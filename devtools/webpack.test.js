@@ -1,3 +1,6 @@
+/**
+ * See https://www.digitalocean.com/community/tutorials/vuejs-demistifying-vue-webpack
+ */
 const webpack = require("webpack"),
     path = require("path"),
     Vue = require("vue"),
@@ -5,31 +8,57 @@ const webpack = require("webpack"),
 
 require("regenerator-runtime/runtime");
 require("jsdom-global")();
+require("proj4");
+
 global.DOMParser = window.DOMParser;
+global.XMLSerializer = window.XMLSerializer;
 
 URL.createObjectURL = function () {
     return false;
 };
-
 Vue.config.devtools = false;
 
 module.exports = {
-    target: "node",
-    devtool: "cheap-module-eval-source-map",
-    output: {
-        devtoolModuleFilenameTemplate: "[absolute-resource-path]"
-    },
     mode: "development",
+    target: "node",
+    devtool: "inline-cheap-module-source-map",
+    output: {
+        // use absolute paths in sourcemaps (important for debugging via IDE)
+        devtoolModuleFilenameTemplate: "[absolute-resource-path]",
+        devtoolFallbackModuleFilenameTemplate: "[absolute-resource-path]?[hash]"
+    },
+    // use when debugging:
+    // devtool: "cheap-module-eval-source-map",
+    // output: {
+    //     devtoolModuleFilenameTemplate: "[absolute-resource-path]"
+    // },
+
     resolve: {
         alias: {
-            "@modules": path.resolve(__dirname, "../modules"),
-            "@addons": path.resolve(__dirname, "../addons"),
-            "@testUtil": path.resolve(__dirname, "../test/unittests/Util")
+            vue: "vue/dist/vue.js"
         },
         extensions: [".tsx", ".ts", ".js"]
     },
+    externals: [
+        /^(bootstrap-slider|\$)$/i
+    ],
     module: {
         rules: [
+            // replace untransformable code in olcs-package
+            {
+                test: /\.js$/,
+                include: [
+                    path.resolve(__dirname, "../node_modules/olcs/util"),
+                    path.resolve(__dirname, "../node_modules/olcs/core")
+                ],
+                use: {
+                    loader: "string-replace-loader",
+                    options: {
+                        search: "const exports = {};",
+                        replace: "var exports = {};"
+                    }
+                }
+            },
             {
                 test: /\.js$/,
                 exclude: /\bvideo.js\b|\bsinon\b|\bturf\b|\bjsts\b/,
@@ -55,7 +84,8 @@ module.exports = {
                 options: {
                     loaders: {
                         js: "esbuild-loader?"
-                    }
+                    },
+                    optimizeSSR: false
                 }
             },
             {
@@ -70,10 +100,14 @@ module.exports = {
                 use: "null-loader"
             },
             {
-                test: /\.(png|jpe?g|gif)$/i,
+                test: /\.(svg)$/,
+                exclude: /fonts/, /* dont want svg fonts from fonts folder to be included */
                 use: [
                     {
-                        loader: "file-loader"
+                        loader: "svg-url-loader",
+                        options: {
+                            noquotes: true
+                        }
                     }
                 ]
             },
@@ -86,6 +120,14 @@ module.exports = {
                 use: {
                     loader: "worker-loader"
                 }
+            },
+            {
+                test: /\.(png|jpe?g|gif)$/i,
+                use: [
+                    {
+                        loader: "file-loader"
+                    }
+                ]
             }
         ]
     },
@@ -94,30 +136,17 @@ module.exports = {
     },
     plugins: [
         new webpack.ProvidePlugin({
-            jQuery: "jquery",
-            $: "jquery",
-            Backbone: "backbone",
-            Radio: "backbone.radio",
-            _: "underscore",
             i18next: ["i18next/dist/cjs/i18next.js"],
-            Config: path.resolve(__dirname, "../test/unittests/deps/testConfig"),
-            XMLSerializer: path.resolve(__dirname, "../test/unittests/deps/testXmlSerializer"),
-            fs: "fs",
-            requestAnimationFrame: "raf"
+            mapCollection: [path.resolve(path.join(__dirname, "../src_3_0_0/core/maps/js/mapCollection.js")), "default"],
+            Config: path.resolve(__dirname, "../test/unittests/deps/testConfig")
+            // XMLSerializer: path.resolve(__dirname, "../test/unittests/deps/testXmlSerializer"),
+            // fs: "fs",
+            // requestAnimationFrame: "raf"
         }),
         new VueLoaderPlugin(),
-        new webpack.NormalModuleReplacementPlugin(/^mqtt$/, "mqtt/dist/mqtt.js"),
-        // ADDONS wird hier global definiert, da der pre-push den Fehler ADDONS is undefined in ./src/addons.js wirft,
-        // obwohl der linter die Zeile ignorieren soll
-        new webpack.DefinePlugin({
-            ADDONS: {},
-            VUE_ADDONS: {}
-        })
-        // if you want to see progress of compiling, activate this
-        // ,new webpack.ProgressPlugin({
-        //     handler(percentage, message, ...args) {
-        //         console.info(percentage, message, ...args);
-        //     }
-        //   })
-    ]
+        new webpack.IgnorePlugin(/canvas/, /jsdom$/)
+    ],
+    node: {
+        fs: "empty"
+    }
 };
