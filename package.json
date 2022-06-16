@@ -17,7 +17,7 @@
   "scripts": {
     "start": "webpack-dev-server --config devtools/webpack.dev.js",
     "start:ssl": "webpack-dev-server --config devtools/webpack.dev.js --https --cert devtools/certificate/localhost.pem --key devtools/certificate/localhost.key",
-    "test": "mochapack --webpack-config devtools/webpack.test.js --bail --recursive --timeout 15000 --file devtools/setupUnitTests.js ./test/unittests/**/*.test.js ./addons/**/unittests/*.test.js",
+    "test": "mochapack --recursive --webpack-config devtools/webpack.vue.test.js ./src/**/*.spec.js ./addons/*/!(node_modules)/**/*.spec.js",
     "test:watch": "npm run test -- --watch",
     "test:vue": "mochapack --recursive --webpack-config devtools/webpack.vue.test.js --file devtools/setupUnitTests.js ./src/**/*.spec.js ./addons/*/!(node_modules)/**/*.spec.js",
     "test:vue:watch": "npm run test:vue -- --watch",
@@ -39,7 +39,7 @@
     "versionHotfix:all": "npm run versionHotfix && cd addons && npm run versionHotfix && cd .. && cd portalconfigs && npm run versionHotfix && cd ..",
     "versionMinor:all": "npm run versionMinor && cd addons && npm run versionMinor && cd .. && cd portalconfigs && npm run versionMinor && cd ..",
     "versionMajor:all": "npm run versionMajor && cd addons && npm run versionMajor && cd .. && cd portalconfigs && npm run versionMajor && cd ..",
-    "prePushHook": "node ./node_modules/@masterportal/mpconfigparser/cli.js ./doc/config.json.md ./doc/config.json.de.md && eslint --max-warnings 0 \"./**/*.{vue,js}\" && npm run test:all",
+    "prePushHook": "node ./node_modules/@masterportal/mpconfigparser/cli.js ./doc/config.json.md ./doc/config.json.de.md && eslint --max-warnings 0 \"./**/*.{vue,js}\" && npm run test",
     "prepare": "husky install"
   },
   "@comment dependencies and devDependencies": [
