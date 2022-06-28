@@ -5,6 +5,7 @@
 
 ## Unreleased - in development
 ### __Breaking Changes__
+<<<<<<< HEAD
 - new config.json parameter 'tree' added. Containes:
   - 'type' (was 'treeType' at root before), the following params are possible: "auto" ( = old "default") or nothing
   - 'validLayerTypesAutoTree' (new parameter) only for tree type 'auto'
@@ -29,6 +30,12 @@
   - 'layerIDsToStyle'
 
 - the Control-Bar Design
+=======
+
+### Added
+
+### Changed
+>>>>>>> a1ff5a75aa (remove unnecesarry packages from package.json)
 
 ### Deprecated
 
