@@ -305,6 +305,10 @@
   - 'layerIDsToStyle'
 - the Control-Bar Design
 
+### Added
+
+### Changed
+
 ### Deprecated
 
 ### Removed
