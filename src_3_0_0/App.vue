@@ -4,6 +4,7 @@ import {mapMutations, mapActions} from "vuex";
 export default {
     name: "App",
     created () {
+        // todo hier auch loadConfig.js, in dem dann nur die mutation ausgeführt wird. --> einheitlichkeit
         this.setConfigJs(Config);
         this.loadConfigJson();
         this.loadServicesJson();
