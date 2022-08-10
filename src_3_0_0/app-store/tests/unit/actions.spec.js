@@ -3,8 +3,7 @@ import sinon from "sinon";
 import {expect} from "chai";
 import actions from "../../actions";
 
-
-describe("src/app-store/actions.js", () => {
+describe("src_3_0_0/app-store/actions.js", () => {
     let commit, state, axiosMock;
     const restConf = "./resources/rest-services-internet.json";
 
@@ -24,6 +23,17 @@ describe("src/app-store/actions.js", () => {
     });
 
     describe("App actions", () => {
+        it("loadConfigJs", () => {
+            const payLoad = {
+                config: "js"
+            };
+
+            actions.loadConfigJs({commit}, payLoad);
+
+            expect(commit.calledOnce).to.be.true;
+            expect(commit.firstCall.args[0]).to.equals("setConfigJs");
+            expect(commit.firstCall.args[1]).to.equals(payLoad);
+        });
         it("loadConfigJson", () => {
             actions.loadConfigJson({commit, state});
 
