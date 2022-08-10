@@ -75,18 +75,18 @@ describe("src_3_0_0/app-store/actions.js", () => {
             expect(axiosMock.calledOnce).to.be.true;
             expect(axiosMock.calledWith(restConf)).to.be.true;
         });
-        it.skip("enrichVisibleLayer", () => {
+        it.skip("enrichVisibleLayers", () => {
             // cannot be tested due to problems mocking imported function getLayerWhere
-            actions.enrichVisibleLayer({commit, state});
+            actions.enrichVisibleLayers({commit, state});
         });
         it("prepareVisibleLayers", () => {
             const stateCopy = {...state};
 
             actions.prepareVisibleLayers({dispatch, state});
             expect(dispatch.calledTwice).to.be.true;
-            expect(dispatch.firstCall.args[0]).to.equals("enrichVisibleLayer");
+            expect(dispatch.firstCall.args[0]).to.equals("enrichVisibleLayers");
             expect(dispatch.firstCall.args[1]).to.be.deep.equals(stateCopy.layerConfig?.Hintergrundkarten?.Layer);
-            expect(dispatch.secondCall.args[0]).to.equals("enrichVisibleLayer");
+            expect(dispatch.secondCall.args[0]).to.equals("enrichVisibleLayers");
             expect(dispatch.secondCall.args[1]).to.be.deep.equals(stateCopy.layerConfig?.Fachdaten?.Layer);
         });
     });
