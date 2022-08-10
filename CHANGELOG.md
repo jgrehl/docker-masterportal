@@ -336,14 +336,6 @@
   - 'layerIDsToStyle'
 - the Control-Bar Design
 
-### Added
-
-### Changed
-
-### Deprecated
-
-### Removed
-
 ### Fixed
 - actionsMapLayers/addLayer: don't set zIndex by default, otherwise addLayerOnTop and addLayerToIndex have no effect
 - Issue #842: LayerInformation shows all service urls in group layer.
