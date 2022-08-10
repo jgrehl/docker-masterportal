@@ -106,8 +106,8 @@ export default {
      * @returns {void}
      */
     prepareVisibleLayers ({dispatch, state}) {
-        dispatch("enrichVisibleLayer", state.layerConfig?.Hintergrundkarten?.Layer);
-        dispatch("enrichVisibleLayer", state.layerConfig?.Fachdaten?.Layer);
+        dispatch("enrichVisibleLayers", state.layerConfig?.Hintergrundkarten?.Layer);
+        dispatch("enrichVisibleLayers", state.layerConfig?.Fachdaten?.Layer);
     },
 
     /**
@@ -116,7 +116,7 @@ export default {
      * @param {Array} layerConfig an array of configured layers like in the config.json
      * @returns {void}
      */
-    enrichVisibleLayer ({commit, state}, layerConfig) {
+    enrichVisibleLayers ({commit, state}, layerConfig) {
         layerConfig?.forEach(layerConf => {
             if (layerConf.visibility) {
                 const rawLayer = getLayerWhere({id: layerConf.id});
