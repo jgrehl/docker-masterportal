@@ -3,8 +3,6 @@ import {expect} from "chai";
 import sinon from "sinon";
 import {shallowMount, createLocalVue} from "@vue/test-utils";
 import AppComponent from "../../App.vue";
-import mutations from "../../app-store/mutations";
-import actions from "../../app-store/actions";
 
 
 const localVue = createLocalVue();
@@ -14,39 +12,44 @@ localVue.use(Vuex);
 describe("src_3_0_0/App.vue", () => {
     let store,
         wrapper,
-        loadConfigJsonFn,
-        loadRestServicesJson,
-        loadServicesJson,
-        loadConfigJs;
+        actions,
+        mutations;
 
     beforeEach(() => {
-        loadConfigJsonFn = actions.loadConfigJson;
-        loadRestServicesJson = actions.loadRestServicesJson;
-        loadServicesJson = actions.loadServicesJson;
-        loadConfigJs = actions.loadConfigJs;
-        actions.loadConfigJson = sinon.spy();
-        actions.loadRestServicesJson = sinon.spy();
-        actions.loadServicesJson = sinon.spy();
-        actions.loadConfigJs = sinon.spy();
+        actions = {
+            loadConfigJs: sinon.spy(),
+            loadConfigJson: sinon.spy(),
+            loadRestServicesJson: sinon.spy(),
+            loadServicesJson: sinon.spy(),
+            prepareVisibleLayers: sinon.spy()
+        };
+        mutations = {
+            setConfigJs: sinon.spy()
+        };
 
         store = new Vuex.Store({
             namespaced: true,
             getters: {
                 allConfigsLoaded: sinon.stub(),
                 configJs: sinon.stub(),
-                portalConfig: sinon.stub()
+                portalConfig: () => {
+                    return {mapView: {}};
+                }
             },
             mutations: mutations,
-            actions: actions
+            actions: actions,
+            state: {
+                loadedConfigs: {
+                    configJson: false,
+                    restServicesJson: false,
+                    servicesJson: false
+                }
+            }
         });
     });
 
     afterEach(() => {
         sinon.restore();
-        actions.loadConfigJson = loadConfigJsonFn;
-        actions.loadRestServicesJson = loadRestServicesJson;
-        actions.loadServicesJson = loadServicesJson;
-        actions.loadConfigJs = loadConfigJs;
     });
 
     it("loads config on creating App", () => {
@@ -63,5 +66,21 @@ describe("src_3_0_0/App.vue", () => {
         wrapper = shallowMount(AppComponent, {store, localVue});
 
         expect(global.mapCollection).to.be.not.undefined;
+    });
+
+    it("watcher allConfigsLoaded is true", () => {
+        wrapper = shallowMount(AppComponent, {store, localVue});
+
+        wrapper.vm.$options.watch.allConfigsLoaded.call(wrapper.vm, true);
+        expect(actions.prepareVisibleLayers.calledOnce).to.be.true;
+        // todo createMaps call cannot be tested due to problems mocking imported functions
+    });
+
+    it("watcher allConfigsLoaded is false", () => {
+        wrapper = shallowMount(AppComponent, {store, localVue});
+
+        wrapper.vm.$options.watch.allConfigsLoaded.call(wrapper.vm, false);
+        expect(actions.prepareVisibleLayers.notCalled).to.be.true;
+        // todo createMaps call cannot be tested due to problems mocking imported functions
     });
 });
