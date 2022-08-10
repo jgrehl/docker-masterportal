@@ -45,5 +45,4 @@ describe("src_3_0_0/core/js/maps/maps.js", () => {
             expect(mapCollect.getMap("2D")).to.be.undefined;
         });
     });
-
 });
