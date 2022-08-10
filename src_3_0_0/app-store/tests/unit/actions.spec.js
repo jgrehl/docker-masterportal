@@ -174,6 +174,7 @@ describe("src_3_0_0/app-store/actions.js", () => {
             }
         };
         commit = sinon.spy();
+        dispatch = sinon.stub().resolves(true);
         state = {
             configJs: {
                 portalConf: "./",
