@@ -14,11 +14,23 @@
         {
           "id": "453",
           "visibility": true
+        },
+        {
+          "id": "452"
         }
       ]
     },
     "Fachdaten": {
-      "Layer": []
+      "Layer": [
+        {
+          "id": "1132",
+          "name": "100 Jahre Stadtgruen POIs",
+          "visibility": true
+        },
+        {
+          "id": "10220"
+        }
+      ]
     }
   }
 }
