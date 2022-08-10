@@ -31,6 +31,9 @@ export default {
         this.setGlobalVariables();
         this.loadConfigsToTheVuexState();
     },
+    mounted () {
+        LoaderOverlay.hide();
+    },
     methods: {
         ...mapActions([
             "extendLayers",
