@@ -13,9 +13,17 @@ localVue.use(Vuex);
 
 describe("src_3_0_0/App.vue", () => {
     let store,
-        wrapper;
+        wrapper,
+        loadConfigJsonFn,
+        loadRestServicesJson,
+        loadServicesJson,
+        setConfigJs;
 
     beforeEach(() => {
+        loadConfigJsonFn = actions.loadConfigJson;
+        loadRestServicesJson = actions.loadRestServicesJson;
+        loadServicesJson = actions.loadServicesJson;
+        setConfigJs = mutations.setConfigJs;
         actions.loadConfigJson = sinon.spy();
         actions.loadRestServicesJson = sinon.spy();
         actions.loadServicesJson = sinon.spy();
@@ -26,6 +34,14 @@ describe("src_3_0_0/App.vue", () => {
             mutations: mutations,
             actions: actions
         });
+    });
+
+    afterEach(() => {
+        sinon.restore();
+        actions.loadConfigJson = loadConfigJsonFn;
+        actions.loadRestServicesJson = loadRestServicesJson;
+        actions.loadServicesJson = loadServicesJson;
+        mutations.setConfigJs = setConfigJs;
     });
 
     it("loads config on creating App", () => {
