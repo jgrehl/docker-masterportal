@@ -1,0 +1,24 @@
+{
+  "Portalconfig": {
+    "mapView": {
+      "backgroundImage": "https://geodienste.hamburg.de/lgv-config/img/backgroundCanvas.jpeg",
+      "startCenter": [
+        565874,
+        5934140
+      ]
+    }
+  },
+  "Themenconfig": {
+    "Hintergrundkarten": {
+      "Layer": [
+        {
+          "id": "453",
+          "visibility": true
+        }
+      ]
+    },
+    "Fachdaten": {
+      "Layer": []
+    }
+  }
+}
