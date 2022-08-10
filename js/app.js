@@ -213,8 +213,6 @@ async function loadApp () {
     if (searchbarAttributes !== undefined && sbconfig) {
         new SearchbarView(sbconfig);
     }
-
-    LoaderOverlay.hide();
 }
 
 export {loadApp};
