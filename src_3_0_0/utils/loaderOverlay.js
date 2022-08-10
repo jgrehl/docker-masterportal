@@ -33,6 +33,7 @@ export default {
         }
         return this.loaderOverlayCount;
     },
+
     /**
      * Initiates the fade animation of MP logo and title. Ths may be interrupted by a mousedown event.
      * @returns {void}
@@ -59,6 +60,7 @@ export default {
 
         setTimeout(this.cleanup.bind(this), 3400);
     },
+
     /**
      * Removes portal logos and titles from Loader, also removes animation classes.
      * @returns {void}
