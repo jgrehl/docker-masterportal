@@ -6,14 +6,8 @@ describe("src_3_0_0/utils/loaderOverlay.js", () => {
         LoaderOverlay.loaderOverlayCount = 0;
         LoaderOverlay.initialLoaderIsHidden = false;
         LoaderOverlay.isFading = false;
-        LoaderOverlay.loaderTimeoutReference = null;
     });
 
-    describe("show", () => {
-        it("show loader should return 1", () => {
-            expect(LoaderOverlay.show()).to.equals(1);
-        });
-    });
     describe("hide", () => {
         it("hide loader should return 0", () => {
             expect(LoaderOverlay.hide()).to.equals(0);
