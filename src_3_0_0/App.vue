@@ -34,6 +34,9 @@ export default {
     mounted () {
         LoaderOverlay.hide();
     },
+    mounted () {
+        LoaderOverlay.hide();
+    },
     methods: {
         ...mapActions([
             "extendLayers",
