@@ -14,8 +14,6 @@ import ParcelSearchView from "../modules/tools/parcelSearch/view";
 
 import {handleUrlParamsBeforeVueMount, readUrlParamEarly} from "../src/utils/parametricUrl/ParametricUrlBridge";
 import {createMaps} from "../src/core/maps/maps.js";
-import mapCollection from "../src/core/maps/mapCollection.js";
-import LoaderOverlay from "../src/utils/loaderOverlay";
 import uiStyle from "../src/utils/uiStyle";
 
 
@@ -40,7 +38,6 @@ let sbconfig,
     controls,
     controlsView;
 
-global.mapCollection = mapCollection;
 
 /**
  * load the configuration of master portal

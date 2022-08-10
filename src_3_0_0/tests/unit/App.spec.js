@@ -17,20 +17,25 @@ describe("src_3_0_0/App.vue", () => {
         loadConfigJsonFn,
         loadRestServicesJson,
         loadServicesJson,
-        setConfigJs;
+        loadConfigJs;
 
     beforeEach(() => {
         loadConfigJsonFn = actions.loadConfigJson;
         loadRestServicesJson = actions.loadRestServicesJson;
         loadServicesJson = actions.loadServicesJson;
-        setConfigJs = mutations.setConfigJs;
+        loadConfigJs = actions.loadConfigJs;
         actions.loadConfigJson = sinon.spy();
         actions.loadRestServicesJson = sinon.spy();
         actions.loadServicesJson = sinon.spy();
-        mutations.setConfigJs = sinon.spy();
+        actions.loadConfigJs = sinon.spy();
 
         store = new Vuex.Store({
             namespaced: true,
+            getters: {
+                allConfigsLoaded: sinon.stub(),
+                configJs: sinon.stub(),
+                portalConfig: sinon.stub()
+            },
             mutations: mutations,
             actions: actions
         });
@@ -41,7 +46,7 @@ describe("src_3_0_0/App.vue", () => {
         actions.loadConfigJson = loadConfigJsonFn;
         actions.loadRestServicesJson = loadRestServicesJson;
         actions.loadServicesJson = loadServicesJson;
-        mutations.setConfigJs = setConfigJs;
+        actions.loadConfigJs = loadConfigJs;
     });
 
     it("loads config on creating App", () => {
@@ -51,6 +56,12 @@ describe("src_3_0_0/App.vue", () => {
         expect(actions.loadConfigJson.calledOnce).to.be.true;
         expect(actions.loadRestServicesJson.calledOnce).to.be.true;
         expect(actions.loadServicesJson.calledOnce).to.be.true;
-        expect(mutations.setConfigJs.calledOnce).to.be.true;
+        expect(actions.loadConfigJs.calledOnce).to.be.true;
+    });
+
+    it("sets mapCollection as  lobal variable", () => {
+        wrapper = shallowMount(AppComponent, {store, localVue});
+
+        expect(global.mapCollection).to.be.not.undefined;
     });
 });
