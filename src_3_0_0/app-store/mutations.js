@@ -37,5 +37,15 @@ export default {
      */
     setRestConfig (state, restConfig) {
         state.restConfig = restConfig;
+    },
+
+    /**
+     * Sets the loaded config to true.
+     * @param {Object} state store state
+     * @param {String} config The config that is loaded
+     * @returns {void}
+     */
+    setLoadedConfigs (state, config) {
+        state.loadedConfigs[config] = true;
     }
 };
