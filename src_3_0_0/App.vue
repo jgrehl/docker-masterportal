@@ -1,5 +1,6 @@
 <script>
 import {mapMutations, mapActions} from "vuex";
+import LoaderOverlay from "./utils/loaderOverlay";
 
 export default {
     name: "App",
@@ -9,6 +10,9 @@ export default {
         this.loadConfigJson();
         this.loadServicesJson();
         this.loadRestServicesJson();
+    },
+    mounted () {
+        LoaderOverlay.hide();
     },
     methods: {
         ...mapMutations([
