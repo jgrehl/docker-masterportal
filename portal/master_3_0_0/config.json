@@ -112,6 +112,9 @@
           "name": "Gebäude LoD2",
           "typ": "TileSet3D",
           "visibility": true
+        },
+        {
+          "id": "452"
         }
       ]
     },
