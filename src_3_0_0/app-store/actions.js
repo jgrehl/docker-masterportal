@@ -1,5 +1,7 @@
 import axios from "axios";
-import {getLayerWhere, initializeLayerList} from "@masterportal/masterportalapi/src/rawLayerList";
+import {initializeLayerList} from "@masterportal/masterportalapi/src/rawLayerList";
+import getNestedValues from "../utils/getNestedValues";
+import getOrMergeRawLayer from "../utils/getOrMergeRawLayer";
 
 export default {
     /**
@@ -35,32 +37,27 @@ export default {
     },
 
     /**
-     * Prepares all visible layers in state's layerConfig.
-     * @returns {void}
-     */
-    prepareVisibleLayers ({dispatch, state}) {
-        dispatch("enrichVisibleLayers", state.layerConfig?.Hintergrundkarten?.Layer);
-        dispatch("enrichVisibleLayers", state.layerConfig?.Fachdaten?.Layer);
-    },
-
-    /**
-     * Enriches all visible layers of config.json with the attributes of the layer in services.json.
-     * Replaces the enriched layer in state.layerConf.
+     * Extends all visible layers of config.json with the attributes of the layer in services.json.
+     * Replaces the extended layer in state.layerConf.
      * @param {Array} layerConfig an array of configured layers like in the config.json
      * @returns {void}
      */
-    enrichVisibleLayers ({commit, state}, layerConfig) {
-        layerConfig?.forEach(layerConf => {
-            if (layerConf.visibility) {
-                const rawLayer = getLayerWhere({id: layerConf.id});
+    extendVisibleLayers ({commit, state}) {
+        const layerContainer = getNestedValues(state.layerConfig, "Layer");
 
-                if (rawLayer) {
-                    commit("replaceByIdInLayerConfig", Object.assign(rawLayer, layerConf));
+        layerContainer.forEach(layerConfigs => {
+            layerConfigs.forEach(layerConf => {
+                if (layerConf.visibility) {
+                    const rawLayer = getOrMergeRawLayer(layerConf);
+
+                    if (rawLayer) {
+                        commit("replaceByIdInLayerConfig", [Object.assign(rawLayer, layerConf)]);
+                    }
+                    else {
+                        console.warn("Configured visible layer with id ", layerConf.id, " was not found in ", state.configJs?.layerConf);
+                    }
                 }
-                else {
-                    console.warn("Configured visible layer with id ", layerConf.id, " was not found in ", state.configJs?.layerConf);
-                }
-            }
+            });
         });
     },
 
