@@ -17,7 +17,7 @@ export default {
     watch: {
         allConfigsLoaded (value) {
             if (value) {
-                this.prepareVisibleLayers();
+                this.extendVisibleLayers();
                 createMaps(this.portalConfig, this.configJs);
             }
         }
@@ -34,7 +34,7 @@ export default {
     },
     methods: {
         ...mapActions([
-            "prepareVisibleLayers",
+            "extendVisibleLayers",
             "loadConfigJs",
             "loadConfigJson",
             "loadRestServicesJson",
