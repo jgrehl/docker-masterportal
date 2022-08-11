@@ -35,9 +35,7 @@ const CustomTreeParser = Parser.extend(/** @lends CustomTreeParser.prototype */{
         if (object?.Layer) {
             object.Layer.forEach(layer => {
                 let objFromRawList,
-                    objsFromRawList,
                     layerExtended = layer,
-                    mergedObjsFromRawList,
                     item;
 
                 // For layer with the same layer id but with different properties as filter
@@ -88,43 +86,6 @@ const CustomTreeParser = Parser.extend(/** @lends CustomTreeParser.prototype */{
                         }
                     }
                     layerExtended = Object.assign(objFromRawList, layerExtended, {"isChildLayer": false});
-                }
-                // For Single-Layer (ol.layer.Layer) with more layers (FNP, LAPRO, Geobasisdaten (farbig), etc.)
-                // For Example: {id: ["550","551","552",...,"559"], visible: false}
-                else if (Array.isArray(layerExtended.id) && typeof layerExtended.id[0] === "string") {
-                    objsFromRawList = this.getRawLayerList();
-                    mergedObjsFromRawList = this.mergeObjectsByIds(layerExtended.id, objsFromRawList);
-
-                    if (mergedObjsFromRawList === null) { // Wenn Layer nicht definiert, dann Abbruch
-                        return;
-                    }
-                    layerExtended = Object.assign(mergedObjsFromRawList, Radio.request("Util", "omit", layerExtended, ["id"]), {"isChildLayer": false});
-                }
-                // For Group-Layer (ol.layer.Group)
-                // For Example: {id: "xxx", children: [{ id: "1364" }, { id: "1365" }], visible: false}
-                else if (layerExtended?.children && typeof layerExtended.id === "string") {
-                    layerExtended.children = layerExtended.children.map(childLayer => {
-                        objFromRawList = null;
-                        if (childLayer.styles && childLayer.styles[0]) {
-                            objFromRawList = rawLayerList.getLayerWhere({id: childLayer.id + childLayer.styles[0]});
-                        }
-                        if (objFromRawList === null || objFromRawList === undefined) {
-                            objFromRawList = rawLayerList.getLayerWhere({id: childLayer.id});
-                        }
-                        if (objFromRawList !== null && objFromRawList !== undefined) {
-                            return Object.assign(objFromRawList, childLayer, {"isChildLayer": true});
-                        }
-                        console.error("A layer of the group \"" + layerExtended.name + "\" with id: " + childLayer.id + " was not created. Id not contained in services.json.");
-                        return undefined;
-                    });
-
-                    layerExtended.children = layerExtended.children.filter(function (childLayer) {
-                        return childLayer !== undefined;
-                    });
-
-                    if (layerExtended.children.length > 0) {
-                        layerExtended = Object.assign(layerExtended, {typ: "GROUP", isChildLayer: false});
-                    }
                 }
 
                 // HVV :(
