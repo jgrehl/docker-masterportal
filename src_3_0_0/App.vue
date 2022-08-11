@@ -1,9 +1,10 @@
 <script>
 import {mapGetters, mapActions} from "vuex";
 
-import {createMaps} from "./core/maps/maps.js";
+import {createMaps} from "./core/maps/maps";
+import runLayerFactory from "./core/layers/layerFactory";
 import LoaderOverlay from "./utils/loaderOverlay";
-import mapCollection from "./core/maps/mapCollection.js";
+import mapCollection from "./core/maps/mapCollection";
 
 export default {
     name: "App",
@@ -11,6 +12,7 @@ export default {
         ...mapGetters([
             "allConfigsLoaded",
             "configJs",
+            "layerConfig",
             "portalConfig"
         ])
     },
@@ -23,6 +25,7 @@ export default {
                 }
                 this.extendVisibleLayers();
                 createMaps(this.portalConfig, this.configJs);
+                runLayerFactory(this.layerConfig);
             }
         }
     },
