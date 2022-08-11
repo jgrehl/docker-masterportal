@@ -21,7 +21,7 @@ describe("src_3_0_0/App.vue", () => {
             loadConfigJson: sinon.spy(),
             loadRestServicesJson: sinon.spy(),
             loadServicesJson: sinon.spy(),
-            prepareVisibleLayers: sinon.spy()
+            extendVisibleLayers: sinon.spy()
         };
         mutations = {
             setConfigJs: sinon.spy()
@@ -72,7 +72,7 @@ describe("src_3_0_0/App.vue", () => {
         wrapper = shallowMount(AppComponent, {store, localVue});
 
         wrapper.vm.$options.watch.allConfigsLoaded.call(wrapper.vm, true);
-        expect(actions.prepareVisibleLayers.calledOnce).to.be.true;
+        expect(actions.extendVisibleLayers.calledOnce).to.be.true;
         // todo createMaps call cannot be tested due to problems mocking imported functions
     });
 
@@ -80,7 +80,7 @@ describe("src_3_0_0/App.vue", () => {
         wrapper = shallowMount(AppComponent, {store, localVue});
 
         wrapper.vm.$options.watch.allConfigsLoaded.call(wrapper.vm, false);
-        expect(actions.prepareVisibleLayers.notCalled).to.be.true;
+        expect(actions.extendVisibleLayers.notCalled).to.be.true;
         // todo createMaps call cannot be tested due to problems mocking imported functions
     });
 });
