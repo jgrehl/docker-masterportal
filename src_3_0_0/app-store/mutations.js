@@ -1,4 +1,5 @@
 import {generateSimpleMutations} from "./utils/generators";
+import replaceInNestedValues from "../utils/replaceInNestedValues";
 import stateAppStore from "./state";
 
 const mutations = {
@@ -7,19 +8,20 @@ const mutations = {
     /**
      * Replaces the layer with the id of the layer toReplace in state's layerConfig.
      * @param {Object} state store state
-     * @param {Object} toReplace config of one layer to replace, must contain id
+     * @param {Array} toReplace array of configs of layers to replace, each config must contain id
      * @returns {void}
      */
-    replaceByIdInLayerConfig (state, toReplace) {
-        const indexBackGroundLayer = state.layerConfig?.Hintergrundkarten?.Layer?.findIndex((layerConf) => layerConf.id === toReplace?.id),
-            indexSubjectDataLayer = state.layerConfig?.Fachdaten?.Layer?.findIndex((layerConf) => layerConf.id === toReplace?.id);
+    replaceByIdInLayerConfig (state, toReplace = []) {
+        toReplace.forEach(replacement => {
+            const assigned = replaceInNestedValues(state.layerConfig, "Layer", replacement, {key: "id", value: replacement.id});
 
-        if (indexBackGroundLayer > -1) {
-            state.layerConfig?.Hintergrundkarten?.Layer?.splice(indexBackGroundLayer, 1, toReplace);
-        }
-        if (indexSubjectDataLayer > -1) {
-            state.layerConfig?.Fachdaten?.Layer?.splice(indexSubjectDataLayer, 1, toReplace);
-        }
+            if (assigned === 0) {
+                console.warn("Replacement of layer ", toReplace, " in state.layerConfig failed. Id ", replacement.id, " was not found in state!");
+            }
+            else if (assigned > 1) {
+                console.warn("Replaced ", assigned.length, " layers in state.layerConfig with ", replacement, " Id ", replacement.id, " was found ", assigned.length, " times. You have to correct your config!");
+            }
+        });
     },
 
     /**
