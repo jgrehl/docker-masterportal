@@ -829,47 +829,6 @@ const Parser = Backbone.Model.extend(/** @lends Parser.prototype */{
         }
     },
 
-    /**
-     * Groups objects from the layerlist that match the IDs in the passed list.
-     * @param  {string[]} [ids=[]] - Array of ids whose objects are grouped together
-     * @param  {Object[]} [layerlist=[]] - Objects from the services.json
-     * @return {Object[]} layerlist - Objects from the services.json
-     */
-    mergeObjectsByIds: function (ids = [], layerlist = []) {
-        const objectsByIds = [],
-            maxScales = [],
-            minScales = [];
-        let newObject = {};
-
-        // Objekte die gruppiert werden
-        ids.forEach(id => {
-            const lay = layerlist.find(layer => layer.id === id);
-
-            if (lay) {
-                objectsByIds.push(lay);
-            }
-        });
-
-        // Wenn nicht alle LayerIDs des Arrays gefunden werden
-        if (objectsByIds.length !== ids.length) {
-            return null;
-        }
-        // Das erste Objekt wird kopiert
-        newObject = {...objectsByIds[0]};
-        // Das Attribut layers wird gruppiert und am kopierten Objekt gesetzt
-        newObject.layers = objectsByIds.map(value => value.layers).toString();
-        // Das Attribut maxScale wird gruppiert
-        // Am kopierten Objekt wird der höchste Wert gesetzt
-        objectsByIds.forEach(object => maxScales.push(parseInt(object.maxScale, 10)));
-        newObject.maxScale = Math.max(...maxScales);
-
-        // Das Attribut minScale wird gruppiert
-        // Am kopierten Objekt wird der niedrigste Wert gesetzt
-        objectsByIds.forEach(object => minScales.push(parseInt(object.minScale, 10)));
-        newObject.minScale = Math.min(...minScales);
-
-        return newObject;
-    },
 
     /**
      * Generates a Uniq ID with prefix
