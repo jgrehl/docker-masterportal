@@ -4,12 +4,11 @@ import {expect} from "chai";
 import actions from "../../actions";
 
 describe("src_3_0_0/app-store/actions.js", () => {
-    let commit, dispatch, state, axiosMock;
+    let commit, state, axiosMock;
     const restConf = "./resources/rest-services-internet.json";
 
     beforeEach(() => {
         commit = sinon.spy();
-        dispatch = sinon.stub().resolves(true);
         state = {
             configJs: {
                 portalConf: "./",
