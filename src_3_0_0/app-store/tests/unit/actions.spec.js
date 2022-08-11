@@ -4,12 +4,11 @@ import {expect} from "chai";
 import actions from "../../actions";
 
 describe("src_3_0_0/app-store/actions.js", () => {
-    let commit, dispatch, state, axiosMock;
+    let commit, state, axiosMock;
     const restConf = "./resources/rest-services-internet.json";
 
     beforeEach(() => {
         commit = sinon.spy();
-        dispatch = sinon.stub().resolves(true);
         state = {
             configJs: {
                 portalConf: "./",
@@ -75,19 +74,9 @@ describe("src_3_0_0/app-store/actions.js", () => {
             expect(axiosMock.calledOnce).to.be.true;
             expect(axiosMock.calledWith(restConf)).to.be.true;
         });
-        it.skip("enrichVisibleLayers", () => {
-            // cannot be tested due to problems mocking imported function getLayerWhere
-            actions.enrichVisibleLayers({commit, state});
-        });
-        it("prepareVisibleLayers", () => {
-            const stateCopy = {...state};
-
-            actions.prepareVisibleLayers({dispatch, state});
-            expect(dispatch.calledTwice).to.be.true;
-            expect(dispatch.firstCall.args[0]).to.equals("enrichVisibleLayers");
-            expect(dispatch.firstCall.args[1]).to.be.deep.equals(stateCopy.layerConfig?.Hintergrundkarten?.Layer);
-            expect(dispatch.secondCall.args[0]).to.equals("enrichVisibleLayers");
-            expect(dispatch.secondCall.args[1]).to.be.deep.equals(stateCopy.layerConfig?.Fachdaten?.Layer);
+        it.skip("extendVisibleLayers", () => {
+            // cannot be tested due to problems mocking imported function getRawLayer
+            actions.extendVisibleLayers({commit, state});
         });
     });
 });
