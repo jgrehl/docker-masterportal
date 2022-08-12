@@ -79,8 +79,6 @@ export default {
     },
 
     /**
-<<<<<<< HEAD
-=======
      * Extends all visible layers of config.json with the attributes of the layer in services.json.
      * Replaces the extended layer in state.layerConf.
      * @param {Array} layerConfig an array of configured layers like in the config.json
@@ -104,7 +102,6 @@ export default {
     },
 
     /**
->>>>>>> 3bc584258 (provide filtered raw layers if treetype default)
      * Load the rest-services.json and commit it to the state.
      * @returns {void}
      */
