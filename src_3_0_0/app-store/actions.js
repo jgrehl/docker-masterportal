@@ -65,6 +65,19 @@ export default {
             });
     },
 
+
+    /**
+     * Fills the states layerConf with filtered layers from services.json.
+     * For more Information see 'getAllRawLayerSortedByMdId'.
+     * @returns {void}
+     */
+    fillLayerConf ({commit, state}) {
+        const layerContainer = flattenArray(getNestedValues(state.layerConfig, "Layer")),
+            rawLayers = getAllRawLayerSortedByMdId(layerContainer);
+
+        commit("addToLayerConfig", {toAdd: {Fachdaten: rawLayers}, parentKey: "Themenconfig"});
+    },
+
     /**
 <<<<<<< HEAD
 =======
