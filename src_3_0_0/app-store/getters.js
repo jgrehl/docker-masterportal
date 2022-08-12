@@ -1,5 +1,6 @@
 import {generateSimpleGetters} from "./utils/generators";
 import getNestedValues from "../utils/getNestedValues";
+import flattenArray from "../utils/flattenArray";
 import stateAppStore from "./state";
 
 const getters = {
