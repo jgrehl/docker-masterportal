@@ -36,9 +36,6 @@ export default {
         this.loadConfigsToTheVuexState();
         this.checkVueObservation();
     },
-    mounted () {
-        LoaderOverlay.hide();
-    },
     methods: {
         ...mapActions([
             "extendLayers",
