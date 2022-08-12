@@ -1,7 +1,8 @@
 import axios from "axios";
 import {initializeLayerList} from "@masterportal/masterportalapi/src/rawLayerList";
 import getNestedValues from "../utils/getNestedValues";
-import getOrMergeRawLayer from "../utils/getOrMergeRawLayer";
+import flattenArray from "../utils/flattenArray";
+import {getAllRawLayerSortedByMdId, getOrMergeRawLayer} from "../utils/getOrMergeRawLayer";
 
 export default {
     /**
@@ -36,6 +37,19 @@ export default {
             });
     },
 
+
+    /**
+     * Fills the states layerConf with filtered layers from services.json.
+     * For more Information see 'getAllRawLayerSortedByMdId'.
+     * @returns {void}
+     */
+    fillLayerConf ({commit, state}) {
+        const layerContainer = flattenArray(getNestedValues(state.layerConfig, "Layer")),
+            rawLayers = getAllRawLayerSortedByMdId(layerContainer);
+
+        commit("addToLayerConfig", {toAdd: {Fachdaten: rawLayers}, parentKey: "Themenconfig"});
+    },
+
     /**
      * Extends all visible layers of config.json with the attributes of the layer in services.json.
      * Replaces the extended layer in state.layerConf.
@@ -43,21 +57,19 @@ export default {
      * @returns {void}
      */
     extendVisibleLayers ({commit, state}) {
-        const layerContainer = getNestedValues(state.layerConfig, "Layer");
+        const layerContainer = flattenArray(getNestedValues(state.layerConfig, "Layer"));
 
-        layerContainer.forEach(layerConfigs => {
-            layerConfigs.forEach(layerConf => {
-                if (layerConf.visibility) {
-                    const rawLayer = getOrMergeRawLayer(layerConf);
+        layerContainer.forEach(layerConf => {
+            if (layerConf.visibility) {
+                const rawLayer = getOrMergeRawLayer(layerConf);
 
-                    if (rawLayer) {
-                        commit("replaceByIdInLayerConfig", [Object.assign(rawLayer, layerConf)]);
-                    }
-                    else {
-                        console.warn("Configured visible layer with id ", layerConf.id, " was not found in ", state.configJs?.layerConf);
-                    }
+                if (rawLayer) {
+                    commit("replaceByIdInLayerConfig", [Object.assign(rawLayer, layerConf)]);
                 }
-            });
+                else {
+                    console.warn("Configured visible layer with id ", layerConf.id, " was not found in ", state.configJs?.layerConf);
+                }
+            }
         });
     },
 
