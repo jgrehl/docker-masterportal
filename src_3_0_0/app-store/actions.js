@@ -80,21 +80,19 @@ export default {
      * @returns {void}
      */
     extendVisibleLayers ({commit, state}) {
-        const layerContainer = getNestedValues(state.layerConfig, "Layer");
+        const layerContainer = flattenArray(getNestedValues(state.layerConfig, "Layer"));
 
-        layerContainer.forEach(layerConfigs => {
-            layerConfigs.forEach(layerConf => {
-                if (layerConf.visibility) {
-                    const rawLayer = getOrMergeRawLayer(layerConf);
+        layerContainer.forEach(layerConf => {
+            if (layerConf.visibility) {
+                const rawLayer = getOrMergeRawLayer(layerConf);
 
-                    if (rawLayer) {
-                        commit("replaceByIdInLayerConfig", [Object.assign(rawLayer, layerConf)]);
-                    }
-                    else {
-                        console.warn("Configured visible layer with id ", layerConf.id, " was not found in ", state.configJs?.layerConf);
-                    }
+                if (rawLayer) {
+                    commit("replaceByIdInLayerConfig", [Object.assign(rawLayer, layerConf)]);
                 }
-            });
+                else {
+                    console.warn("Configured visible layer with id ", layerConf.id, " was not found in ", state.configJs?.layerConf);
+                }
+            }
         });
     },
 
