@@ -1,5 +1,6 @@
 import {generateSimpleGetters} from "./utils/generators";
 import getNestedValues from "../utils/getNestedValues";
+import flattenArray from "../utils/flattenArray";
 import stateAppStore from "./state";
 
 const getters = {
@@ -20,24 +21,9 @@ const getters = {
      * @returns {Array} containing all layer configurations with property 'visibility' is true
      */
     allVisibleLayerConfigs: state => {
-        const layerContainer = getNestedValues(state.layerConfig, "Layer"),
-            visibleLayers = [];
+        const layerContainer = flattenArray(getNestedValues(state.layerConfig, "Layer"));
 
-
-        layerContainer.forEach(content => {
-            if (Array.isArray(content)) {
-                content.forEach(layerConf => {
-                    if (layerConf.visibility) {
-                        visibleLayers.push(layerConf);
-                    }
-                });
-            }
-            else if (content.visibility) {
-                visibleLayers.push(content);
-            }
-        });
-
-        return visibleLayers;
+        return layerContainer.filter(layerConf => layerConf.visibility === true);
     }
 };
 
