@@ -36,7 +36,6 @@ const layerTypes2d = {
  */
 export function createLayer (layerConf, mapMode) {
     const typ = layerConf?.typ?.toUpperCase();
-    let layer;
 
     if (layerTypes2d[typ]) {
         layer = new layerTypes2d[typ](layerConf);
