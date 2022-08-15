@@ -14,3 +14,12 @@ export default function LayerOl2d (attributes) {
 }
 
 LayerOl2d.prototype = Object.create(Layer.prototype);
+
+/**
+ * Sets values to the ol layer.
+ * @param {Object} values The new values.
+ * @returns {void}
+ */
+LayerOl2d.prototype.updateLayerValues = function (values) {
+    this.layer.setVisible(values.visibility);
+};
