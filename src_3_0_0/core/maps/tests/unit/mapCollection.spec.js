@@ -2,7 +2,7 @@ import {expect} from "chai";
 import mapCollect from "../../mapCollection";
 
 describe("src_3_0_0/core/maps/maps.js", () => {
-    before(() => {
+    beforeEach(() => {
         mapCollection.clear();
     });
 
@@ -19,6 +19,20 @@ describe("src_3_0_0/core/maps/maps.js", () => {
         });
     });
 
+    describe("addMap and getMapMapView", () => {
+        it("clear the mapCollection", () => {
+            const map = {
+                map: "map",
+                mode: "2D",
+                getView: () => "The map View"
+            };
+
+            mapCollect.addMap(map, "2D");
+
+            expect(mapCollect.getMapView("2D")).to.equals("The map View");
+        });
+    });
+
     describe("clear and getMap", () => {
         it("clear the mapCollection", () => {
             const map = {
@@ -31,4 +45,5 @@ describe("src_3_0_0/core/maps/maps.js", () => {
             expect(mapCollect.getMap("2D")).to.be.undefined;
         });
     });
+
 });
