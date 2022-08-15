@@ -13,7 +13,8 @@ export default {
             "allConfigsLoaded",
             "configJs",
             "layerConfig",
-            "portalConfig"
+            "portalConfig",
+            "visibleLayerConfigs"
         ])
     },
     watch: {
@@ -26,7 +27,7 @@ export default {
                 }
                 this.extendVisibleLayers();
                 createMaps(this.portalConfig, this.configJs);
-                runLayerFactory(this.layerConfig);
+                runLayerFactory(this.visibleLayerConfigs);
             }
         }
     },
