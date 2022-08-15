@@ -19,6 +19,7 @@ export default {
     watch: {
         allConfigsLoaded (value) {
             if (value) {
+                LoaderOverlay.hide();
                 if (this.portalConfig?.treeType === "default") {
                     // or no 'Fachdaten' in config.json or another config property?
                     this.fillLayerConf();
@@ -32,9 +33,6 @@ export default {
     created () {
         this.setGlobalVariables();
         this.loadConfigsToTheVuexState();
-    },
-    mounted () {
-        LoaderOverlay.hide();
     },
     methods: {
         ...mapActions([
