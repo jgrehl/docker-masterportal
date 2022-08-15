@@ -9,7 +9,6 @@ import * as bridge from "./RadioBridge.js";
  */
 export default function WMSLayer (attrs) {
     const defaults = {
-        infoFormat: "text/xml",
         gfiAsNewWindow: null,
         supported: ["2D", "3D"],
         showSettings: true,
@@ -29,31 +28,6 @@ export default function WMSLayer (attrs) {
         this.set("supported", ["2D"]);
     }
 }
-// Link prototypes and add prototype methods, means WMSLayer uses all methods and properties of Layer
-WMSLayer.prototype = Object.create(Layer.prototype);
-
-/**
- * Creates a layer of type WMS by using wms-layer of the masterportalapi.
- * Sets all needed attributes at the layer and the layer source.
- * @param {Object} attrs Params of the raw layer.
- * @returns {void}
- */
-WMSLayer.prototype.createLayer = function (attrs) {
-    const options = this.getOptions(),
-        rawLayerAttributes = this.getRawLayerAttributes(attrs),
-        layerParams = this.getLayerParams(attrs);
-
-    this.layer = wms.createLayer(rawLayerAttributes, layerParams, options);
-};
-
-/**
- * Gets options that contains resolutions and origin to create the TileGrid.
- * @param {Object} attrs Params of the raw layer.
- * @returns {Object} The options.
- */
-WMSLayer.prototype.getOptions = function () {
-    return {resolutions: mapCollection.getMapView("2D").getResolutions(), origin: [442800, 5809000]};
-};
 
 /**
  * Gets raw layer attributes from services.json attributes.
@@ -62,25 +36,25 @@ WMSLayer.prototype.getOptions = function () {
  */
 WMSLayer.prototype.getRawLayerAttributes = function (attrs) {
     const rawLayerAttributes = {
-        id: attrs.id,
-        gutter: attrs.gutter,
-        format: attrs.format,
-        url: attrs.url,
-        tilesize: attrs.tilesize,
-        layers: attrs.layers,
-        version: attrs.version,
+        // id: attrs.id,
+        // gutter: attrs.gutter,
+        // format: attrs.format,
+        // url: attrs.url,
+        // tilesize: attrs.tilesize,
+        // layers: attrs.layers,
+        // version: attrs.version,
         olAttribution: attrs.olAttribution,
-        transparent: attrs.transparent?.toString(),
-        singleTile: attrs.singleTile,
+        // transparent: attrs.transparent?.toString(),
+        // singleTile: attrs.singleTile,
         minScale: parseInt(attrs.minScale, 10),
         maxScale: parseInt(attrs.maxScale, 10),
-        crs: attrs.crs,
         crossOrigin: attrs.crossOrigin
+        // crs: attrs.crs
     };
 
-    if (attrs.styles !== "nicht vorhanden") {
-        rawLayerAttributes.STYLES = attrs.styles;
-    }
+    // if (attrs.styles !== "nicht vorhanden") {
+    //     rawLayerAttributes.STYLES = attrs.styles;
+    // }
 
     return rawLayerAttributes;
 };
@@ -92,17 +66,17 @@ WMSLayer.prototype.getRawLayerAttributes = function (attrs) {
  */
 WMSLayer.prototype.getLayerParams = function (attrs) {
     return {
-        layers: attrs.layers,
-        name: attrs.name,
+        // layers: attrs.layers,
+        // name: attrs.name,
         legendURL: attrs.legendURL,
         gfiTheme: attrs.gfiTheme,
         gfiAttributes: attrs.gfiAttributes,
         infoFormat: attrs.infoFormat,
         gfiAsNewWindow: attrs.gfiAsNewWindow,
         featureCount: attrs.featureCount,
-        format: attrs.format,
+        // format: attrs.format,
         useProxy: attrs.useProxy,
-        typ: attrs.typ,
+        // typ: attrs.typ,
         layerSequence: attrs.layerSequence
     };
 };
