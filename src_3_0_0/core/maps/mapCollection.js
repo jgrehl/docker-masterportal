@@ -29,5 +29,14 @@ export default {
      */
     getMap: function (mode) {
         return mapCollection.find(map => map?.mode === mode);
+    },
+
+    /**
+     * Gets a mapview of a map by the given mode.
+     * @param {String} mode The map mode.
+     * @returns {module:ol/PluggableMap~PluggableMap} The mapview.
+     */
+    getMapView: function (mode) {
+        return this.getMap(mode).getView();
     }
 };
