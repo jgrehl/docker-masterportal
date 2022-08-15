@@ -7,7 +7,6 @@ import Layer from "./layer";
  */
 export default function LayerOl2d (attributes) {
     const defaultAttributes = {
-        transparency: 0
     };
 
     this.attributes = Object.assign(defaultAttributes, attributes);
