@@ -30,6 +30,14 @@
         },
         {
           "id": "10220"
+        },
+        {
+          "id": "2426",
+          "visibility": false,
+          "name": "Bezirke",
+          "url": "https://geodienste.hamburg.de/HH_WMS_Verwaltungsgrenzen",
+          "typ": "WMS",
+          "layers": "bezirke"
         }
       ]
     }
