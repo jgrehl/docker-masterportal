@@ -5,8 +5,17 @@
  */
 export default function Layer (attributes) {
     const defaultAttributes = {
-        minScale: 0
     };
 
     this.attributes = Object.assign(defaultAttributes, attributes);
+    this.createLayer(this.attributes);
 }
+
+/**
+ * To be overwritten, does nothing.
+ * @returns {void}
+ */
+Layer.prototype.createLayer = function () {
+    // do in children
+    console.warn("Function Layer: 'createLayer' must be overwritten in extended layers!");
+};
