@@ -33,6 +33,36 @@ const getters = {
         const layerContainer = getters.allLayerConfigs(state);
 
         return layerContainer.filter(layerConf => layerConf.visibility === true);
+    },
+
+    /**
+     * Returns visible layers of layerConfig.
+     * @param {Object} state state of the app-store.
+     * @returns {Object[]} The visible layers.
+     */
+    visibleLayerConfigs: state => {
+        let visibleLayers = [];
+
+        Object.values(state.layerConfig).forEach(value => {
+            visibleLayers = [...visibleLayers, ...value.Layer.filter(layer => layer.visibility === true)];
+        });
+
+        return visibleLayers;
+    },
+
+    /**
+     * Returns all layers of layerConfig.
+     * @param {Object} state state of the app-store.
+     * @returns {Object[]} The layers.
+     */
+    allLayerConfigs: state => {
+        let layers = [];
+
+        Object.values(state.layerConfig).forEach(value => {
+            layers = [...layers, ...value.Layer];
+        });
+
+        return layers;
     }
 };
 
