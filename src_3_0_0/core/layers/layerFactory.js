@@ -87,13 +87,8 @@ export function updateLayerAttributes (layer, layerConf) {
  */
 function createLayer (layerConf) {
     const typ = layerConf?.typ?.toUpperCase();
-    let layer;
 
-    if (typ === "WMS") {
-        layer = new LayerOl2dRasterWms(layerConf);
-    }
-
-    return layer;
+    return new possibleLayerTypes[typ](layerConf);
 }
 
 /**
@@ -102,7 +97,8 @@ function createLayer (layerConf) {
  * @param {Object} layerConf The layer config.
  * @returns {void}
  */
-function updateLayerAtributes (layer, layerConf) {
+function updateLayerAttributes (layer, layerConf) {
     Object.assign(layer.attributes, layerConf);
+    layer.updateLayerValues(layer.attributes);
 }
 
