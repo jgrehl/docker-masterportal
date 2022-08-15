@@ -16,5 +16,14 @@ export default {
      */
     getLayers: function () {
         return layerCollection;
+    },
+
+    /**
+     * Returns an layer by id of the layer collection.
+     * @param {String} id The layer id.
+     * @returns {Layer} The layer.
+     */
+    getLayerById: function (id) {
+        return layerCollection.find(layer => layer.attributes.id === id);
     }
 };
