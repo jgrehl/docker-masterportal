@@ -19,3 +19,12 @@ Layer.prototype.createLayer = function () {
     // do in children
     console.warn("Function Layer: 'createLayer' must be overwritten in extended layers!");
 };
+
+/**
+ * To be overwritten, does nothing.
+ * @returns {void}
+ */
+Layer.prototype.updateLayerValues = function () {
+    // do in children
+    console.warn("Function Layer: 'updateLayerValues' must be overwritten in extended layers!");
+};
