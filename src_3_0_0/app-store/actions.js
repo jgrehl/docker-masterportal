@@ -79,6 +79,16 @@ export default {
     },
 
     /**
+     * Extends all visible layers of config.json with the attributes of the layer in services.json.
+     * Replaces the extended layer in state.layerConf.
+     * @param {Boolean} [onlyVisible=false] If true, only visible layers will be extended.
+     * @returns {void}
+     */
+    extendVisibleLayers ({dispatch}) {
+        dispatch("extendLayers", true);
+    },
+
+    /**
      * Extends all layers of config.json with the attributes of the layer in services.json.
      * Replaces the extended layer in state.layerConf.
      * @returns {void}
