@@ -7,18 +7,18 @@ import omit from "./omit";
  * @param {Object} layerConf configuartion of layer like in the config.json
  * @returns {Object} the raw layer
  */
-export function getOrMergeRawLayer (layerConf) {
+export function getAndMergeRawLayer (layerConf) {
     let rawLayer = null;
 
     if (layerConf) {
         if (Array.isArray(layerConf.id)) {
-            rawLayer = mergeLayerByIds(layerConf.id);
+            rawLayer = mergeLayerByIds(layerConf);
         }
         else if (layerConf.children) {
             rawLayer = fillGroupLayer(layerConf);
         }
         else {
-            rawLayer = getLayerWhere({id: layerConf.id});
+            rawLayer = Object.assign(getLayerWhere({id: layerConf.id}), layerConf);
         }
     }
     return rawLayer;
@@ -44,7 +44,7 @@ function fillGroupLayer (layerConf) {
                 objFromRawList = getLayerWhere({id: childLayer.id});
             }
             if (objFromRawList !== null && objFromRawList !== undefined) {
-                return Object.assign(objFromRawList, childLayer, {"isChildLayer": true});
+                return Object.assign(objFromRawList, childLayer);
             }
             console.error("A layer of the group \"" + rawLayer.name + "\" with id: " + childLayer.id + " was not created. Id not contained in services.json.");
             return undefined;
@@ -55,7 +55,7 @@ function fillGroupLayer (layerConf) {
         });
 
         if (rawLayer.children.length > 0) {
-            rawLayer = Object.assign(rawLayer, {typ: "GROUP", isChildLayer: false});
+            rawLayer = Object.assign(rawLayer, {typ: "GROUP"});
         }
         return rawLayer;
     }
@@ -64,22 +64,23 @@ function fillGroupLayer (layerConf) {
 
 /**
  * Merges layer configuration with ids property of type array.
- * @param {Array} ids of layers configurations to merge.
+ * @param {Object} layerConf configuartion of layer like in the config.json with ids in an array
  * @returns {Object} the merged raw layer
  */
-function mergeLayerByIds (ids = []) {
+function mergeLayerByIds (layerConf) {
     // refactored from parser.js, mergeexistingLayers and parserCustomTree.js, parseTree
-    const existingLayers = [],
+    const ids = layerConf.id,
+        existingLayers = [],
         maxScales = [],
         minScales = [],
         layerlist = getLayerList();
     let mergedLayer = {};
 
     ids?.forEach(id => {
-        const lay = layerlist.find(layer => layer.id === id);
+        const layer = layerlist.find(aLayer => aLayer.id === id);
 
-        if (lay) {
-            existingLayers.push(lay);
+        if (layer) {
+            existingLayers.push(layer);
         }
         else {
             console.warn("Layer with id ", id, " not found in services.json. Layers will no be merged!");
@@ -90,11 +91,14 @@ function mergeLayerByIds (ids = []) {
     }
     mergedLayer = {...existingLayers[0]};
     mergedLayer.layers = existingLayers.map(value => value.layers).toString();
-    existingLayers.forEach(object => maxScales.push(parseInt(object.maxScale, 10)));
+    existingLayers.forEach(object => {
+        maxScales.push(parseInt(object.maxScale, 10));
+        minScales.push(parseInt(object.minScale, 10));
+    });
     mergedLayer.maxScale = Math.max(...maxScales);
-    existingLayers.forEach(object => minScales.push(parseInt(object.minScale, 10)));
     mergedLayer.minScale = Math.min(...minScales);
-    mergedLayer = Object.assign(mergedLayer, omit(mergedLayer, ["id"], false), {"isChildLayer": false});
+    // sets all attributes from config at merged layer besides id-array
+    mergedLayer = Object.assign(mergedLayer, omit(layerConf, ["id"], false));
 
     return mergedLayer;
 }
@@ -168,19 +172,19 @@ function filterValidLayer (validLayerTypes, layerList = []) {
      */
 function removeWmsBySensorThings (layerList = []) {
     const sensorThingsLayer = layerList.filter(layer => layer?.typ.toUpperCase() === "SENSORTHINGS"),
-        layerListWithoutWmsSDuplicates = [...layerList],
+        layerListWithoutWmsDuplicates = [...layerList],
         layerIdsToRemove = getWmsLayerIdsToRemove(sensorThingsLayer);
 
     layerIdsToRemove.forEach(layerIdToRemove => {
-        const layerToRemove = layerListWithoutWmsSDuplicates.find(layer => layer.id === layerIdToRemove),
-            index = layerListWithoutWmsSDuplicates.indexOf(layerToRemove);
+        const layerToRemove = layerListWithoutWmsDuplicates.find(layer => layer.id === layerIdToRemove),
+            index = layerListWithoutWmsDuplicates.indexOf(layerToRemove);
 
         if (index > -1) {
-            layerListWithoutWmsSDuplicates.splice(index, 1);
+            layerListWithoutWmsDuplicates.splice(index, 1);
         }
     });
 
-    return layerListWithoutWmsSDuplicates;
+    return layerListWithoutWmsDuplicates;
 }
 
 /**
