@@ -14,38 +14,30 @@
       "Layer": [
         {
           "id": "453",
+          "name" : "Geobasiskarten (HamburgDE)",
           "visibility": true
         },
         {
           "id": "452",
-          "visibility": true
+          "name" : "Digitale Orthophotos (belaubt) Hamburg",
+          "visibility": false
         }
       ]
     },
     "Fachdaten": {
       "Layer": [
         {
-          "id": "1132",
-          "name": "100 Jahre Stadtgruen POIs",
-          "visibility": true
-        },
-        {
-          "id": "10220"
+          "id": "10220",
+          "name" : "Dauerzählstellen (Rad) Hamburg"
         },
         {
           "id": "2426",
-          "visibility": false,
           "name": "Bezirke",
-          "url": "https://geodienste.hamburg.de/HH_WMS_Verwaltungsgrenzen",
-          "typ": "WMS",
-          "layers": "bezirke"
+          "visibility": false
         },
         {
           "id": "1933",
           "visibility": true,
-          "url" : "https://geodienste.hamburg.de/wms_hvv",
-          "layers" : "geofox_workspace:geofoxdb_stations",
-          "typ": "WMS",
           "styles": [
             "geofox_stations"
           ],
