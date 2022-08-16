@@ -21,14 +21,16 @@ export default {
         allConfigsLoaded (value) {
             if (value) {
                 LoaderOverlay.hide();
-                if (this.portalConfig?.treeType === "default") {
-                    // or no 'Fachdaten' in config.json or another config property?
-                    this.fillLayerConf();
-                }
-                this.extendLayers(true);
+                this.extendVisibleLayers();
                 createMaps(this.portalConfig, this.configJs);
                 initializeLayerFactory(this.visibleLayerConfigs);
-                this.extendLayers();
+
+                if (this.portalConfig?.treeType === "default") {
+                    this.fillLayerConf();
+                }
+                else {
+                    this.extendLayers();
+                }
             }
         }
     },
@@ -39,6 +41,7 @@ export default {
     methods: {
         ...mapActions([
             "extendLayers",
+            "extendVisibleLayers",
             "fillLayerConf",
             "loadConfigJs",
             "loadConfigJson",
