@@ -25,9 +25,10 @@ export default {
                     // or no 'Fachdaten' in config.json or another config property?
                     this.fillLayerConf();
                 }
-                this.extendVisibleLayers();
+                this.extendLayers(true);
                 createMaps(this.portalConfig, this.configJs);
                 initializeLayerFactory(this.visibleLayerConfigs);
+                this.extendLayers();
             }
         }
     },
@@ -37,7 +38,7 @@ export default {
     },
     methods: {
         ...mapActions([
-            "extendVisibleLayers",
+            "extendLayers",
             "fillLayerConf",
             "loadConfigJs",
             "loadConfigJson",
