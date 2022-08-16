@@ -1,6 +1,5 @@
 import {generateSimpleGetters} from "./utils/generators";
 import getNestedValues from "../utils/getNestedValues";
-import flattenArray from "../utils/flattenArray";
 import stateAppStore from "./state";
 
 const getters = {
@@ -56,13 +55,18 @@ const getters = {
      * @returns {Object[]} The layers.
      */
     allLayerConfigs: state => {
-        let layers = [];
+        return getNestedValues(state.layerConfig, "Layer").flat(Infinity);
+    },
 
-        Object.values(state.layerConfig).forEach(value => {
-            layers = [...layers, ...value.Layer];
-        });
+    /**
+     * Returns all visible layer configurations.
+     * @param {Object} state state of the app-store.
+     * @returns {Object[]} Containing all layer configurations with property 'visibility' is true.
+     */
+    visibleLayerConfigs: (state) => {
+        const layerContainer = getters.allLayerConfigs(state);
 
-        return layers;
+        return layerContainer.filter(layerConf => layerConf.visibility === true);
     }
 };
 
