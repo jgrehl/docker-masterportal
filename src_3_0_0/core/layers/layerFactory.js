@@ -15,33 +15,6 @@ const possibleLayerTypes = {
 export default function initializeLayerFactory (visibleLayerConfigs) {
     processLayerConfig(visibleLayerConfigs);
     registerLayerConfig();
-
-    setTimeout(() => {
-        store.commit("replaceByIdInLayerConfig", [{
-            id: "2426",
-            visibility: true,
-            name: "Bezirke",
-            url: "https://geodienste.hamburg.de/HH_WMS_Verwaltungsgrenzen",
-            typ: "WMS",
-            layers: "bezirke"
-        }]);
-    }, 2000);
-
-    setTimeout(() => {
-        store.commit("replaceByIdInLayerConfig", [{
-            id: "453",
-            visibility: false,
-            abc: "test"
-        }]);
-    }, 5000);
-
-    setTimeout(() => {
-        store.commit("replaceByIdInLayerConfig", [{
-            id: "452",
-            visibility: true,
-            def: "test"
-        }]);
-    }, 8000);
 }
 
 /**
