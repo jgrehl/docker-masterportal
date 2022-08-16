@@ -24,6 +24,7 @@ export default {
                 this.extendLayers();
                 createMaps(this.portalConfig, this.configJs);
                 initializeLayerFactory(this.visibleLayerConfigs);
+                this.extendLayers();
             }
         }
     },
