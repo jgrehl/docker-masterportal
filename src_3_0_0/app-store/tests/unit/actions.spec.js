@@ -4,11 +4,15 @@ import {expect} from "chai";
 import actions from "../../actions";
 
 describe("src_3_0_0/app-store/actions.js", () => {
-    let commit, state, axiosMock;
+    let axiosMock,
+        commit,
+        dispatch,
+        state;
     const restConf = "./resources/rest-services-internet.json";
 
     beforeEach(() => {
         commit = sinon.spy();
+        dispatch = sinon.spy();
         state = {
             configJs: {
                 portalConf: "./",
@@ -77,6 +81,16 @@ describe("src_3_0_0/app-store/actions.js", () => {
         it.skip("extendVisibleLayers", () => {
             // cannot be tested due to problems mocking imported function getRawLayer
             actions.extendVisibleLayers({commit, state});
+        });
+    });
+
+    describe("extendVisibleLayers", () => {
+        it("should dispatch the action extendLayers with the param: true", () => {
+            actions.extendVisibleLayers({dispatch});
+
+            expect(dispatch.calledOnce).to.be.true;
+            expect(dispatch.firstCall.args[0]).to.equals("extendLayers");
+            expect(dispatch.firstCall.args[1]).to.equals(true);
         });
     });
 });
