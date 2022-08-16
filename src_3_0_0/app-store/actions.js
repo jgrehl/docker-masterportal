@@ -72,7 +72,7 @@ export default {
      * @returns {void}
      */
     fillLayerConf ({commit, state}) {
-        const layerContainer = flattenArray(getNestedValues(state.layerConfig, "Layer")),
+        const layerContainer = getNestedValues(state.layerConfig, "Layer").flat(10),
             rawLayers = getAllRawLayerSortedByMdId(layerContainer);
 
         commit("addToLayerConfig", {layerConfigs: {Fachdaten: rawLayers}, parentKey: "Themenconfig"});
@@ -85,7 +85,7 @@ export default {
      * @returns {void}
      */
     extendVisibleLayers ({commit, state}) {
-        const layerContainer = flattenArray(getNestedValues(state.layerConfig, "Layer"));
+        const layerContainer = getNestedValues(state.layerConfig, "Layer").flat(10);
 
         layerContainer.forEach(layerConf => {
             if (layerConf.visibility) {
