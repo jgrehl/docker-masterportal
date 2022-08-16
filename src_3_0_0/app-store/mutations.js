@@ -9,26 +9,26 @@ const mutations = {
      * Adds the object to states layerConfig under the given parentKey.
      * @param {Object} state store state
      * @param {Object} payload the payload
-     * @param {Array} payload.toAdd object to add to the parentKey
+     * @param {Array} payload.layerConfigs object to add to the parentKey
      * @param {String} payload.parentKey the key of the parent object
      * @returns {void}
      */
-    addToLayerConfig (state, {toAdd, parentKey}) {
-        state.layerConfig[parentKey] = toAdd;
+    addToLayerConfig (state, {layerConfigs, parentKey}) {
+        state.layerConfig[parentKey] = layerConfigs;
     },
 
     /**
      * Replaces the layer with the id of the layer toReplace in state's layerConfig.
      * @param {Object} state store state
-     * @param {Array} toReplace array of configs of layers to replace, each config must contain id
+     * @param {Array} layerConfigs array of configs of layers to replace, each config must contain id
      * @returns {void}
      */
-    replaceByIdInLayerConfig (state, toReplace = []) {
-        toReplace.forEach(replacement => {
+    replaceByIdInLayerConfig (state, layerConfigs = []) {
+        layerConfigs.forEach(replacement => {
             const assigned = replaceInNestedValues(state.layerConfig, "Layer", replacement, {key: "id", value: replacement.id});
 
             if (assigned === 0) {
-                console.warn("Replacement of layer ", toReplace, " in state.layerConfig failed. Id ", replacement.id, " was not found in state!");
+                console.warn("Replacement of layer ", layerConfigs, " in state.layerConfig failed. Id ", replacement.id, " was not found in state!");
             }
             else if (assigned > 1) {
                 console.warn("Replaced ", assigned.length, " layers in state.layerConfig with ", replacement, " Id ", replacement.id, " was found ", assigned.length, " times. You have to correct your config!");

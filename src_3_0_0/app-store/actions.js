@@ -2,7 +2,7 @@ import axios from "axios";
 import {initializeLayerList} from "@masterportal/masterportalapi/src/rawLayerList";
 import getNestedValues from "../utils/getNestedValues";
 import flattenArray from "../utils/flattenArray";
-import {getAllRawLayerSortedByMdId, getOrMergeRawLayer} from "../utils/getOrMergeRawLayer";
+import {getAllRawLayerSortedByMdId, getAndMergeRawLayer} from "../utils/getAndMergeRawLayer";
 
 export default {
     /**
@@ -61,10 +61,10 @@ export default {
 
         layerContainer.forEach(layerConf => {
             if (layerConf.visibility) {
-                const rawLayer = getOrMergeRawLayer(layerConf);
+                const rawLayer = getAndMergeRawLayer(layerConf);
 
                 if (rawLayer) {
-                    commit("replaceByIdInLayerConfig", [Object.assign(rawLayer, layerConf)]);
+                    commit("replaceByIdInLayerConfig", [rawLayer]);
                 }
                 else {
                     console.warn("Configured visible layer with id ", layerConf.id, " was not found in ", state.configJs?.layerConf);
