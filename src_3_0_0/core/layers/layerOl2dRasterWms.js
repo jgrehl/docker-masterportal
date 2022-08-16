@@ -58,7 +58,7 @@ LayerOl2dRasterWms.prototype.getRawLayerAttributes = function (attributes) {
         version: attributes.version
     };
 
-    if (attributes.styles !== "nicht vorhanden") {
+    if (attributes.styles !== undefined) {
         rawLayerAttributes.STYLES = attributes.styles;
     }
 

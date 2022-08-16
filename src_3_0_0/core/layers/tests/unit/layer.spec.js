@@ -5,12 +5,12 @@ import Layer from "../../layer";
 describe("src_3_0_0/core/layers/layer.js", () => {
     let warn;
 
-    before(() => {
+    beforeEach(() => {
         warn = sinon.spy();
         sinon.stub(console, "warn").callsFake(warn);
     });
 
-    after(() => {
+    afterEach(() => {
         sinon.restore();
     });
 
@@ -19,5 +19,13 @@ describe("src_3_0_0/core/layers/layer.js", () => {
 
         expect(layerWrapper).not.to.be.undefined;
         expect(warn.calledOnce).to.be.true;
+    });
+
+    it("new Layer and updateLayerValues should create two warnings", () => {
+        const layerWrapper = new Layer({});
+
+        layerWrapper.updateLayerValues();
+
+        expect(warn.calledTwice).to.be.true;
     });
 });
