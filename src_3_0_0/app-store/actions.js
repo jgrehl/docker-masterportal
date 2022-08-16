@@ -79,16 +79,16 @@ export default {
     },
 
     /**
-     * Extends all visible layers of config.json with the attributes of the layer in services.json.
+     * Extends all layers of config.json with the attributes of the layer in services.json.
      * Replaces the extended layer in state.layerConf.
-     * @param {Array} layerConfig an array of configured layers like in the config.json
+     * @param {Boolean} [onlyVisible=false] If true, only visible layers will be extended.
      * @returns {void}
      */
-    extendVisibleLayers ({commit, state}) {
+    extendLayers ({commit, state}, onlyVisible = false) {
         const layerContainer = getNestedValues(state.layerConfig, "Layer").flat(Infinity);
 
         layerContainer.forEach(layerConf => {
-            if (layerConf.visibility) {
+            if (!onlyVisible || layerConf.visibility) {
                 const rawLayer = getAndMergeRawLayer(layerConf);
 
                 if (rawLayer) {
