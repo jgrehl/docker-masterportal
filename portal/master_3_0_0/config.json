@@ -2,6 +2,7 @@
   "Portalconfig": {
     "mapView": {
       "backgroundImage": "https://geodienste.hamburg.de/lgv-config/img/backgroundCanvas.jpeg",
+      "startZoomLevel": 4,
       "startCenter": [
         565874,
         5934140
@@ -38,6 +39,19 @@
           "url": "https://geodienste.hamburg.de/HH_WMS_Verwaltungsgrenzen",
           "typ": "WMS",
           "layers": "bezirke"
+        },
+        {
+          "id": "1933",
+          "visibility": true,
+          "url" : "https://geodienste.hamburg.de/wms_hvv",
+          "layers" : "geofox_workspace:geofoxdb_stations",
+          "typ": "WMS",
+          "styles": [
+            "geofox_stations"
+          ],
+          "name": [
+            "HVV Haltestellen"
+          ]
         }
       ]
     }
