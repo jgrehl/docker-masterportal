@@ -1,11 +1,17 @@
 import {expect} from "chai";
+import Map from "ol/Map";
 import sinon from "sinon";
-import {createLayer, updateLayerAttributes} from "../../layerFactory";
+import View from "ol/View";
+
+import {createLayer, processLayerConfig, updateLayerAttributes} from "../../layerFactory";
+import mapCollection from "../../../maps/mapCollection";
+
 
 describe("src_3_0_0/core/layers/layerFactory.js", () => {
-    let layerConfig;
+    let layerConfig,
+        map;
 
-    before(() => {
+    beforeEach(() => {
         layerConfig = [
             {
                 id: "453",
@@ -14,24 +20,23 @@ describe("src_3_0_0/core/layers/layerFactory.js", () => {
                 url: "https://geodienste.hamburg.de/HH_WMS_HamburgDE",
                 typ: "WMS",
                 layers: "Geobasiskarten_HHde"
+            },
+            {
+                id: "2426",
+                visibility: true,
+                name: "Bezirke",
+                url: "https://geodienste.hamburg.de/HH_WMS_Verwaltungsgrenzen",
+                typ: "WMS",
+                layers: "bezirke"
             }
         ];
 
         mapCollection.clear();
-        const map = {
+        map = new Map({
             id: "ol",
             mode: "2D",
-            getView: () => {
-                return {
-                    getResolutions: () => [2000, 1000],
-                    getProjection: () => {
-                        return {
-                            getCode: () => "EPSG:25832"
-                        };
-                    }
-                };
-            }
-        };
+            view: new View()
+        });
 
         mapCollection.addMap(map, "2D");
     });
@@ -66,6 +71,19 @@ describe("src_3_0_0/core/layers/layerFactory.js", () => {
                 layers: "Geobasiskarten_HHde",
                 abc: true
             });
+        });
+    });
+
+    describe("processLayerConfig", () => {
+        it("should create two ol layers from two visible layers", () => {
+            let olLayers = [];
+
+            processLayerConfig(layerConfig);
+            olLayers = mapCollection.getMap("2D").getLayers().getArray();
+
+            expect(olLayers.length).equals(2);
+            expect(olLayers[0].get("id")).to.equals("453");
+            expect(olLayers[1].get("id")).to.equals("2426");
         });
     });
 });
