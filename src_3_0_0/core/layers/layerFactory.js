@@ -79,26 +79,3 @@ export function updateLayerAttributes (layer, layerConf) {
     Object.assign(layer.attributes, layerConf);
     layer.updateLayerValues(layer.attributes);
 }
-
-/**
- * Creates layer instances.
- * @param {Object} layerConf The layer configuration.
- * @returns {Layer} The layer instance.
- */
-function createLayer (layerConf) {
-    const typ = layerConf?.typ?.toUpperCase();
-
-    return new possibleLayerTypes[typ](layerConf);
-}
-
-/**
- * Update the layer attributes of the already extistering layer.
- * @param {Layer} layer Layer of the layer collection.
- * @param {Object} layerConf The layer config.
- * @returns {void}
- */
-function updateLayerAttributes (layer, layerConf) {
-    Object.assign(layer.attributes, layerConf);
-    layer.updateLayerValues(layer.attributes);
-}
-
