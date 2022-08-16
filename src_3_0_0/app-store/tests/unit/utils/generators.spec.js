@@ -1,5 +1,5 @@
 import {expect} from "chai";
-import {generateSimpleGetters} from "../../../utils/generators";
+import {generateSimpleGetters, generateSimpleMutations} from "../../../utils/generators";
 
 describe("src_3_0_0/app-store/utils/generators.js", () => {
     describe("generateSimpleGetters", () => {
@@ -12,6 +12,19 @@ describe("src_3_0_0/app-store/utils/generators.js", () => {
 
             expect(typeof simpleGetters.abc).equals("function");
             expect(typeof simpleGetters.coordinates).equals("function");
+        });
+    });
+
+    describe("generateSimpleMutations", () => {
+        it("should generate two simple mutations as functions", () => {
+            const state = {
+                    abc: 123,
+                    coordinates: [0, 10]
+                },
+                simpleMutations = generateSimpleMutations(state);
+
+            expect(typeof simpleMutations.setAbc).equals("function");
+            expect(typeof simpleMutations.setCoordinates).equals("function");
         });
     });
 });
