@@ -9,7 +9,6 @@ import Language from "../modules/language/store/indexLanguage";
 import LayerInformation from "../modules/layerInformation/store/indexLayerInformation";
 import LayerSelector from "../modules/layerSelector/store/indexLayerSelector";
 import Legend from "../modules/legend/store/indexLegend";
-import Maps from "../core/maps/store/indexMap";
 import MapMarker from "../modules/mapMarker/store/indexMapMarker";
 import MouseHover from "../modules/mouseHover/store/indexMouseHover";
 import QuickHelp from "../modules/quickHelp/store/indexQuickHelp";
@@ -40,7 +39,6 @@ const store = new Vuex.Store({
         LayerInformation,
         LayerSelector,
         Legend,
-        Maps,
         MapMarker,
         MouseHover,
         QuickHelp,

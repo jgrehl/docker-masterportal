@@ -34,15 +34,17 @@ function registerLayerConfig () {
  * @param {Object[]} layerConfig The layer configurations.
  * @returns {void}
  */
-function processLayerConfig (layerConfig) {
+export function processLayerConfig (layerConfig) {
     layerConfig.forEach(layerConf => {
-        const layer = layerCollection.getLayerById(layerConf.id);
+        let layer = layerCollection.getLayerById(layerConf.id);
 
         if (layer !== undefined) {
             updateLayerAttributes(layer, layerConf);
         }
         else if (layerConf.visibility === true) {
-            layerCollection.addLayer(createLayer(layerConf));
+            layer = createLayer(layerConf);
+            layerCollection.addLayer(layer);
+            store.dispatch("Maps/addLayer", layer.layer);
         }
     });
 }
