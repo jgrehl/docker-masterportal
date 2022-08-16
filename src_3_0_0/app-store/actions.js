@@ -46,7 +46,7 @@ export default {
         const layerContainer = flattenArray(getNestedValues(state.layerConfig, "Layer")),
             rawLayers = getAllRawLayerSortedByMdId(layerContainer);
 
-        commit("addToLayerConfig", {toAdd: {Fachdaten: rawLayers}, parentKey: "Themenconfig"});
+        commit("addToLayerConfig", {layerConfigs: {Fachdaten: rawLayers}, parentKey: "Themenconfig"});
     },
 
     /**
