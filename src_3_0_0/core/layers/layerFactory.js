@@ -7,58 +7,42 @@ const possibleLayerTypes = {
 };
 
 /**
- * Starts the creation of the layer in the layer factory.
+ * Starts the creation of the layer in the layer factory
+ * and register watcher.
  * @param {Object} visibleLayerConfigs The layer configurations.
  * @returns {void}
  */
-export default function runLayerFactory (visibleLayerConfigs) {
-    visibleLayerConfigs.forEach(layerConf => {
-        const layer = createLayer(layerConf);
-
-        layerCollection.addLayer(layer);
-        store.commit("updateVisibleLayerConfigs", layer.attributes);
-    });
-
-    registerLayerVisibility();
-
-    // only for testing
-    // setTimeout(() => {
-    //     store.commit("updateVisibleLayerConfigs", {
-    //         id: "2426",
-    //         visibility: true,
-    //         name: "Bezirke",
-    //         url: "https://geodienste.hamburg.de/HH_WMS_Verwaltungsgrenzen",
-    //         typ: "WMS",
-    //         layers: "bezirke"
-    //     });
-    // }, 2000);
-
-    // setTimeout(() => {
-    //     store.commit("updateVisibleLayerConfigs", {
-    //         id: "453",
-    //         visibility: false,
-    //         typ: "WMS",
-    //         abc: "test"
-    //     });
-    // }, 5000);
+export default function initializeLayerFactory (visibleLayerConfigs) {
+    processLayerConfig(visibleLayerConfigs);
+    registerLayerConfig();
 }
 
 /**
- * Register to visibility of layers in layerConfig
+ * Register to the layers in layerConfig.
  * @returns {void}
  */
-function registerLayerVisibility () {
+function registerLayerConfig () {
     store.watch((state, getters) => getters.allLayerConfigs, layerConfig => {
-        layerConfig.forEach(layerConf => {
-            const layer = layerCollection.getLayerById(layerConf.id);
+        processLayerConfig(layerConfig);
+    });
+}
 
-            if (layer !== undefined) {
-                updateLayerAttributes(layer, layerConf);
-            }
-            else if (layerConf.visibility === true) {
-                layerCollection.addLayer(createLayer(layerConf));
-            }
-        });
+/**
+ * Creates a layer, if it is not yet present but visible.
+ * Existing layers are updated.
+ * @param {Object} layerConfig The layer configurations
+ * @returns {void}
+ */
+function processLayerConfig (layerConfig) {
+    layerConfig.forEach(layerConf => {
+        const layer = layerCollection.getLayerById(layerConf.id);
+
+        if (layer !== undefined) {
+            updateLayerAttributes(layer, layerConf);
+        }
+        else if (layerConf.visibility === true) {
+            layerCollection.addLayer(createLayer(layerConf));
+        }
     });
 }
 
@@ -67,10 +51,11 @@ function registerLayerVisibility () {
  * @param {Object} layerConf The layer configuration.
  * @returns {Layer} The layer instance.
  */
-function createLayer (layerConf) {
-    const typ = layerConf?.typ?.toUpperCase();
+export function createLayer (layerConf) {
+    const typ = layerConf?.typ?.toUpperCase(),
+        layer = new possibleLayerTypes[typ](layerConf);
 
-    return new possibleLayerTypes[typ](layerConf);
+    return layer;
 }
 
 /**
@@ -79,7 +64,7 @@ function createLayer (layerConf) {
  * @param {Object} layerConf The layer config.
  * @returns {void}
  */
-function updateLayerAttributes (layer, layerConf) {
+export function updateLayerAttributes (layer, layerConf) {
     Object.assign(layer.attributes, layerConf);
     layer.updateLayerValues(layer.attributes);
 }
