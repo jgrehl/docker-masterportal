@@ -1,9 +1,9 @@
 /**
  * Flattens an array with depth 1, means array that contains arrays.
- * @param arr to flatten
- * @returns the flattened array
+ * @param {Array} arr to flatten
+ * @returns {Array} the flattened array
  */
-export default function flattenArray(arr) {
+export default function flattenArray (arr) {
     if (!Array.isArray(arr)) {
         return arr;
     }
@@ -19,4 +19,4 @@ export default function flattenArray(arr) {
     });
 
     return result;
-};
+}
