@@ -126,6 +126,96 @@ describe("src_3_0_0/app-store/getters.js", () => {
             expect(getters.allVisibleLayerConfigs(state)[0].id).to.be.equals("xyz");
             expect(getters.allVisibleLayerConfigs(state)[0].visibility).to.be.true;
             expect(getters.allVisibleLayerConfigs(state)[0].name).to.be.equals("Kita und Krankenhäuser");
+
+    describe("visibleLayerConfigs", () => {
+        it("should returns the configs of visible layers", () => {
+            const state = {
+                layerConfig: {
+                    Fachdaten: {
+                        Layer: [
+                            {
+                                id: 1
+                            },
+                            {
+                                id: 2,
+                                visibility: true
+                            }
+                        ]
+                    },
+                    Hintergrundkarten: {
+                        Layer: [
+                            {
+                                id: 100,
+                                visibility: true
+                            },
+                            {
+                                id: 200
+                            }
+                        ]
+                    }
+                }
+            };
+
+            expect(getters.visibleLayerConfigs(stateAppStore)).to.be.an("array").that.is.empty;
+            expect(getters.visibleLayerConfigs(state)).to.be.an("array").to.deep.equals([
+                {
+                    id: 2,
+                    visibility: true
+                },
+                {
+                    id: 100,
+                    visibility: true
+                }
+            ]);
+        });
+    });
+
+    describe("allLayerConfigs", () => {
+        it("should returns the configs of all layers", () => {
+            const state = {
+                layerConfig: {
+                    Fachdaten: {
+                        Layer: [
+                            {
+                                id: 1
+                            },
+                            {
+                                id: 2,
+                                visibility: true
+                            }
+                        ]
+                    },
+                    Hintergrundkarten: {
+                        Layer: [
+                            {
+                                id: 100,
+                                visibility: true
+                            },
+                            {
+                                id: 200
+                            }
+                        ]
+                    }
+                }
+            };
+
+            expect(getters.allLayerConfigs(stateAppStore)).to.be.an("array").that.is.empty;
+            expect(getters.allLayerConfigs(state)).to.be.an("array").to.deep.equals([
+                {
+                    id: 1
+                },
+                {
+                    id: 2,
+                    visibility: true
+                },
+                {
+                    id: 100,
+                    visibility: true
+                },
+                {
+                    id: 200
+                }
+            ]);
         });
     });
 });
