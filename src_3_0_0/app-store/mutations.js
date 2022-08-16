@@ -55,25 +55,6 @@ const mutations = {
      */
     setLoadedConfigs (state, config) {
         state.loadedConfigs[config] = true;
-    },
-
-    /**
-     * Update attributes of layer configs.
-     * @param {Object} state store state
-     * @param {Object} attributes The new attributes.
-     * @returns {void}
-     */
-    updateVisibleLayerConfigs (state, attributes) {
-        Object.values(state.layerConfig).forEach(value => {
-            const layerConf = value.Layer.find(layer => layer.id === attributes.id);
-
-            if (layerConf !== undefined) {
-                Object.assign(layerConf, attributes);
-            }
-        });
-
-        // necessary to trigger the getters
-        state.layerConfig = {...state.layerConfig};
     }
 };
 
