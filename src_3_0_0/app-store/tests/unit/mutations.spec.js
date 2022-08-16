@@ -3,7 +3,8 @@ import mutations from "../../mutations";
 
 const {
         setLoadedConfigs,
-        replaceByIdInLayerConfig
+        replaceByIdInLayerConfig,
+        updateVisibleLayerConfigs
     } = mutations,
     id = "453",
     state = {
@@ -122,6 +123,73 @@ describe("src_3_0_0/app-store/mutations.js", () => {
 
             replaceByIdInLayerConfig(state, undefined);
             expect(state).to.be.deep.equals(stateCopy);
+        });
+    });
+
+    describe("updateVisibleLayerConfigs", () => {
+        it("update the layerConfig of a layer", () => {
+            const localState = {
+                    layerConfig: {
+                        Fachdaten: {
+                            Layer: [
+                                {
+                                    id: "1"
+                                },
+                                {
+                                    id: "2",
+                                    visibility: true
+                                }
+                            ]
+                        },
+                        Hintergrundkarten: {
+                            Layer: [
+                                {
+                                    id: "100",
+                                    visibility: true
+                                },
+                                {
+                                    id: "200"
+                                }
+                            ]
+                        }
+                    }
+                },
+                attributes = {
+                    id: "1",
+                    visibility: true,
+                    abc: "123",
+                    xyz: "999"
+                };
+
+            updateVisibleLayerConfigs(localState, attributes);
+
+            expect(localState.layerConfig).to.deep.equals({
+                Fachdaten: {
+                    Layer: [
+                        {
+                            id: "1",
+                            visibility: true,
+                            abc: "123",
+                            xyz: "999"
+                        },
+                        {
+                            id: "2",
+                            visibility: true
+                        }
+                    ]
+                },
+                Hintergrundkarten: {
+                    Layer: [
+                        {
+                            id: "100",
+                            visibility: true
+                        },
+                        {
+                            id: "200"
+                        }
+                    ]
+                }
+            });
         });
     });
 });
