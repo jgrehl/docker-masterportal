@@ -17,7 +17,7 @@ export default {
     watch: {
         allConfigsLoaded (value) {
             if (value) {
-                if (this.portalConfig.treeType === "default") {
+                if (this.portalConfig?.treeType === "default") {
                     // or no 'Fachdaten' in config.json or another config property?
                     this.fillLayerConf();
                 }
