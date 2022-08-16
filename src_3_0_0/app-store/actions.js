@@ -89,10 +89,10 @@ export default {
 
         layerContainer.forEach(layerConf => {
             if (layerConf.visibility) {
-                const rawLayer = getOrMergeRawLayer(layerConf);
+                const rawLayer = getAndMergeRawLayer(layerConf);
 
                 if (rawLayer) {
-                    commit("replaceByIdInLayerConfig", [Object.assign(rawLayer, layerConf)]);
+                    commit("replaceByIdInLayerConfig", [rawLayer]);
                 }
                 else {
                     console.warn("Configured visible layer with id ", layerConf.id, " was not found in ", state.configJs?.layerConf);
