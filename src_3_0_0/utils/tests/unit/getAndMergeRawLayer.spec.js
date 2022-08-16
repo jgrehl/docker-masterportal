@@ -1,18 +1,18 @@
 import * as rawLayerList from "@masterportal/masterportalapi/src/rawLayerList";
-import {getAllRawLayerSortedByMdId, getOrMergeRawLayer} from "../../getOrMergeRawLayer.js";
+import {getAllRawLayerSortedByMdId, getAndMergeRawLayer} from "../../getAndMergeRawLayer.js";
 import {expect} from "chai";
 import sinon from "sinon";
 
-describe("src/utils/getOrMergeRawLayer.js", () => {
+describe("src/utils/getAndMergeRawLayer.js", () => {
     let layerConfig;
 
     afterEach(() => {
         sinon.restore();
     });
 
-    describe("getOrMergeRawLayer", () => {
+    describe("getAndMergeRawLayer", () => {
         it("should return null if no param is given", () => {
-            expect(getOrMergeRawLayer()).to.be.null;
+            expect(getAndMergeRawLayer()).to.be.null;
         });
         it("should return a simple raw layer", () => {
             const layerList = [
@@ -50,13 +50,12 @@ describe("src/utils/getOrMergeRawLayer.js", () => {
             });
             sinon.stub(rawLayerList, "getLayerList").returns(layerList);
 
-            result = getOrMergeRawLayer(layerConfig.Hintergrundkarten.Layer[0]);
+            result = getAndMergeRawLayer(layerConfig.Hintergrundkarten.Layer[0]);
 
             expect(result).not.to.be.null;
             expect(result.id).to.be.equals("453");
             expect(result.name).to.be.equals("layer453");
-            // visibility is only in config, simple layer ist not merged here
-            expect(result.visibility).to.be.undefined;
+            expect(result.visibility).to.be.true;
         });
 
         it("should return a merged raw layer, if ids are in an array", () => {
@@ -109,15 +108,15 @@ describe("src/utils/getOrMergeRawLayer.js", () => {
             });
             sinon.stub(rawLayerList, "getLayerList").returns(layerList);
 
-            result = getOrMergeRawLayer(layerConfig.Hintergrundkarten.Layer[0]);
+            result = getAndMergeRawLayer(layerConfig.Hintergrundkarten.Layer[0]);
 
             expect(result).not.to.be.null;
             expect(result.id).to.be.equals("717");
-            expect(result.name).to.be.equals("name717");
+            expect(result.name).to.be.equals("Geobasiskarten (farbig)");
             expect(result.layers).to.be.equals("layer717,layer718,layer719");
             expect(result.maxScale).to.be.equals(30000);
             expect(result.minScale).to.be.equals(10);
-            expect(result.isChildLayer).to.be.false;
+            expect(result.visibility).to.be.true;
         });
 
         it("should return a merged raw layer, if layer is grouped", () => {
@@ -162,13 +161,12 @@ describe("src/utils/getOrMergeRawLayer.js", () => {
             });
             sinon.stub(rawLayerList, "getLayerList").returns(layerList);
 
-            result = getOrMergeRawLayer(layerConfig.Fachdaten.Layer[0].Layer[0]);
+            result = getAndMergeRawLayer(layerConfig.Fachdaten.Layer[0].Layer[0]);
 
             expect(result).not.to.be.null;
             expect(result.id).to.be.equals("xyz");
             expect(result.name).to.be.equals("Kita und Krankenhäuser");
             expect(result.typ).to.be.equals("GROUP");
-            expect(result.isChildLayer).to.be.false;
             expect(result.children).to.be.an("array");
             expect(result.children.length).to.be.equals(2);
             expect(result.children[0].id).to.be.equals("682");
