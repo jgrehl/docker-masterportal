@@ -2,7 +2,7 @@
 import {mapGetters, mapActions} from "vuex";
 
 import {createMaps} from "./core/maps/maps";
-import runLayerFactory from "./core/layers/layerFactory";
+import initializeLayerFactory from "./core/layers/layerFactory";
 import LoaderOverlay from "./utils/loaderOverlay";
 import mapCollection from "./core/maps/mapCollection";
 
@@ -27,7 +27,7 @@ export default {
                 }
                 this.extendVisibleLayers();
                 createMaps(this.portalConfig, this.configJs);
-                runLayerFactory(this.visibleLayerConfigs);
+                initializeLayerFactory(this.visibleLayerConfigs);
             }
         }
     },
