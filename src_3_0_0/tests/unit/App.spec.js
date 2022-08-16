@@ -12,8 +12,7 @@ localVue.use(Vuex);
 describe("src_3_0_0/App.vue", () => {
     let store,
         wrapper,
-        actions,
-        mutations;
+        actions;
 
     beforeEach(() => {
         actions = {
@@ -23,20 +22,20 @@ describe("src_3_0_0/App.vue", () => {
             loadServicesJson: sinon.spy(),
             extendVisibleLayers: sinon.spy()
         };
-        mutations = {
-            setConfigJs: sinon.spy()
-        };
 
         store = new Vuex.Store({
             namespaced: true,
             getters: {
                 allConfigsLoaded: sinon.stub(),
                 configJs: sinon.stub(),
+                layerConfig: sinon.stub(),
                 portalConfig: () => {
                     return {mapView: {}};
+                },
+                visibleLayerConfigs: () => {
+                    return [];
                 }
             },
-            mutations: mutations,
             actions: actions,
             state: {
                 loadedConfigs: {
