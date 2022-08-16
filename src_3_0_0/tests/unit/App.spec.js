@@ -16,11 +16,12 @@ describe("src_3_0_0/App.vue", () => {
 
     beforeEach(() => {
         actions = {
+            extendLayers: sinon.spy(),
+            extendVisibleLayers: sinon.spy(),
             loadConfigJs: sinon.spy(),
             loadConfigJson: sinon.spy(),
             loadRestServicesJson: sinon.spy(),
-            loadServicesJson: sinon.spy(),
-            extendVisibleLayers: sinon.spy()
+            loadServicesJson: sinon.spy()
         };
 
         store = new Vuex.Store({
