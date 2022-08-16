@@ -59,4 +59,106 @@ describe("src_3_0_0/core/layers/layerOl2dRasterWms.js", () => {
         expect(layerWrapper).not.to.be.undefined;
         expect(layerWrapper.layer).not.to.be.undefined;
     });
+
+    describe("getRawLayerAttributes", () => {
+        let localAttributes;
+
+        beforeEach(() => {
+            localAttributes = {
+                crs: "25832",
+                format: "image/png",
+                gutter: 0,
+                id: "123456789",
+                layers: "layer_names",
+                singleTile: false,
+                tilesize: 512,
+                transparent: true,
+                url: "test.url",
+                version: "1.3.0"
+            };
+        });
+
+        it("should return the raw layer attributes", () => {
+            const layerWrapper = new LayerOl2dRasterWms(localAttributes);
+
+            expect(layerWrapper.getRawLayerAttributes(localAttributes)).to.deep.equals({
+                crs: "25832",
+                format: "image/png",
+                gutter: 0,
+                id: "123456789",
+                layers: "layer_names",
+                singleTile: false,
+                tilesize: 512,
+                transparent: "true",
+                url: "test.url",
+                version: "1.3.0"
+            });
+        });
+
+        it("should return the raw layer attributes with styles", () => {
+            Object.assign(localAttributes, {
+                styles: [
+                    "geofox_stations"
+                ]
+            });
+            const layerWrapper = new LayerOl2dRasterWms(localAttributes);
+
+            expect(layerWrapper.getRawLayerAttributes(localAttributes)).to.deep.equals({
+                crs: "25832",
+                format: "image/png",
+                gutter: 0,
+                id: "123456789",
+                layers: "layer_names",
+                singleTile: false,
+                STYLES: ["geofox_stations"],
+                tilesize: 512,
+                transparent: "true",
+                url: "test.url",
+                version: "1.3.0"
+            });
+        });
+    });
+
+    describe("getLayerParams", () => {
+        let localAttributes;
+
+        beforeEach(() => {
+            localAttributes = {
+                format: "image/png",
+                layers: "test_layers",
+                name: "test_name",
+                typ: "wms"
+            };
+        });
+
+        it("should return the layer params", () => {
+            const layerWrapper = new LayerOl2dRasterWms(localAttributes);
+
+            expect(layerWrapper.getLayerParams(localAttributes)).to.deep.equals({
+                format: "image/png",
+                layers: "test_layers",
+                name: "test_name",
+                typ: "wms"
+            });
+        });
+    });
+
+    describe("getOptions", () => {
+        let localAttributes;
+
+        beforeEach(() => {
+            localAttributes = {
+                origin: [442800, 5809000]
+            };
+        });
+
+        it("should return the options", () => {
+            const layerWrapper = new LayerOl2dRasterWms(localAttributes);
+
+            expect(layerWrapper.getOptions(localAttributes)).to.deep.equals({
+                origin: [442800, 5809000],
+                resolutions: [2000, 1000]
+            });
+        });
+    });
 });
