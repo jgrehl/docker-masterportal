@@ -5,6 +5,8 @@ import Layer2dVectorVectorbase from "./layer2dVectorVectorbase";
 import Layer2dVectorOaf from "./layer2dVectorOaf";
 import Layer2dVectorWfs from "./layer2dVectorWfs";
 import Layer2dRasterWms from "./layer2dRasterWms";
+import Layer2dVectorVectorbase from "./Layer2dVectorVectorbase";
+import Layer2dVectorWfs from "./layer2dVectorWfs";
 
 const possibleLayerTypes = {
     GEOJSON: Layer2dVectorGeojson,
