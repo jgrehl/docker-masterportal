@@ -1,16 +1,13 @@
 import {wfs} from "@masterportal/masterportalapi";
 import LoaderOverlay from "../../utils/loaderOverlay";
-import Layer from "./layer";
 import styleList from "@masterportal/masterportalapi/src/vectorStyle/styleList";
 import createStyle from "@masterportal/masterportalapi/src/vectorStyle/createStyle";
 import getGeometryTypeFromService from "@masterportal/masterportalapi/src/vectorStyle/lib/getGeometryTypeFromService";
 import store from "../../app-store";
+// import Layer from "./layer";
 import * as bridge from "./RadioBridge.js";
 import Cluster from "ol/source/Cluster";
-import {bbox, all} from "ol/loadingstrategy.js";
-import {getCenter} from "ol/extent";
-import webgl from "./renderer/webgl";
-import getProxyUrl from "../../utils/getProxyUrl";
+// import {bbox, all} from "ol/loadingstrategy.js";
 
 const geometryTypeRequestLayers = [];
 
@@ -20,16 +17,16 @@ const geometryTypeRequestLayers = [];
  * @returns {void}
  */
 export default function WFSLayer (attrs) {
-    const defaults = {
-        supported: ["2D", "3D"],
-        showSettings: true,
-        isSecured: false,
-        altitudeMode: "clampToGround",
-        useProxy: false,
-        sourceUpdated: false
-    };
+    // const defaults = {
+    //     supported: ["2D", "3D"],
+    //     showSettings: true,
+    //     isSecured: false,
+    //     altitudeMode: "clampToGround",
+    //     useProxy: false,
+    //     sourceUpdated: false
+    // };
 
-    this.createLayer(Object.assign(defaults, attrs));
+    // this.createLayer(Object.assign(defaults, attrs));
 
 
     // override class methods for webgl rendering
@@ -39,12 +36,12 @@ export default function WFSLayer (attrs) {
     }
 
     // call the super-layer
-    Layer.call(this, Object.assign(defaults, attrs), this.layer, !attrs.isChildLayer);
-    this.initStyle(attrs);
+    // Layer.call(this, Object.assign(defaults, attrs), this.layer, !attrs.isChildLayer);
+    this.set("style", this.getStyleFunction(attrs));
     this.prepareFeaturesFor3D(this.layer.getSource().getFeatures());
 }
 // Link prototypes and add prototype methods, means WFSLayer uses all methods and properties of Layer
-WFSLayer.prototype = Object.create(Layer.prototype);
+// WFSLayer.prototype = Object.create(Layer.prototype);
 
 /**
  * Creates a layer of type WFS by using wfs-layer of the masterportalapi.
@@ -54,21 +51,16 @@ WFSLayer.prototype = Object.create(Layer.prototype);
  */
 WFSLayer.prototype.createLayer = function (attrs) {
     const rawLayerAttributes = {
-            id: attrs.id,
-            /**
-            * @deprecated in the next major-release!
-            * useProxy
-            * getProxyUrl()
-            */
-            url: attrs.useProxy ? getProxyUrl(attrs.url) : attrs.url,
-            clusterDistance: attrs.clusterDistance,
-            featureNS: attrs.featureNS,
-            featureType: attrs.featureType,
-            version: attrs.version
+        //     id: attrs.id,
+        //     url: attrs.url,
+        //     clusterDistance: attrs.clusterDistance,
+        //     featureNS: attrs.featureNS,
+        //     featureType: attrs.featureType,
+        //     version: attrs.version
         },
         layerParams = {
-            name: attrs.name,
-            typ: attrs.typ,
+        //     name: attrs.name,
+        //     typ: attrs.typ,
             gfiAttributes: attrs.gfiAttributes,
             gfiTheme: attrs.gfiTheme,
             hitTolerance: attrs.hitTolerance,
@@ -82,16 +74,16 @@ WFSLayer.prototype.createLayer = function (attrs) {
             isPointLayer: attrs.isPointLayer // whether the source will only hold point data, only necessary for webgl
         },
         options = {
-            doNotLoadInitially: attrs.doNotLoadInitially,
-            wfsFilter: attrs.wfsFilter,
-            clusterGeometryFunction: (feature) => {
-                // do not cluster invisible features; can't rely on style since it will be null initially
-                if (feature.get("hideInClustering") === true) {
-                    return null;
-                }
-                return feature.getGeometry();
-            },
-            featuresFilter: this.getFeaturesFilterFunction(attrs),
+            // doNotLoadInitially: attrs.doNotLoadInitially,
+            // wfsFilter: attrs.wfsFilter,
+            // clusterGeometryFunction: (feature) => {
+            //     // do not cluster invisible features; can't rely on style since it will be null initially
+            //     if (feature.get("hideInClustering") === true) {
+            //         return null;
+            //     }
+            //     return feature.getGeometry();
+            // },
+            // featuresFilter: this.getFeaturesFilterFunction(attrs),
             // If an Object contains a property which holds a Function, the property is called a method.
             // This method, when called, will always have it's this variable set to the Object it is associated with.
             // This is true for both strict and non-strict modes.
@@ -106,56 +98,24 @@ WFSLayer.prototype.createLayer = function (attrs) {
                 if (this.get("isSelected") || attrs.isSelected) {
                     LoaderOverlay.hide();
                 }
-            }.bind(this),
-            onLoadingError: (error) => {
-                console.error("masterportal wfs loading error:", error);
-            },
-            loadingParams: {
-                xhrParameters: attrs.isSecured ? {credentials: "include"} : undefined,
-                propertyname: this.getPropertyname(attrs) || undefined,
-                // only used if loading strategy is all
-                bbox: attrs.bboxGeometry ? attrs.bboxGeometry.getExtent().toString() : undefined
-            },
-            loadingStrategy: attrs.loadingStrategy === "all" ? all : bbox
+            }.bind(this)
+            // onLoadingError: (error) => {
+            //     console.error("masterportal wfs loading error:", error);
+            // },
+            // loadingParams: {
+            //     xhrParameters: attrs.isSecured ? {credentials: "include"} : undefined,
+            //     propertyname: this.getPropertyname(attrs) || undefined,
+            //     // only used if loading strategy is all
+            //     bbox: attrs.bboxGeometry ? attrs.bboxGeometry.getExtent().toString() : undefined
+            // }
+            // loadingStrategy: attrs.loadingStrategy === "all" ? all : bbox
         };
 
     this.layer = wfs.createLayer(rawLayerAttributes, {layerParams, options});
 };
 
 /**
- * Returns a function to filter features with.
- * @param {Object} attrs  params of the raw layer
- * @returns {Function} to filter features with
- */
-WFSLayer.prototype.getFeaturesFilterFunction = function (attrs) {
-    return function (features) {
-        // only use features with a geometry
-        let filteredFeatures = features.filter(feature => feature.getGeometry() !== undefined);
-
-        if (attrs.bboxGeometry) {
-            filteredFeatures = filteredFeatures.filter(
-                (feature) => attrs.bboxGeometry.intersectsCoordinate(getCenter(feature.getGeometry().getExtent()))
-            );
-        }
-        return filteredFeatures;
-    };
-};
-/**
- * Returns the propertynames as comma separated string.
- * @param {Object} attrs  params of the raw layer
- * @returns {string} the propertynames as string
- */
-WFSLayer.prototype.getPropertyname = function (attrs) {
-    let propertyname = "";
-
-    if (Array.isArray(attrs.propertyNames)) {
-        propertyname = attrs.propertyNames.join(",");
-    }
-    return propertyname;
-};
-
-/**
- * Initializes the style for this layer. If styleId is set, this is done after vector styles are loaded.
+ * Sets Style for layer.
  * @param {Object} attrs  params of the raw layer
  * @returns {void}
  */
