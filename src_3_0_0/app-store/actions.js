@@ -36,7 +36,6 @@ export default {
             });
     },
 
-
     /**
      * Fills the states layerConf with filtered layers from services.json.
      * For more Information see 'getAllRawLayerSortedByMdId'.
@@ -67,6 +66,11 @@ export default {
     extendLayers ({commit, state}, onlyVisible = false) {
         const layerContainer = getNestedValues(state.layerConfig, "Layer").flat(Infinity);
 
+        if (state.portalConfig?.treeType === "default") {
+            const rawLayers = getAndMergeRawLayersFilteredByMdId();
+
+            commit("addToLayerConfig", {layerConfigs: {Layer: rawLayers}, parentKey: "Fachdaten"});
+        }
         layerContainer.forEach(layerConf => {
             if (!onlyVisible || layerConf.visibility) {
                 const rawLayer = getAndMergeRawLayer(layerConf);
