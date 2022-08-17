@@ -66,18 +66,6 @@ export default {
     },
 
     /**
-     * Fills the states layerConf with filtered layers from services.json.
-     * For more Information see 'getAllRawLayerSortedByMdId'.
-     * @returns {void}
-     */
-    fillLayerConf ({commit, state}) {
-        const layerContainer = getNestedValues(state.layerConfig, "Layer").flat(Infinity),
-            rawLayers = getAllRawLayerSortedByMdId(layerContainer);
-
-        commit("addToLayerConfig", {layerConfigs: {Fachdaten: rawLayers}, parentKey: "Themenconfig"});
-    },
-
-    /**
      * Extends all visible layers of config.json with the attributes of the layer in services.json.
      * Replaces the extended layer in state.layerConf.
      * @returns {void}
@@ -93,7 +81,7 @@ export default {
      * @returns {void}
      */
     extendLayers ({commit, state}, onlyVisible = false) {
-        const layerContainer = getNestedValues(state.layerConfig, "Layer").flat(Infinity);
+        const layerContainer = getNestedValues(state.layerConfig, "Layer", "Ordner").flat(Infinity);
 
         if (state.portalConfig?.treeType === "default") {
             const rawLayers = getAndMergeRawLayersFilteredByMdId();
@@ -101,11 +89,11 @@ export default {
             commit("addToLayerConfig", {layerConfigs: {Layer: rawLayers}, parentKey: "Fachdaten"});
         }
         layerContainer.forEach(layerConf => {
-            if (!onlyVisible || layerConf.visibility) {
+            if (!onlyVisible) {
                 const rawLayer = getAndMergeRawLayer(layerConf);
 
                 if (rawLayer) {
-                    commit("replaceByIdInLayerConfig", [rawLayer]);
+                    commit("replaceByIdInLayerConfig", [{layer: rawLayer, id: layerConf.id}]);
                 }
                 else {
                     console.warn("Configured visible layer with id ", layerConf.id, " was not found in ", state.configJs?.layerConf);
