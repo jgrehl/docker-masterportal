@@ -2,8 +2,6 @@ import Map from "ol/Map";
 import View from "ol/View";
 import VectorSource from "ol/source/Vector.js";
 import VectorLayer from "ol/layer/Vector.js";
-import Cluster from "ol/source/Cluster.js";
-import {WFS} from "ol/format.js";
 import {expect} from "chai";
 import sinon from "sinon";
 import WfsLayer from "../../wfs";
@@ -68,29 +66,6 @@ describe("src/core/layers/wfs.js", () => {
     });
 
     describe("createLayer", () => {
-        it("createLayer shall create an ol.VectorLayer with source and style and WFS-format", function () {
-            const wfsLayer = new WfsLayer(attributes),
-                layer = wfsLayer.get("layer");
-
-            expect(layer).to.be.an.instanceof(VectorLayer);
-            expect(layer.getSource()).to.be.an.instanceof(VectorSource);
-            expect(layer.getSource().getFormat()).to.be.an.instanceof(WFS);
-            expect(typeof layer.getStyleFunction()).to.be.equals("function");
-            expect(layer.get("id")).to.be.equals(attributes.id);
-            expect(layer.get("name")).to.be.equals(attributes.name);
-            expect(layer.get("gfiTheme")).to.be.equals(attributes.gfiTheme);
-        });
-        it("createLayer shall create an ol.VectorLayer with cluster-source", function () {
-            attributes.clusterDistance = 60;
-            const wfsLayer = new WfsLayer(attributes),
-                layer = wfsLayer.get("layer");
-
-            expect(layer).to.be.an.instanceof(VectorLayer);
-            expect(layer.getSource()).to.be.an.instanceof(Cluster);
-            expect(layer.getSource().getDistance()).to.be.equals(attributes.clusterDistance);
-            expect(layer.getSource().getSource().getFormat()).to.be.an.instanceof(WFS);
-            expect(typeof layer.getStyleFunction()).to.be.equals("function");
-        });
         it("createLayer with isSelected=true shall set layer visible", function () {
             attributes.isSelected = true;
             const wfsLayer = new WfsLayer(attributes),
@@ -112,62 +87,7 @@ describe("src/core/layers/wfs.js", () => {
             expect(wfsLayer.get("layer").getVisible()).to.be.false;
         });
     });
-    describe("getFeaturesFilterFunction", () => {
-        it("getFeaturesFilterFunction shall filter getGeometry", function () {
-            const wfsLayer = new WfsLayer(attributes),
-                featuresFilterFunction = wfsLayer.getFeaturesFilterFunction(attributes),
-                features = [{
-                    id: "1",
-                    getGeometry: () => sinon.stub()
-                },
-                {
-                    id: "2",
-                    getGeometry: () => undefined
-                }];
 
-            expect(typeof featuresFilterFunction).to.be.equals("function");
-            expect(featuresFilterFunction(features).length).to.be.equals(1);
-
-        });
-        it("getFeaturesFilterFunction shall filter bboxGeometry", function () {
-            attributes.bboxGeometry = {
-                intersectsCoordinate: (coord) => {
-                    if (coord[0] === 0.5 && coord[1] === 0.5) {
-                        return true;
-                    }
-                    return false;
-                },
-                getExtent: () => [0, 0, 1, 1]
-            };
-            const wfsLayer = new WfsLayer(attributes),
-                featuresFilterFunction = wfsLayer.getFeaturesFilterFunction(attributes),
-                features = [{
-                    id: "1",
-                    getGeometry: () => {
-                        return {
-                            getExtent: () => [0, 0, 1, 1]
-                        };
-
-                    }
-                },
-                {
-                    id: "2",
-                    getGeometry: () => undefined
-                },
-                {
-                    id: "3",
-                    getGeometry: () => {
-                        return {
-                            getExtent: () => [2, 2, 3, 3]
-                        };
-                    }
-                }];
-
-            expect(typeof featuresFilterFunction).to.be.equals("function");
-            expect(featuresFilterFunction(features).length).to.be.equals(1);
-            expect(featuresFilterFunction(features)[0].id).to.be.equals("1");
-        });
-    });
     describe("getPropertyname", () => {
         it("getPropertyname shall return joined proertyNames or empty string", function () {
             attributes.propertyNames = ["app:plan", "app:name"];
