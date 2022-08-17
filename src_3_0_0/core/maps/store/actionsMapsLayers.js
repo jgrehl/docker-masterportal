@@ -9,6 +9,13 @@ export default {
      * @returns {void}
      */
     addLayer (_, layer) {
-        mapCollection.getMap("2D").addLayer(layer);
+        const map2D = mapCollection.getMap("2D");
+
+        if (!map2D.getLayers().getArray().includes(layer)) {
+            map2D.addLayer(layer);
+        }
+        else {
+            console.warn(`The layer with Id: ${layer.get("id")} was not added to the map, because the layer already exists!`);
+        }
     }
 };
