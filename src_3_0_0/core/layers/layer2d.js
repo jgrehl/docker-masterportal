@@ -1,11 +1,14 @@
 import Layer from "./layer";
 
 /**
- * Creates a ol 2d layer.
- * @param {Object} attributes Attributes of the layer.
+ * Creates a 2d layer.
+ * @abstract
+ * @constructs
+ * @extends Layer
+ * @param {Object} attributes The attributes of the layer configuration.
  * @returns {void}
  */
-export default function LayerOl2d (attributes) {
+export default function Layer2d (attributes) {
     const defaultAttributes = {
     };
 
@@ -13,13 +16,13 @@ export default function LayerOl2d (attributes) {
     Layer.call(this, this.attributes);
 }
 
-LayerOl2d.prototype = Object.create(Layer.prototype);
+Layer2d.prototype = Object.create(Layer.prototype);
 
 /**
  * Sets values to the ol layer.
  * @param {Object} values The new values.
  * @returns {void}
  */
-LayerOl2d.prototype.updateLayerValues = function (values) {
+Layer2d.prototype.updateLayerValues = function (values) {
     this.layer.setVisible(values.visibility);
 };
