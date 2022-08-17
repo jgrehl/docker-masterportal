@@ -24,13 +24,6 @@ export default {
                 this.extendLayers();
                 createMaps(this.portalConfig, this.configJs);
                 initializeLayerFactory(this.visibleLayerConfigs);
-
-                if (this.portalConfig?.treeType === "default") {
-                    this.fillLayerConf();
-                }
-                else {
-                    this.extendLayers();
-                }
             }
         }
     },
@@ -41,7 +34,6 @@ export default {
     methods: {
         ...mapActions([
             "extendLayers",
-            "extendVisibleLayers",
             "fillLayerConf",
             "loadConfigJs",
             "loadConfigJson",
