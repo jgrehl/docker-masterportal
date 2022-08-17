@@ -3,6 +3,7 @@ import * as rawLayerList from "@masterportal/masterportalapi/src/rawLayerList";
 import sinon from "sinon";
 import {expect} from "chai";
 import actions from "../../actions";
+import { watch } from "vue";
 
 describe("src_3_0_0/app-store/actions.js", () => {
     let axiosMock,
