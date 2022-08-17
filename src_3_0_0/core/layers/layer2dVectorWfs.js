@@ -1,4 +1,3 @@
-
 import {bbox, all} from "ol/loadingstrategy.js";
 import {wfs} from "@masterportal/masterportalapi";
 import Layer2dVector from "./layer2dVector";
