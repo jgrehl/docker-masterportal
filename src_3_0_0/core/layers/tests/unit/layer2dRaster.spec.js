@@ -1,8 +1,8 @@
 import {expect} from "chai";
 import sinon from "sinon";
-import LayerOl2dRaster from "../../layerOl2dRaster";
+import Layer2dRaster from "../../layer2dRaster";
 
-describe("src_3_0_0/core/layers/layerOl2dRaster.js", () => {
+describe("src_3_0_0/core/layers/layer2dRaster.js", () => {
     let warn;
 
     before(() => {
@@ -14,8 +14,8 @@ describe("src_3_0_0/core/layers/layerOl2dRaster.js", () => {
         sinon.restore();
     });
 
-    it("new layerOl2dRaster should create an layer with warning", () => {
-        const layerWrapper = new LayerOl2dRaster({});
+    it("new Layer2dRaster should create an layer with warning", () => {
+        const layerWrapper = new Layer2dRaster({});
 
         expect(layerWrapper).not.to.be.undefined;
         expect(warn.calledOnce).to.be.true;
