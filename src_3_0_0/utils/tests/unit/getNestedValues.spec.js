@@ -89,5 +89,63 @@ describe("src/utils/getNestedValues.js", () => {
             }
         ]);
     });
+
+    it("should respect searchKeyForArrays", () => {
+        const json = {
+                Fachdaten: {
+                    Layer: [
+                        {
+                            id: "1132",
+                            name: "100 Jahre Stadtgruen POIs",
+                            visibility: true
+                        },
+                        {
+                            id: "10220"
+                        },
+                        {
+                            Titel: "Titel",
+                            Ordner: [
+                                {
+                                    Titel: "3 Layer",
+                                    Layer: [
+                                        {
+                                            id: "717",
+                                            visibility: true
+                                        },
+                                        {
+                                            id: "718",
+                                            visibility: true
+                                        },
+                                        {
+                                            id: "719"
+                                        }
+                                    ],
+                                    Ordner: [
+                                        {
+                                            Titel: "Überschwemmungsgebiete",
+                                            Layer: [
+                                                {
+                                                    id: "1103",
+                                                    visibility: true
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            },
+            result = getNestedValues(json, "Layer", "Ordner").flat(Infinity);
+
+        expect(result.length).to.equal(6);
+        expect(result[0].id).to.equal("1132");
+        expect(result[1].id).to.equal("10220");
+        expect(result[2].id).to.equal("717");
+        expect(result[3].id).to.equal("718");
+        expect(result[4].id).to.equal("719");
+        expect(result[5].id).to.equal("1103");
+    });
 });
 

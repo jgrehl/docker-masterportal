@@ -5,16 +5,30 @@
  * - does not recognize recursions within objects (e.g. a = [a]), lower maxDepth to prevent infinit loops earlier
  * @param {Object} obj the object to search
  * @param {*} searchKey the key to search for
+ * @param {*} searchKeyForArrays if a result entry contains an array at 'searchKeyForArrays', the entries of the array are inspected with 'searchKey'
  * @param {Number} [maxDepth=200] maximum number of self calls, default: 200
  * @returns {*[]} the found nested values as simple array of values
  */
-export default function getNestedValues (obj, searchKey, maxDepth = 200) {
+export default function getNestedValues (obj, searchKey, searchKeyForArrays, maxDepth = 200) {
     if (typeof obj !== "object" || obj === null) {
         return [];
     }
     const result = [];
 
     getNestedValuesHelper(obj, searchKey, maxDepth, result, 0);
+    if (searchKeyForArrays) {
+        const flatResult = result.flat(Infinity);
+
+        flatResult.forEach((value, index) => {
+            if (Array.isArray(value[searchKeyForArrays])) {
+                value[searchKeyForArrays].forEach(subValue => {
+                    getNestedValuesHelper(subValue, searchKey, maxDepth, flatResult, 0);
+                });
+                flatResult.splice(index, 1);
+            }
+        });
+        return flatResult;
+    }
     return result;
 }
 
