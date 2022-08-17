@@ -15,6 +15,9 @@ describe("src_3_0_0/app-store/actions.js", () => {
     const restConf = "./resources/rest-services-internet.json",
         layerConf = "./services.json";
 
+    global.Config = {
+    };
+
     beforeEach(() => {
         layerList = [
             {
