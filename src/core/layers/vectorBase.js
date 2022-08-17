@@ -17,9 +17,7 @@ export default function VectorBaseLayer (attrs) {
     const defaults = {
         supported: ["2D", "3D"],
         isClustered: false,
-        altitudeMode: "clampToGround",
-        useProxy: false,
-        sourceUpdated: false
+        useProxy: false
     };
 
     this.createLayer(Object.assign(defaults, attrs));
@@ -29,36 +27,6 @@ export default function VectorBaseLayer (attrs) {
 }
 
 VectorBaseLayer.prototype = Object.create(Layer.prototype);
-
-/**
- * Creates an vector Base
- * @param {Object} attrs  attributes of the layer
- * @returns {Object} layer
- */
-VectorBaseLayer.prototype.createVectorLayer = function (attrs) {
-    const source = new VectorSource({
-        features: attrs.features
-    });
-
-    return new VectorLayer({
-        source: source,
-        name: attrs.name,
-        typ: attrs.typ,
-        gfiAttributes: attrs.gfiAttributes,
-        id: attrs.id
-    });
-};
-
-/**
- * creates the layer
- * @param {Object} attr the attributes for the layer
- * @returns {void}
- */
-VectorBaseLayer.prototype.createLayer = function (attr) {
-    this.layer = this.createVectorLayer(attr);
-
-    this.features = attr.features;
-};
 
 /**
  * Updates the layers source
