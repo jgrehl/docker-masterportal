@@ -28,9 +28,10 @@ function registerLayerConfig () {
 }
 
 /**
- * Creates a layer, if it is not yet present but visible.
- * Existing layers are updated.
- * @param {Object} layerConfig The layer configurations
+ * Processes the layerConfig.
+ * All existing layers will be updated.
+ * Of the non-existing layers, only the visible ones are created and pushed into the LayerCollection.
+ * @param {Object[]} layerConfig The layer configurations.
  * @returns {void}
  */
 function processLayerConfig (layerConfig) {
