@@ -1,8 +1,10 @@
 import store from "../../app-store";
 import layerCollection from "./layerCollection";
+import LayerOl2dVectorWfs from "./layerOl2dVectorWfs";
 import LayerOl2dRasterWms from "./layerOl2dRasterWms";
 
 const possibleLayerTypes = {
+    WFS: LayerOl2dVectorWfs,
     WMS: LayerOl2dRasterWms
 };
 
