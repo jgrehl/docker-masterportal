@@ -21,15 +21,12 @@ Vue.config.devtools = false;
 module.exports = {
     mode: "development",
     target: "node",
-<<<<<<< HEAD
     devtool: "inline-cheap-module-source-map",
     output: {
         // use absolute paths in sourcemaps (important for debugging via IDE)
         devtoolModuleFilenameTemplate: "[absolute-resource-path]",
         devtoolFallbackModuleFilenameTemplate: "[absolute-resource-path]?[hash]"
     },
-=======
->>>>>>> 95904fdd5 (remove webpack.test for backbone and test function in package.json In this case rename webpack.vue.test.js to webpack.test.js)
     // use when debugging:
     // devtool: "cheap-module-eval-source-map",
     // output: {
