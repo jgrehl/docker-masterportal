@@ -4,9 +4,9 @@ import {WFS} from "ol/format.js";
 import sinon from "sinon";
 import VectorLayer from "ol/layer/Vector.js";
 import VectorSource from "ol/source/Vector.js";
-import LayerOl2dVectorWfs from "../../layerOl2dVectorWfs";
+import Layer2dVectorWfs from "../../layer2dVectorWfs";
 
-describe("src_3_0_0/core/layers/layerOl2dVectorWfs.js", () => {
+describe("src_3_0_0/core/layers/layer2dVectorWfs.js", () => {
     let attributes,
         error,
         warn;
@@ -41,15 +41,15 @@ describe("src_3_0_0/core/layers/layerOl2dVectorWfs.js", () => {
     });
 
     describe("createLayer", () => {
-        it("new LayerOl2dVectorWfs should create an layer with no warning", () => {
-            const wfsLayer = new LayerOl2dVectorWfs({});
+        it("new Layer2dVectorWfs should create an layer with no warning", () => {
+            const wfsLayer = new Layer2dVectorWfs({});
 
             expect(wfsLayer).not.to.be.undefined;
             expect(warn.notCalled).to.be.true;
         });
 
         it("createLayer shall create an ol.VectorLayer with source and style and WFS-format", function () {
-            const wfsLayer = new LayerOl2dVectorWfs(attributes),
+            const wfsLayer = new Layer2dVectorWfs(attributes),
                 layer = wfsLayer.layer;
 
             expect(layer).to.be.an.instanceof(VectorLayer);
@@ -63,7 +63,7 @@ describe("src_3_0_0/core/layers/layerOl2dVectorWfs.js", () => {
 
         it("createLayer shall create an ol.VectorLayer with cluster-source", function () {
             attributes.clusterDistance = 60;
-            const wfsLayer = new LayerOl2dVectorWfs(attributes),
+            const wfsLayer = new Layer2dVectorWfs(attributes),
                 layer = wfsLayer.layer;
 
             expect(layer).to.be.an.instanceof(VectorLayer);
@@ -89,7 +89,7 @@ describe("src_3_0_0/core/layers/layerOl2dVectorWfs.js", () => {
         });
 
         it("should return the raw layer attributes", () => {
-            const wfsLayer = new LayerOl2dVectorWfs(localAttributes);
+            const wfsLayer = new Layer2dVectorWfs(localAttributes);
 
             expect(wfsLayer.getRawLayerAttributes(localAttributes)).to.deep.equals({
                 clusterDistance: 10,
@@ -113,7 +113,7 @@ describe("src_3_0_0/core/layers/layerOl2dVectorWfs.js", () => {
         });
 
         it("should return the raw layer attributes", () => {
-            const wfsLayer = new LayerOl2dVectorWfs(localAttributes);
+            const wfsLayer = new Layer2dVectorWfs(localAttributes);
 
             expect(wfsLayer.getLayerParams(localAttributes)).to.deep.equals({
                 name: "The name",
@@ -124,7 +124,7 @@ describe("src_3_0_0/core/layers/layerOl2dVectorWfs.js", () => {
 
     describe("clusterGeometryFunction", () => {
         it("should return the geometry of a feature", () => {
-            const wfsLayer = new LayerOl2dVectorWfs(attributes),
+            const wfsLayer = new Layer2dVectorWfs(attributes),
                 feature = {
                     get: () => sinon.stub(),
                     getGeometry: () => "Point"
@@ -136,7 +136,7 @@ describe("src_3_0_0/core/layers/layerOl2dVectorWfs.js", () => {
 
     describe("featuresFilter", () => {
         it("featuresFilter shall filter getGeometry", function () {
-            const wfsLayer = new LayerOl2dVectorWfs(attributes),
+            const wfsLayer = new Layer2dVectorWfs(attributes),
                 features = [{
                     id: "1",
                     getGeometry: () => sinon.stub()
@@ -160,7 +160,7 @@ describe("src_3_0_0/core/layers/layerOl2dVectorWfs.js", () => {
                 },
                 getExtent: () => ["1"]
             };
-            const wfsLayer = new LayerOl2dVectorWfs(attributes),
+            const wfsLayer = new Layer2dVectorWfs(attributes),
                 features = [{
                     id: "1",
                     getGeometry: () => {
@@ -191,7 +191,7 @@ describe("src_3_0_0/core/layers/layerOl2dVectorWfs.js", () => {
 
     describe("loadingParams", () => {
         it("should return loading params", () => {
-            const wfsLayer = new LayerOl2dVectorWfs(attributes);
+            const wfsLayer = new Layer2dVectorWfs(attributes);
 
             expect(wfsLayer.loadingParams(attributes)).to.deep.equals({
                 xhrParameters: undefined,
@@ -203,14 +203,14 @@ describe("src_3_0_0/core/layers/layerOl2dVectorWfs.js", () => {
 
     describe("propertyNames", () => {
         it("should return an empty Stirng if no propertyNames are configured", () => {
-            const wfsLayer = new LayerOl2dVectorWfs(attributes);
+            const wfsLayer = new Layer2dVectorWfs(attributes);
 
             expect(wfsLayer.propertyNames(attributes)).to.equals("");
         });
 
         it("should return all strings separated by comma", () => {
             Object.assign(attributes, {propertyNames: ["ab", "cd"]});
-            const wfsLayer = new LayerOl2dVectorWfs(attributes);
+            const wfsLayer = new Layer2dVectorWfs(attributes);
 
             expect(wfsLayer.propertyNames(attributes)).to.equals("ab,cd");
         });
@@ -218,7 +218,7 @@ describe("src_3_0_0/core/layers/layerOl2dVectorWfs.js", () => {
 
     describe("onLoadingError", () => {
         it("should print a console.error", () => {
-            const wfsLayer = new LayerOl2dVectorWfs(attributes);
+            const wfsLayer = new Layer2dVectorWfs(attributes);
 
             wfsLayer.onLoadingError("The error message");
 
