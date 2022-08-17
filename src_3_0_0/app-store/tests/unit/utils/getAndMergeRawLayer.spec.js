@@ -1,5 +1,5 @@
 import * as rawLayerList from "@masterportal/masterportalapi/src/rawLayerList";
-import {getAllRawLayerSortedByMdId, getAndMergeRawLayer} from "../../getAndMergeRawLayer.js";
+import {getAndMergeRawLayersFilteredByMdId, getAndMergeRawLayer} from "../../../utils/getAndMergeRawLayer.js";
 import {expect} from "chai";
 import sinon from "sinon";
 
@@ -11,8 +11,8 @@ describe("src/utils/getAndMergeRawLayer.js", () => {
     });
 
     describe("getAndMergeRawLayer", () => {
-        it("should return null if no param is given", () => {
-            expect(getAndMergeRawLayer()).to.be.null;
+        it("should return undefined if no param is given", () => {
+            expect(getAndMergeRawLayer()).to.be.undefined;
         });
         it("should return a simple raw layer", () => {
             const layerList = [
@@ -244,12 +244,13 @@ describe("src/utils/getAndMergeRawLayer.js", () => {
         });
 
         it("should filter by typ, datasets and layerContainer (removeConfiguredLayer, filterValidLayer)", () => {
-            const result = getAllRawLayerSortedByMdId(layerContainer);
+            const result = getAndMergeRawLayersFilteredByMdId(layerContainer);
 
             expect(result).to.be.an("array");
-            expect(result.length).to.be.equals(2);
-            expect(result[0]).to.be.deep.equals(layerList[1]);
-            expect(result[1]).to.be.deep.equals(layerList[2]);
+            expect(result.length).to.be.equals(3);
+            expect(result[0]).to.be.deep.equals(layerList[0]);
+            expect(result[1]).to.be.deep.equals(layerList[1]);
+            expect(result[2]).to.be.deep.equals(layerList[2]);
         });
 
         it("should delete layer with cache=true and same md_id (deleteLayersIncludeCache)", () => {
@@ -258,11 +259,12 @@ describe("src/utils/getAndMergeRawLayer.js", () => {
             layerList[2].datasets[0].md_id = "B6A59A2B-2D40-4676-9094-efg";
             layerList[2].cache = false;
             layerList[1].cache = true;
-            result = getAllRawLayerSortedByMdId(layerContainer);
+            result = getAndMergeRawLayersFilteredByMdId(layerContainer);
 
             expect(result).to.be.an("array");
-            expect(result.length).to.be.equals(1);
-            expect(result[0]).to.be.deep.equals(layerList[1]);
+            expect(result.length).to.be.equals(2);
+            expect(result[0]).to.be.deep.equals(layerList[0]);
+            expect(result[1]).to.be.deep.equals(layerList[1]);
         });
 
         it("should create new raw layer if datasets contains more than one entry (createLayerPerDataset)", () => {
@@ -274,11 +276,12 @@ describe("src/utils/getAndMergeRawLayer.js", () => {
                     md_name: "md_name_10220"
                 }
             );
-            result = getAllRawLayerSortedByMdId(layerContainer);
+            result = getAndMergeRawLayersFilteredByMdId(layerContainer);
 
             expect(result).to.be.an("array");
-            expect(result.length).to.be.equals(3);
-            expect(result[0]).to.be.deep.equals(layerList[2]);
+            expect(result.length).to.be.equals(4);
+            expect(result[0].id).to.be.deep.equals("453");
+            expect(result[3]).to.be.deep.equals(layerList[2]);
             expect(result[1].id).to.be.deep.equals("452_0");
             expect(result[1].name).to.be.deep.equals(layerList[1].name);
             expect(result[1].datasets[0].md_id).to.be.deep.equals("B6A59A2B-2D40-4676-9094-efg");
