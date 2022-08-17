@@ -2,9 +2,9 @@ import {expect} from "chai";
 import sinon from "sinon";
 import Layer from "ol/layer/Layer";
 import TileWMS from "ol/source/TileWMS";
-import LayerOl2d from "../../layerOl2d";
+import Layer2d from "../../layer2d";
 
-describe("src_3_0_0/core/layers/layerOl2d.js", () => {
+describe("src_3_0_0/core/layers/layer2d.js", () => {
     let warn;
 
     before(() => {
@@ -17,7 +17,7 @@ describe("src_3_0_0/core/layers/layerOl2d.js", () => {
     });
 
     it("new LayerOl2d should create an layer with warning", () => {
-        const layerWrapper = new LayerOl2d({});
+        const layerWrapper = new Layer2d({});
 
         expect(layerWrapper).not.to.be.undefined;
         expect(warn.calledOnce).to.be.true;
@@ -25,7 +25,7 @@ describe("src_3_0_0/core/layers/layerOl2d.js", () => {
 
     describe("updateLayerValues", () => {
         it("updates the visibility of the ol layer to true", () => {
-            const layerWrapper = new LayerOl2d();
+            const layerWrapper = new Layer2d();
 
             layerWrapper.layer = new Layer({
                 source: new TileWMS(),
@@ -39,7 +39,7 @@ describe("src_3_0_0/core/layers/layerOl2d.js", () => {
         });
 
         it("updates the visibility of the ol layer to false", () => {
-            const layerWrapper = new LayerOl2d();
+            const layerWrapper = new Layer2d();
 
             layerWrapper.layer = new Layer({
                 source: new TileWMS(),
