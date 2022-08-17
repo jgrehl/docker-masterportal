@@ -3,7 +3,6 @@ import * as rawLayerList from "@masterportal/masterportalapi/src/rawLayerList";
 import sinon from "sinon";
 import {expect} from "chai";
 import actions from "../../actions";
-import { watch } from "vue";
 
 describe("src_3_0_0/app-store/actions.js", () => {
     let axiosMock,
@@ -233,8 +232,8 @@ describe("src_3_0_0/app-store/actions.js", () => {
             expect(commit.alwaysCalledWith("replaceByIdInLayerConfig"));
             expect(commit.firstCall.args[1]).to.deep.equals([{layer: Object.assign({...layerList[0]}, {visibility: true}), id: layerList[0].id}]);
             expect(commit.secondCall.args[1]).to.deep.equals([{layer: {...layerList[1]}, id: layerList[1].id}]);
-            expect(commit.thirdCall.args[1]).to.deep.equals([{layer:Object.assign({...layerList[2]}, {visibility: true}), id: layerList[2].id}]);
-            expect(commit.lastCall.args[1]).to.deep.equals([{layer:{...layerList[3]}, id: layerList[3].id}]);
+            expect(commit.thirdCall.args[1]).to.deep.equals([{layer: Object.assign({...layerList[2]}, {visibility: true}), id: layerList[2].id}]);
+            expect(commit.lastCall.args[1]).to.deep.equals([{layer: {...layerList[3]}, id: layerList[3].id}]);
         });
         it("extendLayers for custom tree", () => {
             const mergedLayer = {
