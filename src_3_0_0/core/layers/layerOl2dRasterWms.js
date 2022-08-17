@@ -3,7 +3,7 @@ import {wms} from "@masterportal/masterportalapi";
 import LayerOl2dRaster from "./layerOl2dRaster";
 
 /**
- * Creates a ol 2d raster layer.
+ * Creates a ol 2d raster wms layer.
  * @param {Object} attributes Attributes of the layer.
  * @returns {void}
  */
@@ -28,7 +28,7 @@ LayerOl2dRasterWms.prototype = Object.create(LayerOl2dRaster.prototype);
 /**
  * Creates a layer of type WMS by using wms-layer of the masterportalapi.
  * Sets all needed attributes at the layer and the layer source.
- * @param {Object} attributes Params of the raw layer.
+ * @param {Object} attributes The attributes of the layer configuration.
  * @returns {void}
  */
 LayerOl2dRasterWms.prototype.createLayer = function (attributes) {
@@ -40,8 +40,8 @@ LayerOl2dRasterWms.prototype.createLayer = function (attributes) {
 };
 
 /**
- * Gets raw layer attributes from services.json attributes.
- * @param {Object} attributes Params of the raw layer.
+ * Gets raw layer attributes from attributes.
+ * @param {Object} attributes The attributes of the layer configuration.
  * @returns {Object} The raw layer attributes.
  */
 LayerOl2dRasterWms.prototype.getRawLayerAttributes = function (attributes) {
@@ -67,7 +67,7 @@ LayerOl2dRasterWms.prototype.getRawLayerAttributes = function (attributes) {
 
 /**
  * Gets additional layer params.
- * @param {Object} attributes Params of the raw layer.
+ * @param {Object} attributes The attributes of the layer configuration.
  * @returns {Obeject} The layer params.
  */
 LayerOl2dRasterWms.prototype.getLayerParams = function (attributes) {
@@ -81,7 +81,7 @@ LayerOl2dRasterWms.prototype.getLayerParams = function (attributes) {
 
 /**
  * Gets options that contains resolutions and origin to create the TileGrid.
- * @param {Object} attributes Params of the raw layer.
+ * @param {Object} attributes The attributes of the layer configuration.
  * @returns {Object} The options.
  */
 LayerOl2dRasterWms.prototype.getOptions = function (attributes) {
