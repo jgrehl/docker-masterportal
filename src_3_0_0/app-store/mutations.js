@@ -20,12 +20,18 @@ const mutations = {
     /**
      * Replaces the layer with the id of the layer toReplace in state's layerConfig.
      * @param {Object} state store state
-     * @param {Object[]} layerConfigs Array of configs of layers to replace, each config must contain id
+     * @param {Object[]} layerConfigs Array of configs of layers to replace, and the id to match in state.layerConfigs
+     * @param {Object} layerConfigs.layer layerConfig
+     * @param {String} layerConfigs.id the id to match in state.layerConfigs
      * @returns {void}
+     * [{layer: rawLayer, id: layerConf.id}]
      */
     replaceByIdInLayerConfig (state, layerConfigs = []) {
-        layerConfigs.forEach(replacement => {
-            const assigned = replaceInNestedValues(state.layerConfig, "Layer", replacement, {key: "id", value: replacement.id});
+        layerConfigs.forEach(config => {
+            const replacement = config.layer,
+                id = config.id,
+
+                assigned = replaceInNestedValues(state.layerConfig, "Layer", replacement, {key: "id", value: id});
 
             if (assigned === 0) {
                 console.warn(`Replacement of layer ${layerConfigs} in state.layerConfig failed. Id: ${replacement.id} was not found in state!`);
