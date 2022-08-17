@@ -24,6 +24,7 @@ const mutations = {
      * @param {Object} layerConfigs.layer layerConfig
      * @param {String} layerConfigs.id the id to match in state.layerConfigs
      * @returns {void}
+     * [{layer: rawLayer, id: layerConf.id}]
      */
     replaceByIdInLayerConfig (state, layerConfigs = []) {
         layerConfigs.forEach(config => {
