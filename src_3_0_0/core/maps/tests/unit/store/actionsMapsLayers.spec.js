@@ -1,5 +1,6 @@
 import {expect} from "chai";
 import Map from "ol/Map";
+import sinon from "sinon";
 import VectorLayer from "ol/layer/Vector";
 import VectorSource from "ol/source/Vector";
 import View from "ol/View";
@@ -14,7 +15,8 @@ describe("src_3_0_0/core/maps/store/actionsMapsLayers.js", () => {
     let layer1,
         layer2,
         layer3,
-        map;
+        map,
+        warn;
 
     before(() => {
         layer1 = new VectorLayer({
@@ -36,6 +38,9 @@ describe("src_3_0_0/core/maps/store/actionsMapsLayers.js", () => {
     });
 
     beforeEach(() => {
+        warn = sinon.spy();
+        sinon.stub(console, "warn").callsFake(warn);
+
         mapCollection.clear();
         map = new Map({
             id: "ol",
@@ -46,8 +51,12 @@ describe("src_3_0_0/core/maps/store/actionsMapsLayers.js", () => {
         mapCollection.addMap(map, "2D");
     });
 
+    afterEach(() => {
+        sinon.restore();
+    });
+
     describe("addLayer", () => {
-        it("Should add three layers to the map ", () => {
+        it("Should add three layers to the map", () => {
             const ids = ["Donald", "Dagobert", "Darkwing"];
 
             addLayer({}, layer1);
@@ -57,6 +66,18 @@ describe("src_3_0_0/core/maps/store/actionsMapsLayers.js", () => {
             mapCollection.getMap("2D").getLayers().forEach((layer, index) => {
                 expect(layer.get("id")).equals(ids[index]);
             });
+        });
+
+        it("Should add a layer only once, otherwise print a warn, if layer is already exist in the map", () => {
+            const ids = ["Donald"];
+
+            addLayer({}, layer1);
+            addLayer({}, layer1);
+
+            mapCollection.getMap("2D").getLayers().forEach((layer, index) => {
+                expect(layer.get("id")).equals(ids[index]);
+            });
+            expect(warn.calledOnce).to.be.true;
         });
     });
 });
