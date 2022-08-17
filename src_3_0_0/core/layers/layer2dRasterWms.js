@@ -1,13 +1,15 @@
 
 import {wms} from "@masterportal/masterportalapi";
-import LayerOl2dRaster from "./layerOl2dRaster";
+import Layer2dRaster from "./layer2dRaster";
 
 /**
- * Creates a ol 2d raster wms layer.
- * @param {Object} attributes Attributes of the layer.
+ * Creates a 2d raster wms layer.
+ * @constructs
+ * @extends Layer2dRaster
+ * @param {Object} attributes The attributes of the layer configuration.
  * @returns {void}
  */
-export default function LayerOl2dRasterWms (attributes) {
+export default function Layer2dRasterWms (attributes) {
     const defaultAttributes = {
         crs: mapCollection.getMapView("2D").getProjection().getCode(),
         format: "image/png",
@@ -20,10 +22,10 @@ export default function LayerOl2dRasterWms (attributes) {
     };
 
     this.attributes = Object.assign(defaultAttributes, attributes);
-    LayerOl2dRaster.call(this, this.attributes);
+    Layer2dRaster.call(this, this.attributes);
 }
 
-LayerOl2dRasterWms.prototype = Object.create(LayerOl2dRaster.prototype);
+Layer2dRasterWms.prototype = Object.create(Layer2dRaster.prototype);
 
 /**
  * Creates a layer of type WMS by using wms-layer of the masterportalapi.
@@ -31,7 +33,7 @@ LayerOl2dRasterWms.prototype = Object.create(LayerOl2dRaster.prototype);
  * @param {Object} attributes The attributes of the layer configuration.
  * @returns {void}
  */
-LayerOl2dRasterWms.prototype.createLayer = function (attributes) {
+Layer2dRasterWms.prototype.createLayer = function (attributes) {
     const rawLayerAttributes = this.getRawLayerAttributes(attributes),
         layerParams = this.getLayerParams(attributes),
         options = this.getOptions(attributes);
@@ -44,7 +46,7 @@ LayerOl2dRasterWms.prototype.createLayer = function (attributes) {
  * @param {Object} attributes The attributes of the layer configuration.
  * @returns {Object} The raw layer attributes.
  */
-LayerOl2dRasterWms.prototype.getRawLayerAttributes = function (attributes) {
+Layer2dRasterWms.prototype.getRawLayerAttributes = function (attributes) {
     const rawLayerAttributes = {
         crs: attributes.crs,
         format: attributes.format,
@@ -70,7 +72,7 @@ LayerOl2dRasterWms.prototype.getRawLayerAttributes = function (attributes) {
  * @param {Object} attributes The attributes of the layer configuration.
  * @returns {Obeject} The layer params.
  */
-LayerOl2dRasterWms.prototype.getLayerParams = function (attributes) {
+Layer2dRasterWms.prototype.getLayerParams = function (attributes) {
     return {
         format: attributes.format,
         layers: attributes.layers,
@@ -84,7 +86,7 @@ LayerOl2dRasterWms.prototype.getLayerParams = function (attributes) {
  * @param {Object} attributes The attributes of the layer configuration.
  * @returns {Object} The options.
  */
-LayerOl2dRasterWms.prototype.getOptions = function (attributes) {
+Layer2dRasterWms.prototype.getOptions = function (attributes) {
     return {
         origin: attributes.origin,
         resolutions: mapCollection.getMapView("2D").getResolutions()
