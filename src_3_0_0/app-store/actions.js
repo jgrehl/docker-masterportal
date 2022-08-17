@@ -65,7 +65,6 @@ export default {
             });
     },
 
-
     /**
      * Fills the states layerConf with filtered layers from services.json.
      * For more Information see 'getAllRawLayerSortedByMdId'.
