@@ -50,7 +50,7 @@ describe("src_3_0_0/core/layers/layerOl2dRasterWms.js", () => {
         const layerWrapper = new LayerOl2dRasterWms({});
 
         expect(layerWrapper).not.to.be.undefined;
-        expect(warn.calledOnce).to.be.false;
+        expect(warn.notCalled).to.be.true;
     });
 
     it("new LayerOl2dRasterWms with attributes should create an layer", () => {
