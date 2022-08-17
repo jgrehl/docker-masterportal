@@ -7,15 +7,10 @@ import actions from "../../actions";
 describe("src_3_0_0/app-store/actions.js", () => {
     let axiosMock,
         commit,
-<<<<<<< HEAD
         state,
         layerList,
         layerConfig,
         layerConfigCustom;
-=======
-        dispatch,
-        state;
->>>>>>> 574cc4b7d (update actions and range in App.vue)
     const restConf = "./resources/rest-services-internet.json";
 
     beforeEach(() => {
