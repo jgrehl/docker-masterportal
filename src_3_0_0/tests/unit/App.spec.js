@@ -13,7 +13,8 @@ localVue.use(Vuex);
 describe("src_3_0_0/App.vue", () => {
     let store,
         wrapper,
-        actions;
+        actions,
+        createMapsSpy;
 
     beforeEach(() => {
         createMapsSpy = sinon.spy(maps, "createMaps");
