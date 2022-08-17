@@ -7,7 +7,6 @@ import actions from "../../actions";
 describe("src_3_0_0/app-store/actions.js", () => {
     let axiosMock,
         commit,
-<<<<<<< HEAD
         state,
         layerList,
         layerConfig,
@@ -18,10 +17,6 @@ describe("src_3_0_0/app-store/actions.js", () => {
         layerConf = "./services.json";
 =======
         layerConfigCustom;
-=======
-        dispatch,
-        state;
->>>>>>> 574cc4b7d (update actions and range in App.vue)
     const restConf = "./resources/rest-services-internet.json";
 >>>>>>> 28cd84fa1 (update actions and range in App.vue)
 
