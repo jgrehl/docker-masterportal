@@ -127,16 +127,14 @@ function mergeLayerByIds (layerConf) {
 export function getAndMergeRawLayersFilteredByMdId () {
     // refactored from parserDefaultTree.js
     const layerList = getLayerList(),
-        // - layeridstoignore: layerlist.modifyLayerList
         validLayerTypes = ["WMS", "SENSORTHINGS", "TERRAIN3D", "TILESET3D", "OBLIQUE"],
         rawLayers = [],
         cacheLayerMetaIDs = [];
     let relatedWMSLayerIds = [];
 
     for (let i = 0; i < layerList.length; i++) {
-        const rawLayer = layerList[i],
-            // containedLayer = configuredLayerContainer.find((layer) => layer.id === rawLayer.id),
-            layerAdded = false;
+        const rawLayer = layerList[i];
+        let layerAdded = false;
 
         if (!validLayerTypes.includes(rawLayer.typ?.toUpperCase()) || !rawLayer.datasets || rawLayer.datasets.length === 0) {
             continue;
