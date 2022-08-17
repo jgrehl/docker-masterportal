@@ -3,12 +3,16 @@ import * as rawLayerList from "@masterportal/masterportalapi/src/rawLayerList";
 import sinon from "sinon";
 import {expect} from "chai";
 import actions from "../../actions";
+import { watch } from "vue";
 
 describe("src_3_0_0/app-store/actions.js", () => {
     let axiosMock,
         commit,
         dispatch,
-        state;
+        state,
+        layerList,
+        layerConfig,
+        layerConfigCustom;
     const restConf = "./resources/rest-services-internet.json";
 
     global.Config = {
@@ -227,10 +231,10 @@ describe("src_3_0_0/app-store/actions.js", () => {
             actions.extendLayers({commit, state});
             expect(commit.callCount).to.be.equals(4);
             expect(commit.alwaysCalledWith("replaceByIdInLayerConfig"));
-            expect(commit.firstCall.args[1]).to.deep.equals([Object.assign({...layerList[0]}, {visibility: true})]);
-            expect(commit.secondCall.args[1]).to.deep.equals([{...layerList[1]}]);
-            expect(commit.thirdCall.args[1]).to.deep.equals([Object.assign({...layerList[2]}, {visibility: true})]);
-            expect(commit.lastCall.args[1]).to.deep.equals([{...layerList[3]}]);
+            expect(commit.firstCall.args[1]).to.deep.equals([{layer: Object.assign({...layerList[0]}, {visibility: true}), id: layerList[0].id}]);
+            expect(commit.secondCall.args[1]).to.deep.equals([{layer: {...layerList[1]}, id: layerList[1].id}]);
+            expect(commit.thirdCall.args[1]).to.deep.equals([{layer:Object.assign({...layerList[2]}, {visibility: true}), id: layerList[2].id}]);
+            expect(commit.lastCall.args[1]).to.deep.equals([{layer:{...layerList[3]}, id: layerList[3].id}]);
         });
         it("extendLayers for custom tree", () => {
             const mergedLayer = {
@@ -247,10 +251,10 @@ describe("src_3_0_0/app-store/actions.js", () => {
             actions.extendLayers({commit, state});
             expect(commit.callCount).to.be.equals(6);
             expect(commit.alwaysCalledWith("replaceByIdInLayerConfig"));
-            expect(commit.firstCall.args[1][0]).to.deep.equals(mergedLayer);
-            expect(commit.secondCall.args[1][0]).to.deep.equals(layerList[0]);
-            expect(commit.thirdCall.args[1][0]).to.deep.equals(layerList[5]);
-            expect(commit.lastCall.args[1][0]).to.deep.equals(layerList[4]);
+            expect(commit.firstCall.args[1][0].layer).to.deep.equals(mergedLayer);
+            expect(commit.secondCall.args[1][0].layer).to.deep.equals(layerList[0]);
+            expect(commit.thirdCall.args[1][0].layer).to.deep.equals(layerList[5]);
+            expect(commit.lastCall.args[1][0].layer).to.deep.equals(layerList[4]);
         });
         it("extendLayers for default tree with all filtered raw layers", () => {
             let expectedFirstCallArg = null;
@@ -269,9 +273,9 @@ describe("src_3_0_0/app-store/actions.js", () => {
             expect(commit.firstCall.args[0]).to.equals("addToLayerConfig");
             expect(commit.firstCall.args[1]).to.deep.equals(expectedFirstCallArg);
             expect(commit.secondCall.args[0]).to.equals("replaceByIdInLayerConfig");
-            expect(commit.secondCall.args[1]).to.deep.equals([Object.assign({...layerList[0]}, {visibility: true})]);
+            expect(commit.secondCall.args[1][0].layer).to.deep.equals(Object.assign({...layerList[0]}, {visibility: true}));
             expect(commit.thirdCall.args[0]).to.equals("replaceByIdInLayerConfig");
-            expect(commit.thirdCall.args[1]).to.deep.equals([{...layerList[1]}]);
+            expect(commit.thirdCall.args[1][0].layer).to.deep.equals({...layerList[1]});
 
         });
 
@@ -326,15 +330,7 @@ describe("src_3_0_0/app-store/actions.js", () => {
             state.layerConfig = layerConfig;
 
             actions.extendLayers({commit, state});
-
             expect(commit.callCount).to.be.equals(6);
-            // expect(commit.firstCall.args[0]).to.equals("addToLayerConfig");
-            // expect(commit.firstCall.args[1]).to.deep.equals(expectedFirstCallArg);
-            // expect(commit.secondCall.args[0]).to.equals("replaceByIdInLayerConfig");
-            // expect(commit.secondCall.args[1]).to.deep.equals([Object.assign({ ...layerList[0] }, { visibility: true })]);
-            // expect(commit.thirdCall.args[0]).to.equals("replaceByIdInLayerConfig");
-            // expect(commit.thirdCall.args[1]).to.deep.equals([{ ...layerList[1] }]);
-
         });
     });
 
