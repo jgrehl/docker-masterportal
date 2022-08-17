@@ -39,7 +39,6 @@ export default {
     methods: {
         ...mapActions([
             "extendLayers",
-            "extendVisibleLayers",
             "fillLayerConf",
             "loadConfigJs",
             "loadConfigJson",
