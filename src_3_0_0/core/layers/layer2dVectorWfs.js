@@ -1,14 +1,16 @@
 
 import {bbox, all} from "ol/loadingstrategy.js";
 import {wfs} from "@masterportal/masterportalapi";
-import LayerOl2dVector from "./layerOl2dVector";
+import Layer2dVector from "./layer2dVector";
 
 /**
- * Creates a ol 2d vector wfs layer.
- * @param {Object} attributes Attributes of the layer.
+ * Creates a 2d vector wfs layer.
+ * @constructs
+ * @extends Layer2dVector
+ * @param {Object} attributes The attributes of the layer configuration.
  * @returns {void}
  */
-export default function LayerOl2dVectorWfs (attributes) {
+export default function Layer2dVectorWfs (attributes) {
     const defaultAttributes = {
         outputFormat: "XML",
         version: "1.1.0",
@@ -16,10 +18,10 @@ export default function LayerOl2dVectorWfs (attributes) {
     };
 
     this.attributes = Object.assign(defaultAttributes, attributes);
-    LayerOl2dVector.call(this, this.attributes);
+    Layer2dVector.call(this, this.attributes);
 }
 
-LayerOl2dVectorWfs.prototype = Object.create(LayerOl2dVector.prototype);
+Layer2dVectorWfs.prototype = Object.create(Layer2dVector.prototype);
 
 /**
  * Creates a layer of type WFS by using wfs-layer of the masterportalapi.
@@ -27,7 +29,7 @@ LayerOl2dVectorWfs.prototype = Object.create(LayerOl2dVector.prototype);
  * @param {Object} attributes The attributes of the layer configuration.
  * @returns {void}
  */
-LayerOl2dVectorWfs.prototype.createLayer = function (attributes) {
+Layer2dVectorWfs.prototype.createLayer = function (attributes) {
     const rawLayerAttributes = this.getRawLayerAttributes(attributes),
         layerParams = this.getLayerParams(attributes),
         options = this.getOptions(attributes);
@@ -40,7 +42,7 @@ LayerOl2dVectorWfs.prototype.createLayer = function (attributes) {
  * @param {Object} attributes The attributes of the layer configuration.
  * @returns {Object} The raw layer attributes.
  */
-LayerOl2dVectorWfs.prototype.getRawLayerAttributes = function (attributes) {
+Layer2dVectorWfs.prototype.getRawLayerAttributes = function (attributes) {
     return {
         clusterDistance: attributes.clusterDistance,
         featureNS: attributes.featureNS,
@@ -56,7 +58,7 @@ LayerOl2dVectorWfs.prototype.getRawLayerAttributes = function (attributes) {
  * @param {Object} attributes The attributes of the layer configuration.
  * @returns {Obeject} The layer params.
  */
-LayerOl2dVectorWfs.prototype.getLayerParams = function (attributes) {
+Layer2dVectorWfs.prototype.getLayerParams = function (attributes) {
     return {
         name: attributes.name,
         typ: attributes.typ
@@ -68,7 +70,7 @@ LayerOl2dVectorWfs.prototype.getLayerParams = function (attributes) {
  * @param {Object} attributes The attributes of the layer configuration.
  * @returns {Object} The options.
  */
-LayerOl2dVectorWfs.prototype.getOptions = function (attributes) {
+Layer2dVectorWfs.prototype.getOptions = function (attributes) {
     const options = {
         clusterGeometryFunction: this.clusterGeometryFunction,
         doNotLoadInitially: attributes.doNotLoadInitially,
@@ -89,7 +91,7 @@ LayerOl2dVectorWfs.prototype.getOptions = function (attributes) {
  * @param {module:ol/Feature~Feature} feature The ol feature.
  * @returns {module:ol/geom/Point~Point} The feature geometry.
  */
-LayerOl2dVectorWfs.prototype.clusterGeometryFunction = function (feature) {
+Layer2dVectorWfs.prototype.clusterGeometryFunction = function (feature) {
     if (feature.get("hideInClustering") === true) {
         return null;
     }
@@ -104,7 +106,7 @@ LayerOl2dVectorWfs.prototype.clusterGeometryFunction = function (feature) {
  * @param {module:ol/Feature~Feature[]} features The ol features.
  * @returns {Function} to filter features with
  */
-LayerOl2dVectorWfs.prototype.featuresFilter = function (attributes, features) {
+Layer2dVectorWfs.prototype.featuresFilter = function (attributes, features) {
     let filteredFeatures = features.filter(feature => feature.getGeometry() !== undefined);
 
     if (attributes.bboxGeometry) {
@@ -118,7 +120,7 @@ LayerOl2dVectorWfs.prototype.featuresFilter = function (attributes, features) {
  * @param {Object} attributes The attributes of the layer configuration.
  * @returns {Object} The loading Params.
  */
-LayerOl2dVectorWfs.prototype.loadingParams = function (attributes) {
+Layer2dVectorWfs.prototype.loadingParams = function (attributes) {
     const loadingParams = {
         xhrParameters: attributes.isSecured ? {credentials: "include"} : undefined,
         propertyname: this.propertyNames(attributes),
@@ -134,7 +136,7 @@ LayerOl2dVectorWfs.prototype.loadingParams = function (attributes) {
  * @param {Object} attributes The attributes of the layer configuration.
  * @returns {string} The propertynames as string.
  */
-LayerOl2dVectorWfs.prototype.propertyNames = function (attributes) {
+Layer2dVectorWfs.prototype.propertyNames = function (attributes) {
     let propertyname = "";
 
     if (Array.isArray(attributes.propertyNames)) {
@@ -149,6 +151,6 @@ LayerOl2dVectorWfs.prototype.propertyNames = function (attributes) {
  * @param {Error} error The error message.
  * @returns {void}
  */
-LayerOl2dVectorWfs.prototype.onLoadingError = function (error) {
+Layer2dVectorWfs.prototype.onLoadingError = function (error) {
     console.error("Masterportal wfs loading error: ", error);
 };

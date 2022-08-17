@@ -1,8 +1,8 @@
 import {expect} from "chai";
 import sinon from "sinon";
-import LayerOl2dVector from "../../layerOl2dVector";
+import Layer2dVector from "../../layer2dVector";
 
-describe("src_3_0_0/core/layers/layerOl2dVector.js", () => {
+describe("src_3_0_0/core/layers/layer2dVector.js", () => {
     let warn;
 
     before(() => {
@@ -14,8 +14,8 @@ describe("src_3_0_0/core/layers/layerOl2dVector.js", () => {
         sinon.restore();
     });
 
-    it("new LayerOl2dVector should create an layer with warning", () => {
-        const layerWrapper = new LayerOl2dVector({});
+    it("new Layer2dVector should create an layer with warning", () => {
+        const layerWrapper = new Layer2dVector({});
 
         expect(layerWrapper).not.to.be.undefined;
         expect(warn.calledOnce).to.be.true;
