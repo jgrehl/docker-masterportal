@@ -1,6 +1,8 @@
 /**
  * Creates a layer.
- * @param {Object} attributes Attributes of the layer.
+ * @abstract
+ * @constructs
+ * @param {Object} attributes The attributes of the layer configuration.
  * @returns {void}
  */
 export default function Layer (attributes) {
