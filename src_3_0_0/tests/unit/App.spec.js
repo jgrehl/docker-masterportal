@@ -3,6 +3,7 @@ import {expect} from "chai";
 import sinon from "sinon";
 import {shallowMount, createLocalVue} from "@vue/test-utils";
 import AppComponent from "../../App.vue";
+import * as maps from "../../core/maps/maps.js";
 
 
 const localVue = createLocalVue();
@@ -15,6 +16,7 @@ describe("src_3_0_0/App.vue", () => {
         actions;
 
     beforeEach(() => {
+        createMapsSpy = sinon.spy(maps, "createMaps");
         actions = {
             extendLayers: sinon.spy(),
             extendVisibleLayers: sinon.spy(),
@@ -72,15 +74,15 @@ describe("src_3_0_0/App.vue", () => {
         wrapper = shallowMount(AppComponent, {store, localVue});
 
         wrapper.vm.$options.watch.allConfigsLoaded.call(wrapper.vm, true);
-        expect(actions.extendVisibleLayers.calledOnce).to.be.true;
-        // todo createMaps call cannot be tested due to problems mocking imported functions
+        expect(actions.extendLayers.calledOnce).to.be.true;
+        expect(createMapsSpy.calledOnce).to.be.true;
     });
 
     it("watcher allConfigsLoaded is false", () => {
         wrapper = shallowMount(AppComponent, {store, localVue});
 
         wrapper.vm.$options.watch.allConfigsLoaded.call(wrapper.vm, false);
-        expect(actions.extendVisibleLayers.notCalled).to.be.true;
-        // todo createMaps call cannot be tested due to problems mocking imported functions
+        expect(actions.extendLayers.notCalled).to.be.true;
+        expect(createMapsSpy.notCalled).to.be.true;
     });
 });
