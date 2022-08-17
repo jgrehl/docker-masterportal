@@ -81,7 +81,7 @@ describe("src_3_0_0/app-store/mutations.js", () => {
                 }]
             };
 
-            replaceByIdInLayerConfig(state, [toReplace]);
+            replaceByIdInLayerConfig(state, [{layer: toReplace, id: id}]);
 
             expect(state.layerConfig?.Hintergrundkarten?.Layer).to.be.an("array");
             expect(state.layerConfig?.Hintergrundkarten?.Layer.length).to.be.equals(2);
