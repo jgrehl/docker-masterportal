@@ -44,6 +44,17 @@
           "name": [
             "HVV Haltestellen"
           ]
+        },
+        {
+          "id": "1711",
+          "name" : "Krankenhäuser",
+          "visibility": false
+        },
+        {
+          "id": "8712",
+          "name" : "de.hh.up:staatliche schulen",
+          "visibility": true,
+          "clusterDistance": 60
         }
       ]
     }
