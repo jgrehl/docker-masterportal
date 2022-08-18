@@ -119,7 +119,7 @@ function mergeLayerByIds (layerConf) {
 
 /**
  * Returns all layer to add to states layerConfig 'Fachdaten' for treetype 'default'.
- * Filters the raw layerlist by typ, datasets. Deletes layer with cache=true and same md_id.
+ * Filters the raw layerlist by typ and datasets.
  * Creates new raw layer if datasets contains more than one entry.
  *
  * @returns {Array} the filtered layer configurations
@@ -128,8 +128,7 @@ export function getAndMergeRawLayersFilteredByMdId () {
     // refactored from parserDefaultTree.js
     const layerList = getLayerList(),
         validLayerTypes = ["WMS", "SENSORTHINGS", "TERRAIN3D", "TILESET3D", "OBLIQUE"],
-        rawLayers = [],
-        cacheLayerMetaIDs = [];
+        rawLayers = [];
     let relatedWMSLayerIds = [];
 
     for (let i = 0; i < layerList.length; i++) {
@@ -140,9 +139,6 @@ export function getAndMergeRawLayersFilteredByMdId () {
         }
         if (rawLayer.typ.toUpperCase() === "SENSORTHINGS" && rawLayer.related_wms_layers !== undefined) {
             relatedWMSLayerIds = relatedWMSLayerIds.concat(rawLayer.related_wms_layers);
-        }
-        if (rawLayer.cache === true) {
-            cacheLayerMetaIDs.push(rawLayer.datasets[0].md_id);
         }
         if (rawLayer.datasets.length > 1) {
             rawLayer.datasets.forEach((ds, index) => {
@@ -158,13 +154,7 @@ export function getAndMergeRawLayersFilteredByMdId () {
         }
     }
     removeFromLayerList(relatedWMSLayerIds, rawLayers);
-
-    return rawLayers.filter(element => {
-        if (element.cache === false) {
-            return !cacheLayerMetaIDs.includes(element.datasets[0].md_id);
-        }
-        return true;
-    });
+    return rawLayers;
 }
 
 /**
