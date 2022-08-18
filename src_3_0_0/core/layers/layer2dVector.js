@@ -11,7 +11,8 @@ import Layer2d from "./layer2d";
  */
 export default function Layer2dVector (attributes) {
     const defaultAttributes = {
-        altitudeMode: "clampToGround"
+        altitudeMode: "clampToGround",
+        crs: mapCollection.getMapView("2D").getProjection().getCode()
     };
 
     this.attributes = Object.assign(defaultAttributes, attributes);
@@ -49,6 +50,37 @@ Layer2dVector.prototype.featuresFilter = function (attributes, features) {
         filteredFeatures = filteredFeatures.filter((feature) => attributes.bboxGeometry.intersectsExtent(feature.getGeometry().getExtent()));
     }
     return filteredFeatures;
+};
+
+/**
+ * Gets the loading params.
+ * @param {Object} attributes The attributes of the layer configuration.
+ * @returns {Object} The loading Params.
+ */
+Layer2dVector.prototype.loadingParams = function (attributes) {
+    const loadingParams = {
+        xhrParameters: attributes.isSecured ? {credentials: "include"} : undefined,
+        propertyname: this.propertyNames(attributes),
+        // only used if loading strategy is all
+        bbox: attributes.bboxGeometry ? attributes.bboxGeometry.getExtent().toString() : undefined
+    };
+
+    return loadingParams;
+};
+
+/**
+ * Returns the propertyNames as comma separated string.
+ * @param {Object} attributes The attributes of the layer configuration.
+ * @returns {string} The propertynames as string.
+ */
+Layer2dVector.prototype.propertyNames = function (attributes) {
+    let propertyname = "";
+
+    if (Array.isArray(attributes.propertyNames)) {
+        propertyname = attributes.propertyNames.join(",");
+    }
+
+    return propertyname;
 };
 
 /**
