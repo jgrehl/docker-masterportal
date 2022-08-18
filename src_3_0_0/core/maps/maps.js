@@ -1,6 +1,8 @@
 import api from "@masterportal/masterportalapi/src/maps/api";
 import {getLayerList} from "@masterportal/masterportalapi/src/rawLayerList";
 
+import store from "../../app-store";
+
 /**
  * Create the 2D map and mapview.
  * @param {Object} mapViewSettings The mapViewSettings of config.json file.
@@ -16,6 +18,7 @@ function create2DMap (mapViewSettings, configJs) {
         }, "2D", {});
 
     mapCollection.addMap(map, "2D");
+    store.dispatch("Maps/setMapAttributes", {map: map});
 }
 
 /**
