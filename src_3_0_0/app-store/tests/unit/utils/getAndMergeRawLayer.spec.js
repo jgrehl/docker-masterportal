@@ -177,7 +177,8 @@ describe("src/utils/getAndMergeRawLayer.js", () => {
         });
     });
 
-    describe("getAllRawLayerSortedByMdId", () => {
+    describe("getAndMergeRawLayersFilteredByMdId", () => {
+        const validLayerTypesDefaultTree = ["WMS", "SENSORTHINGS", "TERRAIN3D", "TILESET3D", "OBLIQUE"];
         let layerList, layerContainer;
 
         beforeEach(() => {
@@ -243,8 +244,8 @@ describe("src/utils/getAndMergeRawLayer.js", () => {
             sinon.restore();
         });
 
-        it("should filter by typ, datasets and layerContainer (removeConfiguredLayer, filterValidLayer)", () => {
-            const result = getAndMergeRawLayersFilteredByMdId(layerContainer);
+        it("should filter by typ, datasets and layerContainer", () => {
+            const result = getAndMergeRawLayersFilteredByMdId(validLayerTypesDefaultTree);
 
             expect(result).to.be.an("array");
             expect(result.length).to.be.equals(3);
@@ -262,7 +263,7 @@ describe("src/utils/getAndMergeRawLayer.js", () => {
                     md_name: "md_name_10220"
                 }
             );
-            result = getAndMergeRawLayersFilteredByMdId(layerContainer);
+            result = getAndMergeRawLayersFilteredByMdId(validLayerTypesDefaultTree);
 
             expect(result).to.be.an("array");
             expect(result.length).to.be.equals(4);
