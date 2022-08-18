@@ -121,10 +121,10 @@ function mergeLayerByIds (layerConf) {
  * Returns all layer to add to states layerConfig 'Fachdaten' for treetype 'default'.
  * Filters the raw layerlist by typ and datasets.
  * Creates new raw layer if datasets contains more than one entry.
- *
+ * @param {Array} validLayerTypes layer types to be used with the tree.Type "default"
  * @returns {Array} the filtered layer configurations
  */
-export function getAndMergeRawLayersFilteredByMdId () {
+export function getAndMergeRawLayersFilteredByMdId (validLayerTypes) {
     // refactored from parserDefaultTree.js
     const layerList = getLayerList(),
         validLayerTypes = ["WMS", "SENSORTHINGS", "TERRAIN3D", "TILESET3D", "OBLIQUE"],
