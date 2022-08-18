@@ -1,11 +1,11 @@
-import {generateSimpleMutations} from "../../../app-store/utils/generators";
-import initialState from "./stateMap";
+// import {generateSimpleMutations} from "../../../app-store/utils/generators";
+// import initialState from "./stateMap";
 import getters from "./gettersMap";
 import BaseLayer from "ol/layer/Base";
 import findWhereJs from "../../../utils/findWhereJs";
 
 const mutations = {
-    ...generateSimpleMutations(initialState),
+    // ...generateSimpleMutations(initialState),
 
     /**
      * Adds the given feature to highlightedFeatures.

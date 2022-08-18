@@ -1,26 +1,23 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-undef */
 import Layer from "./layer";
 import LoaderOverlay from "../../utils/loaderOverlay";
 import styleList from "@masterportal/masterportalapi/src/vectorStyle/styleList";
 import createStyle from "@masterportal/masterportalapi/src/vectorStyle/createStyle";
 import * as bridge from "./RadioBridge";
-import Cluster from "ol/source/Cluster";
-import VectorLayer from "ol/layer/Vector";
-import VectorSource from "ol/source/Vector";
-import {buffer, containsExtent} from "ol/extent";
-import {GeoJSON} from "ol/format";
-import changeTimeZone from "../../utils/changeTimeZone";
+// import Cluster from "ol/source/Cluster";
+// import VectorLayer from "ol/layer/Vector";
+// import VectorSource from "ol/source/Vector";
+// import {buffer, containsExtent} from "ol/extent";
+// import {GeoJSON} from "ol/format";
+// import changeTimeZone from "../../utils/changeTimeZone";
 import getProxyUrl from "../../utils/getProxyUrl";
-import isObject from "../../utils/isObject";
-import {SensorThingsMqtt} from "../../utils/sensorThingsMqtt";
-import {SensorThingsHttp} from "../../utils/sensorThingsHttp";
-import crs from "@masterportal/masterportalapi/src/crs";
-import store from "../../app-store";
-import dayjs from "dayjs";
-import dayjsTimezone from "dayjs/plugin/timezone";
-import localizedFormat from "dayjs/plugin/localizedFormat";
-import uniqueId from "../../utils/uniqueId";
-import {unByKey} from "ol/Observable";
-import {Circle as CircleStyle, Fill, Stroke, Style} from "ol/style.js";
+// import isObject from "../../utils/isObject";
+// import {SensorThingsMqtt} from "../../utils/sensorThingsMqtt";
+// import {SensorThingsHttp} from "../../utils/sensorThingsHttp";
+// import store from "../../app-store";
+// import moment from "moment";
+// import "moment-timezone";
 
 dayjs.extend(dayjsTimezone);
 dayjs.extend(localizedFormat);
@@ -33,45 +30,45 @@ dayjs.extend(localizedFormat);
 export default function STALayer (attrs) {
     const defaults = {
         supported: ["2D", "3D"],
-        epsg: "EPSG:4326",
-        showSettings: true,
+        // epsg: "EPSG:4326",
+        // showSettings: true,
         isSecured: false,
-        altitudeMode: "clampToGround",
-        useProxy: false,
-        sourceUpdated: false,
-        subscriptionTopics: {},
-        mqttClient: null,
-        timezone: "Europe/Berlin",
-        utc: "+1",
-        version: "1.1",
-        showNoDataValue: true,
-        noDataValue: "no data",
-        loadThingsOnlyInCurrentExtent: false,
-        isSubscribed: false,
-        mqttRh: 2,
-        mqttQos: 2,
-        mqttOptions: {},
-        datastreamAttributes: [
-            "@iot.id",
-            "@iot.selfLink",
-            "Observations",
-            "description",
-            "name",
-            "observationType",
-            "observedArea",
-            "phenomenonTime",
-            "properties",
-            "resultTime",
-            "unitOfMeasurement"
-        ],
-        thingAttributes: [
-            "@iot.id",
-            "@iot.selfLink",
-            "Locations",
-            "description",
-            "name",
-            "properties"
-        ]
+        // altitudeMode: "clampToGround",
+        useProxy: false
+        // sourceUpdated: false,
+        // subscriptionTopics: {},
+        // mqttClient: null,
+        // timezone: "Europe/Berlin",
+        // utc: "+1",
+        // version: "1.1",
+        // showNoDataValue: true,
+        // noDataValue: "no data",
+        // loadThingsOnlyInCurrentExtent: false,
+        // isSubscribed: false,
+        // mqttRh: 2,
+        // mqttQos: 2,
+        // mqttOptions: {},
+        // datastreamAttributes: [
+        //     "@iot.id",
+        //     "@iot.selfLink",
+        //     "Observations",
+        //     "description",
+        //     "name",
+        //     "observationType",
+        //     "observedArea",
+        //     "phenomenonTime",
+        //     "properties",
+        //     "resultTime",
+        //     "unitOfMeasurement"
+        // ],
+        // thingAttributes: [
+        //     "@iot.id",
+        //     "@iot.selfLink",
+        //     "Locations",
+        //     "description",
+        //     "name",
+        //     "properties"
+        // ]
     };
 
     this.onceEvents = {
@@ -111,16 +108,16 @@ STALayer.prototype = Object.create(Layer.prototype);
 STALayer.prototype.createLayer = function (attrs) {
     let initialLoading = true;
     const rawLayerAttributes = {
-            id: attrs.id,
-            url: attrs.url,
-            clusterDistance: attrs.clusterDistance,
+            // id: attrs.id,
+            // url: attrs.url,
+            // clusterDistance: attrs.clusterDistance,
             featureNS: attrs.featureNS,
-            featureType: attrs.featureType,
-            version: attrs.version
+            featureType: attrs.featureType
+            // version: attrs.version
         },
         layerParams = {
-            name: attrs.name,
-            typ: attrs.typ,
+            // name: attrs.name,
+            // typ: attrs.typ,
             gfiAttributes: attrs.gfiAttributes,
             gfiTheme: attrs.gfiTheme,
             hitTolerance: attrs.hitTolerance,
@@ -129,13 +126,13 @@ STALayer.prototype.createLayer = function (attrs) {
             layerSequence: attrs.layerSequence
         },
         options = {
-            clusterGeometryFunction: (feature) => {
-                if (feature.get("hideInClustering") === true) {
-                    return null;
-                }
-                return feature.getGeometry();
-            },
-            featuresFilter: this.getFeaturesFilterFunction(attrs),
+            // clusterGeometryFunction: (feature) => {
+            //     if (feature.get("hideInClustering") === true) {
+            //         return null;
+            //     }
+            //     return feature.getGeometry();
+            // },
+            // featuresFilter: this.getFeaturesFilterFunction(attrs),
             beforeLoading: () => {
                 if (this.get("isSelected") || attrs.isSelected) {
                     LoaderOverlay.show();
@@ -154,9 +151,9 @@ STALayer.prototype.createLayer = function (attrs) {
                     this.onceEvents.featuresloadend.shift()();
                 }
             },
-            onLoadingError: error => {
+            onLoadingError: () => {
                 store.dispatch("Alerting/addSingleAlert", i18next.t("modules.core.modelList.layer.sensor.httpOnError", {name: this.get("name")}));
-                console.warn("masterportal SensorThingsAPI loading error:", error);
+                // console.warn("masterportal SensorThingsAPI loading error:", error);
             }
         };
 
@@ -194,37 +191,9 @@ STALayer.prototype.createVectorLayer = function (rawLayer = {}, {layerParams = {
 };
 
 /**
- * Returns a function to filter features.
+ * Getter of style for layer.
  * @param {Object} attrs params of the raw layer
- * @returns {Function} a function to filter features
- */
-STALayer.prototype.getFeaturesFilterFunction = function (attrs) {
-    return function (features) {
-        let filteredFeatures = features.filter(feature => feature.getGeometry() !== undefined);
-
-        if (attrs.bboxGeometry) {
-            filteredFeatures = filteredFeatures.filter((feature) => attrs.bboxGeometry.intersectsExtent(feature.getGeometry().getExtent()));
-        }
-        return filteredFeatures;
-    };
-};
-
-/**
- * Returns the property names.
- * @param {Object} attrs params of the raw layer
- * @returns {String} the property names as comma separated string
- */
-STALayer.prototype.getPropertyname = function (attrs) {
-    if (Array.isArray(attrs?.propertyNames)) {
-        return attrs.propertyNames.join(",");
-    }
-    return "";
-};
-
-/**
- * Initializes the style and sets it at this. If styleId is set, this is done after vector styles are loaded.
- * @param {Object} attrs attributes of the raw layer
- * @returns {void}
+ * @returns {Function} a function to get the style with or null plus console error if no style model was found
  */
 STALayer.prototype.initStyle = function (attrs) {
     if (store.getters.styleListLoaded) {
@@ -414,19 +383,19 @@ STALayer.prototype.initializeSensorThings = function () {
      */
     const url = this.get("useProxy") ? getProxyUrl(this.get("url")) : this.get("url");
 
-    try {
-        this.createMqttConnectionToSensorThings(url, this.get("mqttOptions"), this.get("timezone"), this.get("showNoDataValue"), this.get("noDataValue"));
-    }
-    catch (err) {
-        console.error("Connecting to mqtt-broker failed. Won't receive live updates. Reason:", err);
-    }
+    // try {
+    //     this.createMqttConnectionToSensorThings(url, this.get("mqttOptions"), this.get("timezone"), this.get("showNoDataValue"), this.get("noDataValue"));
+    // }
+    // catch (err) {
+    //     console.error("Connecting to mqtt-broker failed. Won't receive live updates. Reason:", err);
+    // }
 
-    if (typeof this.options.beforeLoading === "function") {
-        this.options.beforeLoading();
-    }
+    // if (typeof this.options.beforeLoading === "function") {
+    //     this.options.beforeLoading();
+    // }
 
     bridge.listenToLayerVisibility(this, () => {
-        this.toggleSubscriptionsOnMapChanges();
+        // this.toggleSubscriptionsOnMapChanges();
     });
     bridge.listenToIsOutOfRange(this, () => {
         this.toggleSubscriptionsOnMapChanges();
@@ -437,158 +406,6 @@ STALayer.prototype.initializeSensorThings = function () {
     if (store.getters["Maps/scale"] > this.get("maxScaleForHistoricalFeatures")) {
         this.showHistoricalFeatures = false;
     }
-};
-
-/**
- * Creates the connection to a given MQTT-Broker.
- * @param {String} url The url to connect with.
- * @param {Object} mqttOptions The configured mqtt options.
- * @param {String} timezone The timezone of Sensors.
- * @param {Boolean} showNoDataValue true if "nodata" value should be shown, false if not.
- * @param {String} noDataValue The value to use for "nodata".
- * @returns {void}
- */
-STALayer.prototype.createMqttConnectionToSensorThings = function (url, mqttOptions, timezone, showNoDataValue, noDataValue) {
-    if (typeof url !== "string" || !url) {
-        return;
-    }
-    const mqttHost = this.getMqttHostFromUrl(url, error => {
-            console.warn(error);
-        }),
-        options = Object.assign({
-            browserBufferSize: 65536,
-            host: mqttHost,
-            rhPath: url,
-            context: this,
-            path: "/mqtt",
-            protocol: "wss",
-            mqttVersion: "3.1.1"
-        }, mqttOptions);
-
-    this.mqttClient = new SensorThingsMqtt(options);
-
-    this.mqttClient.on("message", (topic, observation) => {
-        const datastreamId = this.getDatastreamIdFromMqttTopic(topic),
-            layerSource = this.get("layerSource") instanceof Cluster ? this.get("layerSource").getSource() : this.get("layerSource"),
-            features = typeof layerSource.getFeatures === "function" && Array.isArray(layerSource.getFeatures()) ? layerSource.getFeatures() : [],
-            feature = this.getFeatureByDatastreamId(features, datastreamId),
-            phenomenonTime = this.getLocalTimeFormat(observation.phenomenonTime, timezone);
-        let clonedFeature = null;
-
-        this.updateObservationForDatastreams(feature, datastreamId, observation);
-        if (this.get("observeLocation") && isObject(feature)) {
-            clonedFeature = feature.clone();
-        }
-        this.updateFeatureProperties(feature, datastreamId, observation.result, phenomenonTime, showNoDataValue, noDataValue, bridge.changeFeatureGFI);
-        if (this.get("observeLocation") && isObject(feature) && isObject(observation?.location) && this.subscribedDataStreamIds[datastreamId]?.subscribed) {
-            if (typeof feature?.get !== "function") {
-                return;
-            }
-            this.updateFeatureLocation(feature, observation, () => {
-                this.locationUpdating[feature.get("dataStreamId")] = false;
-            });
-            if (this.showHistoricalFeatures && Array.isArray(feature.get("historicalFeatureIds")) && feature.get("historicalFeatureIds").length) {
-                this.updateHistoricalFeatures(feature, clonedFeature, layerSource);
-            }
-        }
-    });
-};
-/**
- * Update the historical features for given feature and add onto the map.
- * @param {ol/Feature} feature The feature to update historical features for
- * @param {ol/Feature} clonedFeature The cloned feature to use for old location
- * @param {ol/Layer/Source} layerSource The layer source
- * @returns {void}
- */
-STALayer.prototype.updateHistoricalFeatures = function (feature, clonedFeature, layerSource) {
-    if (typeof feature?.get !== "function" || !Array.isArray(feature.get("historicalFeatureIds")) || typeof clonedFeature?.set !== "function") {
-        return;
-    }
-    const removedFeature = feature.get("historicalFeatureIds").pop();
-
-    if (typeof removedFeature !== "undefined") {
-        layerSource.removeFeature(layerSource.getFeatureById(removedFeature));
-    }
-    clonedFeature.set("dataStreamId", undefined);
-    clonedFeature.setId(uniqueId("historicalFeature-"));
-    feature.get("historicalFeatureIds").unshift(clonedFeature.getId());
-    layerSource.addFeature(clonedFeature);
-    feature.get("historicalFeatureIds").forEach((id, index) => {
-        const scale = this.getScale(index, feature.get("historicalFeatureIds").length, this.get("scaleStyleByZoom"), store.getters["Maps/getView"].getZoom() + 1, store.getters["Maps/getView"].getResolutions().length);
-
-        if (!isObject(layerSource.getFeatureById(id))) {
-            return;
-        }
-        layerSource.getFeatureById(id).set("originScale", this.getScale(index, feature.get("historicalFeatureIds").length));
-        this.setStyleOfHistoricalFeature(layerSource.getFeatureById(id), scale, this.styleRule);
-    });
-};
-
-/**
- * Extracts the host name from the given url
- * @param {String} url the url to find the host name in
- * @param {Function} onError the function to call errors with
- * @returns {String} the extracted host name
- */
-STALayer.prototype.getMqttHostFromUrl = function (url, onError) {
-    if (typeof url !== "string") {
-        if (typeof onError === "function") {
-            onError(new Error("getMqttHostFromUrl: the given url is not a string."));
-        }
-        return "";
-    }
-    const mqttHost = url.split("/")[2];
-
-    if (typeof mqttHost !== "string") {
-        if (typeof onError === "function") {
-            onError(new Error("getMqttHostFromUrl: the given url does not include the host name."));
-        }
-        return "";
-    }
-
-    return mqttHost;
-};
-
-/**
- * Extracts the datastream id from the given topic.
- * @param {String} topic the topic to extract datastream id from.
- * @returns {String} the found datastream id.
- */
-STALayer.prototype.getDatastreamIdFromMqttTopic = function (topic) {
-    if (typeof topic !== "string") {
-        return "";
-    }
-    const datastreamIdx = topic.indexOf("Datastreams(");
-
-    if (datastreamIdx === -1) {
-        return "";
-    }
-    return topic.substring(datastreamIdx + 12, topic.indexOf(")", datastreamIdx + 12));
-};
-
-/**
- * Getter for feature by a given id.
- * @param {ol/Feature[]} features the features to search through
- * @param {String} id the id to lookup the feature for
- * @returns {ol/Feature} the ol feature with the given id
- */
-STALayer.prototype.getFeatureByDatastreamId = function (features, id) {
-    if (!Array.isArray(features) || typeof id !== "string") {
-        return null;
-    }
-    const len = features.length;
-
-    for (let i = 0; i < len; i++) {
-        if (
-            typeof features[i]?.get !== "function"
-            || typeof features[i].get("dataStreamId") !== "string"
-            || !features[i].get("dataStreamId").split(" | ").includes(id)
-        ) {
-            continue;
-        }
-        return features[i];
-    }
-    return null;
 };
 
 /**
@@ -638,6 +455,7 @@ STALayer.prototype.initializeConnection = function (onsuccess, updateOnly = fals
         }
 
         if (Array.isArray(features) && features.length) {
+            // layerSource.addFeatures(features);
             if (isObject(features[0]) && typeof features[0].getGeometry === "function" && (features[0].getGeometry().getType() === "Point" || features[0].getGeometry().getType() === "MultiPoint")) {
                 this.prepareFeaturesFor3D(features);
             }
@@ -661,657 +479,11 @@ STALayer.prototype.initializeConnection = function (onsuccess, updateOnly = fals
         if (typeof this.options.afterLoading === "function") {
             this.options.afterLoading(features);
         }
-
-        if (typeof this.get("historicalLocations") === "number" && this.showHistoricalFeatures) {
-            if (this.get("loadThingsOnlyInCurrentExtent") && Object.entries(copyFeatures).length) {
-                features.forEach(feature => {
-                    const dataStreamIdFeature = feature.get("dataStreamId");
-
-                    if (this.subscribedDataStreamIds[dataStreamIdFeature]?.subscribed && Array.isArray(this.subscribedDataStreamIds[dataStreamIdFeature].historicalFeatureIds)) {
-                        feature.set("subscribed", true);
-                        feature.set("historicalFeatureIds", this.subscribedDataStreamIds[dataStreamIdFeature].historicalFeatureIds);
-                    }
-                });
-                Object.entries(copyFeatures).forEach(([id, feature]) => {
-                    feature.setId(id);
-                    layerSource.addFeature(feature);
-                });
-            }
-        }
-        if (this.get("observeLocation") && this.get("loadThingsOnlyInCurrentExtent")) {
-            this.getHistoricalLocationsOfFeatures();
-        }
-    }, error => {
-        if (typeof this.options.onLoadingError === "function") {
-            this.options.onLoadingError(error);
-        }
+    // }, error => {
+    //     if (typeof this.options.onLoadingError === "function") {
+    //         this.options.onLoadingError(error);
+    //     }
     });
-};
-
-/**
- * Calls the SensorThings-API via http.
- * @param {String} url The url to service
- * @param {String} version The version from service
- * @param {Object} urlParams The url parameters
- * @param {Object} currentExtent the extent coordinates
- * @param {Boolean} intersect true if it intersects, false if not
- * @param {Function} onsuccess a callback function (result) with the result to call on success and result: all things with attributes and location
- * @param {Function} onerror a callback function (err) to pass errors with
- * @returns {void}
- */
-STALayer.prototype.callSensorThingsAPI = function (url, version, urlParams, currentExtent, intersect, onsuccess, onerror) {
-    const requestUrl = this.buildSensorThingsUrl(url, version, urlParams),
-        http = new SensorThingsHttp({
-            rootNode: urlParams?.root
-        });
-
-    if (!this.get("loadThingsOnlyInCurrentExtent")) {
-        http.get(requestUrl, result => {
-            if (typeof onsuccess === "function") {
-                onsuccess(this.getAllThings(result, urlParams, url, version));
-            }
-        }, null, null, onerror);
-    }
-    else {
-        http.getInExtent(requestUrl, currentExtent, intersect, result => {
-            if (typeof onsuccess === "function") {
-                onsuccess(this.getAllThings(result, urlParams, url, version));
-            }
-        }, null, null, onerror);
-    }
-};
-
-/**
- * Builds the SensorThings url.
- * @param {String} url the url to the service
- * @param {String} version the version from the service
- * @param {Object} urlParams the url parameters
- * @returns {String} url to request the sensorThings with
- */
-STALayer.prototype.buildSensorThingsUrl = function (url, version, urlParams) {
-    const root = urlParams?.root || "Things",
-        versionAsString = typeof version === "number" ? version.toFixed(1) : version;
-    let query = "";
-
-    if (isObject(urlParams)) {
-        for (const key in urlParams) {
-            if (key === "root") {
-                continue;
-            }
-            else if (query !== "") {
-                query += "&";
-            }
-
-            if (Array.isArray(urlParams[key])) {
-                if (urlParams[key].length) {
-                    query += "$" + key + "=" + urlParams[key].join(",");
-                }
-            }
-            else {
-                query += "$" + key + "=" + urlParams[key];
-            }
-        }
-    }
-
-    return `${url}/v${versionAsString}/${root}?${query}`;
-};
-
-/**
- * Prepares and Returns all things
- * @param {Object[]} sensordata response of called sensorAPI
- * @param {Object} urlParams The url parameters
- * @param {String} url The url to service
- * @param {String} version The version from service
- * @returns {Object[]} all prepared things
- */
-STALayer.prototype.getAllThings = function (sensordata, urlParams, url, version) {
-    let allThings;
-
-    if (urlParams?.root === "Datastreams") {
-        allThings = this.changeSensordataRootToThings(sensordata, this.get("datastreamAttributes"), this.get("thingAttributes"));
-        allThings = this.unifyThingsByIds(allThings);
-    }
-    else {
-        allThings = this.flattenArray(sensordata);
-    }
-
-    allThings = this.createPropertiesOfDatastreams(allThings, this.get("showNoDataValue"), this.get("noDataValue"), this.get("utc"), this.get("timezone"));
-    allThings = this.aggregatePropertiesOfThings(allThings, url, version);
-
-    return allThings;
-};
-
-/**
- * Changes the root in the sensordata from datastream to thing.
- * @param {Object[]} sensordata the sensordata with datastream as root.
- * @param {String[]} datastreamAttributes The datastream attributes.
- * @param {String[]} thingAttributes The thing attributes.
- * @returns {Object[]} The sensordata with things as root.
- */
-STALayer.prototype.changeSensordataRootToThings = function (sensordata, datastreamAttributes, thingAttributes) {
-    if (!Array.isArray(sensordata)) {
-        return [];
-    }
-    const result = [],
-        datastreamAttributesAssociation = this.createAssociationObject(datastreamAttributes),
-        thingAttributesAssociation = this.createAssociationObject(thingAttributes);
-
-    sensordata.forEach(stream => {
-        if (!isObject(stream?.Thing)) {
-            return;
-        }
-        const datastreamNewAttributes = {},
-            thing = {
-                Datastreams: [datastreamNewAttributes]
-            };
-
-        Object.keys(stream).forEach(key => {
-            if (Object.prototype.hasOwnProperty.call(datastreamAttributesAssociation, key)) {
-                datastreamNewAttributes[key] = stream[key];
-            }
-        });
-        Object.keys(stream.Thing).forEach(key => {
-            if (Object.prototype.hasOwnProperty.call(thingAttributesAssociation, key)) {
-                thing[key] = stream.Thing[key];
-            }
-        });
-
-        result.push(thing);
-    });
-
-    return result;
-};
-
-/**
- * Converts elements of an array to keys in an object with value to be true.
- * @param {String[]} array Array with value to convert to an object.
- * @returns {Object} The object with value of the given array as keys.
- */
-STALayer.prototype.createAssociationObject = function (array) {
-    if (!Array.isArray(array)) {
-        return {};
-    }
-    const associationObject = {};
-
-    array.forEach(key => {
-        associationObject[key] = true;
-    });
-
-    return associationObject;
-};
-
-/**
- * Merge datastreams based on the id of the thing if the ids exist multiple times.
- * @param {Object[]} allThings The sensordata with things as root.
- * @returns {Object[]} The sensordata with merged things as root.
- */
-STALayer.prototype.unifyThingsByIds = function (allThings) {
-    if (!Array.isArray(allThings)) {
-        return [];
-    }
-    const allThingsAssoc = {};
-
-    allThings.forEach(thing => {
-        if (!isObject(thing)) {
-            return;
-        }
-        else if (!isObject(allThingsAssoc[thing["@iot.id"]])) {
-            allThingsAssoc[thing["@iot.id"]] = thing;
-            return;
-        }
-        allThingsAssoc[thing["@iot.id"]].Datastreams = allThingsAssoc[thing["@iot.id"]].Datastreams.concat(thing.Datastreams);
-    });
-
-    return Object.values(allThingsAssoc);
-};
-
-/**
- * Creates a new array with concatenated sub array elements.
- * @info this is equivalent to Array.flat() - except no addition for testing is needed for this one - Array.flat() is a problem for tests and IE11 - so in sta.js we use the this.flattenArray(arr) function - one flat() was left in sta.js, this is solved now
- * @param {*} arr the array to flatten sub arrays or anything else
- * @returns {*} the flattened array if an array was given, the untouched input otherwise
- */
-STALayer.prototype.flattenArray = function (arr) {
-    if (!Array.isArray(arr)) {
-        return arr;
-    }
-    let result = [];
-
-    arr.forEach(value => {
-        if (Array.isArray(value)) {
-            result = result.concat(value);
-        }
-        else {
-            result.push(value);
-        }
-    });
-
-    return result;
-};
-
-/**
- * Iterates over things and creates attributes for each observed property.
- * @param {Object[]} allThings All things.
- * @param {Boolean} showNoDataValue true if "nodata" value should be shown, false if not
- * @param {String} noDataValue the value to use for "nodata"
- * @param {String} utc utc="+1" UTC-Timezone to calculate correct time.
- * @param {String} timezone name of the sensors origin timezone.
- * @returns {Object[]} All things with the newest observation for each dataStream.
- */
-STALayer.prototype.createPropertiesOfDatastreams = function (allThings, showNoDataValue, noDataValue, utc, timezone) {
-    if (!Array.isArray(allThings)) {
-        return [];
-    }
-
-    allThings.forEach(thing => {
-        if (!isObject(thing) || !Array.isArray(thing.Datastreams)) {
-            return;
-        }
-        else if (!isObject(thing.properties)) {
-            thing.properties = {};
-        }
-
-        thing.properties.dataStreamId = [];
-        thing.properties.dataStreamName = [];
-        thing.properties.dataStreamValue = [];
-        thing.properties.dataPhenomenonTime = [];
-
-        this.createPropertiesOfDatastreamsHelper(thing.Datastreams, thing.properties, showNoDataValue, noDataValue, utc, timezone);
-
-        thing.properties.dataStreamId = thing.properties.dataStreamId.join(" | ");
-        thing.properties.dataStreamValue = thing.properties.dataStreamValue.join(" | ");
-        thing.properties.dataStreamName = thing.properties.dataStreamName.join(" | ");
-        thing.properties.dataPhenomenonTime = thing.properties.dataPhenomenonTime.join(" | ");
-    });
-
-    return allThings;
-};
-
-/**
- * Iterates over the dataStreams and creates the attributes for each datastream:
- * "dataStream_[dataStreamId]_[dataStreamName]" and
- * "dataStream_[dataStreamId]_[dataStreamName]_phenomenonTime".
- * @param {Object[]} dataStreams the dataStreams of the thing.
- * @param {Object} properties the properties of the thing.
- * @param {Boolean} showNoDataValue true if "nodata" value should be shown, false if not
- * @param {String} noDataValue the value to use for "nodata"
- * @param {String} utc utc="+1" UTC-Timezone to calculate correct time.
- * @param {String} timezone name of the sensors origin timezone.
- * @returns {Boolean} true on success, false if something went wrong.
- */
-STALayer.prototype.createPropertiesOfDatastreamsHelper = function (dataStreams, properties, showNoDataValue, noDataValue, utc, timezone) {
-    if (!Array.isArray(dataStreams) || !isObject(properties)) {
-        return false;
-    }
-
-    dataStreams.forEach(dataStream => {
-        if (!isObject(dataStream)) {
-            return;
-        }
-        const dataStreamId = String(dataStream["@iot.id"]),
-            dataStreamName = dataStream.name,
-            dataStreamValue = Array.isArray(dataStream.Observations) ? dataStream.Observations[0]?.result : "",
-            dataStreamUnit = dataStream.unitOfMeasurement?.name,
-            key = "dataStream_" + dataStreamId + "_" + dataStreamName;
-        let phenomenonTime = Array.isArray(dataStream.Observations) ? dataStream.Observations[0]?.phenomenonTime : "";
-
-        this.moveDatastreamPropertiesToThing(properties, dataStream.properties);
-        phenomenonTime = changeTimeZone(phenomenonTime?.split("/")[0], utc);
-
-        properties.dataStreamId.push(dataStreamId);
-        properties.dataStreamName.push(dataStreamName);
-
-        if (dataStreamValue !== "") {
-            properties[key] = dataStreamValue;
-            properties[key + "_phenomenonTime"] = this.getLocalTimeFormat(phenomenonTime, timezone);
-            properties.dataStreamValue.push(dataStreamValue);
-            properties.dataPhenomenonTime.push(phenomenonTime);
-        }
-        else if (showNoDataValue) {
-            properties[key] = noDataValue;
-            properties[key + "_phenomenonTime"] = noDataValue;
-            properties.dataStreamValue.push(noDataValue);
-        }
-
-        if (typeof dataStreamUnit !== "undefined" && typeof this.get("rotationUnit") !== "undefined" && dataStreamUnit === this.get("rotationUnit")) {
-            properties.rotation = {
-                isDegree: true,
-                value: typeof dataStreamValue !== "undefined" ? dataStreamValue : 0
-            };
-        }
-    });
-
-    return true;
-};
-
-/**
- * Adds data from datastream to the thing with pipe separator.
- * @param {Object} thingProperties The properties from the thing.
- * @param {Object} dataStreamProperties The properties from the dataStream.
- * @returns {Boolean} returns true on success and false if anything went wrong.
- */
-STALayer.prototype.moveDatastreamPropertiesToThing = function (thingProperties, dataStreamProperties) {
-    if (!isObject(thingProperties) || !isObject(dataStreamProperties)) {
-        return false;
-    }
-    Object.entries(dataStreamProperties).forEach(([key, value]) => {
-        if (typeof thingProperties[key] !== "undefined") {
-            thingProperties[key] = thingProperties[key] + " | " + value;
-        }
-        else {
-            thingProperties[key] = value;
-        }
-    });
-
-    return true;
-};
-
-/**
- * Returns date and time in clients local format converting utc time to sensors origin timezone.
- * @param {String} phenomenonTime phenomenonTime given by sensor
- * @param {String} timezone name of the sensors origin timezone
- * @see https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
- * @see https://day.js.org/docs/en/timezone/timezone
- * @returns {String} A date string based on phenomenonTime and timezone in clients local format or an empty string if an unknown phenomenonTime is given.
- */
-STALayer.prototype.getLocalTimeFormat = function (phenomenonTime, timezone) {
-    const utcTime = this.getFirstPhenomenonTime(phenomenonTime);
-
-    if (utcTime) {
-        return dayjs(utcTime).tz(timezone).format("LLL");
-    }
-    return "";
-};
-
-/**
- * Some sensors deliver a time interval like "2020-04-02T14:00:01.000Z/2020-04-02T14:15:00.000Z".
- * Other sensors deliver a single time like "2020-04-02T14:00:01.000Z".
- * This function returns the first time given in string. Delimiter is always "/".
- * @param {String} phenomenonTime The phenomenonTime given by sensor
- * @returns {String} The first phenomenonTime
- */
-STALayer.prototype.getFirstPhenomenonTime = function (phenomenonTime) {
-    if (typeof phenomenonTime !== "string") {
-        return undefined;
-    }
-    else if (phenomenonTime.split("/").length !== 2) {
-        return phenomenonTime;
-    }
-
-    return phenomenonTime.split("/")[0];
-};
-
-/**
- * Aggregates the properties of the things.
- * @param {Object[]} allThings all things
- * @param {String} url The url to service
- * @param {String} version The version from service
- * @returns {Object[]} aggregated things
- */
-STALayer.prototype.aggregatePropertiesOfThings = function (allThings, url, version) {
-    if (!Array.isArray(allThings)) {
-        return [];
-    }
-    const result = [];
-
-    allThings.forEach(thing => {
-        const aggregatedThing = {};
-
-        if (Array.isArray(thing)) {
-            this.aggregatePropertiesOfThingAsArray(thing, aggregatedThing);
-        }
-        else {
-            this.aggregatePropertiesOfOneThing(thing, aggregatedThing);
-        }
-        if (!isObject(aggregatedThing.properties)) {
-            aggregatedThing.properties = {};
-        }
-        aggregatedThing.properties.requestUrl = url;
-        aggregatedThing.properties.versionUrl = version;
-
-        result.push(aggregatedThing);
-    });
-
-    return result;
-};
-
-/**
- * Aggregates the properties of an array of things.
- * @param {Object[]} arrayOfThings the array of things
- * @param {Object} result the thing to add aggregated properties to
- * @returns {Boolean} returns true on success and false if something went wrong
- */
-STALayer.prototype.aggregatePropertiesOfThingAsArray = function (arrayOfThings, result) {
-    if (!Array.isArray(arrayOfThings) || !isObject(result)) {
-        return false;
-    }
-    let keys = [],
-        props = {},
-        datastreams = [];
-
-    result.location = this.getThingsGeometry(arrayOfThings[0], 0);
-
-    arrayOfThings.forEach(thing => {
-        if (!isObject(thing) || !isObject(thing.properties)) {
-            return;
-        }
-        keys.push(Object.keys(thing.properties));
-        props = Object.assign(props, thing.properties);
-        if (thing?.Datastreams) {
-            datastreams = datastreams.concat(thing.Datastreams);
-        }
-    });
-
-    keys = [...new Set(this.flattenArray(keys))];
-    keys.push("name");
-    keys.push("description");
-    keys.push("@iot.id");
-
-    result.properties = Object.assign({}, props, this.aggregateProperties(arrayOfThings, keys));
-    if (datastreams.length > 0) {
-        result.properties.Datastreams = datastreams;
-    }
-
-    return true;
-};
-
-/**
- * Searches the thing for its geometry location.
- * For some reason there are two different object pathes to check.
- * @param {Object} thing the aggregated thing
- * @param {Number} index the index of the location in array Locations
- * @returns {Object} the geometry object or null if none was found
- */
-STALayer.prototype.getThingsGeometry = function (thing, index) {
-    const locations = thing?.Locations || thing?.Thing?.Locations,
-        location = locations && Object.prototype.hasOwnProperty.call(locations, index) && locations[index]?.location ? locations[index].location : null;
-
-    if (location?.geometry && location.geometry?.type) {
-        return location.geometry;
-    }
-    else if (location?.type) {
-        return location;
-    }
-
-    return null;
-};
-
-/**
- * Aggregates the properties of the given keys and joins them by " | ".
- * @param {Object[]} things Array of things to aggregate
- * @param {String[]} keys Keys to aggregate
- * @returns {Object} the aggregated properties
- */
-STALayer.prototype.aggregateProperties = function (things, keys) {
-    const result = {};
-
-    keys.forEach(key => {
-        const value = [];
-
-        things.forEach(thing => {
-            if (key === "name" || key === "description" || key === "@iot.id") {
-                value.push(thing[key]);
-            }
-            else {
-                value.push(thing.properties[key]);
-            }
-        });
-        result[key] = value.join(" | ");
-    });
-
-    return result;
-};
-
-/**
- * Aggregates the properties of one thing.
- * @param {Object} thing the thing to aggregate properties from
- * @param {Object} result the thing to add aggregated properties to
- * @returns {Boolean} returns true on success and false if something went wrong.
- */
-STALayer.prototype.aggregatePropertiesOfOneThing = function (thing, result) {
-    if (!isObject(thing) || !isObject(result)) {
-        return false;
-    }
-    result.location = this.getThingsGeometry(thing, 0);
-    result.properties = thing.properties;
-
-    if (!isObject(result.properties)) {
-        result.properties = {};
-    }
-    result.properties.name = thing.name;
-    result.properties.description = thing.description;
-    result.properties["@iot.id"] = thing["@iot.id"];
-
-    if (thing?.Datastreams) {
-        result.properties.Datastreams = thing.Datastreams;
-    }
-
-    return true;
-};
-
-/**
- * Creates features from given sensor data
- * @param {Object[]} sensorData sensor with location and properties
- * @param {ol/proj/Projection} mapProjection projection of the map
- * @param {String} epsg the epsg of sensortype
- * @param {String|Object} gfiTheme The name of the gfiTheme or an object of gfiTheme
- * @param {String} utc="+1" UTC-Timezone to calculate correct time.
- * @param {Boolean} isHistorical if it is historical data
- * @returns {ol/Feature[]} feature to draw
- */
-STALayer.prototype.createFeaturesFromSensorData = function (sensorData, mapProjection, epsg, gfiTheme, utc, isHistorical = false) {
-    if (!Array.isArray(sensorData) || typeof epsg === "undefined") {
-        return [];
-    }
-    const features = [];
-
-    sensorData.forEach((data, index) => {
-        if (!data?.location) {
-            return;
-        }
-        let feature = this.createFeatureByLocation(
-            data.location,
-            mapProjection,
-            epsg,
-            error => {
-                console.warn(error);
-            }
-        );
-
-        feature.setId(index);
-        feature.setProperties(data.properties, true);
-
-        if (isObject(gfiTheme)) {
-            feature.set("gfiParams", gfiTheme?.params, true);
-        }
-        feature.set("utc", utc, true);
-        if (isHistorical) {
-            feature.set("scale", this.getScale(index - 1, sensorData.length - 1, this.get("scaleStyleByZoom"), store.getters["Maps/getView"].getZoom() + 1, store.getters["Maps/getView"].getResolutions().length));
-            feature.set("originScale", this.getScale(index - 1, sensorData.length - 1));
-        }
-        feature = this.aggregateDataStreamValue(feature);
-        feature = this.aggregateDataStreamPhenomenonTime(feature);
-        features.push(feature);
-    });
-
-    return features.filter(subFeature => typeof subFeature.getGeometry() !== "undefined");
-};
-
-/**
- * Tries to parse object to ol/format/GeoJson
- * @param {Object} data the object to parse
- * @param {ol/proj/Projection} featureProjection projection of the map
- * @param {String} dataProjection projection of the thing
- * @param {Function} onerror a function(error) to be called on error
- * @returns {ol/Feature} the ol feature
- */
-STALayer.prototype.createFeatureByLocation = function (data, featureProjection, dataProjection, onerror) {
-    const geojsonReader = new GeoJSON({
-        featureProjection,
-        dataProjection
-    });
-
-    try {
-        return geojsonReader.readFeature(data);
-    }
-    catch (err) {
-        if (typeof onerror === "function") {
-            onerror(new Error("createFeatureByLocation: JSON structure in sensor thing location can't be parsed."));
-        }
-    }
-    return null;
-};
-
-/**
- * Aggregates the value and adds them as property "dataStreamValues".
- * @param {ol/Feature} feature The ol feature.
- * @returns {ol/Feature} The feature with new attribute "dataStreamValues".
- */
-STALayer.prototype.aggregateDataStreamValue = function (feature) {
-    const modifiedFeature = feature,
-        dataStreamValues = [];
-
-    if (feature && feature.get("dataStreamId")) {
-        feature.get("dataStreamId").split(" | ").forEach((id, i) => {
-            const dataStreamName = feature.get("dataStreamName").split(" | ")[i];
-
-            if (this.get("showNoDataValue") && !feature.get("dataStream_" + id + "_" + dataStreamName) === "") {
-                dataStreamValues.push(this.get("noDataValue"));
-            }
-            else if (feature.get("dataStream_" + id + "_" + dataStreamName)) {
-                dataStreamValues.push(feature.get("dataStream_" + id + "_" + dataStreamName));
-            }
-        });
-        if (dataStreamValues.length > 0) {
-            modifiedFeature.set("dataStreamValue", dataStreamValues.join(" | "), true);
-        }
-    }
-    return modifiedFeature;
-};
-
-/**
- * Aggregates the phenomenonTimes and adds them as property "dataStreamPhenomenonTime".
- * @param {ol/Feature} feature The ol feature.
- * @returns {ol/Feature} The feature with new attribute "dataStreamPhenomenonTime".
- */
-STALayer.prototype.aggregateDataStreamPhenomenonTime = function (feature) {
-    const modifiedFeature = feature,
-        dataStreamPhenomenonTimes = [];
-
-    if (feature && feature.get("dataStreamId")) {
-        feature.get("dataStreamId").split(" | ").forEach((id, i) => {
-            const dataStreamName = feature.get("dataStreamName").split(" | ")[i];
-
-            if (this.get("showNoDataValue") && !feature.get("dataStream_" + id + "_" + dataStreamName + "_phenomenonTime")) {
-                dataStreamPhenomenonTimes.push(this.get("noDataValue"));
-            }
-            else if (feature.get("dataStream_" + id + "_" + dataStreamName + "_phenomenonTime")) {
-                dataStreamPhenomenonTimes.push(feature.get("dataStream_" + id + "_" + dataStreamName + "_phenomenonTime"));
-            }
-        });
-        modifiedFeature.set("dataStreamPhenomenonTime", dataStreamPhenomenonTimes.join(" | "), true);
-    }
-    return modifiedFeature;
 };
 
 /**
@@ -1324,11 +496,7 @@ STALayer.prototype.toggleSubscriptionsOnMapChanges = function () {
 
     if (state === true) {
         this.createLegend();
-        this.startSubscription(this.get("layer").getSource().getFeatures());
-
-        if (this.get("observeLocation") && this.moveLayerRevisible === false) {
-            this.moveLayerRevisible = state;
-        }
+        // this.startSubscription(this.get("layer").getSource().getFeatures());
     }
     else if (state === false) {
         this.stopSubscription();
@@ -1466,298 +634,35 @@ STALayer.prototype.updateSubscription = function () {
     }, 2000);
 };
 
-/**
- * Getter for datastream ids of features in current extent.
- * @param {ol/Feature[]} features the features of this layer
- * @param {ol/extent} currentExtent the current browser extent
- * @returns {String[]} an array containing all datastream ids from this layer in the current extent
- */
-STALayer.prototype.getDatastreamIdsInCurrentExtent = function (features, currentExtent) {
-    const featuresInExtent = this.getFeaturesInExtent(features, currentExtent);
-
-    return this.getDatastreamIds(featuresInExtent);
-};
-
-/**
- * Returns features in enlarged extent (enlarged by a fixed percentage to make sure moving features close to the extent can move into the mapview).
- * @param {ol/Feature[]} features all features
- * @param {ol/extent} currentExtent the current browser extent coordinates
- * @returns {ol/Feature[]} the features in the given extent
- */
-STALayer.prototype.getFeaturesInExtent = function (features, currentExtent) {
-    const featuresInExtent = [];
-    let enlargedExtent = currentExtent;
-
-    if (typeof this.get("maxSpeedKmh") !== "undefined") {
-        enlargedExtent = this.enlargeExtentForMovableFeatures(currentExtent, this.get("maxSpeedKmh"), this.get("factor"));
-    }
-    else {
-        enlargedExtent = this.enlargeExtent(currentExtent, 0.05);
-    }
-
-    features.forEach(feature => {
-        if (containsExtent(enlargedExtent, feature.getGeometry().getExtent())) {
-            featuresInExtent.push(feature);
-        }
-    });
-
-    return featuresInExtent;
-};
-
-/**
- * Enlarges the given extent by the given factor.
- * @param {ol/extent} extent extent to enlarge
- * @param {Number} factor factor to enlarge extent
- * @returns {ol/extent} the enlarged extent
- */
-STALayer.prototype.enlargeExtent = function (extent, factor) {
-    const bufferAmount = (extent[2] - extent[0]) * factor;
-
-    return buffer(extent, bufferAmount);
-};
-
-/**
- * Enlarges the given extent depending on the max. speed of the features and an additional factor.
- * @param {ol/extent} extent - The current map extent.
- * @param {Number} maxSpeed - The max. speed of the features in km/h.
- * @param {Number} [factor=10] - An optional factor to enlarge the extent.
- * @returns {ol/extent|Boolean} The enlarged extent or false if something failed.
- */
-STALayer.prototype.enlargeExtentForMovableFeatures = function (extent, maxSpeed, factor = 10) {
-    let defaultFactor = factor;
-
-    if (!Array.isArray(extent) || extent.length !== 4) {
-        console.error("sta.enlargeExtentForMovableFeatures: The first parameter must be an array with the length of 4, but got " + typeof extent);
-        return false;
-    }
-    if (typeof maxSpeed !== "number") {
-        console.error("sta.enlargeExtentForMovableFeatures: The second parameter must be a number, but got " + typeof maxSpeed);
-        return false;
-    }
-    if (typeof factor !== "number") {
-        console.error("sta.enlargeExtentForMovableFeatures: The third parameter must be a number, but got " + typeof factor + ". Use the default 10 instead.");
-        defaultFactor = 10;
-    }
-    const minPerSec = maxSpeed / 3600 * 1000,
-        bufferAmount = minPerSec * defaultFactor;
-
-    return buffer(extent, bufferAmount);
-};
-
-/**
- * Getter for datastream ids for this layer - using dataStreamId property with expected pipe delimitors.
- * @param {ol/Feature[]} features features with datastream ids or features with features (see clustering) with datastreamids
- * @returns {String[]} an array containing all datastream ids from this layer
- */
-STALayer.prototype.getDatastreamIds = function (features) {
-    if (!Array.isArray(features)) {
-        return [];
-    }
-    const dataStreamIdsArray = [];
-
-    features.forEach(feature => {
-        if (typeof feature?.get === "function" && Array.isArray(feature.get("features"))) {
-            feature.get("features").forEach(subfeature => {
-                this.getDatastreamIdsHelper(subfeature, dataStreamIdsArray);
-            });
-        }
-        else {
-            this.getDatastreamIdsHelper(feature, dataStreamIdsArray);
-        }
-    });
-
-    return dataStreamIdsArray;
-};
-
-/**
- * Helper function for getDatastreamIds: Pushes the datastream ids into the given array.
- * @param {ol/Feature} feature the feature containing datastream ids
- * @param {String[]} dataStreamIdsArray the array to push the datastream ids into
- * @returns {Boolean} true if the function ran successfull, false if not
- */
-STALayer.prototype.getDatastreamIdsHelper = function (feature, dataStreamIdsArray) {
-    if (typeof feature?.get !== "function" || typeof feature.get("dataStreamId") !== "string" || !Array.isArray(dataStreamIdsArray)) {
-        return false;
-    }
-
-    feature.get("dataStreamId").split(" | ").forEach(id => {
-        dataStreamIdsArray.push(id);
-    });
-    return true;
-};
-
-/**
- * Unsubscribes from the mqtt client with topics subscribed in the past.
- * @param {String[]} datastreamIdsNotToUnsubscribe an array of datastreamIds as whitelist not to unsubscribe from
- * @param {Object} subscriptionTopics an object of subscribed ids as keys and true/false als value
- * @param {String} version the STA version to use in topic
- * @param {Boolean} isVisibleInMap if the layer is visible
- * @param {Object} mqttClient the mqtt client to use
- * @returns {Boolean} returns true on success and false if something went wrong
- */
-STALayer.prototype.unsubscribeFromSensorThings = function (datastreamIdsNotToUnsubscribe, subscriptionTopics, version, isVisibleInMap, mqttClient) {
-    if (!Array.isArray(datastreamIdsNotToUnsubscribe) || !isObject(subscriptionTopics) || !isObject(mqttClient)) {
-        return false;
-    }
-    const datastreamIdsAssoc = {};
-
-    datastreamIdsNotToUnsubscribe.forEach(datastreamId => {
-        datastreamIdsAssoc[datastreamId] = true;
-    });
-
-    Object.entries(subscriptionTopics).forEach(([id, isTopicSubscribed]) => {
-        if (isVisibleInMap === false || isVisibleInMap === true && isTopicSubscribed === true && !Object.prototype.hasOwnProperty.call(datastreamIdsAssoc, id)) {
-            mqttClient.unsubscribe("v" + version + "/Datastreams(" + id + ")/Observations");
-            if (this.get("observeLocation")) {
-                mqttClient.unsubscribe("v" + version + "/Datastreams(" + id + ")/Thing/Locations");
-                if (typeof this.get("historicalLocations") === "number" && this.showHistoricalFeatures) {
-                    this.resetHistoricalLocations(id);
-                }
-                const layerSource = this.get("layerSource") instanceof Cluster ? this.get("layerSource").getSource() : this.get("layerSource"),
-                    feature = this.getFeatureByDatastreamId(layerSource.getFeatures(), id);
-
-                if (typeof feature?.set === "function") {
-                    feature.set("subscribed", false);
-                }
-                this.subscribedDataStreamIds[id] = false;
-            }
-            subscriptionTopics[id] = false;
-        }
-    });
-
-    return true;
-};
-
-/**
- * Subscribes to the mqtt client for the given dataStreamIds.
- * @param {String[]} dataStreamIds an array of dataStreamIds to unsubscribe from
- * @param {Object} subscriptionTopics an object of subscribed ids as keys and true/false als value
- * @param {String} version the STA version to use in topic
- * @param {Object} mqttClient the mqtt client to use
- * @param {Object} mqttSubscribeOptions an object with key rh and qos to subscribe with
- * @returns {Boolean} returns true on success and false if something went wrong
- */
-STALayer.prototype.subscribeToSensorThings = async function (dataStreamIds, subscriptionTopics, version, mqttClient, mqttSubscribeOptions = {}) {
-    if (!Array.isArray(dataStreamIds) || !isObject(subscriptionTopics) || !isObject(mqttClient)) {
-        return false;
-    }
-
-    const layerSource = this.get("layerSource") instanceof Cluster ? this.get("layerSource").getSource() : this.get("layerSource"),
-        newSubscriptionTopics = subscriptionTopics;
-
-    for (let i = 0; i < dataStreamIds.length; i++) {
-        const id = dataStreamIds[i];
-
-        if (id && !subscriptionTopics[id]) {
-            await mqttClient.subscribe("v" + version + "/Datastreams(" + id + ")/Observations", mqttSubscribeOptions);
-
-            if (this.get("observeLocation")) {
-                await mqttClient.subscribe("v" + version + "/Datastreams(" + id + ")/Thing/Locations", mqttSubscribeOptions, () => {
-                    if (this.get("loadThingsOnlyInCurrentExtent")) {
-                        return;
-                    }
-
-                    this.fetchHistoricalLocationsByDatastreamId(
-                        layerSource.getFeatures(),
-                        id,
-                        parseInt(this.get("historicalLocations"), 10),
-                        this.get("url"),
-                        {orderby: "time+desc", expand: "Locations"},
-                        this.get("version"),
-                        () => {
-                            this.locationUpdating[id] = false;
-                        }
-                    );
-                });
-            }
-            newSubscriptionTopics[id] = true;
-
-            const feature = this.getFeatureByDatastreamId(layerSource.getFeatures(), id);
-
-            if (!isObject(feature)) {
-                continue;
-            }
-            feature.set("subscribed", true, true);
-            this.subscribedDataStreamIds[id] = {
-                subscribed: true
-            };
-        }
-    }
-
-    return true;
-};
-
-/**
- * Updates the datastreams of the given feature with received time and result of the observation.
- * @param {ol/Feature} feature feature to be updated
- * @param {String} dataStreamId the datastream id
- * @param {Object} observation the observation to update the old observation with
- * @returns {void}
- */
-STALayer.prototype.updateObservationForDatastreams = function (feature, dataStreamId, observation) {
-    if (typeof feature?.get !== "function" || !Array.isArray(feature.get("Datastreams"))) {
-        return;
-    }
-
-    feature.get("Datastreams").forEach(datastream => {
-        if (typeof datastream["@iot.id"] !== "undefined" && String(datastream["@iot.id"]) === String(dataStreamId)) {
-            datastream.Observations = [observation];
-        }
-    });
-};
-
-/**
- * Updates the location of a feature.
- * @param {ol/Feature} feature feature to be updated
- * @param {Object} observation the observation to update the old coordinates with
- * @param {Function} onsuccess function which is called when coordinates updated once
- * @returns {void}
- */
-STALayer.prototype.updateFeatureLocation = function (feature, observation, onsuccess) {
-    if (typeof feature?.getGeometry !== "function" || !Array.isArray(observation?.location?.geometry?.coordinates) || !observation.location.geometry.coordinates.length) {
-        return;
-    }
-    const mapProjection = store.getters["Maps/projection"].getCode(),
-        coordinates = this.get("epsg") !== mapProjection ? crs.transform(this.get("epsg"), mapProjection, observation.location.geometry.coordinates) : observation.location.geometry.coordinates;
-
-    if (typeof onsuccess === "function") {
-        this.locationUpdating[feature.get("dataStreamId")] = true;
-        this.eventKeys[feature.get("dataStreamId")] = feature.getGeometry().once("change", () => {
-            onsuccess();
-        });
-    }
-    feature.getGeometry().setCoordinates(coordinates);
-};
-
-/**
- * Updates feature properties.
- * @param {ol/Feature} feature feature to be updated
- * @param {String} dataStreamId the datastream id
- * @param {String} result the new state
- * @param {String} phenomenonTime the new phenomenonTime
- * @param {Boolean} showNoDataValue true if "nodata" value should be shown, false if not
- * @param {String} noDataValue the value to use for "nodata"
- * @param {Function} funcChangeFeatureGFI a function to change feature gfi with
- * @returns {Boolean} true on success, false if something went wrong
- */
+// /**
+//  * Updates feature properties.
+//  * @param {ol/Feature} feature feature to be updated
+//  * @param {String} dataStreamId the datastream id
+//  * @param {String} result the new state
+//  * @param {String} phenomenonTime the new phenomenonTime
+//  * @param {Boolean} showNoDataValue true if "nodata" value should be shown, false if not
+//  * @param {String} noDataValue the value to use for "nodata"
+//  * @param {Function} funcChangeFeatureGFI a function to change feature gfi with
+//  * @returns {Boolean} true on success, false if something went wrong
+//  */
 STALayer.prototype.updateFeatureProperties = function (feature, dataStreamId, result, phenomenonTime, showNoDataValue, noDataValue, funcChangeFeatureGFI) {
-    if (
-        typeof feature?.get !== "function"
-        || typeof feature?.set !== "function"
-        || typeof feature.get("dataStreamId") !== "string"
-        || typeof feature.get("dataStreamName") !== "string"
-    ) {
-        return false;
-    }
-    const dataStreamIdIdx = feature.get("dataStreamId").split(" | ").indexOf(String(dataStreamId)),
-        dataStreamNameArray = feature.get("dataStreamName").split(" | "),
-        dataStreamName = Object.prototype.hasOwnProperty.call(dataStreamNameArray, dataStreamIdIdx) ? dataStreamNameArray[dataStreamIdIdx] : "",
-        preparedResult = result === "" && showNoDataValue ? noDataValue : result;
+//     if (
+//         typeof feature?.get !== "function"
+//         || typeof feature?.set !== "function"
+//         || typeof feature.get("dataStreamId") !== "string"
+//         || typeof feature.get("dataStreamName") !== "string"
+//     ) {
+//         return false;
+//     }
+//     const dataStreamIdIdx = feature.get("dataStreamId").split(" | ").indexOf(String(dataStreamId)),
+//         dataStreamNameArray = feature.get("dataStreamName").split(" | "),
+//         dataStreamName = Object.prototype.hasOwnProperty.call(dataStreamNameArray, dataStreamIdIdx) ? dataStreamNameArray[dataStreamIdIdx] : "",
+//         preparedResult = result === "" && showNoDataValue ? noDataValue : result;
 
-    feature.set("dataStream_" + dataStreamId + "_" + dataStreamName, preparedResult, true);
-    feature.set("dataStream_" + dataStreamId + "_" + dataStreamName + "_phenomenonTime", phenomenonTime, true);
-    feature.set("dataStreamValue", this.replaceValueInPipedProperty(feature, "dataStreamValue", dataStreamId, preparedResult));
-    feature.set("dataStreamPhenomenonTime", this.replaceValueInPipedProperty(feature, "dataStreamPhenomenonTime", dataStreamId, phenomenonTime));
+//     feature.set("dataStream_" + dataStreamId + "_" + dataStreamName, preparedResult, true);
+//     feature.set("dataStream_" + dataStreamId + "_" + dataStreamName + "_phenomenonTime", phenomenonTime, true);
+//     feature.set("dataStreamValue", this.replaceValueInPipedProperty(feature, "dataStreamValue", dataStreamId, preparedResult));
+//     feature.set("dataStreamPhenomenonTime", this.replaceValueInPipedProperty(feature, "dataStreamPhenomenonTime", dataStreamId, phenomenonTime));
 
     if (typeof feature.get("rotation") !== "undefined" && typeof preparedResult !== "undefined") {
         feature.set("rotation", {
@@ -1770,94 +675,7 @@ STALayer.prototype.updateFeatureProperties = function (feature, dataStreamId, re
         funcChangeFeatureGFI(feature);
     }
 
-    return true;
-};
-
-/**
- * Register interaction with map view. Listens to change of scale and call removeHistoricalFeatures,
- * if actual scale is less than configured maxScaleForHistoricalFeatures
- * @returns {void}
- */
-STALayer.prototype.registerInteractionMapScaleListeners = function () {
-    store.watch((state, getters) => getters["Maps/scale"], scale => {
-        if (scale > this.get("maxScaleForHistoricalFeatures")) {
-            this.showHistoricalFeatures = false;
-            this.removeHistoricalFeatures();
-            this.lastScale = scale;
-            return;
-        }
-        this.showHistoricalFeatures = true;
-        if (scale <= this.get("maxScaleForHistoricalFeatures") && this.lastScale >= this.get("maxScaleForHistoricalFeatures")) {
-            this.getHistoricalLocationsOfFeatures();
-            this.lastScale = scale;
-        }
-    });
-};
-
-/**
- * Removes the historical Features
- * @returns {void}
- */
-STALayer.prototype.removeHistoricalFeatures = function () {
-    const layerSource = this.get("layerSource") instanceof Cluster ? this.get("layerSource").getSource() : this.get("layerSource"),
-        allFeatures = layerSource.getFeatures(),
-        featuresWithHistoricalIds = allFeatures.filter(feature => typeof feature.get("dataStreamId") !== "undefined" && Array.isArray(feature.get("historicalFeatureIds")));
-
-    featuresWithHistoricalIds.forEach(feature => {
-        if (typeof feature?.get === "function") {
-            feature.get("historicalFeatureIds").forEach(featureId => layerSource.removeFeature(layerSource.getFeatureById(featureId)));
-            feature.unset("historicalFeatureIds");
-        }
-    });
-};
-
-/**
- * Replaces a value of a piped property using dataStreamId to locate the right position in the piped property.
- * @param {ol/Feature} feature the feature with properties
- * @param {String} property the property to be updated
- * @param {String} dataStreamId the datastream id
- * @param {String} value the new value
- * @returns {String} the updated property
- */
-STALayer.prototype.replaceValueInPipedProperty = function (feature, property, dataStreamId, value) {
-    if (
-        typeof feature?.get !== "function"
-        || typeof feature.get("dataStreamId") !== "string"
-        || typeof feature.get(property) !== "string"
-        || typeof property !== "string"
-        || typeof dataStreamId !== "string"
-        || typeof value !== "string"
-    ) {
-        return "";
-    }
-    const dataStreamIds = feature.get("dataStreamId").split(" | "),
-        dataStreamProperty = feature.get(property).split(" | ");
-
-    this.replaceValueInArrayByReference(dataStreamProperty, dataStreamIds, dataStreamId, value);
-
-    return dataStreamProperty.join(" | ");
-};
-
-/**
- * Replaces a value in the given array by the position of an id in an array with referenced ids.
- * @param {String[]} result the result to change the value at the position where reference is found in referenceArray
- * @param {String[]} referenceArray the array to find the position in result to replace the value with
- * @param {String} reference the value to find the position in referenceArray
- * @param {String} value the value to replace the value in result found at position with
- * @returns {Boolean} true if the function ran successfull, false if not
- */
-STALayer.prototype.replaceValueInArrayByReference = function (result, referenceArray, reference, value) {
-    if (!Array.isArray(result) || !Array.isArray(referenceArray)) {
-        return false;
-    }
-    const len = referenceArray.length;
-
-    for (let i = 0; i < len; i++) {
-        if (reference === referenceArray[i]) {
-            result[i] = value;
-        }
-    }
-    return true;
+    // return true;
 };
 
 /**
