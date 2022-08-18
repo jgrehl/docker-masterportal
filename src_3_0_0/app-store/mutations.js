@@ -26,7 +26,6 @@ const mutations = {
      * @param {String} payload.layerConfigs.id the id to match in state.layerConfigs
      * @param {Object} [payload.trigger=true] if true then getters are triggered
      * @returns {void}
-     * [{layer: rawLayer, id: layerConf.id}]
      */
     replaceByIdInLayerConfig (state, {layerConfigs = [], trigger = true} = {}) {
         layerConfigs.forEach(config => {
