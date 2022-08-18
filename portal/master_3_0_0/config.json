@@ -14,12 +14,12 @@
       "Layer": [
         {
           "id": "453",
-          "name" : "Geobasiskarten (HamburgDE)",
+          "name": "Geobasiskarten (HamburgDE)",
           "visibility": true
         },
         {
           "id": "452",
-          "name" : "Digitale Orthophotos (belaubt) Hamburg",
+          "name": "Digitale Orthophotos (belaubt) Hamburg",
           "visibility": false
         }
       ]
@@ -28,7 +28,7 @@
       "Layer": [
         {
           "id": "10220",
-          "name" : "Dauerzählstellen (Rad) Hamburg"
+          "name": "Dauerzählstellen (Rad) Hamburg"
         },
         {
           "id": "2426",
@@ -47,12 +47,12 @@
         },
         {
           "id": "1711",
-          "name" : "Krankenhäuser",
+          "name": "Krankenhäuser",
           "visibility": false
         },
         {
           "id": "8712",
-          "name" : "de.hh.up:staatliche schulen",
+          "name": "de.hh.up:staatliche schulen",
           "visibility": true,
           "clusterDistance": 60
         }
