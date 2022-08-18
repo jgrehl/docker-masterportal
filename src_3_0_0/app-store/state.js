@@ -16,6 +16,11 @@ const state = {
         configJson: false,
         restServicesJson: false,
         servicesJson: false
+    },
+    portalConfigDefaults: {
+        tree: {
+            validLayerTypesDefaultTree: ["WMS", "SENSORTHINGS", "TERRAIN3D", "TILESET3D", "OBLIQUE"]
+        }
     }
 };
 

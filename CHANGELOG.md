@@ -5,8 +5,14 @@
 
 ## Unreleased - in development
 ### __Breaking Changes__
+- new config.json parameter 'tree' added. Containes:
+  - 'type' (was 'treeType' at root before)
+  - 'validLayerTypesDefaultTree' (new parameter)
 
 ### Added
+- The following NPM package was added:
+    - devDependencies:
+        -@babel/plugin-transform-modules-commonjs
 
 ### Changed
 
