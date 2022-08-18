@@ -134,7 +134,6 @@ export function getAndMergeRawLayersFilteredByMdId () {
 
     for (let i = 0; i < layerList.length; i++) {
         const rawLayer = layerList[i];
-        let layerAdded = false;
 
         if (!validLayerTypes.includes(rawLayer.typ?.toUpperCase()) || !rawLayer.datasets || rawLayer.datasets.length === 0) {
             continue;
@@ -146,10 +145,6 @@ export function getAndMergeRawLayersFilteredByMdId () {
             cacheLayerMetaIDs.push(rawLayer.datasets[0].md_id);
         }
         if (rawLayer.datasets.length > 1) {
-            if (layerAdded) {
-                rawLayers.splice(rawLayers.indexOf(rawLayer), 1);
-            }
-            layerAdded = true;
             rawLayer.datasets.forEach((ds, index) => {
                 const newLayer = {...rawLayer};
 
@@ -158,7 +153,7 @@ export function getAndMergeRawLayersFilteredByMdId () {
                 rawLayers.push(newLayer);
             });
         }
-        if (!layerAdded) {
+        else {
             rawLayers.push(rawLayer);
         }
     }
