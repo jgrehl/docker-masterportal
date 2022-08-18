@@ -22,7 +22,7 @@ export default function OAFLayer (attrs) {
         showSettings: true,
         isSecured: false,
         isClustered: false,
-        altitudeMode: "clampToGround",
+        // altitudeMode: "clampToGround",
         useProxy: false,
         sourceUpdated: false
     };
@@ -66,14 +66,27 @@ OAFLayer.prototype.createLayer = function (attrs) {
             crs,
             bboxCrs: attrs.bboxCrs,
             params: attrs.params
+    // const crs = attrs.crs ? attrs.crs : store.getters["Maps/projection"].getCode(),
+    const rawLayerAttributes = {
+            // id: attrs.id,
+            // url: attrs.url,
+            // clusterDistance: attrs.clusterDistance,
+            // limit: attrs.limit,
+            // collection: attrs.collection,
+            // offset: attrs.offset,
+            // bbox: attrs.bbox,
+            // datetime: attrs.datetime,
+            // crs,
+            // bboxCrs: attrs.bboxCrs,
+            // params: attrs.params
         },
         layerParams = {
-            name: attrs.name,
-            typ: attrs.typ,
+            // name: attrs.name,
+            // typ: attrs.typ,
             gfiAttributes: attrs.gfiAttributes,
             gfiTheme: attrs.gfiTheme,
             hitTolerance: attrs.hitTolerance,
-            altitudeMode: attrs.altitudeMode,
+            // altitudeMode: attrs.altitudeMode,
             alwaysOnTop: attrs.alwaysOnTop,
             layerSequence: attrs.layerSequence,
             renderer: attrs.renderer, // use "default" (canvas) or "webgl" renderer
@@ -83,14 +96,14 @@ OAFLayer.prototype.createLayer = function (attrs) {
             isPointLayer: attrs.isPointLayer // whether the source will only hold point data, only necessary for webgl
         },
         options = {
-            clusterGeometryFunction: (feature) => {
-                // do not cluster invisible features; can't rely on style since it will be null initially
-                if (feature.get("hideInClustering") === true) {
-                    return null;
-                }
-                return feature.getGeometry();
-            },
-            featuresFilter: this.getFeaturesFilterFunction(attrs),
+            // clusterGeometryFunction: (feature) => {
+            //     // do not cluster invisible features; can't rely on style since it will be null initially
+            //     if (feature.get("hideInClustering") === true) {
+            //         return null;
+            //     }
+            //     return feature.getGeometry();
+            // },
+            // featuresFilter: this.getFeaturesFilterFunction(attrs),
             beforeLoading: function () {
                 if (this.get("isSelected") || attrs.isSelected) {
                     LoaderOverlay.show();
@@ -101,55 +114,24 @@ OAFLayer.prototype.createLayer = function (attrs) {
                 if (this.get("isSelected") || attrs.isSelected) {
                     LoaderOverlay.hide();
                 }
-            }.bind(this),
-            onLoadingError: (error) => {
-                console.error("masterportal oaf loading error:", error);
-            },
-            loadingParams: {
-                xhrParameters: attrs.isSecured ? {credentials: "include"} : undefined,
-                propertyname: this.getPropertyname(attrs) || undefined,
-                // only used if loading strategy is all
-                bbox: attrs.bboxGeometry ? attrs.bboxGeometry.getExtent().toString() : undefined
-            },
-            loadingStrategy: attrs.loadingStrategy === "all" ? all : bbox
+            }.bind(this)
+            // onLoadingError: (error) => {
+            //     console.error("masterportal oaf loading error:", error);
+            // },
+            // loadingParams: {
+            //     xhrParameters: attrs.isSecured ? {credentials: "include"} : undefined,
+            //     propertyname: this.getPropertyname(attrs) || undefined,
+            //     // only used if loading strategy is all
+            //     bbox: attrs.bboxGeometry ? attrs.bboxGeometry.getExtent().toString() : undefined
+            // },
+            // loadingStrategy: attrs.loadingStrategy === "all" ? all : bbox
         };
 
     this.layer = oaf.createLayer(rawLayerAttributes, {layerParams, options});
 };
 
 /**
- * Returns a function to filter features with.
- * @param {Object} attrs  params of the raw layer
- * @returns {Function} to filter features with
- */
-OAFLayer.prototype.getFeaturesFilterFunction = function (attrs) {
-    return function (features) {
-        // only use features with a geometry
-        let filteredFeatures = features.filter(feature => feature.getGeometry() !== undefined);
-
-        if (attrs.bboxGeometry) {
-            filteredFeatures = filteredFeatures.filter(
-                (feature) => attrs.bboxGeometry.intersectsCoordinate(getCenter(feature.getGeometry().getExtent()))
-            );
-        }
-        return filteredFeatures;
-    };
-};
-/**
- * Returns the propertynames as comma separated string.
- * @param {Object} attrs  params of the raw layer
- * @returns {string} the propertynames as string
- */
-OAFLayer.prototype.getPropertyname = function (attrs) {
-    let propertyname = "";
-
-    if (Array.isArray(attrs.propertyNames)) {
-        propertyname = attrs.propertyNames.join(",");
-    }
-    return propertyname;
-};
-/**
- * Initializes the style for this layer. If styleId is set, this is done after vector styles are loaded.
+ * Get style function for layer.
  * @param {Object} attrs  params of the raw layer
  * @returns {void}
  */

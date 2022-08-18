@@ -1,13 +1,11 @@
 import Cluster from "ol/source/Cluster.js";
 import {expect} from "chai";
-import Feature from "ol/Feature";
-import {GeoJSON} from "ol/format.js";
 import sinon from "sinon";
 import VectorLayer from "ol/layer/Vector.js";
 import VectorSource from "ol/source/Vector.js";
-import Layer2dVectorGeojson from "../../layer2dVectorGeojson";
+import Layer2dVectorOaf from "../../layer2dVectorOaf";
 
-describe("src_3_0_0/core/layers/layer2dVectorGeojson.js", () => {
+describe("src_3_0_0/core/layers/layer2dVectorOaf.js", () => {
     let attributes,
         warn;
 
@@ -37,8 +35,8 @@ describe("src_3_0_0/core/layers/layer2dVectorGeojson.js", () => {
         attributes = {
             id: "id",
             layers: "layer1,layer2",
-            name: "geojsonTestLayer",
-            typ: "Geojson"
+            name: "oafTestLayer",
+            typ: "OAF"
         };
     });
 
@@ -48,20 +46,20 @@ describe("src_3_0_0/core/layers/layer2dVectorGeojson.js", () => {
     });
 
     describe("createLayer", () => {
-        it("new Layer2dVectorGeojson should create an layer with no warning", () => {
-            const geojsonLayer = new Layer2dVectorGeojson({});
+        it("new Layer2dVectorWfs should create an layer with no warning", () => {
+            const oafLayer = new Layer2dVectorOaf({});
 
-            expect(geojsonLayer).not.to.be.undefined;
+            expect(oafLayer).not.to.be.undefined;
             expect(warn.notCalled).to.be.true;
         });
 
-        it("createLayer shall create an ol.VectorLayer with source and style and GeoJSON-format", function () {
-            const geojsonLayer = new Layer2dVectorGeojson(attributes),
-                layer = geojsonLayer.layer;
+        it("createLayer shall create an ol.VectorLayer with source and style and OAF-format", function () {
+            const oafLayer = new Layer2dVectorOaf(attributes),
+                layer = oafLayer.layer;
 
             expect(layer).to.be.an.instanceof(VectorLayer);
             expect(layer.getSource()).to.be.an.instanceof(VectorSource);
-            expect(layer.getSource().getFormat()).to.be.an.instanceof(GeoJSON);
+            expect(typeof layer.getStyleFunction()).to.be.equals("function");
             expect(layer.get("id")).to.be.equals(attributes.id);
             expect(layer.get("name")).to.be.equals(attributes.name);
             expect(layer.get("gfiTheme")).to.be.equals(attributes.gfiTheme);
@@ -69,13 +67,13 @@ describe("src_3_0_0/core/layers/layer2dVectorGeojson.js", () => {
 
         it("createLayer shall create an ol.VectorLayer with cluster-source", function () {
             attributes.clusterDistance = 60;
-            const geojsonLayer = new Layer2dVectorGeojson(attributes),
-                layer = geojsonLayer.layer;
+            const oafLayer = new Layer2dVectorOaf(attributes),
+                layer = oafLayer.layer;
 
             expect(layer).to.be.an.instanceof(VectorLayer);
             expect(layer.getSource()).to.be.an.instanceof(Cluster);
             expect(layer.getSource().getDistance()).to.be.equals(attributes.clusterDistance);
-            expect(layer.getSource().getSource().getFormat()).to.be.an.instanceof(GeoJSON);
+            expect(typeof layer.getStyleFunction()).to.be.equals("function");
         });
     });
 
@@ -84,20 +82,34 @@ describe("src_3_0_0/core/layers/layer2dVectorGeojson.js", () => {
 
         beforeEach(() => {
             localAttributes = {
+                bbox: [1, 2, 3, 4],
+                bboxCrs: "EPSG:25832",
                 clusterDistance: 10,
-                geojson: ["feat", "ures"],
+                collection: "collection",
+                crs: "EPSG:25832",
+                datetime: "time",
                 id: "1234",
+                limit: 10,
+                offset: 10,
+                params: "params",
                 url: "exmpale.url"
             };
         });
 
         it("should return the raw layer attributes", () => {
-            const geojsonLayer = new Layer2dVectorGeojson(localAttributes);
+            const oafLayer = new Layer2dVectorOaf(localAttributes);
 
-            expect(geojsonLayer.getRawLayerAttributes(localAttributes)).to.deep.equals({
+            expect(oafLayer.getRawLayerAttributes(localAttributes)).to.deep.equals({
+                bbox: [1, 2, 3, 4],
+                bboxCrs: "EPSG:25832",
                 clusterDistance: 10,
-                features: ["feat", "ures"],
+                collection: "collection",
+                crs: "EPSG:25832",
+                datetime: "time",
                 id: "1234",
+                limit: 10,
+                offset: 10,
+                params: "params",
                 url: "exmpale.url"
             });
         });
@@ -110,17 +122,17 @@ describe("src_3_0_0/core/layers/layer2dVectorGeojson.js", () => {
             localAttributes = {
                 altitudeMode: "clampToGround",
                 name: "The name",
-                typ: "Geojson"
+                typ: "OAF"
             };
         });
 
         it("should return the raw layer attributes", () => {
-            const geojsonLayer = new Layer2dVectorGeojson(localAttributes);
+            const oafLayer = new Layer2dVectorOaf(localAttributes);
 
-            expect(geojsonLayer.getLayerParams(localAttributes)).to.deep.equals({
+            expect(oafLayer.getLayerParams(localAttributes)).to.deep.equals({
                 altitudeMode: "clampToGround",
                 name: "The name",
-                typ: "Geojson"
+                typ: "OAF"
             });
         });
     });
@@ -130,33 +142,18 @@ describe("src_3_0_0/core/layers/layer2dVectorGeojson.js", () => {
 
         beforeEach(() => {
             options = [
-                "afterLoading",
                 "clusterGeometryFunction",
                 "featuresFilter",
-                "map",
+                "loadingParams",
+                "loadingStrategy",
                 "onLoadingError"
             ];
         });
 
         it("should return the options that includes the correct keys", () => {
-            const geojsonLayer = new Layer2dVectorGeojson(attributes);
+            const oafLayer = new Layer2dVectorOaf(attributes);
 
-            expect(Object.keys(geojsonLayer.getOptions(attributes))).to.deep.equals(options);
-        });
-    });
-
-    describe("afterLoading", () => {
-        it("should set id to features, if id === undefined", () => {
-            const geojsonLayer = new Layer2dVectorGeojson(attributes),
-                features = [
-                    new Feature(),
-                    new Feature()
-                ];
-
-            geojsonLayer.afterLoading(attributes, features);
-
-            expect(features[0].getId()).to.equals("geojson-id-feature-id-0");
-            expect(features[1].getId()).to.equals("geojson-id-feature-id-1");
+            expect(Object.keys(oafLayer.getOptions(attributes))).to.deep.equals(options);
         });
     });
 });
