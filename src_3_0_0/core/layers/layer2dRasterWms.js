@@ -3,7 +3,7 @@ import {wms} from "@masterportal/masterportalapi";
 import Layer2dRaster from "./layer2dRaster";
 
 /**
- * Creates a 2d raster wms layer.
+ * Creates a 2d raster wms (Web Map Service) layer.
  * @constructs
  * @extends Layer2dRaster
  * @param {Object} attributes The attributes of the layer configuration.
@@ -11,7 +11,6 @@ import Layer2dRaster from "./layer2dRaster";
  */
 export default function Layer2dRasterWms (attributes) {
     const defaultAttributes = {
-        crs: mapCollection.getMapView("2D").getProjection().getCode(),
         format: "image/png",
         gutter: 0,
         origin: [442800, 5809000],
