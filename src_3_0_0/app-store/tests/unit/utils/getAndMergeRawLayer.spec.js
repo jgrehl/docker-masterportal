@@ -253,20 +253,6 @@ describe("src/utils/getAndMergeRawLayer.js", () => {
             expect(result[2]).to.be.deep.equals(layerList[2]);
         });
 
-        it("should delete layer with cache=true and same md_id (deleteLayersIncludeCache)", () => {
-            let result = null;
-
-            layerList[2].datasets[0].md_id = "B6A59A2B-2D40-4676-9094-efg";
-            layerList[2].cache = false;
-            layerList[1].cache = true;
-            result = getAndMergeRawLayersFilteredByMdId(layerContainer);
-
-            expect(result).to.be.an("array");
-            expect(result.length).to.be.equals(2);
-            expect(result[0]).to.be.deep.equals(layerList[0]);
-            expect(result[1]).to.be.deep.equals(layerList[1]);
-        });
-
         it("should create new raw layer if datasets contains more than one entry (createLayerPerDataset)", () => {
             let result = null;
 
