@@ -141,6 +141,9 @@
 ## v2.34.0 - 2023-06-07
 ### __Breaking Changes__
 - The Virtual City Planner tool (virtualcityPLANNER) has been removed
+- new config.json parameter 'tree' added. Containes:
+  - 'type' (was 'treeType' at root before)
+  - 'validLayerTypesDefaultTree' (new parameter)
 
 ### Added
 - GFI: nested object values can now be addressed from "gfiAttributes" by dot notation. See [services.json](https://bitbucket.org/geowerkstatt-hamburg/masterportal/src/dev/doc/services.json.md#markdown-header-gfi_attributes) .
