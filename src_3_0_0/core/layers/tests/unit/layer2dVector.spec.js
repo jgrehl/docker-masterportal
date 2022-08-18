@@ -37,12 +37,6 @@ describe("src_3_0_0/core/layers/layer2dVector.js", () => {
         };
     });
 
-    beforeEach(() => {
-        attributes = {
-            altitudeMode: "clampToGround"
-        };
-    });
-
     after(() => {
         sinon.restore();
     });
