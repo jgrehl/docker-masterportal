@@ -3,7 +3,7 @@ import {wfs} from "@masterportal/masterportalapi";
 import Layer2dVector from "./layer2dVector";
 
 /**
- * Creates a 2d vector wfs layer.
+ * Creates a 2d vector wfs (Web Feature Service) layer.
  * @constructs
  * @extends Layer2dVector
  * @param {Object} attributes The attributes of the layer configuration.
@@ -82,35 +82,4 @@ Layer2dVectorWfs.prototype.getOptions = function (attributes) {
     };
 
     return options;
-};
-
-/**
- * Gets the loading params.
- * @param {Object} attributes The attributes of the layer configuration.
- * @returns {Object} The loading Params.
- */
-Layer2dVectorWfs.prototype.loadingParams = function (attributes) {
-    const loadingParams = {
-        xhrParameters: attributes.isSecured ? {credentials: "include"} : undefined,
-        propertyname: this.propertyNames(attributes),
-        // only used if loading strategy is all
-        bbox: attributes.bboxGeometry ? attributes.bboxGeometry.getExtent().toString() : undefined
-    };
-
-    return loadingParams;
-};
-
-/**
- * Returns the propertyNames as comma separated string.
- * @param {Object} attributes The attributes of the layer configuration.
- * @returns {string} The propertynames as string.
- */
-Layer2dVectorWfs.prototype.propertyNames = function (attributes) {
-    let propertyname = "";
-
-    if (Array.isArray(attributes.propertyNames)) {
-        propertyname = attributes.propertyNames.join(",");
-    }
-
-    return propertyname;
 };
