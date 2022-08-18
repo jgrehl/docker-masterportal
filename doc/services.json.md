@@ -110,7 +110,7 @@ to <br>
 Possible configuration for the time related parameters of a WMS-T.
 If a parameter is also present in the service, the definition in this config is used.
 
-> ⚠️ Please mind that `version` must be set to `1.1.1`. The Masterportal implementation does currently not support newer versions.
+> âš ï¸ Please mind that `version` must be set to `1.1.1`. The Masterportal implementation does currently not support newer versions.
 
 |Name|Verpflichtend|Typ|default|Beschreibung|Beispiel|
 |----|-------------|---|-------|------------|--------|
@@ -296,7 +296,7 @@ WMTS layers can be added by
             "kategorie_inspire" : [
                "nicht INSPIRE-identifiziert"
             ],
-            "kategorie_organisation" : "Behörde für Wirtschaft, Verkehr und Innovation"
+            "kategorie_organisation" : "BehÃ¶rde fÃ¼r Wirtschaft, Verkehr und Innovation"
          }
       ]
    }
@@ -552,7 +552,7 @@ For more details, consider reading the [extensive SensorThings-API documentation
       "epsg": "EPSG:4326",
       "gfiTheme" : "default",
       "gfiAttributes" : {
-         "phenomenonTime" : "Letze Zustandsänderung",
+         "phenomenonTime" : "Letze ZustandsÃ¤nderung",
          "state" : "Zustand",
          "plug" : "Stecker",
          "type" : "Typ",
@@ -669,11 +669,11 @@ Metadata specification. All metadata of the layer data is referenced here. By cl
         "csw_url" : "https://metaver.de/csw",
         "show_doc_url" : "https://metaver.de/trefferanzeige?cmd=doShowDocument&docuuid=",
         "rs_id" : "https://registry.gdi-de.org/id/de.hh/010d7370-5306-4b63-983b-59cdd6e94c3c",
-        "md_name" : "Krankenhäuser Hamburg",
+        "md_name" : "KrankenhÃ¤user Hamburg",
         "bbox" : "461468.968928975,5916367.22980651,587010.909598947,5980347.75579767",
         "kategorie_opendata" : [ "Gesundheit" ],
         "kategorie_inspire" : [ "Versorgungswirtschaft und staatliche Dienste" ],
-        "kategorie_organisation" : "Behörde für Arbeit, Gesundheit, Soziales, Familie und Integration"
+        "kategorie_organisation" : "BehÃ¶rde fÃ¼r Arbeit, Gesundheit, Soziales, Familie und Integration"
     }
 ]
 ```
@@ -814,7 +814,7 @@ This theme allows the visualization of historical data regarding a SensorThings-
 |----|--------|----|-------|-----------|
 |charts|yes|**[charts](#markdown-header-gfi_theme_sensor_params_charts)**||Contains attributes for chart creation.|
 |data|no|**[data](#markdown-header-gfi_theme_sensor_params_data)**||Data column names.|
-|header|no|Object|`{"name": "Name", "description": "Beschreibung", "ownerThing": "Eigentümer"}`|Specifies which attributes are to be used for the headers. The display name of each attribute can be specified here, e.g. `"description"` may be displayed `"Arbitrary String"`.|
+|header|no|Object|`{"name": "Name", "description": "Beschreibung", "ownerThing": "EigentÃ¼mer"}`|Specifies which attributes are to be used for the headers. The display name of each attribute can be specified here, e.g. `"description"` may be displayed `"Arbitrary String"`.|
 |historicalData|no|**[historicalData](#markdown-header-gfi_theme_sensor_params_historicalData)**||Indicates for which period the historical Observations should be requested.|
 |beautifyKeys|no|Boolean|true|Defines if the attribute keys are beautified (true) or not (false).|
 |showObjectKeys|no|Boolean|false|Displays attribute keys and values of objects in the data if set to true.|
@@ -1070,7 +1070,7 @@ If the gfiAttributes are given as an object, a key's value may also be an object
 |html|no|**[html](#markdown-header-gfi_attributes-html)**||Object to define the html tag properties. this is neccessary if type ist set to 'html'.|`"Test"`|
 |format|no|String/Object|`"YYYY-MM-DDTHH:mm:ss.SSSZ"/{"key": "value"}`|Data format.|`"DD.MM.YYY"`|
 |prefix|no|String||Attribute value prefix.|Add string to value without whitespace `"https://"`|
-|suffix|no|String||Attribute value suffix.|`"°C"`|
+|suffix|no|String||Attribute value suffix.|`"Â°C"`|
 
 **gfiAttributes example object using `suffix` and `prefix` :**
 
@@ -1082,7 +1082,7 @@ If the gfiAttributes are given as an object, a key's value may also be an object
       "key3": {
          "name": "key shown in the portal 3",
          "condition": "contains",
-         "suffix": "°C",
+         "suffix": "Â°C",
          "prefix": "https://"
       }
    }
@@ -1192,7 +1192,7 @@ If the gfiAttributes are given as an object, a key's value may also be an object
       "key2": "key shown in the portal 2",
       "@Datastreams.0.Observations.0.result": {
         "name": "Temperatur",
-        "suffix": "°C"
+        "suffix": "Â°C"
       }
    }
 }
@@ -1432,15 +1432,15 @@ With these confurations a url in the feature properties can be displayed either 
         {
             "md_id": "2FC4BBED-350C-4380-B138-4222C28F56C6",
             "rs_id": "HMDK/6f62c5f7-7ea3-4e31-99ba-97407b1af9ba",
-            "md_name": "LOD 2 Gebäude",
+            "md_name": "LOD 2 GebÃ¤ude",
             "bbox": "461468.97,5916367.23,587010.91,5980347.76",
             "kategorie_opendata": [
-                "LOD 2 Gebäude"
+                "LOD 2 GebÃ¤ude"
             ],
             "kategorie_inspire": [
-                "LOD 2 Gebäude"
+                "LOD 2 GebÃ¤ude"
             ],
-            "kategorie_organisation": "Behörde für Wirtschaft, Verkehr und Innovation"
+            "kategorie_organisation": "BehÃ¶rde fÃ¼r Wirtschaft, Verkehr und Innovation"
         }
     ]
 }
@@ -1489,7 +1489,7 @@ With these confurations a url in the feature properties can be displayed either 
             "kategorie_inspire" : [
                "Terrain"
             ],
-            "kategorie_organisation" : "Behörde für Wirtschaft, Verkehr und Innovation"
+            "kategorie_organisation" : "BehÃ¶rde fÃ¼r Wirtschaft, Verkehr und Innovation"
          }
       ]
    }
@@ -1537,7 +1537,7 @@ With these confurations a url in the feature properties can be displayed either 
             "kategorie_inspire" : [
                "Oblique"
             ],
-            "kategorie_organisation" : "Behörde für Wirtschaft, Verkehr und Innovation"
+            "kategorie_organisation" : "BehÃ¶rde fÃ¼r Wirtschaft, Verkehr und Innovation"
          }
       ]
    }
@@ -1605,13 +1605,13 @@ Used to display 3D models in Gltf or Glb format.
        {
          "md_id": "A39B4E86-15E2-4BF7-BA82-66F9913D5640",
          "rs_id": "https://registry.gdi-de.org/id/de.hh/6D10BE89-636D-4359-8B27-4AB4DCA02F3A",
-         "md_name": "Digitales Höhenmodell Hamburg DGM 1",
+         "md_name": "Digitales HÃ¶henmodell Hamburg DGM 1",
          "bbox": "461468.97,5916367.23,587010.91,5980347.76",
          "kategorie_opendata": [
            "Geographie, Geologie und Geobasisdaten"
          ],
          "kategorie_inspire": [
-           "Höhe"
+           "HÃ¶he"
          ],
          "kategorie_organisation": "Landesbetrieb Geoinformation und Vermessung"
        }
