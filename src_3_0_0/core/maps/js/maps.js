@@ -6,6 +6,8 @@ import store from "../../../app-store";
 
 import store from "../../app-store";
 
+import store from "../../app-store";
+
 /**
  * Create the map in different modes and update the map attributes.
  * @param {Object} portalConfig The portalConfig.
