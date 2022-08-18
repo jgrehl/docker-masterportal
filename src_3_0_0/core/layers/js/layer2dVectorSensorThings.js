@@ -79,7 +79,7 @@ Layer2dVectorSensorThings.prototype.createLayer = function (attributes) {
         layerParams = this.getLayerParams(attributes),
         options = this.getOptions(attributes);
 
-    this.setLayer(this.createVectorLayer(rawLayerAttributes, {layerParams, options}));
+    this.set("layer", this.createVectorLayer(rawLayerAttributes, {layerParams, options}));
 };
 
 /**
@@ -93,6 +93,18 @@ Layer2dVectorSensorThings.prototype.getRawLayerAttributes = function (attributes
         id: attributes.id,
         url: attributes.url,
         version: attributes.version
+    };
+};
+
+/**
+ * Gets additional layer params.
+ * @param {Object} attributes The attributes of the layer configuration.
+ * @returns {Obeject} The layer params.
+ */
+Layer2dVectorSensorThings.prototype.getLayerParams = function (attributes) {
+    return {
+        name: attributes.name,
+        typ: attributes.typ
     };
 };
 
@@ -112,7 +124,7 @@ Layer2dVectorSensorThings.prototype.getOptions = function (attributes) {
 };
 
 /**
- * Creates a complete ol/Layer from rawLayer.
+ * Creates a complete ol/Layer from rawLayer containing all required children.
  * @param {Object} rawLayer layer specification as in services.json
  * @param {Object} [optionalParams] optional params
  * @param {Object} [optionalParams.layerParams] additional layer params
@@ -138,24 +150,6 @@ Layer2dVectorSensorThings.prototype.createVectorLayer = function (rawLayer = {},
     }
 
     return layer;
-};
-
-/**
- * Sets values to the ol layer.
- * @param {Object} values The new values.
- * @returns {void}
- */
-Layer2dVectorSensorThings.prototype.updateLayerValues = function (values) {
-    const state = this.getStateOfSTALayer(values.visibility, this.get("isSubscribed"));
-
-    this.getLayer().setVisible(values.visibility);
-
-    if (state === true) {
-        this.startSubscription(this.getLayerSource().getFeatures());
-    }
-    else if (state === false) {
-        this.stopSubscription();
-    }
 };
 
 /**
@@ -204,7 +198,7 @@ Layer2dVectorSensorThings.prototype.createMqttConnectionToSensorThings = functio
 
     this.mqttClient.on("message", (topic, observation) => {
         const datastreamId = this.getDatastreamIdFromMqttTopic(topic),
-            layerSource = this.getLayerSource() instanceof Cluster ? this.getLayerSource().getSource() : this.getLayerSource(),
+            layerSource = this.get("layerSource") instanceof Cluster ? this.get("layerSource").getSource() : this.get("layerSource"),
             features = typeof layerSource.getFeatures === "function" && Array.isArray(layerSource.getFeatures()) ? layerSource.getFeatures() : [],
             feature = this.getFeatureByDatastreamId(features, datastreamId),
             phenomenonTime = this.getLocalTimeFormat(observation.phenomenonTime, timezone);
@@ -305,7 +299,7 @@ Layer2dVectorSensorThings.prototype.initializeConnection = function (onsuccess) 
 
     this.callSensorThingsAPI(url, version, urlParams, currentExtent, intersect, sensorData => {
         const features = this.createFeaturesFromSensorData(sensorData, mapProjection, epsg, gfiTheme, utc),
-            layerSource = this.getLayerSource() instanceof Cluster ? this.getLayerSource().getSource() : this.getLayerSource();
+            layerSource = this.get("layerSource") instanceof Cluster ? this.get("layerSource").getSource() : this.get("layerSource");
 
         layerSource.clear();
 
@@ -942,34 +936,21 @@ Layer2dVectorSensorThings.prototype.aggregateDataStreamPhenomenonTime = function
  * @returns {void}
  */
 Layer2dVectorSensorThings.prototype.toggleSubscriptionsOnMapChanges = function () {
-    this.startSubscription(this.getLayer().getSource().getFeatures());
+    this.startSubscription(this.get("layer").getSource().getFeatures());
 };
 
 /**
- * Stops mqtt subscriptions based on the layers state.
- * @returns {void}
- */
-Layer2dVectorSensorThings.prototype.stopSubscription = function () {
-    const subscriptionTopics = this.get("subscriptionTopics"),
-        version = this.get("version"),
-        mqttClient = this.mqttClient;
-
-    this.set("isSubscribed", false);
-    store.dispatch("Maps/unregisterListener", {type: "moveend", listener: this.updateSubscription.bind(this)});
-    this.unsubscribeFromSensorThings([], subscriptionTopics, version, mqttClient);
-};
-
-/**
- * Returns the state of the layer based on visibility and isSubscribed.
- * @param {Boolean} visibility If value model is visible or not.
+ * Returns the state of the layer based on out of range value, isVisibleInMap and isSubscribed.
+ * @param {Boolean} isOutOfRange If map Scale is out of defined layer minScale and maxScale.
+ * @param {Boolean} isVisibleInMap If value model is visible or not.
  * @param {Boolean} isSubscribed To prevent multiple executions.
  * @returns {Boolean} true if layer should be subscribed, false if not
  */
-Layer2dVectorSensorThings.prototype.getStateOfSTALayer = function (visibility, isSubscribed) {
-    if (visibility && !isSubscribed) {
+Layer2dVectorSensorThings.prototype.getStateOfSTALayer = function (isOutOfRange, isVisibleInMap, isSubscribed) {
+    if (!isOutOfRange && isVisibleInMap && !isSubscribed) {
         return true;
     }
-    else if (!visibility && isSubscribed) {
+    else if ((isOutOfRange || !isVisibleInMap) && isSubscribed) {
         return false;
     }
     return undefined;
@@ -999,22 +980,24 @@ Layer2dVectorSensorThings.prototype.startSubscription = function (features) {
  * @returns {void}
  */
 Layer2dVectorSensorThings.prototype.updateSubscription = function () {
-    const datastreamIds = this.getDatastreamIdsInCurrentExtent(this.getLayer().getSource().getFeatures(), store.getters["Maps/boundingBox"]),
+    console.log(store.getters["Maps/boundingBox"]);
+    const datastreamIds = this.getDatastreamIdsInCurrentExtent(this.get("layer").getSource().getFeatures(), store.getters["Maps/boundingBox"]),
         subscriptionTopics = this.get("subscriptionTopics"),
         version = this.get("version"),
+        isVisibleInMap = this.get("isVisibleInMap"),
         mqttClient = this.mqttClient,
         rh = this.get("mqttRh"),
         qos = this.get("mqttQos");
 
     if (!this.get("loadThingsOnlyInCurrentExtent")) {
-        this.unsubscribeFromSensorThings(datastreamIds, subscriptionTopics, version, mqttClient);
+        this.unsubscribeFromSensorThings(datastreamIds, subscriptionTopics, version, isVisibleInMap, mqttClient);
         this.subscribeToSensorThings(datastreamIds, subscriptionTopics, version, mqttClient, {rh, qos});
     }
     else {
-        this.unsubscribeFromSensorThings(datastreamIds, subscriptionTopics, version, mqttClient);
+        this.unsubscribeFromSensorThings(datastreamIds, subscriptionTopics, version, isVisibleInMap, mqttClient);
         this.initializeConnection(() => {
             this.subscribeToSensorThings(
-                this.getDatastreamIdsInCurrentExtent(this.getLayer().getSource().getFeatures(), store.getters["Maps/boundingBox"]),
+                this.getDatastreamIdsInCurrentExtent(this.get("layer").getSource().getFeatures(), store.getters["Maps/boundingBox"]),
                 subscriptionTopics,
                 version,
                 mqttClient,
@@ -1115,10 +1098,11 @@ Layer2dVectorSensorThings.prototype.getDatastreamIdsHelper = function (feature, 
  * @param {String[]} datastreamIdsNotToUnsubscribe an array of datastreamIds as whitelist not to unsubscribe from
  * @param {Object} subscriptionTopics an object of subscribed ids as keys and true/false als value
  * @param {String} version the STA version to use in topic
+ * @param {Boolean} isVisibleInMap if the layer is visible
  * @param {Object} mqttClient the mqtt client to use
  * @returns {Boolean} returns true on success and false if something went wrong
  */
-Layer2dVectorSensorThings.prototype.unsubscribeFromSensorThings = function (datastreamIdsNotToUnsubscribe, subscriptionTopics, version, mqttClient) {
+Layer2dVectorSensorThings.prototype.unsubscribeFromSensorThings = function (datastreamIdsNotToUnsubscribe, subscriptionTopics, version, isVisibleInMap, mqttClient) {
     if (!Array.isArray(datastreamIdsNotToUnsubscribe) || !isObject(subscriptionTopics) || !isObject(mqttClient)) {
         return false;
     }
@@ -1129,7 +1113,7 @@ Layer2dVectorSensorThings.prototype.unsubscribeFromSensorThings = function (data
     });
 
     Object.entries(subscriptionTopics).forEach(([id, isTopicSubscribed]) => {
-        if (isTopicSubscribed === true && !Object.prototype.hasOwnProperty.call(datastreamIdsAssoc, id)) {
+        if (isVisibleInMap === false || isVisibleInMap === true && isTopicSubscribed === true && !Object.prototype.hasOwnProperty.call(datastreamIdsAssoc, id)) {
             mqttClient.unsubscribe("v" + version + "/Datastreams(" + id + ")/Observations");
             subscriptionTopics[id] = false;
         }
