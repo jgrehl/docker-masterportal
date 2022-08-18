@@ -10,6 +10,7 @@ import Layer2dRasterWms from "./layer2dRasterWms";
 const possibleLayerTypes = {
     GEOJSON: Layer2dVectorGeojson,
     OAF: Layer2dVectorOaf,
+    SENSORTHINGS: Layer2dVectorSensorThings,
     VECTORBASE: Layer2dVectorVectorbase,
     WFS: Layer2dVectorWfs,
     WMS: Layer2dRasterWms
@@ -53,7 +54,7 @@ export function processLayerConfig (layerConfig) {
         else if (layerConf.visibility === true && possibleLayerTypes[layerConf?.typ?.toUpperCase()] !== undefined) {
             layer = createLayer(layerConf);
             layerCollection.addLayer(layer);
-            store.dispatch("Maps/addLayer", layer.layer);
+            store.dispatch("Maps/addLayer", layer.get("layer"));
         }
     });
 }
