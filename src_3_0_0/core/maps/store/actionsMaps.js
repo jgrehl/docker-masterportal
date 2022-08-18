@@ -1,8 +1,12 @@
+import actionsMapsAttributesMapper from "./actionsMapsAttributesMapper.js";
+import actionsMapsInteractions from "./actionsMapsInteractions.js";
+import actionsMapsLayers from "./actionsMapsLayers.js";
+
 /**
  * Actions with the Map and MapView.
  */
-import actionsMapsLayers from "./actionsMapsLayers.js";
-
 export default {
+    ...actionsMapsAttributesMapper,
+    ...actionsMapsInteractions,
     ...actionsMapsLayers
 };
