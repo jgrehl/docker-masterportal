@@ -33,7 +33,7 @@ Layer2dVectorWfs.prototype.createLayer = function (attributes) {
         layerParams = this.getLayerParams(attributes),
         options = this.getOptions(attributes);
 
-    this.layer = wfs.createLayer(rawLayerAttributes, {layerParams, options});
+    this.set("layer", wfs.createLayer(rawLayerAttributes, {layerParams, options}));
 };
 
 /**
