@@ -69,7 +69,6 @@ describe("src_3_0_0/app-store/actions.js", () => {
                 typ: "WMS",
                 transparent: true,
                 transparency: 0,
-                cache: false,
                 datasets: [{
                     md_id: "0879B86F-4F44-45AA-BA5B-021D9D30AAEF"
                 }]
