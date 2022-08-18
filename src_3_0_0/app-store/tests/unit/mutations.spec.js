@@ -113,7 +113,7 @@ describe("src_3_0_0/app-store/mutations.js", () => {
                 },
                 stateCopy = {...state};
 
-            replaceByIdInLayerConfig(state, [toReplace]);
+            replaceByIdInLayerConfig(state, [{layer: toReplace, id: "unknown"}]);
             expect(state).to.be.deep.equals(stateCopy);
         });
 
