@@ -13,8 +13,8 @@ describe("src_3_0_0/app-store/actions.js", () => {
         layerConfigCustom;
     const restConf = "./resources/rest-services-internet.json";
 
-    global.Config = {
-    };
+    // global.Config = {
+    // };
 
     beforeEach(() => {
         layerList = [
@@ -247,6 +247,9 @@ describe("src_3_0_0/app-store/actions.js", () => {
                 minScale: 10,
                 typ: "WMS"
             };
+            state.portalConfig = {tree: {
+                type: "custom"
+            }};
 
             state.layerConfig = layerConfigCustom;
             actions.extendLayers({commit, state});
