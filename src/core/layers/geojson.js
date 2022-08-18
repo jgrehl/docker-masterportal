@@ -17,7 +17,7 @@ export default function GeoJSONLayer (attrs) {
     const defaults = {
         supported: ["2D", "3D"],
         isClustered: false,
-        altitudeMode: "clampToGround",
+        // altitudeMode: "clampToGround",
         useProxy: false
     };
 
@@ -48,32 +48,32 @@ GeoJSONLayer.prototype = Object.create(Layer.prototype);
  */
 GeoJSONLayer.prototype.createLayer = function (attrs) {
     const rawLayerAttributes = {
-            id: attrs.id,
-            url: attrs.url,
-            features: attrs.geojson,
-            clusterDistance: attrs.clusterDistance
+            // id: attrs.id,
+            // url: attrs.url,
+            // features: attrs.geojson,
+            // clusterDistance: attrs.clusterDistance
         },
         layerParams = {
-            name: attrs.name,
-            typ: attrs.typ,
-            subTyp: attrs.subTyp,
+            // name: attrs.name,
+            // typ: attrs.typ,
+            // subTyp: attrs.subTyp,
             gfiAttributes: attrs.gfiAttributes,
             gfiTheme: attrs.gfiTheme,
-            altitudeMode: attrs.altitudeMode,
+            // altitudeMode: attrs.altitudeMode,
             hitTolerance: attrs.hitTolerance
         },
         styleFn = this.getStyleFunction(attrs),
         options = {
             layerStyle: styleFn,
-            map: mapCollection.getMap("2D"),
-            clusterGeometryFunction: (feature) => {
-                // do not cluster invisible features; can't rely on style since it will be null initially
-                if (feature.get("hideInClustering") === true) {
-                    return null;
-                }
-                return feature.getGeometry();
-            },
-            featuresFilter: this.getFeaturesFilterFunction(attrs),
+            // map: mapCollection.getMap("2D"),
+            // clusterGeometryFunction: (feature) => {
+            //     // do not cluster invisible features; can't rely on style since it will be null initially
+            //     if (feature.get("hideInClustering") === true) {
+            //         return null;
+            //     }
+            //     return feature.getGeometry();
+            // },
+            // featuresFilter: this.getFeaturesFilterFunction(attrs),
             // If an Object contains a property which holds a Function, the property is called a method.
             // This method, when called, will always have it's this variable set to the Object it is associated with.
             // This is true for both strict and non-strict modes.
@@ -84,21 +84,21 @@ GeoJSONLayer.prototype.createLayer = function (attrs) {
                 }
             }.bind(this),
             afterLoading: function (features) {
-                if (Array.isArray(features)) {
-                    features.forEach((feature, idx) => {
-                        if (typeof feature?.getId === "function" && typeof feature.getId() === "undefined") {
-                            feature.setId("geojson-" + attrs.id + "-feature-id-" + idx);
-                        }
-                    });
-                }
+                // if (Array.isArray(features)) {
+                //     features.forEach((feature, idx) => {
+                //         if (typeof feature?.getId === "function" && typeof feature.getId() === "undefined") {
+                //             feature.setId("geojson-" + attrs.id + "-feature-id-" + idx);
+                //         }
+                //     });
+                // }
                 this.featuresLoaded(attrs.id, features);
                 if (this.get("isSelected") || attrs.isSelected) {
                     LoaderOverlay.hide();
                 }
-            }.bind(this),
-            onLoadingError: (error) => {
-                console.error("masterportal wfs loading error:", error);
-            }
+            }.bind(this)
+            // onLoadingError: (error) => {
+            //     console.error("masterportal wfs loading error:", error);
+            // }
         };
 
     if (styleFn) {
@@ -132,23 +132,6 @@ GeoJSONLayer.prototype.getStyleFunction = function (attrs) {
     }
 
     return style;
-};
-
-/**
- * Returns a function to filter features with.
- * @param {Object} attrs  params of the raw layer
- * @returns {Function} to filter features with
- */
-GeoJSONLayer.prototype.getFeaturesFilterFunction = function (attrs) {
-    return function (features) {
-        // only use features with a geometry
-        let filteredFeatures = features.filter(feature => feature.getGeometry() !== undefined);
-
-        if (attrs.bboxGeometry) {
-            filteredFeatures = filteredFeatures.filter((feature) => attrs.bboxGeometry.intersectsExtent(feature.getGeometry().getExtent()));
-        }
-        return filteredFeatures;
-    };
 };
 
 /**
