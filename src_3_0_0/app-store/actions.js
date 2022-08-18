@@ -27,7 +27,7 @@ export default {
 
         axios.get(targetPath)
             .then(response => {
-                commit("setPortalConfig", response.data?.Portalconfig);
+                commit("setPortalConfig", Object.assign(state.portalConfigDefaults, response.data?.Portalconfig));
                 commit("setLayerConfig", response.data?.Themenconfig);
                 commit("setLoadedConfigs", "configJson");
             })
@@ -44,8 +44,8 @@ export default {
     extendLayers ({commit, state}) {
         const layerContainer = getNestedValues(state.layerConfig, "Layer", "Ordner").flat(Infinity);
 
-        if (state.portalConfig?.treeType === "default") {
-            const rawLayers = getAndMergeRawLayersFilteredByMdId();
+        if (state.portalConfig?.tree?.type === "default") {
+            const rawLayers = getAndMergeRawLayersFilteredByMdId(state.portalConfig?.tree?.validLayerTypesDefaultTree);
 
             commit("addToLayerConfig", {layerConfigs: {Layer: rawLayers}, parentKey: "Fachdaten"});
         }
