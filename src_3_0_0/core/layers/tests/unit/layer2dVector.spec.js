@@ -12,6 +12,23 @@ describe("src_3_0_0/core/layers/layer2dVector.js", () => {
         warn = sinon.spy();
         sinon.stub(console, "error").callsFake(error);
         sinon.stub(console, "warn").callsFake(warn);
+
+        mapCollection.clear();
+        const map = {
+            id: "ol",
+            mode: "2D",
+            getView: () => {
+                return {
+                    getProjection: () => {
+                        return {
+                            getCode: () => "EPSG:25832"
+                        };
+                    }
+                };
+            }
+        };
+
+        mapCollection.addMap(map, "2D");
     });
 
     beforeEach(() => {
@@ -35,19 +52,19 @@ describe("src_3_0_0/core/layers/layer2dVector.js", () => {
 
     describe("clusterGeometryFunction", () => {
         it("should return the geometry of a feature", () => {
-            const wfsLayer = new Layer2dVector(attributes),
+            const layer2d = new Layer2dVector(attributes),
                 feature = {
                     get: () => sinon.stub(),
                     getGeometry: () => "Point"
                 };
 
-            expect(wfsLayer.clusterGeometryFunction(feature)).to.equals("Point");
+            expect(layer2d.clusterGeometryFunction(feature)).to.equals("Point");
         });
     });
 
     describe("featuresFilter", () => {
         it("featuresFilter shall filter getGeometry", function () {
-            const wfsLayer = new Layer2dVector(attributes),
+            const layer2d = new Layer2dVector(attributes),
                 features = [{
                     id: "1",
                     getGeometry: () => sinon.stub()
@@ -57,7 +74,7 @@ describe("src_3_0_0/core/layers/layer2dVector.js", () => {
                     getGeometry: () => undefined
                 }];
 
-            expect(wfsLayer.featuresFilter(attributes, features).length).to.be.equals(1);
+            expect(layer2d.featuresFilter(attributes, features).length).to.be.equals(1);
 
         });
 
@@ -71,7 +88,7 @@ describe("src_3_0_0/core/layers/layer2dVector.js", () => {
                 },
                 getExtent: () => ["1"]
             };
-            const wfsLayer = new Layer2dVector(attributes),
+            const layer2d = new Layer2dVector(attributes),
                 features = [{
                     id: "1",
                     getGeometry: () => {
@@ -93,18 +110,63 @@ describe("src_3_0_0/core/layers/layer2dVector.js", () => {
                         };
                     }
                 }],
-                wfsFeatureFilter = wfsLayer.featuresFilter(attributes, features);
+                wfsFeatureFilter = layer2d.featuresFilter(attributes, features);
 
             expect(wfsFeatureFilter.length).to.be.equals(1);
             expect(wfsFeatureFilter[0].id).to.be.equals("1");
         });
     });
 
+    describe("loadingParams", () => {
+        it("should return loading params", () => {
+            const layer2d = new Layer2dVector(attributes);
+
+            expect(layer2d.loadingParams(attributes)).to.deep.equals({
+                xhrParameters: undefined,
+                propertyname: "",
+                bbox: undefined
+            });
+        });
+    });
+
+    describe("propertyNames", () => {
+        it("should return an empty Stirng if no propertyNames are configured", () => {
+            const layer2d = new Layer2dVector(attributes);
+
+            expect(layer2d.propertyNames(attributes)).to.equals("");
+        });
+
+        it("should return all strings separated by comma", () => {
+            Object.assign(attributes, {propertyNames: ["ab", "cd"]});
+            const layer2d = new Layer2dVector(attributes);
+
+            expect(layer2d.propertyNames(attributes)).to.equals("ab,cd");
+        });
+
+        it("propertyNames shall return joined proertyNames or empty string", function () {
+            attributes.propertyNames = ["app:plan", "app:name"];
+            const layer2d = new Layer2dVector(attributes);
+            let propertyname = layer2d.propertyNames(attributes);
+
+            expect(propertyname).to.be.equals("app:plan,app:name");
+
+            attributes.propertyNames = [];
+            propertyname = layer2d.propertyNames(attributes);
+            expect(propertyname).to.be.equals("");
+            attributes.propertyNames = undefined;
+            propertyname = layer2d.propertyNames(attributes);
+            expect(propertyname).to.be.equals("");
+            attributes.propertyNames = undefined;
+            propertyname = layer2d.propertyNames(attributes);
+            expect(propertyname).to.be.equals("");
+        });
+    });
+
     describe("onLoadingError", () => {
         it("should print a console.error", () => {
-            const wfsLayer = new Layer2dVector(attributes);
+            const layer2d = new Layer2dVector(attributes);
 
-            wfsLayer.onLoadingError("The error message");
+            layer2d.onLoadingError("The error message");
 
             expect(error.calledOnce).to.be.true;
         });
