@@ -24,20 +24,18 @@ const mutations = {
      * @param {Object} layerConfigs.layer layerConfig
      * @param {String} layerConfigs.id the id to match in state.layerConfigs
      * @returns {void}
-     * [{layer: rawLayer, id: layerConf.id}]
      */
     replaceByIdInLayerConfig (state, layerConfigs = []) {
         layerConfigs.forEach(config => {
             const replacement = config.layer,
                 id = config.id,
+                assigned = replaceInNestedValues(state.layerConfig, "Layer", replacement, {key: "id", value: id}, "Ordner");
 
-                assigned = replaceInNestedValues(state.layerConfig, "Layer", replacement, {key: "id", value: id});
-
-            if (assigned === 0) {
-                console.warn(`Replacement of layer ${layerConfigs} in state.layerConfig failed. Id: ${replacement.id} was not found in state!`);
+            if (assigned.length === 0) {
+                console.warn(`Replacement of layer in state.layerConfig failed. Id: ${id} was not found in state!`);
             }
-            else if (assigned > 1) {
-                console.warn(`Replaced ${assigned.length} layers in state.layerConfig with ${replacement} Id: ${replacement.id} was found ${assigned.length} times. You have to correct your config!`);
+            else if (assigned.length > 1) {
+                console.warn(`Replaced ${assigned.length} layers in state.layerConfig with id: ${id}. Layer was found ${assigned.length} times. You have to correct your config!`);
             }
 
             // necessary to trigger the getters
