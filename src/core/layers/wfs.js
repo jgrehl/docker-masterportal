@@ -64,7 +64,7 @@ WFSLayer.prototype.createLayer = function (attrs) {
             gfiAttributes: attrs.gfiAttributes,
             gfiTheme: attrs.gfiTheme,
             hitTolerance: attrs.hitTolerance,
-            altitudeMode: attrs.altitudeMode,
+            // altitudeMode: attrs.altitudeMode,
             alwaysOnTop: attrs.alwaysOnTop,
             layerSequence: attrs.layerSequence,
             renderer: attrs.renderer, // use "default" (canvas) or "webgl" renderer
