@@ -37,7 +37,7 @@
         },
         {
           "id": "1933",
-          "visibility": true,
+          "visibility": false,
           "styles": [
             "geofox_stations"
           ],
@@ -53,7 +53,7 @@
         {
           "id": "8712",
           "name": "de.hh.up:staatliche schulen",
-          "visibility": true,
+          "visibility": false,
           "clusterDistance": 60
         }
       ]
