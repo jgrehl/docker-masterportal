@@ -14,6 +14,7 @@ export default function Layer2d (attributes) {
 
     this.attributes = Object.assign(defaultAttributes, attributes);
     Layer.call(this, this.attributes);
+    this.set("layerSource", this.get("layer").getSource());
 }
 
 Layer2d.prototype = Object.create(Layer.prototype);
