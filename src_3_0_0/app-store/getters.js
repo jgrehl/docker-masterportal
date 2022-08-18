@@ -20,7 +20,7 @@ const getters = {
      * @returns {Object[]} The layers.
      */
     allLayerConfigs: state => {
-        return getNestedValues(state.layerConfig, "Layer").flat(Infinity);
+        return getNestedValues(state.layerConfig, "Layer", "Ordner").flat(Infinity);
     },
 
     /**
