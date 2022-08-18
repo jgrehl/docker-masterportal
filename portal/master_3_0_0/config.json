@@ -57,15 +57,20 @@
           "clusterDistance": 60
         },
         {
-          "id": "geojson",
+          "id": "18106",
           "visibility": true,
+          "loadThingsOnlyInCurrentExtent": true
+        },
+        {
+          "id": "geojson",
+          "visibility": false,
           "name": "Beiträge",
           "url": "../../portalconfigs/dipas/beitraege_geojson.json",
           "typ": "GeoJSON"
         },
         {
           "id": "oaf",
-          "visibility": true,
+          "visibility": false,
           "name": "Schulen",
           "url": "https://api.hamburg.de/datasets/v1/schulen",
           "collection": "staatliche_schulen",
