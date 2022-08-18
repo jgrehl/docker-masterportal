@@ -114,6 +114,15 @@ Configuration of the topic selection tree
 
 ```
 
+**Example**
+```json
+{
+    "tree": {
+        "type": "default",
+        "validLayerTypesDefaultTree": ["WMS", "SENSORTHINGS"]
+    }
+}
+```
 ***
 ### Portalconfig.searchBar
 
