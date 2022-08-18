@@ -19,7 +19,7 @@ export default function replaceInNestedValues (obj, searchKey, replacement, cond
     }
     const result = [];
 
-    getNestedValuesHelper(obj, searchKey, maxDepth, result, 0, replacement, condition, searchKeyForArrays);
+    replaceInNestedValuesHelper(obj, searchKey, maxDepth, result, 0, replacement, condition, searchKeyForArrays);
     return result;
 }
 
@@ -37,29 +37,31 @@ export default function replaceInNestedValues (obj, searchKey, replacement, cond
  * @param {*} searchKeyForArrays if an entry contains an array at 'searchKeyForArrays', the entries of the array are inspected with 'searchKey'
  * @returns {void}
  */
-function getNestedValuesHelper (obj, searchKey, maxDepth, result, depth, replacement, condition, searchKeyForArrays) {
+function replaceInNestedValuesHelper (obj, searchKey, maxDepth, result, depth, replacement, condition, searchKeyForArrays) {
     if (typeof obj !== "object" || obj === null || depth >= maxDepth) {
         return;
     }
 
     Object.keys(obj).forEach(key => {
         if (key === searchKey) {
-            if (obj[key][condition.key] === condition.value) {
+            if (obj[key][condition.key] === condition.value && obj[key] !== replacement) {
                 obj[key] = replacement;
+                result.push(replacement);
             }
             else if (Array.isArray(obj[key])) {
-                obj[key].forEach(element => {
-                    if (element[condition.key] === condition.value) {
-                        result.push(Object.assign(element, replacement));
+                obj[key].forEach((element, index) => {
+                    if (element[condition.key] === condition.value && element !== replacement) {
+                        obj[key].splice(index, 1, replacement);
+                        result.push(replacement);
                     }
                     else if (Array.isArray(element[searchKeyForArrays])) {
-                        getNestedValuesHelper(element[searchKeyForArrays], searchKey, maxDepth, result, depth + 1, replacement, condition, searchKeyForArrays);
+                        replaceInNestedValuesHelper(element[searchKeyForArrays], searchKey, maxDepth, result, depth + 1, replacement, condition, searchKeyForArrays);
                     }
                 });
             }
         }
         else {
-            getNestedValuesHelper(obj[key], searchKey, maxDepth, result, depth + 1, replacement, condition, searchKeyForArrays);
+            replaceInNestedValuesHelper(obj[key], searchKey, maxDepth, result, depth + 1, replacement, condition, searchKeyForArrays);
         }
     });
 }
