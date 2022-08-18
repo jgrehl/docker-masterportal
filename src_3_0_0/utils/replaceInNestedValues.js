@@ -56,9 +56,6 @@ function replaceInNestedValuesHelper (obj, searchKey, maxDepth, result, depth, r
                     else if (Array.isArray(element[searchKeyForArrays])) {
                         replaceInNestedValuesHelper(element[searchKeyForArrays], searchKey, maxDepth, result, depth + 1, replacement, condition, searchKeyForArrays);
                     }
-                    else if (Array.isArray(element[searchKeyForArrays])) {
-                        getNestedValuesHelper(element[searchKeyForArrays], searchKey, maxDepth, result, depth + 1, replacement, condition, searchKeyForArrays);
-                    }
                 });
             }
         }
