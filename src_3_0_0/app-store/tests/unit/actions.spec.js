@@ -177,7 +177,6 @@ describe("src_3_0_0/app-store/actions.js", () => {
             }
         };
         commit = sinon.spy();
-        dispatch = sinon.spy();
         state = {
             configJs: {
                 portalConf: "./",
@@ -335,16 +334,6 @@ describe("src_3_0_0/app-store/actions.js", () => {
 
             actions.extendLayers({commit, state});
             expect(commit.callCount).to.be.equals(6);
-        });
-    });
-
-    describe("extendVisibleLayers", () => {
-        it("should dispatch the action extendLayers with the param: true", () => {
-            actions.extendVisibleLayers({dispatch});
-
-            expect(dispatch.calledOnce).to.be.true;
-            expect(dispatch.firstCall.args[0]).to.equals("extendLayers");
-            expect(dispatch.firstCall.args[1]).to.equals(true);
         });
     });
 });
