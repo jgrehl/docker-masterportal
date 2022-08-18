@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
 import {transform, get} from "ol/proj.js";
 import store from "../../../../app-store";
 
@@ -16,7 +18,7 @@ export default {
     async setMapAttributes ({commit, dispatch, rootState}, {map}) {
         dispatch("registerListener", {type: "change:size", listener: "setSize", listenerType: "commit"});
         dispatch("registerListener", {type: "pointermove", listener: "updatePointer", listenerType: "dispatch"});
-        dispatch("registerListener", {type: "moveend", listener: "updateAttributes", listenerType: "dispatch"});
+        // dispatch("registerListener", {type: "moveend", listener: "updateAttributes", listenerType: "dispatch"});
         dispatch("registerListener", {type: "click", listener: "updateClick", listenerType: "dispatch"});
 
         if (rootState.configJson.Portalconfig.mapView?.twoFingerPan) {
@@ -41,7 +43,7 @@ export default {
 
         commit("setMode", map.mode);
         // update state once initially to get initial settings
-        dispatch("updateAttributes", {map: map});
+        // dispatch("updateAttributes", {map: map});
         commit("setLayerIds", layerIds[1]);
     },
 
@@ -85,19 +87,19 @@ export default {
      * @returns {Function} update function for state parts to update onmoveend
      */
     updateAttributes ({commit, getters, dispatch}, evt) {
-        let map;
+        // let map;
 
-        if (evt) {
-            map = evt.map;
-        }
-        else {
-            ({map} = getters);
-        }
+        // if (evt) {
+        //     map = evt.map;
+        // }
+        // else {
+        //     ({map} = getters);
+        // }
 
-        const mapView = map.getView();
+        // const mapView = map.getView();
 
         commit("setResolution", mapView.getResolution());
-        commit("setBoundingBox", mapView.calculateExtent(map.getSize()));
+        // commit("setBoundingBox", mapView.calculateExtent(map.getSize()));
         commit("setRotation", mapView.getRotation());
         commit("setZoom", mapView.getZoom());
         dispatch("setCenter", mapView.getCenter());
