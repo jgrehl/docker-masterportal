@@ -109,6 +109,15 @@ Konfiguration der Themenbaumes
 }
 ```
 
+**Example**
+```json
+{
+    "tree": {
+        "type": "default",
+        "validLayerTypesDefaultTree": ["WMS", "SENSORTHINGS"]
+    }
+}
+```
 ***
 ### Portalconfig.searchBar
 Konfiguration der Searchbar
