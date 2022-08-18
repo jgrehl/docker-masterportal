@@ -101,7 +101,7 @@ Configuration of the topic selection tree
 **Example:**
 
 ```json
-{       
+{
     "layerIDsToStyle": [
         {
             "id": "1935",
