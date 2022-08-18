@@ -115,7 +115,7 @@ The layer tree (de: "Themenbaum") can be translated as well.
 
 >⚠️ **Plate note**: Adding a translation key to a layer tree entry will overwrite any title or name of the service.
 
-If the treeType is `"default"` or `"custom"`, folder names can be specified. In the following example, the tree would show the value for the key `"foo.bar.exampleSubjectData"` instead of "Subject data".
+If the tree.type is `"default"` or `"custom"`, folder names can be specified. In the following example, the tree would show the value for the key `"foo.bar.exampleSubjectData"` instead of "Subject data".
 
 Default translations:
 
