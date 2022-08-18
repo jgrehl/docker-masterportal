@@ -259,6 +259,9 @@ describe("src_3_0_0/app-store/actions.js", () => {
                 selected: true,
                 typ: "WMS"
             };
+            state.portalConfig = {tree: {
+                type: "custom"
+            }};
 
             state.layerConfig = layerConfigCustom;
             actions.extendLayers({commit, state});
