@@ -95,6 +95,66 @@ describe("src/utils/replaceInNestedValues.js", () => {
 
     });
 
+    it("replace layers in special configuration with nested 'Ordner'", () => {
+        const replacement = {
+            id: "1103",
+            name: "name"
+        };
+        let result = null;
+
+        layerConfig = {
+            Fachdaten: {
+                Layer: [
+                    {
+                        id: "1132",
+                        name: "100 Jahre Stadtgruen POIs",
+                        visibility: true
+                    },
+                    {
+                        id: "10220"
+                    },
+                    {
+                        Titel: "Titel",
+                        Ordner: [
+                            {
+                                Titel: "3 Layer",
+                                Layer: [
+                                    {
+                                        id: "717",
+                                        visibility: true
+                                    },
+                                    {
+                                        id: "718",
+                                        visibility: true
+                                    },
+                                    {
+                                        id: "719"
+                                    }
+                                ],
+                                Ordner: [
+                                    {
+                                        Titel: "Überschwemmungsgebiete",
+                                        Layer: [
+                                            {
+                                                id: "1103",
+                                                visibility: true
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        };
+
+        result = replaceInNestedValues(layerConfig, "Layer", replacement, {key: "id", value: "1103"}, "Ordner");
+        expect(result).to.be.an("array");
+        expect(result.length).to.be.equals(1);
+        expect(result[0]).to.be.deep.equals(Object.assign(replacement, {visibility: true}));
+    });
+
 
 });
 
