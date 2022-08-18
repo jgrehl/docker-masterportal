@@ -59,6 +59,15 @@ Configuration of the topic selection tree
 |type|no|enum["light","default","custom"]|"light"|Decides the type of topic selection tree. You may choose between `"light"` (simple list), `"default"` (FHH-Atlas), and `"custom"` (layer list defined via JSON file).|false|
 |validLayerTypesDefaultTree|no|enum|"["WMS", "SENSORTHINGS", "TERRAIN3D", "TILESET3D", "OBLIQUE"]"|Layer types to be used with the type "default".|false|
 
+**Example**
+```json
+{
+    "tree": {
+        "type": "default",
+        "validLayerTypesDefaultTree": ["WMS", "SENSORTHINGS"]
+    }
+}
+```
 ***
 
 ### Portalconfig.searchBar
