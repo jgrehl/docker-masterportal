@@ -179,7 +179,7 @@ describe("src/utils/getAndMergeRawLayer.js", () => {
 
     describe("getAndMergeRawLayersFilteredByMdId", () => {
         const validLayerTypesDefaultTree = ["WMS", "SENSORTHINGS", "TERRAIN3D", "TILESET3D", "OBLIQUE"];
-        let layerList, layerContainer;
+        let layerList;
 
         beforeEach(() => {
             layerList = [
@@ -229,11 +229,6 @@ describe("src/utils/getAndMergeRawLayer.js", () => {
                     typ: "WFS"
                 }
             ];
-            layerContainer = [
-                {
-                    id: "453",
-                    visibility: true
-                }];
             sinon.stub(rawLayerList, "getLayerWhere").callsFake(function (searchAttributes) {
                 return layerList.find(entry => Object.keys(searchAttributes).every(key => entry[key] === searchAttributes[key])) || null;
             });
