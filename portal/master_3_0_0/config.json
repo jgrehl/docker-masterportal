@@ -260,6 +260,29 @@
               "show": true
             }
           ]
+        },
+        {
+          "id": "Entities3D",
+          "name": "3D-Entities Testlayer",
+          "typ": "Entities3D",
+          "visibility": true,
+          "entities": [
+            {
+              "url": "https://daten-hamburg.de/gdi3d/datasource-data/Simple_Building.glb",
+              "attributes": {
+                "name": "Einfaches Haus in Planten und Blomen"
+              },
+              "latitude": 53.5631,
+              "longitude": 9.9800,
+              "height": 12,
+              "heading": 0,
+              "pitch": 0,
+              "roll": 0,
+              "scale": 5,
+              "allowPicking": true,
+              "show": true
+            }
+          ]
         }
       ]
     }
