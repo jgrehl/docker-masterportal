@@ -31,7 +31,7 @@
 
 const state = {
     backgroundImage: null,
-    boundingBox: null,
+    // boundingBox: null,
     center: null,
     changeZoomLevel: {
         "2D": null,
