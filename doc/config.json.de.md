@@ -23,7 +23,7 @@ Die config.json besteht aus der **[Portalconfig](#markdown-header-Portalconfig)*
 ## Portalconfig
 Im Abschnitt *Portalconfig* können folgende Eigenschaften konfiguriert werden:
 1. Titel & Logo (*portalTitle*)
-2. Art der Themenauswahl (*treeType*)
+2. Konfiguration der Themenauswahl (*tree*)
 3. Starteinstellungen der Kartenansicht (*mapView*)
 4. Schaltflächen auf der Kartenansicht sowie mögliche Interaktionen (*controls*)
 5. Menüeinträge sowie Vorhandenheit jeweiliger Tools und deren Reihenfolge (*menu*)
@@ -35,9 +35,7 @@ Es existieren die im Folgenden aufgelisteten Konfigurationen:
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
 |portalTitle|nein|**[portalTitle](#markdown-header-portalconfigportaltitle)**||Der Titel und weitere Parameter die in der Menüleiste angezeigt werden können.|false|
-|treeType|nein|enum["light","default","custom"]|"light"|Legt fest, welche Themenbaumart genutzt werden soll. Es existieren die Möglichkeiten *light* (einfache Auflistung), *default* (FHH-Atlas), *custom* (benutzerdefinierte Layerliste anhand json).|false|
-|singleBaselayer|nein|Boolean|false|Legt fest, ob nur ein Baselayer gleichzeitig ausgewählt werden kann, nur bei dem treeType „custom“ verfügbar.|false|
-|Baumtyp|nein|enum["light","default","custom"]|"light"|Deprecated in 3.0.0 Bitte Attribut "treeType" verwenden.|false|
+|singleBaselayer|nein|Boolean|false|Legt fest, ob nur ein Baselayer gleichzeitig ausgewählt werden kann, nur bei dem tree.type „custom“ verfügbar.|false|
 |mapView|nein|**[mapView](#markdown-header-portalconfigmapview)**||Mit verschiedenen Parametern wird die Startansicht konfiguriert und der Hintergrund festgelegt, der erscheint wenn keine Karte geladen ist.|false|
 |controls|nein|**[controls](#markdown-header-portalconfigcontrols)**||Mit den Controls kann festgelegt werden, welche Interaktionen in der Karte möglich sein sollen.|false|
 |menu|nein|**[menu](#markdown-header-portalconfigmenu)**||Hier können die Menüeinträge und deren Anordnung konfiguriert werden. Die Reihenfolge der Werkzeuge ist identisch mit der Reihenfolge in der config.json (siehe **[Tools](#markdown-header-portalconfigmenutools)**).|false|
@@ -46,6 +44,16 @@ Es existieren die im Folgenden aufgelisteten Konfigurationen:
 |quickHelp|nein|**[quickHelp](#markdown-header-portalconfigquickHelp)**||Konfiguration neuer und Manipulation bestehender QuickHelp-Fenster.|false|
 |tree|nein|**[tree](#markdown-header-portalconfigtree)**||Konfiguration des Menü-Baums.|false|
 |layerInformation|nein|**[layerInformation](#markdown-header-portalconfiglayerInformation)**||Legt fest, ob individuelle Attribute in Metadaten von layerinformation angezeigt werden soll.|false|
+
+***
+
+### Portalconfig.tree
+Konfiguration der Themenbaumes
+
+|Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
+|----|-------------|---|-------|------------|------|
+|type|nein|enum["light","default","custom"]|"light"|Legt fest, welche Themenbaumart genutzt werden soll. Es existieren die Möglichkeiten *light* (einfache Auflistung), *default* (FHH-Atlas), *custom* (benutzerdefinierte Layerliste anhand json).|false|
+|validLayerTypesDefaultTree|nein|enum|"["WMS", "SENSORTHINGS", "TERRAIN3D", "TILESET3D", "OBLIQUE"]"|Layer Typen die bei dem tree.type "default" verwendet werden sollen.|false|
 
 ***
 
@@ -1466,7 +1474,7 @@ Neben **Portalconfig.menu.tools** können auch die Pfade **Portalconfig.menu.inf
 |resetTree|nein|**[resetTree](#markdown-header-portalconfigmenutoolresetTree)**||Werkzeug um Themenbaum zurückzusetzen. Per Klick auf Werkzeugname im Menü unter Werkzeuge wird der Themenbaum zurückgesetzt.|false|
 |wfsFeatureFilter|nein|**[wfsFeatureFilter](#markdown-header-portalconfigmenutoolwfsFeatureFilter)**||Deprecated in 3.0.0 Bitte "filter" verwenden. Filtern von WFS Features. Über dieses Werkzeug können WFS features gefiltert werden. Dies setzt jedoch eine Konfiguration der "filterOptions" am WFS-Layer-Objekt voraus.|false|
 |wfsSearch|nein|**[wfsSearch](#markdown-header-portalconfigmenutoolwfssearch)**||Ermöglicht es ein Formular zu erstellen, um einen WFS Layer abgekoppelt von der Suchleiste mittels Filter anzufragen. Es ist möglich entweder eine gespeicherte Anfrage (Stored Query, WFS@2.0.0) zu nutzen oder eine Anfrage mithilfe der konfigurierten Parameter zu definieren (WFS@1.1.0).|false|
-|wfst|nein|**[wfst](#markdown-header-portalconfigmenutoolwfst)**||WFS-T Modul zur Visualisierung, Erstellung, Veränderung und Löschen von Features eines bestehenden WFS-T Dienstes.|false|
+|wfst|nein|**[wfst](#markdown-header-portalconfigmenutoolwfst)**||WFS-T Modul mit dem Features visualisiert, erstellt, aktualisiert und gelöscht werden können.|false|
 
 ***
 
@@ -4936,7 +4944,7 @@ Ein Staticlink-Objekt enthält folgende Attribute.
 ***
 
 ## Themenconfig
-Die Themenconfig definiert, welche Inhalte an welcher Stelle im Themenbaum vorkommen. Je nach Konfiguration des treeType können auch Ordner Strukturen in den [Fachdaten](#markdown-header-themenconfigfachdaten) angegeben werden.
+Die Themenconfig definiert, welche Inhalte an welcher Stelle im Themenbaum vorkommen. Je nach Konfiguration des tree.type können auch Ordner Strukturen in den [Fachdaten](#markdown-header-themenconfigfachdaten) angegeben werden.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
@@ -5050,7 +5058,7 @@ Hier werden die 3D-Daten für die 3D-Ansicht definiert. Im custom tree und defau
 
 [type:Layer]: # (Themenconfig.Layer)
 
-Definition für WMS-T Layer für den `treeType` `custom` und `default`. Die Layer können auch unter **[Fachdaten](#markdown-header-themenconfigfachdaten)** definiert werden.
+Definition für WMS-T Layer für den `tree.type` `custom` und `default`. Die Layer können auch unter **[Fachdaten](#markdown-header-themenconfigfachdaten)** definiert werden.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
@@ -5087,7 +5095,7 @@ Hier werden die Ordner definiert. Ordner können auch verschachtelt konfiguriert
 |Titel|ja|String||Titel des Ordners.|false|
 |Layer|ja|**[Layer](#markdown-header-themenconfiglayer)**/**[GroupLayer](#markdown-header-themenconfiggrouplayer)**[]||Definition der Layer.|false|
 |Ordner|nein|**[Ordner](#markdown-header-themenconfigordner)**[]||Definition der Ordner.|false|
-|isFolderSelectable|nein|Boolean|false|Legt fest, ob alle Layer eines Ordners auf einmal über einen Haken aktiviert bzw. deaktiviert werden dürfen. Funktioniert nur, wenn treeType="custom" konfiguriert ist. Ist dieser Wert nicht gesetzt wird die globale Einstellung im `config.js` Parameter `tree.isFolderSelectable` verwendet. |false|
+|isFolderSelectable|nein|Boolean|false|Legt fest, ob alle Layer eines Ordners auf einmal über einen Haken aktiviert bzw. deaktiviert werden dürfen. Funktioniert nur, wenn tree.type="custom" konfiguriert ist. Ist dieser Wert nicht gesetzt wird die globale Einstellung im `config.js` Parameter `tree.isFolderSelectable` verwendet. |false|
 |invertLayerOrder|nein|Boolean|false|Legt fest, ob bei Klick auf den Ordner die Reihenfolge, in der die Layer der Map hinzugefügt werden, umgekehrt werden soll.|false|
 
 **Beispiel Fachdaten-Ordner mit einem Layer**
