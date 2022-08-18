@@ -66,21 +66,11 @@ export default {
     },
 
     /**
-     * Extends all visible layers of config.json with the attributes of the layer in services.json.
-     * Replaces the extended layer in state.layerConf.
-     * @returns {void}
-     */
-    extendVisibleLayers ({dispatch}) {
-        dispatch("extendLayers", true);
-    },
-
-    /**
      * Extends all layers of config.json with the attributes of the layer in services.json.
      * Replaces the extended layer in state.layerConf.
-     * @param {Boolean} [onlyVisible=false] If true, only visible layers will be extended.
      * @returns {void}
      */
-    extendLayers ({commit, state}, onlyVisible = false) {
+    extendLayers ({commit, state}) {
         const layerContainer = getNestedValues(state.layerConfig, "Layer", "Ordner").flat(Infinity);
 
         if (state.portalConfig?.treeType === "default") {
@@ -89,16 +79,15 @@ export default {
             commit("addToLayerConfig", {layerConfigs: {Layer: rawLayers}, parentKey: "Fachdaten"});
         }
         layerContainer.forEach(layerConf => {
-            if (!onlyVisible) {
-                const rawLayer = getAndMergeRawLayer(layerConf);
+            const rawLayer = getAndMergeRawLayer(layerConf);
 
-                if (rawLayer) {
-                    commit("replaceByIdInLayerConfig", [{layer: rawLayer, id: layerConf.id}]);
-                }
-                else {
-                    console.warn("Configured visible layer with id ", layerConf.id, " was not found in ", state.configJs?.layerConf);
-                }
+            if (rawLayer) {
+                commit("replaceByIdInLayerConfig", [{layer: rawLayer, id: layerConf.id}]);
             }
+            else {
+                console.warn("Configured visible layer with id ", layerConf.id, " was not found in ", state.configJs?.layerConf);
+            }
+
         });
     },
 
