@@ -16,7 +16,7 @@ describe("src_3_0_0/core/layers/layer2d.js", () => {
         sinon.restore();
     });
 
-    it("new LayerOl2d should create an layer with warning", () => {
+    it("new Layer2d should create an layer with warning", () => {
         const layerWrapper = new Layer2d({});
 
         expect(layerWrapper).not.to.be.undefined;
