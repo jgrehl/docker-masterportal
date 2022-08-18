@@ -20,7 +20,6 @@ describe("src_3_0_0/App.vue", () => {
         createMapsSpy = sinon.spy(maps, "createMaps");
         actions = {
             extendLayers: sinon.spy(),
-            extendVisibleLayers: sinon.spy(),
             loadConfigJs: sinon.spy(),
             loadConfigJson: sinon.spy(),
             loadRestServicesJson: sinon.spy(),
