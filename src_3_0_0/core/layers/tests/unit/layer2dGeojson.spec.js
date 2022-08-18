@@ -18,7 +18,16 @@ describe("src_3_0_0/core/layers/layer2dVectorGeojson.js", () => {
         mapCollection.clear();
         const map = {
             id: "ol",
-            mode: "2D"
+            mode: "2D",
+            getView: () => {
+                return {
+                    getProjection: () => {
+                        return {
+                            getCode: () => "EPSG:25832"
+                        };
+                    }
+                };
+            }
         };
 
         mapCollection.addMap(map, "2D");
@@ -113,6 +122,26 @@ describe("src_3_0_0/core/layers/layer2dVectorGeojson.js", () => {
                 name: "The name",
                 typ: "Geojson"
             });
+        });
+    });
+
+    describe("getOptions", () => {
+        let options;
+
+        beforeEach(() => {
+            options = [
+                "afterLoading",
+                "clusterGeometryFunction",
+                "featuresFilter",
+                "map",
+                "onLoadingError"
+            ];
+        });
+
+        it("should return the options that includes the correct keys", () => {
+            const geojsonLayer = new Layer2dVectorGeojson(attributes);
+
+            expect(Object.keys(geojsonLayer.getOptions(attributes))).to.deep.equals(options);
         });
     });
 
