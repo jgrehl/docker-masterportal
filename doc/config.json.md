@@ -28,7 +28,7 @@ The configuration is separated into two sections, **[Portalconfig](#markdown-hea
 The section *Portalconfig* controls the following properties:
 
 1. Title & logo (*portalTitle*)
-2. Type of topic selection (*treeType*)
+2. Type of topic selection (*tree*)
 3. Initial map view settings (*mapView*)
 4. Map view buttons and interactions (*controls*)
 5. Menu entries and availability as well as order of tools (*menu*)
@@ -40,9 +40,7 @@ The configuration options listed in the following table exist:
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
 |portalTitle|no|**[portalTitle](#markdown-header-portalconfigportaltitle)**||The portal's title and further elements to be shown in the menu bar.|false|
-|treeType|no|enum["light","default","custom"]|"light"|Decides the type of topic selection tree. You may choose between `"light"` (simple list), `"default"` (FHH-Atlas), and `"custom"` (layer list defined via JSON file).|false|
-|singleBaselayer|no|Boolean|false|Specifies whether only one base layer may be active at any time. Only usable in combination with treeType `"custom"`.|false|
-|Baumtyp|no|enum["light","default","custom"]|"light"|_Deprecated in 3.0.0. Please use `"treeType"` instead._|false|
+|singleBaselayer|no|Boolean|false|Specifies whether only one base layer may be active at any time. Only usable in combination with tree.type `"custom"`.|false|
 |mapView|no|**[mapView](#markdown-header-portalconfigmapview)**||Defines the initial map view and a background shown when no layer is selected.|false|
 |controls|no|**[controls](#markdown-header-portalconfigcontrols)**||Allows setting which interactions are active in the map.|false|
 |menu|no|**[menu](#markdown-header-portalconfigmenu)**||Menu entries and their order are configured in this entry. The order of tools corresponds to the order in the object specifying them; see **[Tools](#markdown-header-portalconfigmenutools)**.|false|
@@ -51,6 +49,15 @@ The configuration options listed in the following table exist:
 |quickHelp|no|**[quickHelp](#markdown-header-portalconfigquickHelp)**||Configuration of new and manipulation of existing QuickHelp windows.|false|
 |tree|no|**[tree](#markdown-header-portalconfigtree)**||Configuration of menu tree.|false|
 |layerInformation|no|**[layerInformation](#markdown-header-portalconfiglayerInformation)**||Decides if to show individual attribute in Meta data of layer information|false|
+
+***
+### Portalconfig.tree
+Configuration of the topic selection tree
+
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|type|no|enum["light","default","custom"]|"light"|Decides the type of topic selection tree. You may choose between `"light"` (simple list), `"default"` (FHH-Atlas), and `"custom"` (layer list defined via JSON file).|false|
+|validLayerTypesDefaultTree|no|enum|"["WMS", "SENSORTHINGS", "TERRAIN3D", "TILESET3D", "OBLIQUE"]"|Layer types to be used with the type "default".|false|
 
 ***
 
@@ -1514,7 +1521,7 @@ Alternatively, also the paths **Portalconfig.menu.info**, **Portalconfig.menu.si
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
 |addWMS|no|**[addWMS](#markdown-header-portalconfigmenutooladdWMS)**||This tool allows loading specific WMS layers. This is done by providing a URL. All the service's layers are retrieved and offered in the layer tree in section "External technical data". Using this tool is only compatible with the `treeType` "custom" or "default".|true|
-|bufferAnalysis|no|**[bufferAnalysis](#markdown-header-bufferAnalysis)**||This buffer analysis allows the selection of a source layer, a buffer radius and a target layer. The chosen buffer radius will then be shown around features of the selected source layer. At the moment a target layer is selected, only the features of this layer will be shown, if they are outside the buffer radii. It is also possible to invert the result. In this case the resulting features will only be show if they are inside the radii. If the portal's treeType is configured to be "custom", only layers active at tool opening time are available for comparison.|false|
+|bufferAnalysis|no|**[bufferAnalysis](#markdown-header-bufferAnalysis)**||This buffer analysis allows the selection of a source layer, a buffer radius and a target layer. The chosen buffer radius will then be shown around features of the selected source layer. At the moment a target layer is selected, only the features of this layer will be shown, if they are outside the buffer radii. It is also possible to invert the result. In this case the resulting features will only be show if they are inside the radii. If the portal's tree.type is configured to be "custom", only layers active at tool opening time are available for comparison.|false|
 |compareFeatures|no|**[compareFeatures](#markdown-header-portalconfigmenutoolcomparefeatures)**||Offers a comparison option for vector features. The getFeatureInfo (GFI) window will offer a clickable star symbol to put elements on the comparison list. Works when used together with the GFI theme **Default**.|false|
 |contact|no|**[contact](#markdown-header-portalconfigmenutoolcontact)**||The contact form allows users to send messages to a configured mail address. For example, this may be used to allow users to submit errors and suggestions.|false|
 |coord|no|**[coord](#markdown-header-portalconfigmenutoolcoord)**||_Deprecated in 3.0.0. Please use `supplyCoord` instead._ Tool to read coordinates on mouse click. When clicking once, the coordinates in the view are frozen and can be copied on clicking the displaying input elements to the clipboard, i.e. you can use them in another document/chat/mail/... with `Strg+V`.|false|
@@ -5023,7 +5030,7 @@ Defines an event trigger, possibly containing a payload.
 
 ## Themenconfig
 
-The `Themenconfig` entry defines the contents and their order in the topic selection. Depending on your `treeType` configuration, the [Fachdaten](#markdown-header-themenconfigfachdaten) section may also contain folder structures.
+The `Themenconfig` entry defines the contents and their order in the topic selection. Depending on your `tree.type` configuration, the [Fachdaten](#markdown-header-themenconfigfachdaten) section may also contain folder structures.
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
@@ -5057,7 +5064,7 @@ Background map definition.
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
-|name|no|String|"Hintergrundkarten"|For `treeType` `default` and `custom`, name of the background map button area.|false|
+|name|no|String|"Hintergrundkarten"|For `tree.type` `default` and `custom`, name of the background map button area.|false|
 |Layer|yes|**[Layer](#markdown-header-themenconfiglayer)**/**[GroupLayer](#markdown-header-themenconfiggrouplayer)**[]||Layer definition.|false|
 |Ordner|no|**[Ordner](#markdown-header-themenconfigordner)**[]||Folder definition.|false|
 
@@ -5088,7 +5095,7 @@ Technical data definition.
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
-|name|no|String|"Fachdaten"|For `treeType` `default` and `custom`, name of the technical data button area.|false|
+|name|no|String|"Fachdaten"|For `tree.type` `default` and `custom`, name of the technical data button area.|false|
 |Layer|yes|**[Layer](#markdown-header-themenconfiglayer)**/**[GroupLayer](#markdown-header-themenconfiggrouplayer)**[]||Layer definition.|false|
 |Ordner|no|**[Ordner](#markdown-header-themenconfigordner)**[]||Folder definition.|false|
 
@@ -5113,7 +5120,7 @@ Technical data definition.
 
 [type:Layer]: # (Themenconfig.Layer)
 
-3D data definition for the 3D mode in `treeType` `custom` and `default`. Only shown when 3D mode is active.
+3D data definition for the 3D mode in `tree.type` `custom` and `default`. Only shown when 3D mode is active.
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
@@ -5141,7 +5148,7 @@ Technical data definition.
 
 [type:Layer]: # (Themenconfig.Layer)
 
-Definition for WMS-T layers `treeType` `custom` and `default`. The layers can also be defined under **[Fachdaten](#markdown-header-themenconfigfachdaten)**.
+Definition for WMS-T layers `tree.type` `custom` and `default`. The layers can also be defined under **[Fachdaten](#markdown-header-themenconfigfachdaten)**.
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
@@ -5178,7 +5185,7 @@ Folder definition. Folders may also be nested. Folders can be configured below t
 |Titel|yes|String||Folder title.|false|
 |Layer|yes|**[Layer](#markdown-header-themenconfiglayer)**/**[GroupLayer](#markdown-header-themenconfiggrouplayer)**[]||Layer definition.|false|
 |Ordner|no|**[Ordner](#markdown-header-themenconfigordner)**[]||Folder definition.|false|
-|isFolderSelectable|no|Boolean|false|Defines whether all layers of a folder can be de-/activated at once by using a checkbox. Only works if treetype="custom". If no flag is set, the global flag in  `config.js` parameter `tree.isFolderSelectable` is used.|false|
+|isFolderSelectable|no|Boolean|false|Defines whether all layers of a folder can be de-/activated at once by using a checkbox. Only works if tree.type="custom". If no flag is set, the global flag in  `config.js` parameter `tree.isFolderSelectable` is used.|false|
 |invertLayerOrder|no|Boolean|false|Defines wheather the order of layers added to the map should be invert when clicking the folder.|false|
 
 **Example Fachdaten-folder with one layer**

@@ -13,8 +13,8 @@ describe("src_3_0_0/app-store/actions.js", () => {
         layerConfigCustom;
     const restConf = "./resources/rest-services-internet.json";
 
-    global.Config = {
-    };
+    // global.Config = {
+    // };
 
     beforeEach(() => {
         layerList = [
@@ -184,6 +184,11 @@ describe("src_3_0_0/app-store/actions.js", () => {
             },
             configJson: {
                 Themenconfig: layerConfig
+            },
+            portalConfigDefaults:  {
+                tree: {
+                    validLayerTypesDefaultTree: ["WMS", "SENSORTHINGS", "TERRAIN3D", "TILESET3D", "OBLIQUE"]
+                }
             }
         };
         axiosMock = sinon.stub(axios, "get").returns(Promise.resolve({request: {status: 200, data: []}}));
@@ -242,6 +247,9 @@ describe("src_3_0_0/app-store/actions.js", () => {
                 minScale: 10,
                 typ: "WMS"
             };
+            state.portalConfig = {tree: {
+                type: "custom"
+            }};
 
             state.layerConfig = layerConfigCustom;
             actions.extendLayers({commit, state});
@@ -255,7 +263,10 @@ describe("src_3_0_0/app-store/actions.js", () => {
         it("extendLayers for default tree with all filtered raw layers", () => {
             let expectedFirstCallArg = null;
 
-            state.portalConfig = {treeType: "default"};
+            state.portalConfig = {tree: {
+                type: "default",
+                validLayerTypesDefaultTree: ["WMS", "SENSORTHINGS", "TERRAIN3D", "TILESET3D", "OBLIQUE"]
+            }};
             state.layerConfig = layerConfig;
             delete state.layerConfig.Fachdaten;
 
@@ -275,8 +286,10 @@ describe("src_3_0_0/app-store/actions.js", () => {
 
         });
 
-        it("extendLayers for special configuration, treetype custom", () => {
-            state.portalConfig = {treeType: "custom"};
+        it("extendLayers for special configuration, tree.type custom", () => {
+            state.portalConfig = {tree: {
+                type: "custom"
+            }};
             layerConfig = {
                 Fachdaten: {
                     Layer: [
