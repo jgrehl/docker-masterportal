@@ -8,14 +8,11 @@ import Layer2dVectorWfs from "../../layer2dVectorWfs";
 
 describe("src_3_0_0/core/layers/layer2dVectorWfs.js", () => {
     let attributes,
-        error,
         warn;
 
     before(() => {
         warn = sinon.spy();
-        error = sinon.spy();
         sinon.stub(console, "warn").callsFake(warn);
-        sinon.stub(console, "error").callsFake(error);
 
         mapCollection.clear();
         const map = {
@@ -107,6 +104,7 @@ describe("src_3_0_0/core/layers/layer2dVectorWfs.js", () => {
 
         beforeEach(() => {
             localAttributes = {
+                altitudeMode: "clampToGround",
                 name: "The name",
                 typ: "WFS"
             };
@@ -116,76 +114,10 @@ describe("src_3_0_0/core/layers/layer2dVectorWfs.js", () => {
             const wfsLayer = new Layer2dVectorWfs(localAttributes);
 
             expect(wfsLayer.getLayerParams(localAttributes)).to.deep.equals({
+                altitudeMode: "clampToGround",
                 name: "The name",
                 typ: "WFS"
             });
-        });
-    });
-
-    describe("clusterGeometryFunction", () => {
-        it("should return the geometry of a feature", () => {
-            const wfsLayer = new Layer2dVectorWfs(attributes),
-                feature = {
-                    get: () => sinon.stub(),
-                    getGeometry: () => "Point"
-                };
-
-            expect(wfsLayer.clusterGeometryFunction(feature)).to.equals("Point");
-        });
-    });
-
-    describe("featuresFilter", () => {
-        it("featuresFilter shall filter getGeometry", function () {
-            const wfsLayer = new Layer2dVectorWfs(attributes),
-                features = [{
-                    id: "1",
-                    getGeometry: () => sinon.stub()
-                },
-                {
-                    id: "2",
-                    getGeometry: () => undefined
-                }];
-
-            expect(wfsLayer.featuresFilter(attributes, features).length).to.be.equals(1);
-
-        });
-
-        it("featuresFilter shall filter bboxGeometry", function () {
-            attributes.bboxGeometry = {
-                intersectsExtent: (extent) => {
-                    if (extent.includes("1")) {
-                        return true;
-                    }
-                    return false;
-                },
-                getExtent: () => ["1"]
-            };
-            const wfsLayer = new Layer2dVectorWfs(attributes),
-                features = [{
-                    id: "1",
-                    getGeometry: () => {
-                        return {
-                            getExtent: () => ["1"]
-                        };
-
-                    }
-                },
-                {
-                    id: "2",
-                    getGeometry: () => undefined
-                },
-                {
-                    id: "3",
-                    getGeometry: () => {
-                        return {
-                            getExtent: () => ["2"]
-                        };
-                    }
-                }],
-                wfsFeatureFilter = wfsLayer.featuresFilter(attributes, features);
-
-            expect(wfsFeatureFilter.length).to.be.equals(1);
-            expect(wfsFeatureFilter[0].id).to.be.equals("1");
         });
     });
 
@@ -213,16 +145,6 @@ describe("src_3_0_0/core/layers/layer2dVectorWfs.js", () => {
             const wfsLayer = new Layer2dVectorWfs(attributes);
 
             expect(wfsLayer.propertyNames(attributes)).to.equals("ab,cd");
-        });
-    });
-
-    describe("onLoadingError", () => {
-        it("should print a console.error", () => {
-            const wfsLayer = new Layer2dVectorWfs(attributes);
-
-            wfsLayer.onLoadingError("The error message");
-
-            expect(error.calledOnce).to.be.true;
         });
     });
 });
