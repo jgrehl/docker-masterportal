@@ -1,6 +1,5 @@
 import {buffer, containsExtent} from "ol/extent";
 import Cluster from "ol/source/Cluster";
-import crs from "@masterportal/masterportalapi/src/crs";
 import {GeoJSON} from "ol/format";
 import moment from "moment";
 import "moment-timezone";
@@ -205,9 +204,6 @@ Layer2dVectorSensorThings.prototype.createMqttConnectionToSensorThings = functio
             phenomenonTime = this.getLocalTimeFormat(observation.phenomenonTime, timezone);
 
         this.updateObservationForDatastreams(feature, datastreamId, observation);
-        if (this.get("observeLocation")) {
-            this.updateFeatureLocation(feature, observation);
-        }
         this.updateFeatureProperties(feature, datastreamId, observation.result, phenomenonTime, showNoDataValue, noDataValue);
     });
 };
@@ -584,7 +580,6 @@ Layer2dVectorSensorThings.prototype.createPropertiesOfDatastreamsHelper = functi
         const dataStreamId = String(dataStream["@iot.id"]),
             dataStreamName = dataStream.name,
             dataStreamValue = Array.isArray(dataStream.Observations) ? dataStream.Observations[0]?.result : "",
-            dataStreamUnit = dataStream.unitOfMeasurement?.name,
             key = "dataStream_" + dataStreamId + "_" + dataStreamName;
         let phenomenonTime = Array.isArray(dataStream.Observations) ? dataStream.Observations[0]?.phenomenonTime : "";
 
@@ -604,12 +599,6 @@ Layer2dVectorSensorThings.prototype.createPropertiesOfDatastreamsHelper = functi
             properties[key] = noDataValue;
             properties[key + "_phenomenonTime"] = noDataValue;
             properties.dataStreamValue.push(noDataValue);
-        }
-        if (typeof dataStreamUnit !== "undefined" && typeof this.get("rotationUnit") !== "undefined" && dataStreamUnit === this.get("rotationUnit")) {
-            properties.rotation = {
-                isDegree: true,
-                value: typeof dataStreamValue !== "undefined" ? dataStreamValue : 0
-            };
         }
     });
 
@@ -1177,22 +1166,6 @@ Layer2dVectorSensorThings.prototype.updateObservationForDatastreams = function (
 };
 
 /**
- * Updates the location of a feature.
- * @param {ol/Feature} feature feature to be updated
- * @param {Object} observation the observation to update the old coordinates with
- * @returns {void}
- */
-Layer2dVectorSensorThings.prototype.updateFeatureLocation = function (feature, observation) {
-    if (typeof feature?.getGeometry !== "function" || !Array.isArray(observation?.location?.geometry?.coordinates) || !observation.location.geometry.coordinates.length) {
-        return;
-    }
-    const mapProjection = store.getters["Maps/projection"].getCode(),
-        coordinates = this.get("epsg") !== mapProjection ? crs.transform(this.get("epsg"), mapProjection, observation.location.geometry.coordinates) : observation.location.geometry.coordinates;
-
-    feature.getGeometry().setCoordinates(coordinates);
-};
-
-/**
  * Updates feature properties.
  * @param {ol/Feature} feature feature to be updated
  * @param {String} dataStreamId the datastream id
@@ -1220,13 +1193,6 @@ Layer2dVectorSensorThings.prototype.updateFeatureProperties = function (feature,
     feature.set("dataStream_" + dataStreamId + "_" + dataStreamName + "_phenomenonTime", phenomenonTime, true);
     feature.set("dataStreamValue", this.replaceValueInPipedProperty(feature, "dataStreamValue", dataStreamId, preparedResult));
     feature.set("dataStreamPhenomenonTime", this.replaceValueInPipedProperty(feature, "dataStreamPhenomenonTime", dataStreamId, phenomenonTime));
-    
-    if (typeof feature.get("rotation") !== "undefined" && typeof preparedResult !== "undefined") {
-        feature.set("rotation", {
-            isDegree: true,
-            value: preparedResult
-        });
-    }
 
     return true;
 };
