@@ -17,7 +17,16 @@ describe("src_3_0_0/core/layers/layer2dVectorWfs.js", () => {
         mapCollection.clear();
         const map = {
             id: "ol",
-            mode: "2D"
+            mode: "2D",
+            getView: () => {
+                return {
+                    getProjection: () => {
+                        return {
+                            getCode: () => "EPSG:25832"
+                        };
+                    }
+                };
+            }
         };
 
         mapCollection.addMap(map, "2D");
@@ -121,30 +130,25 @@ describe("src_3_0_0/core/layers/layer2dVectorWfs.js", () => {
         });
     });
 
-    describe("loadingParams", () => {
-        it("should return loading params", () => {
-            const wfsLayer = new Layer2dVectorWfs(attributes);
+    describe("getOptions", () => {
+        let options;
 
-            expect(wfsLayer.loadingParams(attributes)).to.deep.equals({
-                xhrParameters: undefined,
-                propertyname: "",
-                bbox: undefined
-            });
-        });
-    });
-
-    describe("propertyNames", () => {
-        it("should return an empty Stirng if no propertyNames are configured", () => {
-            const wfsLayer = new Layer2dVectorWfs(attributes);
-
-            expect(wfsLayer.propertyNames(attributes)).to.equals("");
+        beforeEach(() => {
+            options = [
+                "clusterGeometryFunction",
+                "doNotLoadInitially",
+                "featuresFilter",
+                "loadingParams",
+                "loadingStrategy",
+                "onLoadingError",
+                "wfsFilter"
+            ];
         });
 
-        it("should return all strings separated by comma", () => {
-            Object.assign(attributes, {propertyNames: ["ab", "cd"]});
+        it("should return the options that includes the correct keys", () => {
             const wfsLayer = new Layer2dVectorWfs(attributes);
 
-            expect(wfsLayer.propertyNames(attributes)).to.equals("ab,cd");
+            expect(Object.keys(wfsLayer.getOptions(attributes))).to.deep.equals(options);
         });
     });
 });
