@@ -1,4 +1,4 @@
-
+import store from "../../app-store";
 import Layer2d from "./layer2d";
 
 /**
@@ -49,6 +49,7 @@ Layer2dVector.prototype.featuresFilter = function (attributes, features) {
     if (attributes.bboxGeometry) {
         filteredFeatures = filteredFeatures.filter((feature) => attributes.bboxGeometry.intersectsExtent(feature.getGeometry().getExtent()));
     }
+
     return filteredFeatures;
 };
 

@@ -32,7 +32,7 @@
 const state = {
     altitude: 0,
     backgroundImage: null,
-    boundingBox: null,
+    // boundingBox: null,
     center: null,
     changeZoomLevel: {
         "2D": null,
