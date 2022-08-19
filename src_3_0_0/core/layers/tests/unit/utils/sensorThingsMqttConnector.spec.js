@@ -1,5 +1,5 @@
 import {expect} from "chai";
-import {SensorThingsMqttConnector} from "../../sensorThingsMqttConnector.js";
+import {SensorThingsMqttConnector} from "../../../utils/sensorThingsMqttConnector.js";
 
 describe("src/utils/sensorThingsMqttConnector.js", () => {
     let mqttClient = false;
