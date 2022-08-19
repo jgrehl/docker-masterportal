@@ -45,7 +45,7 @@ export default {
         const layerContainer = getNestedValues(state.layerConfig, "Layer", "Ordner").flat(Infinity);
 
         if (state.portalConfig?.tree?.type === "auto") {
-            const rawLayers = getAndMergeRawLayersFilteredByMdId(state.portalConfig?.tree?.validLayerTypesDefaultTree);
+            const rawLayers = getAndMergeRawLayersFilteredByMdId(state.portalConfig?.tree?.validLayerTypesAutoTree);
 
             commit("addToLayerConfig", {layerConfigs: {Layer: rawLayers}, parentKey: "Fachdaten"});
         }
