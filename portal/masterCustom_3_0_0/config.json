@@ -1,0 +1,111 @@
+{
+  "Portalconfig": {
+    "singleBaselayer": true,
+    "layersRemovable": false,
+    "tree": {
+      "type": "custom"
+    }
+  },
+  "Themenconfig": {
+    "Hintergrundkarten": {
+      "Layer": [
+        {
+          "id": [
+            "717",
+            "718",
+            "719",
+            "720",
+            "13712",
+            "13709",
+            "13714",
+            "13716"
+          ],
+          "visibility": true,
+          "name": "Geobasiskarten (farbig)"
+        },
+        {
+          "id": "453"
+        }
+      ]
+    },
+    "Fachdaten_3D": {
+      "Layer": [
+        {
+          "id": "12883",
+          "name": "Gelände",
+          "visibility": true
+        },
+        {
+          "id": "12884",
+          "name": "Gebäude LoD2",
+          "visibility": true
+        }
+      ]
+    },
+    "Fachdaten": {
+      "Layer": [
+        {
+
+          "id": "1711",
+
+          "name" : "Krankenhäuser",
+
+          "visibility": false
+
+        },
+
+        {
+
+          "id": "8712",
+
+          "name" : "de.hh.up:staatliche schulen",
+
+          "visibility": true,
+
+          "clusterDistance": 60
+
+        },
+        {
+          "id": "1132",
+          "name": "100 Jahre Stadtgruen POIs",
+          "visibility": true
+        },
+        {
+          "id": "10220"
+        },
+        {
+          "Titel": "Emissionen",
+          "Ordner": [
+            {
+              "Titel": "Lärmschutzbereiche Flughafen Hamburg (FluLärmHmbV)",
+              "Layer": [
+                {
+                  "id": "2431",
+                  "visibility": true
+                },
+                {
+                  "id": "2430",
+                  "visibility": true
+                },
+                {
+                  "id": "2429"
+                }
+              ],
+              "Ordner": [
+                {
+                  "Titel": "Überschwemmungsgebiete",
+                  "Layer": [
+                    {
+                      "id": "1103",
+                      "visibility": true
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
