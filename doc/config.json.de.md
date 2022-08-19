@@ -54,14 +54,14 @@ Konfiguration der Themenbaumes
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
 |type|nein|enum["auto"]||Der Themenbaum ist in der gleichen Struktur aufgebaut wie die [Themenconfig](#markdown-header-Themenconfig). Wenn der Typ `auto` konfiguriert ist, werden alle Ebenen aus der [services.json](services.json.md) im Baum angeboten, strukturiert durch ihre Metadaten (FHH-Atlas).|false|
-|validLayerTypesDefaultTree|nein|enum|["WMS", "SENSORTHINGS", "TERRAIN3D", "TILESET3D", "OBLIQUE"]|Layer Typen die bei dem tree.type `auto` verwendet werden sollen.|false|
+|validLayerTypesAutoTree|nein|enum|["WMS", "SENSORTHINGS", "TERRAIN3D", "TILESET3D", "OBLIQUE"]|Layer Typen die bei dem tree.type `auto` verwendet werden sollen.|false|
 
 **Example**
 ```json
 {
     "tree": {
         "type": "auto",
-        "validLayerTypesDefaultTree": ["WMS", "WFS"]
+        "validLayerTypesAutoTree": ["WMS", "WFS"]
     }
 }
 ```
