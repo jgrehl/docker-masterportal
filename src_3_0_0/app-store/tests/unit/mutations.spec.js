@@ -81,7 +81,7 @@ describe("src_3_0_0/app-store/mutations.js", () => {
                 }]
             };
 
-            replaceByIdInLayerConfig(state, [{layer: toReplace, id: id}]);
+            replaceByIdInLayerConfig(state, {layerConfigs: [{layer: toReplace, id: id}]});
 
             expect(state.layerConfig?.Hintergrundkarten?.Layer).to.be.an("array");
             expect(state.layerConfig?.Hintergrundkarten?.Layer.length).to.be.equals(2);
@@ -113,7 +113,7 @@ describe("src_3_0_0/app-store/mutations.js", () => {
                 },
                 stateCopy = {...state};
 
-            replaceByIdInLayerConfig(state, [{layer: toReplace, id: "unknown"}]);
+            replaceByIdInLayerConfig(state, {layerConfigs: [{layer: toReplace, id: "unknown"}]});
             expect(state).to.be.deep.equals(stateCopy);
         });
 
