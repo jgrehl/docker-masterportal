@@ -30,7 +30,7 @@ Layer2dVectorOaf.prototype.createLayer = function (attributes) {
         layerParams = this.getLayerParams(attributes),
         options = this.getOptions(attributes);
 
-    this.set("layer", oaf.createVectorLayer(rawLayerAttributes, {layerParams, options}));
+    this.setLayer(oaf.createLayer(rawLayerAttributes, {layerParams, options}));
 };
 
 /**
