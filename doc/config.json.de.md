@@ -39,6 +39,7 @@ Es existieren die im Folgenden aufgelisteten Konfigurationen:
 |mapView|nein|**[mapView](#markdown-header-portalconfigmapview)**||Mit verschiedenen Parametern wird die Startansicht konfiguriert und der Hintergrund festgelegt, der erscheint wenn keine Karte geladen ist.|false|
 |controls|nein|**[controls](#markdown-header-portalconfigcontrols)**||Mit den Controls kann festgelegt werden, welche Interaktionen in der Karte möglich sein sollen.|false|
 |menu|nein|**[menu](#markdown-header-portalconfigmenu)**||Hier können die Menüeinträge und deren Anordnung konfiguriert werden. Die Reihenfolge der Werkzeuge ist identisch mit der Reihenfolge in der config.json (siehe **[Tools](#markdown-header-portalconfigmenutools)**).|false|
+|tree|nein|**[tree](#markdown-header-portalconfigtree)**||Konfiguration der Themenbaumes.|false|
 |searchBar|nein|**[searchBar](#markdown-header-portalconfigsearchbar)**||Über die Suchleiste können verschiedene Suchen gleichzeitig angefragt werden.|false|
 |layersRemovable|nein|Boolean|false|Gibt an, ob der Layer gelöscht werden darf.|false|
 |quickHelp|nein|**[quickHelp](#markdown-header-portalconfigquickHelp)**||Konfiguration neuer und Manipulation bestehender QuickHelp-Fenster.|false|
@@ -53,14 +54,14 @@ Konfiguration der Themenbaumes
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
 |type|nein|enum["light","default","custom"]|"light"|Legt fest, welche Themenbaumart genutzt werden soll. Es existieren die Möglichkeiten *light* (einfache Auflistung), *default* (FHH-Atlas), *custom* (benutzerdefinierte Layerliste anhand json).|false|
-|validLayerTypesDefaultTree|nein|enum|"["WMS", "SENSORTHINGS", "TERRAIN3D", "TILESET3D", "OBLIQUE"]"|Layer Typen die bei dem tree.type "default" verwendet werden sollen.|false|
+|validLayerTypesDefaultTree|nein|enum|["WMS", "SENSORTHINGS", "TERRAIN3D", "TILESET3D", "OBLIQUE"]|Layer Typen die bei dem tree.type "default" verwendet werden sollen.|false|
 
 **Example**
 ```json
 {
     "tree": {
         "type": "default",
-        "validLayerTypesDefaultTree": ["WMS", "SENSORTHINGS"]
+        "validLayerTypesDefaultTree": ["WMS", "WFS"]
     }
 }
 ```
