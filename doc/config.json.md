@@ -57,14 +57,14 @@ Configuration of the topic selection tree
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
-|type|no|enum["light","default","custom"]|"light"|Decides the type of topic selection tree. You may choose between `"light"` (simple list), `"default"` (FHH-Atlas), and `"custom"` (layer list defined via JSON file).|false|
-|validLayerTypesDefaultTree|no|enum|["WMS", "SENSORTHINGS", "TERRAIN3D", "TILESET3D", "OBLIQUE"]|Layer types to be used with the type "default".|false|
+|type|no|enum["auto"]||The topic tree is build in same structure as the [Themenconfig](#markdown-header-Themenconfig). If type `auto` is configured, all layers from the [services.json](services.json.md) are provided in tree, structured by metadata (FHH-Atlas).|false|
+|validLayerTypesDefaultTree|no|enum|["WMS", "SENSORTHINGS", "TERRAIN3D", "TILESET3D", "OBLIQUE"]|Layer types to be used with the type `auto`.|false|
 
 **Example**
 ```json
 {
     "tree": {
-        "type": "default",
+        "type": "auto",
         "validLayerTypesDefaultTree": ["WMS", "SENSORTHINGS"]
     }
 }
