@@ -6,6 +6,18 @@
 ## Known Issues
 
 ---
+## v2.24.1 - 2022-08-19
+### Added
+- The following NPM packages are added:
+
+    - dependencies:
+
+        - "vue2-datepicker"
+
+### Fixed
+- Fix sensor layer extent-display issues caused by url parameter usage.
+
+---
 
 ## v2.24.0 - 2022-08-03
 ### __Breaking Changes__
