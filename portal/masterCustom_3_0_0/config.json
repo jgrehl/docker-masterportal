@@ -1,9 +1,7 @@
 {
   "Portalconfig": {
     "singleBaselayer": true,
-    "layersRemovable": false,
-    "tree": {
-    }
+    "layersRemovable": false
   },
   "Themenconfig": {
     "Hintergrundkarten": {

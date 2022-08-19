@@ -73,7 +73,7 @@ export default {
     extendLayers ({commit, state}) {
         const layerContainer = getNestedValues(state.layerConfig, "Layer", "Ordner").flat(Infinity);
 
-        if (state.portalConfig?.tree?.type === "default") {
+        if (state.portalConfig?.tree?.type === "auto") {
             const rawLayers = getAndMergeRawLayersFilteredByMdId(state.portalConfig?.tree?.validLayerTypesDefaultTree);
 
             commit("addToLayerConfig", {layerConfigs: {Layer: rawLayers}, parentKey: "Fachdaten"});
