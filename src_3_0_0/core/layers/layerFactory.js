@@ -54,7 +54,7 @@ export function processLayerConfig (layerConfig) {
         else if (layerConf.visibility === true && possibleLayerTypes[layerConf?.typ?.toUpperCase()] !== undefined) {
             layer = createLayer(layerConf);
             layerCollection.addLayer(layer);
-            store.dispatch("Maps/addLayer", layer.get("layer"));
+            store.dispatch("Maps/addLayer", layer.getLayer());
         }
     });
 }
