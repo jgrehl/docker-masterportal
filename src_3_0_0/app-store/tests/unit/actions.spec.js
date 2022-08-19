@@ -184,7 +184,7 @@ describe("src_3_0_0/app-store/actions.js", () => {
             },
             portalConfigDefaults: {
                 tree: {
-                    validLayerTypesDefaultTree: ["WMS", "SENSORTHINGS", "TERRAIN3D", "TILESET3D", "OBLIQUE"]
+                    validLayerTypesAutoTree: ["WMS", "SENSORTHINGS", "TERRAIN3D", "TILESET3D", "OBLIQUE"]
                 }
             }
         };
@@ -259,7 +259,7 @@ describe("src_3_0_0/app-store/actions.js", () => {
 
             state.portalConfig = {tree: {
                 type: "auto",
-                validLayerTypesDefaultTree: ["WMS", "SENSORTHINGS", "TERRAIN3D", "TILESET3D", "OBLIQUE"]
+                validLayerTypesAutoTree: ["WMS", "SENSORTHINGS", "TERRAIN3D", "TILESET3D", "OBLIQUE"]
             }};
             state.layerConfig = layerConfig;
             delete state.layerConfig.Fachdaten;
