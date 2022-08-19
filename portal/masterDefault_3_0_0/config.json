@@ -13,7 +13,7 @@
     "singleBaselayer": true,
     "tree": {
       "type": "auto",
-      "validLayerTypesDefaultTree": ["WMS", "SENSORTHINGS", "TERRAIN3D", "TILESET3D", "OBLIQUE"]
+      "validLayerTypesAutoTree": ["WMS", "SENSORTHINGS", "TERRAIN3D", "TILESET3D", "OBLIQUE"]
     }
   },
   "Themenconfig": {
