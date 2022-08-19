@@ -118,10 +118,10 @@ function mergeLayerByIds (layerConf) {
 }
 
 /**
- * Returns all layer to add to states layerConfig 'Fachdaten' for treetype 'default'.
+ * Returns all layer to add to states layerConfig 'Fachdaten' for treetype 'auto'.
  * Filters the raw layerlist by typ and datasets.
  * Creates new raw layer if datasets contains more than one entry.
- * @param {Array} validLayerTypes layer types to be used with the tree.type "default". If not configured,  ["WMS", "SENSORTHINGS", "TERRAIN3D", "TILESET3D", "OBLIQUE"] are used
+ * @param {Array} validLayerTypes layer types to be used with the tree.type 'auto'. If not configured,  ["WMS", "SENSORTHINGS", "TERRAIN3D", "TILESET3D", "OBLIQUE"] are used
  * @returns {Array} the filtered layer configurations
  */
 export function getAndMergeRawLayersFilteredByMdId (validLayerTypes) {
