@@ -47,17 +47,17 @@ describe("src_3_0_0/core/layers/layer2dRasterWms.js", () => {
     });
 
     it("new Layer2dRasterWms should create an layer with no warning", () => {
-        const layerWrapper = new Layer2dRasterWms({});
+        const wmsLayer = new Layer2dRasterWms({});
 
-        expect(layerWrapper).not.to.be.undefined;
+        expect(wmsLayer).not.to.be.undefined;
         expect(warn.notCalled).to.be.true;
     });
 
     it("new Layer2dRasterWms with attributes should create an layer", () => {
-        const layerWrapper = new Layer2dRasterWms(attributes);
+        const wmsLayer = new Layer2dRasterWms(attributes);
 
-        expect(layerWrapper).not.to.be.undefined;
-        expect(layerWrapper.layer).not.to.be.undefined;
+        expect(wmsLayer).not.to.be.undefined;
+        expect(wmsLayer.getLayer()).not.to.be.undefined;
     });
 
     describe("getRawLayerAttributes", () => {
@@ -79,9 +79,9 @@ describe("src_3_0_0/core/layers/layer2dRasterWms.js", () => {
         });
 
         it("should return the raw layer attributes", () => {
-            const layerWrapper = new Layer2dRasterWms(localAttributes);
+            const wmsLayer = new Layer2dRasterWms(localAttributes);
 
-            expect(layerWrapper.getRawLayerAttributes(localAttributes)).to.deep.equals({
+            expect(wmsLayer.getRawLayerAttributes(localAttributes)).to.deep.equals({
                 crs: "25832",
                 format: "image/png",
                 gutter: 0,
@@ -101,9 +101,9 @@ describe("src_3_0_0/core/layers/layer2dRasterWms.js", () => {
                     "geofox_stations"
                 ]
             });
-            const layerWrapper = new Layer2dRasterWms(localAttributes);
+            const wmsLayer = new Layer2dRasterWms(localAttributes);
 
-            expect(layerWrapper.getRawLayerAttributes(localAttributes)).to.deep.equals({
+            expect(wmsLayer.getRawLayerAttributes(localAttributes)).to.deep.equals({
                 crs: "25832",
                 format: "image/png",
                 gutter: 0,
@@ -132,9 +132,9 @@ describe("src_3_0_0/core/layers/layer2dRasterWms.js", () => {
         });
 
         it("should return the layer params", () => {
-            const layerWrapper = new Layer2dRasterWms(localAttributes);
+            const wmsLayer = new Layer2dRasterWms(localAttributes);
 
-            expect(layerWrapper.getLayerParams(localAttributes)).to.deep.equals({
+            expect(wmsLayer.getLayerParams(localAttributes)).to.deep.equals({
                 format: "image/png",
                 layers: "test_layers",
                 name: "test_name",
@@ -153,9 +153,9 @@ describe("src_3_0_0/core/layers/layer2dRasterWms.js", () => {
         });
 
         it("should return the options", () => {
-            const layerWrapper = new Layer2dRasterWms(localAttributes);
+            const wmsLayer = new Layer2dRasterWms(localAttributes);
 
-            expect(layerWrapper.getOptions(localAttributes)).to.deep.equals({
+            expect(wmsLayer.getOptions(localAttributes)).to.deep.equals({
                 origin: [442800, 5809000],
                 resolutions: [2000, 1000]
             });
