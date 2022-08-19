@@ -6,7 +6,7 @@
 ## Unreleased - in development
 ### __Breaking Changes__
 - new config.json parameter 'tree' added. Containes:
-  - 'type' (was 'treeType' at root before)
+  - 'type' (was 'treeType' at root before), only one param possible: "auto" ( = old "default") or nothing
   - 'validLayerTypesDefaultTree' (new parameter)
 
 ### Added
