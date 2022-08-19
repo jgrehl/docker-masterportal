@@ -245,10 +245,6 @@ describe("src_3_0_0/app-store/actions.js", () => {
                 typ: "WMS"
             };
 
-            state.portalConfig = {tree: {
-                type: "custom"
-            }};
-
             state.layerConfig = layerConfigCustom;
             actions.extendLayers({commit, state});
             expect(commit.callCount).to.be.equals(6);
@@ -262,7 +258,7 @@ describe("src_3_0_0/app-store/actions.js", () => {
             let expectedFirstCallArg = null;
 
             state.portalConfig = {tree: {
-                type: "default",
+                type: "auto",
                 validLayerTypesDefaultTree: ["WMS", "SENSORTHINGS", "TERRAIN3D", "TILESET3D", "OBLIQUE"]
             }};
             state.layerConfig = layerConfig;
@@ -284,10 +280,7 @@ describe("src_3_0_0/app-store/actions.js", () => {
 
         });
 
-        it("extendLayers for special configuration, tree.type custom", () => {
-            state.portalConfig = {tree: {
-                type: "custom"
-            }};
+        it("extendLayers for special configuration with 'Ordner'", () => {
             layerConfig = {
                 Fachdaten: {
                     Layer: [
