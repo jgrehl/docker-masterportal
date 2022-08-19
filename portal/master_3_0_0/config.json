@@ -7,8 +7,6 @@
         565874,
         5934140
       ]
-    },
-    "tree": {
     }
   },
   "Themenconfig": {
@@ -57,6 +55,28 @@
           "name": "de.hh.up:staatliche schulen",
           "visibility": false,
           "clusterDistance": 60
+        },
+        {
+          "id": "geojson",
+          "visibility": true,
+          "name": "Beiträge",
+          "url": "../../portalconfigs/dipas/beitraege_geojson.json",
+          "typ": "GeoJSON"
+        },
+        {
+          "id": "oaf",
+          "visibility": true,
+          "name": "Schulen",
+          "url": "https://api.hamburg.de/datasets/v1/schulen",
+          "collection": "staatliche_schulen",
+          "typ": "OAF",
+          "bbox": "",
+          "bboxCrs": "",
+          "datetime": "",
+          "crs": "EPSG:25832",
+          "params": {
+            "anzahl_schueler": ">1000"
+          }
         }
       ]
     }

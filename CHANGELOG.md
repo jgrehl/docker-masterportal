@@ -158,7 +158,7 @@
 ### __Breaking Changes__
 - The Virtual City Planner tool (virtualcityPLANNER) has been removed
 - new config.json parameter 'tree' added. Containes:
-  - 'type' (was 'treeType' at root before)
+  - 'type' (was 'treeType' at root before), only one param possible: "auto" ( = old "default") or nothing
   - 'validLayerTypesDefaultTree' (new parameter)
 
 ### Added
