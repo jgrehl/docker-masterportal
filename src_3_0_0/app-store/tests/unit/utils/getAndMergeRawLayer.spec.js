@@ -249,7 +249,16 @@ describe("src/utils/getAndMergeRawLayer.js", () => {
             expect(result[2]).to.be.deep.equals(layerList[2]);
         });
 
-        it("should create new raw layer if datasets contains more than one entry (createLayerPerDataset)", () => {
+        it("should filter by typ, datasets and layerContainer but only typ WMS", () => {
+            const result = getAndMergeRawLayersFilteredByMdId(["WMS"]);
+
+            expect(result).to.be.an("array");
+            expect(result.length).to.be.equals(2);
+            expect(result[0]).to.be.deep.equals(layerList[0]);
+            expect(result[1]).to.be.deep.equals(layerList[1]);
+        });
+
+        it("should create new raw layer if datasets contains more than one entry", () => {
             let result = null;
 
             layerList[1].datasets.push(
