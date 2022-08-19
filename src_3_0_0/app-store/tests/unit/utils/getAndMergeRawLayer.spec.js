@@ -178,7 +178,7 @@ describe("src/utils/getAndMergeRawLayer.js", () => {
     });
 
     describe("getAndMergeRawLayersFilteredByMdId", () => {
-        const validLayerTypesDefaultTree = ["WMS", "SENSORTHINGS", "TERRAIN3D", "TILESET3D", "OBLIQUE"];
+        const validLayerTypesAutoTree = ["WMS", "SENSORTHINGS", "TERRAIN3D", "TILESET3D", "OBLIQUE"];
         let layerList;
 
         beforeEach(() => {
@@ -240,7 +240,7 @@ describe("src/utils/getAndMergeRawLayer.js", () => {
         });
 
         it("should filter by typ, datasets and layerContainer", () => {
-            const result = getAndMergeRawLayersFilteredByMdId(validLayerTypesDefaultTree);
+            const result = getAndMergeRawLayersFilteredByMdId(validLayerTypesAutoTree);
 
             expect(result).to.be.an("array");
             expect(result.length).to.be.equals(3);
@@ -267,7 +267,7 @@ describe("src/utils/getAndMergeRawLayer.js", () => {
                     md_name: "md_name_10220"
                 }
             );
-            result = getAndMergeRawLayersFilteredByMdId(validLayerTypesDefaultTree);
+            result = getAndMergeRawLayersFilteredByMdId(validLayerTypesAutoTree);
 
             expect(result).to.be.an("array");
             expect(result.length).to.be.equals(4);
