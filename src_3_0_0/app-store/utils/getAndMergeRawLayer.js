@@ -121,20 +121,20 @@ function mergeLayerByIds (layerConf) {
  * Returns all layer to add to states layerConfig 'Fachdaten' for treetype 'default'.
  * Filters the raw layerlist by typ and datasets.
  * Creates new raw layer if datasets contains more than one entry.
- * @param {Array} validLayerTypes layer types to be used with the tree.Type "default"
+ * @param {Array} validLayerTypes layer types to be used with the tree.type "default". If not configured,  ["WMS", "SENSORTHINGS", "TERRAIN3D", "TILESET3D", "OBLIQUE"] are used
  * @returns {Array} the filtered layer configurations
  */
 export function getAndMergeRawLayersFilteredByMdId (validLayerTypes) {
     // refactored from parserDefaultTree.js
     const layerList = getLayerList(),
-        validLayerTypes = ["WMS", "SENSORTHINGS", "TERRAIN3D", "TILESET3D", "OBLIQUE"],
-        rawLayers = [];
+        rawLayers = [],
+        layerTypes = validLayerTypes ? validLayerTypes : ["WMS", "SENSORTHINGS", "TERRAIN3D", "TILESET3D", "OBLIQUE"];
     let relatedWMSLayerIds = [];
 
     for (let i = 0; i < layerList.length; i++) {
         const rawLayer = layerList[i];
 
-        if (!validLayerTypes.includes(rawLayer.typ?.toUpperCase()) || !rawLayer.datasets || rawLayer.datasets.length === 0) {
+        if (!layerTypes.includes(rawLayer.typ?.toUpperCase()) || !rawLayer.datasets || rawLayer.datasets.length === 0) {
             continue;
         }
         if (rawLayer.typ.toUpperCase() === "SENSORTHINGS" && rawLayer.related_wms_layers !== undefined) {
