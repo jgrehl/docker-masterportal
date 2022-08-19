@@ -1,6 +1,5 @@
 import {buffer, containsExtent} from "ol/extent";
 import Cluster from "ol/source/Cluster";
-import crs from "@masterportal/masterportalapi/src/crs";
 import {GeoJSON} from "ol/format";
 import moment from "moment";
 import "moment-timezone";
@@ -205,9 +204,6 @@ Layer2dVectorSensorThings.prototype.createMqttConnectionToSensorThings = functio
             phenomenonTime = this.getLocalTimeFormat(observation.phenomenonTime, timezone);
 
         this.updateObservationForDatastreams(feature, datastreamId, observation);
-        if (this.get("observeLocation")) {
-            this.updateFeatureLocation(feature, observation);
-        }
         this.updateFeatureProperties(feature, datastreamId, observation.result, phenomenonTime, showNoDataValue, noDataValue);
     });
 };
@@ -1174,22 +1170,6 @@ Layer2dVectorSensorThings.prototype.updateObservationForDatastreams = function (
             datastream.Observations = [observation];
         }
     });
-};
-
-/**
- * Updates the location of a feature.
- * @param {ol/Feature} feature feature to be updated
- * @param {Object} observation the observation to update the old coordinates with
- * @returns {void}
- */
-Layer2dVectorSensorThings.prototype.updateFeatureLocation = function (feature, observation) {
-    if (typeof feature?.getGeometry !== "function" || !Array.isArray(observation?.location?.geometry?.coordinates) || !observation.location.geometry.coordinates.length) {
-        return;
-    }
-    const mapProjection = store.getters["Maps/projection"].getCode(),
-        coordinates = this.get("epsg") !== mapProjection ? crs.transform(this.get("epsg"), mapProjection, observation.location.geometry.coordinates) : observation.location.geometry.coordinates;
-
-    feature.getGeometry().setCoordinates(coordinates);
 };
 
 /**
