@@ -56,7 +56,7 @@ describe("src_3_0_0/core/layers/layer2dVectorWfs.js", () => {
 
         it("createLayer shall create an ol.VectorLayer with source and style and WFS-format", function () {
             const wfsLayer = new Layer2dVectorWfs(attributes),
-                layer = wfsLayer.layer;
+                layer = wfsLayer.getLayer();
 
             expect(layer).to.be.an.instanceof(VectorLayer);
             expect(layer.getSource()).to.be.an.instanceof(VectorSource);
@@ -70,7 +70,7 @@ describe("src_3_0_0/core/layers/layer2dVectorWfs.js", () => {
         it("createLayer shall create an ol.VectorLayer with cluster-source", function () {
             attributes.clusterDistance = 60;
             const wfsLayer = new Layer2dVectorWfs(attributes),
-                layer = wfsLayer.layer;
+                layer = wfsLayer.getLayer();
 
             expect(layer).to.be.an.instanceof(VectorLayer);
             expect(layer.getSource()).to.be.an.instanceof(Cluster);
