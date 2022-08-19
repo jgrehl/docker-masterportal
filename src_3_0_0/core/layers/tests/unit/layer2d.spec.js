@@ -17,39 +17,59 @@ describe("src_3_0_0/core/layers/layer2d.js", () => {
     });
 
     it("new Layer2d should create an layer with warning", () => {
-        const layerWrapper = new Layer2d({});
+        const layer2d = new Layer2d({});
 
-        expect(layerWrapper).not.to.be.undefined;
+        expect(layer2d).not.to.be.undefined;
         expect(warn.calledOnce).to.be.true;
     });
 
     describe("updateLayerValues", () => {
         it("updates the visibility of the ol layer to true", () => {
-            const layerWrapper = new Layer2d();
+            const layer2d = new Layer2d();
 
-            layerWrapper.layer = new Layer({
+            layer2d.layer = new Layer({
                 source: new TileWMS(),
                 visible: false
             });
 
-            layerWrapper.updateLayerValues({visibility: true});
+            layer2d.updateLayerValues({visibility: true});
 
-            expect(layerWrapper.layer.getVisible()).to.be.true;
+            expect(layer2d.layer.getVisible()).to.be.true;
 
         });
 
         it("updates the visibility of the ol layer to false", () => {
-            const layerWrapper = new Layer2d();
+            const layer2d = new Layer2d();
 
-            layerWrapper.layer = new Layer({
+            layer2d.layer = new Layer({
                 source: new TileWMS(),
                 visible: true
             });
 
-            layerWrapper.updateLayerValues({visibility: false});
+            layer2d.updateLayerValues({visibility: false});
 
-            expect(layerWrapper.layer.getVisible()).to.be.false;
+            expect(layer2d.layer.getVisible()).to.be.false;
 
+        });
+    });
+
+    describe("getLayer and setLayer", () => {
+        it("should setLayer and getLayer return the layer", () => {
+            const layer2d = new Layer2d({});
+
+            layer2d.setLayer({layer: "layer"});
+
+            expect(layer2d.getLayer()).to.deep.equals({layer: "layer"});
+        });
+    });
+
+    describe("getLayerSource and setLayerSource", () => {
+        it("should setLayer and getLayer return the layer", () => {
+            const layer2d = new Layer2d({});
+
+            layer2d.setLayerSource({layer: "source"});
+
+            expect(layer2d.getLayerSource()).to.deep.equals({layer: "source"});
         });
     });
 });
