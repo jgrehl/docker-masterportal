@@ -63,17 +63,17 @@ describe("src_3_0_0/core/layers/layer2dRasterWms.js", () => {
 
 
     it("new Layer2dRasterWms should create an layer with no warning", () => {
-        const layerWrapper = new Layer2dRasterWms({});
+        const wmsLayer = new Layer2dRasterWms({});
 
-        expect(layerWrapper).not.to.be.undefined;
+        expect(wmsLayer).not.to.be.undefined;
         expect(warn.notCalled).to.be.true;
     });
 
     it("new Layer2dRasterWms with attributes should create an layer", () => {
-        const layerWrapper = new Layer2dRasterWms(attributes);
+        const wmsLayer = new Layer2dRasterWms(attributes);
 
-        expect(layerWrapper).not.to.be.undefined;
-        expect(layerWrapper.layer).not.to.be.undefined;
+        expect(wmsLayer).not.to.be.undefined;
+        expect(wmsLayer.getLayer()).not.to.be.undefined;
     });
 
     describe("getRawLayerAttributes", () => {
