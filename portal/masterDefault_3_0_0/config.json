@@ -1,0 +1,67 @@
+{
+  "Portalconfig": {
+    "mapView": {
+      "backgroundImage": "https://geodienste.hamburg.de/lgv-config/img/backgroundCanvas.jpeg",
+      "extent": [
+        442800,
+        5809000,
+        738000,
+        6102200
+      ],
+      "startResolution": 5.2916638091682096
+    },
+    "singleBaselayer": true,
+    "tree": {
+      "type": "default",
+      "validLayerTypesDefaultTree": ["WMS", "SENSORTHINGS", "TERRAIN3D", "TILESET3D", "OBLIQUE"]
+    }
+  },
+  "Themenconfig": {
+    "Hintergrundkarten": {
+      "name": "translate#common:tree.backgroundMaps",
+      "Layer": [
+        {
+          "id": [
+            "13534",
+            "13537",
+            "13538",
+            "13539",
+            "13540",
+            "13541",
+            "13535",
+            "13536"
+          ],
+          "name": "Geobasiskarten (Schriftplatte)"
+        },
+        {
+          "id": "452",
+          "name": "Luftbilder DOP 20 (DOP 40 mit Umland)",
+          "visibility": true
+        },
+        {
+          "id": "453"
+        }
+      ]
+    },
+    "Fachdaten_3D": {
+      "name": "translate#common:tree.subjectData3D",
+      "Layer": [
+        {
+          "id": "12883",
+          "name": "Gelände",
+          "visibility": true
+        },
+        {
+          "id": "16101",
+          "name": "Brueckenflaechen HH",
+          "visibility": true
+        },
+        {
+          "id": "12884",
+          "name": "Gebäude LoD2",
+          "visibility": true
+        }
+      ]
+    }
+  }
+}
