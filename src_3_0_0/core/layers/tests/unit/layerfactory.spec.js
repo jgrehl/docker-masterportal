@@ -57,6 +57,7 @@ describe("src_3_0_0/core/layers/layerFactory.js", () => {
                     typ: "WMS",
                     abc: true
                 },
+                get: (value) => value,
                 updateLayerValues: () => sinon.stub()
             };
 
