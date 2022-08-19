@@ -1,5 +1,5 @@
 import {expect} from "chai";
-import {SensorThingsHttp} from "../../sensorThingsHttp.js";
+import {SensorThingsHttp} from "../../../utils/sensorThingsHttp.js";
 
 describe("src/utils/sensorThingsHttp", () => {
     let http = null,

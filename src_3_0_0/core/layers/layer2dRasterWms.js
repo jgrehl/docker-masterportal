@@ -37,7 +37,7 @@ Layer2dRasterWms.prototype.createLayer = function (attributes) {
         layerParams = this.getLayerParams(attributes),
         options = this.getOptions(attributes);
 
-    this.set("layer", wms.createLayer(rawLayerAttributes, layerParams, options));
+    this.setLayer(wms.createLayer(rawLayerAttributes, layerParams, options));
 };
 
 /**
