@@ -29,7 +29,7 @@ Layer2dVectorGeojson.prototype.createLayer = function (attributes) {
         layerParams = this.getLayerParams(attributes),
         options = this.getOptions(attributes);
 
-    this.set("layer", geojson.createLayer(rawLayerAttributes, {layerParams, options}));
+    this.setLayer(geojson.createLayer(rawLayerAttributes, {layerParams, options}));
 };
 
 /**
