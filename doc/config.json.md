@@ -118,7 +118,7 @@ Configuration of the topic selection tree
 ```json
 {
     "tree": {
-        "type": "default",
+        "type": "auto",
         "validLayerTypesDefaultTree": ["WMS", "SENSORTHINGS"]
     }
 }
