@@ -60,7 +60,7 @@ GeoJSONLayer.prototype.createLayer = function (attrs) {
         layerParams = {
             // name: attrs.name,
             // typ: attrs.typ,
-            // subTyp: attrs.subTyp,
+            subTyp: attrs.subTyp,
             gfiAttributes: attrs.gfiAttributes,
             gfiTheme: attrs.gfiTheme,
             // altitudeMode: attrs.altitudeMode,
