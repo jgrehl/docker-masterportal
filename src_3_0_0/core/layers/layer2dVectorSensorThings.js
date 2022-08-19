@@ -79,7 +79,7 @@ Layer2dVectorSensorThings.prototype.createLayer = function (attributes) {
         layerParams = this.getLayerParams(attributes),
         options = this.getOptions(attributes);
 
-    this.set("layer", this.createVectorLayer(rawLayerAttributes, {layerParams, options}));
+    this.setLayer(this.createVectorLayer(rawLayerAttributes, {layerParams, options}));
 };
 
 /**
@@ -198,7 +198,7 @@ Layer2dVectorSensorThings.prototype.createMqttConnectionToSensorThings = functio
 
     this.mqttClient.on("message", (topic, observation) => {
         const datastreamId = this.getDatastreamIdFromMqttTopic(topic),
-            layerSource = this.get("layerSource") instanceof Cluster ? this.get("layerSource").getSource() : this.get("layerSource"),
+            layerSource = this.getLayerSource() instanceof Cluster ? this.getLayerSource().getSource() : this.getLayerSource(),
             features = typeof layerSource.getFeatures === "function" && Array.isArray(layerSource.getFeatures()) ? layerSource.getFeatures() : [],
             feature = this.getFeatureByDatastreamId(features, datastreamId),
             phenomenonTime = this.getLocalTimeFormat(observation.phenomenonTime, timezone);
@@ -299,7 +299,7 @@ Layer2dVectorSensorThings.prototype.initializeConnection = function (onsuccess) 
 
     this.callSensorThingsAPI(url, version, urlParams, currentExtent, intersect, sensorData => {
         const features = this.createFeaturesFromSensorData(sensorData, mapProjection, epsg, gfiTheme, utc),
-            layerSource = this.get("layerSource") instanceof Cluster ? this.get("layerSource").getSource() : this.get("layerSource");
+            layerSource = this.getLayerSource() instanceof Cluster ? this.getLayerSource().getSource() : this.getLayerSource();
 
         layerSource.clear();
 
@@ -936,7 +936,7 @@ Layer2dVectorSensorThings.prototype.aggregateDataStreamPhenomenonTime = function
  * @returns {void}
  */
 Layer2dVectorSensorThings.prototype.toggleSubscriptionsOnMapChanges = function () {
-    this.startSubscription(this.get("layer").getSource().getFeatures());
+    this.startSubscription(this.getLayer().getSource().getFeatures());
 };
 
 /**
@@ -981,7 +981,7 @@ Layer2dVectorSensorThings.prototype.startSubscription = function (features) {
  */
 Layer2dVectorSensorThings.prototype.updateSubscription = function () {
     console.log(store.getters["Maps/boundingBox"]);
-    const datastreamIds = this.getDatastreamIdsInCurrentExtent(this.get("layer").getSource().getFeatures(), store.getters["Maps/boundingBox"]),
+    const datastreamIds = this.getDatastreamIdsInCurrentExtent(this.getLayer().getSource().getFeatures(), store.getters["Maps/boundingBox"]),
         subscriptionTopics = this.get("subscriptionTopics"),
         version = this.get("version"),
         isVisibleInMap = this.get("isVisibleInMap"),
@@ -997,7 +997,7 @@ Layer2dVectorSensorThings.prototype.updateSubscription = function () {
         this.unsubscribeFromSensorThings(datastreamIds, subscriptionTopics, version, isVisibleInMap, mqttClient);
         this.initializeConnection(() => {
             this.subscribeToSensorThings(
-                this.getDatastreamIdsInCurrentExtent(this.get("layer").getSource().getFeatures(), store.getters["Maps/boundingBox"]),
+                this.getDatastreamIdsInCurrentExtent(this.getLayer().getSource().getFeatures(), store.getters["Maps/boundingBox"]),
                 subscriptionTopics,
                 version,
                 mqttClient,
