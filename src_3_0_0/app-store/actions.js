@@ -53,7 +53,7 @@ export default {
             const rawLayer = getAndMergeRawLayer(layerConf);
 
             if (rawLayer) {
-                commit("replaceByIdInLayerConfig", [{layer: rawLayer, id: layerConf.id}]);
+                commit("replaceByIdInLayerConfig", {layerConfigs: [{layer: rawLayer, id: layerConf.id}]});
             }
             else {
                 console.warn("Configured visible layer with id ", layerConf.id, " was not found in ", state.configJs?.layerConf);
