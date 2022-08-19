@@ -113,7 +113,7 @@ Konfiguration der Themenbaumes
 ```json
 {
     "tree": {
-        "type": "default",
+        "type": "auto",
         "validLayerTypesDefaultTree": ["WMS", "WFS"]
     }
 }
