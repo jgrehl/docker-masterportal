@@ -10,15 +10,10 @@ describe("src_3_0_0/app-store/actions.js", () => {
         state,
         layerList,
         layerConfig,
-<<<<<<< HEAD
         layerConfigCustom,
         initializeLayerListSpy;
     const restConf = "./resources/rest-services-internet.json",
         layerConf = "./services.json";
-=======
-        layerConfigCustom;
-    const restConf = "./resources/rest-services-internet.json";
->>>>>>> 28cd84fa1 (update actions and range in App.vue)
 
     beforeEach(() => {
         layerList = [
