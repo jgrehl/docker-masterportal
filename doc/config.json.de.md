@@ -114,7 +114,7 @@ Konfiguration der Themenbaumes
 {
     "tree": {
         "type": "default",
-        "validLayerTypesDefaultTree": ["WMS", "SENSORTHINGS"]
+        "validLayerTypesDefaultTree": ["WMS", "WFS"]
     }
 }
 ```
