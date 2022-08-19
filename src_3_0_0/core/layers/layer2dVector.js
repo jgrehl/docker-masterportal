@@ -1,4 +1,3 @@
-import store from "../../app-store";
 import Layer2d from "./layer2d";
 
 /**
