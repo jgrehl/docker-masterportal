@@ -27,7 +27,7 @@ export default {
 
         axios.get(targetPath)
             .then(response => {
-                commit("setPortalConfig", Object.assign(state.portalConfigDefaults, response.data?.Portalconfig));
+                commit("setPortalConfig", response.data?.Portalconfig);
                 commit("setLayerConfig", response.data?.Themenconfig);
                 commit("setLoadedConfigs", "configJson");
             })
