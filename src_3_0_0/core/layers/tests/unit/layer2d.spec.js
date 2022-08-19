@@ -39,16 +39,16 @@ describe("src_3_0_0/core/layers/layer2d.js", () => {
     it("new LayerOl2d should create an layer with warning", () => {
         const layerWrapper = new Layer2d({});
 
-        expect(layerWrapper).not.to.be.undefined;
+        expect(layer2d).not.to.be.undefined;
         expect(warn.calledOnce).to.be.true;
     });
 
 
     describe("updateLayerValues", () => {
         it("updates the visibility of the ol layer to true", () => {
-            const layerWrapper = new Layer2d();
+            const layer2d = new Layer2d();
 
-            layerWrapper.layer = new Layer({
+            layer2d.layer = new Layer({
                 source: new TileWMS(),
                 visible: false
             });
@@ -128,5 +128,4 @@ describe("src_3_0_0/core/layers/layer2d.js", () => {
             expect(layer2d.getLayerSource()).to.deep.equals({layer: "source"});
         });
     });
->>>>>>> c76fc799a (update rename the layer js files and update jsdoc comments)
 });
