@@ -3,7 +3,6 @@
     "singleBaselayer": true,
     "layersRemovable": false,
     "tree": {
-      "type": "custom"
     }
   },
   "Themenconfig": {
