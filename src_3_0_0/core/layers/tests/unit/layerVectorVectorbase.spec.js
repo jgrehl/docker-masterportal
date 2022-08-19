@@ -14,7 +14,16 @@ describe("src_3_0_0/core/layers/layer2dVectorVectorbase.js", () => {
         mapCollection.clear();
         const map = {
             id: "ol",
-            mode: "2D"
+            mode: "2D",
+            getView: () => {
+                return {
+                    getProjection: () => {
+                        return {
+                            getCode: () => "EPSG:25832"
+                        };
+                    }
+                };
+            }
         };
 
         mapCollection.addMap(map, "2D");
