@@ -119,7 +119,7 @@ Configuration of the topic selection tree
 {
     "tree": {
         "type": "auto",
-        "validLayerTypesDefaultTree": ["WMS", "SENSORTHINGS"]
+        "validLayerTypesAutoTree": ["WMS", "SENSORTHINGS"]
     }
 }
 ```
