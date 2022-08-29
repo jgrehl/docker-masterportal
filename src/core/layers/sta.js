@@ -605,14 +605,14 @@ STALayer.prototype.startIntervalUpdate = function (timeout) {
  */
 STALayer.prototype.updateSubscription = function () {
     // Timout to avoid display issues with url params see FLS-299 ticket. Issue has to be resolved without timeout.
-    setTimeout(async () =>{
-        const datastreamIds = this.getDatastreamIdsInCurrentExtent(this.get("layer").getSource().getFeatures(), store.getters["Maps/getCurrentExtent"]),
-            subscriptionTopics = this.get("subscriptionTopics"),
-            version = this.get("version"),
-            isVisibleInMap = this.get("isVisibleInMap"),
-            mqttClient = this.mqttClient,
-            rh = this.get("mqttRh"),
-            qos = this.get("mqttQos");
+    setTimeout(() =>{
+        // const datastreamIds = this.getDatastreamIdsInCurrentExtent(this.get("layer").getSource().getFeatures(), store.getters["Maps/getCurrentExtent"]),
+        //     subscriptionTopics = this.get("subscriptionTopics"),
+        //     version = this.get("version"),
+        //     isVisibleInMap = this.get("isVisibleInMap"),
+        //     mqttClient = this.mqttClient,
+        //     rh = this.get("mqttRh"),
+        //     qos = this.get("mqttQos");
 
         if (!this.get("loadThingsOnlyInCurrentExtent") && !this.moveLayerRevisible) {
             this.unsubscribeFromSensorThings(datastreamIds, subscriptionTopics, version, isVisibleInMap, mqttClient);
