@@ -28,15 +28,18 @@
       "Layer": [
         {
           "id": "10220",
-          "name": "Dauerzählstellen (Rad) Hamburg"
+          "name": "Dauerzählstellen (Rad) Hamburg",
+          "typ" : "WMS"
         },
         {
           "id": "2426",
           "name": "Bezirke",
+          "typ" : "WMS",
           "visibility": false
         },
         {
           "id": "1933",
+          "typ" : "WMS",
           "visibility": false,
           "styles": [
             "geofox_stations"
@@ -48,33 +51,38 @@
         {
           "id": "1711",
           "name": "Krankenhäuser",
+          "typ" : "WFS",
           "visibility": false
         },
         {
           "id": "8712",
           "name": "de.hh.up:staatliche schulen",
+          "typ" : "WFS",
           "visibility": false,
           "clusterDistance": 60
         },
         {
           "id": "18106",
+          "name" : "Elektro Ladestandorte Hamburg",
+          "typ" : "SensorThings",
           "visibility": true,
           "loadThingsOnlyInCurrentExtent": true
         },
         {
           "id": "geojson",
-          "visibility": false,
           "name": "Beiträge",
-          "url": "../../portalconfigs/dipas/beitraege_geojson.json",
-          "typ": "GeoJSON"
+          "typ": "GeoJSON",
+          "visibility": false,
+          "url": "./resources/example_geojson.json"
         },
         {
+
           "id": "oaf",
-          "visibility": false,
           "name": "Schulen",
+          "typ": "OAF",
+          "visibility": false,
           "url": "https://api.hamburg.de/datasets/v1/schulen",
           "collection": "staatliche_schulen",
-          "typ": "OAF",
           "bbox": "",
           "bboxCrs": "",
           "datetime": "",
