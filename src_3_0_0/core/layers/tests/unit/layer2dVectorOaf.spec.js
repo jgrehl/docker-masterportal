@@ -115,28 +115,6 @@ describe("src_3_0_0/core/layers/layer2dVectorOaf.js", () => {
         });
     });
 
-    describe("getLayerParams", () => {
-        let localAttributes;
-
-        beforeEach(() => {
-            localAttributes = {
-                altitudeMode: "clampToGround",
-                name: "The name",
-                typ: "OAF"
-            };
-        });
-
-        it("should return the raw layer attributes", () => {
-            const oafLayer = new Layer2dVectorOaf(localAttributes);
-
-            expect(oafLayer.getLayerParams(localAttributes)).to.deep.equals({
-                altitudeMode: "clampToGround",
-                name: "The name",
-                typ: "OAF"
-            });
-        });
-    });
-
     describe("getOptions", () => {
         let options;
 
