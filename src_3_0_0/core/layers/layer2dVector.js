@@ -55,7 +55,7 @@ Layer2dVector.prototype.featuresFilter = function (attributes, features) {
 /**
  * Gets additional layer params.
  * @param {Object} attributes The attributes of the layer configuration.
- * @returns {Obeject} The layer params.
+ * @returns {Object} The layer params.
  */
 Layer2dVector.prototype.getLayerParams = function (attributes) {
     return {
