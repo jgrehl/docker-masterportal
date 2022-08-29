@@ -551,11 +551,11 @@ STALayer.prototype.startSubscription = function (features) {
  * Stops mqtt subscriptions based on the layers state.
  * @returns {void}
  */
-STALayer.prototype.stopSubscription = function () {
-    const subscriptionTopics = this.get("subscriptionTopics"),
-        version = this.get("version"),
-        isVisibleInMap = this.get("isVisibleInMap"),
-        mqttClient = this.mqttClient;
+// STALayer.prototype.stopSubscription = function () {
+//     const subscriptionTopics = this.get("subscriptionTopics"),
+//         version = this.get("version"),
+//         isVisibleInMap = this.get("isVisibleInMap"),
+//         mqttClient = this.mqttClient;
 
     this.set("isSubscribed", false);
     store.dispatch("Maps/unregisterListener", {type: "moveend", listener: this.updateSubscription.bind(this)});
