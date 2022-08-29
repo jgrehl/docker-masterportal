@@ -25,22 +25,6 @@ const possibleLayerTypes = {
 export default function initializeLayerFactory (visibleLayerConfigs) {
     processLayerConfig(visibleLayerConfigs);
     registerLayerConfig();
-
-    setTimeout(() => {
-        store.commit("replaceByIdInLayerConfig", {
-            layerConfigs: [{
-                id: "2426",
-                layer: {
-                    id: "2426",
-                    visibility: true,
-                    name: "Bezirke",
-                    url: "https://geodienste.hamburg.de/HH_WMS_Verwaltungsgrenzen",
-                    typ: "WMS",
-                    layers: "bezirke"
-                }
-            }]
-        });
-    }, 2000);
 }
 
 /**
@@ -69,6 +53,7 @@ export function processLayerConfig (layerConfig) {
         }
         else if (layerConf.visibility === true && possibleLayerTypes[layerConf?.typ?.toUpperCase()] !== undefined) {
             layer = createLayer(layerConf);
+            updateLayerConfig(layer);
             layerCollection.addLayer(layer);
             store.dispatch("Maps/addLayer", layer.getLayer());
         }
@@ -96,6 +81,14 @@ export function createLayer (layerConf) {
 export function updateLayerAttributes (layer, layerConf) {
     Object.assign(layer.attributes, layerConf);
     layer.updateLayerValues(layer.attributes);
+}
+
+/**
+ * Update the layer config in app-store.
+ * @param {Layer} layer Layer of the layer collection.
+ * @returns {void}
+ */
+function updateLayerConfig (layer) {
     store.commit("replaceByIdInLayerConfig", {
         layerConfigs: [{
             id: layer.get("id"),
