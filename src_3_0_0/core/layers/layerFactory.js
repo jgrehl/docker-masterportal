@@ -6,7 +6,6 @@ import Layer2dVectorGeojson from "./layer2dVectorGeojson";
 import Layer2dVectorVectorbase from "./Layer2dVectorVectorbase";
 import Layer2dVectorOaf from "./layer2dVectorOaf";
 import Layer2dVectorWfs from "./layer2dVectorWfs";
-import Layer2dRasterWms from "./layer2dRasterWms";
 
 const possibleLayerTypes = {
     GEOJSON: Layer2dVectorGeojson,
@@ -14,6 +13,7 @@ const possibleLayerTypes = {
     SENSORTHINGS: Layer2dVectorSensorThings,
     STATICIMAGE: Layer2dRasterStaticImage,
     VECTORBASE: Layer2dVectorVectorbase,
+    VECTORTILE: Layer2dVectorTile,
     WFS: Layer2dVectorWfs,
     WMS: Layer2dRasterWms
 };
