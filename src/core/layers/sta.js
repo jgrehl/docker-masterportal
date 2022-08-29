@@ -659,10 +659,10 @@ STALayer.prototype.updateFeatureProperties = function (feature, dataStreamId, re
 //         dataStreamName = Object.prototype.hasOwnProperty.call(dataStreamNameArray, dataStreamIdIdx) ? dataStreamNameArray[dataStreamIdIdx] : "",
 //         preparedResult = result === "" && showNoDataValue ? noDataValue : result;
 
-//     feature.set("dataStream_" + dataStreamId + "_" + dataStreamName, preparedResult, true);
-//     feature.set("dataStream_" + dataStreamId + "_" + dataStreamName + "_phenomenonTime", phenomenonTime, true);
-//     feature.set("dataStreamValue", this.replaceValueInPipedProperty(feature, "dataStreamValue", dataStreamId, preparedResult));
-//     feature.set("dataStreamPhenomenonTime", this.replaceValueInPipedProperty(feature, "dataStreamPhenomenonTime", dataStreamId, phenomenonTime));
+    // feature.set("dataStream_" + dataStreamId + "_" + dataStreamName, preparedResult, true);
+    // feature.set("dataStream_" + dataStreamId + "_" + dataStreamName + "_phenomenonTime", phenomenonTime, true);
+    // feature.set("dataStreamValue", this.replaceValueInPipedProperty(feature, "dataStreamValue", dataStreamId, preparedResult));
+    // feature.set("dataStreamPhenomenonTime", this.replaceValueInPipedProperty(feature, "dataStreamPhenomenonTime", dataStreamId, phenomenonTime));
 
     if (typeof feature.get("rotation") !== "undefined" && typeof preparedResult !== "undefined") {
         feature.set("rotation", {
