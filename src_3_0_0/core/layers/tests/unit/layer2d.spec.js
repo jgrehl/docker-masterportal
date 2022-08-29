@@ -16,11 +16,13 @@ describe("src_3_0_0/core/layers/layer2d.js", () => {
         sinon.restore();
     });
 
-    it("new Layer2d should create an layer with warning", () => {
-        const layer2d = new Layer2d({});
+    describe("createLayer", () => {
+        it("new Layer2d should create an layer with warning", () => {
+            const layer2d = new Layer2d({});
 
-        expect(layer2d).not.to.be.undefined;
-        expect(warn.calledOnce).to.be.true;
+            expect(layer2d).not.to.be.undefined;
+            expect(warn.calledOnce).to.be.true;
+        });
     });
 
     describe("updateLayerValues", () => {
