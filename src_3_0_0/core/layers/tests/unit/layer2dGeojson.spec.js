@@ -103,28 +103,6 @@ describe("src_3_0_0/core/layers/layer2dVectorGeojson.js", () => {
         });
     });
 
-    describe("getLayerParams", () => {
-        let localAttributes;
-
-        beforeEach(() => {
-            localAttributes = {
-                altitudeMode: "clampToGround",
-                name: "The name",
-                typ: "Geojson"
-            };
-        });
-
-        it("should return the raw layer attributes", () => {
-            const geojsonLayer = new Layer2dVectorGeojson(localAttributes);
-
-            expect(geojsonLayer.getLayerParams(localAttributes)).to.deep.equals({
-                altitudeMode: "clampToGround",
-                name: "The name",
-                typ: "Geojson"
-            });
-        });
-    });
-
     describe("getOptions", () => {
         let options;
 
