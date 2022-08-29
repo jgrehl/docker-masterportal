@@ -19,19 +19,21 @@ describe("src_3_0_0/core/layers/layer.js", () => {
         sinon.restore();
     });
 
-    it("new Layer should create an layer with warning", () => {
-        const layerWrapper = new Layer({});
+    describe("createLayer", () => {
+        it("new Layer should create an layer with warning", () => {
+            const layerWrapper = new Layer({});
 
-        expect(layerWrapper).not.to.be.undefined;
-        expect(warn.calledOnce).to.be.true;
-    });
+            expect(layerWrapper).not.to.be.undefined;
+            expect(warn.calledOnce).to.be.true;
+        });
 
-    it("new Layer and updateLayerValues should create two warnings", () => {
-        const layerWrapper = new Layer({});
+        it("new Layer and updateLayerValues should create two warnings", () => {
+            const layerWrapper = new Layer({});
 
-        layerWrapper.updateLayerValues();
+            layerWrapper.updateLayerValues();
 
-        expect(warn.calledTwice).to.be.true;
+            expect(warn.calledTwice).to.be.true;
+        });
     });
 
     describe("get and set", () => {

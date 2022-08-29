@@ -14,10 +14,12 @@ describe("src_3_0_0/core/layers/layer2dRaster.js", () => {
         sinon.restore();
     });
 
-    it("new Layer2dRaster should create an layer with warning", () => {
-        const layerWrapper = new Layer2dRaster({});
+    describe("createLayer", () => {
+        it("new Layer2dRaster should create an layer with warning", () => {
+            const layerWrapper = new Layer2dRaster({});
 
-        expect(layerWrapper).not.to.be.undefined;
-        expect(warn.calledOnce).to.be.true;
+            expect(layerWrapper).not.to.be.undefined;
+            expect(warn.calledOnce).to.be.true;
+        });
     });
 });
