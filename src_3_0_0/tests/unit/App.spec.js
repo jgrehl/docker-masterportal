@@ -64,7 +64,7 @@ describe("src_3_0_0/App.vue", () => {
         expect(actions.loadConfigJs.calledOnce).to.be.true;
     });
 
-    it("sets mapCollection as  lobal variable", () => {
+    it("sets mapCollection as global variable", () => {
         wrapper = shallowMount(AppComponent, {store, localVue});
 
         expect(global.mapCollection).to.be.not.undefined;
