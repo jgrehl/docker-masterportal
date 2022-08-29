@@ -47,19 +47,6 @@ Layer2dVectorGeojson.prototype.getRawLayerAttributes = function (attributes) {
 };
 
 /**
- * Gets additional layer params.
- * @param {Object} attributes The attributes of the layer configuration.
- * @returns {Obeject} The layer params.
- */
-Layer2dVectorGeojson.prototype.getLayerParams = function (attributes) {
-    return {
-        altitudeMode: attributes.altitudeMode,
-        name: attributes.name,
-        typ: attributes.typ
-    };
-};
-
-/**
  * Gets additional options.
  * @param {Object} attributes The attributes of the layer configuration.
  * @returns {Object} The options.
