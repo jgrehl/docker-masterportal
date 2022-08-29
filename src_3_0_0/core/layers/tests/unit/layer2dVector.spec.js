@@ -117,6 +117,28 @@ describe("src_3_0_0/core/layers/layer2dVector.js", () => {
         });
     });
 
+    describe("getLayerParams", () => {
+        let localAttributes;
+
+        beforeEach(() => {
+            localAttributes = {
+                altitudeMode: "clampToGround",
+                name: "The name",
+                typ: "Layer2d"
+            };
+        });
+
+        it("should return the raw layer attributes", () => {
+            const layer2d = new Layer2dVector(localAttributes);
+
+            expect(layer2d.getLayerParams(localAttributes)).to.deep.equals({
+                altitudeMode: "clampToGround",
+                name: "The name",
+                typ: "Layer2d"
+            });
+        });
+    });
+
     describe("loadingParams", () => {
         it("should return loading params", () => {
             const layer2d = new Layer2dVector(attributes);
