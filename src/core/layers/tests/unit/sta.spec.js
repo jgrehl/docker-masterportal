@@ -1,8 +1,8 @@
 import VectorSource from "ol/source/Vector.js";
 import VectorLayer from "ol/layer/Vector.js";
-import Cluster from "ol/source/Cluster.js";
-import Feature from "ol/Feature.js";
-import Point from "ol/geom/Point.js";
+// import Cluster from "ol/source/Cluster.js";
+// import Feature from "ol/Feature.js";
+// import Point from "ol/geom/Point.js";
 import {expect} from "chai";
 import sinon from "sinon";
 import STALayer from "../../sta";
@@ -67,27 +67,6 @@ describe("src/core/layers/sta.js", () => {
     });
 
     describe("createLayer", () => {
-        it("should create an ol.VectorLayer with source and style", () => {
-            const staLayer = new STALayer(attributes),
-                layer = staLayer.get("layer");
-
-            expect(layer).to.be.an.instanceof(VectorLayer);
-            expect(layer.getSource()).to.be.an.instanceof(VectorSource);
-            expect(typeof layer.getStyleFunction()).to.be.equals("function");
-            expect(layer.get("id")).to.be.equals(attributes.id);
-            expect(layer.get("name")).to.be.equals(attributes.name);
-            expect(layer.get("gfiTheme")).to.be.equals(attributes.gfiTheme);
-        });
-        it("createLayer shall create an ol.VectorLayer with cluster-source", () => {
-            attributes.clusterDistance = 60;
-            const staLayer = new STALayer(attributes),
-                layer = staLayer.get("layer");
-
-            expect(layer).to.be.an.instanceof(VectorLayer);
-            expect(layer.getSource()).to.be.an.instanceof(Cluster);
-            expect(layer.getSource().getDistance()).to.be.equals(attributes.clusterDistance);
-            expect(typeof layer.getStyleFunction()).to.be.equals("function");
-        });
         it("createLayer with isSelected=true shall set layer visible", () => {
             attributes.isSelected = true;
             const staLayer = new STALayer(attributes),
@@ -107,83 +86,6 @@ describe("src/core/layers/sta.js", () => {
             expect(layer.getSource()).to.be.an.instanceof(VectorSource);
             expect(staLayer.get("isVisibleInMap")).to.be.false;
             expect(staLayer.get("layer").getVisible()).to.be.false;
-        });
-    });
-
-    describe("getFeaturesFilterFunction", () => {
-        it("getFeaturesFilterFunction shall filter getGeometry", () => {
-            const staLayer = new STALayer(attributes),
-                featuresFilterFunction = staLayer.getFeaturesFilterFunction(attributes),
-                features = [{
-                    id: "1",
-                    getGeometry: () => sinon.stub()
-                },
-                {
-                    id: "2",
-                    getGeometry: () => undefined
-                }];
-
-            expect(typeof featuresFilterFunction).to.be.equals("function");
-            expect(featuresFilterFunction(features).length).to.be.equals(1);
-
-        });
-        it("getFeaturesFilterFunction shall filter bboxGeometry", () => {
-            attributes.bboxGeometry = {
-                intersectsExtent: (extent) => {
-                    if (extent.includes("1")) {
-                        return true;
-                    }
-                    return false;
-                },
-                getExtent: () => ["1"]
-            };
-            const staLayer = new STALayer(attributes),
-                featuresFilterFunction = staLayer.getFeaturesFilterFunction(attributes),
-                features = [{
-                    id: "1",
-                    getGeometry: () => {
-                        return {
-                            getExtent: () => ["1"]
-                        };
-
-                    }
-                },
-                {
-                    id: "2",
-                    getGeometry: () => undefined
-                },
-                {
-                    id: "3",
-                    getGeometry: () => {
-                        return {
-                            getExtent: () => ["2"]
-                        };
-                    }
-                }];
-
-            expect(typeof featuresFilterFunction).to.be.equals("function");
-            expect(featuresFilterFunction(features).length).to.be.equals(1);
-            expect(featuresFilterFunction(features)[0].id).to.be.equals("1");
-        });
-    });
-
-    describe("getPropertyname", () => {
-        it("getPropertyname shall return joined proertyNames or empty string", () => {
-            attributes.propertyNames = ["app:plan", "app:name"];
-            const staLayer = new STALayer(attributes);
-            let propertyname = staLayer.getPropertyname(attributes);
-
-            expect(propertyname).to.be.equals("app:plan,app:name");
-
-            attributes.propertyNames = [];
-            propertyname = staLayer.getPropertyname(attributes);
-            expect(propertyname).to.be.equals("");
-            attributes.propertyNames = undefined;
-            propertyname = staLayer.getPropertyname(attributes);
-            expect(propertyname).to.be.equals("");
-            attributes.propertyNames = undefined;
-            propertyname = staLayer.getPropertyname(attributes);
-            expect(propertyname).to.be.equals("");
         });
     });
 
@@ -394,444 +296,116 @@ describe("src/core/layers/sta.js", () => {
         });
     });
 
-    describe("updateHistoricalFeatures", () => {
-        it("should do nothing if first param is no object with 'get' method", () => {
-            const removeFeatureStub = sinon.stub(sensorLayer.get("layer").getSource(), "removeFeature"),
-                feature = {};
-
-            sensorLayer.updateHistoricalFeatures(feature);
-            expect(removeFeatureStub.called).to.be.false;
-        });
-        it("should do nothing if the get('historicalFeatureIds') function on the first param does not return an array", () => {
-            const removeFeatureStub = sinon.stub(sensorLayer.get("layer").getSource(), "removeFeature"),
-                feature = {
-                    get: () => undefined
-                };
-
-            sensorLayer.updateHistoricalFeatures(feature, feature);
-            expect(removeFeatureStub.called).to.be.false;
-        });
-        it("should do nothing if third param is no object with 'set' method", () => {
-            const removeFeatureStub = sinon.stub(sensorLayer.get("layer").getSource(), "removeFeature"),
-                feature = {
-                    get: () => undefined
-                };
-
-            sensorLayer.updateHistoricalFeatures(feature, feature);
-            expect(removeFeatureStub.called).to.be.false;
-        });
-        it("should call all expected functions", () => {
-            const removeFeatureStub = sinon.stub(sensorLayer.get("layer").getSource(), "removeFeature"),
-                getFeatureByIdStub = sinon.stub(sensorLayer.get("layer").getSource(), "getFeatureById"),
-                addFeatureStub = sinon.stub(sensorLayer.get("layer").getSource(), "addFeature"),
-                getScaleStub = sinon.stub(sensorLayer, "getScale"),
-                feature = {
-                    get: () => [0],
-                    getId: sinon.stub(),
-                    set: sinon.stub(),
-                    setId: sinon.stub()
-                };
-
-            store.getters = {
-                "Maps/getView": {
-                    getZoom: () => 0,
-                    getResolutions: () => []
-                }
-            };
-
-            sensorLayer.updateHistoricalFeatures(feature, feature, sensorLayer.get("layer").getSource());
-            expect(removeFeatureStub.called).to.be.true;
-            expect(getFeatureByIdStub.called).to.be.true;
-            expect(addFeatureStub.called).to.be.true;
-            expect(getScaleStub.called).to.be.true;
-        });
-    });
-
-    describe("getMqttHostFromUrl", () => {
-        it("should call the error handler if anything but a string is given as first parameter and should return an empty string", () => {
-            let lastError = null;
-            const result = sensorLayer.getMqttHostFromUrl(undefined, error => {
-                lastError = error;
-            });
-
-            expect(result).to.be.a("string").and.to.be.empty;
-            expect(lastError).to.be.an.instanceof(Error);
-        });
-        it("should call the error handler if the given url is not valid", () => {
-            let lastError = null;
-            const result = sensorLayer.getMqttHostFromUrl("https:/iot.hamburg.de", error => {
-                lastError = error;
-            });
-
-            expect(result).to.be.a("string").and.to.be.empty;
-            expect(lastError).to.be.an.instanceof(Error);
-        });
-        it("should return the mqtt host from the given url", () => {
-            let lastError = null;
-            const result = sensorLayer.getMqttHostFromUrl("https://iot.hamburg.de", error => {
-                lastError = error;
-            });
-
-            expect(result).to.equal("iot.hamburg.de");
-            expect(lastError).to.not.be.an.instanceof(Error);
-        });
-    });
-
-    describe("getDatastreamIdFromMqttTopic", () => {
-        it("should return an empty string if anything but a string is given", () => {
-            expect(sensorLayer.getDatastreamIdFromMqttTopic(undefined)).to.be.a("string").and.to.be.empty;
-            expect(sensorLayer.getDatastreamIdFromMqttTopic(null)).to.be.a("string").and.to.be.empty;
-            expect(sensorLayer.getDatastreamIdFromMqttTopic(1234)).to.be.a("string").and.to.be.empty;
-            expect(sensorLayer.getDatastreamIdFromMqttTopic(true)).to.be.a("string").and.to.be.empty;
-            expect(sensorLayer.getDatastreamIdFromMqttTopic(false)).to.be.a("string").and.to.be.empty;
-            expect(sensorLayer.getDatastreamIdFromMqttTopic([])).to.be.a("string").and.to.be.empty;
-            expect(sensorLayer.getDatastreamIdFromMqttTopic({})).to.be.a("string").and.to.be.empty;
-        });
-        it("should return an empty string if a string without a certain indicator is given", () => {
-            expect(sensorLayer.getDatastreamIdFromMqttTopic("test")).to.be.a("string").and.to.be.empty;
-        });
-        it("should return the first occurence of an id within certain indicators", () => {
-            expect(sensorLayer.getDatastreamIdFromMqttTopic("test.Datastreams(1234).Observations(5678)")).to.equal("1234");
-        });
-    });
-
-    describe("getFeatureByDatastreamId", () => {
-        it("should return null if the first parameter is anything but an array", () => {
-            expect(sensorLayer.getFeatureByDatastreamId({}, "6789")).to.be.null;
-            expect(sensorLayer.getFeatureByDatastreamId(null, "6789")).to.be.null;
-            expect(sensorLayer.getFeatureByDatastreamId(undefined, "6789")).to.be.null;
-            expect(sensorLayer.getFeatureByDatastreamId(123, "6789")).to.be.null;
-            expect(sensorLayer.getFeatureByDatastreamId(true, "6789")).to.be.null;
-            expect(sensorLayer.getFeatureByDatastreamId(false, "6789")).to.be.null;
-            expect(sensorLayer.getFeatureByDatastreamId("string", "6789")).to.be.null;
-        });
-        it("should return null if the second parameter is anything but a string", () => {
-            expect(sensorLayer.getFeatureByDatastreamId([], {})).to.be.null;
-            expect(sensorLayer.getFeatureByDatastreamId([], null)).to.be.null;
-            expect(sensorLayer.getFeatureByDatastreamId([], undefined)).to.be.null;
-            expect(sensorLayer.getFeatureByDatastreamId([], 123)).to.be.null;
-            expect(sensorLayer.getFeatureByDatastreamId([], true)).to.be.null;
-            expect(sensorLayer.getFeatureByDatastreamId([], false)).to.be.null;
-            expect(sensorLayer.getFeatureByDatastreamId([], [])).to.be.null;
-        });
-        it("should return null if the given features are an empty array", () => {
-            expect(sensorLayer.getFeatureByDatastreamId([], "string")).to.be.null;
-        });
-        it("should return null if the given id is not included in any dataStreamId of the given features", () => {
-            const features = [
-                {get: () => "1234 | 5678"},
-                {get: () => "2345 | 6789"},
-                {get: () => "3456 | 7890"}
-            ];
-
-            expect(sensorLayer.getFeatureByDatastreamId(features, "4321")).to.be.null;
-        });
-        it("should return the feature where id equals the dataStreamId", () => {
-            const features = [
-                    {get: () => "1234 | 5678"},
-                    {get: () => "2345"},
-                    {get: () => "3456 | 7890"}
-                ],
-                result = sensorLayer.getFeatureByDatastreamId(features, "2345");
-
-            expect(result).to.be.an("object");
-            expect(result.get).to.be.a("function");
-            expect(result.get()).to.equal("2345");
-        });
-        it("should return the feature where id is found in a piped dataStreamId string", () => {
-            const features = [
-                    {get: () => "1234 | 5678"},
-                    {get: () => "2345 | 6789"},
-                    {get: () => "3456 | 7890"}
-                ],
-                result = sensorLayer.getFeatureByDatastreamId(features, "6789");
-
-            expect(result).to.be.an("object");
-            expect(result.get).to.be.a("function");
-            expect(result.get()).to.equal("2345 | 6789");
-        });
-        it("should return null if the given id is only a sub part of an id of a piped dataStreamId string", () => {
-            const features = [
-                {get: () => "1234 | 5678"},
-                {get: () => "2345 | 6789"},
-                {get: () => "3456 | 7890"}
-            ];
-
-            expect(sensorLayer.getFeatureByDatastreamId(features, "23")).to.be.null;
-        });
-    });
-
-    describe("getDatastreamIdsHelper", () => {
-        it("should return false if the first parameter is not an object", () => {
-            expect(sensorLayer.getDatastreamIdsHelper([], [])).to.be.false;
-            expect(sensorLayer.getDatastreamIdsHelper(null, [])).to.be.false;
-            expect(sensorLayer.getDatastreamIdsHelper(undefined, [])).to.be.false;
-            expect(sensorLayer.getDatastreamIdsHelper(123, [])).to.be.false;
-            expect(sensorLayer.getDatastreamIdsHelper(true, [])).to.be.false;
-            expect(sensorLayer.getDatastreamIdsHelper(false, [])).to.be.false;
-            expect(sensorLayer.getDatastreamIdsHelper("string", [])).to.be.false;
-        });
-        it("should return false if the first parameter is an object but has no get function", () => {
-            expect(sensorLayer.getDatastreamIdsHelper({}, [])).to.be.false;
-        });
-        it("should return false if the first parameter has not string value under dataStreamId received by getter", () => {
-            expect(sensorLayer.getDatastreamIdsHelper({get: () => undefined}, [])).to.be.false;
-            expect(sensorLayer.getDatastreamIdsHelper({get: () => null}, [])).to.be.false;
-            expect(sensorLayer.getDatastreamIdsHelper({get: () => 123}, [])).to.be.false;
-            expect(sensorLayer.getDatastreamIdsHelper({get: () => true}, [])).to.be.false;
-            expect(sensorLayer.getDatastreamIdsHelper({get: () => false}, [])).to.be.false;
-            expect(sensorLayer.getDatastreamIdsHelper({get: () => []}, [])).to.be.false;
-            expect(sensorLayer.getDatastreamIdsHelper({get: () => {
-                return {};
-            }}, [])).to.be.false;
-        });
-        it("should return false if the second parameter is not an array", () => {
-            expect(sensorLayer.getDatastreamIdsHelper({get: () => "string"}, undefined)).to.be.false;
-            expect(sensorLayer.getDatastreamIdsHelper({get: () => "string"}, null)).to.be.false;
-            expect(sensorLayer.getDatastreamIdsHelper({get: () => "string"}, 123)).to.be.false;
-            expect(sensorLayer.getDatastreamIdsHelper({get: () => "string"}, true)).to.be.false;
-            expect(sensorLayer.getDatastreamIdsHelper({get: () => "string"}, false)).to.be.false;
-            expect(sensorLayer.getDatastreamIdsHelper({get: () => "string"}, {})).to.be.false;
-            expect(sensorLayer.getDatastreamIdsHelper({get: () => "string"}, "string")).to.be.false;
-        });
-        it("should push a pipeless value into the second parameter", () => {
-            const feature = {
-                    get: () => "1234"
-                },
-                result = [];
-
-            expect(sensorLayer.getDatastreamIdsHelper(feature, result)).to.be.true;
-            expect(result).to.deep.equal(["1234"]);
-        });
-        it("should push all value splitted by pipe into the second parameter", () => {
-            const feature = {
-                    get: () => "1234 | 5678"
-                },
-                result = [];
-
-            expect(sensorLayer.getDatastreamIdsHelper(feature, result)).to.be.true;
-            expect(result).to.deep.equal(["1234", "5678"]);
-        });
-    });
-
-    describe("getDatastreamIds", () => {
-        it("should return an empty array if the given parameter is not an array", () => {
-            expect(sensorLayer.getDatastreamIds(undefined)).to.be.an("array").and.to.be.empty;
-            expect(sensorLayer.getDatastreamIds(null)).to.be.an("array").and.to.be.empty;
-            expect(sensorLayer.getDatastreamIds(123)).to.be.an("array").and.to.be.empty;
-            expect(sensorLayer.getDatastreamIds(true)).to.be.an("array").and.to.be.empty;
-            expect(sensorLayer.getDatastreamIds(false)).to.be.an("array").and.to.be.empty;
-            expect(sensorLayer.getDatastreamIds("string")).to.be.an("array").and.to.be.empty;
-            expect(sensorLayer.getDatastreamIds({})).to.be.an("array").and.to.be.empty;
-        });
-        it("should return an empty array if the given parameter is an array but is empty", () => {
-            expect(sensorLayer.getDatastreamIds([])).to.be.an("array").and.to.be.empty;
-        });
-        it("should return an empty array if the features are not objects", () => {
-            expect(sensorLayer.getDatastreamIds([undefined, null, 123, true, false, "string", []])).to.be.an("array").and.to.be.empty;
-        });
-        it("should return an empty array if the features are objects but have no get function", () => {
-            expect(sensorLayer.getDatastreamIds([{}, {get: false}])).to.be.an("array").and.to.be.empty;
-        });
-        it("should collect the datastream ids of the features if the features have no sub features", () => {
-            const features = [
-                {get: key => key === "features" ? undefined : "123"},
-                {get: key => key === "features" ? undefined : "456 | 789"}
-            ];
-
-            expect(sensorLayer.getDatastreamIds(features)).to.deep.equal(["123", "456", "789"]);
-        });
-        it("should collect all datastream ids of all sub features if any given features have sub features", () => {
-            const features = [
-                {
-                    get: () => [
-                        {get: key => key === "features" ? undefined : "321"},
-                        {get: key => key === "features" ? undefined : "654 | 987"}
-                    ]
-                },
-                {get: key => key === "features" ? undefined : "123"},
-                {get: key => key === "features" ? undefined : "456 | 789"}
-            ];
-
-            expect(sensorLayer.getDatastreamIds(features)).to.deep.equal(["321", "654", "987", "123", "456", "789"]);
-        });
-    });
-
-    describe("replaceValueInArrayByReference", () => {
-        it("should return false if the given result is not an array", () => {
-            expect(sensorLayer.replaceValueInArrayByReference(undefined, [], "string", "value")).to.be.false;
-            expect(sensorLayer.replaceValueInArrayByReference(null, [], "string", "value")).to.be.false;
-            expect(sensorLayer.replaceValueInArrayByReference(123, [], "string", "value")).to.be.false;
-            expect(sensorLayer.replaceValueInArrayByReference(true, [], "string", "value")).to.be.false;
-            expect(sensorLayer.replaceValueInArrayByReference(false, [], "string", "value")).to.be.false;
-            expect(sensorLayer.replaceValueInArrayByReference("string", [], "string", "value")).to.be.false;
-            expect(sensorLayer.replaceValueInArrayByReference({}, [], "string", "value")).to.be.false;
-        });
-        it("should return false if the given referenceArray is not an array", () => {
-            expect(sensorLayer.replaceValueInArrayByReference([], undefined, "string", "value")).to.be.false;
-            expect(sensorLayer.replaceValueInArrayByReference([], null, "string", "value")).to.be.false;
-            expect(sensorLayer.replaceValueInArrayByReference([], 123, "string", "value")).to.be.false;
-            expect(sensorLayer.replaceValueInArrayByReference([], true, "string", "value")).to.be.false;
-            expect(sensorLayer.replaceValueInArrayByReference([], false, "string", "value")).to.be.false;
-            expect(sensorLayer.replaceValueInArrayByReference([], "string", "string", "value")).to.be.false;
-            expect(sensorLayer.replaceValueInArrayByReference([], {}, "string", "value")).to.be.false;
-        });
-        it("should replace value in array by reference and return true", () => {
-            const resArr = [];
-
-            expect(sensorLayer.replaceValueInArrayByReference(resArr, ["3"], "3", "5")).to.be.true;
-            expect(resArr).to.deep.equal(["5"]);
-        });
-        it("should return empty array if reference array does not includes the given reference", () => {
-            const resArr = [];
-
-            expect(sensorLayer.replaceValueInArrayByReference(resArr, ["3"], "4", "5")).to.be.true;
-            expect(resArr).to.deep.equal([]);
-        });
-    });
-
-    describe("replaceValueInPipedProperty", () => {
-        it("should return an empty string if the given parameters are not correct", () => {
-            expect(sensorLayer.replaceValueInPipedProperty({}, "dataStreamValue", "8805", "available")).to.be.a("string").and.to.be.empty;
-            expect(sensorLayer.replaceValueInPipedProperty([], "dataStreamValue", "8805", "available")).to.be.a("string").and.to.be.empty;
-            expect(sensorLayer.replaceValueInPipedProperty([], undefined, "8805", "available")).to.be.a("string").and.to.be.empty;
-            expect(sensorLayer.replaceValueInPipedProperty([], "dataStreamValue", undefined, "available")).to.be.a("string").and.to.be.empty;
-            expect(sensorLayer.replaceValueInPipedProperty([], "dataStreamValue", "8805", undefined)).to.be.a("string").and.to.be.empty;
-            expect(sensorLayer.replaceValueInPipedProperty(undefined, undefined, undefined, undefined)).to.be.a("string").and.to.be.empty;
-        });
-        it("should return an empty string if the given feature has no dataStreamId", () => {
-            const feature = {
-                get: key => key === "dataStreamId" ? undefined : "foo | bar"
-            };
-
-            expect(sensorLayer.replaceValueInPipedProperty(feature, "property", "dataStreamId", "value")).to.be.a("string").and.to.be.empty;
-        });
-        it("should return an empty string if the given feature has not the expected property", () => {
-            const feature = {
-                get: key => key === "dataStreamId" ? "1 | 2" : undefined
-            };
-
-            expect(sensorLayer.replaceValueInPipedProperty(feature, "property", "dataStreamId", "value")).to.be.a("string").and.to.be.empty;
-        });
-        it("should replace value in piped properties", () => {
-            const feature = {
-                get: key => key === "dataStreamId" ? "1 | 2" : "foo | bar"
-            };
-
-            expect(sensorLayer.replaceValueInPipedProperty(feature, "property", "2", "baz")).to.equal("foo | baz");
-        });
-    });
-
     describe("updateFeatureProperties", () => {
-        it("should return false if the given feature has no get function", () => {
-            expect(sensorLayer.updateFeatureProperties(undefined)).to.be.false;
-            expect(sensorLayer.updateFeatureProperties(null)).to.be.false;
-            expect(sensorLayer.updateFeatureProperties(1234)).to.be.false;
-            expect(sensorLayer.updateFeatureProperties(true)).to.be.false;
-            expect(sensorLayer.updateFeatureProperties(false)).to.be.false;
-            expect(sensorLayer.updateFeatureProperties([])).to.be.false;
-            expect(sensorLayer.updateFeatureProperties({})).to.be.false;
-        });
-        it("should return false if the given feature has not set function", () => {
-            expect(sensorLayer.updateFeatureProperties({get: () => false})).to.be.false;
-        });
-        it("should return false if the feature has no dataStreamId property", () => {
-            expect(sensorLayer.updateFeatureProperties({get: () => false, set: () => false})).to.be.false;
-        });
-        it("should return false if the feature has no dataStreamName property", () => {
-            expect(sensorLayer.updateFeatureProperties({get: key => key === "dataStreamId" ? "str" : false, set: () => false})).to.be.false;
-        });
-        it("should return false if the feature has no dataStreamName property", () => {
-            expect(sensorLayer.updateFeatureProperties({get: key => key === "dataStreamId" ? "str" : false, set: () => false})).to.be.false;
-        });
-        it("should return true and change the feature", () => {
-            const setLogger = [],
-                feature = {
-                    get: key => {
-                        if (key === "dataStreamId") {
-                            return "1 | 2";
-                        }
-                        else if (key === "dataStreamName") {
-                            return "nameA | nameB";
-                        }
-                        else if (key === "dataStreamValue") {
-                            return "nameA | nameB";
-                        }
-                        else if (key === "dataStreamPhenomenonTime") {
-                            return "phenomenonTimeA | phenomenonTimeB";
-                        }
-                        return undefined;
-                    },
-                    set: (key, value) => {
-                        setLogger.push({key, value});
-                    }
-                },
-                expected = [
-                    {
-                        key: "dataStream_2_nameB",
-                        value: "result"
-                    },
-                    {
-                        key: "dataStream_2_nameB_phenomenonTime",
-                        value: "phenomenonTime"
-                    },
-                    {
-                        key: "dataStreamValue",
-                        value: "nameA | result"
-                    },
-                    {
-                        key: "dataStreamPhenomenonTime",
-                        value: "phenomenonTimeA | phenomenonTime"
-                    }
-                ];
+        // it("should return false if the given feature has no get function", () => {
+        //     expect(sensorLayer.updateFeatureProperties(undefined)).to.be.false;
+        //     expect(sensorLayer.updateFeatureProperties(null)).to.be.false;
+        //     expect(sensorLayer.updateFeatureProperties(1234)).to.be.false;
+        //     expect(sensorLayer.updateFeatureProperties(true)).to.be.false;
+        //     expect(sensorLayer.updateFeatureProperties(false)).to.be.false;
+        //     expect(sensorLayer.updateFeatureProperties([])).to.be.false;
+        //     expect(sensorLayer.updateFeatureProperties({})).to.be.false;
+        // });
+        // it("should return false if the given feature has not set function", () => {
+        //     expect(sensorLayer.updateFeatureProperties({get: () => false})).to.be.false;
+        // });
+        // it("should return false if the feature has no dataStreamId property", () => {
+        //     expect(sensorLayer.updateFeatureProperties({get: () => false, set: () => false})).to.be.false;
+        // });
+        // it("should return false if the feature has no dataStreamName property", () => {
+        //     expect(sensorLayer.updateFeatureProperties({get: key => key === "dataStreamId" ? "str" : false, set: () => false})).to.be.false;
+        // });
+        // it("should return false if the feature has no dataStreamName property", () => {
+        //     expect(sensorLayer.updateFeatureProperties({get: key => key === "dataStreamId" ? "str" : false, set: () => false})).to.be.false;
+        // });
+        // it("should return true and change the feature", () => {
+        //     const setLogger = [],
+        //         feature = {
+        //             get: key => {
+        //                 if (key === "dataStreamId") {
+        //                     return "1 | 2";
+        //                 }
+        //                 else if (key === "dataStreamName") {
+        //                     return "nameA | nameB";
+        //                 }
+        //                 else if (key === "dataStreamValue") {
+        //                     return "nameA | nameB";
+        //                 }
+        //                 else if (key === "dataStreamPhenomenonTime") {
+        //                     return "phenomenonTimeA | phenomenonTimeB";
+        //                 }
+        //                 return undefined;
+        //             },
+        //             set: (key, value) => {
+        //                 setLogger.push({key, value});
+        //             }
+        //         },
+        //         expected = [
+        //             {
+        //                 key: "dataStream_2_nameB",
+        //                 value: "result"
+        //             },
+        //             {
+        //                 key: "dataStream_2_nameB_phenomenonTime",
+        //                 value: "phenomenonTime"
+        //             },
+        //             {
+        //                 key: "dataStreamValue",
+        //                 value: "nameA | result"
+        //             },
+        //             {
+        //                 key: "dataStreamPhenomenonTime",
+        //                 value: "phenomenonTimeA | phenomenonTime"
+        //             }
+        //         ];
 
-            expect(sensorLayer.updateFeatureProperties(feature, "2", "result", "phenomenonTime", "showNoDataValue", "noDataValue", "funcChangeFeatureGFI")).to.be.true;
-            expect(setLogger).to.deep.equal(expected);
-        });
-        it("should return true and change the feature with showNoDataValue and noDataValue", () => {
-            const setLogger = [],
-                feature = {
-                    get: key => {
-                        if (key === "dataStreamId") {
-                            return "1 | 2";
-                        }
-                        else if (key === "dataStreamName") {
-                            return "nameA | nameB";
-                        }
-                        else if (key === "dataStreamValue") {
-                            return "nameA | nameB";
-                        }
-                        else if (key === "dataStreamPhenomenonTime") {
-                            return "phenomenonTimeA | phenomenonTimeB";
-                        }
-                        return undefined;
-                    },
-                    set: (key, value) => {
-                        setLogger.push({key, value});
-                    }
-                },
-                expected = [
-                    {
-                        key: "dataStream_2_nameB",
-                        value: "noDataValue"
-                    },
-                    {
-                        key: "dataStream_2_nameB_phenomenonTime",
-                        value: "phenomenonTime"
-                    },
-                    {
-                        key: "dataStreamValue",
-                        value: "nameA | noDataValue"
-                    },
-                    {
-                        key: "dataStreamPhenomenonTime",
-                        value: "phenomenonTimeA | phenomenonTime"
-                    }
-                ];
+        //     expect(sensorLayer.updateFeatureProperties(feature, "2", "result", "phenomenonTime", "showNoDataValue", "noDataValue", "funcChangeFeatureGFI")).to.be.true;
+        //     expect(setLogger).to.deep.equal(expected);
+        // });
+        // it("should return true and change the feature with showNoDataValue and noDataValue", () => {
+        //     const setLogger = [],
+        //         feature = {
+        //             get: key => {
+        //                 if (key === "dataStreamId") {
+        //                     return "1 | 2";
+        //                 }
+        //                 else if (key === "dataStreamName") {
+        //                     return "nameA | nameB";
+        //                 }
+        //                 else if (key === "dataStreamValue") {
+        //                     return "nameA | nameB";
+        //                 }
+        //                 else if (key === "dataStreamPhenomenonTime") {
+        //                     return "phenomenonTimeA | phenomenonTimeB";
+        //                 }
+        //                 return undefined;
+        //             },
+        //             set: (key, value) => {
+        //                 setLogger.push({key, value});
+        //             }
+        //         },
+        //         expected = [
+        //             {
+        //                 key: "dataStream_2_nameB",
+        //                 value: "noDataValue"
+        //             },
+        //             {
+        //                 key: "dataStream_2_nameB_phenomenonTime",
+        //                 value: "phenomenonTime"
+        //             },
+        //             {
+        //                 key: "dataStreamValue",
+        //                 value: "nameA | noDataValue"
+        //             },
+        //             {
+        //                 key: "dataStreamPhenomenonTime",
+        //                 value: "phenomenonTimeA | phenomenonTime"
+        //             }
+        //         ];
 
-            expect(sensorLayer.updateFeatureProperties(feature, "2", "", "phenomenonTime", true, "noDataValue", "funcChangeFeatureGFI")).to.be.true;
-            expect(setLogger).to.deep.equal(expected);
-        });
+        //     expect(sensorLayer.updateFeatureProperties(feature, "2", "", "phenomenonTime", true, "noDataValue", "funcChangeFeatureGFI")).to.be.true;
+        //     expect(setLogger).to.deep.equal(expected);
+        // });
         it("should return true call the given change feature gfi function", () => {
             let lastFeature = null;
             const feature = {
