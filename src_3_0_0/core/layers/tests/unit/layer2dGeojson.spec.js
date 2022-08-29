@@ -36,12 +36,10 @@ describe("src_3_0_0/core/layers/layer2dVectorGeojson.js", () => {
     beforeEach(() => {
         attributes = {
             id: "id",
-            layers: "layer1,layer2",
             name: "geojsonTestLayer",
             typ: "Geojson"
         };
     });
-
 
     after(() => {
         sinon.restore();
