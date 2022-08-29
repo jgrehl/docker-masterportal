@@ -1,5 +1,6 @@
 import store from "../../app-store";
 import layerCollection from "./layerCollection";
+import Layer2dRasterStaticImage from "./layer2dRasterStaticImage";
 import Layer2dRasterWms from "./layer2dRasterWms";
 import Layer2dVectorGeojson from "./layer2dVectorGeojson";
 import Layer2dVectorVectorbase from "./Layer2dVectorVectorbase";
@@ -11,6 +12,7 @@ const possibleLayerTypes = {
     GEOJSON: Layer2dVectorGeojson,
     OAF: Layer2dVectorOaf,
     SENSORTHINGS: Layer2dVectorSensorThings,
+    STATICIMAGE: Layer2dRasterStaticImage,
     VECTORBASE: Layer2dVectorVectorbase,
     WFS: Layer2dVectorWfs,
     WMS: Layer2dRasterWms
