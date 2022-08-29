@@ -41,6 +41,23 @@ describe("src_3_0_0/core/layers/layerFactory.js", () => {
         mapCollection.addMap(map, "2D");
     });
 
+    afterEach(() => {
+        sinon.restore();
+    });
+
+    describe("processLayerConfig", () => {
+        it("should create two ol layers from two visible layers", () => {
+            let olLayers = [];
+
+            processLayerConfig(layerConfig);
+            olLayers = mapCollection.getMap("2D").getLayers().getArray();
+
+            expect(olLayers.length).equals(2);
+            expect(olLayers[0].get("id")).to.equals("453");
+            expect(olLayers[1].get("id")).to.equals("2426");
+        });
+    });
+
     describe("createLayer", () => {
         it("should creates a layer with type WMS", () => {
             const wmsLayer = createLayer(layerConfig[0]);
@@ -72,19 +89,6 @@ describe("src_3_0_0/core/layers/layerFactory.js", () => {
                 layers: "Geobasiskarten_HHde",
                 abc: true
             });
-        });
-    });
-
-    describe("processLayerConfig", () => {
-        it("should create two ol layers from two visible layers", () => {
-            let olLayers = [];
-
-            processLayerConfig(layerConfig);
-            olLayers = mapCollection.getMap("2D").getLayers().getArray();
-
-            expect(olLayers.length).equals(2);
-            expect(olLayers[0].get("id")).to.equals("453");
-            expect(olLayers[1].get("id")).to.equals("2426");
         });
     });
 });
