@@ -49,7 +49,6 @@ describe("src_3_0_0/core/layers/layer2dVectorSensorThings.js", () => {
     beforeEach(() => {
         attributes = {
             id: "id",
-            layers: "layer1,layer2",
             name: "sensorThingsTestLayer",
             typ: "SensorThings",
             url: "https://url.de",
@@ -58,7 +57,6 @@ describe("src_3_0_0/core/layers/layer2dVectorSensorThings.js", () => {
 
         sensorThingsLayer = new Layer2dVectorSensorThings(attributes);
     });
-
 
     after(() => {
         sinon.restore();
