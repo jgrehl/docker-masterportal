@@ -35,12 +35,10 @@ describe("src_3_0_0/core/layers/layer2dVectorWfs.js", () => {
     beforeEach(() => {
         attributes = {
             id: "id",
-            layers: "layer1,layer2",
             name: "wfsTestLayer",
             typ: "WFS"
         };
     });
-
 
     after(() => {
         sinon.restore();
