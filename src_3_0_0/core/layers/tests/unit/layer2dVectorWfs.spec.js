@@ -108,28 +108,6 @@ describe("src_3_0_0/core/layers/layer2dVectorWfs.js", () => {
         });
     });
 
-    describe("getLayerParams", () => {
-        let localAttributes;
-
-        beforeEach(() => {
-            localAttributes = {
-                altitudeMode: "clampToGround",
-                name: "The name",
-                typ: "WFS"
-            };
-        });
-
-        it("should return the raw layer attributes", () => {
-            const wfsLayer = new Layer2dVectorWfs(localAttributes);
-
-            expect(wfsLayer.getLayerParams(localAttributes)).to.deep.equals({
-                altitudeMode: "clampToGround",
-                name: "The name",
-                typ: "WFS"
-            });
-        });
-    });
-
     describe("getOptions", () => {
         let options;
 
