@@ -91,6 +91,19 @@
           }
         },
         {
+          "id": "46",
+          "name": "Lärmberechnung",
+          "typ": "StaticImage",
+          "visibility": true,
+          "url": "https://geodienste.hamburg.de/lgv-config/img/Laerm-Test_300dpi.png",
+          "extent": [
+            568426.27,
+            5931985.58,
+            569614.86,
+            5933174.11
+          ]
+        },
+        {
           "Titel": "Emissionen",
           "Ordner": [
             {
