@@ -1,3 +1,6 @@
+
+import {unByKey as unlistenByKey} from "ol/Observable.js";
+
 /**
  * Interactions with the Map and MapView.
  */
@@ -33,5 +36,26 @@ export default {
         };
 
         mapCollection.getMap("2D").on(type, registeredActions[type][listenerType][listener]);
+    },
+
+    /**
+     * Unsubscribes listener to certain events.
+     * @param {Object} _ not used
+     * @param {Object} payload parameter object
+     * @param {String} payload.type The event type or array of event types.
+     * @param {Function} payload.listener The listener function.
+     * @param {String | Function} payload.listenerType Type of the listener. Possible are: "function", "commit" and "dispatch".
+     * @returns {void}
+     */
+    unregisterListener (_, {type, listener, listenerType = "function"}) {
+        if (typeof type === "string") {
+            if (registeredActions[type] && registeredActions[type][listenerType] && registeredActions[type][listenerType][String(listener)]) {
+                mapCollection.getMap("2D").un(type, registeredActions[type][listenerType][String(listener)]);
+                registeredActions[type][listenerType][String(listener)] = null;
+            }
+        }
+        else {
+            unlistenByKey(type);
+        }
     }
 };
