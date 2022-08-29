@@ -6,10 +6,15 @@ import View from "ol/View";
 import {createLayer, processLayerConfig, updateLayerAttributes} from "../../layerFactory";
 import mapCollection from "../../../maps/mapCollection";
 
-
 describe("src_3_0_0/core/layers/layerFactory.js", () => {
     let layerConfig,
-        map;
+        map,
+        warn;
+
+    before(() => {
+        warn = sinon.spy();
+        sinon.stub(console, "warn").callsFake(warn);
+    });
 
     beforeEach(() => {
         layerConfig = [
@@ -41,7 +46,7 @@ describe("src_3_0_0/core/layers/layerFactory.js", () => {
         mapCollection.addMap(map, "2D");
     });
 
-    afterEach(() => {
+    after(() => {
         sinon.restore();
     });
 
