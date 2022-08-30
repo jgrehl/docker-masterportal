@@ -1,7 +1,7 @@
 import {expect} from "chai";
 import {SensorThingsHttp} from "../../../utils/sensorThingsHttp.js";
 
-describe("src/utils/sensorThingsHttp", () => {
+describe("src_3_0_0/utils/sensorThingsHttp", () => {
     let http = null,
         lastError = false;
 
