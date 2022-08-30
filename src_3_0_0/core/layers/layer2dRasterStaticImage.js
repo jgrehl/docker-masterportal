@@ -48,7 +48,7 @@ Layer2dRasterStaticImage.prototype.getRawLayerAttributes = function (attributes)
 };
 
 /**
- * Creates a complete ol/Layer from rawLayer containing all required children.
+ * Creates a complete ol/Layer from rawLayer.
  * @param {Object} rawLayer layer specification as in services.json
  * @returns {ol/Layer} layer that can be added to map
  */
