@@ -29,10 +29,7 @@ function mergeRawLayer (layerConf, rawLayer) {
         else if (layerConf.children) {
             mergedLayer = fillGroupLayer(layerConf);
         }
-        else if (rawLayer === undefined || rawLayer === null) {
-            console.warn("Configured layer ", layerConf, " not found in services.json!");
-        }
-        else {
+        else if (rawLayer !== undefined && rawLayer !== null) {
             mergedLayer = Object.assign(rawLayer, layerConf);
         }
     }
