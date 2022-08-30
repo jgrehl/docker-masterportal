@@ -77,6 +77,38 @@
           "params": {
             "anzahl_schueler": ">1000"
           }
+        },
+        {
+          "Titel": "Emissionen",
+          "Ordner": [
+            {
+              "Titel": "Lärmschutzbereiche Flughafen Hamburg (FluLärmHmbV)",
+              "Layer": [
+                {
+                  "id": "2431",
+                  "visibility": true
+                },
+                {
+                  "id": "2430",
+                  "visibility": true
+                },
+                {
+                  "id": "2429"
+                }
+              ],
+              "Ordner": [
+                {
+                  "Titel": "Überschwemmungsgebiete",
+                  "Layer": [
+                    {
+                      "id": "1103",
+                      "visibility": true
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
         }
       ]
     }
