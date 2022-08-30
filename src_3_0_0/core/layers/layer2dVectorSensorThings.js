@@ -113,7 +113,7 @@ Layer2dVectorSensorThings.prototype.getOptions = function (attributes) {
 };
 
 /**
- * Creates a complete ol/Layer from rawLayer containing all required children.
+ * Creates a complete ol/Layer from rawLayer.
  * @param {Object} rawLayer layer specification as in services.json
  * @param {Object} [optionalParams] optional params
  * @param {Object} [optionalParams.layerParams] additional layer params
