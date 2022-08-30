@@ -2,6 +2,7 @@ import store from "../../app-store";
 import layerCollection from "./layerCollection";
 import Layer2dRasterStaticImage from "./layer2dRasterStaticImage";
 import Layer2dRasterWms from "./layer2dRasterWms";
+import Layer2dRasterWmts from "./layer2dRasterWmts";
 import Layer2dVectorGeojson from "./layer2dVectorGeojson";
 import Layer2dVectorVectorbase from "./Layer2dVectorVectorbase";
 import Layer2dVectorOaf from "./layer2dVectorOaf";
@@ -15,7 +16,8 @@ const possibleLayerTypes = {
     VECTORBASE: Layer2dVectorVectorbase,
     VECTORTILE: Layer2dVectorTile,
     WFS: Layer2dVectorWfs,
-    WMS: Layer2dRasterWms
+    WMS: Layer2dRasterWms,
+    WMTS: Layer2dRasterWmts
 };
 
 /**
