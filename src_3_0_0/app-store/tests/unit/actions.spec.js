@@ -10,8 +10,10 @@ describe("src_3_0_0/app-store/actions.js", () => {
         state,
         layerList,
         layerConfig,
-        layerConfigCustom;
-    const restConf = "./resources/rest-services-internet.json";
+        layerConfigCustom,
+        initializeLayerListSpy;
+    const restConf = "./resources/rest-services-internet.json",
+        layerConf = "./services.json";
 
     beforeEach(() => {
         layerList = [
@@ -177,6 +179,7 @@ describe("src_3_0_0/app-store/actions.js", () => {
         state = {
             configJs: {
                 portalConf: "./",
+                layerConf: layerConf,
                 restConf: restConf
             },
             configJson: {
@@ -188,11 +191,13 @@ describe("src_3_0_0/app-store/actions.js", () => {
                 }
             }
         };
+        global.XMLHttpRequest = sinon.useFakeXMLHttpRequest();
         axiosMock = sinon.stub(axios, "get").returns(Promise.resolve({request: {status: 200, data: []}}));
         sinon.stub(rawLayerList, "getLayerWhere").callsFake(function (searchAttributes) {
             return layerList.find(entry => Object.keys(searchAttributes).every(key => entry[key] === searchAttributes[key])) || null;
         });
         sinon.stub(rawLayerList, "getLayerList").returns(layerList);
+        initializeLayerListSpy = sinon.spy(rawLayerList, "initializeLayerList");
     });
 
     afterEach(() => {
@@ -223,6 +228,12 @@ describe("src_3_0_0/app-store/actions.js", () => {
 
             expect(axiosMock.calledOnce).to.be.true;
             expect(axiosMock.calledWith(restConf)).to.be.true;
+        });
+        it("loadServicesJson", () => {
+            actions.loadServicesJson({state, commit});
+
+            expect(initializeLayerListSpy.calledOnce).to.be.true;
+            expect(initializeLayerListSpy.calledWith(layerConf)).to.be.true;
         });
         it("extendLayers for simple tree", () => {
             state.layerConfig = layerConfig;
