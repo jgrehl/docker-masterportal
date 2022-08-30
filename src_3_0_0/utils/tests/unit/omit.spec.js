@@ -1,7 +1,7 @@
 import {expect} from "chai";
 import omit from "../../omit";
 
-describe("src/utils/omit.js", () => {
+describe("src_3_0_0/utils/omit.js", () => {
     describe("omit", () => {
         const obj = {a: "foo", b: "bar", c: "baz"},
             objectBoolean = {true: {x: "foo", y: "bar"}},
