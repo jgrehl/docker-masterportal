@@ -33,7 +33,6 @@ examples*
 
 examples.zip
 portal/master
-portal/masterCustom
 portal/masterDefault
 
 jshintrc
@@ -57,8 +56,6 @@ npm-debug.log
 /portal/*
 !/portal/basic
 !/portal/master
-!/portal/masterCustom
-!/portal/masterCustom_3_0_0
 !/portal/masterDefault
 !/portal/masterDefault_3_0_0
 !/portal/master_3_0_0
