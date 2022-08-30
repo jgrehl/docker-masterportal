@@ -216,11 +216,6 @@ Layer2dVectorTile.prototype.isStyleValid = function (style) {
  * @returns {Object} spriteData
  */
 Layer2dVectorTile.prototype.fetchSpriteData = function (spriteUrl) {
-    /**
-     * @deprecated in the next major-release!
-     * useProxy
-     * getProxyUrl()
-     */
     return axios.get(spriteUrl)
         .then(resp => resp.data);
 };
