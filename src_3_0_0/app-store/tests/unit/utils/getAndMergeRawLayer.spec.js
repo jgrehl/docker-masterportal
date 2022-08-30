@@ -3,7 +3,7 @@ import {getAndMergeRawLayersFilteredByMdId, getAndMergeRawLayer} from "../../../
 import {expect} from "chai";
 import sinon from "sinon";
 
-describe("src/utils/getAndMergeRawLayer.js", () => {
+describe("src_3_0_0/utils/getAndMergeRawLayer.js", () => {
     let layerConfig;
 
     afterEach(() => {
