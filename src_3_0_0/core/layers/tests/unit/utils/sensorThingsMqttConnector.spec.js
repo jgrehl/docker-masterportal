@@ -1,7 +1,7 @@
 import {expect} from "chai";
 import {SensorThingsMqttConnector} from "../../../utils/sensorThingsMqttConnector.js";
 
-describe("src/utils/sensorThingsMqttConnector.js", () => {
+describe("src_3_0_0/utils/sensorThingsMqttConnector.js", () => {
     let mqttClient = false;
 
     beforeEach(() => {

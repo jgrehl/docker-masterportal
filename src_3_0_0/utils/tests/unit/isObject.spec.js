@@ -1,7 +1,7 @@
 import {expect} from "chai";
 import isObject from "../../isObject";
 
-describe("src/utils/isObject.js", () => {
+describe("src_3_0_0/utils/isObject.js", () => {
     describe("isObject", () => {
         it("should return false if undefined is passed", () => {
             expect(isObject(undefined)).to.be.false;
