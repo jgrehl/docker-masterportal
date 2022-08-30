@@ -137,11 +137,6 @@ Layer2dVectorTile.prototype.setStyleById = function (styleID) {
  * @returns {Promise} resolves void after style was set; may reject if received style is invalid
  */
 Layer2dVectorTile.prototype.setStyleByDefinition = function ({id, url, resolutions}) {
-    /**
-     * @deprecated in the next major-release!
-     * useProxy
-     * getProxyUrl()
-     */
     return axios.get(url)
         .then(response => response.data)
         .then(style => {
