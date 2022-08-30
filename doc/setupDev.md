@@ -115,7 +115,6 @@ $ npm start
 - After compilation, you may open the following links for comprehensive demo applications:
     - https://localhost:9001/portal/basic A portal with a simple configuration
     - https://localhost:9001/portal/master Simple topic tree
-    - https://localhost:9001/portal/masterCustom Complex topic tree with folder structure
     - https://localhost:9001/portal/masterDefault Default topic tree loading all WMS layers from the `services.json` file
 
 ### `npm run test`
