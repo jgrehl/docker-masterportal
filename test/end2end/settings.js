@@ -18,7 +18,6 @@ const capabilities = {
     configs = new Map([
         ["basic", "basic"],
         ["master", "master"],
-        ["custom", "masterCustom"],
         ["default", "masterDefault"]
     ]),
     modes = [
