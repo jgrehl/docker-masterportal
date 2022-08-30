@@ -49,10 +49,9 @@ function replaceInNestedValuesHelper (obj, searchKey, maxDepth, result, depth, r
                 result.push(replacement);
             }
             else if (Array.isArray(obj[key])) {
-                obj[key].forEach((element, index) => {
+                obj[key].forEach(element => {
                     if (element[condition.key] === condition.value && element !== replacement) {
-                        obj[key].splice(index, 1, replacement);
-                        result.push(replacement);
+                        result.push(Object.assign(element, replacement));
                     }
                     else if (Array.isArray(element[searchKeyForArrays])) {
                         replaceInNestedValuesHelper(element[searchKeyForArrays], searchKey, maxDepth, result, depth + 1, replacement, condition, searchKeyForArrays);
