@@ -1,7 +1,7 @@
 import getNestedValues from "../../getNestedValues.js";
 import {expect} from "chai";
 
-describe("src/utils/getNestedValues.js", () => {
+describe("src_3_0_0/utils/getNestedValues.js", () => {
     const starks = {
         Ned: {
             fullName: "Eddard Stark",
