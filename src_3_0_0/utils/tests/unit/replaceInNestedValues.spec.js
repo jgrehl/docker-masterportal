@@ -1,7 +1,7 @@
 import replaceInNestedValues from "../../replaceInNestedValues.js";
 import {expect} from "chai";
 
-describe("src/utils/replaceInNestedValues.js", () => {
+describe("src_3_0_0/utils/replaceInNestedValues.js", () => {
     let layerConfig;
     const backGroundLayer = {
         id: "452"
