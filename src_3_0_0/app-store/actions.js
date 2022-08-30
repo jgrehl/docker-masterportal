@@ -2,6 +2,7 @@ import axios from "axios";
 import {initializeLayerList} from "@masterportal/masterportalapi/src/rawLayerList";
 import getNestedValues from "../utils/getNestedValues";
 import {getAndMergeRawLayersFilteredByMdId, getAndMergeRawLayer} from "./utils/getAndMergeRawLayer";
+import {modifyRawLayerList} from "./utils/modifyRawLayerList";
 
 export default {
     /**
@@ -55,10 +56,6 @@ export default {
             if (rawLayer) {
                 commit("replaceByIdInLayerConfig", {layerConfigs: [{layer: rawLayer, id: layerConf.id}]});
             }
-            else {
-                console.warn("Configured visible layer with id ", layerConf.id, " was not found in ", state.configJs?.layerConf);
-            }
-
         });
     },
 
@@ -79,11 +76,27 @@ export default {
 
     /**
      * Load the services.json via masterportalapi.
+     * If portalConfig.tree contains parameter 'layerIDsToIgnore', 'metaIDsToIgnore', 'metaIDsToMerge' or 'layerIDsToStyle' the raw layerlist is filtered.
      * @returns {void}
      */
     loadServicesJson ({state, commit}) {
-        initializeLayerList(state.configJs?.layerConf, () => {
-            commit("setLoadedConfigs", "servicesJson");
+        initializeLayerList(state.configJs?.layerConf, (layerList, error) => {
+            if (error) {
+                // Implementieren, wenn Alert da ist:
+                // Radio.trigger("Alert", "alert", {
+                //     text: "<strong>Die Datei '" + layerConfUrl + "' konnte nicht geladen werden!</strong>",
+                //     kategorie: "alert-warning"
+                // });
+            }
+            else if (state.portalConfig?.tree) {
+                const rawLayerArray = modifyRawLayerList(layerList, state.portalConfig?.tree);
+
+                initializeLayerList(rawLayerArray,
+                    () => commit("setLoadedConfigs", "servicesJson"));
+            }
+            else {
+                commit("setLoadedConfigs", "servicesJson");
+            }
         });
     }
 };
