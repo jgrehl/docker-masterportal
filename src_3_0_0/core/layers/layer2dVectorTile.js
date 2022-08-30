@@ -1,12 +1,12 @@
 import axios from "axios";
 import {vectorTile} from "@masterportal/masterportalapi";
 
-import Layer2dVector from "./layer2dVector";
+import Layer2d from "./layer2d";
 
 /**
  * Creates a 2d vector tile layer.
  * @constructs
- * @extends Layer2dVector
+ * @extends Layer2d
  * @param {Object} attributes The attributes of the layer configuration.
  * @returns {void}
  */
@@ -17,13 +17,13 @@ export default function Layer2dVectorTile (attributes) {
     };
 
     this.attributes = Object.assign(defaultAttributes, attributes);
-    Layer2dVector.call(this, this.attributes);
+    Layer2d.call(this, this.attributes);
 
     this.checkProjection();
     this.setConfiguredLayerStyle();
 }
 
-Layer2dVectorTile.prototype = Object.create(Layer2dVector.prototype);
+Layer2dVectorTile.prototype = Object.create(Layer2d.prototype);
 
 /**
  * Creates a layer of type WFS by using wfs-layer of the masterportalapi.
