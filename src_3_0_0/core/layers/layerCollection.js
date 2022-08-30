@@ -11,6 +11,14 @@ export default {
     },
 
     /**
+     * Removes all entries from the collection.
+     * @returns {void}
+     */
+    clear: function () {
+        layerCollection.length = 0;
+    },
+
+    /**
      * Gets the layerCollection
      * @returns {Layer[]} The layer collection.
      */
