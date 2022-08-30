@@ -29,17 +29,17 @@
         {
           "id": "10220",
           "name": "Dauerzählstellen (Rad) Hamburg",
-          "typ" : "WMS"
+          "typ": "WMS"
         },
         {
           "id": "2426",
           "name": "Bezirke",
-          "typ" : "WMS",
+          "typ": "WMS",
           "visibility": false
         },
         {
           "id": "1933",
-          "typ" : "WMS",
+          "typ": "WMS",
           "visibility": false,
           "styles": [
             "geofox_stations"
@@ -51,20 +51,20 @@
         {
           "id": "1711",
           "name": "Krankenhäuser",
-          "typ" : "WFS",
+          "typ": "WFS",
           "visibility": false
         },
         {
           "id": "8712",
           "name": "de.hh.up:staatliche schulen",
-          "typ" : "WFS",
+          "typ": "WFS",
           "visibility": false,
           "clusterDistance": 60
         },
         {
           "id": "18106",
-          "name" : "Elektro Ladestandorte Hamburg",
-          "typ" : "SensorThings",
+          "name": "Elektro Ladestandorte Hamburg",
+          "typ": "SensorThings",
           "visibility": true,
           "loadThingsOnlyInCurrentExtent": true
         },
@@ -76,7 +76,6 @@
           "url": "./resources/example_geojson.json"
         },
         {
-
           "id": "oaf",
           "name": "Schulen",
           "typ": "OAF",
