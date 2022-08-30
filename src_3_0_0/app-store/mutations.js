@@ -20,14 +20,14 @@ const mutations = {
     /**
      * Replaces the layer with the id of the layer toReplace in state's layerConfig.
      * @param {Object} state store state
-     * @param {Object} payload the payload
+     * @param {Object} [payload={}] the payload
      * @param {Object[]} [payload.layerConfigs=[]] Array of configs of layers to replace, and the id to match in state.layerConfigs
      * @param {Object} payload.layerConfigs.layer layerConfig
      * @param {String} payload.layerConfigs.id the id to match in state.layerConfigs
      * @param {Object} [payload.trigger=true] if true then getters are triggered
      * @returns {void}
      */
-    replaceByIdInLayerConfig (state, {layerConfigs, trigger} = {layerConfigs: [], trigger: true}) {
+    replaceByIdInLayerConfig (state, {layerConfigs = [], trigger = true} = {}) {
         layerConfigs.forEach(config => {
             const replacement = config.layer,
                 id = config.id,
