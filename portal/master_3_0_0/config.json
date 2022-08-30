@@ -69,14 +69,14 @@
           "loadThingsOnlyInCurrentExtent": true
         },
         {
-          "id": "geojson",
+          "id": "GeoJSON",
           "name": "Beiträge",
           "typ": "GeoJSON",
           "visibility": false,
           "url": "./resources/example_geojson.json"
         },
         {
-          "id": "oaf",
+          "id": "OAF",
           "name": "Schulen",
           "typ": "OAF",
           "visibility": false,
@@ -91,7 +91,7 @@
           }
         },
         {
-          "id": "46",
+          "id": "StaticImage",
           "name": "Lärmberechnung",
           "typ": "StaticImage",
           "visibility": true,
