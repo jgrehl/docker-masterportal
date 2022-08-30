@@ -13,12 +13,11 @@ import {wmts} from "@masterportal/masterportalapi";
  */
 export default function WMTSLayer (attrs, options) {
     const defaults = {
-        infoFormat: "text/xml",
-        supported: ["2D", "3D"],
-        showSettings: true
+        // infoFormat: "text/xml",
+        supported: ["2D", "3D"]
     };
 
-    this.layer = wmts.createLayer(Object.assign(defaults, attrs, options));
+    // this.layer = wmts.createLayer(Object.assign(defaults, attrs, options));
 
     // call the super-layer
     Layer.call(this, Object.assign(defaults, attrs, options), this.layer, !attrs.isChildLayer);
@@ -31,7 +30,7 @@ export default function WMTSLayer (attrs, options) {
 }
 
 // Link prototypes and add prototype methods, means WMTSLayer uses all methods and properties of Layer
-WMTSLayer.prototype = Object.create(Layer.prototype);
+// WMTSLayer.prototype = Object.create(Layer.prototype);
 
 /**
  * If no legendURL is set an Error is written on the console.
