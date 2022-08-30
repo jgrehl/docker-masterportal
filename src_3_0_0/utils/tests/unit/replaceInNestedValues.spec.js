@@ -27,7 +27,20 @@ describe("src_3_0_0/utils/replaceInNestedValues.js", () => {
                         visibility: true
                     },
                     {
-                        id: "10220"
+                        id: "10220",
+                        name: "Dauerzählstellen (Rad) Hamburg",
+                        url: "https://geodienste.hamburg.de/HH_WMS_Dauerzaehlstellen_Rad",
+                        typ: "WMS",
+                        visibility: false,
+                        layers: "dauerzaehlstellen_rad",
+                        format: "image/png",
+                        version: "1.3.0",
+                        singleTile: true,
+                        transparent: true,
+                        transparency: 0,
+                        urlIsVisible: true,
+                        tilesize: 512,
+                        gutter: 0
                     }
                 ]
             }
@@ -155,6 +168,33 @@ describe("src_3_0_0/utils/replaceInNestedValues.js", () => {
         expect(result[0]).to.be.deep.equals(Object.assign(replacement, {visibility: true}));
     });
 
+    it("should replace visibility of one element, but previous attributes should remain present", () => {
+        const replacement = {
+                id: "10220",
+                visibility: true
+            },
+            result = replaceInNestedValues(layerConfig, "Layer", replacement, {key: "id", value: replacement.id}),
+            newResult = {
+                id: "10220",
+                name: "Dauerzählstellen (Rad) Hamburg",
+                url: "https://geodienste.hamburg.de/HH_WMS_Dauerzaehlstellen_Rad",
+                typ: "WMS",
+                visibility: true,
+                layers: "dauerzaehlstellen_rad",
+                format: "image/png",
+                version: "1.3.0",
+                singleTile: true,
+                transparent: true,
+                transparency: 0,
+                urlIsVisible: true,
+                tilesize: 512,
+                gutter: 0
+            };
 
+        expect(result).to.be.an("array");
+        expect(result.length).to.be.equals(1);
+        expect(result[0]).to.be.deep.equals(newResult);
+        expect(layerConfig.Fachdaten.Layer[1]).to.be.deep.equals(newResult);
+    });
 });
 
