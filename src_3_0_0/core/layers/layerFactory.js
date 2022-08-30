@@ -31,6 +31,18 @@ const possibleLayerTypes = {
 export default function initializeLayerFactory (visibleLayerConfigs) {
     processLayerConfig(visibleLayerConfigs);
     registerLayerConfig();
+
+    setTimeout(() => {
+        store.commit("replaceByIdInLayerConfig", {
+            layerConfigs: [{
+                id: "2431",
+                layer: {
+                    id: "2431",
+                    visibility: true
+                }
+            }]
+        });
+    }, 15000);
 }
 
 /**
