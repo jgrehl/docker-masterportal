@@ -4,8 +4,10 @@ import Layer2dRasterStaticImage from "./layer2dRasterStaticImage";
 import Layer2dRasterWms from "./layer2dRasterWms";
 import Layer2dRasterWmts from "./layer2dRasterWmts";
 import Layer2dVectorGeojson from "./layer2dVectorGeojson";
-import Layer2dVectorVectorbase from "./Layer2dVectorVectorbase";
 import Layer2dVectorOaf from "./layer2dVectorOaf";
+import Layer2dVectorSensorThings from "./layer2dVectorSensorThings";
+import Layer2dVectorTile from "./layer2dVectorTile";
+import Layer2dVectorVectorbase from "./layer2dVectorVectorbase";
 import Layer2dVectorWfs from "./layer2dVectorWfs";
 
 const possibleLayerTypes = {
@@ -101,3 +103,4 @@ function updateLayerConfig (layer) {
         trigger: false
     });
 }
+
