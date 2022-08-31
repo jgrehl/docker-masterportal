@@ -16,7 +16,7 @@
           "id": "453",
           "name": "Geobasiskarten (HamburgDE)",
           "typ": "WMS",
-          "visibility": false
+          "visibility": true
         },
         {
           "id": "452",
@@ -91,7 +91,7 @@
           "id": "WMTS",
           "name": "EOC Basemap",
           "typ": "WMTS",
-          "visibility": true,
+          "visibility": false,
           "capabilitiesUrl": "https://tiles.geoservice.dlr.de/service/wmts?SERVICE=WMTS&REQUEST=GetCapabilities",
           "layers": "eoc:basemap"
         }
@@ -102,13 +102,14 @@
         {
           "id": "10220",
           "name": "Dauerzählstellen (Rad) Hamburg",
-          "typ": "WMS"
+          "typ": "WMS",
+          "visibility": false
         },
         {
           "id": "2426",
           "name": "Bezirke",
           "typ": "WMS",
-          "visibility": true
+          "visibility": false
         },
         {
           "id": "1933",
@@ -138,7 +139,7 @@
           "id": "18106",
           "name": "Elektro Ladestandorte Hamburg",
           "typ": "SensorThings",
-          "visibility": true,
+          "visibility": false,
           "loadThingsOnlyInCurrentExtent": true
         },
         {
