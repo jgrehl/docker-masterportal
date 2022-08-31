@@ -127,7 +127,6 @@ export default {
 
     /**
      * Load the services.json via masterportalapi.
-     * If portalConfig.tree contains parameter 'layerIDsToIgnore', 'metaIDsToIgnore', 'metaIDsToMerge' or 'layerIDsToStyle' the raw layerlist is filtered.
      * @returns {void}
      */
     loadServicesJson ({state, commit}) {
