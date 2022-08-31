@@ -90,6 +90,16 @@ describe("src_3_0_0/core/layers/layer2d.js", () => {
         });
     });
 
+    describe("getIntervalAutoRefresh and setIntervalAutoRefresh", () => {
+        it("should setLayer and getLayer return the layer", () => {
+            const layer2d = new Layer2d({});
+
+            layer2d.setIntervalAutoRefresh(18);
+
+            expect(layer2d.getIntervalAutoRefresh()).to.equals(18);
+        });
+    });
+
     describe("getLayer and setLayer", () => {
         it("should setLayer and getLayer return the layer", () => {
             const layer2d = new Layer2d({});
