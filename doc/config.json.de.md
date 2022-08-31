@@ -155,7 +155,31 @@ layerPills": {
 ```
 
 ***
+### Portalconfig.tree.layerIDsToStyle
 
+|Name|Required|Type|Default|Description|
+|----|--------|----|-------|-----------|
+|id|nein|String||a `services.json` layer's id|
+|styles|nein|String/String[]||Style to be used as string; if multiple styles are to be used, they are listed in an array.|
+|name|nein|String/String[]||Name to be used as string; if multiple names are to be used, they are listed in an array.|
+|legendUrl|nein|String/String[]||Legend image URL to be used as string; if multiple legend images are to be used, their URLs are listed in an array.|
+
+**Example:**
+
+```json
+{
+    "layerIDsToStyle": [
+        {
+            "id": "1935",
+            "styles": ["geofox_Faehre", "geofox-bahn", "geofox-bus", "geofox_BusName"],
+            "name": ["Fährverbindungen", "Bahnlinien", "Buslinien", "Busliniennummern"],
+            "legendURL": ["http://geoportal.metropolregion.hamburg.de/legende_mrh/hvv-faehre.png", "http://geoportal.metropolregion.hamburg.de/legende_mrh/hvv-bahn.png", "http://geoportal.metropolregion.hamburg.de/legende_mrh/hvv-bus.png", "http://87.106.16.168/legende_mrh/hvv-bus.png"]
+        }
+    ]
+}
+```
+
+***
 ### Portalconfig.searchBar
 Konfiguration der Searchbar
 
