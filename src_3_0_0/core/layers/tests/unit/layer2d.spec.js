@@ -55,6 +55,41 @@ describe("src_3_0_0/core/layers/layer2d.js", () => {
         });
     });
 
+    describe("autoRefresh", () => {
+        let controlAutoRefreshSpy,
+            startAutoRefreshSpy,
+            stopAutoRefreshSpy,
+            layer2d;
+
+        before(() => {
+            controlAutoRefreshSpy = sinon.spy(Layer2d.prototype, "controlAutoRefresh");
+            startAutoRefreshSpy = sinon.spy(Layer2d.prototype, "startAutoRefresh");
+            stopAutoRefreshSpy = sinon.spy(Layer2d.prototype, "stopAutoRefresh");
+            layer2d = new Layer2d({
+                autoRefresh: 50000,
+                id: 123456,
+                visibility: true
+            });
+        });
+
+        it("should start the function controlAutoRefresh and startAutoRefreshSpy when a layer is created", () => {
+            expect(controlAutoRefreshSpy.calledOnce).to.be.true;
+            expect(startAutoRefreshSpy.calledOnce).to.be.true;
+            expect(layer2d.getIntervalAutoRefresh()).is.not.undefined;
+        });
+
+        it("stop the refreshing when layer is no longer visible", () => {
+            layer2d.updateLayerValues({
+                autoRefresh: 50000,
+                id: 123456,
+                visibility: false
+            });
+
+            expect(stopAutoRefreshSpy.calledOnce).to.be.true;
+            expect(layer2d.getIntervalAutoRefresh()).is.undefined;
+        });
+    });
+
     describe("getLayer and setLayer", () => {
         it("should setLayer and getLayer return the layer", () => {
             const layer2d = new Layer2d({});
