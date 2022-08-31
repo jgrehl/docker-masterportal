@@ -8,6 +8,10 @@
 - new config.json parameter 'tree' added. Containes:
   - 'type' (was 'treeType' at root before), only one param possible: "auto" ( = old "default") or nothing
   - 'validLayerTypesAutoTree' (new parameter)
+  - 'layerIDsToIgnore' (moved from config.js)
+  - 'metaIDsToMerge' (moved from config.js)
+  - 'metaIDsToIgnore' (moved from config.js)
+  - 'layerIDsToStyle' (moved from config.js)
 
 ### Added
 - The following NPM package was added:
@@ -15,6 +19,11 @@
         -@babel/plugin-transform-modules-commonjs
 
 ### Changed
+- Parameters moved from config.js to config.json:
+  - 'layerIDsToIgnore'
+  - 'metaIDsToMerge'
+  - 'metaIDsToIgnore'
+  - 'layerIDsToStyle'
 
 ### Deprecated
 
