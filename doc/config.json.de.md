@@ -114,7 +114,21 @@ Konfiguration der Themenbaumes
 {
     "tree": {
         "type": "auto",
-        "validLayerTypesAutoTree": ["WMS", "WFS"]
+        "validLayerTypesAutoTree": ["WMS", "WFS"],
+        "layerIDsToIgnore": ["1912", "1913"],
+        "metaIDsToIgnore": [
+            "09DE39AB-A965-45F4-B8F9-0C339A45B154"
+        ],
+        "metaIDsToMerge": [
+            "FE4DAF57-2AF6-434D-85E3-220A20B8C0F1"
+        ],
+        "layerIDsToStyle": [
+        {
+            "id": "1935",
+            "styles": ["geofox_Faehre", "geofox-bahn", "geofox-bus", "geofox_BusName"],
+            "name": ["Fährverbindungen", "Bahnlinien", "Buslinien", "Busliniennummern"],
+            "legendURL": ["http://geoportal.metropolregion.hamburg.de/legende_mrh/hvv-faehre.png", "http://geoportal.metropolregion.hamburg.de/legende_mrh/hvv-bahn.png", "http://geoportal.metropolregion.hamburg.de/legende_mrh/hvv-bus.png", "http://87.106.16.168/legende_mrh/hvv-bus.png"]
+        }
     }
 }
 ```
