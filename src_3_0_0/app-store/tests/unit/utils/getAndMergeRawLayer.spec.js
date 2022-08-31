@@ -1,5 +1,5 @@
 import * as rawLayerList from "@masterportal/masterportalapi/src/rawLayerList";
-import {getAndMergeRawLayersFilteredByMdId, getAndMergeRawLayer} from "../../../utils/getAndMergeRawLayer.js";
+import {getAndMergeAllRawLayers, getAndMergeRawLayer} from "../../../utils/getAndMergeRawLayer.js";
 import {expect} from "chai";
 import sinon from "sinon";
 
@@ -15,7 +15,7 @@ describe("src_3_0_0/utils/getAndMergeRawLayer.js", () => {
             expect(getAndMergeRawLayer()).to.be.undefined;
         });
         it("should return a simple raw layer", () => {
-            const layerList = [
+            const simpleLayerList = [
                 {
                     id: "453",
                     name: "layer453"
@@ -46,9 +46,9 @@ describe("src_3_0_0/utils/getAndMergeRawLayer.js", () => {
                 }
             };
             sinon.stub(rawLayerList, "getLayerWhere").callsFake(function (searchAttributes) {
-                return layerList.find(entry => Object.keys(searchAttributes).every(key => entry[key] === searchAttributes[key])) || null;
+                return simpleLayerList.find(entry => Object.keys(searchAttributes).every(key => entry[key] === searchAttributes[key])) || null;
             });
-            sinon.stub(rawLayerList, "getLayerList").returns(layerList);
+            sinon.stub(rawLayerList, "getLayerList").returns(simpleLayerList);
 
             result = getAndMergeRawLayer(layerConfig.Hintergrundkarten.Layer[0]);
 
@@ -74,7 +74,7 @@ describe("src_3_0_0/utils/getAndMergeRawLayer.js", () => {
                     ]
                 }
             };
-            const layerList = [
+            const simpleLayerList = [
                 {
                     id: "453",
                     name: "layer453"
@@ -104,9 +104,9 @@ describe("src_3_0_0/utils/getAndMergeRawLayer.js", () => {
             let result = null;
 
             sinon.stub(rawLayerList, "getLayerWhere").callsFake(function (searchAttributes) {
-                return layerList.find(entry => Object.keys(searchAttributes).every(key => entry[key] === searchAttributes[key])) || null;
+                return simpleLayerList.find(entry => Object.keys(searchAttributes).every(key => entry[key] === searchAttributes[key])) || null;
             });
-            sinon.stub(rawLayerList, "getLayerList").returns(layerList);
+            sinon.stub(rawLayerList, "getLayerList").returns(simpleLayerList);
 
             result = getAndMergeRawLayer(layerConfig.Hintergrundkarten.Layer[0]);
 
@@ -143,7 +143,7 @@ describe("src_3_0_0/utils/getAndMergeRawLayer.js", () => {
                     ]
                 }
             };
-            const layerList = [
+            const simpleLayerList = [
                 {
                     id: "682",
                     name: "name682"
@@ -157,9 +157,9 @@ describe("src_3_0_0/utils/getAndMergeRawLayer.js", () => {
             let result = null;
 
             sinon.stub(rawLayerList, "getLayerWhere").callsFake(function (searchAttributes) {
-                return layerList.find(entry => Object.keys(searchAttributes).every(key => entry[key] === searchAttributes[key])) || null;
+                return simpleLayerList.find(entry => Object.keys(searchAttributes).every(key => entry[key] === searchAttributes[key])) || null;
             });
-            sinon.stub(rawLayerList, "getLayerList").returns(layerList);
+            sinon.stub(rawLayerList, "getLayerList").returns(simpleLayerList);
 
             result = getAndMergeRawLayer(layerConfig.Fachdaten.Layer[0].Layer[0]);
 
@@ -177,12 +177,13 @@ describe("src_3_0_0/utils/getAndMergeRawLayer.js", () => {
         });
     });
 
-    describe("getAndMergeRawLayersFilteredByMdId", () => {
-        const validLayerTypesAutoTree = ["WMS", "SENSORTHINGS", "TERRAIN3D", "TILESET3D", "OBLIQUE"];
-        let layerList;
+    describe("getAndMergeAllRawLayers", () => {
+        let treeConfig,
+            simpleLayerList,
+            layerList;
 
         beforeEach(() => {
-            layerList = [
+            simpleLayerList = [
                 {
                     id: "453",
                     name: "name453",
@@ -229,10 +230,50 @@ describe("src_3_0_0/utils/getAndMergeRawLayer.js", () => {
                     typ: "WFS"
                 }
             ];
-            sinon.stub(rawLayerList, "getLayerWhere").callsFake(function (searchAttributes) {
-                return layerList.find(entry => Object.keys(searchAttributes).every(key => entry[key] === searchAttributes[key])) || null;
-            });
-            sinon.stub(rawLayerList, "getLayerList").returns(layerList);
+            treeConfig = {};
+            layerList = [
+                {
+                    id: "453",
+                    name: "layer453",
+                    typ: "WMS",
+                    datasets: [{
+                        md_id: "md_id_453",
+                        md_name: "md_name_453"
+                    }]
+                },
+                {
+                    id: "452",
+                    name: "layer452",
+                    typ: "WMS",
+                    datasets: [{
+                        md_id: "md_id_452",
+                        md_name: "md_name_452"
+                    }]
+                },
+                {
+                    id: "1132",
+                    name: "layer1132",
+                    foo: "bar",
+                    typ: "WMS",
+                    gfiAttributes: "ignore",
+                    layers: "layer1",
+                    maxScale: "1000",
+                    minScale: "10",
+                    datasets: [{
+                        md_id: "md_id_1132",
+                        md_name: "md_name_1132"
+                    }]
+                },
+                {
+                    id: "10220",
+                    name: "layer10220",
+                    typ: "WMS",
+                    datasets: [{
+                        md_id: "md_id_10220",
+                        md_name: "md_name_10220"
+                    }]
+                }
+            ];
         });
 
         afterEach(() => {
@@ -240,45 +281,218 @@ describe("src_3_0_0/utils/getAndMergeRawLayer.js", () => {
         });
 
         it("should filter by typ, datasets and layerContainer", () => {
-            const result = getAndMergeRawLayersFilteredByMdId(validLayerTypesAutoTree);
+            sinon.stub(rawLayerList, "getLayerWhere").callsFake(function (searchAttributes) {
+                return simpleLayerList.find(entry => Object.keys(searchAttributes).every(key => entry[key] === searchAttributes[key])) || null;
+            });
+            sinon.stub(rawLayerList, "getLayerList").returns(simpleLayerList);
+            const result = getAndMergeAllRawLayers(treeConfig);
 
             expect(result).to.be.an("array");
             expect(result.length).to.be.equals(3);
-            expect(result[0]).to.be.deep.equals(layerList[0]);
-            expect(result[1]).to.be.deep.equals(layerList[1]);
-            expect(result[2]).to.be.deep.equals(layerList[2]);
+            expect(result[0]).to.be.deep.equals(simpleLayerList[0]);
+            expect(result[1]).to.be.deep.equals(simpleLayerList[1]);
+            expect(result[2]).to.be.deep.equals(simpleLayerList[2]);
         });
 
         it("should filter by typ, datasets and layerContainer but only typ WMS", () => {
-            const result = getAndMergeRawLayersFilteredByMdId(["WMS"]);
+            sinon.stub(rawLayerList, "getLayerWhere").callsFake(function (searchAttributes) {
+                return simpleLayerList.find(entry => Object.keys(searchAttributes).every(key => entry[key] === searchAttributes[key])) || null;
+            });
+            sinon.stub(rawLayerList, "getLayerList").returns(simpleLayerList);
+            const result = getAndMergeAllRawLayers({validLayerTypesAutoTree: ["WMS"]});
 
             expect(result).to.be.an("array");
             expect(result.length).to.be.equals(2);
-            expect(result[0]).to.be.deep.equals(layerList[0]);
-            expect(result[1]).to.be.deep.equals(layerList[1]);
+            expect(result[0]).to.be.deep.equals(simpleLayerList[0]);
+            expect(result[1]).to.be.deep.equals(simpleLayerList[1]);
         });
 
         it("should create new raw layer if datasets contains more than one entry", () => {
+            sinon.stub(rawLayerList, "getLayerWhere").callsFake(function (searchAttributes) {
+                return simpleLayerList.find(entry => Object.keys(searchAttributes).every(key => entry[key] === searchAttributes[key])) || null;
+            });
+            sinon.stub(rawLayerList, "getLayerList").returns(simpleLayerList);
             let result = null;
 
-            layerList[1].datasets.push(
+            simpleLayerList[1].datasets.push(
                 {
                     md_id: "B6A59A2B-2D40-4676-9094-kjkjkjk",
                     md_name: "md_name_10220"
                 }
             );
-            result = getAndMergeRawLayersFilteredByMdId(validLayerTypesAutoTree);
+            result = getAndMergeAllRawLayers(treeConfig);
 
             expect(result).to.be.an("array");
             expect(result.length).to.be.equals(4);
             expect(result[0].id).to.be.deep.equals("453");
-            expect(result[3]).to.be.deep.equals(layerList[2]);
+            expect(result[3]).to.be.deep.equals(simpleLayerList[2]);
             expect(result[1].id).to.be.deep.equals("452_0");
-            expect(result[1].name).to.be.deep.equals(layerList[1].name);
+            expect(result[1].name).to.be.deep.equals(simpleLayerList[1].name);
             expect(result[1].datasets[0].md_id).to.be.deep.equals("B6A59A2B-2D40-4676-9094-efg");
             expect(result[2].id).to.be.deep.equals("452_1");
-            expect(result[2].name).to.be.deep.equals(layerList[1].name);
+            expect(result[2].name).to.be.deep.equals(simpleLayerList[1].name);
             expect(result[2].datasets[0].md_id).to.be.deep.equals("B6A59A2B-2D40-4676-9094-kjkjkjk");
+        });
+
+        it("layers contained in layerIDsToIgnore should be removed from layerlist", () => {
+            sinon.stub(rawLayerList, "getLayerWhere").callsFake(function (searchAttributes) {
+                return layerList.find(entry => Object.keys(searchAttributes).every(key => entry[key] === searchAttributes[key])) || null;
+            });
+            sinon.stub(rawLayerList, "getLayerList").returns(layerList);
+            let result = null;
+
+            treeConfig.layerIDsToIgnore = ["453", "452"];
+            result = getAndMergeAllRawLayers(treeConfig);
+            expect(result.length).to.be.equals(2);
+        });
+        it("layers not contained in layerIDsToIgnore should not removed from layerlist", () => {
+            sinon.stub(rawLayerList, "getLayerWhere").callsFake(function (searchAttributes) {
+                return layerList.find(entry => Object.keys(searchAttributes).every(key => entry[key] === searchAttributes[key])) || null;
+            });
+            sinon.stub(rawLayerList, "getLayerList").returns(layerList);
+            let result = null;
+
+            treeConfig.layerIDsToIgnore = ["45333", "45222"];
+            result = getAndMergeAllRawLayers(treeConfig);
+            expect(result.length).to.be.equals(4);
+        });
+        it("layers contained in metaIDsToIgnore should be removed from layerlist", () => {
+            sinon.stub(rawLayerList, "getLayerWhere").callsFake(function (searchAttributes) {
+                return layerList.find(entry => Object.keys(searchAttributes).every(key => entry[key] === searchAttributes[key])) || null;
+            });
+            sinon.stub(rawLayerList, "getLayerList").returns(layerList);
+            let result = null;
+
+            treeConfig.metaIDsToIgnore = ["md_id_453", "md_id_452"];
+            result = getAndMergeAllRawLayers(treeConfig);
+            expect(result.length).to.be.equals(2);
+        });
+        it("layers not contained in metaIDsToIgnore should not removed from layerlist", () => {
+            sinon.stub(rawLayerList, "getLayerWhere").callsFake(function (searchAttributes) {
+                return layerList.find(entry => Object.keys(searchAttributes).every(key => entry[key] === searchAttributes[key])) || null;
+            });
+            sinon.stub(rawLayerList, "getLayerList").returns(layerList);
+            let result = null;
+
+            treeConfig.metaIDsToIgnore = ["md_id_45333", "md_id_45222"];
+            result = getAndMergeAllRawLayers(treeConfig);
+            expect(result.length).to.be.equals(4);
+        });
+        it("WMS layers contained in metaIDsToMerge should be merged", () => {
+            sinon.stub(rawLayerList, "getLayerWhere").callsFake(function (searchAttributes) {
+                return layerList.find(entry => Object.keys(searchAttributes).every(key => entry[key] === searchAttributes[key])) || null;
+            });
+            sinon.stub(rawLayerList, "getLayerList").returns(layerList);
+            const layerConf = {
+                id: "11322",
+                name: "layer11322",
+                typ: "WMS",
+                gfiAttributes: {
+                    "name": "Name"
+                },
+                layers: "layer2",
+                maxScale: "5000",
+                minScale: "50",
+                datasets: [{
+                    md_id: "md_id_1132",
+                    md_name: "md_name_1132"
+                }]
+            };
+            let result = null,
+                filteredResult = null;
+
+            layerList.push(layerConf);
+            treeConfig.metaIDsToMerge = ["md_id_1132"];
+
+            result = getAndMergeAllRawLayers(treeConfig);
+            filteredResult = result.filter(layer => layer.name === "layer11322");
+            expect(result.length).to.be.equals(4);
+            expect(filteredResult.length).to.be.equals(0);
+            expect(result[result.length - 1].id).to.be.equals("1132");
+            expect(result[result.length - 1].foo).to.be.equals("bar");
+            expect(result[result.length - 1].name).to.be.equals("md_name_1132");
+            expect(result[result.length - 1].gfiAttributes).to.be.deep.equals({
+                "name": "Name"
+            });
+            expect(result[result.length - 1].layers).to.be.equals("layer1,layer2");
+            expect(result[result.length - 1].maxScale).to.be.equals(5000);
+            expect(result[result.length - 1].minScale).to.be.equals(10);
+        });
+        it("WMS layers contained in metaIDsToMerge should be merged - merged layer should have gfiAttributes from first layer in list", () => {
+            sinon.stub(rawLayerList, "getLayerWhere").callsFake(function (searchAttributes) {
+                return layerList.find(entry => Object.keys(searchAttributes).every(key => entry[key] === searchAttributes[key])) || null;
+            });
+            sinon.stub(rawLayerList, "getLayerList").returns(layerList);
+            const layerConf = {
+                id: "11322",
+                name: "layer11322",
+                typ: "WMS",
+                gfiAttributes: {
+                    "name": "Name"
+                },
+                datasets: [{
+                    md_id: "md_id_1132",
+                    md_name: "md_name_1132"
+                }]
+            };
+            let result = null;
+
+            layerList[2].gfiAttributes = {
+                "foo": "bar"
+            };
+            layerList.push(layerConf);
+            treeConfig.metaIDsToMerge = ["md_id_1132"];
+
+            result = getAndMergeAllRawLayers(treeConfig);
+            expect(result.length).to.be.equals(4);
+            expect(result[result.length - 1].id).to.be.equals("1132");
+            expect(result[result.length - 1].foo).to.be.equals("bar");
+            expect(result[result.length - 1].name).to.be.equals("md_name_1132");
+            expect(result[result.length - 1].gfiAttributes).to.be.deep.equals({
+                "foo": "bar"
+            });
+        });
+        it("WMS layers contained in layerIDsToStyle should be extended or splitted", () => {
+            sinon.stub(rawLayerList, "getLayerWhere").callsFake(function (searchAttributes) {
+                return layerList.find(entry => Object.keys(searchAttributes).every(key => entry[key] === searchAttributes[key])) || null;
+            });
+            sinon.stub(rawLayerList, "getLayerList").returns(layerList);
+            const legendUrls = ["https://geoportal.metropolregion.hamburg.de/legende_mrh/hvv-faehre.png", "https://geoportal.metropolregion.hamburg.de/legende_mrh/hvv-bahn.png", "https://geoportal.metropolregion.hamburg.de/legende_mrh/hvv-bus.png", "https://geoportal.metropolregion.hamburg.de/legende_mrh/hvv-bus.png"],
+                names = ["Fährverbindungen", "Bahnlinien", "Buslinien", "Busliniennummern"],
+                styles = ["geofox_Faehre", "geofox-bahn", "geofox-bus", "geofox_BusName"],
+                layerIDsToStyle = [{
+                    id: "10220",
+                    styles: "geofox_stations",
+                    name: "Haltestellen",
+                    legendURL: "https://geoportal.metropolregion.hamburg.de/legende_mrh/hvv-bus.png"
+                },
+                {
+                    id: "452",
+                    styles: styles,
+                    name: names,
+                    legendURL: legendUrls
+                }];
+            let result = null,
+                filteredResult = null;
+
+            treeConfig.layerIDsToStyle = layerIDsToStyle;
+
+            result = getAndMergeAllRawLayers(treeConfig);
+            filteredResult = result.filter(layer => layer.name === "452");
+            expect(result.length).to.be.equals(7);
+            expect(filteredResult.length).to.be.equals(0);
+            for (let index = 0; index < 4; index++) {
+                expect(result[index + 1].id).to.be.equals("452" + styles[index]);
+                expect(result[index + 1].style).to.be.equals(styles[index]);
+                expect(result[index + 1].legendURL).to.be.equals(legendUrls[index]);
+                expect(result[index + 1].name).to.be.equals(names[index]);
+                expect(result[index + 1].styles).to.be.equals(styles[index]);
+            }
+
+            expect(result[result.length - 1].id).to.be.equals("10220");
+            expect(result[result.length - 1].legendURL).to.be.equals("https://geoportal.metropolregion.hamburg.de/legende_mrh/hvv-bus.png");
+            expect(result[result.length - 1].name).to.be.equals("Haltestellen");
+            expect(result[result.length - 1].styles).to.be.equals("geofox_stations");
         });
     });
 

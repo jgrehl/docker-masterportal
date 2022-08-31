@@ -160,6 +160,10 @@
 - new config.json parameter 'tree' added. Containes:
   - 'type' (was 'treeType' at root before), only one param possible: "auto" ( = old "default") or nothing
   - 'validLayerTypesAutoTree' (new parameter)
+  - 'layerIDsToIgnore' (moved from config.js)
+  - 'metaIDsToMerge' (moved from config.js)
+  - 'metaIDsToIgnore' (moved from config.js)
+  - 'layerIDsToStyle' (moved from config.js)
 
 ### Added
 - GFI: nested object values can now be addressed from "gfiAttributes" by dot notation. See [services.json](https://bitbucket.org/geowerkstatt-hamburg/masterportal/src/dev/doc/services.json.md#markdown-header-gfi_attributes) .
@@ -289,6 +293,11 @@
     - sinon: 14.0.2 to 15.0.2
 - The version of node was updated, must be `>= 16.13.2 <= 16.18.1`
 - The version of npm was updated, must be `>= 8.1.2 <= 8.19.3`
+- Parameters moved from config.js to config.json:
+  - 'layerIDsToIgnore'
+  - 'metaIDsToMerge'
+  - 'metaIDsToIgnore'
+  - 'layerIDsToStyle'
 
 ### Fixed
 - actionsMapLayers/addLayer: don't set zIndex by default, otherwise addLayerOnTop and addLayerToIndex have no effect
