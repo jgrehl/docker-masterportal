@@ -88,6 +88,8 @@ export default {
 
     /**
      * Extends all layers of config.json with the attributes of the layer in services.json.
+     * If portalConfig.tree contains parameter 'layerIDsToIgnore', 'metaIDsToIgnore', 'metaIDsToMerge' or 'layerIDsToStyle' the raw layerlist is filtered and merged.
+     * Config entry portalConfig.tree.validLayerTypesAutoTree is respected.
      * Replaces the extended layer in state.layerConf.
      * @returns {void}
      */
@@ -95,7 +97,7 @@ export default {
         const layerContainer = getNestedValues(state.layerConfig, "Layer", "Ordner").flat(Infinity);
 
         if (state.portalConfig?.tree?.type === "auto") {
-            const rawLayers = getAndMergeRawLayersFilteredByMdId(state.portalConfig?.tree?.validLayerTypesAutoTree);
+            const rawLayers = getAndMergeAllRawLayers(state.portalConfig?.tree);
 
             commit("addToLayerConfig", {layerConfigs: {Layer: rawLayers}, parentKey: "Fachdaten"});
         }
@@ -125,7 +127,6 @@ export default {
 
     /**
      * Load the services.json via masterportalapi.
-     * If portalConfig.tree contains parameter 'layerIDsToIgnore', 'metaIDsToIgnore', 'metaIDsToMerge' or 'layerIDsToStyle' the raw layerlist is filtered.
      * @returns {void}
      */
     loadServicesJson ({state, commit}) {
