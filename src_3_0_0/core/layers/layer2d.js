@@ -1,3 +1,5 @@
+import Cluster from "ol/source/Cluster";
+
 import Layer from "./layer";
 
 /**
@@ -14,18 +16,69 @@ export default function Layer2d (attributes) {
 
     this.attributes = Object.assign(defaultAttributes, attributes);
     Layer.call(this, this.attributes);
+
     this.setLayerSource(this.getLayer()?.getSource());
+    this.controlAutoRefresh(attributes);
 }
 
 Layer2d.prototype = Object.create(Layer.prototype);
 
 /**
- * Sets values to the ol layer.
- * @param {Object} values The new values.
+ * Controls the automatic refresh of the layer source.
+ * @param {Object} attributes The attributes of the layer configuration
  * @returns {void}
  */
-Layer2d.prototype.updateLayerValues = function (values) {
-    this.getLayer().setVisible(values.visibility);
+Layer2d.prototype.controlAutoRefresh = function (attributes) {
+    const autoRefresh = attributes?.autoRefresh;
+
+    if (typeof autoRefresh === "number" || typeof autoRefresh === "string") {
+        if (attributes.visibility && typeof this.getIntervalAutoRefresh() === "undefined") {
+            this.startAutoRefresh(parseInt(autoRefresh, 10));
+        }
+        else if (!attributes.visibility) {
+            this.stopAutoRefresh();
+        }
+    }
+};
+
+/**
+ * Creates and starts an interval to refresh the layer.
+ * @param {Number} autoRefresh The interval in milliseconds.
+ * @returns {void}
+ */
+Layer2d.prototype.startAutoRefresh = function (autoRefresh) {
+    this.setIntervalAutoRefresh(setInterval(() => {
+        const layerSource = this.getLayerSource() instanceof Cluster ? this.getLayerSource()?.getSource() : this.getLayerSource();
+
+        layerSource?.refresh();
+    }, autoRefresh));
+};
+
+/**
+ * Clears running auto refresh interval.
+ * @returns {void}
+ */
+Layer2d.prototype.stopAutoRefresh = function () {
+    clearInterval(this.getIntervalAutoRefresh());
+    this.setIntervalAutoRefresh(undefined);
+};
+
+/**
+ * Sets values to the ol layer.
+ * @param {Object} attributes The new attributes.
+ * @returns {void}
+ */
+Layer2d.prototype.updateLayerValues = function (attributes) {
+    this.getLayer()?.setVisible(attributes.visibility);
+    this.controlAutoRefresh(attributes);
+};
+
+/**
+ * Getter for interval auto refresh.
+ * @returns {void}
+ */
+Layer2d.prototype.getIntervalAutoRefresh = function () {
+    return this.intervalAutoRefresh;
 };
 
 /**
@@ -42,6 +95,15 @@ Layer2d.prototype.getLayer = function () {
  */
 Layer2d.prototype.getLayerSource = function () {
     return this.layerSource;
+};
+
+/**
+ * Setter for interval auto refresh.
+ * @param {Number} value The interval auto refresh.
+ * @returns {void}
+ */
+Layer2d.prototype.setIntervalAutoRefresh = function (value) {
+    this.intervalAutoRefresh = value;
 };
 
 /**
