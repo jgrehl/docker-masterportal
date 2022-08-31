@@ -522,51 +522,8 @@ Settings for generating the tree automatically. Only works if treeType="default"
 
 |Name|Required|Type|Default|Description|
 |----|--------|----|-------|-----------|
-|orderBy|no|enum["Opendata", "Inspire", "Behörde"]|`"Opendata"`|Category the layer tree is sorted by initially.|
-|layerIDsToIgnore|no|Array||Array of `services.json` layer ids not to be shown in the layer tree.|
-|layerIDsToStyle|no|**[layerIDsToStyle](#markdown-header-treelayeridstostyle)**[]||Special implementation for a HVV (Hamburg public transportation) service. Contains objects to request various styles of a layer id.|
-|metaIDsToMerge|no|String[]||All layers found in the `services.json` regarding these meta IDs are merged to a single layer of the layer tree.|
-|metaIDsToIgnore|no|String[]||All `services.json` layers listed will not be shown in the layer tree.|
+|orderBy|no|String|`"OpenData"`|Category the layer tree is sorted by initially.|
 |isFolderSelectable|no|Boolean|`true`|Globally sets whether a selection box is provided on folders that de-/activates all layers in it. An override per element exists, see **[config.json](config.json.md#Ordnerkonfiguration-Fachdaten)**.|
-
-***
-
-### tree.layerIDsToStyle
-
-|Name|Required|Type|Default|Description|
-|----|--------|----|-------|-----------|
-|id|no|Sring||a `services.json` layer's id|
-|styles|no|String/String[]||Style to be used as string; if multiple styles are to be used, they are listed in an array.|
-|name|no|String/String[]||Name to be used as string; if multiple names are to be used, they are listed in an array.|
-|legendUrl|no|String/String[]||Legend image URL to be used as string; if multiple legend images are to be used, their URLs are listed in an array.|
-
-**Example:**
-
-```json
-{
-    "tree": {
-        "orderBy": "Opendata",
-        "layerIDsToIgnore": ["1912", "1913"],
-        "layerIDsToStyle": [
-            {
-                "id": "1935",
-                "styles": ["geofox_Faehre", "geofox-bahn", "geofox-bus", "geofox_BusName"],
-                "name": ["Fährverbindungen", "Bahnlinien", "Buslinien", "Busliniennummern"],
-                "legendURL": ["http://geoportal.metropolregion.hamburg.de/legende_mrh/hvv-faehre.png", "http://geoportal.metropolregion.hamburg.de/legende_mrh/hvv-bahn.png", "http://geoportal.metropolregion.hamburg.de/legende_mrh/hvv-bus.png", "http://87.106.16.168/legende_mrh/hvv-bus.png"]
-            }
-        ],
-        "metaIDsToMerge": [
-            "FE4DAF57-2AF6-434D-85E3-220A20B8C0F1"
-        ],
-        "metaIDsToIgnore": [
-            "09DE39AB-A965-45F4-B8F9-0C339A45B154"
-        ],
-        "isFolderSelectable": false
-    }
-}
-```
-
-***
 
 ## metadata
 
