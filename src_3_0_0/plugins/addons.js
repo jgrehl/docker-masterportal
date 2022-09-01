@@ -53,7 +53,7 @@ async function loadControl (addonKey) {
         // register the vuex store module
         store.registerModule(["controls", addon.component.name], addon.store);
     }
-    store.commit("controls/registerControl", {name: name, control: addon.component});
+    store.commit("Controls/registerControl", {name: name, control: addon.component});
     Vue.prototype.$controlAddons.push(name);
 }
 
