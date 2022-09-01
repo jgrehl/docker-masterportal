@@ -131,7 +131,7 @@
           "id": "2426",
           "name": "Bezirke",
           "typ": "WMS",
-          "visibility": false
+          "visibility": true
         },
         {
           "id": "1933",
