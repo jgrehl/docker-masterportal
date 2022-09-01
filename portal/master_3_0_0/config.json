@@ -7,6 +7,10 @@
         565874,
         5934140
       ]
+    },
+    "controls": {
+      "backForward": true,
+      "fullScreen": true
     }
   },
   "Themenconfig": {
@@ -103,13 +107,13 @@
           "id": "10220",
           "name": "Dauerzählstellen (Rad) Hamburg",
           "typ": "WMS",
-          "visibility": false
+          "visibility": true
         },
         {
           "id": "2426",
           "name": "Bezirke",
           "typ": "WMS",
-          "visibility": false
+          "visibility": true
         },
         {
           "id": "1933",
