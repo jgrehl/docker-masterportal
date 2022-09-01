@@ -1,11 +1,11 @@
 import getters from "./gettersControls";
 import mutations from "./mutationsControls";
 import attributions from "./attributions/store/indexAttributions";
-import backForward from "./backForward/store/indexBackForward";
+// import backForward from "./backForward/store/indexBackForward";
 import orientation from "./orientation/store/indexOrientation";
 import AttributionsItem from "./attributions/components/AttributionsItem.vue";
-import BackForward from "./backForward/components/BackForward.vue";
-import FullScreen from "./fullScreen/components/FullScreen.vue";
+// import BackForward from "./backForward/components/BackForward.vue";
+// import FullScreen from "./fullScreen/components/FullScreen.vue";
 import OrientationItem from "./orientation/components/OrientationItem.vue";
 import OverviewMap from "./overviewMap/components/OverviewMap.vue";
 import StartTool from "./startTool/components/StartTool.vue";
@@ -24,7 +24,7 @@ export default {
     namespaced: true,
     modules: {
         attributions,
-        backForward,
+        // backForward,
         orientation
     },
     // initial state - information on all controls that are not addons.
@@ -32,9 +32,9 @@ export default {
         // maps config.json.md control key to component
         componentMap: {
             attributions: AttributionsItem,
-            backForward: BackForward,
+            // backForward: BackForward,
             freeze: FreezeScreen,
-            fullScreen: FullScreen,
+            // fullScreen: FullScreen,
             orientation: OrientationItem,
             overviewMap: OverviewMap,
             rotation: RotationItem,
@@ -45,7 +45,7 @@ export default {
         // config.json.md control keys where the matching element is to be hidden in mobile mode
         mobileHiddenControls: [
             "backForward",
-            "fullScreen",
+            // "fullScreen",
             // NOTE "mousePosition" is not rendered as a child here
             "overviewMap",
             "totalView",
