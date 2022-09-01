@@ -24,6 +24,24 @@ const getters = {
     },
 
     /**
+     * Returns the controls configuration of portalConfig.
+     * @param {Object} state state of the app-store.
+     * @returns {Object} The controls config.
+     */
+    controlsConfig: state => {
+        return state.portalConfig?.controls || null;
+    },
+
+    /**
+     * Returns the ui style of configJs.
+     * @param {Object} state state of the app-store.
+     * @returns {Object} The ui style.
+     */
+    uiStyle: state => {
+        return state.configJs?.uiStyle?.toUpperCase() || "DEFAULT";
+    },
+
+    /**
      * Returns all visible layer configurations.
      * @param {Object} state state of the app-store.
      * @returns {Object[]} Containing all layer configurations with property 'visibility' is true.
