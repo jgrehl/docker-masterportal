@@ -1,6 +1,7 @@
 <script>
 import {mapGetters, mapActions} from "vuex";
 
+import ControlBar from "./modules/controls/ControlBar.vue";
 import {createMaps} from "./core/maps/maps";
 import initializeLayerFactory from "./core/layers/layerFactory";
 import LoaderOverlay from "./utils/loaderOverlay";
@@ -8,6 +9,9 @@ import mapCollection from "./core/maps/mapCollection";
 
 export default {
     name: "App",
+    components: {
+        ControlBar
+    },
     computed: {
         ...mapGetters([
             "allConfigsLoaded",
@@ -70,16 +74,62 @@ export default {
         class="masterportal-container"
     >
         <div
-            id="map"
-        />
+            id="map-wrapper"
+        >
+            <div
+                id="map"
+            />
+            <div
+                v-if="allConfigsLoaded"
+                class="elements-positioned-over-map"
+            >
+                <ControlBar class="controls" />
+            </div>
+        </div>
     </div>
 </template>
 
 <style lang="scss" scoped>
-    /* map itself should fill the whole region as "background" */
-    #map {
-        position: absolute;
+    @import "~variables";
+
+    #masterportal-container {
+        display: flex;
+        flex-direction: column;
+        flex-flow: column;
+
+        position: relative;
+
         height: 100%;
         width: 100%;
+
+        font-family: $font_family_default;
+        font-size: $font_size_default;
+
+        #map-wrapper {
+            display: flex;
+            height:calc(100% - 50px);
+            overflow: hidden;
+            position: relative;
+            flex-grow:1;
+            order:1;
+
+            #map {
+                position: absolute;
+                height: 100%;
+                width: 100%;
+            }
+            .elements-positioned-over-map {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-end;
+
+                width: 100%;
+                height: 100%;
+
+                .controls {
+                    flex-grow: 1;
+                }
+            }
+        }
     }
 </style>
