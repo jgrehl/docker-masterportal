@@ -52,6 +52,10 @@ export default {
          */
         setGlobalVariables () {
             global.mapCollection = mapCollection;
+
+            if (typeof Cesium === "undefined") {
+                global.Cesium = null;
+            }
         },
 
         /**
