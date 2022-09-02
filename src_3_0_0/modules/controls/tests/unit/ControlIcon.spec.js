@@ -1,8 +1,9 @@
-import Vuex from "vuex";
 import {config, mount, createLocalVue} from "@vue/test-utils";
-import ControlIcon from "../../ControlIcon.vue";
 import {expect} from "chai";
 import sinon from "sinon";
+import Vuex from "vuex";
+
+import ControlIcon from "../../ControlIcon.vue";
 
 const localVue = createLocalVue();
 
