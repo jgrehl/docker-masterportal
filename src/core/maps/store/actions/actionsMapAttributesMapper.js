@@ -41,7 +41,7 @@ export default {
             }
         }});
 
-        commit("setMode", map.mode);
+        // commit("setMode", map.mode);
         // update state once initially to get initial settings
         // dispatch("updateAttributes", {map: map});
         commit("setLayerIds", layerIds[1]);
