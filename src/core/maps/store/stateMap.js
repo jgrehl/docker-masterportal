@@ -1,6 +1,6 @@
 /**
 * @property {String} backgroundImage BackgroundImage of the map.
-* @property {Number[]} boundingBox Current boundingBox values of the map.
+// * @property {Number[]} boundingBox Current boundingBox values of the map.
 * @property {Number[]} center Current center values of the map.
 * @property {Number} changeZoomLevel Last zoom level before switching to another map mode.
 * @property {Number[]} clickCoordinate Current coordinates where the mouse click event was triggered.
@@ -16,7 +16,7 @@
 * @property {String[]} loadedLayers list of ready loaded layers IDs
 * @property {Number} maxZoomLevel Max zoom level of the map view.
 * @property {Number} minZoomLevel Min zoom level of the map view.
-* @property {String} mode Current mode of the map e.g. 2D/3D.
+// * @property {String} mode Current mode of the map e.g. 2D/3D.
 * @property {Number[]} mouseCoordinate Current mouse coordinate values of the map.
 * @property {String[]} overlayIds Current overlays of the map by Id.
 * @property {String} projection Current projection name of the map.
@@ -53,7 +53,7 @@ const state = {
     latitude: null,
     maxZoomLevel: null,
     minZoomLevel: null,
-    mode: "2D",
+    // mode: "2D",
     mouseCoordinate: null,
     overlayIds: null,
     projection: null,
