@@ -1,4 +1,5 @@
 import BackForward from "./backForward/components/BackForward.vue";
+import Button3d from "./button3d/components/Button3dItem.vue";
 import FullScreen from "./fullScreen/components/FullScreen.vue";
 
 /**
@@ -11,6 +12,7 @@ import FullScreen from "./fullScreen/components/FullScreen.vue";
 const state = {
     componentMap: {
         backForward: BackForward,
+        button3d: Button3d,
         fullScreen: FullScreen
     },
     mobileHiddenControls: [
