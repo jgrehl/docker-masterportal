@@ -1,0 +1,105 @@
+import {expect} from "chai";
+import Map from "ol/Map";
+import sinon from "sinon";
+import View from "ol/View";
+
+import actions from "../../../store/actionsMapsMapMode";
+
+const {
+    changeMapMode,
+    activateMap2d,
+    activateMap3d
+} = actions;
+
+describe("src_3_0_0/core/maps/store/actionsMapsMapMode.js", () => {
+    let commit,
+        dispatch,
+        getters,
+        map2d,
+        map3d;
+
+    beforeEach(() => {
+        commit = sinon.spy();
+        dispatch = sinon.spy();
+        getters = sinon.spy();
+
+        mapCollection.clear();
+        map2d = new Map({
+            id: "ol",
+            mode: "2D",
+            view: new View()
+        });
+
+        map3d = {
+            id: "olcs",
+            mode: "3D",
+            setEnabled: () => sinon.spy()
+        };
+
+        mapCollection.addMap(map2d, "2D");
+        mapCollection.addMap(map3d, "3D");
+    });
+
+    afterEach(() => {
+        sinon.restore();
+    });
+
+    describe("changeMapMode", () => {
+        it("Should dispatch activateMap3d, if change from 2D to 3D map mode", () => {
+            const targetMode = "3D";
+
+            getters = {
+                mode: "2D"
+            };
+
+            changeMapMode({dispatch, getters}, targetMode);
+
+            expect(dispatch.calledOnce).to.be.true;
+            expect(dispatch.firstCall.args).to.deep.equals(["activateMap3d"]);
+        });
+
+        it("Should dispatch activateMap2d, if change from 3D to 2D map mode", () => {
+            const targetMode = "2D";
+
+            getters = {
+                mode: "3D"
+            };
+
+            changeMapMode({dispatch, getters}, targetMode);
+
+            expect(dispatch.calledOnce).to.be.true;
+            expect(dispatch.firstCall.args).to.deep.equals(["activateMap2d"]);
+        });
+
+        it("Should dispatch do not called, if the current and target map mode are the same", () => {
+            const targetMode = "2D";
+
+            getters = {
+                mode: "2D"
+            };
+
+            changeMapMode({dispatch, getters}, targetMode);
+
+            expect(dispatch.notCalled).to.be.true;
+        });
+    });
+
+    describe("activateMap2d", () => {
+        it("should trigger mapView animation", () => {
+            const animateSpy = sinon.spy(mapCollection.getMapView("2D"), "animate");
+
+            activateMap2d({commit});
+
+            expect(animateSpy.calledOnce).to.be.true;
+        });
+    });
+
+    describe("activateMap3d", () => {
+        it("should commit 2D to mode", ()=> {
+            activateMap3d({commit});
+
+            expect(commit.calledOnce).to.be.true;
+            expect(commit.firstCall.args).to.deep.equals(["setMode", "3D"]);
+        });
+    });
+});
