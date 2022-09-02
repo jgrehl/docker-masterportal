@@ -14,10 +14,10 @@ describe("src_3_0_0/App.vue", () => {
     let store,
         wrapper,
         actions,
-        createMapsSpy;
+        initializeMapsSpy;
 
     beforeEach(() => {
-        createMapsSpy = sinon.spy(maps, "createMaps");
+        initializeMapsSpy = sinon.spy(maps, "initializeMaps");
         actions = {
             extendLayers: sinon.spy(),
             loadConfigJs: sinon.spy(),
@@ -75,7 +75,7 @@ describe("src_3_0_0/App.vue", () => {
 
         wrapper.vm.$options.watch.allConfigsLoaded.call(wrapper.vm, true);
         expect(actions.extendLayers.calledOnce).to.be.true;
-        expect(createMapsSpy.calledOnce).to.be.true;
+        expect(initializeMapsSpy.calledOnce).to.be.true;
     });
 
     it("watcher allConfigsLoaded is false", () => {
@@ -83,6 +83,6 @@ describe("src_3_0_0/App.vue", () => {
 
         wrapper.vm.$options.watch.allConfigsLoaded.call(wrapper.vm, false);
         expect(actions.extendLayers.notCalled).to.be.true;
-        expect(createMapsSpy.notCalled).to.be.true;
+        expect(initializeMapsSpy.notCalled).to.be.true;
     });
 });
