@@ -89,10 +89,10 @@ Konfiguration der Themenbaumes
 
 |Name|Required|Type|Default|Description|
 |----|--------|----|-------|-----------|
-|id|nein|String||a `services.json` layer's id|
-|styles|nein|String/String[]||Style to be used as string; if multiple styles are to be used, they are listed in an array.|
-|name|nein|String/String[]||Name to be used as string; if multiple names are to be used, they are listed in an array.|
-|legendUrl|nein|String/String[]||Legend image URL to be used as string; if multiple legend images are to be used, their URLs are listed in an array.|
+|id|nein|String||id des Layers in der `services.json`|
+|styles|nein|String/String[]||Zu verwendender Stil als String; wenn mehrere Stile verwendet werden sollen, werden sie in einem Array aufgeführt.|
+|name|nein|String/String[]||Zu verwendender Name als String; wenn mehrere Namen verwendet werden sollen, werden sie in einem Array aufgelistet.|
+|legendUrl|nein|String/String[]||URL des Legendenbildes, das als String verwendet werden soll; wenn mehrere Legendenbilder verwendet werden sollen, werden ihre URLs in einem Array aufgeführt.|
 
 **Example:**
 
