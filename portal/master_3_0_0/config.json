@@ -9,8 +9,9 @@
       ]
     },
     "controls": {
-      "backForward": true,
-      "fullScreen": true
+      "fullScreen": true,
+      "button3d": true,
+      "backForward": true
     }
   },
   "Themenconfig": {
@@ -97,7 +98,8 @@
           "typ": "WMTS",
           "visibility": false,
           "capabilitiesUrl": "https://tiles.geoservice.dlr.de/service/wmts?SERVICE=WMTS&REQUEST=GetCapabilities",
-          "layers": "eoc:basemap"
+          "layers": "eoc:basemap",
+          "optionsFromCapabilities": true
         }
       ]
     },
@@ -133,10 +135,10 @@
           "visibility": false
         },
         {
-          "id" : "52",
-          "name" : "Parkhäuser",
-          "typ" : "WFS",
-          "visibility": true,
+          "id": "52",
+          "name": "Parkhäuser",
+          "typ": "WFS",
+          "visibility": false,
           "autoRefresh": 5000
         },
         {
