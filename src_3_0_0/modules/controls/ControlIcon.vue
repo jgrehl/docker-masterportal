@@ -9,7 +9,7 @@ export default {
         /** Name of the bootstrap icon, with or without prefix 'bi-' */
         iconName: {
             type: String,
-            required: true
+            default: ""
         },
         /** Whether the icon is currently clickable or marked disabled */
         disabled: {
@@ -30,6 +30,10 @@ export default {
         inline: {
             type: Boolean,
             default: false
+        },
+        buttonTitle: {
+            type: String,
+            default: ""
         }
     },
     computed: {
@@ -37,7 +41,7 @@ export default {
          * @returns {String} icon name with added prefix 'bi-' if it was missing
          */
         iconClass () {
-            return this.iconName.startsWith("bi-") ? this.iconName : `bi-${this.iconName}`;
+            return this.iconName === "" || this.iconName.startsWith("bi-") ? this.iconName : `bi-${this.iconName}`;
         }
     }
 };
@@ -55,8 +59,14 @@ export default {
     >
         <!-- children should usually be placed absolutely in relation to ControlIcon -->
         <i
+            v-if="iconClass !== ''"
             :class="iconClass"
         />
+        <p
+            v-else-if="buttonTitle !== ''"
+        >
+            {{ title }}
+        </p>
         <slot />
     </button>
 </template>
@@ -103,6 +113,13 @@ export default {
             transform: translate(-50%, -50%);
             // adjust line-height to use same height as ::before Element
             line-height: 0;
+        }
+
+        > p {
+            color: $white;
+            font-family: $font_family_accent;
+            font-size: 17px;
+            padding: .25rem 0 0 0
         }
 
         /* pseudo-class state effects */
