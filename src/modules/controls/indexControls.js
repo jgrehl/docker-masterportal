@@ -30,7 +30,7 @@ export default {
     // initial state - information on all controls that are not addons.
     state: {
         // maps config.json.md control key to component
-        componentMap: {
+        // componentMap: {
             attributions: AttributionsItem,
             // backForward: BackForward,
             freeze: FreezeScreen,
@@ -41,7 +41,7 @@ export default {
             startTool: StartTool,
             totalView: TotalView,
             zoom: ZoomInAndOut
-        },
+        // },
         // config.json.md control keys where the matching element is to be hidden in mobile mode
         mobileHiddenControls: [
             "backForward",
