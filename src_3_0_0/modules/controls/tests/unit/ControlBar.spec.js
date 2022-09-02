@@ -1,8 +1,9 @@
-import Vuex from "vuex";
 import {config, mount, createLocalVue} from "@vue/test-utils";
-import ControlBar from "../../ControlBar.vue";
 import {expect} from "chai";
 import sinon from "sinon";
+import Vuex from "vuex";
+
+import ControlBar from "../../ControlBar.vue";
 
 const localVue = createLocalVue();
 

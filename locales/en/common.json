@@ -1150,7 +1150,8 @@
                 "titleMenu": "Main View"
             },
             "3d": {
-                "buttonTitle": "3D",
+                "buttonTitle3d": "3D",
+                "buttonTitle2d": "2D",
                 "openView3d": "Start view",
                 "closeView3d": "Close view",
                 "noCesium": "Cesium/3D-Functionality could not be loaded - Please inform the service provider"

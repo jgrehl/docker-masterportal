@@ -7,36 +7,29 @@ export default {
      * to fire changes when required. Each time a new map is registered, all old listeners
      * are discarded and new ones are registered.
      * @param {Object} param store context
+     * @param {Object} param.commit the commit
      * @param {Object} param.dispatch the dispatch
-     * @param {module:ol/Map} map map object
      * @returns {void}
      */
-    async setMapAttributes ({dispatch}, {map}) {
+    setMapAttributes ({commit, dispatch}) {
+        const map = mapCollection.getMap("2D");
+
         dispatch("registerListener", {type: "moveend", listener: "updateAttributes", listenerType: "dispatch"});
 
+        commit("setMode", map.mode);
         // update state once initially to get initial settings
-        dispatch("updateAttributes", {map: map});
+        dispatch("updateAttributes");
     },
 
     /**
      * Updates map attributes.
      * @param {Object} param store context
      * @param {Object} param.commit the commit
-     * @param {Object} param.getters the getters
-     * @param {MapBrowserEvent} evt - Moveend event
      * @returns {Function} update function for state parts to update onmoveend
      */
-    updateAttributes ({commit, getters}, evt) {
-        let map;
-
-        if (evt) {
-            map = evt.map;
-        }
-        else {
-            ({map} = getters);
-        }
-
-        const mapView = map.getView();
+    updateAttributes ({commit}) {
+        const map = mapCollection.getMap("2D"),
+            mapView = mapCollection.getMapView("2D");
 
         commit("setBoundingBox", mapView.calculateExtent(map.getSize()));
     }
