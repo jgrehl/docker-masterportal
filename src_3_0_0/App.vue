@@ -2,8 +2,8 @@
 import {mapGetters, mapActions} from "vuex";
 
 import ControlBar from "./modules/controls/ControlBar.vue";
-import {createMaps} from "./core/maps/maps";
 import initializeLayerFactory from "./core/layers/layerFactory";
+import {initializeMaps} from "./core/maps/maps";
 import LoaderOverlay from "./utils/loaderOverlay";
 import mapCollection from "./core/maps/mapCollection";
 
@@ -26,7 +26,7 @@ export default {
             if (value) {
                 LoaderOverlay.hide();
                 this.extendLayers();
-                createMaps(this.portalConfig, this.configJs);
+                initializeMaps(this.portalConfig, this.configJs);
                 initializeLayerFactory(this.visibleLayerConfigs);
             }
         }
@@ -34,6 +34,7 @@ export default {
     created () {
         this.setGlobalVariables();
         this.loadConfigsToTheVuexState();
+        this.checkVueObservation();
     },
     methods: {
         ...mapActions([
@@ -67,6 +68,30 @@ export default {
             this.loadConfigJson();
             this.loadServicesJson();
             this.loadRestServicesJson();
+        },
+
+        /**
+        * Logs an error, if map3D is observed by vue. Only in mode 'development'.
+        * NOTICE: this only works when 3D is enabled once!
+        *
+        * If the map3D is observed, and more information is needed:
+        * Log of the observables in vue:
+        * node_modules\vue\dist\vue.runtime.esm.js
+        * function defineReactive$$1
+        * line 1012: console.log(obj, key, val);
+        * @returns {void}
+        */
+        checkVueObservation () {
+            /* eslint-disable no-process-env */
+            if (process.env.NODE_ENV === "development") {
+                setInterval(() => {
+                    const map3d = mapCollection.getMap("3D");
+
+                    if (map3d?.__ob__) {
+                        console.error("map3d is observed by vue:", map3d, " This leads to extreme performance problems, and the cause must be eliminated. This can have several causes: the map3D is in vuex-state or is available via getter. Layers are in the state or in the getters and reference the map3D.");
+                    }
+                }, 5000);
+            }
         }
     }
 };
