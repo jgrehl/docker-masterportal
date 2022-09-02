@@ -127,15 +127,15 @@ function mergeLayerWithSeveralIds (layerConf) {
  * If config 'validLayerTypes' is set, it contains layer types to be used with the tree.type 'auto'. If not configured,  ["WMS", "SENSORTHINGS", "TERRAIN3D", "TILESET3D", "OBLIQUE"] are used.
  * @returns {Array} the filtered layer configurations
  */
-export function getAndMergeAllRawLayers (treeConfig) {
+export function getAndMergeAllRawLayers (treeConfig = {}) {
     // refactored from parserDefaultTree.js and layerList.js
     const layerList = getLayerList(),
         rawLayers = [],
-        validLayerTypes = treeConfig?.validLayerTypesAutoTree ? treeConfig?.validLayerTypesAutoTree : ["WMS", "SENSORTHINGS", "TERRAIN3D", "TILESET3D", "OBLIQUE"],
-        layerIDsToIgnore = Object.prototype.hasOwnProperty.call(treeConfig, "layerIDsToIgnore") ? treeConfig.layerIDsToIgnore : [],
-        metaIDsToIgnore = Object.prototype.hasOwnProperty.call(treeConfig, "metaIDsToIgnore") ? treeConfig.metaIDsToIgnore : [],
-        metaIDsToMerge = Object.prototype.hasOwnProperty.call(treeConfig, "metaIDsToMerge") ? treeConfig.metaIDsToMerge : [],
-        layerIDsToStyle = Object.prototype.hasOwnProperty.call(treeConfig, "layerIDsToStyle") ? treeConfig.layerIDsToStyle : [],
+        validLayerTypes = treeConfig.validLayerTypesAutoTree || ["WMS", "SENSORTHINGS", "TERRAIN3D", "TILESET3D", "OBLIQUE"],
+        layerIDsToIgnore = treeConfig.layerIDsToIgnore || [],
+        metaIDsToIgnore = treeConfig.metaIDsToIgnore || [],
+        metaIDsToMerge = treeConfig.metaIDsToMerge || [],
+        layerIDsToStyle = treeConfig.layerIDsToStyle || [],
         idsOfLayersToStyle = layerIDsToStyle.map(entry => entry.id),
         toMergeByMdId = {};
     let relatedWMSLayerIds = [];
@@ -151,7 +151,7 @@ export function getAndMergeAllRawLayers (treeConfig) {
             metaIDsToIgnore.includes(rawLayer.datasets[0].md_id)) {
             continue;
         }
-        if (layerType === "WMS" && metaIDsToMerge.includes(rawLayer.datasets[0].md_id)) {
+        if (metaIDsToMerge.includes(rawLayer.datasets[0].md_id)) {
             collectLayersToMergeByMetaId(toMergeByMdId, rawLayer.datasets[0].md_id, rawLayer);
             continue;
         }
