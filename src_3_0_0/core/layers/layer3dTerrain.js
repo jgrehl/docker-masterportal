@@ -29,25 +29,3 @@ Layer3dTerrain.prototype.createLayer = function (attributes) {
     this.setLayer(terrain.createLayer(attributes));
     this.setVisible(attributes.visibility, attributes, mapCollection.getMap("3D"));
 };
-
-/**
- * Calls masterportalAPI's terrain-layer to set this layer visible.
- * @param {Boolean} visibility visibility of the layer
- * @param {Object} attributes The attributes of the layer configuration.
- * @param {Cesium} map The 3d map.
- * @returns {void}
- */
-Layer3dTerrain.prototype.setVisible = function (visibility, attributes, map) {
-    this.getLayer().setVisible(visibility, attributes, map);
-};
-
-/**
- * Sets values to the cesium layer.
- * @param {Object} attributes The new attributes.
- * @returns {void}
- */
-Layer3dTerrain.prototype.updateLayerValues = function (attributes) {
-    if (this.get("visibility") !== attributes.visibility) {
-        this.setVisible(attributes.visibility, attributes, mapCollection.getMap("3D"));
-    }
-};
