@@ -10,6 +10,16 @@ describe("src_3_0_0/core/layers/layer3d.js", () => {
         sinon.stub(console, "warn").callsFake(warn);
     });
 
+    beforeEach(() => {
+        mapCollection.clear();
+        const map = {
+            id: "olcs",
+            mode: "3D"
+        };
+
+        mapCollection.addMap(map, "3D");
+    });
+
     after(() => {
         sinon.restore();
     });
@@ -20,6 +30,24 @@ describe("src_3_0_0/core/layers/layer3d.js", () => {
 
             expect(layer3d).not.to.be.undefined;
             expect(warn.calledOnce).to.be.true;
+        });
+    });
+
+    describe("updateLayerValues", () => {
+        it("updates the visibility of the 3d layer to true", () => {
+            const setVisibleSpy = sinon.spy(Layer3d.prototype, "setVisible"),
+                layer3d = new Layer3d({visibility: false});
+
+            layer3d.updateLayerValues({visibility: true});
+
+            expect(setVisibleSpy.calledOnce).to.be.true;
+            expect(setVisibleSpy.firstCall.args[0]).to.equals(true);
+            expect(setVisibleSpy.firstCall.args[1]).to.deep.equals({visibility: true});
+            expect(setVisibleSpy.firstCall.args[2]).to.deep.equals({
+                id: "olcs",
+                mode: "3D"
+            });
+
         });
     });
 });
