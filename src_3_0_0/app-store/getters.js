@@ -24,6 +24,15 @@ const getters = {
     },
 
     /**
+     * Returns path to the cesium library.
+     * @param {Object} state state of the app-store.
+     * @returns {String} The cesium library path.
+     */
+    cesiumLib: state => {
+        return state.configJs.cesiumLib || "https://cesium.com/downloads/cesiumjs/releases/1.95/Build/Cesium/Cesium.js";
+    },
+
+    /**
      * Returns the controls configuration of portalConfig.
      * @param {Object} state state of the app-store.
      * @returns {Object} The controls config.
