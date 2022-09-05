@@ -19,7 +19,7 @@ describe("src_3_0_0/core/layers/layer3dEntities.js", () => {
             visibility: false,
             entities: [
                 {
-                    "url": "https://daten-hamburg.de/gdi3d/datasource-data/Simple_Building.glb",
+                    "url": "the_url",
                     "attributes": {
                         "name": "einfaches Haus in Planten und Blomen"
                     },
@@ -39,7 +39,6 @@ describe("src_3_0_0/core/layers/layer3dEntities.js", () => {
 
     afterEach(() => {
         sinon.restore();
-        global.Cesium = null;
     });
 
     describe("createLayer", () => {
