@@ -75,14 +75,7 @@ describe("src/core/layers/terrain.js", () => {
         expect(terrainLayer.get("typ")).to.be.equals(attrs.typ);
     }
 
-    it("createLayer shall create a terrain layer", function () {
-        const terrainLayer = new TerrainLayer(attributes),
-            layer = terrainLayer.get("layer");
 
-        checkLayer(layer, terrainLayer, attributes);
-        expect(cesiumTerrainProviderSpy.notCalled).to.equal(true);
-        expect(cesiumEllipsoidTerrainProviderSpy.notCalled).to.equal(true);
-    });
     it("createLayer shall create a visible terrain layer", function () {
         attributes.isSelected = true;
         const terrainLayer = new TerrainLayer(attributes),
