@@ -1,7 +1,7 @@
-import store from "../../app-store";
-import layerCollection from "./layerCollection";
-import Layer2d from "./layer2d";
 import {createLayer} from "./layerFactory";
+import Layer2d from "./layer2d";
+import layerCollection from "./layerCollection";
+import store from "../../app-store";
 
 /**
  * Starts the creation of the layer in the layer factory
@@ -69,7 +69,7 @@ export function processLayerConfig (layerConfig, mapMode) {
  * @param {Object} layerConf The layer config.
  * @returns {void}
  */
-function updateLayerAttributes (layer, layerConf) {
+export function updateLayerAttributes (layer, layerConf) {
     layer.updateLayerValues(layerConf);
     Object.assign(layer.attributes, layerConf);
 }
