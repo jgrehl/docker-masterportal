@@ -39,18 +39,6 @@ export default function TerrainLayer (attrs) {
         }
     });
 }
-// Link prototypes and add prototype methods, means TerrainLayer uses all methods and properties of Layer
-TerrainLayer.prototype = Object.create(Layer.prototype);
-
-/**
- * Creates the layer by using masterportalAPI's terrain-layer.
- * If attribute isSelected is true, setIsSelected is called.
- * @param {Object} attr the attributes for the layer
- * @returns {void}
- */
-TerrainLayer.prototype.createLayer = function (attr) {
-    this.layer = terrain.createLayer(attr);
-};
 
 /**
  * Calls the function setIsSelected.
@@ -77,7 +65,7 @@ TerrainLayer.prototype.setIsSelected = function (newValue, attr) {
         if (!this.attributes && attr) {
             isVisibleInMap = attr.isVisibleInMap;
             attr.isSelected = newValue;
-            terrain.setVisible(newValue, this.attributes ? this.attributes : attr, map);
+            // terrain.setVisible(newValue, this.attributes ? this.attributes : attr, map);
         }
         else {
             this.attributes.isSelected = newValue;
