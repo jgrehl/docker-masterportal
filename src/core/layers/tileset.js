@@ -47,8 +47,6 @@ export default function TileSetLayer (attrs) {
     this.layer.tileset?.tileVisible?.addEventListener(this.applyStyle.bind(this));
 
 }
-// Link prototypes and add prototype methods, means TileSetLayer uses all methods and properties of Layer
-TileSetLayer.prototype = Object.create(Layer.prototype);
 
 /**
  * Creates the layer and if attr.isSelected = true, the layer is set visible.
@@ -150,7 +148,7 @@ TileSetLayer.prototype.setIsSelected = function (newValue, attr) {
             isVisibleInMap = attr.isVisibleInMap;
             attr.isVisibleInMap = newValue;
             attr.isSelected = newValue;
-            this.layer.setVisible(newValue, map);
+            // this.layer.setVisible(newValue, map);
         }
         else {
             this.setIsVisibleInMap(newValue);
