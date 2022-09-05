@@ -19,7 +19,7 @@ export default function Layer3d (attributes) {
 Layer3d.prototype = Object.create(Layer.prototype);
 
 /**
- * Calls masterportalAPI's terrain-layer to set this layer visible.
+ * Calls masterportalAPI's layer to set this layer visible.
  * @param {Boolean} visibility visibility of the layer
  * @param {Object} attributes The attributes of the layer configuration.
  * @param {Cesium} map The 3d map.
