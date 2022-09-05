@@ -12,5 +12,5 @@ const Config = {
     ],
     layerConf: "https://geodienste.hamburg.de/services-internet.json",
     restConf: "https://geodienste.hamburg.de/lgv-config/rest-services-internet.json",
-    startingMap3D: true
+    startingMap3D: false
 };
