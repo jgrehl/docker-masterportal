@@ -43,6 +43,14 @@ Layer.prototype.get = function (key) {
 };
 
 /**
+ * Getter for layer.
+ * @returns {ol/layer/Layer~Layer|Object} The ol layer
+ */
+Layer.prototype.getLayer = function () {
+    return this.layer;
+};
+
+/**
  * Setter for attribute values.
  * @param {String} key The attribute key.
  * @param {*} value The attribute value
@@ -50,4 +58,13 @@ Layer.prototype.get = function (key) {
  */
 Layer.prototype.set = function (key, value) {
     this.attributes[key] = value;
+};
+
+/**
+ * Setter for layer.
+ * @param {ol/layer/Layer~Layer|Object} value The ol layer
+ * @returns {void}
+ */
+Layer.prototype.setLayer = function (value) {
+    this.layer = value;
 };
