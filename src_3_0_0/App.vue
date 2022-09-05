@@ -2,7 +2,7 @@
 import {mapGetters, mapActions} from "vuex";
 
 import ControlBar from "./modules/controls/ControlBar.vue";
-import initializeLayerFactory from "./core/layers/layerFactory";
+import initializeLayers from "./core/layers/layerProcessor";
 import {initializeMaps} from "./core/maps/maps";
 import LoaderOverlay from "./utils/loaderOverlay";
 import mapCollection from "./core/maps/mapCollection";
@@ -27,7 +27,7 @@ export default {
                 LoaderOverlay.hide();
                 this.extendLayers();
                 initializeMaps(this.portalConfig, this.configJs);
-                initializeLayerFactory(this.visibleLayerConfigs);
+                initializeLayers(this.visibleLayerConfigs);
             }
         }
     },
