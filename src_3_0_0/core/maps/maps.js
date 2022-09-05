@@ -1,5 +1,6 @@
 import api from "@masterportal/masterportalapi/src/maps/api";
 import {getLayerList} from "@masterportal/masterportalapi/src/rawLayerList";
+import {load3DScript} from "@masterportal/masterportalapi/src/lib/load3DScript";
 
 import store from "../../app-store";
 
@@ -13,13 +14,7 @@ export function initializeMaps (portalConfig, configJs) {
     create2DMap(portalConfig.mapView, configJs);
     store.dispatch("Maps/setMapAttributes");
 
-    if (Cesium) {
-        create3DMap(configJs);
-
-        if (configJs.startingMap3D) {
-            store.dispatch("Maps/changeMapMode", "3D");
-        }
-    }
+    load3dMap(configJs);
 }
 
 /**
@@ -39,11 +34,26 @@ function create2DMap (mapViewSettings, configJs) {
 }
 
 /**
+ * Loads Cesium and
+ * @param {Object} configJs The config.js.
+ * @returns {void}
+ */
+export function load3dMap (configJs) {
+    load3DScript(store.getters.cesiumLib, () => {
+        create3DMap(configJs);
+
+        if (configJs.startingMap3D) {
+            store.dispatch("Maps/activateMap3d", "3D");
+        }
+    });
+}
+
+/**
  * Create the 3D map.
  * @param {Object} configJs The settings of config.json file.
  * @returns {void}
  */
-function create3DMap (configJs) {
+export function create3DMap (configJs) {
     const map3d = api.map.createMap({
         cesiumParameter: configJs?.cesiumParameter,
         map2D: mapCollection.getMap("2D")
