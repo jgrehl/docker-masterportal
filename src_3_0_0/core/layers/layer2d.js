@@ -82,14 +82,6 @@ Layer2d.prototype.getIntervalAutoRefresh = function () {
 };
 
 /**
- * Getter for ol layer.
- * @returns {ol/layer/Layer~Layer} The ol layer
- */
-Layer2d.prototype.getLayer = function () {
-    return this.layer;
-};
-
-/**
  * Getter for ol layer source.
  * @returns {ol/source/Source~Source} The ol layer source.
  */
@@ -104,15 +96,6 @@ Layer2d.prototype.getLayerSource = function () {
  */
 Layer2d.prototype.setIntervalAutoRefresh = function (value) {
     this.intervalAutoRefresh = value;
-};
-
-/**
- * Setter for ol layer.
- * @param {ol/layer/Layer~Layer} value The ol layer
- * @returns {void}
- */
-Layer2d.prototype.setLayer = function (value) {
-    this.layer = value;
 };
 
 /**
