@@ -3,7 +3,7 @@ import Map from "ol/Map";
 import sinon from "sinon";
 import View from "ol/View";
 
-import {createLayer, processLayerConfig, updateLayerAttributes} from "../../layerFactory";
+import {createLayer} from "../../layerFactory";
 import mapCollection from "../../../maps/mapCollection";
 
 describe("src_3_0_0/core/layers/layerFactory.js", () => {
@@ -20,19 +20,25 @@ describe("src_3_0_0/core/layers/layerFactory.js", () => {
         layerConfig = [
             {
                 id: "453",
-                visibility: true,
                 name: "Geobasiskarten (HamburgDE)",
+                visibility: true,
                 url: "https://geodienste.hamburg.de/HH_WMS_HamburgDE",
                 typ: "WMS",
                 layers: "Geobasiskarten_HHde"
             },
             {
                 id: "2426",
-                visibility: true,
                 name: "Bezirke",
+                visibility: true,
                 url: "https://geodienste.hamburg.de/HH_WMS_Verwaltungsgrenzen",
                 typ: "WMS",
                 layers: "bezirke"
+            },
+            {
+                id: "12883",
+                name: "Gelände",
+                typ: "Terrain3D",
+                visibility: true
             }
         ];
 
@@ -50,19 +56,6 @@ describe("src_3_0_0/core/layers/layerFactory.js", () => {
         sinon.restore();
     });
 
-    describe("processLayerConfig", () => {
-        it("should create two ol layers from two visible layers", () => {
-            let olLayers = [];
-
-            processLayerConfig(layerConfig);
-            olLayers = mapCollection.getMap("2D").getLayers().getArray();
-
-            expect(olLayers.length).equals(2);
-            expect(olLayers[0].get("id")).to.equals("453");
-            expect(olLayers[1].get("id")).to.equals("2426");
-        });
-    });
-
     describe("createLayer", () => {
         it("should creates a layer with type WMS", () => {
             const wmsLayer = createLayer(layerConfig[0]);
@@ -70,30 +63,18 @@ describe("src_3_0_0/core/layers/layerFactory.js", () => {
             expect(wmsLayer).not.to.be.undefined;
             expect(wmsLayer.attributes.typ).to.equals("WMS");
         });
-    });
 
-    describe("updateLayerAttributes", () => {
-        it("should update a wms layer", () => {
-            const wmsLayer = {
-                attributes: {
-                    typ: "WMS",
-                    abc: true
-                },
-                get: (value) => value,
-                updateLayerValues: () => sinon.stub()
-            };
+        it("should creates a layer with type TERRAIN3D, if mapMode is 3D", () => {
+            const terrainLayer = createLayer(layerConfig[2], "3D");
 
-            updateLayerAttributes(wmsLayer, layerConfig[0]);
+            expect(terrainLayer).not.to.be.undefined;
+            expect(terrainLayer.attributes.typ).to.equals("Terrain3D");
+        });
 
-            expect(wmsLayer.attributes).to.deep.equals({
-                id: "453",
-                visibility: true,
-                name: "Geobasiskarten (HamburgDE)",
-                url: "https://geodienste.hamburg.de/HH_WMS_HamburgDE",
-                typ: "WMS",
-                layers: "Geobasiskarten_HHde",
-                abc: true
-            });
+        it("should don't creates a layer with type TERRAIN3D, if mapMode is 2D", () => {
+            const terrainLayer = createLayer(layerConfig[2], "2D");
+
+            expect(terrainLayer).to.be.undefined;
         });
     });
 });
