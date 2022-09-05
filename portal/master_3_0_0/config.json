@@ -21,7 +21,7 @@
           "id": "453",
           "name": "Geobasiskarten (HamburgDE)",
           "typ": "WMS",
-          "visibility": true
+          "visibility": false
         },
         {
           "id": "452",
@@ -100,6 +100,12 @@
           "capabilitiesUrl": "https://tiles.geoservice.dlr.de/service/wmts?SERVICE=WMTS&REQUEST=GetCapabilities",
           "layers": "eoc:basemap",
           "optionsFromCapabilities": true
+        },
+        {
+          "id": "12883",
+          "name": "Gelände",
+          "typ" : "Terrain3D",
+          "visibility": true
         }
       ]
     },
