@@ -43,5 +43,3 @@ export function createLayer (layerConf, mapMode) {
 
     return layer;
 }
-
-

@@ -100,16 +100,6 @@ describe("src_3_0_0/core/layers/layer2d.js", () => {
         });
     });
 
-    describe("getLayer and setLayer", () => {
-        it("should setLayer and getLayer return the layer", () => {
-            const layer2d = new Layer2d({});
-
-            layer2d.setLayer({layer: "layer"});
-
-            expect(layer2d.getLayer()).to.deep.equals({layer: "layer"});
-        });
-    });
-
     describe("getLayerSource and setLayerSource", () => {
         it("should setLayer and getLayer return the layer", () => {
             const layer2d = new Layer2d({});
