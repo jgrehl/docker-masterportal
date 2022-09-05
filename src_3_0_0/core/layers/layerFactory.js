@@ -1,5 +1,6 @@
 import store from "../../app-store";
 import layerCollection from "./layerCollection";
+import Layer2d from "./layer2d";
 import Layer2dRasterStaticImage from "./layer2dRasterStaticImage";
 import Layer2dRasterWms from "./layer2dRasterWms";
 import Layer2dRasterWmts from "./layer2dRasterWmts";
@@ -9,18 +10,22 @@ import Layer2dVectorSensorThings from "./layer2dVectorSensorThings";
 import Layer2dVectorTile from "./layer2dVectorTile";
 import Layer2dVectorVectorbase from "./layer2dVectorVectorbase";
 import Layer2dVectorWfs from "./layer2dVectorWfs";
+import Layer3dTerrain from "./layer3dTerrain";
 
-const possibleLayerTypes = {
-    GEOJSON: Layer2dVectorGeojson,
-    OAF: Layer2dVectorOaf,
-    SENSORTHINGS: Layer2dVectorSensorThings,
-    STATICIMAGE: Layer2dRasterStaticImage,
-    VECTORBASE: Layer2dVectorVectorbase,
-    VECTORTILE: Layer2dVectorTile,
-    WFS: Layer2dVectorWfs,
-    WMS: Layer2dRasterWms,
-    WMTS: Layer2dRasterWmts
-};
+const possible2dLayerTypes = {
+        GEOJSON: Layer2dVectorGeojson,
+        OAF: Layer2dVectorOaf,
+        SENSORTHINGS: Layer2dVectorSensorThings,
+        STATICIMAGE: Layer2dRasterStaticImage,
+        VECTORBASE: Layer2dVectorVectorbase,
+        VECTORTILE: Layer2dVectorTile,
+        WFS: Layer2dVectorWfs,
+        WMS: Layer2dRasterWms,
+        WMTS: Layer2dRasterWmts
+    },
+    possible3dLayerTypes = {
+        TERRAIN3D: Layer3dTerrain
+    };
 
 /**
  * Starts the creation of the layer in the layer factory
@@ -29,17 +34,43 @@ const possibleLayerTypes = {
  * @returns {void}
  */
 export default function initializeLayerFactory (visibleLayerConfigs) {
-    processLayerConfig(visibleLayerConfigs);
-    registerLayerConfig();
+    processLayerConfig(visibleLayerConfigs, possible2dLayerTypes);
+
+    if (store.getters["Maps/mode"] === "3D") {
+        processLayerConfig(visibleLayerConfigs, possible3dLayerTypes);
+    }
+    else {
+        watchOnceMapMode(visibleLayerConfigs);
+    }
+    watchLayerConfig();
 }
 
 /**
- * Register to the layers in layerConfig.
+ * Watch the layers in layerConfig.
  * @returns {void}
  */
-function registerLayerConfig () {
+function watchLayerConfig () {
     store.watch((state, getters) => getters.allLayerConfigs, layerConfig => {
-        processLayerConfig(layerConfig);
+        processLayerConfig(layerConfig, possible2dLayerTypes);
+
+        if (store.getters["Maps/mode"] === "3D") {
+            processLayerConfig(layerConfig, possible3dLayerTypes);
+        }
+    });
+}
+
+/**
+ * Watches once the mode in Maps.
+ * @param {Object} visibleLayerConfigs The layer configurations.
+ * @returns {void}
+ */
+function watchOnceMapMode (visibleLayerConfigs) {
+    const unwatchMapsMode = store.watch((state, getters) => getters["Maps/mode"], mode => {
+        if (mode === "3D") {
+            processLayerConfig(visibleLayerConfigs, possible3dLayerTypes);
+        }
+
+        unwatchMapsMode();
     });
 }
 
@@ -48,9 +79,10 @@ function registerLayerConfig () {
  * All existing layers will be updated.
  * Of the non-existing layers, only the visible ones are created and pushed into the LayerCollection.
  * @param {Object[]} layerConfig The layer configurations.
+ * @param {Object} possibleLayerTypes The possible layer types.
  * @returns {void}
  */
-export function processLayerConfig (layerConfig) {
+export function processLayerConfig (layerConfig, possibleLayerTypes) {
     layerConfig.forEach(layerConf => {
         let layer = layerCollection.getLayerById(layerConf.id);
 
@@ -58,10 +90,13 @@ export function processLayerConfig (layerConfig) {
             updateLayerAttributes(layer, layerConf);
         }
         else if (layerConf.visibility === true && possibleLayerTypes[layerConf?.typ?.toUpperCase()] !== undefined) {
-            layer = createLayer(layerConf);
+            layer = createLayer(layerConf, possibleLayerTypes);
             updateLayerConfig(layer);
             layerCollection.addLayer(layer);
-            store.dispatch("Maps/addLayer", layer.getLayer());
+
+            if (layer instanceof Layer2d) {
+                store.dispatch("Maps/addLayer", layer.getLayer());
+            }
         }
     });
 }
@@ -69,9 +104,10 @@ export function processLayerConfig (layerConfig) {
 /**
  * Creates layer instances.
  * @param {Object} layerConf The layer configuration.
+ * @param {Object} possibleLayerTypes The possible layer types.
  * @returns {Layer} The layer instance.
  */
-export function createLayer (layerConf) {
+export function createLayer (layerConf, possibleLayerTypes) {
     const typ = layerConf?.typ?.toUpperCase(),
         layer = new possibleLayerTypes[typ](layerConf);
 
