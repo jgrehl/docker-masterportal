@@ -66,7 +66,7 @@ describe("src_3_0_0/core/layers/layer3dTerrain.js", () => {
             };
         });
 
-        it("new Layer3d should create an layer with warning", () => {
+        it("new Layer3dTerrain should create an layer with warning", () => {
             const layer3dTerrain = new Layer3dTerrain({});
 
             expect(layer3dTerrain).not.to.be.undefined;
