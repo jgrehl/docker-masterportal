@@ -51,4 +51,15 @@ describe("src_3_0_0/core/layers/layer.js", () => {
             expect(layerWrapper.get("abc")).to.equals(999);
         });
     });
+
+    describe("getLayer and setLayer", () => {
+        it("should setLayer and getLayer return the layer", () => {
+            const layerWrapper = new Layer({});
+
+            layerWrapper.setLayer({layer: "layer"});
+
+            expect(layerWrapper.getLayer()).to.deep.equals({layer: "layer"});
+        });
+    });
+
 });
