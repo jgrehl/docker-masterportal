@@ -12,5 +12,18 @@ const Config = {
     ],
     layerConf: "https://geodienste.hamburg.de/services-internet.json",
     restConf: "https://geodienste.hamburg.de/lgv-config/rest-services-internet.json",
-    startingMap3D: false
+    startingMap3D: false,
+    cesiumParameter: {
+        fog: {
+            enabled: true,
+            density: 0.0002,
+            screenSpaceErrorFactor: 2.0
+        },
+        fxaa: true,
+        globe: {
+            enableLighting: true,
+            maximumScreenSpaceError: 2,
+            tileCacheSize: 20
+        }
+    }
 };
