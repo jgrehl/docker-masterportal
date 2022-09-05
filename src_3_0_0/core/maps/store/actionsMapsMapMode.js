@@ -48,7 +48,9 @@ export default {
     activateMap3d ({commit}) {
         const map3d = mapCollection.getMap("3D");
 
-        map3d.setEnabled(true);
-        commit("setMode", "3D");
+        if (map3d) {
+            map3d.setEnabled(true);
+            commit("setMode", "3D");
+        }
     }
 };
