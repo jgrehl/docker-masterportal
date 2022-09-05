@@ -78,23 +78,6 @@ describe("src/core/layers/tileset.js", () => {
         expect(tilesetLayer.get("typ")).to.be.equals(attrs.typ);
     }
 
-    it("createLayer shall create a tileset layer", function () {
-        const tilesetLayer = new TileSetLayer(attributes),
-            layer = tilesetLayer.get("layer");
-
-        checkLayer(layer, tilesetLayer, attributes);
-        expect(fromUrlSpy.calledOnce).to.equal(true);
-
-    });
-    it("createLayer shall create a visible tileset layer", function () {
-        attributes.isSelected = true;
-        const tilesetLayer = new TileSetLayer(attributes),
-            layer = tilesetLayer.get("layer");
-
-        checkLayer(layer, tilesetLayer, attributes);
-        expect(fromUrlSpy.calledOnce).to.equal(true);
-        expect(fromUrlSpy.calledWithMatch("https://geoportal-hamburg.de/gdi3d/datasource-data/LoD2/tileset.json", {maximumScreenSpaceError: 6})).to.equal(true);
-    });
     it("setVisible shall call setIsSelected", function () {
         const tilesetLayer = new TileSetLayer(attributes),
             layer = tilesetLayer.get("layer"),

@@ -106,6 +106,12 @@
           "name": "Gelände",
           "typ": "Terrain3D",
           "visibility": false
+        },
+        {
+          "id": "12884",
+          "name": "Gebäude LoD2",
+          "typ": "TileSet3D",
+          "visibility": true
         }
       ]
     },
