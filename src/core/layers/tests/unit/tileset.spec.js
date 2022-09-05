@@ -78,23 +78,6 @@ describe("src/core/layers/tileset.js", () => {
         expect(layer.tileset.layerReferenceId).to.be.equals(attrs.id);
     }
 
-    it("createLayer shall create a tileset layer", function () {
-        const tilesetLayer = new TileSetLayer(attributes),
-            layer = tilesetLayer.get("layer");
-
-        checkLayer(layer, tilesetLayer, attributes);
-        expect(cesium3DTilesetSpy.calledOnce).to.equal(true);
-
-    });
-    it("createLayer shall create a visible tileset layer", function () {
-        attributes.isSelected = true;
-        const tilesetLayer = new TileSetLayer(attributes),
-            layer = tilesetLayer.get("layer");
-
-        checkLayer(layer, tilesetLayer, attributes);
-        expect(cesium3DTilesetSpy.calledOnce).to.equal(true);
-        expect(cesium3DTilesetSpy.calledWithMatch({maximumScreenSpaceError: 6})).to.equal(true);
-    });
     it("setVisible shall call setIsSelected", function () {
         const tilesetLayer = new TileSetLayer(attributes),
             layer = tilesetLayer.get("layer"),
