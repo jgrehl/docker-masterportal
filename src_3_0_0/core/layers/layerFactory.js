@@ -9,6 +9,7 @@ import Layer2dVectorVectorbase from "./layer2dVectorVectorbase";
 import Layer2dVectorWfs from "./layer2dVectorWfs";
 import Layer3dEntities from "./layer3dEntities";
 import Layer3dTerrain from "./layer3dTerrain";
+import Layer3dTileset from "./layer3dTileset";
 
 const layerTypes2d = {
         GEOJSON: Layer2dVectorGeojson,
@@ -23,7 +24,8 @@ const layerTypes2d = {
     },
     layerTypes3d = {
         ENTITIES3D: Layer3dEntities,
-        TERRAIN3D: Layer3dTerrain
+        TERRAIN3D: Layer3dTerrain,
+        TILESET3D: Layer3dTileset
     };
 
 /**
