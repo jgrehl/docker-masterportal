@@ -104,7 +104,7 @@
         {
           "id": "12883",
           "name": "Gelände",
-          "typ" : "Terrain3D",
+          "typ": "Terrain3D",
           "visibility": false
         }
       ]
