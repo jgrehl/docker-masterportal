@@ -17,17 +17,6 @@ export default function initializeLayers (visibleLayerConfigs) {
 }
 
 /**
- * Watch the layers in layerConfig.
- * Starts processing of all layer configs.
- * @returns {void}
- */
-function watchLayerConfig () {
-    store.watch((state, getters) => getters.allLayerConfigs, layerConfig => {
-        processLayerConfig(layerConfig, store.getters["Maps/mode"]);
-    });
-}
-
-/**
  * Watches the mode in Maps.
  * Starts processing of visible 3d layer configs.
  * @param {Object} visibleLayerConfigs The layer configurations.
@@ -38,6 +27,17 @@ function watchMapMode () {
         if (mapMode === "3D") {
             processLayerConfig(store.getters.visibleLayerConfigs, mapMode);
         }
+    });
+}
+
+/**
+ * Watch the layers in layerConfig.
+ * Starts processing of all layer configs.
+ * @returns {void}
+ */
+function watchLayerConfig () {
+    store.watch((state, getters) => getters.allLayerConfigs, layerConfig => {
+        processLayerConfig(layerConfig, store.getters["Maps/mode"]);
     });
 }
 
