@@ -36,10 +36,17 @@ describe("src_3_0_0/utils/buildTreeStructure.js", () => {
 
     describe("buildTreeStructure", () => {
         it("should return the unchanged layerlist if no param is given", () => {
-            layerList = [{id: "id"}];
-            sinon.stub(rawLayerList, "getLayerList").returns(layerList);
+            const shortList = [ {
+                "id": "452",
+                "name": "Luftbilder DOP 20 (DOP 40 mit Umland)",
+                "visibility": true
+            },
+            {
+                "id": "453"
+            }];
 
-            expect(buildTreeStructure()).to.be.deep.equals(layerList);
+            sinon.stub(rawLayerList, "getLayerList").returns(shortList);
+            expect(buildTreeStructure()).to.be.deep.equals(shortList);
         });
 
 
