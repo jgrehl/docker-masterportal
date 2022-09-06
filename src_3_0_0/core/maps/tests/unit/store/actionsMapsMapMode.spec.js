@@ -95,11 +95,18 @@ describe("src_3_0_0/core/maps/store/actionsMapsMapMode.js", () => {
     });
 
     describe("activateMap3d", () => {
-        it("should commit 2D to mode", ()=> {
+        it("should commit 3D to mode", ()=> {
             activateMap3d({commit});
 
             expect(commit.calledOnce).to.be.true;
             expect(commit.firstCall.args).to.deep.equals(["setMode", "3D"]);
+        });
+
+        it("should not commit 3D to mode, if map3d doesn't exist", () => {
+            mapCollection.clear();
+            activateMap3d({commit});
+
+            expect(commit.notCalled).to.be.true;
         });
     });
 });
