@@ -4,17 +4,7 @@ import groupBy from "../../../src/utils/groupBy";
 import rawLayerList from "@masterportal/masterportalapi/src/rawLayerList";
 
 const DefaultTreeParser = Parser.extend(/** @lends DefaultTreeParser.prototype */{
-    /**
-     * @class DefaultTreeParser
-     * @extends Parser
-     * @memberof Core.ConfigLoader
-     * @property {String[]} validLayerTypes=["WMS", "SENSORTHINGS", "TERRAIN3D", "TILESET3D", "OBLIQUE"] The layertypes to show in the defaultTree.
-     * @fires Core#RadioRequestUtilIsViewMobile
-     * @constructs
-     */
-    defaults: Object.assign({}, Parser.prototype.defaults, {
-        validLayerTypes: ["WMS", "SENSORTHINGS", "TERRAIN3D", "TILESET3D", "OBLIQUE"]
-    }),
+   
 
     /**
      * Parses the layer from services.json.
@@ -24,14 +14,14 @@ const DefaultTreeParser = Parser.extend(/** @lends DefaultTreeParser.prototype *
      * @returns {void}
      */
     parseTree: function (layerList, layer3dList = null, timeLayerList = null) {
-        let newLayerList = this.filterValidLayer(this.get("validLayerTypes"), layerList);
+        // let newLayerList = this.filterValidLayer(this.get("validLayerTypes"), layerList);
 
-        newLayerList = this.removeWmsBySensorThings(newLayerList);
+        // newLayerList = this.removeWmsBySensorThings(newLayerList);
         // Removes all layers that are already displayed in the cache
-        newLayerList = this.deleteLayersIncludeCache(newLayerList);
+        // newLayerList = this.deleteLayersIncludeCache(newLayerList);
 
         // For layers with more than 1 dataset, 1 additional layer is created per dataset
-        newLayerList = this.createLayerPerDataset(newLayerList);
+        let newLayerList = this.createLayerPerDataset(newLayerList);
 
         this.parseLayerList(newLayerList, layer3dList, timeLayerList);
     },
@@ -53,28 +43,7 @@ const DefaultTreeParser = Parser.extend(/** @lends DefaultTreeParser.prototype *
         });
     },
 
-    /**
-     * Removes WMS-Layer containing the same dataset as SensorThings layer, using the attribute related_wms_layers.
-     * @param  {Object[]} [layerList=[]] The layers from services.json
-     * @returns {Object[]} LayerList without wms duplicates
-     */
-    removeWmsBySensorThings: function (layerList = []) {
-        const sensorThingsLayer = layerList.filter(layer => layer?.typ.toUpperCase() === "SENSORTHINGS"),
-            layerListWithoutWmsSDuplicates = [...layerList],
-            layerIdsToRemove = this.getWmsLayerIdsToRemove(sensorThingsLayer);
-
-        layerIdsToRemove.forEach(layerIdToRemove => {
-            const layerToRemove = layerListWithoutWmsSDuplicates.find(layer => layer.id === layerIdToRemove),
-                index = layerListWithoutWmsSDuplicates.indexOf(layerToRemove);
-
-            if (index > -1) {
-                layerListWithoutWmsSDuplicates.splice(index, 1);
-            }
-        });
-
-        return layerListWithoutWmsSDuplicates;
-    },
-
+   
     /**
      * Gets the wms layer ids to remove, using the attribute related_wms_layers.
      * @param {Object[]} [sensorThingsLayer=[]] The sensorThings layers.
@@ -92,21 +61,6 @@ const DefaultTreeParser = Parser.extend(/** @lends DefaultTreeParser.prototype *
         return layerIdsToRemove;
     },
 
-    /**
-     * Removes all layers that are already displayed in the cache.
-     * @param  {Object[]} layerList - Objekte from services.json
-     * @return {Object[]} layerList - Objekte from services.json
-     */
-    deleteLayersIncludeCache: function (layerList) {
-        const cacheLayerMetaIDs = [],
-            cacheLayer = layerList.filter(item => item.cache === true);
-
-        cacheLayer.forEach(layer => {
-            cacheLayerMetaIDs.push(layer.datasets[0].md_id);
-        });
-
-        return layerList.filter(element => !(cacheLayerMetaIDs.includes(element.datasets[0].md_id) && element.cache === false));
-    },
 
     /**
      * Retrieves all objects with more than one record from the layerList
@@ -172,7 +126,8 @@ const DefaultTreeParser = Parser.extend(/** @lends DefaultTreeParser.prototype *
         }
 
         // Models für die Fachdaten erzeugen
-        this.groupDefaultTreeOverlays(overlayList);
+        // this.groupDefaultTreeOverlays(overlayList);
+        // this.groupDefaultTreeOverlays(typeGroup.overlays);
         // Models für 3D Daten erzeugen
         if (layer3dList) {
             this.create3dLayer(typeGroup.layer3d, layer3dList);
@@ -369,75 +324,40 @@ const DefaultTreeParser = Parser.extend(/** @lends DefaultTreeParser.prototype *
         });
     },
 
-    /**
-     * subdivide the layers grouped by metaName into folders
-     * and layers if a MetaNameGroup has only one entry
-     * it should be added as layer and not as folder
-     * @param {object} metaNameGroups - todo
-     * @param {string} name - todo
-     * @returns {object} categories
-    */
-    splitIntoFolderAndLayer: function (metaNameGroups, name) {
-        const folder = [],
-            layer = [],
-            categories = {};
-
-        Object.entries(metaNameGroups).forEach(metaName => {
-            const group = metaName[1],
-                groupname = metaName[0];
-
-            // Wenn eine Gruppe mehr als einen Eintrag hat -> Ordner erstellen
-            if (Object.keys(group).length > 1) {
-                folder.push({
-                    name: groupname,
-                    layer: group,
-                    id: this.createUniqId(groupname)
-                });
-            }
-            else {
-                layer.push(group[0]);
-            }
-            categories.folder = folder;
-            categories.layer = layer;
-            categories.id = this.createUniqId(name);
-            categories.name = name;
-        });
-        return categories;
-    },
-
+   
     /**
      * Groups layers by category and MetaName
      * @param  {Object} overlays - The technical data as an object
      * @returns {void}
      */
     groupDefaultTreeOverlays: function (overlays) {
-        const tree = {},
-            categoryGroups = groupBy(overlays, function (layer) {
-                // Gruppierung nach Opendatakategorie
-                if (this.get("category") === "Opendata") {
-                    return layer.datasets[0].kategorie_opendata[0];
-                }
-                // Gruppierung nach Inspirekategorie
-                else if (this.get("category") === "Inspire") {
-                    return layer.datasets[0].kategorie_inspire[0];
-                }
-                else if (this.get("category") === "Behörde") {
-                    return layer.datasets[0].kategorie_organisation;
-                }
-                return "Nicht zugeordnet";
-            }.bind(this));
+        const tree = {};
+        //    categoryGroups = groupBy(overlays, function (layer) {
+        //         // Gruppierung nach Opendatakategorie
+        //         if (this.get("category") === "Opendata") {
+        //             return layer.datasets[0].kategorie_opendata[0];
+        //         }
+        //         // Gruppierung nach Inspirekategorie
+        //         else if (this.get("category") === "Inspire") {
+        //             return layer.datasets[0].kategorie_inspire[0];
+        //         }
+        //         else if (this.get("category") === "Behörde") {
+        //             return layer.datasets[0].kategorie_organisation;
+        //         }
+        //         return "Nicht zugeordnet";
+        //     }.bind(this));
 
-        // Gruppierung nach MetaName
-        Object.entries(categoryGroups).forEach(value => {
-            const group = value[1],
-                name = value[0],
-                metaNameGroups = groupBy(group, function (layer) {
-                    return layer.datasets[0].md_name;
-                });
+        // // Gruppierung nach MetaName
+        // Object.entries(categoryGroups).forEach(value => {
+        //     const group = value[1],
+        //         name = value[0],
+        //         metaNameGroups = groupBy(group, function (layer) {
+        //             return layer.datasets[0].md_name;
+        //         });
 
-            // in Layer und Ordner unterteilen
-            tree[name] = this.splitIntoFolderAndLayer(metaNameGroups, name);
-        });
+        //     // in Layer und Ordner unterteilen
+        //     tree[name] = this.splitIntoFolderAndLayer(metaNameGroups, name);
+        // });
         this.createModelsForDefaultTree(tree);
     },
 
@@ -447,13 +367,13 @@ const DefaultTreeParser = Parser.extend(/** @lends DefaultTreeParser.prototype *
      * @returns {void}
      */
     createModelsForDefaultTree: function (tree) {
-        const sortedKeys = Object.keys(tree).sort(),
-            sortedCategories = [],
+        // const sortedKeys = Object.keys(tree).sort(),
+          const  sortedCategories = [],
             isQuickHelpSet = store.getters["QuickHelp/isSet"];
 
-        sortedKeys.forEach(key => {
-            sortedCategories.push(tree[key]);
-        });
+        // sortedKeys.forEach(key => {
+        //     sortedCategories.push(tree[key]);
+        // });
         // Kategorien erzeugen
         this.addItems(sortedCategories, {
             type: "folder",
