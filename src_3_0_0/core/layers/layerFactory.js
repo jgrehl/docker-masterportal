@@ -9,7 +9,7 @@ import Layer2dVectorVectorbase from "./layer2dVectorVectorbase";
 import Layer2dVectorWfs from "./layer2dVectorWfs";
 import Layer3dTerrain from "./layer3dTerrain";
 
-const possible2dLayerTypes = {
+const layerTypes2d = {
         GEOJSON: Layer2dVectorGeojson,
         OAF: Layer2dVectorOaf,
         SENSORTHINGS: Layer2dVectorSensorThings,
@@ -20,7 +20,7 @@ const possible2dLayerTypes = {
         WMS: Layer2dRasterWms,
         WMTS: Layer2dRasterWmts
     },
-    possible3dLayerTypes = {
+    layerTypes3d = {
         TERRAIN3D: Layer3dTerrain
     };
 
@@ -34,11 +34,11 @@ export function createLayer (layerConf, mapMode) {
     const typ = layerConf?.typ?.toUpperCase();
     let layer;
 
-    if (possible2dLayerTypes[typ]) {
-        layer = new possible2dLayerTypes[typ](layerConf);
+    if (layerTypes2d[typ]) {
+        layer = new layerTypes2d[typ](layerConf);
     }
-    else if (mapMode === "3D" && possible3dLayerTypes[typ]) {
-        layer = new possible3dLayerTypes[typ](layerConf);
+    else if (mapMode === "3D" && layerTypes3d[typ]) {
+        layer = new layerTypes3d[typ](layerConf);
     }
 
     return layer;
