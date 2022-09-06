@@ -6,11 +6,22 @@ describe("src_3_0_0/core/layers/layer3dTerrain.js", () => {
     let attributes,
         cesiumEllipsoidTerrainProviderSpy,
         cesiumTerrainProviderSpy,
+        map3d,
         warn;
 
     before(() => {
         warn = sinon.spy();
         sinon.stub(console, "warn").callsFake(warn);
+
+        map3d = {
+            id: "1",
+            mode: "3D",
+            getCesiumScene: () => {
+                return {};
+            }
+        };
+
+        mapCollection.addMap(map3d, "3D");
     });
 
     beforeEach(() => {
@@ -31,7 +42,7 @@ describe("src_3_0_0/core/layers/layer3dTerrain.js", () => {
         cesiumTerrainProviderSpy = sinon.spy(global.Cesium, "CesiumTerrainProvider");
     });
 
-    after(() => {
+    afterEach(() => {
         sinon.restore();
         global.Cesium = null;
     });
@@ -68,6 +79,18 @@ describe("src_3_0_0/core/layers/layer3dTerrain.js", () => {
 
             checkLayer(layer, layer3dTerrain, attributes);
             expect(cesiumTerrainProviderSpy.notCalled).to.equal(true);
+            expect(cesiumEllipsoidTerrainProviderSpy.calledOnce).to.equal(true);
+        });
+
+        it("createLayer shall create a visible terrain layer", function () {
+            Object.assign(attributes, {visibility: true});
+
+            const layer3dTerrain = new Layer3dTerrain(attributes),
+                layer = layer3dTerrain.getLayer();
+
+            checkLayer(layer, layer3dTerrain, attributes);
+            expect(cesiumTerrainProviderSpy.calledOnce).to.equal(true);
+            expect(cesiumTerrainProviderSpy.calledWithMatch({requestVertexNormals: true})).to.equal(true);
             expect(cesiumEllipsoidTerrainProviderSpy.notCalled).to.equal(true);
         });
     });
