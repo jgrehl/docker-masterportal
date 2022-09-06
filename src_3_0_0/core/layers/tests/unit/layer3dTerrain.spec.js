@@ -13,6 +13,8 @@ describe("src_3_0_0/core/layers/layer3dTerrain.js", () => {
         warn = sinon.spy();
         sinon.stub(console, "warn").callsFake(warn);
 
+        mapCollection.clear();
+
         map3d = {
             id: "1",
             mode: "3D",
@@ -82,7 +84,7 @@ describe("src_3_0_0/core/layers/layer3dTerrain.js", () => {
             expect(cesiumEllipsoidTerrainProviderSpy.calledOnce).to.equal(true);
         });
 
-        it("createLayer shall create a visible terrain layer", function () {
+        it("createLayer shall create a visible terrain layer", () => {
             Object.assign(attributes, {visibility: true});
 
             const layer3dTerrain = new Layer3dTerrain(attributes),
