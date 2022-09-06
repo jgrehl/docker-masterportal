@@ -7,6 +7,7 @@ import Layer2dVectorSensorThings from "./layer2dVectorSensorThings";
 import Layer2dVectorTile from "./layer2dVectorTile";
 import Layer2dVectorVectorbase from "./layer2dVectorVectorbase";
 import Layer2dVectorWfs from "./layer2dVectorWfs";
+import Layer3dEntities from "./layer3dEntities";
 import Layer3dTerrain from "./layer3dTerrain";
 
 const layerTypes2d = {
@@ -21,6 +22,7 @@ const layerTypes2d = {
         WMTS: Layer2dRasterWmts
     },
     layerTypes3d = {
+        ENTITIES3D: Layer3dEntities,
         TERRAIN3D: Layer3dTerrain
     };
 
