@@ -23,13 +23,15 @@ describe("src_3_0_0/core/layers/layer3dTileset.js", () => {
             }
         };
 
+        mapCollection.clear();
+
         global.Cesium = {};
         global.Cesium.Cesium3DTileset = () => { /* no content*/ };
 
         cesium3DTilesetSpy = sinon.spy(global.Cesium, "Cesium3DTileset");
     });
 
-    after(() => {
+    afterEach(() => {
         sinon.restore();
         global.Cesium = null;
     });
