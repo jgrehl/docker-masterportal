@@ -28,6 +28,9 @@ Layer3dEntities.prototype = Object.create(Layer3d.prototype);
 Layer3dEntities.prototype.createLayer = function (attributes) {
     const map3d = mapCollection.getMap("3D");
 
+    attributes?.entities?.forEach(entitie => {
+        entitie.show = attributes.visibility;
+    });
+
     this.setLayer(entities.createLayer(attributes, map3d));
-    this.setVisible(attributes.visibility, attributes, map3d);
 };
