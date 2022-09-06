@@ -5,7 +5,6 @@ import {shallowMount, createLocalVue} from "@vue/test-utils";
 import AppComponent from "../../App.vue";
 import * as maps from "../../core/maps/maps.js";
 
-
 const localVue = createLocalVue();
 
 localVue.use(Vuex);
@@ -30,6 +29,9 @@ describe("src_3_0_0/App.vue", () => {
             namespaced: true,
             getters: {
                 allConfigsLoaded: sinon.stub(),
+                cesiumLibrary: () => {
+                    return "path_to_cesium_library";
+                },
                 configJs: sinon.stub(),
                 layerConfig: sinon.stub(),
                 portalConfig: () => {
