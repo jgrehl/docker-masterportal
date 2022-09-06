@@ -13,8 +13,21 @@
     "tree": {
       "type": "auto",
       "validLayerTypesAutoTree": ["WMS", "SENSORTHINGS", "TERRAIN3D", "TILESET3D", "OBLIQUE"],
-      "orderBy": "opendata",
-      "saveSelection": true,
+      "categories": [
+        {
+          "key": "kategorie_opendata",
+          "name": "Opendata",
+          "active": true
+        },
+        {
+          "key": "kategorie_inspire",
+          "name": "Inspire"
+        },
+        {
+          "key": "kategorie_organisation",
+          "name": "Behörde"
+        }
+      ],
       "layerIDsToIgnore": [
           "1912", "1913", "1914", "1915", "1916", "1917",
           "2298",
