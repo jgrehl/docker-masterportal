@@ -43,7 +43,7 @@ describe("src_3_0_0/utils/buildTreeStructure.js", () => {
         });
 
 
-        it.only("should return tree structured for active category", () => {
+        it("should return tree structured for active category", () => {
             const layerConfig = {
                 Hintergrundkarten: {
                     Layer: [
