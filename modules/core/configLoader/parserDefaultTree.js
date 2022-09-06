@@ -1,10 +1,11 @@
+/* eslint-disable no-unused-vars */
 import Parser from "./parser";
 import store from "../../../src/app-store/index";
 import groupBy from "../../../src/utils/groupBy";
 import rawLayerList from "@masterportal/masterportalapi/src/rawLayerList";
 
 const DefaultTreeParser = Parser.extend(/** @lends DefaultTreeParser.prototype */{
-   
+
 
     /**
      * Parses the layer from services.json.
@@ -21,7 +22,7 @@ const DefaultTreeParser = Parser.extend(/** @lends DefaultTreeParser.prototype *
         // newLayerList = this.deleteLayersIncludeCache(newLayerList);
 
         // For layers with more than 1 dataset, 1 additional layer is created per dataset
-        let newLayerList = this.createLayerPerDataset(newLayerList);
+        const newLayerList = this.createLayerPerDataset(newLayerList);
 
         this.parseLayerList(newLayerList, layer3dList, timeLayerList);
     },
@@ -43,7 +44,7 @@ const DefaultTreeParser = Parser.extend(/** @lends DefaultTreeParser.prototype *
         });
     },
 
-   
+
     /**
      * Gets the wms layer ids to remove, using the attribute related_wms_layers.
      * @param {Object[]} [sensorThingsLayer=[]] The sensorThings layers.
@@ -324,7 +325,7 @@ const DefaultTreeParser = Parser.extend(/** @lends DefaultTreeParser.prototype *
         });
     },
 
-   
+
     /**
      * Groups layers by category and MetaName
      * @param  {Object} overlays - The technical data as an object
@@ -368,7 +369,7 @@ const DefaultTreeParser = Parser.extend(/** @lends DefaultTreeParser.prototype *
      */
     createModelsForDefaultTree: function (tree) {
         // const sortedKeys = Object.keys(tree).sort(),
-          const  sortedCategories = [],
+        const sortedCategories = [],
             isQuickHelpSet = store.getters["QuickHelp/isSet"];
 
         // sortedKeys.forEach(key => {
