@@ -15,6 +15,24 @@ const getters = {
     },
 
     /**
+     * Returns the active category configured in config.json unter 'tree'.
+     * @param {Object} state state of the app-store.
+     * @returns {Object|null} The active category or the first one or null if not found
+     */
+    activeOrFirstCategory: state => {
+        const categories = state.portalConfig?.tree?.categories;
+
+        if (Array.isArray(categories) && categories.length > 0) {
+            const activeCategory = categories.filter(category => category.active === true);
+
+            if (activeCategory) {
+                return activeCategory[0];
+            }
+            return categories[0];
+        }
+        return null;
+    },
+    /**
      * Returns all layers of layerConfig.
      * @param {Object} state state of the app-store.
      * @returns {Object[]} The layers.
