@@ -37,7 +37,7 @@ describe("src_3_0_0/core/layers/layer3dEntities.js", () => {
         };
     });
 
-    after(() => {
+    afterEach(() => {
         sinon.restore();
         global.Cesium = null;
     });
