@@ -7,11 +7,12 @@
 ### __Breaking Changes__
 - new config.json parameter 'tree' added. Containes:
   - 'type' (was 'treeType' at root before), only one param possible: "auto" ( = old "default") or nothing
-  - 'validLayerTypesAutoTree' (new parameter)
-  - 'layerIDsToIgnore' (moved from config.js)
-  - 'metaIDsToMerge' (moved from config.js)
-  - 'metaIDsToIgnore' (moved from config.js)
-  - 'layerIDsToStyle' (moved from config.js)
+  - 'validLayerTypesAutoTree' (new parameter) only for tree type 'auto'
+  - 'layerIDsToIgnore' (moved from config.js) only for tree type 'auto'
+  - 'metaIDsToMerge' (moved from config.js) only for tree type 'auto'
+  - 'metaIDsToIgnore' (moved from config.js) only for tree type 'auto'
+  - 'layerIDsToStyle' (moved from config.js) only for tree type 'auto'
+  - 'categories': only for tree type 'auto', contains categories in datasets of layers. Tree is structured by them.
 
 ### Added
 - The following NPM package was added:
