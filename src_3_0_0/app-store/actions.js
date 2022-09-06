@@ -2,22 +2,27 @@ import axios from "axios";
 import {initializeLayerList} from "@masterportal/masterportalapi/src/rawLayerList";
 import getNestedValues from "../utils/getNestedValues";
 import {getAndMergeAllRawLayers, getAndMergeRawLayer} from "./utils/getAndMergeRawLayer";
+import {buildTreeStructure} from "./utils/buildTreeStructure";
 
 export default {
-    /**
+     /**
      * Extends all layers of config.json with the attributes of the layer in services.json.
      * If portalConfig.tree contains parameter 'layerIDsToIgnore', 'metaIDsToIgnore', 'metaIDsToMerge' or 'layerIDsToStyle' the raw layerlist is filtered and merged.
      * Config entry portalConfig.tree.validLayerTypesAutoTree is respected.
+     * If tree type is 'auto' , folder structure is build from layer's metadata contents for the active or first category configured in config.json unter 'tree'.
      * Replaces the extended layer in state.layerConf.
      * @returns {void}
      */
-    extendLayers ({commit, state}) {
+      extendLayers ({commit, getters, state}) {
         const layerContainer = getNestedValues(state.layerConfig, "Layer", "Ordner").flat(Infinity);
 
         if (state.portalConfig?.tree?.type === "auto") {
-            const rawLayers = getAndMergeAllRawLayers(state.portalConfig?.tree);
+            let layersStructured = [];
 
-            commit("addToLayerConfig", {layerConfigs: {Layer: rawLayers}, parentKey: "Fachdaten"});
+            getAndMergeAllRawLayers(state.portalConfig?.tree);
+            layersStructured = buildTreeStructure(state.layerConfig, getters.activeOrFirstCategory);
+
+            commit("addToLayerConfig", {layerConfigs: layersStructured, parentKey: "Fachdaten"});
         }
         layerContainer.forEach(layerConf => {
             const rawLayer = getAndMergeRawLayer(layerConf);

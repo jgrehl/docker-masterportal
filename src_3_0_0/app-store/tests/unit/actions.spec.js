@@ -266,6 +266,7 @@ describe("src_3_0_0/app-store/actions.js", () => {
             expect(commit.lastCall.args[1].layerConfigs[0].layer).to.deep.equals(layerList[4]);
         });
         it("extendLayers for default tree with all filtered raw layers", () => {
+            const getters = {activeCategory: null};
             let expectedFirstCallArg = null;
 
             state.portalConfig = {tree: {
@@ -275,11 +276,11 @@ describe("src_3_0_0/app-store/actions.js", () => {
             state.layerConfig = layerConfig;
             delete state.layerConfig.Fachdaten;
 
-            actions.extendLayers({commit, state});
+            actions.extendLayers({commit, getters, state});
 
             layerList.splice(3, 2);
             layerList.splice(4, 3);
-            expectedFirstCallArg = {layerConfigs: {Layer: layerList}, parentKey: "Fachdaten"};
+            expectedFirstCallArg = {layerConfigs: layerList, parentKey: "Fachdaten"};
 
             expect(commit.callCount).to.be.equals(3);
             expect(commit.firstCall.args[0]).to.equals("addToLayerConfig");
