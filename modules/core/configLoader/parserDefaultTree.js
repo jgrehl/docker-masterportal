@@ -5,7 +5,6 @@ import groupBy from "../../../src/utils/groupBy";
 
 const DefaultTreeParser = Parser.extend(/** @lends DefaultTreeParser.prototype */{
 
-
     /**
      * Parses the layer from services.json.
      * @param {Object[]} layerList The layers from services.json.
@@ -42,7 +41,6 @@ const DefaultTreeParser = Parser.extend(/** @lends DefaultTreeParser.prototype *
             return element?.datasets?.length > 0 && validLayerTypes.includes(element?.typ.toUpperCase());
         });
     },
-
 
     /**
      * Gets the wms layer ids to remove, using the attribute related_wms_layers.
@@ -252,7 +250,6 @@ const DefaultTreeParser = Parser.extend(/** @lends DefaultTreeParser.prototype *
             }
         });
     },
-
 
     /**
      * Groups layers by category and MetaName
