@@ -34,7 +34,7 @@ export default {
             map3d = mapCollection.getMap("3D");
 
         map2dView.animate({rotation: 0}, () => {
-            map3d.setEnabled(false);
+            map3d?.setEnabled(false);
             commit("setMode", "2D");
         });
     },
