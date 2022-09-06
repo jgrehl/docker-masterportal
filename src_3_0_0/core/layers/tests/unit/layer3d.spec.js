@@ -20,7 +20,7 @@ describe("src_3_0_0/core/layers/layer3d.js", () => {
         mapCollection.addMap(map, "3D");
     });
 
-    after(() => {
+    afterEach(() => {
         sinon.restore();
     });
 
