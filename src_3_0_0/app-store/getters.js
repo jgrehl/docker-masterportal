@@ -28,8 +28,8 @@ const getters = {
      * @param {Object} state state of the app-store.
      * @returns {String} The cesium library path.
      */
-    cesiumLib: state => {
-        return state.configJs.cesiumLib || "https://cesium.com/downloads/cesiumjs/releases/1.95/Build/Cesium/Cesium.js";
+    cesiumLibrary: state => {
+        return state.configJs?.cesiumLibrary || "https://cesium.com/downloads/cesiumjs/releases/1.95/Build/Cesium/Cesium.js";
     },
 
     /**

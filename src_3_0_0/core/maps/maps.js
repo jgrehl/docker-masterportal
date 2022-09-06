@@ -39,7 +39,7 @@ function create2DMap (mapViewSettings, configJs) {
  * @returns {void}
  */
 export function load3dMap (configJs) {
-    load3DScript(store.getters.cesiumLib, () => {
+    load3DScript(store.getters.cesiumLibrary, () => {
         create3DMap(configJs);
 
         if (configJs.startingMap3D) {
