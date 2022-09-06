@@ -143,11 +143,12 @@
 - The Virtual City Planner tool (virtualcityPLANNER) has been removed
 - new config.json parameter 'tree' added. Containes:
   - 'type' (was 'treeType' at root before), only one param possible: "auto" ( = old "default") or nothing
-  - 'validLayerTypesAutoTree' (new parameter)
-  - 'layerIDsToIgnore' (moved from config.js)
-  - 'metaIDsToMerge' (moved from config.js)
-  - 'metaIDsToIgnore' (moved from config.js)
-  - 'layerIDsToStyle' (moved from config.js)
+  - 'validLayerTypesAutoTree' (new parameter) only for tree type 'auto'
+  - 'layerIDsToIgnore' (moved from config.js) only for tree type 'auto'
+  - 'metaIDsToMerge' (moved from config.js) only for tree type 'auto'
+  - 'metaIDsToIgnore' (moved from config.js) only for tree type 'auto'
+  - 'layerIDsToStyle' (moved from config.js) only for tree type 'auto'
+  - 'categories': only for tree type 'auto', contains categories in datasets of layers. Tree is structured by them.
 
 ### Added
 - GFI: nested object values can now be addressed from "gfiAttributes" by dot notation. See [services.json](https://bitbucket.org/geowerkstatt-hamburg/masterportal/src/dev/doc/services.json.md#markdown-header-gfi_attributes) .
