@@ -149,6 +149,7 @@
   - 'metaIDsToIgnore' (moved from config.js) only for tree type 'auto'
   - 'layerIDsToStyle' (moved from config.js) only for tree type 'auto'
   - 'categories': only for tree type 'auto', contains categories in datasets of layers. Tree is structured by them.
+- the attribute 'cache' on the layer is no longer taken into account with tree.type 'auto
 
 ### Added
 - GFI: nested object values can now be addressed from "gfiAttributes" by dot notation. See [services.json](https://bitbucket.org/geowerkstatt-hamburg/masterportal/src/dev/doc/services.json.md#markdown-header-gfi_attributes) .
