@@ -1,5 +1,10 @@
 import {getLayerList} from "@masterportal/masterportalapi/src/rawLayerList";
 import getNestedValues from "../../utils/getNestedValues";
+import {sortObjects} from "../../utils/sortObjects";
+
+const keyFolder = "Ordner",
+    keyTitle = "Titel",
+    keyLayer = "Layer";
 
 /**
  * Returns all layer from services.json to add to states layerConfig for treetype 'auto', besides background-layers.
@@ -9,14 +14,11 @@ import getNestedValues from "../../utils/getNestedValues";
  * @returns {Object} tree structure as json object
  */
 export function buildTreeStructure (layerConfig, category) {
-    // refactored from parserDefaultTree.js
+    // @todo refactored from parserDefaultTree.js
     //
-    // dort wird an allen Objekten, die keine id haben, eine id gesetzt: id: this.createUniqId(groupname)
-    // brauchen wir das auch?
-    const keyFolder = "Ordner",
-        keyTitle = "Titel",
-        keyLayer = "Layer",
-        layerList = getLayerList(),
+    // @todo dort wird an allen Objekten, die keine id haben, eine id gesetzt: id: this.createUniqId(groupname)
+    // @todo brauchen wir das auch?
+    const layerList = getLayerList(),
         bgLayers = getNestedValues(layerConfig?.Hintergrundkarten, keyLayer).flat(Infinity),
         categoryKey = category?.key,
         groups = {},
@@ -30,8 +32,7 @@ export function buildTreeStructure (layerConfig, category) {
     folder[keyFolder] = [];
 
     for (let i = 0; i < layerList.length; i++) {
-        const rawLayer = layerList[i],
-            subToAdd = {};
+        const rawLayer = layerList[i];
         let subFolder;
 
         if (bgLayerIds.indexOf(rawLayer.id) > -1) {
@@ -39,50 +40,29 @@ export function buildTreeStructure (layerConfig, category) {
         }
         if (rawLayer.datasets[0] && rawLayer.datasets[0][categoryKey]) {
             const mdName = rawLayer.datasets[0].md_name,
-                groupName = getCategoryName(rawLayer, categoryKey),
-                isFirstLayer = checkIsFirstLayer(layersByMdName, rawLayer);
+                groupName = getGroupName(rawLayer, categoryKey),
+                isFirstLayer = isFirstLayerWithMdName(layersByMdName, rawLayer, mdName);
 
             if (!Object.keys(groups).find((key) => key === groupName)) {
-                const toAdd = {};
-
-                toAdd[keyFolder] = [];
-                toAdd[keyTitle] = groupName;
-                folder[keyFolder].push(toAdd);
-                folder[keyFolder] = sortByKey(folder[keyFolder], keyTitle);
-                groups[groupName] = {};
+                addGroup(folder, groups, groupName);
             }
             subFolder = folder[keyFolder].find((obj) => obj[keyTitle] === groupName);
 
             if (!Object.keys(groups[groupName]).find((key) => key === mdName)) {
                 groups[groupName][mdName] = [];
                 if (isFirstLayer) {
-                    appendArray(subFolder, keyLayer);
-                    // subFolder[keyLayer].push({id:rawLayer.id, name:mdName});
-                    subFolder[keyLayer].push(Object.assign({}, rawLayer, {name: mdName}));
-                    subFolder[keyLayer] = sortByKey(subFolder[keyLayer], "name");
+                    addSingleLayer(subFolder, rawLayer, mdName);
                 }
                 else {
-                    subToAdd[keyLayer] = groups[groupName][mdName];
-                    subToAdd[keyTitle] = mdName;
-                    subFolder[keyFolder].push(subToAdd);
-                    subFolder[keyFolder] = sortByKey(subFolder[keyFolder], keyTitle);
+                    addSubGroup(subFolder, groups, groupName, mdName);
                 }
             }
             if (!isFirstLayer) {
                 if (layersByMdName[mdName].length === 2) {
-                    groups[groupName][mdName] = [];
-                    removeLayerById(subFolder[keyLayer], layersByMdName[mdName][0].id);
-                    subToAdd[keyLayer] = groups[groupName][mdName];
-                    subToAdd[keyTitle] = mdName;
-                    subFolder[keyFolder].push(subToAdd);
-                    subFolder[keyFolder] = sortByKey(subFolder[keyFolder], keyTitle);
-
-                    // groups[groupName][mdName].push({id: layersByMdName[mdName][0].id, name:layersByMdName[mdName][0].name});
-                    groups[groupName][mdName].push(layersByMdName[mdName][0]);
+                    moveFirstLayerToFolder(subFolder, groups, layersByMdName, groupName, mdName);
                 }
-                // groups[groupName][mdName].push({id:rawLayer.id, name:rawLayer.name});
                 groups[groupName][mdName].push(rawLayer);
-                groups[groupName][mdName] = sortByKey(groups[groupName][mdName], "name");
+                sortObjects(groups[groupName][mdName], "name");
             }
         }
     }
@@ -91,16 +71,76 @@ export function buildTreeStructure (layerConfig, category) {
 }
 
 /**
- * An empty list is appended at key, if not exists.
- * @param {Object} object an object
- * @param {String} key an empty list is appended at key, if not exists
+ * Moves the first layer with given mdName to subfolder.
+ * @param {Object} subFolder sub Folder
+ * @param {Object} groups layers by groupname and netatdata-name
+ * @param {Object} layersByMdName contains lists of layers grouped by matadata-name
+ * @param {String} groupName name of the group (category) in layers first dataset
+ * @param {String} mdName metadata-name of the layer
  * @returns {void}
  */
-function appendArray (object, key) {
-    if (!Array.isArray(object[key])) {
-        object[key] = [];
-    }
+function moveFirstLayerToFolder (subFolder, groups, layersByMdName, groupName, mdName) {
+    const firstLayer = layersByMdName[mdName][0],
+        subToAdd = {};
+
+    groups[groupName][mdName] = [];
+    removeLayerById(subFolder[keyLayer], firstLayer.id);
+    subToAdd[keyLayer] = groups[groupName][mdName];
+    subToAdd[keyTitle] = mdName;
+    subFolder[keyFolder].push(subToAdd);
+    sortObjects(subFolder[keyFolder], keyTitle);
+    groups[groupName][mdName].push(firstLayer);
 }
+
+/**
+ * Adds a single layer to sub folder and assigns the metadata-name to the name.
+ * @param {Object} subFolder sub Folder
+ * @param {Object} layer the raw layer
+ * @param {String} mdName metadata-name of the layer
+ * @returns {void}
+ */
+function addSingleLayer (subFolder, layer, mdName) {
+    if (!Array.isArray(subFolder[keyLayer])) {
+        subFolder[keyLayer] = [];
+    }
+    subFolder[keyLayer].push(Object.assign({}, layer, {name: mdName}));
+    sortObjects(subFolder[keyLayer], "name");
+}
+
+/**
+ * Adds layers from groups to subfolder.
+ * @param {Object} subFolder sub Folder
+ * @param {Object} groups layers by groupname and netatdata-name
+ * @param {String} groupName name of the group (category) in layers first dataset
+ * @param {String} mdName metadata-name of the layer
+ * @returns {void}
+ */
+function addSubGroup (subFolder, groups, groupName, mdName) {
+    const subToAdd = {};
+
+    subToAdd[keyLayer] = groups[groupName][mdName];
+    subToAdd[keyTitle] = mdName;
+    subFolder[keyFolder].push(subToAdd);
+    sortObjects(subFolder[keyFolder], keyTitle);
+}
+
+/**
+ * Adds group to folder.
+ * @param {Object} folder the folder
+ * @param {Object} groups layers by groupname and netatdata-name
+ * @param {String} groupName name of the group (category) in layers first dataset
+ * @returns {void}
+ */
+function addGroup (folder, groups, groupName) {
+    const toAdd = {};
+
+    toAdd[keyFolder] = [];
+    toAdd[keyTitle] = groupName;
+    folder[keyFolder].push(toAdd);
+    sortObjects(folder[keyFolder], keyTitle);
+    groups[groupName] = {};
+}
+
 /**
  * Removes the object with the given id from list.
  * @param {Array} list to delete an entry from
@@ -113,26 +153,6 @@ function removeLayerById (list, idToDelete) {
     if (toRemoveIndex > -1) {
         list.splice(toRemoveIndex, 1);
     }
-}
-/**
- * Sorts a list by values gotten by key.
- * @param {Array} list to sort
- * @param {String} key to get the value vrom to sort by
- * @returns {Array} the sorted list
- */
-function sortByKey (list, key) {
-    return list.sort((a, b) => {
-        const valueA = a[key].toUpperCase(),
-            valueB = b[key].toUpperCase();
-
-        if (valueA < valueB) {
-            return -1;
-        }
-        if (valueA > valueB) {
-            return 1;
-        }
-        return 0;
-    });
 }
 
 /**
@@ -160,31 +180,26 @@ function getIdsOfLayers (layers) {
  * @param {String} categoryKey key of the category to read the name of
  * @returns {String} the name of the category for the given categoryKey
  */
-function getCategoryName (layer, categoryKey) {
+function getGroupName (layer, categoryKey) {
     if (Array.isArray(layer.datasets[0][categoryKey])) {
         return layer.datasets[0][categoryKey][0];
     }
-
     return layer.datasets[0][categoryKey];
-
 }
 
 /**
  * Returns true, if no other layer with the given metadata-name is contained in layersByMdName.
  * @param {Object} layersByMdName contains lists of layers grouped by matadata-name
- * @param {Object} layer the layer, must have attribute datasets with one entry with key 'md_name'
+ * @param {Object} layer the raw layer
+ * @param {String} mdName metadata-name of the layer
  * @returns {Boolean} true, if no other layer with the given metadata-name is contained in layersByMdName
  */
-function checkIsFirstLayer (layersByMdName, layer) {
-    const mdName = layer.datasets[0].md_name;
-
+function isFirstLayerWithMdName (layersByMdName, layer, mdName) {
     if (Object.keys(layersByMdName).find((key) => key === mdName)) {
         layersByMdName[mdName].push(layer);
         return false;
     }
-
     layersByMdName[mdName] = [layer];
     return true;
-
 }
 
