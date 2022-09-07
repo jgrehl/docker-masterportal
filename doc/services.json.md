@@ -14,7 +14,6 @@ All layer information the portal needs to use the services is stored here. Confi
 
 |Name|Required|Type|Default|Description|Example|
 |----|--------|----|-------|-----------|-------|
-|cache|no|Boolean||Is this layer part of a cached service? If `true`, this layer is preferred to layers that share the same metadata, but have `cache` set to `false`. This only works in portals with `"tree.type": "default"` in their **[config.json](config.json.md)**. The parameter has no effects on other tree types.|`false`|
 |datasets|no|**[datasets](#markdown-header-wms_wfs_oaf_datasets)**/Boolean||Metadata specification. All metadata the layer data is referenced here. On clicking the "i" button in the layer tree, the information is retrieved by the CSW interface and shown to the user. For this, the **[rest-services.json](rest-services.json.md)** has to provide the URL of the metadata catalog resp. its CSW interface. The values *kategorie_opendata*, *kategorie_inspire*, and *kategorie_organisation* are used for layer categorization if the **[config.json](config.json.md)** has `tree.type` set to `"default"`. To remove the "i" button altogether, explicitly set `"datasets": false`.||
 |featureCount|yes|String||Amount of features retrieved on GFI requests. Corresponds to the *GetFeatureInfo parameter "FEATURE_COUNT"*.|`"1"`|
 |format|yes|String||Image format of tiles requested via *GetMap*. Must match one of the service's formats listed in *Capability/Request/GetMap/Format*.|`"image/jpeg"`|
@@ -65,7 +64,6 @@ All layer information the portal needs to use the services is stored here. Confi
       "gfiTheme" : "default",
       "layerAttribution" : "nicht vorhanden",
       "legend" : false,
-      "cache" : false,
       "featureCount" : "1",
       "isSecured": true,
       "authenticationUrl": "https://geodienste.hamburg.de/HH_WMS_DOP10?VERSION=1.3.0&SERVICE=WMS&REQUEST=GetCapabilities",
@@ -197,7 +195,6 @@ WMTS layers can be added by
    "coordinateSystem": "EPSG:3857",
    "layerAttribution": "nicht vorhanden",
    "legend": false,
-   "cache": true,
    "wrapX": true,
    "origin": [
       -20037508.3428,
