@@ -5,7 +5,7 @@ import {getAndMergeAllRawLayers, getAndMergeRawLayer} from "./utils/getAndMergeR
 import {buildTreeStructure} from "./utils/buildTreeStructure";
 
 export default {
-     /**
+    /**
      * Extends all layers of config.json with the attributes of the layer in services.json.
      * If portalConfig.tree contains parameter 'layerIDsToIgnore', 'metaIDsToIgnore', 'metaIDsToMerge' or 'layerIDsToStyle' the raw layerlist is filtered and merged.
      * Config entry portalConfig.tree.validLayerTypesAutoTree is respected.
@@ -13,7 +13,7 @@ export default {
      * Replaces the extended layer in state.layerConf.
      * @returns {void}
      */
-      extendLayers ({commit, getters, state}) {
+    extendLayers ({commit, getters, state}) {
         const layerContainer = getNestedValues(state.layerConfig, "Layer", "Ordner").flat(Infinity);
 
         if (state.portalConfig?.tree?.type === "auto") {
