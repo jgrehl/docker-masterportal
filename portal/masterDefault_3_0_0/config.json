@@ -16,16 +16,16 @@
       "categories": [
         {
           "key": "kategorie_opendata",
-          "name": "Opendata",
+          "name": "common:tree.categoryOpendata",
           "active": true
         },
         {
           "key": "kategorie_inspire",
-          "name": "Inspire"
+          "name": "common:tree.categoryInspire"
         },
         {
           "key": "kategorie_organisation",
-          "name": "Behörde"
+          "name": "common:tree.categoryOrganisation"
         }
       ],
       "layerIDsToIgnore": [
