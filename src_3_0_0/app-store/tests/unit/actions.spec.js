@@ -265,8 +265,12 @@ describe("src_3_0_0/app-store/actions.js", () => {
             expect(commit.thirdCall.args[1].layerConfigs[0].layer).to.deep.equals(layerList[5]);
             expect(commit.lastCall.args[1].layerConfigs[0].layer).to.deep.equals(layerList[4]);
         });
-        it("extendLayers for default tree with all filtered raw layers", () => {
-            const getters = {activeCategory: null};
+        it("extendLayers for auto tree with all filtered raw layers", () => {
+            const getters = {activeCategory: {
+                "key": "kategorie_opendata",
+                "name": "Opendata",
+                "active": true
+            }};
             let expectedFirstCallArg = null;
 
             state.portalConfig = {tree: {
@@ -288,7 +292,7 @@ describe("src_3_0_0/app-store/actions.js", () => {
             expect(commit.secondCall.args[0]).to.equals("replaceByIdInLayerConfig");
             expect(commit.secondCall.args[1].layerConfigs[0].layer).to.deep.equals(Object.assign({...layerList[0]}, {visibility: true}));
             expect(commit.thirdCall.args[0]).to.equals("replaceByIdInLayerConfig");
-            expect(commit.thirdCall.args[1].layerConfigs[0].layer).to.deep.equals({...layerList[1]});
+            expect(commit.thirdCall.args[1].layerConfigs[0].layer).to.deep.equals(layerList[1]);
 
         });
 
@@ -343,6 +347,11 @@ describe("src_3_0_0/app-store/actions.js", () => {
 
             actions.extendLayers({commit, state});
             expect(commit.callCount).to.be.equals(6);
+            expect(commit.alwaysCalledWith("replaceByIdInLayerConfig"));
+            expect(commit.firstCall.args[1].layerConfigs[0].layer).to.deep.equals(layerList[2]);
+            expect(commit.secondCall.args[1].layerConfigs[0].layer).to.deep.equals(layerList[3]);
+            expect(commit.thirdCall.args[1].layerConfigs[0].layer).to.deep.equals(layerList[6]);
+            expect(commit.lastCall.args[1].layerConfigs[0].layer).to.deep.equals(layerList[5]);
         });
     });
 });
