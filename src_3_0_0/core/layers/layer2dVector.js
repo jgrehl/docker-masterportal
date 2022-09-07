@@ -40,7 +40,7 @@ Layer2dVector.prototype.clusterGeometryFunction = function (feature) {
  * Note: only use features with a geometry.
  * @param {Object} attributes The attributes of the layer configuration.
  * @param {module:ol/Feature~Feature[]} features The ol features.
- * @returns {Function} to filter features with
+ * @returns {module:ol/Feature~Feature[]} to filter features with
  */
 Layer2dVector.prototype.featuresFilter = function (attributes, features) {
     let filteredFeatures = features.filter(feature => feature.getGeometry() !== undefined);
@@ -84,7 +84,7 @@ Layer2dVector.prototype.loadingParams = function (attributes) {
 /**
  * Returns the propertyNames as comma separated string.
  * @param {Object} attributes The attributes of the layer configuration.
- * @returns {string} The propertynames as string.
+ * @returns {String} The propertynames as string.
  */
 Layer2dVector.prototype.propertyNames = function (attributes) {
     let propertyname = "";
