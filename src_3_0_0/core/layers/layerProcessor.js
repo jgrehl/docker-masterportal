@@ -6,7 +6,7 @@ import store from "../../app-store";
 /**
  * Starts the creation of the layer in the layer factory
  * and register watcher.
- * @param {Object} visibleLayerConfigs The layer configurations.
+ * @param {Object[]} visibleLayerConfigs The layer configurations.
  * @returns {void}
  */
 export default function initializeLayers (visibleLayerConfigs) {
@@ -19,7 +19,6 @@ export default function initializeLayers (visibleLayerConfigs) {
 /**
  * Watches the mode in Maps.
  * Starts processing of visible 3d layer configs.
- * @param {Object} visibleLayerConfigs The layer configurations.
  * @returns {void}
  */
 function watchMapMode () {
@@ -77,7 +76,7 @@ export function updateLayerAttributes (layer, layerConf) {
 /**
  * Processes the layer.
  * Layer is added to collection and map and layerConfig is updated.
- * @param {Object} layer The layer configuration.
+ * @param {Layer} layer The layer configuration.
  * @returns {void}
  */
 function processLayer (layer) {
