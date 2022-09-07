@@ -75,7 +75,7 @@ Layer2d.prototype.updateLayerValues = function (attributes) {
 
 /**
  * Getter for interval auto refresh.
- * @returns {void}
+ * @returns {Number} The interval auto refresh.
  */
 Layer2d.prototype.getIntervalAutoRefresh = function () {
     return this.intervalAutoRefresh;
