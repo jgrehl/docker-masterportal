@@ -5,6 +5,30 @@ import {getAndMergeAllRawLayers, getAndMergeRawLayer} from "./utils/getAndMergeR
 
 export default {
     /**
+     * Extends all layers of config.json with the attributes of the layer in services.json.
+     * If portalConfig.tree contains parameter 'layerIDsToIgnore', 'metaIDsToIgnore', 'metaIDsToMerge' or 'layerIDsToStyle' the raw layerlist is filtered and merged.
+     * Config entry portalConfig.tree.validLayerTypesAutoTree is respected.
+     * Replaces the extended layer in state.layerConf.
+     * @returns {void}
+     */
+    extendLayers ({commit, state}) {
+        const layerContainer = getNestedValues(state.layerConfig, "Layer", "Ordner").flat(Infinity);
+
+        if (state.portalConfig?.tree?.type === "auto") {
+            const rawLayers = getAndMergeAllRawLayers(state.portalConfig?.tree);
+
+            commit("addToLayerConfig", {layerConfigs: {Layer: rawLayers}, parentKey: "Fachdaten"});
+        }
+        layerContainer.forEach(layerConf => {
+            const rawLayer = getAndMergeRawLayer(layerConf);
+
+            if (rawLayer) {
+                commit("replaceByIdInLayerConfig", {layerConfigs: [{layer: rawLayer, id: layerConf.id}]});
+            }
+        });
+    },
+
+    /**
      * Commit the loaded config.js to the state.
      * @param {Object} configJs The config.js
      * @returns {void}
@@ -34,30 +58,6 @@ export default {
             .catch(error => {
                 console.error(`Error occured during loading config.json specified by config.js (${targetPath}).`, error);
             });
-    },
-
-    /**
-     * Extends all layers of config.json with the attributes of the layer in services.json.
-     * If portalConfig.tree contains parameter 'layerIDsToIgnore', 'metaIDsToIgnore', 'metaIDsToMerge' or 'layerIDsToStyle' the raw layerlist is filtered and merged.
-     * Config entry portalConfig.tree.validLayerTypesAutoTree is respected.
-     * Replaces the extended layer in state.layerConf.
-     * @returns {void}
-     */
-    extendLayers ({commit, state}) {
-        const layerContainer = getNestedValues(state.layerConfig, "Layer", "Ordner").flat(Infinity);
-
-        if (state.portalConfig?.tree?.type === "auto") {
-            const rawLayers = getAndMergeAllRawLayers(state.portalConfig?.tree);
-
-            commit("addToLayerConfig", {layerConfigs: {Layer: rawLayers}, parentKey: "Fachdaten"});
-        }
-        layerContainer.forEach(layerConf => {
-            const rawLayer = getAndMergeRawLayer(layerConf);
-
-            if (rawLayer) {
-                commit("replaceByIdInLayerConfig", {layerConfigs: [{layer: rawLayer, id: layerConf.id}]});
-            }
-        });
     },
 
     /**
