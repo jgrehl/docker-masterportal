@@ -36,7 +36,7 @@ describe("src_3_0_0/utils/buildTreeStructure.js", () => {
 
     describe("buildTreeStructure", () => {
         it("should return the unchanged layerlist if no param is given", () => {
-            const shortList = [ {
+            const shortList = [{
                 "id": "452",
                 "name": "Luftbilder DOP 20 (DOP 40 mit Umland)",
                 "visibility": true
