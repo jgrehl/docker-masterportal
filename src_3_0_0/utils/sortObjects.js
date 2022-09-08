@@ -1,20 +1,4 @@
 /**
- * Sorts an array of objects in the order of the nested attributes passed.
- * @param {Object[]} objects The objects to be sorted.
- * @param {String[]} nestedAttributes The nested attributes to be sorted by.
- * @returns {void}
- */
-export function sortObjectsByNestedAttributes (objects, nestedAttributes) {
-    const cloneObjects = [...objects];
-
-    nestedAttributes.forEach(nestedAttribute => {
-        sortObjects(cloneObjects, nestedAttribute);
-    });
-
-    return cloneObjects;
-}
-
-/**
  * Sorts objects by the passed nested attribute.
  * @param {Object[]} objects The objects to be sorted.
  * @param {String} nestedAttribute The nested attribute.
@@ -55,4 +39,4 @@ export function getNestedElement (searchElement, nestedAttribute) {
     return isNaN(parseInt(nestedElement, 10)) ? nestedElement : parseInt(nestedElement, 10);
 }
 
-export default {sortObjectsByNestedAttributes, sortObjects, getNestedElement};
+export default {sortObjects, getNestedElement};
