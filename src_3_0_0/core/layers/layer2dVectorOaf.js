@@ -44,10 +44,10 @@ Layer2dVectorOaf.prototype.getRawLayerAttributes = function (attributes) {
         bboxCrs: attributes.bboxCrs,
         clusterDistance: attributes.clusterDistance,
         collection: attributes.collection,
-        crs: attributes.crs,
+        crs: attributes.crs === false || attributes.crs ? attributes.crs : "http://www.opengis.net/def/crs/EPSG/0/25832",
         datetime: attributes.datetime,
         id: attributes.id,
-        limit: attributes.limit,
+        limit: typeof attributes.limit === "undefined" ? 400 : attributes.limit,
         offset: attributes.offset,
         params: attributes.params,
         url: attributes.url
