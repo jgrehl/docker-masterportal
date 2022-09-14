@@ -7,6 +7,7 @@ import "../css/style.css";
 import Vue from "vue";
 import App from "./App.vue";
 import store from "./app-store";
+import "bootstrap/js/dist/offcanvas";
 
 import loadAddons from "./plugins/addons";
 import remoteInterface from "./plugins/remoteInterface";
