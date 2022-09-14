@@ -16,7 +16,7 @@ export default {
                 id="offcanvasLabel"
                 class="offcanvas-title"
             >
-                {{}}
+                {{ $t("common:menu.name") }}
             </h5>
             <button
                 type="button"
