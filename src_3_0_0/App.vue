@@ -107,7 +107,9 @@ export default {
         id="masterportal-container"
         class="masterportal-container"
     >
-        <MenuContainer />
+        <MenuContainer>
+            Menü Inhalte kommen hierher!
+        </MenuContainer>
         <div
             id="map-wrapper"
         >
