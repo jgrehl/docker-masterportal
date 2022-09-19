@@ -26,7 +26,7 @@ export default {
             />
         </div>
         <div class="offcanvas-body">
-            Menü Inhalte kommen hierher!
+            <slot />
         </div>
     </div>
 </template>
