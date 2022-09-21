@@ -2,6 +2,7 @@
 import {mapGetters, mapActions} from "vuex";
 
 import ControlBar from "./modules/controls/ControlBar.vue";
+import ControlBar1 from "./modules/controls/ControlBar1.vue";
 import initializeLayers from "./core/layers/layerProcessor";
 import {initializeMaps} from "./core/maps/maps";
 import LoaderOverlay from "./utils/loaderOverlay";
@@ -10,7 +11,8 @@ import mapCollection from "./core/maps/mapCollection";
 export default {
     name: "App",
     components: {
-        ControlBar
+        ControlBar,
+        ControlBar1
     },
     computed: {
         ...mapGetters([
@@ -113,7 +115,7 @@ export default {
                 v-if="allConfigsLoaded"
                 class="elements-positioned-over-map"
             >
-                <ControlBar class="controls" />
+                <ControlBar1 class="controls" />
             </div>
         </div>
     </div>
@@ -156,9 +158,6 @@ export default {
                 width: 100%;
                 height: 100%;
 
-                .controls {
-                    flex-grow: 1;
-                }
             }
         }
     }
