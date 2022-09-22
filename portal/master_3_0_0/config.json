@@ -8,6 +8,13 @@
         5934140
       ]
     },
+    "navigationSecondary": {
+      "sections": [
+        {
+          "scaleSwitcher": {}
+        }
+      ]
+    },
     "controls": {
       "zoom": true,
       "totalView": true,
