@@ -4,6 +4,12 @@ import ControlIcon from "../../ControlIcon.vue";
 
 export default {
     name: "Button3dItem",
+    props: {
+        iconThreeD: {
+            type: String,
+            default: "badge-3d"
+        }
+    },
     computed: {
         ...mapGetters("Maps", ["mode"]),
 
@@ -46,6 +52,7 @@ export default {
             :title="buttonTitle"
             :on-click="triggerChangeMapMode"
             :button-title="buttonTitle"
+            :icon-name="iconThreeD"
         />
     </div>
 </template>
