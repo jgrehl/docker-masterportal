@@ -1,7 +1,7 @@
 import {expect} from "chai";
 import {sortObjects, getNestedElement} from "../../sortObjects.js";
 
-describe("src/utils/sortObjects.js", () => {
+describe("src_3_0_0/utils/sortObjects.js", () => {
     const objects = [
         {
             name: "1a",
