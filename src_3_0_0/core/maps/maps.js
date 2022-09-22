@@ -10,7 +10,7 @@ import store from "../../app-store";
  * @param {Object} configJs The config.js.
  * @returns {void}
  */
-export default function initializeMaps (portalConfig, configJs) {
+export function initializeMaps (portalConfig, configJs) {
     create2DMap(portalConfig.mapView, configJs);
     store.dispatch("Maps/setMapAttributes");
     store.dispatch("Maps/setViewAttributes");
