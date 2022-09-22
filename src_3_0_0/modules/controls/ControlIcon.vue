@@ -51,7 +51,7 @@ export default {
     <button
         type="button"
         :tabindex="disabled ? '-1' : '0'"
-        :class="['control-icon', 'bootstrap-icon', inline ? 'inline' : 'standalone']"
+        :class="['control-icon', 'bootstrap-icon', 'btn', inline ? 'inline' : 'standalone']"
         :title="title"
         :disabled="disabled"
         @click.stop="onClick"
@@ -78,13 +78,10 @@ export default {
         display: block;
         text-align: center;
         top: auto;
-        margin: 5px;
 
         font-size: calc(#{$icon_length} - 0.35 * #{$icon_length});
         height: $icon_length;
         width: $icon_length;
-
-        box-shadow: 0 6px 12px $shadow;
     }
 
     .inline {
@@ -99,7 +96,7 @@ export default {
 
     .control-icon {
         background-color: $primary;
-        color: $white;
+        color: $black;
 
         pointer-events: all;
         cursor: pointer;
@@ -116,7 +113,7 @@ export default {
         }
 
         > p {
-            color: $white;
+            color: $black;
             font-family: $font_family_accent;
             font-size: 17px;
             padding: .25rem 0 0 0
