@@ -1,3 +1,5 @@
+import findWhereJs from "../../../utils/findWhereJs";
+
 /**
  * Registers on events of the map and view to keep the attributes up to date.
  */
@@ -32,5 +34,22 @@ export default {
             mapView = mapCollection.getMapView("2D");
 
         commit("setBoundingBox", mapView.calculateExtent(map.getSize()));
+    },
+
+    /**
+     * Sets mapView values to the store.
+     * @param {Object} param store context
+     * @param {Object} param.commit the commit
+     * @returns {void}
+     */
+    setViewAttributes ({commit}) {
+        const mapView = mapCollection.getMapView("2D"),
+            options = findWhereJs(mapView.get("options"), {
+                resolution: mapView.getConstrainedResolution(mapView.getResolution())
+            });
+
+        commit("setResolution", mapView.getResolution());
+        commit("setScale", options.scale);
+        commit("setZoom", mapView.getZoom());
     }
 };
