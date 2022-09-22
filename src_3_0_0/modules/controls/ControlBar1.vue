@@ -100,7 +100,7 @@ export default {
 
 <template>
     <div
-        class="btn-group-vertical m-5"
+        class="btn-group-vertical m-5 btn-group-controls"
         role="group"
     >
         <!-- v-if="categories.categoryName === 'sidebar'" -->
@@ -125,5 +125,11 @@ export default {
 
     .btn-control {
         background-color: $white;
+    }
+
+    .btn-group-controls {
+        background-color: $white;
+        border: solid $white 4px;
+        border-radius: 25px;
     }
 </style>
