@@ -28,7 +28,7 @@ export default {
             mapDiv.addEventListener("touchend", (event) => dispatch("oneFingerDragMessageEnd", event));
         }
 
-        dispatch("setViewAttributes", map.getView());
+        // dispatch("setViewAttributes", map.getView());
 
         const layerIds = await dispatch("normalizeLayers", await map.getLayers().getArray()),
             channel = Radio.channel("VectorLayer");
