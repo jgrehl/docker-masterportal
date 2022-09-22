@@ -51,7 +51,7 @@ export default {
     <button
         type="button"
         :tabindex="disabled ? '-1' : '0'"
-        :class="['control-icon', 'bootstrap-icon', 'btn', inline ? 'inline' : 'standalone']"
+        :class="['control-icon', 'bootstrap-icon', 'btn', 'my-2', inline ? 'inline' : 'standalone']"
         :title="title"
         :disabled="disabled"
         @click.stop="onClick"
@@ -100,7 +100,8 @@ export default {
 
         pointer-events: all;
         cursor: pointer;
-        border: 0;
+        border: solid $white 1px;
+        border-radius: 50%;
 
         /* position icon in center of button */
         > i {
