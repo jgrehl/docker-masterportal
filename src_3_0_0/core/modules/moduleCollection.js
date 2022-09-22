@@ -9,7 +9,7 @@ import indexScaleSwitcher from "../../modules/scaleSwitcher/store/indexScaleSwit
 /**
  * The imported module components.
  */
-import ScaleSwitcher from "../../modules/scaleSwitcher/components/scaleSwitcher.vue";
+import ScaleSwitcher from "../../modules/scaleSwitcher/components/ScaleSwitcher.vue";
 
 const moduleStores = {
         ScaleSwitcher: indexScaleSwitcher
@@ -26,7 +26,7 @@ export default {
     /**
      * Adds the modules that are configured in the config.json to moduleComponentsConfigured and registers its stores.
      * @param {String} navigationName The navigation name.
-     * @param {Object} moduleConfigs The module configs of the navigation.
+     * @param {Object[]} moduleConfigs The module configs of the navigation.
      * @returns {void}
      */
     registerConfiguredModules (navigationName, moduleConfigs = []) {
@@ -45,7 +45,6 @@ export default {
             });
         });
 
-        console.log(moduleComponentsConfigured);
     },
 
     /**
@@ -74,5 +73,21 @@ export default {
      */
     getConfiguredModuleComponentsByNavigation (navigationName) {
         return moduleComponentsConfigured[navigationName];
+    },
+
+    /**
+     * Gets the module components.
+     * @returns {Object} The module components.
+     */
+    getModuleComponents () {
+        return moduleComponents;
+    },
+
+    /**
+     * Gets the module stores.
+     * @returns {Object} The module stores.
+     */
+    getModuleStores () {
+        return moduleStores;
     }
 };
