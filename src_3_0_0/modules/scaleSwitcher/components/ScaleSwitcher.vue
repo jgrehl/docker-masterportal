@@ -1,6 +1,5 @@
 <script>
 import {mapGetters, mapMutations} from "vuex";
-import getters from "../store/gettersScaleSwitcher";
 import mutations from "../store/mutationsScaleSwitcher";
 
 /**
@@ -9,7 +8,7 @@ import mutations from "../store/mutationsScaleSwitcher";
 export default {
     name: "ScaleSwitcher",
     computed: {
-        ...mapGetters("Modlues/ScaleSwitcher", Object.keys(getters)),
+        ...mapGetters("Modules/ScaleSwitcher", ["active"]),
         scale: {
             get () {
                 return this.$store.state.Maps.scale;
@@ -69,7 +68,7 @@ export default {
 
 <template lang="html">
     <div
-        v-if="true"
+        v-if="active"
         id="scale-switcher"
         class="row"
     >
