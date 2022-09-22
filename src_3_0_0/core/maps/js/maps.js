@@ -13,6 +13,7 @@ import store from "../../../app-store";
 function initializeMaps (portalConfig, configJs) {
     create2DMap(portalConfig.mapView, configJs);
     store.dispatch("Maps/setMapAttributes");
+    store.dispatch("Maps/setViewAttributes");
 
     load3dMap(configJs);
 }
