@@ -18,9 +18,8 @@ export default {
     data () {
         return {
             categories: [
-                {categoryName: "top", className: "top-controls"},
-                {categoryName: "separator", className: "control-separator"},
-                {categoryName: "bottom", className: "bottom-controls"}
+                {categoryName: "sidebar"},
+                {categoryName: "menu"}
             ]
         };
     },
@@ -104,55 +103,19 @@ export default {
         class="btn-group-vertical m-5"
         role="group"
     >
+        <!-- v-if="categories.categoryName === 'sidebar'" -->
         <div
-            v-for="({categoryName, className}, categoryIndex) in categories"
-            :key="categoryIndex"
+            v-for="(control, index) in categorizedControls['top']"
+            :key="index"
         >
-            <li
-                v-if="categoryName === 'separator'"
-                :key="categoryIndex"
-                :class="className"
-                aria-hidden="true"
+            <component
+                :is="control.component"
+                :key="control.key"
+                :class="[
+                    isMobile && hiddenMobile(control.key) ? 'hidden' : '',
+                ]"
+                v-bind="control.props"
             />
-            <div
-                v-for="(control, index) in categorizedControls[categoryName]"
-                v-else
-                :key="index"
-            >
-                <button
-                    type="button"
-                    class="btn btn-control"
-                >
-                    {{ control }}
-                </button>
-            </div>
-            <div
-                class="btn-group"
-                role="group"
-            >
-                <button
-                    type="button"
-                    class="btn btn-control dropdown-toggle"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                >
-                    Dropdown
-                </button>
-                <ul class="dropdown-menu">
-                    <li>
-                        <a
-                            class="dropdown-item"
-                            href="#"
-                        >Dropdown link</a>
-                    </li>
-                    <li>
-                        <a
-                            class="dropdown-item"
-                            href="#"
-                        >Dropdown link</a>
-                    </li>
-                </ul>
-            </div>
         </div>
     </div>
 </template>

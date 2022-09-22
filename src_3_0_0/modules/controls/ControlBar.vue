@@ -113,9 +113,9 @@ export default {
 </script>
 
 <template>
-    <ul
+    <div
         v-if="!isSimpleStyle()"
-        class="right-bar"
+        class="m-5"
     >
         <template v-for="({categoryName, className}, categoryIndex) in categories">
             <li
@@ -144,7 +144,7 @@ export default {
                 </li>
             </template>
         </template>
-    </ul>
+    </div>
 </template>
 
 <style lang="scss" scoped>
