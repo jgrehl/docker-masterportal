@@ -3,7 +3,8 @@ import {mapGetters, mapActions} from "vuex";
 
 import ControlBar from "./modules/controls/ControlBar.vue";
 import initializeLayers from "./core/layers/layerProcessor";
-import {initializeMaps} from "./core/maps/maps";
+import initializeMaps from "./core/maps/maps";
+import initializeModules from "./core/modules/moduleProcessor";
 import LoaderOverlay from "./utils/loaderOverlay";
 import mapCollection from "./core/maps/mapCollection";
 
@@ -28,6 +29,7 @@ export default {
                 this.extendLayers();
                 initializeMaps(this.portalConfig, this.configJs);
                 initializeLayers(this.visibleLayerConfigs);
+                initializeModules(this.portalConfig);
             }
         }
     },

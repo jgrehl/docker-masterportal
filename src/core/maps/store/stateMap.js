@@ -20,12 +20,11 @@
 * @property {Number[]} mouseCoordinate Current mouse coordinate values of the map.
 * @property {String[]} overlayIds Current overlays of the map by Id.
 * @property {String} projection Current projection name of the map.
-* @property {Number} resolution Current resolution value of the map.
+// * @property {Number} resolution Current resolution value of the map.
 * @property {Number[]} resolutions Available resolution values of the map.
 * @property {Number} rotation Current rotation value of the map.
-* @property {Number} scale Current scale value of the map.
+// * @property {Number} scale Current scale value of the map.
 * @property {Number} size Current size in pixels of the map in the DOM.
-* @property {Number} zoom Current zoom level of the map view.
 * @property {Boolean} twoFingerPanStart Indicator if the 2-Fingers-Pan is active.
 */
 
@@ -57,12 +56,12 @@ const state = {
     mouseCoordinate: null,
     overlayIds: null,
     projection: null,
-    resolution: null,
+    // resolution: null,
     resolutions: null,
     rotation: null,
-    scale: null,
+    // scale: null,
     size: null,
-    zoom: null,
+    // zoom: null,
     twoFingerPanStart: false
 };
 
