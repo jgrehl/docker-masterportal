@@ -1,7 +1,7 @@
 import {expect} from "chai";
 import upperFirst from "../../upperFirst";
 
-describe("src/utils/upperFirst.js", () => {
+describe("src_3_0_0/utils/upperFirst.js", () => {
     it("should reply to anything but a string with an empty string", () => {
         expect(upperFirst(undefined)).to.be.a("string").and.to.be.empty;
         expect(upperFirst(null)).to.be.a("string").and.to.be.empty;
