@@ -2,6 +2,7 @@
 import {mapGetters, mapActions} from "vuex";
 
 import ControlBar from "./modules/controls/ControlBar.vue";
+import ContainerItem from "./modules/container/ContainerItem.vue";
 import initializeLayers from "./core/layers/layerProcessor";
 import {initializeMaps} from "./core/maps/maps";
 import initializeModules from "./core/modules/moduleProcessor";
@@ -11,7 +12,8 @@ import mapCollection from "./core/maps/mapCollection";
 export default {
     name: "App",
     components: {
-        ControlBar
+        ControlBar,
+        ContainerItem
     },
     computed: {
         ...mapGetters([
@@ -110,6 +112,7 @@ export default {
             <div
                 id="map"
             />
+            <ContainerItem />
             <div
                 v-if="allConfigsLoaded"
                 class="elements-positioned-over-map"
