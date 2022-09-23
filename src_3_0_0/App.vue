@@ -112,6 +112,7 @@ export default {
             <div
                 id="map"
             />
+            <!-- only for Testing -->
             <ContainerItem />
             <div
                 v-if="allConfigsLoaded"
