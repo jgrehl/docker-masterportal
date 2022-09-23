@@ -33,7 +33,13 @@ describe("src_3_0_0/modules/scaleSwitcher/components/ScaleSwitcher.vue", () => {
                 }
             }
         };
-    let store, wrapper;
+    let defaultState,
+        store,
+        wrapper;
+
+    before(() => {
+        defaultState = {...ScaleSwitcher.state};
+    });
 
     beforeEach(() => {
         mapCollection.clear();
@@ -103,6 +109,10 @@ describe("src_3_0_0/modules/scaleSwitcher/components/ScaleSwitcher.vue", () => {
         if (wrapper) {
             wrapper.destroy();
         }
+    });
+
+    after(() => {
+        ScaleSwitcher.state = defaultState;
     });
 
     it("renders the scaleSwitcher", () => {
