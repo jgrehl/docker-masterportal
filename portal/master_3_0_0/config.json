@@ -9,11 +9,11 @@
       ]
     },
     "navigationSecondary": {
-      "sections": [
-        {
-          "scaleSwitcher": {}
+      "sections": {
+        "scaleSwitcher": {
+          "active": true
         }
-      ]
+      }
     },
     "controls": {
       "fullScreen": true,

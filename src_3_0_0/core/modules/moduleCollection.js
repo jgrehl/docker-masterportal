@@ -1,4 +1,4 @@
-
+import upperFirst from "../../utils/upperFirst";
 import store from "../../app-store";
 
 /**
@@ -26,25 +26,23 @@ export default {
     /**
      * Adds the modules that are configured in the config.json to moduleComponentsConfigured and registers its stores.
      * @param {String} navigationName The navigation name.
-     * @param {Object[]} moduleConfigs The module configs of the navigation.
+     * @param {Object} [moduleConfigs={}] The module configs of the navigation.
      * @returns {void}
      */
-    registerConfiguredModules (navigationName, moduleConfigs = []) {
-        moduleConfigs.forEach(moduleConfig => {
-            Object.keys(moduleConfig).forEach(moduleKey => {
-                const module = moduleComponents[moduleKey],
-                    modulename = moduleKey.charAt(0).toUpperCase() + moduleKey.slice(1),
-                    moduleStore = moduleStores[modulename];
+    registerConfiguredModules (navigationName, moduleConfigs = {}) {
+        Object.keys(moduleConfigs).forEach(moduleKey => {
+            const module = moduleComponents[moduleKey],
+                modulename = upperFirst(moduleKey),
+                moduleStore = moduleStores[modulename];
 
-                if (module) {
-                    moduleComponentsConfigured[navigationName].push(module);
-                }
-                if (moduleStore) {
-                    store.registerModule(["Modules", modulename], moduleStore);
-                }
-            });
+            if (module) {
+                moduleComponentsConfigured[navigationName].push(module);
+            }
+            if (moduleStore) {
+                Object.assign(moduleStore.state, moduleConfigs[moduleKey]);
+                store.registerModule(["Modules", modulename], moduleStore);
+            }
         });
-
     },
 
     /**
