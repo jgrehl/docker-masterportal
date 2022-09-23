@@ -35,7 +35,7 @@ function create2DMap (mapViewSettings, configJs) {
 }
 
 /**
- * Loads Cesium and
+ * Loads Cesium and the start creating the 3D map.
  * @param {Object} configJs The config.js.
  * @returns {void}
  */

@@ -1,16 +1,25 @@
 import {expect} from "chai";
 
 import moduleCollection from "../../moduleCollection";
+import ScaleSwitcher from "../../../../../src_3_0_0/modules/scaleSwitcher/store/indexScaleSwitcher";
 
 describe("src_3_0_0/core/modules/moduleCollection.js", () => {
+    let defaultState;
+
+    before(() => {
+        defaultState = {...ScaleSwitcher.state};
+    });
+
+    after(() => {
+        ScaleSwitcher.state = defaultState;
+    });
+
     describe("registerConfiguredModules and getConfiguredModuleComponentsByNavigation", () => {
         it("should register configured modules", () => {
             const navigationName = "navigationSecondary",
-                moduleConfigs = [
-                    {
-                        "scaleSwitcher": {}
-                    }
-                ];
+                moduleConfigs = {
+                    "scaleSwitcher": {}
+                };
             let configuredNavigationSecondaryModules = [];
 
             moduleCollection.registerConfiguredModules(navigationName, moduleConfigs);
