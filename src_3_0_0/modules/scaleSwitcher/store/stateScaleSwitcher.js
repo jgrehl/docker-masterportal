@@ -5,10 +5,12 @@
  * @property {String} id Id of the ScaleSwitcher component
  * @property {String} name Displayed as title (config-param)
  *
- * @property {Boolean} active If true, scaleSwitcher will rendered
- * @property {Boolean} isVisibleInMenu If true, tool is selectable in menu (config-param)
- * @property {Boolean} deactivateGFI Flag if tool should deactivate gfi (config-param)
- * @property {Boolean} supportedDevice Devices on which the module is displayed
+ * @property {Boolean} active If true, scaleSwitcher will rendered.
+ * @property {Boolean} deactivateGFI The GFI will be disabled when opening this module if the attribute is true.
+ * @property {Boolean} hasMouseMapInteractions If this attribute is true, then all other modules will be deactivated when this attribute is also true. Only one module with this attribute true may be open at the same time, since conflicts can arise in the card interactions.
+ * @property {Boolean} isVisibleInMenu Is selectable in the menu if the attribute is true.
+ * @property {String[]} supportedDevice Devices on which the module is displayed.
+ * @property {String[]} supportedMapMode Map mode in which this module can be used.
  */
 const state = {
     icon: "bi-arrows-angle-contract",
@@ -17,8 +19,10 @@ const state = {
 
     active: false,
     deactivateGFI: false,
+    hasMouseMapInteractions: false,
     isVisibleInMenu: true,
-    supportedDevice: ["Desktop", "Mobil", "Table"]
+    supportedDevice: ["Desktop", "Mobil", "Table"],
+    supportedMapMode: ["2D", "3D"]
 };
 
 export default state;

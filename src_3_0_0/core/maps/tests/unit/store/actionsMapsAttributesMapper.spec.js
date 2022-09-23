@@ -6,7 +6,8 @@ import View from "ol/View";
 import actions from "../../../store/actionsMapsAttributesMapper";
 
 const {
-    setMapAttributes
+    setMapAttributes,
+    setViewAttributes
 } = actions;
 
 describe("src_3_0_0/core/maps/store/actionsMapsAttributesMapper.js", () => {
@@ -33,18 +34,27 @@ describe("src_3_0_0/core/maps/store/actionsMapsAttributesMapper.js", () => {
     });
 
     describe("setMapAttributes", () => {
-        it("Should commit and dispatch attributes", () => {
+        it("Should commit and dispatch map attributes", () => {
             setMapAttributes({commit, dispatch});
 
             expect(dispatch.calledTwice).to.be.true;
             expect(commit.calledOnce).to.be.true;
             expect(dispatch.firstCall.args).to.deep.equals(["registerListener", {
                 type: "moveend",
-                listener: "updateAttributes",
+                listener: "updateMapAttributes",
                 listenerType: "dispatch"
             }]);
-            expect(dispatch.secondCall.args).to.deep.equals(["updateAttributes"]);
+            expect(dispatch.secondCall.args).to.deep.equals(["updateMapAttributes"]);
             expect(commit.firstCall.args).to.deep.equals(["setMode", "2D"]);
+        });
+    });
+
+    describe("setViewAttributes", () => {
+        it("Should dispatch map view attributes", () => {
+            setViewAttributes({dispatch});
+
+            expect(dispatch.calledOnce).to.be.true;
+            expect(dispatch.firstCall.args).to.deep.equals(["updateMapViewAttributes"]);
         });
     });
 });
