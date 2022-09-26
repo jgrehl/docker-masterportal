@@ -25,18 +25,18 @@ export default {
     },
     computed: {
         ...mapGetters(["controlsConfig", "isMobile", "uiStyle"]),
-        ...mapGetters("Controls", ["componentMap", "mobileHiddenControls", "bottomControls"]),
+        ...mapGetters("Controls", ["componentMap", "mobileHiddenControls", "menuControls"]),
         /** @returns {Object} contains controls to-be-rendered sorted by placement */
         categorizedControls () {
             const categorizedControls = {
-                top: [],
-                bottom: []
+                sidebar: [],
+                menu: []
             };
 
             if (this.controlsConfig === null) {
                 return {
-                    top: [fallbackTopRight],
-                    bottom: [fallbackBottomRight]
+                    sidebar: [fallbackTopRight],
+                    menu: [fallbackBottomRight]
                 };
             }
 
@@ -47,8 +47,8 @@ export default {
                     if (addonControlConfig.hiddenMobile) {
                         this.mobileHiddenControls.push(controlName);
                     }
-                    if (addonControlConfig.bottomControl) {
-                        this.bottomControls.push(controlName);
+                    if (addonControlConfig.menuControl) {
+                        this.menuControls.push(controlName);
                     }
                 }
             }, this);
@@ -68,17 +68,17 @@ export default {
                 })
                 .filter(x => x !== "mousePosition") // "mousePosition" is currently handled in footer
                 .forEach(c => {
-                    if (this.bottomControls.includes(c.key)) {
-                        categorizedControls.bottom.push(c);
+                    if (this.menuControls.includes(c.key)) {
+                        categorizedControls.menu.push(c);
                     }
                     else {
                         // defaulting to top-right corner
-                        categorizedControls.top.push(c);
+                        categorizedControls.sidebar.push(c);
                     }
                 });
 
-            categorizedControls.top.push(fallbackTopRight);
-            categorizedControls.bottom.unshift(fallbackBottomRight);
+            categorizedControls.sidebar.push(fallbackTopRight);
+            categorizedControls.menu.unshift(fallbackBottomRight);
 
             return categorizedControls;
         }
@@ -103,9 +103,9 @@ export default {
         class="btn-group-vertical m-5 btn-group-controls"
         role="group"
     >
-        <!-- v-if="categories.categoryName === 'sidebar'" -->
+        <!-- 'sidebar' -->
         <div
-            v-for="(control, index) in categorizedControls['top']"
+            v-for="(control, index) in categorizedControls['sidebar']"
             :key="index"
         >
             <component
