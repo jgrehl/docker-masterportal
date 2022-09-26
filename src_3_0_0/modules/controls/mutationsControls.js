@@ -6,10 +6,10 @@ export default {
      * @param {String} name name of control in config.json
      * @param {Object} control Vue Component
      * @param {Boolean} [hiddenMobile=false] whether component is visible in mobile resolution
-     * @param {Boolean} [bottomControlsFlag=false] whether component is to be shown at lower end of the page
+     * @param {Boolean} [menuControlsFlag=false] whether component is to be shown at lower end of the page
      * @returns {void}
      */
-    registerControl (state, {name, control, hiddenMobile = false, bottomControlsFlag = false}) {
+    registerControl (state, {name, control, hiddenMobile = false, menuControlsFlag = false}) {
         state.componentMap = {
             ...state.componentMap,
             [name]: control
@@ -20,9 +20,9 @@ export default {
                 name
             ];
         }
-        if (bottomControlsFlag) {
-            state.bottomControls = [
-                ...state.bottomControls,
+        if (menuControlsFlag) {
+            state.menuControls = [
+                ...state.menuControls,
                 name
             ];
         }
@@ -41,6 +41,6 @@ export default {
 
         state.componentMap = nextMap;
         state.hiddenMobile = state.mobileHiddenControls.filter(s => s !== name);
-        state.bottomControls = state.bottomControls.filter(s => s !== name);
+        state.menuControls = state.menuControls.filter(s => s !== name);
     }
 };

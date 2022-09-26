@@ -7,7 +7,7 @@ import FullScreen from "./fullScreen/components/FullScreen.vue";
  * @typedef {Object} controls
  * @property {Object} componentMap Maps config.json.md control key to component.
  * @property {Object[]} mobileHiddenControls config.json.md control keys where the matching element is to be hidden in mobile mode.
- * @property {Object[]} bottomControls Controls that are rendered in the lower map area.
+ * @property {Object[]} menuControls Controls that are rendered in the lower map area.
  */
 const state = {
     componentMap: {
@@ -18,7 +18,7 @@ const state = {
     mobileHiddenControls: [
         "fullScreen"
     ],
-    bottomControls: []
+    menuControls: []
 };
 
 export default state;
