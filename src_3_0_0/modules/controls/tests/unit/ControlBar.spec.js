@@ -22,7 +22,7 @@ describe("src_3_0_0/modules/controls/ControlBar.vue", () => {
                     getters: {
                         componentMap: sinon.stub(),
                         mobileHiddenControls: sinon.stub(),
-                        bottomControls: sinon.stub()
+                        menuControls: sinon.stub()
                     }
                 }
             },
