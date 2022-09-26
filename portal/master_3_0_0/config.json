@@ -10,8 +10,11 @@
     },
     "controls": {
       "fullScreen": true,
-      "button3d": true,
-      "backForward": true
+      "backForward": true,
+      "button3d": {
+        "hiddenMobile": true,
+        "menuControl": true
+      }
     }
   },
   "Themenconfig": {
