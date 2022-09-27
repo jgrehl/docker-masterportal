@@ -4,10 +4,6 @@ import {load3DScript} from "@masterportal/masterportalapi/src/lib/load3DScript";
 
 import store from "../../../app-store";
 
-import store from "../../app-store";
-
-import store from "../../app-store";
-
 /**
  * Create the map in different modes and update the map attributes.
  * @param {Object} portalConfig The portalConfig.
