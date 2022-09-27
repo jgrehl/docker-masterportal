@@ -1,6 +1,5 @@
 <script>
 import {mapGetters} from "vuex";
-import {Popover} from "bootstrap";
 
 /**
  * Control layout component that places controls on the map.
@@ -12,7 +11,8 @@ export default {
             categories: [
                 {categoryName: "sidebar"},
                 {categoryName: "menu"}
-            ]
+            ],
+            activatedMenu: false
         };
     },
     computed: {
@@ -53,7 +53,7 @@ export default {
                 })
                 .filter(x => x !== "mousePosition") // "mousePosition" is currently handled in footer
                 .forEach(c => {
-                    if (this.menuControls.includes(c.key)) {
+                    if (this.menuControls.includes(c.key) || this.controlsConfig[c.key].menuControl === true) {
                         categorizedControls.menu.push(c);
                     }
                     else {
@@ -75,6 +75,9 @@ export default {
         },
         isSimpleStyle () {
             return this.uiStyle === "SIMPLE";
+        },
+        toggleMenu () {
+            this.activatedMenu = !this.activatedMenu;
         }
     }
 };
@@ -101,31 +104,31 @@ export default {
         <div v-if="menuControls.length >= 1">
             <hr>
             <div
-                class="btn-group"
+                class="btn-group-vertical"
                 role="group"
             >
+                <div v-if="activatedMenu">
+                    <div
+                        v-for="(control, index) in categorizedControls['menu']"
+                        :key="index"
+                    >
+                        <component
+                            :is="control.component"
+                            :key="control.key"
+                            :class="[
+                                isMobile && hiddenMobile(control.key) ? 'hidden' : ''
+                            ]"
+                            v-bind="control.props"
+                        />
+                    </div>
+                </div>
                 <button
                     type="button"
-                    class="control-icon bootstrap-icon btn my-2 standalone dropdown-toggle"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
+                    class="control-icon bootstrap-icon my-2 standalone"
+                    @click="toggleMenu"
                 >
                     <i class="bi-three-dots" />
                 </button>
-                <div
-                    v-for="(control, index) in categorizedControls['menu']"
-                    :key="index"
-                    class="dropdown-menu p-0"
-                >
-                    <component
-                        :is="control.component"
-                        :key="control.key"
-                        :class="[
-                            isMobile && hiddenMobile(control.key) ? 'hidden' : '', 'mx-2'
-                        ]"
-                        v-bind="control.props"
-                    />
-                </div>
             </div>
         </div>
     </div>
@@ -138,5 +141,7 @@ export default {
         background-color: $white;
         border: solid $white 4px;
         border-radius: 25px;
+        position: absolute;
+        bottom: 0;
     }
 </style>
