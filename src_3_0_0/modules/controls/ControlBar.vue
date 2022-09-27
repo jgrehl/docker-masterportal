@@ -25,7 +25,7 @@ export default {
                 menu: []
             };
 
-            this.$controlAddons.forEach(controlName => {
+            this.$controlAddons?.forEach(controlName => {
                 const addonControlConfig = this.controlsConfig[controlName];
 
                 if (addonControlConfig) {
