@@ -51,7 +51,7 @@ export default {
     <button
         type="button"
         :tabindex="disabled ? '-1' : '0'"
-        :class="['control-icon', 'bootstrap-icon', 'btn', 'my-2', inline ? 'inline' : 'standalone']"
+        :class="['control-icon', 'bootstrap-icon', 'btn', 'my-2', 'standalone']"
         :title="title"
         :disabled="disabled"
         @click.stop="onClick"
@@ -71,7 +71,7 @@ export default {
     </button>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
     @import "~variables";
 
     .standalone {
@@ -82,16 +82,6 @@ export default {
         font-size: calc(#{$icon_length} - 0.35 * #{$icon_length});
         height: $icon_length;
         width: $icon_length;
-    }
-
-    .inline {
-        display: inline-block;
-        text-align: center;
-        top: auto;
-
-        font-size: calc(#{$icon_length_small} - 0.35 * #{$icon_length_small});
-        width: $icon_length_small;
-        height: $icon_length_small;
     }
 
     .control-icon {
@@ -122,20 +112,27 @@ export default {
 
         /* pseudo-class state effects */
         &:hover {
-            background-color: lighten($primary, 10%);;
+            background-color: darken($primary, 10%);
+            border-color: $white;
         }
         &:focus {
-            background-color: lighten($primary, 15%);
-            outline: 1px solid lighten($primary, 15%);
+            background-color: darken($primary, 15%);
+            outline: 1px solid darken($primary, 15%);
+            border-color: $white;
+        }
+        &:checked {
+            border-color: $white;
         }
         &:active {
-            background-color: lighten($primary, 5%);
+            background-color: darken($primary, 5%);
+            border-color: $white;
         }
 
         &:disabled {
             background-color: $light-grey;
             color: $dark_grey;
             cursor: default;
+            border-color: $white;
         }
     }
     .bi-plus-icon {
