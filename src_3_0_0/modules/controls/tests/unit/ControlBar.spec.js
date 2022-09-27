@@ -20,30 +20,39 @@ describe("src_3_0_0/modules/controls/ControlBar.vue", () => {
                 Controls: {
                     namespaced: true,
                     getters: {
-                        componentMap: sinon.stub(),
-                        mobileHiddenControls: sinon.stub(),
-                        menuControls: sinon.stub()
+                        componentMap: () => {
+                            return {
+                                backForward: sinon.stub(),
+                                button3d: sinon.stub(),
+                                fullScreen: sinon.stub()
+                            };
+                        },
+                        mobileHiddenControls: () => {
+                            return ["fullScreen"];
+                        },
+                        menuControls: () => {
+                            return ["button3d"];
+                        }
                     }
                 }
             },
             getters: {
-                controlsConfig: () => null,
+                controlsConfig: () => sinon.stub(),
                 isMobile: sinon.stub(),
                 uiStyle: sinon.stub()
             }
         });
     });
 
-    it("renders the right-bar", () => {
+    it("renders the buttons group", () => {
         const wrapper = mount(ControlBar, {store, localVue});
 
-        expect(wrapper.find(".right-bar").exists()).to.be.true;
+        expect(wrapper.find(".btn-group-controls").exists()).to.be.true;
     });
 
-    it("renders three <li>", () => {
+    it("renders the button", () => {
         const wrapper = mount(ControlBar, {store, localVue});
 
-        expect(wrapper.findAll("li").length).to.equals(3);
-        expect(wrapper.findAll("li.control-separator").exists()).to.be.true;
+        expect(wrapper.find(".control-icon").exists()).to.be.true;
     });
 });
