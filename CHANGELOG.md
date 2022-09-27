@@ -300,6 +300,11 @@
   - 'metaIDsToMerge'
   - 'metaIDsToIgnore'
   - 'layerIDsToStyle'
+- the Control-Bar Design
+
+### Deprecated
+
+### Removed
 
 ### Fixed
 - actionsMapLayers/addLayer: don't set zIndex by default, otherwise addLayerOnTop and addLayerToIndex have no effect
