@@ -4,12 +4,6 @@ import ControlIcon from "../../ControlIcon.vue";
 
 export default {
     name: "Button3dItem",
-    props: {
-        iconThreeD: {
-            type: String,
-            default: "badge-3d"
-        }
-    },
     computed: {
         ...mapGetters("Maps", ["mode"]),
 
@@ -27,6 +21,14 @@ export default {
          */
         buttonTitle () {
             return i18next.t(this.mode === "2D" ? "common:modules.controls.3d.buttonTitle3d" : "common:modules.controls.3d.buttonTitle2d");
+        },
+
+        /**
+         * Returns the button title depending on the current map mode.
+         * @returns {String} The current button title.
+         */
+        buttonIcon () {
+            return this.mode === "2D" ? "badge-3d" : "2-square";
         }
     },
     methods: {
@@ -52,7 +54,7 @@ export default {
             :title="buttonTitle"
             :on-click="triggerChangeMapMode"
             :button-title="buttonTitle"
-            :icon-name="iconThreeD"
+            :icon-name="buttonIcon"
         />
     </div>
 </template>
