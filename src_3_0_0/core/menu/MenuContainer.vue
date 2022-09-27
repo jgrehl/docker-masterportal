@@ -1,11 +1,13 @@
 <script>
 import {mapGetters} from "vuex";
 import PortalTitle from "./portalTitle/components/PortalTitle.vue";
+import ResizeHandle from "../../sharedComponents/ResizeHandle.vue";
 
 export default {
     name: "MenuContainer",
     components: {
-        PortalTitle
+        PortalTitle,
+        ResizeHandle
     },
     data () {
         return {
@@ -67,9 +69,24 @@ export default {
                 />
             </template>
         </div>
+        <ResizeHandle
+            id="menuContainerHandle"
+            handle-position="r"
+            :max-width="0.5"
+        >
+            <div>&#8942;</div>
+        </ResizeHandle>
     </div>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
+#menuContainerHandle {
+    width: 12px;
 
+    & > div {
+        position: absolute;
+        top: 50%;
+        left: 4px;
+    }
+}
 </style>
