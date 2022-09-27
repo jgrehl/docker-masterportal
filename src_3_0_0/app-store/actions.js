@@ -102,32 +102,6 @@ export default {
     },
 
     /**
-<<<<<<< HEAD
-=======
-     * Extends all visible layers of config.json with the attributes of the layer in services.json.
-     * Replaces the extended layer in state.layerConf.
-     * @param {Array} layerConfig an array of configured layers like in the config.json
-     * @returns {void}
-     */
-    extendVisibleLayers ({commit, state}) {
-        const layerContainer = flattenArray(getNestedValues(state.layerConfig, "Layer"));
-
-        layerContainer.forEach(layerConf => {
-            if (layerConf.visibility) {
-                const rawLayer = getOrMergeRawLayer(layerConf);
-
-                if (rawLayer) {
-                    commit("replaceByIdInLayerConfig", [Object.assign(rawLayer, layerConf)]);
-                }
-                else {
-                    console.warn("Configured visible layer with id ", layerConf.id, " was not found in ", state.configJs?.layerConf);
-                }
-            }
-        });
-    },
-
-    /**
->>>>>>> 1b6151a54 (provide filtered raw layers if treetype default)
      * Load the rest-services.json and commit it to the state.
      * @returns {void}
      */
