@@ -107,9 +107,7 @@ export default {
         id="masterportal-container"
         class="masterportal-container"
     >
-        <MenuContainer>
-            Menü Inhalte kommen hierher!
-        </MenuContainer>
+        <MenuContainer />
         <div
             id="map-wrapper"
         >
@@ -167,7 +165,7 @@ export default {
                 height: 100%;
                 width: 100%;
             }
-            #menu-toggle-button{
+            #menu-toggle-button {
                 // TODO(roehlipa): Style ist wie bei ControlIcons, zentralisieren!
                 position: absolute;
                 top: 15px;
