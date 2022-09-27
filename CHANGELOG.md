@@ -27,6 +27,8 @@
   - 'metaIDsToIgnore'
   - 'layerIDsToStyle'
 
+- the Control-Bar Design
+
 ### Deprecated
 
 ### Removed
