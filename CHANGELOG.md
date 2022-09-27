@@ -14,6 +14,7 @@
   - 'layerIDsToStyle' (moved from config.js) only for tree type 'auto'
   - 'categories': only for tree type 'auto', contains categories in datasets of layers. Tree is structured by them.
 - the attribute 'cache' on the layer is no longer taken into account with tree.type 'auto
+- config.json control can not be "bottomControl" anymore only menuControl
 
 ### Added
 - The following NPM package was added:
