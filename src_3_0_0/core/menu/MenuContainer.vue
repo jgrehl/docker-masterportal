@@ -48,6 +48,8 @@ export default {
         class="offcanvas offcanvas-start"
         tabindex="-1"
         aria-labelledby="offcanvasLabel"
+        data-bs-scroll="true"
+        data-bs-backdrop="false"
     >
         <div class="offcanvas-header">
             <PortalTitle />
