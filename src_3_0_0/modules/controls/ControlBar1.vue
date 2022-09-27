@@ -1,14 +1,6 @@
 <script>
 import {mapGetters} from "vuex";
-
-const fallbackTopRight = {
-        key: "top-right-fallback",
-        fallback: true
-    },
-    fallbackBottomRight = {
-        key: "bottom-right-fallback",
-        fallback: true
-    };
+import {Popover} from "bootstrap";
 
 /**
  * Control layout component that places controls on the map.
@@ -32,13 +24,6 @@ export default {
                 sidebar: [],
                 menu: []
             };
-
-            if (this.controlsConfig === null) {
-                return {
-                    sidebar: [fallbackTopRight],
-                    menu: [fallbackBottomRight]
-                };
-            }
 
             this.$controlAddons.forEach(controlName => {
                 const addonControlConfig = this.controlsConfig[controlName];
@@ -77,9 +62,6 @@ export default {
                     }
                 });
 
-            categorizedControls.sidebar.push(fallbackTopRight);
-            categorizedControls.menu.unshift(fallbackBottomRight);
-
             return categorizedControls;
         }
     },
@@ -93,6 +75,10 @@ export default {
         },
         isSimpleStyle () {
             return this.uiStyle === "SIMPLE";
+        },
+        hasMenuControls () {
+            console.log(this.menuControls.lenght);
+            return this.menuControls.lenght >= 1;
         }
     }
 };
@@ -103,7 +89,7 @@ export default {
         class="btn-group-vertical m-5 btn-group-controls"
         role="group"
     >
-        <!-- 'sidebar' -->
+        <!-- sidebar -->
         <div
             v-for="(control, index) in categorizedControls['sidebar']"
             :key="index"
@@ -117,15 +103,41 @@ export default {
                 v-bind="control.props"
             />
         </div>
+        <div v-if="menuControls.length >= 1">
+            <hr>
+            <div
+                class="btn-group"
+                role="group"
+            >
+                <button
+                    type="button"
+                    class="control-icon bootstrap-icon btn my-2 standalone dropdown-toggle"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                >
+                    <i class="bi-three-dots" />
+                </button>
+                <div
+                    v-for="(control, index) in categorizedControls['menu']"
+                    :key="index"
+                    class="dropdown-menu"
+                >
+                    <component
+                        :is="control.component"
+                        :key="control.key"
+                        :class="[
+                            isMobile && hiddenMobile(control.key) ? 'hidden' : '',
+                        ]"
+                        v-bind="control.props"
+                    />
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
 <style lang="scss" scoped>
     @import "~variables";
-
-    .btn-control {
-        background-color: $white;
-    }
 
     .btn-group-controls {
         background-color: $white;

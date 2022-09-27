@@ -18,7 +18,7 @@ const state = {
     mobileHiddenControls: [
         "fullScreen"
     ],
-    menuControls: []
+    menuControls: ["button3d"]
 };
 
 export default state;
