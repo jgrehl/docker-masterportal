@@ -12,7 +12,7 @@
       "fullScreen": true,
       "backForward": true,
       "button3d": {
-        "hiddenMobile": true,
+        "hiddenMobile": false,
         "menuControl": true
       }
     }
