@@ -55,10 +55,17 @@ export default {
                 .forEach(c => {
                     if (this.menuControls.includes(c.key) || this.controlsConfig[c.key].menuControl === true) {
                         categorizedControls.menu.push(c);
+                        this.menuControls.push(c.key);
+                        if (this.controlsConfig[c.key].hiddenMobile === true) {
+                            this.mobileHiddenControls.push(c.key);
+                        }
                     }
                     else {
                         // defaulting to sidebar
                         categorizedControls.sidebar.push(c);
+                        if (this.controlsConfig[c.key].hiddenMobile === true) {
+                            this.mobileHiddenControls.push(c.key);
+                        }
                     }
                 });
 
@@ -72,6 +79,9 @@ export default {
          */
         hiddenMobile (componentName) {
             return this.mobileHiddenControls.includes(componentName);
+        },
+        hiddenMobileIsMenu () {
+            return this.menuControls.every(element => this.mobileHiddenControls.includes(element));
         },
         isSimpleStyle () {
             return this.uiStyle === "SIMPLE";
@@ -96,12 +106,12 @@ export default {
                 :is="control.component"
                 :key="control.key"
                 :class="[
-                    isMobile && hiddenMobile(control.key) ? 'hidden' : '',
+                    isMobile && hiddenMobile(control.key) ? 'd-none' : '',
                 ]"
                 v-bind="control.props"
             />
         </div>
-        <div v-if="menuControls.length >= 1">
+        <div v-if="menuControls.length >= 1 && hiddenMobileIsMenu">
             <hr>
             <div
                 class="btn-group-vertical"
@@ -116,7 +126,7 @@ export default {
                             :is="control.component"
                             :key="control.key"
                             :class="[
-                                isMobile && hiddenMobile(control.key) ? 'hidden' : ''
+                                isMobile && hiddenMobile(control.key) ? 'd-none' : ''
                             ]"
                             v-bind="control.props"
                         />
