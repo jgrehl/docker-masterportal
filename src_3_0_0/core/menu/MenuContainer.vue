@@ -19,7 +19,7 @@ export default {
     computed: {
         ...mapGetters("Menu", ["componentMap", "configuration"]),
         ...mapGetters("MenuNavigation", ["lastEntry"]),
-        ...mapGetters(["portalConfig"]),
+        ...mapGetters(["isMobile", "portalConfig"]),
         activeMenuItem () {
             return this.menuItems.find(menuItem => menuItem.key === this.lastEntry);
         }
@@ -55,7 +55,10 @@ export default {
     <div
         id="menu-offcanvas"
         class="offcanvas offcanvas-start"
-        :class="configuration.initiallyOpen ? 'show' : ''"
+        :class="{
+            show: configuration.initiallyOpen,
+            fullWidthCanvas: isMobile
+        }"
         tabindex="-1"
         aria-labelledby="offcanvasLabel"
         data-bs-scroll="true"
@@ -93,6 +96,7 @@ export default {
             />
         </div>
         <ResizeHandle
+            v-if="!isMobile"
             id="menuContainerHandle"
             handle-position="r"
             :max-width="0.5"
@@ -103,6 +107,9 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+.fullWidthCanvas {
+    width: 100%;
+}
 #menuContainerHandle {
     width: 12px;
 
