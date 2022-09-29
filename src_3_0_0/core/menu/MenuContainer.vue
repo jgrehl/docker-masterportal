@@ -18,7 +18,7 @@ export default {
         };
     },
     computed: {
-        ...mapGetters("Menu", ["componentMap"]),
+        ...mapGetters("Menu", ["componentMap", "configuration"]),
         ...mapGetters(["portalConfig"]),
         activeComponent: {
             get () {
@@ -67,6 +67,7 @@ export default {
     <div
         id="menu-offcanvas"
         class="offcanvas offcanvas-start"
+        :class="configuration.initiallyOpen ? 'show' : ''"
         tabindex="-1"
         aria-labelledby="offcanvasLabel"
         data-bs-scroll="true"
