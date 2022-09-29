@@ -43,6 +43,9 @@ export default {
                         });
                     }
                 });
+        },
+        removeShowClass () {
+            document.getElementById("menu-offcanvas")?.classList.remove("show");
         }
     }
 };
@@ -68,6 +71,7 @@ export default {
                 class="btn-close text-reset"
                 data-bs-dismiss="offcanvas"
                 :aria-label="$t('common:menu.ariaLabelClose')"
+                @click="removeShowClass"
             />
         </div>
         <div class="offcanvas-body">
