@@ -7,8 +7,4 @@
  * @property {String} toolTip defines the default toolTip. String which is displayed if you hover over the title.
  */
 export default {
-    title: "hi",
-    logo: "ho",
-    link: "ha",
-    toolTip: "he"
 };
