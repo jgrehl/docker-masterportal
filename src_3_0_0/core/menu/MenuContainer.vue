@@ -1,5 +1,5 @@
 <script>
-import {mapGetters} from "vuex";
+import {mapGetters, mapMutations} from "vuex";
 import PortalTitle from "./portalTitle/components/PortalTitle.vue";
 import MenuNavigation from "./navigation/components/MenuNavigation.vue";
 import ResizeHandle from "../../sharedComponents/ResizeHandle.vue";
@@ -13,51 +13,36 @@ export default {
     },
     data () {
         return {
-            menuItems: [],
-            activeComp: null
+            menuItems: []
         };
     },
     computed: {
         ...mapGetters("Menu", ["componentMap", "configuration"]),
+        ...mapGetters("MenuNavigation", ["lastEntry"]),
         ...mapGetters(["portalConfig"]),
-        activeComponent: {
-            get () {
-                return this.activeComp;
-            },
-            set (value) {
-                this.activeComp = value;
-            }
+        activeMenuItem () {
+            return this.menuItems.find(menuItem => menuItem.key === this.lastEntry);
         }
     },
     // watch: {
-    //     allConfigsLoaded (value) {
-    //         if (value) {
-    //             this.menuItems = [];
-    //
-    //         }
-    //     }
     // },
     mounted () {
         this.loadMenuItems();
     },
     methods: {
+        ...mapMutations("MenuNavigation", ["removeLastEntry", "addEntry"]),
         loadMenuItems () {
             Object
-                .keys(this.portalConfig)
+                .keys(this.configuration)
                 .forEach(key => {
-                    if (this.componentMap[key] && typeof this.portalConfig[key] === "object" && this.portalConfig[key].title) {
+                    if (this.componentMap[key] && typeof this.configuration[key] === "object" && this.configuration[key].title) {
                         this.menuItems.push({
                             component: this.componentMap[key],
-                            props: this.portalConfig[key],
+                            props: this.configuration[key],
                             key
                         });
                     }
                 });
-        },
-        activateMenuItem (compKey) {
-            this.activeComponent = this.menuItems.find(menuItem => menuItem.key === compKey);
-            this.$refs.menuNavigation.addEntry(this.activeComponent.props.title);
-
         }
     }
 };
@@ -88,19 +73,19 @@ export default {
         <div class="offcanvas-body">
             <MenuNavigation ref="menuNavigation" />
 
-            <div v-if="!activeComponent">
+            <div v-if="!lastEntry">
                 <a
                     v-for="comp in menuItems"
                     :key="comp.key"
-                    @click="activateMenuItem(comp.key)"
+                    @click="addEntry(comp.key)"
                 >
                     {{ comp.props.title }}
                 </a>
             </div>
             <component
-                :is="activeComponent.component"
-                v-bind="activeComponent.props"
-                v-if="activeComponent"
+                :is="activeMenuItem.component"
+                v-bind="activeMenuItem.props"
+                v-if="lastEntry"
             />
         </div>
         <ResizeHandle
