@@ -107,7 +107,7 @@ export default {
         id="masterportal-container"
         class="masterportal-container"
     >
-        <MenuContainer />
+        <MenuContainer v-if="allConfigsLoaded" />
         <div
             id="map-wrapper"
         >
