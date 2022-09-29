@@ -101,6 +101,7 @@ export default {
             v-if="!isMobile"
             id="menuContainerHandle"
             handle-position="r"
+            :min-width="0.1"
             :max-width="0.5"
         >
             <div>&#8942;</div>
