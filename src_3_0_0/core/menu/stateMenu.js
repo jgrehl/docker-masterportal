@@ -1,4 +1,4 @@
-import Folder from "./folder/components/Folder.vue";
+import Folder from "./folder/components/MenuFolder.vue";
 /**
  * User type definition
  * @typedef {Object} menu
