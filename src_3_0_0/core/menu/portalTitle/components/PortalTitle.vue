@@ -1,12 +1,31 @@
 <script>
-import {mapGetters} from "vuex";
 
 export default {
     name: "PortalTitle",
-    computed: {
-        ...mapGetters("PortalTitle", ["title", "logo", "link", "toolTip"])
+    props: {
+        /** portal name */
+        title: {
+            type: String,
+            default: ""
+        },
+        /** Path to an external image file */
+        logo: {
+            type: String,
+            default: ""
+        },
+        /** URL of an external website to link to */
+        link: {
+            type: String,
+            default: ""
+        },
+        /** Shown on hovering the portal logo */
+        toolTip: {
+            type: String,
+            default: ""
+        }
     },
-
+    computed: {
+    },
     created () {
         // const myBus = Backbone.Events;
         //
@@ -99,32 +118,31 @@ export default {
 </script>
 
 <template>
-    <h1>THIS IS PORTALTITLE!!!</h1>
-<!--    <div-->
-<!--        v-if="title !== '' || logo !== '' || link !== '' || toolTip !== ''"-->
-<!--        class="portal-title"-->
-<!--    >-->
-<!--        <a-->
-<!--            :href="link"-->
-<!--            target="_blank"-->
-<!--            :data-bs-toggle="title"-->
-<!--            data-bs-placement="bottom"-->
-<!--            :title="toolTip"-->
-<!--            class="tabable"-->
-<!--        >-->
+    <div
+        v-if="title !== '' || logo !== '' || link !== '' || toolTip !== ''"
+        class="portal-title"
+    >
+        <a
+            :href="link"
+            target="_blank"
+            :data-bs-toggle="title"
+            data-bs-placement="bottom"
+            :title="toolTip"
+            class="tabable"
+        >
 
-<!--            <img-->
-<!--                v-if="logo !== ''"-->
-<!--                id="logo"-->
-<!--                :src="logo"-->
-<!--                :alt="title"-->
-<!--            >-->
-<!--            <h1-->
-<!--                id="title-text"-->
-<!--                v-html="title"-->
-<!--            />-->
-<!--        </a>-->
-<!--    </div>-->
+            <img
+                v-if="logo !== ''"
+                id="logo"
+                :src="logo"
+                :alt="title"
+            >
+            <h1
+                id="title-text"
+                v-html="title"
+            />
+        </a>
+    </div>
 </template>
 
 <style lang="scss" scoped>
