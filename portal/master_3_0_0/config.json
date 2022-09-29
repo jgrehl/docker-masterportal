@@ -25,6 +25,9 @@
         "fullScreen": true
       }
     },
+    "menu": {
+      "initiallyOpen": true
+    },
     "portalTitle": {
       "title": "Master",
       "logo": "https://geodienste.hamburg.de/lgv-config/img/hh-logo.png",
