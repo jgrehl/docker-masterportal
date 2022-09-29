@@ -1,5 +1,7 @@
 <script>
 
+import {mapGetters, mapMutations} from "vuex";
+
 export default {
     name: "MenuNavigation",
     data () {
@@ -8,23 +10,24 @@ export default {
         };
     },
     computed: {
+        ...mapGetters("MenuNavigation", ["lastEntry"])
     },
-    mounted () {
-    },
+    // mounted () {
+    // },
     methods: {
-        addEntry (componenentKey) {
-            console.log(componenentKey)
-            this.entries.push(componenentKey);
-        }
+        ...mapMutations("MenuNavigation", ["addEntry", "removeLastEntry"])
     }
 };
 </script>
 
 <template>
     <div>
-        <p v-if="entries">
-            Nav: {{ entries[entries.length - 1] }}
-        </p>
+        <a
+            v-if="lastEntry"
+            @click="removeLastEntry"
+        >
+            &#60; {{ lastEntry }}
+        </a>
     </div>
 </template>
 
