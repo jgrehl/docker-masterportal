@@ -1,7 +1,7 @@
 <script>
 
 export default {
-    name: "Folder",
+    name: "MenuFolder",
     props: {
         /** title of the folder */
         title: {
