@@ -1,43 +1,64 @@
 <script>
 import {mapGetters} from "vuex";
 import PortalTitle from "./portalTitle/components/PortalTitle.vue";
+import MenuNavigation from "./navigation/components/MenuNavigation.vue";
 import ResizeHandle from "../../sharedComponents/ResizeHandle.vue";
 
 export default {
     name: "MenuContainer",
     components: {
         PortalTitle,
+        MenuNavigation,
         ResizeHandle
     },
     data () {
         return {
-            comps: []
+            menuItems: [],
+            activeComp: null
         };
     },
     computed: {
         ...mapGetters("Menu", ["componentMap"]),
-        ...mapGetters(["allConfigsLoaded", "portalConfig"])
-    },
-    watch: {
-        allConfigsLoaded (value) {
-            if (value) {
-                this.comps = [];
-                Object
-                    .keys(this.portalConfig)
-                    .forEach(key => {
-                        if (this.componentMap[key]) {
-                            this.comps.push({
-                                component: this.componentMap[key],
-                                props: typeof this.portalConfig[key] === "object" ? this.portalConfig[key] : {},
-                                key
-                            });
-                        }
-                    });
+        ...mapGetters(["portalConfig"]),
+        activeComponent: {
+            get () {
+                return this.activeComp;
+            },
+            set (value) {
+                this.activeComp = value;
             }
         }
     },
+    // watch: {
+    //     allConfigsLoaded (value) {
+    //         if (value) {
+    //             this.menuItems = [];
+    //
+    //         }
+    //     }
+    // },
     mounted () {
-        // console.log(this.comps)
+        this.loadMenuItems();
+    },
+    methods: {
+        loadMenuItems () {
+            Object
+                .keys(this.portalConfig)
+                .forEach(key => {
+                    if (this.componentMap[key] && typeof this.portalConfig[key] === "object" && this.portalConfig[key].title) {
+                        this.menuItems.push({
+                            component: this.componentMap[key],
+                            props: this.portalConfig[key],
+                            key
+                        });
+                    }
+                });
+        },
+        activateMenuItem (compKey) {
+            this.activeComponent = this.menuItems.find(menuItem => menuItem.key === compKey);
+            this.$refs.menuNavigation.addEntry(this.activeComponent.props.title);
+
+        }
     }
 };
 </script>
@@ -52,7 +73,10 @@ export default {
         data-bs-backdrop="false"
     >
         <div class="offcanvas-header">
-            <PortalTitle />
+            <PortalTitle
+                v-if="portalConfig.portalTitle"
+                v-bind="portalConfig.portalTitle"
+            />
             <button
                 type="button"
                 class="btn-close text-reset"
@@ -61,15 +85,22 @@ export default {
             />
         </div>
         <div class="offcanvas-body">
-            <template
-                v-for="(comp) in comps"
-            >
-                <component
-                    :is="comp.component"
+            <MenuNavigation ref="menuNavigation" />
+
+            <div v-if="!activeComponent">
+                <a
+                    v-for="comp in menuItems"
                     :key="comp.key"
-                    v-bind="comp.props"
-                />
-            </template>
+                    @click="activateMenuItem(comp.key)"
+                >
+                    {{ comp.props.title }}
+                </a>
+            </div>
+            <component
+                :is="activeComponent.component"
+                v-bind="activeComponent.props"
+                v-if="activeComponent"
+            />
         </div>
         <ResizeHandle
             id="menuContainerHandle"
