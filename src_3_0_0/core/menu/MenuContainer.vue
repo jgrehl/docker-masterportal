@@ -81,6 +81,8 @@ export default {
             <MenuNavigation ref="menuNavigation" />
 
             <div v-if="!lastEntry">
+                <!-- TODO: ESLint: Visible, non-interactive elements with click handlers must have at least one keyboard listener.(vuejs-accessibility/click-events-have-key-events) -->
+                <!-- eslint-disable-next-line -->
                 <a
                     v-for="comp in menuItems"
                     :key="comp.key"
