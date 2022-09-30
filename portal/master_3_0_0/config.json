@@ -11,9 +11,8 @@
     "controls": {
       "fullScreen": true,
       "backForward": true,
-      "button3d": {
-        "hiddenMobile": false,
-        "menuControl": true
+      "expandable": {
+        "button3d": true
       }
     }
   },
