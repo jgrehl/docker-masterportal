@@ -6,10 +6,10 @@ export default {
      * @param {String} name name of control in config.json
      * @param {Object} control Vue Component
      * @param {Boolean} [hiddenMobile=false] whether component is visible in mobile resolution
-     * @param {Boolean} [menuControls=false] whether component is to be shown in the extended menu
+     * @param {Boolean} [expandableControls=false] whether component is to be shown in the extended expandable
      * @returns {void}
      */
-    registerControl (state, {name, control, hiddenMobile = false, menuControls = false}) {
+    registerControl (state, {name, control, hiddenMobile = false, expandableControls = false}) {
         state.componentMap = {
             ...state.componentMap,
             [name]: control
@@ -20,9 +20,9 @@ export default {
                 name
             ];
         }
-        if (menuControls) {
-            state.menuControls = [
-                ...state.menuControls,
+        if (expandableControls) {
+            state.expandableControls = [
+                ...state.expandableControls,
                 name
             ];
         }
@@ -41,6 +41,6 @@ export default {
 
         state.componentMap = nextMap;
         state.hiddenMobile = state.mobileHiddenControls.filter(s => s !== name);
-        state.menuControls = state.menuControls.filter(s => s !== name);
+        state.expandableControls = state.expandableControls.filter(s => s !== name);
     }
 };
