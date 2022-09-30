@@ -8,69 +8,26 @@ export default {
     name: "ControlBar",
     data () {
         return {
-            categories: [
-                {categoryName: "sidebar"},
-                {categoryName: "menu"}
-            ],
-            activatedMenu: false
+            activatedMenu: false,
+            categorizedControls: {
+                sidebar: [],
+                menu: []
+            }
         };
     },
     computed: {
         ...mapGetters(["controlsConfig", "isMobile", "uiStyle"]),
-        ...mapGetters("Controls", ["componentMap", "mobileHiddenControls", "menuControls"]),
-        /** @returns {Object} contains controls to-be-rendered sorted by placement */
-        categorizedControls () {
-            const categorizedControls = {
-                sidebar: [],
-                menu: []
-            };
-
-            this.$controlAddons?.forEach(controlName => {
-                const addonControlConfig = this.controlsConfig[controlName];
-
-                if (addonControlConfig) {
-                    if (addonControlConfig.hiddenMobile) {
-                        this.mobileHiddenControls.push(controlName);
-                    }
-                    if (addonControlConfig.menuControl) {
-                        this.menuControls.push(controlName);
-                    }
-                }
-            }, this);
-
-            Object
-                .keys(this.controlsConfig)
-                .filter(key => this.controlsConfig[key])
-                .map(key => {
-                    if (this.componentMap[key]) {
-                        return {
-                            component: this.componentMap[key],
-                            props: typeof this.controlsConfig[key] === "object" ? this.controlsConfig[key] : {},
-                            key
-                        };
-                    }
-                    return key;
-                })
-                .filter(x => x !== "mousePosition") // "mousePosition" is currently handled in footer
-                .forEach(c => {
-                    if (this.menuControls.includes(c.key) || this.controlsConfig[c.key].menuControl === true) {
-                        categorizedControls.menu.push(c);
-                        this.menuControls.push(c.key);
-                        if (this.controlsConfig[c.key].hiddenMobile === true) {
-                            this.mobileHiddenControls.push(c.key);
-                        }
-                    }
-                    else {
-                        // defaulting to sidebar
-                        categorizedControls.sidebar.push(c);
-                        if (this.controlsConfig[c.key].hiddenMobile === true) {
-                            this.mobileHiddenControls.push(c.key);
-                        }
-                    }
-                });
-
-            return categorizedControls;
+        ...mapGetters("Controls", ["componentMap", "mobileHiddenControls", "menuControls"])
+    },
+    mounted () {
+        if (this.controlsConfig.expandable) {
+            Object.keys(this.controlsConfig.expandable).forEach(control => {
+                this.menuControls.push(control);
+            });
+            this.prepareControls(this.controlsConfig.expandable);
+            delete this.controlsConfig.expandable;
         }
+        this.prepareControls(this.controlsConfig);
     },
     methods: {
         /**
@@ -88,7 +45,52 @@ export default {
         },
         toggleMenu () {
             this.activatedMenu = !this.activatedMenu;
+        },
+        prepareControls (configuredControls) {
+            this.$controlAddons?.forEach(controlName => {
+                const addonControlConfig = configuredControls[controlName];
+
+                if (addonControlConfig) {
+                    if (addonControlConfig.hiddenMobile) {
+                        this.mobileHiddenControls.push(controlName);
+                    }
+                    if (addonControlConfig.menuControl) {
+                        this.menuControls.push(controlName);
+                    }
+                }
+            }, this);
+
+            Object
+                .keys(configuredControls)
+                .filter(key => configuredControls[key])
+                .map(key => {
+                    if (this.componentMap[key]) {
+                        return {
+                            component: this.componentMap[key],
+                            props: typeof configuredControls[key] === "object" ? configuredControls[key] : {},
+                            key
+                        };
+                    }
+                    return key;
+                })
+                .filter(x => x !== "mousePosition") // "mousePosition" is currently handled in footer
+                .forEach(c => {
+                    if (this.menuControls.includes(c.key)) {
+                        this.categorizedControls.menu.push(c);
+                        if (configuredControls[c.key].hiddenMobile === true) {
+                            this.mobileHiddenControls.push(c.key);
+                        }
+                    }
+                    else {
+                        // defaulting to sidebar
+                        this.categorizedControls.sidebar.push(c);
+                        if (configuredControls[c.key].hiddenMobile === true) {
+                            this.mobileHiddenControls.push(c.key);
+                        }
+                    }
+                });
         }
+
     }
 };
 </script>
@@ -111,7 +113,7 @@ export default {
                 v-bind="control.props"
             />
         </div>
-        <div v-if="menuControls.length >= 1 && hiddenMobileIsMenu">
+        <div v-if="menuControls.length >= 1">
             <hr>
             <div
                 class="btn-group-vertical"
