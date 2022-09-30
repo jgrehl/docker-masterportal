@@ -35,7 +35,7 @@ describe("src_3_0_0/modules/controls/mutationsControls.js", () => {
                         name: {id: "controlId"}
                     },
                     mobileHiddenControls: [],
-                    menuControls: []
+                    expandableControls: []
                 },
                 name = "name";
 
