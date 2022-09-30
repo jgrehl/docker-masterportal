@@ -8,21 +8,21 @@ export default {
     name: "ControlBar",
     data () {
         return {
-            activatedMenu: false,
+            activatedExpandable: false,
             categorizedControls: {
                 sidebar: [],
-                menu: []
+                expandable: []
             }
         };
     },
     computed: {
         ...mapGetters(["controlsConfig", "isMobile", "uiStyle"]),
-        ...mapGetters("Controls", ["componentMap", "mobileHiddenControls", "menuControls"])
+        ...mapGetters("Controls", ["componentMap", "mobileHiddenControls", "expandableControls"])
     },
     mounted () {
         if (this.controlsConfig.expandable) {
             Object.keys(this.controlsConfig.expandable).forEach(control => {
-                this.menuControls.push(control);
+                this.expandableControls.push(control);
             });
             this.prepareControls(this.controlsConfig.expandable);
             delete this.controlsConfig.expandable;
@@ -37,14 +37,14 @@ export default {
         hiddenMobile (componentName) {
             return this.mobileHiddenControls.includes(componentName);
         },
-        hiddenMobileIsMenu () {
-            return this.menuControls.every(element => this.mobileHiddenControls.includes(element));
+        hiddenMobileIsExpandable () {
+            return this.expandableControls.every(element => this.mobileHiddenControls.includes(element));
         },
         isSimpleStyle () {
             return this.uiStyle === "SIMPLE";
         },
-        toggleMenu () {
-            this.activatedMenu = !this.activatedMenu;
+        toggleExpandable () {
+            this.activatedExpandable = !this.activatedExpandable;
         },
         prepareControls (configuredControls) {
             this.$controlAddons?.forEach(controlName => {
@@ -54,8 +54,8 @@ export default {
                     if (addonControlConfig.hiddenMobile) {
                         this.mobileHiddenControls.push(controlName);
                     }
-                    if (addonControlConfig.menuControl) {
-                        this.menuControls.push(controlName);
+                    if (addonControlConfig.expandableControl) {
+                        this.expandableControls.push(controlName);
                     }
                 }
             }, this);
@@ -75,8 +75,8 @@ export default {
                 })
                 .filter(x => x !== "mousePosition") // "mousePosition" is currently handled in footer
                 .forEach(c => {
-                    if (this.menuControls.includes(c.key)) {
-                        this.categorizedControls.menu.push(c);
+                    if (this.expandableControls.includes(c.key)) {
+                        this.categorizedControls.expandable.push(c);
                         if (configuredControls[c.key].hiddenMobile === true) {
                             this.mobileHiddenControls.push(c.key);
                         }
@@ -113,15 +113,15 @@ export default {
                 v-bind="control.props"
             />
         </div>
-        <div v-if="menuControls.length >= 1">
+        <div v-if="expandableControls.length >= 1">
             <hr>
             <div
                 class="btn-group-vertical"
                 role="group"
             >
-                <div v-if="activatedMenu">
+                <div v-if="activatedExpandable">
                     <div
-                        v-for="(control, index) in categorizedControls['menu']"
+                        v-for="(control, index) in categorizedControls['expandable']"
                         :key="index"
                     >
                         <component
@@ -136,8 +136,8 @@ export default {
                 </div>
                 <button
                     type="button"
-                    class="control-icon bootstrap-icon my-2 standalone"
-                    @click="toggleMenu"
+                    class="control-icon-controls bootstrap-icon my-2 control-button-controls"
+                    @click="toggleExpandable"
                 >
                     <i class="bi-three-dots" />
                 </button>

@@ -51,7 +51,7 @@ export default {
     <button
         type="button"
         :tabindex="disabled ? '-1' : '0'"
-        :class="['control-icon', 'bootstrap-icon', 'btn', 'my-2', 'standalone']"
+        :class="['control-icon-controls', 'bootstrap-icon', 'btn', 'my-2', 'control-button-controls']"
         :title="title"
         :disabled="disabled"
         @click.stop="onClick"
@@ -74,7 +74,7 @@ export default {
 <style lang="scss">
     @import "~variables";
 
-    .standalone {
+    .control-button-controls {
         display: block;
         text-align: center;
         top: auto;
@@ -84,7 +84,7 @@ export default {
         width: $icon_length;
     }
 
-    .control-icon {
+    .control-icon-controls {
         background-color: $primary;
         color: $black;
 
