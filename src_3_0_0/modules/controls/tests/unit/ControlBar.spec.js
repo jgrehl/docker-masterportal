@@ -30,7 +30,7 @@ describe("src_3_0_0/modules/controls/ControlBar.vue", () => {
                         mobileHiddenControls: () => {
                             return ["fullScreen"];
                         },
-                        menuControls: () => {
+                        expandableControls: () => {
                             return ["button3d"];
                         }
                     }
@@ -53,6 +53,6 @@ describe("src_3_0_0/modules/controls/ControlBar.vue", () => {
     it("renders the button", () => {
         const wrapper = mount(ControlBar, {store, localVue});
 
-        expect(wrapper.find(".control-icon").exists()).to.be.true;
+        expect(wrapper.find(".control-icon-controls").exists()).to.be.true;
     });
 });
