@@ -738,6 +738,19 @@ Configuration of layerInformation.
 |backForward|no|**[backForward](#markdown-header-portalconfigcontrolsbackforward)**|false|Shows buttons to jump to previous and next map views.|false|
 |startTool|no|**[startTool](#markdown-header-portalconfigcontrolsbackforward)**|false|Displays buttons for the configured tools. These can be used to open and close the respective tools.|false|
 
+Controls can be configured to be expandable so they will not initially show up in the sidebar but if you click the button with the three dots. You need to add the object "expandable" to the controls configuration.
+
+**Example**
+```json
+"controls": {
+      "fullScreen": true,
+      "backForward": true,
+      "expandable": {
+        "button3d": true
+      }
+    }
+```
+
 ***
 
 #### Portalconfig.controls.attributions
