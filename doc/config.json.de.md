@@ -711,6 +711,19 @@ Konfiguration der layerInformation.
 |backForward|nein|**[backForward](#markdown-header-portalconfigcontrolsbackforward)**|false|Zeigt Buttons zur Steuerung der letzten und nächsten Kartenansichten an.|false|
 |startTool|nein|**[startTool](#markdown-header-portalconfigcontrolsbackforward)**|false|Zeigt Buttons für die konfigurierten Werkezeuge an. Über diese lassen sich die jeweiligen Werkzeuge öffnen und schließen.|false|
 
+Controls können in der config.json in die Ebene "expandable" verschachtelt werden und sind somit nicht mehr in der Leiste an der Seite, sondern über den Knopf mit den drei Punkten aufklappbar.
+
+**Beispiel**
+```json
+"controls": {
+      "fullScreen": true,
+      "backForward": true,
+      "expandable": {
+        "button3d": true
+      }
+    }
+```
+
 ***
 
 #### Portalconfig.controls.attributions
