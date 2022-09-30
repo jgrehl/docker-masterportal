@@ -14,7 +14,7 @@
   - 'layerIDsToStyle' (moved from config.js) only for tree type 'auto'
   - 'categories': only for tree type 'auto', contains categories in datasets of layers. Tree is structured by them.
 - the attribute 'cache' on the layer is no longer taken into account with tree.type 'auto
-- controls: a control can only be configured in config.json as "menuControl". "bottomControl" is not longer supported. (ToDo: add to documentation)
+- controls: a control can only be configured in config.json as "expandable". "bottomControl" is not longer supported.
 
 ### Added
 - The following NPM package was added:
