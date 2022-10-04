@@ -1,5 +1,5 @@
 <script>
-import {mapGetters, mapMutations} from "vuex";
+import {mapGetters, mapMutations, mapActions} from "vuex";
 import PortalTitle from "./portalTitle/components/PortalTitle.vue";
 import MenuNavigation from "./navigation/components/MenuNavigation.vue";
 import ResizeHandle from "../../sharedComponents/ResizeHandle.vue";
@@ -11,17 +11,12 @@ export default {
         MenuNavigation,
         ResizeHandle
     },
-    data () {
-        return {
-            menuItems: []
-        };
-    },
     computed: {
-        ...mapGetters("Menu", ["componentMap", "configuration"]),
-        ...mapGetters("MenuNavigation", ["lastEntry"]),
+        ...mapGetters("Menu", ["componentMap", "configuration", "menuItems"]),
+        ...mapGetters("MenuNavigation", {lastNavigationEntry: "lastEntry"}),
         ...mapGetters(["isMobile", "portalConfig"]),
         activeMenuItem () {
-            return this.menuItems.find(menuItem => menuItem.key === this.lastEntry);
+            return this.menuItems.find(menuItem => menuItem.key === this.lastNavigationEntry);
         }
     },
     // watch: {
@@ -30,20 +25,8 @@ export default {
         this.loadMenuItems();
     },
     methods: {
-        ...mapMutations("MenuNavigation", ["removeLastEntry", "addEntry"]),
-        loadMenuItems () {
-            Object
-                .keys(this.configuration)
-                .forEach(key => {
-                    if (this.componentMap[key] && typeof this.configuration[key] === "object" && this.configuration[key].title) {
-                        this.menuItems.push({
-                            component: this.componentMap[key],
-                            props: this.configuration[key],
-                            key
-                        });
-                    }
-                });
-        },
+        ...mapMutations("MenuNavigation", {addNavigationEntry: "addEntry"}),
+        ...mapActions("Menu", ["loadMenuItems"]),
         removeShowClass () {
             document.getElementById("menu-offcanvas")?.classList.remove("show");
         }
@@ -80,13 +63,13 @@ export default {
         <div class="offcanvas-body">
             <MenuNavigation ref="menuNavigation" />
 
-            <div v-if="!lastEntry">
+            <div v-if="!lastNavigationEntry">
                 <!-- TODO: ESLint: Visible, non-interactive elements with click handlers must have at least one keyboard listener.(vuejs-accessibility/click-events-have-key-events) -->
                 <!-- eslint-disable-next-line -->
                 <a
                     v-for="comp in menuItems"
                     :key="comp.key"
-                    @click="addEntry(comp.key)"
+                    @click="addNavigationEntry(comp.key)"
                 >
                     {{ comp.props.title }}
                 </a>
@@ -94,7 +77,7 @@ export default {
             <component
                 :is="activeMenuItem.component"
                 v-bind="activeMenuItem.props"
-                v-if="lastEntry"
+                v-if="lastNavigationEntry"
             />
         </div>
         <ResizeHandle

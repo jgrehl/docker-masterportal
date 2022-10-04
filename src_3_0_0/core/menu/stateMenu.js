@@ -8,5 +8,6 @@ import Folder from "./folder/components/MenuFolder.vue";
 export default {
     componentMap: {
         folder: Folder
-    }
+    },
+    menuItems: []
 };
