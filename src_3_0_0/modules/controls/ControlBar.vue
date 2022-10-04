@@ -46,6 +46,11 @@ export default {
         toggleExpandable () {
             this.activatedExpandable = !this.activatedExpandable;
         },
+        /**
+         * prepares the configured tools to be the right component form
+         * @param {Object} configuredControls controls as configured in config.json
+         * @returns {void}
+         */
         prepareControls (configuredControls) {
             this.$controlAddons?.forEach(controlName => {
                 const addonControlConfig = configuredControls[controlName];
@@ -155,5 +160,67 @@ export default {
         border-radius: 25px;
         position: absolute;
         bottom: 0;
+    }
+
+     .control-button-controls {
+        display: block;
+        text-align: center;
+        top: auto;
+
+        font-size: calc(#{$icon_length} - 0.35 * #{$icon_length});
+        height: $icon_length;
+        width: $icon_length;
+    }
+
+    .control-icon-controls {
+        background-color: $primary;
+        color: $black;
+
+        pointer-events: all;
+        cursor: pointer;
+        border: solid $white 1px;
+        border-radius: 50%;
+
+        /* position icon in center of button */
+        > i {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            // adjust line-height to use same height as ::before Element
+            line-height: 0;
+        }
+
+        > p {
+            color: $black;
+            font-family: $font_family_accent;
+            font-size: 17px;
+            padding: .25rem 0 0 0
+        }
+
+        /* pseudo-class state effects */
+        &:hover {
+            background-color: darken($primary, 10%);
+            border-color: $white;
+        }
+        &:focus {
+            background-color: darken($primary, 15%);
+            outline: 1px solid darken($primary, 15%);
+            border-color: $white;
+        }
+        &:checked {
+            border-color: $white;
+        }
+        &:active {
+            background-color: darken($primary, 5%);
+            border-color: $white;
+        }
+
+        &:disabled {
+            background-color: $light-grey;
+            color: $dark_grey;
+            cursor: default;
+            border-color: $white;
+        }
     }
 </style>
