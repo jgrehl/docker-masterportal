@@ -71,7 +71,7 @@ export default {
     </button>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
     @import "~variables";
 
     .control-button-controls {
