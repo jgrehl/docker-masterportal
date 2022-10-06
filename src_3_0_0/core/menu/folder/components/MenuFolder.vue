@@ -1,7 +1,13 @@
 <script>
 
+import {mapMutations} from "vuex";
+import MenuItems from "../../menuItems/components/MenuItems.vue";
+
 export default {
     name: "MenuFolder",
+    components: {
+        MenuItems
+    },
     props: {
         /** title of the folder */
         title: {
@@ -27,15 +33,17 @@ export default {
     computed: {
     },
     methods: {
+        ...mapMutations("MenuNavigation", {addNavigationEntry: "addEntry"})
     }
 };
 </script>
 
 <template>
     <div>
-        <p>{{ title }}</p>
+        <h4>{{ title }}</h4>
+        <MenuItems :items="children" />
         <div>
-            Hi, ich bin Aktiv!
+            {{ title }} in da house!
         </div>
     </div>
 </template>
