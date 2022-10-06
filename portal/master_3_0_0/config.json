@@ -27,8 +27,77 @@
     },
     "menu": {
       "initiallyOpen": true,
-      "folder": {
-        "title": "firstFolder"
+      "tools1": {
+        "title": "folder1",
+        "icon": "",
+        "children": {
+          "info": {
+            "title": "folder1_1",
+            "icon": "",
+            "children": {
+              "blablub": {
+                "title": "folder1_1_1",
+                "icon": "",
+                "children": {
+                }
+              }
+            }
+          },
+          "info2": {
+            "title": "folder1_2",
+            "icon": "",
+            "children": {
+              "blablub": {
+                "title": "folder1_2_1",
+                "icon": "",
+                "children": {
+                }
+              }
+            }
+          }
+        }
+      },
+      "tools2": {
+        "title": "folder2",
+        "icon": "",
+        "children": {
+          "info": {
+            "title": "folder2_1",
+            "icon": "",
+            "children": {
+              "genericFolder": {
+                "title": "folder2_1_1",
+                "icon": "",
+                "children": {
+                }
+              },
+              "genericFolder2": {
+                "title": "folder2_1_2",
+                "icon": "",
+                "children": {
+                }
+              }
+            }
+          },
+          "info2": {
+            "title": "folder2_2",
+            "icon": "",
+            "children": {
+              "genericFolder": {
+                "title": "folder2_2_1",
+                "icon": "",
+                "children": {
+                }
+              },
+              "genericFolder2": {
+                "title": "folder2_2_2",
+                "icon": "",
+                "children": {
+                }
+              }
+            }
+          }
+        }
       }
     },
     "portalTitle": {
