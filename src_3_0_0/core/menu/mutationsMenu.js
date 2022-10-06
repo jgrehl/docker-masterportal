@@ -1,5 +1,5 @@
 export default {
-    addMenuItem (state, item) {
-        state.menuItems.push(item);
+    setMenuItems (state, items) {
+        state.menuItems = items;
     }
 };
