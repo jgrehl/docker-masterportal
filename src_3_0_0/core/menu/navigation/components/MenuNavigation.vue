@@ -10,10 +10,8 @@ export default {
         };
     },
     computed: {
-        ...mapGetters("MenuNavigation", ["lastEntry"])
+        ...mapGetters("MenuNavigation", ["previousEntry", "lastEntry"])
     },
-    // mounted () {
-    // },
     methods: {
         ...mapMutations("MenuNavigation", ["addEntry", "removeLastEntry"])
     }
@@ -22,13 +20,15 @@ export default {
 
 <template>
     <div>
-        <!-- TODO: ESLint: Visible, non-interactive elements with click handlers must have at least one keyboard listener.(vuejs-accessibility/click-events-have-key-events) -->
-        <!-- eslint-disable-next-line -->
         <a
             v-if="lastEntry"
+            href="#"
             @click="removeLastEntry"
+            @keypress="removeLastEntry"
         >
-            &#60; {{ lastEntry }}
+            <h5>
+                &#60; {{ lastEntry && !previousEntry ? "Menu" : previousEntry.props.title }}
+            </h5>
         </a>
     </div>
 </template>
