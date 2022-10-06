@@ -3,24 +3,21 @@ import {mapGetters, mapMutations, mapActions} from "vuex";
 import PortalTitle from "./portalTitle/components/PortalTitle.vue";
 import MenuNavigation from "./navigation/components/MenuNavigation.vue";
 import ResizeHandle from "../../sharedComponents/ResizeHandle.vue";
+import MenuItems from "./menuItems/components/MenuItems.vue";
 
 export default {
     name: "MenuContainer",
     components: {
         PortalTitle,
         MenuNavigation,
-        ResizeHandle
+        ResizeHandle,
+        MenuItems
     },
     computed: {
-        ...mapGetters("Menu", ["componentMap", "configuration", "menuItems"]),
+        ...mapGetters("Menu", ["configuration", "menuItems"]),
         ...mapGetters("MenuNavigation", {lastNavigationEntry: "lastEntry"}),
-        ...mapGetters(["isMobile", "portalConfig"]),
-        activeMenuItem () {
-            return this.menuItems.find(menuItem => menuItem.key === this.lastNavigationEntry);
-        }
+        ...mapGetters(["isMobile", "portalConfig"])
     },
-    // watch: {
-    // },
     mounted () {
         this.loadMenuItems();
     },
@@ -61,22 +58,16 @@ export default {
             />
         </div>
         <div class="offcanvas-body">
-            <MenuNavigation ref="menuNavigation" />
+            <MenuNavigation />
 
-            <div v-if="!lastNavigationEntry">
-                <!-- TODO: ESLint: Visible, non-interactive elements with click handlers must have at least one keyboard listener.(vuejs-accessibility/click-events-have-key-events) -->
-                <!-- eslint-disable-next-line -->
-                <a
-                    v-for="comp in menuItems"
-                    :key="comp.key"
-                    @click="addNavigationEntry(comp.key)"
-                >
-                    {{ comp.props.title }}
-                </a>
-            </div>
+            <MenuItems
+                v-if="!lastNavigationEntry"
+                :items="menuItems"
+            />
+
             <component
-                :is="activeMenuItem.component"
-                v-bind="activeMenuItem.props"
+                :is="lastNavigationEntry.component"
+                v-bind="lastNavigationEntry.props"
                 v-if="lastNavigationEntry"
             />
         </div>
