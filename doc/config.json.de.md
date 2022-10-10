@@ -59,9 +59,10 @@ Konfiguration der Themenbaumes
 |metaIDsToIgnore|nein|String[]||Alle in der `services.json` gefundenen Layer, die diesen Meta-IDs entsprechen, werden nicht im Baum angezeigt. Nur für den Baum-Typ `auto`.|false|
 |metaIDsToMerge|nein|String[]||Alle in der `services.json` gefundenen Layer, die diesen Meta-IDs entsprechen, werden zu einer einzigen Layer im Baum zusammengeführt. Nur für den Baum-Typ `auto`.|true|
 |layerIDsToStyle|nein|**[layerIDsToStyle](#markdown-header-treelayeridstostyle)**[]||Spezielle Implementierung für einen HVV-Dienst (Hamburger Verkehrsbetriebe). Enthält Objekte zur Abfrage verschiedener Stile einer Layer-ID. Nur für den Baum-Typ `auto`.|true|
+|highlightedFeatures|nein|**[highlightedFeatures](#markdown-header-portalconfigtreehighlightedfeatures)**||Konfiguration zusätzlich zum Highlighting von Features.|false|
 
 
-**Example**
+**Beispiel**
 ```json
 {
     "tree": {
@@ -84,7 +85,20 @@ Konfiguration der Themenbaumes
     }
 }
 ```
+
+**Beispiel Highlighting**
+```
+#!json
+"tree":{
+    "highlightedFeatures": {
+        "active": true,
+        "layerName": "common:tree.selectedFeatures"
+    }
+},
+```
+
 ***
+
 ### Portalconfig.tree.layerIDsToStyle
 
 |Name|Required|Type|Default|Description|
@@ -94,7 +108,7 @@ Konfiguration der Themenbaumes
 |name|nein|String/String[]||Zu verwendender Name als String; wenn mehrere Namen verwendet werden sollen, werden sie in einem Array aufgelistet.|
 |legendUrl|nein|String/String[]||URL des Legendenbildes, das als String verwendet werden soll; wenn mehrere Legendenbilder verwendet werden sollen, werden ihre URLs in einem Array aufgeführt.|
 
-**Example:**
+**Beispiel**
 
 ```json
 {
@@ -109,7 +123,7 @@ Konfiguration der Themenbaumes
 }
 ```
 
-**Example**
+**Beispiel**
 ```json
 {
     "tree": {
@@ -132,7 +146,28 @@ Konfiguration der Themenbaumes
     }
 }
 ```
+
 ***
+
+#### Portalconfig.tree.highlightedFeatures
+Konfiguration zusätzlich zum Highlighting von Features. Wenn mit dem Werkzeug "Liste" oder "Features auswählen" mit "Auf dieses Feature zoomen" oder per Url-Parameter Features hervorgehoben werden, dann ist ein Layer mit diesen Features im Menü-Baum auswählbar.
+
+|Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
+|----|-------------|---|-------|------------|------|
+|active|nein|Boolean|false|Gibt an, ob dieses Feature aktiv ist.|false|
+|layerName|nein|String|"common:tree.selectedFeatures"|Name der erzeugten Layer mit den hervorgehobenen Features. Der Name enthält zusätzlich den Namen des Werkzeuges mit dem gearbeitet wurde.|true|
+
+**Beispiel**
+```
+#!json
+"highlightedFeatures": {
+    "active": false,
+    "layerName": "common:tree.selectedFeatures"
+},
+```
+
+***
+
 ### Portalconfig.searchBar
 Konfiguration der Searchbar
 
@@ -633,7 +668,6 @@ Konfiguration der Suche über die sichtbaren VectorLayer. Bei der Layerdefinitio
     "layerTypes": ["WFS", "GeoJSON"]
 }
 ```
-***
 
 #### Portalconfig.tree
 Konfiguration des Menü-Baums.
