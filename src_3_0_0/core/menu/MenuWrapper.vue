@@ -14,16 +14,12 @@ export default {
         MenuNavigation,
         PortalTitle
     },
-    data: () => ({additionalLeftNavigationPath: []}),
     computed: {
         ...mapGetters(["portalConfig"]),
         ...mapGetters("Menu", ["componentMap", "mainMenu", "secondaryMenu", "section"]),
         ...mapGetters("MenuNavigation", {lastNavigationPath: "lastEntry"}) // @todo: make navigation work for each side
     },
     methods: {
-        updateLeftNavigationPath (val) {
-            this.additionalLeftNavigationPath.push(val);
-        },
         getComponentFromPath () {
             return this.componentMap[this.getObjectFromPath().itemType];
         },
