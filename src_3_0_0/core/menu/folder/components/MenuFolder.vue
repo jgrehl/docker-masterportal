@@ -1,5 +1,4 @@
 <script>
-
 import MenuItems from "../../menuItems/components/MenuItems.vue";
 
 export default {
