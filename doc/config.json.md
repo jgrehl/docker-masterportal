@@ -52,6 +52,7 @@ The configuration options listed in the following table exist:
 |layerInformation|no|**[layerInformation](#markdown-header-portalconfiglayerInformation)**||Decides if to show individual attribute in Meta data of layer information|false|
 
 ***
+
 ### Portalconfig.tree
 Configuration of the topic selection tree
 
@@ -63,6 +64,7 @@ Configuration of the topic selection tree
 |metaIDsToIgnore|no|String[]||All `services.json` layers listed will not be shown in the layer tree. Only for tree-type `auto`.|false|
 |metaIDsToMerge|no|String[]||All layers found in the `services.json` regarding these meta IDs are merged to a single layer of the layer tree. Only for tree-type `auto`.|true|
 |layerIDsToStyle|no|**[layerIDsToStyle](#markdown-header-treelayeridstostyle)**[]||Special implementation for a HVV (Hamburg public transportation) service. Contains objects to request various styles of a layer id. Only for tree-type `auto`.|true|
+|highlightedFeatures|no|**[highlightedFeatures](#markdown-header-portalconfigtreehighlightedfeatures)**||Configuration in addition to feature highlighting.|false|
 
 **Example**
 ```json
@@ -88,7 +90,20 @@ Configuration of the topic selection tree
     }
 }
 ```
+
+**Example Highlighting**
+```
+#!json
+"tree":{
+    "highlightedFeatures": {
+        "active": true,
+        "layerName": "common:tree.selectedFeatures"
+    }
+},
+```
+
 ***
+
 ### Portalconfig.tree.layerIDsToStyle
 
 |Name|Required|Type|Default|Description|
@@ -138,7 +153,28 @@ Configuration of the topic selection tree
     }
 }
 ```
+
 ***
+
+#### Portalconfig.tree.highlightedFeatures
+Configuration in addition to highlighting features. If features are highlighted with the "List" or "Select Features" tool with "Zoom to this Feature" or via url parameter, then a layer with these features is selectable in the menu tree.
+
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|active|no|Boolean|false|Indicates whether this feature is active.|false|
+|layerName|no|String|"common:tree.selectedFeatures"|Name of the created layer with the highlighted features. The name also contains the name of the tool that was used.|true|
+
+**Example**
+```
+#!json
+"highlightedFeatures": {
+    "active": false,
+    "layerName": "common:tree.selectedFeatures"
+},
+```
+
+***
+
 ### Portalconfig.searchBar
 
 Search bar configuration.
@@ -661,9 +697,6 @@ Visible vector layer search configuration. For all vector layers supposed to be 
     }
 }
 ```
-***
-#### Portalconfig.tree
-Configuration of the menu tree.
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
