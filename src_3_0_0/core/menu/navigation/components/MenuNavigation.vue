@@ -1,5 +1,4 @@
 <script>
-
 import {mapGetters, mapMutations} from "vuex";
 
 export default {
