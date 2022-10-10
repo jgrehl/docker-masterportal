@@ -17,7 +17,6 @@ const menuGetters = {
         return null;
     },
     section: (_, getters) => path => {
-
         if (getters[path[0]]) {
             const section = idx(getters, path);
 
