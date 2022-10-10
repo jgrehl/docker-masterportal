@@ -27,7 +27,7 @@ export default {
             @keypress="removeLastEntry"
         >
             <h5>
-                &#60; {{ lastEntry && !previousEntry ? "Menu" : previousEntry.props.title }}
+                &#60; {{ lastEntry && !previousEntry ? "Menu" : previousEntry.props.name }}
             </h5>
         </a>
     </div>
