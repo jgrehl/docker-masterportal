@@ -6,6 +6,24 @@
 ## Known Issues
 
 ---
+
+## Unreleased - in development
+### __Breaking Changes__
+
+### Added
+- highlightFeaturesByAttribute: new isIn filter, offering the possibility to search for multiple values
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+#837: search and layerTree work on mobile again.
+
+---
+
 ## v2.26.0 - 2022-10-05
 ### __Breaking Changes__
 
