@@ -17,11 +17,10 @@ export default {
     data: () => ({additionalLeftNavigationPath: []}),
     computed: {
         ...mapGetters(["portalConfig"]),
-        ...mapGetters("Menu", ["componentMap", "mainMenu", "secondaryMenu"]),
+        ...mapGetters("Menu", ["componentMap", "mainMenu", "secondaryMenu", "section"]),
         ...mapGetters("MenuNavigation", {lastNavigationPath: "lastEntry"}) // @todo: make navigation work for each side
     },
     methods: {
-        ...mapGetters("Menu", ["section"]),
         updateLeftNavigationPath (val) {
             this.additionalLeftNavigationPath.push(val);
         },
@@ -29,7 +28,7 @@ export default {
             return this.componentMap[this.getObjectFromPath().itemType];
         },
         getObjectFromPath () {
-            return this.section()(this.lastNavigationPath);
+            return this.section(this.lastNavigationPath);
         }
     }
 };
