@@ -162,7 +162,7 @@ export default {
         bottom: 0;
     }
 
-     .control-button-controls {
+    .control-button-controls {
         display: block;
         text-align: center;
         top: auto;
