@@ -33,5 +33,4 @@ export default {
 
         commit("setBoundingBox", mapView.calculateExtent(map.getSize()));
     }
-
 };
