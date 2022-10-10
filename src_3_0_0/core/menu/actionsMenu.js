@@ -28,7 +28,7 @@ function buildMenuMatrix (getters, node) {
         .forEach(nodeKey => {
             const nodeObject = node[nodeKey];
 
-            if (typeof nodeObject === "object" && nodeObject.title) {
+            if (typeof nodeObject === "object" && nodeObject.name) {
                 const menuItem = {
                     props: nodeObject,
                     nodeKey
