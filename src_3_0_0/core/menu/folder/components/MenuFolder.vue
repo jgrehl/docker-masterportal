@@ -9,15 +9,10 @@ export default {
         MenuItems
     },
     props: {
-        /** title of the folder */
-        title: {
+        /** name of the folder */
+        name: {
             type: String,
             required: true
-        },
-        /** icon of the folder */
-        icon: {
-            type: String,
-            default: ""
         },
         /** child elements within the folder */
         children: {
@@ -40,10 +35,10 @@ export default {
 
 <template>
     <div>
-        <h4>{{ title }}</h4>
+        <h4>{{ name }}</h4>
         <MenuItems :items="children" />
         <div>
-            {{ title }} in da house!
+            {{ name }} in da house!
         </div>
     </div>
 </template>

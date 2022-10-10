@@ -12,6 +12,9 @@ export default {
         }
     },
     computed: {
+        iconClass () {
+            return this.iconName === "" || this.iconName.startsWith("bi-") ? this.iconName : `bi-${this.iconName}`;
+        }
     },
     methods: {
         ...mapMutations("MenuNavigation", {addNavigationEntry: "addEntry"})
@@ -33,7 +36,11 @@ export default {
                     class="nav-link"
                     href="#"
                 >
-                    {{ item.props.title }}
+                    <i
+                        v-if="item.props.icon !== ''"
+                        :class="item.props.icon"
+                    />
+                    {{ item.props.name }}
                 </a>
             </li>
         </ul>
