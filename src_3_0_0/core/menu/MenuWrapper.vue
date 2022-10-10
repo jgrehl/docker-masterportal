@@ -52,11 +52,11 @@ export default {
                     :path="lastNavigationPath"
                 />
                 <MenuSection
-                    v-for="(_,key) in mainMenu.sections"
+                    v-for="(_, key) in mainMenu.sections"
                     v-else
                     :key="key"
                     :section-index="key"
-                    :side="'mainMenu'"
+                    side="mainMenu"
                 />
             </template>
         </MenuContainer>
