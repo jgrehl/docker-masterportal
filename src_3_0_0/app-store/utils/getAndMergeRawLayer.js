@@ -58,6 +58,7 @@ function fillGroupLayer (layerConf) {
             if (objFromRawList !== null && objFromRawList !== undefined) {
                 return Object.assign(objFromRawList, childLayer);
             }
+            console.error("A layer of the group \"" + rawLayer.name + "\" with id: " + childLayer.id + " was not created. Id not contained in services.json.");
             return undefined;
         });
 
