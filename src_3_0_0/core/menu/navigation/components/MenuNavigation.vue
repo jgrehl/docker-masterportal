@@ -3,11 +3,6 @@ import {mapGetters, mapMutations} from "vuex";
 
 export default {
     name: "MenuNavigation",
-    data () {
-        return {
-            entries: []
-        };
-    },
     computed: {
         ...mapGetters("MenuNavigation", ["previousEntry", "lastEntry"])
     },
