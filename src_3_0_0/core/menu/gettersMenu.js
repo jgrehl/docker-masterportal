@@ -10,6 +10,13 @@ const menuGetters = {
         }
         return null;
     },
+    mainTitle (_, getters) {
+        return getters.mainMenu ? getters.mainMenu.title : null;
+    },
+    secondaryTitle (_, getters) {
+        return getters.secondaryMenu ? getters.secondaryMenu.title : null;
+
+    },
     secondaryMenu (_, __, ___, rootGetters) {
         if (rootGetters.loadedConfigs.configJson) {
             return rootGetters.portalConfig.secondaryMenu;
