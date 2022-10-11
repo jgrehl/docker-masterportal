@@ -14,17 +14,9 @@ export default {
         MenuNavigation,
         PortalTitle
     },
-    data: () => ({additionalLeftNavigationPath: []}),
     computed: {
-        ...mapGetters(["portalConfig"]),
-        ...mapGetters("Menu", ["componentMap", "mainMenu", "secondaryMenu"]),
+        ...mapGetters("Menu", ["mainMenu", "secondaryMenu"]),
         ...mapGetters("MenuNavigation", ["componentFromPath", "objectFromPath", "lastEntry"]) // @todo: make navigation work for each side
-    },
-    methods: {
-        ...mapGetters("Menu", ["section"]),
-        updateLeftNavigationPath (val) {
-            this.additionalLeftNavigationPath.push(val);
-        }
     }
 };
 </script>
@@ -51,11 +43,11 @@ export default {
                     :path="lastEntry"
                 />
                 <MenuSection
-                    v-for="(_,key) in mainMenu.sections"
+                    v-for="(_, key) in mainMenu.sections"
                     v-else
                     :key="key"
                     :section-index="key"
-                    :side="'mainMenu'"
+                    side="mainMenu"
                 />
             </template>
         </MenuContainer>
