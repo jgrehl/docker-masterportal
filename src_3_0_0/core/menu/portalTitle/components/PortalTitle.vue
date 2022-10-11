@@ -4,7 +4,7 @@ export default {
     name: "PortalTitle",
     props: {
         /** portal name */
-        title: {
+        text: {
             type: String,
             default: ""
         },
@@ -119,13 +119,13 @@ export default {
 
 <template>
     <div
-        v-if="title !== '' || logo !== '' || link !== '' || toolTip !== ''"
+        v-if="text !== '' || logo !== '' || link !== '' || toolTip !== ''"
         class="portal-title"
     >
         <a
             :href="link"
             target="_blank"
-            :data-bs-toggle="title"
+            :data-bs-toggle="text"
             data-bs-placement="bottom"
             :title="toolTip"
             class="tabable"
@@ -135,11 +135,11 @@ export default {
                 v-if="logo !== ''"
                 id="logo"
                 :src="logo"
-                :alt="title"
+                :alt="text"
             >
             <h1
                 id="title-text"
-                v-html="title"
+                v-html="text"
             />
         </a>
     </div>
