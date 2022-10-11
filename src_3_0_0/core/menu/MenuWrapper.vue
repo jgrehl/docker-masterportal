@@ -15,14 +15,10 @@ export default {
 
 <template>
     <div id="menu-offcanvas-wrapper">
-        <MenuContainer
-            v-if="mainMenu"
-            :class="mainMenu.initiallyOpen ? 'show' : ''"
-        />
+        <MenuContainer v-if="mainMenu" />
         <MenuContainer
             v-if="secondaryMenu"
             side="secondary"
-            :class="secondaryMenu.initiallyOpen ? 'show' : ''"
         />
     </div>
 </template>
