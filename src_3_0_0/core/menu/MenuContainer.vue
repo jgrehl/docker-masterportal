@@ -23,11 +23,6 @@ export default {
         handlePosition () {
             return this.side === "main" ? "r" : "l";
         }
-    },
-    methods: {
-        removeShowClass () {
-            document.getElementById("menu-offcanvas")?.classList.remove("show");
-        }
     }
 };
 </script>
