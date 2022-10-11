@@ -74,7 +74,7 @@ export default {
                 :min-width="0.1"
                 :max-width="0.5"
             >
-                <div>&#8942;</div>
+                &#8942;
             </ResizeHandle>
         </template>
     </div>
@@ -82,13 +82,10 @@ export default {
 
 <style lang="scss" scoped>
 .menu-container-handle {
+    display: flex;
     width: 12px;
-
-    & > div {
-        position: absolute;
-        top: 50%;
-        left: 4px;
-    }
+    align-items: center;
+    justify-content: center;
 }
 .mobile-container-handle {
     position: static;
