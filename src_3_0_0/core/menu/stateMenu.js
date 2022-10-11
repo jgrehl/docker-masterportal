@@ -9,9 +9,6 @@ import Folder from "./folder/components/MenuFolder.vue";
 
 export default {
     componentMap: {
-    },
-    identifyComponentByProperty: {
-        children: Folder
-    },
-    menuItems: []
+        folder: Folder
+    }
 };

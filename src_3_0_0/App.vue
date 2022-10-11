@@ -2,7 +2,7 @@
 import {mapGetters, mapActions} from "vuex";
 import ControlBar from "./modules/controls/ControlBar.vue";
 import ContainerItem from "./modules/container/ContainerItem.vue";
-import MenuContainer from "./core/menu/MenuContainer.vue";
+import MenuWrapper from "./core/menu/MenuWrapper.vue";
 import initializeLayers from "./core/layers/layerProcessor";
 import {initializeMaps} from "./core/maps/maps";
 import initializeModules from "./core/modules/moduleProcessor";
@@ -14,7 +14,7 @@ export default {
     components: {
         ControlBar,
         ContainerItem,
-        MenuContainer
+        MenuWrapper
     },
     computed: {
         ...mapGetters([
@@ -107,7 +107,7 @@ export default {
         id="masterportal-container"
         class="masterportal-container"
     >
-        <MenuContainer v-if="allConfigsLoaded" />
+        <MenuWrapper v-if="allConfigsLoaded" />
         <div
             id="map-wrapper"
         >
@@ -119,7 +119,7 @@ export default {
                 class="btn btn-primary bootstrap-icon"
                 type="button"
                 data-bs-toggle="offcanvas"
-                data-bs-target="#menu-offcanvas"
+                data-bs-target="#menu-offcanvas-start"
                 :aria-label="$t('common:menu.ariaLabelOpen')"
             >
                 <i class="bi-list" />
