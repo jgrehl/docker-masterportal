@@ -13,7 +13,7 @@ export default {
         ...mapGetters("MenuNavigation", ["previousEntry", "lastEntry"])
     },
     methods: {
-        ...mapMutations("MenuNavigation", ["addEntry", "removeLastEntry"])
+        ...mapMutations("MenuNavigation", ["removeLastEntry"])
     }
 };
 </script>
@@ -27,7 +27,8 @@ export default {
             @keypress="removeLastEntry"
         >
             <h5>
-                &#60; {{ lastEntry && !previousEntry ? "Menu" : previousEntry.props.name }}
+                <!-- @Todo: get object via path in previousEntry and show the title property-->
+                &#60; {{ lastEntry && !previousEntry ? "Menu" : previousEntry }}
             </h5>
         </a>
     </div>
