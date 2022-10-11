@@ -2,7 +2,7 @@
 import {mapGetters, mapActions} from "vuex";
 import ControlBar from "./modules/controls/ControlBar.vue";
 import ContainerItem from "./modules/container/ContainerItem.vue";
-import MenuWrapper from "./core/menu/MenuWrapper.vue";
+import MenuContainer from "./core/menu/MenuContainer.vue";
 import initializeLayers from "./core/layers/layerProcessor";
 import {initializeMaps} from "./core/maps/maps";
 import initializeModules from "./core/modules/moduleProcessor";
@@ -14,7 +14,7 @@ export default {
     components: {
         ControlBar,
         ContainerItem,
-        MenuWrapper
+        MenuContainer
     },
     computed: {
         ...mapGetters([
@@ -23,7 +23,8 @@ export default {
             "layerConfig",
             "portalConfig",
             "visibleLayerConfigs"
-        ])
+        ]),
+        ...mapGetters("Menu", ["mainMenu", "secondaryMenu"])
     },
     watch: {
         allConfigsLoaded (value) {
@@ -107,7 +108,7 @@ export default {
         id="masterportal-container"
         class="masterportal-container"
     >
-        <MenuWrapper v-if="allConfigsLoaded" />
+        <MenuContainer v-if="allConfigsLoaded && mainMenu" />
         <div
             id="map-wrapper"
         >
@@ -133,6 +134,10 @@ export default {
                 <ControlBar class="controls" />
             </div>
         </div>
+        <MenuContainer
+            v-if="allConfigsLoaded && secondaryMenu"
+            side="secondary"
+        />
     </div>
 </template>
 
