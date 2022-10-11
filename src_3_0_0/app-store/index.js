@@ -8,8 +8,9 @@ import actions from "./actions";
 
 import Controls from "../modules/controls/indexControls";
 import Maps from "../core/maps/store/indexMaps";
-import Menu from "../core/menu/store/indexMenu";
+import Menu from "../core/menu/indexMenu";
 import Modules from "../core/modules/store/indexModules";
+import PortalTitle from "../core/menu/portalTitle/store/indexPortalTitle";
 
 Vue.use(Vuex);
 
@@ -22,7 +23,8 @@ const store = new Vuex.Store({
         Controls: {...Controls},
         Maps,
         Menu,
-        Modules: {...Modules}
+        Modules: {...Modules},
+        PortalTitle
     }
 });
 
