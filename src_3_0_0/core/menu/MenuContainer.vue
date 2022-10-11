@@ -1,9 +1,11 @@
 <script>
 import {mapGetters} from "vuex";
+import PortalTitle from "./portalTitle/components/PortalTitle.vue";
 
 export default {
     name: "MenuContainer",
     components: {
+        PortalTitle
     },
     data () {
         return {
@@ -46,12 +48,7 @@ export default {
         aria-labelledby="offcanvasLabel"
     >
         <div class="offcanvas-header">
-            <h5
-                id="offcanvasLabel"
-                class="offcanvas-title"
-            >
-                {{ $t("common:menu.name") }}
-            </h5>
+            <PortalTitle />
             <button
                 type="button"
                 class="btn-close text-reset"
