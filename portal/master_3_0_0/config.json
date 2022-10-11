@@ -10,7 +10,7 @@
     },
     "navigationSecondary": {
       "sections": {
-        "scaleSwitcher": {
+        "scaleSwitcher_": {
           "active": true
         }
       }
