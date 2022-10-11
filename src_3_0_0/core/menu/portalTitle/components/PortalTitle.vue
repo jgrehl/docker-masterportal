@@ -1,9 +1,10 @@
 <script>
-import {mapGetters, mapActions} from "vuex";
+import {mapGetters} from "vuex";
 
 export default {
     name: "PortalTitle",
     computed: {
+        ...mapGetters("PortalTitle", ["title", "logo", "link", "toolTip"])
     },
 
     created () {
@@ -26,10 +27,6 @@ export default {
                 //     searchBar = document.getElementById("searchbar");
                 //
                 // navBar.insertBefore(this.$el, searchBar);
-                console.log(this.title)
-                console.log(this.logo)
-                console.log(this.link)
-                console.log(this.toolTip)
                 // if (this.title !== "" || this.logo !== "" || this.link !== "" || this.toolTip !== "") {
                 //     this.renderDependingOnSpace();
                 // }
@@ -45,7 +42,7 @@ export default {
         showTitle () {
             return true;
             // return !(this.uiStyle === "TABLE" || this.mobile);
-        },
+        }
         /**
         * Depending on the available space, the titletext and titlelogo is rendered.
         * @returns {void}
