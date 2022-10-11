@@ -1,22 +1,14 @@
 <script>
 import {mapGetters} from "vuex";
 import MenuContainer from "./MenuContainer.vue";
-import MenuNavigation from "./navigation/components/MenuNavigation.vue";
-import PortalTitle from "./portalTitle/components/PortalTitle.vue";
-import MenuSection from "./MenuSection.vue";
-
 
 export default {
     name: "MenuWrapper",
     components: {
-        MenuSection,
-        MenuContainer,
-        MenuNavigation,
-        PortalTitle
+        MenuContainer
     },
     computed: {
-        ...mapGetters("Menu", ["mainMenu", "secondaryMenu"]),
-        ...mapGetters("MenuNavigation", ["componentFromPath", "objectFromPath", "lastEntry"]) // @todo: make navigation work for each side
+        ...mapGetters("Menu", ["mainMenu", "secondaryMenu"])
     }
 };
 </script>
@@ -26,34 +18,10 @@ export default {
         <MenuContainer
             v-if="mainMenu"
             :class="mainMenu.initiallyOpen ? 'show' : ''"
-        >
-            <template #header>
-                <PortalTitle
-                    v-if="mainMenu.title"
-                    v-bind="mainMenu.title"
-                />
-            </template>
-            <template #body>
-                <!-- @Todo:Make navigation work for each side-->
-                <MenuNavigation />
-                <component
-                    :is="componentFromPath"
-                    v-bind="objectFromPath"
-                    v-if="lastEntry"
-                    :path="lastEntry"
-                />
-                <MenuSection
-                    v-for="(_, key) in mainMenu.sections"
-                    v-else
-                    :key="key"
-                    :section-index="key"
-                    side="mainMenu"
-                />
-            </template>
-        </MenuContainer>
+        />
         <MenuContainer
             v-if="secondaryMenu"
-            side="end"
+            side="secondary"
             :class="secondaryMenu.initiallyOpen ? 'show' : ''"
         />
     </div>
