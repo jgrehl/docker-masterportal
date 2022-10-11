@@ -10,8 +10,8 @@ export default {
     props: {
         side: {
             type: String,
-            default: "start",
-            validator: value => value === "start" || value === "end"
+            default: "main",
+            validator: value => value === "main" || value === "secondary"
         }
     },
     computed: {
@@ -33,8 +33,8 @@ export default {
         :id="'menu-offcanvas-' + side"
         class="offcanvas"
         :class="{
-            'offcanvas-start': !isMobile && side === 'start',
-            'offcanvas-end': !isMobile && side === 'end',
+            'offcanvas-start': !isMobile && side === 'main',
+            'offcanvas-end': !isMobile && side === 'secondary',
             'offcanvas-bottom': isMobile,
             mobileOffCanvas: isMobile
         }"
