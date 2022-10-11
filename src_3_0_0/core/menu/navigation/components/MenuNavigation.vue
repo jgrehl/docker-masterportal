@@ -1,10 +1,16 @@
 <script>
+
 import {mapGetters, mapMutations} from "vuex";
 
 export default {
     name: "MenuNavigation",
+    data () {
+        return {
+            entries: []
+        };
+    },
     computed: {
-        ...mapGetters("MenuNavigation", ["previousEntry", "lastEntry"])
+        ...mapGetters("MenuNavigation", ["previousEntry", "lastEntry", "objectFromPath"])
     },
     methods: {
         ...mapMutations("MenuNavigation", ["removeLastEntry"])
@@ -21,8 +27,7 @@ export default {
             @keypress="removeLastEntry"
         >
             <h5>
-                <!-- @Todo: get object via path in previousEntry and show the title property-->
-                &#60; {{ lastEntry && !previousEntry ? "Menu" : previousEntry }}
+                &#60; {{ !previousEntry ? $t('common:menu.name') : objectFromPath.title }}
             </h5>
         </a>
     </div>
