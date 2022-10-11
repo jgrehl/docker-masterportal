@@ -8,6 +8,7 @@ import actions from "./actions";
 
 import Controls from "../modules/controls/indexControls";
 import Maps from "../core/maps/store/indexMaps";
+import Menu from "../core/menu/store/indexMenu";
 import Modules from "../core/modules/store/indexModules";
 
 Vue.use(Vuex);
@@ -20,6 +21,7 @@ const store = new Vuex.Store({
     modules: {
         Controls: {...Controls},
         Maps,
+        Menu,
         Modules: {...Modules}
     }
 });
