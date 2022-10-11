@@ -119,7 +119,7 @@ export default {
                 class="btn btn-primary bootstrap-icon"
                 type="button"
                 data-bs-toggle="offcanvas"
-                data-bs-target="#menu-offcanvas-start"
+                data-bs-target="#menu-offcanvas-main"
                 :aria-label="$t('common:menu.ariaLabelOpen')"
             >
                 <i class="bi-list" />
