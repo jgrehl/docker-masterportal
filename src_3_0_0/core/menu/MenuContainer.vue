@@ -1,29 +1,23 @@
 <script>
-import {mapGetters, mapMutations, mapActions} from "vuex";
-import PortalTitle from "./portalTitle/components/PortalTitle.vue";
-import MenuNavigation from "./navigation/components/MenuNavigation.vue";
+import {mapGetters} from "vuex";
 import ResizeHandle from "../../sharedComponents/ResizeHandle.vue";
-import MenuItems from "./menuItems/components/MenuItems.vue";
 
 export default {
     name: "MenuContainer",
     components: {
-        PortalTitle,
-        MenuNavigation,
-        ResizeHandle,
-        MenuItems
+        ResizeHandle
+    },
+    props: {
+        side: {
+            type: String,
+            default: "start",
+            validator: value => value === "start" || value === "end"
+        }
     },
     computed: {
-        ...mapGetters("Menu", ["configuration", "menuItems"]),
-        ...mapGetters("MenuNavigation", {lastNavigationEntry: "lastEntry"}),
-        ...mapGetters(["isMobile", "portalConfig"])
-    },
-    mounted () {
-        this.loadMenuItems();
+        ...mapGetters(["isMobile"])
     },
     methods: {
-        ...mapMutations("MenuNavigation", {addNavigationEntry: "addEntry"}),
-        ...mapActions("Menu", ["loadMenuItems"]),
         removeShowClass () {
             document.getElementById("menu-offcanvas")?.classList.remove("show");
         }
@@ -33,10 +27,11 @@ export default {
 
 <template>
     <div
-        id="menu-offcanvas"
-        class="offcanvas offcanvas-start"
+        :id="'menu-offcanvas-' + side"
+        class="offcanvas"
         :class="{
-            show: configuration.initiallyOpen,
+            'offcanvas-start': side === 'start',
+            'offcanvas-end': side === 'end',
             fullWidthCanvas: isMobile
         }"
         tabindex="-1"
@@ -45,10 +40,7 @@ export default {
         data-bs-backdrop="false"
     >
         <div class="offcanvas-header">
-            <PortalTitle
-                v-if="portalConfig.portalTitle"
-                v-bind="portalConfig.portalTitle"
-            />
+            <slot name="header" />
             <button
                 type="button"
                 class="btn-close text-reset"
@@ -58,23 +50,12 @@ export default {
             />
         </div>
         <div class="offcanvas-body">
-            <MenuNavigation />
-
-            <MenuItems
-                v-if="!lastNavigationEntry"
-                :items="menuItems"
-            />
-
-            <component
-                :is="lastNavigationEntry.component"
-                v-bind="lastNavigationEntry.props"
-                v-if="lastNavigationEntry"
-            />
+            <slot name="body" />
         </div>
         <ResizeHandle
             v-if="!isMobile"
-            id="menuContainerHandle"
-            handle-position="r"
+            class="menuContainerHandle"
+            :handle-position="side === 'start' ? 'r' : 'l'"
             :min-width="0.1"
             :max-width="0.5"
         >
@@ -87,7 +68,7 @@ export default {
 .fullWidthCanvas {
     width: 100%;
 }
-#menuContainerHandle {
+.menuContainerHandle {
     width: 12px;
 
     & > div {

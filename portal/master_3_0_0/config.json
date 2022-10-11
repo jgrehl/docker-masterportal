@@ -25,86 +25,66 @@
         "fullScreen": true
       }
     },
-    "menu": {
+    "mainMenu": {
       "initiallyOpen": true,
-      "tools1": {
-        "name": "folder1",
-        "icon": "bi-file-plus",
-        "children": {
-          "info": {
-            "name": "folder1_1",
-            "icon": "bi-file-plus",
-            "children": {
-              "blablub": {
-                "name": "folder1_1_1",
-                "icon": "bi-file-plus",
-                "children": {
-                }
-              }
-            }
-          },
-          "info2": {
-            "name": "folder1_2",
-            "icon": "bi-file-plus",
-            "children": {
-              "blablub": {
-                "name": "folder1_2_1",
-                "icon": "bi-file-plus",
-                "children": {
-                }
-              }
-            }
-          }
-        }
+      "title": {
+        "text": "Master",
+        "logo": "https://geodienste.hamburg.de/lgv-config/img/hh-logo.png",
+        "link": "https://geoinfo.hamburg.de",
+        "toolTip": "Landesbetrieb Geoinformation und Vermessung"
       },
-      "tools2": {
-        "name": "folder2",
-        "icon": "bi-file-plus",
-        "children": {
-          "info": {
-            "name": "folder2_1",
+      "sections": [
+        [
+          {
+            "title": "folder1",
             "icon": "bi-file-plus",
-            "children": {
-              "genericFolder": {
-                "name": "folder2_1_1",
+            "itemType": "folder",
+            "children": [
+              {
+                "itemType": "folder",
+                "title": "folder1_1",
                 "icon": "bi-file-plus",
-                "children": {
-                }
+                "children": [
+                  {
+                    "itemType": "folder",
+                    "title": "folder1_1_1",
+                    "icon": "bi-file-plus"
+
+                  },
+                  {
+                    "itemType": "folder",
+                    "title": "folder1_1_2",
+                    "icon": "bi-file-plus"
+                  }
+                ]
               },
-              "genericFolder2": {
-                "name": "folder2_1_2",
-                "icon": "bi-file-plus",
-                "children": {
-                }
+              {
+                "itemType": "folder",
+                "title": "folder1_2",
+                "icon": "bi-file-plus"
               }
-            }
+            ]
           },
-          "info2": {
-            "name": "folder2_2",
-            "icon": "",
-            "children": {
-              "genericFolder": {
-                "name": "folder2_2_1",
-                "icon": "",
-                "children": {
-                }
+          {
+            "title": "folder2",
+            "icon": "bi-file-plus",
+            "itemType": "folder",
+            "children": [
+              {
+                "itemType": "folder",
+                "title": "folder2_1",
+                "icon": "bi-file-plus"
+
               },
-              "genericFolder2": {
-                "name": "folder2_2_2",
-                "icon": "",
-                "children": {
-                }
+              {
+                "itemType": "folder",
+                "title": "folder2_2",
+                "icon": "bi-file-plus"
               }
-            }
+            ]
           }
-        }
-      }
-    },
-    "portalTitle": {
-      "title": "Master",
-      "logo": "https://geodienste.hamburg.de/lgv-config/img/hh-logo.png",
-      "link": "https://geoinfo.hamburg.de",
-      "toolTip": "Landesbetrieb Geoinformation und Vermessung"
+        ]
+      ]
     }
   },
   "Themenconfig": {
