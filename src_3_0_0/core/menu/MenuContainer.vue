@@ -15,17 +15,14 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(["isMobile"])
+        ...mapGetters(["isMobile"]),
+        handlePosition () {
+            return this.side === "main" ? "r" : "l";
+        }
     },
     methods: {
         removeShowClass () {
             document.getElementById("menu-offcanvas")?.classList.remove("show");
-        },
-        handlePosition () {
-            if (this.isMobile) {
-                return "t";
-            }
-            return this.side === "start" ? "r" : "l";
         }
     }
 };
