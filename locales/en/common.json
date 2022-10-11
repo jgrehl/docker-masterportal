@@ -41,6 +41,8 @@
     "menu": {
         "topics": "Issues & Topics",
         "name": "Menu",
+        "ariaLabelOpen": "Open $t(menu.name)",
+        "ariaLabelClose": "Close $t(menu.name)",
         "views": {
             "name": "Views",
             "view01": "View 1"

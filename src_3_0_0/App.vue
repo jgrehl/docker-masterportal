@@ -1,8 +1,8 @@
 <script>
 import {mapGetters, mapActions} from "vuex";
-
 import ControlBar from "./modules/controls/ControlBar.vue";
 import ContainerItem from "./modules/container/ContainerItem.vue";
+import MenuContainer from "./core/menu/components/MenuContainer.vue";
 import initializeLayers from "./core/layers/layerProcessor";
 import {initializeMaps} from "./core/maps/maps";
 import initializeModules from "./core/modules/moduleProcessor";
@@ -13,7 +13,8 @@ export default {
     name: "App",
     components: {
         ControlBar,
-        ContainerItem
+        ContainerItem,
+        MenuContainer
     },
     computed: {
         ...mapGetters([
@@ -106,12 +107,23 @@ export default {
         id="masterportal-container"
         class="masterportal-container"
     >
+        <MenuContainer />
         <div
             id="map-wrapper"
         >
             <div
                 id="map"
             />
+            <button
+                id="menu-toggle-button"
+                class="btn btn-primary bootstrap-icon"
+                type="button"
+                data-bs-toggle="offcanvas"
+                data-bs-target="#menu-offcanvas"
+                :aria-label="$t('common:menu.ariaLabelOpen')"
+            >
+                <i class="bi-list" />
+            </button>
             <!-- only for Testing -->
             <ContainerItem />
             <div
@@ -142,16 +154,33 @@ export default {
 
         #map-wrapper {
             display: flex;
-            height:calc(100% - 50px);
+            height: calc(100% - 50px);
             overflow: hidden;
             position: relative;
-            flex-grow:1;
-            order:1;
+            flex-grow: 1;
+            order: 1;
 
             #map {
                 position: absolute;
                 height: 100%;
                 width: 100%;
+            }
+            #menu-toggle-button{
+                // TODO(roehlipa): Style ist wie bei ControlIcons, zentralisieren!
+                position: absolute;
+                top: 15px;
+                left: 15px;
+                font-size: calc(#{$icon_length} - 0.35 * #{$icon_length});
+                height: $icon_length;
+                width: $icon_length;
+
+                i {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    line-height: 0;
+                }
             }
             .elements-positioned-over-map {
                 display: flex;
