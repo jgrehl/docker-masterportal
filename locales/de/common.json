@@ -41,6 +41,8 @@
     "menu": {
         "topics": "Themen",
         "name": "Menü",
+        "ariaLabelOpen": "$t(menu.name) öffnen",
+        "ariaLabelClose": "$t(menu.name) schließen",
         "views": {
             "name": "Ansichten",
             "view01": "Ansicht 1"
