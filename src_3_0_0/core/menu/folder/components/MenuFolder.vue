@@ -1,6 +1,5 @@
 <script>
 
-import {mapMutations} from "vuex";
 import MenuItems from "../../menuItems/components/MenuItems.vue";
 
 export default {
@@ -9,13 +8,24 @@ export default {
         MenuItems
     },
     props: {
-        /** name of the folder */
-        name: {
+        /** title of the folder */
+        title: {
             type: String,
             required: true
         },
+        /** icon of the folder */
+        icon: {
+            type: String,
+            default: ""
+        },
+        // @Todo: check if children can be gotten via path
         /** child elements within the folder */
         children: {
+            type: Array,
+            default: () => []
+        },
+        /** path of the actual element */
+        path: {
             type: Array,
             default: () => []
         }
@@ -24,21 +34,19 @@ export default {
         return {
             isActive: false
         };
-    },
-    computed: {
-    },
-    methods: {
-        ...mapMutations("MenuNavigation", {addNavigationEntry: "addEntry"})
     }
 };
 </script>
 
 <template>
     <div>
-        <h4>{{ name }}</h4>
-        <MenuItems :items="children" />
+        <h4>{{ title }}</h4>
+        <MenuItems
+            :items="children"
+            :path="[...path, 'children']"
+        />
         <div>
-            {{ name }} in da house!
+            {{ title }} in da house!
         </div>
     </div>
 </template>
