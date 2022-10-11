@@ -1,23 +1,29 @@
 <script>
 
-import {mapMutations} from "vuex";
+import {mapGetters} from "vuex";
+import MenuItem from "../../MenuItem.vue";
 
 export default {
     name: "MenuItems",
+    components: {MenuItem},
     props: {
+        // @Todo: check if items can be gotten via path
         /** array of menu items to display */
         items: {
+            type: Array,
+            default: () => []
+        },
+        /** array of menu items to display */
+        path: {
             type: Array,
             default: () => []
         }
     },
     computed: {
+        ...mapGetters("Menu", ["section"]),
         iconClass () {
             return this.iconName === "" || this.iconName.startsWith("bi-") ? this.iconName : `bi-${this.iconName}`;
         }
-    },
-    methods: {
-        ...mapMutations("MenuNavigation", {addNavigationEntry: "addEntry"})
     }
 };
 </script>
@@ -26,22 +32,14 @@ export default {
     <div>
         <ul class="nav flex-column">
             <li
-                v-for="item in items"
-                :key="item.key"
+                v-for="(item, key) in items || section(path)"
+                :key="key"
                 class="nav-item"
-                @click="addNavigationEntry(item)"
-                @keypress="addNavigationEntry(item)"
             >
-                <a
-                    class="nav-link"
-                    href="#"
-                >
-                    <i
-                        v-if="item.props.icon !== ''"
-                        :class="item.props.icon"
-                    />
-                    {{ item.props.name }}
-                </a>
+                <MenuItem
+                    v-bind="item"
+                    :path="[...path, key]"
+                />
             </li>
         </ul>
     </div>
