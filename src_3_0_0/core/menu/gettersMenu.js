@@ -10,18 +10,24 @@ const menuGetters = {
         }
         return null;
     },
+    mainInitiallyOpen (_, getters) {
+        return getters.mainMenu ? getters.mainMenu.initiallyOpen : false;
+    },
     mainTitle (_, getters) {
         return getters.mainMenu ? getters.mainMenu.title : null;
-    },
-    secondaryTitle (_, getters) {
-        return getters.secondaryMenu ? getters.secondaryMenu.title : null;
-
     },
     secondaryMenu (_, __, ___, rootGetters) {
         if (rootGetters.loadedConfigs.configJson) {
             return rootGetters.portalConfig.secondaryMenu;
         }
         return null;
+    },
+    secondaryInitiallyOpen (_, getters) {
+        return getters.secondaryMenu ? getters.secondaryMenu.initiallyOpen : false;
+    },
+    secondaryTitle (_, getters) {
+        return getters.secondaryMenu ? getters.secondaryMenu.title : null;
+
     },
     section: (_, getters) => path => {
         if (getters[path[0]]) {
