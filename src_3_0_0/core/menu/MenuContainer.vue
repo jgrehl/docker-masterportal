@@ -20,6 +20,12 @@ export default {
     methods: {
         removeShowClass () {
             document.getElementById("menu-offcanvas")?.classList.remove("show");
+        },
+        handlePosition () {
+            if (this.isMobile) {
+                return "t";
+            }
+            return this.side === "start" ? "r" : "l";
         }
     }
 };
@@ -30,9 +36,10 @@ export default {
         :id="'menu-offcanvas-' + side"
         class="offcanvas"
         :class="{
-            'offcanvas-start': side === 'start',
-            'offcanvas-end': side === 'end',
-            fullWidthCanvas: isMobile
+            'offcanvas-start': !isMobile && side === 'start',
+            'offcanvas-end': !isMobile && side === 'end',
+            'offcanvas-bottom': isMobile,
+            mobileOffCanvas: isMobile
         }"
         tabindex="-1"
         aria-labelledby="offcanvasLabel"
@@ -53,11 +60,12 @@ export default {
             <slot name="body" />
         </div>
         <ResizeHandle
-            v-if="!isMobile"
-            class="menuContainerHandle"
-            :handle-position="side === 'start' ? 'r' : 'l'"
-            :min-width="0.1"
-            :max-width="0.5"
+            :class="isMobile ? 'mobileContainerHandle' : 'menuContainerHandle'"
+            :handle-position="handlePosition()"
+            :min-width="!isMobile ? 0.1 : 1"
+            :max-width="!isMobile ? 0.5 : 1"
+            :min-height="isMobile ? 0.1 : 1"
+            :max-height="isMobile ? 0.5 : 1"
         >
             <div>&#8942;</div>
         </ResizeHandle>
@@ -65,9 +73,6 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-.fullWidthCanvas {
-    width: 100%;
-}
 .menuContainerHandle {
     width: 12px;
 
@@ -76,5 +81,19 @@ export default {
         top: 50%;
         left: 4px;
     }
+}
+.mobileContainerHandle {
+    height: 12px;
+
+    & > div {
+        position: absolute;
+        transform: rotate(90deg);
+        left: 50%;
+        top: -2.5px;
+    }
+}
+.mobileOffCanvas {
+    height: 20%;
+    width: 100%;
 }
 </style>
