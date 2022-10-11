@@ -321,7 +321,8 @@ export default {
          * @returns {void}
          */
         setNewSize () {
-            const containerWidth = document.getElementById("masterportal-container").offsetWidth;
+            const containerWidth = document.getElementById("masterportal-container").offsetWidth,
+                containerHeight = document.getElementById("masterportal-container").offsetHeight;
 
             if (this.handlePosition !== "t" && this.handlePosition !== "b") {
                 let newWidth = this.initialDimensions.width + handleSigns[this.handlePosition][0] * this.dCursorPosition.x;
@@ -337,11 +338,11 @@ export default {
             if (this.handlePosition !== "l" && this.handlePosition !== "r") {
                 let newHeight = this.initialDimensions.height + handleSigns[this.handlePosition][1] * this.dCursorPosition.y;
 
-                if (newHeight < containerWidth * this.minHeight) {
-                    newHeight = containerWidth * this.minHeight;
+                if (newHeight < containerHeight * this.minHeight) {
+                    newHeight = containerHeight * this.minHeight;
                 }
-                if (newHeight > containerWidth * this.maxHeight) {
-                    newHeight = containerWidth * this.maxHeight;
+                if (newHeight > containerHeight * this.maxHeight) {
+                    newHeight = containerHeight * this.maxHeight;
                 }
                 this.handleElement.style.height = Math.round(newHeight) + "px";
             }
