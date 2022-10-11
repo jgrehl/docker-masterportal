@@ -20,8 +20,12 @@ export default {
     },
     computed: {
         ...mapGetters(["isMobile"]),
+        ...mapGetters("Menu", ["mainInitiallyOpen", "secondaryInitiallyOpen"]),
         handlePosition () {
             return this.side === "main" ? "r" : "l";
+        },
+        initiallyOpen () {
+            return this.side === "main" ? this.mainInitiallyOpen : this.secondaryInitiallyOpen;
         }
     }
 };
@@ -35,6 +39,7 @@ export default {
             'offcanvas-start': !isMobile && side === 'main',
             'offcanvas-end': !isMobile && side === 'secondary',
             'offcanvas-bottom': isMobile,
+            'show': initiallyOpen,
             mobileOffCanvas: isMobile
         }"
         tabindex="-1"
