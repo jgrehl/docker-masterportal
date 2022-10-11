@@ -1,10 +1,14 @@
 <script>
 import {mapGetters} from "vuex";
+import MenuBody from "./MenuBody.vue";
+import MenuHeader from "./MenuHeader.vue";
 import ResizeHandle from "../../sharedComponents/ResizeHandle.vue";
 
 export default {
     name: "MenuContainer",
     components: {
+        MenuBody,
+        MenuHeader,
         ResizeHandle
     },
     props: {
@@ -43,34 +47,41 @@ export default {
         data-bs-scroll="true"
         data-bs-backdrop="false"
     >
-        <div class="offcanvas-header">
-            <slot name="header" />
-            <button
-                type="button"
-                class="btn-close text-reset"
-                data-bs-dismiss="offcanvas"
-                :aria-label="$t('common:menu.ariaLabelClose')"
-                @click="removeShowClass"
-            />
-        </div>
-        <div class="offcanvas-body">
-            <slot name="body" />
-        </div>
-        <ResizeHandle
-            :class="isMobile ? 'mobileContainerHandle' : 'menuContainerHandle'"
-            :handle-position="handlePosition()"
-            :min-width="!isMobile ? 0.1 : 1"
-            :max-width="!isMobile ? 0.5 : 1"
-            :min-height="isMobile ? 0.1 : 1"
-            :max-height="isMobile ? 0.5 : 1"
-        >
-            <div>&#8942;</div>
-        </ResizeHandle>
+        <template v-if="isMobile">
+            <ResizeHandle
+                class="mobile-container-handle"
+                handle-position="t"
+                :min-height="0.1"
+                :max-height="0.5"
+            >
+                <MenuHeader :side="side" />
+            </ResizeHandle>
+            <ResizeHandle
+                class="mobile-container-handle"
+                handle-position="t"
+                :min-height="0.1"
+                :max-height="0.5"
+            >
+                <MenuBody :side="side" />
+            </ResizeHandle>
+        </template>
+        <template v-else>
+            <MenuHeader :side="side" />
+            <MenuBody :side="side" />
+            <ResizeHandle
+                class="menu-container-handle"
+                :handle-position="handlePosition"
+                :min-width="0.1"
+                :max-width="0.5"
+            >
+                <div>&#8942;</div>
+            </ResizeHandle>
+        </template>
     </div>
 </template>
 
 <style lang="scss" scoped>
-.menuContainerHandle {
+.menu-container-handle {
     width: 12px;
 
     & > div {
@@ -79,15 +90,11 @@ export default {
         left: 4px;
     }
 }
-.mobileContainerHandle {
-    height: 12px;
-
-    & > div {
-        position: absolute;
-        transform: rotate(90deg);
-        left: 50%;
-        top: -2.5px;
-    }
+.mobile-container-handle {
+    position: static;
+    width: auto;
+    height: auto;
+    background-color: transparent;
 }
 .mobileOffCanvas {
     height: 20%;
