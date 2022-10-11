@@ -14,17 +14,16 @@ export default {
         MenuNavigation,
         PortalTitle
     },
+    data: () => ({additionalLeftNavigationPath: []}),
     computed: {
         ...mapGetters(["portalConfig"]),
-        ...mapGetters("Menu", ["componentMap", "mainMenu", "secondaryMenu", "section"]),
-        ...mapGetters("MenuNavigation", {lastNavigationPath: "lastEntry"}) // @todo: make navigation work for each side
+        ...mapGetters("Menu", ["componentMap", "mainMenu", "secondaryMenu"]),
+        ...mapGetters("MenuNavigation", ["componentFromPath", "objectFromPath", "lastEntry"]) // @todo: make navigation work for each side
     },
     methods: {
-        getComponentFromPath () {
-            return this.componentMap[this.getObjectFromPath().itemType];
-        },
-        getObjectFromPath () {
-            return this.section(this.lastNavigationPath);
+        ...mapGetters("Menu", ["section"]),
+        updateLeftNavigationPath (val) {
+            this.additionalLeftNavigationPath.push(val);
         }
     }
 };
@@ -46,17 +45,17 @@ export default {
                 <!-- @Todo:Make navigation work for each side-->
                 <MenuNavigation />
                 <component
-                    :is="getComponentFromPath()"
-                    v-bind="getObjectFromPath()"
-                    v-if="lastNavigationPath"
-                    :path="lastNavigationPath"
+                    :is="componentFromPath"
+                    v-bind="objectFromPath"
+                    v-if="lastEntry"
+                    :path="lastEntry"
                 />
                 <MenuSection
-                    v-for="(_, key) in mainMenu.sections"
+                    v-for="(_,key) in mainMenu.sections"
                     v-else
                     :key="key"
                     :section-index="key"
-                    side="mainMenu"
+                    :side="'mainMenu'"
                 />
             </template>
         </MenuContainer>
