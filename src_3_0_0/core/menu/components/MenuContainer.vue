@@ -1,6 +1,40 @@
 <script>
+import {mapGetters} from "vuex";
+
 export default {
-    name: "MenuContainer"
+    name: "MenuContainer",
+    components: {
+    },
+    data () {
+        return {
+            comps: []
+        };
+    },
+    computed: {
+        ...mapGetters("Menu", ["componentMap"]),
+        ...mapGetters(["allConfigsLoaded", "portalConfig"])
+    },
+    watch: {
+        allConfigsLoaded (value) {
+            if (value) {
+                this.comps = [];
+                Object
+                    .keys(this.portalConfig)
+                    .forEach(key => {
+                        if (this.componentMap[key]) {
+                            this.comps.push({
+                                component: this.componentMap[key],
+                                props: typeof this.portalConfig[key] === "object" ? this.portalConfig[key] : {},
+                                key
+                            });
+                        }
+                    });
+            }
+        }
+    },
+    mounted () {
+        // console.log(this.comps)
+    }
 };
 </script>
 
@@ -26,7 +60,15 @@ export default {
             />
         </div>
         <div class="offcanvas-body">
-            <slot />
+            <template
+                v-for="(comp) in comps"
+            >
+                <component
+                    :is="comp.component"
+                    :key="comp.key"
+                    v-bind="comp.props"
+                />
+            </template>
         </div>
     </div>
 </template>
