@@ -24,6 +24,12 @@
         "freeze": true,
         "fullScreen": true
       }
+    },
+    "portalTitle": {
+      "title": "Master",
+      "logo": "https://geodienste.hamburg.de/lgv-config/img/hh-logo.png",
+      "link": "https://geoinfo.hamburg.de",
+      "toolTip": "Landesbetrieb Geoinformation und Vermessung"
     }
   },
   "Themenconfig": {
