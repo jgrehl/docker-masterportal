@@ -1,0 +1,43 @@
+<script>
+import {mapGetters} from "vuex";
+import MenuItems from "./menuItems/components/MenuItems.vue";
+
+export default {
+    name: "MenuSection",
+    components: {MenuItems},
+    props: {
+        side: {
+            type: String,
+            required: true,
+            validator: value => value === "mainMenu" || value === "secondaryMenu"
+        },
+        sectionIndex: {
+            type: Number,
+            required: true
+        },
+        additionalPath: {
+            type: Array,
+            default: () => []
+        }
+    },
+    computed: {
+        ...mapGetters("Menu", ["section"]),
+        path () {
+            return [this.side, "sections", this.sectionIndex, ...this.additionalPath];
+        }
+    }
+};
+</script>
+
+<template>
+    <div>
+        <MenuItems
+            :items="section(path)"
+            :path="path"
+        />
+    </div>
+</template>
+
+<style scoped>
+
+</style>
