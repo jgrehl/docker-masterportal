@@ -14,18 +14,18 @@ export default {
     props: {
         side: {
             type: String,
-            default: "main",
-            validator: value => value === "main" || value === "secondary"
+            default: "mainMenu",
+            validator: value => value === "mainMenu" || value === "secondaryMenu"
         }
     },
     computed: {
         ...mapGetters(["isMobile"]),
         ...mapGetters("Menu", ["mainInitiallyOpen", "secondaryInitiallyOpen"]),
         handlePosition () {
-            return this.side === "main" ? "r" : "l";
+            return this.side === "mainMenu" ? "r" : "l";
         },
         initiallyOpen () {
-            return this.side === "main" ? this.mainInitiallyOpen : this.secondaryInitiallyOpen;
+            return this.side === "mainMenu" ? this.mainInitiallyOpen : this.secondaryInitiallyOpen;
         }
     }
 };
@@ -36,8 +36,8 @@ export default {
         :id="'menu-offcanvas-' + side"
         class="offcanvas"
         :class="{
-            'offcanvas-start': !isMobile && side === 'main',
-            'offcanvas-end': !isMobile && side === 'secondary',
+            'offcanvas-start': !isMobile && side === 'mainMenu',
+            'offcanvas-end': !isMobile && side === 'secondaryMenu',
             'offcanvas-bottom': isMobile,
             'show': initiallyOpen,
             mobileOffCanvas: isMobile
