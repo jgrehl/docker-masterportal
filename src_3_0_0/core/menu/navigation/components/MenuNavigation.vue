@@ -7,7 +7,7 @@ export default {
         side: {
             type: String,
             required: true,
-            validator: value => value === "main" || value === "secondary"
+            validator: value => value === "mainMenu" || value === "secondaryMenu"
         }
     },
     computed: {
