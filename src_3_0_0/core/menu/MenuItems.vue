@@ -1,6 +1,6 @@
 <script>
 import {mapGetters} from "vuex";
-import MenuItem from "../../MenuItem.vue";
+import MenuItem from "./MenuItem.vue";
 
 export default {
     name: "MenuItems",
@@ -40,15 +40,4 @@ export default {
 
 <style lang="scss" scoped>
 @import "~variables";
-@import "~/css/mixins.scss";
-.tabable {
-    text-decoration: none;
-    cursor: pointer;
-    &:hover {
-        @include primary_action_hover;
-    }
-    &:focus {
-        @include primary_action_focus;
-    }
-}
 </style>
