@@ -12,15 +12,15 @@ export default {
     props: {
         side: {
             type: String,
-            default: "main",
-            validator: value => value === "main" || value === "secondary"
+            default: "mainMenu",
+            validator: value => value === "mainMenu" || value === "secondaryMenu"
         }
     },
     computed: {
         ...mapGetters("Menu", ["mainMenu", "secondaryMenu"]),
         ...mapGetters("MenuNavigation", ["componentFromPath", "objectFromPath", "lastEntry"]),
         menu () {
-            return this.side === "main" ? this.mainMenu : this.secondaryMenu;
+            return this.side === "mainMenu" ? this.mainMenu : this.secondaryMenu;
         }
     }
 };
@@ -28,7 +28,6 @@ export default {
 
 <template>
     <div class="offcanvas-body">
-        <!-- TODO(rullkoma): Make navigation work for each side -->
         <MenuNavigation :side="side" />
         <component
             :is="componentFromPath(side)"
@@ -41,7 +40,7 @@ export default {
             v-else
             :key="key"
             :section-index="key"
-            :side="side + 'Menu'"
+            :side="side"
         />
     </div>
 </template>
