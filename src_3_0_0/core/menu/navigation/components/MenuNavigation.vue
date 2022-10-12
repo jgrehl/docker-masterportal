@@ -3,8 +3,15 @@ import {mapGetters, mapMutations} from "vuex";
 
 export default {
     name: "MenuNavigation",
+    props: {
+        side: {
+            type: String,
+            required: true,
+            validator: value => value === "main" || value === "secondary"
+        }
+    },
     computed: {
-        ...mapGetters("MenuNavigation", ["previousEntry", "lastEntry", "objectFromPath"])
+        ...mapGetters("MenuNavigation", ["lastEntry", "previousEntry", "objectFromPath"])
     },
     methods: {
         ...mapMutations("MenuNavigation", ["removeLastEntry"])
@@ -15,13 +22,13 @@ export default {
 <template>
     <div>
         <a
-            v-if="lastEntry"
+            v-if="lastEntry(side)"
             href="#"
-            @click="removeLastEntry"
-            @keypress="removeLastEntry"
+            @click="removeLastEntry(side)"
+            @keypress="removeLastEntry(side)"
         >
             <h5>
-                &#60; {{ !previousEntry ? $t('common:menu.name') : objectFromPath.title }}
+                &#60; {{ !previousEntry(side) ? $t('common:menu.name') : objectFromPath(side).title }}
             </h5>
         </a>
     </div>
