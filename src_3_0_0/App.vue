@@ -200,8 +200,8 @@ export default {
             #secondary_menu-toggle-button {
                 // TODO(roehlipa): Style ist wie bei ControlIcons, zentralisieren!
                 position: absolute;
-                top: 300px;
-                left: 15px;
+                top: 15px;
+                right: 15px;
                 font-size: calc(#{$icon_length} - 0.35 * #{$icon_length});
                 height: $icon_length;
                 width: $icon_length;
