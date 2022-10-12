@@ -85,6 +85,60 @@
           }
         ]
       ]
+    },
+    "secondaryMenu": {
+      "sections": [
+        [
+          {
+            "title": "folder1",
+            "icon": "bi-file-plus",
+            "itemType": "folder",
+            "children": [
+              {
+                "itemType": "folder",
+                "title": "folder1_1",
+                "icon": "bi-file-plus",
+                "children": [
+                  {
+                    "itemType": "folder",
+                    "title": "folder1_1_1",
+                    "icon": "bi-file-plus"
+
+                  },
+                  {
+                    "itemType": "folder",
+                    "title": "folder1_1_2",
+                    "icon": "bi-file-plus"
+                  }
+                ]
+              },
+              {
+                "itemType": "folder",
+                "title": "folder1_2",
+                "icon": "bi-file-plus"
+              }
+            ]
+          },
+          {
+            "title": "folder2",
+            "icon": "bi-file-plus",
+            "itemType": "folder",
+            "children": [
+              {
+                "itemType": "folder",
+                "title": "folder2_1",
+                "icon": "bi-file-plus"
+
+              },
+              {
+                "itemType": "folder",
+                "title": "folder2_2",
+                "icon": "bi-file-plus"
+              }
+            ]
+          }
+        ]
+      ]
     }
   },
   "Themenconfig": {
