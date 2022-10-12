@@ -29,12 +29,12 @@ export default {
 <template>
     <div class="offcanvas-body">
         <!-- TODO(rullkoma): Make navigation work for each side -->
-        <MenuNavigation />
+        <MenuNavigation :side="side" />
         <component
-            :is="componentFromPath"
-            v-bind="objectFromPath"
-            v-if="lastEntry"
-            :path="lastEntry"
+            :is="componentFromPath(side)"
+            v-bind="objectFromPath(side)"
+            v-if="lastEntry(side)"
+            :path="lastEntry(side)"
         />
         <MenuSection
             v-for="(_, key) in menu.sections"
