@@ -7,12 +7,12 @@ const menuNavigationgetters = {
      * @param {Object} state module state
      * @returns {Object|null} last added menu navigation entry or null
      */
-    lastEntry: state => side => state.entries[side + "Menu"][state.entries[side + "Menu"].length - 1] || null,
+    lastEntry: state => side => state.entries[side][state.entries[side].length - 1] || null,
     /**
      * @param {Object} state module state
      * @returns {Object|null} previous added menu navigation entry or null
      */
-    previousEntry: state => side => state.entries[side + "Menu"][state.entries[side + "Menu"].length - 2] || null,
+    previousEntry: state => side => state.entries[side][state.entries[side].length - 2] || null,
     /**
      * @param {Object} _ module state (discarded)
      * @param {Object} getters module getters

@@ -17,12 +17,6 @@ export default {
             type: String,
             default: ""
         },
-        // @Todo: check if children can be gotten via path
-        /** child elements within the folder */
-        children: {
-            type: Array,
-            default: () => []
-        },
         /** path of the actual element */
         path: {
             type: Array,
@@ -41,7 +35,6 @@ export default {
     <div>
         <h4>{{ title }}</h4>
         <MenuItems
-            :items="children"
             :path="[...path, 'children']"
         />
         <div>
