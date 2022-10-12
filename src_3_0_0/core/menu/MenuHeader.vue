@@ -10,17 +10,17 @@ export default {
     props: {
         side: {
             type: String,
-            default: "main",
-            validator: value => value === "main" || value === "secondary"
+            default: "mainMenu",
+            validator: value => value === "mainMenu" || value === "secondaryMenu"
         }
     },
     computed: {
         ...mapGetters("Menu", ["mainTitle", "secondaryTitle"]),
         title () {
-            if (this.side === "main" && this.mainTitle) {
+            if (this.side === "mainMenu" && this.mainTitle) {
                 return this.mainTitle;
             }
-            if (this.side === "secondary" && this.secondaryTitle) {
+            if (this.side === "secondaryMenu" && this.secondaryTitle) {
                 return this.mainTitle;
             }
             return null;
