@@ -1,8 +1,8 @@
 export default {
     addEntry (state, entry) {
-        state.entries.push(entry);
+        state.entries[entry[0]].push(entry);
     },
-    removeLastEntry (state) {
-        state.entries.pop();
+    removeLastEntry (state, side) {
+        state.entries[side + "Menu"].pop();
     }
 };
