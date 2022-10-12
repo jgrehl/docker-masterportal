@@ -1,5 +1,4 @@
 <script>
-import {mapGetters} from "vuex";
 import MenuItems from "./menuItems/components/MenuItems.vue";
 
 export default {
@@ -21,7 +20,6 @@ export default {
         }
     },
     computed: {
-        ...mapGetters("Menu", ["section"]),
         path () {
             return [this.side, "sections", this.sectionIndex, ...this.additionalPath];
         }
@@ -32,7 +30,6 @@ export default {
 <template>
     <div>
         <MenuItems
-            :items="section(path)"
             :path="path"
         />
     </div>
