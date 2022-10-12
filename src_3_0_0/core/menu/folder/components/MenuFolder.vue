@@ -1,5 +1,5 @@
 <script>
-import MenuItems from "../../menuItems/components/MenuItems.vue";
+import MenuItems from "../../MenuItems.vue";
 
 export default {
     name: "MenuFolder",
@@ -33,13 +33,10 @@ export default {
 
 <template>
     <div>
-        <h4>{{ title }}</h4>
+        <h4>{{ $t(title) }}</h4>
         <MenuItems
             :path="[...path, 'children']"
         />
-        <div>
-            {{ title }} in da house!
-        </div>
     </div>
 </template>
 
