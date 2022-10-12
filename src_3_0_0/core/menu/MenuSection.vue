@@ -1,5 +1,5 @@
 <script>
-import MenuItems from "./menuItems/components/MenuItems.vue";
+import MenuItems from "./MenuItems.vue";
 
 export default {
     name: "MenuSection",
