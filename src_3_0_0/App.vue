@@ -120,7 +120,17 @@ export default {
                 class="btn btn-primary bootstrap-icon"
                 type="button"
                 data-bs-toggle="offcanvas"
-                data-bs-target="#menu-offcanvas-main"
+                data-bs-target="#menu-offcanvas-mainMenu"
+                :aria-label="$t('common:menu.ariaLabelOpen')"
+            >
+                <i class="bi-list" />
+            </button>
+            <button
+                id="secondary_menu-toggle-button"
+                class="btn btn-primary bootstrap-icon"
+                type="button"
+                data-bs-toggle="offcanvas"
+                data-bs-target="#menu-offcanvas-secondaryMenu"
                 :aria-label="$t('common:menu.ariaLabelOpen')"
             >
                 <i class="bi-list" />
@@ -136,7 +146,7 @@ export default {
         </div>
         <MenuContainer
             v-if="allConfigsLoaded && secondaryMenu"
-            side="secondary"
+            side="secondaryMenu"
         />
     </div>
 </template>
@@ -174,6 +184,23 @@ export default {
                 // TODO(roehlipa): Style ist wie bei ControlIcons, zentralisieren!
                 position: absolute;
                 top: 15px;
+                left: 15px;
+                font-size: calc(#{$icon_length} - 0.35 * #{$icon_length});
+                height: $icon_length;
+                width: $icon_length;
+
+                i {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    line-height: 0;
+                }
+            }
+            #secondary_menu-toggle-button {
+                // TODO(roehlipa): Style ist wie bei ControlIcons, zentralisieren!
+                position: absolute;
+                top: 300px;
                 left: 15px;
                 font-size: calc(#{$icon_length} - 0.35 * #{$icon_length});
                 height: $icon_length;
