@@ -4,5 +4,8 @@
  * @property {Array} entries holds keys of navigated menu items.
  */
 export default {
-    entries: []
+    entries: {
+        mainMenu: [],
+        secondaryMenu: []
+    }
 };
