@@ -6,12 +6,6 @@ export default {
     name: "MenuItems",
     components: {MenuItem},
     props: {
-        // @Todo: check if items can be gotten via path
-        /** array of menu items to display */
-        items: {
-            type: Array,
-            default: () => []
-        },
         /** array of menu items to display */
         path: {
             type: Array,
@@ -31,7 +25,7 @@ export default {
     <div>
         <ul class="nav flex-column">
             <li
-                v-for="(item, key) in items || section(path)"
+                v-for="(item, key) in section(path)"
                 :key="key"
                 class="nav-item"
             >
