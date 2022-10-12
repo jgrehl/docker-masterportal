@@ -1,8 +1,10 @@
 <script>
 import {mapMutations} from "vuex";
+import SimpleButton from "../../../src/share-components/SimpleButton.vue";
 
 export default {
     name: "MenuItem",
+    components: {SimpleButton},
     props: {
         description: {
             type: String,
@@ -39,16 +41,11 @@ export default {
 </script>
 
 <template>
-    <button
-        @click="addNavigationEntry(path)"
-        @keypress="addNavigationEntry(path)"
-    >
-        <i
-            v-if="showIcon"
-            :class="icon"
-        />
-        {{ $t(title) }}
-    </button>
+    <SimpleButton
+        :interaction="() => addNavigationEntry(path)"
+        :text="title"
+        :icon="showIcon ? icon : null"
+    />
     <!-- TODO(roehlipa): Properly add description -->
 </template>
 
