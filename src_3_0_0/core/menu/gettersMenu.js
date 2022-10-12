@@ -34,7 +34,7 @@ const menuGetters = {
             const section = idx(getters, path);
 
             if (section === badPathSymbol) {
-                console.error(`Menu.getters.section: ${badPathSymbol.description}.`);
+                console.error(`Menu.getters.section: ${badPathSymbol.description} ${path}.`);
                 return null;
             }
             return section;
