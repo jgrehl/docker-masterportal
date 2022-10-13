@@ -1,19 +1,23 @@
 <script>
 import MenuNavigation from "./navigation/components/MenuNavigation.vue";
-import MenuSection from "./MenuSection.vue";
+import MenuItems from "./MenuItems.vue";
 import {mapGetters} from "vuex";
 
 export default {
     name: "MenuBody",
     components: {
         MenuNavigation,
-        MenuSection
+        MenuItems
     },
     props: {
         side: {
             type: String,
             default: "mainMenu",
             validator: value => value === "mainMenu" || value === "secondaryMenu"
+        },
+        additionalPath: {
+            type: Array,
+            default: () => []
         }
     },
     computed: {
@@ -21,6 +25,11 @@ export default {
         ...mapGetters("MenuNavigation", ["componentFromPath", "objectFromPath", "lastEntry"]),
         menu () {
             return this.side === "mainMenu" ? this.mainMenu : this.secondaryMenu;
+        }
+    },
+    methods: {
+        path (sectionIndex) {
+            return [this.side, "sections", sectionIndex, ...this.additionalPath];
         }
     }
 };
@@ -35,12 +44,14 @@ export default {
             v-if="lastEntry(side)"
             :path="lastEntry(side)"
         />
-        <MenuSection
+        <div
             v-for="(_, key) in menu.sections"
             v-else
             :key="key"
-            :section-index="key"
-            :side="side"
-        />
+        >
+            <MenuItems
+                :path="path(key)"
+            />
+        </div>
     </div>
 </template>
