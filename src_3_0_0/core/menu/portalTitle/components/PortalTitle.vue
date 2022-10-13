@@ -1,5 +1,7 @@
 <script>
 
+import {mapGetters} from "vuex";
+
 export default {
     name: "PortalTitle",
     props: {
@@ -25,101 +27,14 @@ export default {
         }
     },
     computed: {
-    },
-    created () {
-        // const myBus = Backbone.Events;
-        //
-        // myBus.listenTo(Radio.channel("Title"), {
-        //     "setSize": () => {
-        //         setTimeout(() => {
-        //             if (this.title !== "" || this.logo !== "" || this.link !== "" || this.toolTip !== "") {
-        //                 this.renderDependingOnSpace();
-        //             }
-        //         }, 500);
-        //     }
-        // });
-    },
-    mounted () {
-        if (this.showTitle()) {
-            this.$nextTick(() => {
-                // const navBar = document.getElementsByClassName("navbar-collapse")[0],
-                //     searchBar = document.getElementById("searchbar");
-                //
-                // navBar.insertBefore(this.$el, searchBar);
-                // if (this.title !== "" || this.logo !== "" || this.link !== "" || this.toolTip !== "") {
-                //     this.renderDependingOnSpace();
-                // }
-            });
-        }
-    },
-    methods: {
-        /**
-         * Returns true, if the title should be shown.
-         * uistyle TABLE does not show the title.
-         * @returns {boolean} true, if the title should be shown
-         */
-        showTitle () {
-            return true;
-            // return !(this.uiStyle === "TABLE" || this.mobile);
-        }
-        /**
-        * Depending on the available space, the titletext and titlelogo is rendered.
-        * @returns {void}
-        */
-        // renderDependingOnSpace: function () {
-        //     let navMenuWidth,
-        //         searchbarWidth,
-        //         navBarWidth,
-        //         titleWidth,
-        //         titleTextWidth,
-        //         rest,
-        //         logo;
-        //     const titleEl = document.getElementsByClassName("portal-title"),
-        //         titlePadding = 10;
-        //
-        //     this.$el.style.display = "block";
-        //     document.getElementById("title-text").style.display = "inline-block";
-        //
-        //     if (document.getElementById("searchbar")) {
-        //         navMenuWidth = document.getElementById("root").offsetWidth;
-        //         searchbarWidth = document.getElementById("searchbar").offsetWidth;
-        //         navBarWidth = document.getElementById("main-nav").offsetWidth;
-        //         titleTextWidth = document.getElementById("title-text").offsetWidth;
-        //         if (document.getElementById("logo")) {
-        //             logo = document.getElementById("logo").offsetWidth;
-        //         }
-        //         titleWidth = titleEl ? titleEl[0].offsetWidth : 0;
-        //
-        //         if (!this.$store.state.PortalTitle.titleWidth) {
-        //             if (titleWidth > titlePadding) {
-        //                 this.$store.state.PortalTitle.titleWidth = titleWidth;
-        //             }
-        //         }
-        //
-        //         rest = navBarWidth - navMenuWidth - searchbarWidth;
-        //         document.getElementById("title-text").style.width = (rest - logo - titlePadding).toString() + "px";
-        //
-        //         if (logo < rest && this.$el.style.display === "none") {
-        //             this.$el.style.display = "block";
-        //         }
-        //         else if (rest < logo && this.$el.style.display === "block") {
-        //             this.$el.style.display = "none";
-        //         }
-        //         if (rest - titleTextWidth - logo - titlePadding < (30 / titleTextWidth * 100) - titleTextWidth && document.getElementById("title-text").style.display === "inline-block") {
-        //             document.getElementById("title-text").style.display = "none";
-        //         }
-        //         else if (rest - titleTextWidth - logo - titlePadding > (30 / titleTextWidth * 100) && document.getElementById("title-text").style.display === "none") {
-        //             document.getElementById("title-text").style.display = "inline-block";
-        //         }
-        //     }
-        // }
+        ...mapGetters(["isMobile"])
     }
 };
 </script>
 
 <template>
     <div
-        v-if="text !== '' || logo !== '' || link !== '' || toolTip !== ''"
+        v-if="!isMobile && (text !== '' || logo !== '' || link !== '' || toolTip !== '')"
         class="portal-title"
     >
         <a
