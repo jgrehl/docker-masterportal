@@ -69,8 +69,8 @@ export default {
         commit("setProjection", mapView.getProjection());
         commit("setBackgroundImage", mapView.get("backgroundImage"));
         // note initial values for quick comparisons/resets
-        commit("setInitialZoomLevel", mapView.getZoom());
-        commit("setInitialCenter", mapView.getCenter());
+        // commit("setInitialZoomLevel", mapView.getZoom());
+        // commit("setInitialCenter", mapView.getCenter());
         commit("setInitialResolution", mapView.getResolution());
         commit("setZoom", mapView.getZoom());
         commit("setMinZoomLevel", mapView.getMinZoom());
@@ -98,10 +98,10 @@ export default {
 
         // const mapView = map.getView();
 
-        commit("setResolution", mapView.getResolution());
+        // commit("setResolution", mapView.getResolution());
         // commit("setBoundingBox", mapView.calculateExtent(map.getSize()));
         commit("setRotation", mapView.getRotation());
-        commit("setZoom", mapView.getZoom());
+        // commit("setZoom", mapView.getZoom());
         dispatch("setCenter", mapView.getCenter());
     },
 
