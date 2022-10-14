@@ -45,13 +45,10 @@ export default {
     i {
         margin-right: 0.5rem;
     }
-    &:focus, &:active { /*, &:hover { TODO: Use hover with this rule instead when this component is project wide */
+    &:focus, &:active &:hover {
         color: $primary;
         background-color: $white;
         border-color: $primary;
-    }
-    &:hover {
-        @include primary_action_hover;
     }
 }
 </style>
