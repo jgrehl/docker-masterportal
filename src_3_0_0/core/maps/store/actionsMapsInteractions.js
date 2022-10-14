@@ -39,6 +39,20 @@ export default {
     },
 
     /**
+     * Sets map view to initial properties.
+     * @param {Object} param store context
+     * @param {Object} param.state the state
+     * @returns {void}
+     */
+    resetView ({state}) {
+        const view = mapCollection.getMapView("2D");
+
+        view.setCenter(state.initialCenter);
+        view.setRotation(state.initialRotation);
+        view.setZoom(state.initialZoom);
+    },
+
+    /**
      * Unsubscribes listener to certain events.
      * @param {Object} _ not used
      * @param {Object} payload parameter object
