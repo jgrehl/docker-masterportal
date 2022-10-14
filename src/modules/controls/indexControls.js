@@ -9,7 +9,7 @@ import AttributionsItem from "./attributions/components/AttributionsItem.vue";
 import OrientationItem from "./orientation/components/OrientationItem.vue";
 import OverviewMap from "./overviewMap/components/OverviewMap.vue";
 import StartTool from "./startTool/components/StartTool.vue";
-import TotalView from "./totalView/components/TotalView.vue";
+// import TotalView from "./totalView/components/TotalView.vue";
 import ZoomInAndOut from "./zoom/components/ZoomInAndOut.vue";
 import FreezeScreen from "./freeze/components/FreezeScreen.vue";
 import RotationItem from "./rotation/components/RotationItem.vue";
@@ -31,24 +31,24 @@ export default {
     state: {
         // maps config.json.md control key to component
         // componentMap: {
-            attributions: AttributionsItem,
-            // backForward: BackForward,
-            freeze: FreezeScreen,
-            // fullScreen: FullScreen,
-            orientation: OrientationItem,
-            overviewMap: OverviewMap,
-            rotation: RotationItem,
-            startTool: StartTool,
-            totalView: TotalView,
-            zoom: ZoomInAndOut
+        attributions: AttributionsItem,
+        // backForward: BackForward,
+        freeze: FreezeScreen,
+        // fullScreen: FullScreen,
+        orientation: OrientationItem,
+        overviewMap: OverviewMap,
+        rotation: RotationItem,
+        startTool: StartTool,
+        // totalView: TotalView,
+        // zoom: ZoomInAndOut
         // },
         // config.json.md control keys where the matching element is to be hidden in mobile mode
         mobileHiddenControls: [
-            "backForward",
+            // "backForward",
             // "fullScreen",
             // NOTE "mousePosition" is not rendered as a child here
             "overviewMap",
-            "totalView",
+            // "totalView",
             "freeze"
         ],
         bottomControls: ["attributions", "overviewMap"]
