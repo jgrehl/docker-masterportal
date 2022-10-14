@@ -11,7 +11,6 @@ import Maps from "../core/maps/store/indexMaps";
 import Menu from "../core/menu/indexMenu";
 import MenuNavigation from "../core/menu/navigation/store/indexMenuNavigation";
 import Modules from "../core/modules/store/indexModules";
-import PortalTitle from "../core/menu/portalTitle/store/indexPortalTitle";
 
 Vue.use(Vuex);
 
@@ -25,8 +24,7 @@ const store = new Vuex.Store({
         Maps,
         Menu,
         MenuNavigation,
-        Modules: {...Modules},
-        PortalTitle
+        Modules: {...Modules}
     }
 });
 
