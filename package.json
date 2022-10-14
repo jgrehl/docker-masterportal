@@ -70,7 +70,6 @@
     "chart.js": "^2.9.3",
     "crypto-js": "^4.1.1",
     "dom-parser": "^0.1.6",
-    "dom-storage": "^2.1.0",
     "html2canvas": "^1.4.1",
     "i18next": "^22.4.11",
     "i18next-browser-languagedetector": "^7.0.1",
