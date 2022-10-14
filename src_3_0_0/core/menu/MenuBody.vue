@@ -1,13 +1,13 @@
 <script>
-import MenuNavigation from "./navigation/components/MenuNavigation.vue";
 import MenuItems from "./MenuItems.vue";
+import MenuNavigation from "./navigation/components/MenuNavigation.vue";
 import {mapGetters} from "vuex";
 
 export default {
     name: "MenuBody",
     components: {
-        MenuNavigation,
-        MenuItems
+        MenuItems,
+        MenuNavigation
     },
     props: {
         side: {
