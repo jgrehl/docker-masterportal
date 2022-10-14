@@ -14,10 +14,6 @@ export default {
             type: String,
             default: "mainMenu",
             validator: value => value === "mainMenu" || value === "secondaryMenu"
-        },
-        additionalPath: {
-            type: Array,
-            default: () => []
         }
     },
     computed: {
@@ -29,7 +25,7 @@ export default {
     },
     methods: {
         path (sectionIndex) {
-            return [this.side, "sections", sectionIndex, ...this.additionalPath];
+            return [this.side, "sections", sectionIndex];
         }
     }
 };
