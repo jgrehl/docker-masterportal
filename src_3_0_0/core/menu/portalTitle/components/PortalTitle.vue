@@ -1,5 +1,4 @@
 <script>
-
 import {mapGetters} from "vuex";
 
 export default {
@@ -43,17 +42,17 @@ export default {
             :data-bs-toggle="text"
             data-bs-placement="bottom"
             :title="toolTip"
-            class="tabable"
+            class="tabbable"
         >
 
             <img
                 v-if="logo !== ''"
-                id="logo"
+                class="portal-title-logo"
                 :src="logo"
                 :alt="text"
             >
             <h1
-                id="title-text"
+                class="portal-title-text"
                 v-html="text"
             />
         </a>
@@ -68,15 +67,18 @@ export default {
     overflow: hidden;
     line-height: 50px;
     float: left;
+
     a {
-        text-decoration: none;
         display: block;
+        text-decoration: none;
+
         img {
-            margin: 0 5px 0 5px;
-            max-height: 40px;
             display: inline-block;
             vertical-align: middle;
+            margin: 0 5px;
+            max-height: 40px;
         }
+
         h1 {
             color: $secondary_contrast;
             margin-left: 5px;
@@ -90,5 +92,4 @@ export default {
         }
     }
 }
-
 </style>
