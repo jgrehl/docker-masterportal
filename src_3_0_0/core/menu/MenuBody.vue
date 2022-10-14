@@ -40,14 +40,14 @@ export default {
             v-if="lastEntry(side)"
             :path="lastEntry(side)"
         />
-        <div
+        <template
             v-for="(_, key) in menu.sections"
             v-else
-            :key="key"
         >
             <MenuItems
+                :key="key"
                 :path="path(key)"
             />
-        </div>
+        </template>
     </div>
 </template>
