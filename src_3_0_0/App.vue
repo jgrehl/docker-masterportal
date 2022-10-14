@@ -125,6 +125,10 @@ export default {
             >
                 <i class="bi-list" />
             </button>
+            <!--
+                TODO(roehlipa): Toggle buttons currently don't work when a menu is initially opened -> gotta close the menu first
+                    Should be fixed when using own css rules and functionality
+            -->
             <button
                 id="secondary-menu-toggle-button"
                 class="btn btn-primary bootstrap-icon menu-toggle-button"
