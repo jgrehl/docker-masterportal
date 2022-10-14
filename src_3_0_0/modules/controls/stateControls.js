@@ -1,6 +1,7 @@
 import BackForward from "./backForward/components/BackForward.vue";
 import Button3d from "./button3d/components/Button3dItem.vue";
 import FullScreen from "./fullScreen/components/FullScreen.vue";
+import TotalView from "./totalView/components/TotalView.vue";
 
 /**
  * User type definition
@@ -13,9 +14,14 @@ const state = {
     componentMap: {
         backForward: BackForward,
         button3d: Button3d,
-        fullScreen: FullScreen
+        fullScreen: FullScreen,
+        totalView: TotalView
     },
-    mobileHiddenControls: ["fullScreen"],
+    mobileHiddenControls: [
+        "backForward",
+        "fullScreen",
+        "totalView"
+    ],
     expandableControls: []
 };
 

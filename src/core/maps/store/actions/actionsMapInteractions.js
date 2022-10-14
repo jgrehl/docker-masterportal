@@ -43,19 +43,18 @@ export default {
      * @param {Object} param store context
      * @param {Object} param.state the state
      * @param {Object} param.dispatch the dispatch
-     * @param {Object} param.getters the getters
      * @returns {void}
      */
-    resetView ({state, dispatch, getters}) {
-        const view = getters.getView;
+    resetView ({state, dispatch}) {
+        // const view = getters.getView;
 
         if (state.mode === "3D") {
             dispatch("setZoomLevel", state.changeZoomLevel["3D"]);
             dispatch("setCenter", state.initialCenter);
         }
         else {
-            view.setCenter(state.initialCenter);
-            view.setResolution(state.initialResolution);
+            // view.setCenter(state.initialCenter);
+            // view.setResolution(state.initialResolution);
         }
         dispatch("MapMarker/removePointMarker", null, {root: true});
     },
