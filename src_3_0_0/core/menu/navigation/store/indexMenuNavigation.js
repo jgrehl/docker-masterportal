@@ -1,10 +1,10 @@
 import getters from "./gettersMenuNavigation";
-import state from "./stateMenuNavigation";
 import mutations from "./mutationsMenuNavigation";
+import state from "./stateMenuNavigation";
 
 export default {
     namespaced: true,
     getters,
-    state,
-    mutations
+    mutations,
+    state
 };
