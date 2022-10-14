@@ -18,6 +18,7 @@
     "controls": {
       "fullScreen": true,
       "backForward": true,
+      "totalView": true,
       "expandable": {
         "button3d": true
       }
