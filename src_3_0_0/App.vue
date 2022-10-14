@@ -117,7 +117,7 @@ export default {
             />
             <button
                 id="menu-toggle-button"
-                class="btn btn-primary bootstrap-icon"
+                class="btn btn-primary bootstrap-icon menu-toggle-button"
                 type="button"
                 data-bs-toggle="offcanvas"
                 data-bs-target="#menu-offcanvas-mainMenu"
@@ -126,8 +126,8 @@ export default {
                 <i class="bi-list" />
             </button>
             <button
-                id="secondary_menu-toggle-button"
-                class="btn btn-primary bootstrap-icon"
+                id="secondary-menu-toggle-button"
+                class="btn btn-primary bootstrap-icon menu-toggle-button"
                 type="button"
                 data-bs-toggle="offcanvas"
                 data-bs-target="#menu-offcanvas-secondaryMenu"
@@ -180,8 +180,8 @@ export default {
                 height: 100%;
                 width: 100%;
             }
-            #menu-toggle-button {
-                // TODO(roehlipa): Style ist wie bei ControlIcons, zentralisieren!
+            .menu-toggle-button {
+                // TODO(roehlipa): Use same styling as ControlIcons?
                 position: absolute;
                 top: 15px;
                 left: 15px;
@@ -197,22 +197,9 @@ export default {
                     line-height: 0;
                 }
             }
-            #secondary_menu-toggle-button {
-                // TODO(roehlipa): Style ist wie bei ControlIcons, zentralisieren!
-                position: absolute;
-                top: 15px;
+            #secondary-menu-toggle-button {
                 right: 15px;
-                font-size: calc(#{$icon_length} - 0.35 * #{$icon_length});
-                height: $icon_length;
-                width: $icon_length;
-
-                i {
-                    position: absolute;
-                    top: 50%;
-                    left: 50%;
-                    transform: translate(-50%, -50%);
-                    line-height: 0;
-                }
+                left: auto;
             }
             .elements-positioned-over-map {
                 display: flex;
