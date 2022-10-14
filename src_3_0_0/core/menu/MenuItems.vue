@@ -12,10 +12,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters("Menu", ["section"]),
-        iconClass () {
-            return this.iconName === "" || this.iconName.startsWith("bi-") ? this.iconName : `bi-${this.iconName}`;
-        }
+        ...mapGetters("Menu", ["section"])
     }
 };
 </script>
