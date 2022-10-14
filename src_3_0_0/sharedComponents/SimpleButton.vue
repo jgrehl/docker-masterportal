@@ -46,6 +46,7 @@ export default {
         margin-right: 0.5rem;
     }
     &:focus, &:active &:hover {
+        /* TODO(roehlipa): Adjust colors */
         color: $primary;
         background-color: $white;
         border-color: $primary;
