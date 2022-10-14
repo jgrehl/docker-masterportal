@@ -1,12 +1,12 @@
-import getters from "./gettersMenu";
-import state from "./stateMenu";
-import mutations from "./mutationsMenu";
 import actions from "./actionsMenu";
+import getters from "./gettersMenu";
+import mutations from "./mutationsMenu";
+import state from "./stateMenu";
 
 export default {
     namespaced: true,
-    getters,
     actions,
-    state,
-    mutations
+    getters,
+    mutations,
+    state
 };
