@@ -3,7 +3,7 @@ import {mapGetters} from "vuex";
 import PortalTitle from "./portalTitle/components/PortalTitle.vue";
 
 export default {
-    name: "MenuHeader",
+    name: "MenuContainerHeader",
     components: {
         PortalTitle
     },
