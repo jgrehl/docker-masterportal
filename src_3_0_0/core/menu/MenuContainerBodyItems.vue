@@ -1,10 +1,12 @@
 <script>
 import {mapGetters} from "vuex";
-import MenuItem from "./MenuItem.vue";
+import MenuContainerBodyElement from "./MenuContainerBodyElement.vue";
 
 export default {
-    name: "MenuItems",
-    components: {MenuItem},
+    name: "MenuContainerBodyItems",
+    components: {
+        MenuContainerBodyElement
+    },
     props: {
         path: {
             type: Array,
@@ -23,7 +25,7 @@ export default {
             v-for="(item, key) in section(path)"
             :key="key"
         >
-            <MenuItem
+            <MenuContainerBodyElement
                 v-bind="item"
                 :path="[...path, key]"
             />
