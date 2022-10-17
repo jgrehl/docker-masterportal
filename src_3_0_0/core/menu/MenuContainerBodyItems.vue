@@ -8,6 +8,10 @@ export default {
         MenuContainerBodyElement
     },
     props: {
+        idAppendix: {
+            type: String,
+            required: true
+        },
         path: {
             type: Array,
             default: () => []
@@ -20,9 +24,13 @@ export default {
 </script>
 
 <template>
-    <ul class="nav flex-column">
+    <ul
+        :id="'menu-offcanvas-body-items-' + idAppendix"
+        class="nav flex-column"
+    >
         <li
             v-for="(item, key) in section(path)"
+            :id="'menu-offcanvas-body-items-element-' + key + '-' + idAppendix"
             :key="key"
         >
             <MenuContainerBodyElement
