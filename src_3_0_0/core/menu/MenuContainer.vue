@@ -49,6 +49,7 @@ export default {
     >
         <template v-if="isMobile">
             <ResizeHandle
+                :id="'menu-offcanvas-resize-handle-header-' + side"
                 class="mobile-container-handle"
                 handle-position="top"
                 :min-height="0.1"
@@ -57,6 +58,7 @@ export default {
                 <MenuContainerHeader :side="side" />
             </ResizeHandle>
             <ResizeHandle
+                :id="'menu-offcanvas-resize-handle-body-' + side"
                 class="mobile-container-handle"
                 handle-position="top"
                 :min-height="0.1"
@@ -69,6 +71,7 @@ export default {
             <MenuContainerHeader :side="side" />
             <MenuContainerBody :side="side" />
             <ResizeHandle
+                :id="'menu-offcanvas-resize-handle-' + side"
                 class="menu-container-handle"
                 :handle-position="handlePosition"
                 :min-width="0.1"
