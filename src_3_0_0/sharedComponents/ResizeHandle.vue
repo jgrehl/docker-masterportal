@@ -1,14 +1,14 @@
 <script>
 // Signs for calculating the position after resize
 const handleSigns = {
-    tl: [-1, -1],
-    t: [0, -1],
-    tr: [1, -1],
-    r: [1, 0],
-    br: [1, 1],
-    b: [0, 1],
-    bl: [-1, 1],
-    l: [-1, 0]
+    topLeft: [-1, -1],
+    top: [0, -1],
+    topRight: [1, -1],
+    right: [1, 0],
+    bottomRight: [1, 1],
+    bottom: [0, 1],
+    bottomLeft: [-1, 1],
+    left: [-1, 0]
 };
 
 /**
@@ -37,8 +37,8 @@ export default {
          */
         handlePosition: {
             type: String,
-            default: "bl",
-            validator: value => ["tl", "t", "tr", "r", "br", "b", "bl", "l"].includes(value)
+            default: "bottomLeft",
+            validator: value => ["topLeft", "top", "topRight", "right", "bottomRight", "bottom", "bottomLeft", "left"].includes(value)
         },
         minHeight: {
             type: Number,
@@ -83,7 +83,7 @@ export default {
         }
     },
     data: () => ({
-        dCursorPosition: {x: 0, y: 0}, // Cursor position difference during resizing, modified by rotation
+        deltaCursorPosition: {x: 0, y: 0}, // Cursor position difference during resizing, modified by rotation
         initialCursorPosition: {x: 0, y: 0},
         isResizing: false,
         initialDimensions: {width: 0, height: 0},
@@ -115,7 +115,7 @@ export default {
         eventData () {
             return {
                 cursorClass: this.cursorClass,
-                dCursorPosition: this.dCursorPosition,
+                deltaCursorPosition: this.deltaCursorPosition,
                 grid: this.grid,
                 handleElement: this.handleElement,
                 handlePosition: this.handlePosition,
@@ -220,20 +220,20 @@ export default {
         onMouseMove (event) {
             const clientX = event.touches ? event.touches[0].clientX : event.clientX,
                 clientY = event.touches ? event.touches[0].clientY : event.clientY,
-                dX = clientX - this.initialCursorPosition.x,
-                dY = clientY - this.initialCursorPosition.y;
+                deltaX = clientX - this.initialCursorPosition.x,
+                deltaY = clientY - this.initialCursorPosition.y;
 
             if (clientX < 0 || clientX > window.innerWidth || clientY < 0 || clientY > window.innerHeight) {
                 this.$emit("leftScreen", this.eventData);
                 this.isResizing = false;
             }
 
-            this.dCursorPosition.x = dX * Math.cos(this.initialRotation) + dY * Math.sin(this.initialRotation);
-            this.dCursorPosition.y = dY * Math.cos(this.initialRotation) - dX * Math.sin(this.initialRotation);
+            this.deltaCursorPosition.x = deltaX * Math.cos(this.initialRotation) + deltaY * Math.sin(this.initialRotation);
+            this.deltaCursorPosition.y = deltaY * Math.cos(this.initialRotation) - deltaX * Math.sin(this.initialRotation);
 
             if (this.grid > 1) {
-                this.dCursorPosition.x = Math.round(this.dCursorPosition.x / this.grid) * this.grid;
-                this.dCursorPosition.y = Math.round(this.dCursorPosition.y / this.grid) * this.grid;
+                this.deltaCursorPosition.x = Math.round(this.deltaCursorPosition.x / this.grid) * this.grid;
+                this.deltaCursorPosition.y = Math.round(this.deltaCursorPosition.y / this.grid) * this.grid;
             }
             this.setNewSize();
 
@@ -299,18 +299,18 @@ export default {
          * @returns {void}
          */
         setNewPosition () {
-            const dWidth = this.initialDimensions.width - this.handleElement.offsetWidth,
-                dHeight = this.initialDimensions.height - this.handleElement.offsetHeight,
-                [sX, sY] = handleSigns[this.handlePosition];
+            const deltaWidth = this.initialDimensions.width - this.handleElement.offsetWidth,
+                deltaHeight = this.initialDimensions.height - this.handleElement.offsetHeight,
+                [signX, signY] = handleSigns[this.handlePosition];
             let {left, top} = this.initialPosition;
 
             // Disposition correction 1
-            left += 0.5 * dWidth;
-            top += 0.5 * dHeight;
+            left += 0.5 * deltaWidth;
+            top += 0.5 * deltaHeight;
             // Disposition correction 2, only needed when symmetric resize is disabled
             if (!this.symmetricResize) {
-                left -= 0.5 * (sX * dWidth * Math.cos(this.initialRotation) - sY * dHeight * Math.sin(this.initialRotation));
-                top -= 0.5 * (sY * dHeight * Math.cos(this.initialRotation) + sX * dWidth * Math.sin(this.initialRotation));
+                left -= 0.5 * (signX * deltaWidth * Math.cos(this.initialRotation) - signY * deltaHeight * Math.sin(this.initialRotation));
+                top -= 0.5 * (signY * deltaHeight * Math.cos(this.initialRotation) + signX * deltaWidth * Math.sin(this.initialRotation));
             }
             this.handleElement.style.left = Math.round(left) + "px";
             this.handleElement.style.top = Math.round(top) + "px";
@@ -324,8 +324,8 @@ export default {
             const containerWidth = document.getElementById("masterportal-container").offsetWidth,
                 containerHeight = document.getElementById("masterportal-container").offsetHeight;
 
-            if (this.handlePosition !== "t" && this.handlePosition !== "b") {
-                let newWidth = this.initialDimensions.width + handleSigns[this.handlePosition][0] * this.dCursorPosition.x;
+            if (this.handlePosition !== "top" && this.handlePosition !== "bottom") {
+                let newWidth = this.initialDimensions.width + handleSigns[this.handlePosition][0] * this.deltaCursorPosition.x;
 
                 if (newWidth < containerWidth * this.minWidth) {
                     newWidth = containerWidth * this.minWidth;
@@ -335,8 +335,8 @@ export default {
                 }
                 this.handleElement.style.width = Math.round(newWidth) + "px";
             }
-            if (this.handlePosition !== "l" && this.handlePosition !== "r") {
-                let newHeight = this.initialDimensions.height + handleSigns[this.handlePosition][1] * this.dCursorPosition.y;
+            if (this.handlePosition !== "left" && this.handlePosition !== "right") {
+                let newHeight = this.initialDimensions.height + handleSigns[this.handlePosition][1] * this.deltaCursorPosition.y;
 
                 if (newHeight < containerHeight * this.minHeight) {
                     newHeight = containerHeight * this.minHeight;
@@ -432,35 +432,35 @@ $handle_size: 6px;
         }
     }
     &-type {
-        &-tl {
+        &-topLeft {
             top: 0;
             left: 0;
         }
-        &-tr {
+        &-topRight {
             top: 0;
             right: 0;
         }
-        &-bl {
+        &-bottomLeft {
             bottom: 0;
             left: 0;
         }
-        &-br {
+        &-bottomRight {
             bottom: 0;
             right: 0;
         }
-        &-t {
+        &-top {
             top: 0;
             width: 100%
         }
-        &-l {
+        &-left {
             left: calc(-2 * #{$handle_size});
             height: 100%;
         }
-        &-r {
+        &-right {
             right: calc(-2 * #{$handle_size});
             height: 100%;
         }
-        &-b {
+        &-bottom {
             bottom: 0;
             width: 100%
         }
