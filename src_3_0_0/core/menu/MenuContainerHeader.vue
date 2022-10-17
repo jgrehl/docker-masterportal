@@ -35,12 +35,16 @@ export default {
 </script>
 
 <template>
-    <div class="offcanvas-header">
+    <div
+        :id="'menu-offcanvas-header-' + side"
+        class="offcanvas-header"
+    >
         <MenuContainerHeaderTitle
             v-if="title"
             v-bind="title"
         />
         <button
+            :id="'menu-offcanvas-header-close-button-' + side"
             type="button"
             class="btn-close text-reset"
             data-bs-dismiss="offcanvas"
