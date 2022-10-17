@@ -46,6 +46,7 @@ export default {
         >
             <MenuContainerBodyItems
                 :key="key"
+                :id-appendix="side"
                 :path="path(key)"
             />
         </template>
