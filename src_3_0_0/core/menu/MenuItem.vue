@@ -47,6 +47,7 @@ export default {
         :icon="showIcon ? icon : null"
     />
     <!-- TODO(roehlipa): Properly add description -->
+    <!-- TODO(roehlipa): Buttons should look differently when mobile -->
 </template>
 
 <style scoped>
