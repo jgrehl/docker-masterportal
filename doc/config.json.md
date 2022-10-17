@@ -52,15 +52,6 @@ The configuration options listed in the following table exist:
 |layerInformation|no|**[layerInformation](#markdown-header-portalconfiglayerInformation)**||Decides if to show individual attribute in Meta data of layer information|false|
 
 ***
-### Portalconfig.tree
-Configuration of the topic selection tree
-
-|Name|Required|Type|Default|Description|Expert|
-|----|--------|----|-------|-----------|------|
-|type|no|enum["light","default","custom"]|"light"|Decides the type of topic selection tree. You may choose between `"light"` (simple list), `"default"` (FHH-Atlas), and `"custom"` (layer list defined via JSON file).|false|
-|validLayerTypesDefaultTree|no|enum|"["WMS", "SENSORTHINGS", "TERRAIN3D", "TILESET3D", "OBLIQUE"]"|Layer types to be used with the type "default".|false|
-
-***
 
 ### Portalconfig.tree
 Configuration of the topic selection tree
