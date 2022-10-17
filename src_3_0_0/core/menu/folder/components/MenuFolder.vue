@@ -7,8 +7,7 @@ export default {
         MenuContainerBodyItems
     },
     props: {
-        /** title of the folder */
-        title: {
+        idAppendix: {
             type: String,
             required: true
         },
@@ -21,6 +20,11 @@ export default {
         path: {
             type: Array,
             default: () => []
+        },
+        /** title of the folder */
+        title: {
+            type: String,
+            required: true
         }
     },
     data () {
@@ -35,6 +39,7 @@ export default {
     <div>
         <h4>{{ $t(title) }}</h4>
         <MenuContainerBodyItems
+            :id-appendix="idAppendix"
             :path="[...path, 'children']"
         />
     </div>
