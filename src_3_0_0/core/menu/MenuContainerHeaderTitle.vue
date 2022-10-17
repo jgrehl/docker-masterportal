@@ -2,7 +2,7 @@
 import {mapGetters} from "vuex";
 
 export default {
-    name: "PortalTitle",
+    name: "MenuContainerHeaderTitle",
     props: {
         /** portal name */
         text: {
