@@ -32,7 +32,10 @@ export default {
 </script>
 
 <template>
-    <div class="offcanvas-body">
+    <div
+        :id="'menu-offcanvas-body-' + side"
+        class="offcanvas-body"
+    >
         <MenuNavigation :side="side" />
         <component
             :is="componentFromPath(side)"
