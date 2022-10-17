@@ -18,10 +18,10 @@ export default {
         ...mapGetters("Menu", ["mainTitle", "secondaryTitle"]),
         title () {
             if (this.side === "mainMenu" && this.mainTitle) {
-                return this.mainTitle;
+                return {...this.mainTitle, idAppendix: this.side};
             }
             if (this.side === "secondaryMenu" && this.secondaryTitle) {
-                return this.mainTitle;
+                return {...this.secondaryTitle, idAppendix: this.side};
             }
             return null;
         }
