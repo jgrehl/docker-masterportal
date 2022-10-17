@@ -4,7 +4,7 @@ import MenuNavigation from "./navigation/components/MenuNavigation.vue";
 import {mapGetters} from "vuex";
 
 export default {
-    name: "MenuBody",
+    name: "MenuContainerBody",
     components: {
         MenuItems,
         MenuNavigation
