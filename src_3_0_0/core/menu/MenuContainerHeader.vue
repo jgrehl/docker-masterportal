@@ -1,11 +1,11 @@
 <script>
 import {mapGetters} from "vuex";
-import PortalTitle from "./portalTitle/components/PortalTitle.vue";
+import MenuContainerHeaderTitle from "./MenuContainerHeaderTitle.vue";
 
 export default {
     name: "MenuContainerHeader",
     components: {
-        PortalTitle
+        MenuContainerHeaderTitle
     },
     props: {
         side: {
@@ -36,7 +36,7 @@ export default {
 
 <template>
     <div class="offcanvas-header">
-        <PortalTitle
+        <MenuContainerHeaderTitle
             v-if="title"
             v-bind="title"
         />
