@@ -22,7 +22,7 @@ export default {
         ...mapGetters(["isMobile"]),
         ...mapGetters("Menu", ["mainInitiallyOpen", "secondaryInitiallyOpen"]),
         handlePosition () {
-            return this.side === "mainMenu" ? "r" : "l";
+            return this.side === "mainMenu" ? "right" : "left";
         },
         initiallyOpen () {
             return this.side === "mainMenu" ? this.mainInitiallyOpen : this.secondaryInitiallyOpen;
@@ -50,7 +50,7 @@ export default {
         <template v-if="isMobile">
             <ResizeHandle
                 class="mobile-container-handle"
-                handle-position="t"
+                handle-position="top"
                 :min-height="0.1"
                 :max-height="0.5"
             >
@@ -58,7 +58,7 @@ export default {
             </ResizeHandle>
             <ResizeHandle
                 class="mobile-container-handle"
-                handle-position="t"
+                handle-position="top"
                 :min-height="0.1"
                 :max-height="0.5"
             >
