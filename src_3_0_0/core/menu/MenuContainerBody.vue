@@ -1,12 +1,12 @@
 <script>
-import MenuItems from "./MenuItems.vue";
+import MenuContainerBodyItems from "./MenuContainerBodyItems.vue";
 import MenuNavigation from "./navigation/components/MenuNavigation.vue";
 import {mapGetters} from "vuex";
 
 export default {
     name: "MenuContainerBody",
     components: {
-        MenuItems,
+        MenuContainerBodyItems,
         MenuNavigation
     },
     props: {
@@ -44,7 +44,7 @@ export default {
             v-for="(_, key) in menu.sections"
             v-else
         >
-            <MenuItems
+            <MenuContainerBodyItems
                 :key="key"
                 :path="path(key)"
             />
