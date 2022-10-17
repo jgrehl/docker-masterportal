@@ -1,14 +1,14 @@
 <script>
 import {mapGetters} from "vuex";
-import MenuBody from "./MenuBody.vue";
-import MenuHeader from "./MenuHeader.vue";
+import MenuContainerBody from "./MenuContainerBody.vue";
+import MenuContainerHeader from "./MenuContainerHeader.vue";
 import ResizeHandle from "../../sharedComponents/ResizeHandle.vue";
 
 export default {
     name: "MenuContainer",
     components: {
-        MenuBody,
-        MenuHeader,
+        MenuContainerBody,
+        MenuContainerHeader,
         ResizeHandle
     },
     props: {
@@ -54,7 +54,7 @@ export default {
                 :min-height="0.1"
                 :max-height="0.5"
             >
-                <MenuHeader :side="side" />
+                <MenuContainerHeader :side="side" />
             </ResizeHandle>
             <ResizeHandle
                 class="mobile-container-handle"
@@ -62,12 +62,12 @@ export default {
                 :min-height="0.1"
                 :max-height="0.5"
             >
-                <MenuBody :side="side" />
+                <MenuContainerBody :side="side" />
             </ResizeHandle>
         </template>
         <template v-else>
-            <MenuHeader :side="side" />
-            <MenuBody :side="side" />
+            <MenuContainerHeader :side="side" />
+            <MenuContainerBody :side="side" />
             <ResizeHandle
                 class="menu-container-handle"
                 :handle-position="handlePosition"
