@@ -4,8 +4,12 @@ import {mapGetters} from "vuex";
 export default {
     name: "MenuContainerHeaderTitle",
     props: {
-        /** portal name */
-        text: {
+        idAppendix: {
+            type: String,
+            required: true
+        },
+        /** URL of an external website to link to */
+        link: {
             type: String,
             default: ""
         },
@@ -14,12 +18,12 @@ export default {
             type: String,
             default: ""
         },
-        /** URL of an external website to link to */
-        link: {
+        /** title text */
+        text: {
             type: String,
             default: ""
         },
-        /** Shown on hovering the portal logo */
+        /** Shown on hovering the title logo */
         toolTip: {
             type: String,
             default: ""
@@ -34,7 +38,8 @@ export default {
 <template>
     <div
         v-if="!isMobile && (text !== '' || logo !== '' || link !== '' || toolTip !== '')"
-        class="portal-title"
+        :id="'menu-offcanvas-header-title-' + idAppendix"
+        class="header-title"
     >
         <a
             :href="link"
@@ -47,14 +52,10 @@ export default {
 
             <img
                 v-if="logo !== ''"
-                class="portal-title-logo"
                 :src="logo"
                 :alt="text"
             >
-            <h1
-                class="portal-title-text"
-                v-html="text"
-            />
+            <h1 v-html="text" />
         </a>
     </div>
 </template>
@@ -62,7 +63,8 @@ export default {
 <style lang="scss" scoped>
 @import "~variables";
 
-.portal-title {
+/* TODO(roehlipa): Update focus, hover and active style */
+.header-title {
     margin-left: 10px;
     overflow: hidden;
     line-height: 50px;
