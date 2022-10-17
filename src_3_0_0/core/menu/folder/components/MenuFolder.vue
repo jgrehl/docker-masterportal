@@ -1,10 +1,10 @@
 <script>
-import MenuItems from "../../MenuItems.vue";
+import MenuContainerBodyItems from "../../MenuContainerBodyItems.vue";
 
 export default {
     name: "MenuFolder",
     components: {
-        MenuItems
+        MenuContainerBodyItems
     },
     props: {
         /** title of the folder */
@@ -34,7 +34,7 @@ export default {
 <template>
     <div>
         <h4>{{ $t(title) }}</h4>
-        <MenuItems
+        <MenuContainerBodyItems
             :path="[...path, 'children']"
         />
     </div>

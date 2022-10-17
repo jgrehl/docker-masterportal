@@ -3,7 +3,7 @@ import {mapMutations} from "vuex";
 import SimpleButton from "../../sharedComponents/SimpleButton.vue";
 
 export default {
-    name: "MenuItem",
+    name: "MenuContainerBodyElement",
     components: {SimpleButton},
     props: {
         description: {
