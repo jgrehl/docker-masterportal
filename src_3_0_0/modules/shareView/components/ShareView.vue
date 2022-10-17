@@ -30,7 +30,7 @@ export default {
                 await navigator.share(shareData);
             }
             catch (err) {
-                console.log(`Error: ${err}`);
+                // console.log(`Error: ${err}`);
             }
         }
     }
