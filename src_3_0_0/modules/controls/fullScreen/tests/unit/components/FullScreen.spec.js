@@ -13,7 +13,7 @@ describe("src_3_0_0/modules/controls/fullScreen/components/FullScreen.vue", () =
     it("renders the fullScreen button", () => {
         const wrapper = mount(FullScreen, {localVue});
 
-        expect(wrapper.find(".fullscreen-button").exists()).to.be.true;
+        expect(wrapper.find("#full-screen-button").exists()).to.be.true;
         expect(wrapper.findAll("button")).to.have.length(1);
     });
 });
