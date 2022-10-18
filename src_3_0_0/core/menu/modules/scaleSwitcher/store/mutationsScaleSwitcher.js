@@ -1,4 +1,4 @@
-import {generateSimpleMutations} from "../../../app-store/utils/generators";
+import {generateSimpleMutations} from "../../../../../app-store/utils/generators";
 import state from "./stateScaleSwitcher";
 
 const mutations = {

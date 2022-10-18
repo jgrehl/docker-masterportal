@@ -1,5 +1,5 @@
 import Folder from "./folder/components/MenuFolder.vue";
-import ScaleSwitcher from "../../modules/scaleSwitcher/components/ScaleSwitcher.vue";
+import ScaleSwitcher from "./modules/scaleSwitcher/components/ScaleSwitcher.vue";
 
 /**
  * Menu type definition
