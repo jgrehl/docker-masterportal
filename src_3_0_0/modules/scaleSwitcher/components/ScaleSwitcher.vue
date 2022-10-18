@@ -8,7 +8,7 @@ import mutations from "../store/mutationsScaleSwitcher";
 export default {
     name: "ScaleSwitcher",
     computed: {
-        ...mapGetters("Modules/ScaleSwitcher", ["active"]),
+        ...mapGetters("Menu/ScaleSwitcher", ["active"]),
         scale: {
             get () {
                 return this.$store.state.Maps.scale;
@@ -38,7 +38,7 @@ export default {
         this.scales = mapCollection.getMapView("2D").get("options").map(option => option.scale);
     },
     methods: {
-        ...mapMutations("Modules/ScaleSwitcher", Object.keys(mutations)),
+        ...mapMutations("Menu/ScaleSwitcher", Object.keys(mutations)),
 
         /**
          * Sets the focus to the first control
