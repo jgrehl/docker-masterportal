@@ -6,6 +6,43 @@ import {buildTreeStructure} from "./js/buildTreeStructure";
 
 export default {
     /**
+     * Copies the the content of the given element to the clipboard if the browser accepts the command.
+     * Solution for the weird behaviour on iOS from:
+     * https://stackoverflow.com/questions/34045777/copy-to-clipboard-using-javascript-in-ios
+     *
+     * @param {Element} el element to copy,
+     * @returns {void}
+     */
+    copyToClipboard ({dispatch}, el) {
+        const oldReadOnly = el.readOnly,
+            oldContentEditable = el.contentEditable,
+            range = document.createRange(),
+            selection = window.getSelection();
+
+        el.readOnly = false;
+        el.contentEditable = true;
+
+        range.selectNodeContents(el);
+        selection.removeAllRanges();
+        if (!Radio.request("Util", "isInternetExplorer")) {
+            selection.addRange(range);
+        }
+        // Seems to be required for mobile devices
+        el.setSelectionRange(0, 999999);
+
+        el.readOnly = oldReadOnly;
+        el.contentEditable = oldContentEditable;
+
+        try {
+            document.execCommand("copy");
+            dispatch("Alerting/addSingleAlert", {content: i18next.t("common:modules.util.copyToClipboard.contentSaved")}, {root: true});
+        }
+        catch (err) {
+            dispatch("Alerting/addSingleAlert", {content: i18next.t("common:modules.util.copyToClipboard.contentNotSaved")}, {root: true});
+            console.error(`CopyToClipboard: ${err}`);
+        }
+    },
+    /**
      * Extends all layers of config.json with the attributes of the layer in services.json.
      * If portalConfig.tree contains parameter 'layerIDsToIgnore', 'metaIDsToIgnore', 'metaIDsToMerge' or 'layerIDsToStyle' the raw layerlist is filtered and merged.
      * Config entry portalConfig.tree.validLayerTypesAutoTree is respected.
