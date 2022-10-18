@@ -5,7 +5,7 @@ import ContainerItem from "./modules/container/ContainerItem.vue";
 import MenuContainer from "./core/menu/MenuContainer.vue";
 import initializeLayers from "./core/layers/layerProcessor";
 import {initializeMaps} from "./core/maps/maps";
-import initializeModules from "./core/modules/moduleProcessor";
+import initializeModules from "./core/menu/modules/moduleProcessor";
 import LoaderOverlay from "./utils/loaderOverlay";
 import mapCollection from "./core/maps/mapCollection";
 
