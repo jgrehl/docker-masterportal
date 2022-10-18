@@ -47,7 +47,7 @@ describe("src_3_0_0/core/menu/modules/scaleSwitcher/components/ScaleSwitcher.vue
         store = new Vuex.Store({
             namespaces: true,
             modules: {
-                Modules: {
+                Menu: {
                     namespaced: true,
                     modules: {
                         ScaleSwitcher
@@ -102,7 +102,7 @@ describe("src_3_0_0/core/menu/modules/scaleSwitcher/components/ScaleSwitcher.vue
 
         mapCollection.addMap(map, "2D");
 
-        store.commit("Modules/ScaleSwitcher/setActive", true);
+        store.commit("Menu/ScaleSwitcher/setActive", true);
     });
 
     afterEach(() => {
@@ -122,7 +122,7 @@ describe("src_3_0_0/core/menu/modules/scaleSwitcher/components/ScaleSwitcher.vue
     });
 
     it("do not render the scaleSwitchers select if not active", () => {
-        store.commit("Modules/ScaleSwitcher/setActive", false);
+        store.commit("Menu/ScaleSwitcher/setActive", false);
         wrapper = shallowMount(ScaleSwitcherComponent, {store, localVue});
 
         expect(wrapper.find("#scale-switcher").exists()).to.be.false;
