@@ -36,6 +36,11 @@
       "sections": [
         [
           {
+            "title": "Scale",
+            "icon": "bi-arrows-angle-contract",
+            "itemType": "scaleSwitcher"
+          },
+          {
             "title": "folder1",
             "icon": "bi-file-plus",
             "itemType": "folder",

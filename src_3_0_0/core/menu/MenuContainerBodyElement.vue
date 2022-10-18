@@ -1,5 +1,5 @@
 <script>
-import {mapMutations} from "vuex";
+import {mapActions} from "vuex";
 import SimpleButton from "../../sharedComponents/SimpleButton.vue";
 
 export default {
@@ -35,14 +35,14 @@ export default {
         }
     },
     methods: {
-        ...mapMutations("MenuNavigation", {addNavigationEntry: "addEntry"})
+        ...mapActions("Menu", ["clickedMenuElement"])
     }
 };
 </script>
 
 <template>
     <SimpleButton
-        :interaction="() => addNavigationEntry(path)"
+        :interaction="() => clickedMenuElement(path)"
         :text="title"
         :icon="showIcon ? icon : null"
     />
