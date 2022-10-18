@@ -51,7 +51,7 @@ export default {
 </script>
 
 <template>
-    <div class="back-forward-buttons">
+    <div id="back-forward-buttons">
         <ControlIcon
             class="forward"
             :title="$t(`common:modules.controls.backForward.stepForward`)"
