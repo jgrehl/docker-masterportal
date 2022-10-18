@@ -48,7 +48,7 @@ export default {
 </script>
 
 <template>
-    <div class="button-3d-button">
+    <div id="button-3d-button">
         <component
             :is="component"
             :title="buttonTitle"
