@@ -10,7 +10,6 @@ import Controls from "../modules/controls/indexControls";
 import Maps from "../core/maps/store/indexMaps";
 import Menu from "../core/menu/indexMenu";
 import MenuNavigation from "../core/menu/navigation/store/indexMenuNavigation";
-import Modules from "../core/modules/store/indexModules";
 
 Vue.use(Vuex);
 
@@ -23,8 +22,7 @@ const store = new Vuex.Store({
         Controls: {...Controls},
         Maps,
         Menu,
-        MenuNavigation,
-        Modules: {...Modules}
+        MenuNavigation
     }
 });
 
