@@ -17,8 +17,8 @@ export default {
         }
     },
     computed: {
-        ...mapGetters("Menu", ["mainMenu", "secondaryMenu"]),
-        ...mapGetters("MenuNavigation", ["componentFromPath", "objectFromPath", "lastEntry"]),
+        ...mapGetters("Menu", ["componentFromPath", "mainMenu", "objectFromPath", "secondaryMenu"]),
+        ...mapGetters("MenuNavigation", ["lastEntry"]),
         menu () {
             return this.side === "mainMenu" ? this.mainMenu : this.secondaryMenu;
         }
