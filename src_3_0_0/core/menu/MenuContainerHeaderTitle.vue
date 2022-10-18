@@ -59,7 +59,6 @@ export default {
 <style lang="scss" scoped>
 @import "~variables";
 
-/* TODO(roehlipa): Update focus, hover and active style */
 .header-title {
     display: grid;
     grid-template-columns: 7.5em 20.5em;
