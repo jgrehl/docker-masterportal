@@ -4,7 +4,7 @@ import sinon from "sinon";
 import initializeModules from "../../moduleProcessor";
 import moduleCollection from "../../moduleCollection";
 
-describe("src_3_0_0/core/modules/moduleProcessor.js", () => {
+describe("src_3_0_0/core/menu/modules/moduleProcessor.js", () => {
     describe("initializeModules", () => {
         it("should start registerConfiguredModules of moduleCollection", () => {
             const portalConfig = {
