@@ -67,7 +67,7 @@ describe("src_3_0_0/modules/controls/backForward/components/BackForward.vue", ()
     it("renders the forward/backward buttons", () => {
         const wrapper = mount(BackForward, {store, localVue});
 
-        expect(wrapper.find(".back-forward-buttons").exists()).to.be.true;
+        expect(wrapper.find("#back-forward-buttons").exists()).to.be.true;
         expect(wrapper.findAll("button")).to.have.length(2);
     });
 
