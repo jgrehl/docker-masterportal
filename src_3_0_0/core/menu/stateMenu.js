@@ -1,4 +1,6 @@
 import Folder from "./folder/components/MenuFolder.vue";
+import ScaleSwitcher from "../../modules/scaleSwitcher/components/ScaleSwitcher.vue";
+
 /**
  * Menu type definition
  * @typedef {Object} menu
@@ -9,6 +11,7 @@ import Folder from "./folder/components/MenuFolder.vue";
 
 export default {
     componentMap: {
-        folder: Folder
+        folder: Folder,
+        scaleSwitcher: ScaleSwitcher
     }
 };
