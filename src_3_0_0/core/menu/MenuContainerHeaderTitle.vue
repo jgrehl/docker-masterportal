@@ -55,7 +55,7 @@ export default {
                 :src="logo"
                 :alt="text"
             >
-            <h1 v-html="text" />
+            <h1>{{ text }}</h1>
         </a>
     </div>
 </template>
