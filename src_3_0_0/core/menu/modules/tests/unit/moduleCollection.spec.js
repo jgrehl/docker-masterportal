@@ -1,7 +1,7 @@
 import {expect} from "chai";
 
 import moduleCollection from "../../moduleCollection";
-import ScaleSwitcher from "../../../../../modules/scaleSwitcher/store/indexScaleSwitcher";
+import ScaleSwitcher from "../../scaleSwitcher/store/indexScaleSwitcher";
 
 describe("src_3_0_0/core/menu/modules/moduleCollection.js", () => {
     let defaultState;
