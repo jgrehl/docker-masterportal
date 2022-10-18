@@ -11,7 +11,8 @@ export default {
         }
     },
     computed: {
-        ...mapGetters("MenuNavigation", ["lastEntry", "previousEntry", "objectFromPath"])
+        ...mapGetters("Menu", ["objectFromPath"]),
+        ...mapGetters("MenuNavigation", ["lastEntry", "previousEntry"])
     },
     methods: {
         ...mapMutations("MenuNavigation", ["removeLastEntry"])
