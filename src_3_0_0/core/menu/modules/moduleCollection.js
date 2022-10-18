@@ -40,7 +40,7 @@ export default {
             }
             if (moduleStore) {
                 Object.assign(moduleStore.state, moduleConfigs[moduleKey]);
-                store.registerModule(["Modules", modulename], moduleStore);
+                store.registerModule(["Menu", modulename], moduleStore);
             }
         });
     },
