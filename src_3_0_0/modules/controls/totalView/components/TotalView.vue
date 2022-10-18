@@ -46,7 +46,7 @@ export default {
 </script>
 
 <template>
-    <div class="back-forward-buttons">
+    <div id="total-view-button">
         <component
             :is="component"
             id="start-totalview"

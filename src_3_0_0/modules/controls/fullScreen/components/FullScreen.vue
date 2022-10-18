@@ -122,7 +122,7 @@ export default {
 </script>
 
 <template>
-    <div class="fullscreen-button">
+    <div id="full-screen-button">
         <component
             :is="component"
             :title="$t(`common:modules.controls.fullScreen.${active ? 'disable' : 'enable'}`)"
