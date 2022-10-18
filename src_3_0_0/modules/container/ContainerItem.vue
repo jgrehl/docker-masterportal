@@ -1,6 +1,6 @@
 <script>
 import {mapGetters} from "vuex";
-import moduleCollection from "../../core/modules/moduleCollection";
+import moduleCollection from "../../core/menu/modules/moduleCollection";
 
 /**
  * Only for testing modules until the menu is ready!

@@ -1,15 +1,15 @@
-import upperFirst from "../../utils/upperFirst";
-import store from "../../app-store";
+import upperFirst from "../../../utils/upperFirst";
+import store from "../../../app-store";
 
 /**
  * The imported module stores.
  */
-import indexScaleSwitcher from "../../modules/scaleSwitcher/store/indexScaleSwitcher";
+import indexScaleSwitcher from "../../../modules/scaleSwitcher/store/indexScaleSwitcher";
 
 /**
  * The imported module components.
  */
-import ScaleSwitcher from "../../modules/scaleSwitcher/components/ScaleSwitcher.vue";
+import ScaleSwitcher from "../../../modules/scaleSwitcher/components/ScaleSwitcher.vue";
 
 const moduleStores = {
         ScaleSwitcher: indexScaleSwitcher
