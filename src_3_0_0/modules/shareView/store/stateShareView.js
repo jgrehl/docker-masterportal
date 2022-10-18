@@ -20,7 +20,11 @@ const state = {
     renderToWindow: true,
     resizableWindow: true,
     isVisibleInMenu: true,
-    deactivateGFI: false
+    deactivateGFI: false,
+    // saveSelection state
+    layerIds: [],
+    layerTransparencies: [],
+    layerVisibilities: []
 };
 
 export default state;
