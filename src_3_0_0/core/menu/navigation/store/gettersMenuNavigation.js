@@ -12,28 +12,7 @@ const menuNavigationgetters = {
      * @param {Object} state module state
      * @returns {Object|null} previous added menu navigation entry or null
      */
-    previousEntry: state => side => state.entries[side][state.entries[side].length - 2] || null,
-    /**
-     * @param {Object} _ module state (discarded)
-     * @param {Object} getters module getters
-     * @param {Object} __ root state (discarded)
-     * @param {Object} rootGetters root getters
-     * @returns {Object} component identified via componentMap
-     */
-    componentFromPath: (_, getters, __, rootGetters) => side => {
-        return rootGetters["Menu/componentMap"][getters.objectFromPath(side).itemType];
-    },
-    /**
-     * @param {Object} _ module state (discarded)
-     * @param {Object} getters module getters
-     * @param {Object} __ root state (discarded)
-     * @param {Object} rootGetters root getters
-     * @returns {Object} previous added menu navigation entry or null
-     */
-    objectFromPath: (_, getters, __, rootGetters) => side => {
-        // eslint-disable-next-line new-cap
-        return rootGetters["Menu/section"](getters.lastEntry(side));
-    }
+    previousEntry: state => side => state.entries[side][state.entries[side].length - 2] || null
 };
 
 export default menuNavigationgetters;
