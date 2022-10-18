@@ -1,4 +1,4 @@
-import {generateSimpleGetters} from "../../../app-store/utils/generators";
+import {generateSimpleGetters} from "../../../../../app-store/utils/generators";
 import scaleSwitcherState from "./stateScaleSwitcher";
 
 const getters = {
