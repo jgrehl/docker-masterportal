@@ -36,28 +36,24 @@ export default {
 </script>
 
 <template>
-    <div
+    <a
         v-if="!isMobile && (text !== '' || logo !== '' || link !== '' || toolTip !== '')"
         :id="'menu-offcanvas-header-title-' + idAppendix"
+        :href="link"
+        target="_blank"
+        :data-bs-toggle="text"
+        data-bs-placement="bottom"
+        :title="toolTip"
         class="header-title"
     >
-        <a
-            :href="link"
-            target="_blank"
-            :data-bs-toggle="text"
-            data-bs-placement="bottom"
-            :title="toolTip"
-            class="tabbable"
-        >
 
-            <img
-                v-if="logo !== ''"
-                :src="logo"
-                :alt="text"
-            >
-            <h1>{{ text }}</h1>
-        </a>
-    </div>
+        <img
+            v-if="logo !== ''"
+            :src="logo"
+            :alt="text"
+        >
+        <h1>{{ text }}</h1>
+    </a>
 </template>
 
 <style lang="scss" scoped>
@@ -65,33 +61,20 @@ export default {
 
 /* TODO(roehlipa): Update focus, hover and active style */
 .header-title {
-    margin-left: 10px;
-    overflow: hidden;
-    line-height: 50px;
-    float: left;
+    display: grid;
+    grid-template-columns: 7.5em 20.5em;
+    grid-column-gap: 1em;
+    align-items: center;
+    overflow-wrap: break-word;
 
-    a {
-        display: block;
-        text-decoration: none;
+    img {
+        max-height: 40px;
+    }
 
-        img {
-            display: inline-block;
-            vertical-align: middle;
-            margin: 0 5px;
-            max-height: 40px;
-        }
-
-        h1 {
-            color: $secondary_contrast;
-            margin-left: 5px;
-            font-size: 26px;
-            font-family: $font_family_narrow;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            display: inline-block;
-            vertical-align: middle;
-        }
+    h1 {
+        color: $secondary_contrast;
+        font-size: 26px;
+        font-family: $font_family_narrow;
     }
 }
 </style>
