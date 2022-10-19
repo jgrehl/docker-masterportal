@@ -81,6 +81,8 @@ export default {
                 resolution: mapView.getConstrainedResolution(mapView.getResolution())
             });
 
+        commit("setMaxZoom", mapView.getMaxZoom());
+        commit("setMinZoom", mapView.getMinZoom());
         commit("setResolution", mapView.getResolution());
         commit("setScale", options.scale);
         commit("setZoom", mapView.getZoom());
