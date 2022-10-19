@@ -1,5 +1,6 @@
 import BackForward from "./backForward/components/BackForward.vue";
 import Button3d from "./button3d/components/Button3dItem.vue";
+import FreezeScreen from "./freeze/components/FreezeScreen.vue";
 import FullScreen from "./fullScreen/components/FullScreen.vue";
 import TotalView from "./totalView/components/TotalView.vue";
 
@@ -14,11 +15,13 @@ const state = {
     componentMap: {
         backForward: BackForward,
         button3d: Button3d,
+        freeze: FreezeScreen,
         fullScreen: FullScreen,
         totalView: TotalView
     },
     mobileHiddenControls: [
         "backForward",
+        "freeze",
         "fullScreen",
         "totalView"
     ],
