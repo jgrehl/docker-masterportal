@@ -20,7 +20,8 @@
       "backForward": true,
       "totalView": true,
       "expandable": {
-        "button3d": true
+        "button3d": true,
+        "freeze": true
       }
     }
   },
