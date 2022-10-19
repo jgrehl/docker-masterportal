@@ -134,10 +134,12 @@ describe("src_3_0_0/core/maps/store/actionsMapsAttributesMapper.js", () => {
         it("Should update attributes by change resolution event", () => {
             updateAttributesByChangeResolution({commit});
 
-            expect(commit.callCount).to.equals(3);
-            expect(commit.firstCall.args).to.deep.equals(["setResolution", 2.6458319045841048]);
-            expect(commit.secondCall.args).to.deep.equals(["setScale", 10000]);
-            expect(commit.thirdCall.args).to.deep.equals(["setZoom", 5]);
+            expect(commit.callCount).to.equals(5);
+            expect(commit.firstCall.args).to.deep.equals(["setMaxZoom", 5]);
+            expect(commit.secondCall.args).to.deep.equals(["setMinZoom", 0]);
+            expect(commit.thirdCall.args).to.deep.equals(["setResolution", 2.6458319045841048]);
+            expect(commit.getCall(3).args).to.deep.equals(["setScale", 10000]);
+            expect(commit.getCall(4).args).to.deep.equals(["setZoom", 5]);
         });
     });
 });
