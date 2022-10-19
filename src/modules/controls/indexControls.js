@@ -11,7 +11,7 @@ import OverviewMap from "./overviewMap/components/OverviewMap.vue";
 import StartTool from "./startTool/components/StartTool.vue";
 // import TotalView from "./totalView/components/TotalView.vue";
 import ZoomInAndOut from "./zoom/components/ZoomInAndOut.vue";
-import FreezeScreen from "./freeze/components/FreezeScreen.vue";
+// import FreezeScreen from "./freeze/components/FreezeScreen.vue";
 
 /**
  * controls-Module is required to be able to nest controls
@@ -32,7 +32,7 @@ export default {
         // componentMap: {
         attributions: AttributionsItem,
         // backForward: BackForward,
-        freeze: FreezeScreen,
+        // freeze: FreezeScreen,
         // fullScreen: FullScreen,
         orientation: OrientationItem,
         overviewMap: OverviewMap,
@@ -45,9 +45,9 @@ export default {
             // "backForward",
             // "fullScreen",
             // NOTE "mousePosition" is not rendered as a child here
-            "overviewMap",
+            "overviewMap"
             // "totalView",
-            "freeze"
+            // "freeze"
         ],
         bottomControls: ["attributions", "overviewMap"]
     },
