@@ -16,12 +16,13 @@
       }
     },
     "controls": {
-      "fullScreen": true,
-      "backForward": true,
+      "zoom": true,
       "totalView": true,
+      "button3d": true,
       "expandable": {
-        "button3d": true,
-        "freeze": true
+        "backForward": true,
+        "freeze": true,
+        "fullScreen": true
       }
     }
   },
