@@ -1,6 +1,8 @@
 
 import {unByKey as unlistenByKey} from "ol/Observable.js";
 
+import actionsMapsInteractionsZoom from "./actionsMapsInteractionsZoom";
+
 /**
  * Interactions with the Map and MapView.
  */
@@ -8,6 +10,8 @@ import {unByKey as unlistenByKey} from "ol/Observable.js";
 const registeredActions = {};
 
 export default {
+    ...actionsMapsInteractionsZoom,
+
     /**
      * Registered listener for certain events on the map.
      * @see https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html

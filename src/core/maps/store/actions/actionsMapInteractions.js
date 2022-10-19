@@ -12,22 +12,6 @@ export default {
     },
 
     /**
-     * Reduces the zoomlevel by one.
-     * @returns {void}
-     */
-    decreaseZoomLevel ({dispatch, getters}) {
-        dispatch("setZoomLevel", getters.getView.getZoom() - 1);
-    },
-
-    /**
-     * Increases the zoomlevel by one.
-     * @returns {void}
-     */
-    increaseZoomLevel ({dispatch, getters}) {
-        dispatch("setZoomLevel", getters.getView.getZoom() + 1);
-    },
-
-    /**
      * Removes an interaction from the map.
      * @param {Object} _ not used
      * @param {module:ol/interaction/Interaction} interaction - Interaction to be removed from map.
@@ -93,20 +77,7 @@ export default {
             console.warn("Center was not set. Probably there is a data type error. The format of the coordinate must be an array with two numbers.");
         }
     },
-    /**
-     * Sets a new zoom level to map and store. All other fields will be updated onmoveend.
-     * @param {Object} param store context
-     * @param {Object} param.getters the getters
-     * @param {Number} zoomLevel The zoomLevel to zoom to
-     * @returns {void}
-     */
-    setZoomLevel ({getters}, zoomLevel) {
-        const view = getters.getView;
 
-        if (zoomLevel <= view.getMaxZoom() && zoomLevel >= view.getMinZoom()) {
-            view.setZoom(zoomLevel);
-        }
-    },
     /**
      * toggles the maps background
      * @param {Object} param store context

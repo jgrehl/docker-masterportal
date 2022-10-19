@@ -73,8 +73,8 @@ export default {
         // commit("setInitialCenter", mapView.getCenter());
         commit("setInitialResolution", mapView.getResolution());
         commit("setZoom", mapView.getZoom());
-        commit("setMinZoomLevel", mapView.getMinZoom());
-        commit("setMaxZoomLevel", mapView.getMaxZoom());
+        // commit("setMinZoomLevel", mapView.getMinZoom());
+        // commit("setMaxZoomLevel", mapView.getMaxZoom());
     },
 
     /**
