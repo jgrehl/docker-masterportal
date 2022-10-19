@@ -10,7 +10,7 @@ import OrientationItem from "./orientation/components/OrientationItem.vue";
 import OverviewMap from "./overviewMap/components/OverviewMap.vue";
 import StartTool from "./startTool/components/StartTool.vue";
 // import TotalView from "./totalView/components/TotalView.vue";
-import ZoomInAndOut from "./zoom/components/ZoomInAndOut.vue";
+// import ZoomInAndOut from "./zoom/components/ZoomInAndOut.vue";
 // import FreezeScreen from "./freeze/components/FreezeScreen.vue";
 
 /**
@@ -38,7 +38,7 @@ export default {
         overviewMap: OverviewMap,
         startTool: StartTool,
         // totalView: TotalView,
-        zoom: ZoomInAndOut,
+        // zoom: ZoomInAndOut,
         // },
         // config.json.md control keys where the matching element is to be hidden in mobile mode
         mobileHiddenControls: [

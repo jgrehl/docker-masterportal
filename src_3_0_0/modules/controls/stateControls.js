@@ -3,6 +3,7 @@ import Button3d from "./button3d/components/Button3dItem.vue";
 import FreezeScreen from "./freeze/components/FreezeScreen.vue";
 import FullScreen from "./fullScreen/components/FullScreen.vue";
 import TotalView from "./totalView/components/TotalView.vue";
+import ZoomInAndOut from "./zoom/components/ZoomInAndOut.vue";
 
 /**
  * User type definition
@@ -17,7 +18,8 @@ const state = {
         button3d: Button3d,
         freeze: FreezeScreen,
         fullScreen: FullScreen,
-        totalView: TotalView
+        totalView: TotalView,
+        zoom: ZoomInAndOut
     },
     mobileHiddenControls: [
         "backForward",

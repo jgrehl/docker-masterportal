@@ -1,7 +1,6 @@
 import {expect} from "chai";
 import Map from "ol/Map.js";
 import gettersMap from "../../../store/gettersMap";
-import stateMap from "../../../store/stateMap";
 import mutationsMap from "../../../store/mutationsMap";
 import View from "ol/View";
 import VectorLayer from "ol/layer/Vector.js";
@@ -12,26 +11,6 @@ const {addLayerToMap} = mutationsMap;
 describe("src/core/maps/store/gettersMap.js", () => {
 
     describe("Map simple getters", async () => {
-
-        it("returns false for maximumZoomLevelActive from state", () => {
-            const state = {
-                zoom: 0,
-                maxZoomLevel: 10
-            };
-
-            expect(gettersMap.maximumZoomLevelActive(stateMap)).to.be.true;
-            expect(gettersMap.maximumZoomLevelActive(state)).to.be.false;
-        });
-
-        it("returns false for minimumZoomLevelActive from state", () => {
-            const state = {
-                zoom: 5,
-                minZoomLevel: 0
-            };
-
-            expect(gettersMap.minimumZoomLevelActive(stateMap)).to.be.true;
-            expect(gettersMap.minimumZoomLevelActive(state)).to.be.false;
-        });
         it("returns the 2D map", () => {
             const map = {
                 id: "ol",
