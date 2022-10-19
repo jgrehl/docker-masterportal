@@ -10,8 +10,6 @@
 * @property {String[]} highlightedFeatures list of highlighted features, indices correspond to "highlightedFeaturesStyles"
 * @property {String[]} highlightedFeatureStyles list of original styles for highlighted features, indices correspond to "highlightedFeatures"
 * @property {String[]} loadedLayers list of ready loaded layers IDs
-* @property {Number} maxZoomLevel Max zoom level of the map view.
-* @property {Number} minZoomLevel Min zoom level of the map view.
 * @property {Number[]} mouseCoordinate Current mouse coordinate values of the map.
 * @property {String[]} overlayIds Current overlays of the map by Id.
 * @property {String} projection Current projection name of the map.
@@ -41,10 +39,8 @@ const state = {
     highlightedFeatures: [],
     highlightedFeatureStyles: [],
     loadedLayers: [],
-    longitude: null,
-    latitude: null,
-    maxZoomLevel: null,
-    minZoomLevel: null,
+    // maxZoomLevel: null,
+    // minZoomLevel: null,
     // mode: "2D",
     mouseCoordinate: null,
     overlayIds: null,
