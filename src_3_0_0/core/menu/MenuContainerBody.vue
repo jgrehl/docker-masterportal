@@ -10,6 +10,7 @@ export default {
         MenuNavigation
     },
     props: {
+        /** Defines in which menu the component is being rendered */
         side: {
             type: String,
             default: "mainMenu",
@@ -19,11 +20,18 @@ export default {
     computed: {
         ...mapGetters("Menu", ["componentFromPath", "mainMenu", "objectFromPath", "secondaryMenu"]),
         ...mapGetters("MenuNavigation", ["lastEntry"]),
+        /**
+         * @returns {object} Menu configuration for the given menu.
+         */
         menu () {
             return this.side === "mainMenu" ? this.mainMenu : this.secondaryMenu;
         }
     },
     methods: {
+        /**
+         * @param {Number} sectionIndex Index inside of a section of a menu.
+         * @returns {Array} Returns the path for a section inside the menu this component is rendered in.
+         */
         path (sectionIndex) {
             return [this.side, "sections", sectionIndex];
         }
