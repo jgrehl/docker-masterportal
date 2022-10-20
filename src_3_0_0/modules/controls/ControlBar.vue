@@ -20,7 +20,7 @@ export default {
         ...mapGetters("Controls", ["componentMap", "mobileHiddenControls", "expandableControls"])
     },
     mounted () {
-        if (this.controlsConfig.expandable) {
+        if (this.controlsConfig?.expandable) {
             Object.keys(this.controlsConfig.expandable).forEach(control => {
                 this.expandableControls.push(control);
             });
@@ -82,14 +82,14 @@ export default {
                 .forEach(c => {
                     if (this.expandableControls.includes(c.key)) {
                         this.categorizedControls.expandable.push(c);
-                        if (configuredControls[c.key].hiddenMobile === true) {
+                        if (configuredControls[c.key]?.hiddenMobile === true) {
                             this.mobileHiddenControls.push(c.key);
                         }
                     }
                     else {
                         // defaulting to sidebar
                         this.categorizedControls.sidebar.push(c);
-                        if (configuredControls[c.key].hiddenMobile === true) {
+                        if (configuredControls[c.key]?.hiddenMobile === true) {
                             this.mobileHiddenControls.push(c.key);
                         }
                     }
