@@ -8,10 +8,12 @@ export default {
         MenuContainerBodyElement
     },
     props: {
+        /** Appendix set on the id to make it unique. Needed, as the menu can be rendered multiple times. */
         idAppendix: {
             type: String,
             required: true
         },
+        /** Path to find the MenuContainerBodyElement inside the store structure. */
         path: {
             type: Array,
             default: () => []
