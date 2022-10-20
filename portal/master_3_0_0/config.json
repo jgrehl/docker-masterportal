@@ -53,20 +53,22 @@
                   {
                     "itemType": "folder",
                     "title": "folder1_1_1",
-                    "icon": "bi-file-plus"
-
+                    "icon": "bi-file-plus",
+                    "children": []
                   },
                   {
                     "itemType": "folder",
                     "title": "folder1_1_2",
-                    "icon": "bi-file-plus"
+                    "icon": "bi-file-plus",
+                    "children": []
                   }
                 ]
               },
               {
                 "itemType": "folder",
                 "title": "folder1_2",
-                "icon": "bi-file-plus"
+                "icon": "bi-file-plus",
+                "children": []
               }
             ]
           },
@@ -78,13 +80,14 @@
               {
                 "itemType": "folder",
                 "title": "folder2_1",
-                "icon": "bi-file-plus"
-
+                "icon": "bi-file-plus",
+                "children": []
               },
               {
                 "itemType": "folder",
                 "title": "folder2_2",
-                "icon": "bi-file-plus"
+                "icon": "bi-file-plus",
+                "children": []
               }
             ]
           }
@@ -107,20 +110,22 @@
                   {
                     "itemType": "folder",
                     "title": "folder1_1_1",
-                    "icon": "bi-file-plus"
-
+                    "icon": "bi-file-plus",
+                    "children": []
                   },
                   {
                     "itemType": "folder",
                     "title": "folder1_1_2",
-                    "icon": "bi-file-plus"
+                    "icon": "bi-file-plus",
+                    "children": []
                   }
                 ]
               },
               {
                 "itemType": "folder",
                 "title": "folder1_2",
-                "icon": "bi-file-plus"
+                "icon": "bi-file-plus",
+                "children": []
               }
             ]
           },
@@ -132,13 +137,14 @@
               {
                 "itemType": "folder",
                 "title": "folder2_1",
-                "icon": "bi-file-plus"
-
+                "icon": "bi-file-plus",
+                "children": []
               },
               {
                 "itemType": "folder",
                 "title": "folder2_2",
-                "icon": "bi-file-plus"
+                "icon": "bi-file-plus",
+                "children": []
               }
             ]
           }
