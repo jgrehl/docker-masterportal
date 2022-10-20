@@ -39,7 +39,7 @@ export default {
         <MenuNavigation :side="side" />
         <component
             :is="componentFromPath(side)"
-            v-bind="{idAppendix: side, ...objectFromPath(side)}"
+            v-bind="{idAppendix: side, ...objectFromPath(side, 'last')}"
             v-if="lastEntry(side)"
             :path="lastEntry(side)"
         />
