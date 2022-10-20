@@ -6,30 +6,38 @@ export default {
     name: "MenuContainerBodyElement",
     components: {SimpleButton},
     props: {
+        /** Text displayed inside the element. */
+        title: {
+            type: String,
+            required: true,
+            validator: value => value !== ""
+        },
+        /** Description used as it's title and aria-label. May be displayed alongside the element. */
         description: {
             type: String,
             default: ""
         },
-        title: {
-            type: String,
-            default: "",
-            validator: value => value !== ""
-        },
+        /** Icon displayed inside the element*/
         icon: {
             type: String,
             default: "",
             validator: value => value.startsWith("bi-")
         },
+        /** Whether the description should be displayed alongside the element. */
         showDescription: {
             type: Boolean,
             default: false
         },
+        /** Path to find the element inside the store structure. */
         path: {
             type: Array,
             default: () => []
         }
     },
     computed: {
+        /**
+         * @returns {boolean} Depending on whether the icon is given it is decided whether on is shown.
+         */
         showIcon () {
             return typeof this.icon === "string" && this.icon.length > 0;
         }
