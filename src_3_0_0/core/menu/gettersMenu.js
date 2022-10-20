@@ -10,7 +10,7 @@ const menuGetters = {
      * @returns {Object} component identified via componentMap
      */
     componentFromPath: (_, getters) => side => {
-        return getters.componentMap[getters.objectFromPath(side).itemType];
+        return getters.componentMap[getters.objectFromPath(side, "last").itemType];
     },
     mainMenu (_, __, ___, rootGetters) {
         if (rootGetters.loadedConfigs.configJson) {
@@ -31,9 +31,9 @@ const menuGetters = {
      * @param {Object} rootGetters root getters
      * @returns {Object} previous added menu navigation entry or null
      */
-    objectFromPath: (_, getters, __, rootGetters) => side => {
+    objectFromPath: (_, getters, __, rootGetters) => (side, entry) => {
         // eslint-disable-next-line new-cap
-        return getters.section(rootGetters["MenuNavigation/lastEntry"](side));
+        return getters.section(rootGetters[`MenuNavigation/${entry}Entry`](side));
     },
     secondaryMenu (_, __, ___, rootGetters) {
         if (rootGetters.loadedConfigs.configJson) {
