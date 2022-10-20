@@ -56,7 +56,7 @@ const getters = {
      * @returns {Object} The controls config.
      */
     controlsConfig: state => {
-        return state.portalConfig?.controls || null;
+        return state.portalConfig?.controls || {};
     },
 
     /**
