@@ -30,10 +30,10 @@ export default {
     >
         <li
             v-for="(item, key) in section(path)"
-            :id="'menu-offcanvas-body-items-element-' + key + '-' + idAppendix"
             :key="key"
         >
             <MenuContainerBodyElement
+                :id="'menu-offcanvas-body-items-element-' + key + '-' + idAppendix"
                 v-bind="item"
                 :path="[...path, key]"
             />
