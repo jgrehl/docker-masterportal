@@ -12,7 +12,10 @@ export default {
     },
     computed: {
         ...mapGetters("Menu", ["objectFromPath"]),
-        ...mapGetters("MenuNavigation", ["lastEntry", "previousEntry"])
+        ...mapGetters("MenuNavigation", ["lastEntry", "previousEntry"]),
+        entry () {
+            return !this.previousEntry(this.side) ? i18next.t("common:menu.name") : this.objectFromPath(this.side, "previous").title;
+        }
     },
     methods: {
         ...mapMutations("MenuNavigation", ["removeLastEntry"])
@@ -28,9 +31,7 @@ export default {
         @click="removeLastEntry(side)"
         @keypress="removeLastEntry(side)"
     >
-        <h5>
-            &#60; {{ !previousEntry(side) ? $t('common:menu.name') : objectFromPath(side).title }}
-        </h5>
+        <h5>&#60; {{ entry }}</h5>
     </a>
 </template>
 
