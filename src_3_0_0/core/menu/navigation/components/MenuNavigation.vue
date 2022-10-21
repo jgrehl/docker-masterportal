@@ -4,6 +4,7 @@ import {mapActions, mapGetters} from "vuex";
 export default {
     name: "MenuNavigation",
     props: {
+        /** Defines in which menu the component is being rendered */
         side: {
             type: String,
             required: true,
@@ -13,6 +14,11 @@ export default {
     computed: {
         ...mapGetters("Menu", ["objectFromPath"]),
         ...mapGetters("MenuNavigation", ["lastEntry", "previousEntry"]),
+        /**
+         * If no previousEntry besides the menu is present, show the menu String.
+         * Otherwise, show the title of the folder.
+         * @returns {String} Value to be displayed.
+         */
         entry () {
             return !this.previousEntry(this.side) ? i18next.t("common:menu.name") : this.objectFromPath(this.side, "previous").title;
         }
