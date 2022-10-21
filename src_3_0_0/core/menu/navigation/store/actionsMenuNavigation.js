@@ -1,4 +1,11 @@
 const actions = {
+    /**
+     * Properly deactivates an element if it is not a folder
+     * and removes its entry from the navigation.
+     * @param {Object} context Vuex context object.
+     * @param {String} side Side on which the navigation action occurred.
+     * @returns {void}
+     */
     navigateBack ({commit, dispatch, rootGetters}, side) {
         // eslint-disable-next-line new-cap
         const {itemType} = rootGetters["Menu/objectFromPath"]("mainMenu", "last");
