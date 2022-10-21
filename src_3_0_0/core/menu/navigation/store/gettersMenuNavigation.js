@@ -1,18 +1,18 @@
 import menuNavigationState from "./stateMenuNavigation";
 import {generateSimpleGetters} from "../../../../app-store/utils/generators";
 
-const menuNavigationgetters = {
+const getters = {
     ...generateSimpleGetters(menuNavigationState),
     /**
-     * @param {Object} state module state
-     * @returns {Object|null} last added menu navigation entry or null
+     * @param {MenuNavigationState} state Local vuex state.
+     * @returns {(function(side: String): any|null)} Last entry for the given menu.
      */
     lastEntry: state => side => state.entries[side][state.entries[side].length - 1] || null,
     /**
-     * @param {Object} state module state
-     * @returns {Object|null} previous added menu navigation entry or null
+     * @param {MenuNavigationState} state Local vuex state.
+     * @returns {(function(side: String): any|null)} Second to last entry for the given menu.
      */
     previousEntry: state => side => state.entries[side][state.entries[side].length - 2] || null
 };
 
-export default menuNavigationgetters;
+export default getters;
