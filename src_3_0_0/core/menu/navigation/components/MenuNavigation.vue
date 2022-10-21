@@ -1,5 +1,5 @@
 <script>
-import {mapGetters, mapMutations} from "vuex";
+import {mapActions, mapGetters} from "vuex";
 
 export default {
     name: "MenuNavigation",
@@ -18,7 +18,7 @@ export default {
         }
     },
     methods: {
-        ...mapMutations("MenuNavigation", ["removeLastEntry"])
+        ...mapActions("MenuNavigation", ["navigateBack"])
     }
 };
 </script>
@@ -28,8 +28,8 @@ export default {
         v-if="lastEntry(side)"
         :id="'menu-offcanvas-body-navigation-' + side"
         href="#"
-        @click="removeLastEntry(side)"
-        @keypress="removeLastEntry(side)"
+        @click="navigateBack(side)"
+        @keypress="navigateBack(side)"
     >
         <h5>&#60; {{ entry }}</h5>
     </a>
