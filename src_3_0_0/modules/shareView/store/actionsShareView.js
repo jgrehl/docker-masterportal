@@ -14,9 +14,11 @@ const actions = {
      * @param {Array} layerList list of layers
      * @returns {void}
      */
-    createUrlParams ({commit}, layerList) {
+    createUrlParams ({commit, store}) {
+        debugger;
         const layerTransparencies = [],
-            layerVisibilities = [];
+            layerVisibilities = [],
+            layerList = store.getters.visibleLayerConfigs;
 
         layerList.forEach(layerModel => {
             layerTransparencies.push(layerModel.transparency);
