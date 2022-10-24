@@ -27,7 +27,6 @@ export default {
          * @returns {void}
          */
         active (isActive) {
-            debugger;
             if (isActive) {
                 this.createUrlParams();
             }
@@ -138,15 +137,15 @@ export default {
                 v-if="qrDataUrl"
             >
                 <img
-                    alt="qr Code"
                     id="qrCodeImg"
+                    alt="qr Code"
                     :src="qrDataUrl"
                 >
                 <button
                     class="btn btn-primary"
                     @click="downloadQr"
                 >
-                    QRCode herunterladen</a>
+                    QRCode herunterladen
                 </button>
             </div>
             <div class="form-group form-group-sm">
