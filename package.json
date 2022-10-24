@@ -74,6 +74,7 @@
     "jsts": "^2.9.2",
     "mqtt": "^4.3.7",
     "object-hash": "^3.0.0",
+    "qrcode": "^1.5.1",
     "vue": "^2.7.14",
     "vue-multiselect": "^2.1.6",
     "vue-template-compiler": "^2.7.14",
