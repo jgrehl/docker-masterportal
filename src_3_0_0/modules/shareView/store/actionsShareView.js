@@ -15,7 +15,6 @@ const actions = {
      * @returns {void}
      */
     createUrlParams ({commit, store}) {
-        debugger;
         const layerTransparencies = [],
             layerVisibilities = [],
             layerList = store.getters.visibleLayerConfigs;
