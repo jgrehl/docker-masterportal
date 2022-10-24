@@ -13,8 +13,8 @@ export default {
     clickedMenuElement ({commit, dispatch, getters}, path) {
         const {itemType} = getters.section(path);
 
-        commit("MenuNavigation/addEntry", path, {root: true});
         if (itemType) {
+            commit("MenuNavigation/addEntry", path, {root: true});
             if (itemType === "folder") {
                 Vue.nextTick(() => document.getElementById(`menu-offcanvas-body-items-element-0-${path[0]}`)?.focus());
                 return;
