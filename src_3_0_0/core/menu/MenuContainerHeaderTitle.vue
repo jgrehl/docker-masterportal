@@ -9,6 +9,11 @@ export default {
             type: String,
             required: true
         },
+        /** title text */
+        text: {
+            type: String,
+            required: true
+        },
         /** URL of an external website to link to */
         link: {
             type: String,
@@ -16,11 +21,6 @@ export default {
         },
         /** Path to an external image file */
         logo: {
-            type: String,
-            default: ""
-        },
-        /** title text */
-        text: {
             type: String,
             default: ""
         },
@@ -38,9 +38,9 @@ export default {
 
 <template>
     <a
-        v-if="!isMobile && (text !== '' || logo !== '' || link !== '' || toolTip !== '')"
+        v-if="!isMobile"
         :id="'menu-offcanvas-header-title-' + idAppendix"
-        :href="link"
+        :href="link ? link : '#'"
         target="_blank"
         :data-bs-toggle="text"
         data-bs-placement="bottom"
@@ -49,7 +49,7 @@ export default {
     >
 
         <img
-            v-if="logo !== ''"
+            v-if="logo"
             :src="logo"
             :alt="text"
         >
