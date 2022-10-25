@@ -75,5 +75,19 @@ export default {
         else {
             unlistenByKey(type);
         }
+    },
+
+    setView (_, {center, rotation, zoom}) {
+        const view = mapCollection.getMapView("2D");
+
+        if (center) {
+            view.setCenter(center);
+        }
+        if (rotation) {
+            view.setRotation(rotation);
+        }
+        if (zoom) {
+            view.setZoom(zoom);
+        }
     }
 };
