@@ -10,7 +10,6 @@ import Overlay from "ol/Overlay.js";
 import proj4 from "proj4";
 import * as Proj from "ol/proj.js";
 import {Circle, LineString} from "ol/geom.js";
-import LoaderOverlay from "../../../../utils/loaderOverlay";
 
 export default {
     name: "OrientationItem",
@@ -46,8 +45,9 @@ export default {
         };
     },
     computed: {
-        ...mapGetters("controls/orientation", Object.keys(getters)),
+        ...mapGetters("Controls/orientation", Object.keys(getters)),
         ...mapGetters("Maps", ["projection"]),
+        ...mapGetters(["visibleLayerConfigs"]),
         poiDistancesLocal () {
             return this.poiDistances === true ? [500, 1000, 2000] : this.poiDistances;
         }
@@ -65,11 +65,13 @@ export default {
             if (!this.poiModeCurrentPositionEnabled && this.showPoiIcon) {
                 this.showPoiWindow();
             }
+        },
+        visibleLayerConfigs () {
+            this.checkWFS();
         }
     },
     created () {
         this.setIsGeoLocationPossible();
-        Radio.channel("ModelList").on("updateVisibleInMapList", this.checkWFS);
     },
     mounted () {
         this.addElement();
@@ -77,8 +79,8 @@ export default {
 
     },
     methods: {
-        ...mapMutations("controls/orientation", Object.keys(mutations)),
-        ...mapActions("Maps", ["setCenter", "setZoomLevel"]),
+        ...mapMutations("Controls/orientation", Object.keys(mutations)),
+        ...mapActions("Maps", ["setView"]),
 
         setIsGeoLocationPossible () {
             this.isGeoLocationPossible = window.location.protocol === "https:" || ["localhost", "127.0.0.1"].indexOf(window.location.hostname);
@@ -141,7 +143,7 @@ export default {
          * @returns {void}
          */
         onError () {
-            this.$store.dispatch("Alerting/addSingleAlert", "<strong>" + i18next.t("common:modules.controls.orientation.geolocationDeniedText") + " </strong>");
+            // this.$store.dispatch("Alerting/addSingleAlert", "<strong>" + i18next.t("common:modules.controls.orientation.geolocationDeniedText") + " </strong>");
             this.isGeolocationDenied = true;
             if (this.geolocation !== null) {
                 this.untrack();
@@ -157,16 +159,22 @@ export default {
         },
 
         /**
-         * To decide shwo or not to show Poi
+         * To decide show or not to show Poi
          * @returns {void}
          */
         checkWFS () {
-            const visibleWFSModels = Radio.request("ModelList", "getModelsByAttributes", {isVisibleInMap: true, typ: "WFS"});
+            const visibleWFSModels = [];
+
+            this.visibleLayerConfigs?.forEach(layer => {
+                if (layer.typ === "WFS") {
+                    visibleWFSModels.push(layer);
+                }
+            });
 
             if (this.poiDistancesLocal.length > 0) {
                 if (!visibleWFSModels.length) {
                     this.setShowPoiIcon(false);
-                    this.$store.dispatch("MapMarker/removePointMarker");
+                    // this.$store.dispatch("MapMarker/removePointMarker");
                 }
                 else {
                     this.setShowPoiIcon(true);
@@ -223,8 +231,7 @@ export default {
          * @returns {void}
          */
         zoomAndCenter (position) {
-            this.setCenter(position);
-            this.setZoomLevel(6);
+            this.setView({center: position, rotation: null, zoom: 6});
         },
 
         /**
@@ -261,7 +268,7 @@ export default {
                 console.error("The configured zoomMode: " + zoomMode + " does not exist. Please use the params 'once' or 'always'!");
             }
 
-            this.$store.dispatch("MapMarker/removePointMarker");
+            // this.$store.dispatch("MapMarker/removePointMarker");
         },
 
         /**
@@ -297,7 +304,7 @@ export default {
             this.removeOverlay();
 
             if (this.poiModeCurrentPositionEnabled) {
-                this.$store.dispatch("MapMarker/removePointMarker");
+                // this.$store.dispatch("MapMarker/removePointMarker");
                 mapCollection.getMap("2D").addOverlay(this.marker);
                 if (this.geolocation === null) {
                     geolocation = new Geolocation({tracking: true, projection: Proj.get("EPSG:4326")});
@@ -336,7 +343,7 @@ export default {
          */
         showPoiWindow () {
             if (!this.position) {
-                LoaderOverlay.show();
+                // LoaderOverlay.show();
                 const geolocation = this.geolocation,
                     position = geolocation.getPosition(),
                     centerPosition = proj4(proj4("EPSG:4326"), proj4(this.projection.getCode()), position);
@@ -353,13 +360,13 @@ export default {
          * @param {Object} evt error event
          * @returns {void}
          */
-        onPOIError (evt) {
-            this.$store.dispatch("Alerting/addSingleAlert", "<strong>" + i18next.t("common:modules.controls.orientation.trackingDeniedText") + " </strong>" + evt.message);
+        onPOIError () {
+            // this.$store.dispatch("Alerting/addSingleAlert", "<strong>" + i18next.t("common:modules.controls.orientation.trackingDeniedText") + " </strong>" + evt.message);
 
             if (this.geolocation !== null) {
                 this.untrack();
             }
-            LoaderOverlay.hide();
+            // LoaderOverlay.hide();
         },
 
         /**
@@ -371,7 +378,13 @@ export default {
         getVectorFeaturesInCircle (distance, centerPosition) {
             const circle = new Circle(centerPosition, distance),
                 circleExtent = circle.getExtent(),
-                visibleWFSLayers = Radio.request("ModelList", "getModelsByAttributes", {isVisibleInMap: true, typ: "WFS"});
+                visibleWFSLayers = [];
+
+            this.visibleLayerConfigs.forEach(layer => {
+                if (layer.typ === "WFS") {
+                    visibleWFSLayers.push(layer);
+                }
+            });
             let featuresAll = [],
                 features = [];
 
@@ -463,9 +476,9 @@ export default {
     <div class="orientationButtons">
         <span
             id="geolocation_marker"
-            class="bootstrap-icon geolocation_marker"
+            class="geolocation_marker"
         >
-            <i class="bi-geo-alt-fill" />
+            <i class="bi-record-circle-fill" />
         </span>
         <ControlIcon
             id="geolocate"
@@ -500,13 +513,14 @@ export default {
     .orientationButtons {
         margin-top: 20px;
         >.toggleButtonPressed {
-            background-color: rgb(8,88,158);
+            background-color: $dark_blue;
+            color: $white;
         }
     }
     .geolocation_marker {
-        color: $white;
-        padding: 2px 3px 2px 2px;
-        background: none repeat scroll #D42132;
-        border-radius: 50px;
+        color: $dark_blue;
+        padding: 1px;
+        background: none repeat scroll $white;
+        border-radius: 50%;
     }
 </style>
