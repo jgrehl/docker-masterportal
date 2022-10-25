@@ -1,5 +1,6 @@
 <script>
 import {mapGetters, mapActions} from "vuex";
+import Alerting from "./modules/alerting/components/AlertingItem.vue";
 import ControlBar from "./modules/controls/components/ControlBar.vue";
 import initializeLayers from "./core/layers/js/layerProcessor";
 import {initializeMaps} from "./core/maps/js/maps";
@@ -13,6 +14,7 @@ import MenuToggleButton from "./modules/menu/components/MenuToggleButton.vue";
 export default {
     name: "App",
     components: {
+        Alerting,
         ControlBar,
         LayerPills,
         MenuContainer,
@@ -123,6 +125,7 @@ export default {
             id="map-wrapper"
             class="mp-map"
         >
+            <Alerting />
             <MenuToggleButton
                 v-if="allConfigsLoaded && mainMenu && uiStyle !== 'SIMPLE'"
                 side="mainMenu"
