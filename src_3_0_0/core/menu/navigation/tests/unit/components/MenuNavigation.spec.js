@@ -11,7 +11,7 @@ const localVue = createLocalVue();
 localVue.use(Vuex);
 config.mocks.$t = key => key;
 
-describe("src_3_0_0/modules/controls/backForward/components/MenuNavigation.vue", () => {
+describe("src_3_0_0/core/menu/navigation/components/MenuNavigation.vue", () => {
     let store, navigateBackSpy;
     const sampleMainMenuPath = ["mainMenu", "sections", 0, 1, "children", 0],
         sampleConfigObject = {title: "awesomeTitle"};
