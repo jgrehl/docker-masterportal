@@ -4,6 +4,7 @@ import FreezeScreen from "../freeze/components/FreezeScreen.vue";
 import FullScreen from "../fullScreen/components/FullScreen.vue";
 import TotalView from "../totalView/components/TotalView.vue";
 import ZoomInAndOut from "../zoom/components/ZoomInAndOut.vue";
+import Orientation from "../orientation/components/OrientationItem.vue";
 
 /**
  * User type definition
@@ -19,7 +20,8 @@ const state = {
         freeze: FreezeScreen,
         fullScreen: FullScreen,
         totalView: TotalView,
-        zoom: ZoomInAndOut
+        zoom: ZoomInAndOut,
+        orientation: Orientation
     },
     mobileHiddenControls: [
         "backForward",
