@@ -2,7 +2,8 @@ import getters from "./gettersControls";
 import mutations from "./mutationsControls";
 import state from "./stateControls";
 
-import backForward from "../backForward/store/indexBackForward";
+import backForward from "./backForward/store/indexBackForward";
+import orientation from "./orientation/store/indexOrientation";
 
 /**
  * controls-Module is required to be able to nest controls
@@ -13,7 +14,8 @@ import backForward from "../backForward/store/indexBackForward";
 export default {
     namespaced: true,
     modules: {
-        backForward
+        backForward,
+        orientation
     },
     getters,
     mutations,
