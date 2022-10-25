@@ -112,7 +112,7 @@ describe("src_3_0_0/core/maps/store/actionsMapsAttributesMapper.js", () => {
         it("Should set initial attributes", () => {
             setInitialAttributes({commit});
 
-            expect(commit.callCount).to.equals(4);
+            expect(commit.callCount).to.equals(5);
             expect(commit.firstCall.args).to.deep.equals(["setInitialCenter", [10, 20]]);
             expect(commit.secondCall.args).to.deep.equals(["setInitialRotation", 0]);
             expect(commit.thirdCall.args).to.deep.equals(["setInitialZoom", 5]);
