@@ -41,7 +41,7 @@ export default {
         v-if="!isMobile"
         :id="'menu-offcanvas-header-title-' + idAppendix"
         :href="link ? link : '#'"
-        target="_blank"
+        :target="link ? '_blank' : '_self'"
         :data-bs-toggle="text"
         data-bs-placement="bottom"
         :title="toolTip"
