@@ -13,6 +13,7 @@
  * @property {Number} rotation Current rotation value of the map view.
  * @property {Number} scale Current scale value of the map.
  * @property {Number} zoom Current zoom level of the map view.
+ * @property {String} projection Current projection of the map view.
 */
 
 const state = {
@@ -27,7 +28,8 @@ const state = {
     resolution: null,
     rotation: null,
     scale: null,
-    zoom: null
+    zoom: null,
+    projection: null
 };
 
 export default state;
