@@ -53,7 +53,7 @@ export default {
             :src="logo"
             :alt="text"
         >
-        <h1>{{ text }}</h1>
+        <h1>{{ $t(text) }}</h1>
     </a>
 </template>
 
