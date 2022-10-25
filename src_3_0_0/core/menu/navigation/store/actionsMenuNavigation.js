@@ -8,7 +8,7 @@ const actions = {
      */
     navigateBack ({commit, dispatch, rootGetters}, side) {
         // eslint-disable-next-line new-cap
-        const {itemType} = rootGetters["Menu/objectFromPath"]("mainMenu", "last");
+        const {itemType} = rootGetters["Menu/objectFromPath"](side, "last");
 
         if (itemType !== "folder") {
             dispatch("Menu/setElementActive", {moduleNamespace: itemType.charAt(0).toUpperCase() + itemType.slice(1), isActive: false}, {root: true});
