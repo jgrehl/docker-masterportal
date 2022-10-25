@@ -34,15 +34,22 @@ export default {
     },
     methods: {
         ...mapActions("Maps", ["changeMapMode"]),
+        ...mapActions("Alerting", ["addSingleAlert", "cleanup"]),
 
         /**
          * Triggers the change of the map from 2D to 3D and vice versa.
          * @returns {void}
          */
         triggerChangeMapMode () {
+             this.addSingleAlert({
+                    "content": "See alert",
+                    "mustBeConfirmed": true,
+                    "multipleAlert": true
+                });
+            document.getElementById("mymodal").modal("show");
             const targetMode = this.mode === "2D" ? "3D" : "2D";
 
-            this.changeMapMode(targetMode);
+            //this.changeMapMode(targetMode);
         }
     }
 };
