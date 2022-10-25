@@ -12,13 +12,14 @@ localVue.use(Vuex);
 config.mocks.$t = key => key;
 
 describe("src_3_0_0/modules/controls/backForward/components/MenuNavigation.vue", () => {
-    let store;
+    let store, navigateBackSpy;
     const sampleMainMenuPath = ["mainMenu", "sections", 0, 1, "children", 0],
-        sampleConfigObject = {title: "awesomeTitle"},
-        navigateBackSpy = sinon.spy();
+        sampleConfigObject = {title: "awesomeTitle"};
 
 
     beforeEach(() => {
+        navigateBackSpy = sinon.spy();
+
         store = new Vuex.Store({
             namespaces: true,
             modules: {
@@ -44,6 +45,8 @@ describe("src_3_0_0/modules/controls/backForward/components/MenuNavigation.vue",
             }
         });
     });
+
+    afterEach(sinon.restore);
 
     it("renders the navigation in the main menu side", () => {
         const wrapper = mount(MenuNavigation, {store, localVue, propsData: {side: "mainMenu"}});
