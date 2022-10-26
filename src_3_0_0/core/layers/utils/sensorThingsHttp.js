@@ -19,7 +19,7 @@ import crs from "@masterportal/masterportalapi/src/crs";
  * @memberof Core.ModelList.Layer.SensorThingsHttp
  * @export
  */
-export class SensorThingsHttp {
+class SensorThingsHttp {
 
     /**
      * Constructor of SensorThingsHttp.
@@ -507,3 +507,7 @@ export class SensorThingsHttp {
         this.rootNode = rootNode;
     }
 }
+
+module.exports = {
+    SensorThingsHttp
+};
