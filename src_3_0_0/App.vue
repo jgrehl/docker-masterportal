@@ -116,6 +116,7 @@ export default {
                 id="map"
             />
             <button
+                v-if="mainMenu"
                 id="main-menu-toggle-button"
                 class="btn btn-primary bootstrap-icon menu-toggle-button"
                 type="button"
@@ -130,6 +131,7 @@ export default {
                     Should be fixed when using own css rules and functionality
             -->
             <button
+                v-if="secondaryMenu"
                 id="secondary-menu-toggle-button"
                 class="btn btn-primary bootstrap-icon menu-toggle-button"
                 type="button"
