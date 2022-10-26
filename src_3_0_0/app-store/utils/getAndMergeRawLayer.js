@@ -1,4 +1,4 @@
-import {getLayerWhere, getLayerList, initializeLayerList} from "@masterportal/masterportalapi/src/rawLayerList";
+import {rawLayerList} from "@masterportal/masterportalapi/src";
 import omit from "../../utils/omit";
 /**
  * Returns the extended raw layer to the id contained in the layer configuration.
@@ -8,7 +8,7 @@ import omit from "../../utils/omit";
  * @returns {Object} the extended and merged raw layer
  */
 export function getAndMergeRawLayer (layerConf) {
-    return mergeRawLayer(layerConf, getLayerWhere({id: layerConf?.id}));
+    return mergeRawLayer(layerConf, rawLayerList.getLayerWhere({id: layerConf?.id}));
 }
 
 /**
@@ -50,10 +50,10 @@ function fillGroupLayer (layerConf) {
             let objFromRawList = null;
 
             if (childLayer.styles && childLayer.styles[0]) {
-                objFromRawList = getLayerWhere({id: childLayer.id + childLayer.styles[0]});
+                objFromRawList = rawLayerList.getLayerWhere({id: childLayer.id + childLayer.styles[0]});
             }
             if (objFromRawList === null || objFromRawList === undefined) {
-                objFromRawList = getLayerWhere({id: childLayer.id});
+                objFromRawList = rawLayerList.getLayerWhere({id: childLayer.id});
             }
             if (objFromRawList !== null && objFromRawList !== undefined) {
                 return Object.assign(objFromRawList, childLayer);
@@ -88,7 +88,7 @@ function mergeLayerWithSeveralIds (layerConf) {
     let mergedLayer = {};
 
     ids?.forEach(id => {
-        const layer = getLayerWhere({id: id});
+        const layer = rawLayerList.getLayerWhere({id: id});
 
         if (layer) {
             existingLayers.push(layer);
@@ -130,7 +130,7 @@ function mergeLayerWithSeveralIds (layerConf) {
  */
 export function getAndMergeAllRawLayers (treeConfig = {}) {
     // refactored from parserDefaultTree.js and layerList.js
-    const layerList = getLayerList(),
+    const layerList = rawLayerList.getLayerList(),
         rawLayers = [],
         validLayerTypes = treeConfig.validLayerTypesAutoTree || ["WMS", "SENSORTHINGS", "TERRAIN3D", "TILESET3D", "OBLIQUE"],
         layerIDsToIgnore = treeConfig.layerIDsToIgnore || [],
@@ -179,7 +179,7 @@ export function getAndMergeAllRawLayers (treeConfig = {}) {
     mergeByMetaIds(toMergeByMdId, rawLayers);
     removeFromLayerList(relatedWMSLayerIds, rawLayers);
     // set rawLayerList in masterportalapi to this rawLayers
-    initializeLayerList(rawLayers);
+    rawLayerList.initializeLayerList(rawLayers);
     return rawLayers;
 }
 
