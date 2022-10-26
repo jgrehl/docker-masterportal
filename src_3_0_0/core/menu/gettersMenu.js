@@ -24,6 +24,9 @@ const menuGetters = {
     mainTitle (_, getters) {
         return getters.mainMenu ? getters.mainMenu.title : null;
     },
+    mainToggleButtonIcon (_, getters) {
+        return getters.mainMenu.toggleButtonIcon ?? "bi-list";
+    },
     /**
      * @param {Object} _ module state (discarded)
      * @param {Object} getters module getters
@@ -47,6 +50,9 @@ const menuGetters = {
     secondaryTitle (_, getters) {
         return getters.secondaryMenu ? getters.secondaryMenu.title : null;
 
+    },
+    secondaryToggleButtonIcon (_, getters) {
+        return getters.secondaryMenu.toggleButtonIcon ?? "bi-tools";
     },
     section: (_, getters) => path => {
         if (getters[path[0]]) {
