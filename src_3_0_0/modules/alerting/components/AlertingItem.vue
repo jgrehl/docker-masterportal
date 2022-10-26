@@ -170,7 +170,7 @@ export default {
         },
         /**
          * Just a wrapper method for the XHR request for the sake of testing.
-         * @param {Boolean} fetchBroadcastUrl fetchBroadcastUrl
+         * @param {Boolean} value value for showTheModal
          * @returns {void}
          */
         toggleModal: function (value) {
@@ -184,7 +184,6 @@ export default {
         onModalHid: function () {
             this.cleanup();
         },
-
         /**
          * Update a single alert's has-been-read state.
          * @param {string} hash hash
@@ -192,6 +191,23 @@ export default {
          */
         markAsRead: function (hash) {
             this.alertHasBeenRead(hash);
+        },
+        /**
+         * Select the class for the alert category.
+         * @param {String} category category of the alert
+         * @returns {void}
+         */
+        selectCategoryClass: function (category) {
+            if (category === "News") {
+                return "badge rounded-pill bg-success";
+            }
+            else if (category === "Alert") {
+                return "badge rounded-pill bg-warning";
+            }
+            else if (category === "Error") {
+                return "badge rounded-pill bg-danger";
+            }
+            return "badge rounded-pill bg-info";
         }
     }
 };
@@ -211,26 +227,26 @@ export default {
             role="document"
         >
             <div class="modal-content">
+                <div class="modal-header">
+                    <button
+                        type="button"
+                        class="btn-close"
+                        aria-label="Close"
+                        @click="toggleModal(false)"
+                    />
+                </div>
                 <div
                     v-for="(alertCategory, categoryIndex) in sortedAlerts"
                     :key="alertCategory.category"
                     class="alertCategoryContainer"
                     :class="{ last: categoryIndex === sortedAlerts.length-1 }"
                 >
-                    <div class="modal-header">
-                        <h3 class="modal-title">
-                            {{ $t(alertCategory.category) }}
-                        </h3>
-                        <button
-                            type="button"
-                            class="btn-close"
-                            aria-label="Close"
-                            @click="toggleModal(false)"
-                        >
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-
+                    <hr
+                        v-if="categoryIndex>1"
+                    >
+                    <span :class="selectCategoryClass(alertCategory.category)">
+                        {{ $t(alertCategory.category) }}
+                    </span>
                     <div
                         v-for="(singleAlert, singleAlertIndex) in alertCategory.content"
                         :key="singleAlert.hash"
@@ -244,6 +260,12 @@ export default {
                                 last: singleAlertIndex === alertCategory.content.length-1
                             }"
                         >
+                            <hr
+                                v-if="singleAlertIndex>0 || categoryIndex>=0"
+                            >
+                            <span :class="selectCategoryClass(singleAlert.category)">
+                                {{ $t(singleAlert.category) }}
+                            </span>
                             <div
                                 class="modal-body"
                                 v-html="singleAlert.content"
@@ -252,12 +274,14 @@ export default {
                                 v-if="singleAlert.mustBeConfirmed && availableLocalStorage"
                                 class="confirm"
                             >
-                                <a
+                                <button
+                                    type="button"
+                                    class="btn btn-link btn-sm float-end"
                                     @click="markAsRead(singleAlert.hash)"
                                     @keydown.enter="markAsRead(singleAlert.hash)"
                                 >
                                     {{ $t(singleAlert.confirmText) }}
-                                </a>
+                                </button>
                             </p>
                         </div>
                     </div>
