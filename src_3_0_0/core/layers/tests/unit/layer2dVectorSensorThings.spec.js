@@ -7,8 +7,8 @@ import VectorLayer from "ol/layer/Vector.js";
 import VectorSource from "ol/source/Vector.js";
 
 import Layer2dVectorSensorThings from "../../layer2dVectorSensorThings";
-import * as SensorThingsHttp from "../../utils/sensorThingsHttp";
-import * as sensorThingsMqtt from "../../utils/sensorThingsMqtt";
+import SensorThingsHttp from "../../utils/sensorThingsHttp";
+import sensorThingsMqtt from "../../utils/sensorThingsMqtt";
 
 describe("src_3_0_0/core/layers/layer2dVectorSensorThings.js", () => {
     let attributes,
