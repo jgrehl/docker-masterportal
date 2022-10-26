@@ -3,7 +3,7 @@ import {expect} from "chai";
 import sinon from "sinon";
 import {shallowMount, createLocalVue} from "@vue/test-utils";
 import AppComponent from "../../App.vue";
-import * as maps from "../../core/maps/maps.js";
+import maps from "../../core/maps/maps.js";
 
 const localVue = createLocalVue();
 
