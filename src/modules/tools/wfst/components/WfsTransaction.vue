@@ -3,7 +3,7 @@ import {mapActions, mapGetters, mapMutations} from "vuex";
 import getLayerInformationModule from "../utils/getLayerInformation";
 import ToolTemplate from "../../ToolTemplate.vue";
 import {getComponent} from "../../../../utils/getComponent";
-import SimpleButton from "../../../../share-components/SimpleButton.vue";
+import SimpleButton from "../../../../../src_3_0_0/sharedComponents/SimpleButton.vue";
 
 export default {
     name: "WfsTransaction",
