@@ -3,6 +3,7 @@ import {mapGetters, mapActions} from "vuex";
 import ControlBar from "./modules/controls/ControlBar.vue";
 import ContainerItem from "./modules/container/ContainerItem.vue";
 import MenuContainer from "./core/menu/MenuContainer.vue";
+import MenuToggleButton from "./core/menu/MenuToggleButton.vue";
 import initializeLayers from "./core/layers/layerProcessor";
 import {initializeMaps} from "./core/maps/maps";
 import initializeModules from "./core/menu/modules/moduleProcessor";
@@ -14,7 +15,8 @@ export default {
     components: {
         ControlBar,
         ContainerItem,
-        MenuContainer
+        MenuContainer,
+        MenuToggleButton
     },
     computed: {
         ...mapGetters([
@@ -24,7 +26,7 @@ export default {
             "portalConfig",
             "visibleLayerConfigs"
         ]),
-        ...mapGetters("Menu", ["mainMenu", "secondaryMenu", "mainToggleButtonIcon", "secondaryToggleButtonIcon"])
+        ...mapGetters("Menu", ["mainMenu", "secondaryMenu"])
     },
     watch: {
         allConfigsLoaded (value) {
@@ -115,32 +117,11 @@ export default {
             <div
                 id="map"
             />
-            <button
-                v-if="mainMenu"
-                id="main-menu-toggle-button"
-                class="btn btn-primary bootstrap-icon menu-toggle-button"
-                type="button"
-                data-bs-toggle="offcanvas"
-                data-bs-target="#menu-offcanvas-mainMenu"
-                :aria-label="$t('common:menu.ariaLabelOpen')"
-            >
-                <i :class="mainToggleButtonIcon" />
-            </button>
-            <!--
-                TODO(roehlipa): Toggle buttons currently don't work when a menu is initially opened -> gotta close the menu first
-                    Should be fixed when using own css rules and functionality
-            -->
-            <button
-                v-if="secondaryMenu"
-                id="secondary-menu-toggle-button"
-                class="btn btn-primary bootstrap-icon menu-toggle-button"
-                type="button"
-                data-bs-toggle="offcanvas"
-                data-bs-target="#menu-offcanvas-secondaryMenu"
-                :aria-label="$t('common:menu.ariaLabelOpen')"
-            >
-                <i :class="secondaryToggleButtonIcon" />
-            </button>
+            <MenuToggleButton v-if="allConfigsLoaded && mainMenu" />
+            <MenuToggleButton
+                v-if="allConfigsLoaded && secondaryMenu"
+                side="secondary"
+            />
             <!-- only for Testing -->
             <ContainerItem />
             <div
@@ -185,27 +166,6 @@ export default {
                 position: absolute;
                 height: 100%;
                 width: 100%;
-            }
-            .menu-toggle-button {
-                // TODO(roehlipa): Use same styling as ControlIcons?
-                position: absolute;
-                top: 15px;
-                left: 15px;
-                font-size: calc(#{$icon_length} - 0.35 * #{$icon_length});
-                height: $icon_length;
-                width: $icon_length;
-
-                i {
-                    position: absolute;
-                    top: 50%;
-                    left: 50%;
-                    transform: translate(-50%, -50%);
-                    line-height: 0;
-                }
-            }
-            #secondary-menu-toggle-button {
-                right: 15px;
-                left: auto;
             }
             .elements-positioned-over-map {
                 display: flex;
