@@ -12,6 +12,9 @@ const Config = {
     ],
     layerConf: "https://geodienste.hamburg.de/services-internet.json",
     restConf: "https://geodienste.hamburg.de/lgv-config/rest-services-internet.json",
+    alerting: {
+        fetchBroadcastUrl: "./resources/newsFeedPortalAlerts.json"
+    },
     startingMap3D: false,
     cesiumLibrary: "https://geoportal-hamburg.de/mastercode/cesium/1_95/Cesium.js",
     cesiumParameter: {
