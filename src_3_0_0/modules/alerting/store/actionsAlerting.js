@@ -70,9 +70,10 @@ export default {
             "multipleAlert": true
         });
         dispatch("addSingleAlert", {
+            "category": "News",
             "content": "See alert2",
             "mustBeConfirmed": true,
-            "multipleAlert": true
+            "multipleAlert": false
         });
         fetchFirstModuleConfig(context, configPaths, "Alerting");
     },
