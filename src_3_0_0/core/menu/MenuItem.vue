@@ -1,6 +1,6 @@
 <script>
 import {mapMutations} from "vuex";
-import SimpleButton from "../../../src/share-components/SimpleButton.vue";
+import SimpleButton from "../../sharedComponents/SimpleButton.vue";
 
 export default {
     name: "MenuItem",
