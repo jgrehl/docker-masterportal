@@ -1,4 +1,4 @@
-import * as rawLayerList from "@masterportal/masterportalapi/src/rawLayerList";
+import rawLayerList from "@masterportal/masterportalapi/src/rawLayerList";
 import {getAndMergeAllRawLayers, getAndMergeRawLayer} from "../../../utils/getAndMergeRawLayer.js";
 import {expect} from "chai";
 import sinon from "sinon";
