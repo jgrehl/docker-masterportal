@@ -24,6 +24,11 @@ const menuGetters = {
     mainTitle (_, getters) {
         return getters.mainMenu ? getters.mainMenu.title : null;
     },
+    /**
+     * @param {Object} _ module state (discarded)
+     * @param {Object} getters module getters
+     * @returns {string} Icon used for button toggling the mainMenu.
+     */
     mainToggleButtonIcon (_, getters) {
         return getters.mainMenu.toggleButtonIcon ?? "bi-list";
     },
@@ -51,6 +56,11 @@ const menuGetters = {
         return getters.secondaryMenu ? getters.secondaryMenu.title : null;
 
     },
+    /**
+     * @param {Object} _ module state (discarded)
+     * @param {Object} getters module getters
+     * @returns {string} Icon used for button toggling the secondaryMenu.
+     */
     secondaryToggleButtonIcon (_, getters) {
         return getters.secondaryMenu.toggleButtonIcon ?? "bi-tools";
     },
