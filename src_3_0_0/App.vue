@@ -24,7 +24,7 @@ export default {
             "portalConfig",
             "visibleLayerConfigs"
         ]),
-        ...mapGetters("Menu", ["mainMenu", "secondaryMenu"])
+        ...mapGetters("Menu", ["mainMenu", "secondaryMenu", "mainToggleButtonIcon", "secondaryToggleButtonIcon"])
     },
     watch: {
         allConfigsLoaded (value) {
@@ -124,7 +124,7 @@ export default {
                 data-bs-target="#menu-offcanvas-mainMenu"
                 :aria-label="$t('common:menu.ariaLabelOpen')"
             >
-                <i class="bi-list" />
+                <i :class="mainToggleButtonIcon" />
             </button>
             <!--
                 TODO(roehlipa): Toggle buttons currently don't work when a menu is initially opened -> gotta close the menu first
@@ -139,7 +139,7 @@ export default {
                 data-bs-target="#menu-offcanvas-secondaryMenu"
                 :aria-label="$t('common:menu.ariaLabelOpen')"
             >
-                <i class="bi-list" />
+                <i :class="secondaryToggleButtonIcon" />
             </button>
             <!-- only for Testing -->
             <ContainerItem />
