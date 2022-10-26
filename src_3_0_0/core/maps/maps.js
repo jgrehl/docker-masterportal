@@ -10,7 +10,7 @@ import store from "../../app-store";
  * @param {Object} configJs The config.js.
  * @returns {void}
  */
-export function initializeMaps (portalConfig, configJs) {
+function initializeMaps (portalConfig, configJs) {
     create2DMap(portalConfig.mapView, configJs);
     store.dispatch("Maps/setMapAttributes");
 
@@ -38,7 +38,7 @@ function create2DMap (mapViewSettings, configJs) {
  * @param {Object} configJs The config.js.
  * @returns {void}
  */
-export function load3dMap (configJs) {
+function load3dMap (configJs) {
     load3DScript(store.getters.cesiumLibrary, () => {
         create3DMap(configJs);
 
@@ -53,7 +53,7 @@ export function load3dMap (configJs) {
  * @param {Object} configJs The settings of config.json file.
  * @returns {void}
  */
-export function create3DMap (configJs) {
+function create3DMap (configJs) {
     const map3d = api.map.createMap({
         cesiumParameter: configJs?.cesiumParameter,
         map2D: mapCollection.getMap("2D")
@@ -61,3 +61,9 @@ export function create3DMap (configJs) {
 
     mapCollection.addMap(map3d, "3D");
 }
+
+module.exports = {
+    create3DMap,
+    initializeMaps,
+    load3dMap
+};
