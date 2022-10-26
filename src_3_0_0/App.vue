@@ -116,7 +116,7 @@ export default {
                 id="map"
             />
             <button
-                id="menu-toggle-button"
+                id="main-menu-toggle-button"
                 class="btn btn-primary bootstrap-icon menu-toggle-button"
                 type="button"
                 data-bs-toggle="offcanvas"
