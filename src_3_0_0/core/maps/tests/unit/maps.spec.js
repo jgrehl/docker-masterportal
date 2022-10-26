@@ -1,4 +1,4 @@
-import * as load3DScript from "@masterportal/masterportalapi/src/lib/load3DScript";
+import load3DScript from "@masterportal/masterportalapi/src/lib/load3DScript";
 import {expect} from "chai";
 import sinon from "sinon";
 
