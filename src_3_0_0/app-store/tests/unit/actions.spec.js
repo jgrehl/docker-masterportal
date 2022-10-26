@@ -1,5 +1,5 @@
 import axios from "axios";
-import * as rawLayerList from "@masterportal/masterportalapi/src/rawLayerList";
+import rawLayerList from "@masterportal/masterportalapi/src/rawLayerList";
 import sinon from "sinon";
 import {expect} from "chai";
 import actions from "../../actions";
