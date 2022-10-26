@@ -15,7 +15,7 @@ import {SensorThingsMqttConnector} from "./sensorThingsMqttConnector";
  *  </pre>
  * @export
  */
-export class SensorThingsMqtt {
+class SensorThingsMqtt {
     /**
      * constructor of SensorThingsMqtt
      * @post connects via mqtt with the given host
@@ -60,3 +60,7 @@ export class SensorThingsMqtt {
         return connector;
     }
 }
+
+module.exports = {
+    SensorThingsMqtt
+};
