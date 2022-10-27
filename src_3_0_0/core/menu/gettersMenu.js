@@ -66,7 +66,7 @@ const menuGetters = {
     /**
      * @param {Object} _ module state (discarded)
      * @param {Object} getters module getters
-     * @returns {Object|null} The title object determined by its side if configured
+     * @returns {{title: string, idAppendix: string}|null} An object including the title and an appendix for the titles id to make it unique; may return null if no title is configured.
      */
     titleBySide: (_, getters) => side => {
         if (side === "mainMenu" && getters.mainTitle) {
