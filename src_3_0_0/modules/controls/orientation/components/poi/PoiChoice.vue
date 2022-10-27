@@ -23,7 +23,7 @@ export default {
         });
     },
     methods: {
-        ...mapMutations("controls/orientation", Object.keys(mutations)),
+        ...mapMutations("Controls/orientation", Object.keys(mutations)),
 
         /**
          * Callback when close icon has been clicked.
