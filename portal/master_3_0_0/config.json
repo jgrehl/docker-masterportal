@@ -283,7 +283,7 @@
           "id": "1711",
           "name": "Krankenhäuser",
           "typ": "WFS",
-          "visibility": false
+          "visibility": true
         },
         {
           "id": "52",
