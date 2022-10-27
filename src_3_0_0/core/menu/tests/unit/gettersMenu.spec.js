@@ -107,6 +107,18 @@ describe("src_3_0_0/core/menu/gettersMenu.js", () => {
             expect(gettersMenu.mainTitle(undefined, getters)).to.equal(titleSymbol);
         });
     });
+    describe("mainToggleButtonIcon", () => {
+        it("should return the configured icon for the mainMenu if configured", () => {
+            const toggleButtonIcon = "bi-bucket";
+
+            getters.mainMenu = {toggleButtonIcon};
+
+            expect(gettersMenu.mainToggleButtonIcon(undefined, getters)).to.equal(toggleButtonIcon);
+        });
+        it("should return the default icon if it isn't configured on mainMenu", () => {
+            expect(gettersMenu.mainToggleButtonIcon(undefined, getters)).to.equal("bi-list");
+        });
+    });
     describe("objectFromPath", () => {
         const foundObject = Symbol("am object"),
             lastEntrySymbol = Symbol("last entry"),
@@ -247,6 +259,59 @@ describe("src_3_0_0/core/menu/gettersMenu.js", () => {
             getters.secondaryMenu = {title: titleSymbol};
 
             expect(gettersMenu.secondaryTitle(undefined, getters)).to.equal(titleSymbol);
+        });
+    });
+    describe("secondaryToggleButtonIcon", () => {
+        it("should return the configured icon for the secondaryMenu if configured", () => {
+            const toggleButtonIcon = "bi-bucket";
+
+            getters.secondaryMenu = {toggleButtonIcon};
+
+            expect(gettersMenu.secondaryToggleButtonIcon(undefined, getters)).to.equal(toggleButtonIcon);
+        });
+        it("should return the default icon if it isn't configured on secondaryMenu", () => {
+            expect(gettersMenu.secondaryToggleButtonIcon(undefined, getters)).to.equal("bi-tools");
+        });
+    });
+    describe("titleBySide", () => {
+        const exampleTitle = {
+            text: "Precise title",
+            logo: "some png source",
+            link: "https://valid.url.com",
+            toolTip: "More info"
+        };
+
+        it("should return the mainTitle properties as well as the side as idAppendix if the side is 'mainMenu' and 'mainTitle' is defined", () => {
+            getters.mainTitle = exampleTitle;
+
+            const side = "mainMenu",
+                titleObject = gettersMenu.titleBySide(undefined, getters)(side);
+
+            expect(titleObject).to.not.equal(null);
+            expect(titleObject.text).to.equal(exampleTitle.text);
+            expect(titleObject.logo).to.equal(exampleTitle.logo);
+            expect(titleObject.link).to.equal(exampleTitle.link);
+            expect(titleObject.toolTip).to.equal(exampleTitle.toolTip);
+            expect(titleObject.idAppendix).to.equal(side);
+        });
+        it("should return the mainTitle properties as well as the side as idAppendix if the side is 'secondaryMenu' and 'secondaryTitle' is defined", () => {
+            getters.secondaryTitle = exampleTitle;
+
+            const side = "secondaryMenu",
+                titleObject = gettersMenu.titleBySide(undefined, getters)(side);
+
+            expect(titleObject).to.not.equal(null);
+            expect(titleObject.text).to.equal(exampleTitle.text);
+            expect(titleObject.logo).to.equal(exampleTitle.logo);
+            expect(titleObject.link).to.equal(exampleTitle.link);
+            expect(titleObject.toolTip).to.equal(exampleTitle.toolTip);
+            expect(titleObject.idAppendix).to.equal(side);
+        });
+        it("should return null if a given side does not have a title defined", () => {
+            expect(gettersMenu.titleBySide(undefined, getters)("mainMenu")).to.equal(null);
+        });
+        it("should return null if a given side does not equal 'mainMenu' or 'secondaryMenu'", () => {
+            expect(gettersMenu.titleBySide(undefined, getters)("newMenu")).to.equal(null);
         });
     });
     describe("section", () => {
