@@ -113,7 +113,7 @@ export default {
 
             poiFeatures.forEach(category => {
                 category.features.forEach(feat => {
-                    feat.imgPath = this.getImgPath(feat);
+                    // feat.imgPath = this.getImgPath(feat);
                     feat.nearbyTitleText = this.getFeatureTitle(feat);
                 });
             });
@@ -388,7 +388,7 @@ export default {
                                             :key="'feat' + i"
                                             @click="zoomFeature"
                                         >
-                                            <td v-if="feat.imgPath.indexOf('</svg>') !== -1">
+                                            <!-- <td v-if="feat.imgPath.indexOf('</svg>') !== -1">
                                                 <span v-html="feat.imgPath" />
                                             </td>
                                             <td v-else-if="feat.imgPath.length > 0">
@@ -396,7 +396,7 @@ export default {
                                                     :src="feat.imgPath"
                                                     :alt="$t('common:modules.controls.orientation.imgAlt')"
                                                 >
-                                            </td>
+                                            </td> -->
                                             <td>
                                                 <p
                                                     v-for="(featNearbyTitleText, iNearby) in feat.nearbyTitleText"
