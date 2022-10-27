@@ -7,7 +7,7 @@ export default {
         commit("MenuNavigation/addEntry", path, {root: true});
         if (itemType) {
             if (itemType === "folder") {
-                Vue.nextTick(() => document.getElementById(`menu-offcanvas-body-items-element-0-${path[0]}`).focus());
+                Vue.nextTick(() => document.getElementById(`menu-offcanvas-body-items-element-0-${path[0]}`)?.focus());
                 return;
             }
             dispatch("setElementActive", {moduleNamespace: itemType.charAt(0).toUpperCase() + itemType.slice(1), isActive: true});
