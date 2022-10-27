@@ -1,6 +1,6 @@
 import menuState from "./stateMenu";
 import {generateSimpleGetters} from "../../app-store/utils/generators";
-import idx, {badPathSymbol} from "../../../src/utils/idx";
+import {badPathSymbol, idx} from "../../../src/utils/idx";
 
 const menuGetters = {
     ...generateSimpleGetters(menuState),
