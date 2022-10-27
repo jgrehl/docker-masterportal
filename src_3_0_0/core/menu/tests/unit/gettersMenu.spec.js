@@ -1,7 +1,7 @@
 import sinon from "sinon";
 import {expect} from "chai";
 import gettersMenu from "../../gettersMenu";
-// import * as idx from "../../../../../src/utils/idx";
+const idx = require("../../../../../src/utils/idx");
 
 describe("src_3_0_0/core/menu/gettersMenu.js", () => {
     const mainMenuSymbol = Symbol("mainMenu"),
@@ -249,15 +249,14 @@ describe("src_3_0_0/core/menu/gettersMenu.js", () => {
             expect(gettersMenu.secondaryTitle(undefined, getters)).to.equal(titleSymbol);
         });
     });
-    // TODO(roehlipa): Tests are currently not functional as the sinon.stub on idx leads to TypeError: Descriptor for property default is non-configurable and non-writable after the recent rebase
-    /* describe("section", () => {
+    describe("section", () => {
         const goodPath = Symbol("woowee we found something");
         let foundSection, path;
 
         beforeEach(() => {
             foundSection = idx.badPathSymbol;
             path = [];
-            sinon.stub(idx, "default").callsFake(() => foundSection);
+            sinon.stub(idx, "idx").callsFake(() => foundSection);
         });
 
         it("should return a found object from the getters through the given path if it exists for mainMenu", () => {
@@ -305,5 +304,5 @@ describe("src_3_0_0/core/menu/gettersMenu.js", () => {
             expect(consoleErrorSpy.firstCall.args.length).to.equal(1);
             expect(consoleErrorSpy.firstCall.args[0]).to.equal(`Menu: The given menu ${path[0]} is not configured in the config.json.`);
         });
-    }); */
+    });
 });
