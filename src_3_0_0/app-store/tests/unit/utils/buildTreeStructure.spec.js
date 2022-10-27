@@ -116,6 +116,46 @@ describe("src_3_0_0/utils/buildTreeStructure.js", () => {
             expect(result.Ordner[1].Layer[1].name).to.be.equals(result.Ordner[1].Layer[1].datasets[0].md_name);
         });
 
+        it("should return tree structured for active category containing a wms-time layer", () => {
+            const wmsTimeLayer = {
+                    "id": "23555",
+                    "name": "Satellitenbilder Sentinel-2 CIR",
+                    "typ": "WMS",
+                    "datasets": [
+                        {
+                            "md_id": "98A63379-C7EC-4F78-919D-1DFD311C566F",
+                            "md_name": "Satellitenbilder Sentinel-2 Hamburg",
+                            "kategorie_opendata": [
+                                "Umwelt"
+                            ],
+                            "kategorie_inspire": [
+                                "Gebäude"
+                            ],
+                            "kategorie_organisation": "Landesbetrieb Geoinformation und Vermessung"
+                        }
+                    ],
+                    "time": true
+                },
+                layerListWithMWSTime = layerList.concat([wmsTimeLayer]);
+            let result = null,
+                filteredResult = null;
+
+            sinon.stub(rawLayerList, "getLayerList").returns(layerListWithMWSTime);
+
+            getAndMergeAllRawLayers();
+            result = buildTreeStructure(layerConfig, categories[0]);
+            filteredResult = getNestedValues(result, "id").flat(Infinity);
+
+            expect(result).to.be.an("object");
+            expect(filteredResult.indexOf("452")).to.be.equals(-1);
+            expect(filteredResult.indexOf("453")).to.be.equals(-1);
+            expect(filteredResult.indexOf("23555")).not.to.be.equals(-1);
+            expect(result.Ordner[1].Layer).to.be.an("array").to.have.lengthOf(1);
+            expect(result.Ordner[1].Layer[0].id).to.be.equals("23555");
+            expect(result.Ordner[1].Layer[0].time).to.be.true;
+            expect(result.Ordner[1].Layer[0].name).to.be.equals(result.Ordner[1].Layer[0].datasets[0].md_name);
+        });
+
         it("should return tree structured for second category", () => {
             let result = null,
                 filteredResult = null;
