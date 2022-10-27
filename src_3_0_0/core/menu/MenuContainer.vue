@@ -20,7 +20,7 @@ export default {
     },
     computed: {
         ...mapGetters(["isMobile"]),
-        ...mapGetters("Menu", ["mainInitiallyOpen", "secondaryInitiallyOpen"]),
+        ...mapGetters("Menu", ["mainInitiallyOpen", "secondaryInitiallyOpen", "titleBySide"]),
         handlePosition () {
             return this.side === "mainMenu" ? "right" : "left";
         },
@@ -43,7 +43,7 @@ export default {
             mobileOffCanvas: isMobile
         }"
         tabindex="-1"
-        aria-labelledby="offcanvasLabel"
+        :aria-label="titleBySide(side) ? titleBySide(side).text : false"
         data-bs-scroll="true"
         data-bs-backdrop="false"
     >
