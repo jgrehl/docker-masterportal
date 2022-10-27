@@ -289,7 +289,7 @@
           "id": "52",
           "name": "Parkhäuser",
           "typ": "WFS",
-          "visibility": false,
+          "visibility": true,
           "autoRefresh": 5000
         },
         {
