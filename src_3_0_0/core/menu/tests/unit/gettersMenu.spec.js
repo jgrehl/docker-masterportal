@@ -118,6 +118,13 @@ describe("src_3_0_0/core/menu/gettersMenu.js", () => {
         it("should return the default icon if it isn't configured on mainMenu", () => {
             expect(gettersMenu.mainToggleButtonIcon(undefined, getters)).to.equal("bi-list");
         });
+        it("should return the default icon if the configured icon does not start with '-bi'", () => {
+            const toggleButtonIcon = "bucket";
+
+            getters.mainMenu = {toggleButtonIcon};
+
+            expect(gettersMenu.mainToggleButtonIcon(undefined, getters)).to.equal("bi-list");
+        });
     });
     describe("objectFromPath", () => {
         const foundObject = Symbol("am object"),
@@ -270,6 +277,13 @@ describe("src_3_0_0/core/menu/gettersMenu.js", () => {
             expect(gettersMenu.secondaryToggleButtonIcon(undefined, getters)).to.equal(toggleButtonIcon);
         });
         it("should return the default icon if it isn't configured on secondaryMenu", () => {
+            expect(gettersMenu.secondaryToggleButtonIcon(undefined, getters)).to.equal("bi-tools");
+        });
+        it("should return the default icon if the configured icon does not start with '-bi'", () => {
+            const toggleButtonIcon = "bucket";
+
+            getters.secondaryMenu = {toggleButtonIcon};
+
             expect(gettersMenu.secondaryToggleButtonIcon(undefined, getters)).to.equal("bi-tools");
         });
     });
