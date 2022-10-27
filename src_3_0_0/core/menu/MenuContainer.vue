@@ -12,6 +12,7 @@ export default {
         ResizeHandle
     },
     props: {
+        /** Defines in which menu the component is being rendered */
         side: {
             type: String,
             default: "mainMenu",
@@ -21,9 +22,15 @@ export default {
     computed: {
         ...mapGetters(["isMobile"]),
         ...mapGetters("Menu", ["mainInitiallyOpen", "secondaryInitiallyOpen", "titleBySide"]),
+        /**
+         * @returns {string} Defines whether the ResizeHandle should be displayed on the right or left side depending on the menu this component is rendered in.
+         */
         handlePosition () {
             return this.side === "mainMenu" ? "right" : "left";
         },
+        /**
+         * @returns {boolean} Whether the menu should be initially open.
+         */
         initiallyOpen () {
             return this.side === "mainMenu" ? this.mainInitiallyOpen : this.secondaryInitiallyOpen;
         }
