@@ -1,4 +1,4 @@
-export const badPathSymbol = Symbol("Path could not be resolved.");
+const badPathSymbol = Symbol("Path could not be resolved.");
 
 /**
  * Utility function (idx) for traversing the given path of the given object
@@ -9,7 +9,15 @@ export const badPathSymbol = Symbol("Path could not be resolved.");
  * @param {string[]} path The path of keys / indices to traverse through the object.
  * @returns {?*} The value(s) to be retrieved from the given object.
  */
-export default (object, path) => path.reduce(
-    (acc, currentVal) => acc && Object.prototype.hasOwnProperty.call(acc, currentVal) ? acc[currentVal] : badPathSymbol,
-    object
-);
+function idx (object, path) {
+    return path.reduce(
+        (acc, currentVal) => acc && Object.prototype.hasOwnProperty.call(acc, currentVal) ? acc[currentVal] : badPathSymbol,
+        object
+    );
+}
+
+// TODO: Change export back to ES-Syntax when surrounding configuration is settled
+module.exports = {
+    badPathSymbol,
+    idx
+};
