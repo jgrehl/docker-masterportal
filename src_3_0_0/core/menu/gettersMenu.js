@@ -54,7 +54,6 @@ const menuGetters = {
     },
     secondaryTitle (_, getters) {
         return getters.secondaryMenu ? getters.secondaryMenu.title : null;
-
     },
     /**
      * @param {Object} _ module state (discarded)
@@ -63,6 +62,20 @@ const menuGetters = {
      */
     secondaryToggleButtonIcon (_, getters) {
         return getters.secondaryMenu.toggleButtonIcon ?? "bi-tools";
+    },
+    /**
+     * @param {Object} _ module state (discarded)
+     * @param {Object} getters module getters
+     * @returns {Object|null} The title object determined by its side if configured
+     */
+    titleBySide: (_, getters) => side => {
+        if (side === "mainMenu" && getters.mainTitle) {
+            return {...getters.mainTitle, idAppendix: side};
+        }
+        if (side === "secondaryMenu" && getters.secondaryTitle) {
+            return {...getters.secondaryTitle, idAppendix: side};
+        }
+        return null;
     },
     section: (_, getters) => path => {
         if (getters[path[0]]) {

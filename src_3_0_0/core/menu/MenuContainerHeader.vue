@@ -15,16 +15,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters("Menu", ["mainTitle", "secondaryTitle"]),
-        title () {
-            if (this.side === "mainMenu" && this.mainTitle) {
-                return {...this.mainTitle, idAppendix: this.side};
-            }
-            if (this.side === "secondaryMenu" && this.secondaryTitle) {
-                return {...this.secondaryTitle, idAppendix: this.side};
-            }
-            return null;
-        }
+        ...mapGetters("Menu", ["titleBySide"])
     },
     methods: {
         removeShowClass () {
@@ -40,8 +31,8 @@ export default {
         class="offcanvas-header"
     >
         <MenuContainerHeaderTitle
-            v-if="title"
-            v-bind="title"
+            v-if="titleBySide(side)"
+            v-bind="titleBySide(side)"
         />
         <button
             :id="'menu-offcanvas-header-close-button-' + side"
