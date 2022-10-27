@@ -378,10 +378,12 @@ export default {
         getVectorFeaturesInCircle (distance, centerPosition) {
             const circle = new Circle(centerPosition, distance),
                 circleExtent = circle.getExtent(),
-                visibleWFSLayers = [];
+                visibleWFSLayers = [],
+                map2D = mapCollection.getMap("2D"),
+                layers = map2D.getLayers().getArray();
 
-            this.visibleLayerConfigs.forEach(layer => {
-                if (layer.typ === "WFS") {
+            layers.forEach(layer => {
+                if (layer.get("typ") === "WFS") {
                     visibleWFSLayers.push(layer);
                 }
             });
@@ -389,8 +391,8 @@ export default {
                 features = [];
 
             visibleWFSLayers.forEach(layer => {
-                if (layer.has("layerSource") === true) {
-                    features = layer.get("layerSource").getFeaturesInExtent(circleExtent);
+                if (layer.get("source")) {
+                    features = layer.get("source").getFeaturesInExtent(circleExtent);
                     features.forEach(function (feat) {
                         Object.assign(feat, {
                             styleId: layer.get("styleId"),
@@ -511,7 +513,6 @@ export default {
     @import "~variables";
 
     .orientationButtons {
-        margin-top: 20px;
         >.toggleButtonPressed {
             background-color: $dark_blue;
             color: $white;

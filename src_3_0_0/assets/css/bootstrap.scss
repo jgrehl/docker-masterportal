@@ -77,10 +77,6 @@
 .nav > li.disabled > a {
     color: $secondary_contrast !important;
 }
-.nav-pills > li > a.active {
-    color: white !important;
-    font-weight: normal !important;
-}
 
 .navbar-nav li:not(.nav-item) .nav-link {
     padding: .25rem 1.67rem;
