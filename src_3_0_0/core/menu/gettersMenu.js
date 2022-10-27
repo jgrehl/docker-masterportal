@@ -51,7 +51,7 @@ const menuGetters = {
      * @returns {string} Icon used for button toggling the mainMenu.
      */
     mainToggleButtonIcon (_, getters) {
-        return getters.mainMenu.toggleButtonIcon || "bi-list";
+        return getters.mainMenu?.toggleButtonIcon || "bi-list";
     },
     /**
      * @param {MenuState} _ Local vuex state (discarded).
@@ -105,7 +105,7 @@ const menuGetters = {
      * @returns {string} Icon used for button toggling the secondaryMenu.
      */
     secondaryToggleButtonIcon (_, getters) {
-        return getters.secondaryMenu.toggleButtonIcon || "bi-tools";
+        return getters.secondaryMenu?.toggleButtonIcon || "bi-tools";
     },
     /**
      * @param {MenuState} _ Local vuex state (discarded).
