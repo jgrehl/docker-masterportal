@@ -34,7 +34,8 @@ describe("src_3_0_0/core/menu/MenuContainer.vue", () => {
                     namespaced: true,
                     getters: {
                         mainInitiallyOpen: (state) => state.mainInitiallyOpen,
-                        secondaryInitiallyOpen: (state) => state.secondaryInitiallyOpen
+                        secondaryInitiallyOpen: (state) => state.secondaryInitiallyOpen,
+                        titleBySide: () => () => false
                     },
                     state: {
                         mainInitiallyOpen: false,
