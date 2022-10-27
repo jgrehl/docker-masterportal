@@ -8,6 +8,7 @@ export default {
         MenuContainerHeaderTitle
     },
     props: {
+        /** Defines in which menu the component is being rendered */
         side: {
             type: String,
             default: "mainMenu",
@@ -18,6 +19,11 @@ export default {
         ...mapGetters("Menu", ["titleBySide"])
     },
     methods: {
+        /**
+         * Removes the class "show", which is used when displaying a menu, from the menu this
+         * component is rendered in.
+         * @returns {void}
+         */
         removeShowClass () {
             document.getElementById(`menu-offcanvas-${this.side}`)?.classList.remove("show");
         }
