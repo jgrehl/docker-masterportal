@@ -49,7 +49,7 @@ export default {
         });
     },
     methods: {
-        ...mapMutations("controls/orientation", Object.keys(mutations)),
+        ...mapMutations("Controls/orientation", Object.keys(mutations)),
         ...mapActions("Maps", ["zoomToExtent"]),
 
         /**
