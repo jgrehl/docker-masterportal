@@ -7,7 +7,7 @@
     "https://qs-geofos.fhhnet.stadt.hamburg.de/fhh-atlas/": ["oblique_2020", "fhh-atlas-ie11"],
     "https://geofos.fhhnet.stadt.hamburg.de/fhh-atlas/": ["oblique_2020", "fhh-atlas-ie11", "news_fhh-atlas"],
     "https://geofos/fhh-atlas/": ["oblique_2020", "fhh-atlas-ie11", "news_fhh-atlas"],
-    "https://localhost:9001/portal/newsfeed/": ["fhh-panorama", "news-ais"],
+    "https://localhost:9001/portal/master_3_0_0/": ["fhh-panorama", "news-ais"],
     "https://geoportal.metropolregion.hamburg.de/mrhportal_abnahme/": ["qs-release"],
     "https://geoportal.metropolregion.hamburg.de/mrhportal_elmshorn_abnahme/": ["qs-release"],
     "https://geoportal.metropolregion.hamburg.de/roads_abnahme/": ["qs-release"],
@@ -34,7 +34,7 @@
       "category": "Nutzerumfrage 360°-Panoramabilder",
       "content": "Wie nutzen Sie die 360°-Panoramabilder? Das möchten wir von Ihnen erfahren!<br>Nehmen Sie gerne an unserer Umfrage teil. Die Befragung dauert ca. 5 Minuten.<br><br>Folgen Sie direkt diesem Link:<br><a href='https://geowerkstatthamburg.limesurvey.net/982796?lang=de'>https://geowerkstatthamburg.limesurvey.net/982796?lang=de</a><br><br><img src='https://geofos.fhhnet.stadt.hamburg.de/Mastercode/2_24_1/img/Streetsmart.jpg' alt='LGV Panoramabild' width='250' height='226'><br>Ihre Daten werden anonym erfasst und nicht an Dritte weitergegeben.<br><br>Ihr Team LGV Befahrungsdaten",
       "displayFrom": "2022-08-24 05:00",
-      "displayUntil": "2023-09-28 23:59",
+      "displayUntil": "2024-09-28 23:59",
       "mustBeConfirmed": true,
       "once": true
     },
