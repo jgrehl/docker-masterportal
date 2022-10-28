@@ -1,27 +1,27 @@
 export default {
-    /**
-     * Adds an interaction to the map.
-     * @param {Object} _ not used
-     * @param {module:ol/interaction/Interaction} interaction - Interaction to be added to map.
-     * @returns {void}
-     */
-    async addInteraction (_, interaction) {
-        const map = await mapCollection.getMap("2D");
+    // /**
+    //  * Adds an interaction to the map.
+    //  * @param {Object} _ not used
+    //  * @param {module:ol/interaction/Interaction} interaction - Interaction to be added to map.
+    //  * @returns {void}
+    //  */
+    // async addInteraction (_, interaction) {
+    //     const map = await mapCollection.getMap("2D");
 
-        map.addInteraction(interaction);
-    },
+    //     map.addInteraction(interaction);
+    // },
 
-    /**
-     * Removes an interaction from the map.
-     * @param {Object} _ not used
-     * @param {module:ol/interaction/Interaction} interaction - Interaction to be removed from map.
-     * @returns {void}
-     */
-    async removeInteraction (_, interaction) {
-        const map = await mapCollection.getMap("2D");
+    // /**
+    //  * Removes an interaction from the map.
+    //  * @param {Object} _ not used
+    //  * @param {module:ol/interaction/Interaction} interaction - Interaction to be removed from map.
+    //  * @returns {void}
+    //  */
+    // async removeInteraction (_, interaction) {
+    //     const map = await mapCollection.getMap("2D");
 
-        map.removeInteraction(interaction);
-    },
+    //     map.removeInteraction(interaction);
+    // },
     /**
      * Sets center and resolution to initial values.
      * @param {Object} param store context
