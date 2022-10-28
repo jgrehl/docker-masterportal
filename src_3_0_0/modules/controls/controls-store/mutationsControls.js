@@ -1,4 +1,9 @@
+import {generateSimpleMutations} from "../../app-store/utils/generators";
+import stateControls from "./stateControls";
+
 export default {
+    ...generateSimpleMutations(stateControls),
+
     /**
      * Registers a new control element.
      * Can be called e.g. by an addon, if Store is globally accessible.
