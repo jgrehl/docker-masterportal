@@ -63,18 +63,20 @@ export default {
      * @param {object} context context
      * @returns {void}
      */
-    initialize: function ({dispatch}) {
-        dispatch("addSingleAlert", {
+    initialize: function (context) {
+        /*  context.dispatch("addSingleAlert", {
             "content": "See alert",
             "mustBeConfirmed": true,
             "multipleAlert": true
         });
-        dispatch("addSingleAlert", {
+        context.dispatch("addSingleAlert", {
             "category": "News",
+            "title": "Title",
             "content": "See alert2",
+            "creationDate": "2022-12-24",
             "mustBeConfirmed": true,
-            "multipleAlert": false
-        });
+            "multipleAlert": true
+        }); */
         fetchFirstModuleConfig(context, configPaths, "Alerting");
     },
 
@@ -159,7 +161,6 @@ export default {
             console.warn("Alert cancelled, bad content value:", newAlertObj.content);
             return false;
         }
-
         for (const key in newAlertObj) {
             alertProtoClone[key] = newAlertObj[key];
         }
