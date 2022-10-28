@@ -29,10 +29,10 @@ describe("src_3_0_0/core/menu/gettersMenu.js", () => {
     describe("componentFromPath", () => {
         const component = Symbol("Am component"),
             itemType = "component";
-        let objectFromPathFake, side;
+        let objectFromPathFake, side, state;
 
         beforeEach(() => {
-            getters.componentMap = {component};
+            state = {componentMap: {component}};
             objectFromPathFake = sinon.fake.returns({itemType});
             getters.objectFromPath = objectFromPathFake;
         });
@@ -40,7 +40,7 @@ describe("src_3_0_0/core/menu/gettersMenu.js", () => {
         it("should return a component from the componentMap if the parameter side equals 'mainMenu'", () => {
             side = "mainMenu";
 
-            expect(gettersMenu.componentFromPath(undefined, getters)(side)).to.equal(component);
+            expect(gettersMenu.componentFromPath(state, getters)(side)).to.equal(component);
             expect(objectFromPathFake.calledOnce).to.be.true;
             expect(objectFromPathFake.firstCall.args.length).to.equal(2);
             expect(objectFromPathFake.firstCall.args[0]).to.equal(side);
@@ -49,7 +49,7 @@ describe("src_3_0_0/core/menu/gettersMenu.js", () => {
         it("should return a component from the componentMap if the parameter side equals 'secondaryMenu'", () => {
             side = "secondaryMenu";
 
-            expect(gettersMenu.componentFromPath(undefined, getters)(side)).to.equal(component);
+            expect(gettersMenu.componentFromPath(state, getters)(side)).to.equal(component);
             expect(objectFromPathFake.calledOnce).to.be.true;
             expect(objectFromPathFake.firstCall.args.length).to.equal(2);
             expect(objectFromPathFake.firstCall.args[0]).to.equal(side);
@@ -58,7 +58,7 @@ describe("src_3_0_0/core/menu/gettersMenu.js", () => {
         it("should return null and log an error if the given side does not equal 'mainMenu' or 'secondaryMenu'", () => {
             side = "newMenu";
 
-            expect(gettersMenu.componentFromPath(undefined, getters)(side)).to.equal(null);
+            expect(gettersMenu.componentFromPath(state, getters)(side)).to.equal(null);
             expect(objectFromPathFake.notCalled).to.be.true;
             expect(consoleErrorSpy.calledOnce).to.be.true;
             expect(consoleErrorSpy.firstCall.args.length).to.equal(1);
@@ -94,17 +94,17 @@ describe("src_3_0_0/core/menu/gettersMenu.js", () => {
         it("should return null if mainMenu is null", () => {
             expect(gettersMenu.mainTitle(undefined, getters)).to.equal(null);
         });
-        it("should return undefined if title is not defined on mainMenu", () => {
+        it("should return null if title is not defined on mainMenu", () => {
             getters.mainMenu = {};
 
-            expect(gettersMenu.mainTitle(undefined, getters)).to.equal(undefined);
+            expect(gettersMenu.mainTitle(undefined, getters)).to.equal(null);
         });
         it("should return the title if it is defined on mainMenu", () => {
-            const titleSymbol = Symbol("Am title");
+            const title = "Am title";
 
-            getters.mainMenu = {title: titleSymbol};
+            getters.mainMenu = {title};
 
-            expect(gettersMenu.mainTitle(undefined, getters)).to.equal(titleSymbol);
+            expect(gettersMenu.mainTitle(undefined, getters)).to.equal(title);
         });
     });
     describe("mainToggleButtonIcon", () => {
@@ -255,17 +255,17 @@ describe("src_3_0_0/core/menu/gettersMenu.js", () => {
         it("should return null if secondaryMenu is null", () => {
             expect(gettersMenu.secondaryTitle(undefined, getters)).to.equal(null);
         });
-        it("should return undefined if title is not defined on secondaryMenu", () => {
+        it("should return null if title is not defined on secondaryMenu", () => {
             getters.secondaryMenu = {};
 
-            expect(gettersMenu.secondaryTitle(undefined, getters)).to.equal(undefined);
+            expect(gettersMenu.secondaryTitle(undefined, getters)).to.equal(null);
         });
         it("should return the title if it is defined on secondaryMenu", () => {
-            const titleSymbol = Symbol("Am title");
+            const title = "Am title";
 
-            getters.secondaryMenu = {title: titleSymbol};
+            getters.secondaryMenu = {title};
 
-            expect(gettersMenu.secondaryTitle(undefined, getters)).to.equal(titleSymbol);
+            expect(gettersMenu.secondaryTitle(undefined, getters)).to.equal(title);
         });
     });
     describe("secondaryToggleButtonIcon", () => {
