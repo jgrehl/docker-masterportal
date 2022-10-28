@@ -8,14 +8,8 @@ import ControlIcon from "../../components/ControlIcon.vue";
  */
 export default {
     name: "TotalView",
-    props: {
-        /** icon name for the control icon */
-        icon: {
-            type: String,
-            default: "skip-backward-fill"
-        }
-    },
     computed: {
+        ...mapGetters("Controls/TotalView", ["icon"]),
         ...mapGetters("Maps", ["center", "initialCenter", "initialZoom", "zoom"]),
 
         component () {

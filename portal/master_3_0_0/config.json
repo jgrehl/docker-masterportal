@@ -21,7 +21,7 @@
         ]
       },
       "expandable": {
-        "backForward": true,
+        "button3d": true,
         "freeze": true,
         "fullScreen": true
       }
