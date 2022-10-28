@@ -17,7 +17,7 @@ export default {
      */
     async setMapAttributes ({commit, dispatch, rootState}, {map}) {
         dispatch("registerListener", {type: "change:size", listener: "setSize", listenerType: "commit"});
-        dispatch("registerListener", {type: "pointermove", listener: "updatePointer", listenerType: "dispatch"});
+        // dispatch("registerListener", {type: "pointermove", listener: "updatePointer", listenerType: "dispatch"});
         // dispatch("registerListener", {type: "moveend", listener: "updateAttributes", listenerType: "dispatch"});
         dispatch("registerListener", {type: "click", listener: "updateClick", listenerType: "dispatch"});
 
@@ -66,7 +66,7 @@ export default {
      */
     setViewAttributes ({commit}, mapView) {
         // currently has no change mechanism
-        commit("setProjection", mapView.getProjection());
+        // commit("setProjection", mapView.getProjection());
         commit("setBackgroundImage", mapView.get("backgroundImage"));
         // note initial values for quick comparisons/resets
         // commit("setInitialZoomLevel", mapView.getZoom());
