@@ -89,7 +89,7 @@ export default {
         let initialDisplayedAlerts;
 
         this.initialize();
-
+console.log('++++');
         if (this.availableLocalStorage && localStorage[this.localStorageDisplayedAlertsKey] !== undefined) {
             try {
                 initialDisplayedAlerts = JSON.parse(localStorage[this.localStorageDisplayedAlertsKey]);
@@ -106,6 +106,7 @@ export default {
 
         if (this.fetchBroadcastUrl !== undefined && this.fetchBroadcastUrl !== false) {
             this.fetchBroadcast(this.fetchBroadcastUrl);
+            console.log(this.fetchBroadcastUrl);
         }
     },
 
@@ -199,15 +200,15 @@ export default {
          */
         selectCategoryClass: function (category) {
             if (category === "News") {
-                return "badge rounded-pill bg-success";
+                return "badge rounded-pill bg-success offset-alert";
             }
             else if (category === "Alert") {
-                return "badge rounded-pill bg-warning";
+                return "badge rounded-pill bg-warning offset-alert";
             }
             else if (category === "Error") {
-                return "badge rounded-pill bg-danger";
+                return "badge rounded-pill bg-danger offset-alert";
             }
-            return "badge rounded-pill bg-info";
+            return "badge rounded-pill bg-info offset-alert";
         }
     }
 };
@@ -241,12 +242,6 @@ export default {
                     class="alertCategoryContainer"
                     :class="{ last: categoryIndex === sortedAlerts.length-1 }"
                 >
-                    <hr
-                        v-if="categoryIndex>1"
-                    >
-                    <span :class="selectCategoryClass(alertCategory.category)">
-                        {{ $t(alertCategory.category) }}
-                    </span>
                     <div
                         v-for="(singleAlert, singleAlertIndex) in alertCategory.content"
                         :key="singleAlert.hash"
@@ -261,28 +256,46 @@ export default {
                             }"
                         >
                             <hr
-                                v-if="singleAlertIndex>0 || categoryIndex>=0"
+                                v-if="singleAlertIndex>0 || categoryIndex>0"
                             >
-                            <span :class="selectCategoryClass(singleAlert.category)">
-                                {{ $t(singleAlert.category) }}
-                            </span>
+                            <h2>
+                                <span :class="selectCategoryClass(singleAlert.category)">
+                                    {{ $t(singleAlert.category) }}
+                                </span>
+                            </h2>
                             <div
                                 class="modal-body"
-                                v-html="singleAlert.content"
-                            />
-                            <p
-                                v-if="singleAlert.mustBeConfirmed && availableLocalStorage"
-                                class="confirm"
                             >
-                                <button
-                                    type="button"
-                                    class="btn btn-link btn-sm float-end"
-                                    @click="markAsRead(singleAlert.hash)"
-                                    @keydown.enter="markAsRead(singleAlert.hash)"
+                                <h3>
+                                    <b>
+                                        {{ singleAlert.title }}
+                                    </b>
+                                </h3>
+                                <div
+                                    class="singleAlertMessage"
+                                    v-html="singleAlert.content"
+                                />
+                            </div>
+                            <div
+                                class="d-flex justify-content-between offset-alert small"
+                            >
+                                <div
+                                    v-html="'Created: '+singleAlert.creationDate"
+                                />
+                                <p
+                                    v-if="singleAlert.mustBeConfirmed && availableLocalStorage"
+                                    class="confirm"
                                 >
-                                    {{ $t(singleAlert.confirmText) }}
-                                </button>
-                            </p>
+                                    <button
+                                        type="button"
+                                        class="btn btn-link btn-sm float-end"
+                                        @click="markAsRead(singleAlert.hash)"
+                                        @keydown.enter="markAsRead(singleAlert.hash)"
+                                    >
+                                        {{ $t(singleAlert.confirmText) }}
+                                    </button>
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -296,11 +309,17 @@ export default {
     #alertModal{
         display:block;
     }
+    .offset-alert {
+    margin-left:10px;
+    }
+    .badge-pill{
+        font-size:12px;
+    }
     div.alertCategoryContainer {
-        margin-bottom:24px;
+        margin-bottom:0px;
 
         &.last {
-            margin-bottom:12px;
+            margin-bottom:6px;
         }
 
         h3 {
@@ -332,11 +351,13 @@ export default {
         }
 
         div.singleAlertContainer {
-            border-bottom:1px dotted #CCCCCC;
+            border-bottom:1px dotted #cccccc;
             color:$secondary_contrast;
             font-size:12px;
-            margin-bottom:12px;
-            padding-bottom:12px;
+            margin-top:0px;
+            margin-bottom:0px;
+            padding-bottom:0px;
+            padding-bottom:0;
 
             &.singleAlertIsImportant p {
                 color:#EE7777;
