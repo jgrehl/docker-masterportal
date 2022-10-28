@@ -60,6 +60,15 @@ const getters = {
     },
 
     /**
+     * Returns if mobile device is used.
+     * @param {String} state state of the app-store.
+     * @returns {Boolean} Mobile is used.
+     */
+    isMobile: state => {
+        return state.deviceMode === "Mobile";
+    },
+
+    /**
      * Returns the ui style of configJs.
      * @param {Object} state state of the app-store.
      * @returns {Object} The ui style.
