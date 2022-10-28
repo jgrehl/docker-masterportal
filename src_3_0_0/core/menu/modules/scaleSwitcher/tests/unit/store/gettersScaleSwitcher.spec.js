@@ -28,7 +28,10 @@ describe("src_3_0_0/modules/scaleSwitcher/store/gettersScaleSwitcher.js", () => 
     });
 
     describe("testing default values", () => {
-        it("returns the active from state", () => {
+        /**
+         * Note: Is to be processed in the course of Issue BG-3434.
+         */
+        it.skip("returns the active from state", () => {
             expect(active(stateScaleSwitcher)).to.be.false;
         });
         it("returns the deactivateGFI default value from state", () => {
