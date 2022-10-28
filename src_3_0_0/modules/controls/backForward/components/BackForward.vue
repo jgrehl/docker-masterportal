@@ -11,20 +11,14 @@ export default {
     components: {
         ControlIcon
     },
-    props: {
-        /** icon name of the forward button */
-        iconFor: {
-            type: String,
-            default: "skip-end-fill"
-        },
-        /** icon name of the backward button */
-        iconBack: {
-            type: String,
-            default: "skip-start-fill"
-        }
-    },
     computed: {
-        ...mapGetters("Controls/backForward", ["forthAvailable", "backAvailable"])
+        ...mapGetters("Controls/BackForward", [
+            "backAvailable",
+            "forthAvailable",
+            "iconBack",
+            "iconFor",
+            "supportedDevice"
+        ])
     },
     mounted () {
         mapCollection.getMap("2D").on("moveend", this.memorizeMap);
@@ -33,10 +27,11 @@ export default {
         mapCollection.getMap("2D").un("moveend", this.memorizeMap);
     },
     methods: {
-        ...mapMutations(
-            "Controls/backForward",
-            ["forward", "backward", "memorize"]
-        ),
+        ...mapMutations("Controls/BackForward", [
+            "backward",
+            "forward",
+            "memorize"
+        ]),
         memorizeMap () {
             this.memorize(mapCollection.getMapView("2D"));
         },
@@ -51,7 +46,9 @@ export default {
 </script>
 
 <template>
-    <div id="back-forward-buttons">
+    <div
+        id="back-forward-buttons"
+    >
         <ControlIcon
             class="forward"
             :title="$t(`common:modules.controls.backForward.stepForward`)"
