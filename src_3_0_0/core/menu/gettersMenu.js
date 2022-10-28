@@ -10,7 +10,11 @@ const menuGetters = {
      * @returns {(function(side: String): Object)} Function returning component identified via componentMap.
      */
     componentFromPath: (state, getters) => side => {
-        return state.componentMap[getters.objectFromPath(side, "last").itemType];
+        if (["mainMenu", "secondaryMenu"].includes(side)) {
+            return state.componentMap[getters.objectFromPath(side, "last").itemType];
+        }
+        console.error(`Menu.componentMap: The given menu side ${side} is not allowed. Please use "mainMenu" or "secondaryMenu" instead.`);
+        return null;
     },
     /**
      * @param {MenuState} _ Local vuex state (discarded).
@@ -57,8 +61,14 @@ const menuGetters = {
      * @returns {(function(side: String, entry: String): Object)} Function returning previous added menu navigation entry or null.
      */
     objectFromPath: (_, getters, __, rootGetters) => (side, entry) => {
-        // eslint-disable-next-line new-cap
-        return getters.section(rootGetters[`MenuNavigation/${entry}Entry`](side));
+        if (["mainMenu", "secondaryMenu"].includes(side) && ["last", "previous"].includes(entry)) {
+            // eslint-disable-next-line new-cap
+            return getters.section(rootGetters[`MenuNavigation/${entry}Entry`](side));
+        }
+        console.error("Menu.objectFromPath: One of the following errors occurred:");
+        console.error(`Menu.objectFromPath: a) The given menu side ${side} is not allowed. Please use "mainMenu" or "secondaryMenu" instead.`);
+        console.error(`Menu.objectFromPath: b) The given entry in the navigation ${entry} is not allowed. Please use "last" or "previous" instead.`);
+        return null;
     },
     /**
      * @param {MenuState} _ Local vuex state (discarded).
