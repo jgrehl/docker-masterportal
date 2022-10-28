@@ -480,7 +480,7 @@ export default {
             id="geolocation_marker"
             class="geolocation_marker"
         >
-            <i class="bi-record-circle-fill" />
+            <i class="bi-circle-fill" />
         </span>
         <ControlIcon
             id="geolocate"
@@ -521,7 +521,7 @@ export default {
     .geolocation_marker {
         color: $dark_blue;
         padding: 1px;
-        background: none repeat scroll $white;
         border-radius: 50%;
+        font-size: 1.4rem;
     }
 </style>
