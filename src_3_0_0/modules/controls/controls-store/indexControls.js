@@ -1,12 +1,10 @@
+import actions from "./actionsControls";
 import getters from "./gettersControls";
 import mutations from "./mutationsControls";
 import state from "./stateControls";
 
 import backForward from "../backForward/store/indexBackForward";
-<<<<<<<< HEAD:src_3_0_0/modules/controls/controls-store/indexControls.js
 import orientation from "../orientation/store/indexOrientation";
-========
->>>>>>>> b0b01718e (update move files into new folder structure):src_3_0_0/modules/controls/store/indexControls.js
 
 /**
  * controls-Module is required to be able to nest controls
@@ -20,6 +18,7 @@ export default {
         backForward,
         orientation
     },
+    actions,
     getters,
     mutations,
     state

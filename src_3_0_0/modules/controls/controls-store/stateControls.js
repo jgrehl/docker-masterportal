@@ -13,8 +13,7 @@ import Orientation from "../orientation/components/OrientationItem.vue";
  * User type definition
  * @typedef {Object} controls
  * @property {Object} componentMap Maps config.json.md control key to component.
- * @property {Object[]} mobileHiddenControls config.json.md control keys where the matching element is to be hidden in mobile mode.
- * @property {Object[]} expandableControls Controls that are rendered in the expandable area.
+ * @property {Boolean} activatedExpandable Controls are expandend.
  */
 const state = {
     componentMap: {
@@ -26,13 +25,8 @@ const state = {
         zoom: ZoomInAndOut,
         orientation: Orientation
     },
-    mobileHiddenControls: [
-        "backForward",
-        "freeze",
-        "fullScreen",
-        "totalView"
-    ],
-    expandableControls: []
+
+    activatedExpandable: false
 };
 
 export default state;
