@@ -2,7 +2,6 @@ import AddWMS from "./addWMS/components/AddWMS.vue";
 import BufferAnalysis from "./bufferAnalysis/components/BufferAnalysis.vue";
 import CompareFeatures from "./compareFeatures/components/CompareFeatures.vue";
 import ContactFormular from "./contact/components/ContactFormular.vue";
-import CoordToolkit from "./coordToolkit/components/CoordToolkit.vue";
 import DrawItem from "./draw/components/DrawItem.vue";
 import FeatureLister from "./featureLister/components/FeatureLister.vue";
 import FileImport from "./fileImport/components/FileImport.vue";
@@ -37,7 +36,6 @@ const state = {
         bufferAnalysis: BufferAnalysis,
         compareFeatures: CompareFeatures,
         contact: ContactFormular,
-        coordToolkit: CoordToolkit,
         draw: DrawItem,
         featureLister: FeatureLister,
         fileImport: FileImport,

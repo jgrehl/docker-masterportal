@@ -42,6 +42,9 @@
             "type": "scaleSwitcher"
           },
           {
+            "type": "coordToolkit"
+          },
+          {
             "type": "shareView"
           },
           {
@@ -304,6 +307,9 @@
           "typ": "WFS",
           "visibility": false,
           "clusterDistance": 60
+        },
+        {
+          "id": "19173"
         },
         {
           "id": "18106",
