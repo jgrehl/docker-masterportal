@@ -1,12 +1,10 @@
 <script>
 import {mapGetters, mapActions} from "vuex";
 import ControlBar from "./modules/controls/ControlBar.vue";
-import ContainerItem from "./modules/container/ContainerItem.vue";
 import MenuContainer from "./core/menu/MenuContainer.vue";
 import MenuToggleButton from "./core/menu/MenuToggleButton.vue";
 import initializeLayers from "./core/layers/layerProcessor";
 import {initializeMaps} from "./core/maps/maps";
-import initializeModules from "./core/menu/modules/moduleProcessor";
 import LoaderOverlay from "./utils/loaderOverlay";
 import mapCollection from "./core/maps/mapCollection";
 
@@ -14,7 +12,6 @@ export default {
     name: "App",
     components: {
         ControlBar,
-        ContainerItem,
         MenuContainer,
         MenuToggleButton
     },
@@ -35,7 +32,6 @@ export default {
                 this.extendLayers();
                 initializeMaps(this.portalConfig, this.configJs);
                 initializeLayers(this.visibleLayerConfigs);
-                initializeModules(this.portalConfig);
             }
         }
     },
@@ -47,7 +43,6 @@ export default {
     methods: {
         ...mapActions([
             "extendLayers",
-            "fillLayerConf",
             "loadConfigJs",
             "loadConfigJson",
             "loadRestServicesJson",
@@ -122,8 +117,6 @@ export default {
                 v-if="allConfigsLoaded && secondaryMenu"
                 side="secondary"
             />
-            <!-- only for Testing -->
-            <ContainerItem />
             <div
                 v-if="allConfigsLoaded"
                 class="elements-positioned-over-map"
