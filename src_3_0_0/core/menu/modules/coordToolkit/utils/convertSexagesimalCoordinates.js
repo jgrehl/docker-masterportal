@@ -4,14 +4,13 @@
  * @returns {object} containing easting and northing as decimal value
  */
 export function convertSexagesimalToDecimal (coord) {
-    // if (typeof coord === "string") {
-    //     return convertSexagesimalStringToDecimal(coord);
-    // }
-    // else if (Array.isArray(coord)) {
-    //     return convertSexagesimalArrayToDecimal(coord);
-    // }
-    // return {easting: "No value", northing: "No value"};
-    return {};
+    if (typeof coord === "string") {
+        return convertSexagesimalStringToDecimal(coord);
+    }
+    else if (Array.isArray(coord)) {
+        return convertSexagesimalArrayToDecimal(coord);
+    }
+    return {easting: "No value", northing: "No value"};
 }
 
 /**
@@ -20,58 +19,57 @@ export function convertSexagesimalToDecimal (coord) {
  * @returns {object} containing easting and northing as decimal value
  */
 function convertSexagesimalStringToDecimal (coordinates) {
-    // const coord = coordinates.replace("E", ""),
-    //     pairs = coord.indexOf("N") > -1 ? coord.split("N") : coord.split("S");
-    // let eastingCoord,
-    //     northingCoord,
-    //     eastingSplit,
-    //     northingSplit,
-    //     eastingDegree = null,
-    //     northingDegree = null,
-    //     eastingMin = null,
-    //     northingMin = null,
-    //     eastingSecs = null,
-    //     northingSecs = null,
-    //     eastingDez = null,
-    //     northingDez = null,
-    //     easting = null,
-    //     northing = null;
+    const coord = coordinates.replace("E", ""),
+        pairs = coord.indexOf("N") > -1 ? coord.split("N") : coord.split("S");
+    let eastingCoord,
+        northingCoord,
+        eastingSplit,
+        northingSplit,
+        eastingDegree = null,
+        northingDegree = null,
+        eastingMin = null,
+        northingMin = null,
+        eastingSecs = null,
+        northingSecs = null,
+        eastingDez = null,
+        northingDez = null,
+        easting = null,
+        northing = null;
 
-    // if (pairs.length === 2) {
-    //     eastingCoord = pairs[0];
-    //     northingCoord = pairs[1].substring(0, pairs[1].length - 1);
-    //     if (eastingCoord.indexOf("′") === -1) {
-    //         eastingCoord += " 00′";
-    //     }
-    //     if (northingCoord.indexOf("′") === -1) {
-    //         northingCoord += " 00′";
-    //     }
-    //     if (eastingCoord.indexOf("″") === -1) {
-    //         eastingCoord += " 00″";
-    //     }
-    //     if (northingCoord.indexOf("″") === -1) {
-    //         northingCoord += " 00″";
-    //     }
-    // }
-    // eastingSplit = eastingCoord.trim().split(" "); // 53° 32′ 24″ N or 53° 35′ N
-    // northingSplit = northingCoord.trim().split(" "); // 9° 54′ 56″ E or  9° 48′ E
-    // eastingSplit = eastingSplit.map(c => c.trim());
-    // northingSplit = northingSplit.map(c => c.trim());
+    if (pairs.length === 2) {
+        eastingCoord = pairs[0];
+        northingCoord = pairs[1].substring(0, pairs[1].length - 1);
+        if (eastingCoord.indexOf("′") === -1) {
+            eastingCoord += " 00′";
+        }
+        if (northingCoord.indexOf("′") === -1) {
+            northingCoord += " 00′";
+        }
+        if (eastingCoord.indexOf("″") === -1) {
+            eastingCoord += " 00″";
+        }
+        if (northingCoord.indexOf("″") === -1) {
+            northingCoord += " 00″";
+        }
+    }
+    eastingSplit = eastingCoord.trim().split(" "); // 53° 32′ 24″ N or 53° 35′ N
+    northingSplit = northingCoord.trim().split(" "); // 9° 54′ 56″ E or  9° 48′ E
+    eastingSplit = eastingSplit.map(c => c.trim());
+    northingSplit = northingSplit.map(c => c.trim());
 
-    // eastingDegree = Number(eastingSplit[0].substring(0, eastingSplit[0].length - 1));
-    // northingDegree = Number(northingSplit[0].substring(0, northingSplit[0].length - 1));
-    // eastingMin = Number(eastingSplit[1].substring(0, eastingSplit[1].length - 1)) / 60;
-    // northingMin = Number(northingSplit[1].substring(0, northingSplit[1].length - 1)) / 60;
-    // eastingSecs = Number(eastingSplit[2].substring(0, eastingSplit[2].length - 1)) / 3600;
-    // northingSecs = Number(northingSplit[2].substring(0, northingSplit[2].length - 1)) / 3600;
+    eastingDegree = Number(eastingSplit[0].substring(0, eastingSplit[0].length - 1));
+    northingDegree = Number(northingSplit[0].substring(0, northingSplit[0].length - 1));
+    eastingMin = Number(eastingSplit[1].substring(0, eastingSplit[1].length - 1)) / 60;
+    northingMin = Number(northingSplit[1].substring(0, northingSplit[1].length - 1)) / 60;
+    eastingSecs = Number(eastingSplit[2].substring(0, eastingSplit[2].length - 1)) / 3600;
+    northingSecs = Number(northingSplit[2].substring(0, northingSplit[2].length - 1)) / 3600;
 
-    // eastingDez = eastingDegree + eastingMin + eastingSecs;
-    // northingDez = northingDegree + northingMin + northingSecs;
-    // easting = eastingDez.toFixed(4) + "°";
-    // northing = northingDez.toFixed(4) + "°";
+    eastingDez = eastingDegree + eastingMin + eastingSecs;
+    northingDez = northingDegree + northingMin + northingSecs;
+    easting = eastingDez.toFixed(4) + "°";
+    northing = northingDez.toFixed(4) + "°";
 
-    // return {easting: easting, northing: northing};
-    return {};
+    return {easting: easting, northing: northing};
 }
 /**
  * Converts geographic coordinates to to decimal.
@@ -79,19 +77,18 @@ function convertSexagesimalStringToDecimal (coordinates) {
  * @returns {Array} containing easting and northing
  */
 function convertSexagesimalArrayToDecimal (coordinates) {
-    // const latitude = coordinates[0],
-    //     newLatitude = Number(latitude[0]) +
-    //         (Number(latitude[1] ? latitude[1] : 0) / 60) +
-    //         (Number(latitude[2] ? latitude[2] : 0) / 60 / 60),
+    const latitude = coordinates[0],
+        newLatitude = Number(latitude[0]) +
+            (Number(latitude[1] ? latitude[1] : 0) / 60) +
+            (Number(latitude[2] ? latitude[2] : 0) / 60 / 60),
 
-    //     longitude = coordinates[1],
-    //     newLongitude = Number(longitude[0]) +
-    //         (Number(longitude[1] ? longitude[1] : 0) / 60) +
-    //         (Number(longitude[2] ? longitude[2] : 0) / 60 / 60);
+        longitude = coordinates[1],
+        newLongitude = Number(longitude[0]) +
+            (Number(longitude[1] ? longitude[1] : 0) / 60) +
+            (Number(longitude[2] ? longitude[2] : 0) / 60 / 60);
 
-    // // turning the coordinates around to make it work for WGS84
-    // return [newLongitude, newLatitude];
-    return [];
+    // turning the coordinates around to make it work for WGS84
+    return [newLongitude, newLatitude];
 }
 
 
