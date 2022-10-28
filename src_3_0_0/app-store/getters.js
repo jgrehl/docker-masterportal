@@ -133,6 +133,18 @@ const getters = {
         const layerContainer = getters.allSubjectDataLayerConfigs(state);
 
         return layerContainer.filter(layerConf => layerConf.visibility === true);
+    },
+    
+    /**
+     * Returns the layer configuration with the given id.
+     * @param {Object} state state of the app-store.
+     * @param {String} ide id of the layer
+     * @returns {Object|null}} the layer configuration with the given id
+     */
+    layerConfigById: (state) => (id) => {
+        const layerContainer = getters.allLayerConfigs(state);
+
+        return layerContainer.find(layerConf => layerConf.id === id);
     }
 };
 

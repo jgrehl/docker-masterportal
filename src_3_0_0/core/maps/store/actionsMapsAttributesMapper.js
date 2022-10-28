@@ -33,6 +33,11 @@ export default {
             listener: "updateAttributesByMoveend",
             listenerType: "dispatch"
         });
+        dispatch("registerListener", {
+            type: "pointermove",
+            listener: "updatePointer",
+            listenerType: "dispatch"
+        });
 
         mapView.on("change:resolution", () => {
             dispatch("updateAttributesByChangeResolution");
@@ -52,8 +57,40 @@ export default {
         commit("setInitialCenter", mapView.getCenter());
         commit("setInitialRotation", mapView.getRotation());
         commit("setInitialZoom", mapView.getZoom());
+        commit("setProjection", mapView.getProjection());
         commit("setMode", map.mode);
         commit("setProjection", mapView.getProjection());
+    },
+
+    /**
+     *  Updates the mouse coordinates
+     * @param {Object} param store context
+     * @param {Object} param.commit the commit
+     * @param {Object} param.getters the getters
+     * @param {Object} event update event
+     * @returns {Function} update function for mouse coordinate
+     */
+    updatePointer ({commit, getters}, event) {
+        if (event.dragging) {
+            return;
+        }
+        if (getters.mode === "2D") {
+            commit("setMouseCoordinate", event.coordinate);
+        }
+        else if (getters.mode === "3D") {
+            try {
+                const scene = mapCollection.getMap("3D").getCesiumScene(),
+                    pickedPositionCartesian = scene.pickPosition(event.endPosition),
+                    cartographicPickedPosition = scene.globe.ellipsoid.cartesianToCartographic(pickedPositionCartesian),
+                    transformedPickedPosition = transform([Cesium.Math.toDegrees(cartographicPickedPosition.longitude), Cesium.Math.toDegrees(cartographicPickedPosition.latitude)], get("EPSG:4326"), getters.projection);
+
+                transformedPickedPosition.push(cartographicPickedPosition.height);
+                commit("setMouseCoordinate", transformedPickedPosition);
+            }
+            catch {
+                // An error is thrown if the scene is not rendered yet.
+            }
+        }
     },
 
     /**
