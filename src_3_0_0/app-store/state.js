@@ -12,7 +12,7 @@ import isMobile from "../shared/js/utils/isMobile";
  */
 const state = {
     configJs: null,
-    isMobile: isMobile(),
+    deviceMode: isMobile() ? "Mobile" : "Desktop",
     layerConfig: [],
     loadedConfigs: {
         configJson: false,

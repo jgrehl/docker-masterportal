@@ -5,6 +5,7 @@ import ControlIcon from "../../components/ControlIcon.vue";
 export default {
     name: "Button3dItem",
     computed: {
+        ...mapGetters("Controls/Button3d", ["icon2d", "icon3d"]),
         ...mapGetters("Maps", ["mode"]),
 
         /**
@@ -28,7 +29,7 @@ export default {
          * @returns {String} The current button title.
          */
         buttonIcon () {
-            return this.mode === "2D" ? "badge-3d" : "2-square";
+            return this.mode === "2D" ? this.icon3d : this.icon2d;
         }
     },
     methods: {
