@@ -1,5 +1,6 @@
 <script>
-import ControlIcon from "../../components/ControlIcon.vue";
+import {mapGetters} from "vuex";
+import ControlIcon from "../../ControlIcon.vue";
 
 /**
  * Enables fullscreen using browser tools.
@@ -80,6 +81,8 @@ export default {
         };
     },
     computed: {
+        ...mapGetters("Controls/FullScreen", ["iconArrow", "iconExit"]),
+
         component () {
             return ControlIcon;
         }
@@ -126,7 +129,7 @@ export default {
         <component
             :is="component"
             :title="$t(`common:modules.controls.fullScreen.${active ? 'disable' : 'enable'}`)"
-            :icon-name="active ? 'fullscreen-exit' : 'arrows-fullscreen'"
+            :icon-name="active ? iconExit : iconArrow"
             :on-click="toggleFullScreen"
         />
     </div>
