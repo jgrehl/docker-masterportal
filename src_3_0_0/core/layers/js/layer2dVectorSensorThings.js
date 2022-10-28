@@ -285,7 +285,6 @@ Layer2dVectorSensorThings.prototype.getFeatureByDatastreamId = function (feature
 /**
  * Initial loading of sensor data
  * @param {Function} onsuccess a function to call on success
- * @fires Core#RadioRequestUtilGetProxyURL
  * @returns {void}
  */
 Layer2dVectorSensorThings.prototype.initializeConnection = function (onsuccess) {

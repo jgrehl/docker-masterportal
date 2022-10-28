@@ -1,8 +1,5 @@
-import WMSGetFeatureInfo from "ol/format/WMSGetFeatureInfo.js";
-import Feature from "ol/Feature";
-import axios from "axios";
-import handleAxiosResponse from "../utils/handleAxiosResponse.js";
-import rawLayerList from "@masterportal/masterportalapi/src/rawLayerList";
+// import WMSGetFeatureInfo from "ol/format/WMSGetFeatureInfo.js";
+// import Feature from "ol/Feature";
 
 /**
  * Handles the GetFeatureInfo request.
@@ -15,54 +12,54 @@ import rawLayerList from "@masterportal/masterportalapi/src/rawLayerList";
  * @param {ol/layer} layer - layer that's requested (used to infer credential use)
  * @returns {Promise<module:ol/Feature[]>}  Promise object represents the GetFeatureInfo request
  */
-export function requestGfi (mimeType, url, layer) {
-    const layerSpecification = rawLayerList.getLayerWhere({id: layer.get("id")}),
-        layerIsSecured = Boolean(layerSpecification?.isSecured);
+// export function requestGfi (mimeType, url, layer) {
+//     const layerSpecification = rawLayerList.getLayerWhere({id: layer.get("id")}),
+//         layerIsSecured = Boolean(layerSpecification?.isSecured);
 
-    return axios({
-        method: "get",
-        withCredentials: layerIsSecured,
-        url})
-        .then(response => handleAxiosResponse(response, "requestGfi"))
-        .then(responseData => {
-            let parsedDocument = null;
+//     return axios({
+//         method: "get",
+//         withCredentials: layerIsSecured,
+//         url})
+//         .then(response => handleAxiosResponse(response, "requestGfi"))
+//         .then(responseData => {
+//             let parsedDocument = null;
 
-            if (mimeType === "text/xml") {
-                parsedDocument = parseDocumentString(responseData, mimeType);
-            }
-            else if (mimeType === "text/html") {
-                parsedDocument = parseDocumentString(responseData, mimeType);
+//             if (mimeType === "text/xml") {
+//                 parsedDocument = parseDocumentString(responseData, mimeType);
+//             }
+//             else if (mimeType === "text/html") {
+//                 parsedDocument = parseDocumentString(responseData, mimeType);
 
-                if (parsedDocument.childNodes.length > 0 &&
-                    (
-                        !parsedDocument.getElementsByTagName("body")[0] ||
-                        parsedDocument.getElementsByTagName("body")[0].children.length > 0
-                    ) &&
-                    (
-                        !parsedDocument.getElementsByTagName("tbody")[0] ||
-                        parsedDocument.getElementsByTagName("tbody")[0].children.length > 0
-                    )) {
-                    return responseData;
-                }
+//                 if (parsedDocument.childNodes.length > 0 &&
+//                     (
+//                         !parsedDocument.getElementsByTagName("body")[0] ||
+//                         parsedDocument.getElementsByTagName("body")[0].children.length > 0
+//                     ) &&
+//                     (
+//                         !parsedDocument.getElementsByTagName("tbody")[0] ||
+//                         parsedDocument.getElementsByTagName("tbody")[0].children.length > 0
+//                     )) {
+//                     return responseData;
+//                 }
 
-                return null;
-            }
-            else if (mimeType === "application/json") {
-                parsedDocument = responseData;
-            }
+//                 return null;
+//             }
+//             else if (mimeType === "application/json") {
+//                 parsedDocument = responseData;
+//             }
 
-            return parsedDocument;
-        })
-        .then(doc => {
-            if (mimeType === "text/xml") {
-                return parseFeatures(doc);
-            }
-            return doc;
-        })
-        .catch(error => {
-            throw error;
-        });
-}
+//             return parsedDocument;
+//         })
+//         .then(doc => {
+//             if (mimeType === "text/xml") {
+//                 return parseFeatures(doc);
+//             }
+//             return doc;
+//         })
+//         .catch(error => {
+//             throw error;
+//         });
+// }
 
 /**
  * parses the given string as DOM document
@@ -72,28 +69,28 @@ export function requestGfi (mimeType, url, layer) {
  * @param {Function} [parseFromStringOpt=null] a function(documentString, mimeType) for parsing the document (for testing only)
  * @returns {(Document|XMLDocument)}  a valid document, free of parser errors
  */
-export function parseDocumentString (documentString, mimeType, parseFromStringOpt = null) {
-    const domParser = new DOMParser(),
-        doc = typeof parseFromStringOpt === "function" ? parseFromStringOpt(documentString, mimeType) : domParser.parseFromString(documentString, mimeType);
-    let errObj = null,
-        parsererror = null;
+// export function parseDocumentString (documentString, mimeType, parseFromStringOpt = null) {
+//     const domParser = new DOMParser(),
+//         doc = typeof parseFromStringOpt === "function" ? parseFromStringOpt(documentString, mimeType) : domParser.parseFromString(documentString, mimeType);
+//     let errObj = null,
+//         parsererror = null;
 
-    if (doc === null || typeof doc !== "object" || !(doc instanceof Document) && doc.constructor.name !== "XMLDocument") {
-        // parsing errors are reported on the console by DOMParser
-        throw Error("requestGfi, checkParsingProcess: the received doc is no valid Document nor XMLDocument");
-    }
+//     if (doc === null || typeof doc !== "object" || !(doc instanceof Document) && doc.constructor.name !== "XMLDocument") {
+//         // parsing errors are reported on the console by DOMParser
+//         throw Error("requestGfi, checkParsingProcess: the received doc is no valid Document nor XMLDocument");
+//     }
 
-    parsererror = doc.getElementsByTagName("parsererror");
+//     parsererror = doc.getElementsByTagName("parsererror");
 
-    if (parsererror instanceof HTMLCollection && parsererror.length > 0) {
-        for (errObj of parsererror) {
-            console.warn("requestGfi, parseDocumentString: parsererror", errObj);
-        }
-        throw Error("requestGfi, parseDocumentString: the parsererror has reported a problem");
-    }
+//     if (parsererror instanceof HTMLCollection && parsererror.length > 0) {
+//         for (errObj of parsererror) {
+//             console.warn("requestGfi, parseDocumentString: parsererror", errObj);
+//         }
+//         throw Error("requestGfi, parseDocumentString: the parsererror has reported a problem");
+//     }
 
-    return doc;
-}
+//     return doc;
+// }
 
 /**
  * Parses the response into openlayers features.
@@ -103,30 +100,30 @@ export function parseDocumentString (documentString, mimeType, parseFromStringOp
  * @param {XMLDocument} doc Data to be parsed.
  * @returns {module:ol/Feature[]} Collection of openlayers features.
  */
-export function parseFeatures (doc) {
-    const firstChild = doc.firstChild.tagName,
-        gmlNamespace = "http://www.opengis.net/gml";
-    let features = [],
-        box = null,
-        coordinates = null;
+// export function parseFeatures (doc) {
+//    const firstChild = doc.firstChild.tagName,
+//        gmlNamespace = "http://www.opengis.net/gml";
+//    let features = [],
+//        box = null,
+//        coordinates = null;
+//
+//    if (firstChild.includes("FeatureCollection") || firstChild.includes("msGMLOutput")) {
+//        features = parseOgcConformFeatures(doc);
+//        box = doc.getElementsByTagNameNS(gmlNamespace, "Box");
+//        if (box.length === 1 && features.length > 1) {
+//            coordinates = box[0].getElementsByTagNameNS(gmlNamespace, "coordinates")[0];
+//            features.unshift(String(coordinates.innerHTML).split(/[, ]/));
+//        }
+//    }
+//    else if (firstChild.includes("GetFeatureInfoResponse")) {
+//        features = parseQGisFeatures(doc);
+//    }
+//    else {
+//        features = parseEsriFeatures(doc);
+//    }
 
-    if (firstChild.includes("FeatureCollection") || firstChild.includes("msGMLOutput")) {
-        features = parseOgcConformFeatures(doc);
-        box = doc.getElementsByTagNameNS(gmlNamespace, "Box");
-        if (box.length === 1 && features.length > 1) {
-            coordinates = box[0].getElementsByTagNameNS(gmlNamespace, "coordinates")[0];
-            features.unshift(String(coordinates.innerHTML).split(/[, ]/));
-        }
-    }
-    else if (firstChild.includes("GetFeatureInfoResponse")) {
-        features = parseQGisFeatures(doc);
-    }
-    else {
-        features = parseEsriFeatures(doc);
-    }
-
-    return features;
-}
+//     return features;
+// }
 
 /**
  * Parse the response of a gfi from an OGC-conform service.
