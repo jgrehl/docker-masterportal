@@ -8,13 +8,6 @@
         5934140
       ]
     },
-    "navigationSecondary": {
-      "sections": {
-        "scaleSwitcher_": {
-          "active": true
-        }
-      }
-    },
     "controls": {
       "zoom": true,
       "totalView": true,
@@ -36,7 +29,7 @@
       "sections": [
         [
           {
-            "title": "Scale",
+            "title": "common:menu.tools.scaleSwitcher",
             "icon": "bi-arrows-angle-contract",
             "itemType": "scaleSwitcher"
           },
