@@ -1,4 +1,9 @@
+import {generateSimpleGetters} from "../../../../app-store/utils/generators";
+import stateBackForward from "./stateBackForward";
+
 export default {
+    ...generateSimpleGetters(stateBackForward),
+
     /**
      * @param {Object} state module state
      * @returns {Boolean} whether a previous memory exists
