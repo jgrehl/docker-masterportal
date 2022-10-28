@@ -3,6 +3,7 @@ import Map from "ol/Map";
 import sinon from "sinon";
 import View from "ol/View";
 
+import {getProjection} from "@masterportal/masterportalapi/src/crs";
 import actions from "../../../store/actionsMapsAttributesMapper";
 
 const {
@@ -99,10 +100,15 @@ describe("src_3_0_0/core/maps/store/actionsMapsAttributesMapper.js", () => {
         it("Should register listeners", () => {
             registerMapListener({dispatch});
 
-            expect(dispatch.calledOnce).to.be.true;
+            expect(dispatch.calledTwice).to.be.true;
             expect(dispatch.firstCall.args).to.deep.equals(["registerListener", {
                 type: "moveend",
                 listener: "updateAttributesByMoveend",
+                listenerType: "dispatch"
+            }]);
+            expect(dispatch.secondCall.args).to.deep.equals(["registerListener", {
+                type: "pointermove",
+                listener: "updatePointer",
                 listenerType: "dispatch"
             }]);
         });
@@ -116,7 +122,9 @@ describe("src_3_0_0/core/maps/store/actionsMapsAttributesMapper.js", () => {
             expect(commit.firstCall.args).to.deep.equals(["setInitialCenter", [10, 20]]);
             expect(commit.secondCall.args).to.deep.equals(["setInitialRotation", 0]);
             expect(commit.thirdCall.args).to.deep.equals(["setInitialZoom", 5]);
-            expect(commit.getCall(3).args).to.deep.equals(["setMode", "2D"]);
+            expect(commit.getCall(3).args[0]).to.be.equals("setProjection");
+            expect(commit.getCall(3).args[1].code_).to.be.equals("EPSG:3857");
+            expect(commit.getCall(4).args).to.deep.equals(["setMode", "2D"]);
         });
     });
 
