@@ -1,5 +1,6 @@
 <script>
-import {mapGetters} from "vuex";
+import {mapActions, mapGetters, mapMutations} from "vuex";
+import upperFirst from "../../utils/upperFirst";
 
 /**
  * Control layout component that places controls on the map.
@@ -8,94 +9,115 @@ export default {
     name: "ControlBar",
     data () {
         return {
-            activatedExpandable: false,
             categorizedControls: {
-                sidebar: [],
+                initialVisible: [],
                 expandable: []
             }
         };
     },
     computed: {
-        ...mapGetters(["controlsConfig", "isMobile", "uiStyle"]),
-        ...mapGetters("Controls", ["componentMap", "mobileHiddenControls", "expandableControls"])
+        ...mapGetters(["controlsConfig", "deviceMode", "uiStyle"]),
+        ...mapGetters("Controls", ["activatedExpandable", "componentMap"]),
+        ...mapGetters("Maps", ["mode"])
+    },
+    watch: {
+        /**
+         * Watch the controlsConfig and update the categorizedControls.
+         * @param {Object} controlsConfig Controls as configured in config.json.
+         * @returns {void}
+         */
+        controlsConfig (controlsConfig) {
+            this.categorizedControls.initialVisible.length = 0;
+            this.categorizedControls.expandable.length = 0;
+
+            this.initializeControls(controlsConfig);
+        }
     },
     mounted () {
-        if (this.controlsConfig?.expandable) {
-            Object.keys(this.controlsConfig.expandable).forEach(control => {
-                this.expandableControls.push(control);
-            });
-            this.prepareControls(this.controlsConfig.expandable);
-            delete this.controlsConfig.expandable;
-        }
-        this.prepareControls(this.controlsConfig);
+        this.initializeControls(this.controlsConfig);
     },
     methods: {
+        ...mapActions("Controls", ["mergeControlState"]),
+        ...mapMutations("Controls", ["setActivatedExpandable"]),
+
         /**
-         * @param {String} componentName name of the control as noted in config.json
-         * @returns {Boolean} true if control should be hidden in mobile screen width
+         * Initialize the controls.
+         * @param {Object} controlsConfig Controls as configured in config.json.
+         * @returns {void}
          */
-        hiddenMobile (componentName) {
-            return this.mobileHiddenControls.includes(componentName);
+        initializeControls (controlsConfig) {
+            if (!this.isSimpleStyle()) {
+                this.prepareControls(controlsConfig);
+
+                if (controlsConfig?.expandable) {
+                    this.prepareControls(controlsConfig.expandable, true);
+                }
+            }
         },
-        hiddenMobileIsExpandable () {
-            return this.expandableControls.every(element => this.mobileHiddenControls.includes(element));
-        },
+
+        /**
+         * Checks if uiStyle is "SIMPLE":
+         * @returns {Boolean} Is ui style simple
+         */
         isSimpleStyle () {
             return this.uiStyle === "SIMPLE";
         },
-        toggleExpandable () {
-            this.activatedExpandable = !this.activatedExpandable;
-        },
+
         /**
-         * prepares the configured tools to be the right component form
-         * @param {Object} configuredControls controls as configured in config.json
+         * Prepares the configured tools to be the right component form.
+         * @param {Object} controlsConfig Controls as configured in config.json.
+         * @param {Boolean} [expandable=true] Indicates whether controls are extensible
          * @returns {void}
          */
-        prepareControls (configuredControls) {
-            this.$controlAddons?.forEach(controlName => {
-                const addonControlConfig = configuredControls[controlName];
+        prepareControls (controlsConfig, expandable = false) {
+            Object.keys(controlsConfig).forEach(controlKey => {
+                const controlValues = controlsConfig[controlKey];
 
-                if (addonControlConfig) {
-                    if (addonControlConfig.hiddenMobile) {
-                        this.mobileHiddenControls.push(controlName);
-                    }
-                    if (addonControlConfig.expandableControl) {
-                        this.expandableControls.push(controlName);
-                    }
+                if (controlValues === true) {
+                    this.fillCategorizedControls(controlKey, expandable);
                 }
-            }, this);
+                else if (typeof controlValues === "object" && controlKey !== "expandable") {
+                    this.mergeControlState({controlKey, controlValues});
+                    this.fillCategorizedControls(controlKey, expandable);
+                }
+            });
+        },
 
-            Object
-                .keys(configuredControls)
-                .filter(key => configuredControls[key])
-                .map(key => {
-                    if (this.componentMap[key]) {
-                        return {
-                            component: this.componentMap[key],
-                            props: typeof configuredControls[key] === "object" ? configuredControls[key] : {},
-                            key
-                        };
-                    }
-                    return key;
-                })
-                .filter(x => x !== "mousePosition") // "mousePosition" is currently handled in footer
-                .forEach(c => {
-                    if (this.expandableControls.includes(c.key)) {
-                        this.categorizedControls.expandable.push(c);
-                        if (configuredControls[c.key]?.hiddenMobile === true) {
-                            this.mobileHiddenControls.push(c.key);
-                        }
-                    }
-                    else {
-                        // defaulting to sidebar
-                        this.categorizedControls.sidebar.push(c);
-                        if (configuredControls[c.key]?.hiddenMobile === true) {
-                            this.mobileHiddenControls.push(c.key);
-                        }
-                    }
-                });
+        /**
+         * Fills the attribute categorizedControls with controls.
+         * @param {String} controlKey The key of the control.
+         * @param {Boolean} expandable Indicates whether controls are extensible
+         * @returns {void}
+         */
+        fillCategorizedControls (controlKey, expandable) {
+            const control = {
+                component: this.componentMap[controlKey],
+                key: controlKey
+            };
+
+            if (expandable) {
+                this.categorizedControls.expandable.push(control);
+            }
+            else {
+                this.categorizedControls.initialVisible.push(control);
+            }
+        },
+
+        /**
+         * Checks if the control is to be applied in the map- and device mode.
+         * @param {String} key The key of the control.
+         * @returns {Boolean} The control is shown.
+         */
+        checkIsVisible (key) {
+            let isVisible = false;
+
+            if (this.$store.getters[`Controls/${upperFirst(key)}/supportedMapMode`]?.includes(this.mode)
+                    && this.$store.getters[`Controls/${upperFirst(key)}/supportedDevice`]?.includes(this.deviceMode)) {
+                isVisible = true;
+            }
+
+            return isVisible;
         }
-
     }
 };
 </script>
@@ -106,19 +128,17 @@ export default {
         role="group"
     >
         <div
-            v-for="(control, index) in categorizedControls['sidebar']"
+            v-for="(control, index) in categorizedControls.initialVisible"
             :key="index"
         >
             <component
                 :is="control.component"
+                v-if="checkIsVisible(control.key)"
                 :key="control.key"
-                :class="[
-                    isMobile && hiddenMobile(control.key) ? 'd-none' : '',
-                ]"
                 v-bind="control.props"
             />
         </div>
-        <div v-if="expandableControls.length >= 1">
+        <div v-if="categorizedControls.expandable.length >= 1">
             <hr>
             <div
                 class="btn-group-vertical"
@@ -126,15 +146,13 @@ export default {
             >
                 <div v-if="activatedExpandable">
                     <div
-                        v-for="(control, index) in categorizedControls['expandable']"
+                        v-for="(control, index) in categorizedControls.expandable"
                         :key="index"
                     >
                         <component
                             :is="control.component"
+                            v-if="checkIsVisible(control.key)"
                             :key="control.key"
-                            :class="[
-                                isMobile && hiddenMobile(control.key) ? 'd-none' : ''
-                            ]"
                             v-bind="control.props"
                         />
                     </div>
@@ -142,7 +160,7 @@ export default {
                 <button
                     type="button"
                     class="control-icon-controls bootstrap-icon my-2 control-button-controls"
-                    @click="toggleExpandable"
+                    @click="setActivatedExpandable(!activatedExpandable)"
                 >
                     <i class="bi-three-dots" />
                 </button>
