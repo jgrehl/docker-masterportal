@@ -1,5 +1,6 @@
 <script>
-import ControlIcon from "../../components/ControlIcon.vue";
+import {mapGetters} from "vuex";
+import ControlIcon from "../../ControlIcon.vue";
 import FreezeScreenUnfreeze from "./FreezeScreenUnfreeze.vue";
 
 /**
@@ -18,6 +19,8 @@ export default {
         };
     },
     computed: {
+        ...mapGetters("Controls/Freeze", ["icon"]),
+
         component () {
             return ControlIcon;
         }
@@ -48,7 +51,7 @@ export default {
             :is="component"
             :title="$t(`common:modules.controls.freeze.freeze`)"
             class="control"
-            :icon-name="'lock-fill'"
+            :icon-name="icon"
             :on-click="showFreezeWin"
         />
         <FreezeScreenUnfreeze
