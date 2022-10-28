@@ -77,6 +77,15 @@ export default {
         }
     },
 
+     /**
+     * Sets center, rotation and zoom at the view.
+     * @param {Object} _ not used
+     * @param {Object} payload parameter object
+     * @param {Array.<number>} payload.center center of the view
+     * @param {number} payload.rotation rotation of the view
+     * @param {number} payload.zoom zoom of the view
+     * @returns {void}
+     */
     setView (_, {center, rotation, zoom}) {
         const view = mapCollection.getMapView("2D");
 
@@ -89,5 +98,29 @@ export default {
         if (zoom) {
             view.setZoom(zoom);
         }
+    },
+
+    /**
+     * Adds an interaction to the map.
+     * @param {Object} _ not used
+     * @param {module:ol/interaction/Interaction} interaction - Interaction to be added to map.
+     * @returns {void}
+     */
+    addInteraction (_, interaction) {
+        const map = mapCollection.getMap("2D");
+
+        map.addInteraction(interaction);
+    },
+
+    /**
+     * Removes an interaction from the map.
+     * @param {Object} _ not used
+     * @param {module:ol/interaction/Interaction} interaction - Interaction to be removed from map.
+     * @returns {void}
+     */
+    removeInteraction (_, interaction) {
+        const map = mapCollection.getMap("2D");
+
+        map.removeInteraction(interaction);
     }
 };
