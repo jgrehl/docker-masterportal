@@ -1,12 +1,21 @@
 /**
  * User type definition
  * @typedef {Object} BackForwardState
- * @property {Number} position The counter of memories.
+ * @property {String} iconBack Icon of the backward button.
+ * @property {String} iconFor Icon of the forward button.
+ * @property {String[]} supportedDevice Devices on which the module is displayed.
+ * @property {String[]} supportedMapMode Map mode in which this module can be used.
  * @property {Object[]} memory The memories.
+ * @property {Number} position The counter of memories.
  */
 const state = {
-    position: null,
-    memory: []
+    iconBack: "skip-start-fill",
+    iconFor: "skip-end-fill",
+    supportedDevice: ["Desktop"],
+    supportedMapMode: ["2D"],
+
+    memory: [],
+    position: null
 };
 
 export default state;
