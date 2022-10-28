@@ -43,7 +43,7 @@ const menuGetters = {
      * @returns {(Object|null)} Title of the mainMenu or null.
      */
     mainTitle (_, getters) {
-        return getters.mainMenu && typeof getters.mainMenu.title === "string" ? getters.mainMenu.title : null;
+        return getters.mainMenu && typeof getters.mainMenu?.title === "string" ? getters.mainMenu.title : null;
     },
     /**
      * @param {MenuState} _ Local vuex state (discarded).
