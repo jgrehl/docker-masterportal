@@ -9,11 +9,8 @@ export default {
         ControlIcon
     },
     computed: {
-        ...mapGetters("Maps", [
-            "isMaxZoomDisplayed",
-            "isMinZoomDisplayed",
-            "mode"
-        ])
+        ...mapGetters("Controls/Zoom", ["iconIn", "iconOut"]),
+        ...mapGetters("Maps", ["isMaxZoomDisplayed", "isMinZoomDisplayed"])
     },
     methods: {
         ...mapActions("Maps", ["decreaseZoom", "increaseZoom"])
@@ -22,19 +19,16 @@ export default {
 </script>
 
 <template>
-    <div
-        v-if="mode === '2D'"
-        id="zoom-in-and-out-buttons"
-    >
+    <div id="zoom-in-and-out-buttons">
         <ControlIcon
-            icon-name="plus-icon"
             :title="$t(`common:modules.controls.zoom.zoomIn`)"
+            :icon-name="iconIn"
             :disabled="isMaxZoomDisplayed"
             :on-click="increaseZoom"
         />
         <ControlIcon
-            icon-name="minus-icon"
             :title="$t(`common:modules.controls.zoom.zoomOut`)"
+            :icon-name="iconOut"
             :disabled="isMinZoomDisplayed"
             :on-click="decreaseZoom"
         />
