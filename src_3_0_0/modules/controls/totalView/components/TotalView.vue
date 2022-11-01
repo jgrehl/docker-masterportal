@@ -1,6 +1,6 @@
 <script>
 import {mapGetters, mapActions} from "vuex";
-import ControlIcon from "../../ControlIcon.vue";
+import ControlIcon from "../../components/ControlIcon.vue";
 
 /**
  * TotalView adds a control that lets the user reset the
