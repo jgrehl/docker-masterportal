@@ -1,6 +1,6 @@
 <script>
 import {mapGetters, mapMutations} from "vuex";
-import ControlIcon from "../../ControlIcon.vue";
+import ControlIcon from "../../components/ControlIcon.vue";
 
 /**
  * The BackForward control element allows stepping back
