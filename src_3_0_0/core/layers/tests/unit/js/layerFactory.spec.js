@@ -3,7 +3,11 @@ import Map from "ol/Map";
 import sinon from "sinon";
 import View from "ol/View";
 
+<<<<<<< HEAD
 import layerFactory from "../../../js/layerFactory";
+=======
+import {createLayer} from "../../../js/layerFactory";
+>>>>>>> 935466aa1 (update move files into new folder structure)
 
 describe("src_3_0_0/core/js/layers/layerFactory.js", () => {
     let layerConfig,
