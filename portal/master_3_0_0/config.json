@@ -49,6 +49,9 @@
             "type": "scaleSwitcher"
           },
           {
+            "type": "shareView"
+          },
+          {
             "name": "folder1",
             "icon": "bi-file-plus",
             "type": "folder",
