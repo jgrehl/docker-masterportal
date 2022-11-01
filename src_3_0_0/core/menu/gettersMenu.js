@@ -51,7 +51,7 @@ const menuGetters = {
      * @returns {string} Icon used for button toggling the mainMenu.
      */
     mainToggleButtonIcon (_, getters) {
-        if (getters.mainMenu?.toggleButtonIcon.startsWith("bi-")) {
+        if (getters.mainMenu?.toggleButtonIcon?.startsWith("bi-")) {
             return getters.mainMenu.toggleButtonIcon;
         }
 
@@ -109,7 +109,7 @@ const menuGetters = {
      * @returns {string} Icon used for button toggling the secondaryMenu.
      */
     secondaryToggleButtonIcon (_, getters) {
-        if (getters.secondaryMenu?.toggleButtonIcon.startsWith("bi-")) {
+        if (getters.secondaryMenu?.toggleButtonIcon?.startsWith("bi-")) {
             return getters.secondaryMenu.toggleButtonIcon;
         }
 
