@@ -6,10 +6,9 @@ import mutations from "./mutations";
 import state from "./state";
 import actions from "./actions";
 
-import Controls from "../modules/controls/indexControls";
+import Controls from "../modules/controls/store/indexControls";
 import Maps from "../core/maps/store/indexMaps";
-import Menu from "../core/menu/indexMenu";
-import MenuNavigation from "../core/menu/navigation/store/indexMenuNavigation";
+import Menu from "../modules/menu/store/indexMenu";
 
 Vue.use(Vuex);
 
@@ -21,8 +20,7 @@ const store = new Vuex.Store({
     modules: {
         Controls: {...Controls},
         Maps,
-        Menu,
-        MenuNavigation
+        Menu
     }
 });
 
