@@ -1,4 +1,4 @@
-import isMobile from "../utils/isMobile";
+import isMobile from "../shared/js/utils/isMobile";
 
 /**
  * User type definition

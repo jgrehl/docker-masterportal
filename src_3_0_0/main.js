@@ -1,7 +1,7 @@
 import "regenerator-runtime/runtime";
 
-import "../css/bootstrap.scss";
-import "../css/style.css";
+import "./assets/css/bootstrap.scss";
+import "./assets/css/style.css";
 
 import Vue from "vue";
 import App from "./App.vue";
