@@ -1,5 +1,5 @@
-import {generateSimpleGetters} from "./utils/generators";
-import getNestedValues from "../utils/getNestedValues";
+import {generateSimpleGetters} from "../shared/js/utils/generators";
+import getNestedValues from "../shared/js/utils/getNestedValues";
 import stateAppStore from "./state";
 
 const getters = {

@@ -94,9 +94,9 @@ module.exports = function () {
         resolve: {
             alias: {
                 text: "text-loader",
-                "variables": path.resolve(__dirname, "..", "css", "variables.scss")
-            },
-            extensions: [".tsx", ".ts", ".js"]
+                "mixins": path.resolve(__dirname, "..", "src_3_0_0", "assets", "css", "mixins.scss"),
+                "variables": path.resolve(__dirname, "..", "src_3_0_0", "assets", "css", "variables.scss")
+            }
         },
         module: {
             rules: [
