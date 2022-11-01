@@ -1,5 +1,5 @@
 <script>
-import ControlIcon from "../../ControlIcon.vue";
+import ControlIcon from "../../components/ControlIcon.vue";
 
 /**
  * Enables fullscreen using browser tools.
