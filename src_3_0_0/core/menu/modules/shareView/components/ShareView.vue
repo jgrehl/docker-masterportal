@@ -1,5 +1,5 @@
 <script>
-import {mapActions, mapGetters, mapMutations} from "vuex";
+import {mapGetters, mapMutations} from "vuex";
 import getters from "../store/gettersShareView";
 import mutations from "../store/mutationsShareView";
 import QRCode from "qrcode";
@@ -15,25 +15,9 @@ export default {
         };
     },
     computed: {
-        ...mapGetters("Modules/ShareView", Object.keys(getters)),
+        ...mapGetters("Menu/ShareView", Object.keys(getters)),
         ...mapGetters("Maps", ["getView"]),
-        ...mapActions("Modules/ShareView", ["createUrlParams"]),
         ...mapGetters(["visibleLayerConfigs", "isMobile"])
-    },
-    watch: {
-        /**
-         * Prepares the Url that can be copied and sets focus.
-         * @param {Boolean} isActive - if active or not
-         * @returns {void}
-         */
-        active (isActive) {
-            if (isActive) {
-                this.createUrlParams();
-            }
-        }
-    },
-    created () {
-        // this.createUrlParams();
     },
     methods: {
         ...mapMutations("Tools/ShareView", Object.keys(mutations)),
@@ -42,7 +26,7 @@ export default {
             const shareData = {
                 title: "Masterportal",
                 text: "Schau mal!",
-                url: "https://developer.mozilla.org"
+                url: this.url
             };
 
             try {
@@ -58,7 +42,7 @@ export default {
          * @returns {void}
          */
         generateQRCodeDataURL () {
-            const url = "www.google.com";
+            const url = this.url;
 
             QRCode.toDataURL(url).then((qrDataUrl) => {
                 this.qrDataUrl = qrDataUrl;
@@ -72,6 +56,15 @@ export default {
             link.href = this.qrDataUrl;
             link.target = "_blank";
             link.click();
+        },
+        twitter () {
+            return "https://twitter.com/share?url=" + this.url + "&text=Meine Karte: ";
+        },
+        facebook () {
+            return "https://www.facebook.com/sharer/sharer.php?u=" + this.url;
+        },
+        copyToClipboard () {
+            navigator.clipboard.writeText(this.url);
         }
     }
 };
@@ -97,7 +90,8 @@ export default {
                 <a
                     aria-label="Auf Twitter teilen"
                     class="btn btn-primary"
-                    href="https://twitter.com/share?url=google.com&text=GoogleHiervia=<USERNAME>"
+                    :href="twitter"
+                    target="_blank"
                 >
                     <i class="bi-twitter" />
                 </a>
@@ -107,20 +101,20 @@ export default {
                 <a
                     aria-label="Auf Facebook teilen"
                     class="btn btn-primary"
-                    href="https://www.facebook.com/sharer/sharer.php?u=google.com"
+                    :href="facebook"
                 >
                     <i class="bi-facebook" />
                 </a>
                 Auf Facebook teilen
             </div>
             <div class="col-12">
-                <a
+                <button
                     aria-label="Link kopieren"
                     class="btn btn-primary"
-                    href="https://www.facebook.com/sharer/sharer.php?u=google.com"
+                    @click="copyToClipboard"
                 >
                     <i class="bi-link" />
-                </a>
+                </button>
                 Den Link kopieren
             </div>
             <div class="col-12">
@@ -149,10 +143,10 @@ export default {
                 </button>
             </div>
             <div class="form-group form-group-sm">
-                <label for="tool-saveSelection-input-url">Test URL</label>
+                <label for="tool-shareView-input-url">Test URL</label>
                 <input
-                    id="tool-saveSelection-input-url"
-                    ref="tool-saveSelection-input-url"
+                    id="tool-shareView-input-url"
+                    ref="tool-shareView-input-url"
                     type="text"
                     class="form-control form-control-sm"
                     :value="url"
