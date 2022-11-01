@@ -6,14 +6,20 @@
  * @returns {String} url with params
  */
 export function getStateAsUrlParams (rootState, rootGetters) {
-    const layerIds = rootState.Tools.SaveSelection.layerIds,
-        layerVisibilities = rootState.Tools.SaveSelection.layerVisibilities,
-        layerTransparencies = rootState.Tools.SaveSelection.layerTransparencies;
+    const layerIds = [],
+        layerVisibilities = [],
+        layerTransparencies = [];
+
+    rootGetters.visibleLayerConfigs.forEach(layer => {
+        layerIds.push(layer.id);
+        layerVisibilities.push(layer.visibility);
+        layerTransparencies.push(layer.transparency);
+    });
 
     return location.origin + location.pathname +
         "?Map/layerIds=" + layerIds +
         "&visibility=" + layerVisibilities +
         "&transparency=" + layerTransparencies +
         "&Map/center=[" + rootGetters["Maps/center"] +
-        "]&Map/zoomLevel=" + rootGetters["Maps/getView"].getZoom();
+        "]&Map/zoomLevel=" + rootGetters["Maps/zoom"];
 }
