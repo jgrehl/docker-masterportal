@@ -1,6 +1,6 @@
 <script>
 import {mapActions, mapGetters} from "vuex";
-import ControlIcon from "../../ControlIcon.vue";
+import ControlIcon from "../../components/ControlIcon.vue";
 
 export default {
     name: "Button3dItem",

@@ -1,8 +1,8 @@
 import axios from "axios";
 import {initializeLayerList} from "@masterportal/masterportalapi/src/rawLayerList";
-import getNestedValues from "../utils/getNestedValues";
-import {getAndMergeAllRawLayers, getAndMergeRawLayer} from "./utils/getAndMergeRawLayer";
-import {buildTreeStructure} from "./utils/buildTreeStructure";
+import getNestedValues from "../shared/js/utils/getNestedValues";
+import {getAndMergeAllRawLayers, getAndMergeRawLayer} from "./js/getAndMergeRawLayer";
+import {buildTreeStructure} from "./js/buildTreeStructure";
 
 export default {
     /**
