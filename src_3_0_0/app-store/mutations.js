@@ -1,5 +1,5 @@
-import {generateSimpleMutations} from "./utils/generators";
-import replaceInNestedValues from "../utils/replaceInNestedValues";
+import {generateSimpleMutations} from "../shared/js/utils/generators";
+import replaceInNestedValues from "../shared/js/utils/replaceInNestedValues";
 import stateAppStore from "./state";
 
 const mutations = {

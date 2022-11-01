@@ -1,12 +1,13 @@
 <script>
 import {mapGetters, mapActions} from "vuex";
-import ControlBar from "./modules/controls/ControlBar.vue";
-import MenuContainer from "./core/menu/MenuContainer.vue";
-import MenuToggleButton from "./core/menu/MenuToggleButton.vue";
-import initializeLayers from "./core/layers/layerProcessor";
-import {initializeMaps} from "./core/maps/maps";
-import LoaderOverlay from "./utils/loaderOverlay";
-import mapCollection from "./core/maps/mapCollection";
+import ControlBar from "./modules/controls/components/ControlBar.vue";
+import MenuContainer from "./modules/menu/components/MenuContainer.vue";
+import MenuToggleButton from "./modules/menu/components/MenuToggleButton.vue";
+
+import initializeLayers from "./core/layers/js/layerProcessor";
+import {initializeMaps} from "./core/maps/js/maps";
+import LoaderOverlay from "./shared/js/utils/loaderOverlay";
+import mapCollection from "./core/maps/js/mapCollection";
 
 export default {
     name: "App",
