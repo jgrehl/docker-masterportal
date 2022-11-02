@@ -25,6 +25,18 @@ describe("src_3_0_0/modules/controls/button3d/components/Button3dItem.vue", () =
         store = new Vuex.Store({
             namespaced: true,
             modules: {
+                Controls: {
+                    namespaced: true,
+                    modules: {
+                        Button3d: {
+                            namespaced: true,
+                            getters: {
+                                icon2d: sinon.stub(),
+                                icon3d: sinon.stub()
+                            }
+                        }
+                    }
+                },
                 Maps: {
                     namespaced: true,
                     getters: {
