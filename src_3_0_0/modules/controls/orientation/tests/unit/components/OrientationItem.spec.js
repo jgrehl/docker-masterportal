@@ -1,6 +1,7 @@
 import Vuex from "vuex";
-import {config, createLocalVue, shallowMount} from "@vue/test-utils";
+import {config, createLocalVue, mount} from "@vue/test-utils";
 import {expect} from "chai";
+import sinon from "sinon";
 import OrientationItemComponent from "../../../components/OrientationItem.vue";
 
 const localVue = createLocalVue();
@@ -9,76 +10,60 @@ localVue.use(Vuex);
 config.mocks.$t = key => key;
 
 describe("src/modules/controls/orientation/components/OrientationItem.vue", () => {
-    const mockConfigJson = {
-            Portalconfig: {
-                menu: {
-                    "controls":
-                    {
-                        "orientation":
-                            {
-                                "zoomMode": "once",
-                                "poiDistances":
-                                    [
-                                        1000,
-                                        5000,
-                                        10000
-                                    ]
-                            }
-
-                    }
-                }
-            }
-        },
-
-        mockGetters = {
-            showPoiIcon: () => false,
-            position: () => null,
-            showPoiChoice: () => false,
-            showPoi: () => false
-        };
-    let store,
-        wrapper;
+    let store;
 
     beforeEach(() => {
         store = new Vuex.Store({
-            namespaces: true,
+            namespaced: true,
             modules: {
-                controls: {
+                Controls: {
                     namespaced: true,
                     modules: {
                         orientation: {
                             namespaced: true,
-                            getters: mockGetters
+                            getters: {
+                                geolocation: sinon.stub(),
+                                poiModeCurrentPositionEnabled: sinon.stub(),
+                                showPoi: sinon.stub(),
+                                showPoiChoice: sinon.stub(),
+                                showPoiIcon: sinon.stub()
+                            }
                         }
-                    },
-                    state: {
-                        configJson: mockConfigJson
                     }
                 }
+            },
+            getters: {
+                visibleLayerConfigs: sinon.stub()
             }
-        });
-
-        wrapper = shallowMount(OrientationItemComponent, {
-            store,
-            localVue
         });
     });
 
+    after(() => {
+        sinon.restore();
+    });
+
     it("renders the Orientation component", () => {
+        const wrapper = mount(OrientationItemComponent, {store, localVue});
+
         expect(wrapper.find(".orientationButtons").exists()).to.be.true;
         expect(wrapper.find("#geolocation_marker").exists()).to.be.true;
     });
 
     it("renders the Orientation button", () => {
+        const wrapper = mount(OrientationItemComponent, {store, localVue});
+
         expect(wrapper.find("#geolocate").exists()).to.be.true;
     });
 
     it("will not render the Poi Orientation button", () => {
+        const wrapper = mount(OrientationItemComponent, {store, localVue});
+
         expect(wrapper.find("#geolocatePOI").exists()).to.be.false;
     });
 
     it("will union the array", () => {
-        const arr1 = [3, 3, 4],
+        const wrapper = mount(OrientationItemComponent, {store, localVue}),
+            arr1 = [3, 3, 4],
             arr2 = [5, 6, 7],
             arr = [3, 4, 5, 6, 7];
 
