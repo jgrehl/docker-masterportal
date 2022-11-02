@@ -25,7 +25,7 @@ export default {
             commit("addToLayerConfig", {layerConfigs: layersStructured, parentKey: "Fachdaten"});
         }
         layerContainer.forEach(layerConf => {
-            const rawLayer = getAndMergeRawLayer(layerConf);
+            const rawLayer = getAndMergeRawLayer(layerConf, state.portalConfig?.tree?.type);
 
             if (rawLayer) {
                 commit("replaceByIdInLayerConfig", {layerConfigs: [{layer: rawLayer, id: layerConf.id}]});
