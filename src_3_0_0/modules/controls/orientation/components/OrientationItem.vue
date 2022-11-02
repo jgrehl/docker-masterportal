@@ -45,7 +45,13 @@ export default {
         };
     },
     computed: {
-        ...mapGetters("Controls/orientation", Object.keys(getters)),
+        ...mapGetters("Controls/orientation", [
+            "geolocation",
+            "poiModeCurrentPositionEnabled",
+            "showPoi",
+            "showPoiChoice",
+            "showPoiIcon"
+        ]),
         ...mapGetters("Maps", ["projection"]),
         ...mapGetters(["visibleLayerConfigs"]),
         poiDistancesLocal () {
@@ -239,8 +245,7 @@ export default {
          * @returns {void}
          */
         positioning () {
-            const geolocation = this.geolocation,
-                position = geolocation.getPosition(),
+            const position = this.geolocation.getPosition(),
                 firstGeolocation = this.firstGeolocation,
                 zoomMode = this.zoomMode,
                 centerPosition = proj4(proj4("EPSG:4326"), proj4(this.projection.getCode()), position);
