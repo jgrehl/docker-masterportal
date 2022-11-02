@@ -1,13 +1,13 @@
 
 const state = {
-    showPoiIcon: false,
-    showPoiChoice: false,
+    activeCategory: "",
+    geolocation: null,
     poiMode: "currentPosition",
     poiModeCurrentPositionEnabled: true,
-    showPoi: false,
-    geolocation: null,
     position: null,
-    activeCategory: ""
+    showPoi: false,
+    showPoiChoice: false,
+    showPoiIcon: false
 };
 
 export default state;
