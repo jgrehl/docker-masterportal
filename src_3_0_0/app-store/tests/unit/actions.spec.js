@@ -253,6 +253,7 @@ describe("src_3_0_0/app-store/actions.js", () => {
                 name: "Geobasiskarten (farbig)",
                 maxScale: 30000,
                 minScale: 10,
+                selected: true,
                 typ: "WMS"
             };
 
