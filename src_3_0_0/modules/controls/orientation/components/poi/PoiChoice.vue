@@ -1,12 +1,11 @@
 <script>
 import {mapGetters, mapMutations} from "vuex";
-import getters from "../../store/gettersOrientation";
 import mutations from "../../store/mutationsOrientation";
 
 export default {
     name: "PoiChoice",
     computed: {
-        ...mapGetters("Controls/orientation", Object.keys(getters)),
+        ...mapGetters("Controls/orientation", ["poiMode"]),
         choices () {
             return {
                 "currentPosition": this.$t("common:modules.controls.orientation.poiChoiceCurrentPostion"),
