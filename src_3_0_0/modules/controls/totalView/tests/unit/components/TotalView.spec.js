@@ -18,6 +18,17 @@ describe("src_3_0_0/modules/controls/totalView/components/TotalView.vue", () => 
         store = new Vuex.Store({
             namespaced: true,
             modules: {
+                Controls: {
+                    namespaced: true,
+                    modules: {
+                        TotalView: {
+                            namespaced: true,
+                            getters: {
+                                icon: sinon.stub()
+                            }
+                        }
+                    }
+                },
                 Maps: {
                     namespaced: true,
                     getters: {
