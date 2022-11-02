@@ -84,7 +84,7 @@ describe("src_3_0_0/modules/menu/actionsMenu.js", () => {
     describe("setElementActive", () => {
         const isActive = true,
             moduleNamespace = "ModuleName",
-            functionName = `Menu/${moduleNamespace}/setActive`;
+            functionName = `Modules/${moduleNamespace}/setActive`;
         let context;
 
         beforeEach(() => {
