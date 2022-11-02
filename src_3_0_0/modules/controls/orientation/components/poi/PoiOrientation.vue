@@ -1,6 +1,5 @@
 <script>
 import {mapGetters, mapMutations, mapActions} from "vuex";
-import getters from "../../store/gettersOrientation";
 import mutations from "../../store/mutationsOrientation";
 import {extractEventCoordinates} from "../../../../../../src/utils/extractEventCoordinates";
 import Icon from "ol/style/Icon";
@@ -30,7 +29,7 @@ export default {
         };
     },
     computed: {
-        ...mapGetters("Controls/orientation", Object.keys(getters))
+        ...mapGetters("Controls/orientation", ["activeCategory", "position"])
     },
     watch: {
         position () {
