@@ -6,7 +6,6 @@ import PoiOrientationComponent from "../../../../components/poi/PoiOrientation.v
 // import PointStyle from "../../../../../../../../modules/vectorStyle/pointStyle.js";
 // import PolygonStyle from "../../../../../../../../modules/vectorStyle/polygonStyle.js";
 import Feature from "ol/Feature.js";
-import {Circle} from "ol/geom.js";
 import sinon from "sinon";
 import Icon from "ol/style/Icon";
 
@@ -15,57 +14,33 @@ const localVue = createLocalVue();
 localVue.use(Vuex);
 config.mocks.$t = key => key;
 
-describe.skip("src/modules/controls/orientation/components/PoiOrientation.vue", () => {
-    const mockConfigJson = {
-            Portalconfig: {
-                menu: {
-                    "controls":
-                        {
-                            "orientation":
-                                {
-                                    "zoomMode": "once",
-                                    "poiDistances":
-                                        [
-                                            1000,
-                                            5000,
-                                            10000
-                                        ]
-                                }
-
-                        }
-                }
-            }
-        },
-
-        mockGetters = {
-            showPoi: () => true,
-            position: () => [565650.509295172, 5934218.137240716],
-            activeCategory: () => "1000"
-        };
-
+describe("src/modules/controls/orientation/components/PoiOrientation.vue", () => {
     let store,
         propsData,
         wrapper;
 
     beforeEach(() => {
         store = new Vuex.Store({
-            namespaces: true,
+            namespaced: true,
             modules: {
-                controls: {
+                Controls: {
                     namespaced: true,
                     modules: {
                         orientation: {
                             namespaced: true,
-                            getters: mockGetters,
+                            getters: {
+                                activeCategory: sinon.stub(),
+                                position: sinon.stub()
+                            },
                             mutations: {
-                                setActiveCategory: () => sinon.stub()
+                                setActiveCategory: sinon.stub()
                             }
                         }
-                    },
-                    state: {
-                        configJson: mockConfigJson
                     }
                 }
+            },
+            getters: {
+                visibleLayerConfigs: sinon.stub()
             }
         });
 
@@ -75,31 +50,11 @@ describe.skip("src/modules/controls/orientation/components/PoiOrientation.vue", 
                 5000,
                 10000
             ],
-            getFeaturesInCircle: (distance, centerPosition) => {
-                const circle = new Circle(centerPosition, distance),
-                    circleExtent = circle.getExtent(),
-                    visibleWFSLayers = Radio.request("ModelList", "getModelsByAttributes", {isVisibleInMap: true, typ: "WFS"});
-                let featuresAll = [],
-                    features = [];
+            getFeaturesInCircle: () => {
+                const feature = new Feature(),
+                    featuresAll = [];
 
-                if (!Array.isArray(visibleWFSLayers) || !visibleWFSLayers.length) {
-                    return [];
-                }
-                visibleWFSLayers.forEach(layer => {
-                    if (layer.has("layerSource") === true) {
-                        features = layer.get("layerSource").getFeaturesInExtent(circleExtent);
-                        features.forEach(function (feat) {
-                            Object.assign(feat, {
-                                styleId: layer.get("styleId"),
-                                layerName: layer.get("name"),
-                                dist2Pos: this.getDistance(feat, centerPosition)
-                            });
-                        }, this);
-                        featuresAll = this.union(features, featuresAll, function (obj1, obj2) {
-                            return obj1 === obj2;
-                        });
-                    }
-                }, this);
+                featuresAll.push(feature);
 
                 return featuresAll;
             }
@@ -116,7 +71,7 @@ describe.skip("src/modules/controls/orientation/components/PoiOrientation.vue", 
         sinon.restore();
     });
 
-    describe.skip("Render Component", function () {
+    describe("Render Component", function () {
         it("renders the Poi Orientation component", () => {
             expect(wrapper.find("#surrounding_vectorfeatures").exists()).to.be.true;
             expect(wrapper.find(".modal-backdrop").exists()).to.be.true;
@@ -126,7 +81,7 @@ describe.skip("src/modules/controls/orientation/components/PoiOrientation.vue", 
     describe("getFeatureTitle", function () {
         let feature = new Feature();
 
-        it.skip("should return layerName when name is unset", function () {
+        it("should return layerName when name is unset", function () {
             feature = Object.assign(feature, {
                 layerName: "LayerName"
             });
@@ -144,6 +99,9 @@ describe.skip("src/modules/controls/orientation/components/PoiOrientation.vue", 
         });
     });
 
+    /**
+     * ToDo: Tests nachziehen, wenn Vector Styling in vue
+     */
     describe.skip("SVG Functions", function () {
         it("createPolygonGraphic should return an SVG", function () {
             // const style = new PolygonStyle();
@@ -162,7 +120,7 @@ describe.skip("src/modules/controls/orientation/components/PoiOrientation.vue", 
         });
     });
 
-    describe("getImgPath", () => {
+    describe.skip("getImgPath", () => {
         let request;
 
         beforeEach(() => {
