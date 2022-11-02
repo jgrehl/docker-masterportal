@@ -1,5 +1,5 @@
 import rawLayerList from "@masterportal/masterportalapi/src/rawLayerList";
-import {getAndMergeAllRawLayers, getAndMergeRawLayer} from "../../../js/getAndMergeRawLayer.js";
+import {addSelected, getAndMergeAllRawLayers, getAndMergeRawLayer} from "../../../js/getAndMergeRawLayer.js";
 import {expect} from "chai";
 import sinon from "sinon";
 
@@ -174,6 +174,90 @@ describe("src_3_0_0/app-store/js/getAndMergeRawLayer.js", () => {
             expect(result.children[1].id).to.be.equals("1731");
             expect(result.children[1].name).to.be.equals("name1731");
             expect(result.children[1].layers).to.be.equals("layer1731");
+        });
+    });
+
+    describe("addSelected", () => {
+        it("should set selected to true, if treeType is 'light'", () => {
+            const rawLayer = {
+                    id: "1"
+                },
+                treeType = "light";
+
+            expect(addSelected(rawLayer, treeType)).to.deep.equals({
+                id: "1",
+                selected: true
+            });
+        });
+
+        it("should set selected to false, if treeType is 'custom'", () => {
+            const rawLayer = {
+                    id: "2"
+                },
+                treeType = "custom";
+
+            expect(addSelected(rawLayer, treeType)).to.deep.equals({
+                id: "2",
+                selected: false
+            });
+        });
+
+        it("should set selected to true, if treeType is 'custom' and visibility is true", () => {
+            const rawLayer = {
+                    id: "3",
+                    visibility: true
+                },
+                treeType = "custom";
+
+            expect(addSelected(rawLayer, treeType)).to.deep.equals({
+                id: "3",
+                selected: true,
+                visibility: true
+            });
+        });
+
+        it("should set selected to true, if treeType is 'auto' and visibility is true", () => {
+            const rawLayer = {
+                    id: "4",
+                    visibility: true
+                },
+                treeType = "auto";
+
+            expect(addSelected(rawLayer, treeType)).to.deep.equals({
+                id: "4",
+                selected: true,
+                visibility: true
+            });
+        });
+
+        it("should set selected to true, if treeType is 'custom' and visibility is false and selected is true", () => {
+            const rawLayer = {
+                    id: "5",
+                    selected: true,
+                    visibility: false
+                },
+                treeType = "custom";
+
+            expect(addSelected(rawLayer, treeType)).to.deep.equals({
+                id: "5",
+                selected: true,
+                visibility: false
+            });
+        });
+
+        it("should set selected to true, if treeType is 'custom' and visibility is true and selected is false", () => {
+            const rawLayer = {
+                    id: "6",
+                    selected: false,
+                    visibility: true
+                },
+                treeType = "custom";
+
+            expect(addSelected(rawLayer, treeType)).to.deep.equals({
+                id: "6",
+                selected: true,
+                visibility: true
+            });
         });
     });
 
@@ -495,7 +579,4 @@ describe("src_3_0_0/app-store/js/getAndMergeRawLayer.js", () => {
             expect(result[result.length - 1].styles).to.be.equals("geofox_stations");
         });
     });
-
-
 });
-
