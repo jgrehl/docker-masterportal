@@ -49,7 +49,7 @@ describe("src_3_0_0/modules/controls/backForward/components/BackForward.vue", ()
                 Controls: {
                     namespaced: true,
                     modules: {
-                        backForward: BackForwardModule
+                        BackForward: BackForwardModule
                     }
                 },
                 Maps: {
