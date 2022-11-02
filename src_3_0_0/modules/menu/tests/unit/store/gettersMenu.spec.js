@@ -4,7 +4,8 @@ import gettersMenu from "../../../store/gettersMenu";
 import idx from "../../../../../shared/js/utils/idx";
 
 describe("src_3_0_0/modules/menu/gettersMenu.js", () => {
-    const mainMenuSymbol = Symbol("mainMenu"),
+    const component = Symbol("Am component"),
+        mainMenuSymbol = Symbol("mainMenu"),
         secondaryMenuSymbol = Symbol("secondaryMenu");
     let consoleErrorSpy, getters, rootGetters;
 
@@ -16,7 +17,14 @@ describe("src_3_0_0/modules/menu/gettersMenu.js", () => {
             secondaryMenu: null
         };
         rootGetters = {
-            loadedConfigs: {configJson: false},
+            Modules: {
+                componentMap: {
+                    component: component
+                }
+            },
+            loadedConfigs: {
+                configJson: false
+            },
             portalConfig: {
                 mainMenu: mainMenuSymbol,
                 secondaryMenu: secondaryMenuSymbol
@@ -27,12 +35,11 @@ describe("src_3_0_0/modules/menu/gettersMenu.js", () => {
     afterEach(sinon.restore);
 
     describe("componentFromPath", () => {
-        const component = Symbol("Am component"),
-            itemType = "component";
+        const itemType = "component";
         let objectFromPathFake, side, state;
 
         beforeEach(() => {
-            state = {componentMap: {component}};
+            state = {};
             objectFromPathFake = sinon.fake.returns({itemType});
             getters.objectFromPath = objectFromPathFake;
         });
@@ -40,7 +47,7 @@ describe("src_3_0_0/modules/menu/gettersMenu.js", () => {
         it("should return a component from the componentMap if the parameter side equals 'mainMenu'", () => {
             side = "mainMenu";
 
-            expect(gettersMenu.componentFromPath(state, getters)(side)).to.equal(component);
+            expect(gettersMenu.componentFromPath(state, getters, rootGetters)(side)).to.equal(component);
             expect(objectFromPathFake.calledOnce).to.be.true;
             expect(objectFromPathFake.firstCall.args.length).to.equal(2);
             expect(objectFromPathFake.firstCall.args[0]).to.equal(side);
@@ -49,7 +56,7 @@ describe("src_3_0_0/modules/menu/gettersMenu.js", () => {
         it("should return a component from the componentMap if the parameter side equals 'secondaryMenu'", () => {
             side = "secondaryMenu";
 
-            expect(gettersMenu.componentFromPath(state, getters)(side)).to.equal(component);
+            expect(gettersMenu.componentFromPath(state, getters, rootGetters)(side)).to.equal(component);
             expect(objectFromPathFake.calledOnce).to.be.true;
             expect(objectFromPathFake.firstCall.args.length).to.equal(2);
             expect(objectFromPathFake.firstCall.args[0]).to.equal(side);
@@ -58,7 +65,7 @@ describe("src_3_0_0/modules/menu/gettersMenu.js", () => {
         it("should return null and log an error if the given side does not equal 'mainMenu' or 'secondaryMenu'", () => {
             side = "newMenu";
 
-            expect(gettersMenu.componentFromPath(state, getters)(side)).to.equal(null);
+            expect(gettersMenu.componentFromPath(state, getters, rootGetters)(side)).to.equal(null);
             expect(objectFromPathFake.notCalled).to.be.true;
             expect(consoleErrorSpy.calledOnce).to.be.true;
             expect(consoleErrorSpy.firstCall.args.length).to.equal(1);
