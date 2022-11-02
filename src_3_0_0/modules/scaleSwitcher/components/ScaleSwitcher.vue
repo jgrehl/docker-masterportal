@@ -8,7 +8,7 @@ import mutations from "../store/mutationsScaleSwitcher";
 export default {
     name: "ScaleSwitcher",
     computed: {
-        ...mapGetters("Menu/ScaleSwitcher", ["active"]),
+        ...mapGetters("Modules/ScaleSwitcher", ["active"]),
         scale: {
             get () {
                 return this.$store.state.Maps.scale;
