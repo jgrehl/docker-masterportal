@@ -19,12 +19,23 @@ describe("src_3_0_0/modules/controls/zoom/components/ZoomInAndOut.vue", () => {
         store = new Vuex.Store({
             namespaced: true,
             modules: {
+                Controls: {
+                    namespaced: true,
+                    modules: {
+                        Zoom: {
+                            namespaced: true,
+                            getters: {
+                                iconIn: sinon.stub(),
+                                iconOut: sinon.stub()
+                            }
+                        }
+                    }
+                },
                 Maps: {
                     namespaced: true,
                     getters: {
                         isMaxZoomDisplayed: () => false,
-                        isMinZoomDisplayed: () => false,
-                        mode: () => "2D"
+                        isMinZoomDisplayed: () => false
                     },
                     actions: {
                         decreaseZoom: decreaseZoomSpy,
