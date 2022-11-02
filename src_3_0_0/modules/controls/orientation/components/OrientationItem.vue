@@ -1,6 +1,5 @@
 <script>
 import {mapGetters, mapMutations, mapActions} from "vuex";
-import getters from "../store/gettersOrientation";
 import mutations from "../store/mutationsOrientation";
 import ControlIcon from "../../ControlIcon.vue";
 import PoiChoice from "./poi/PoiChoice.vue";
