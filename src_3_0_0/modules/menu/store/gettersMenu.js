@@ -7,11 +7,12 @@ const menuGetters = {
     /**
      * @param {MenuState} state Local vuex state.
      * @param {Object} getters Local vuex getters.
+     * @param {Object} rootState vuex rootState.
      * @returns {(function(side: String): Object)} Function returning component identified via componentMap.
      */
-    componentFromPath: (state, getters) => side => {
+    componentFromPath: (state, getters, rootState) => side => {
         if (["mainMenu", "secondaryMenu"].includes(side)) {
-            return state.componentMap[getters.objectFromPath(side, "last").itemType];
+            return rootState.Modules.componentMap[getters.objectFromPath(side, "last").itemType];
         }
         console.error(`Menu.componentMap: The given menu side ${side} is not allowed. Please use "mainMenu" or "secondaryMenu" instead.`);
         return null;

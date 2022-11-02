@@ -35,7 +35,7 @@ export default {
      * @returns {void}
      */
     setElementActive ({commit, dispatch}, {moduleNamespace, isActive}) {
-        const setActiveName = `Menu/${moduleNamespace}/setActive`;
+        const setActiveName = `Modules/${moduleNamespace}/setActive`;
 
         if (Object.keys(this._actions).includes(setActiveName)) {
             dispatch(setActiveName, isActive, {root: true});
