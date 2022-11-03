@@ -85,6 +85,11 @@ export default {
             });
         },
 
+        /**
+         * Reacts when the map is clicked
+         * @param {Object} evt the click event.
+         * @returns {void}
+         */
         mapClicked (evt) {
             this.setPosition(evt.coordinate);
             this.setShowPoi(true);
