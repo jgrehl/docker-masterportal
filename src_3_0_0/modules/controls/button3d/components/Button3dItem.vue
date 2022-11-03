@@ -45,6 +45,7 @@ export default {
             const targetMode = this.mode === "2D" ? "3D" : "2D";
 
             this.changeMapMode(targetMode);
+
         }
     }
 };

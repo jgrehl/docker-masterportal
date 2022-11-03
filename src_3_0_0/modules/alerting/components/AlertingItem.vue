@@ -89,7 +89,6 @@ export default {
         let initialDisplayedAlerts;
 
         this.initialize();
-console.log('++++');
         if (this.availableLocalStorage && localStorage[this.localStorageDisplayedAlertsKey] !== undefined) {
             try {
                 initialDisplayedAlerts = JSON.parse(localStorage[this.localStorageDisplayedAlertsKey]);
@@ -106,7 +105,6 @@ console.log('++++');
 
         if (this.fetchBroadcastUrl !== undefined && this.fetchBroadcastUrl !== false) {
             this.fetchBroadcast(this.fetchBroadcastUrl);
-            console.log(this.fetchBroadcastUrl);
         }
     },
 
