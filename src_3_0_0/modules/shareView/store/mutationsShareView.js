@@ -1,4 +1,4 @@
-import {generateSimpleMutations} from "../../../../../app-store/utils/generators.js";
+import {generateSimpleMutations} from "../../../shared/js/utils/generators";
 import state from "./stateShareView";
 
 const mutations = {
