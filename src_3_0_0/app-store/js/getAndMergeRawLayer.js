@@ -5,32 +5,10 @@ import omit from "../../shared/js/utils/omit";
  * If id contains an array of ids, the rawlayer is merged.
  * Grouped layers children are filled with the rawlayers.
  * @param {Object} layerConf configuration of layer like in the config.json
- * @param {Object} [treeType="light"] the type for topic tree
  * @returns {Object} the extended and merged raw layer
  */
-export function getAndMergeRawLayer (layerConf, treeType = "light") {
-    const rawLayer = mergeRawLayer(layerConf, rawLayerList.getLayerWhere({id: layerConf?.id}));
-
-    return addSelected(rawLayer, treeType);
-}
-
-/**
- * Adds the attribute "selected" to raw layer.
- * @param {Object} rawLayer The raw layer.
- * @param {Object} [treeType="light"] the type for topic tree
- * @returns {Object} The raw layer
- */
-export function addSelected (rawLayer, treeType) {
-    if (rawLayer) {
-        if (treeType === "light" || rawLayer.visibility) {
-            rawLayer.selected = true;
-        }
-        else if (!Object.hasOwn(rawLayer, "selected")) {
-            rawLayer.selected = false;
-        }
-    }
-
-    return rawLayer;
+export function getAndMergeRawLayer (layerConf) {
+    return mergeRawLayer(layerConf, rawLayerList.getLayerWhere({id: layerConf?.id}));
 }
 
 /**
@@ -164,7 +142,7 @@ export function getAndMergeAllRawLayers (treeConfig = {}) {
     let relatedWMSLayerIds = [];
 
     for (let i = 0; i < layerList.length; i++) {
-        const rawLayer = addSelected(layerList[i], treeConfig.type),
+        const rawLayer = layerList[i],
             layerType = rawLayer.typ?.toUpperCase();
 
         if (!validLayerTypes.includes(layerType) ||
