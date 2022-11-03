@@ -1,4 +1,4 @@
-import {generateSimpleMutations} from "../../../../app-store/utils/generators";
+import {generateSimpleMutations} from "../../../../shared/js/utils/generators";
 import stateTotalView from "./stateTotalView";
 
 export default {
