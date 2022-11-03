@@ -1,6 +1,6 @@
 <script>
 import {mapGetters} from "vuex";
-import ControlIcon from "../../ControlIcon.vue";
+import ControlIcon from "../../components/ControlIcon.vue";
 import FreezeScreenUnfreeze from "./FreezeScreenUnfreeze.vue";
 
 /**
