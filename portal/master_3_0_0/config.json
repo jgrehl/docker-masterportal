@@ -25,6 +25,9 @@
         "fullScreen": true
       }
     },
+    "tree": {
+      "layerPillsAmount": 2
+    },
     "mainMenu": {
       "initiallyOpen": true,
       "title": {
