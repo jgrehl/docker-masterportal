@@ -46,6 +46,7 @@ export default {
     computed: {
         ...mapGetters("Controls/orientation", [
             "geolocation",
+            "poiMode",
             "poiModeCurrentPositionEnabled",
             "showPoi",
             "showPoiChoice",
@@ -347,7 +348,6 @@ export default {
          */
         showPoiWindow () {
             if (!this.position) {
-                // LoaderOverlay.show();
                 const geolocation = this.geolocation,
                     position = geolocation.getPosition(),
                     centerPosition = proj4(proj4("EPSG:4326"), proj4(this.projection.getCode()), position);
@@ -370,7 +370,6 @@ export default {
             if (this.geolocation !== null) {
                 this.untrack();
             }
-            // LoaderOverlay.hide();
         },
 
         /**
