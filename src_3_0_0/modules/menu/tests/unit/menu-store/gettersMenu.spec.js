@@ -1,9 +1,9 @@
 import sinon from "sinon";
 import {expect} from "chai";
-import gettersMenu from "../../../store/gettersMenu";
+import gettersMenu from "../../../menu-store/gettersMenu";
 import idx from "../../../../../shared/js/utils/idx";
 
-describe("src_3_0_0/modules/menu/gettersMenu.js", () => {
+describe("src_3_0_0/modules/menu/menu-store/gettersMenu.js", () => {
     const component = Symbol("Am component"),
         mainMenuSymbol = Symbol("mainMenu"),
         secondaryMenuSymbol = Symbol("secondaryMenu");
