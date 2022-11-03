@@ -47,3 +47,11 @@ export function createLayer (layerConf, mapMode) {
 
     return layer;
 }
+
+/**
+ * Return 3D layer names
+ * @returns {Array} The 3D layer names as an array.
+ */
+export function getLayerTypes3d () {
+    return Object.keys(layerTypes3d);
+}
