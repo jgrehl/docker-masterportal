@@ -184,7 +184,6 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-    @import "~/css/mixins.scss";
     @import "~variables";
 
     .poi-choice {
@@ -196,12 +195,6 @@ export default {
                 font-size: $font_size_icon_lg;
                 padding: 12px;
                 cursor: pointer;
-                &:focus {
-                    @include primary_action_focus;
-                }
-                &:hover {
-                    @include primary_action_hover;
-                }
             }
         }
         .modal-title {
