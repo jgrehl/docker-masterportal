@@ -1,5 +1,6 @@
 import Folder from "../menu/components/MenuFolder.vue";
 import ScaleSwitcher from "../scaleSwitcher/components/ScaleSwitcher.vue";
+import ShareView from "../shareView/components/ShareView.vue";
 
 /**
  * User type definition
@@ -9,7 +10,8 @@ import ScaleSwitcher from "../scaleSwitcher/components/ScaleSwitcher.vue";
 const state = {
     componentMap: {
         folder: Folder,
-        scaleSwitcher: ScaleSwitcher
+        scaleSwitcher: ScaleSwitcher,
+        shareView: ShareView
     }
 };
 
