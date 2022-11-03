@@ -16,13 +16,16 @@ const state = {
     icon: "bi-arrows-angle-contract",
     id: "scaleSwitcher",
     name: "common:menu.tools.scaleSwitcher",
+    title: "common:menu.tools.scaleSwitcher", // @todo gleich mit name
+    itemType: "scaleSwitcher", // @todo gleich mit id
 
     active: false,
     deactivateGFI: false,
     hasMouseMapInteractions: false,
     isVisibleInMenu: true,
-    supportedDevice: ["Desktop", "Mobil", "Table"],
-    supportedMapMode: ["2D", "3D"]
+    supportedDevice: ["Desktop", "Mobil", "Table"], // @todo noch im Menü einbauen
+    // supportedDevice: ["Desktop", "Mobil", "Table"], // @todo noch im Menü einbauen
+    supportedMapMode: ["2D", "3D"] // @todo noch im Menü einbauen
 };
 
 export default state;
