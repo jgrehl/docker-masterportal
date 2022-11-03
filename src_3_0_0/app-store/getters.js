@@ -80,7 +80,7 @@ const getters = {
     /**
      * Returns the ui style of configJs.
      * @param {Object} state state of the app-store.
-     * @returns {Object} The ui style.l
+     * @returns {Object} The ui style.
      */
     uiStyle: state => {
         return state.configJs?.uiStyle?.toUpperCase() || "DEFAULT";
