@@ -14,7 +14,7 @@ export default {
         };
     },
     computed: {
-        ...mapGetters("Menu/ShareView", ["url"]),
+        ...mapGetters("Modules/ShareView", ["url"]),
         ...mapGetters("Maps", ["getView"]),
         ...mapGetters(["visibleLayerConfigs", "isMobile"]),
 
@@ -27,7 +27,7 @@ export default {
         }
     },
     methods: {
-        ...mapMutations("Tools/ShareView", Object.keys(mutations)),
+        ...mapMutations("Modules/ShareView", Object.keys(mutations)),
 
         async share () {
             const shareData = {
@@ -107,18 +107,19 @@ export default {
                     target="_blank"
                 >
                     <i class="bi-twitter" />
+                    Auf Twitter teilen
                 </a>
-                Auf Twitter teilen
             </div>
             <div class="col-12">
                 <a
                     aria-label="Auf Facebook teilen"
                     class="btn btn-primary"
                     :href="facebook"
+                    target="_blank"
                 >
                     <i class="bi-facebook" />
+                    Auf Facebook teilen
                 </a>
-                Auf Facebook teilen
             </div>
             <div class="col-12">
                 <button
@@ -127,8 +128,8 @@ export default {
                     @click="copyToClipboard"
                 >
                     <i class="bi-link" />
+                    Den Link kopieren
                 </button>
-                Den Link kopieren
             </div>
             <div class="col-12">
                 <button
@@ -137,8 +138,8 @@ export default {
                     @click="generateQRCodeDataURL"
                 >
                     <i class="bi-qr-code" />
+                    Einen QRCode erstellen
                 </button>
-                Einen QRCode erstellen
             </div>
             <div
                 v-if="qrDataUrl"
@@ -171,7 +172,6 @@ export default {
 
 
 <style lang="scss" scoped>
-    @import "~/css/mixins.scss";
     @import "~variables";
 
 .start-btn {
@@ -179,6 +179,5 @@ export default {
     background-color: white;
     height: 500px;
     width: 300px;
-
 }
 </style>
