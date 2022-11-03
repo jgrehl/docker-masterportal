@@ -42,6 +42,15 @@ const getters = {
     },
 
     /**
+     * Returns all subject data layers of layerConfig.
+     * @param {Object} state state of the app-store.
+     * @returns {Object[]} The layers.
+     */
+    allSubjectDataLayerConfigs: state => {
+        return getNestedValues(state.layerConfig.Fachdaten, "Layer", "Ordner").flat(Infinity);
+    },
+
+    /**
      * Returns path to the cesium library.
      * @param {Object} state state of the app-store.
      * @returns {String} The cesium library path.
@@ -84,6 +93,17 @@ const getters = {
      */
     visibleLayerConfigs: (state) => {
         const layerContainer = getters.allLayerConfigs(state);
+
+        return layerContainer.filter(layerConf => layerConf.visibility === true);
+    },
+
+    /**
+     * Returns all visible layer configurations.
+     * @param {Object} state state of the app-store.
+     * @returns {Object[]} Containing all layer configurations with property 'visibility' is true.
+     */
+    visibleSubjectDataLayerConfigs: (state) => {
+        const layerContainer = getters.allSubjectDataLayerConfigs(state);
 
         return layerContainer.filter(layerConf => layerConf.visibility === true);
     }
