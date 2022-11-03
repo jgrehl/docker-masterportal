@@ -34,6 +34,9 @@ export default {
                 initializeMaps(this.portalConfig, this.configJs);
                 initializeLayers(this.visibleLayerConfigs);
             }
+        },
+        portalConfig (portalConfig) {
+            this.mergeModuleState(portalConfig);
         }
     },
     created () {
@@ -48,6 +51,9 @@ export default {
             "loadConfigJson",
             "loadRestServicesJson",
             "loadServicesJson"
+        ]),
+        ...mapActions("Modules", [
+            "mergeModuleState"
         ]),
 
         /**
