@@ -1,5 +1,5 @@
 <script>
-import {mapGetters, mapMutations} from "vuex";
+import {mapActions, mapGetters, mapMutations} from "vuex";
 import mutations from "../../store/mutationsOrientation";
 
 export default {
@@ -23,6 +23,7 @@ export default {
     },
     methods: {
         ...mapMutations("Controls/orientation", Object.keys(mutations)),
+        ...mapActions("Maps", ["registerListener", "unregisterListener"]),
 
         /**
          * Callback when close icon has been clicked.
@@ -77,13 +78,28 @@ export default {
         triggerTrack () {
             this.$emit("track");
             this.hidePoiChoice(false);
+
+            this.registerListener({
+                type: "click",
+                listener: this.mapClicked
+            });
+        },
+
+        mapClicked (evt) {
+            this.setPosition(evt.coordinate);
+            this.setShowPoi(true);
         },
 
         /**
+         * ToDo: MapMarker hinzufügen
          * Stopping the poi track
          * @returns {void}
          */
         stopPoi () {
+            this.unregisterListener({
+                type: "click",
+                listener: this.mapClicked
+            });
             this.setPoiMode("currentPosition");
             this.setCurrentPositionEnabled(true);
             // this.$store.dispatch("MapMarker/removePointMarker");
