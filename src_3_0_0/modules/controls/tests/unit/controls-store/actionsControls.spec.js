@@ -1,13 +1,13 @@
 import {expect} from "chai";
 import sinon from "sinon";
-import actions from "../../actionsControls";
+import actions from "../../../controls-store/actionsControls";
 
 const {
     mergeControlState
 } = actions;
 
 
-describe("src_3_0_0/modules/controls/actionsControls.js", () => {
+describe("src_3_0_0/modules/controls/controls-store/actionsControls.js", () => {
     let commit;
 
     beforeEach(() => {
