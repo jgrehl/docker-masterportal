@@ -3,6 +3,7 @@ import {mapGetters, mapActions} from "vuex";
 import ControlBar from "./modules/controls/components/ControlBar.vue";
 import MenuContainer from "./modules/menu/components/MenuContainer.vue";
 import MenuToggleButton from "./modules/menu/components/MenuToggleButton.vue";
+import LayerPills from "./modules/layerPills/components/LayerPills.vue";
 
 import initializeLayers from "./core/layers/js/layerProcessor";
 import {initializeMaps} from "./core/maps/js/maps";
@@ -14,7 +15,8 @@ export default {
     components: {
         ControlBar,
         MenuContainer,
-        MenuToggleButton
+        MenuToggleButton,
+        LayerPills
     },
     computed: {
         ...mapGetters([
@@ -129,6 +131,7 @@ export default {
                 class="elements-positioned-over-map"
             >
                 <ControlBar class="controls" />
+                <LayerPills />
             </div>
         </div>
         <MenuContainer
