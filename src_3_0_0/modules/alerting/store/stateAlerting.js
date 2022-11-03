@@ -8,7 +8,7 @@ export default {
         displayUntil: false, // "2030-01-01 00:00:00" (see moment.js)
         creationDate: "",
         hash: "",
-        multipleAlert: true,
+        multipleAlert: false,
         legacy_onConfirm: false, // for legacy only, thats why no doc
         mustBeConfirmed: false, // Boolean
         once: false // {seconds: 59, minutes: ...} (see moment.js)
