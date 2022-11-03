@@ -81,5 +81,18 @@ describe("src_3_0_0/core/maps/store/actionsMapsInteractionsZoom.js", () => {
             expect(dispatch.notCalled).to.be.true;
             expect(view.getZoom()).to.equals(3);
         });
+
+        describe("zoomToExtent", () => {
+            it("Zoom to the extent with duration 0 milliseconds", () => {
+                const view = map2d.getView();
+
+                actions.zoomToExtent({}, {
+                    extent: [565760.049, 5931747.185, 568940.626, 5935453.891],
+                    options: {duration: 0}
+                });
+                expect(view.getCenter()).to.deep.equal([567350.3375, 5933600.538]);
+                expect(Math.round(view.getZoom())).equals(10);
+            });
+        });
     });
 });
