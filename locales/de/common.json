@@ -72,6 +72,7 @@
             "wfsTransaction": "WFS-T Tool",
             "scaleSwitcher": "Maßstab umschalten",
             "selectFeatures": "Features auswählen",
+            "shareView": "Auswahl teilen",
             "legend":"Legende",
             "styleVt": "Style Vector Tile Layers",
             "bufferAnalysis": "Buffer Analyse",
@@ -828,6 +829,15 @@
             },
             "scaleSwitcher": {
                 "label": "Maßstab"
+            },
+            "shareView": {
+                "shareHeadline": "Wie möchten Sie den Link teilen?",
+                "share": "Teilen",
+                "shareFacebook": "Facebook",
+                "shareTwitter": "Twitter",
+                "shareQR": "QRCode erstellen",
+                "shareLink": "Link kopieren",
+                "downloadQR": "QRCode herunterladen"
             },
             "bufferAnalysis": {
                 "sourceSelectLabel": "Quell-Layer",
