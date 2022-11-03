@@ -64,6 +64,15 @@ export default {
      * @returns {void}
      */
     initialize: function (context) {
+        context.dispatch("addSingleAlert", {
+            "content": "See alert",
+            "multipleAlert": false
+        });
+        context.dispatch("addSingleAlert", {
+            "content": "See alert2",
+            "multipleAlert": false
+        });
+
         fetchFirstModuleConfig(context, configPaths, "Alerting");
 
     },
@@ -179,7 +188,7 @@ export default {
 
         displayAlert = isUnique && isInTime && isNotRestricted;
         if (displayAlert) {
-            if (newAlert.multipleAlert !== true) {
+            if ((newAlert.multipleAlert !== true && !newAlert.initial) || (newAlert.multipleAlert === true && state.alerts[state.alerts.length - 1]?.initial === true)) {
                 state.alerts = [];
             }
             commit("addToAlerts", alertProtoClone);
