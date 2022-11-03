@@ -1,9 +1,9 @@
 import {expect} from "chai";
-import mutations from "../../../store/mutationsControls";
+import mutations from "../../../controls-store/mutationsControls";
 
 const {registerControl, unregisterControl} = mutations;
 
-describe("src_3_0_0/modules/controls/store/mutationsControls.js", () => {
+describe("src_3_0_0/modules/controls/controls-store/mutationsControls.js", () => {
     describe("registerControl", () => {
         it("add new control to componentMap", () => {
             const state = {
