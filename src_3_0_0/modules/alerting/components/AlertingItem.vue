@@ -152,7 +152,8 @@ export default {
             }
 
             collectedAlerts.forEach(singleAlert => {
-                singleAlert.multipleAlert = true;
+                // singleAlert.multipleAlert = true;
+                singleAlert.initial = true;
                 this.addSingleAlert(singleAlert);
             });
         },
@@ -180,7 +181,7 @@ export default {
          * When closing the modal, update all alerts' have-been-read states.
          * @returns {void}
          */
-        onModalHid: function () {
+        onModalClose: function () {
             this.cleanup();
         },
         /**
@@ -231,7 +232,7 @@ export default {
                         type="button"
                         class="btn-close"
                         aria-label="Close"
-                        @click="toggleModal(false)"
+                        @click="toggleModal(false); onModalClose();"
                     />
                 </div>
                 <div
@@ -306,6 +307,7 @@ export default {
     @import "~variables";
     #alertModal{
         display:block;
+        background-color: rgba(0,0,0,0.5);
     }
     .offset-alert {
     margin-left:10px;
@@ -331,50 +333,13 @@ export default {
             padding:0;
         }
 
-        /*
-            This is only for now. Because there havent been defined any styles yet.
-            Negative margin may be bad in the long run.
-        */
-        div.singleAlertWrapper {
-            &.error {
-                margin-left:-24px;
-                border-left: 4px solid rgba(255, 0, 0, 0.9);
-                padding-left: 21px;
-            }
-            &.warning {
-                margin-left:-24px;
-                border-left: 4px solid rgba(255, 125, 0, 0.7);
-                padding-left: 21px;
-            }
-        }
-
         div.singleAlertContainer {
-            border-bottom:1px dotted #cccccc;
             color:$secondary_contrast;
             font-size:12px;
             margin-top:0px;
             margin-bottom:0px;
             padding-bottom:0px;
             padding-bottom:0;
-
-            &.singleAlertIsImportant p {
-                color:#EE7777;
-
-                &.confirm a {
-                    color:$secondary_contrast;
-                    cursor:pointer;
-                    text-decoration:underline;
-
-                    &:hover {
-                        text-decoration:none;
-                    }
-                }
-            }
-
-            &.last {
-                border-bottom:none;
-                padding-bottom:0;
-            }
         }
     }
 </style>
