@@ -41,10 +41,19 @@ export default {
          * @returns {void}
          */
         triggerChangeMapMode () {
-            document.getElementById("mymodal").modal("show");
             const targetMode = this.mode === "2D" ? "3D" : "2D";
 
             this.changeMapMode(targetMode);
+
+            this.addSingleAlert({
+                "content": "Welcome to 3D",
+                "mustBeConfirmed": true,
+                "multipleAlert": true});
+
+            this.addSingleAlert({
+                "content": "Welcome to 2D",
+                "mustBeConfirmed": true,
+                "multipleAlert": true});
 
         }
     }
