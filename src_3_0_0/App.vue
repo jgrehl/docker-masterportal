@@ -6,7 +6,7 @@ import MenuToggleButton from "./modules/menu/components/MenuToggleButton.vue";
 
 import initializeLayers from "./core/layers/js/layerProcessor";
 import {initializeMaps} from "./core/maps/js/maps";
-import LoaderOverlay from "./shared/js/utils/loaderOverlay";
+import LoaderOverlay from "./app-store/js/loaderOverlay";
 import mapCollection from "./core/maps/js/mapCollection";
 
 export default {
