@@ -64,20 +64,8 @@ export default {
      * @returns {void}
      */
     initialize: function (context) {
-        /*  context.dispatch("addSingleAlert", {
-            "content": "See alert",
-            "mustBeConfirmed": true,
-            "multipleAlert": true
-        });
-        context.dispatch("addSingleAlert", {
-            "category": "News",
-            "title": "Title",
-            "content": "See alert2",
-            "creationDate": "2022-12-24",
-            "mustBeConfirmed": true,
-            "multipleAlert": true
-        }); */
         fetchFirstModuleConfig(context, configPaths, "Alerting");
+
     },
 
     /**
