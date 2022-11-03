@@ -1,7 +1,7 @@
 import {expect} from "chai";
-import LoaderOverlay from "../../loaderOverlay";
+import LoaderOverlay from "../../../js/loaderOverlay";
 
-describe("src_3_0_0/shared/js/utils/loaderOverlay.js", () => {
+describe("src_3_0_0/app-store/js/loaderOverlay.js", () => {
     before(() => {
         LoaderOverlay.loaderOverlayCount = 0;
         LoaderOverlay.initialLoaderIsHidden = false;
