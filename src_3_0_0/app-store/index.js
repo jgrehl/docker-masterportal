@@ -10,6 +10,7 @@ import Controls from "../modules/controls/controls-store/indexControls";
 import Maps from "../core/maps/store/indexMaps";
 import Menu from "../modules/menu/menu-store/indexMenu";
 import Modules from "../modules/modules-store/indexModules";
+import LayerPills from "../modules/layerPills/store/indexLayerPills";
 
 Vue.use(Vuex);
 
@@ -22,7 +23,8 @@ const store = new Vuex.Store({
         Controls,
         Maps,
         Menu,
-        Modules
+        Modules,
+        LayerPills
     }
 });
 
