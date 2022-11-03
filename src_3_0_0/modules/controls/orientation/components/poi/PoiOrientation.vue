@@ -422,7 +422,6 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-    @import "~/css/mixins.scss";
     @import "~variables";
 
     .poi {
@@ -443,9 +442,6 @@ export default {
             float: right;
             padding: 12px;
             cursor: pointer;
-            &:focus {
-                @include primary_action_focus;
-            }
         }
         .modal-dialog {
             z-index: 1051;
@@ -453,9 +449,6 @@ export default {
         .tab-content{
             max-height: 78vH;
             overflow: auto;
-            &:focus {
-                @include primary_action_focus;
-            }
             tbody {
                 >tr {
                     >td {
