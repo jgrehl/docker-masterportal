@@ -35,5 +35,22 @@ export default {
         if (zoom <= view.getMaxZoom() && zoom >= view.getMinZoom()) {
             view.setZoom(zoom);
         }
+    },
+
+    /**
+     * Zoom to a given extent
+     * @param {Object} _ store context.
+     * @param {Object} payload parameter object.
+     * @param {String[]} payload.extent The extent to zoom.
+     * @param {Object} payload.options Options for zoom.
+     * @param {Number} [payload.options.duration=800] The duration of the animation in milliseconds.
+     * @see {@link https://openlayers.org/en/latest/apidoc/module-ol_View-View.html#fit} for more options.
+     * @returns {void}
+     */
+    zoomToExtent (_, {extent, options}) {
+        mapCollection.getMapView("2D").fit(extent, {
+            size: mapCollection.getMap("2D").getSize(),
+            ...Object.assign({duration: 800}, options)
+        });
     }
 };
