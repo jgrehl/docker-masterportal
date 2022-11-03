@@ -18,10 +18,18 @@ export default {
         ...mapGetters("Maps", ["getView"]),
         ...mapGetters(["visibleLayerConfigs", "isMobile"]),
 
+        /**
+         * Generates the link for facebook.
+         * @returns {String} url with params
+         */
         facebook () {
             return "https://www.facebook.com/sharer/sharer.php?u=" + this.url;
         },
 
+        /**
+         * Generates the link for twitter.
+         * @returns {String} url with params
+         */
         twitter () {
             return "https://twitter.com/share?url=" + this.url + "&text=Meine Karte: ";
         }
@@ -29,21 +37,11 @@ export default {
     methods: {
         ...mapMutations("Modules/ShareView", Object.keys(mutations)),
 
-        async share () {
-            const shareData = {
-                title: "Masterportal",
-                text: "Schau mal!",
-                url: this.url
-            };
-
-            try {
-                await navigator.share(shareData);
-            }
-            catch (err) {
-                // console.log(`Error: ${err}`);
-            }
-        },
-        share1 () {
+        /**
+         * Shares the link on a mobile device.
+         * @returns {void}
+         */
+        share () {
             const shareData = {
                 title: "Masterportal",
                 text: "Schau mal!",
@@ -55,9 +53,9 @@ export default {
                     console.error(`Error: ${err}`);
                 });
         },
+
         /**
-         * Generates an qr code for the given coordinates with the configured url schema
-         * @param {Number[]} coordinates An array with two entries for longitude and latitude coordinates in EPSG:25832
+         * Generates a qrCode for the given url.
          * @returns {void}
          */
         generateQRCodeDataURL () {
@@ -67,6 +65,10 @@ export default {
                 this.qrDataUrl = qrDataUrl;
             });
         },
+        /**
+         * Downloads the qrCode.
+         * @returns {void}
+         */
         downloadQr () {
             const link = document.createElement("a");
 
@@ -76,6 +78,11 @@ export default {
             link.target = "_blank";
             link.click();
         },
+        /**
+         * Lets you copy the url to the clipboard.
+         * ToDo: add "link copied" Hinweis
+         * @returns {void}
+         */
         copyToClipboard () {
             navigator.clipboard.writeText(this.url);
         }
@@ -85,14 +92,14 @@ export default {
 
 <template lang="html">
     <div class="start-btn">
-        <h2>Diese Karte teilen via..</h2>
+        <h2>{{ $t("modules.tools.shareView.shareHeadline") }}</h2>
         <div v-if="isMobile">
             <button
                 class="btn btn-primary"
                 @click="share1"
             >
                 <i class="bi-share" />
-                Teilen
+                {{ $t("modules.tools.shareView.share") }}
             </button>
         </div>
         <div
@@ -107,7 +114,7 @@ export default {
                     target="_blank"
                 >
                     <i class="bi-twitter" />
-                    Auf Twitter teilen
+                    {{ $t("modules.tools.shareView.shareTwitter") }}
                 </a>
             </div>
             <div class="col-12">
@@ -118,7 +125,7 @@ export default {
                     target="_blank"
                 >
                     <i class="bi-facebook" />
-                    Auf Facebook teilen
+                    {{ $t("modules.tools.shareView.shareFacebook") }}
                 </a>
             </div>
             <div class="col-12">
@@ -128,7 +135,7 @@ export default {
                     @click="copyToClipboard"
                 >
                     <i class="bi-link" />
-                    Den Link kopieren
+                    {{ $t("modules.tools.shareView.shareLink") }}
                 </button>
             </div>
             <div class="col-12">
@@ -138,7 +145,7 @@ export default {
                     @click="generateQRCodeDataURL"
                 >
                     <i class="bi-qr-code" />
-                    Einen QRCode erstellen
+                    {{ $t("modules.tools.shareView.shareQR") }}
                 </button>
             </div>
             <div
@@ -153,31 +160,9 @@ export default {
                     class="btn btn-primary"
                     @click="downloadQr"
                 >
-                    QRCode herunterladen
+                    {{ $t("modules.tools.shareView.downloadQR") }}
                 </button>
-            </div>
-            <div class="form-group form-group-sm">
-                <label for="tool-shareView-input-url">Test URL</label>
-                <input
-                    id="tool-shareView-input-url"
-                    ref="tool-shareView-input-url"
-                    type="text"
-                    class="form-control form-control-sm"
-                    :value="url"
-                >
             </div>
         </div>
     </div>
 </template>
-
-
-<style lang="scss" scoped>
-    @import "~variables";
-
-.start-btn {
-    z-index: 10;
-    background-color: white;
-    height: 500px;
-    width: 300px;
-}
-</style>
