@@ -1,4 +1,4 @@
-import {generateSimpleMutations} from "../../app-store/utils/generators";
+import {generateSimpleMutations} from "../../../shared/js/utils/generators";
 import stateControls from "./stateControls";
 
 export default {
