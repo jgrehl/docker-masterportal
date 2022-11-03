@@ -1,5 +1,5 @@
-import {generateSimpleGetters} from "../../../../../app-store/utils/generators.js";
-import {getStateAsUrlParams} from "../../../../../utils/parametricUrl/stateToUrlWriter";
+import {generateSimpleGetters} from "../../../shared/js/utils/generators";
+import {getStateAsUrlParams} from "../../../shared/js/utils/stateToUrlWriter";
 import shareViewState from "./stateShareView";
 
 const getters = {
