@@ -1,6 +1,5 @@
 <script>
 import {mapGetters, mapMutations} from "vuex";
-import getters from "../store/gettersShareView";
 import mutations from "../store/mutationsShareView";
 import QRCode from "qrcode";
 
@@ -15,9 +14,17 @@ export default {
         };
     },
     computed: {
-        ...mapGetters("Menu/ShareView", Object.keys(getters)),
+        ...mapGetters("Menu/ShareView", ["url"]),
         ...mapGetters("Maps", ["getView"]),
-        ...mapGetters(["visibleLayerConfigs", "isMobile"])
+        ...mapGetters(["visibleLayerConfigs", "isMobile"]),
+
+        facebook () {
+            return "https://www.facebook.com/sharer/sharer.php?u=" + this.url;
+        },
+
+        twitter () {
+            return "https://twitter.com/share?url=" + this.url + "&text=Meine Karte: ";
+        }
     },
     methods: {
         ...mapMutations("Tools/ShareView", Object.keys(mutations)),
@@ -35,6 +42,18 @@ export default {
             catch (err) {
                 // console.log(`Error: ${err}`);
             }
+        },
+        share1 () {
+            const shareData = {
+                title: "Masterportal",
+                text: "Schau mal!",
+                url: this.url
+            };
+
+            navigator.share(shareData)
+                .catch((err) => {
+                    console.error(`Error: ${err}`);
+                });
         },
         /**
          * Generates an qr code for the given coordinates with the configured url schema
@@ -57,12 +76,6 @@ export default {
             link.target = "_blank";
             link.click();
         },
-        twitter () {
-            return "https://twitter.com/share?url=" + this.url + "&text=Meine Karte: ";
-        },
-        facebook () {
-            return "https://www.facebook.com/sharer/sharer.php?u=" + this.url;
-        },
         copyToClipboard () {
             navigator.clipboard.writeText(this.url);
         }
@@ -76,7 +89,7 @@ export default {
         <div v-if="isMobile">
             <button
                 class="btn btn-primary"
-                @click="share"
+                @click="share1"
             >
                 <i class="bi-share" />
                 Teilen
