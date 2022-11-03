@@ -1,9 +1,9 @@
 import sinon from "sinon";
 import Vue from "vue";
 import {expect} from "chai";
-import actions from "../../../store/actionsMenu";
+import actions from "../../../menu-store/actionsMenu";
 
-describe("src_3_0_0/modules/menu/actionsMenu.js", () => {
+describe("src_3_0_0/modules/menu/menu-store/actionsMenu.js", () => {
     let consoleError, commit, dispatch;
 
     beforeEach(() => {
