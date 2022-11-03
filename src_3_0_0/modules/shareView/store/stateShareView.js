@@ -16,11 +16,7 @@ const state = {
     id: "shareView",
     // defaults for config.json parameters
     name: "common:menu.tools.shareView",
-    icon: "bi-share",
-    renderToWindow: true,
-    resizableWindow: true,
-    isVisibleInMenu: true,
-    deactivateGFI: false
+    icon: "bi-share"
 };
 
 export default state;
