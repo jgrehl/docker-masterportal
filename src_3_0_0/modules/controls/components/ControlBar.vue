@@ -1,6 +1,6 @@
 <script>
 import {mapActions, mapGetters, mapMutations} from "vuex";
-import upperFirst from "../../utils/upperFirst";
+import upperFirst from "../../../shared/js/utils/upperFirst";
 
 /**
  * Control layout component that places controls on the map.
