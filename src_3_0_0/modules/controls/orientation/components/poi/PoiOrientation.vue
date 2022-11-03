@@ -3,7 +3,6 @@ import {mapGetters, mapMutations, mapActions} from "vuex";
 import mutations from "../../store/mutationsOrientation";
 import {extractEventCoordinates} from "../../../../../../src/utils/extractEventCoordinates";
 import Icon from "ol/style/Icon";
-// import LoaderOverlay from "../../../../../utils/loaderOverlay";
 
 export default {
     name: "PoiOrientation",
@@ -31,13 +30,7 @@ export default {
     computed: {
         ...mapGetters("Controls/orientation", ["activeCategory", "position"])
     },
-    watch: {
-        position () {
-            this.getFeatures();
-        }
-    },
     mounted () {
-        // LoaderOverlay.hide();
         this.show();
         this.getFeatures();
         this.initActiveCategory();
@@ -387,6 +380,7 @@ export default {
                                             :key="'feat' + i"
                                             @click="zoomFeature"
                                         >
+                                            <!-- ToDo: wieder herstellen, wenn Styling in Vue ist -->
                                             <!-- <td v-if="feat.imgPath.indexOf('</svg>') !== -1">
                                                 <span v-html="feat.imgPath" />
                                             </td>
