@@ -30,6 +30,13 @@ describe("src/modules/controls/orientation/components/PoiChoice.vue", () => {
                             }
                         }
                     }
+                },
+                Maps: {
+                    namespaced: true,
+                    actions: {
+                        registerListener: sinon.spy(),
+                        unregisterListener: sinon.spy()
+                    }
                 }
             }
         });
