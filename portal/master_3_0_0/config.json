@@ -37,7 +37,7 @@
         [
           {
             "title": "common:menu.tools.scaleSwitcher",
-            "icon": "bi-arrows-angle-contract",
+            "icon": "bi-1-square-fill",
             "itemType": "scaleSwitcher"
           },
           {
@@ -48,7 +48,7 @@
               {
                 "itemType": "folder",
                 "title": "folder1_1",
-                "icon": "bi-file-plus",
+                "icon": "bi-1-square-fill",
                 "children": [
                   {
                     "itemType": "folder",
