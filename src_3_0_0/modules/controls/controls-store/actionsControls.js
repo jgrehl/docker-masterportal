@@ -1,4 +1,4 @@
-import upperFirst from "../../utils/upperFirst";
+import upperFirst from "../../../shared/js/utils/upperFirst";
 
 export default {
     /**
