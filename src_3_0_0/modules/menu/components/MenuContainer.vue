@@ -56,6 +56,7 @@ export default {
         :id="'mp-menu-' + side"
         class="mp-menu collapse"
         :class="{
+            'mp-menu-table': uiStyle === 'TABLE',
             'show': initiallyOpen
         }"
         tabindex="-1"
@@ -87,6 +88,7 @@ export default {
     top: 80%;
 }
 
+
 @media (min-width: 768px) {
     .mp-menu {
         width: 400px;
@@ -101,4 +103,11 @@ export default {
         right: 0px;
     }
  }
+
+.mp-menu-table {
+    height: 200px;
+    position: fixed;
+    left: calc(50% - 200px);
+    top: calc(100% - 250px);
+}
 </style>
