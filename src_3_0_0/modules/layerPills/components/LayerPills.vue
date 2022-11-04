@@ -104,7 +104,7 @@ export default {
                 :class="visibleSubjectDataLayers.length <= layerPillsAmount ? 'nav-item invisible' : 'nav-item'"
             >
                 <button
-                    id="left-button"
+                    id="layerpills-left-button"
                     type="button"
                     class="btn btn-customized"
                     :disabled="leftScrollDisabled"
@@ -129,9 +129,8 @@ export default {
                     {{ layer.name }}
                 </a>
                 <button
-                    id="close-button"
                     type="button"
-                    class="btn btn-customized"
+                    class="btn btn-customized close-button"
                     aria-label="Close button"
                     @click="removeLayerFromVisibleLayers(layer.id)"
                 >
@@ -143,7 +142,7 @@ export default {
                 class="nav-item"
             >
                 <button
-                    id="right-button"
+                    id="layerpills-right-button"
                     type="button"
                     class="btn btn-customized"
                     :disabled="rightScrollDisabled"
