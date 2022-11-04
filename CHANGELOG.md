@@ -4,6 +4,13 @@
 [Semantic versioning](https://semver.org/spec/v2.0.0.html) is used.
 
 
+## v2.27.1 - 2022-11-04
+### Fixed
+- DefaultTree: Time tool opens again by changing WMS-Time layer
+- Fixed a bug that caused some layers in the topic tree to disappear from the typ "default"
+
+---
+
 ## v2.27.0 - 2022-11-02
 ### Added
 - related filters can be displayed together with new attribute layerGroups in config.json.
