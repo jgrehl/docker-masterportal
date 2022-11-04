@@ -19,13 +19,7 @@ export default {
     },
     computed: {
         ...mapGetters(["uiStyle"]),
-        ...mapGetters("Menu", ["mainInitiallyOpen", "secondaryInitiallyOpen", "titleBySide"]),
-        /**
-         * @returns {string} Defines whether the ResizeHandle should be displayed on the right or left side depending on the menu this component is rendered in.
-         */
-        handlePosition () {
-            return this.side === "mainMenu" ? "right" : "left";
-        },
+        ...mapGetters("Menu", ["mainMenuExpanded", "secondaryMenuExpanded", "titleBySide"]),
         /**
          * @returns {boolean} Whether the menu should be initially open.
          */
@@ -56,8 +50,10 @@ export default {
         :id="'mp-menu-' + side"
         class="mp-menu collapse"
         :class="{
+            'mp-menu-main': side === 'mainMenu',
+            'mp-menu-secondary': side === 'secondaryMenu',
             'mp-menu-table': uiStyle === 'TABLE',
-            'show': initiallyOpen
+            'show': mainMenuExpanded && side === 'mainMenu' || secondaryMenuExpanded && side === 'secondaryMenu'
         }"
         tabindex="-1"
         :aria-label="titleBySide(side) ? titleBySide(side).text : false"
