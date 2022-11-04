@@ -1,4 +1,5 @@
 import findWhereJs from "../../../shared/js/utils/findWhereJs";
+import {transform, get} from "ol/proj.js";
 
 /**
  * Registers on events of the map and view to keep the attributes up to date.
