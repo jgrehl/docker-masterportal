@@ -2,14 +2,12 @@
 import {mapActions, mapGetters} from "vuex";
 import MenuContainerBody from "./MenuContainerBody.vue";
 import MenuContainerHeader from "./MenuContainerHeader.vue";
-import ResizeHandle from "../../../shared/components/ResizeHandle.vue";
 
 export default {
     name: "MenuContainer",
     components: {
         MenuContainerBody,
-        MenuContainerHeader,
-        ResizeHandle
+        MenuContainerHeader
     },
     props: {
         /** Defines in which menu the component is being rendered */
@@ -68,39 +66,12 @@ export default {
         data-bs-scroll="true"
         data-bs-backdrop="false"
     >
-        <template v-if="isMobile">
-            <ResizeHandle
-                :id="'menu-offcanvas-resize-handle-header-' + side"
-                class="mobile-container-handle"
-                handle-position="top"
-                :min-height="0.1"
-                :max-height="0.5"
-            >
-                <MenuContainerHeader :side="side" />
-            </ResizeHandle>
-            <ResizeHandle
-                :id="'menu-offcanvas-resize-handle-body-' + side"
-                class="mobile-container-handle"
-                handle-position="top"
-                :min-height="0.1"
-                :max-height="0.5"
-            >
-                <MenuContainerBody :side="side" />
-            </ResizeHandle>
-        </template>
-        <template v-else>
-            <MenuContainerHeader :side="side" />
-            <MenuContainerBody :side="side" />
-            <ResizeHandle
-                :id="'menu-offcanvas-resize-handle-' + side"
-                class="menu-container-handle"
-                :handle-position="handlePosition"
-                :min-width="0.1"
-                :max-width="0.5"
-            >
-                &#8942;
-            </ResizeHandle>
-        </template>
+        <MenuContainerHeader
+            :side="side"
+        />
+        <MenuContainerBody
+            :side="side"
+        />
     </div>
 </template>
 
