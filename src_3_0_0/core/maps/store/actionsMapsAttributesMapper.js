@@ -60,7 +60,6 @@ export default {
         commit("setInitialZoom", mapView.getZoom());
         commit("setProjection", mapView.getProjection());
         commit("setMode", map.mode);
-        commit("setProjection", mapView.getProjection());
     },
 
     /**
