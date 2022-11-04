@@ -1,6 +1,6 @@
 <script>
 import {Pointer} from "ol/interaction.js";
-import {getProjections} from "@masterportal/masterportalapi/src/crs";
+import crs from "@masterportal/masterportalapi/src/crs";
 import {mapGetters, mapActions, mapMutations} from "vuex";
 import getters from "../store/gettersCoordToolkit";
 import mutations from "../store/mutationsCoordToolkit";
@@ -13,7 +13,7 @@ export default {
         };
     },
     computed: {
-        ...mapGetters("Menu/CoordToolkit", Object.keys(getters)),
+        ...mapGetters("Modules/CoordToolkit", Object.keys(getters)),
         ...mapGetters("Maps", {
             projection: "projection",
             mouseCoordinate: "mouseCoordinate",
@@ -47,26 +47,6 @@ export default {
     },
     watch: {
         /**
-         * If true, mode is set to "supply", projections are initialized.
-         * If false, error messages and values are resetted.
-         * @param {Boolean} value Value deciding whether the tool gets activated or deactivated.
-         * @returns {void}
-         */
-        active (value) {
-            console.log("active", value);
-            this.removeMarker();
-
-            if (value) {
-                this.setToolkitActive();
-            }
-            else {
-                this.resetErrorMessages("all");
-                this.resetValues();
-                this.setSupplyCoordInactive();
-                this.removeInputActions();
-            }
-        },
-        /**
          * Allows switching between 2D and 3D when the tool is open.
          * @returns {void}
          */
@@ -81,22 +61,31 @@ export default {
     created () {
         this.$on("close", this.close);
     },
+    destroyed () {
+        this.resetErrorMessages("all");
+        this.resetValues();
+        this.setSupplyCoordInactive();
+        this.removeInputActions();
+    },
     mounted () {
+        this.removeMarker();
+        this.initProjections();
+        this.setExample();
+        this.setMode("supply");
+        this.setSupplyCoordActive();
+        this.setFocusToFirstControl();
         /**
          * Do this in next tick, only then heightLayerId is in state
          */
         this.$nextTick(() => {
-            // todo nur temporär bis menu da ist
-            this.setToolkitActive();
-            // bis hier
             if (this.heightLayerId !== null) {
                 this.initHeightLayer();
             }
         });
     },
     methods: {
-        ...mapMutations("Menu/CoordToolkit", Object.keys(mutations)),
-        ...mapActions("Menu/CoordToolkit", [
+        ...mapMutations("Modules/CoordToolkit", Object.keys(mutations)),
+        ...mapActions("Modules/CoordToolkit", [
             "checkPosition",
             "changedPosition",
             "setFirstSearchPosition",
@@ -117,14 +106,6 @@ export default {
             addInteractionToMap: "addInteraction",
             removeInteractionFromMap: "removeInteraction"
         }),
-
-        setToolkitActive () {
-            this.initProjections();
-            this.setExample();
-            this.setMode("supply");
-            this.setSupplyCoordActive();
-            this.setFocusToFirstControl();
-        },
         /**
          * Sets the focus to the first control
          * @returns {void}
@@ -141,7 +122,7 @@ export default {
          * @returns {void}
          */
         initProjections () {
-            const pr = getProjections(),
+            const pr = crs.getProjections(),
                 wgs84Proj = [];
 
             // id is set to the name and in case of decimal "-DG" is appended to name later on
@@ -164,7 +145,6 @@ export default {
                 else {
                     proj.title = proj.name;
                 }
-                console.log("this.currentProjection", this.currentProjection);
                 if (proj.id === this.currentProjection.id) {
                     this.setCurrentProjection(proj);
                 }
