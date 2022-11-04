@@ -114,17 +114,19 @@ export default {
         id="masterportal-container"
         class="masterportal-container"
     >
-        <MenuContainer v-if="allConfigsLoaded && mainMenu" />
+        <MenuContainer
+            v-if="allConfigsLoaded && mainMenu"
+            side="mainMenu"
+        />
+        <MenuContainer
+            v-if="allConfigsLoaded && secondaryMenu"
+            side="secondaryMenu"
+        />
         <div
             id="map-wrapper"
         >
             <div
                 id="map"
-            />
-            <MenuToggleButton v-if="allConfigsLoaded && mainMenu" />
-            <MenuToggleButton
-                v-if="allConfigsLoaded && secondaryMenu"
-                side="secondary"
             />
             <div
                 v-if="allConfigsLoaded"
@@ -134,10 +136,6 @@ export default {
                 <LayerPills />
             </div>
         </div>
-        <MenuContainer
-            v-if="allConfigsLoaded && secondaryMenu"
-            side="secondaryMenu"
-        />
     </div>
 </template>
 
