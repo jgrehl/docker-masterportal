@@ -1,11 +1,13 @@
 <script>
-import {mapActions, mapGetters} from "vuex";
+import {mapGetters, mapActions} from "vuex";
+import MenuToggleButton from "./MenuToggleButton.vue";
 import MenuContainerBody from "./MenuContainerBody.vue";
 import MenuContainerHeader from "./MenuContainerHeader.vue";
 
 export default {
     name: "MenuContainer",
     components: {
+        MenuToggleButton,
         MenuContainerBody,
         MenuContainerHeader
     },
@@ -45,24 +47,29 @@ export default {
 </script>
 
 <template>
-    <div
-        v-if="uiStyle !== 'SIMPLE'"
-        :id="'mp-menu-' + side"
-        class="mp-menu collapse"
-        :class="{
-            'mp-menu-main': side === 'mainMenu',
-            'mp-menu-secondary': side === 'secondaryMenu',
-            'mp-menu-table': uiStyle === 'TABLE',
-            'show': mainMenuExpanded && side === 'mainMenu' || secondaryMenuExpanded && side === 'secondaryMenu'
-        }"
-        tabindex="-1"
-        :aria-label="titleBySide(side) ? titleBySide(side).text : false"
-    >
-        <MenuContainerHeader
+    <div v-if="uiStyle !== 'SIMPLE'">
+        <div
+            :id="'mp-menu-' + side"
+            class="mp-menu collapse"
+            :class="{
+                'mp-menu-main': side === 'mainMenu',
+                'mp-menu-secondary': side === 'secondaryMenu',
+                'mp-menu-table': uiStyle === 'TABLE',
+                'show': mainMenuExpanded && side === 'mainMenu' || secondaryMenuExpanded && side === 'secondaryMenu'
+            }"
+            tabindex="-1"
+            :aria-label="titleBySide(side) ? titleBySide(side).text : false"
+        >
+            <MenuContainerHeader
+                :side="side"
+            />
+            <MenuContainerBody
+                :side="side"
+            />
+        </div>
+        <MenuToggleButton
             :side="side"
-        />
-        <MenuContainerBody
-            :side="side"
+            :uistyle="uiStyle"
         />
     </div>
 </template>
@@ -73,7 +80,7 @@ export default {
     width: 100%;
     position: fixed;
     background-color: white;
-    z-index: 1;
+    z-index: 2;
 }
 
 .mp-menu-main {
