@@ -3,7 +3,6 @@ import Map from "ol/Map";
 import sinon from "sinon";
 import View from "ol/View";
 
-import {getProjection} from "@masterportal/masterportalapi/src/crs";
 import actions from "../../../store/actionsMapsAttributesMapper";
 
 const {
