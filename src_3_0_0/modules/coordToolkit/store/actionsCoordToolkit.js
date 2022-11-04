@@ -1,10 +1,10 @@
 import {toStringHDMS} from "ol/coordinate.js";
 import proj4 from "proj4";
-import {rawLayerList} from "@masterportal/masterportalapi/src";
-import isMobile from "../../../../../utils/isMobile";
-import {convertSexagesimalFromString, convertSexagesimalToDecimal, convertSexagesimalFromDecimal} from "../utils/convertSexagesimalCoordinates";
-import {requestGfi} from "../../../../../api/wmsGetFeatureInfo";
-import {createLayer} from "../../../../../core/layers/layerFactory";
+import rawLayerList from "@masterportal/masterportalapi/src/rawLayerList";
+import isMobile from "../../../shared/js/utils/isMobile";
+import {convertSexagesimalFromString, convertSexagesimalToDecimal, convertSexagesimalFromDecimal} from "../js/convertSexagesimalCoordinates";
+import {requestGfi} from "../../../shared/js/api/wmsGetFeatureInfo";
+import {createLayer} from "../../../core/layers/js/layerFactory";
 
 export default {
     /**
@@ -23,7 +23,7 @@ export default {
                 toCopy += state.delimiter;
             });
             if (toCopy.length > 0) {
-                toCopy = toCopy.substr(0, toCopy.length - 1);
+                toCopy = toCopy.substring(0, toCopy.length - 1);
             }
             navigator.clipboard.writeText(toCopy)
                 .then(() => {
@@ -441,8 +441,5 @@ export default {
         const newCoords = [parseFloat(coordinates[0]), parseFloat(coordinates[1])];
 
         commit("Maps/setCenter", newCoords, {root: true});
-    },
-    setActive ({commit}, value) {
-        commit("setActive", value);
     }
 };
