@@ -1,6 +1,6 @@
 
-import {transformFromMapProjection} from "@masterportal/masterportalapi/src/crs";
-import {generateSimpleGetters} from "../../../../../app-store/utils/generators";
+import crs from "@masterportal/masterportalapi/src/crs";
+import {generateSimpleGetters} from "../../../shared/js/utils/generators";
 import coordState from "./stateCoordToolkit";
 
 const getters = {
@@ -19,7 +19,7 @@ const getters = {
         let positionTargetProjection = [0, 0];
 
         if (state.positionMapProjection !== null && state.positionMapProjection.length > 0) {
-            positionTargetProjection = transformFromMapProjection(
+            positionTargetProjection = crs.transformFromMapProjection(
                 map,
                 targetProjection,
                 [...state.positionMapProjection]
