@@ -1,13 +1,13 @@
 <script>
-import {mapGetters} from "vuex";
+import {mapGetters, mapMutations} from "vuex";
 
 export default {
     name: "MenuToggleButton",
     props: {
         side: {
             type: String,
-            default: "main",
-            validator: value => value === "main" || value === "secondary"
+            default: "mainMenu",
+            validator: value => value === "mainMenu" || value === "secondaryMenu"
         }
     },
     computed: {
@@ -16,24 +16,22 @@ export default {
          * @returns {string} iconClass to be used depending on the side this button is used for.
          */
         iconClass () {
-            return this.side === "main" ? this.mainToggleButtonIcon : this.secondaryToggleButtonIcon;
+            return this.side === "mainMenu" ? this.mainToggleButtonIcon : this.secondaryToggleButtonIcon;
         }
+    },
+    methods: {
+        ...mapMutations("Menu", ["toggleMenu"])
     }
 };
 </script>
 
 <template>
-    <!--
-        TODO(roehlipa): Toggle buttons currently don't work when a menu is initially opened -> gotta close the menu first
-            Should be fixed when using own css rules and functionality
-    -->
     <button
-        :id="side + '-menu-toggle-button'"
+        :id="side + '-toggle-button'"
         class="btn btn-primary bootstrap-icon menu-toggle-button"
         type="button"
-        data-bs-toggle="offcanvas"
-        :data-bs-target="`#menu-offcanvas-${side}Menu`"
         :aria-label="$t('common:menu.ariaLabelOpen')"
+        @click="toggleMenu(side)"
     >
         <i :class="iconClass" />
     </button>
@@ -43,13 +41,13 @@ export default {
 @import "~variables";
 
 .menu-toggle-button {
-    // TODO(roehlipa): Use same styling as ControlIcons?
     position: absolute;
     top: 15px;
     left: 15px;
     font-size: calc(#{$icon_length} - 0.35 * #{$icon_length});
     height: $icon_length;
     width: $icon_length;
+    z-index: 1;
 
     i {
         position: absolute;
@@ -59,7 +57,7 @@ export default {
         line-height: 0;
     }
 }
-#secondary-menu-toggle-button {
+#secondaryMenu-toggle-button {
     right: 15px;
     left: auto;
 }
