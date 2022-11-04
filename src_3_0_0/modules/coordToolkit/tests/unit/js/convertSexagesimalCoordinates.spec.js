@@ -1,5 +1,5 @@
 import {expect} from "chai";
-import {convertSexagesimalFromString, convertSexagesimalToDecimal, convertSexagesimalFromDecimal} from "../../../utils/convertSexagesimalCoordinates.js";
+import {convertSexagesimalFromString, convertSexagesimalToDecimal, convertSexagesimalFromDecimal} from "../../../js/convertSexagesimalCoordinates.js";
 
 describe("src/utils/convertSexagesimalCoordinates.js", () => {
     describe("convertSexagesimalFromString", () => {
