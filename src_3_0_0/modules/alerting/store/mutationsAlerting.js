@@ -1,5 +1,5 @@
 import moment from "moment";
-import {generateSimpleMutations} from "../../../app-store/utils/generators";
+import {generateSimpleMutations} from "../../../shared/js/utils/generators";
 import initialState from "./stateAlerting";
 
 export default {
