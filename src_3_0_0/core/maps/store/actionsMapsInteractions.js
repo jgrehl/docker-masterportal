@@ -77,7 +77,7 @@ export default {
         }
     },
 
-     /**
+    /**
      * Sets center, rotation and zoom at the view.
      * @param {Object} _ not used
      * @param {Object} payload parameter object
