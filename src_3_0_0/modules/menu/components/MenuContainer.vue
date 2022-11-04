@@ -18,7 +18,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(["isMobile", "mainMenu", "secondaryMenu"]),
+        ...mapGetters(["uiStyle"]),
         ...mapGetters("Menu", ["mainInitiallyOpen", "secondaryInitiallyOpen", "titleBySide"]),
         /**
          * @returns {string} Defines whether the ResizeHandle should be displayed on the right or left side depending on the menu this component is rendered in.
@@ -52,6 +52,7 @@ export default {
 
 <template>
     <div
+        v-if="uiStyle !== 'SIMPLE'"
         :id="'mp-menu-' + side"
         class="mp-menu collapse"
         :class="{
