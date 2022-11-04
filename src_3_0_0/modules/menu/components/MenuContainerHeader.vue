@@ -1,5 +1,5 @@
 <script>
-import {mapGetters} from "vuex";
+import {mapGetters, mapMutations} from "vuex";
 import MenuContainerHeaderTitle from "./MenuContainerHeaderTitle.vue";
 
 export default {
@@ -19,38 +19,39 @@ export default {
         ...mapGetters("Menu", ["titleBySide"])
     },
     methods: {
+
         /**
-         * Removes the class "show", which is used when displaying a menu, from the menu this
-         * component is rendered in.
+         * Toggles Menu
          * @returns {void}
          */
-        removeShowClass () {
-            document.getElementById(`menu-offcanvas-${this.side}`)?.classList.remove("show");
-        }
+        ...mapMutations("Menu", ["toggleMenu"])
     }
 };
 </script>
 
 <template>
     <div
-        :id="'menu-offcanvas-header-' + side"
-        class="offcanvas-header"
+        :id="'menu-header-' + side"
+        class="menu-header"
     >
         <MenuContainerHeaderTitle
             v-if="titleBySide(side)"
             v-bind="titleBySide(side)"
         />
         <button
-            :id="'menu-offcanvas-header-close-button-' + side"
+            :id="'menu-header-close-button-' + side"
             type="button"
-            class="btn-close text-reset"
-            data-bs-dismiss="offcanvas"
+            class="btn-close text-reset menu-header-close-button"
             :aria-label="$t('common:menu.ariaLabelClose')"
-            @click="removeShowClass"
+            @click="toggleMenu(side)"
         />
     </div>
 </template>
 
 <style scoped>
+.menu-header-close-button {
+    position: absolute;
+    right: 10px;
+}
 
 </style>
