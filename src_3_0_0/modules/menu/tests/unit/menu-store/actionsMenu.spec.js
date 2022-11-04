@@ -1,27 +1,9 @@
 import sinon from "sinon";
 import Vue from "vue";
 import {expect} from "chai";
-<<<<<<< HEAD
-=======
-<<<<<<<< HEAD:src_3_0_0/modules/menu/tests/unit/store/actionsMenu.spec.js
->>>>>>> 673d450ae (update rename store folders and move loaderOverlay to app-store/js)
-<<<<<<<< HEAD:src_3_0_0/modules/menu/tests/unit/menu-store/actionsMenu.spec.js
 import actions from "../../../menu-store/actionsMenu";
 
 describe("src_3_0_0/modules/menu/menu-store/actionsMenu.js", () => {
-========
-import actions from "../../../store/actionsMenu";
-
-describe("src_3_0_0/modules/menu/actionsMenu.js", () => {
->>>>>>>> b0b01718e (update move files into new folder structure):src_3_0_0/modules/menu/tests/unit/store/actionsMenu.spec.js
-<<<<<<< HEAD
-=======
-========
-import actions from "../../../menu-store/actionsMenu";
-
-describe("src_3_0_0/modules/menu/menu-store/actionsMenu.js", () => {
->>>>>>>> 673d450ae (update rename store folders and move loaderOverlay to app-store/js):src_3_0_0/modules/menu/tests/unit/menu-store/actionsMenu.spec.js
->>>>>>> 673d450ae (update rename store folders and move loaderOverlay to app-store/js)
     let consoleError, commit, dispatch;
 
     beforeEach(() => {

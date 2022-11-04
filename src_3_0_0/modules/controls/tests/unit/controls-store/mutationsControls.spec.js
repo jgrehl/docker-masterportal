@@ -1,31 +1,9 @@
 import {expect} from "chai";
-<<<<<<< HEAD
-=======
-<<<<<<<< HEAD:src_3_0_0/modules/controls/tests/unit/store/mutationsControls.spec.js
->>>>>>> 673d450ae (update rename store folders and move loaderOverlay to app-store/js)
-<<<<<<<< HEAD:src_3_0_0/modules/controls/tests/unit/controls-store/mutationsControls.spec.js
 import mutations from "../../../controls-store/mutationsControls";
 
 const {registerControl, unregisterControl} = mutations;
 
 describe("src_3_0_0/modules/controls/controls-store/mutationsControls.js", () => {
-========
-import mutations from "../../../store/mutationsControls";
-
-const {registerControl, unregisterControl} = mutations;
-
-describe("src_3_0_0/modules/controls/store/mutationsControls.js", () => {
->>>>>>>> b0b01718e (update move files into new folder structure):src_3_0_0/modules/controls/tests/unit/store/mutationsControls.spec.js
-<<<<<<< HEAD
-=======
-========
-import mutations from "../../../controls-store/mutationsControls";
-
-const {registerControl, unregisterControl} = mutations;
-
-describe("src_3_0_0/modules/controls/controls-store/mutationsControls.js", () => {
->>>>>>>> 673d450ae (update rename store folders and move loaderOverlay to app-store/js):src_3_0_0/modules/controls/tests/unit/controls-store/mutationsControls.spec.js
->>>>>>> 673d450ae (update rename store folders and move loaderOverlay to app-store/js)
     describe("registerControl", () => {
         it("add new control to componentMap", () => {
             const state = {
