@@ -52,19 +52,13 @@ export default {
 
 <template>
     <div
-        :id="'menu-offcanvas-' + side"
-        class="offcanvas"
+        :id="'mp-menu-' + side"
+        class="mp-menu collapse"
         :class="{
-            'offcanvas-start': !isMobile && side === 'mainMenu',
-            'offcanvas-end': !isMobile && side === 'secondaryMenu',
-            'offcanvas-bottom': isMobile,
-            'show': initiallyOpen,
-            mobileOffCanvas: isMobile
+            'show': initiallyOpen
         }"
         tabindex="-1"
         :aria-label="titleBySide(side) ? titleBySide(side).text : false"
-        data-bs-scroll="true"
-        data-bs-backdrop="false"
     >
         <MenuContainerHeader
             :side="side"
@@ -76,20 +70,34 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-.menu-container-handle {
-    display: flex;
-    width: 12px;
-    align-items: center;
-    justify-content: center;
-}
-.mobile-container-handle {
-    position: static;
-    width: auto;
-    height: auto;
-    background-color: transparent;
-}
-.mobileOffCanvas {
-    height: 20%;
+.mp-menu {
+    height: 100%;
     width: 100%;
+    position: fixed;
+    background-color: white;
+    z-index: 1;
 }
+
+.mp-menu-main {
+    left: 0px;
+}
+
+.mp-menu-secondary {
+    top: 80%;
+}
+
+@media (min-width: 768px) {
+    .mp-menu {
+        width: 400px;
+        top: 0px;
+    }
+
+    .mp-menu-main {
+        left: 0px;
+    }
+
+    .mp-menu-secondary {
+        right: 0px;
+    }
+ }
 </style>
