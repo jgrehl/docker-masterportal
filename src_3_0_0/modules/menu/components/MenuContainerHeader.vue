@@ -1,5 +1,5 @@
 <script>
-import {mapGetters, mapMutations} from "vuex";
+import {mapGetters} from "vuex";
 import MenuContainerHeaderTitle from "./MenuContainerHeaderTitle.vue";
 
 export default {
@@ -17,14 +17,6 @@ export default {
     },
     computed: {
         ...mapGetters("Menu", ["titleBySide"])
-    },
-    methods: {
-
-        /**
-         * Toggles Menu
-         * @returns {void}
-         */
-        ...mapMutations("Menu", ["toggleMenu"])
     }
 };
 </script>
@@ -37,13 +29,6 @@ export default {
         <MenuContainerHeaderTitle
             v-if="titleBySide(side)"
             v-bind="titleBySide(side)"
-        />
-        <button
-            :id="'menu-header-close-button-' + side"
-            type="button"
-            class="btn-close text-reset menu-header-close-button"
-            :aria-label="$t('common:menu.ariaLabelClose')"
-            @click="toggleMenu(side)"
         />
     </div>
 </template>
