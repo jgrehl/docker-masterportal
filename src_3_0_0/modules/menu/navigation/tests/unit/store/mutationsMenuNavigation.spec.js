@@ -3,7 +3,7 @@ import mutations from "../../../store/mutationsMenuNavigation.js";
 
 
 const {addEntry, removeLastEntry} = mutations,
-    sampleMainMenuPath = ["mainMenu", "sections", 0, 1, "children", 0];
+    sampleMainMenuPath = ["mainMenu", "sections", 0, 1, "elements", 0];
 
 describe("src_3_0_0/core/menu/navigation/store/mutationsMenuNavigation.js", () => {
     describe("addEntry", () => {
