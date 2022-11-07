@@ -15,7 +15,7 @@ describe("src_3_0_0/modules/menu/MenuContainerHeader.vue", () => {
         functions = {
             divId: side => `#${idPrefix}-header-${side}`,
             buttonId: side => `#${idPrefix}-header-close-button-${side}`,
-            titleMock: side => ({idAppendix: side, text: "TestText"})
+            nameMock: side => ({idAppendix: side, text: "TestText"})
         };
     let consoleErrorSpy,
         getElementByIdFake,
@@ -44,10 +44,10 @@ describe("src_3_0_0/modules/menu/MenuContainerHeader.vue", () => {
                         secondaryTitle: () => secondaryTitle,
                         titleBySide: () => side => {
                             if (side === "mainMenu" && mainTitle) {
-                                return functions.titleMock(side);
+                                return functions.nameMock(side);
                             }
                             if (side === "secondaryMenu" && secondaryTitle) {
-                                return functions.titleMock(side);
+                                return functions.nameMock(side);
                             }
                             return null;
                         }
@@ -59,7 +59,7 @@ describe("src_3_0_0/modules/menu/MenuContainerHeader.vue", () => {
 
     afterEach(sinon.restore);
 
-    it("should render the component including the title component if titleBySide returns an object for 'mainMenu'", () => {
+    it("should render the component including the name component if titleBySide returns an object for 'mainMenu'", () => {
         mainTitle = "defined";
 
         const side = "mainMenu",
@@ -90,7 +90,7 @@ describe("src_3_0_0/modules/menu/MenuContainerHeader.vue", () => {
         expect(removeSpy.firstCall.args.length).to.equal(1);
         expect(removeSpy.firstCall.args[0]).to.equal("show");
     });
-    it("should render the component including the title component if titleBySide returns an object for 'secondaryMenu'", () => {
+    it("should render the component including the name component if titleBySide returns an object for 'secondaryMenu'", () => {
         secondaryTitle = "defined";
 
         const side = "secondaryMenu",
@@ -121,7 +121,7 @@ describe("src_3_0_0/modules/menu/MenuContainerHeader.vue", () => {
         expect(removeSpy.firstCall.args.length).to.equal(1);
         expect(removeSpy.firstCall.args[0]).to.equal("show");
     });
-    it("should render the component without the title component if titleBySide returns null", () => {
+    it("should render the component without the name component if titleBySide returns null", () => {
         const side = "mainMenu",
             wrapper = shallowMount(MenuContainerHeader, {
                 localVue,
@@ -150,7 +150,7 @@ describe("src_3_0_0/modules/menu/MenuContainerHeader.vue", () => {
         expect(removeSpy.firstCall.args.length).to.equal(1);
         expect(removeSpy.firstCall.args[0]).to.equal("show");
     });
-    it("should render the component without the title and log an error if a wrong value for the prop side is given", () => {
+    it("should render the component without the name and log an error if a wrong value for the prop side is given", () => {
         mainTitle = "defined";
 
         const side = "newMenu",
