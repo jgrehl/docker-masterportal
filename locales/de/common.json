@@ -144,13 +144,15 @@
             }
         },
         "alerting": {
-            "hideMessage": "Diese Meldung nicht mehr anzeigen",
             "categories": {
-                "error": "Fehler",
-                "info": "Info",
-                "success": "Erfolg",
-                "warning": "Achtung"
-            }
+              "alert": "Achtung",
+              "error": "Fehler",
+              "info": "Info",
+              "news": "News",
+              "success": "Erfolg"
+            },
+            "created": "Erstellt: ",
+            "hideMessage": "Diese Meldung nicht mehr anzeigen"
         },
         "confirmAction": {
             "defaultHeadline": "Bestätigung benötigt",
