@@ -26,7 +26,7 @@ export default {
             "portalConfig",
             "visibleLayerConfigs"
         ]),
-        ...mapGetters("Menu", ["mainMenu", "secondaryMenu"])
+        ...mapGetters("Menu", ["mainMenu", "secondaryMenu", "mainMenuExpanded", "secondaryMenuExpanded"])
     },
     watch: {
         allConfigsLoaded (value) {
@@ -124,6 +124,11 @@ export default {
         />
         <div
             id="map-wrapper"
+            class="mp-map"
+            :class="{
+                'mainexpanded': mainMenuExpanded,
+                'secondaryexpanded': secondaryMenuExpanded
+            }"
         >
             <div
                 id="map"
@@ -182,4 +187,13 @@ export default {
             }
         }
     }
+
+@media (min-width: 768px) {
+        .mainexpanded {
+            margin-left: 400px;
+        }
+        .secondaryexpanded {
+            margin-right: 400px;
+        }
+}
 </style>
