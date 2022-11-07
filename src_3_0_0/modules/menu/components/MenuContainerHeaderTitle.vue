@@ -9,7 +9,7 @@ export default {
             type: String,
             required: true
         },
-        /** title text */
+        /** name text */
         text: {
             type: String,
             required: true
@@ -24,7 +24,7 @@ export default {
             type: String,
             default: ""
         },
-        /** Shown on hovering the title logo */
+        /** Shown on hovering the name logo */
         toolTip: {
             type: String,
             default: ""
