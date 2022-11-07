@@ -9,7 +9,7 @@ const localVue = createLocalVue();
 localVue.use(Vuex);
 config.mocks.$t = key => key;
 
-describe("src/modules/controls/orientation/components/PoiChoice.vue", () => {
+describe("src_3_0_0/modules/controls/orientation/components/PoiChoice.vue", () => {
     let store,
         wrapper;
 
@@ -20,7 +20,7 @@ describe("src/modules/controls/orientation/components/PoiChoice.vue", () => {
                 Controls: {
                     namespaced: true,
                     modules: {
-                        orientation: {
+                        Orientation: {
                             namespaced: true,
                             getters: {
                                 poiMode: sinon.stub()
