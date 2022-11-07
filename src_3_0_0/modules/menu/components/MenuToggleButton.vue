@@ -40,9 +40,7 @@ export default {
         class="btn btn-primary bootstrap-icon menu-toggle-button"
         :class="{
             'menu-toggle-button-main': side === 'mainMenu',
-            'menu-toggle-button-secondary': side === 'secondaryMenu',
-            'activated-main': side === 'mainMenu' && mainMenuExpanded,
-            'activated-secondary': side === 'secondaryMenu' && secondaryMenuExpanded
+            'menu-toggle-button-secondary': side === 'secondaryMenu'
         }"
         type="button"
         :aria-label="$t('common:menu.ariaLabelOpen')"
@@ -56,12 +54,12 @@ export default {
 @import "~variables";
 
 .menu-toggle-button {
-    position: absolute;
     top: 15px;
     font-size: calc(#{$icon_length} - 0.35 * #{$icon_length});
     height: $icon_length;
     width: $icon_length;
     z-index: 1;
+    position: relative;
 
     i {
         position: absolute;
@@ -76,17 +74,11 @@ export default {
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
 }
-.activated-main {
-    left: 400px
-}
+
 
 .menu-toggle-button-secondary {
     right: 0px;
     border-top-left-radius: 20px;
     border-bottom-left-radius: 20px;
-}
-
-.activated-secondary {
-    right: 400px
 }
 </style>
