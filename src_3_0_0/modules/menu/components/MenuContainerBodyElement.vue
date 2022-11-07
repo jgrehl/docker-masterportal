@@ -7,12 +7,12 @@ export default {
     components: {SimpleButton},
     props: {
         /** Text displayed inside the element. */
-        title: {
+        name: {
             type: String,
             required: true,
             validator: value => value !== ""
         },
-        /** Description used as it's title and aria-label. May be displayed alongside the element. */
+        /** Description used as it's name and aria-label. May be displayed alongside the element. */
         description: {
             type: String,
             default: ""
@@ -51,7 +51,7 @@ export default {
 <template>
     <SimpleButton
         :interaction="() => clickedMenuElement(path)"
-        :text="title"
+        :text="name"
         :icon="showIcon ? icon : null"
     />
     <!-- TODO(roehlipa): Properly add description -->
