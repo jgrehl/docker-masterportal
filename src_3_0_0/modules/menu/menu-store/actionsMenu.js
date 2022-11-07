@@ -11,18 +11,18 @@ export default {
      * @returns {void}
      */
     clickedMenuElement ({commit, dispatch, getters}, path) {
-        const {itemType} = getters.section(path);
+        const {type} = getters.section(path);
 
-        if (itemType) {
+        if (type) {
             commit("Menu/Navigation/addEntry", path, {root: true});
-            if (itemType === "folder") {
+            if (type === "folder") {
                 Vue.nextTick(() => document.getElementById(`menu-offcanvas-body-items-element-0-${path[0]}`)?.focus());
                 return;
             }
-            dispatch("setElementActive", {moduleNamespace: itemType.charAt(0).toUpperCase() + itemType.slice(1), isActive: true});
+            dispatch("setElementActive", {moduleNamespace: type.charAt(0).toUpperCase() + type.slice(1), isActive: true});
             return;
         }
-        console.error("Menu: A menu entry is missing the required value \"itemType\".");
+        console.error("Menu: A menu entry is missing the required value \"type\".");
     },
     /**
      * Activates the module with the given namespace.
