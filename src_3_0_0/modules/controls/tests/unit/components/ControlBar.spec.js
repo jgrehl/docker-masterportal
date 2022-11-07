@@ -29,6 +29,12 @@ describe("src_3_0_0/modules/controls/components/ControlBar.vue", () => {
                             };
                         }
                     }
+                },
+                Maps: {
+                    namespaced: true,
+                    getters: {
+                        mode: sinon.stub()
+                    }
                 }
             },
             getters: {
