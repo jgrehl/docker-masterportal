@@ -11,29 +11,24 @@ localVue.use(Vuex);
 config.mocks.$t = key => key;
 
 describe("src_3_0_0/modules/shareView/components/ShareView.vue", () => {
-    const mockMapGetters = {
-            zoom: sinon.stub(),
-            center: sinon.stub()
-        },
-        mockConfigJson = {
-            Portalconfig: {
-                navigationSecondary: {
-                    sections: [
-                        {
-                            shareView: {
-                                "title": "Share",
-                                "icon": "bi-share",
-                                "itemType": "shareView"
-                            }
+    const mockConfigJson = {
+        Portalconfig: {
+            navigationSecondary: {
+                sections: [
+                    {
+                        shareView: {
+                            "title": "Share",
+                            "icon": "bi-share",
+                            "itemType": "shareView"
                         }
-                    ]
-                }
+                    }
+                ]
             }
-        };
+        }
+    };
     let defaultState,
         store,
-        wrapper,
-        rootGetters;
+        wrapper;
 
     before(() => {
         defaultState = {...ShareView.state};
@@ -48,36 +43,30 @@ describe("src_3_0_0/modules/shareView/components/ShareView.vue", () => {
                 Modules: {
                     namespaced: true,
                     modules: {
-                        ShareView
+                        ShareView: {
+                            namespaced: true,
+                            getters: {
+                                url: sinon.stub()
+                            }
+                        }
                     }
                 },
                 Maps: {
                     namespaced: true,
-                    getters: mockMapGetters,
+                    getters: {
+                        getView: sinon.stub()
+                    },
                     actions: {}
                 }
             },
             state: {
                 configJson: mockConfigJson
+            },
+            getters: {
+                visibleLayerConfigs: sinon.stub(),
+                isMobile: sinon.stub()
             }
         });
-
-        rootGetters = {
-            visibleLayerConfigs: [
-                {
-                    id: "1",
-                    visibility: "true",
-                    transparency: "0"
-                },
-                {
-                    id: "2",
-                    visibility: "true",
-                    transparency: "50"
-                }
-            ],
-            "Maps/center": [123, 456],
-            "Maps/zoom": "7"
-        };
 
     });
 
