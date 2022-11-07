@@ -94,8 +94,9 @@ export default {
         <h2>{{ $t("modules.tools.shareView.shareHeadline") }}</h2>
         <div v-if="isMobile">
             <button
+                aria-label="$t('modules.tools.shareView.share')"
                 class="btn btn-primary"
-                @click="share1"
+                @click="share"
             >
                 <i class="bi-share" />
                 {{ $t("modules.tools.shareView.share") }}
@@ -107,7 +108,8 @@ export default {
         >
             <div class="col-12">
                 <a
-                    aria-label="Auf Twitter teilen"
+                    id="twitter-btn"
+                    aria-label="$t('modules.tools.shareView.shareTwitter')"
                     class="btn btn-primary"
                     :href="twitter"
                     target="_blank"
@@ -118,7 +120,8 @@ export default {
             </div>
             <div class="col-12">
                 <a
-                    aria-label="Auf Facebook teilen"
+                    id="facebook-btn"
+                    aria-label="$t('modules.tools.shareView.shareFacebook')"
                     class="btn btn-primary"
                     :href="facebook"
                     target="_blank"
@@ -129,7 +132,8 @@ export default {
             </div>
             <div class="col-12">
                 <button
-                    aria-label="Link kopieren"
+                    id="copy-btn"
+                    aria-label="$t('modules.tools.shareView.shareLink')"
                     class="btn btn-primary"
                     @click="copyToClipboard"
                 >
@@ -140,7 +144,7 @@ export default {
             <div class="col-12">
                 <button
                     id="qr-btn"
-                    aria-label="QR Code erstellen"
+                    aria-label="$t('modules.tools.shareView.shareQR') "
                     class="btn btn-primary"
                     @click="generateQRCodeDataURL"
                 >
@@ -157,6 +161,7 @@ export default {
                     :src="qrDataUrl"
                 >
                 <button
+                    aria-label="$t('modules.tools.shareView.downloadQR')"
                     class="btn btn-primary"
                     @click="downloadQr"
                 >
