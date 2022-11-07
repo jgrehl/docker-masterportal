@@ -28,7 +28,7 @@ describe("src_3_0_0/modules/menu/menu-store/actionsMenu.js", () => {
             getters = {section};
         });
 
-        it("log an error if the menu element with the given path does not have an itemType", () => {
+        it("log an error if the menu element with the given path does not have an type", () => {
             actions.clickedMenuElement({commit, dispatch, getters}, path);
 
             expect(section.calledOnce).to.be.true;
@@ -38,10 +38,10 @@ describe("src_3_0_0/modules/menu/menu-store/actionsMenu.js", () => {
             expect(dispatch.notCalled).to.be.true;
             expect(consoleError.calledOnce).to.be.true;
             expect(consoleError.firstCall.args.length).to.equal(1);
-            expect(consoleError.firstCall.args[0]).to.equal("Menu: A menu entry is missing the required value \"itemType\".");
+            expect(consoleError.firstCall.args[0]).to.equal("Menu: A menu entry is missing the required value \"type\".");
         });
         it("should commit the path for the element and dispatch an action to activate the element if it's not a folder", () => {
-            element.itemType = "genericElement";
+            element.type = "genericElement";
             actions.clickedMenuElement({commit, dispatch, getters}, path);
 
             expect(section.calledOnce).to.be.true;
@@ -59,7 +59,7 @@ describe("src_3_0_0/modules/menu/menu-store/actionsMenu.js", () => {
             expect(consoleError.notCalled).to.be.true;
         });
         it("should commit the path for the element and focus the first sub-element if it's a folder", async () => {
-            element.itemType = "folder";
+            element.type = "folder";
             actions.clickedMenuElement({commit, dispatch, getters}, path);
 
             expect(section.calledOnce).to.be.true;

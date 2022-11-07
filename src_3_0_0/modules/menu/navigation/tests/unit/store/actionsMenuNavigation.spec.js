@@ -18,7 +18,7 @@ describe("src_3_0_0/core/menu/navigation/store/actionsMenuNavigation.js", () => 
 
     describe("navigateBack", () => {
         it("should dispatch the deactivation of the element if it is not a folder and commit the removal of the last navigation element", () => {
-            objectFromPathSpy.returns({itemType: genericItemType});
+            objectFromPathSpy.returns({type: genericItemType});
             const side = "mainMenu";
 
             actions.navigateBack({commit, dispatch, rootGetters}, side);
@@ -43,7 +43,7 @@ describe("src_3_0_0/core/menu/navigation/store/actionsMenuNavigation.js", () => 
             expect(commit.firstCall.args[1]).to.equal(side);
         });
         it("should only commit the removal of the last navigation element if it is a folder", () => {
-            objectFromPathSpy.returns({itemType: folderItemType});
+            objectFromPathSpy.returns({type: folderItemType});
             const side = "secondaryMenu";
 
             actions.navigateBack({commit, dispatch, rootGetters}, side);
