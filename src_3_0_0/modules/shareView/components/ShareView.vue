@@ -53,7 +53,6 @@ export default {
                     console.error(`Error: ${err}`);
                 });
         },
-
         /**
          * Generates a qrCode for the given url.
          * @returns {void}
@@ -91,7 +90,7 @@ export default {
 </script>
 
 <template lang="html">
-    <div class="start-btn">
+    <div id="share-view">
         <h2>{{ $t("modules.tools.shareView.shareHeadline") }}</h2>
         <div v-if="isMobile">
             <button
@@ -140,6 +139,7 @@ export default {
             </div>
             <div class="col-12">
                 <button
+                    id="qr-btn"
                     aria-label="QR Code erstellen"
                     class="btn btn-primary"
                     @click="generateQRCodeDataURL"
