@@ -32,12 +32,12 @@ export default {
      */
     addAttributesToModuleState ({commit, dispatch}, items) {
         items.forEach(item => {
-            if (item?.itemType === "folder") {
-                dispatch("addAttributesToModuleState", item.children);
+            if (item?.type === "folder") {
+                dispatch("addAttributesToModuleState", item.elements);
             }
             else {
                 for (const [key, value] of Object.entries(item)) {
-                    commit(`${upperFirst(item?.itemType)}/set${upperFirst(key)}`, value);
+                    commit(`${upperFirst(item?.type)}/set${upperFirst(key)}`, value);
                 }
             }
         });
