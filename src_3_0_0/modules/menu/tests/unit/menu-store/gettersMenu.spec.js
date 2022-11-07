@@ -35,12 +35,12 @@ describe("src_3_0_0/modules/menu/menu-store/gettersMenu.js", () => {
     afterEach(sinon.restore);
 
     describe("componentFromPath", () => {
-        const itemType = "component";
+        const type = "component";
         let objectFromPathFake, side, state;
 
         beforeEach(() => {
             state = {};
-            objectFromPathFake = sinon.fake.returns({itemType});
+            objectFromPathFake = sinon.fake.returns({type});
             getters.objectFromPath = objectFromPathFake;
         });
 
@@ -107,11 +107,16 @@ describe("src_3_0_0/modules/menu/menu-store/gettersMenu.js", () => {
             expect(gettersMenu.mainTitle(undefined, getters)).to.equal(null);
         });
         it("should return the title if it is defined on mainMenu", () => {
-            const title = "Am title";
+            const title = {
+                "text": "Master",
+                "logo": "https://geodienste.hamburg.de/lgv-config/img/hh-logo.png",
+                "link": "https://geoinfo.hamburg.de",
+                "toolTip": "Landesbetrieb Geoinformation und Vermessung"
+            };
 
             getters.mainMenu = {title};
 
-            expect(gettersMenu.mainTitle(undefined, getters)).to.equal(title);
+            expect(gettersMenu.mainTitle(undefined, getters)).to.deep.equal(title);
         });
     });
     describe("mainToggleButtonIcon", () => {
@@ -268,11 +273,16 @@ describe("src_3_0_0/modules/menu/menu-store/gettersMenu.js", () => {
             expect(gettersMenu.secondaryTitle(undefined, getters)).to.equal(null);
         });
         it("should return the title if it is defined on secondaryMenu", () => {
-            const title = "Am title";
+            const title = {
+                "text": "Master",
+                "logo": "https://geodienste.hamburg.de/lgv-config/img/hh-logo.png",
+                "link": "https://geoinfo.hamburg.de",
+                "toolTip": "Landesbetrieb Geoinformation und Vermessung"
+            };
 
             getters.secondaryMenu = {title};
 
-            expect(gettersMenu.secondaryTitle(undefined, getters)).to.equal(title);
+            expect(gettersMenu.secondaryTitle(undefined, getters)).to.deep.equal(title);
         });
     });
     describe("secondaryToggleButtonIcon", () => {
@@ -296,7 +306,7 @@ describe("src_3_0_0/modules/menu/menu-store/gettersMenu.js", () => {
     });
     describe("titleBySide", () => {
         const exampleTitle = {
-            text: "Precise title",
+            text: "Precise name",
             logo: "some png source",
             link: "https://valid.url.com",
             toolTip: "More info"
@@ -306,29 +316,29 @@ describe("src_3_0_0/modules/menu/menu-store/gettersMenu.js", () => {
             getters.mainTitle = exampleTitle;
 
             const side = "mainMenu",
-                titleObject = gettersMenu.titleBySide(undefined, getters)(side);
+                nameObject = gettersMenu.titleBySide(undefined, getters)(side);
 
-            expect(titleObject).to.not.equal(null);
-            expect(titleObject.text).to.equal(exampleTitle.text);
-            expect(titleObject.logo).to.equal(exampleTitle.logo);
-            expect(titleObject.link).to.equal(exampleTitle.link);
-            expect(titleObject.toolTip).to.equal(exampleTitle.toolTip);
-            expect(titleObject.idAppendix).to.equal(side);
+            expect(nameObject).to.not.equal(null);
+            expect(nameObject.text).to.equal(exampleTitle.text);
+            expect(nameObject.logo).to.equal(exampleTitle.logo);
+            expect(nameObject.link).to.equal(exampleTitle.link);
+            expect(nameObject.toolTip).to.equal(exampleTitle.toolTip);
+            expect(nameObject.idAppendix).to.equal(side);
         });
         it("should return the mainTitle properties as well as the side as idAppendix if the side is 'secondaryMenu' and 'secondaryTitle' is defined", () => {
             getters.secondaryTitle = exampleTitle;
 
             const side = "secondaryMenu",
-                titleObject = gettersMenu.titleBySide(undefined, getters)(side);
+                nameObject = gettersMenu.titleBySide(undefined, getters)(side);
 
-            expect(titleObject).to.not.equal(null);
-            expect(titleObject.text).to.equal(exampleTitle.text);
-            expect(titleObject.logo).to.equal(exampleTitle.logo);
-            expect(titleObject.link).to.equal(exampleTitle.link);
-            expect(titleObject.toolTip).to.equal(exampleTitle.toolTip);
-            expect(titleObject.idAppendix).to.equal(side);
+            expect(nameObject).to.not.equal(null);
+            expect(nameObject.text).to.equal(exampleTitle.text);
+            expect(nameObject.logo).to.equal(exampleTitle.logo);
+            expect(nameObject.link).to.equal(exampleTitle.link);
+            expect(nameObject.toolTip).to.equal(exampleTitle.toolTip);
+            expect(nameObject.idAppendix).to.equal(side);
         });
-        it("should return null if a given side does not have a title defined", () => {
+        it("should return null if a given side does not have a name defined", () => {
             expect(gettersMenu.titleBySide(undefined, getters)("mainMenu")).to.equal(null);
         });
         it("should return null if a given side does not equal 'mainMenu' or 'secondaryMenu'", () => {

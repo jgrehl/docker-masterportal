@@ -12,9 +12,9 @@ config.mocks.$t = key => key;
 describe("src_3_0_0/modules/menu/MenuContainerBodyItems.vue", () => {
     let store;
     const sampleSection = [
-        {icon: "bi-test", title: "sampleSectionOne"},
-        {icon: "bi-test", title: "sampleSectionTwo"},
-        {icon: "bi-test", title: "sampleSectionThree"}
+        {icon: "bi-test", name: "sampleSectionOne"},
+        {icon: "bi-test", name: "sampleSectionTwo"},
+        {icon: "bi-test", name: "sampleSectionThree"}
     ];
 
     beforeEach(() => {
