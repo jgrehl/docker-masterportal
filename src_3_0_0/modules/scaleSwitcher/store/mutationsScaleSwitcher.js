@@ -1,5 +1,5 @@
 import {generateSimpleMutations} from "../../../shared/js/utils/generators";
-import state from "./stateScaleSwitcher";
+import stateScaleSwitcher from "./stateScaleSwitcher";
 
 const mutations = {
     /**
@@ -8,7 +8,7 @@ const mutations = {
      * {setKey:   (state, payload) => *   state[key] = payload * }
      * will be returned.
      */
-    ...generateSimpleMutations(state)
+    ...generateSimpleMutations(stateScaleSwitcher)
 
     // NOTE overwrite mutations here if you need a special behaviour in a mutation
 };
