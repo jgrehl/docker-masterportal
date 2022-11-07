@@ -16,11 +16,11 @@ export default {
         ...mapGetters("Menu/Navigation", ["lastEntry", "previousEntry"]),
         /**
          * If no previousEntry besides the menu is present, show the menu String.
-         * Otherwise, show the title of the folder.
+         * Otherwise, show the name of the folder.
          * @returns {String} Value to be displayed.
          */
         entry () {
-            return !this.previousEntry(this.side) ? i18next.t("common:menu.name") : this.objectFromPath(this.side, "previous").title;
+            return !this.previousEntry(this.side) ? i18next.t("common:menu.name") : this.objectFromPath(this.side, "previous").name;
         }
     },
     methods: {
