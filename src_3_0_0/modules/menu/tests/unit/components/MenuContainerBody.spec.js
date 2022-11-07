@@ -12,7 +12,7 @@ config.mocks.$t = key => key;
 
 describe("src_3_0_0/modules/menu/MenuContainerBody.vue", () => {
     let store;
-    const sampleConfigObject = {title: "awesomeTitle"};
+    const sampleConfigObject = {name: "awesomeName"};
 
     beforeEach(() => {
 

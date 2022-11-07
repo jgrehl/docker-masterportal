@@ -36,58 +36,58 @@
       "sections": [
         [
           {
-            "title": "common:menu.tools.scaleSwitcher",
-            "icon": "bi-1-square-fill",
-            "itemType": "scaleSwitcher"
+            "name": "common:menu.tools.scaleSwitcher",
+            "icon": "bi-arrows-angle-contract",
+            "type": "scaleSwitcher"
           },
           {
-            "title": "folder1",
+            "name": "folder1",
             "icon": "bi-file-plus",
-            "itemType": "folder",
-            "children": [
+            "type": "folder",
+            "elements": [
               {
-                "itemType": "folder",
-                "title": "folder1_1",
-                "icon": "bi-1-square-fill",
-                "children": [
+                "name": "folder1_1",
+                "icon": "bi-file-plus",
+                "type": "folder",
+                "elements": [
                   {
-                    "itemType": "folder",
-                    "title": "folder1_1_1",
+                    "name": "folder1_1_1",
                     "icon": "bi-file-plus",
-                    "children": []
+                    "type": "folder",
+                    "elements": []
                   },
                   {
-                    "itemType": "folder",
-                    "title": "folder1_1_2",
+                    "name": "folder1_1_2",
                     "icon": "bi-file-plus",
-                    "children": []
+                    "type": "folder",
+                    "elements": []
                   }
                 ]
               },
               {
-                "itemType": "folder",
-                "title": "folder1_2",
+                "name": "folder1_2",
                 "icon": "bi-file-plus",
-                "children": []
+                "type": "folder",
+                "elements": []
               }
             ]
           },
           {
-            "title": "folder2",
+            "name": "folder2",
             "icon": "bi-file-plus",
-            "itemType": "folder",
-            "children": [
+            "type": "folder",
+            "elements": [
               {
-                "itemType": "folder",
-                "title": "folder2_1",
+                "name": "folder2_1",
                 "icon": "bi-file-plus",
-                "children": []
+                "type": "folder",
+                "elements": []
               },
               {
-                "itemType": "folder",
-                "title": "folder2_2",
+                "name": "folder2_2",
                 "icon": "bi-file-plus",
-                "children": []
+                "type": "folder",
+                "elements": []
               }
             ]
           }
@@ -98,53 +98,53 @@
       "sections": [
         [
           {
-            "title": "folder1",
+            "name": "folder1",
             "icon": "bi-file-plus",
-            "itemType": "folder",
-            "children": [
+            "type": "folder",
+            "elements": [
               {
-                "itemType": "folder",
-                "title": "folder1_1",
+                "name": "folder1_1",
                 "icon": "bi-file-plus",
-                "children": [
+                "type": "folder",
+                "elements": [
                   {
-                    "itemType": "folder",
-                    "title": "folder1_1_1",
+                    "name": "folder1_1_1",
                     "icon": "bi-file-plus",
-                    "children": []
+                    "type": "folder",
+                    "elements": []
                   },
                   {
-                    "itemType": "folder",
-                    "title": "folder1_1_2",
+                    "name": "folder1_1_2",
                     "icon": "bi-file-plus",
-                    "children": []
+                    "type": "folder",
+                    "elements": []
                   }
                 ]
               },
               {
-                "itemType": "folder",
-                "title": "folder1_2",
+                "name": "folder1_2",
                 "icon": "bi-file-plus",
-                "children": []
+                "type": "folder",
+                "elements": []
               }
             ]
           },
           {
-            "title": "folder2",
+            "name": "folder2",
             "icon": "bi-file-plus",
-            "itemType": "folder",
-            "children": [
+            "type": "folder",
+            "elements": [
               {
-                "itemType": "folder",
-                "title": "folder2_1",
+                "name": "folder2_1",
                 "icon": "bi-file-plus",
-                "children": []
+                "type": "folder",
+                "elements": []
               },
               {
-                "itemType": "folder",
-                "title": "folder2_2",
+                "name": "folder2_2",
                 "icon": "bi-file-plus",
-                "children": []
+                "type": "folder",
+                "elements": []
               }
             ]
           }
