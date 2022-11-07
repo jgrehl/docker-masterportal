@@ -1,5 +1,6 @@
 <script>
-import {mapActions} from "vuex";
+import {mapActions, mapGetters} from "vuex";
+import isModuleVisible from "../../../shared/js/utils/isModuleVisible";
 import SimpleButton from "../../../shared/components/SimpleButton.vue";
 
 export default {
@@ -35,6 +36,9 @@ export default {
         }
     },
     computed: {
+        ...mapGetters(["deviceMode"]),
+        ...mapGetters("Maps", ["mode"]),
+
         /**
          * @returns {boolean} Depending on whether the icon is given it is decided whether on is shown.
          */
@@ -43,13 +47,26 @@ export default {
         }
     },
     methods: {
-        ...mapActions("Menu", ["clickedMenuElement"])
+        ...mapActions("Menu", ["clickedMenuElement"]),
+
+        /**
+         * Checks if the module is to be applied in the map- and device mode.
+         * @returns {Boolean} The module is shown.
+         */
+        checkIsVisible () {
+            const supportedMapModes = this.$attrs.supportedMapModes,
+                supportedDevices = this.$attrs.supportedDevices;
+
+            return isModuleVisible(this.mode, this.deviceMode, supportedMapModes, supportedDevices);
+        }
     }
+
 };
 </script>
 
 <template>
     <SimpleButton
+        v-if="checkIsVisible()"
         :interaction="() => clickedMenuElement(path)"
         :text="name"
         :icon="showIcon ? icon : null"
