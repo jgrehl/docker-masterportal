@@ -12,7 +12,7 @@ config.mocks.$t = key => key;
 
 describe("src_3_0_0/modules/menu/MenuContainer.vue", () => {
     let store;
-    const sampleMainMenuPath = ["mainMenu", "sections", 0, 1, "children", 0];
+    const sampleMainMenuPath = ["mainMenu", "sections", 0, 1, "elements", 0];
 
     beforeEach(() => {
 
