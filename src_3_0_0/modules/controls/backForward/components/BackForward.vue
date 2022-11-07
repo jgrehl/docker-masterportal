@@ -17,7 +17,7 @@ export default {
             "forthAvailable",
             "iconBack",
             "iconForward",
-            "supportedDevice"
+            "supportedDevices"
         ])
     },
     mounted () {
