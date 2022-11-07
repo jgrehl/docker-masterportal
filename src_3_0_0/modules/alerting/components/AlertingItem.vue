@@ -18,6 +18,7 @@ export default {
             "displayedAlerts",
             "fetchBroadcastUrl",
             "localStorageDisplayedAlertsKey",
+            "initialClosed",
             "showTheModal",
             "sortedAlerts"
         ]),
@@ -152,7 +153,6 @@ export default {
             }
 
             collectedAlerts.forEach(singleAlert => {
-                // singleAlert.multipleAlert = true;
                 singleAlert.initial = true;
                 this.addSingleAlert(singleAlert);
             });
@@ -183,6 +183,7 @@ export default {
          */
         onModalClose: function () {
             this.cleanup();
+            this.$store.commit("Alerting/setInitialClosed", true);
         },
         /**
          * Update a single alert's has-been-read state.
@@ -193,18 +194,33 @@ export default {
             this.alertHasBeenRead(hash);
         },
         /**
+         * Check category name if footer attributes should be shown
+         * @param {String} category category name
+         * @returns {void}
+         */
+        checkFooter: function (category) {
+            const checkCategory = category.toLowerCase();
+
+            if (checkCategory !== "error" && checkCategory !== "alert" && checkCategory !== "success") {
+                return true;
+            }
+            return false;
+        },
+        /**
          * Select the class for the alert category.
          * @param {String} category category of the alert
          * @returns {void}
          */
         selectCategoryClass: function (category) {
-            if (category === "News") {
+            const generalizedCategory = category?.toLowerCase();
+
+            if (generalizedCategory === "news" || generalizedCategory === "success") {
                 return "badge rounded-pill bg-success offset-alert";
             }
-            else if (category === "Alert") {
+            else if (generalizedCategory === "alert") {
                 return "badge rounded-pill bg-warning offset-alert";
             }
-            else if (category === "Error") {
+            else if (generalizedCategory === "error") {
                 return "badge rounded-pill bg-danger offset-alert";
             }
             return "badge rounded-pill bg-info offset-alert";
@@ -259,7 +275,7 @@ export default {
                             >
                             <h2>
                                 <span :class="selectCategoryClass(singleAlert.category)">
-                                    {{ $t(singleAlert.category) }}
+                                    {{ $t(singleAlert.displayCategory) }}
                                 </span>
                             </h2>
                             <div
@@ -276,10 +292,11 @@ export default {
                                 />
                             </div>
                             <div
+                                v-if="checkFooter(singleAlert.category)"
                                 class="d-flex justify-content-between offset-alert small"
                             >
                                 <div
-                                    v-html="'Created: '+singleAlert.creationDate"
+                                    v-html="$t(`common:modules.alerting.created`)+singleAlert.creationDate"
                                 />
                                 <p
                                     v-if="singleAlert.mustBeConfirmed && availableLocalStorage"
