@@ -12,7 +12,7 @@ const menuGetters = {
      */
     componentFromPath: (state, getters, rootState) => side => {
         if (["mainMenu", "secondaryMenu"].includes(side)) {
-            return rootState.Modules.componentMap[getters.objectFromPath(side, "last").itemType];
+            return rootState.Modules.componentMap[getters.objectFromPath(side, "last").type];
         }
         console.error(`Menu.componentMap: The given menu side ${side} is not allowed. Please use "mainMenu" or "secondaryMenu" instead.`);
         return null;
@@ -44,7 +44,7 @@ const menuGetters = {
      * @returns {(Object|null)} Title of the mainMenu or null.
      */
     mainTitle (_, getters) {
-        return getters.mainMenu && typeof getters.mainMenu?.title === "string" ? getters.mainMenu.title : null;
+        return getters.mainMenu && typeof getters.mainMenu?.title === "object" ? getters.mainMenu.title : null;
     },
     /**
      * @param {MenuState} _ Local vuex state (discarded).
@@ -102,7 +102,7 @@ const menuGetters = {
      * @returns {(Object|null)} Title of the secondaryMenu or null.
      */
     secondaryTitle (_, getters) {
-        return getters.secondaryMenu && typeof getters.secondaryMenu.title === "string" ? getters.secondaryMenu.title : null;
+        return getters.secondaryMenu && typeof getters.secondaryMenu.title === "object" ? getters.secondaryMenu.title : null;
     },
     /**
      * @param {MenuState} _ Local vuex state (discarded).

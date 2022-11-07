@@ -11,7 +11,7 @@ config.mocks.$t = key => key;
 
 describe("src_3_0_0/modules/menu/MenuContainerBodyElement.vue", () => {
     it("renders the component and it contains the SimpleButton", () => {
-        const wrapper = shallowMount(MenuContainerBodyElement, {localVue, propsData: {icon: "bi-file-plus", title: "awesomeTitle"}});
+        const wrapper = shallowMount(MenuContainerBodyElement, {localVue, propsData: {icon: "bi-file-plus", name: "awesomeName"}});
 
         expect(wrapper.findComponent(SimpleButton).exists()).to.be.true;
     });
