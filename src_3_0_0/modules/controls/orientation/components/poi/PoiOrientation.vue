@@ -28,7 +28,7 @@ export default {
         };
     },
     computed: {
-        ...mapGetters("Controls/orientation", ["activeCategory", "position"])
+        ...mapGetters("Controls/Orientation", ["activeCategory", "position"])
     },
     mounted () {
         this.show();
@@ -41,7 +41,7 @@ export default {
         });
     },
     methods: {
-        ...mapMutations("Controls/orientation", Object.keys(mutations)),
+        ...mapMutations("Controls/Orientation", Object.keys(mutations)),
         ...mapActions("Maps", ["zoomToExtent"]),
 
         /**
