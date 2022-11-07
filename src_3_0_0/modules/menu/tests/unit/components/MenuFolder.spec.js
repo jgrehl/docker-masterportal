@@ -25,7 +25,16 @@ describe("src_3_0_0/modules/menu/MenuFolder.vue", () => {
                     getters: {
                         section: () => () => sampleConfigObject
                     }
+                },
+                Maps: {
+                    namespaced: true,
+                    getters: {
+                        mode: () => "2D"
+                    }
                 }
+            },
+            getters: {
+                deviceMode: () => "Desktop"
             }
         });
     });
