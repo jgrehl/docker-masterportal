@@ -1,6 +1,7 @@
 <script>
 import {mapActions, mapGetters, mapMutations} from "vuex";
 import upperFirst from "../../../shared/js/utils/upperFirst";
+import isModuleVisible from "../../../shared/js/utils/isModuleVisible";
 
 /**
  * Control layout component that places controls on the map.
@@ -109,14 +110,10 @@ export default {
          * @returns {Boolean} The control is shown.
          */
         checkIsVisible (key) {
-            let isVisible = false;
+            const supportedMapModes = this.$store.getters[`Controls/${upperFirst(key)}/supportedMapModes`],
+                supportedDevices = this.$store.getters[`Controls/${upperFirst(key)}/supportedDevices`];
 
-            if (this.$store.getters[`Controls/${upperFirst(key)}/supportedMapMode`]?.includes(this.mode)
-                    && this.$store.getters[`Controls/${upperFirst(key)}/supportedDevice`]?.includes(this.deviceMode)) {
-                isVisible = true;
-            }
-
-            return isVisible;
+            return isModuleVisible(this.mode, this.deviceMode, supportedMapModes, supportedDevices);
         }
     }
 };
