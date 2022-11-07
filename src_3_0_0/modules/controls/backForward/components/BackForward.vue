@@ -16,7 +16,7 @@ export default {
             "backAvailable",
             "forthAvailable",
             "iconBack",
-            "iconFor",
+            "iconForward",
             "supportedDevice"
         ])
     },
@@ -53,7 +53,7 @@ export default {
             class="forward"
             :title="$t(`common:modules.controls.backForward.stepForward`)"
             :disabled="!forthAvailable"
-            :icon-name="iconFor"
+            :icon-name="iconForward"
             :on-click="moveForward"
         />
         <ControlIcon
