@@ -14,7 +14,7 @@ const localVue = createLocalVue();
 localVue.use(Vuex);
 config.mocks.$t = key => key;
 
-describe("src/modules/controls/orientation/components/PoiOrientation.vue", () => {
+describe("src_3_0_0/modules/controls/orientation/components/PoiOrientation.vue", () => {
     let store,
         propsData,
         wrapper;
@@ -26,7 +26,7 @@ describe("src/modules/controls/orientation/components/PoiOrientation.vue", () =>
                 Controls: {
                     namespaced: true,
                     modules: {
-                        orientation: {
+                        Orientation: {
                             namespaced: true,
                             getters: {
                                 activeCategory: sinon.stub(),
