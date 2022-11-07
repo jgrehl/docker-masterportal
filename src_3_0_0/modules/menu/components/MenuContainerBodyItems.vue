@@ -1,6 +1,7 @@
 <script>
 import {mapGetters} from "vuex";
 import MenuContainerBodyElement from "./MenuContainerBodyElement.vue";
+import upperFirst from "../../../shared/js/utils/upperFirst";
 
 export default {
     name: "MenuContainerBodyItems",
@@ -21,6 +22,27 @@ export default {
     },
     computed: {
         ...mapGetters("Menu", ["section"])
+    },
+    methods: {
+        /**
+         * Returns the properties from the state, if available.
+         * Otherwise the item (properties from config.json) is returned.
+         * @param {Object} item The menu item.
+         * @returns {Object} The properties from state or config.json.
+         */
+        chooseProperties (item) {
+            let properties = item;
+
+            if (Object.hasOwn(item, "type")) {
+                const stateProperties = this.$store.state.Modules[upperFirst(item.type)];
+
+                if (typeof stateProperties === "object") {
+                    properties = stateProperties;
+                }
+            }
+
+            return properties;
+        }
     }
 };
 </script>
@@ -36,7 +58,7 @@ export default {
         >
             <MenuContainerBodyElement
                 :id="'menu-offcanvas-body-items-element-' + key + '-' + idAppendix"
-                v-bind="item"
+                v-bind="chooseProperties(item)"
                 :path="[...path, key]"
             />
         </li>
