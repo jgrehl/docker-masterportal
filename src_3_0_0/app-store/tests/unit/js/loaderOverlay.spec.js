@@ -1,12 +1,7 @@
 import {expect} from "chai";
 import LoaderOverlay from "../../../js/loaderOverlay";
 
-<<<<<<<< HEAD:src_3_0_0/app-store/tests/unit/js/loaderOverlay.spec.js
-
 describe("src_3_0_0/app-store/js/loaderOverlay.js", () => {
-========
-describe("src_3_0_0/shared/js/utils/loaderOverlay.js", () => {
->>>>>>>> bbdd9fe90b (update move files into new folder structure):src_3_0_0/shared/js/utils/tests/unit/loaderOverlay.spec.js
     before(() => {
         LoaderOverlay.loaderOverlayCount = 0;
         LoaderOverlay.initialLoaderIsHidden = false;
