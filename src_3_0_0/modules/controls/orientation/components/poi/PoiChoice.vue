@@ -5,7 +5,7 @@ import mutations from "../../store/mutationsOrientation";
 export default {
     name: "PoiChoice",
     computed: {
-        ...mapGetters("Controls/orientation", ["poiMode"]),
+        ...mapGetters("Controls/Orientation", ["poiMode"]),
         choices () {
             return {
                 "currentPosition": this.$t("common:modules.controls.orientation.poiChoiceCurrentPostion"),
@@ -22,7 +22,7 @@ export default {
         });
     },
     methods: {
-        ...mapMutations("Controls/orientation", Object.keys(mutations)),
+        ...mapMutations("Controls/Orientation", Object.keys(mutations)),
         ...mapActions("Maps", ["registerListener", "unregisterListener"]),
 
         /**

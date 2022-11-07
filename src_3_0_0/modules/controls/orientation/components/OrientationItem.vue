@@ -17,20 +17,6 @@ export default {
         PoiChoice,
         PoiOrientation
     },
-    props: {
-        /** the zoomMode in config.json */
-        zoomMode: {
-            type: String,
-            required: false,
-            default: "once"
-        },
-        /** the distances in config.json */
-        poiDistances: {
-            type: [Boolean, Array],
-            required: false,
-            default: () => []
-        }
-    },
     data () {
         return {
             firstGeolocation: true, // flag to check if it the first time
@@ -44,13 +30,17 @@ export default {
         };
     },
     computed: {
-        ...mapGetters("Controls/orientation", [
+        ...mapGetters("Controls/Orientation", [
             "geolocation",
+            "iconGeolocate",
+            "iconGeolocatePOI",
+            "poiDistances",
             "poiMode",
             "poiModeCurrentPositionEnabled",
             "showPoi",
             "showPoiChoice",
-            "showPoiIcon"
+            "showPoiIcon",
+            "zoomMode"
         ]),
         ...mapGetters("Maps", ["projection"]),
         ...mapGetters(["visibleLayerConfigs"]),
@@ -85,7 +75,7 @@ export default {
 
     },
     methods: {
-        ...mapMutations("Controls/orientation", Object.keys(mutations)),
+        ...mapMutations("Controls/Orientation", Object.keys(mutations)),
         ...mapActions("Maps", ["setView"]),
 
         setIsGeoLocationPossible () {
@@ -488,13 +478,13 @@ export default {
         <ControlIcon
             id="geolocate"
             :title="$t('common:modules.controls.orientation.titleGeolocate')"
-            :icon-name="'geo-alt-fill'"
+            :icon-name="iconGeolocate"
             :on-click="getOrientation"
         />
         <ControlIcon
             v-if="showPoiIcon"
             id="geolocatePOI"
-            :icon-name="'record-circle'"
+            :icon-name="iconGeolocatePOI"
             :title="$t('common:modules.controls.orientation.titleGeolocatePOI')"
             :on-click="getPOI"
         />
