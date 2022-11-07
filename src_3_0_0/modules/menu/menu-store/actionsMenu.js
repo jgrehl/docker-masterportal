@@ -1,4 +1,5 @@
 import Vue from "vue";
+import upperFirst from "../../../shared/js/utils/upperFirst";
 
 export default {
     /**
@@ -19,7 +20,7 @@ export default {
                 Vue.nextTick(() => document.getElementById(`menu-offcanvas-body-items-element-0-${path[0]}`)?.focus());
                 return;
             }
-            dispatch("setElementActive", {moduleNamespace: type.charAt(0).toUpperCase() + type.slice(1), isActive: true});
+            Vue.nextTick(() => dispatch("setElementActive", {moduleNamespace: upperFirst(type), isActive: true}));
             return;
         }
         console.error("Menu: A menu entry is missing the required value \"type\".");
