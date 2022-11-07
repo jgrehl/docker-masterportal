@@ -240,4 +240,10 @@ export default {
             border-color: $white;
         }
     }
+
+    @media (max-width: 768px) {
+        .btn-group-controls {
+            display: none;
+        }
+    }
 </style>
