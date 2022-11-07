@@ -65,12 +65,14 @@ export default {
      */
     initialize: function (context) {
         context.dispatch("addSingleAlert", {
-            "content": "See alert",
-            "multipleAlert": false
+            "category": "success",
+            "content": "Error during loading",
+            "multipleAlert": true
         });
         context.dispatch("addSingleAlert", {
-            "content": "See alert2",
-            "multipleAlert": false
+            "content": "Error during loading2",
+            "category": "error",
+            "multipleAlert": true
         });
 
         fetchFirstModuleConfig(context, configPaths, "Alerting");
@@ -135,7 +137,12 @@ export default {
     addSingleAlert: function ({state, commit}, newAlert) {
         const objectHash = require("object-hash"),
             newAlertObj = typeof newAlert === "string" ? {content: newAlert} : newAlert,
-            alertProtoClone = {...state.alertProto};
+            alertProtoClone = {...state.alertProto},
+            hasInitAlert = state.alerts.some(function (alert) {
+                return alert.initial === true;
+            }),
+            category = newAlertObj.category?.toLowerCase();
+
 
         let
             isUnique = false,
@@ -145,6 +152,16 @@ export default {
 
         if (newAlertObj === undefined) {
             return false;
+        }
+
+        if (state.availableCategories.includes(category)) {
+            newAlertObj.displayCategory = `common:modules.alerting.categories.${category}`;
+        }
+        else if (newAlertObj.category === undefined || newAlertObj.category === "") {
+            newAlertObj.displayCategory = "info";
+        }
+        else {
+            newAlertObj.displayCategory = newAlertObj.category;
         }
 
         // in case its an object with deprecated text property, display warning and continue
@@ -188,7 +205,7 @@ export default {
 
         displayAlert = isUnique && isInTime && isNotRestricted;
         if (displayAlert) {
-            if ((newAlert.multipleAlert !== true && !newAlert.initial) || (newAlert.multipleAlert === true && state.alerts[state.alerts.length - 1]?.initial === true)) {
+            if ((newAlert.multipleAlert !== true && !newAlert.initial && state.initialClosed === true) || (newAlert.multipleAlert === true && hasInitAlert === true && state.initialClosed === true)) {
                 state.alerts = [];
             }
             commit("addToAlerts", alertProtoClone);
