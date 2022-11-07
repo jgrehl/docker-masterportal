@@ -1,9 +1,9 @@
 <script>
 import {mapGetters, mapActions} from "vuex";
 import ControlBar from "./modules/controls/components/ControlBar.vue";
-import MenuContainer from "./modules/menu/components/MenuContainer.vue";
 import MenuToggleButton from "./modules/menu/components/MenuToggleButton.vue";
 import LayerPills from "./modules/layerPills/components/LayerPills.vue";
+import MenuContainer from "./modules/menu/components/MenuContainer.vue";
 
 import initializeLayers from "./core/layers/js/layerProcessor";
 import {initializeMaps} from "./core/maps/js/maps";
@@ -118,6 +118,21 @@ export default {
             v-if="allConfigsLoaded && mainMenu"
             side="mainMenu"
         />
+        <MenuToggleButton
+            v-if="allConfigsLoaded && mainMenu"
+            side="mainMenu"
+        />
+        <div
+            v-if="allConfigsLoaded"
+            class="elements-positioned-over-map"
+        >
+            <ControlBar class="controls" />
+            <LayerPills />
+        </div>
+        <MenuToggleButton
+            v-if="allConfigsLoaded && secondaryMenu"
+            side="secondaryMenu"
+        />
         <MenuContainer
             v-if="allConfigsLoaded && secondaryMenu"
             side="secondaryMenu"
@@ -125,21 +140,10 @@ export default {
         <div
             id="map-wrapper"
             class="mp-map"
-            :class="{
-                'mainexpanded': mainMenuExpanded,
-                'secondaryexpanded': secondaryMenuExpanded
-            }"
         >
             <div
                 id="map"
             />
-            <div
-                v-if="allConfigsLoaded"
-                class="elements-positioned-over-map"
-            >
-                <ControlBar class="controls" />
-                <LayerPills />
-            </div>
         </div>
     </div>
 </template>
@@ -149,8 +153,7 @@ export default {
 
     #masterportal-container {
         display: flex;
-        flex-direction: column;
-        flex-flow: column;
+        flex-direction: row;
 
         position: relative;
 
@@ -161,22 +164,25 @@ export default {
         font-size: $font-size-base;
 
         #map-wrapper {
-            display: flex;
-            height: calc(100% - 50px);
+            height: 100%;
+            width: 100%;
             overflow: hidden;
-            position: relative;
-            flex-grow: 1;
-            order: 1;
+            position: absolute;
 
             #map {
-                position: absolute;
+                position: relative;
                 height: 100%;
                 width: 100%;
             }
-            .elements-positioned-over-map {
+        }
+    }
+
+    .elements-positioned-over-map {
                 display: flex;
                 flex-direction: column;
                 align-items: flex-end;
+                z-index: 1;
+                pointer-events: none;
 
                 width: 100%;
                 height: 100%;
@@ -185,8 +191,6 @@ export default {
                     flex-grow: 1;
                 }
             }
-        }
-    }
 
 @media (min-width: 768px) {
         .mainexpanded {
