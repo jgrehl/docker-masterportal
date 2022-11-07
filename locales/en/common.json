@@ -153,13 +153,15 @@
             }
         },
         "alerting": {
-            "hideMessage": "Diese Meldung nicht mehr anzeigen",
             "categories": {
-                "error": "Error",
-                "info": "Info",
-                "success": "Success",
-                "warning": "Warning"
-            }
+              "alert": "Alert",
+              "error": "Error",
+              "info": "Info",
+              "news": "News",
+              "success": "Success"
+            },
+            "created": "Created: ",
+            "hideMessage": "Don't show this message again"
         },
         "confirmAction": {
             "defaultHeadline": "Confirmation request",
