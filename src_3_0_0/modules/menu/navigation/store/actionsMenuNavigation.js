@@ -1,3 +1,6 @@
+import Vue from "vue";
+import upperFirst from "../../../../shared/js/utils/upperFirst";
+
 const actions = {
     /**
      * Properly deactivates an element if it is not a folder
@@ -11,9 +14,9 @@ const actions = {
         const {type} = rootGetters["Menu/objectFromPath"](side, "last");
 
         if (type !== "folder") {
-            dispatch("Menu/setElementActive", {moduleNamespace: type.charAt(0).toUpperCase() + type.slice(1), isActive: false}, {root: true});
+            dispatch("Menu/setElementActive", {moduleNamespace: upperFirst(type), isActive: false}, {root: true});
         }
-        commit("removeLastEntry", side);
+        Vue.nextTick(() => commit("removeLastEntry", side));
     }
 };
 
