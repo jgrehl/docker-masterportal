@@ -1,7 +1,7 @@
 export default {
     alertProto: {
         title: "",
-        category: "Info", // Kategorien festlegen  "News", "Alert"
+        category: "info", // Kategorien festlegen  "News", "Alert"
         confirmText: "Als gelesen markieren",
         content: "",
         displayClass: "info", // "error" mitgeben bei string-Funktion
