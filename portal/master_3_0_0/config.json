@@ -12,16 +12,15 @@
       "zoom": true,
       "totalView": true,
       "button3d": true,
-      "orientation": {
-        "zoomMode": "once",
-        "poiDistances": [
-          500,
-          1000,
-          2000
-        ]
-      },
       "expandable": {
-        "button3d": true,
+        "orientation": {
+          "zoomMode": "once",
+          "poiDistances": [
+            500,
+            1000,
+            2000
+          ]
+        },
         "freeze": true,
         "fullScreen": true
       }
