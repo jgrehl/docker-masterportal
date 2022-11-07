@@ -11,7 +11,7 @@ config.mocks.$t = key => key;
 
 describe("src_3_0_0/modules/menu/MenuFolder.vue", () => {
     let store;
-    const sampleConfigObject = {children: [{title: "itemOne", icon: "bi-icon"}, {title: "itemTwo", icon: "bi-icon"}]},
+    const sampleConfigObject = {elements: [{name: "itemOne", icon: "bi-icon"}, {name: "itemTwo", icon: "bi-icon"}]},
         sampleMainMenuPath = ["mainMenu", "sections", 0, 1];
 
 
@@ -33,7 +33,7 @@ describe("src_3_0_0/modules/menu/MenuFolder.vue", () => {
     afterEach(sinon.restore);
 
     it("renders the heading", () => {
-        const wrapper = mount(MenuFolder, {store, localVue, propsData: {idAppendix: "mainMenu", title: "awesomeFolder", path: sampleMainMenuPath}});
+        const wrapper = mount(MenuFolder, {store, localVue, propsData: {idAppendix: "mainMenu", name: "awesomeFolder", path: sampleMainMenuPath}});
 
         expect(wrapper.findAll("h4")).to.have.length(1);
     });
