@@ -22,8 +22,8 @@ export default {
             type: Array,
             default: () => []
         },
-        /** title of the folder */
-        title: {
+        /** name of the folder */
+        name: {
             type: String,
             required: true
         }
@@ -38,10 +38,10 @@ export default {
 
 <template>
     <div>
-        <h4>{{ $t(title) }}</h4>
+        <h4>{{ $t(name) }}</h4>
         <MenuContainerBodyItems
             :id-appendix="idAppendix"
-            :path="[...path, 'children']"
+            :path="[...path, 'elements']"
         />
     </div>
 </template>
