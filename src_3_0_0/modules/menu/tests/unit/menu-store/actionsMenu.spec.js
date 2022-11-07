@@ -1,6 +1,6 @@
+import {expect} from "chai";
 import sinon from "sinon";
 import Vue from "vue";
-import {expect} from "chai";
 import actions from "../../../menu-store/actionsMenu";
 
 describe("src_3_0_0/modules/menu/menu-store/actionsMenu.js", () => {
@@ -40,7 +40,7 @@ describe("src_3_0_0/modules/menu/menu-store/actionsMenu.js", () => {
             expect(consoleError.firstCall.args.length).to.equal(1);
             expect(consoleError.firstCall.args[0]).to.equal("Menu: A menu entry is missing the required value \"type\".");
         });
-        it("should commit the path for the element and dispatch an action to activate the element if it's not a folder", () => {
+        it("should commit the path for the element and dispatch an action to activate the element if it's not a folder", async () => {
             element.type = "genericElement";
             actions.clickedMenuElement({commit, dispatch, getters}, path);
 
@@ -52,6 +52,7 @@ describe("src_3_0_0/modules/menu/menu-store/actionsMenu.js", () => {
             expect(commit.firstCall.args[0]).to.equal("Menu/Navigation/addEntry");
             expect(commit.firstCall.args[1]).to.equal(path);
             expect(commit.firstCall.args[2]).to.eql({root: true});
+            await Vue.nextTick();
             expect(dispatch.calledOnce).to.be.true;
             expect(dispatch.firstCall.args.length).to.equal(2);
             expect(dispatch.firstCall.args[0]).to.equal("setElementActive");
