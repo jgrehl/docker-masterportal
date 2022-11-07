@@ -36,8 +36,6 @@
       "sections": [
         [
           {
-            "name": "common:menu.tools.scaleSwitcher",
-            "icon": "bi-arrows-angle-contract",
             "type": "scaleSwitcher"
           },
           {

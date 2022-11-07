@@ -1,9 +1,9 @@
-import Vuex from "vuex";
 import {config, shallowMount, createLocalVue} from "@vue/test-utils";
-import ScaleSwitcherComponent from "../../../components/ScaleSwitcher.vue";
-import ScaleSwitcher from "../../../store/indexScaleSwitcher";
 import {expect} from "chai";
 import sinon from "sinon";
+import Vuex from "vuex";
+
+import ScaleSwitcherComponent from "../../../components/ScaleSwitcher.vue";
 
 const localVue = createLocalVue();
 
@@ -33,13 +33,9 @@ describe("src_3_0_0/modules/scaleSwitcher/components/ScaleSwitcher.vue", () => {
                 }
             }
         };
-    let defaultState,
+    let active = true,
         store,
         wrapper;
-
-    before(() => {
-        defaultState = {...ScaleSwitcher.state};
-    });
 
     beforeEach(() => {
         mapCollection.clear();
@@ -50,7 +46,16 @@ describe("src_3_0_0/modules/scaleSwitcher/components/ScaleSwitcher.vue", () => {
                 Modules: {
                     namespaced: true,
                     modules: {
-                        ScaleSwitcher
+                        namespaced: true,
+                        ScaleSwitcher: {
+                            namespaced: true,
+                            getters: {
+                                active: () => active
+                            },
+                            mutations: {
+                                setActive: sinon.stub()
+                            }
+                        }
                     }
                 },
                 Maps: {
@@ -101,34 +106,31 @@ describe("src_3_0_0/modules/scaleSwitcher/components/ScaleSwitcher.vue", () => {
         };
 
         mapCollection.addMap(map, "2D");
-
-        store.commit("Modules/ScaleSwitcher/setActive", true);
     });
 
     afterEach(() => {
         if (wrapper) {
             wrapper.destroy();
         }
-    });
-
-    after(() => {
-        ScaleSwitcher.state = defaultState;
+        sinon.restore();
     });
 
     it("renders the scaleSwitcher", () => {
+        active = true;
         wrapper = shallowMount(ScaleSwitcherComponent, {store, localVue});
 
         expect(wrapper.find("#scale-switcher").exists()).to.be.true;
     });
 
     it("do not render the scaleSwitchers select if not active", () => {
-        store.commit("Modules/ScaleSwitcher/setActive", false);
+        active = false;
         wrapper = shallowMount(ScaleSwitcherComponent, {store, localVue});
 
         expect(wrapper.find("#scale-switcher").exists()).to.be.false;
     });
 
     it("has initially set all scales to select", () => {
+        active = true;
         wrapper = shallowMount(ScaleSwitcherComponent, {store, localVue});
         const options = wrapper.findAll("option");
 
@@ -139,6 +141,7 @@ describe("src_3_0_0/modules/scaleSwitcher/components/ScaleSwitcher.vue", () => {
     });
 
     it("has initially selected scale", async () => {
+        active = true;
         wrapper = shallowMount(ScaleSwitcherComponent, {store, localVue});
         const select = wrapper.find("select");
 
@@ -146,6 +149,7 @@ describe("src_3_0_0/modules/scaleSwitcher/components/ScaleSwitcher.vue", () => {
     });
 
     it("renders the correct value when select is changed", async () => {
+        active = true;
         wrapper = shallowMount(ScaleSwitcherComponent, {store, localVue});
         const select = wrapper.find("select"),
             options = wrapper.findAll("option");
@@ -160,6 +164,8 @@ describe("src_3_0_0/modules/scaleSwitcher/components/ScaleSwitcher.vue", () => {
 
     it("sets focus to first input control", async () => {
         const elem = document.createElement("div");
+
+        active = true;
 
         if (document.body) {
             document.body.appendChild(elem);
