@@ -8,10 +8,10 @@ const actions = {
      */
     navigateBack ({commit, dispatch, rootGetters}, side) {
         // eslint-disable-next-line new-cap
-        const {itemType} = rootGetters["Menu/objectFromPath"](side, "last");
+        const {type} = rootGetters["Menu/objectFromPath"](side, "last");
 
-        if (itemType !== "folder") {
-            dispatch("Menu/setElementActive", {moduleNamespace: itemType.charAt(0).toUpperCase() + itemType.slice(1), isActive: false}, {root: true});
+        if (type !== "folder") {
+            dispatch("Menu/setElementActive", {moduleNamespace: type.charAt(0).toUpperCase() + type.slice(1), isActive: false}, {root: true});
         }
         commit("removeLastEntry", side);
     }
