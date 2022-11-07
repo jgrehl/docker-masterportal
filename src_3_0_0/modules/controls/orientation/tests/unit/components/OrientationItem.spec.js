@@ -9,7 +9,7 @@ const localVue = createLocalVue();
 localVue.use(Vuex);
 config.mocks.$t = key => key;
 
-describe("src/modules/controls/orientation/components/OrientationItem.vue", () => {
+describe("src_3_0_0/modules/controls/orientation/components/OrientationItem.vue", () => {
     let store;
 
     beforeEach(() => {
@@ -19,14 +19,19 @@ describe("src/modules/controls/orientation/components/OrientationItem.vue", () =
                 Controls: {
                     namespaced: true,
                     modules: {
-                        orientation: {
+                        Orientation: {
                             namespaced: true,
                             getters: {
                                 geolocation: sinon.stub(),
+                                iconGeolocate: sinon.stub(),
+                                iconGeolocatePOI: sinon.stub(),
+                                poiDistances: () => [],
+                                poiMode: sinon.stub(),
                                 poiModeCurrentPositionEnabled: sinon.stub(),
                                 showPoi: sinon.stub(),
                                 showPoiChoice: sinon.stub(),
-                                showPoiIcon: sinon.stub()
+                                showPoiIcon: sinon.stub(),
+                                zoomMode: sinon.stub()
                             }
                         }
                     }
