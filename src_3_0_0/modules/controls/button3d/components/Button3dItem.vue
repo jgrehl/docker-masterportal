@@ -46,34 +46,40 @@ export default {
             this.changeMapMode(targetMode);
 
             this.addSingleAlert({
+                "title": "Title",
                 "content": "I am Info",
                 "mustBeConfirmed": true,
                 "creationDate": "01/01/24",
                 "multipleAlert": true});
             this.addSingleAlert({
+                "title": "Title",
                 "category": "news",
                 "content": "I am News",
                 "creationDate": "01/01/24",
                 "mustBeConfirmed": true,
                 "multipleAlert": true});
             this.addSingleAlert({
+                "title": "Title",
                 "category": "alert",
                 "content": "I am Alert",
                 "mustBeConfirmed": true,
                 "multipleAlert": true});
             this.addSingleAlert({
+                "title": "Title",
                 "category": "error",
                 "content": "I am Error",
                 "mustBeConfirmed": true,
                 "multipleAlert": true});
 
             this.addSingleAlert({
+                "title": "Title",
                 "category": "success",
                 "content": "I am Success",
                 "mustBeConfirmed": true,
                 "multipleAlert": true});
 
             this.addSingleAlert({
+                "title": "Title",
                 "category": "owncategory",
                 "content": "Welcome to 3D",
                 "creationDate": "01/01/24",
