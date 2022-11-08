@@ -78,6 +78,15 @@ const getters = {
     },
 
     /**
+     * Returns the mapView settings configuration of portalConfig.
+     * @param {Object} state state of the app-store.
+     * @returns {Object} The controls config.
+     */
+    mapViewSettings: state => {
+        return state.portalConfig?.mapView || {};
+    },
+
+    /**
      * Returns the ui style of configJs.
      * @param {Object} state state of the app-store.
      * @returns {Object} The ui style.
