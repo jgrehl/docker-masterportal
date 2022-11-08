@@ -4,6 +4,7 @@ import OpenConfig from "../openConfig/components/OpenConfig.vue";
 import ScaleSwitcher from "../scaleSwitcher/components/ScaleSwitcher.vue";
 import ShareView from "../shareView/components/ShareView.vue";
 import CoordToolkit from "../coordToolkit/components/CoordToolkit.vue";
+import Measure from "../measure/components/MeasureInMap.vue";
 
 /**
  * User type definition
@@ -17,7 +18,8 @@ const state = {
         openConfig: OpenConfig,
         print: PrintMap,
         scaleSwitcher: ScaleSwitcher,
-        shareView: ShareView
+        shareView: ShareView,
+        measure: Measure
     }
 };
 
