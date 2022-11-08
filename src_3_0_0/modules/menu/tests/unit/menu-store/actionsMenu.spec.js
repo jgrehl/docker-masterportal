@@ -15,6 +15,58 @@ describe("src_3_0_0/modules/menu/menu-store/actionsMenu.js", () => {
 
     afterEach(sinon.restore);
 
+    describe("mergeMenuState", () => {
+        it("should set merged mainMenu and secondaryMenu and reset Navigation/entries", () => {
+            const state = {
+                    mainMenu: {
+                        initiallyOpen: false,
+                        title: null,
+                        toggleButtonIcon: "bi-list",
+                        sections: []
+                    },
+                    secondaryMenu: {
+                        initiallyOpen: false,
+                        sections: [],
+                        title: null,
+                        toggleButtonIcon: "bi-tools"
+                    }
+                },
+                mainMenu = {
+                    initiallyOpen: true,
+                    sections: [
+                        [
+                            {
+                                type: "abc"
+                            }
+                        ]
+                    ]
+                },
+                secondaryMenu = {
+                    initiallyOpen: true,
+                    sections: [
+                        [
+                            {
+                                type: "xyz"
+                            }
+                        ]
+                    ]
+                };
+
+            actions.mergeMenuState({commit, state}, {mainMenu, secondaryMenu});
+
+            expect(commit.calledThrice).to.be.true;
+            expect(commit.firstCall.args[0]).to.equals("setMainMenu");
+            expect(commit.firstCall.args[1]).to.equals(Object.assign(state.mainMenu, mainMenu));
+            expect(commit.secondCall.args[0]).to.equals("setSecondaryMenu");
+            expect(commit.secondCall.args[1]).to.equals(Object.assign(state.secondaryMenu, secondaryMenu));
+            expect(commit.thirdCall.args[0]).to.equals("Navigation/setEntries");
+            expect(commit.thirdCall.args[1]).to.deep.equals({
+                mainMenu: [],
+                secondaryMenu: []
+            });
+        });
+    });
+
     describe("clickedMenuElement", () => {
         const path = ["generic"];
         let element, focus, getElementById, getters, section;
