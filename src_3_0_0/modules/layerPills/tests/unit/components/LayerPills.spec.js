@@ -114,25 +114,6 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
         });
     });
 
-    describe("left and right scroll visibility", () => {
-        it("left scroll is not visible and right scroll button does not exist", () => {
-            store.commit("setPortalConfig", {
-                tree: {
-                    layerPillsAmount: 4
-                }
-            });
-            wrapper = shallowMount(LayerPillsComponent, {store, localVue});
-            expect(wrapper.find(".invisible").exists()).to.be.true;
-            expect(wrapper.find("#layerpills-right-button").exists()).to.be.false;
-        });
-
-        it("left scroll is visible and right scroll button exists", () => {
-            wrapper = shallowMount(LayerPillsComponent, {store, localVue});
-            expect(wrapper.find(".invisible").exists()).to.be.false;
-            expect(wrapper.find("#layerpills-right-button").exists()).to.be.true;
-        });
-    });
-
     describe("left scroll enabled and disabled", () => {
         it("left scroll is disabled", () => {
             wrapper = shallowMount(LayerPillsComponent, {store, localVue});
@@ -249,5 +230,4 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
             expect(store.state.LayerPills.rightScrollDisabled).to.equal(true);
         });
     });
-
 });
