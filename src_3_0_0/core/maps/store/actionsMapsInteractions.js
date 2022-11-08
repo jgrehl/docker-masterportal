@@ -13,6 +13,17 @@ export default {
     ...actionsMapsInteractionsZoom,
 
     /**
+     * Adds an interaction to the map.
+     * @param {Object} _ not used
+     * @param {module:ol/interaction/Interaction} interaction - Interaction to be added to map.
+     * @returns {void}
+     */
+    async addInteraction (_, interaction) {
+        const map = await mapCollection.getMap("2D");
+
+        map.addInteraction(interaction);
+    },
+    /**
      * Registered listener for certain events on the map.
      * @see https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html
      * @param {Object} param store context
@@ -42,6 +53,17 @@ export default {
         mapCollection.getMap("2D").on(type, registeredActions[type][listenerType][listener]);
     },
 
+    /**
+     * Removes an interaction from the map.
+     * @param {Object} _ not used
+     * @param {module:ol/interaction/Interaction} interaction - Interaction to be removed from map.
+     * @returns {void}
+     */
+    async removeInteraction (_, interaction) {
+        const map = await mapCollection.getMap("2D");
+
+        map.removeInteraction(interaction);
+    },
     /**
      * Sets map view to initial properties.
      * @param {Object} param store context
