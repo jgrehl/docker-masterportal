@@ -12,7 +12,6 @@ export default {
     },
     watch: {
         visibleSubjectDataLayerConfigs (value) {
-
             this.setVisibleLayers(value, this.mode);
         },
         visibleSubjectDataLayers (value) {
@@ -65,16 +64,24 @@ export default {
                 }
             }
         },
-        removeLayerFromVisibleLayers (layerId) {
+        removeLayerFromVisibleLayers (layer) {
+            const layerIndex = this.visibleSubjectDataLayers.indexOf(layer) + 1;
+
+            if (layerIndex > this.layerPillsAmount) {
+                this.setStartIndex(this.startIndex - 1);
+                this.setEndIndex(this.endIndex - 1);
+            }
+
             this.replaceByIdInLayerConfig({
                 layerConfigs: [{
-                    id: layerId,
+                    id: layer.id,
                     layer: {
-                        id: layerId,
+                        id: layer.id,
                         visibility: false
                     }
                 }]
             });
+
         },
         moveLayerPills (direction) {
             if (direction === "right") {
@@ -101,7 +108,7 @@ export default {
             class="nav nav-pills"
         >
             <li
-                :class="visibleSubjectDataLayers.length <= layerPillsAmount ? 'nav-item invisible' : 'nav-item'"
+                class="nav-item"
             >
                 <button
                     id="layerpills-left-button"
@@ -132,13 +139,12 @@ export default {
                     type="button"
                     class="btn btn-customized close-button"
                     aria-label="Close button"
-                    @click="removeLayerFromVisibleLayers(layer.id)"
+                    @click="removeLayerFromVisibleLayers(layer)"
                 >
                     <i class="bi bi-x-lg icn-customized" />
                 </button>
             </li>
             <li
-                v-if="visibleSubjectDataLayers.length > layerPillsAmount"
                 class="nav-item"
             >
                 <button
@@ -202,10 +208,6 @@ export default {
     .btn-customized:hover {
         background-color: darken($primary, 10%);
         border-color: $white;
-    }
-
-    .invisible {
-        visibility: hidden;
     }
 
 </style>
