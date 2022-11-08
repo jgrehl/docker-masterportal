@@ -77,7 +77,8 @@
             "bufferAnalysis": "Buffer Analysis",
             "parcelSearch": "Parcel search",
             "wfsSearch": "WFS search",
-            "layerClusterToggler": "Open Layer Cluster"
+            "layerClusterToggler": "Open Layer Cluster",
+            "openConfig": "Open Map"
         },
         "contact": "Mail",
         "info": "Information"
@@ -364,7 +365,11 @@
               "sendButton": "send message",
               "successMessage": "Your request was sent successfully.",
               "successTicket": "Your ticket number is: "
-
+            },
+            "openConfig": {
+              "explanation": "Open a map that you have saved as a local project file.",
+              "headline": "open map",
+              "openFile": "Open project file"
             },
             "print": {
                 "titleLabel": "Title",
