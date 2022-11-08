@@ -79,7 +79,8 @@
             "bufferAnalysis": "Buffer Analyse",
             "wfsSearch": "WFS Suche",
             "routing": "Routing",
-            "layerClusterToggler": "Layer-Gruppe öffnen"
+            "layerClusterToggler": "Layer-Gruppe öffnen",
+            "openConfig": "Karte öffnen"
         },
         "contact": "Kontakt",
         "info": "Informationen"
@@ -377,6 +378,11 @@
                 "sendButton": "Abschicken",
                 "successMessage": "Ihre Anfrage wurde erfolgreich versendet.",
                 "successTicket": "Ihre Ticketnummer lautet: "
+            },
+            "openConfig": {
+              "explanation": "Öffnen Sie eine Karte die sie als lokale Projektdatei abgespeichert haben.",
+              "headline": "Karte öffnen",
+              "openFile": "Projektdatei öffnen"
             },
             "print": {
                 "titleLabel": "Titel",
