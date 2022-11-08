@@ -75,6 +75,12 @@ function create3DMap (configJs) {
         map2D: mapCollection.getMap("2D")
     }, "3D");
 
+    api.map.olcsMap.handle3DEvents({
+        scene: map3d.getCesiumScene(),
+        map3D: map3d,
+        callback: (clickObject) => store.dispatch("Maps/updatePointer", Object.freeze(clickObject))
+    });
+
     mapCollection.addMap(map3d, "3D");
 }
 
