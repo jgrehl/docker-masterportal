@@ -2,6 +2,7 @@ import actions from "./actionsModules";
 import state from "./stateModules";
 
 import CoordToolkit from "../coordToolkit/store/indexCoordToolkit";
+import Measure from "../measure/store/indexMeasure";
 import OpenConfig from "../openConfig/store/indexOpenConfig";
 import Print from "../print/store/indexPrint";
 import ScaleSwitcher from "../scaleSwitcher/store/indexScaleSwitcher";
@@ -14,6 +15,7 @@ export default {
     modules: {
         // modules must be copied, else tests fail in watch mode
         CoordToolkit: {...CoordToolkit},
+        Measure: {...Measure},
         OpenConfig: {...OpenConfig},
         Print: {...Print},
         ScaleSwitcher: {...ScaleSwitcher},
