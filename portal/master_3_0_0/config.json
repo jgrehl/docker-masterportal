@@ -45,6 +45,9 @@
             "type": "shareView"
           },
           {
+            "type": "openConfig"
+          },
+          {
             "name": "folder1",
             "icon": "bi-file-plus",
             "type": "folder",
