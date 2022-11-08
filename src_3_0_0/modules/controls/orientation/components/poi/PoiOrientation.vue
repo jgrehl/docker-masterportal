@@ -16,10 +16,7 @@ export default {
 
         getFeaturesInCircle: {
             type: Function,
-            required: true,
-            default: () => {
-                console.warn("No function was defined for this getFeaturesInCircle.");
-            }
+            required: true
         }
     },
     data () {
