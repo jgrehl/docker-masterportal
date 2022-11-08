@@ -6,13 +6,11 @@ import {mapActions, mapGetters} from "vuex";
 export default {
     name: "AlertingItem",
 
-
     data () {
         return {
             availableLocalStorage: false
         };
     },
-
     computed: {
         ...mapGetters("Alerting", [
             "displayedAlerts",
@@ -22,28 +20,25 @@ export default {
             "showTheModal",
             "sortedAlerts"
         ]),
-
         /**
          * Reads current URL and returns it without hash and without get params, always ending with slash.
-         * This is needed to have a normalized URL tocompare with configured BroadcastConfig URLs;
+         * This is needed to have a normalized URL to compare with configured BroadcastConfig URLs;
          * see example file /portal/master/resources/broadcastedPortalAlerts.json
          * @returns {String} The normalized current browser URL
          */
         currentUrl: () => {
             return document.URL.replace(/#.*$/, "").replace(/\/*\?.*$/, "/").replace(/\bwww.\b/, "");
         },
-
         /**
          * Console mapping to be able to debug in template.
          * @returns {void}
          */
         console: () => console
     },
-
     watch: {
         /**
          * Syncs localstorage with displayedAlerts prop.
-         * @param {object} newDisplayedAlerts newly changed displayedAlerts object
+         * @param {Object} newDisplayedAlerts newly changed displayedAlerts object
          * @returns {void}
          */
         displayedAlerts (newDisplayedAlerts) {
@@ -52,25 +47,13 @@ export default {
                 localStorage[this.localStorageDisplayedAlertsKey] = JSON.stringify(newDisplayedAlerts);
             }
         }
-        /*   visible: function(newVal, oldVal) { // watch it
-            this.visible = newVal;
-            console.log('new' +newVal+ '==' +oldVal)
-        } */
-
     },
-
     /**
      * Created hook: Creates event listener for legacy Radio calls (to be removed seometime).
      * Checks if localstorage is available.
      * @returns {void}
      */
     created () {
-        /*  Backbone.Events.listenTo(Radio.channel("Alert"), {
-            "alert": newAlert => {
-                this.addSingleAlert(newAlert);
-            }
-        }); */
-
         try {
             if (localStorage) {
                 this.availableLocalStorage = true;
@@ -81,7 +64,6 @@ export default {
             console.error("Spelling localestorage is not available in this application. Please allow third party cookies in your browser!");
         }
     },
-
     /**
      * Mounted hook: Initially sets up localstorage and then fetches BroadcastConfig.
      * @returns {void}
@@ -121,7 +103,7 @@ export default {
         /**
          * Do this after successfully fetching broadcastConfig:
          * Process configured data and add each resulting alert into the state.
-         * @param {object} response received response object
+         * @param {Object} response received response object
          * @returns {void}
          */
         axiosCallback: function (response) {
@@ -160,7 +142,7 @@ export default {
 
         /**
          * Just a wrapper method for the XHR request for the sake of testing.
-         * @param {string} fetchBroadcastUrl fetchBroadcastUrl
+         * @param {String} fetchBroadcastUrl fetchBroadcastUrl
          * @returns {void}
          */
         fetchBroadcast: function (fetchBroadcastUrl) {
@@ -169,14 +151,13 @@ export default {
             });
         },
         /**
-         * Just a wrapper method for the XHR request for the sake of testing.
+         * Toggles the modal
          * @param {Boolean} value value for showTheModal
          * @returns {void}
          */
         toggleModal: function (value) {
             this.$store.commit("Alerting/setShowTheModal", value);
         },
-
         /**
          * When closing the modal, update all alerts' have-been-read states.
          * @returns {void}
@@ -194,7 +175,7 @@ export default {
             this.alertHasBeenRead(hash);
         },
         /**
-         * Check category name if footer attributes should be shown
+         * Check category name to control if footer attributes should be shown
          * @param {String} category category name
          * @returns {void}
          */
@@ -260,15 +241,10 @@ export default {
                     <div
                         v-for="(singleAlert, singleAlertIndex) in alertCategory.content"
                         :key="singleAlert.hash"
-                        class="singleAlertWrapper"
                         :class="singleAlert.displayClass"
                     >
                         <div
                             class="singleAlertContainer"
-                            :class="{
-                                singleAlertIsImportant: singleAlert.mustBeConfirmed,
-                                last: singleAlertIndex === alertCategory.content.length-1
-                            }"
                         >
                             <hr
                                 v-if="singleAlertIndex>0 || categoryIndex>0"
@@ -287,7 +263,6 @@ export default {
                                     </b>
                                 </h3>
                                 <div
-                                    class="singleAlertMessage"
                                     v-html="singleAlert.content"
                                 />
                             </div>
@@ -296,11 +271,12 @@ export default {
                                 class="d-flex justify-content-between offset-alert small"
                             >
                                 <div
+                                    class="mt-2"
                                     v-html="$t(`common:modules.alerting.created`)+singleAlert.creationDate"
                                 />
                                 <p
                                     v-if="singleAlert.mustBeConfirmed && availableLocalStorage"
-                                    class="confirm"
+                                    class="mt-1"
                                 >
                                     <button
                                         type="button"
@@ -334,11 +310,9 @@ export default {
     }
     div.alertCategoryContainer {
         margin-bottom:0px;
-
         &.last {
             margin-bottom:6px;
         }
-
         h3 {
             border:none;
             color: $secondary_contrast;
