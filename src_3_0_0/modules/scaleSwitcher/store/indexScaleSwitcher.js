@@ -6,7 +6,7 @@ import state from "./stateScaleSwitcher";
 
 export default {
     namespaced: true,
-    state,
+    state: {...state},
     mutations,
     actions,
     getters
