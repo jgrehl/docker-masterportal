@@ -5,12 +5,10 @@ import Layer3d from "../../../js/layer3d";
 describe("src_3_0_0/core/js/layers/layer3d.js", () => {
     let warn;
 
-    before(() => {
+    beforeEach(() => {
         warn = sinon.spy();
         sinon.stub(console, "warn").callsFake(warn);
-    });
 
-    beforeEach(() => {
         mapCollection.clear();
         const map = {
             id: "olcs",
