@@ -7,6 +7,7 @@ import OpenConfig from "../openConfig/store/indexOpenConfig";
 import Print from "../print/store/indexPrint";
 import ScaleSwitcher from "../scaleSwitcher/store/indexScaleSwitcher";
 import ShareView from "../shareView/store/indexShareView";
+import Contact from "../contact/store/indexContact";
 
 export default {
     namespaced: true,
@@ -19,6 +20,7 @@ export default {
         OpenConfig: {...OpenConfig},
         Print: {...Print},
         ScaleSwitcher: {...ScaleSwitcher},
-        ShareView: {...ShareView}
+        ShareView: {...ShareView},
+        Contact: {...Contact}
     }
 };
