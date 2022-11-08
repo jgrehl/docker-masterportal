@@ -930,6 +930,16 @@
             "scaleSwitcher": {
                 "label": "Scale"
             },
+            "shareView": {
+                "shareHeadline": "How would you like to share the link?",
+                "share": "Teilen",
+                "shareFacebook": "Facebook",
+                "shareTwitter": "Twitter",
+                "shareQR": "Generate a QRCode",
+                "shareLink": "Copy link",
+                "downloadQR": "Download QRCode",
+                "myMap": "This is my map: "
+            },
             "bufferAnalysis": {
                 "sourceSelectLabel": "source layer",
                 "targetSelectLabel": "target layer",
