@@ -56,6 +56,9 @@
             "type": "openConfig"
           },
           {
+            "type": "measure"
+          },
+          {
             "type": "print",
             "printServiceId": "mapfish",
             "printAppId": "master",
@@ -65,23 +68,23 @@
           },
           {
             "name": "folder1",
-            "icon": "bi-file-plus",
+            "icon": "bi-folder-plus",
             "type": "folder",
             "elements": [
               {
                 "name": "folder1_1",
-                "icon": "bi-file-plus",
+                "icon": "bi-folder-plus",
                 "type": "folder",
                 "elements": [
                   {
                     "name": "folder1_1_1",
-                    "icon": "bi-file-plus",
+                    "icon": "bi-folder-plus",
                     "type": "folder",
                     "elements": []
                   },
                   {
                     "name": "folder1_1_2",
-                    "icon": "bi-file-plus",
+                    "icon": "bi-folder-plus",
                     "type": "folder",
                     "elements": []
                   }
@@ -89,7 +92,7 @@
               },
               {
                 "name": "folder1_2",
-                "icon": "bi-file-plus",
+                "icon": "bi-folder-plus",
                 "type": "folder",
                 "elements": []
               }
@@ -97,18 +100,18 @@
           },
           {
             "name": "folder2",
-            "icon": "bi-file-plus",
+            "icon": "bi-folder-plus",
             "type": "folder",
             "elements": [
               {
                 "name": "folder2_1",
-                "icon": "bi-file-plus",
+                "icon": "bi-folder-plus",
                 "type": "folder",
                 "elements": []
               },
               {
                 "name": "folder2_2",
-                "icon": "bi-file-plus",
+                "icon": "bi-folder-plus",
                 "type": "folder",
                 "elements": []
               }
