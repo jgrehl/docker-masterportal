@@ -85,7 +85,7 @@ export default {
         commit("setMaxZoom", mapView.getMaxZoom());
         commit("setMinZoom", mapView.getMinZoom());
         commit("setResolution", mapView.getResolution());
-        commit("setScale", options.scale);
+        commit("setScale", options?.scale);
         commit("setZoom", mapView.getZoom());
     }
 };
