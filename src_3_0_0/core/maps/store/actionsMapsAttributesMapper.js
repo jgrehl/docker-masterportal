@@ -1,5 +1,4 @@
 import findWhereJs from "../../../shared/js/utils/findWhereJs";
-import {transform, get} from "ol/proj.js";
 
 /**
  * Registers on events of the map and view to keep the attributes up to date.
@@ -77,17 +76,11 @@ export default {
         if (getters.mode === "2D") {
             commit("setMouseCoordinate", event.coordinate);
         }
-        else if (getters.mode === "3D") {
+        else if (getters.mode === "3D" && event.pickedPosition) {
             try {
-                const scene = mapCollection.getMap("3D").getCesiumScene(),
-                    pickedPositionCartesian = scene.pickPosition(event.endPosition),
-                    cartographicPickedPosition = scene.globe.ellipsoid.cartesianToCartographic(pickedPositionCartesian),
-                    transformedPickedPosition = transform([Cesium.Math.toDegrees(cartographicPickedPosition.longitude), Cesium.Math.toDegrees(cartographicPickedPosition.latitude)], get("EPSG:4326"), getters.projection);
-
-                transformedPickedPosition.push(cartographicPickedPosition.height);
-                commit("setMouseCoordinate", transformedPickedPosition);
+                commit("setMouseCoordinate", event.pickedPosition);
             }
-            catch {
+            catch (e) {
                 // An error is thrown if the scene is not rendered yet.
             }
         }
