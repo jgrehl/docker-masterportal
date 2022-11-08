@@ -4,6 +4,7 @@ import MenuContainer from "../../../components/MenuContainer.vue";
 import MenuContainerHeader from "../../../components/MenuContainerHeader.vue";
 import MenuContainerBody from "../../../components/MenuContainerBody.vue";
 import {expect} from "chai";
+import sinon from "sinon";
 
 const localVue = createLocalVue();
 
@@ -19,7 +20,9 @@ describe("src_3_0_0/modules/menu/MenuContainer.vue", () => {
         store = new Vuex.Store({
             namespaces: true,
             getters: {
-                isMobile: (state) => state.isMobile
+                isMobile: (state) => state.isMobile,
+                mainMenu: sinon.stub(),
+                secondaryMenu: sinon.stub()
             },
             state: {
                 isMobile: false
@@ -48,6 +51,9 @@ describe("src_3_0_0/modules/menu/MenuContainer.vue", () => {
                         setTestSecondaryInitiallyOpen: (state, value) => {
                             state.secondaryInitiallyOpen = value;
                         }
+                    },
+                    actions: {
+                        mergeMenuState: sinon.stub()
                     }
                 },
                 MenuNavigation: {
