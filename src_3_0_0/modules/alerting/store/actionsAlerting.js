@@ -18,7 +18,6 @@ function findSingleAlertByHash (haystackAlerts, needleHash) {
 
     return foundAlerts.length ? foundAlerts[0] : false;
 }
-
 /**
  * Checks if an alert should be displayed considerung its .displayFrom and .displayUntil properties.
  * @param {Object} alertToCheck The alert to check
@@ -27,7 +26,6 @@ function findSingleAlertByHash (haystackAlerts, needleHash) {
 function checkAlertLifespan (alertToCheck) {
     return (!alertToCheck.displayFrom || moment().isAfter(alertToCheck.displayFrom)) && (!alertToCheck.displayUntil || moment().isBefore(alertToCheck.displayUntil));
 }
-
 /**
  * Checks if an already displayed alert may be displayed again.
  * @param {Object} displayedAlerts an object as collection of already displayed alerts with their hash value as associated key
@@ -78,21 +76,19 @@ export default {
         fetchFirstModuleConfig(context, configPaths, "Alerting");
 
     },
-
     /**
      * Mapping to equilavent mutation
-     * @param {object} commit commit
-     * @param {object} alerts alerts to be set
+     * @param {Object} commit commit
+     * @param {Object} alerts alerts to be set
      * @returns {void}
      */
     setDisplayedAlerts: function ({commit}, alerts = {}) {
         commit("setDisplayedAlerts", alerts);
     },
-
     /**
      * Removes read alerts, set displayed alerts as displayed and hide modal.
-     * @param {object} state state
-     * @param {object} commit commit
+     * @param {Object} state state
+     * @param {Object} commit commit
      * @returns {void}
      */
     cleanup: function ({state, commit}) {
@@ -104,12 +100,11 @@ export default {
         });
         commit("setReadyToShow", false);
     },
-
     /**
      * Marks a single alert as read. Triggers callback function if defined. As a conclusion, the callback
      * function does only work if the alert must be confirmed and has not been read.
-     * @param {object} state state
-     * @param {string} hash Hash of read alert
+     * @param {Object} state state
+     * @param {String} hash Hash of read alert
      * @returns {void}
      */
     alertHasBeenRead: function ({state, commit}, hash) {
@@ -117,12 +112,8 @@ export default {
 
         if (singleAlert !== false) {
             commit("setAlertAsRead", singleAlert);
-            if (typeof singleAlert.legacy_onConfirm === "function") {
-                singleAlert.legacy_onConfirm();
-            }
         }
     },
-
     /**
      * Checks a new alert object, if it may be added to alerting queue. This includes checking, if
      *  1: alert is already in queue
@@ -210,7 +201,6 @@ export default {
             }
             commit("addToAlerts", alertProtoClone);
         }
-
         // even if current alert got seeded out, there still might be another one in the pipe
         if (state.alerts.length > 0) {
             if (findSingleAlertByHash(state.alerts, alertProtoClone.hash) !== false && isInTime && isNotRestricted) {
