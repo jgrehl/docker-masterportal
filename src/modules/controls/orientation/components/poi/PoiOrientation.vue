@@ -1,6 +1,5 @@
 <script>
-import {mapGetters, mapMutations, mapActions} from "vuex";
-import getters from "../../store/gettersOrientation";
+import {mapMutations, mapActions} from "vuex";
 import mutations from "../../store/mutationsOrientation";
 import Icon from "ol/style/Icon";
 
