@@ -58,7 +58,7 @@ Konfiguration der Themenbaumes
 |layerIDsToIgnore|nein|String[]||Liste von `services.json`-Layer-Ids, die nicht im Baum angezeigt werden sollen. Nur für den Baum-Typ `auto`.|false|
 |metaIDsToIgnore|nein|String[]||Alle in der `services.json` gefundenen Layer, die diesen Meta-IDs entsprechen, werden nicht im Baum angezeigt. Nur für den Baum-Typ `auto`.|false|
 |metaIDsToMerge|nein|String[]||Alle in der `services.json` gefundenen Layer, die diesen Meta-IDs entsprechen, werden zu einer einzigen Layer im Baum zusammengeführt. Nur für den Baum-Typ `auto`.|true|
-|layerIDsToStyle|nein|**[layerIDsToStyle](#markdown-header-treelayeridstostyle)**[]||Spezielle Implementierung für einen HVV-Dienst (Hamburger Verkehrsbetriebe). Enthält Objekte zur Abfrage verschiedener Stile einer Layer-ID. Nur für den Baum-Typ `auto`.|true|
+|layerIDsToStyle|nein|**[layerIDsToStyle](#markdown-header-portalconfigtreelayeridstostyle)**[]||Spezielle Implementierung für einen HVV-Dienst (Hamburger Verkehrsbetriebe). Enthält Objekte zur Abfrage verschiedener Stile einer Layer-ID. Nur für den Baum-Typ `auto`.|true|
 |highlightedFeatures|nein|**[highlightedFeatures](#markdown-header-portalconfigtreehighlightedfeatures)**||Konfiguration zusätzlich zum Highlighting von Features.|false|
 
 
@@ -85,18 +85,6 @@ Konfiguration der Themenbaumes
     }
 }
 ```
-
-**Beispiel Highlighting**
-```
-#!json
-"tree":{
-    "highlightedFeatures": {
-        "active": true,
-        "layerName": "common:tree.selectedFeatures"
-    }
-},
-```
-
 ***
 
 ### Portalconfig.tree.layerIDsToStyle
@@ -122,31 +110,6 @@ Konfiguration der Themenbaumes
     ]
 }
 ```
-
-**Beispiel**
-```json
-{
-    "tree": {
-        "type": "auto",
-        "validLayerTypesAutoTree": ["WMS", "WFS"],
-        "layerIDsToIgnore": ["1912", "1913"],
-        "metaIDsToIgnore": [
-            "09DE39AB-A965-45F4-B8F9-0C339A45B154"
-        ],
-        "metaIDsToMerge": [
-            "FE4DAF57-2AF6-434D-85E3-220A20B8C0F1"
-        ],
-        "layerIDsToStyle": [
-        {
-            "id": "1935",
-            "styles": ["geofox_Faehre", "geofox-bahn", "geofox-bus", "geofox_BusName"],
-            "name": ["Fährverbindungen", "Bahnlinien", "Buslinien", "Busliniennummern"],
-            "legendURL": ["http://geoportal.metropolregion.hamburg.de/legende_mrh/hvv-faehre.png", "http://geoportal.metropolregion.hamburg.de/legende_mrh/hvv-bahn.png", "http://geoportal.metropolregion.hamburg.de/legende_mrh/hvv-bus.png", "http://87.106.16.168/legende_mrh/hvv-bus.png"]
-        }
-    }
-}
-```
-
 ***
 
 #### Portalconfig.tree.highlightedFeatures
@@ -668,45 +631,6 @@ Konfiguration der Suche über die sichtbaren VectorLayer. Bei der Layerdefinitio
     "layerTypes": ["WFS", "GeoJSON"]
 }
 ```
-
-#### Portalconfig.tree
-Konfiguration des Menü-Baums.
-
-|Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
-|----|-------------|---|-------|------------|------|
-|highlightedFeatures|nein|**[highlightedFeatures](#markdown-header-portalconfigtreehighlightedfeatures)**||Konfiguration zusätzlich zum Highlighting von Features.|false|
-|showScaleTooltip|nein|Boolean|false|Flag ob im Layer Tooltip zusätzlich zum Namen des entsprechenden Layers auch der Maßstabsbereich angezeigt wird.|false|
-
-**Beispiel**
-```
-#!json
-"tree":{
-    "highlightedFeatures": {
-        "active": true,
-        "layerName": "common:tree.selectedFeatures"
-    },
-    "showScaleTooltip": true
-},
-```
-***
-
-#### Portalconfig.tree.highlightedFeatures
-Konfiguration zusätzlich zum Highlighting von Features. Wenn mit dem Werkzeug "Liste" oder "Features auswählen" mit "Auf dieses Feature zoomen" oder per Url-Parameter Features hervorgehoben werden, dann ist ein Layer mit diesen Features im Menü-Baum auswählbar.
-
-|Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
-|----|-------------|---|-------|------------|------|
-|active|nein|Boolean|false|Gibt an, ob dieses Feature aktiv ist.|false|
-|layerName|nein|String|"common:tree.selectedFeatures"|Name der erzeugten Layer mit den hervorgehobenen Features. Der Name enthält zusätzlich den Namen des Werkzeuges mit dem gearbeitet wurde.|true|
-
-**Beispiel**
-```
-#!json
-"highlightedFeatures": {
-    "active": false,
-    "layerName": "common:tree.selectedFeatures"
-},
-```
-***
 
 #### Portalconfig.layerInformation
 Konfiguration der layerInformation.
@@ -1366,7 +1290,6 @@ Hier können die Menüeinträge und deren Anordnung konfiguriert werden. Die Rei
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
 |ansichten|nein|**[ansichten](#markdown-header-portalconfigmenuansichten)**||Vorkonfigurierte Kartenansicht im 2D und 3D Modus|false|
-|initiallyOpen|nein|Boolean|false|Legt fest, ob das Menü initial geöffnet sein soll.|false|
 |info|nein|**[info](#markdown-header-portalconfigmenuinfo)**||Ordner im Menü, der **[tools](#markdown-header-portalconfigmenutools)** oder **[staticlinks](#markdown-header-portalconfigmenustaticlinks)** darstellt.|false|
 |legend|nein|**[legend](#markdown-header-portalconfigmenulegend)**||In der Legende werden alle sichtbaren Layer dargestellt.|false|
 |login|nein|**[login](#markdown-header-portalconfigmenulogin)**||Konfiguration der Anmeldung bei einem OIDC-Server.|false|
