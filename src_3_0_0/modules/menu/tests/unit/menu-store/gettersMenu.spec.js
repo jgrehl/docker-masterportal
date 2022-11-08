@@ -1,17 +1,25 @@
 import sinon from "sinon";
 import {expect} from "chai";
 import gettersMenu from "../../../menu-store/gettersMenu";
+import stateMenu from "../../../menu-store/stateMenu";
 import idx from "../../../../../shared/js/utils/idx";
 
 describe("src_3_0_0/modules/menu/menu-store/gettersMenu.js", () => {
     const component = Symbol("Am component"),
         mainMenuSymbol = Symbol("mainMenu"),
         secondaryMenuSymbol = Symbol("secondaryMenu");
-    let consoleErrorSpy, getters, rootGetters;
+    let consoleErrorSpy,
+        getters,
+        rootGetters,
+        state;
 
     beforeEach(() => {
         consoleErrorSpy = sinon.spy();
         sinon.stub(console, "error").callsFake(consoleErrorSpy);
+        state = {
+            mainMenu: mainMenuSymbol,
+            secondaryMenu: secondaryMenuSymbol
+        };
         getters = {
             mainMenu: null,
             secondaryMenu: null
@@ -36,7 +44,7 @@ describe("src_3_0_0/modules/menu/menu-store/gettersMenu.js", () => {
 
     describe("componentFromPath", () => {
         const type = "component";
-        let objectFromPathFake, side, state;
+        let objectFromPathFake, side;
 
         beforeEach(() => {
             state = {};
@@ -72,39 +80,48 @@ describe("src_3_0_0/modules/menu/menu-store/gettersMenu.js", () => {
             expect(consoleErrorSpy.firstCall.args[0]).to.equal(`Menu.componentMap: The given menu side ${side} is not allowed. Please use "mainMenu" or "secondaryMenu" instead.`);
         });
     });
+
     describe("mainMenu", () => {
         it("should return a configuration for the mainMenu if the configJson is already loaded", () => {
-            rootGetters.loadedConfigs.configJson = true;
+            rootGetters.portalConfig.mainMenu = {};
 
-            expect(gettersMenu.mainMenu(undefined, getters, undefined, rootGetters)).to.equal(mainMenuSymbol);
+            expect(gettersMenu.mainMenu(state, undefined, undefined, rootGetters)).to.equal(mainMenuSymbol);
         });
         it("should return null if the configJson has not been loaded yet", () => {
-            expect(gettersMenu.mainMenu(undefined, getters, undefined, rootGetters)).to.equal(null);
+            rootGetters.portalConfig.mainMenu = undefined;
+
+            expect(gettersMenu.mainMenu(state, undefined, undefined, rootGetters)).to.equal(null);
         });
     });
+
     describe("mainInitiallyOpen", () => {
         it("should return false if mainMenu is null", () => {
-            expect(gettersMenu.mainInitiallyOpen(undefined, getters)).to.equal(false);
+            state.mainMenu = {
+                initiallyOpen: false
+            };
+
+            expect(gettersMenu.mainInitiallyOpen(state)).to.equal(false);
         });
         it("should return false if initiallyOpen is not a boolean set on mainMenu", () => {
-            getters.mainMenu = {};
-
-            expect(gettersMenu.mainInitiallyOpen(undefined, getters)).to.equal(false);
+            expect(gettersMenu.mainInitiallyOpen(stateMenu)).to.equal(false);
         });
         it("should return the value of initiallyOpen if mainMenu is not null (loaded) and is a boolean value on mainMenu", () => {
-            getters.mainMenu = {initiallyOpen: true};
+            state.mainMenu = {initiallyOpen: true};
 
-            expect(gettersMenu.mainInitiallyOpen(undefined, getters)).to.equal(true);
+            expect(gettersMenu.mainInitiallyOpen(state)).to.equal(true);
         });
     });
+
     describe("mainTitle", () => {
         it("should return null if mainMenu is null", () => {
-            expect(gettersMenu.mainTitle(undefined, getters)).to.equal(null);
+            state.mainMenu = {
+                title: null
+            };
+
+            expect(gettersMenu.mainTitle(state)).to.equal(null);
         });
         it("should return null if title is not defined on mainMenu", () => {
-            getters.mainMenu = {};
-
-            expect(gettersMenu.mainTitle(undefined, getters)).to.equal(null);
+            expect(gettersMenu.mainTitle(stateMenu)).to.equal(null);
         });
         it("should return the title if it is defined on mainMenu", () => {
             const title = {
@@ -114,30 +131,25 @@ describe("src_3_0_0/modules/menu/menu-store/gettersMenu.js", () => {
                 "toolTip": "Landesbetrieb Geoinformation und Vermessung"
             };
 
-            getters.mainMenu = {title};
+            state.mainMenu = {title};
 
-            expect(gettersMenu.mainTitle(undefined, getters)).to.deep.equal(title);
+            expect(gettersMenu.mainTitle(state)).to.deep.equal(title);
         });
     });
+
     describe("mainToggleButtonIcon", () => {
         it("should return the configured icon for the mainMenu if configured", () => {
             const toggleButtonIcon = "bi-bucket";
 
-            getters.mainMenu = {toggleButtonIcon};
+            state.mainMenu = {toggleButtonIcon};
 
-            expect(gettersMenu.mainToggleButtonIcon(undefined, getters)).to.equal(toggleButtonIcon);
+            expect(gettersMenu.mainToggleButtonIcon(state)).to.equal(toggleButtonIcon);
         });
         it("should return the default icon if it isn't configured on mainMenu", () => {
-            expect(gettersMenu.mainToggleButtonIcon(undefined, getters)).to.equal("bi-list");
-        });
-        it("should return the default icon if the configured icon does not start with '-bi'", () => {
-            const toggleButtonIcon = "bucket";
-
-            getters.mainMenu = {toggleButtonIcon};
-
-            expect(gettersMenu.mainToggleButtonIcon(undefined, getters)).to.equal("bi-list");
+            expect(gettersMenu.mainToggleButtonIcon(stateMenu)).to.equal("bi-list");
         });
     });
+
     describe("objectFromPath", () => {
         const foundObject = Symbol("am object"),
             lastEntrySymbol = Symbol("last entry"),
@@ -238,39 +250,50 @@ describe("src_3_0_0/modules/menu/menu-store/gettersMenu.js", () => {
             expect(consoleErrorSpy.thirdCall.args[0]).to.equal(`Menu.objectFromPath: b) The given entry in the navigation ${entry} is not allowed. Please use "last" or "previous" instead.`);
         });
     });
+
     describe("secondaryMenu", () => {
         it("should return a configuration for the secondaryMenu if the configJson is already loaded", () => {
-            rootGetters.loadedConfigs.configJson = true;
+            rootGetters.portalConfig.secondaryMenu = {};
 
-            expect(gettersMenu.secondaryMenu(undefined, getters, undefined, rootGetters)).to.equal(secondaryMenuSymbol);
+            expect(gettersMenu.secondaryMenu(state, undefined, undefined, rootGetters)).to.equal(secondaryMenuSymbol);
         });
         it("should return null if the configJson has not been loaded yet", () => {
-            expect(gettersMenu.secondaryMenu(undefined, getters, undefined, rootGetters)).to.equal(null);
+            rootGetters.portalConfig.secondaryMenu = undefined;
+
+            expect(gettersMenu.secondaryMenu(state, undefined, undefined, rootGetters)).to.equal(null);
         });
     });
+
     describe("secondaryInitiallyOpen", () => {
         it("should return false if secondaryMenu is null", () => {
-            expect(gettersMenu.secondaryInitiallyOpen(undefined, getters)).to.equal(false);
+            state.secondaryMenu = {
+                initiallyOpen: false
+            };
+
+            expect(gettersMenu.secondaryInitiallyOpen(state)).to.equal(false);
         });
         it("should return false if initiallyOpen is not a boolean set on secondaryMenu", () => {
-            getters.secondaryMenu = {};
-
-            expect(gettersMenu.secondaryInitiallyOpen(undefined, getters)).to.equal(false);
+            expect(gettersMenu.secondaryInitiallyOpen(stateMenu)).to.equal(false);
         });
         it("should return the value of initiallyOpen if secondaryMenu is not null (loaded) and is a boolean value on secondaryMenu", () => {
-            getters.secondaryMenu = {initiallyOpen: true};
+            state.secondaryMenu = {initiallyOpen: true};
 
-            expect(gettersMenu.secondaryInitiallyOpen(undefined, getters)).to.equal(true);
+            expect(gettersMenu.secondaryInitiallyOpen(state)).to.equal(true);
         });
     });
+
     describe("secondaryTitle", () => {
         it("should return null if secondaryMenu is null", () => {
-            expect(gettersMenu.secondaryTitle(undefined, getters)).to.equal(null);
+            state.secondaryMenu = {
+                title: null
+            };
+
+            expect(gettersMenu.secondaryTitle(state)).to.equal(null);
         });
         it("should return null if title is not defined on secondaryMenu", () => {
             getters.secondaryMenu = {};
 
-            expect(gettersMenu.secondaryTitle(undefined, getters)).to.equal(null);
+            expect(gettersMenu.secondaryTitle(stateMenu)).to.equal(null);
         });
         it("should return the title if it is defined on secondaryMenu", () => {
             const title = {
@@ -280,30 +303,25 @@ describe("src_3_0_0/modules/menu/menu-store/gettersMenu.js", () => {
                 "toolTip": "Landesbetrieb Geoinformation und Vermessung"
             };
 
-            getters.secondaryMenu = {title};
+            state.secondaryMenu = {title};
 
-            expect(gettersMenu.secondaryTitle(undefined, getters)).to.deep.equal(title);
+            expect(gettersMenu.secondaryTitle(state)).to.deep.equal(title);
         });
     });
+
     describe("secondaryToggleButtonIcon", () => {
         it("should return the configured icon for the secondaryMenu if configured", () => {
             const toggleButtonIcon = "bi-bucket";
 
-            getters.secondaryMenu = {toggleButtonIcon};
+            state.secondaryMenu = {toggleButtonIcon};
 
-            expect(gettersMenu.secondaryToggleButtonIcon(undefined, getters)).to.equal(toggleButtonIcon);
+            expect(gettersMenu.secondaryToggleButtonIcon(state)).to.equal(toggleButtonIcon);
         });
         it("should return the default icon if it isn't configured on secondaryMenu", () => {
-            expect(gettersMenu.secondaryToggleButtonIcon(undefined, getters)).to.equal("bi-tools");
-        });
-        it("should return the default icon if the configured icon does not start with '-bi'", () => {
-            const toggleButtonIcon = "bucket";
-
-            getters.secondaryMenu = {toggleButtonIcon};
-
-            expect(gettersMenu.secondaryToggleButtonIcon(undefined, getters)).to.equal("bi-tools");
+            expect(gettersMenu.secondaryToggleButtonIcon(stateMenu)).to.equal("bi-tools");
         });
     });
+
     describe("titleBySide", () => {
         const exampleTitle = {
             text: "Precise name",
@@ -345,6 +363,7 @@ describe("src_3_0_0/modules/menu/menu-store/gettersMenu.js", () => {
             expect(gettersMenu.titleBySide(undefined, getters)("newMenu")).to.equal(null);
         });
     });
+
     describe("section", () => {
         const goodPath = Symbol("woowee we found something");
         let foundSection, path;
