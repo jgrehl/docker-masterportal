@@ -78,12 +78,30 @@ const getters = {
     },
 
     /**
+     * Returns teh mainmenu of portalConfig.
+     * @param {String} state state of the app-store.
+     * @returns {Object} Main menu.
+     */
+    mainMenu: state => {
+        return state.portalConfig.mainMenu || {};
+    },
+
+    /**
      * Returns the mapView settings configuration of portalConfig.
      * @param {Object} state state of the app-store.
      * @returns {Object} The controls config.
      */
     mapViewSettings: state => {
         return state.portalConfig?.mapView || {};
+    },
+
+    /**
+     * Returns teh secondaryMenu of portalConfig.
+     * @param {String} state state of the app-store.
+     * @returns {Object} Secondary menu.
+     */
+    secondaryMenu: state => {
+        return state.portalConfig.secondaryMenu || {};
     },
 
     /**
