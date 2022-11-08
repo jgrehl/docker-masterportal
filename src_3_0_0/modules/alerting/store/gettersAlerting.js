@@ -1,44 +1,40 @@
 export default {
     /**
      * Getter for fetchBroadcastUrl.
-     * @param {object} state state
-     * @returns {string} fetchBroadcastUrl
+     * @param {Object} state state
+     * @returns {String} fetchBroadcastUrl
      */
     fetchBroadcastUrl: (state) => {
         return state.fetchBroadcastUrl;
     },
-
     /**
      * Getter for localStorageDisplayedAlertsKey.
-     * @param {object} state state
-     * @returns {string} localStorageDisplayedAlertsKey
+     * @param {Object} state state
+     * @returns {String} localStorageDisplayedAlertsKey
      */
     localStorageDisplayedAlertsKey: (state) => {
         return state.localStorageDisplayedAlertsKey;
     },
-
     /**
      * Getter for displayedAlerts.
-     * @param {object} state state
-     * @returns {object} displayedAlerts
+     * @param {Object} state state
+     * @returns {Object} displayedAlerts
      */
     displayedAlerts: (state) => {
         return state.displayedAlerts;
     },
-
     /**
      * Getter for showTheModal.
-     * @param {object} state state
-     * @returns {boolean} showTheModal
+     * @param {Object} state state
+     * @returns {Boolean} showTheModal
      */
     showTheModal: (state) => {
         return state.showTheModal;
     },
-
     /**
      * This returns the alerts queue array grouped by the alerts' category property.
-     * @param {object} state state
-     * @returns {array} sortedAlerts
+     * @param {Object} state state
+     * @returns {Object[]} sortedAlerts
      */
     sortedAlerts: (state) => {
         const
