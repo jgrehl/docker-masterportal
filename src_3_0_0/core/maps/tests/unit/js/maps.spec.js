@@ -2,7 +2,7 @@ import load3DScript from "@masterportal/masterportalapi/src/lib/load3DScript";
 import {expect} from "chai";
 import sinon from "sinon";
 
-import {initializeMaps, load3dMap} from "../../../js/maps";
+import {initializeMaps, load3DMap} from "../../../js/maps";
 import store from "../../../../../app-store";
 
 describe("src_3_0_0/core/js/maps/maps.js", () => {
@@ -40,13 +40,13 @@ describe("src_3_0_0/core/js/maps/maps.js", () => {
         });
     });
 
-    describe("load3dMap", () => {
+    describe("load3DMap", () => {
         it("should trigger the masterportalapi function load3DScript", () => {
             const configJs = {
                 config: "js"
             };
 
-            load3dMap(configJs);
+            load3DMap(configJs);
 
             expect(load3DScriptSpy.calledOnce).to.be.true;
             expect(load3DScriptSpy.firstCall.args[0]).to.equals("path_to_cesium_library");
