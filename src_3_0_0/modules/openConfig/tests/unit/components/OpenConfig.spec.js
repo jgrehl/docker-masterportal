@@ -1,6 +1,7 @@
 import {config, shallowMount, createLocalVue} from "@vue/test-utils";
 import {expect} from "chai";
 import sinon from "sinon";
+import Vue from "vue";
 import Vuex from "vuex";
 
 import OpenConfigComponent from "../../../components/OpenConfig.vue";
@@ -34,13 +35,6 @@ describe("src_3_0_0/modules/openConfig/components/OpenConfig.vue", () => {
                         }
                     }
                 }
-            },
-            actions: {
-                extendLayers: sinon.stub()
-            },
-            mutations: {
-                setLayerConfig: sinon.stub(),
-                setPortalConfig: sinon.stub()
             }
         });
     });
@@ -64,21 +58,25 @@ describe("src_3_0_0/modules/openConfig/components/OpenConfig.vue", () => {
         expect(wrapper.find("#open-config-input-button > label > span > i").exists()).to.be.true;
     });
 
-    it.skip("should trigger function triggerClickOnFileInput on keydown", async () => {
-        const openConfigComponentSpy = sinon.spy(OpenConfigComponent.methods, "triggerClickOnFileInput");
+    it("should trigger function triggerClickOnFileInput on keydown", async () => {
+        Vue.nextTick(async () => {
+            const openConfigComponentSpy = sinon.spy(OpenConfigComponent.methods, "triggerClickOnFileInput");
 
-        wrapper = shallowMount(OpenConfigComponent, {store, localVue});
-        await wrapper.find("#open-config-input-button > label").trigger("keydown");
+            wrapper = shallowMount(OpenConfigComponent, {store, localVue});
+            await wrapper.find("#open-config-input-button > label").trigger("keydown");
 
-        expect(openConfigComponentSpy.calledOnce).to.be.true;
+            expect(openConfigComponentSpy.calledOnce).to.be.true;
+        });
     });
 
-    it.skip("should trigger function loadFile on change input", async () => {
-        const loadFileSpy = sinon.spy(OpenConfigComponent.methods, "loadFile");
+    it("should trigger function loadFile on change input", async () => {
+        Vue.nextTick(async () => {
+            const loadFileSpy = sinon.spy(OpenConfigComponent.methods, "loadFile");
 
-        wrapper = shallowMount(OpenConfigComponent, {store, localVue});
-        await wrapper.find("#open-config-input-button > label > input").trigger("change");
+            wrapper = shallowMount(OpenConfigComponent, {store, localVue});
+            await wrapper.find("#open-config-input-button > label > input").trigger("change");
 
-        expect(loadFileSpy.calledOnce).to.be.true;
+            expect(loadFileSpy.calledOnce).to.be.true;
+        });
     });
 });
