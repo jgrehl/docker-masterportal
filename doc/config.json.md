@@ -63,7 +63,7 @@ Configuration of the topic selection tree
 |layerIDsToIgnore|no|String[]||Array of `services.json` layer ids not to be shown in the layer tree. Only for tree-type `auto`.|false|
 |metaIDsToIgnore|no|String[]||All `services.json` layers listed will not be shown in the layer tree. Only for tree-type `auto`.|false|
 |metaIDsToMerge|no|String[]||All layers found in the `services.json` regarding these meta IDs are merged to a single layer of the layer tree. Only for tree-type `auto`.|true|
-|layerIDsToStyle|no|**[layerIDsToStyle](#markdown-header-treelayeridstostyle)**[]||Special implementation for a HVV (Hamburg public transportation) service. Contains objects to request various styles of a layer id. Only for tree-type `auto`.|true|
+|layerIDsToStyle|no|**[layerIDsToStyle](#markdown-header-portalconfigtreelayeridstostyle)**[]||Special implementation for a HVV (Hamburg public transportation) service. Contains objects to request various styles of a layer id. Only for tree-type `auto`.|true|
 |highlightedFeatures|no|**[highlightedFeatures](#markdown-header-portalconfigtreehighlightedfeatures)**||Configuration in addition to feature highlighting.|false|
 
 **Example**
@@ -128,32 +128,6 @@ Configuration of the topic selection tree
 }
 
 ```
-
-**Example**
-```json
-{
-    "tree": {
-        "type": "auto",
-        "validLayerTypesAutoTree": ["WMS", "WFS"],
-        "layerIDsToIgnore": ["1912", "1913"],
-         "metaIDsToIgnore": [
-            "09DE39AB-A965-45F4-B8F9-0C339A45B154"
-        ],
-         "metaIDsToMerge": [
-            "FE4DAF57-2AF6-434D-85E3-220A20B8C0F1"
-        ],
-         "layerIDsToStyle": [
-            {
-                "id": "1935",
-                "styles": ["geofox_Faehre", "geofox-bahn", "geofox-bus", "geofox_BusName"],
-                "name": ["Fährverbindungen", "Bahnlinien", "Buslinien", "Busliniennummern"],
-                "legendURL": ["http://geoportal.metropolregion.hamburg.de/legende_mrh/hvv-faehre.png", "http://geoportal.metropolregion.hamburg.de/legende_mrh/hvv-bahn.png", "http://geoportal.metropolregion.hamburg.de/legende_mrh/hvv-bus.png", "http://87.106.16.168/legende_mrh/hvv-bus.png"]
-            }
-        ]
-    }
-}
-```
-
 ***
 
 #### Portalconfig.tree.highlightedFeatures
@@ -697,42 +671,7 @@ Visible vector layer search configuration. For all vector layers supposed to be 
     }
 }
 ```
-
-|Name|Required|Type|Default|Description|Expert|
-|----|--------|----|-------|-----------|------|
-|highlightedFeatures|no|**[highlightedFeatures](#markdown-header-portalconfigtreehighlightedfeatures)**||Configuration in addition to feature highlighting.|false|
-|showScaleTooltip|no|Boolean|false|Flag whether the scale range is displayed in the layer tooltip in addition to the name of the corresponding layer.|false|
-
-**Example**
-```
-#!json
-"tree":{
-    "highlightedFeatures": {
-        "active": true,
-        "layerName": "common:tree.selectedFeatures"
-    },
-    "showScaleTooltip": true
-},
-```
 ***
-#### Portalconfig.tree.highlightedFeatures
-Configuration in addition to highlighting features. If features are highlighted with the "List" or "Select Features" tool with "Zoom to this Feature" or via url parameter, then a layer with these features is selectable in the menu tree.
-
-|Name|Required|Type|Default|Description|Expert|
-|----|--------|----|-------|-----------|------|
-|active|no|Boolean|false|Indicates whether this feature is active.|false|
-|layerName|no|String|"common:tree.selectedFeatures"|Name of the created layer with the highlighted features. The name also contains the name of the tool that was used.|true|
-
-**Example**
-```
-#!json
-"highlightedFeatures": {
-    "active": false,
-    "layerName": "common:tree.selectedFeatures"
-},
-```
-***
-
 
 #### Portalconfig.layerInformation
 Configuration of layerInformation.
@@ -1418,7 +1357,6 @@ This field allows creating and ordering menu entries. The order of tools corresp
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
 |ansichten|no|**[ansichten](#markdown-header-portalconfigmenuansichten)**||Preconfigured map view in 2D and 3D mode|false|
-|initiallyOpen|no|Boolean|false|Determines whether the menu should initially be open.|false|
 |info|no|**[info](#markdown-header-portalconfigmenuinfo)**||Menu folder containing **[tools](#markdown-header-portalconfigmenutools)** or **[staticlinks](#markdown-header-portalconfigmenustaticlinks)**.|false|
 |tools|no|**[tools](#markdown-header-portalconfigmenutools)**||Menu folder containing tools.|false|
 |tree|no|**[tree](#markdown-header-portalconfigmenutree)**||Representation and position of the topic selection tree.|false|
