@@ -28,8 +28,8 @@ export default {
          * @returns {void}
          */
         controlsConfig (controlsConfig) {
-            this.categorizedControls.initialVisible.length = 0;
-            this.categorizedControls.expandable.length = 0;
+            this.categorizedControls.initialVisible = [];
+            this.categorizedControls.expandable = [];
 
             this.initializeControls(controlsConfig);
         }
