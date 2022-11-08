@@ -935,7 +935,8 @@
                 "shareTwitter": "Twitter",
                 "shareQR": "QRCode erstellen",
                 "shareLink": "Link kopieren",
-                "downloadQR": "QRCode herunterladen"
+                "downloadQR": "QRCode herunterladen",
+                "myMap": "Hier ist mein Kartenausschnitt: "
             },
             "bufferAnalysis": {
                 "sourceSelectLabel": "Quell-Layer",

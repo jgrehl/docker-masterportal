@@ -31,7 +31,7 @@ export default {
          * @returns {String} url with params
          */
         twitter () {
-            return "https://twitter.com/share?url=" + this.url + "&text=Meine Karte: ";
+            return "https://twitter.com/share?url=" + this.url + "&text=" + this.$t("modules.tools.shareView.myMap");
         }
     },
     methods: {
@@ -43,8 +43,8 @@ export default {
          */
         share () {
             const shareData = {
-                title: "Masterportal",
-                text: "Schau mal!",
+                title: this.$t("modules.tools.shareView.myMap"),
+                text: this.$t("modules.tools.shareView.myMap"),
                 url: this.url
             };
 
