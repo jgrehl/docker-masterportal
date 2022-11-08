@@ -3,7 +3,6 @@
  * @typedef {Object} ScaleSwitcherState
  * @property {Boolean} active If true, scaleSwitcher will rendered.
  * @property {String} icon Icon next to title (config-param)
- * @property {String} id Id of the ScaleSwitcher component
  * @property {String} name Displayed as title (config-param)
  * @property {String[]} supportedDevices Devices on which the module is displayed.
  * @property {String[]} supportedMapModes Map mode in which this module can be used.
