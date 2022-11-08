@@ -3,6 +3,25 @@ import upperFirst from "../../../shared/js/utils/upperFirst";
 
 export default {
     /**
+     * Merge the menu state.
+     * @param {Object} param store context
+     * @param {Object} param.commit the commit
+     * @param {Object} param.state the state
+     * @param {Object} payLoad The payload.
+     * @param {Object} payLoad.mainMenu The main menu setting.
+     * @param {Object} payLoad.secondaryMenu The secondary menu setting.
+     * @returns {void}
+     */
+    mergeMenuState ({commit, state}, {mainMenu, secondaryMenu}) {
+        commit("setMainMenu", Object.assign(state.mainMenu, mainMenu));
+        commit("setSecondaryMenu", Object.assign(state.secondaryMenu, secondaryMenu));
+        commit("Navigation/setEntries", {
+            mainMenu: [],
+            secondaryMenu: []
+        });
+    },
+
+    /**
      * Action triggered when a menu element has been clicked.
      * Add an entry to the navigation and, when the element
      * was a Folder, focus the first child-element, otherwise,
@@ -25,6 +44,7 @@ export default {
         }
         console.error("Menu: A menu entry is missing the required value \"type\".");
     },
+
     /**
      * Activates the module with the given namespace.
      * If it utilizes an action for activation, that is dispatched.
