@@ -41,8 +41,8 @@ export default {
 
 <template>
     <div
-        :id="'menu-offcanvas-body-' + side"
-        class="offcanvas-body"
+        :id="'mp-body-' + side"
+        class="mp-menu-body"
     >
         <MenuNavigation :side="side" />
         <component
@@ -63,3 +63,15 @@ export default {
         </template>
     </div>
 </template>
+
+<style lang="scss" scoped>
+@import "~variables";
+    .mp-menu-body{
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        padding: $padding;
+        font-size: $font-size-base;
+    }
+
+</style>
