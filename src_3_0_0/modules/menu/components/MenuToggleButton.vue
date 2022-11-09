@@ -38,10 +38,11 @@ export default {
     <button
         :id="side + '-toggle-button'"
         class="btn btn-primary bootstrap-icon menu-toggle-button"
-        :class="{
-            'menu-toggle-button-main': side === 'mainMenu',
-            'menu-toggle-button-secondary': side === 'secondaryMenu'
-        }"
+        :class="[
+            'toggle-button-' + side,
+            {'expanded': mainMenuExpanded && side === 'mainMenu' || secondaryMenuExpanded && side === 'secondaryMenu'}
+        ]
+        "
         type="button"
         :aria-label="$t('common:menu.ariaLabelOpen')"
         @click="toggleMenu(side)"
@@ -60,6 +61,8 @@ export default {
     width: $icon_length;
     z-index: 1;
     position: relative;
+    flex-grow: 0;
+    flex-shrink: 0;
 
     i {
         position: absolute;
@@ -69,16 +72,55 @@ export default {
         line-height: 0;
     }
 }
-.menu-toggle-button-main {
+
+.expanded {
+    border-width: 1px;
+    border-color: $light-grey;
+    z-index: 5;
+}
+.toggle-button-mainMenu {
     left: 0px;
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
+    &.expanded {
+        left: -13px;
+        border-radius: 50%;
+    }
 }
 
 
-.menu-toggle-button-secondary {
+.toggle-button-secondaryMenu {
     right: 0px;
     border-top-left-radius: 20px;
     border-bottom-left-radius: 20px;
+    &.expanded {
+        right: -13px;
+        border-radius: 50%;
+    }
+}
+
+@media (max-width: 768px) {
+    .menu-toggle-button {
+        border-radius: 20px;
+        right: 20px;
+        position: fixed;
+        font-size: $icon_length;
+        height: calc(#{$icon_length} * 1.75);
+        width: calc(#{$icon_length} * 1.75);
+        border-radius: 50%;
+    }
+    .toggle-button-mainMenu {
+        top:60%;
+        left: auto;
+    }
+
+    .toggle-button-secondaryMenu {
+        top:calc(60% + #{$icon_length} * 1.75 + 10px);
+    }
+
+    .expanded {
+        display: none;
+    }
+
 }
 </style>
