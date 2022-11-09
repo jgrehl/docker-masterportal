@@ -1,5 +1,4 @@
 import {createLayer} from "./layerFactory";
-import Layer2d from "./layer2d";
 import layerCollection from "./layerCollection";
 import store from "../../../app-store";
 
@@ -83,10 +82,6 @@ function processLayer (layer) {
     if (layer) {
         updateLayerConfig(layer);
         layerCollection.addLayer(layer);
-
-        if (layer instanceof Layer2d) {
-            store.dispatch("Maps/addLayer", layer.getLayer());
-        }
     }
 }
 
