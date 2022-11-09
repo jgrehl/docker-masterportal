@@ -11,14 +11,12 @@ localVue.use(Vuex);
 config.mocks.$t = key => key;
 
 describe("src_3_0_0/modules/menu/MenuContainerHeader.vue", () => {
-    const idPrefix = "menu-offcanvas",
+    const idPrefix = "mp",
         functions = {
             divId: side => `#${idPrefix}-header-${side}`,
-            buttonId: side => `#${idPrefix}-header-close-button-${side}`,
             nameMock: side => ({idAppendix: side, text: "TestText"})
         };
     let consoleErrorSpy,
-        getElementByIdFake,
         mainTitle,
         removeSpy,
         secondaryTitle,
@@ -28,10 +26,7 @@ describe("src_3_0_0/modules/menu/MenuContainerHeader.vue", () => {
         consoleErrorSpy = sinon.spy();
         sinon.stub(console, "error").callsFake(consoleErrorSpy);
         removeSpy = sinon.spy();
-        getElementByIdFake = sinon.fake.returns({
-            classList: {remove: removeSpy}
-        });
-        sinon.stub(document, "getElementById").callsFake(getElementByIdFake);
+
         mainTitle = null;
         secondaryTitle = null;
         store = new Vuex.Store({
@@ -68,27 +63,13 @@ describe("src_3_0_0/modules/menu/MenuContainerHeader.vue", () => {
                 store,
                 propsData: {side}
             }),
-            container = wrapper.find(functions.divId(side)),
-            dismissButton = container.find(functions.buttonId(side));
+            container = wrapper.find(functions.divId(side));
 
         expect(container.exists()).to.be.true;
-        expect(container.classes()).to.eql(["offcanvas-header"]);
+        expect(container.classes()).to.eql(["mp-menu-header"]);
         expect(container.findComponent(MenuContainerHeaderTitle).exists()).to.be.true;
-        expect(dismissButton.exists()).to.be.true;
-        expect(dismissButton.attributes("type")).to.equal("button");
-        expect(dismissButton.classes()).to.eql(["btn-close", "text-reset"]);
-        expect(dismissButton.attributes("data-bs-dismiss")).to.equal("offcanvas");
-        expect(dismissButton.attributes("aria-label")).to.equal("common:menu.ariaLabelClose");
         expect(consoleErrorSpy.notCalled).to.be.true;
 
-        dismissButton.trigger("click");
-
-        expect(getElementByIdFake.calledOnce).to.be.true;
-        expect(getElementByIdFake.firstCall.args.length).to.equal(1);
-        expect(getElementByIdFake.firstCall.args[0]).to.equal(`${idPrefix}-${side}`);
-        expect(removeSpy.calledOnce).to.be.true;
-        expect(removeSpy.firstCall.args.length).to.equal(1);
-        expect(removeSpy.firstCall.args[0]).to.equal("show");
     });
     it("should render the component including the name component if titleBySide returns an object for 'secondaryMenu'", () => {
         secondaryTitle = "defined";
@@ -99,27 +80,14 @@ describe("src_3_0_0/modules/menu/MenuContainerHeader.vue", () => {
                 store,
                 propsData: {side}
             }),
-            container = wrapper.find(functions.divId(side)),
-            dismissButton = container.find(functions.buttonId(side));
+            container = wrapper.find(functions.divId(side));
+
 
         expect(container.exists()).to.be.true;
-        expect(container.classes()).to.eql(["offcanvas-header"]);
+        expect(container.classes()).to.eql(["mp-menu-header"]);
         expect(container.findComponent(MenuContainerHeaderTitle).exists()).to.be.true;
-        expect(dismissButton.exists()).to.be.true;
-        expect(dismissButton.attributes("type")).to.equal("button");
-        expect(dismissButton.classes()).to.eql(["btn-close", "text-reset"]);
-        expect(dismissButton.attributes("data-bs-dismiss")).to.equal("offcanvas");
-        expect(dismissButton.attributes("aria-label")).to.equal("common:menu.ariaLabelClose");
         expect(consoleErrorSpy.notCalled).to.be.true;
 
-        dismissButton.trigger("click");
-
-        expect(getElementByIdFake.calledOnce).to.be.true;
-        expect(getElementByIdFake.firstCall.args.length).to.equal(1);
-        expect(getElementByIdFake.firstCall.args[0]).to.equal(`${idPrefix}-${side}`);
-        expect(removeSpy.calledOnce).to.be.true;
-        expect(removeSpy.firstCall.args.length).to.equal(1);
-        expect(removeSpy.firstCall.args[0]).to.equal("show");
     });
     it("should render the component without the name component if titleBySide returns null", () => {
         const side = "mainMenu",
@@ -128,27 +96,13 @@ describe("src_3_0_0/modules/menu/MenuContainerHeader.vue", () => {
                 store,
                 propsData: {side}
             }),
-            container = wrapper.find(functions.divId(side)),
-            dismissButton = container.find(functions.buttonId(side));
+            container = wrapper.find(functions.divId(side));
 
         expect(container.exists()).to.be.true;
-        expect(container.classes()).to.eql(["offcanvas-header"]);
+        expect(container.classes()).to.eql(["mp-menu-header"]);
         expect(container.findComponent(MenuContainerHeaderTitle).exists()).to.be.false;
-        expect(dismissButton.exists()).to.be.true;
-        expect(dismissButton.attributes("type")).to.equal("button");
-        expect(dismissButton.classes()).to.eql(["btn-close", "text-reset"]);
-        expect(dismissButton.attributes("data-bs-dismiss")).to.equal("offcanvas");
-        expect(dismissButton.attributes("aria-label")).to.equal("common:menu.ariaLabelClose");
         expect(consoleErrorSpy.notCalled).to.be.true;
 
-        dismissButton.trigger("click");
-
-        expect(getElementByIdFake.calledOnce).to.be.true;
-        expect(getElementByIdFake.firstCall.args.length).to.equal(1);
-        expect(getElementByIdFake.firstCall.args[0]).to.equal(`${idPrefix}-${side}`);
-        expect(removeSpy.calledOnce).to.be.true;
-        expect(removeSpy.firstCall.args.length).to.equal(1);
-        expect(removeSpy.firstCall.args[0]).to.equal("show");
     });
     it("should render the component without the name and log an error if a wrong value for the prop side is given", () => {
         mainTitle = "defined";
@@ -159,28 +113,13 @@ describe("src_3_0_0/modules/menu/MenuContainerHeader.vue", () => {
                 store,
                 propsData: {side}
             }),
-            container = wrapper.find(functions.divId(side)),
-            dismissButton = container.find(functions.buttonId(side));
+            container = wrapper.find(functions.divId(side));
 
         expect(container.exists()).to.be.true;
-        expect(container.classes()).to.eql(["offcanvas-header"]);
+        expect(container.classes()).to.eql(["mp-menu-header"]);
         expect(container.findComponent(MenuContainerHeaderTitle).exists()).to.be.false;
-        expect(dismissButton.exists()).to.be.true;
-        expect(dismissButton.attributes("type")).to.equal("button");
-        expect(dismissButton.classes()).to.eql(["btn-close", "text-reset"]);
-        expect(dismissButton.attributes("data-bs-dismiss")).to.equal("offcanvas");
-        expect(dismissButton.attributes("aria-label")).to.equal("common:menu.ariaLabelClose");
         expect(consoleErrorSpy.calledOnce).to.be.true;
         expect(consoleErrorSpy.firstCall.args.length).to.equal(1);
         expect(consoleErrorSpy.firstCall.args[0].replace(/[\n\r]+/g, " ")).to.equal("[Vue warn]: Invalid prop: custom validator check failed for prop \"side\". found in ---> <MenuContainerHeader> at src_3_0_0/modules/menu/components/MenuContainerHeader.vue        <Root>");
-
-        dismissButton.trigger("click");
-
-        expect(getElementByIdFake.calledOnce).to.be.true;
-        expect(getElementByIdFake.firstCall.args.length).to.equal(1);
-        expect(getElementByIdFake.firstCall.args[0]).to.equal(`${idPrefix}-${side}`);
-        expect(removeSpy.calledOnce).to.be.true;
-        expect(removeSpy.firstCall.args.length).to.equal(1);
-        expect(removeSpy.firstCall.args[0]).to.equal("show");
     });
 });
