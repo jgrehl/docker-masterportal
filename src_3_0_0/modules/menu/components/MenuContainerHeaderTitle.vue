@@ -73,7 +73,7 @@ export default {
         }
     }
 
-@media (min-width: 768px) {
+@include media-breakpoint-up(sm)  {
     .mp-menu-header-title {
 
         img {
