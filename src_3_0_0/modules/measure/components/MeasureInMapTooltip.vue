@@ -1,6 +1,5 @@
 <script>
 import {mapGetters} from "vuex";
-import getters from "../store/gettersMeasure";
 import {Fill, Stroke, Style, Text} from "ol/style.js";
 import {Polygon, LineString, Point} from "ol/geom.js";
 import Feature from "ol/Feature.js";
@@ -17,7 +16,15 @@ export default {
         };
     },
     computed: {
-        ...mapGetters("Menu/Measure", Object.keys(getters))
+        ...mapGetters("Menu/Measure", [
+            "layer",
+            "featureId",
+            "tooltipCoord",
+            "polygons",
+            "lines",
+            "polygonAreas",
+            "lineLengths"
+        ])
     },
     watch: {
         featureId (value) {
