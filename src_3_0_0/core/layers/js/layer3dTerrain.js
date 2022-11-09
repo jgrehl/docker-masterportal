@@ -27,5 +27,5 @@ Layer3dTerrain.prototype = Object.create(Layer3d.prototype);
  */
 Layer3dTerrain.prototype.createLayer = function (attributes) {
     this.setLayer(terrain.createLayer(attributes));
-    this.setVisible(attributes.visibility, attributes, mapCollection.getMap("3D"));
+    this.setVisible(attributes.visibility, mapCollection.getMap("3D"), attributes);
 };
