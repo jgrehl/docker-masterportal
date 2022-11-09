@@ -40,11 +40,11 @@ describe("src_3_0_0/core/js/layers/layer3d.js", () => {
 
             expect(setVisibleSpy.calledOnce).to.be.true;
             expect(setVisibleSpy.firstCall.args[0]).to.equals(true);
-            expect(setVisibleSpy.firstCall.args[1]).to.deep.equals({visibility: true});
-            expect(setVisibleSpy.firstCall.args[2]).to.deep.equals({
+            expect(setVisibleSpy.firstCall.args[1]).to.deep.equals({
                 id: "olcs",
                 mode: "3D"
             });
+            expect(setVisibleSpy.firstCall.args[2]).to.deep.equals({visibility: true});
 
         });
     });
