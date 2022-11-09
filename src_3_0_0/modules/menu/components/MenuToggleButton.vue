@@ -54,53 +54,8 @@ export default {
 <style lang="scss" scoped>
 @import "~variables";
 
+
 .menu-toggle-button {
-    top: 15px;
-    font-size: calc(#{$icon_length} - 0.35 * #{$icon_length});
-    height: $icon_length;
-    width: $icon_length;
-    z-index: 1;
-    position: relative;
-    flex-grow: 0;
-    flex-shrink: 0;
-
-    i {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        line-height: 0;
-    }
-}
-
-.expanded {
-    border-width: 1px;
-    border-color: $light-grey;
-    z-index: 5;
-}
-.toggle-button-mainMenu {
-    left: 0px;
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 20px;
-    &.expanded {
-        left: -13px;
-        border-radius: 50%;
-    }
-}
-
-
-.toggle-button-secondaryMenu {
-    right: 0px;
-    border-top-left-radius: 20px;
-    border-bottom-left-radius: 20px;
-    &.expanded {
-        right: -13px;
-        border-radius: 50%;
-    }
-}
-
-@media (max-width: 768px) {
-    .menu-toggle-button {
         border-radius: 20px;
         right: 20px;
         position: fixed;
@@ -108,6 +63,9 @@ export default {
         height: calc(#{$icon_length} * 1.75);
         width: calc(#{$icon_length} * 1.75);
         border-radius: 50%;
+        flex-grow: 0;
+        flex-shrink: 0;
+        z-index: 1;
     }
     .toggle-button-mainMenu {
         top:60%;
@@ -122,5 +80,53 @@ export default {
         display: none;
     }
 
+
+@include media-breakpoint-up(sm) {
+    .menu-toggle-button {
+        top: 15px;
+        font-size: calc(#{$icon_length} - 0.35 * #{$icon_length});
+        height: $icon_length;
+        width: $icon_length;
+        position: relative;
+
+        i {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            line-height: 0;
+        }
+    }
+    .expanded {
+        border-width: 1px;
+        border-color: $light-grey;
+        z-index: 5;
+    }
+    .toggle-button-mainMenu {
+        left: 0px;
+        border-top-right-radius: 20px;
+        border-bottom-right-radius: 20px;
+        border-bottom-left-radius: 0px;
+        border-top-left-radius: 0px;
+        &.expanded {
+            display: block;
+            left: -13px;
+            border-radius: 50%;
+        }
+    }
+
+    .toggle-button-secondaryMenu {
+        right: 0px;
+        border-top-right-radius: 0px;
+        border-bottom-right-radius: 0px;
+        border-bottom-left-radius: 20px;
+        border-top-left-radius: 20px;
+
+        &.expanded {
+            display: block;
+            right: -13px;
+            border-radius: 50%;
+        }
+    }
 }
 </style>
