@@ -10,18 +10,13 @@ config.mocks.$t = key => key;
 
 describe("src_3_0_0/modules/menu/MenuContainerHeaderTitle.vue", () => {
     const idAppendix = "mainMenu",
-        id = `#menu-offcanvas-header-title-${idAppendix}`,
+        id = `#mp-menu-header-title-${idAppendix}`,
         nameText = "My Portal";
-    let isMobile,
-        store;
+    let store;
 
     beforeEach(() => {
-        isMobile = false;
         store = new Vuex.Store({
-            namespaces: true,
-            getters: {
-                isMobile: () => isMobile
-            }
+            namespaces: true
         });
     });
 
@@ -36,10 +31,8 @@ describe("src_3_0_0/modules/menu/MenuContainerHeaderTitle.vue", () => {
         expect(anchor.exists()).to.be.true;
         expect(anchor.attributes("href")).to.equal("#");
         expect(anchor.attributes("target")).to.equal("_self");
-        expect(anchor.attributes("data-bs-toggle")).to.equal(nameText);
-        expect(anchor.attributes("data-bs-placement")).to.equal("bottom");
         expect(anchor.attributes("title")).to.equal("");
-        expect(anchor.classes()).to.eql(["header-title"]);
+        expect(anchor.classes()).to.eql(["mp-menu-header-title"]);
         expect(anchor.findAll("h1").length).to.equal(1);
         expect(anchor.find("h1").text()).to.equal(nameText);
         expect(anchor.find("img").exists()).to.be.false;
@@ -56,10 +49,8 @@ describe("src_3_0_0/modules/menu/MenuContainerHeaderTitle.vue", () => {
         expect(anchor.exists()).to.be.true;
         expect(anchor.attributes("href")).to.equal(link);
         expect(anchor.attributes("target")).to.equal("_blank");
-        expect(anchor.attributes("data-bs-toggle")).to.equal(nameText);
-        expect(anchor.attributes("data-bs-placement")).to.equal("bottom");
         expect(anchor.attributes("title")).to.equal("");
-        expect(anchor.classes()).to.eql(["header-title"]);
+        expect(anchor.classes()).to.eql(["mp-menu-header-title"]);
         expect(anchor.findAll("h1").length).to.equal(1);
         expect(anchor.find("h1").text()).to.equal(nameText);
         expect(anchor.find("img").exists()).to.be.false;
@@ -76,10 +67,8 @@ describe("src_3_0_0/modules/menu/MenuContainerHeaderTitle.vue", () => {
         expect(anchor.exists()).to.be.true;
         expect(anchor.attributes("href")).to.equal("#");
         expect(anchor.attributes("target")).to.equal("_self");
-        expect(anchor.attributes("data-bs-toggle")).to.equal(nameText);
-        expect(anchor.attributes("data-bs-placement")).to.equal("bottom");
         expect(anchor.attributes("title")).to.equal("");
-        expect(anchor.classes()).to.eql(["header-title"]);
+        expect(anchor.classes()).to.eql(["mp-menu-header-title"]);
         expect(anchor.findAll("h1").length).to.equal(1);
         expect(anchor.find("h1").text()).to.equal(nameText);
         expect(anchor.findAll("img").length).to.equal(1);
@@ -99,24 +88,10 @@ describe("src_3_0_0/modules/menu/MenuContainerHeaderTitle.vue", () => {
 
         expect(anchor.attributes("href")).to.equal("#");
         expect(anchor.attributes("target")).to.equal("_self");
-        expect(anchor.attributes("data-bs-toggle")).to.equal(nameText);
-        expect(anchor.attributes("data-bs-placement")).to.equal("bottom");
         expect(anchor.attributes("title")).to.equal(toolTip);
-        expect(anchor.classes()).to.eql(["header-title"]);
+        expect(anchor.classes()).to.eql(["mp-menu-header-title"]);
         expect(anchor.findAll("h1").length).to.equal(1);
         expect(anchor.find("h1").text()).to.equal(nameText);
         expect(anchor.find("img").exists()).to.be.false;
-    });
-    it("should not render the component if the view is mobile, regardless of the given props", () => {
-        isMobile = true;
-
-        const wrapper = mount(MenuContainerHeaderTitle, {
-                localVue,
-                store,
-                propsData: {idAppendix, text: nameText}
-            }),
-            anchor = wrapper.find(id);
-
-        expect(anchor.exists()).to.be.false;
     });
 });
