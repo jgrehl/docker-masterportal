@@ -11,7 +11,6 @@
  */
 const state = {
     active: false,
-    id: "shareView",
     icon: "bi-share",
     name: "common:menu.tools.shareView",
     supportedDevices: ["Desktop", "Mobile", "Table"],
