@@ -49,7 +49,7 @@ export default {
 
 <template>
     <ul
-        :id="'menu-offcanvas-body-items-' + idAppendix"
+        :id="'mp-menu-body-items-' + idAppendix"
         class="nav flex-column"
     >
         <li
@@ -57,8 +57,8 @@ export default {
             :key="key"
         >
             <MenuContainerBodyElement
-                :id="'menu-offcanvas-body-items-element-' + key + '-' + idAppendix"
-                v-bind="chooseProperties(item)"
+                :id="'mp-menu-body-items-element-' + key + '-' + idAppendix"
+                v-bind="item"
                 :path="[...path, key]"
             />
         </li>
