@@ -52,22 +52,36 @@ export default {
 <style lang="scss" scoped>
 @import "~variables";
 
+.mp-menu-header-title {
+        padding: $padding;
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+        overflow-wrap: break-word;
+
+        img {
+            max-height: 30px;
+            flex-grow: 0;
+            flex-shrink: 0;
+        }
+
+        h1 {
+            color: $secondary_contrast;
+            font-size: 26px;
+            flex-grow: 1;
+            margin-left: 20px;
+        }
+    }
+
 @media (min-width: 768px) {
     .mp-menu-header-title {
-        display: grid;
-        grid-template-columns: 7.5em 20.5em;
-        grid-column-gap: 1em;
-        align-items: center;
-        overflow-wrap: break-word;
 
         img {
             max-height: 40px;
         }
 
         h1 {
-            color: $secondary_contrast;
             font-size: 26px;
-            font-family: $font_family_narrow;
         }
     }
 }
