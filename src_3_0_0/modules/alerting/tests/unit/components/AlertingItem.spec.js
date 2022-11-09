@@ -39,14 +39,14 @@ describe("src/modules/alerting/components/AlertingItem.vue", function () {
                 "globalAlerts": ["Test1", "Test4"],
 
                 "restrictedAlerts": {
-                    "https://localhost:9001/portal/master/": ["Test2"],
+                    "https://localhost:9001/portal/master_3_0_0/": ["Test2"],
                     "https://localhost:9001/portal/basic/": ["Test3"]
                 },
 
                 "alerts": {
                     "Test1": {
-                        "displayClass": "error",
-                        "category": "Test 1",
+                        "title": "Test 1",
+                        "category": "error",
                         "content": "Lorem Ipsum 1 (global content)",
                         "displayFrom": "2020-03-01 20:15:55",
                         "displayUntil": "2052-05-17 14:30",
@@ -55,8 +55,8 @@ describe("src/modules/alerting/components/AlertingItem.vue", function () {
                         "multipleAlert": true
                     },
                     "Test2": {
-                        "displayClass": "info",
-                        "category": "Test 1",
+                        "title": "Test 2",
+                        "category": "info",
                         "content": "Lorem Ipsum 2 (content for master)",
                         "displayFrom": false,
                         "displayUntil": "2052-05-17 14:30",
@@ -65,8 +65,8 @@ describe("src/modules/alerting/components/AlertingItem.vue", function () {
                         "multipleAlert": true
                     },
                     "Test3": {
-                        "displayClass": "error",
-                        "category": "Test 2",
+                        "title": "Test 3",
+                        "category": "error",
                         "content": "Lorem Ipsum 3 (content for basic)",
                         "displayFrom": false,
                         "displayUntil": "2052-05-17 14:30",
@@ -75,8 +75,8 @@ describe("src/modules/alerting/components/AlertingItem.vue", function () {
                         "multipleAlert": true
                     },
                     "Test4": {
-                        "displayClass": "warning",
-                        "category": "Test 2",
+                        "title": "Test 4",
+                        "category": "info",
                         "content": "Lorem Ipsum 4 (global content)",
                         "displayFrom": false,
                         "displayUntil": "2052-05-17 14:30",
@@ -109,7 +109,7 @@ describe("src/modules/alerting/components/AlertingItem.vue", function () {
             mountingSettings = {
                 store,
                 computed: {
-                    currentUrl: () => "https://localhost:9001/portal/master/"
+                    currentUrl: () => "https://localhost:9001/portal/master_3_0_0/"
                 },
                 methods: {
                     fetchBroadcast: function () {
@@ -128,9 +128,13 @@ describe("src/modules/alerting/components/AlertingItem.vue", function () {
         await wrapper.vm.$nextTick();
 
         categoryContainers = wrapper.findAll(".alertCategoryContainer");
-        alertWrappers = wrapper.findAll(".singleAlertWrapper");
+        alertWrappers = wrapper.findAll(".singleAlertContainer");
 
-        describe("Expecting initially shown 2 category groups with 3 alerts", function () {
+        console.log('-----------------------------------------------------------------------------------------------------');
+
+        console.log(categoryContainers.at(0));
+
+        describe("Expecting initially shown 2 category groups with 2 alerts", function () {
             it("There are 2 category groups", function () {
                 expect(categoryContainers.exists()).to.be.true;
                 expect(categoryContainers.length).to.equal(2);
@@ -140,12 +144,12 @@ describe("src/modules/alerting/components/AlertingItem.vue", function () {
                 expect(categoryContainers.at(0).find("h3").exists()).to.be.true;
                 expect(categoryContainers.at(0).find("h3").text()).to.equal("Test 1");
             });
-            it("and contains 2 alerts", function () {
-                expect(categoryContainers.at(0).findAll(".singleAlertWrapper").length).to.equal(2);
+            it("and contains 1 alerts", function () {
+                expect(categoryContainers.at(0).findAll(".singleAlertContainer").length).to.equal(1);
             });
 
             it("1st alert is of category \"error\"", function () {
-                expect(alertWrappers.at(0).classes().indexOf("error")).not.to.equal(-1);
+                expect(alertWrappers.at(0).classes().indexOf("info")).not.to.equal(-1);
             });
             it("and has a confirmation link", function () {
                 expect(alertWrappers.at(0).find("p.confirm").exists()).to.be.true;
