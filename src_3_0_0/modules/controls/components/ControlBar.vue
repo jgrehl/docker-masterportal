@@ -72,14 +72,16 @@ export default {
          */
         prepareControls (controlsConfig, expandable = false) {
             Object.keys(controlsConfig).forEach(controlKey => {
-                const controlValues = controlsConfig[controlKey];
+                if (this.componentMap[controlKey]) {
+                    const controlValues = controlsConfig[controlKey];
 
-                if (controlValues === true) {
-                    this.fillCategorizedControls(controlKey, expandable);
-                }
-                else if (typeof controlValues === "object" && controlKey !== "expandable") {
-                    this.mergeControlState({controlKey, controlValues});
-                    this.fillCategorizedControls(controlKey, expandable);
+                    if (controlValues === true) {
+                        this.fillCategorizedControls(controlKey, expandable);
+                    }
+                    else if (typeof controlValues === "object" && controlKey !== "expandable") {
+                        this.mergeControlState({controlKey, controlValues});
+                        this.fillCategorizedControls(controlKey, expandable);
+                    }
                 }
             });
         },
