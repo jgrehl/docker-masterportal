@@ -36,20 +36,20 @@ describe("src_3_0_0/modules/menu/MenuContainer.vue", () => {
                 Menu: {
                     namespaced: true,
                     getters: {
-                        mainInitiallyOpen: (state) => state.mainInitiallyOpen,
-                        secondaryInitiallyOpen: (state) => state.secondaryInitiallyOpen,
+                        mainMenuExpanded: (state) => state.mainMenuExpanded,
+                        secondaryMenuExpanded: (state) => state.secondaryMenuExpanded,
                         titleBySide: () => () => false
                     },
                     state: {
-                        mainInitiallyOpen: false,
-                        secondaryInitiallyOpen: false
+                        mainMenuExpanded: false,
+                        secondaryMenuExpanded: false
                     },
                     mutations: {
-                        setTestMainInitiallyOpen: (state, value) => {
-                            state.mainInitiallyOpen = value;
+                        setTestMainMenuExpanded: (state, value) => {
+                            state.mainMenuExpanded = value;
                         },
-                        setTestSecondaryInitiallyOpen: (state, value) => {
-                            state.secondaryInitiallyOpen = value;
+                        setTestSecondaryMenuExpanded: (state, value) => {
+                            state.secondaryMenuExpanded = value;
                         }
                     },
                     actions: {
@@ -70,53 +70,40 @@ describe("src_3_0_0/modules/menu/MenuContainer.vue", () => {
     describe("mainMenu", () => {
         it("renders the component but doesnt show it initially and it contains all default elements", () => {
             const wrapper = shallowMount(MenuContainer, {store, localVue, propsData: {side: "mainMenu"}}),
-                mainMenuWrapper = wrapper.find("#menu-offcanvas-mainMenu");
+                mainMenuWrapper = wrapper.find("#mp-menu-mainMenu");
 
             expect(mainMenuWrapper.exists()).to.be.true;
             expect(mainMenuWrapper.findComponent(MenuContainerHeader).exists()).to.be.true;
             expect(mainMenuWrapper.findComponent(MenuContainerBody).exists()).to.be.true;
-            expect(wrapper.findAll(".menu-container-handle").length).to.equal(1);
-            expect(wrapper.find("#menu-offcanvas-mainMenu").classes()).to.not.contain("show");
+            expect(wrapper.findAll(".mp-menu-container-handle").length).to.equal(1);
+            expect(wrapper.find("#mp-menu-mainMenu").classes()).to.not.contain("show");
         });
 
         it("opens the menu if initial open is true", () => {
-            store.commit("Menu/setTestMainInitiallyOpen", true);
+            store.commit("Menu/setTestMainMenuExpanded", true);
             const wrapper = shallowMount(MenuContainer, {store, localVue, propsData: {side: "mainMenu"}});
 
-            expect(wrapper.find("#menu-offcanvas-mainMenu").classes()).to.contain("show");
+            expect(wrapper.find("#mp-menu-mainMenu").classes()).to.contain("show");
         });
 
-        it("renders the mobile resize handles if isMobile is true", () => {
-            store.commit("setTestIsMobile", true);
-            const wrapper = shallowMount(MenuContainer, {store, localVue, propsData: {side: "mainMenu"}});
-
-            expect(wrapper.findAll(".mobile-container-handle").length).to.equal(2);
-        });
     });
     describe("secondaryMenu", () => {
         it("renders the component but doesnt show it initially and it contains all default elements", () => {
             const wrapper = shallowMount(MenuContainer, {store, localVue, propsData: {side: "secondaryMenu"}}),
-                secondaryMenuWrapper = wrapper.find("#menu-offcanvas-secondaryMenu");
+                secondaryMenuWrapper = wrapper.find("#mp-menu-secondaryMenu");
 
             expect(secondaryMenuWrapper.exists()).to.be.true;
             expect(secondaryMenuWrapper.findComponent(MenuContainerHeader).exists()).to.be.true;
             expect(secondaryMenuWrapper.findComponent(MenuContainerBody).exists()).to.be.true;
-            expect(wrapper.findAll(".menu-container-handle").length).to.equal(1);
-            expect(wrapper.find("#menu-offcanvas-secondaryMenu").classes()).to.not.contain("show");
+            expect(wrapper.findAll(".mp-menu-container-handle").length).to.equal(1);
+            expect(wrapper.find("#mp-menu-secondaryMenu").classes()).to.not.contain("show");
         });
 
         it("opens the menu if initial open is true", () => {
-            store.commit("Menu/setTestSecondaryInitiallyOpen", true);
+            store.commit("Menu/setTestSecondaryMenuExpanded", true);
             const wrapper = shallowMount(MenuContainer, {store, localVue, propsData: {side: "secondaryMenu"}});
 
-            expect(wrapper.find("#menu-offcanvas-secondaryMenu").classes()).to.contain("show");
-        });
-
-        it("renders both mobile resize handles if isMobile is true", () => {
-            store.commit("setTestIsMobile", true);
-            const wrapper = shallowMount(MenuContainer, {store, localVue, propsData: {side: "secondaryMenu"}});
-
-            expect(wrapper.findAll(".mobile-container-handle").length).to.equal(2);
+            expect(wrapper.find("#mp-menu-secondaryMenu").classes()).to.contain("show");
         });
     });
 });
