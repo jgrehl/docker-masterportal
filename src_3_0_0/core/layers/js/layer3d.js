@@ -21,11 +21,11 @@ Layer3d.prototype = Object.create(Layer.prototype);
 /**
  * Calls masterportalAPI's layer to set this layer visible.
  * @param {Boolean} visibility visibility of the layer
- * @param {Object} attributes The attributes of the layer configuration.
  * @param {Cesium} map The 3d map.
+ * @param {Object} [attributes={}] The attributes of the layer configuration.
  * @returns {void}
  */
-Layer3d.prototype.setVisible = function (visibility, attributes, map) {
+Layer3d.prototype.setVisible = function (visibility, map, attributes = {}) {
     this.getLayer()?.setVisible(visibility, attributes, map);
 };
 
@@ -36,6 +36,6 @@ Layer3d.prototype.setVisible = function (visibility, attributes, map) {
  */
 Layer3d.prototype.updateLayerValues = function (attributes) {
     if (this.get("visibility") !== attributes.visibility) {
-        this.setVisible(attributes.visibility, attributes, mapCollection.getMap("3D"));
+        this.setVisible(attributes.visibility, mapCollection.getMap("3D"), attributes);
     }
 };
