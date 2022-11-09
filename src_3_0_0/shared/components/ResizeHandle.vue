@@ -408,7 +408,7 @@ $handle_size: 3px;
     position: absolute;
     width: $handle_size;
     height: $handle_size;
-    background-color: $light_grey;
+    background-color: $white;
 
     &-is-resizing * {
         -webkit-touch-callout: none;
