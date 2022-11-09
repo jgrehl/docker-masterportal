@@ -9,7 +9,7 @@ export default {
     actions,
     state: {...state},
     modules: {
-        ScaleSwitcher,
-        ShareView
+        ScaleSwitcher: {...ScaleSwitcher},
+        ShareView: {...ShareView}
     }
 };
