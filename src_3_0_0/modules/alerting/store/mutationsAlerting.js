@@ -50,6 +50,15 @@ export default {
         singleAlert.mustBeConfirmed = false;
     },
     /**
+     * Sets a single alert's has-been-read status to false.
+     * @param {Object} state state
+     * @param {Object} singleAlert alert object that has been read
+     * @returns {void}
+     */
+    setAlertAsUnread (state, singleAlert) {
+        singleAlert.mustBeConfirmed = true;
+    },
+    /**
      * Adds a reference, that a single alert has been displayed. Do not confuse this with has been read.
      * @param {Object} state state
      * @param {Object} newAlert alert object that has been displayed
