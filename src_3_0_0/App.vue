@@ -24,7 +24,8 @@ export default {
             "configJs",
             "layerConfig",
             "portalConfig",
-            "visibleLayerConfigs"
+            "visibleLayerConfigs",
+            "uiStyle"
         ]),
         ...mapGetters("Menu", ["mainMenu", "secondaryMenu", "mainMenuExpanded", "secondaryMenuExpanded"])
     },
@@ -115,11 +116,11 @@ export default {
         class="masterportal-container"
     >
         <MenuContainer
-            v-if="allConfigsLoaded && mainMenu"
+            v-if="allConfigsLoaded && mainMenu && uiStyle !== 'SIMPLE'"
             side="mainMenu"
         />
         <MenuToggleButton
-            v-if="allConfigsLoaded && mainMenu"
+            v-if="allConfigsLoaded && mainMenu && uiStyle !== 'SIMPLE'"
             side="mainMenu"
         />
         <div
@@ -130,11 +131,11 @@ export default {
             <LayerPills />
         </div>
         <MenuToggleButton
-            v-if="allConfigsLoaded && secondaryMenu"
+            v-if="allConfigsLoaded && secondaryMenu && uiStyle !== 'SIMPLE'"
             side="secondaryMenu"
         />
         <MenuContainer
-            v-if="allConfigsLoaded && secondaryMenu"
+            v-if="allConfigsLoaded && secondaryMenu && uiStyle !== 'SIMPLE'"
             side="secondaryMenu"
         />
         <div
@@ -151,19 +152,16 @@ export default {
 <style lang="scss" scoped>
     @import "~variables";
 
-    #masterportal-container {
+    .masterportal-container {
         display: flex;
         flex-direction: row;
-
         position: relative;
-
         height: 100%;
         width: 100%;
-
         font-family: $font_family_default;
         font-size: $font-size-base;
 
-        #map-wrapper {
+        .mp-map {
             height: 100%;
             width: 100%;
             overflow: hidden;
@@ -191,13 +189,4 @@ export default {
                     flex-grow: 1;
                 }
             }
-
-@media (min-width: 768px) {
-        .mainexpanded {
-            margin-left: 400px;
-        }
-        .secondaryexpanded {
-            margin-right: 400px;
-        }
-}
 </style>
