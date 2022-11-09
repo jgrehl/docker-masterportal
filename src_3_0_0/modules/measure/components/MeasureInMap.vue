@@ -13,7 +13,23 @@ export default {
         MeasureInMapTooltip
     },
     computed: {
-        ...mapGetters("Menu/Measure", ["layer", "selectedGeometry", "geometryValues", "selectedUnit", "currentUnits", "lines", "polygons", "featureId"]),
+        ...mapGetters("Menu/Measure", [
+            "active",
+            "featureId",
+            "tooltipCoord",
+            "interaction",
+            "source",
+            "layer",
+            "lines",
+            "polygons",
+            "geometryValues",
+            "geometryValues3d",
+            "lineStringUnits",
+            "polygonUnits",
+            "selectedGeometry",
+            "selectedUnit",
+            "currentUnits"
+        ]),
         ...mapGetters(["uiStyle"]),
         ...mapGetters("Maps", ["mode"])
     },
