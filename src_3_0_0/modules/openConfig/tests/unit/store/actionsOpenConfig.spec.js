@@ -1,6 +1,7 @@
 import {expect} from "chai";
 import sinon from "sinon";
 import actions from "../../../store/actionsOpenConfig";
+import layerCollection from "../../../../../core/layers/js/layerCollection";
 
 const {
     processConfigJsonOnload
@@ -8,12 +9,15 @@ const {
 
 
 describe("src_3_0_0/modules/openConfig/store/actionsOpenConfig.js", () => {
-    let commit,
+    let clearSpy,
+        commit,
         dispatch;
 
     beforeEach(() => {
         commit = sinon.spy();
         dispatch = sinon.spy();
+
+        clearSpy = sinon.spy(layerCollection, "clear");
     });
 
     afterEach(() => {
@@ -21,7 +25,7 @@ describe("src_3_0_0/modules/openConfig/store/actionsOpenConfig.js", () => {
     });
 
     describe("processConfigJsonOnload", () => {
-        it("should set Portalconfig set Layerconfig to the state and start extendLayers", () => {
+        it("should clear layerCollection, set Portalconfig set Layerconfig to the state and start extendLayers", () => {
             const event = {
                 target: {
                     result: "{\r\n  \"Portalconfig\": {},\r\n  \"Themenconfig\": {}\r\n}\r\n"
@@ -29,6 +33,8 @@ describe("src_3_0_0/modules/openConfig/store/actionsOpenConfig.js", () => {
             };
 
             processConfigJsonOnload({commit, dispatch}, event);
+
+            expect(clearSpy.calledOnce).to.be.true;
 
             expect(commit.calledTwice).to.be.true;
             expect(commit.firstCall.args[0]).to.equals("setPortalConfig");
