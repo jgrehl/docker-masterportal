@@ -4,6 +4,8 @@ import mutations from "./mutationsMenu";
 import state from "./stateMenu";
 
 import Navigation from "../navigation/store/indexMenuNavigation";
+import ScaleSwitcher from "../../scaleSwitcher/store/indexScaleSwitcher";
+import CoordToolkit from "../../coordToolkit/store/indexCoordToolkit";
 
 export default {
     namespaced: true,
@@ -12,6 +14,8 @@ export default {
     mutations,
     state: {...state},
     modules: {
-        Navigation
+        Navigation,
+        ScaleSwitcher,
+        CoordToolkit
     }
 };
