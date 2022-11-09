@@ -1,7 +1,7 @@
 <script>
 
 import axios from "axios";
-import {mapActions, mapGetters} from "vuex";
+import {mapActions, mapGetters, mapMutations} from "vuex";
 
 export default {
     name: "AlertingItem",
@@ -18,6 +18,7 @@ export default {
             "localStorageDisplayedAlertsKey",
             "initialClosed",
             "showTheModal",
+            "alerts",
             "sortedAlerts"
         ]),
         /**
@@ -99,6 +100,9 @@ export default {
             "initialize",
             "setDisplayedAlerts"
         ]),
+        ...mapMutations("Alerting", [
+            "removeFromAlerts"
+        ]),
 
         /**
          * Do this after successfully fetching broadcastConfig:
@@ -136,6 +140,7 @@ export default {
 
             collectedAlerts.forEach(singleAlert => {
                 singleAlert.initial = true;
+                singleAlert.initialConfirmed = singleAlert.mustBeConfirmed;
                 this.addSingleAlert(singleAlert);
             });
         },
@@ -175,14 +180,22 @@ export default {
             this.alertHasBeenRead(hash);
         },
         /**
-         * Check category name to control if footer attributes should be shown
+         * Remove an alert from the alert modal
+         * @param {string} hash hash
+         * @returns {void}
+         */
+        removeAlert: function (hash) {
+            this.removeFromAlerts({hash: hash});
+        },
+        /**
+         * Check category name to distiguish between news and alert categories
          * @param {String} category category name
          * @returns {void}
          */
-        checkFooter: function (category) {
+        checkCategory: function (category) {
             const checkCategory = category.toLowerCase();
 
-            if (checkCategory !== "error" && checkCategory !== "alert" && checkCategory !== "success") {
+            if (checkCategory !== "error" && checkCategory !== "warning" && checkCategory !== "success") {
                 return true;
             }
             return false;
@@ -196,15 +209,15 @@ export default {
             const generalizedCategory = category?.toLowerCase();
 
             if (generalizedCategory === "news" || generalizedCategory === "success") {
-                return "badge rounded-pill bg-success offset-alert";
+                return "badge rounded-pill bg-success";
             }
-            else if (generalizedCategory === "alert") {
-                return "badge rounded-pill bg-warning offset-alert";
+            else if (generalizedCategory === "warning") {
+                return "badge rounded-pill bg-warning";
             }
             else if (generalizedCategory === "error") {
-                return "badge rounded-pill bg-danger offset-alert";
+                return "badge rounded-pill bg-danger";
             }
-            return "badge rounded-pill bg-info offset-alert";
+            return "badge rounded-pill bg-info";
         }
     }
 };
@@ -212,7 +225,7 @@ export default {
 
 <template>
     <div
-        v-if="showTheModal"
+        v-if="showTheModal && alerts.length>0"
         id="alertModal"
         class="modal"
         tabindex="-1"
@@ -220,7 +233,7 @@ export default {
         role="dialog"
     >
         <div
-            class="modal-dialog modal-dialog-centered"
+            class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
             role="document"
         >
             <div class="modal-content">
@@ -233,60 +246,83 @@ export default {
                     />
                 </div>
                 <div
-                    v-for="(alertCategory, categoryIndex) in sortedAlerts"
-                    :key="alertCategory.category"
-                    class="alertCategoryContainer"
-                    :class="{ last: categoryIndex === sortedAlerts.length-1 }"
+                    class="modal-body"
                 >
                     <div
-                        v-for="(singleAlert, singleAlertIndex) in alertCategory.content"
-                        :key="singleAlert.hash"
-                        :class="singleAlert.displayClass"
+                        v-for="(alertCategory, categoryIndex) in sortedAlerts"
+                        :key="alertCategory.category"
+                        class="alertCategoryContainer"
                     >
                         <div
-                            class="singleAlertContainer"
+                            v-for="(singleAlert, singleAlertIndex) in alertCategory.content"
+                            :key="singleAlert.hash"
+                            :class="singleAlert.category"
                         >
-                            <hr
-                                v-if="singleAlertIndex>0 || categoryIndex>0"
-                            >
-                            <h2>
-                                <span :class="selectCategoryClass(singleAlert.category)">
-                                    {{ $t(singleAlert.displayCategory) }}
-                                </span>
-                            </h2>
                             <div
-                                class="modal-body"
+                                class="singleAlertContainer"
                             >
-                                <h3>
+                                <hr
+                                    v-if="singleAlertIndex>0 || categoryIndex>0"
+                                >
+                                <button
+                                    v-if="!checkCategory(singleAlert.category)"
+                                    type="button"
+                                    class="btn btn-close btn-sm float-end mt-0"
+                                    aria-label="Close"
+                                    @click="removeAlert(singleAlert.hash);"
+                                />
+                                <div
+                                    class="d-flex bd-highlight mb-3"
+                                >
+                                    <h2
+                                        class="ms-auto p-2  bd-highlight"
+                                    >
+                                        <span :class="selectCategoryClass(singleAlert.category)">
+                                            {{ $t(singleAlert.displayCategory) }}
+                                        </span>
+                                    </h2>
+                                </div>
+                                <h3
+                                    class="mt-1"
+                                >
                                     <b>
                                         {{ singleAlert.title }}
                                     </b>
                                 </h3>
                                 <div
+                                    class="ms-2"
                                     v-html="singleAlert.content"
                                 />
                             </div>
                             <div
-                                v-if="checkFooter(singleAlert.category)"
-                                class="d-flex justify-content-between offset-alert small"
+                                v-if="checkCategory(singleAlert.category)"
+                                class="d-flex justify-content-between small"
                             >
                                 <div
                                     class="mt-2"
                                     v-html="$t(`common:modules.alerting.created`)+singleAlert.creationDate"
                                 />
-                                <p
-                                    v-if="singleAlert.mustBeConfirmed && availableLocalStorage"
+                                <div
+                                    v-if="singleAlert.initialConfirmed && availableLocalStorage"
                                     class="mt-1"
                                 >
-                                    <button
-                                        type="button"
-                                        class="btn btn-link btn-sm float-end"
-                                        @click="markAsRead(singleAlert.hash)"
-                                        @keydown.enter="markAsRead(singleAlert.hash)"
+                                    <div
+                                        class="form-check form-switch mt-1"
                                     >
-                                        {{ $t(singleAlert.confirmText) }}
-                                    </button>
-                                </p>
+                                        <label
+                                            class="form-check-label"
+                                            for="flexSwitchCheckDefault"
+                                        >
+                                            {{ singleAlert.mustBeConfirmed? $t(singleAlert.confirmText) : $t(singleAlert.reConfirmText) }}
+                                        </label>
+                                        <input
+                                            id="flexSwitchCheckDefault"
+                                            class="form-check-input"
+                                            type="checkbox"
+                                            @input="markAsRead(singleAlert.hash);"
+                                        >
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -301,9 +337,6 @@ export default {
     #alertModal{
         display:block;
         background-color: rgba(0,0,0,0.5);
-    }
-    .offset-alert {
-    margin-left:10px;
     }
     .badge-pill{
         font-size:12px;
@@ -328,9 +361,13 @@ export default {
             color:$secondary_contrast;
             font-size:12px;
             margin-top:0px;
-            margin-bottom:0px;
+            margin-bottom:5px;
             padding-bottom:0px;
             padding-bottom:0;
         }
+    #flexSwitchCheckDefault {
+    background-color: $light_blue;
+    border-color: $light_blue;;
+    }
     }
 </style>

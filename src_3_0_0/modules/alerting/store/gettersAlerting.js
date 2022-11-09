@@ -32,6 +32,14 @@ export default {
         return state.showTheModal;
     },
     /**
+     * Getter for alerts.
+     * @param {Object} state state
+     * @returns {Object[]} alerts
+     */
+    alerts: (state) => {
+        return state.alerts;
+    },
+    /**
      * This returns the alerts queue array grouped by the alerts' category property.
      * @param {Object} state state
      * @returns {Object[]} sortedAlerts
