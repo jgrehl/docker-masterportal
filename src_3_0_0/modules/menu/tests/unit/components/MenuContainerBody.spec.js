@@ -54,7 +54,7 @@ describe("src_3_0_0/modules/menu/MenuContainerBody.vue", () => {
     describe("mainMenu", () => {
         it("renders the component and it contains the MenuNavigation", () => {
             const wrapper = shallowMount(MenuContainerBody, {store, localVue, propsData: {side: "mainMenu"}}),
-                mainMenuBodyWrapper = wrapper.find("#menu-offcanvas-body-mainMenu");
+                mainMenuBodyWrapper = wrapper.find("#mp-body-mainMenu");
 
             expect(mainMenuBodyWrapper.exists()).to.be.true;
             expect(mainMenuBodyWrapper.findComponent(MenuNavigation).exists()).to.be.true;
@@ -70,7 +70,7 @@ describe("src_3_0_0/modules/menu/MenuContainerBody.vue", () => {
             }
 
             wrapper = shallowMount(MenuContainerBody, {store, localVue, propsData: {side: "mainMenu"}});
-            mainMenuBodyWrapper = wrapper.find("#menu-offcanvas-body-mainMenu");
+            mainMenuBodyWrapper = wrapper.find("#mp-body-mainMenu");
 
             expect(mainMenuBodyWrapper.findAllComponents(MenuContainerBodyItems).length).to.be.equal(sectionCount);
         });
@@ -78,7 +78,7 @@ describe("src_3_0_0/modules/menu/MenuContainerBody.vue", () => {
     describe("secondaryMenu", () => {
         it("renders the component and it contains the MenuNavigation", () => {
             const wrapper = shallowMount(MenuContainerBody, {store, localVue, propsData: {side: "secondaryMenu"}}),
-                mainMenuBodyWrapper = wrapper.find("#menu-offcanvas-body-secondaryMenu");
+                mainMenuBodyWrapper = wrapper.find("#mp-body-secondaryMenu");
 
             expect(mainMenuBodyWrapper.exists()).to.be.true;
             expect(mainMenuBodyWrapper.findComponent(MenuNavigation).exists()).to.be.true;
@@ -94,7 +94,7 @@ describe("src_3_0_0/modules/menu/MenuContainerBody.vue", () => {
             }
 
             wrapper = shallowMount(MenuContainerBody, {store, localVue, propsData: {side: "secondaryMenu"}});
-            mainMenuBodyWrapper = wrapper.find("#menu-offcanvas-body-secondaryMenu");
+            mainMenuBodyWrapper = wrapper.find("#mp-body-secondaryMenu");
 
             expect(mainMenuBodyWrapper.findAllComponents(MenuContainerBodyItems).length).to.be.equal(sectionCount);
         });
