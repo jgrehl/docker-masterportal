@@ -64,12 +64,17 @@ export default {
     initialize: function (context) {
         context.dispatch("addSingleAlert", {
             "category": "success",
-            "content": "Error during loading",
+            "content": "Success during loading",
             "multipleAlert": true
         });
         context.dispatch("addSingleAlert", {
-            "content": "Error during loading2",
+            "content": "Error during loading",
             "category": "error",
+            "multipleAlert": true
+        });
+        context.dispatch("addSingleAlert", {
+            "category": "success",
+            "content": "Success during loading2",
             "multipleAlert": true
         });
 
@@ -101,8 +106,7 @@ export default {
         commit("setReadyToShow", false);
     },
     /**
-     * Marks a single alert as read. Triggers callback function if defined. As a conclusion, the callback
-     * function does only work if the alert must be confirmed and has not been read.
+     * Marks a single alert as un/read. Triggers callback function if defined.
      * @param {Object} state state
      * @param {String} hash Hash of read alert
      * @returns {void}
@@ -111,7 +115,12 @@ export default {
         const singleAlert = findSingleAlertByHash(state.alerts, hash);
 
         if (singleAlert !== false) {
-            commit("setAlertAsRead", singleAlert);
+            if (singleAlert.mustBeConfirmed === true) {
+                commit("setAlertAsRead", singleAlert);
+            }
+            else {
+                commit("setAlertAsUnread", singleAlert);
+            }
         }
     },
     /**
