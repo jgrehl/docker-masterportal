@@ -85,7 +85,7 @@ export default {
     height: 100%;
     min-width: 100%;
     position: fixed;
-    background-color: $white;
+    background-color: $menu-background-color;
     z-index: 2;
 }
 
@@ -103,7 +103,7 @@ export default {
 }
 
 
-@media (min-width: 768px) {
+@include media-breakpoint-up(sm)  {
     .mp-menu {
         top: 0px;
         min-width: 20%;
