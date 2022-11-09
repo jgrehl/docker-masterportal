@@ -14,6 +14,11 @@ export default {
             type: String,
             default: null,
             required: false
+        },
+        customclass: {
+            type: String,
+            default: null,
+            required: false
         }
     }
 };
@@ -22,6 +27,7 @@ export default {
 <template>
     <button
         class="btn btn-primary"
+        :class="customclass"
         type="button"
         @click="interaction"
     >
