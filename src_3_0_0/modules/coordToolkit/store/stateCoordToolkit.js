@@ -40,6 +40,7 @@ const state = {
     icon: "bi-globe",
     id: "coordToolkit",
     name: "common:menu.tools.coordToolkit",
+    type: "coordToolkit",
 
     active: false,
     isVisibleInMenu: true,
