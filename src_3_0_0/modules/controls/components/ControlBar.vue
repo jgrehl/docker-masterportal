@@ -172,6 +172,7 @@ export default {
     @import "~variables";
 
     .btn-group-controls {
+        display: none;
         background-color: $white;
         border: solid $white 4px;
         border-radius: 25px;
@@ -241,9 +242,9 @@ export default {
         }
     }
 
-    @media (max-width: 768px) {
+    @include media-breakpoint-up(sm) {
         .btn-group-controls {
-            display: none;
+            display: block;
         }
     }
 </style>
