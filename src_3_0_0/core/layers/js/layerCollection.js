@@ -1,3 +1,7 @@
+import Layer2d from "./layer2d";
+import Layer3d from "./layer3d";
+import store from "../../../app-store";
+
 const layerCollection = [];
 
 export default {
@@ -8,14 +12,32 @@ export default {
      */
     addLayer: function (layer) {
         layerCollection.push(layer);
+
+        if (layer instanceof Layer2d) {
+            store.dispatch("Maps/addLayer", layer.getLayer());
+        }
     },
 
     /**
-     * Removes all entries from the collection.
+     * Removes all entries from the collection and remove all layers from maps.
      * @returns {void}
      */
     clear: function () {
-        layerCollection.length = 0;
+        layerCollection.forEach(layer => {
+            if (layer instanceof Layer2d) {
+                const olLayer = layer.getLayer();
+
+                olLayer.setVisible(false);
+                mapCollection.getMap("2D")?.removeLayer(olLayer);
+            }
+            else if (layer instanceof Layer3d) {
+                layer.setVisible(false, mapCollection.getMap("3D"), layer.attributes);
+            }
+        });
+
+        while (layerCollection.length > 0) {
+            layerCollection.pop();
+        }
     },
 
     /**
