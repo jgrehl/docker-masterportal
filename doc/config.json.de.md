@@ -86,17 +86,6 @@ Konfiguration der Themenbaumes
 }
 ```
 
-**Beispiel Highlighting**
-```
-#!json
-"tree":{
-    "highlightedFeatures": {
-        "active": true,
-        "layerName": "common:tree.selectedFeatures"
-    }
-},
-```
-
 ***
 
 ### Portalconfig.tree.layerIDsToStyle
