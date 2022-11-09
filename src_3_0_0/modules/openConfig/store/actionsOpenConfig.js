@@ -1,3 +1,5 @@
+import layerCollection from "../../../core/layers/js/layerCollection";
+
 const actions = {
 
     /**
@@ -8,6 +10,7 @@ const actions = {
     processConfigJsonOnload ({commit, dispatch}, event) {
         const configJson = JSON.parse(event.target.result);
 
+        layerCollection.clear();
         commit("setPortalConfig", configJson.Portalconfig, {root: true});
         commit("setLayerConfig", configJson.Themenconfig, {root: true});
         dispatch("extendLayers", null, {root: true});

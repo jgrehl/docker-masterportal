@@ -1,13 +1,19 @@
 import {expect} from "chai";
+import Map from "ol/Map";
 
 import layerCollection from "../../../js/layerCollection";
 
 describe("src_3_0_0/core/js/layers/layerCollection.js", () => {
     let layer1,
         layer2,
-        layer3;
+        layer3,
+        map;
 
     before(() => {
+        mapCollection.clear();
+        map = new Map();
+        mapCollection.addMap(map, "2D");
+
         layer1 = {
             attributes: {
                 id: "firstLayer"
