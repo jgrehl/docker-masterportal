@@ -18,14 +18,12 @@ describe("src_3_0_0/modules/menu/MenuContainerHeader.vue", () => {
         };
     let consoleErrorSpy,
         mainTitle,
-        removeSpy,
         secondaryTitle,
         store;
 
     beforeEach(() => {
         consoleErrorSpy = sinon.spy();
         sinon.stub(console, "error").callsFake(consoleErrorSpy);
-        removeSpy = sinon.spy();
 
         mainTitle = null;
         secondaryTitle = null;
