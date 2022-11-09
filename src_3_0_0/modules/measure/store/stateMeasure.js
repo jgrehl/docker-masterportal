@@ -7,13 +7,8 @@ import source from "../utils/measureSource";
  * Measure tool state definition.
  * @typedef {object} MeasureState
  * @property {boolean} active if true, Measure will rendered
- * @property {string} id id of the Measure component
  * @property {string} name displayed as title (config-param)
  * @property {string} icon icon next to title (config-param)
- * @property {boolean} renderToWindow if true, tool is rendered in a window, else in sidebar (config-param)
- * @property {boolean} resizableWindow if true, window is resizable (config-param)
- * @property {boolean} isVisibleInMenu if true, tool is selectable in menu (config-param)
- * @property {boolean} deactivateGFI flag if tool should deactivate gfi (config-param)
  * @property {number} earthRadius earth radius to assume for length/area calculations (config-param)
  * @property {string} measurementAccuracy indicates how accurately the measurement result is displayed for m and m².
  *                                        Options are "decimeter" for one decimal place. "meter" for no decimal place.
@@ -38,15 +33,9 @@ import source from "../utils/measureSource";
  */
 const state = {
     active: false,
-    id: "measure",
-
     // defaults for config.json tool parameters
     name: "Strecke / Fläche messen",
     icon: "bi-arrows-angle-expand",
-    renderToWindow: true,
-    resizableWindow: true,
-    isVisibleInMenu: true,
-    deactivateGFI: true,
     supportedDevices: ["Desktop", "Mobile", "Table"],
     supportedMapModes: ["2D", "3D"],
     type: "measure",
