@@ -42,7 +42,7 @@ describe("src_3_0_0/modules/menu/MenuContainerBodyItems.vue", () => {
     it("renders the component as main menu", () => {
         const wrapper = shallowMount(MenuContainerBodyItems, {store, localVue, propsData: {idAppendix: "mainMenu"}});
 
-        expect(wrapper.find("#menu-offcanvas-body-items-mainMenu").exists()).to.be.true;
+        expect(wrapper.find("#mp-menu-body-items-mainMenu").exists()).to.be.true;
     });
 
     it("contains a list element and a MenuContainerBodyElements in the main menu for each configured section item", () => {
@@ -56,7 +56,7 @@ describe("src_3_0_0/modules/menu/MenuContainerBodyItems.vue", () => {
     it("renders the component as secondary menu", () => {
         const wrapper = shallowMount(MenuContainerBodyItems, {store, localVue, propsData: {idAppendix: "secondaryMenu"}});
 
-        expect(wrapper.find("#menu-offcanvas-body-items-secondaryMenu").exists()).to.be.true;
+        expect(wrapper.find("#mp-menu-body-items-secondaryMenu").exists()).to.be.true;
     });
 
     it("contains a list element and a MenuContainerBodyElements in the main menu for each configured section item", () => {

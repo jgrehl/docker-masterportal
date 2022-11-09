@@ -30,39 +30,35 @@ describe("src_3_0_0/modules/menu/MenuToggleButton.vue", () => {
     afterEach(sinon.restore);
 
     it("should render the button including 'mainToggleButtonIcon' as the icon class for side 'main'", () => {
-        const side = "main",
+        const side = "mainMenu",
             wrapper = mount(MenuToggleButton, {
                 localVue,
                 store,
                 propsData: {side}
             }),
-            button = wrapper.find(`#${side}-menu-toggle-button`),
+            button = wrapper.find(`#${side}-toggle-button`),
             icon = button.find("i");
 
         expect(button.exists()).to.be.true;
-        expect(button.classes()).to.eql(["btn", "btn-primary", "bootstrap-icon", "menu-toggle-button"]);
+        expect(button.classes()).to.eql(["btn", "btn-primary", "bootstrap-icon", "menu-toggle-button", "toggle-button-mainMenu"]);
         expect(button.attributes("type")).to.equal("button");
-        expect(button.attributes("data-bs-toggle")).to.equal("offcanvas");
-        expect(button.attributes("data-bs-target")).to.equal(`#menu-offcanvas-${side}Menu`);
         expect(button.attributes("aria-label")).to.equal("common:menu.ariaLabelOpen");
         expect(icon.exists()).to.be.true;
         expect(icon.classes()).to.eql(["bi-list"]);
     });
-    it("should render the button including 'secondaryToggleButtonIcon' as the icon class for side 'secondary'", () => {
-        const side = "secondary",
+    it("should render the button including 'secondaryToggleButtonIcon' as the icon class for side 'secondaryMenu'", () => {
+        const side = "secondaryMenu",
             wrapper = mount(MenuToggleButton, {
                 localVue,
                 store,
                 propsData: {side}
             }),
-            button = wrapper.find(`#${side}-menu-toggle-button`),
+            button = wrapper.find(`#${side}-toggle-button`),
             icon = button.find("i");
 
         expect(button.exists()).to.be.true;
-        expect(button.classes()).to.eql(["btn", "btn-primary", "bootstrap-icon", "menu-toggle-button"]);
+        expect(button.classes()).to.eql(["btn", "btn-primary", "bootstrap-icon", "menu-toggle-button", "toggle-button-secondaryMenu"]);
         expect(button.attributes("type")).to.equal("button");
-        expect(button.attributes("data-bs-toggle")).to.equal("offcanvas");
-        expect(button.attributes("data-bs-target")).to.equal(`#menu-offcanvas-${side}Menu`);
         expect(button.attributes("aria-label")).to.equal("common:menu.ariaLabelOpen");
         expect(icon.exists()).to.be.true;
         expect(icon.classes()).to.eql(["bi-tools"]);
