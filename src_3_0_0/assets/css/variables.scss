@@ -60,7 +60,6 @@ $navbar-nav-link-padding-x: 0.9375rem;
 $navbar-toggler-padding-x: .625rem;
 $navbar-toggler-focus-width: 0;
 
-
 $badge-border-radius: 10px;
 $font-family-sans-serif: MasterPortalFont, Arial, sans-serif;
 $icon-font-path: "fonts/";
@@ -141,6 +140,9 @@ $dropdown-link-active-bg: transparent;
 // List group
 
 $dropdown-item-disabled-bg:  #eeeeee;
+
+// Menu
+$menu-background-color: $white;
 
 /* ICON SIZES */
 $icon_length: 2.25rem;
