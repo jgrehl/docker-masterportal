@@ -154,14 +154,15 @@
         },
         "alerting": {
             "categories": {
-              "alert": "Alert",
               "error": "Error",
               "info": "Info",
               "news": "News",
-              "success": "Success"
+              "success": "Success",
+              "warning": "Warning"
             },
             "created": "Created: ",
-            "hideMessage": "Don't show this message again"
+            "hideMessage": "Don't show this message again",
+            "showMessage": "Show this message again"
         },
         "confirmAction": {
             "defaultHeadline": "Confirmation request",
