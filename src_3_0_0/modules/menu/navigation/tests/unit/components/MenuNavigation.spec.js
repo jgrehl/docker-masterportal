@@ -53,18 +53,18 @@ describe("src_3_0_0/core/menu/navigation/components/MenuNavigation.vue", () => {
     it("renders the navigation in the main menu side", () => {
         const wrapper = mount(MenuNavigation, {store, localVue, propsData: {side: "mainMenu"}});
 
-        expect(wrapper.find("#menu-offcanvas-body-navigation-mainMenu").exists()).to.be.true;
+        expect(wrapper.find("#mp-navigation-mainMenu").exists()).to.be.true;
     });
 
     it("renders the navigation in the secondary menu side", () => {
         const wrapper = mount(MenuNavigation, {store, localVue, propsData: {side: "secondaryMenu"}});
 
-        expect(wrapper.find("#menu-offcanvas-body-navigation-secondaryMenu").exists()).to.be.true;
+        expect(wrapper.find("#mp-navigation-secondaryMenu").exists()).to.be.true;
     });
 
     it("calls the navigateBack function every time the navigation is clicked", async () => {
         const wrapper = mount(MenuNavigation, {store, localVue, propsData: {side: "mainMenu"}}),
-            navigation = wrapper.find("#menu-offcanvas-body-navigation-mainMenu");
+            navigation = wrapper.find("#mp-navigation-mainMenu");
 
         navigation.trigger("click");
         await wrapper.vm.$nextTick();
