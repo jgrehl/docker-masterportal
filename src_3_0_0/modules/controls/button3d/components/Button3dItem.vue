@@ -45,7 +45,7 @@ export default {
 
             this.changeMapMode(targetMode);
 
-            this.addSingleAlert({
+            /*  this.addSingleAlert({
                 "title": "Title",
                 "content": "I am Info",
                 "mustBeConfirmed": true,
@@ -57,11 +57,11 @@ export default {
                 "content": "I am News",
                 "creationDate": "01/01/24",
                 "mustBeConfirmed": true,
-                "multipleAlert": true});
+                "multipleAlert": true}); */
             this.addSingleAlert({
                 "title": "Title",
-                "category": "alert",
-                "content": "I am Alert",
+                "category": "warning",
+                "content": "I am Warning",
                 "mustBeConfirmed": true,
                 "multipleAlert": true});
             this.addSingleAlert({
@@ -70,7 +70,13 @@ export default {
                 "content": "I am Error",
                 "mustBeConfirmed": true,
                 "multipleAlert": true});
-
+            this.addSingleAlert({
+                "title": "Title",
+                "category": "warning",
+                "content": "I am Warning2",
+                "mustBeConfirmed": true,
+                "multipleAlert": true});
+            /*
             this.addSingleAlert({
                 "title": "Title",
                 "category": "success",
@@ -84,7 +90,7 @@ export default {
                 "content": "Welcome to 3D",
                 "creationDate": "01/01/24",
                 "mustBeConfirmed": true,
-                "multipleAlert": true});
+                "multipleAlert": true}); */
 
         }
     }
