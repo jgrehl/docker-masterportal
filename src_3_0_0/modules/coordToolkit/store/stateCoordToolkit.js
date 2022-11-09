@@ -41,10 +41,11 @@ const state = {
     id: "coordToolkit",
     name: "common:menu.tools.coordToolkit",
     type: "coordToolkit",
-
     active: false,
     isVisibleInMenu: true,
     deactivateGFI: true,
+    supportedDevices: ["Desktop", "Mobile", "Table"],
+    supportedMapModes: ["2D", "3D"],
 
     mode: "supply",
     selectPointerMove: null,
