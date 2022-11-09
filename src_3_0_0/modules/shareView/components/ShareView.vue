@@ -4,7 +4,7 @@ import mutations from "../store/mutationsShareView";
 import QRCode from "qrcode";
 
 /**
- * Tool to switch the scale of the map. Listens to changes of the map's scale and sets the scale to this value.
+ * Tool to share a view via link to twitter, facebook, qrCode or copy the link as well as any other app on mobile.
  */
 export default {
     name: "ShareView",
