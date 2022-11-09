@@ -44,23 +44,24 @@ export default {
     </div>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
+@import "~variables";
 .mp-menu-header{
     display: flex;
     padding: 10px;
 }
 .mp-menu-header-close-button {
-    display: none;
+    display: block;
     position: absolute;
     right: 10px;
     top: 10px;
 }
 
-@media (max-width: 768px) {
-    .mp-menu-header-close-button {
-        display: block;
-    }
 
+@include media-breakpoint-up(sm) {
+    .mp-menu-header-close-button {
+        display: none;
+    }
 }
 
 </style>
