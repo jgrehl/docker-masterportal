@@ -8,6 +8,7 @@ import Print from "../print/store/indexPrint";
 import ScaleSwitcher from "../scaleSwitcher/store/indexScaleSwitcher";
 import ShareView from "../shareView/store/indexShareView";
 import Contact from "../contact/store/indexContact";
+import AddWMS from "../addWMS/store/indexAddWMS";
 
 export default {
     namespaced: true,
@@ -21,6 +22,7 @@ export default {
         Print: {...Print},
         ScaleSwitcher: {...ScaleSwitcher},
         ShareView: {...ShareView},
-        Contact: {...Contact}
+        Contact: {...Contact},
+        AddWMS: {...AddWMS}
     }
 };
