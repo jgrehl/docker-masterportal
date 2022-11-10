@@ -1,5 +1,6 @@
 import {generateSimpleGetters} from "../shared/js/utils/generators";
 import getNestedValues from "../shared/js/utils/getNestedValues";
+import {getLayerTypes3d} from "../core/layers/js/layerFactory";
 import stateAppStore from "./state";
 
 const getters = {
@@ -164,6 +165,15 @@ const getters = {
         const matchingLayer = state.restConfig.filter(layer => layer.id === id);
 
         return matchingLayer[0];
+    },
+    
+    layerConfigsByMode: (state) => (mode) => {
+        const layerContainer = getters.allLayerConfigs(state),
+            layerTypes3d = getLayerTypes3d();
+
+        return layerContainer.filter(layer => {
+            return mode === "2D" ? !layerTypes3d.includes(layer.typ.toUpperCase()) : true;
+        });
     }
 };
 
