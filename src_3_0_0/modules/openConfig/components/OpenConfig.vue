@@ -49,7 +49,13 @@ export default {
             if (targetFile?.type === "application/json") {
                 const reader = new FileReader();
 
-                reader.onload = this.processConfigJsonOnload;
+                reader.onload = (evt) => {
+                    this.processConfigJsonOnload(evt);
+                    /**
+                     * @todo Alerting ergänzen
+                     */
+                    console.warn(`Die Konfigurationsdatei "${targetFile?.name}"" wurde erfolgreich geladen`);
+                };
                 reader.readAsText(event.target.files[0]);
             }
             else {
