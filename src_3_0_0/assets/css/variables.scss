@@ -20,7 +20,6 @@
 // Quickly modify global styling by enabling or disabling optional features.
 
 $enable-caret:                false;
-$enable-rounded:              false;
 $enable-shadows:              true;
 
 // Links
@@ -62,9 +61,6 @@ $navbar-toggler-padding-x: .625rem;
 $navbar-toggler-focus-width: 0;
 
 
-$border-radius-base: 0;
-$border-radius-large: 0;
-$border-radius-small: 0;
 $badge-border-radius: 10px;
 $font-family-sans-serif: MasterPortalFont, Arial, sans-serif;
 $icon-font-path: "fonts/";
@@ -91,7 +87,7 @@ $light_grey_outline: #050505;
 * Used for primary buttons like start a search, print etc.
 */
 $dark_blue: #003063;
-$primary: white;
+$primary: rgb(212, 151, 151);
 $white: #ffffff;
 $black: #000;
 $light_red: #E10019;
