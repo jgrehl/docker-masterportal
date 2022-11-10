@@ -167,6 +167,12 @@ const getters = {
         return matchingLayer[0];
     },
     
+    /**
+     * Returns all layer configurations, if mode is 3D, else returns only 2d-layer configurations.
+     * @param {Object} state state of the app-store.
+     * @param {String} mode the mode of the map
+     * @returns all layer configurations, if mode is 3D, else returns only 2d-layer configurations.
+     */
     layerConfigsByMode: (state) => (mode) => {
         const layerContainer = getters.allLayerConfigs(state),
             layerTypes3d = getLayerTypes3d();
