@@ -297,6 +297,7 @@
 - treeType 'default': 3D-data can be configured in folders in config.json
 - FeatureLister:
   - The FeatureLister now works for layer-typ "WFS" and "GeoJSON".
+- A new module `OpenConfig` has been implemented, which can be used to load a new configuration file (config.json) at runtime.
 
 ### Changed
 - Update GeoJSON, WFS, OAF getFeaturesFilterFunction filtert kann nach exakter Geometrie filtern.
