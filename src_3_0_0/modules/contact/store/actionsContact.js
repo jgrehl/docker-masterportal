@@ -12,7 +12,7 @@ const actions = {
      * @return {void}
      */
     onSendSuccess: ({state, commit, dispatch}, ticketId) => {
-        const {closeAfterSend, deleteAfterSend, withTicketNo, id} = state;
+        const {closeAfterSend, deleteAfterSend, withTicketNo} = state;
         let content = i18next.t("common:modules.tools.contact.successMessage");
 
         if (withTicketNo) {
@@ -59,7 +59,7 @@ const actions = {
         const {to, from, serviceId, serviceID, includeSystemInfo} = state,
             id = serviceId || serviceID,
             systemInfo = getSystemInfo(rootGetters.portalTitle),
-            mailServiceUrl = rootGetters.getRestServiceById(id).url,
+            mailServiceUrl = rootGetters.getRestConfigById(id).url,
             ticketId = createTicketId(state.locationOfCustomerService);
 
         // stop sending if form is not valid

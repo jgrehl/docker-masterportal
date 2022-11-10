@@ -29,7 +29,7 @@ function fillFields ({nameInput, mailInput, phoneInput, messageInput}) {
     messageInput.trigger("keyup");
 }
 
-describe("src/modules/tools/contact/components/ContactFormular.vue", () => {
+describe("src/modules/contact/components/ContactFormular.vue", () => {
     let store, wrapper;
 
     beforeEach(() => {
@@ -41,9 +41,10 @@ describe("src/modules/tools/contact/components/ContactFormular.vue", () => {
         store = new Vuex.Store({
             namespaces: true,
             modules: {
-                Tools: {
+                Modules: {
                     namespaced: true,
                     modules: {
+                        namespaced: true,
                         Contact: ContactModule
                     }
                 }
@@ -53,7 +54,7 @@ describe("src/modules/tools/contact/components/ContactFormular.vue", () => {
             }
         });
 
-        store.commit("Tools/Contact/setActive", true);
+        store.commit("Modules/Contact/setActive", true);
     });
 
     afterEach(() => {
