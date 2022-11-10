@@ -10,7 +10,7 @@ const localVue = createLocalVue();
 localVue.use(Vuex);
 config.mocks.$t = key => key;
 
-describe.only("src_3_0_0/modules/layerTree/components/Layer.vue", () => {
+describe("src_3_0_0/modules/layerTree/components/Layer.vue", () => {
     let store,
         wrapper,
         layer,
