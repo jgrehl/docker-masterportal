@@ -225,7 +225,7 @@ export default {
                             <a
                                 class="nav-link"
                                 :class="feature.category === activeCategory ? 'active' : ''"
-                                :href="'#' + feature.category"
+                                :href="feature.category"
                                 :aria-controls="feature.category"
                                 role="button"
                                 data-bs-toggle="pill"
