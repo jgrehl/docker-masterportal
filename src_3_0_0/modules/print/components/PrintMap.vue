@@ -4,7 +4,6 @@ import Cluster from "ol/source/Cluster";
 import {mapGetters, mapMutations, mapActions} from "vuex";
 import {Vector} from "ol/layer.js";
 
-import getters from "../store/gettersPrint";
 import mutations from "../store/mutationsPrint";
 import thousandsSeparator from "../../../shared/js/utils/thousandsSeparator";
 import getVisibleLayer from "../js/getVisibleLayer";
@@ -20,7 +19,25 @@ export default {
         };
     },
     computed: {
-        ...mapGetters("Modules/Print", Object.keys(getters)), // @todo
+        ...mapGetters("Modules/Print", [
+            "active",
+            "autoAdjustScale",
+            "capabilitiesFilter",
+            "currentFormat",
+            "currentLayoutName",
+            "currentMapScale",
+            "defaultCapabilitiesFilter",
+            "fileDownloads",
+            "filename",
+            "formatList",
+            "isScaleSelectedManually",
+            "layoutList",
+            "printMapMarker",
+            "printService",
+            "scaleList",
+            "title",
+            "visibleLayerList"
+        ]),
         ...mapGetters("Maps", ["scales, size", "scale"]),
 
         currentScale: {
@@ -135,14 +152,6 @@ export default {
             this.setCurrentMapScale(value);
         }
     },
-    /**
-     * Lifecycle hook: adds a "close"-Listener to close the tool.
-     * sets listener to laylerlist.
-     * @returns {void}
-     */
-    created () {
-        this.setServiceId(this.mapfishServiceId && this.mapfishServiceId !== "" ? this.mapfishServiceId : this.printServiceId);
-    },
     mounted () {
         if (this.shownLayoutList.length === 0) {
             this.$nextTick(() => {
@@ -154,7 +163,6 @@ export default {
                 }
             });
         }
-
 
         this.setCurrentMapScale(this.scale);
     },
