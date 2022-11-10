@@ -1,5 +1,6 @@
 <script>
 import isObject from "../../../../utils/isObject";
+import {mapGetters} from "vuex";
 import {getComponent} from "../../../../utils/getComponent";
 import BuildSpec from "../utils/buildSpec";
 import getVisibleLayer from "../utils/getVisibleLayer";
@@ -10,6 +11,9 @@ import rawLayerList from "@masterportal/masterportalapi/src/rawLayerList";
  */
 export default {
     name: "PrintMap",
+    computed: {
+        ...mapGetters("Tools/Gfi", ["currentFeature"])
+    },
 
     /**
      * Lifecycle hook: adds a "close"-Listener to close the tool.
@@ -119,3 +123,87 @@ export default {
 };
 </script>
 
+<template lang="html">
+    <ToolTemplate
+        :title="$t(name)"
+        :icon="icon"
+        :active="active"
+        :show-in-sidebar="true"
+        :initial-width="400"
+        :render-to-window="renderToWindow"
+        :resizable-window="resizableWindow"
+        :deactivate-gfi="deactivateGFI"
+    >
+        <template #toolBody>
+            <form>
+                <div
+                    v-if="isPrintDrawnGeoms && isPlotService"
+                    class="form-group form-group-sm row"
+                >
+                    <label
+                        class="col-md-5 control-label"
+                        for="printGeometries"
+                    >
+                        {{ $t("common:modules.tools.print.printGeometries") }}
+                    </label>
+                    <div class="col-sm-7">
+                        <div class="checkbox">
+                            <input
+                                id="printGeometries"
+                                type="checkbox"
+                                :checked="shouldPrintGeometries"
+                                class="form-check-input"
+                                @change="setShouldPrintGeometries($event.target.checked)"
+                            >
+                        </div>
+                    </div>
+                </div>
+                <div
+                    v-if="isLegendAvailable"
+                    class="form-group form-group-sm row"
+                >
+                    <label
+                        class="col-md-5 control-label"
+                        for="printLegend"
+                    >
+                        {{ $t("common:modules.tools.print.withLegendLabel") }}
+                    </label>
+                    <div class="col-md-7">
+                        <div class="form-check">
+                            <input
+                                id="printLegend"
+                                type="checkbox"
+                                class="form-check-input"
+                                :checked="isLegendSelected"
+                                @change="setIsLegendSelected($event.target.checked)"
+                            >
+                        </div>
+                    </div>
+                </div>
+                <div
+                    v-if="isGfiAvailable"
+                    class="form-group form-group-sm row"
+                >
+                    <label
+                        class="col-md-5 col-form-label pt-0"
+                        for="printGfi"
+                    >
+                        {{ $t("common:modules.tools.print.withInfoLabel") }}
+                    </label>
+                    <div class="col-md-7">
+                        <div class="form-check">
+                            <input
+                                id="printGfi"
+                                type="checkbox"
+                                class="form-check-input"
+                                :disabled="currentFeature === null"
+                                :checked="isGfiSelected"
+                                @change="setIsGfiSelected($event.target.checked)"
+                            >
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </template>
+    </ToolTemplate>
+</template>
