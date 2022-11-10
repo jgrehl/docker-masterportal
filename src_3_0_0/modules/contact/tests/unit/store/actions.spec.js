@@ -1,8 +1,8 @@
-import testAction from "../../../../../../../test/unittests/VueTestUtils.js";
+import testAction from "../../../../../../test/unittests/VueTestUtils";
 import {expect} from "chai";
 import sinon from "sinon";
 
-import httpClientModule from "../../../utils/httpClient";
+import httpClientModule from "../../../js/httpClient";
 import actions from "../../../store/actionsContact";
 
 const {onSendSuccess, send} = actions;
@@ -127,7 +127,7 @@ describe("src/modules/tools/contact/store/actionsContact.js", () => {
                 },
                 rootGetters: {
                     portalTitle: "Test",
-                    getRestServiceById: id => id === "007" ? {url: "example.com"} : {}
+                    getRestConfigById: id => id === "007" ? {url: "example.com"} : {}
                 }
             });
         });
