@@ -1,4 +1,5 @@
 import Folder from "../menu/components/MenuFolder.vue";
+import PrintMap from "../print/components/PrintMap.vue";
 import OpenConfig from "../openConfig/components/OpenConfig.vue";
 import ScaleSwitcher from "../scaleSwitcher/components/ScaleSwitcher.vue";
 import ShareView from "../shareView/components/ShareView.vue";
@@ -14,6 +15,7 @@ const state = {
         coordToolkit: CoordToolkit,
         folder: Folder,
         openConfig: OpenConfig,
+        print: PrintMap,
         scaleSwitcher: ScaleSwitcher,
         shareView: ShareView
     }

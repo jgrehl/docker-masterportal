@@ -35,7 +35,7 @@ export default {
         });
         dispatch("registerListener", {
             type: "pointermove",
-            listener: "updatePointer",
+            listener: "updateAttributesByPointer",
             listenerType: "dispatch"
         });
 
@@ -57,33 +57,10 @@ export default {
         commit("setInitialCenter", mapView.getCenter());
         commit("setInitialRotation", mapView.getRotation());
         commit("setInitialZoom", mapView.getZoom());
-        commit("setProjection", mapView.getProjection());
         commit("setMode", map.mode);
-    },
-
-    /**
-     *  Updates the mouse coordinates
-     * @param {Object} param store context
-     * @param {Object} param.commit the commit
-     * @param {Object} param.getters the getters
-     * @param {Object} event update event
-     * @returns {Function} update function for mouse coordinate
-     */
-    updatePointer ({commit, getters}, event) {
-        if (event.dragging) {
-            return;
-        }
-        if (getters.mode === "2D") {
-            commit("setMouseCoordinate", event.coordinate);
-        }
-        else if (getters.mode === "3D" && event.pickedPosition) {
-            try {
-                commit("setMouseCoordinate", event.pickedPosition);
-            }
-            catch (e) {
-                // An error is thrown if the scene is not rendered yet.
-            }
-        }
+        commit("setProjection", mapView.getProjection());
+        commit("setResolutions", mapView.getResolutions());
+        commit("setScales", mapView.get("options").map(option => option.scale));
     },
 
     /**
@@ -96,8 +73,8 @@ export default {
         const map = mapCollection.getMap("2D"),
             mapView = mapCollection.getMapView("2D");
 
-        commit("setBoundingBox", mapView.calculateExtent(map.getSize()));
         commit("setCenter", mapView.getCenter());
+        commit("setExtent", mapView.calculateExtent(map.getSize()));
     },
 
     /**
@@ -117,5 +94,30 @@ export default {
         commit("setResolution", mapView.getResolution());
         commit("setScale", options?.scale);
         commit("setZoom", mapView.getZoom());
+    },
+
+    /**
+     *  Updates the mouse coordinates
+     * @param {Object} param store context
+     * @param {Object} param.commit the commit
+     * @param {Object} param.getters the getters
+     * @param {Object} event update event
+     * @returns {Function} update function for mouse coordinate
+     */
+    updateAttributesByPointer ({commit, getters}, event) {
+        if (event.dragging) {
+            return;
+        }
+        if (getters.mode === "2D") {
+            commit("setMouseCoordinate", event.coordinate);
+        }
+        else if (getters.mode === "3D" && event.pickedPosition) {
+            try {
+                commit("setMouseCoordinate", event.pickedPosition);
+            }
+            catch (e) {
+                // An error is thrown if the scene is not rendered yet.
+            }
+        }
     }
 };
