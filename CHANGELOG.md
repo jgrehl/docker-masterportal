@@ -20,6 +20,7 @@
 - The following NPM package was added:
     - devDependencies:
         -@babel/plugin-transform-modules-commonjs
+- A new module `OpenConfig` has been implemented, which can be used to load a new configuration file (config.json) at runtime.
 
 ### Changed
 - Parameters moved from config.js to config.json:
