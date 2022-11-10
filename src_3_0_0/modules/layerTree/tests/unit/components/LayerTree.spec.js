@@ -11,7 +11,7 @@ const localVue = createLocalVue();
 localVue.use(Vuex);
 config.mocks.$t = key => key;
 
-describe.only("src_3_0_0/modules/layerTree/components/LayerTree.vue", () => {
+describe("src_3_0_0/modules/layerTree/components/LayerTree.vue", () => {
     const mockConfigJson = {
         Portalconfig: {
             navigationSecondary: {
