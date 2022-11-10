@@ -16,7 +16,7 @@ export default {
         };
     },
     computed: {
-        ...mapGetters("Menu/Measure", [
+        ...mapGetters("Modules/Measure", [
             "layer",
             "featureId",
             "tooltipCoord",

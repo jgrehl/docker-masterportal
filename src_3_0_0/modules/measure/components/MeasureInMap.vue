@@ -13,7 +13,7 @@ export default {
         MeasureInMapTooltip
     },
     computed: {
-        ...mapGetters("Menu/Measure", [
+        ...mapGetters("Modules/Measure", [
             "active",
             "featureId",
             "tooltipCoord",
@@ -69,8 +69,8 @@ export default {
         }
     },
     methods: {
-        ...mapMutations("Menu/Measure", Object.keys(mutations)),
-        ...mapActions("Menu/Measure", Object.keys(actions)),
+        ...mapMutations("Modules/Measure", Object.keys(mutations)),
+        ...mapActions("Modules/Measure", Object.keys(actions)),
 
         /**
          * Sets the focus to the first control
