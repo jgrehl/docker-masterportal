@@ -2602,7 +2602,6 @@ Print module, configurable for 2 print services: *High Resolution PlotService* a
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
-|mapfishServiceId|yes|String||_Deprecated in 3.0.0._ Print service id. Resolved using the **[rest-services.json](rest-services.json.md)** file.|false|
 |printServiceId|yes|String||Print service id. Resolved using the **[rest-services.json](rest-services.json.md)** file.|false|
 |printService|no|String|"mapfish"|Flag determining which print service is in use. `plotservice` activates the *High Resolution PlotService*, if the parameter is not set, *Mapfish 3* is used.|false|
 |printAppCapabilities|no|String|"capabilities.json"|path for the configuration of the print service|false|
@@ -2629,7 +2628,7 @@ Print module, configurable for 2 print services: *High Resolution PlotService* a
     "print": {
         "name": "Karte drucken",
         "icon": "bi-printer-fill",
-        "mapfishServiceId": "123456",
+        "printServiceId": "123456",
         "filename": "Print",
         "title": "My Title",
         "printService": "plotservice",
@@ -2652,7 +2651,7 @@ Print module, configurable for 2 print services: *High Resolution PlotService* a
     "print": {
         "name": "Karte drucken",
         "icon": "bi-printer-fill",
-        "mapfishServiceId": "mapfish_printservice_id",
+        "printServiceId": "mapfish_printservice_id",
         "printAppId": "mrh",
         "filename": "Print",
         "title": "Mein Titel"

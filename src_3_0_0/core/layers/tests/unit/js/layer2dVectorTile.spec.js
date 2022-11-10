@@ -35,9 +35,12 @@ describe("src_3_0_0/core/js/layers/layer2dVectorTile.js", () => {
             {name: "Layer Two", id: "l2", defaultStyle: true}
         ];
     let attributes,
+        error,
         warn;
 
     before(() => {
+        error = sinon.spy();
+        sinon.stub(console, "error").callsFake(error);
         warn = sinon.spy();
         sinon.stub(console, "warn").callsFake(warn);
 

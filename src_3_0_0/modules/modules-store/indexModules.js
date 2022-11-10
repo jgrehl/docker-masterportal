@@ -1,10 +1,11 @@
 import actions from "./actionsModules";
 import state from "./stateModules";
 
+import CoordToolkit from "../coordToolkit/store/indexCoordToolkit";
 import OpenConfig from "../openConfig/store/indexOpenConfig";
+import Print from "../print/store/indexPrint";
 import ScaleSwitcher from "../scaleSwitcher/store/indexScaleSwitcher";
 import ShareView from "../shareView/store/indexShareView";
-import CoordToolkit from "../coordToolkit/store/indexCoordToolkit";
 
 export default {
     namespaced: true,
@@ -12,8 +13,9 @@ export default {
     state: {...state},
     modules: {
         // modules must be copied, else tests fail in watch mode
-        OpenConfig: {...OpenConfig},
         CoordToolkit: {...CoordToolkit},
+        OpenConfig: {...OpenConfig},
+        Print: {...Print},
         ScaleSwitcher: {...ScaleSwitcher},
         ShareView: {...ShareView}
     }
