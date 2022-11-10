@@ -11,13 +11,23 @@ const {
 describe("src_3_0_0/modules/openConfig/store/actionsOpenConfig.js", () => {
     let clearSpy,
         commit,
-        dispatch;
+        dispatch,
+        map;
 
     beforeEach(() => {
+        mapCollection.clear();
+
         commit = sinon.spy();
         dispatch = sinon.spy();
-
         clearSpy = sinon.spy(layerCollection, "clear");
+
+        map = {
+            id: "ol",
+            mode: "2D",
+            removeLayer: () => sinon.spy()
+        };
+
+        mapCollection.addMap(map, "2D");
     });
 
     afterEach(() => {
