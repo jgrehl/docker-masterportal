@@ -68,9 +68,7 @@ export default {
 
 <template lang="html">
     <div
-        v-if="active"
-        id="scale-switcher"
-        class="row"
+        
     >
         <label
             for="scale-switcher-select"
