@@ -1561,6 +1561,7 @@ A folder object defined by a name, icon, and its children.
 [type:layerSlider]: # (Portalconfig.menu.tool.layerSlider)
 [type:measure]: # (Portalconfig.menu.tool.measure)
 [type:modeler3D]: # (Portalconfig.menu.tool.modeler3D)
+[type:openConfig]: # (Portalconfig.menu.tool.openConfig)
 [type:parcelSearch]: # (Portalconfig.menu.tool.parcelSearch)
 [type:print]: # (Portalconfig.menu.tool.print)
 [type:routing]: # (Portalconfig.menu.tool.routing)
@@ -1613,6 +1614,7 @@ Alternatively, also the paths **Portalconfig.menu.info**, **Portalconfig.menu.si
 |wfsFeatureFilter|no|**[wfsFeatureFilter](#markdown-header-portalconfigmenutoolwfsFeatureFilter)**||_Deprecated in 3.0.0. Please use `filter` instead._ Filters WFS features. This required configuring `"filterOptions"` on the WFS layer object.|false|
 |wfsSearch|no|**[wfsSearch](#markdown-header-portalconfigmenutoolwfssearch)**||Makes it possible to create a form to query WFS layers using filters. It is possible to either use a stored query (WFS@2.0.0) or define the query using the defined parameters (WFS@1.1.0).|false|
 |wfst|no|**[wfst](#markdown-header-portalconfigmenutoolwfst)**||WFS-T module to visualize, create, update and delete features.|false|
+|openConfig|no|**[openConfig](#markdown-header-portalconfigmenutoolopenConfig)**||With this module a configuration file (config.json) can be reloaded at runtime. The modules and map are adapted to the new configuration.|false|
 
 ***
 
@@ -4353,6 +4355,14 @@ The tool allows for switching the style of vector tile layers(❗) which provide
 ⚠️Deprecated in 3.0.0. Please use `coordToolkit` instead.
 
 Tool to read coordinates on mouse click.
+
+***
+
+#### Portalconfig.menu.tool.openConfig
+
+[inherits]: # (Portalconfig.menu.tool)
+
+With this module a configuration file (config.json) can be reloaded at runtime. The modules and map are adapted to the new configuration.
 
 ***
 
