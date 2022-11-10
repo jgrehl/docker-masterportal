@@ -1,8 +1,6 @@
-<!-- <script>
+<script>
 import {mapGetters, mapMutations} from "vuex";
 import getters from "../store/gettersAddWMS";
-import {getComponent} from "../../../../utils/getComponent";
-import ToolTemplate from "../../ToolTemplate.vue";
 import mutations from "../store/mutationsAddWMS";
 import {WMSCapabilities} from "ol/format.js";
 import {intersects} from "ol/extent";
@@ -12,9 +10,6 @@ import LoaderOverlay from "../../../../utils/loaderOverlay";
 
 export default {
     name: "AddWMS",
-    components: {
-        ToolTemplate
-    },
     data: function () {
         return {
             treeTyp: Radio.request("Parser", "getTreeType"),
@@ -25,7 +20,7 @@ export default {
         };
     },
     computed: {
-        ...mapGetters("Tools/AddWMS", Object.keys(getters)),
+        ...mapGetters("Modules/AddWMS", Object.keys(getters)),
         ...mapGetters("Maps", ["projection"])
     },
     watch: {
@@ -49,7 +44,7 @@ export default {
         }
     },
     methods: {
-        ...mapMutations("Tools/AddWMS", Object.keys(mutations)),
+        ...mapMutations("Modules/AddWMS", Object.keys(mutations)),
 
         /**
          * Sets the focus to the first control
@@ -68,12 +63,6 @@ export default {
          */
         close () {
             this.setActive(false);
-            // The value "isActive" of the Backbone model is also set to false to change the CSS class in the menu (menu/desktop/tool/view.toggleIsActiveClass)
-            const model = getComponent(this.id);
-
-            if (model) {
-                model.set("isActive", false);
-            }
         },
 
         /**
@@ -91,6 +80,8 @@ export default {
 
         /**
          * Importing the external wms layers
+         * @fires Core#RadioTriggerUtilShowLoader
+         * @fires Core#RadioTriggerUtilHideLoader
          * @fires Core.ModelList#RadioTriggerModelListRenderTree
          * @fires Core.ConfigLoader#RadioTriggerParserAddFolder
          * @returns {void}
@@ -204,20 +195,9 @@ export default {
                 Radio.trigger("Parser", "addFolder", object.Title, this.getParsedTitle(object.Title), parentId, level, false, false, object.invertLayerOrder);
             }
             else {
-                const datasets = [];
-
-                if (object?.MetadataURL?.[0].OnlineResource) {
-                    datasets.push({
-                        customMetadata: true,
-                        csw_url: object.MetadataURL[0].OnlineResource,
-                        attributes: {}
-                    });
-                }
                 Radio.trigger("Parser", "addLayer", object.Title, this.getParsedTitle(object.Title), parentId, level, object.Name, this.wmsUrl, this.version, {
                     maxScale: object?.MaxScaleDenominator?.toString(),
-                    minScale: object?.MinScaleDenominator?.toString(),
-                    legendURL: object?.Style?.[0].LegendURL?.[0].OnlineResource?.toString(),
-                    datasets
+                    minScale: object?.MinScaleDenominator?.toString()
                 });
             }
         },
@@ -324,56 +304,45 @@ export default {
 };
 </script>
 
-<template>
-    <ToolTemplate
-        :title="$t(name)"
-        :icon="icon"
-        :active="active"
-        :render-to-window="renderToWindow"
-        :resizable-window="resizableWindow"
-        :deactivate-gfi="deactivateGFI"
+<template lang="html">
+    <div
+        v-if="active"
+        id="addWMS"
+        class="row"
     >
-        <template #toolBody>
-            <div
-                v-if="active"
-                id="add-wms"
-                class="addWMS win-body"
+        <div
+            v-if="invalidUrl"
+            class="addwms_error"
+        >
+            {{ $t('common:modules.tools.addWMS.errorEmptyUrl') }}
+        </div>
+        <input
+            id="wmsUrl"
+            ref="wmsUrl"
+            aria-label="WMS-Url"
+            type="text"
+            class="form-control wmsUrlsChanged"
+            :placeholder="$t('common:modules.tools.addWMS.placeholder')"
+            @keydown.enter="inputUrl"
+        >
+        <button
+            id="addWMSButton"
+            type="button"
+            class="btn btn-primary"
+            @click="importLayers"
+        >
+            <span
+                class=""
+                aria-hidden="true"
+            >{{ $t('common:modules.tools.addWMS.textLoadLayer') }}</span>
+            <span
+                class="bootstrap-icon"
+                aria-hidden="true"
             >
-                <div
-                    v-if="invalidUrl"
-                    class="addwms_error"
-                >
-                    {{ $t('common:modules.tools.addWMS.errorEmptyUrl') }}
-                </div>
-                <input
-                    id="wmsUrl"
-                    ref="wmsUrl"
-                    aria-label="WMS-Url"
-                    type="text"
-                    class="form-control wmsUrlsChanged"
-                    :placeholder="$t('common:modules.tools.addWMS.placeholder')"
-                    @keydown.enter="inputUrl"
-                >
-                <button
-                    id="addWMSButton"
-                    type="button"
-                    class="btn btn-primary"
-                    @click="importLayers"
-                >
-                    <span
-                        class=""
-                        aria-hidden="true"
-                    >{{ $t('common:modules.tools.addWMS.textLoadLayer') }}</span>
-                    <span
-                        class="bootstrap-icon"
-                        aria-hidden="true"
-                    >
-                        <i class="bi-check-lg" />
-                    </span>
-                </button>
-            </div>
-        </template>
-    </ToolTemplate>
+                <i class="bi-check-lg" />
+            </span>
+        </button>
+    </div>
 </template>
 
 <style lang="scss" scoped>
@@ -394,4 +363,4 @@ export default {
         color: $light_red;
         margin-bottom: 10px;
     }
-</style> -->
+</style>
