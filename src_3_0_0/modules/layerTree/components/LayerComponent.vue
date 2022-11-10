@@ -67,7 +67,7 @@ export default {
             @click="visibilityInLayerTreeChanged(!isLayerVisible())"
         >
         <label
-            :class="['mt-0 d-flex flex-column align-self-start', layerConf.visibility ? 'bold' : '']"
+            :class="['mt-0 d-flex flex-column align-self-start', isLayerVisible() ? 'bold' : '']"
             :for="'layertree-layer-checkbox' + layerConf.id"
         >
             <h5>{{ layerConf.name }}</h5>
