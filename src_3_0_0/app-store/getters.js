@@ -96,6 +96,16 @@ const getters = {
     },
 
     /**
+     * Returns a rest service from restConf by ID
+     * @param {Object} state the store state
+     * @param {String} id The id for rest service
+     * @returns {Object} the rest service config object
+     */
+    restServiceById: state => id => {
+        return state?.restConfig?.find(service => service.id === id);
+    },
+
+    /**
      * Returns the secondaryMenu of portalConfig.
      * @param {Object} state state of the app-store.
      * @returns {Object} Secondary menu.
