@@ -2,7 +2,7 @@ import {expect} from "chai";
 import {getStateAsUrlParams} from "../../stateToUrlWriter";
 
 
-describe("src/utils/parametricUrl/stateToUrlWriter.js", () => {
+describe("src_3_0_0/shared/js/utils/stateToUrlWriter.js", () => {
     it("test getStateAsUrlParams", () => {
         const rootGetters = {
                 visibleLayerConfigs: [
