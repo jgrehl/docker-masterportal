@@ -545,40 +545,40 @@ export default {
                 </div>
             </div>
         </form>
-        <div id="tool-print-downloads-container">
+        <div id="modules-print-downloads-container">
             <div
                 v-for="file in fileDownloads"
-                id="tool-print-download-container"
+                id="modules-print-download-container"
                 :key="file.index"
                 class="row"
             >
-                <div class="col-md-4 tool-print-download-title-container">
+                <div class="col-md-4 modules-print-download-title-container">
                     <span
                         v-if="printService === 'plotservice'"
-                        class="tool-print-download-title"
+                        class="modules-print-download-title"
                     >
                         {{ file.filename + "." + file.outputFormat }}
                     </span>
                     <span
                         v-else
-                        class="tool-print-download-title"
+                        class="modules-print-download-title"
                     >
                         {{ file.title }}
                     </span>
                 </div>
-                <div class="col-md-2 tool-print-download-icon-container">
+                <div class="col-md-2 modules-print-download-icon-container">
                     <div
                         v-if="!file.finishState"
-                        class="tool-print-download-loader"
+                        class="modules-print-download-loader"
                     />
                     <div
                         v-else
-                        class="bootstrap-icon tool-print-download-icon"
+                        class="bootstrap-icon modules-print-download-icon"
                     >
                         <i class="bi-check-lg" />
                     </div>
                 </div>
-                <div class="col-md-6 d-grid gap-2 tool-print-download-button-container">
+                <div class="col-md-6 d-grid gap-2 modules-print-download-button-container">
                     <button
                         v-if="file.finishState"
                         class="btn btn-primary btn-sm"
@@ -588,7 +588,7 @@ export default {
                     </button>
                     <button
                         v-else
-                        class="btn btn-outline-default btn-sm tool-print-download-button-disabled"
+                        class="btn btn-outline-default btn-sm modules-print-download-button-disabled"
                         disabled
                     >
                         {{ $t("common:modules.tools.print.createDownloadFile") }}
@@ -640,32 +640,32 @@ export default {
     #outputFileTitleWarning.active {
         display: none;
     }
-    #tool-print-downloads-container {
+    #modules-print-downloads-container {
         margin-top: 30px;
 
-        #tool-print-download-container {
+        #modules-print-download-container {
             padding-left: 15px;
             margin-top: 10px;
 
-            .tool-print-download-title-container {
+            .modules-print-download-title-container {
                 padding: 8px 0 0 0;
             }
 
-            .tool-print-download-icon-container {
+            .modules-print-download-icon-container {
                 margin: 5px 0 0 0;
             }
 
-            .tool-print-download-icon {
+            .modules-print-download-icon {
                 font-size: $font-size-lg;
                 color: $light_blue;
             }
 
-            .tool-print-download-button-disabled {
+            .modules-print-download-button-disabled {
                 border-color: $dark_grey;
                 color: $dark-grey;
             }
 
-            .tool-print-download-loader {
+            .modules-print-download-loader {
                 border: 4px solid $light_grey;
                 border-radius: 50%;
                 border-top: 4px solid $light_blue;
