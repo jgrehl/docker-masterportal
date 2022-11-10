@@ -376,9 +376,9 @@
               "successTicket": "Your ticket number is: "
             },
             "openConfig": {
-              "explanation": "Open a map that you have saved as a local project file.",
+              "explanation": "Open a map that you have saved as a local configuration file.",
               "headline": "open map",
-              "openFile": "Open project file"
+              "openFile": "Open configuration file"
             },
             "print": {
                 "titleLabel": "Title",
