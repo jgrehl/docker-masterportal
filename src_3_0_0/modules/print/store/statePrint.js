@@ -5,10 +5,12 @@
  * @property {String} filename output filename
  * @property {String} icon icon of the print
  * @property {String} name name of the print
- * @property {String} printServiceId the id from the rest services json for the print app
+ * @property {String[]} supportedDevices Devices on which the module is displayed.
+ * @property {String[]} supportedMapModes Map mode in which this module can be used.
  * @property {String} title title for the report
  * @property {String} type type of the Print component
  *
+ * @property {String} printServiceId the id from the rest services json for the print app
  * @property {Object} printSettings print settings from the config.json
  * @property {String} mapfishServiceId _Deprecated. This field will no longer be used in the next major release._ the id from the rest services json for the mapfish app
  * @property {String} serviceId _Deprecated. This field will no longer be used in the next major release._ temporary used for different serviceId parameters
@@ -50,10 +52,12 @@ const state = {
     filename: "report",
     icon: "bi-printer-fill",
     name: "common:menu.tools.print",
-    printServiceId: "",
+    supportedDevices: ["Desktop", "Table"],
+    supportedMapModes: ["2D"],
     title: "PrintResult",
     type: "print",
 
+    printServiceId: "",
     printMapMarker: false,
     serviceId: "",
     printService: "mapfish",
