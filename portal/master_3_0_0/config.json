@@ -39,6 +39,11 @@
       "sections": [
         [
           {
+            "type": "layerTree"
+          }
+        ],
+        [
+          {
             "type": "scaleSwitcher"
           },
           {

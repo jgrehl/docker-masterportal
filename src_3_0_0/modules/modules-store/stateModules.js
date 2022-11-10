@@ -6,6 +6,7 @@ import ScaleSwitcher from "../scaleSwitcher/components/ScaleSwitcher.vue";
 import ShareView from "../shareView/components/ShareView.vue";
 import CoordToolkit from "../coordToolkit/components/CoordToolkit.vue";
 import Contact from "../contact/components/ContactFormular.vue";
+import LayerTree from "../layerTree/components/LayerTree.vue";
 
 /**
  * User type definition
@@ -21,7 +22,8 @@ const state = {
         print: PrintMap,
         scaleSwitcher: ScaleSwitcher,
         shareView: ShareView,
-        contact: Contact
+        contact: Contact,
+        layerTree: LayerTree
     }
 };
 
