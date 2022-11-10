@@ -133,7 +133,6 @@ const getters = {
 
         return layerContainer.filter(layerConf => layerConf.visibility === true);
     },
-
     /**
      * Returns all visible layer configurations.
      * @param {Object} state state of the app-store.
@@ -155,6 +154,16 @@ const getters = {
         const layerContainer = getters.allLayerConfigs(state);
 
         return layerContainer.find(layerConf => layerConf.id === id);
+    },
+    /**
+     * Returns the restConfig whitch matches the id.
+     * @param {Object} state state of the app-store.
+     * @returns {Object} the restConfig layer that matches the given id.
+     */
+    getRestConfigById: (state) => (id) => {
+        const matchingLayer = state.restConfig.filter(layer => layer.id === id);
+
+        return matchingLayer[0];
     }
 };
 
