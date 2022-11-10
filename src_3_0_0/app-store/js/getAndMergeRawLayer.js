@@ -11,22 +11,23 @@ import omit from "../../shared/js/utils/omit";
 export function getAndMergeRawLayer (layerConf, treeType = "light") {
     const rawLayer = mergeRawLayer(layerConf, rawLayerList.getLayerWhere({id: layerConf?.id}));
 
-    return addSelected(rawLayer, treeType);
+    // use layerConf, if layer is not available in rawLayerList (services.json)
+    return addShowInLayerTree(rawLayer ? rawLayer : layerConf, treeType);
 }
 
 /**
- * Adds the attribute "selected" to raw layer.
+ * Adds the attribute "showInLayerTree" to raw layer.
  * @param {Object} rawLayer The raw layer.
  * @param {Object} [treeType="light"] the type for topic tree
  * @returns {Object} The raw layer
  */
-export function addSelected (rawLayer, treeType) {
+export function addShowInLayerTree (rawLayer, treeType) {
     if (rawLayer) {
         if (treeType === "light" || rawLayer.visibility) {
-            rawLayer.selected = true;
+            rawLayer.showInLayerTree = true;
         }
-        else if (!Object.hasOwn(rawLayer, "selected")) {
-            rawLayer.selected = false;
+        else if (!Object.hasOwn(rawLayer, "showInLayerTree")) {
+            rawLayer.showInLayerTree = false;
         }
     }
 
@@ -164,7 +165,7 @@ export function getAndMergeAllRawLayers (treeConfig = {}) {
     let relatedWMSLayerIds = [];
 
     for (let i = 0; i < layerList.length; i++) {
-        const rawLayer = addSelected(layerList[i], treeConfig.type),
+        const rawLayer = addShowInLayerTree(layerList[i], treeConfig.type),
             layerType = rawLayer.typ?.toUpperCase();
 
         if (!validLayerTypes.includes(layerType) ||
