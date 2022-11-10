@@ -4,7 +4,6 @@
 * @property {Number[]} clickCoordinate Current coordinates where the mouse click event was triggered.
 * @property {Number[]} clickPixel Current pixel values where the mouse click event was triggered.
 * @property {Number[]} clickCartesianCoordinate Current cartesian 2D coordinate.
-* @property {Number[]} extent Current extent values of the map.
 * @property {Number} initialResolution Initial resolution value of the map.
 * @property {String[]} layerIds Current layers of the map by Id.
 * @property {String[]} highlightedFeatures list of highlighted features, indices correspond to "highlightedFeaturesStyles"
@@ -13,8 +12,6 @@
 * @property {Number[]} mouseCoordinate Current mouse coordinate values of the map.
 * @property {String[]} overlayIds Current overlays of the map by Id.
 * @property {String} projection Current projection name of the map.
-* @property {Number[]} resolutions Available resolution values of the map.
-* @property {Number} rotation Current rotation value of the map.
 * @property {Number} size Current size in pixels of the map in the DOM.
 * @property {Boolean} twoFingerPanStart Indicator if the 2-Fingers-Pan is active.
 */
@@ -31,7 +28,7 @@ const state = {
     clickCoordinate: null,
     clickPixel: null,
     clickCartesianCoordinate: null,
-    extent: null,
+    // extent: null,
     // initialCenter: null,
     initialResolution: null,
     // initialZoomLevel: null,
@@ -46,7 +43,7 @@ const state = {
     overlayIds: null,
     // projection: null,
     // resolution: null,
-    resolutions: null,
+    // resolutions: null,
     // rotation: null,
     // scale: null,
     size: null,
