@@ -23,11 +23,7 @@ describe("src_3_0_0/modules/scaleSwitcher/components/ScaleSwitcher.vue", () => {
                 navigationSecondary: {
                     sections: [
                         {
-                            scaleSwitcher: {
-                                "name": "translate#common:menu.tools.scaleSwitcher",
-                                "icon": "bi-arrows-angle-contract",
-                                "renderToWindow": true
-                            }
+                            type: "scaleSwitcher"
                         }
                     ]
                 }
