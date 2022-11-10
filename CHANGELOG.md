@@ -337,6 +337,26 @@
   - 'layerIDsToStyle'
 - the Control-Bar Design
 
+### Removed
+- The following NPM packages are removed:
+    - dependencies
+        - backbone
+        - backbone.radio
+        - bootstrap-colorpicker
+        - bootstrap-datepicker
+        - bootstrap-toggle
+        - jquery
+        - jquery-ui
+        - rbush
+        - rbush-knn
+        - vcs-oblique
+    - devDependencies:
+        - eslint-plugin-backbone
+        - eslint-plugin-you-dont-need-lodash-underscore
+        - jsdoc
+        - sinon-chai
+- Module print: The attribute `mapfishServiceId` has been removed. Use `printServiceId` instead.
+
 ### Fixed
 - actionsMapLayers/addLayer: don't set zIndex by default, otherwise addLayerOnTop and addLayerToIndex have no effect
 - Issue #842: LayerInformation shows all service urls in group layer.
