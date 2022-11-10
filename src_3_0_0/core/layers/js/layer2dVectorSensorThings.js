@@ -292,7 +292,7 @@ Layer2dVectorSensorThings.prototype.initializeConnection = function (onsuccess) 
         version = this.get("version"),
         urlParams = this.get("urlParameter"),
         currentExtent = {
-            extent: store.getters["Maps/boundingBox"],
+            extent: store.getters["Maps/extent"],
             sourceProjection: mapCollection.getMapView("2D").getProjection().getCode(),
             targetProjection: this.get("epsg")
         },
@@ -998,7 +998,7 @@ Layer2dVectorSensorThings.prototype.startSubscription = function (features) {
  * @returns {void}
  */
 Layer2dVectorSensorThings.prototype.updateSubscription = function () {
-    const datastreamIds = this.getDatastreamIdsInCurrentExtent(this.getLayer().getSource().getFeatures(), store.getters["Maps/boundingBox"]),
+    const datastreamIds = this.getDatastreamIdsInCurrentExtent(this.getLayer().getSource().getFeatures(), store.getters["Maps/extent"]),
         subscriptionTopics = this.get("subscriptionTopics"),
         version = this.get("version"),
         mqttClient = this.mqttClient,
@@ -1013,7 +1013,7 @@ Layer2dVectorSensorThings.prototype.updateSubscription = function () {
         this.unsubscribeFromSensorThings(datastreamIds, subscriptionTopics, version, mqttClient);
         this.initializeConnection(() => {
             this.subscribeToSensorThings(
-                this.getDatastreamIdsInCurrentExtent(this.getLayer().getSource().getFeatures(), store.getters["Maps/boundingBox"]),
+                this.getDatastreamIdsInCurrentExtent(this.getLayer().getSource().getFeatures(), store.getters["Maps/extent"]),
                 subscriptionTopics,
                 version,
                 mqttClient,
