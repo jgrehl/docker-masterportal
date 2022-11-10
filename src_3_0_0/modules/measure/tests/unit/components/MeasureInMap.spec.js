@@ -14,7 +14,6 @@ describe("src_3_0_0/modules/measure/components/MeasureInMap.vue", () => {
     let store,
         wrapper,
         origcreateDrawInteraction,
-        origremoveDrawInteraction,
         origdeleteFeatures;
 
     const mockConfigJson = {
@@ -34,10 +33,8 @@ describe("src_3_0_0/modules/measure/components/MeasureInMap.vue", () => {
         mapCollection.clear();
 
         origcreateDrawInteraction = MeasureModule.actions.createDrawInteraction;
-        origremoveDrawInteraction = MeasureModule.actions.removeDrawInteraction;
         origdeleteFeatures = MeasureModule.actions.deleteFeatures;
         MeasureModule.actions.createDrawInteraction = sinon.spy();
-        MeasureModule.actions.removeDrawInteraction = sinon.spy();
         MeasureModule.actions.deleteFeatures = sinon.spy();
         MeasureModule.mutations.setSelectedGeometry = sinon.spy();
         MeasureModule.mutations.setSelectedUnit = sinon.spy();
@@ -90,7 +87,6 @@ describe("src_3_0_0/modules/measure/components/MeasureInMap.vue", () => {
             wrapper.destroy();
         }
         MeasureModule.actions.createDrawInteraction = origcreateDrawInteraction;
-        MeasureModule.actions.removeDrawInteraction = origremoveDrawInteraction;
         MeasureModule.actions.deleteFeatures = origdeleteFeatures;
         sinon.restore();
     });
