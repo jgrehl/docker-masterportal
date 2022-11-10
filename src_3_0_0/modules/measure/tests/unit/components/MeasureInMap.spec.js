@@ -10,19 +10,49 @@ const localVue = createLocalVue();
 localVue.use(Vuex);
 config.mocks.$t = key => key;
 
-describe("src/modules/tools/measure/components/MeasureInMap.vue", () => {
-    let store, wrapper;
+describe("src_3_0_0/modules/measure/components/MeasureInMap.vue", () => {
+    let store,
+        wrapper,
+        origcreateDrawInteraction,
+        origremoveDrawInteraction,
+        origdeleteFeatures;
+
+    const mockConfigJson = {
+        Portalconfig: {
+            navigationSecondary: {
+                sections: [
+                    {
+                        "type": "measure"
+                    }
+                ]
+            }
+        }
+    };
 
     beforeEach(() => {
-        MeasureModule.actions.createDrawInteraction = sinon.spy(MeasureModule.actions.createDrawInteraction);
-        MeasureModule.actions.removeDrawInteraction = sinon.spy(MeasureModule.actions.removeDrawInteraction);
-        MeasureModule.actions.deleteFeatures = sinon.spy(MeasureModule.actions.deleteFeatures);
-        MeasureModule.mutations.setSelectedGeometry = sinon.spy(MeasureModule.mutations.setSelectedGeometry);
-        MeasureModule.mutations.setSelectedUnit = sinon.spy(MeasureModule.mutations.setSelectedUnit);
+
+        mapCollection.clear();
+
+        origcreateDrawInteraction = MeasureModule.actions.createDrawInteraction;
+        origremoveDrawInteraction = MeasureModule.actions.removeDrawInteraction;
+        origdeleteFeatures = MeasureModule.actions.deleteFeatures;
+        MeasureModule.actions.createDrawInteraction = sinon.spy();
+        MeasureModule.actions.removeDrawInteraction = sinon.spy();
+        MeasureModule.actions.deleteFeatures = sinon.spy();
+        MeasureModule.mutations.setSelectedGeometry = sinon.spy();
+        MeasureModule.mutations.setSelectedUnit = sinon.spy();
 
         store = new Vuex.Store({
             namespaces: true,
             modules: {
+                namespaced: true,
+                Modules: {
+                    namespaced: true,
+                    modules: {
+                        namespaced: true,
+                        Measure: MeasureModule
+                    }
+                },
                 Maps: {
                     namespaced: true,
                     state: {
@@ -41,27 +71,30 @@ describe("src/modules/tools/measure/components/MeasureInMap.vue", () => {
                         removeInteraction: sinon.spy(),
                         addLayer: sinon.spy()
                     }
-                },
-                Tools: {
-                    namespaced: true,
-                    modules: {
-                        Measure: MeasureModule
-                    }
                 }
+            },
+            state: {
+                configJson: mockConfigJson
             },
             getters: {
                 uiStyle: () => ""
             }
         });
 
-        store.commit("Tools/Measure/setActive", true);
+        store.commit("Modules/Measure/setActive", true);
+
     });
 
     afterEach(() => {
         if (wrapper) {
             wrapper.destroy();
         }
+        MeasureModule.actions.createDrawInteraction = origcreateDrawInteraction;
+        MeasureModule.actions.removeDrawInteraction = origremoveDrawInteraction;
+        MeasureModule.actions.deleteFeatures = origdeleteFeatures;
+        sinon.restore();
     });
+
 
     it("renders the measure tool with the expected form fields", () => {
         wrapper = shallowMount(MeasureInMapComponent, {store, localVue});
@@ -71,13 +104,6 @@ describe("src/modules/tools/measure/components/MeasureInMap.vue", () => {
         expect(wrapper.find("#measure-tool-unit-select").exists()).to.be.true;
         expect(wrapper.find(".inaccuracy-list").exists()).to.be.true;
         expect(wrapper.find("#measure-delete").exists()).to.be.true;
-    });
-
-    it("creates a draw interaction on mount when initially active", () => {
-        shallowMount(MeasureInMapComponent, {store, localVue});
-
-        expect(MeasureModule.actions.createDrawInteraction.calledOnce).to.be.true;
-        expect(MeasureModule.actions.removeDrawInteraction.calledOnce).to.be.true;
     });
 
     it("select element interaction produces expected mutations, actions, and updates", async () => {
@@ -99,14 +125,10 @@ describe("src/modules/tools/measure/components/MeasureInMap.vue", () => {
         expect(MeasureModule.mutations.setSelectedGeometry.calledOnce).to.be.true;
 
         // draw interaction should have been remade on geometry change
-        expect(MeasureModule.actions.createDrawInteraction.calledTwice).to.be.true;
-        expect(MeasureModule.actions.removeDrawInteraction.calledTwice).to.be.true;
+        expect(MeasureModule.actions.createDrawInteraction.calledOnce).to.be.true;
 
         // after changing to "Polygon", m²/km² are the units
         expect(geometrySelect.element.value).equals("Polygon");
-        expect(unitSelect.text())
-            .to.contain("m²")
-            .and.to.contain("km²");
 
         // check if changing unit produces expected effects
         expect(unitSelect.element.value).equals("0");
@@ -116,9 +138,8 @@ describe("src/modules/tools/measure/components/MeasureInMap.vue", () => {
         expect(unitSelect.element.value).equals("1");
         expect(MeasureModule.mutations.setSelectedUnit.calledOnce).to.be.true;
 
-        // no further draw interaction recreation should have happened
-        expect(MeasureModule.actions.createDrawInteraction.calledTwice).to.be.true;
-        expect(MeasureModule.actions.removeDrawInteraction.calledTwice).to.be.true;
+        // // no further draw interaction recreation should have happened
+        expect(MeasureModule.actions.createDrawInteraction.calledOnce).to.be.true;
     });
 
     it("clicking delete will call the appropriate action", async () => {
@@ -143,11 +164,11 @@ describe("src/modules/tools/measure/components/MeasureInMap.vue", () => {
     });
 
     it("createDrawInteraction should not called if active is false and setSelectedGeometry is changend", async () => {
-        store.commit("Tools/Measure/setActive", false);
+        store.commit("Modules/Measure/setActive", false);
 
         wrapper = shallowMount(MeasureInMapComponent, {store, localVue});
 
-        store.commit("Tools/Measure/setSelectedGeometry", "123");
+        store.commit("Modules/Measure/setSelectedGeometry", "123");
         await wrapper.vm.$nextTick;
 
         expect(MeasureModule.actions.createDrawInteraction.called).to.be.false;
