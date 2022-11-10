@@ -117,13 +117,28 @@ describe("src_3_0_0/core/maps/store/actionsMapsAttributesMapper.js", () => {
         it("Should set initial attributes", () => {
             setInitialAttributes({commit});
 
-            expect(commit.callCount).to.equals(5);
+            expect(commit.callCount).to.equals(7);
             expect(commit.firstCall.args).to.deep.equals(["setInitialCenter", [10, 20]]);
             expect(commit.secondCall.args).to.deep.equals(["setInitialRotation", 0]);
             expect(commit.thirdCall.args).to.deep.equals(["setInitialZoom", 5]);
-            expect(commit.getCall(3).args[0]).to.be.equals("setProjection");
-            expect(commit.getCall(3).args[1].code_).to.be.equals("EPSG:3857");
-            expect(commit.getCall(4).args).to.deep.equals(["setMode", "2D"]);
+            expect(commit.getCall(3).args).to.deep.equals(["setMode", "2D"]);
+            expect(commit.getCall(4).args).to.be.equals(["setProjection", "EPSG:3857"]);
+            expect(commit.getCall(5).args).to.deep.equals(["setResolutions", [
+                66.14579761460263,
+                26.458319045841044,
+                15.874991427504629,
+                10.583327618336419,
+                5.2916638091682096,
+                2.6458319045841048
+            ]]);
+            expect(commit.getCall(6).args).to.deep.equals(["setScales", [
+                250000,
+                100000,
+                60000,
+                40000,
+                20000,
+                10000
+            ]]);
         });
     });
 
@@ -132,8 +147,8 @@ describe("src_3_0_0/core/maps/store/actionsMapsAttributesMapper.js", () => {
             updateAttributesByMoveend({commit});
 
             expect(commit.callCount).to.equals(2);
-            expect(commit.firstCall.args).to.deep.equals(["setBoundingBox", [-122.29159522920523, -112.29159522920523, 142.29159522920523, 152.29159522920523]]);
-            expect(commit.secondCall.args).to.deep.equals(["setCenter", [10, 20]]);
+            expect(commit.firstCall.args).to.deep.equals(["setCenter", [10, 20]]);
+            expect(commit.secondCall.args).to.deep.equals(["setExtent", [-122.29159522920523, -112.29159522920523, 142.29159522920523, 152.29159522920523]]);
         });
     });
 
