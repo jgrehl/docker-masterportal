@@ -134,7 +134,7 @@ const getters = {
 
         return layerContainer.filter(layerConf => layerConf.visibility === true);
     },
-    
+
     /**
      * Returns the layer configuration with the given id.
      * @param {Object} state state of the app-store.
