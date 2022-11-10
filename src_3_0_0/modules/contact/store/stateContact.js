@@ -2,13 +2,8 @@
  * Contact tool state definition.
  * @typedef {Object} ContactState
  * @property {Boolean} active If true, SaveSelection will be rendered.
- * @property {String} id Id of the Contact component.
  * @property {String} name Displayed as the title. (config-param)
  * @property {String} icon Icon next to the title. (config-param)
- * @property {Boolean} renderToWindow If true, tool is rendered in a window, else in the sidebar. (config-param)
- * @property {Boolean} resizableWindow If true, window is resizable. (config-param)
- * @property {Boolean} isVisibleInMenu If true, tool is selectable in menu. (config-param)
- * @property {Boolean} deactivateGFI Flag determining if the tool should deactivate GFI. (config-param)
  * @property {String} serviceId The id of the service (rest-services.json) that contains the url of the mail service. (config-param)
  * @property {Object[]} from Default sender for the e-mail. (config-param)
  * @property {Object[]} to Default recipient of the e-mail. (config-param)
@@ -26,18 +21,14 @@
  * @property {Boolean} privacyPolicyAccepted Whether the user has accepted the privacy policy or not.
  * @property {String} phone The phone number that the user has entered.
  * @property {String} username The name of the user.
- * @property {String} serviceID _Deprecated. This field will no longer be used in the next major release._ The id of the service (rest-services.json) that contains the url of the mail service. (config-param)
- */
+ * @property {String[]} supportedDevices Devices on which the module is displayed.
+ * @property {String[]} supportedMapModes Map mode in which this module can be used.
+ * @property {String} type The type of the module.
+*/
 const state = {
     active: false,
-    id: "contact",
-    // defaults for config.json tool parameters
     name: "common:menu.contact",
     icon: "bi-envelope-fill",
-    renderToWindow: true,
-    resizableWindow: true,
-    isVisibleInMenu: true,
-    deactivateGFI: true,
     from: [],
     serviceId: null,
     to: [],
@@ -51,13 +42,14 @@ const state = {
     privacyPolicyLink: "https://www.masterportal.org/datenschutz.html",
     subject: "",
     withTicketNo: true,
-    serviceID: null,
-    // contact state
     mail: "",
     message: "",
     privacyPolicyAccepted: false,
     phone: "",
-    username: ""
+    username: "",
+    supportedDevices: ["Desktop", "Mobile", "Table"],
+    supportedMapModes: ["2D", "3D"],
+    type: "contact"
 };
 
 export default state;
