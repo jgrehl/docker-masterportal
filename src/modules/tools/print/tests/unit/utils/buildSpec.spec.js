@@ -257,6 +257,7 @@ describe("src/modules/tools/print/utils/buildSpec", function () {
             expect(buildSpec.getStyleModel(vectorLayer, layerId)).to.eql(groupLayer);
         });
     });
+    describe("getStyleAttributes", function () {
 
     describe("getStyleObject", function () {
         const vectorLayer = new Vector();
