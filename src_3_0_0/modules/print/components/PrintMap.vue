@@ -34,6 +34,7 @@ export default {
             "layoutList",
             "printMapMarker",
             "printService",
+            "printServiceId",
             "scaleList",
             "title",
             "visibleLayerList"
@@ -151,6 +152,9 @@ export default {
         scale: function (value) {
             this.setCurrentMapScale(value);
         }
+    },
+    created () {
+        this.setServiceId(this.printServiceId);
     },
     mounted () {
         if (this.shownLayoutList.length === 0) {
