@@ -13,7 +13,7 @@ const localVue = createLocalVue();
 localVue.use(Vuex);
 config.mocks.$t = key => key;
 
-describe("src/modules/tools/measure/components/MeasureInMapTooltip.vue", () => {
+describe("src_3_0_0/modules/measure/components/MeasureInMapTooltip.vue", () => {
     let store;
 
     /**
@@ -28,7 +28,8 @@ describe("src/modules/tools/measure/components/MeasureInMapTooltip.vue", () => {
         store = new Vuex.Store({
             namespaces: true,
             modules: {
-                Tools: {
+                namespaced: true,
+                Modules: {
                     namespaced: true,
                     modules: {
                         Measure: {
