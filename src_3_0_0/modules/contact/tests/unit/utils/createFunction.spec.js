@@ -1,8 +1,8 @@
 import {expect} from "chai";
 
-import {createMessage, createSubject, createTicketId} from "../../../utils/createFunctions";
+import {createMessage, createSubject, createTicketId} from "../../../js/createFunctions";
 
-describe("tools/contact/utils/createFunctions", function () {
+describe("contact/utils/createFunctions", function () {
     describe("createTicketId", function () {
         it("generates an id with expected format", function () {
             expect(createTicketId()).to.match(/^\d{4}-\d{4,5}-\d{4,5}$/);
