@@ -2,10 +2,11 @@
 import {mapActions, mapGetters} from "vuex";
 import isModuleVisible from "../../../shared/js/utils/isModuleVisible";
 import SimpleButton from "../../../shared/components/SimpleButton.vue";
+import LayerTree from "../../layerTree/components/LayerTree.vue";
 
 export default {
     name: "MenuContainerBodyElement",
-    components: {SimpleButton},
+    components: {SimpleButton, LayerTree},
     props: {
         /** Text displayed inside the element. */
         name: {
@@ -65,12 +66,21 @@ export default {
 </script>
 
 <template>
-    <SimpleButton
-        v-if="checkIsVisible()"
-        :interaction="() => clickedMenuElement(path)"
-        :text="name"
-        :icon="showIcon ? icon : null"
-        customclass="w-100 justify-content-start"
-    />
+    <div>
+        <template
+            v-if="$attrs.type === 'layerTree'"
+        >
+            <LayerTree />
+        </template>
+        <SimpleButton
+            v-else-if="checkIsVisible()"
+            :interaction="() => clickedMenuElement(path)"
+            :text="name"
+            :icon="showIcon ? icon : null"
+            customclass="w-100 justify-content-start"
+        />
+        <!-- TODO(roehlipa): Properly add description -->
+        <!-- TODO(roehlipa): Buttons should look differently when mobile -->
+    </div>
 </template>
 
