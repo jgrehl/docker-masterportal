@@ -380,9 +380,9 @@
                 "successTicket": "Ihre Ticketnummer lautet: "
             },
             "openConfig": {
-              "explanation": "Öffnen Sie eine Karte die sie als lokale Projektdatei abgespeichert haben.",
+              "explanation": "Öffnen Sie eine Karte, die Sie als lokale Konfigurationsdatei abgespeichert haben.",
               "headline": "Karte öffnen",
-              "openFile": "Projektdatei öffnen"
+              "openFile": "Konfigurationsdatei öffnen"
             },
             "print": {
                 "titleLabel": "Titel",

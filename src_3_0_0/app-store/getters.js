@@ -70,7 +70,7 @@ const getters = {
 
     /**
      * Returns if mobile device is used.
-     * @param {String} state state of the app-store.
+     * @param {Object} state state of the app-store.
      * @returns {Boolean} Mobile is used.
      */
     isMobile: state => {
@@ -78,8 +78,8 @@ const getters = {
     },
 
     /**
-     * Returns teh mainmenu of portalConfig.
-     * @param {String} state state of the app-store.
+     * Returns the mainmenu of portalConfig.
+     * @param {Object} state state of the app-store.
      * @returns {Object} Main menu.
      */
     mainMenu: state => {
@@ -96,8 +96,8 @@ const getters = {
     },
 
     /**
-     * Returns teh secondaryMenu of portalConfig.
-     * @param {String} state state of the app-store.
+     * Returns the secondaryMenu of portalConfig.
+     * @param {Object} state state of the app-store.
      * @returns {Object} Secondary menu.
      */
     secondaryMenu: state => {
