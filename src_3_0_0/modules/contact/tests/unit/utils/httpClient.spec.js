@@ -1,12 +1,11 @@
 import sinon from "sinon";
 import axios from "axios";
 
-import httpClientModule from "../../../utils/httpClient";
+import httpClientModule from "../../../js/httpClient";
 
 describe("tools/contact/utils/httpClient", function () {
     describe("httpClient", function () {
         beforeEach(() => {
-            sinon.stub(Radio, "trigger");
             sinon.stub(console, "error");
         });
 
