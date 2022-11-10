@@ -1,9 +1,9 @@
 <script>
 import {mapGetters} from "vuex";
-import Layer from "./Layer.vue";
+import Layer from "./LayerComponent.vue";
 
 /**
- * Module to switch the scale of the map. Listens to changes of the map's scale and sets the scale to this value.
+ * Module to display the layers in menu.
  */
 export default {
     name: "LayerTree",
