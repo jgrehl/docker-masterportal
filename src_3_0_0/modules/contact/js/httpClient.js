@@ -1,7 +1,6 @@
 import axios from "axios";
 import convertJsonToPost from "../../../shared/js/utils/convertJsonToPost";
-import LoaderOverlay from "../../../shared/js/utils/loaderOverlay";
-
+import LoaderOverlay from "../../../app-store/js/loaderOverlay";
 /**
  * Show the loader after the dispatch of an e-mail has been started.
  *
