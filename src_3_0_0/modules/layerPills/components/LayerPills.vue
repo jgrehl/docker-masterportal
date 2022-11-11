@@ -102,10 +102,10 @@ export default {
     <div
         v-if="visibleSubjectDataLayers.length > 0 && layerPillsAmount > 0"
         id="layer-pills"
-        class="container-fluid customized"
+        class="layer-pills-container"
     >
         <ul
-            class="nav nav-pills"
+            class="nav nav-pills layerpills"
         >
             <li
                 class="nav-item"
@@ -165,10 +165,12 @@ export default {
 <style lang="scss" scoped>
     @import "~variables";
 
-    .customized {
-        position: absolute;
+    .layer-pills-container {
+        position: relative;
         top: 10px;
-        left: 50px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
     }
 
     .nav-item {
@@ -208,6 +210,10 @@ export default {
     .btn-customized:hover {
         background-color: darken($primary, 10%);
         border-color: $white;
+    }
+
+    .layerpills {
+        pointer-events: all;
     }
 
 </style>
