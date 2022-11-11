@@ -7,7 +7,7 @@
     "https://qs-geofos.fhhnet.stadt.hamburg.de/fhh-atlas/": ["oblique_2020", "fhh-atlas-ie11"],
     "https://geofos.fhhnet.stadt.hamburg.de/fhh-atlas/": ["oblique_2020", "fhh-atlas-ie11", "news_fhh-atlas"],
     "https://geofos/fhh-atlas/": ["oblique_2020", "fhh-atlas-ie11", "news_fhh-atlas"],
-    "https://localhost:9001/portal/master_3_0_0/": ["fhh-panorama", "news-ais"],
+    "https://localhost:9001/portal/master_3_0_0/": ["news-ais", "fhh-panorama"],
     "https://geoportal.metropolregion.hamburg.de/mrhportal_abnahme/": ["qs-release"],
     "https://geoportal.metropolregion.hamburg.de/mrhportal_elmshorn_abnahme/": ["qs-release"],
     "https://geoportal.metropolregion.hamburg.de/roads_abnahme/": ["qs-release"],
@@ -40,9 +40,8 @@
       "once": true
     },
     "news-ais": {
-      "displayClass": "error",
       "title": "Das ist ein sehr langer Titel Das ist ein sehr langer Titel Das ist ein sehr langer Titel",
-      "category": "Willkommen im NEUEN Atlas Innere Sicherheit (AIS)!",
+      "category": "info",
       "content": "Hier geht es zum <a target='_blank' href='https://geofos.fhhnet.stadt.hamburg.de/atlas-innere-sicherheit/'>alten Atlas Innere Sicherheit</a>, der<br> Ihnen noch für kurze Zeit zur Verfügung steht.<br> Für Fragen wenden Sie sich an die Fachliche Leiststelle <br>AIS unter <a href='mailto:referatA44@bis.hamburg.de'>referatA44@bis.hamburg.de</a>",
       "once": false
     },
