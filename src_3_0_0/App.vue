@@ -1,22 +1,22 @@
 <script>
 import {mapGetters, mapActions} from "vuex";
 import ControlBar from "./modules/controls/components/ControlBar.vue";
-import MenuToggleButton from "./modules/menu/components/MenuToggleButton.vue";
-import LayerPills from "./modules/layerPills/components/LayerPills.vue";
-import MenuContainer from "./modules/menu/components/MenuContainer.vue";
-
 import initializeLayers from "./core/layers/js/layerProcessor";
 import {initializeMaps} from "./core/maps/js/maps";
+import LayerPills from "./modules/layerPills/components/LayerPills.vue";
 import LoaderOverlay from "./app-store/js/loaderOverlay";
 import mapCollection from "./core/maps/js/mapCollection";
+import MenuContainer from "./modules/menu/components/MenuContainer.vue";
+import MenuToggleButton from "./modules/menu/components/MenuToggleButton.vue";
+
 
 export default {
     name: "App",
     components: {
         ControlBar,
+        LayerPills,
         MenuContainer,
-        MenuToggleButton,
-        LayerPills
+        MenuToggleButton
     },
     computed: {
         ...mapGetters([
@@ -119,74 +119,82 @@ export default {
             v-if="allConfigsLoaded && mainMenu && uiStyle !== 'SIMPLE'"
             side="mainMenu"
         />
-        <MenuToggleButton
-            v-if="allConfigsLoaded && mainMenu && uiStyle !== 'SIMPLE'"
-            side="mainMenu"
-        />
-        <div
-            v-if="allConfigsLoaded"
-            class="elements-positioned-over-map"
-        >
-            <ControlBar class="controls" />
-            <LayerPills />
-        </div>
-        <MenuToggleButton
-            v-if="allConfigsLoaded && secondaryMenu && uiStyle !== 'SIMPLE'"
-            side="secondaryMenu"
-        />
-        <MenuContainer
-            v-if="allConfigsLoaded && secondaryMenu && uiStyle !== 'SIMPLE'"
-            side="secondaryMenu"
-        />
         <div
             id="map-wrapper"
             class="mp-map"
         >
+            <MenuToggleButton
+                v-if="allConfigsLoaded && mainMenu && uiStyle !== 'SIMPLE'"
+                side="mainMenu"
+            />
             <div
                 id="map"
             />
+            <div
+                v-if="allConfigsLoaded"
+                class="elements-positioned-over-map"
+            >
+                <ControlBar class="controls" />
+                <LayerPills />
+            </div>
+            <MenuToggleButton
+                v-if="allConfigsLoaded && secondaryMenu && uiStyle !== 'SIMPLE'"
+                side="secondaryMenu"
+            />
         </div>
+        <MenuContainer
+            v-if="allConfigsLoaded && secondaryMenu && uiStyle !== 'SIMPLE'"
+            side="secondaryMenu"
+        />
     </div>
 </template>
 
 <style lang="scss" scoped>
-    @import "~variables";
+@import "~variables";
 
-    .masterportal-container {
-        display: flex;
-        flex-direction: row;
-        position: relative;
+.masterportal-container {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    height: 100%;
+    width: 100%;
+    font-family: $font_family_default;
+    font-size: $font-size-base;
+
+    .mp-map {
         height: 100%;
         width: 100%;
-        font-family: $font_family_default;
-        font-size: $font-size-base;
+        overflow: hidden;
+        position: relative;
+        display: flex;
+        flex-direction: row;
 
-        .mp-map {
+        #map {
+            position: fixed;
             height: 100%;
             width: 100%;
-            overflow: hidden;
-            position: absolute;
-
-            #map {
-                position: relative;
-                height: 100%;
-                width: 100%;
-            }
         }
     }
+}
 
-    .elements-positioned-over-map {
-                display: flex;
-                flex-direction: column;
-                align-items: flex-end;
-                z-index: 1;
-                pointer-events: none;
+.elements-positioned-over-map {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    z-index: 1;
+    pointer-events: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
 
-                width: 100%;
-                height: 100%;
+    .controls {
+        flex-grow: 1;
+    }
+}
 
-                .controls {
-                    flex-grow: 1;
-                }
-            }
+@include media-breakpoint-up(sm) {
+    #map {
+        position: relative;
+    }
+}
 </style>
