@@ -62,6 +62,11 @@ export default {
      * @returns {void}
      */
     initialize: function (context) {
+    /*  context.dispatch("addSingleAlert", {
+            "category": "info",
+            "content": "Success during loading",
+            "multipleAlert": true
+        });
         context.dispatch("addSingleAlert", {
             "category": "success",
             "content": "Success during loading",
@@ -76,7 +81,7 @@ export default {
             "category": "success",
             "content": "Success during loading2",
             "multipleAlert": true
-        });
+        }); */
 
         fetchFirstModuleConfig(context, configPaths, "Alerting");
 
@@ -140,11 +145,9 @@ export default {
             alertProtoClone = {...state.alertProto},
             hasInitAlert = state.alerts.some(function (alert) {
                 return alert.initial === true;
-            }),
-            category = newAlertObj.category?.toLowerCase();
+            });
 
-
-        let
+        let category,
             isUnique = false,
             isNotRestricted = false,
             isInTime = false,
@@ -152,6 +155,10 @@ export default {
 
         if (newAlertObj === undefined) {
             return false;
+        }
+
+        if (newAlertObj?.category !== undefined) {
+            category = newAlertObj.category.toLowerCase();
         }
 
         if (state.availableCategories.includes(category)) {
@@ -187,7 +194,6 @@ export default {
             alertProtoClone.hash = alertProtoClone.hash + alertProtoClone.displayUntil;
         }
         alertProtoClone.hash = objectHash(alertProtoClone.hash);
-
         isUnique = findSingleAlertByHash(state.alerts, alertProtoClone.hash) === false;
         if (!isUnique) {
             console.warn("Alert ignored (duplicate): " + alertProtoClone.hash);
@@ -218,6 +224,7 @@ export default {
             }
             commit("setReadyToShow", true);
         }
+
         return displayAlert;
     }
 };
