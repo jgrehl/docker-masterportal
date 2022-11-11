@@ -275,7 +275,7 @@ export default {
                                     class="d-flex bd-highlight mb-3"
                                 >
                                     <h2
-                                        class="ms-auto p-2  bd-highlight"
+                                        class="ms-auto p-2 bd-highlight"
                                     >
                                         <span :class="selectCategoryClass(singleAlert.category)">
                                             {{ $t(singleAlert.displayCategory) }}
@@ -293,34 +293,34 @@ export default {
                                     class="ms-2"
                                     v-html="singleAlert.content"
                                 />
-                            </div>
-                            <div
-                                v-if="checkCategory(singleAlert.category)"
-                                class="d-flex justify-content-between small"
-                            >
                                 <div
-                                    class="mt-2"
-                                    v-html="$t(`common:modules.alerting.created`)+singleAlert.creationDate"
-                                />
-                                <div
-                                    v-if="singleAlert.initialConfirmed && availableLocalStorage"
-                                    class="mt-1"
+                                    v-if="checkCategory(singleAlert.category)"
+                                    class="d-flex justify-content-between small"
                                 >
                                     <div
-                                        class="form-check form-switch mt-1"
+                                        class="mt-2"
+                                        v-html="$t(`common:modules.alerting.created`)+singleAlert.creationDate"
+                                    />
+                                    <div
+                                        v-if="singleAlert.initialConfirmed && availableLocalStorage"
+                                        class="mt-1"
                                     >
-                                        <label
-                                            class="form-check-label"
-                                            for="flexSwitchCheckDefault"
+                                        <div
+                                            class="form-check form-check-reverse form-switch mt-1"
                                         >
-                                            {{ singleAlert.mustBeConfirmed? $t(singleAlert.confirmText) : $t(singleAlert.reConfirmText) }}
-                                        </label>
-                                        <input
-                                            id="flexSwitchCheckDefault"
-                                            class="form-check-input"
-                                            type="checkbox"
-                                            @input="markAsRead(singleAlert.hash);"
-                                        >
+                                            <label
+                                                class="form-check-label"
+                                                for="flexSwitchCheckDefault"
+                                            >
+                                                {{ singleAlert.mustBeConfirmed? $t(singleAlert.confirmText) : $t(singleAlert.reConfirmText) }}
+                                            </label>
+                                            <input
+                                                id="flexSwitchCheckDefault"
+                                                class="form-check-input"
+                                                type="checkbox"
+                                                @input="markAsRead(singleAlert.hash);"
+                                            >
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -365,9 +365,8 @@ export default {
             padding-bottom:0px;
             padding-bottom:0;
         }
-    #flexSwitchCheckDefault {
+    #flexSwitchCheckDefault{
     background-color: $light_blue;
-    border-color: $light_blue;;
     }
     }
 </style>
