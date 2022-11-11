@@ -22,7 +22,7 @@ export default {
     },
     computed: {
         ...mapGetters(["uiStyle"]),
-        ...mapGetters("Menu", ["mainMenuExpanded", "secondaryMenuExpanded", "titleBySide"]),
+        ...mapGetters("Menu", ["mainMenu", "secondaryMenu", "titleBySide"]),
         /**
          * @returns {string} Defines whether the ResizeHandle should be displayed on the right or left side depending on the menu this component is rendered in.
          */
@@ -55,7 +55,7 @@ export default {
             'mp-' + side,
             {
                 'mp-menu-table': uiStyle === 'TABLE',
-                'show': mainMenuExpanded && side === 'mainMenu' || secondaryMenuExpanded && side === 'secondaryMenu'
+                'show': mainMenu.expanded && side === 'mainMenu' || secondaryMenu.expanded && side === 'secondaryMenu'
             }
         ]"
         tabindex="-1"
