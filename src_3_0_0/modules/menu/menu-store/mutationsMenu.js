@@ -12,16 +12,16 @@ export default {
      */
     toggleMenu (currentState, side = {}) {
         if (side === "mainMenu") {
-            if (store.getters.isMobile && currentState.secondaryMenuExpanded) {
-                currentState.secondaryMenuExpanded = false;
+            if (store.getters.isMobile && currentState.secondaryMenu.expanded) {
+                currentState.secondaryMenu.expanded = false;
             }
-            currentState.mainMenuExpanded = !currentState.mainMenuExpanded;
+            currentState.mainMenu.expanded = !currentState.mainMenu.expanded;
         }
         else if (side === "secondaryMenu") {
-            if (store.getters.isMobile && currentState.mainMenuExpanded) {
-                currentState.mainMenuExpanded = false;
+            if (store.getters.isMobile && currentState.mainMenu.expanded) {
+                currentState.mainMenu.expanded = false;
             }
-            currentState.secondaryMenuExpanded = !currentState.secondaryMenuExpanded;
+            currentState.secondaryMenu.expanded = !currentState.secondaryMenu.expanded;
         }
     }
 };
