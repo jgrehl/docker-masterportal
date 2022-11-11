@@ -8,9 +8,9 @@ import ResizeHandle from "../../../shared/components/ResizeHandle.vue";
 export default {
     name: "MenuContainer",
     components: {
-        ResizeHandle,
         MenuContainerBody,
-        MenuContainerHeader
+        MenuContainerHeader,
+        ResizeHandle
     },
     props: {
         /** Defines in which menu the component is being rendered */
