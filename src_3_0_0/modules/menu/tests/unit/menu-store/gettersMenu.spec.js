@@ -94,21 +94,21 @@ describe("src_3_0_0/modules/menu/menu-store/gettersMenu.js", () => {
         });
     });
 
-    describe("mainInitiallyOpen", () => {
+    describe("mainExpanded", () => {
         it("should return false if mainMenu is null", () => {
             state.mainMenu = {
-                initiallyOpen: false
+                expanded: false
             };
 
-            expect(gettersMenu.mainInitiallyOpen(state)).to.equal(false);
+            expect(gettersMenu.mainExpanded(state)).to.equal(false);
         });
-        it("should return false if initiallyOpen is not a boolean set on mainMenu", () => {
-            expect(gettersMenu.mainInitiallyOpen(stateMenu)).to.equal(false);
+        it("should return false if Expanded is not a boolean set on mainMenu", () => {
+            expect(gettersMenu.mainExpanded(stateMenu)).to.equal(false);
         });
-        it("should return the value of initiallyOpen if mainMenu is not null (loaded) and is a boolean value on mainMenu", () => {
-            state.mainMenu = {initiallyOpen: true};
+        it("should return the value of Expanded if mainMenu is not null (loaded) and is a boolean value on mainMenu", () => {
+            state.mainMenu = {expanded: true};
 
-            expect(gettersMenu.mainInitiallyOpen(state)).to.equal(true);
+            expect(gettersMenu.mainExpanded(state)).to.equal(true);
         });
     });
 
@@ -264,21 +264,21 @@ describe("src_3_0_0/modules/menu/menu-store/gettersMenu.js", () => {
         });
     });
 
-    describe("secondaryInitiallyOpen", () => {
+    describe("secondaryExpanded", () => {
         it("should return false if secondaryMenu is null", () => {
             state.secondaryMenu = {
-                initiallyOpen: false
+                expanded: false
             };
 
-            expect(gettersMenu.secondaryInitiallyOpen(state)).to.equal(false);
+            expect(gettersMenu.secondaryExpanded(state)).to.equal(false);
         });
-        it("should return false if initiallyOpen is not a boolean set on secondaryMenu", () => {
-            expect(gettersMenu.secondaryInitiallyOpen(stateMenu)).to.equal(false);
+        it("should return false if Expanded is not a boolean set on secondaryMenu", () => {
+            expect(gettersMenu.secondaryExpanded(stateMenu)).to.equal(false);
         });
-        it("should return the value of initiallyOpen if secondaryMenu is not null (loaded) and is a boolean value on secondaryMenu", () => {
-            state.secondaryMenu = {initiallyOpen: true};
+        it("should return the value of Expanded if secondaryMenu is not null (loaded) and is a boolean value on secondaryMenu", () => {
+            state.secondaryMenu = {expanded: true};
 
-            expect(gettersMenu.secondaryInitiallyOpen(state)).to.equal(true);
+            expect(gettersMenu.secondaryExpanded(state)).to.equal(true);
         });
     });
 
