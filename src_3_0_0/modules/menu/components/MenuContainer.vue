@@ -123,7 +123,7 @@ export default {
 
     .mp-menu-container-handle {
         display: flex;
-        width: 6px;
+        width: 12px;
         align-items: center;
         justify-content: center;
         top: 0em;
