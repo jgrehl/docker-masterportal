@@ -29,7 +29,7 @@
       "layerPillsAmount": 2
     },
     "mainMenu": {
-      "initiallyOpen": true,
+      "expanded": true,
       "title": {
         "text": "Master",
         "logo": "https://geodienste.hamburg.de/lgv-config/img/hh-logo.png",
