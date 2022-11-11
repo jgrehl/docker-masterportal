@@ -37,7 +37,7 @@ export default {
         <button
             :id="'mp-menu-header-close-button-' + side"
             type="button"
-            class="btn-close mp-menu-header-close-button"
+            class="btn-close p-2 mp-menu-header-close-button"
             :aria-label="$t('common:menu.ariaLabelClose')"
             @click="toggleMenu(side)"
         />
@@ -48,7 +48,6 @@ export default {
 @import "~variables";
 .mp-menu-header{
     display: flex;
-    padding: 10px;
 }
 .mp-menu-header-close-button {
     display: block;
