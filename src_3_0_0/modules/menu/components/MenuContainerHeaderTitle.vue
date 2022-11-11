@@ -67,7 +67,7 @@ export default {
 
         h1 {
             color: $secondary_contrast;
-            font-size: 26px;
+            font-size: $font_size_huge;
             flex-grow: 1;
             margin-left: 20px;
         }
@@ -80,9 +80,6 @@ export default {
             max-height: 40px;
         }
 
-        h1 {
-            font-size: 26px;
-        }
     }
 }
 
