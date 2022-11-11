@@ -11,7 +11,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters("Menu", ["mainMenuExpanded", "secondaryMenuExpanded", "mainToggleButtonIcon", "secondaryToggleButtonIcon"]),
+        ...mapGetters("Menu", ["mainExpanded", "secondaryExpanded", "mainToggleButtonIcon", "secondaryToggleButtonIcon"]),
         /**
          * @returns {string} iconClass to be used depending on the side this button is used for.
          */
@@ -19,10 +19,10 @@ export default {
             let icon;
 
             if (this.side === "mainMenu") {
-                icon = this.mainMenuExpanded ? "bi-chevron-left" : this.mainToggleButtonIcon;
+                icon = this.mainExpanded ? "bi-chevron-left" : this.mainToggleButtonIcon;
             }
             else {
-                icon = this.secondaryMenuExpanded ? "bi-chevron-right" : this.secondaryToggleButtonIcon;
+                icon = this.secondaryExpanded ? "bi-chevron-right" : this.secondaryToggleButtonIcon;
             }
 
             return icon;
@@ -40,7 +40,7 @@ export default {
         class="btn btn-primary bootstrap-icon menu-toggle-button"
         :class="[
             'toggle-button-' + side,
-            {'expanded': mainMenuExpanded && side === 'mainMenu' || secondaryMenuExpanded && side === 'secondaryMenu'}
+            {'expanded': mainExpanded && side === 'mainMenu' || secondaryExpanded && side === 'secondaryMenu'}
         ]
         "
         type="button"
