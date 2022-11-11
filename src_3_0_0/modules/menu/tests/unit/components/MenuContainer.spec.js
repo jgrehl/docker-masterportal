@@ -36,20 +36,20 @@ describe("src_3_0_0/modules/menu/MenuContainer.vue", () => {
                 Menu: {
                     namespaced: true,
                     getters: {
-                        mainMenuExpanded: (state) => state.mainMenuExpanded,
-                        secondaryMenuExpanded: (state) => state.secondaryMenuExpanded,
+                        mainExpanded: (state) => state.mainExpanded,
+                        secondaryExpanded: (state) => state.secondaryExpanded,
                         titleBySide: () => () => false
                     },
                     state: {
-                        mainMenuExpanded: false,
-                        secondaryMenuExpanded: false
+                        mainExpanded: false,
+                        secondaryExpanded: false
                     },
                     mutations: {
                         setTestMainMenuExpanded: (state, value) => {
-                            state.mainMenuExpanded = value;
+                            state.mainExpanded = value;
                         },
                         setTestSecondaryMenuExpanded: (state, value) => {
-                            state.secondaryMenuExpanded = value;
+                            state.secondaryExpanded = value;
                         }
                     },
                     actions: {
