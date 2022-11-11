@@ -35,10 +35,10 @@ const menuGetters = {
 
     /**
      * @param {Object} state Local vuex state.
-     * @returns {Boolean} Whether the mainMenu should be initially open.
+     * @returns {Boolean} Whether the mainMenu is opened.
      */
-    mainInitiallyOpen: state => {
-        return state.mainMenu.initiallyOpen;
+    mainExpanded: state => {
+        return state.mainMenu.expanded;
     },
 
     /**
@@ -93,8 +93,8 @@ const menuGetters = {
      * @param {Object} state Local vuex state.
      * @returns {Boolean} Whether the secondaryMenu should be initially open.
      */
-    secondaryInitiallyOpen: state => {
-        return state.secondaryMenu.initiallyOpen;
+    secondaryExpanded: state => {
+        return state.secondaryMenu.expanded;
     },
 
     /**
