@@ -70,15 +70,7 @@ export default {
         :interaction="() => clickedMenuElement(path)"
         :text="name"
         :icon="showIcon ? icon : null"
-        customclass="mp-menu-body-element"
+        customclass="w-100 justify-content-start"
     />
-    <!-- TODO(roehlipa): Properly add description -->
-    <!-- TODO(roehlipa): Buttons should look differently when mobile -->
 </template>
 
-<style lang="scss" scoped>
-    .mp-menu-body-element{
-        width: 100%;
-        justify-content: left;
-    }
-</style>
