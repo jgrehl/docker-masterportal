@@ -56,13 +56,12 @@ export default {
 
 
 .menu-toggle-button {
-        border-radius: 20px;
+        border-radius: 50%;
         right: 20px;
         position: fixed;
         font-size: $icon_length;
         height: calc(#{$icon_length} * 1.75);
         width: calc(#{$icon_length} * 1.75);
-        border-radius: 50%;
         flex-grow: 0;
         flex-shrink: 0;
         z-index: 1;
@@ -84,10 +83,10 @@ export default {
 @include media-breakpoint-up(sm) {
     .menu-toggle-button {
         top: 15px;
-        font-size: calc(#{$icon_length} - 0.35 * #{$icon_length});
+        font-size: $font_size_huge;
         height: $icon_length;
         width: $icon_length;
-        position: relative;
+        position: absolute;
 
         i {
             position: absolute;
@@ -103,11 +102,11 @@ export default {
         z-index: 5;
     }
     .toggle-button-mainMenu {
-        left: 0px;
-        border-top-right-radius: 20px;
-        border-bottom-right-radius: 20px;
-        border-bottom-left-radius: 0px;
-        border-top-left-radius: 0px;
+        left: 0;
+        border-top-right-radius: 50%;
+        border-bottom-right-radius: 50%;
+        border-bottom-left-radius: 0;
+        border-top-left-radius: 0;
         &.expanded {
             display: block;
             left: -13px;
@@ -116,11 +115,11 @@ export default {
     }
 
     .toggle-button-secondaryMenu {
-        right: 0px;
-        border-top-right-radius: 0px;
-        border-bottom-right-radius: 0px;
-        border-bottom-left-radius: 20px;
-        border-top-left-radius: 20px;
+        right: 0;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 50%;
+        border-top-left-radius: 50%;
 
         &.expanded {
             display: block;
