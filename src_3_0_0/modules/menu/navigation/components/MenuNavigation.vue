@@ -33,7 +33,7 @@ export default {
     <a
         v-if="lastEntry(side)"
         :id="'mp-navigation-' + side"
-        class="mp-menu-navigation"
+        class="p-2 mp-menu-navigation"
         href="#"
         @click="navigateBack(side)"
         @keypress="navigateBack(side)"
@@ -46,7 +46,6 @@ export default {
 @import "~variables";
 
 .mp-menu-navigation{
-    padding-bottom: 10px;
     color: $black;
 }
 
