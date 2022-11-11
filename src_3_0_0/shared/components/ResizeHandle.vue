@@ -402,7 +402,7 @@ export default {
 <style lang="scss" scoped>
 @import "~variables";
 
-$handle_size: 3px;
+$handle_size: 6px;
 
 .resize-handle {
     position: absolute;
