@@ -18,6 +18,7 @@ export default {
             "localStorageDisplayedAlertsKey",
             "initialClosed",
             "showTheModal",
+            "alertWindowTitle",
             "alerts",
             "sortedAlerts"
         ]),
@@ -50,8 +51,7 @@ export default {
         }
     },
     /**
-     * Created hook: Creates event listener for legacy Radio calls (to be removed seometime).
-     * Checks if localstorage is available.
+     * Created hook: Checks if localstorage is available.
      * @returns {void}
      */
     created () {
@@ -238,6 +238,7 @@ export default {
         >
             <div class="modal-content">
                 <div class="modal-header">
+                    {{ $t(alertWindowTitle) }}
                     <button
                         type="button"
                         class="btn-close"
@@ -339,17 +340,17 @@ export default {
         background-color: rgba(0,0,0,0.5);
     }
     .badge-pill{
-        font-size:12px;
+        font-size:$font-size-base;
     }
     div.alertCategoryContainer {
-        margin-bottom:0px;
+        margin-bottom:0;
         &.last {
-            margin-bottom:6px;
+            margin-bottom:0.4375rem;
         }
         h3 {
             border:none;
             color: $secondary_contrast;
-            font-size:14px;
+            font-size:$font-size-lg;
             font-weight:bold;
             letter-spacing:initial;
             line-height:18px;
@@ -359,10 +360,9 @@ export default {
 
         div.singleAlertContainer {
             color:$secondary_contrast;
-            font-size:12px;
-            margin-top:0px;
-            margin-bottom:5px;
-            padding-bottom:0px;
+            font-size:$font-size-base;
+            margin-top:0;
+            margin-bottom:0.3125rem;
             padding-bottom:0;
         }
     #flexSwitchCheckDefault{
