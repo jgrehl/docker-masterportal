@@ -3,6 +3,7 @@ import {mapGetters, mapActions} from "vuex";
 import MenuContainerBody from "./MenuContainerBody.vue";
 import MenuContainerHeader from "./MenuContainerHeader.vue";
 import ResizeHandle from "../../../shared/components/ResizeHandle.vue";
+import LayerTree from "../../layerTree/components/LayerTree.vue";
 
 
 export default {
@@ -10,7 +11,8 @@ export default {
     components: {
         MenuContainerBody,
         MenuContainerHeader,
-        ResizeHandle
+        ResizeHandle,
+        LayerTree
     },
     props: {
         /** Defines in which menu the component is being rendered */
@@ -64,6 +66,7 @@ export default {
         <MenuContainerHeader
             :side="side"
         />
+        <LayerTree />
         <MenuContainerBody
             :side="side"
         />

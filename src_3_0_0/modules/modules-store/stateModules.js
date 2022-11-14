@@ -6,7 +6,6 @@ import ScaleSwitcher from "../scaleSwitcher/components/ScaleSwitcher.vue";
 import ShareView from "../shareView/components/ShareView.vue";
 import CoordToolkit from "../coordToolkit/components/CoordToolkit.vue";
 import Contact from "../contact/components/ContactFormular.vue";
-import LayerTree from "../layerTree/components/LayerTree.vue";
 
 /**
  * User type definition
@@ -15,15 +14,14 @@ import LayerTree from "../layerTree/components/LayerTree.vue";
  */
 const state = {
     componentMap: {
+        contact: Contact,
         coordToolkit: CoordToolkit,
         folder: Folder,
         measure: Measure,
         openConfig: OpenConfig,
         print: PrintMap,
         scaleSwitcher: ScaleSwitcher,
-        shareView: ShareView,
-        contact: Contact,
-        layerTree: LayerTree
+        shareView: ShareView
     }
 };
 
