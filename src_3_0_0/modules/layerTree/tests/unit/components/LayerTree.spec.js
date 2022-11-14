@@ -77,7 +77,7 @@ describe("src_3_0_0/modules/layerTree/components/LayerTree.vue", () => {
                 }
             },
             getters: {
-                layerConfigsByMode: () => (mode) => {
+                inTreeVisibleLayerConfigsByMode: () => (mode) => {
                     if (mode === "2D") {
                         return layers2D;
                     }
