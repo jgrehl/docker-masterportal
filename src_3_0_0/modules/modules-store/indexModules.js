@@ -7,6 +7,7 @@ import GetFeatureInfo from "../getFeatureInfo/store/indexGetFeatureInfo";
 import Measure from "../measure/store/indexMeasure";
 import OpenConfig from "../openConfig/store/indexOpenConfig";
 import Print from "../print/store/indexPrint";
+import Routing from "../routing/store/indexRouting";
 import ScaleSwitcher from "../scaleSwitcher/store/indexScaleSwitcher";
 import ShareView from "../shareView/store/indexShareView";
 import Contact from "../contact/store/indexContact";
@@ -23,6 +24,7 @@ export default {
         GetFeatureInfo: {...GetFeatureInfo},
         Measure: {...Measure},
         OpenConfig: {...OpenConfig},
+        Routing: {...Routing},
         Print: {...Print},
         ScaleSwitcher: {...ScaleSwitcher},
         ShareView: {...ShareView},
