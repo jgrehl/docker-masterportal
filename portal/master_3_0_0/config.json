@@ -46,6 +46,11 @@
       "sections": [
         [
           {
+            "type": "scaleSwitcher",
+            "showDescription": true,
+            "description": "Stelle den Maßstab um, ganz ohne zu scrollen."
+          },
+          {
             "type": "coordToolkit",
             "heightLayerId": "19173",
             "heightElementName": "value_0",
