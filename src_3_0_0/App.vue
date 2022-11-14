@@ -24,8 +24,8 @@ export default {
             "configJs",
             "layerConfig",
             "portalConfig",
-            "visibleLayerConfigs",
-            "uiStyle"
+            "uiStyle",
+            "visibleLayerConfigs"
         ]),
         ...mapGetters("Menu", ["mainMenu", "secondaryMenu", "mainMenuExpanded", "secondaryMenuExpanded"])
     },
