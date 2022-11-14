@@ -76,8 +76,6 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-    @import "~variables";
-
     .bold {
         font-weight: bold;
     }
