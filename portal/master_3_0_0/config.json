@@ -39,11 +39,6 @@
       "sections": [
         [
           {
-            "type": "layerTree"
-          }
-        ],
-        [
-          {
             "type": "scaleSwitcher"
           },
           {
@@ -344,7 +339,8 @@
           "name": "de.hh.up:staatliche schulen",
           "typ": "WFS",
           "visibility": false,
-          "clusterDistance": 60
+          "clusterDistance": 60,
+          "showInLayerTree": false
         },
         {
           "id": "19173"
