@@ -21,7 +21,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(["uiStyle"]),
+        ...mapGetters(["uiStyle", "mainMenuFromConfig", "secondaryMenuFromConfig"]),
         ...mapGetters("Menu", ["mainExpanded", "secondaryExpanded", "titleBySide"]),
         /**
          * @returns {string} Defines whether the ResizeHandle should be displayed on the right or left side depending on the menu this component is rendered in.
@@ -32,14 +32,14 @@ export default {
     },
     watch: {
         mainMenu (mainMenu) {
-            this.mergeMenuState({mainMenu: mainMenu, secondaryMenu: this.secondaryMenu});
+            this.mergeMenuState({mainMenu: mainMenu, secondaryMenu: this.secondaryMenuFromConfig});
         },
         secondaryMenu (secondaryMenu) {
-            this.mergeMenuState({mainMenu: this.mainMenu, secondaryMenu: secondaryMenu});
+            this.mergeMenuState({mainMenu: this.mainMenuFromConfig, secondaryMenu: secondaryMenu});
         }
     },
     created () {
-        this.mergeMenuState({mainMenu: this.mainMenu, secondaryMenu: this.secondaryMenu});
+        this.mergeMenuState({mainMenu: this.mainMenuFromConfig, secondaryMenu: this.secondaryMenuFromConfig});
     },
     methods: {
         ...mapActions("Menu", ["mergeMenuState"])
