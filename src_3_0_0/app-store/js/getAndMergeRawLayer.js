@@ -23,7 +23,7 @@ export function getAndMergeRawLayer (layerConf, treeType = "light") {
  */
 export function addShowInLayerTree (rawLayer, treeType) {
     if (rawLayer) {
-        if (treeType === "light" || rawLayer.visibility) {
+        if ((treeType === "light" || rawLayer.visibility) && rawLayer.showInLayerTree !== false) {
             rawLayer.showInLayerTree = true;
         }
         else if (!Object.hasOwn(rawLayer, "showInLayerTree")) {
