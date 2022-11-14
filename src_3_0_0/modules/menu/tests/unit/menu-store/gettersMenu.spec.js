@@ -81,19 +81,6 @@ describe("src_3_0_0/modules/menu/menu-store/gettersMenu.js", () => {
         });
     });
 
-    describe("mainMenu", () => {
-        it("should return a configuration for the mainMenu if the configJson is already loaded", () => {
-            rootGetters.portalConfig.mainMenu = {};
-
-            expect(gettersMenu.mainMenu(state, undefined, undefined, rootGetters)).to.equal(mainMenuSymbol);
-        });
-        it("should return null if the configJson has not been loaded yet", () => {
-            rootGetters.portalConfig.mainMenu = undefined;
-
-            expect(gettersMenu.mainMenu(state, undefined, undefined, rootGetters)).to.equal(null);
-        });
-    });
-
     describe("mainExpanded", () => {
         it("should return false if mainMenu is null", () => {
             state.mainMenu = {
@@ -248,19 +235,6 @@ describe("src_3_0_0/modules/menu/menu-store/gettersMenu.js", () => {
             expect(consoleErrorSpy.secondCall.args[0]).to.equal(`Menu.objectFromPath: a) The given menu side ${side} is not allowed. Please use "mainMenu" or "secondaryMenu" instead.`);
             expect(consoleErrorSpy.thirdCall.args.length).to.equal(1);
             expect(consoleErrorSpy.thirdCall.args[0]).to.equal(`Menu.objectFromPath: b) The given entry in the navigation ${entry} is not allowed. Please use "last" or "previous" instead.`);
-        });
-    });
-
-    describe("secondaryMenu", () => {
-        it("should return a configuration for the secondaryMenu if the configJson is already loaded", () => {
-            rootGetters.portalConfig.secondaryMenu = {};
-
-            expect(gettersMenu.secondaryMenu(state, undefined, undefined, rootGetters)).to.equal(secondaryMenuSymbol);
-        });
-        it("should return null if the configJson has not been loaded yet", () => {
-            rootGetters.portalConfig.secondaryMenu = undefined;
-
-            expect(gettersMenu.secondaryMenu(state, undefined, undefined, rootGetters)).to.equal(null);
         });
     });
 
