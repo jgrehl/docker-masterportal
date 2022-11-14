@@ -1,26 +1,5 @@
 import axios from "axios";
 import convertJsonToPost from "../../../shared/js/utils/convertJsonToPost";
-import LoaderOverlay from "../../../app-store/js/loaderOverlay";
-/**
- * Show the loader after the dispatch of an e-mail has been started.
- *
- * @fires Util#RadioTriggerUtilShowLoader
- * @return {void}
- */
-function onSendStart () {
-    LoaderOverlay.show();
-}
-
-/**
- * Hide the loader after the dispatch of an e-mail has been completed.
- * The loader is also hidden if an error occurred during the dispatch.
- *
- * @fires Util#RadioTriggerUtilHideLoader
- * @return {void}
- */
-function onSendComplete () {
-    LoaderOverlay.hide();
-}
 
 /**
  * Sends the given data to the mail service behind the given url.
@@ -32,7 +11,6 @@ function onSendComplete () {
  * @returns {void}
  */
 function httpClient (url, data, onSuccess, onError) {
-    onSendStart();
 
     axios.post(url, convertJsonToPost(data))
         .then(response => {
@@ -49,8 +27,7 @@ function httpClient (url, data, onSuccess, onError) {
             console.error("An error occurred sending an email.");
             console.error(err);
             onError();
-        })
-        .finally(onSendComplete);
+        });
 }
 
 export default {httpClient};
