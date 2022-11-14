@@ -1,9 +1,6 @@
 <script>
 import {mapActions, mapGetters, mapMutations} from "vuex";
 import ContactFormularInput from "./ContactFormularInput.vue";
-import actions from "../store/actionsContact";
-import getters from "../store/gettersContact";
-import mutations from "../store/mutationsContact";
 
 export default {
     name: "ContactFormular",
@@ -11,22 +8,33 @@ export default {
         ContactFormularInput
     },
     computed: {
-        ...mapGetters("Modules/Contact", Object.keys(getters))
-    },
-    created () {
-        this.$on("close", this.close);
-        // warn if deprecated param is used
-        if (this.serviceID) {
-            console.warn("Contact Tool: The parameter 'serviceID' is deprecated in the next major release! Please use serviceId instead.");
-        }
+        ...mapGetters("Modules/Contact", [
+            "active",
+            "contactInfo",
+            "maxLines",
+            "username",
+            "mail",
+            "message",
+            "phone",
+            "showPrivacyPolicy",
+            "privacyPolicyAccepted",
+            "privacyPolicyLink",
+            "validForm",
+            "validMail",
+            "validMessage",
+            "validPhone",
+            "validUsername"
+        ])
     },
     methods: {
-        ...mapMutations("Modules/Contact", Object.keys(mutations)),
-        ...mapActions("Modules/Contact", Object.keys(actions)),
-
-        close () {
-            this.setActive(false);
-        }
+        ...mapMutations("Modules/Contact", [
+            "setUsername",
+            "setMail",
+            "setPhone",
+            "setMessage",
+            "togglePrivacyPolicyAccepted"
+        ]),
+        ...mapActions("Modules/Contact", ["send"])
     }
 };
 </script>
@@ -38,7 +46,7 @@ export default {
     >
         <div
             v-if="contactInfo"
-            id="tool-contact-addionalInformation"
+            id="module-contact-addionalInformation"
             class="form-group contents"
         >
             {{ contactInfo }}
@@ -85,15 +93,15 @@ export default {
             />
             <div
                 v-if="showPrivacyPolicy"
-                id="tool-contact-privacyPolicy"
+                id="module-contact-privacyPolicy"
                 class="form-group"
             >
                 <label
-                    id="tool-contact-privacyPolicy-label"
-                    for="tool-contact-privacyPolicy-input"
+                    id="module-contact-privacyPolicy-label"
+                    for="module-contact-privacyPolicy-input"
                 >
                     <input
-                        id="tool-contact-privacyPolicy-input"
+                        id="module-contact-privacyPolicy-input"
                         :value="privacyPolicyAccepted"
                         type="checkbox"
                         @click="togglePrivacyPolicyAccepted"
@@ -103,7 +111,7 @@ export default {
                 <p v-html="$t('common:modules.tools.contact.privacyPolicy.info', {privacyPolicyLink})" />
             </div>
             <button
-                id="tool-contact-send-message"
+                id="module-contact-send-message"
                 type="submit"
                 class="btn btn-primary float-end"
                 :disabled="!validForm"
@@ -121,7 +129,7 @@ export default {
         cursor: pointer;
     }
 
-    #tool-contact-privacyPolicy {
+    #module-contact-privacyPolicy {
         label, span {
             cursor: pointer;
         }

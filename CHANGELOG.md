@@ -356,6 +356,7 @@
         - jsdoc
         - sinon-chai
 - Module print: The attribute `mapfishServiceId` has been removed. Use `printServiceId` instead.
+- Module contact: The attribute `serviceID` has been removed. Use `serviceId` instead.
 
 ### Fixed
 - actionsMapLayers/addLayer: don't set zIndex by default, otherwise addLayerOnTop and addLayerToIndex have no effect
