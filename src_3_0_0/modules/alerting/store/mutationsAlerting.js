@@ -5,15 +5,6 @@ import initialState from "./stateAlerting";
 export default {
     ...generateSimpleMutations(initialState),
     /**
-     * Set state config
-     * @param {Object} state state
-     * @param {Object} configs configs
-     * @returns {void}
-     */
-    setConfigs (state, configs) {
-        state.configJs = configs;
-    },
-    /**
      * Adds a single alert with a push.
      * @param {Object} state state
      * @param {Object} newAlert new alert
