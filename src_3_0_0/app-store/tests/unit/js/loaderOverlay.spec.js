@@ -7,11 +7,6 @@ describe("src_3_0_0/app-store/js/loaderOverlay.js", () => {
         LoaderOverlay.initialLoaderIsHidden = false;
         LoaderOverlay.isFading = false;
     });
-    describe("show", () => {
-        it("show loader should return 1", () => {
-            expect(LoaderOverlay.show()).to.equals(1);
-        });
-    });
     describe("hide", () => {
         it("hide loader should return 0", () => {
             expect(LoaderOverlay.hide()).to.equals(0);

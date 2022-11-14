@@ -36,7 +36,7 @@ describe("src/modules/contact/components/ContactFormular.vue", () => {
         ContactModule.actions.send = sinon.spy();
         ContactModule.actions.onSendSuccess = sinon.spy();
 
-        ContactModule.state.serviceID = undefined;
+        ContactModule.state.serviceId = undefined;
 
         store = new Vuex.Store({
             namespaces: true,
@@ -66,7 +66,7 @@ describe("src/modules/contact/components/ContactFormular.vue", () => {
     it("has a disabled save button if the form is not completed", () => {
         wrapper = mount(ContactComponent, {store, localVue});
 
-        const sendButton = wrapper.find("#tool-contact-send-message");
+        const sendButton = wrapper.find("#module-contact-send-message");
 
         expect(sendButton.exists()).to.be.true;
         expect(sendButton.attributes("disabled")).to.equal("disabled");
@@ -75,11 +75,11 @@ describe("src/modules/contact/components/ContactFormular.vue", () => {
     it("has an enabled & working save button if the form is completed", async () => {
         wrapper = mount(ContactComponent, {store, localVue});
 
-        const sendButton = wrapper.find("#tool-contact-send-message"),
-            nameInput = wrapper.find("#tool-contact-username-input"),
-            mailInput = wrapper.find("#tool-contact-mail-input"),
-            phoneInput = wrapper.find("#tool-contact-phone-input"),
-            messageInput = wrapper.find("#tool-contact-message-input");
+        const sendButton = wrapper.find("#module-contact-send-message"),
+            nameInput = wrapper.find("#module-contact-username-input"),
+            mailInput = wrapper.find("#module-contact-mail-input"),
+            phoneInput = wrapper.find("#module-contact-phone-input"),
+            messageInput = wrapper.find("#module-contact-message-input");
 
         fillFields({nameInput, mailInput, phoneInput, messageInput});
         await wrapper.vm.$nextTick();
@@ -95,11 +95,11 @@ describe("src/modules/contact/components/ContactFormular.vue", () => {
 
         wrapper = mount(ContactComponent, {store, localVue});
 
-        const sendButton = wrapper.find("#tool-contact-send-message"),
-            nameInput = wrapper.find("#tool-contact-username-input"),
-            mailInput = wrapper.find("#tool-contact-mail-input"),
-            phoneInput = wrapper.find("#tool-contact-phone-input"),
-            messageInput = wrapper.find("#tool-contact-message-input");
+        const sendButton = wrapper.find("#module-contact-send-message"),
+            nameInput = wrapper.find("#module-contact-username-input"),
+            mailInput = wrapper.find("#module-contact-mail-input"),
+            phoneInput = wrapper.find("#module-contact-phone-input"),
+            messageInput = wrapper.find("#module-contact-message-input");
 
         for (const emptyInput of [nameInput, mailInput, phoneInput, messageInput]) {
             fillFields({nameInput, mailInput, phoneInput, messageInput});
@@ -120,14 +120,14 @@ describe("src/modules/contact/components/ContactFormular.vue", () => {
 
         wrapper = mount(ContactComponent, {store, localVue});
 
-        const sendButton = wrapper.find("#tool-contact-send-message"),
-            nameInput = wrapper.find("#tool-contact-username-input"),
-            mailInput = wrapper.find("#tool-contact-mail-input"),
-            phoneInput = wrapper.find("#tool-contact-phone-input"),
-            messageInput = wrapper.find("#tool-contact-message-input"),
-            checkbox = wrapper.find("#tool-contact-privacyPolicy-input");
+        const sendButton = wrapper.find("#module-contact-send-message"),
+            nameInput = wrapper.find("#module-contact-username-input"),
+            mailInput = wrapper.find("#module-contact-mail-input"),
+            phoneInput = wrapper.find("#module-contact-phone-input"),
+            messageInput = wrapper.find("#module-contact-message-input"),
+            checkbox = wrapper.find("#module-contact-privacyPolicy-input");
 
-        expect(wrapper.find("#tool-contact-addionalInformation").exists()).to.be.true;
+        expect(wrapper.find("#module-contact-addionalInformation").exists()).to.be.true;
         expect(checkbox.exists()).to.be.true;
 
         fillFields({nameInput, mailInput, phoneInput, messageInput});
@@ -150,6 +150,6 @@ describe("src/modules/contact/components/ContactFormular.vue", () => {
         wrapper = mount(ContactComponent, {store, localVue, attachTo: elem});
 
         await wrapper.vm.$nextTick();
-        expect(wrapper.find("#tool-contact-username-input").element).to.equal(document.activeElement);
+        expect(wrapper.find("#module-contact-username-input").element).to.equal(document.activeElement);
     });
 });
