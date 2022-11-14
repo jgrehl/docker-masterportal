@@ -169,17 +169,18 @@ const getters = {
     },    
 
     /**
-     * Returns all layer configurations, if mode is 3D, else returns only 2d-layer configurations.
+     * Returns all layer configurations to show in tree, if mode is 3D, else returns only 2d-layer configurations.
+     * Filteres by attribute 'showInLayerTree'.
      * @param {Object} state state of the app-store.
      * @param {String} mode the mode of the map
      * @returns {Object[]} all layer configurations, if mode is 3D, else returns only 2d-layer configurations.
      */
-    layerConfigsByMode: (state) => (mode) => {
+    inTreeVisibleLayerConfigsByMode: (state) => (mode) => {
         const layerContainer = getters.allLayerConfigs(state),
             layerTypes3d = getLayerTypes3d();
 
         return layerContainer.filter(layer => {
-            return mode === "2D" ? !layerTypes3d.includes(layer.typ.toUpperCase()) : true;
+            return layer.showInLayerTree !== false && (mode === "2D" ? !layerTypes3d.includes(layer.typ.toUpperCase()) : true);
         });
     }
 };
