@@ -33,7 +33,7 @@ export default {
         chooseProperties (item) {
             let properties = item;
 
-            if (Object.hasOwn(item, "type")) {
+            if ("type" in item) {
                 const stateProperties = this.$store.state.Modules[upperFirst(item.type)];
 
                 if (typeof stateProperties === "object") {
@@ -58,7 +58,7 @@ export default {
         >
             <MenuContainerBodyElement
                 :id="'mp-menu-body-items-element-' + key + '-' + idAppendix"
-                v-bind="item"
+                v-bind="chooseProperties (item)"
                 :path="[...path, key]"
             />
         </li>
