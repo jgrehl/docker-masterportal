@@ -11,7 +11,7 @@ export default {
         Layer
     },
     computed: {
-        ...mapGetters(["layerConfigsByMode"]),
+        ...mapGetters(["inTreeVisibleLayerConfigsByMode"]),
         ...mapGetters("Maps", ["mode"])
     }
 };
@@ -20,9 +20,10 @@ export default {
 <template lang="html">
     <div
         id="layer-tree"
+        class="offcanvas-body"
     >
         <div
-            v-for="(layerConf) in layerConfigsByMode(mode)"
+            v-for="(layerConf) in inTreeVisibleLayerConfigsByMode(mode)"
             :key="layerConf.id"
         >
             <Layer
