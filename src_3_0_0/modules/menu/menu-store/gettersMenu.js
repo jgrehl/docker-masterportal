@@ -21,20 +21,6 @@ const menuGetters = {
 
     /**
      * @param {Object} state Local vuex state.
-     * @param {Object} _ Local vuex getters (discarded).
-     * @param {Object} __ Root state (discarded).
-     * @param {Object} rootGetters Root getters.
-     * @returns {(Object|null)} The configuration of the mainMenu or null.
-     */
-    mainMenu (state, _, __, rootGetters) {
-        if (rootGetters.portalConfig?.mainMenu) {
-            return state.mainMenu;
-        }
-        return null;
-    },
-
-    /**
-     * @param {Object} state Local vuex state.
      * @returns {Boolean} Whether the mainMenu is opened.
      */
     mainExpanded: state => {
@@ -72,20 +58,6 @@ const menuGetters = {
         console.error("Menu.objectFromPath: One of the following errors occurred:");
         console.error(`Menu.objectFromPath: a) The given menu side ${side} is not allowed. Please use "mainMenu" or "secondaryMenu" instead.`);
         console.error(`Menu.objectFromPath: b) The given entry in the navigation ${entry} is not allowed. Please use "last" or "previous" instead.`);
-        return null;
-    },
-
-    /**
-     * @param {Object} state Local vuex state.
-     * @param {Object} _ Local vuex getters (discarded).
-     * @param {Object} __ Root state (discarded).
-     * @param {Object} rootGetters Root getters.
-     * @returns {(Object|null)} The configuration of the secondaryMenu or null.
-     */
-    secondaryMenu (state, _, __, rootGetters) {
-        if (rootGetters.portalConfig?.secondaryMenu) {
-            return state.secondaryMenu;
-        }
         return null;
     },
 
