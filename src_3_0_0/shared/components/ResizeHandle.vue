@@ -453,11 +453,11 @@ $handle_size: 6px;
             width: 100%
         }
         &-left {
-            left: calc(-2 * #{$handle_size});
+            left: 0;
             height: 100%;
         }
         &-right {
-            right: calc(-2 * #{$handle_size});
+            right: 0;
             height: 100%;
         }
         &-bottom {
