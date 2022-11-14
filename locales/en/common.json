@@ -152,6 +152,7 @@
           }
         },
         "alerting": {
+            "alertWindowTitle": "Information",
             "categories": {
               "error": "Error",
               "info": "Info",
