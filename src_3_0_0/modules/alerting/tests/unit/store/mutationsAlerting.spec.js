@@ -3,16 +3,6 @@ import {expect} from "chai";
 
 describe("src/modules/alerting/store/mutationsAlerting.js", () => {
 
-    it("setConfigs", async function () {
-        const state = {
-            configJs: {data: {data1: "fromState"}}
-        };
-
-        mutations.setConfigs(state, {data: {data1: "overwritten"}});
-
-
-        expect(state.configJs.data.data1).to.eql("overwritten");
-    });
     it("addToAlerts", async function () {
         const state = {
             alerts: [{title: "alone"}]
