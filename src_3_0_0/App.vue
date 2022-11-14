@@ -196,5 +196,8 @@ export default {
     #map {
         position: relative;
     }
+    .elements-positioned-over-map {
+        position: relative;
+    }
 }
 </style>
