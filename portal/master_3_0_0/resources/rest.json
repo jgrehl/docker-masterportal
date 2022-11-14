@@ -1,0 +1,229 @@
+[
+  {
+    "id": "1",
+    "name": "CSW HMDK Summary",
+    "url": "http://metaver.de/csw?service=CSW&version=2.0.2&request=GetRecordById&typeNames=csw:Record&elementsetname=summary",
+    "typ": "CSW"
+  },
+  {
+    "id": "2",
+    "name": "Metadaten-URL",
+    "url": "http://metaver.de/trefferanzeige?docuuid=",
+    "typ": "URL"
+  },
+  {
+    "id": "3",
+    "name": "CSW HMDK Full",
+    "url": "http://metaver.de/csw?service=CSW&version=2.0.2&request=GetRecordById&typeNames=csw:Record&elementsetname=full",
+    "typ": "CSW"
+  },
+  {
+    "id": "4",
+    "name": "BKG Geokodierungsdienst Suggest",
+    "url": "/bkg_suggest",
+    "typ": "GDZ"
+  },
+  {
+    "id": "5",
+    "name": "BKG Geokodierungsdienst Geosearch",
+    "url": "/bkg_geosearch",
+    "typ": "GDZ"
+  },
+  {
+    "id": "6",
+    "name": "Hamburg Gazetteer",
+    "url": "https://geodienste.hamburg.de/HH_WFS_DOG?service=WFS&request=GetFeature&version=2.0.0",
+    "typ": "WFS"
+  },
+  {
+    "id": "7",
+    "name": "Routing Service VIOM",
+    "url": "/viomRouting",
+    "providerID": "HHBWVI",
+    "typ": "ID"
+  },
+  {
+    "id": "8",
+    "name": "Hamburg Gazetteer",
+    "url": "https://geodienste.hamburg.de/HH_WFS_GAGES?service=WFS&request=GetFeature&version=2.0.0",
+    "typ": "WFS",
+    "gfiTheme": "default",
+    "gfiAttributes": {
+      "strassenname": "Straßenname",
+      "hausnummer": "Hausnummer",
+      "hausnummernzusatz": "Buchstabe/Adressierungszusatz",
+      "strasse_kurz": "Straßenschlüssel",
+      "postleitzahl": "Postleitzahl",
+      "status": "Amtlich vergebene Adresse",
+      "bezirke": "Bezirk",
+      "postOrtsteil": "Stadtteil",
+      "ortsteil_kurz": "Ortsteil",
+      "baubloecke": "Baublock",
+      "statistischesgebiet": "Statistisches Gebiet",
+      "alkis_flurstuecksnummer": "Flurstücksnummer",
+      "alkis_gemarkung": "Gemarkung",
+      "amtsgericht_name": "Name des Amtsgerichtes",
+      "finanzamtnr": "Finanzamt",
+      "finanzamt": "Name des Finanzamtes",
+      "grundbuchbezirk": "Grundbuchschlüssel",
+      "polizeikommissariat": "Polizeikommissariat",
+      "grundschulnr": "Grundschulnummer",
+      "grundschule": "Name der Grundschule",
+      "wahlbezirk": "Wahlbezirk (Bundestagswahl 2021)",
+      "wahlkreisbt": "Wahlkreis (Bundestagswahl 2021)",
+      "wahlkreisbu": "Wahlkreis (Bürgerschaftswahl 2020)",
+      "wahlkreis_bv": "Wahlkreis (Bezirksversammlungswahl 2019)"
+    }
+  },
+  {
+    "id": "10",
+    "name": "OSM Suche",
+    "url": "https://nominatim.openstreetmap.org/search?",
+    "typ": "WFS"
+  },
+  {
+    "id": "11",
+    "name": "Komoot Photon Suche",
+    "url": "https://photon.komoot.io/api/?",
+    "typ": "WFS"
+  },
+  {
+    "id": "88",
+    "name": "Hamburg Gazetteer",
+    "url": "https://geodienste.hamburg.de/HH_WFS_GAGES",
+    "typ": "WFS"
+  },
+  {
+    "id": "1001",
+    "name": "Deegree WPS RZ2 Produktion",
+    "url": "https://geodienste.hamburg.de/HH_WPS",
+    "version": "1.1.0",
+    "typ": "WPS"
+  },
+  {
+    "id": "1002",
+    "name": "Deegree WPS RZ2 Test",
+    "url": "https://qs-geodienste.hamburg.de/HH_WPS",
+    "typ": "WPS"
+  },
+  {
+    "id": "1003",
+    "name": "Deegree WPS RZ2 Test",
+    "url": "https://test-geodienste.hamburg.de/HH_WPS",
+    "typ": "WPS"
+  },
+  {
+    "id": "80001",
+    "name": "Email Service by PHP",
+    "url": "https://geoportal-hamburg.de/smtp/sendmail.php",
+    "typ": "EmailService"
+  },
+  {
+    "id": "80002",
+    "name": "Email Service by PHP",
+    "url": "https://geoportal-hamburg.de/smtp/sendmail.php",
+    "typ": "EmailService"
+  },
+  {
+    "id": "80001-PHP8",
+    "name": "Email Service by PHP",
+    "url": "https://test-geofos.fhhnet.stadt.hamburg.de/smtp/sendmail.php",
+    "typ": "EmailService"
+  },
+  {
+    "id": "80002-PHP8",
+    "name": "Email Service by PHP",
+    "url": "https://test-geofos.fhhnet.stadt.hamburg.de/smtp/sendmail.php",
+    "typ": "EmailService"
+  },
+  {
+    "id": "99999",
+    "name": "Print Service",
+    "url": "https://geodienste.hamburg.de/mapfish_print_2_internet",
+    "typ": "PrintService"
+  },
+  {
+    "id": "99998",
+    "name": "Print Service Test",
+    "url": "https://qs-geodienste.hamburg.de/mapfish_print_2_internet",
+    "typ": "PrintService"
+  },
+  {
+    "id": "virtualcityPLANNER",
+    "name": "virtualcityPLANNER",
+    "url": "https://devel.virtualcityplanner.de",
+    "scenarioId": "BjtEA4zwBEiZeG2CX"
+  },
+  {
+    "id": "elastic",
+    "name": "Elastic Prod",
+    "url": "https://geodienste.hamburg.de/layers/_search/template?source_content_type=application/json&source=",
+    "typ": "Search"
+  },
+  {
+    "id": "elastic_prod",
+    "name": "Elastic Prod",
+    "url": "https://geodienste.hamburg.de/layers/_search/template",
+    "typ": "Search"
+  },
+  {
+    "id": "elastic_qs",
+    "name": "Elastic QS",
+    "url": "https://qs-geodienste.hamburg.de/layers/_search/template?source_content_type=application/json&source=",
+    "typ": "Search"
+  },
+  {
+    "id": "elastic_mrh",
+    "name": "Elastic mrh Prod",
+    "url": "https://geodienste.hamburg.de/layers-mrh/_search/template",
+    "typ": "Search"
+  },
+  {
+    "id": "elastic_mrh_qs",
+    "name": "Elastic mrh QS",
+    "url": "https://test-geodienste.hamburg.de/layers-mrh/_search/template",
+    "typ": "Search"
+  },
+  {
+    "id": "elastic_all",
+    "name": "Elastic All Prod",
+    "url": "https://geodienste.hamburg.de/layers-all/_search/template",
+    "typ": "Search"
+  },
+  {
+    "id": "elastic_all_qs",
+    "name": "Elastic All QS",
+    "url": "https://test-geodienste.hamburg.de/layers-all/_search/template",
+    "typ": "Search"
+  },
+  {
+    "id": "mapfish",
+    "name": "Print Service Prod",
+    "url": "https://geodienste.hamburg.de/mapfish_print_internet/print/",
+    "typ": "Print"
+  },
+  {
+    "id": "mapfish_qs",
+    "name": "Print Service QS",
+    "url": "https://qs-geodienste.hamburg.de/mapfish_print_internet/print/",
+    "typ": "Print"
+  },
+  {
+    "id": "mapfish_test",
+    "name": "Print Service Test",
+    "url": "https://test-geodienste.hamburg.de/mapfish_print/print/",
+    "typ": "Print"
+  },
+  {
+    "id": "bkg_ors",
+    "name": "BKG OpenRoute",
+    "url": "https://geodienste.hamburg.de/web_ors/",
+    "typ": "GDZ"
+  },
+  {
+    "id": "oblique",
+    "name": "vcsOblique",
+    "url": "https://geoportal-hamburg.de/FHH-Schraegluftbilder/",
+    "typ": "url"
+  }
+]
