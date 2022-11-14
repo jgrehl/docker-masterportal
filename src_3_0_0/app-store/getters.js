@@ -82,7 +82,7 @@ const getters = {
      * @param {Object} state state of the app-store.
      * @returns {Object} Main menu.
      */
-    mainMenu: state => {
+    mainMenuFromConfig: state => {
         return state.portalConfig.mainMenu || {};
     },
 
@@ -110,7 +110,7 @@ const getters = {
      * @param {Object} state state of the app-store.
      * @returns {Object} Secondary menu.
      */
-    secondaryMenu: state => {
+    secondaryMenuFromConfig: state => {
         return state.portalConfig.secondaryMenu || {};
     },
 
