@@ -30,6 +30,7 @@ export default {
             "fileDownloads",
             "filename",
             "formatList",
+            "layoutMapInfo",
             "isScaleSelectedManually",
             "layoutList",
             "printMapMarker",
