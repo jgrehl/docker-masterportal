@@ -52,6 +52,7 @@
         - jsdoc
         - sinon-chai
 - Module print: The attribute `mapfishServiceId` has been removed. Use `printServiceId` instead.
+- Module contact: The attribute `serviceID` has been removed. Use `serviceId` instead.
 
 ### Fixed
 
