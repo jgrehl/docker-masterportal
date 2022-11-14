@@ -19,6 +19,11 @@ export default {
             type: String,
             default: null,
             required: false
+        },
+        description: {
+            type: String,
+            default: null,
+            required: false
         }
     }
 };
@@ -26,9 +31,32 @@ export default {
 
 <template>
     <button
-        class="btn btn-primary"
-        :class="customclass"
+        v-if="description"
+        class="btn btn-secondary btn-description d-flex align-items-center row py-3"
         type="button"
+        :class="customclass"
+        @click="interaction"
+    >
+        <i
+            v-if="icon !== null"
+            :class="icon"
+            role="img"
+            class="col"
+        />
+        <span class="col-10 lh-1 btn-texts row">
+            <span>
+                {{ $t(text) }}
+            </span>
+            <span class="btn-description text-wrap col-12 pt-2">
+                {{ $t(description) }}
+            </span>
+        </span>
+    </button>
+    <button
+        v-else
+        class="btn btn-secondary d-flex align-items-center"
+        type="button"
+        :class="customclass"
         @click="interaction"
     >
         <i
@@ -48,14 +76,22 @@ export default {
     display: flex;
     justify-content: center;
     white-space: nowrap;
+    min-height: 2.5rem;
+    padding-right: 1.5rem;
+
     i {
-        margin-right: 0.5rem;
+        font-size: 1.125rem;
+        padding-left: 1rem;
+        padding-right: .5rem;
     }
-    &:focus, &:active, &:hover {
-        /* TODO(roehlipa): Adjust colors */
-        color: $primary;
-        background-color: $white;
-        border-color: $primary;
+    .btn-texts {
+        text-align: left;
+        .btn-description {
+            font-size: $font-size-sm;
+        }
     }
+}
+.btn-description {
+    border-radius: 25px;
 }
 </style>

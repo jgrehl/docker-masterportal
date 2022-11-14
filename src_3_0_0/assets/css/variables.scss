@@ -34,8 +34,9 @@ $link-decoration: none;
 // Font, line-height, and color for body text, headings, and more.
 // In the case of Masterportal, the base size is 16 px, the browser's default, as we do set a base font but not in the html tag.
 // We set the base variable to 12px. This is the base that Bootstrap uses internally to calculate sizes (such as $font-size-sm)
+// ToDo: evaluate if 16 is fine
 
-$font-size-base: .75rem;
+$font-size-base: 1rem;
 
 // Buttons + Forms
 //
@@ -85,13 +86,13 @@ $light_grey_outline: #050505;
 /* PRIMARY: The primary buttons blue
 * Used for primary buttons like start a search, print etc.
 */
-$dark_blue: #003063;
+$dark_blue: #151C27;
 $primary: rgb(212, 151, 151);
 $white: #ffffff;
 $black: #000;
 $light_red: #E10019;
 $dark_grey: #424242;
-$light_blue: #00437A;
+$light_blue: #DCE2F3;
 
 $navbar-light-color: $dark_grey;
 
@@ -100,15 +101,41 @@ $navbar-light-color: $dark_grey;
  * Elements: Navigation bars and togglers, overall content.
  * Examples: NavBar, open/close tool, layer list, cancel Buttons ...
  */
-$secondary: $light_grey;
-$secondary_table_style: #F2F2F2;  // background for table view style
+$secondary: $white;
+$secondary_contrast: $dark_blue;
 $secondary_hover: $light_blue;
-$secondary_focus: $light_blue;
-$secondary_focus_contrast: #F3F3F3;
-$secondary_active_drop: rgba(227, 227, 227, 0.5);
-$secondary_contrast: #333333;
-$secondary_icon_button: #525252;
-$secondary_selected: rgb(184, 89, 0);
+$secondary_active: $dark_blue;
+$secondary_active_contrast: $light_blue;
+$secondary_focus: $dark_blue;
+$secondary_focus_contrast: $light_blue;
+$secondary_table_style: #F2F2F2;  // background for table view style
+
+/*ToDo: bei neuem bootstrap update hoffentlich möglich*/
+// .btn-secondary {
+//   --bs-btn-color: $secondary_contrast;
+//   --bs-btn-bg: $secondary;
+//   --bs-btn-border-radius: 50px;
+//   --bs-btn-hover-color: $secondary_contrast;
+//   --bs-btn-hover-bg: $secondary_hover;
+//   --bs-btn-active-color: $secondary_active_contrast;
+//   --bs-btn-active-bg: $secondary_active;
+//   --bs-btn-focus-color: $secondary_focus_contrast;
+//   --bs-btn-focus-bg: $secondary_focus;
+//   --bs-btn-box-shadow: none;
+// }
+
+.btn-secondary {
+  --bs-btn-color: #151C27;
+  --bs-btn-bg: #ffffff;
+  --bs-btn-border-radius: 50px;
+  --bs-btn-hover-color: #151C27;
+  --bs-btn-hover-bg: #DCE2F3;
+  --bs-btn-active-color: #DCE2F3;
+  --bs-btn-active-bg: #151C27;
+  --bs-btn-focus-color: #DCE2F3;
+  --bs-btn-focus-bg: #151C27;
+  --bs-btn-box-shadow: none;
+}
 
 /* ACCENT: Action
  * Action color for certain special accents
