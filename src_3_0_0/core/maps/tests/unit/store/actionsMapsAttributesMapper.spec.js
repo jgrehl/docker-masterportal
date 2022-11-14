@@ -107,7 +107,7 @@ describe("src_3_0_0/core/maps/store/actionsMapsAttributesMapper.js", () => {
             }]);
             expect(dispatch.secondCall.args).to.deep.equals(["registerListener", {
                 type: "pointermove",
-                listener: "updatePointer",
+                listener: "updateAttributesByPointer",
                 listenerType: "dispatch"
             }]);
         });
@@ -122,7 +122,8 @@ describe("src_3_0_0/core/maps/store/actionsMapsAttributesMapper.js", () => {
             expect(commit.secondCall.args).to.deep.equals(["setInitialRotation", 0]);
             expect(commit.thirdCall.args).to.deep.equals(["setInitialZoom", 5]);
             expect(commit.getCall(3).args).to.deep.equals(["setMode", "2D"]);
-            expect(commit.getCall(4).args).to.be.equals(["setProjection", "EPSG:3857"]);
+            expect(commit.getCall(4).args[0]).to.equals("setProjection");
+            expect(commit.getCall(4).args[1].code_).to.equals("EPSG:3857");
             expect(commit.getCall(5).args).to.deep.equals(["setResolutions", [
                 66.14579761460263,
                 26.458319045841044,
