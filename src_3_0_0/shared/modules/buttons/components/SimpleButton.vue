@@ -32,7 +32,7 @@ export default {
 <template>
     <button
         v-if="description"
-        class="btn btn-secondary btn-description d-flex align-items-center row py-3"
+        class="btn btn-light btn-description d-flex align-items-center row py-3"
         type="button"
         :class="customclass"
         @click="interaction"
@@ -54,7 +54,7 @@ export default {
     </button>
     <button
         v-else
-        class="btn btn-secondary d-flex align-items-center"
+        class="btn btn-light d-flex align-items-center"
         type="button"
         :class="customclass"
         @click="interaction"
