@@ -4,6 +4,7 @@ import GetFeatureInfo from "../getFeatureInfo/components/GetFeatureInfo.vue";
 import PrintMap from "../print/components/PrintMap.vue";
 import Measure from "../measure/components/MeasureInMap.vue";
 import OpenConfig from "../openConfig/components/OpenConfig.vue";
+import Routing from "../routing/components/RoutingTemplate.vue";
 import ScaleSwitcher from "../scaleSwitcher/components/ScaleSwitcher.vue";
 import ShareView from "../shareView/components/ShareView.vue";
 import Contact from "../contact/components/ContactFormular.vue";
@@ -23,6 +24,7 @@ const state = {
         measure: Measure,
         openConfig: OpenConfig,
         print: PrintMap,
+        routing: Routing,
         scaleSwitcher: ScaleSwitcher,
         shareView: ShareView,
         addWMS: AddWMS
