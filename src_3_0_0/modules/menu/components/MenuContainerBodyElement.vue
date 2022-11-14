@@ -79,6 +79,7 @@ export default {
             :interaction="() => clickedMenuElement(path)"
             :text="name"
             :icon="showIcon ? icon : null"
+            :description="showDescription ? description : null"
             customclass="w-100 justify-content-start"
         />
         <!-- TODO(roehlipa): Properly add description -->
