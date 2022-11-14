@@ -13,8 +13,10 @@
 const state = {
     active: false,
     hasMouseMapInteractions: false,
+    description: "",
     icon: "bi-arrows-angle-contract",
     name: "common:menu.tools.scaleSwitcher",
+    showDescription: false,
     supportedDevices: ["Desktop", "Mobile", "Table"],
     supportedMapModes: ["2D", "3D"],
     type: "scaleSwitcher"
