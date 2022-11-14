@@ -56,8 +56,8 @@ export default {
     created () {
         if (this.focusOnCreation) {
             this.$nextTick(() => {
-                if (this.$refs[`tool-contact-${this.inputName}-input`]) {
-                    this.$refs[`tool-contact-${this.inputName}-input`].focus();
+                if (this.$refs[`module-contact-${this.inputName}-input`]) {
+                    this.$refs[`module-contact-${this.inputName}-input`].focus();
                 }
             });
         }
@@ -80,17 +80,17 @@ export default {
                     'input-group-text',
                     htmlElement === 'textarea' ? 'force-border' : ''
                 ]"
-                :for="`tool-contact-${inputName}-input`"
+                :for="`module-contact-${inputName}-input`"
             >{{ labelText }}</label>
             <component
                 :is="htmlElement"
-                :id="`tool-contact-${inputName}-input`"
-                :ref="`tool-contact-${inputName}-input`"
+                :id="`module-contact-${inputName}-input`"
+                :ref="`module-contact-${inputName}-input`"
                 :value="inputValue"
                 :autocomplete="autocomplete"
                 :type="htmlElement === 'input' ? inputType : ''"
                 :class="[(htmlElement === 'select' ? 'form-select' : 'form-control'), (validInput ? 'is-valid' : '')]"
-                :aria-describedby="`tool-contact-${inputName}-help`"
+                :aria-describedby="`module-contact-${inputName}-help`"
                 :placeholder="$t(`common:modules.tools.contact.placeholder.${inputName}`)"
                 :rows="htmlElement === 'textarea' ? rows : ''"
                 @keyup="changeFunction($event.currentTarget.value)"
@@ -98,7 +98,7 @@ export default {
         </div>
         <span
             v-if="!validInput"
-            :id="`tool-contact-${inputName}-help`"
+            :id="`module-contact-${inputName}-help`"
             class="help-block"
         >
             {{ $t(
