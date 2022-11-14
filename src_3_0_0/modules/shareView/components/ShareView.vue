@@ -113,9 +113,10 @@ export default {
                 <a
                     id="twitter-btn"
                     aria-label="$t('modules.tools.shareView.shareTwitter')"
-                    class="btn btn-primary"
+                    class="btn btn-secondary"
                     :href="twitter"
                     target="_blank"
+                    role="button"
                 >
                     <i class="bi-twitter" />
                     {{ $t("modules.tools.shareView.shareTwitter") }}
@@ -125,9 +126,10 @@ export default {
                 <a
                     id="facebook-btn"
                     aria-label="$t('modules.tools.shareView.shareFacebook')"
-                    class="btn btn-primary"
+                    class="btn btn-secondary"
                     :href="facebook"
                     target="_blank"
+                    role="button"
                 >
                     <i class="bi-facebook" />
                     {{ $t("modules.tools.shareView.shareFacebook") }}
@@ -137,7 +139,7 @@ export default {
                 <button
                     id="copy-btn"
                     aria-label="$t('modules.tools.shareView.shareLink')"
-                    class="btn btn-primary"
+                    class="btn btn-secondary"
                     @click="copyToClipboard"
                 >
                     <i class="bi-link" />
@@ -148,7 +150,7 @@ export default {
                 <button
                     id="qr-btn"
                     aria-label="$t('modules.tools.shareView.shareQR') "
-                    class="btn btn-primary"
+                    class="btn btn-secondary"
                     @click="generateQRCodeDataURL"
                 >
                     <i class="bi-qr-code" />
@@ -165,7 +167,7 @@ export default {
                 >
                 <button
                     aria-label="$t('modules.tools.shareView.downloadQR')"
-                    class="btn btn-primary"
+                    class="btn btn-secondary"
                     @click="downloadQr"
                 >
                     {{ $t("modules.tools.shareView.downloadQR") }}
