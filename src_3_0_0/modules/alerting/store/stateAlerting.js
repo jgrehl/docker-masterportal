@@ -15,6 +15,7 @@
  * @property {Boolean} alertProto.mustBeConfirmed flag if an alert can be marked to show not again
  * @property {Boolean/Object} alertProto.once flag if alert is shown once or not. Can also be an object {seconds: 59, minutes: ...} (see moment.js) with information when the alert is shown again
 
+ * @property {String} alertWindowTitle shown title of the main alert/modal window
  * @property {Object[]} alerts array of current loaded alerts
  * @property {Object} displayedAlerts object of available alerts
  * @property {Boolean/String} fetchBroadcastUrl URL of the alert json
@@ -39,6 +40,7 @@ export default {
         once: false
     },
     alerts: [],
+    alertWindowTitle: "common:modules.alerting.alertWindowTitle",
     displayedAlerts: {},
     fetchBroadcastUrl: false,
     initialClosed: false,
