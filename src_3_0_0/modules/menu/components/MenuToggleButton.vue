@@ -87,6 +87,8 @@ export default {
         height: $icon_length;
         width: $icon_length;
         position: absolute;
+        border-width: 1px;
+        border-color: $light-grey;
 
         i {
             position: absolute;
@@ -96,11 +98,7 @@ export default {
             line-height: 0;
         }
     }
-    .expanded {
-        border-width: 1px;
-        border-color: $light-grey;
-        z-index: 5;
-    }
+
     .toggle-button-mainMenu {
         left: 0;
         border-top-right-radius: 50%;
@@ -109,8 +107,6 @@ export default {
         border-top-left-radius: 0;
         &.expanded {
             display: block;
-            left: -13px;
-            border-radius: 50%;
         }
     }
 
@@ -123,8 +119,6 @@ export default {
 
         &.expanded {
             display: block;
-            right: -13px;
-            border-radius: 50%;
         }
     }
 }
