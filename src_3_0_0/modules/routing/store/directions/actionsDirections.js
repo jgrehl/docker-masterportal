@@ -78,7 +78,7 @@ export default {
      * @param {Boolean} [parameter.instructions] should request with instructions
      * @returns {RoutingDirections} routingDirections
      */
-    async fetchDirections ({state, getters, dispatch}, {wgs84Coords, instructions}) {
+    async fetchDirections ({state, getters, dispatch, rootState}, {wgs84Coords, instructions}) {
         const {settings} = state,
             {selectedAvoidSpeedProfileOptions} = getters,
             avoidPolygons = await dispatch("getAvoidPolygonsWgs84");
@@ -269,7 +269,6 @@ export default {
         dispatch("Maps/addLayer", directionsRouteLayer, {root: true});
         dispatch("Maps/addLayer", directionsWaypointsLayer, {root: true});
         dispatch("Maps/addLayer", directionsAvoidLayer, {root: true});
-
 
 
         dispatch("createInteractionFromMapInteractionMode");
