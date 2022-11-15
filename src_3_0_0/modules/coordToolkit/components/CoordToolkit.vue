@@ -662,7 +662,7 @@ export default {
     .hint{
         margin: 5px 0 25px;
         text-align:center;
-        color: $secondary_focus;
+        color: $black;
         transition: color 0.35s;
     }
     .info{
