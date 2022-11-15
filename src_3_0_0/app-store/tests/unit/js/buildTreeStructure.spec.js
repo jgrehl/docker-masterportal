@@ -36,21 +36,21 @@ describe("src_3_0_0/app-store/js/buildTreeStructure.js", () => {
             },
             Fachdaten: {
                 Layer: [
-                  {
-                    id: "21999",
-                    name: "Quartiere",
-                    typ: "WMS",
-                    visibility: false,
-                    showInLayerTree: true
-                  },
-                  {
-                    id: "22000",
-                    name: "Stadtbereiche",
-                    typ: "WMS",
-                    visibility: true
-                  }
+                    {
+                        id: "21999",
+                        name: "Quartiere",
+                        typ: "WMS",
+                        visibility: false,
+                        showInLayerTree: true
+                    },
+                    {
+                        id: "22000",
+                        name: "Stadtbereiche",
+                        typ: "WMS",
+                        visibility: true
+                    }
                 ]
-              }
+            }
         };
     let layerList;
 
@@ -92,7 +92,7 @@ describe("src_3_0_0/app-store/js/buildTreeStructure.js", () => {
             layerConfig.Fachdaten.Layer.forEach(layerConf => {
                 getAndMergeRawLayer(layerConf, "auto");
             });
-            filteredResult = getNestedValues(result, "id").flat(Infinity);            
+            filteredResult = getNestedValues(result, "id").flat(Infinity);
 
             expect(result).to.be.an("object");
             expect(filteredResult.indexOf("452")).to.be.equals(-1);
