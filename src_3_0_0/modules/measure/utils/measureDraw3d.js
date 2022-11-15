@@ -69,7 +69,7 @@ function updateText (lengthText, heightText, distance, heightDiff) {
  * @returns {object} styles
  */
 function generate3dTextStyles (distance, heightDiff, addUnlistener) {
-    currentUnit = store.getters["Tools/Measure/selectedUnit"];
+    currentUnit = store.getters["Modules/Measure/selectedUnit"];
 
     const lengthText = new Text({...textStyleBase}),
         heightText = new Text({...textStyleBase, offsetY: -30}),
@@ -88,7 +88,7 @@ function generate3dTextStyles (distance, heightDiff, addUnlistener) {
 
     // store.subscribe returns an unlistener function
     addUnlistener(store.subscribe(({type, payload}) => {
-        if (type === "Tools/Measure/setSelectedUnit") {
+        if (type === "Modules/Measure/setSelectedUnit") {
             currentUnit = payload;
             boundUpdateText();
         }
@@ -218,7 +218,7 @@ function handleSecondPoint (coords, cartesian, addUnlistener) {
     i18next.on("languageChanged", boundUpdateTextPoint);
     addUnlistener(() => i18next.off("languageChanged", boundUpdateTextPoint));
     addUnlistener(store.subscribe(({type}) => {
-        if (type === "Tools/Measure/setSelectedUnit") {
+        if (type === "Modules/Measure/setSelectedUnit") {
             boundUpdateTextPoint();
         }
     }));
