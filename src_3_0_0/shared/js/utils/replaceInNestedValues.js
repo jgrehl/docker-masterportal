@@ -72,7 +72,7 @@ function replaceInNestedValuesHelper (obj, searchKey, maxDepth, result, depth, r
 
 /**
  * Informs Vue about new properties at obj to observe them.
- * @link https://v2.vuejs.org/v2/guide/reactivity.html
+ * @link https://v2.vuejs.org/v2/api/#Vue-set
  * @param {Object} obj to change porperties of
  * @param {String} key key of property
  * @param {*} replacement the replacement at the key
