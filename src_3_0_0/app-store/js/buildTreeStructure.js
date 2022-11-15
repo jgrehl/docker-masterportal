@@ -11,9 +11,10 @@ const keyFolder = "Ordner",
  * The layers are sorted and grouped by metadata-name.
  * @param  {Object} layerConfig configuration of layer like in the config.json, to get background-layer from
  * @param  {String} category the category to get the tree for
+ * @param  {Object} shownLayerConfs configuration of layer to show on first level of tree, configured in config.json
  * @returns {Object} tree structure as json object
  */
-export function buildTreeStructure (layerConfig, category) {
+export function buildTreeStructure (layerConfig, category, shownLayerConfs = []) {
     // @todo refactored from parserDefaultTree.js
     //
     // @todo dort wird an allen Objekten, die keine id haben, eine id gesetzt: id: this.createUniqId(groupname)
@@ -32,13 +33,18 @@ export function buildTreeStructure (layerConfig, category) {
     folder[keyFolder] = [];
 
     for (let i = 0; i < layerList.length; i++) {
-        const rawLayer = layerList[i];
-        let subFolder;
+        let rawLayer = layerList[i],
+            subFolder;
 
         if (bgLayerIds.indexOf(rawLayer.id) > -1) {
             continue;
         }
         if (rawLayer.datasets[0] && rawLayer.datasets[0][categoryKey]) {
+            shownLayerConfs.forEach(layerConf => {
+                if (layerConf.id === rawLayer.id) {
+                    rawLayer = Object.assign(rawLayer, layerConf);
+                }
+            });
             const mdName = rawLayer.datasets[0].md_name,
                 groupName = getGroupName(rawLayer, categoryKey),
                 isFirstLayer = isFirstLayerWithMdName(layersByMdName, rawLayer, mdName);
