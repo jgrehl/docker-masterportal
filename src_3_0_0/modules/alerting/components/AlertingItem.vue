@@ -260,20 +260,20 @@ export default {
                             :class="singleAlert.category"
                         >
                             <div
-                                class="singleAlertContainer"
+                                class="singleAlertContainer row"
                             >
                                 <hr
                                     v-if="singleAlertIndex>0 || categoryIndex>0"
                                 >
-                                <button
-                                    v-if="!checkCategory(singleAlert.category)"
-                                    type="button"
-                                    class="btn btn-close btn-sm float-end mt-0"
-                                    aria-label="Close"
-                                    @click="removeAlert(singleAlert.hash);"
-                                />
+                                <h3
+                                    class="mt-1 ms-2 col-8"
+                                >
+                                    <b>
+                                        {{ singleAlert.title }}
+                                    </b>
+                                </h3>
                                 <div
-                                    class="d-flex bd-highlight mb-3"
+                                    class="d-flex bd-highlight mb-3 col"
                                 >
                                     <h2
                                         class="ms-auto p-2 bd-highlight"
@@ -283,15 +283,14 @@ export default {
                                         </span>
                                     </h2>
                                 </div>
-                                <h3
-                                    class="mt-1"
-                                >
-                                    <b>
-                                        {{ singleAlert.title }}
-                                    </b>
-                                </h3>
+                                <button
+                                    v-if="!checkCategory(singleAlert.category)"
+                                    type="button"
+                                    class="btn btn-close btn-sm col-1 me-2"
+                                    aria-label="Close"
+                                    @click="removeAlert(singleAlert.hash);"
+                                />
                                 <div
-                                    class="ms-2"
                                     v-html="singleAlert.content"
                                 />
                                 <div
