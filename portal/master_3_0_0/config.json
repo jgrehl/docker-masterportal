@@ -56,9 +56,6 @@
             "type": "openConfig"
           },
           {
-            "type": "measure"
-          },
-          {
             "type": "print",
             "printServiceId": "mapfish",
             "printAppId": "master",
@@ -123,6 +120,9 @@
     "secondaryMenu": {
       "sections": [
         [
+          {
+            "type": "measure"
+          },
           {
             "name": "folder1",
             "icon": "bi-file-plus",
