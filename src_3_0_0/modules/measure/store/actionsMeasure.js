@@ -1,6 +1,6 @@
-import source from "../utils/measureSource";
-import makeDraw2d from "../utils/measureDraw";
-import makeDraw3d from "../utils/measureDraw3d";
+import source from "../js/measureSource";
+import makeDraw2d from "../js/measureDraw";
+import makeDraw3d from "../js/measureDraw3d";
 
 export default {
     /**
