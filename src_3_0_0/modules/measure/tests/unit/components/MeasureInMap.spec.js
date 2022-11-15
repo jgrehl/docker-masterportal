@@ -4,7 +4,6 @@ import {expect} from "chai";
 import sinon from "sinon";
 import MeasureInMapComponent from "../../../components/MeasureInMap.vue";
 import MeasureModule from "../../../store/indexMeasure";
-import View from "ol/View";
 
 const localVue = createLocalVue();
 
@@ -15,8 +14,7 @@ describe("src_3_0_0/modules/measure/components/MeasureInMap.vue", () => {
     let store,
         wrapper,
         origcreateDrawInteraction,
-        origdeleteFeatures,
-        map;
+        origdeleteFeatures;
 
     const mockConfigJson = {
         Portalconfig: {
