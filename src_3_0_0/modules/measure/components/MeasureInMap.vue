@@ -1,7 +1,5 @@
 <script>
 import {mapActions, mapGetters, mapMutations} from "vuex";
-import mutations from "../store/mutationsMeasure";
-import actions from "../store/actionsMeasure";
 import MeasureInMapTooltip from "./MeasureInMapTooltip.vue";
 
 /**
@@ -23,7 +21,6 @@ export default {
             "lines",
             "polygons",
             "geometryValues",
-            "geometryValues3d",
             "lineStringUnits",
             "polygonUnits",
             "selectedGeometry",
@@ -60,8 +57,15 @@ export default {
         }
     },
     created () {
-        this.$on("close", this.close);
-        this.$store.dispatch("Maps/addLayer", this.layer);
+        this.$store.dispatch("Maps/checkLayer", this.layer).then((layerExists) => {
+            if (!layerExists) {
+                this.$store.dispatch("Maps/addLayer", this.layer);
+            }
+        });
+
+    },
+    destroyed () {
+        this.setActive(false);
     },
     mounted () {
         if (this.active) {
@@ -69,8 +73,8 @@ export default {
         }
     },
     methods: {
-        ...mapMutations("Modules/Measure", Object.keys(mutations)),
-        ...mapActions("Modules/Measure", Object.keys(actions)),
+        ...mapMutations("Modules/Measure", ["setSelectedGeometry", "setSelectedUnit", "setActive"]),
+        ...mapActions("Modules/Measure", ["deleteFeatures", "createDrawInteraction", "removeIncompleteDrawing", "removeDrawInteraction"]),
 
         /**
          * Sets the focus to the first control
@@ -85,13 +89,6 @@ export default {
                     this.$refs["measure-tool-unit-select"].focus();
                 }
             });
-        },
-        /**
-         * Sets active to false.
-         * @returns {void}
-         */
-        close () {
-            this.setActive(false);
         },
         /**
          * removes the last drawing if it has not been completed
@@ -216,7 +213,6 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-@import "~variables";
 
 .inaccuracy-list {
     max-width: 270px;
