@@ -20,7 +20,7 @@ export default {
 <template lang="html">
     <div
         id="layer-tree"
-        class="offcanvas-body"
+        class="layer-tree"
     >
         <div
             v-for="(layerConf) in inTreeVisibleLayerConfigsByMode(mode)"
@@ -32,3 +32,12 @@ export default {
         </div>
     </div>
 </template>
+
+<style lang="scss" scoped>
+@import "~variables";
+    .layer-tree{
+        padding: $padding;
+        font-size: $font-size-base;
+    }
+
+</style>
