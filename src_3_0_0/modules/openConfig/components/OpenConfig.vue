@@ -87,7 +87,7 @@ export default {
         >
             <label
                 ref="file-upload-label"
-                class="btn upload-button-wrapper"
+                class="btn btn-secondary"
                 tabindex="0"
                 @keydown="triggerClickOnFileInput"
             >
@@ -122,13 +122,6 @@ export default {
 
     .upload-button-wrapper {
         color: $white;
-        background-color: $secondary_focus;
-        &:focus {
-            @include primary_action_focus;
-        }
-        &:hover {
-            @include primary_action_hover;
-        }
     }
 
 </style>
