@@ -6,7 +6,7 @@ import stateRouting from "../../../../store/stateRouting";
  * @returns {ol/Style} style
  */
 export default function createDirectionsWaypointStyle (feature) {
-    const styleSetting = stateRouting.directionsSettings.styleWaypoint,
+    const styleSetting = stateRouting.directionsSettings.styleWaypoint ? stateRouting.directionsSettings.styleWaypoint : stateRouting.Directions.settings.styleWaypoint,
         routingId = feature.get("routingId");
 
     return new Style({
@@ -27,7 +27,7 @@ export default function createDirectionsWaypointStyle (feature) {
                 textBaseline: "middle",
                 text: String(routingId + 1),
                 fill: new Fill({
-                    color: styleSetting.textFillColor
+                    color: "styleSetting.textFillColor"
                 }),
                 stroke: new Stroke({
                     color: styleSetting.textLineColor,
@@ -35,5 +35,4 @@ export default function createDirectionsWaypointStyle (feature) {
                 })
             })
     });
-    // };
 }
