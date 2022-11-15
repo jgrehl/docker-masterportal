@@ -6,14 +6,14 @@ const mutations = {
     ...generateSimpleMutations(stateAppStore),
 
     /**
-     * Adds the object to states layerConfig under the given parentKey.
+     * Sets the object to states layerConfig under the given parentKey.
      * @param {Object} state store state
      * @param {Object} payload the payload
-     * @param {Object[]} payload.layerConfigs object to add to the parentKey
+     * @param {Object[]} payload.layerConfigs object to set to the parentKey
      * @param {String} payload.parentKey the key of the parent object
      * @returns {void}
      */
-    addToLayerConfig (state, {layerConfigs, parentKey}) {
+    setInLayerConfig (state, {layerConfigs, parentKey}) {
         state.layerConfig[parentKey] = layerConfigs;
     },
 
