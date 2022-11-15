@@ -16,7 +16,18 @@ const mutations = {
     setInLayerConfig (state, {layerConfigs, parentKey}) {
         state.layerConfig[parentKey] = layerConfigs;
     },
-
+    /**
+     * Adds one layerConfig to states layerConfig under the given parentKey.
+     * @param {Object} state store state
+     * @param {Object} payload the payload
+     * @param {Object[]} payload.layerConfigs object to add to the parentKey
+     * @param {String} payload.parentKey the key of the parent object
+     * @returns {void}
+     */
+    addLayerToLayerConfig (state, {layerConfig, parentKey}) {
+        // überprüfen, ob schon in LayerConfig vorhanden bevor es gepusht wird
+        state.layerConfig[parentKey].push(layerConfig);
+    },
     /**
      * Replaces the layer with the id of the layer toReplace in state's layerConfig.
      * @param {Object} state store state

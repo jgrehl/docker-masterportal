@@ -6,6 +6,7 @@ import ScaleSwitcher from "../scaleSwitcher/components/ScaleSwitcher.vue";
 import ShareView from "../shareView/components/ShareView.vue";
 import CoordToolkit from "../coordToolkit/components/CoordToolkit.vue";
 import Contact from "../contact/components/ContactFormular.vue";
+import AddWMS from "../addWMS/components/AddWMS.vue";
 
 /**
  * User type definition
@@ -21,7 +22,8 @@ const state = {
         openConfig: OpenConfig,
         print: PrintMap,
         scaleSwitcher: ScaleSwitcher,
-        shareView: ShareView
+        shareView: ShareView,
+        addWMS: AddWMS
     }
 };
 
