@@ -34,7 +34,7 @@ import source from "../js/measureSource";
 const state = {
     active: false,
     // defaults for config.json tool parameters
-    name: "Strecke / Fläche messen",
+    name: "common:menu.tools.measure",
     icon: "bi-arrows-angle-expand",
     supportedDevices: ["Desktop", "Mobile", "Table"],
     supportedMapModes: ["2D"],
@@ -48,7 +48,6 @@ const state = {
     lines: {},
     polygons: {},
     geometryValues: ["LineString", "Polygon"],
-    geometryValues3d: ["3D"],
     lineStringUnits: ["m", "km"],
     polygonUnits: ["m²", "km²"],
     selectedGeometry: "LineString",
