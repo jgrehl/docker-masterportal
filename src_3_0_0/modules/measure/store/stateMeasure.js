@@ -1,7 +1,7 @@
 import VectorLayer from "ol/layer/Vector.js";
 
-import style from "../utils/measureStyle";
-import source from "../utils/measureSource";
+import style from "../js/measureStyle";
+import source from "../js/measureSource";
 
 /**
  * Measure tool state definition.
@@ -37,7 +37,7 @@ const state = {
     name: "Strecke / Fläche messen",
     icon: "bi-arrows-angle-expand",
     supportedDevices: ["Desktop", "Mobile", "Table"],
-    supportedMapModes: ["2D", "3D"],
+    supportedMapModes: ["2D"],
     type: "measure",
 
     // tool-specific config.json parameters
