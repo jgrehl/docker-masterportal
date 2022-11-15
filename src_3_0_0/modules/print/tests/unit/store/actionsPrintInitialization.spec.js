@@ -177,28 +177,6 @@ describe("src_3_0_0/modules/print/store/actionsPrintInitialization.js", () => {
                 {type: "setEventListener", payload: "postrender", commit: true}
             ], {}, done);
         });
-        it("toggle the post render listener with active false and should unregister listener", done => {
-            const TileLayer = {},
-                state = {
-                    active: false,
-                    visibleLayerList: [
-                        TileLayer,
-                        VectorLayer,
-                        VectorLayer,
-                        VectorLayer,
-                        VectorLayer
-                    ],
-                    eventListener: undefined,
-                    layoutList: [{
-                        name: "A4 Hochformat"
-                    }]
-                };
-
-            testAction(togglePostrenderListener, undefined, state, {}, [
-                {type: "setVisibleLayer", payload: state.visibleLayerList, commit: true},
-                {type: "setEventListener", payload: undefined, commit: true}
-            ], {}, done);
-        });
     });
 
     describe("setPrintLayers", function () {
