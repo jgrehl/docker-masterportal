@@ -4,7 +4,6 @@ import sinon from "sinon";
 import Vuex from "vuex";
 
 import LayerTreeComponent from "../../../components/LayerTree.vue";
-import LayerTree from "../../../store/indexLayerTree";
 
 const localVue = createLocalVue();
 
@@ -12,17 +11,6 @@ localVue.use(Vuex);
 config.mocks.$t = key => key;
 
 describe("src_3_0_0/modules/layerTree/components/LayerTree.vue", () => {
-    const mockConfigJson = {
-        Portalconfig: {
-            navigationSecondary: {
-                sections: [
-                    {
-                        type: "layerTree"
-                    }
-                ]
-            }
-        }
-    };
     let store,
         wrapper,
         mapMode,
@@ -62,13 +50,6 @@ describe("src_3_0_0/modules/layerTree/components/LayerTree.vue", () => {
         store = new Vuex.Store({
             namespaces: true,
             modules: {
-                Modules: {
-                    namespaced: true,
-                    modules: {
-                        namespaced: true,
-                        LayerTree
-                    }
-                },
                 Maps: {
                     namespaced: true,
                     getters: {
@@ -81,13 +62,8 @@ describe("src_3_0_0/modules/layerTree/components/LayerTree.vue", () => {
                     if (mode === "2D") {
                         return layers2D;
                     }
-
                     return layers2D.concat(layers3D);
-
                 }
-            },
-            state: {
-                configJson: mockConfigJson
             }
         });
     });
