@@ -17,5 +17,20 @@ export default {
         else {
             console.warn(`The layer with Id: ${layer.get("id")} was not added to the map, because the layer already exists!`);
         }
+    },
+
+    /**
+     * Adds a layer to the map.
+     * @param {Object} _ context object.
+     * @param {module:ol/layer/Base~BaseLayer} layer The layer to check.
+     * @returns {Boolean} if layer exists in mapCollection
+     */
+    checkLayer (_, layer) {
+        const map2D = mapCollection.getMap("2D");
+
+        if (map2D.getLayers().getArray().includes(layer)) {
+            return true;
+        }
+        return false;
     }
 };
