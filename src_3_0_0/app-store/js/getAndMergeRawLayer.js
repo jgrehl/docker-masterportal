@@ -12,18 +12,23 @@ export function getAndMergeRawLayer (layerConf, treeType = "light") {
     const rawLayer = mergeRawLayer(layerConf, rawLayerList.getLayerWhere({id: layerConf?.id}));
 
     // use layerConf, if layer is not available in rawLayerList (services.json)
-    return addShowInLayerTree(rawLayer ? rawLayer : layerConf, treeType);
+    return addShowInLayerTree(rawLayer || layerConf, treeType);
 }
 
 /**
  * Adds the attribute "showInLayerTree" to raw layer.
+ * Rules:
+ * If treeType light then always showInLayerTree = true (so showLayerInTree has no effect in config.json)
+ * If a layer has visibility= true, then also always showInLayerTree = true so it is not possible to have showInLayerTree = false and visibility: true
+ * because visibility = true always results in showInLayerTree = true no matter what the config.json says.
+ * If both are not true, then showInLayerTree = false (for all other treeTypes e.g. "auto") if the attribute is not already set explicitly on the layer (i.e. in config.json).
  * @param {Object} rawLayer The raw layer.
  * @param {Object} [treeType="light"] the type for topic tree
  * @returns {Object} The raw layer
  */
 export function addShowInLayerTree (rawLayer, treeType) {
     if (rawLayer) {
-        if ((treeType === "light" || rawLayer.visibility) && rawLayer.showInLayerTree !== false) {
+        if (treeType === "light" || rawLayer.visibility) {
             rawLayer.showInLayerTree = true;
         }
         else if (!Object.hasOwn(rawLayer, "showInLayerTree")) {
