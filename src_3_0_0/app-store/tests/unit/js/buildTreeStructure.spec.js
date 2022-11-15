@@ -1,6 +1,6 @@
 import rawLayerList from "@masterportal/masterportalapi/src/rawLayerList";
 import {buildTreeStructure} from "../../../js/buildTreeStructure.js";
-import {getAndMergeAllRawLayers} from "../../../js/getAndMergeRawLayer.js";
+import {getAndMergeRawLayer, getAndMergeAllRawLayers} from "../../../js/getAndMergeRawLayer.js";
 import getNestedValues from "../../../../shared/js/utils/getNestedValues";
 import {expect} from "chai";
 import sinon from "sinon";
@@ -33,7 +33,24 @@ describe("src_3_0_0/app-store/js/buildTreeStructure.js", () => {
                         "id": "453"
                     }
                 ]
-            }
+            },
+            Fachdaten: {
+                Layer: [
+                  {
+                    id: "21999",
+                    name: "Quartiere",
+                    typ: "WMS",
+                    visibility: false,
+                    showInLayerTree: true
+                  },
+                  {
+                    id: "22000",
+                    name: "Stadtbereiche",
+                    typ: "WMS",
+                    visibility: true
+                  }
+                ]
+              }
         };
     let layerList;
 
@@ -64,15 +81,18 @@ describe("src_3_0_0/app-store/js/buildTreeStructure.js", () => {
         });
 
 
-        it("should return tree structured for active category", () => {
+        it("should return tree structured for active category and respect subject data layer configuration", () => {
             let result = null,
                 filteredResult = null;
 
             sinon.stub(rawLayerList, "getLayerList").returns(layerList);
 
             getAndMergeAllRawLayers();
-            result = buildTreeStructure(layerConfig, categories[0]);
-            filteredResult = getNestedValues(result, "id").flat(Infinity);
+            result = buildTreeStructure(layerConfig, categories[0], layerConfig.Fachdaten.Layer);
+            layerConfig.Fachdaten.Layer.forEach(layerConf => {
+                getAndMergeRawLayer(layerConf, "auto");
+            });
+            filteredResult = getNestedValues(result, "id").flat(Infinity);            
 
             expect(result).to.be.an("object");
             expect(filteredResult.indexOf("452")).to.be.equals(-1);
@@ -85,8 +105,10 @@ describe("src_3_0_0/app-store/js/buildTreeStructure.js", () => {
             expect(result.Ordner[0].Ordner).to.be.an("array").to.have.lengthOf(1);
             expect(result.Ordner[0].Ordner[0].Layer).to.be.an("array").to.have.lengthOf(2);
             expect(result.Ordner[0].Ordner[0].Layer[0].id).to.be.equals("21999");
+            expect(result.Ordner[0].Ordner[0].Layer[0].showInLayerTree).to.be.true;
             expect(result.Ordner[0].Ordner[0].Layer[0].name).not.to.be.equals(result.Ordner[0].Ordner[0].Layer[0].datasets[0].md_name);
             expect(result.Ordner[0].Ordner[0].Layer[1].id).to.be.equals("22000");
+            expect(result.Ordner[0].Ordner[0].Layer[1].showInLayerTree).to.be.true;
             expect(result.Ordner[0].Ordner[0].Layer[1].name).not.to.be.equals(result.Ordner[0].Ordner[0].Layer[1].datasets[0].md_name);
             expect(result.Ordner[0].Ordner[0].Titel).to.be.equals(result.Ordner[0].Ordner[0].Layer[1].datasets[0].md_name);
             expect(result.Ordner[0].Layer).to.be.an("array").to.have.lengthOf(2);
