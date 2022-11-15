@@ -124,7 +124,7 @@
       ]
     },
     "mainMenu": {
-      "initiallyOpen": true,
+      "expanded": true,
       "title": {
         "text": "Master Auto",
         "logo": "https://geodienste.hamburg.de/lgv-config/img/hh-logo.png",
