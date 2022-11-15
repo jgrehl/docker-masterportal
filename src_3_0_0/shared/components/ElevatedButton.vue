@@ -46,10 +46,10 @@ export default {
     min-width: 5rem;
     width: fit-content;
     padding-right: 1.5rem;
+    padding-left: 1rem;
 
     i {
         font-size: 1.5rem;
-        padding-left: 1rem;
         padding-right: .5rem;
     }
 }
