@@ -1,5 +1,5 @@
 import stateMeasure from "./stateMeasure";
-import {calculateLineLengths, calculatePolygonAreas} from "../utils/measureCalculation";
+import {calculateLineLengths, calculatePolygonAreas} from "../js/measureCalculation";
 
 import {generateSimpleGetters} from "../../../shared/js/utils/generators";
 
