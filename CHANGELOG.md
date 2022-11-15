@@ -15,6 +15,7 @@
   - 'categories': only for tree type 'auto', contains categories in datasets of layers. Tree is structured by them.
 - the attribute 'cache' on the layer is no longer taken into account with tree.type 'auto
 - controls: a control can only be configured in config.json as "expandable". "bottomControl" is not longer supported.
+- 'supportedTreeTypes': attribute was added like 'supportedDevices' and 'supportedMapModes' to make it configurable in which tree type the module should be displayed; default value is light. 
 
 ### Added
 - The following NPM package was added:
