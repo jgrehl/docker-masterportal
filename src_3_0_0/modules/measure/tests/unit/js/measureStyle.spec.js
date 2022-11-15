@@ -5,9 +5,9 @@ import {Polygon} from "ol/geom.js";
 
 import {expect} from "chai";
 
-import style from "../../../utils/measureStyle";
+import style from "../../../js/measureStyle";
 
-describe("tools/measure/utils/measureStyle", function () {
+describe("tools/measure/js/measureStyle", function () {
     it("get correct coordinates for polygon", function () {
         const source = new VectorSource(),
             layer = new VectorLayer({
