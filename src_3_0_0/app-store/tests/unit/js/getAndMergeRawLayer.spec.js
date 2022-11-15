@@ -255,7 +255,7 @@ describe("src_3_0_0/app-store/js/getAndMergeRawLayer.js", () => {
 
             expect(addShowInLayerTree(rawLayer, treeType)).to.deep.equals({
                 id: "6",
-                showInLayerTree: false,
+                showInLayerTree: true,
                 visibility: true
             });
         });
