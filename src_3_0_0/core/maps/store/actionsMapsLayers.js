@@ -20,7 +20,7 @@ export default {
     },
 
     /**
-     * Adds a layer to the map.
+     * Checks if a layer is in the map collections
      * @param {Object} _ context object.
      * @param {module:ol/layer/Base~BaseLayer} layer The layer to check.
      * @returns {Boolean} if layer exists in mapCollection
