@@ -2,7 +2,7 @@ import {expect} from "chai";
 import sinon from "sinon";
 
 import actions from "../../../store/actionsMeasure";
-import source from "../../../utils/measureSource";
+import source from "../../../js/measureSource";
 
 const {deleteFeatures} = actions;
 
