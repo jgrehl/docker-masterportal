@@ -6,21 +6,13 @@ import {WMSCapabilities} from "ol/format.js";
 import {intersects} from "ol/extent";
 import crs from "@masterportal/masterportalapi/src/crs";
 import axios from "axios";
-import LoaderOverlay from "../../../../utils/loaderOverlay";
 
 export default {
     name: "AddWMS",
-    data: function () {
-        return {
-            treeTyp: Radio.request("Parser", "getTreeType"),
-            uniqueId: 100,
-            invalidUrl: false,
-            wmsUrl: "",
-            version: ""
-        };
-    },
     computed: {
+        ...mapGetters(["portalConfig"]),
         ...mapGetters("Modules/AddWMS", Object.keys(getters)),
+        // ...mapGetters("Modules/AddWMS", ["active", ]),
         ...mapGetters("Maps", ["projection"])
     },
     watch: {
@@ -35,15 +27,8 @@ export default {
             }
         }
     },
-    created () {
-        this.$on("close", this.close);
-
-        if (!["custom", "default"].includes(this.treeTyp)) {
-            console.error("The addWMS tool is currently only supported for the custom and default theme trees!");
-            this.close();
-        }
-    },
     methods: {
+        ...mapMutations(["addLayerToLayerConfig"]),
         ...mapMutations("Modules/AddWMS", Object.keys(mutations)),
 
         /**
@@ -57,14 +42,6 @@ export default {
                 }
             });
         },
-        /**
-         * Closes this tool window by setting active to false
-         * @returns {void}
-         */
-        close () {
-            this.setActive(false);
-        },
-
         /**
          * Send via Enter key.
          * @param {Event} event - Key event.
@@ -80,42 +57,36 @@ export default {
 
         /**
          * Importing the external wms layers
-         * @fires Core#RadioTriggerUtilShowLoader
-         * @fires Core#RadioTriggerUtilHideLoader
-         * @fires Core.ModelList#RadioTriggerModelListRenderTree
-         * @fires Core.ConfigLoader#RadioTriggerParserAddFolder
          * @returns {void}
          */
         importLayers: function () {
             const url = this.$el.querySelector("#wmsUrl").value.trim();
 
-            this.invalidUrl = false;
+            this.setInvalidUrl(false);
             if (url === "") {
-                this.invalidUrl = true;
+                this.setInvalidUrl(true);
                 return;
             }
             else if (url.includes("http:")) {
                 this.$store.dispatch("Alerting/addSingleAlert", i18next.t("common:modules.tools.addWMS.errorHttpsMessage"));
                 return;
             }
-            LoaderOverlay.show();
             axios({
                 timeout: 4000,
                 url: url + "?request=GetCapabilities&service=WMS"
             })
                 .then(response => response.data)
                 .then((data) => {
-                    LoaderOverlay.hide();
                     try {
                         const parser = new WMSCapabilities(),
                             uniqId = this.getAddWmsUniqueId(),
                             capability = parser.read(data),
                             version = capability?.version,
                             checkVersion = this.isVersionEnabled(version),
-                            currentExtent = Radio.request("Parser", "getPortalConfig")?.mapView?.extent;
-
+                            currentExtent = this.portalConfig.mapView?.extent;
                         let checkExtent = this.getIfInExtent(capability, currentExtent),
                             finalCapability = capability;
+
 
                         if (!checkVersion) {
                             const reversedData = this.getReversedData(data);
@@ -129,20 +100,19 @@ export default {
                             return;
                         }
 
-                        this.version = version;
-                        this.wmsUrl = url;
-
-                        if (Radio.request("Parser", "getItemByAttributes", {id: "ExternalLayer"}) === undefined) {
-                            Radio.trigger("Parser", "addFolder", "Externe Fachdaten", "ExternalLayer", "tree", 0);
-                            Radio.trigger("ModelList", "renderTree");
-                            $("#Overlayer").parent().after($("#ExternalLayer").parent());
-                        }
-                        Radio.trigger("Parser", "addFolder", finalCapability.Service.Title, uniqId, "ExternalLayer", 0);
+                        this.setVersion = version;
+                        this.setWmsUrl = url;
+                        // kommt noch
+                        // if (Radio.request("Parser", "getItemByAttributes", {id: "ExternalLayer"}) === undefined) {
+                        //     Radio.trigger("Parser", "addFolder", "Externe Fachdaten", "ExternalLayer", "tree", 0);
+                        //     Radio.trigger("ModelList", "renderTree");
+                        //     $("#Overlayer").parent().after($("#ExternalLayer").parent());
+                        // }
+                        // Radio.trigger("Parser", "addFolder", finalCapability.Service.Title, uniqId, "ExternalLayer", 0);
                         finalCapability.Capability.Layer.Layer.forEach(layer => {
                             this.parseLayer(layer, uniqId, 1);
                         });
-                        Radio.trigger("ModelList", "closeAllExpandedFolder");
-
+                        // Radio.trigger("ModelList", "closeAllExpandedFolder");
                         this.$store.dispatch("Alerting/addSingleAlert", i18next.t("common:modules.tools.addWMS.completeMessage"));
 
                     }
@@ -150,7 +120,6 @@ export default {
                         this.displayErrorMessage();
                     }
                 }, () => {
-                    LoaderOverlay.hide();
                     this.displayErrorMessage();
                 });
         },
@@ -163,7 +132,7 @@ export default {
         inputUrl: function (e) {
             const code = e.keyCode;
 
-            this.invalidUrl = false;
+            this.setInvalidUrl(false);
             if (code === 13) {
                 this.importLayers();
             }
@@ -183,8 +152,6 @@ export default {
          * @param {Object} object the ol layer to hang into the menu as new folder or new layer
          * @param {String} parentId the id of the parent object in the menu
          * @param {Number} level the depth of the recursion
-         * @fires Core.ConfigLoader#RadioTriggerParserAddFolder
-         * @fires Core.ConfigLoader#RadioTriggerParserAddLayer
          * @return {void}
          */
         parseLayer: function (object, parentId, level) {
@@ -192,13 +159,16 @@ export default {
                 object.Layer.forEach(layer => {
                     this.parseLayer(layer, this.getParsedTitle(object.Title), level + 1);
                 });
-                Radio.trigger("Parser", "addFolder", object.Title, this.getParsedTitle(object.Title), parentId, level, false, false, object.invertLayerOrder);
+                // Radio.trigger("Parser", "addFolder", object.Title, this.getParsedTitle(object.Title), parentId, level, false, false, object.invertLayerOrder);
             }
             else {
-                Radio.trigger("Parser", "addLayer", object.Title, this.getParsedTitle(object.Title), parentId, level, object.Name, this.wmsUrl, this.version, {
-                    maxScale: object?.MaxScaleDenominator?.toString(),
-                    minScale: object?.MinScaleDenominator?.toString()
-                });
+                // Vilma mutation mit this aufrufen in mapMutations aufnehmen
+                console.log("*** store", this.store.state);
+                this.addLayerToLayerConfig({layerConfigs: "layersStructured", parentKey: "Fachdaten"});
+                // Radio.trigger("Parser", "addLayer", object.Title, this.getParsedTitle(object.Title), parentId, level, object.Name, this.wmsUrl, this.version, {
+                //     maxScale: object?.MaxScaleDenominator?.toString(),
+                //     minScale: object?.MinScaleDenominator?.toString()
+                // });
             }
         },
 
@@ -287,7 +257,7 @@ export default {
         getAddWmsUniqueId: function () {
             const uniqueId = this.uniqueId;
 
-            this.uniqueId = uniqueId + 1;
+            this.setUniqueId(uniqueId + 1);
             return "external_" + uniqueId;
         },
 
@@ -304,7 +274,7 @@ export default {
 };
 </script>
 
-<template lang="html">
+<template>
     <div
         v-if="active"
         id="addWMS"
