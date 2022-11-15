@@ -1,4 +1,3 @@
-import {getByDotSyntax} from "../../../shared/js/utils/fetchFirstModuleConfig";
 import {
     fetchRoutingNominatimGeosearch,
     fetchRoutingNominatimGeosearchReverse
@@ -10,10 +9,10 @@ import * as constantsRouting from "./constantsRouting";
 /**
  * @const {String} configPath an array of possible config locations. First one found will be used
  */
-const configPaths = [
-    "configJson.Portalconfig.menu.tools.children.routing",
+/* const configPaths = [
+   /*  "configJson.Portalconfig.menu.tools.children.routing",
     "configJson.Portalconfig.menu.routing"
-];
+]; */
 
 export default {
     /**
@@ -30,12 +29,8 @@ export default {
      * @param {Object} context actions context object.
      * @returns {void}
      */
-    checkNonOptionalConfigFields ({rootState}) {
-        // Needs to use rootState because state does not contain values from config.json on the initial load
-        const state = configPaths
-                .map(path => getByDotSyntax(rootState, path))
-                .find(config => config !== undefined),
-            checkPaths = constantsRouting.nonOptionalConfigFields.map(field => field.split(".")),
+    checkNonOptionalConfigFields ({state}) {
+        const checkPaths = constantsRouting.nonOptionalConfigFields.map(field => field.split(".")),
             missing = checkPaths.filter(path => {
                 const val = path.reduce((partObj, partPath) => {
                     return partObj?.[partPath];
