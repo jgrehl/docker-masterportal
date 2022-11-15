@@ -288,7 +288,7 @@ describe("src_3_0_0/app-store/actions.js", () => {
             expectedFirstCallArg = {layerConfigs: layerList, parentKey: "Fachdaten"};
 
             expect(commit.callCount).to.be.equals(3);
-            expect(commit.firstCall.args[0]).to.equals("addToLayerConfig");
+            expect(commit.firstCall.args[0]).to.equals("setInLayerConfig");
             expect(commit.firstCall.args[1]).to.deep.equals(expectedFirstCallArg);
             expect(commit.secondCall.args[0]).to.equals("replaceByIdInLayerConfig");
             expect(commit.secondCall.args[1].layerConfigs[0].layer).to.deep.equals(Object.assign({...layerList[0]}, {visibility: true}));
