@@ -21,6 +21,7 @@
     },
     "tree": {
       "type": "auto",
+      "layerPillsAmount": 5,
       "validLayerTypesAutoTree": [
         "WMS",
         "SENSORTHINGS",
@@ -121,12 +122,88 @@
         "BD9B5D2E-B6B8-4857-99A5-306B0411E48B",
         "4C2CB09B-5F74-4BDF-BE10-3F4DBEF5BB02"
       ]
+    },
+    "mainMenu": {
+      "initiallyOpen": true,
+      "title": {
+        "text": "Master Auto",
+        "logo": "https://geodienste.hamburg.de/lgv-config/img/hh-logo.png",
+        "link": "https://geoinfo.hamburg.de",
+        "toolTip": "Landesbetrieb Geoinformation und Vermessung"
+      },
+      "sections": [
+        [
+          {
+            "type": "scaleSwitcher"
+          },
+          {
+            "type": "coordToolkit",
+            "heightLayerId": "19173",
+            "heightElementName": "value_0",
+            "heightValueWater": "-20",
+            "heightValueBuilding": "200",
+            "zoomLevel": 5
+          },
+          {
+            "type": "shareView"
+          },
+          {
+            "type": "openConfig"
+          },
+          {
+            "type": "print",
+            "printServiceId": "mapfish",
+            "printAppId": "master",
+            "filename": "Ausdruck",
+            "title": "Mein Titel",
+            "currentLayoutName": "A4 Hochformat"
+          },
+          {
+            "name": "folder1",
+            "icon": "bi-file-plus",
+            "type": "folder",
+            "elements": [
+              {
+                "name": "folder1_1",
+                "icon": "bi-file-plus",
+                "type": "folder",
+                "elements": [
+                  {
+                    "name": "folder1_1_1",
+                    "icon": "bi-file-plus",
+                    "type": "folder",
+                    "elements": []
+                  },
+                  {
+                    "name": "folder1_1_2",
+                    "icon": "bi-file-plus",
+                    "type": "folder",
+                    "elements": []
+                  }
+                ]
+              },
+              {
+                "name": "folder1_2",
+                "icon": "bi-file-plus",
+                "type": "folder",
+                "elements": []
+              }
+            ]
+          }
+        ]
+      ]
     }
   },
+
   "Themenconfig": {
     "Hintergrundkarten": {
       "name": "translate#common:tree.backgroundMaps",
       "Layer": [
+        {
+          "id": "452",
+          "name": "Luftbilder DOP 20 (DOP 40 mit Umland)",
+          "visibility": true
+        },
         {
           "id": [
             "13534",
@@ -138,15 +215,29 @@
             "13535",
             "13536"
           ],
-          "name": "Geobasiskarten (Schriftplatte)"
+          "name": "Geobasiskarten (Schriftplatte)",
+           "showInLayerTree": true
         },
         {
-          "id": "452",
-          "name": "Luftbilder DOP 20 (DOP 40 mit Umland)",
+          "id": "453",
+          "showInLayerTree": true
+        }
+      ]
+    },
+    "Fachdaten": {
+      "Layer": [
+        {
+          "id": "10220",
+          "name": "Dauerzählstellen (Rad) Hamburg",
+          "typ": "WMS",
+          "visibility": false,
+          "showInLayerTree": true
+        },
+        {
+          "id": "2426",
+          "name": "Bezirke",
+          "typ": "WMS",
           "visibility": true
-        },
-        {
-          "id": "453"
         }
       ]
     }
