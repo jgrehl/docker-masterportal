@@ -71,7 +71,7 @@ function replaceInNestedValuesHelper (obj, searchKey, maxDepth, result, depth, r
 }
 
 /**
- * Informs Vue about new properties at obj to observe them
+ * Informs Vue about new properties at obj to observe them.
  * @link https://v2.vuejs.org/v2/guide/reactivity.html
  * @param {Object} obj to change porperties of
  * @param {String} key key of property
@@ -81,10 +81,12 @@ function replaceInNestedValuesHelper (obj, searchKey, maxDepth, result, depth, r
 function addToObserver (obj, key, replacement) {
     if (typeof replacement === "object") {
         Object.keys(replacement).forEach(aKey => {
-            Vue.set(obj, aKey, replacement[aKey]);
+            if (!Object.hasOwn(obj, aKey)) {
+                Vue.set(obj, aKey, replacement[aKey]);
+            }
         });
     }
-    else {
+    else if (!Object.hasOwn(obj, key)) {
         Vue.set(obj, key, replacement);
     }
 }
