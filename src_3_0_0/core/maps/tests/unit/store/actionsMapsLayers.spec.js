@@ -8,7 +8,8 @@ import View from "ol/View";
 import actions from "../../../store/actionsMapsLayers";
 
 const {
-    addLayer
+    addLayer,
+    checkLayer
 } = actions;
 
 describe("src_3_0_0/core/maps/store/actionsMapsLayers.js", () => {
@@ -79,5 +80,26 @@ describe("src_3_0_0/core/maps/store/actionsMapsLayers.js", () => {
             });
             expect(warn.calledOnce).to.be.true;
         });
+    });
+
+    describe("checkLayer", () => {
+        it("Should return true if layer exists", () => {
+
+            addLayer({}, layer1);
+            addLayer({}, layer2);
+
+            expect(checkLayer({}, layer1)).to.be.true;
+            expect(checkLayer({}, layer2)).to.be.true;
+            expect(checkLayer({}, layer3)).to.be.false;
+        });
+
+        it("Should return false if layer doesn't exists", () => {
+
+            addLayer({}, layer2);
+
+            expect(checkLayer({}, layer1)).to.be.false;
+            expect(checkLayer({}, layer2)).to.be.true;
+        });
+
     });
 });
