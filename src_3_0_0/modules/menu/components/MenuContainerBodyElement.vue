@@ -36,7 +36,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(["deviceMode"]),
+        ...mapGetters(["deviceMode", "portalConfig"]),
         ...mapGetters("Maps", ["mode"]),
 
         /**
@@ -55,9 +55,10 @@ export default {
          */
         checkIsVisible () {
             const supportedMapModes = this.$attrs.supportedMapModes,
-                supportedDevices = this.$attrs.supportedDevices;
+                supportedDevices = this.$attrs.supportedDevices,
+                supportedTreeTypes = this.$attrs.supportedTreeTypes;
 
-            return isModuleVisible(this.mode, this.deviceMode, supportedMapModes, supportedDevices);
+            return isModuleVisible(this.mode, this.deviceMode, this.portalConfig.tree?.type, supportedMapModes, supportedDevices, supportedTreeTypes);
         }
     }
 
