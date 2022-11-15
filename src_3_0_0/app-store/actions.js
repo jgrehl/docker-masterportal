@@ -20,9 +20,9 @@ export default {
             let layersStructured = [];
 
             getAndMergeAllRawLayers(state.portalConfig?.tree);
-            layersStructured = buildTreeStructure(state.layerConfig, getters.activeOrFirstCategory);
+            layersStructured = buildTreeStructure(state.layerConfig, getters.activeOrFirstCategory, layerContainer);
 
-            commit("addToLayerConfig", {layerConfigs: layersStructured, parentKey: "Fachdaten"});
+            commit("setInLayerConfig", {layerConfigs: layersStructured, parentKey: "Fachdaten"});
         }
         layerContainer.forEach(layerConf => {
             const rawLayer = getAndMergeRawLayer(layerConf, state.portalConfig?.tree?.type);
