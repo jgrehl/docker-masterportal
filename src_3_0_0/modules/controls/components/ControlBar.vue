@@ -17,7 +17,7 @@ export default {
         };
     },
     computed: {
-        ...mapGetters(["controlsConfig", "deviceMode", "uiStyle"]),
+        ...mapGetters(["controlsConfig", "deviceMode", "uiStyle", "portalConfig"]),
         ...mapGetters("Controls", ["activatedExpandable", "componentMap"]),
         ...mapGetters("Maps", ["mode"])
     },
@@ -113,9 +113,10 @@ export default {
          */
         checkIsVisible (key) {
             const supportedMapModes = this.$store.getters[`Controls/${upperFirst(key)}/supportedMapModes`],
-                supportedDevices = this.$store.getters[`Controls/${upperFirst(key)}/supportedDevices`];
+                supportedDevices = this.$store.getters[`Controls/${upperFirst(key)}/supportedDevices`],
+                supportedTreeTypes = this.$store.getters[`Controls/${upperFirst(key)}/supportedTreeTypes`];
 
-            return isModuleVisible(this.mode, this.deviceMode, supportedMapModes, supportedDevices);
+            return isModuleVisible(this.mode, this.deviceMode, this.portalConfig.tree?.type, supportedMapModes, supportedDevices, supportedTreeTypes);
         }
     }
 };
