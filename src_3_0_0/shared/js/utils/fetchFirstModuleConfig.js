@@ -20,7 +20,6 @@ function getByDotSyntax (obj, path, separator = ".") {
         console.warn("Invalid path parameter given for \"getByDotSyntax()\":", path);
         return undefined;
     }
-
     return getByArraySyntax(obj, pathArray);
 }
 
@@ -46,7 +45,6 @@ function getByArraySyntax (obj, pathArray) {
     if (pathArray.length === 0) {
         return obj[step];
     }
-
     return getByArraySyntax(obj[step], pathArray);
 }
 
