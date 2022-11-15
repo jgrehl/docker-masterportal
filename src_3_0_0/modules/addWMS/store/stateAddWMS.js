@@ -7,6 +7,7 @@
  * @property {String} icon icon next to title (config-param)
  * @property {String[]} supportedDevices Devices on which the module is displayed.
  * @property {String[]} supportedMapModes Map mode in which this module can be used.
+ * @property {String[]} supportedTreeTypes Tree type in which this module is displayed.
  */
 const state = {
     active: false,
@@ -14,7 +15,14 @@ const state = {
     name: "common:menu.tools.addWms",
     icon: "bi-plus-lg",
     supportedDevices: ["Desktop", "Mobile", "Table"],
-    supportedMapModes: ["2D", "3D"]
+    supportedMapModes: ["2D", "3D"],
+    treeTyp: "default",
+    uniqueId: 100,
+    invalidUrl: false,
+    wmsUrl: "",
+    version: "",
+    supportedTreeTypes: ["light"]
+
 };
 
 export default state;
