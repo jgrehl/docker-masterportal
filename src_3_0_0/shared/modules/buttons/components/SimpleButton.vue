@@ -78,10 +78,10 @@ export default {
     white-space: nowrap;
     min-height: 2.5rem;
     padding-right: 1.5rem;
+    padding-left: 1rem;
 
     i {
         font-size: 1.125rem;
-        padding-left: 1rem;
         padding-right: .5rem;
     }
     .btn-texts {
