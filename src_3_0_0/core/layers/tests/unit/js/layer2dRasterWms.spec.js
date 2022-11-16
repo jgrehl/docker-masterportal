@@ -126,6 +126,10 @@ describe("src_3_0_0/core/js/layers/layer2dRasterWms.js", () => {
         beforeEach(() => {
             localAttributes = {
                 format: "image/png",
+                gfiAsNewWindow: false,
+                gfiAttributes: "showAll",
+                gfiTheme: "default",
+                infoFormat: "text/xml",
                 layers: "test_layers",
                 name: "test_name",
                 typ: "wms"
@@ -137,6 +141,10 @@ describe("src_3_0_0/core/js/layers/layer2dRasterWms.js", () => {
 
             expect(wmsLayer.getLayerParams(localAttributes)).to.deep.equals({
                 format: "image/png",
+                gfiAsNewWindow: false,
+                gfiAttributes: "showAll",
+                gfiTheme: "default",
+                infoFormat: "text/xml",
                 layers: "test_layers",
                 name: "test_name",
                 typ: "wms"

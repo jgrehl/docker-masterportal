@@ -60,6 +60,8 @@ Layer2dVector.prototype.featuresFilter = function (attributes, features) {
 Layer2dVector.prototype.getLayerParams = function (attributes) {
     return {
         altitudeMode: attributes.altitudeMode,
+        gfiAttributes: attributes.gfiAttributes,
+        gfiTheme: attributes.gfiTheme,
         name: attributes.name,
         typ: attributes.typ
     };

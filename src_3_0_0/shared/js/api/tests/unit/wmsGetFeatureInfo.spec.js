@@ -1,8 +1,21 @@
 import {expect} from "chai";
+import sinon from "sinon";
+
 import {parseDocumentString, parseFeatures} from "../../wmsGetFeatureInfo.js";
 import handleAxiosResponse from "../../../utils/handleAxiosResponse.js";
 
 describe("src/api/wmsGetFeatureInfo.js", () => {
+    let warn;
+
+    before(() => {
+        warn = sinon.spy();
+        sinon.stub(console, "warn").callsFake(warn);
+    });
+
+    after(() => {
+        sinon.restore();
+    });
+
     describe("handleAxiosResponse", () => {
         const testFunctions = {
             getResponse: response => {

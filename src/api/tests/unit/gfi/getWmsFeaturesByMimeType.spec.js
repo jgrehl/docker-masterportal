@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import {expect} from "chai";
 import {
     createGfiFeature,
@@ -320,3 +321,5 @@ describe("src/api/gfi/getWmsFeaturesByMimeType.js", () => {
         });
     });
 });
+=======
+>>>>>>> 9d1b825d61 (update move gfi to src_3_0_0/modules/getFeatureInfo)
