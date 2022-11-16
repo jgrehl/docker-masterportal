@@ -17,17 +17,19 @@ config.mocks.$t = key => key;
 
 describe("src/modules/routing/components/RoutingTemplate.vue", () => {
     const mockConfigJson = {
-        Portalconfig: {
-            menu: {
-                tools: {
-                    children: {
-                        routing:
+        configJson: {
+            Portalconfig: {
+                mainMenu: {
+                    sections: [
+                        [
                             {
+                                "type": "routing",
                                 "name": "translate#common:menu.tools.routing",
                                 "icon": "bi-signpost-2-fill",
                                 "renderToWindow": true
                             }
-                    }
+                        ]
+                    ]
                 }
             }
         }
@@ -67,7 +69,7 @@ describe("src/modules/routing/components/RoutingTemplate.vue", () => {
                         mode: "2D"
                     }
                 },
-                Tools: {
+                Modules: {
                     namespaced: true,
                     modules: {
                         Routing:
@@ -82,12 +84,12 @@ describe("src/modules/routing/components/RoutingTemplate.vue", () => {
                             actions,
                             getters
                         }
-                    }
-                },
-                Alerting: {
-                    namespaced: true,
-                    actions: {
-                        addSingleAlert: sinon.stub()
+                    },
+                    Alerting: {
+                        namespaced: true,
+                        actions: {
+                            addSingleAlert: sinon.stub()
+                        }
                     }
                 }
             },
@@ -136,7 +138,7 @@ describe("src/modules/routing/components/RoutingTemplate.vue", () => {
         wrapper = shallowMount(RoutingComponent, {store, localVue});
         wrapper.vm.close();
         await wrapper.vm.$nextTick();
-        expect(store.state.Tools.Routing.active).to.be.false;
+        expect(store.state.Modules.Routing.active).to.be.false;
         expect(wrapper.find("#routing").exists()).to.be.false;
     });
 });

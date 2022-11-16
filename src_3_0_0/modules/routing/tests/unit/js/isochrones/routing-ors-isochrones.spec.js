@@ -1,5 +1,5 @@
 import axios from "axios";
-import store from "../../../../../../../app-store";
+import store from "../../../../../../app-store";
 import {expect} from "chai";
 import sinon from "sinon";
 import {RoutingIsochrones} from "../../../../js/classes/routing-isochrones";
@@ -11,7 +11,7 @@ describe("src/modules/routing/js/directions/routing-ors-directions.js", () => {
     beforeEach(() => {
         sinon.stub(i18next, "t").callsFake((...args) => args);
         store.getters = {
-            getRestServiceById: () => ({url: "tmp"})
+            restServiceById: () => ({url: "tmp"})
         };
     });
 
@@ -86,8 +86,8 @@ describe("src/modules/routing/js/directions/routing-ors-directions.js", () => {
                 }))
             );
 
-            state.isochronesSettings.timeValue = 1;
-            state.isochronesSettings.intervalValue = 1;
+            state.Isochrones.settings.timeValue = 1;
+            state.Isochrones.settings.intervalValue = 1;
 
             const result = await fetchRoutingOrsIsochrones({
                     coordinates: [6.5821172105612185, 51.33169403960399],
