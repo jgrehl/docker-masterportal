@@ -3,6 +3,11 @@ html, body {
     width: 100%;
 }
 
+
+#masterportal-root {
+    height: 100%;
+}
+
 #cursorGlyph {
     position: absolute;
     z-index: 1000;
