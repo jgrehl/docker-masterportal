@@ -9,7 +9,7 @@ import getters from "../../../store/gettersRouting";
 import state from "../../../store/stateRouting";
 import Directions from "../../../store/directions/indexDirections";
 import Isochrones from "../../../store/isochrones/indexIsochrones";
-import thousandsSeparator from "../../../../../shared/js/js/fetchFirstModuleConfig";
+import thousandsSeparator from "../../../../../shared/js/utils/fetchFirstModuleConfig";
 
 const localVue = createLocalVue();
 
