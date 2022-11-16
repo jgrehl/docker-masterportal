@@ -98,7 +98,6 @@ const state = {
         serviceId: null,
         speedProfile: "CAR",
         isochronesMethodOption: "TIME",
-        // Distance
         distanceValue: 30,
         minDistance: 1,
         maxDistance: 400,
