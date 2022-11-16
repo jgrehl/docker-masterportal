@@ -132,10 +132,10 @@ export default {
             :key="index"
         >
             <component
+                v-bind="control.props"
                 :is="control.component"
                 v-if="checkIsVisible(control.key)"
                 :key="control.key"
-                v-bind="control.props"
             />
         </div>
         <div v-if="categorizedControls.expandable.length >= 1">
@@ -150,10 +150,10 @@ export default {
                         :key="index"
                     >
                         <component
+                            v-bind="control.props"
                             :is="control.component"
                             v-if="checkIsVisible(control.key)"
                             :key="control.key"
-                            v-bind="control.props"
                         />
                     </div>
                 </div>
