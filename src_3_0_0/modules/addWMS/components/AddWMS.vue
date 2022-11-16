@@ -7,9 +7,16 @@ import axios from "axios";
 
 export default {
     name: "AddWMS",
+    data () {
+        return {
+            uniqueId: 100,
+            invalidUrl: false,
+            addedLayerIds: []
+        };
+    },
     computed: {
-        ...mapGetters(["portalConfig"]),
-        ...mapGetters("Modules/AddWMS", ["active", "uniqueId", "invalidUrl", "wmsUrl", "version"]),
+        ...mapGetters(["portalConfig", "layerConfig"]),
+        ...mapGetters("Modules/AddWMS", ["active", "wmsUrl", "version"]),
         ...mapGetters("Maps", ["projection", "mode"])
     },
     watch: {
@@ -26,7 +33,7 @@ export default {
     },
     methods: {
         ...mapMutations(["addLayerToLayerConfig"]),
-        ...mapMutations("Modules/AddWMS", ["setInvalidUrl", "setVersion", "setWmsUrl", "setUniqueId"]),
+        ...mapMutations("Modules/AddWMS", ["setVersion", "setWmsUrl"]),
 
         /**
          * Sets the focus to the first control
@@ -59,9 +66,9 @@ export default {
         importLayers: function () {
             const url = this.$el.querySelector("#wmsUrl").value.trim();
 
-            this.setInvalidUrl(false);
+            this.invalidUrl = false;
             if (url === "") {
-                this.setInvalidUrl(true);
+                this.invalidUrl = true;
                 return;
             }
             else if (url.includes("http:")) {
@@ -109,10 +116,6 @@ export default {
                         finalCapability.Capability.Layer.Layer.forEach(layer => {
                             this.parseLayer(layer, uniqId, 1);
                         });
-                        // Radio.trigger("ModelList", "closeAllExpandedFolder");
-                        // @todo replace alert message if neccessary
-                        this.$store.dispatch("Alerting/addSingleAlert", i18next.t("common:modules.tools.addWMS.completeMessage"));
-                        this.$refs.wmsUrl.value = "";
                     }
                     catch (e) {
                         this.displayErrorMessage();
@@ -130,7 +133,7 @@ export default {
         inputUrl: function (e) {
             const code = e.keyCode;
 
-            this.setInvalidUrl(false);
+            this.invalidUrl = false;
             if (code === 13) {
                 this.importLayers();
             }
@@ -174,7 +177,18 @@ export default {
                     minScale: object?.MinScaleDenominator?.toString()
                 };
 
-                this.addLayerToLayerConfig({layerConfig: layerObject, parentKey: "Fachdaten"});
+                if (!this.addedLayerIds.includes(layerObject.id)) {
+                    this.addedLayerIds.push(layerObject.id);
+                    this.addLayerToLayerConfig({layerConfig: layerObject, parentKey: "Fachdaten"});
+                    // @todo Radio.trigger("ModelList", "closeAllExpandedFolder");
+                    // @todo replace alert message if neccessary
+                    this.$store.dispatch("Alerting/addSingleAlert", i18next.t("common:modules.tools.addWMS.completeMessage"));
+                    this.$refs.wmsUrl.value = "";
+                }
+                else {
+                    this.$store.dispatch("Alerting/addSingleAlert", i18next.t("common:modules.tools.addWMS.alreadyAdded"));
+                    this.$refs.wmsUrl.value = "";
+                }
             }
         },
 
@@ -263,7 +277,7 @@ export default {
         getAddWmsUniqueId: function () {
             const uniqueId = this.uniqueId;
 
-            this.setUniqueId(uniqueId + 1);
+            this.uniqueId = uniqueId + 1;
             return "external_" + uniqueId;
         },
 
