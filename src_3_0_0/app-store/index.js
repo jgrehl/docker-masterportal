@@ -1,5 +1,4 @@
-import Vue from "vue";
-import Vuex from "vuex";
+import {createStore} from "vuex";
 
 import getters from "./getters";
 import mutations from "./mutations";
@@ -13,9 +12,7 @@ import Menu from "../modules/menu/menu-store/indexMenu";
 import Modules from "../modules/modules-store/indexModules";
 import LayerPills from "../modules/layerPills/store/indexLayerPills";
 
-Vue.use(Vuex);
-
-const store = new Vuex.Store({
+const store = createStore({
     state,
     getters,
     mutations,
@@ -31,4 +28,3 @@ const store = new Vuex.Store({
 });
 
 export default store;
-
