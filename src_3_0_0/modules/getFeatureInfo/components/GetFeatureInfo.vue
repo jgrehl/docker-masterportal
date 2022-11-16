@@ -1,5 +1,4 @@
 <script>
-import api from "@masterportal/masterportalapi/src/maps/api";
 import {mapGetters, mapMutations, mapActions} from "vuex";
 
 import GetFeatureInfoDetached from "./GetFeatureInfoDetached.vue";
@@ -34,8 +33,8 @@ export default {
             gfiFeatures: "gfiFeaturesReverse"
         }),
         ...mapGetters("Maps", {
-            mapSize: "size",
-            mapMode: "mode"
+            clickCoordinate: "clickCoordinate",
+            mapSize: "size"
         }),
         /**
          * Returns the current view type.
@@ -65,20 +64,11 @@ export default {
     },
     watch: {
         /**
-         * Whenever active changes and it's false, reset function will call.
-         * @param {Boolean} value Is gfi active.
+         * Whenever the map click coordinate changes updateClick action will call.
          * @returns {void}
          */
-        active: function (value) {
-            this.handleMapListener(this.mapMode, value);
-        },
-        /**
-         * Whenever the map mode changes  reset function will call.
-         * @param {String} mode The map mode.
-         * @returns {void}
-         */
-        mapMode: function (mode) {
-            this.handleMapListener(mode, this.active);
+        clickCoordinate () {
+            this.updateClick();
         },
         /**
          * Whenever feature changes, put it into the store
@@ -107,14 +97,14 @@ export default {
         }
     },
     mounted () {
-        this.handleMapListener(this.mapMode, this.active);
+        this.addGfiToMenu();
     },
     beforeUpdate () {
         this.createMappedProperties(this.feature);
     },
     methods: {
+        ...mapActions("Modules/GetFeatureInfo", ["addGfiToMenu", "updateClick"]),
         ...mapActions("Maps", ["registerListener", "unregisterListener"]),
-        ...mapActions("Modules/GetFeatureInfo", ["updateClick"]),
         ...mapMutations("Modules/GetFeatureInfo", ["setGfiFeatures", "setCurrentFeature"]),
 
         /**
@@ -172,30 +162,6 @@ export default {
                 return omit(properties, ignoredKeys, true);
             }
             return mapAttributes(properties, mappingObject);
-        },
-
-        /**
-         * hHandles the maps listener in 2D and 3D mode, when in relation to active.
-         * @param {String} mapMode The map mode.
-         * @param {Boolean} active Is gfi active.
-         * @returns {void}
-         */
-        handleMapListener: function (mapMode, active) {
-            if (active) {
-                if (mapMode === "2D") {
-                    this.registerListener({type: "click", listener: this.updateClick});
-                }
-                else if (mapMode === "3D") {
-                    const map3D = mapCollection.getMap("3D");
-
-                    this.unregisterListener({type: "click", listener: this.updateClick});
-                    api.map.olcsMap.handle3DEvents({scene: map3D.getCesiumScene(), map3D: map3D, callback: (clickObject) => this.updateClick(Object.freeze(clickObject))});
-                }
-            }
-            else {
-                this.reset();
-                this.unregisterListener({type: "click", listener: this.updateClick});
-            }
         }
     }
 };

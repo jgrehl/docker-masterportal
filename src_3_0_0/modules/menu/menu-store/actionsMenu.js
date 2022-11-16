@@ -3,6 +3,19 @@ import upperFirst from "../../../shared/js/utils/upperFirst";
 
 export default {
     /**
+     * Adds a module state to a menu side.
+     * @param {Object} param store context
+     * @param {Object} param.state the state
+     * @param {Object} moduleState State of a module.
+     * @returns {Number} The position in the first section.
+     */
+    addModule ({state}, moduleState) {
+        state[moduleState.menuSide].sections[0].push(moduleState);
+
+        return state[moduleState.menuSide].sections[0].length - 1;
+    },
+
+    /**
      * Merge the menu state.
      * @param {Object} param store context
      * @param {Object} param.commit the commit

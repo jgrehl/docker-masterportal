@@ -5,7 +5,9 @@ import SimpleButton from "../../../shared/components/SimpleButton.vue";
 
 export default {
     name: "MenuContainerBodyElement",
-    components: {SimpleButton},
+    components: {
+        SimpleButton
+    },
     props: {
         /** Text displayed inside the element. */
         name: {
@@ -46,6 +48,11 @@ export default {
             return typeof this.icon === "string" && this.icon.length > 0;
         }
     },
+    mounted () {
+        if (this.$attrs?.active) {
+            this.clickedMenuElement(this.path);
+        }
+    },
     methods: {
         ...mapActions("Menu", ["clickedMenuElement"]),
 
@@ -73,9 +80,16 @@ export default {
             :text="name"
             :icon="showIcon ? icon : null"
             customclass="w-100 justify-content-start"
+            :class="$attrs.isInVisibleInMenu ? 'is-invisible' : ''"
         />
         <!-- TODO(roehlipa): Properly add description -->
         <!-- TODO(roehlipa): Buttons should look differently when mobile -->
     </div>
 </template>
+
+<style lang="scss" scoped>
+    .is-invisible {
+        display: none;
+    }
+</style>
 
