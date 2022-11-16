@@ -122,15 +122,6 @@ const mutations = {
     },
 
     /**
-     * Set map size to state.
-     * @param {Object} state The state.
-     * @param {Event} evt The change size event of the map.
-     * @returns {void}
-     */
-    setSize (state, evt) {
-        state.size = evt.target.getSize();
-    },
-    /**
      * Set status of the two fingers pan event.
      * @param {Object} state The state.
      * @param {Boolean} value Value indicating if the 2-Finger-Pan is active.

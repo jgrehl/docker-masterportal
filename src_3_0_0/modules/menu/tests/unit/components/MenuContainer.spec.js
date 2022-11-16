@@ -20,9 +20,9 @@ describe("src_3_0_0/modules/menu/MenuContainer.vue", () => {
         store = new Vuex.Store({
             namespaces: true,
             getters: {
-                isMobile: (state) => state.isMobile,
-                mainMenu: sinon.stub(),
-                secondaryMenu: sinon.stub()
+                mainMenuFromConfig: sinon.stub(),
+                secondaryMenuFromConfig: sinon.stub(),
+                uiStyle: sinon.stub()
             },
             state: {
                 isMobile: false

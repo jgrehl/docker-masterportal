@@ -1,3 +1,6 @@
+import api from "@masterportal/masterportalapi/src/maps/api";
+import {transform, get} from "ol/proj.js";
+
 import findWhereJs from "../../../shared/js/utils/findWhereJs";
 
 /**
@@ -14,34 +17,97 @@ export default {
      */
     setMapAttributes ({dispatch}) {
         dispatch("registerMapListener");
+        dispatch("registerMapViewListener");
         dispatch("setInitialAttributes");
         dispatch("updateAttributesByMoveend");
         dispatch("updateAttributesByChangeResolution");
     },
 
     /**
-     * Register map and view listener.
+     * Register map listener.
      * @param {Object} param store context
      * @param {Object} param.dispatch the dispatch
      * @returns {void}
      */
     registerMapListener ({dispatch}) {
-        const mapView = mapCollection.getMapView("2D");
+        dispatch("registerListener", {
+            type: "change:size",
+            listener: "updateAttributesByChangeSize",
+            listenerType: "dispatch"
+        });
+
+        dispatch("registerListener", {
+            type: "click",
+            listener: "updateAttributesByClick",
+            listenerType: "dispatch"
+        });
 
         dispatch("registerListener", {
             type: "moveend",
             listener: "updateAttributesByMoveend",
             listenerType: "dispatch"
         });
+
         dispatch("registerListener", {
             type: "pointermove",
             listener: "updateAttributesByPointer",
             listenerType: "dispatch"
         });
+    },
+
+    /**
+     * Unregister map listener.
+     * Note: Necessary for perfomance in 3D mode.
+     * @param {Object} param store context
+     * @param {Object} param.dispatch the dispatch
+     * @returns {void}
+     */
+    unregisterMapListener ({dispatch}) {
+        dispatch("unregisterListener", {
+            type: "click",
+            listener: "updateAttributesByClick",
+            listenerType: "dispatch"
+        });
+
+        dispatch("unregisterListener", {
+            type: "pointermove",
+            listener: "updateAttributesByPointer",
+            listenerType: "dispatch"
+        });
+    },
+
+    /**
+     * Register map view listener.
+     * @param {Object} param store context
+     * @param {Object} param.dispatch the dispatch
+     * @returns {void}
+     */
+    registerMapViewListener ({dispatch}) {
+        const mapView = mapCollection.getMapView("2D");
 
         mapView.on("change:resolution", () => {
             dispatch("updateAttributesByChangeResolution");
         });
+    },
+
+    /**
+     * Register cesium (map 3D) listener.
+     * @param {Object} param store context
+     * @param {Object} param.dispatch the dispatch
+     * @returns {void}
+     */
+    registerCesiumListener ({dispatch}) {
+        const map3d = mapCollection.getMap("3D"),
+            scene3d = map3d.getCesiumScene(),
+            eventHandler = new Cesium.ScreenSpaceEventHandler(scene3d.canvas);
+
+        api.map.olcsMap.handle3DEvents({
+            scene: scene3d,
+            map3D: map3d,
+            callback: (clickObject) => dispatch("updateAttributesByClick", Object.freeze(clickObject))
+        });
+
+        eventHandler.setInputAction((evt) => dispatch("updateAttributesByPointer", evt), Cesium.ScreenSpaceEventType.MOUSE_MOVE);
     },
 
     /**
@@ -64,6 +130,38 @@ export default {
     },
 
     /**
+     * Updates map attributes by change size.
+     * @param {Object} param store context
+     * @param {Object} param.commit the commit
+     * @returns {void}
+     */
+    updateAttributesByChangeSize ({commit}) {
+        const map = mapCollection.getMap("2D");
+
+        commit("setSize", map.getSize());
+    },
+
+    /**
+     * Updates the click coordinate and the related pixel depending on the map mode.
+     * If Gfi Tool is active, the features of this coordinate/pixel are set.
+     * @param {Object} param store context
+     * @param {Object} param.getters the getters
+     * @param {Object} param.commit the commit
+     * @param {MapBrowserEvent} evt - Click event in 2D, fake click event in 3D
+     * @returns {void}
+     */
+    updateAttributesByClick ({getters, commit}, evt) {
+        if (getters.mode === "2D") {
+            commit("setClickCoordinate", evt.coordinate);
+            commit("setClickPixel", evt.pixel);
+        }
+        else if (getters.mode === "3D") {
+            commit("setClickCoordinate", evt.pickedPosition);
+            commit("setClickCartesianCoordinate", [evt.position.x, evt.position.y]);
+        }
+    },
+
+    /**
      * Updates map attributes by moveend.
      * @param {Object} param store context
      * @param {Object} param.commit the commit
@@ -75,6 +173,34 @@ export default {
 
         commit("setCenter", mapView.getCenter());
         commit("setExtent", mapView.calculateExtent(map.getSize()));
+    },
+
+    /**
+     * Updates the mouse coordinates.
+     * @param {Object} param store context
+     * @param {Object} param.commit the commit
+     * @param {Object} param.getters the getters
+     * @param {Object} event update event
+     * @returns {Function} update function for mouse coordinate
+     */
+    updateAttributesByPointer ({commit, getters}, event) {
+        if (getters.mode === "2D") {
+            commit("setMouseCoordinate", event.coordinate);
+        }
+        else if (getters.mode === "3D") {
+            try {
+                const scene = mapCollection.getMap("3D").getCesiumScene(),
+                    pickedPositionCartesian = scene.pickPosition(event.endPosition),
+                    cartographicPickedPosition = scene.globe.ellipsoid.cartesianToCartographic(pickedPositionCartesian),
+                    transformedPickedPosition = transform([Cesium.Math.toDegrees(cartographicPickedPosition.longitude), Cesium.Math.toDegrees(cartographicPickedPosition.latitude)], get("EPSG:4326"), getters.projection);
+
+                transformedPickedPosition.push(cartographicPickedPosition.height);
+                commit("setMouseCoordinate", transformedPickedPosition);
+            }
+            catch (e) {
+                // An error is thrown if the scene is not rendered yet.
+            }
+        }
     },
 
     /**
@@ -94,30 +220,5 @@ export default {
         commit("setResolution", mapView.getResolution());
         commit("setScale", options?.scale);
         commit("setZoom", mapView.getZoom());
-    },
-
-    /**
-     *  Updates the mouse coordinates
-     * @param {Object} param store context
-     * @param {Object} param.commit the commit
-     * @param {Object} param.getters the getters
-     * @param {Object} event update event
-     * @returns {Function} update function for mouse coordinate
-     */
-    updateAttributesByPointer ({commit, getters}, event) {
-        if (event.dragging) {
-            return;
-        }
-        if (getters.mode === "2D") {
-            commit("setMouseCoordinate", event.coordinate);
-        }
-        else if (getters.mode === "3D" && event.pickedPosition) {
-            try {
-                commit("setMouseCoordinate", event.pickedPosition);
-            }
-            catch (e) {
-                // An error is thrown if the scene is not rendered yet.
-            }
-        }
     }
 };
