@@ -1,6 +1,6 @@
 <script>
 import {mapGetters} from "vuex";
-import Layer from "./LayerComponent.vue";
+import LayerTreeNode from "./LayerTreeNode.vue";
 
 /**
  * Module to display the layers in menu.
@@ -8,11 +8,10 @@ import Layer from "./LayerComponent.vue";
 export default {
     name: "LayerTree",
     components: {
-        Layer
+        LayerTreeNode
     },
     computed: {
-        ...mapGetters(["inTreeVisibleLayerConfigsByMode"]),
-        ...mapGetters("Maps", ["mode"])
+        ...mapGetters(["layerConfig"])
     }
 };
 </script>
@@ -23,12 +22,22 @@ export default {
         class="layer-tree me-3"
     >
         <div
-            v-for="(layerConf) in inTreeVisibleLayerConfigsByMode(mode)"
-            :key="layerConf.id"
+            v-for="(layerConfigKey, i) in Object.keys(layerConfig)"
+            :key="i"
         >
-            <Layer
-                :layer-conf="layerConf"
-            />
+            <div
+                v-for="(subKey, ii) in Object.keys(layerConfig[layerConfigKey])"
+                :key="ii"
+            >
+                <div
+                    v-for="(conf, iii) in layerConfig[layerConfigKey][subKey]"
+                    :key="iii"
+                >
+                    <LayerTreeNode
+                        :conf="conf"
+                    />
+                </div>
+            </div>
         </div>
     </div>
 </template>
