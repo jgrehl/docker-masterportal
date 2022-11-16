@@ -70,6 +70,15 @@ const getters = {
     },
 
     /**
+     * Returns the ignored keys configuration of config.js.
+     * @param {Object} state state of the app-store.
+     * @returns {String[]} The ignored keys config.
+     */
+    ignoredKeys: state => {
+        return state.configJs?.ignoredKeys || [];
+    },
+
+    /**
      * Returns if mobile device is used.
      * @param {Object} state state of the app-store.
      * @returns {Boolean} Mobile is used.

@@ -54,8 +54,9 @@ describe("src_3_0_0/core/maps/store/actionsMapsMapMode.js", () => {
 
             changeMapMode({dispatch, getters}, targetMode);
 
-            expect(dispatch.calledOnce).to.be.true;
-            expect(dispatch.firstCall.args).to.deep.equals(["activateMap3d"]);
+            expect(dispatch.calledTwice).to.be.true;
+            expect(dispatch.firstCall.args).to.deep.equals(["unregisterMapListener"]);
+            expect(dispatch.secondCall.args).to.deep.equals(["activateMap3d"]);
         });
 
         it("Should dispatch activateMap2d, if change from 3D to 2D map mode", () => {
@@ -67,8 +68,9 @@ describe("src_3_0_0/core/maps/store/actionsMapsMapMode.js", () => {
 
             changeMapMode({dispatch, getters}, targetMode);
 
-            expect(dispatch.calledOnce).to.be.true;
-            expect(dispatch.firstCall.args).to.deep.equals(["activateMap2d"]);
+            expect(dispatch.calledTwice).to.be.true;
+            expect(dispatch.firstCall.args).to.deep.equals(["registerMapListener"]);
+            expect(dispatch.secondCall.args).to.deep.equals(["activateMap2d"]);
         });
 
         it("Should dispatch do not called, if the current and target map mode are the same", () => {

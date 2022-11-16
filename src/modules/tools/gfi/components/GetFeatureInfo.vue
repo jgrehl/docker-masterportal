@@ -1,46 +1,24 @@
 <script>
-import {mapGetters, mapMutations, mapActions} from "vuex";
-import getters from "../store/gettersGfi";
+import {mapGetters} from "vuex";
 import MobileTemplate from "./templates/MobileTemplate.vue";
-import DetachedTemplate from "./templates/DetachedTemplate.vue";
 import TableTemplate from "./templates/TableTemplate.vue";
 import AttachedTemplate from "./templates/AttachedTemplate.vue";
-import omit from "../../../../utils/omit";
-import {mapAttributes} from "@masterportal/masterportalapi/src/lib/attributeMapper";
-import api from "@masterportal/masterportalapi/src/maps/api";
 
 export default {
     name: "GetFeatureInfo",
     components: {
         MobileTemplate,
-        DetachedTemplate,
+        // DetachedTemplate,
         TableTemplate,
         AttachedTemplate
-    },
-    data () {
-        return {
-            // current index of the pagination and so also for the feature in the gfiFeatures
-            pagerIndex: 0,
-            // key for re-render child(detached) component
-            componentKey: false,
-            updatedFeature: false
-        };
     },
     computed: {
         // gfiWindow is deprecated
         ...mapGetters({
             isMobile: "mobile",
-            gfiWindow: "gfiWindow",
-            uiStyle: "uiStyle",
-            ignoredKeys: "ignoredKeys"
-        }),
-        ...mapGetters("Tools/Gfi", Object.keys(getters)),
-        ...mapGetters("Tools/Gfi", {
-            gfiFeatures: "gfiFeaturesReverse"
-        }),
-        ...mapGetters("Maps", {
-            mapSize: "size",
-            mapMode: "mode"
+            gfiWindow: "gfiWindow"
+            // uiStyle: "uiStyle",
+            // ignoredKeys: "ignoredKeys"
         }),
         /**
          * Returns the current view type.
@@ -237,91 +215,3 @@ export default {
     }
 };
 </script>
-
-<template>
-    <div
-        v-if="isVisible && feature !== null"
-        class="gfi"
-    >
-        <component
-            :is="currentViewType"
-            :key="componentKey"
-            :feature="feature"
-            :is-updated="updatedFeature"
-            @updateFeatureDone="setUpdatedFeature()"
-            @close="reset"
-        >
-            <!-- Slot Content for Footer -->
-            <template
-                v-if="gfiFeatures.length > 1"
-                #footer
-            >
-                <div class="gfi-footer">
-                    <div
-                        :class="[pagerIndex < 1 ? 'disabled' : '', 'pager-left', 'pager']"
-                        role="button"
-                        tabindex="0"
-                        @click="decreasePagerIndex"
-                        @keydown.enter="decreasePagerIndex"
-                    >
-                        <span class="bootstrap-icon">
-                            <i class="bi-chevron-left" />
-                        </span>
-                    </div>
-                    <div
-                        :class="[pagerIndex === gfiFeatures.length - 1 ? 'disabled' : '', 'pager-right', 'pager']"
-                        role="button"
-                        tabindex="0"
-                        @click="increasePagerIndex"
-                        @keydown.enter="increasePagerIndex"
-                    >
-                        <span class="bootstrap-icon">
-                            <i class="bi-chevron-right" />
-                        </span>
-                    </div>
-                </div>
-            </template>
-        </component>
-    </div>
-</template>
-
-
-<style lang="scss">
-@import "~variables";
-
-.gfi {
-    color: $secondary_contrast;
-}
-.bold{
-    font-weight: bold;
-}
-.gfi-footer {
-        color: $dark_grey;
-        font-size: $font_size_huge;
-         .pager {
-            background-color: $secondary;
-            padding: 6px;
-            cursor: pointer;
-            width: 50%;
-            margin: 0;
-            text-align: center;
-            list-style: none;
-        }
-
-        .pager-left {
-            float: left;
-            border-right: 1px solid $light_grey;
-        }
-
-        .pager-right {
-            float: right;
-        }
-        .disabled {
-            cursor: not-allowed;
-            background-color: lighten($light_grey_inactive, 40%);
-            color: $light_grey_inactive_contrast;
-        }
-
-    }
-
-</style>
