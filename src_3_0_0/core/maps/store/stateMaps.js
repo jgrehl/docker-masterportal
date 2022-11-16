@@ -2,6 +2,9 @@
  * User type definition
  * @typedef {Object} MapState
  * @property {Number[]} center Current center values of the map.
+ * @property {Number[]} clickCartesianCoordinate Current cartesian 2D coordinate.
+ * @property {Number[]} clickCoordinate Current coordinates where the mouse click event was triggered.
+ * @property {Number[]} clickPixel Current pixel values where the mouse click event was triggered.
  * @property {Number[]} extent Current extent values of the map.
  * @property {Number[]} initialCenter Initial center values of the map.
  * @property {Number} initialRotation Initial rotation of the map view.
@@ -16,11 +19,15 @@
  * @property {Number} rotation Current rotation value of the map view.
  * @property {Number} scale Current scale value of the map.
  * @property {Number[]} scales Available scales of the map.
+ * @property {Number} size Current size in pixels of the map in the DOM.
  * @property {Number} zoom Current zoom level of the map view.
 */
 
 const state = {
     center: null,
+    clickCartesianCoordinate: null,
+    clickCoordinate: null,
+    clickPixel: null,
     extent: null,
     initialCenter: null,
     initialRotation: null,
@@ -35,6 +42,7 @@ const state = {
     rotation: null,
     scale: null,
     scales: null,
+    size: null,
     zoom: null
 };
 
