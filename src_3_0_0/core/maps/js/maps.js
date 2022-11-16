@@ -57,6 +57,7 @@ function watchPortalConfig () {
 function load3DMap (configJs) {
     load3DScript(store.getters.cesiumLibrary, () => {
         create3DMap(configJs);
+        store.dispatch("Maps/registerCesiumListener");
 
         if (configJs.startingMap3D) {
             store.dispatch("Maps/activateMap3d", "3D");
@@ -74,12 +75,6 @@ function create3DMap (configJs) {
         cesiumParameter: configJs?.cesiumParameter,
         map2D: mapCollection.getMap("2D")
     }, "3D");
-
-    api.map.olcsMap.handle3DEvents({
-        scene: map3d.getCesiumScene(),
-        map3D: map3d,
-        callback: (clickObject) => store.dispatch("Maps/updatePointer", Object.freeze(clickObject))
-    });
 
     mapCollection.addMap(map3d, "3D");
 }

@@ -15,9 +15,11 @@ export default {
 
         if (currentMode !== targetMode) {
             if (targetMode === "2D") {
+                dispatch("registerMapListener");
                 dispatch("activateMap2d");
             }
             else if (targetMode === "3D") {
+                dispatch("unregisterMapListener");
                 dispatch("activateMap3d");
             }
         }
