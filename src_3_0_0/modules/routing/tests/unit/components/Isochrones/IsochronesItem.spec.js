@@ -24,17 +24,17 @@ config.mocks.$t = key => key;
 describe("src/modules/routing/components/Isochrones/IsochronesItem.vue", () => {
     const mockConfigJson = {
         Portalconfig: {
-            menu: {
-                tools: {
-                    children: {
-                        routing:
-                            {
-                                "name": "translate#common:menu.tools.routing",
-                                "icon": "bi-signpost-2-fill",
-                                "renderToWindow": true
-                            }
-                    }
-                }
+            mainMenu: {
+                sections: [
+                    [
+                        {
+                            "type": "routing",
+                            "name": "translate#common:menu.tools.routing",
+                            "icon": "bi-signpost-2-fill",
+                            "renderToWindow": true
+                        }
+                    ]
+                ]
             }
         }
     };
@@ -57,7 +57,7 @@ describe("src/modules/routing/components/Isochrones/IsochronesItem.vue", () => {
         store = new Vuex.Store({
             namespaced: true,
             modules: {
-                Tools: {
+                Modules: {
                     namespaced: true,
                     modules: {
                         Routing:
@@ -72,7 +72,6 @@ describe("src/modules/routing/components/Isochrones/IsochronesItem.vue", () => {
                                     getters: gettersIsochrones
                                 }
                             },
-                            state: {...state},
                             mutations,
                             actions,
                             getters

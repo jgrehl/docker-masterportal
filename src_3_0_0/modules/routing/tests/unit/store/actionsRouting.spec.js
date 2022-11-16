@@ -3,10 +3,11 @@ import actionsRouting from "../../../store/actionsRouting";
 import {expect} from "chai";
 
 describe("src/modules/routing/store/actionsRouting.js", () => {
-    let state, rootState;
+    let state;
 
     beforeEach(() => {
         state = {
+            type: "routing",
             geosearch: {
                 type: null,
                 serviceId: null
@@ -24,26 +25,13 @@ describe("src/modules/routing/store/actionsRouting.js", () => {
                 serviceId: null
             }
         };
-        rootState = {
-            configJson: {
-                Portalconfig: {
-                    menu: {
-                        tools: {
-                            children: {
-                                routing: state
-                            }
-                        }
-                    }
-                }
-            }
-        };
     });
 
     afterEach(sinon.restore);
 
     it("should throw error because of missing required config parameter", () => {
         try {
-            actionsRouting.checkNonOptionalConfigFields({rootState});
+            actionsRouting.checkNonOptionalConfigFields({state});
         }
         catch (e) {
             expect(e.message).equal("Routing tool is not configured correctly. The following required fields are missing: geosearch.type, geosearch.serviceId, geosearchReverse.type, geosearchReverse.serviceId, directionsSettings.type, directionsSettings.serviceId, isochronesSettings.type, isochronesSettings.serviceId");
@@ -59,6 +47,6 @@ describe("src/modules/routing/store/actionsRouting.js", () => {
         state.directionsSettings.serviceId = "serviceId";
         state.isochronesSettings.type = "type";
         state.isochronesSettings.serviceId = "serviceId";
-        actionsRouting.checkNonOptionalConfigFields({rootState});
+        actionsRouting.checkNonOptionalConfigFields({state});
     });
 });
