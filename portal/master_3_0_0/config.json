@@ -29,7 +29,7 @@
       "layerPillsAmount": 2
     },
     "mainMenu": {
-      "expanded": true,
+      "expanded": false,
       "title": {
         "text": "Master",
         "logo": "https://geodienste.hamburg.de/lgv-config/img/hh-logo.png",
@@ -138,8 +138,12 @@
       ]
     },
     "secondaryMenu": {
+      "expanded": true,
       "sections": [
         [
+          {
+            "type": "getFeatureInfo"
+          },
           {
             "type": "measure"
           },
@@ -328,7 +332,7 @@
           "id": "1711",
           "name": "Krankenhäuser",
           "typ": "WFS",
-          "visibility": true
+          "visibility": false
         },
         {
           "id": "52",
@@ -352,7 +356,7 @@
           "id": "18106",
           "name": "Elektro Ladestandorte Hamburg",
           "typ": "SensorThings",
-          "visibility": false,
+          "visibility": true,
           "loadThingsOnlyInCurrentExtent": true
         },
         {
