@@ -13,16 +13,9 @@ import Backend from "i18next-http-backend";
 /**
  * Initialization. Wrapped in a function to avoid calling it initially
  * in a mochapack run.
- * @returns {object} VueI18Next instance
+ * @param {Object} app Vue-app
+ * @returns {void}
  */
-// export function initiateVueI18Next () {
-//     app.use(I18NextVue, {i18next});
-//     Vue.use(VueI18Next);
-//     exportContainer.instance = new VueI18Next(i18next, {namespaces: ["additional", "common"]});
-//     return exportContainer.instance;
-// }
-
-
 export function initiateVueI18Next (app) {
     app.use(I18NextVue, {i18next});
 }
