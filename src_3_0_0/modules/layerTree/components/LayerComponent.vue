@@ -1,5 +1,6 @@
 <script>
-import {mapMutations} from "vuex";
+import {mapGetters, mapMutations} from "vuex";
+import {getLayerTypes3d} from "../../../core/layers/js/layerFactory";
 
 /**
  * Representation of a layer in layerTree.
@@ -14,6 +15,7 @@ export default {
         }
     },
     computed: {
+        ...mapGetters("Maps", ["mode"]),
         checkboxValue: {
             get () {
                 return this.isLayerVisible();
@@ -49,6 +51,17 @@ export default {
          */
         isLayerVisible () {
             return typeof this.layerConf.visibility === "boolean" ? this.layerConf.visibility : false;
+        },
+
+        /**
+     * Returns true, if layer configuration shall be shown in tree in current map mode.
+     * Filteres by attribute 'showInLayerTree'.
+     * @returns {boolean} true, if layer configuration shall be shown in tree
+     */
+        showInLayerTree () {
+            const layerTypes3d = getLayerTypes3d();
+
+            return this.layerConf.showInLayerTree !== false && (this.mode === "2D" ? !layerTypes3d.includes(this.layerConf.typ.toUpperCase()) : true);
         }
     }
 };
@@ -56,6 +69,7 @@ export default {
 
 <template lang="html">
     <div
+        v-if="showInLayerTree()"
         :id="'layertree-layer-' + layerConf.id"
         class="form-check"
     >
