@@ -2,10 +2,12 @@
 import MenuContainerBodyItems from "./MenuContainerBodyItems.vue";
 import MenuNavigation from "../navigation/components/MenuNavigation.vue";
 import {mapGetters} from "vuex";
+import GetFeatureInfo from "../../getFeatureInfo/components/GetFeatureInfo.vue";
 
 export default {
     name: "MenuContainerBody",
     components: {
+        GetFeatureInfo,
         MenuContainerBodyItems,
         MenuNavigation
     },
@@ -20,6 +22,7 @@ export default {
     computed: {
         ...mapGetters("Menu", ["componentFromPath", "mainMenu", "objectFromPath", "secondaryMenu"]),
         ...mapGetters("Menu/Navigation", ["lastEntry"]),
+        ...mapGetters("Modules/GetFeatureInfo", ["menuSide"]),
         /**
          * @returns {object} Menu configuration for the given menu.
          */
@@ -45,6 +48,9 @@ export default {
         class="mp-menu-body"
     >
         <MenuNavigation :side="side" />
+        <GetFeatureInfo
+            v-if="side === menuSide"
+        />
         <component
             :is="componentFromPath(side)"
             v-bind="{idAppendix: side, ...objectFromPath(side, 'last')}"
@@ -74,4 +80,7 @@ export default {
         font-size: $font-size-base;
     }
 
+    .is-invisible {
+        display: none;
+    }
 </style>
