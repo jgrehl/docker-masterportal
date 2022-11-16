@@ -4,7 +4,6 @@ import {WMSCapabilities} from "ol/format.js";
 import {intersects} from "ol/extent";
 import crs from "@masterportal/masterportalapi/src/crs";
 import axios from "axios";
-import {processLayerConfig} from "../../../core/layers/js/layerProcessor";
 
 export default {
     name: "AddWMS",
@@ -111,8 +110,9 @@ export default {
                             this.parseLayer(layer, uniqId, 1);
                         });
                         // Radio.trigger("ModelList", "closeAllExpandedFolder");
+                        // @todo replace alert message if neccessary
                         this.$store.dispatch("Alerting/addSingleAlert", i18next.t("common:modules.tools.addWMS.completeMessage"));
-
+                        this.$refs.wmsUrl.value = "";
                     }
                     catch (e) {
                         this.displayErrorMessage();
@@ -157,14 +157,11 @@ export default {
                 object.Layer.forEach(layer => {
                     this.parseLayer(layer, this.getParsedTitle(object.Title), level + 1);
                 });
-
                 // @todo: Folder machen
                 // Radio.trigger("Parser", "addFolder", object.Title, this.getParsedTitle(object.Title), parentId, level, false, false, object.invertLayerOrder);
             }
             else {
-                // Vilma
-                // in eigene method machen: createLayerConfig
-                const layerConfig = [{
+                const layerObject = {
                     id: this.getParsedTitle(object.Title),
                     name: object.Title,
                     typ: "WMS",
@@ -175,9 +172,9 @@ export default {
                     showInLayerTree: true,
                     maxScale: object?.MaxScaleDenominator?.toString(),
                     minScale: object?.MinScaleDenominator?.toString()
-                }];
+                };
 
-                processLayerConfig(layerConfig, this.mode);
+                this.addLayerToLayerConfig({layerConfig: layerObject, parentKey: "Fachdaten"});
             }
         },
 
@@ -295,32 +292,36 @@ export default {
         >
             {{ $t('common:modules.tools.addWMS.errorEmptyUrl') }}
         </div>
-        <input
-            id="wmsUrl"
-            ref="wmsUrl"
-            aria-label="WMS-Url"
-            type="text"
-            class="form-control wmsUrlsChanged"
-            :placeholder="$t('common:modules.tools.addWMS.placeholder')"
-            @keydown.enter="inputUrl"
+        <div
+            v-else
         >
-        <button
-            id="addWMSButton"
-            type="button"
-            class="btn btn-primary"
-            @click="importLayers"
-        >
-            <span
-                class=""
-                aria-hidden="true"
-            >{{ $t('common:modules.tools.addWMS.textLoadLayer') }}</span>
-            <span
-                class="bootstrap-icon"
-                aria-hidden="true"
+            <input
+                id="wmsUrl"
+                ref="wmsUrl"
+                aria-label="WMS-Url"
+                type="text"
+                class="form-control wmsUrlsChanged"
+                :placeholder="$t('common:modules.tools.addWMS.placeholder')"
+                @keydown.enter="inputUrl"
             >
-                <i class="bi-check-lg" />
-            </span>
-        </button>
+            <button
+                id="addWMSButton"
+                type="button"
+                class="btn btn-primary"
+                @click="importLayers"
+            >
+                <span
+                    class=""
+                    aria-hidden="true"
+                >{{ $t('common:modules.tools.addWMS.textLoadLayer') }}</span>
+                <span
+                    class="bootstrap-icon"
+                    aria-hidden="true"
+                >
+                    <i class="bi-check-lg" />
+                </span>
+            </button>
+        </div>
     </div>
 </template>
 
