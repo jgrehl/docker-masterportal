@@ -51,13 +51,12 @@ async function fetchRoutingOrsIsochrones ({
     avoidSpeedProfileOptions,
     transformCoordinates
 }) {
-
     const serviceUrl = store.getters.restServiceById(state.isochronesSettings.serviceId).url,
         url = `${serviceUrl}/v2/isochrones/${routingOrsSpeedProfile(speedProfile)}`,
-        rangeValue = optimization === "TIME" ? state.isochronesSettings.timeValue : state.isochronesSettings.distanceValue,
+        rangeValue = optimization === "TIME" ? state.Isochrones.settings.timeValue : state.Isochrones.settings.distanceValue,
         optimizationMultiplicator = routingOrsOptimizationMultiplicator(optimization),
         range = rangeValue * optimizationMultiplicator,
-        interval = state.isochronesSettings.intervalValue * optimizationMultiplicator;
+        interval = state.Isochrones.settings.intervalValue * optimizationMultiplicator;
     let result = null,
         first = null,
         second = null,
