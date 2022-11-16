@@ -66,7 +66,7 @@ export default {
         <MenuContainerHeader
             :side="side"
         />
-        <LayerTree />
+        <LayerTree v-if="side === 'mainMenu'" />
         <MenuContainerBody
             :side="side"
         />
