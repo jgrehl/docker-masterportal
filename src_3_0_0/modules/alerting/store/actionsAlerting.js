@@ -62,27 +62,6 @@ export default {
      * @returns {void}
      */
     initialize: function (context) {
-    /*  context.dispatch("addSingleAlert", {
-            "category": "info",
-            "content": "Success during loading",
-            "multipleAlert": true
-        });
-        context.dispatch("addSingleAlert", {
-            "category": "success",
-            "content": "Success during loading",
-            "multipleAlert": true
-        });
-        context.dispatch("addSingleAlert", {
-            "content": "Error during loading",
-            "category": "error",
-            "multipleAlert": true
-        });
-        context.dispatch("addSingleAlert", {
-            "category": "success",
-            "content": "Success during loading2",
-            "multipleAlert": true
-        }); */
-
         fetchFirstModuleConfig(context, configPaths, "Alerting");
 
     },
