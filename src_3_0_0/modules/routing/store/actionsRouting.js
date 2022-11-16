@@ -9,10 +9,6 @@ import * as constantsRouting from "./constantsRouting";
 /**
  * @const {String} configPath an array of possible config locations. First one found will be used
  */
-/* const configPaths = [
-   /*  "configJson.Portalconfig.menu.tools.children.routing",
-    "configJson.Portalconfig.menu.routing"
-]; */
 
 export default {
     /**
