@@ -2,7 +2,7 @@
 import {mapActions, mapGetters, mapMutations} from "vuex";
 import mutations from "../../store/directions/mutationsDirections";
 import RoutingBatchProcessing from "../RoutingBatchProcessing.vue";
-import {RoutingTaskHandler} from "../../utils/classes/routing-task-handler";
+import {RoutingTaskHandler} from "../../js/classes/routing-task-handler";
 
 export default {
     name: "DirectionsItemBatchProcessing",

@@ -7,7 +7,7 @@ import stateRouting from "../../../../store/stateRouting";
  * @returns {ol/Style} style
  */
 export default function createIsochronesPointStyle () {
-    const styleSetting = stateRouting.isochronesSettings.styleCenter ? stateRouting.isochronesSettings.styleCenter : stateRouting.Isochrones.settings.styleCenter;
+    const styleSetting = stateRouting.Isochrones.settings.styleCenter;
 
     return new Style({
         image: new Circle({

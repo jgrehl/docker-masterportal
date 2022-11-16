@@ -1,6 +1,6 @@
 <script>
 import {mapActions} from "vuex";
-import {RoutingGeosearchResult} from "../utils/classes/routing-geosearch-result";
+import {RoutingGeosearchResult} from "../js/classes/routing-geosearch-result";
 
 export default {
     name: "RoutingCoordinateInput",

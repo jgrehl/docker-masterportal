@@ -8,9 +8,9 @@ import Point from "ol/geom/Point";
 import VectorSource from "ol/source/Vector";
 import Draw from "ol/interaction/Draw";
 import Select from "ol/interaction/Select";
-import {RoutingWaypoint} from "../../../../utils/classes/routing-waypoint";
-import {RoutingDirections} from "../../../../utils/classes/routing-directions";
-import {RoutingGeosearchResult} from "../../../../utils/classes/routing-geosearch-result";
+import {RoutingWaypoint} from "../../../../js/classes/routing-waypoint";
+import {RoutingDirections} from "../../../../js/classes/routing-directions";
+import {RoutingGeosearchResult} from "../../../../js/classes/routing-geosearch-result";
 
 describe("src/modules/routing/store/directions/actionsDirections.js", () => {
     let state, commitSpy, commit, dispatchSpy, dispatch, dispatchMocks, getters, rootState, waypoints, wgs84Coordinates, routingDirectionsWaypointSource, routingDirectionsAvoidSource, routingDirectionsResult, routeFeature, highlightFeature, startWaypoint, endWaypoint, avoidPolygonCoordinates;

@@ -2,13 +2,13 @@ import axios from "axios";
 import store from "../../../../../../../app-store";
 import {expect} from "chai";
 import sinon from "sinon";
-import {RoutingGeosearchResult} from "../../../../utils/classes/routing-geosearch-result";
+import {RoutingGeosearchResult} from "../../../../js/classes/routing-geosearch-result";
 import {
     fetchRoutingBkgGeosearch,
     fetchRoutingBkgGeosearchReverse
-} from "../../../../utils/geosearch/routing-bkg-geosearch";
+} from "../../../../js/geosearch/routing-bkg-geosearch";
 
-describe("src/modules/routing/utils/geosearch/routing-bkg-geosearch.js", () => {
+describe("src/modules/routing/js/geosearch/routing-bkg-geosearch.js", () => {
     beforeEach(() => {
         sinon.stub(i18next, "t").callsFake((...args) => args);
         store.getters.getRestServiceById = () => ({url: "tmp"});
