@@ -1039,7 +1039,7 @@
                 }
             },
             "routing": {
-                "coordinateInputHelp": "Finde a place or add a point by clicking on the map",
+                "coordinateInputHelp": "Find a place or add a point by clicking on the map",
                 "startpoint": "Startpoint",
                 "endpoint": "Endpoint",
                 "waypoint": "Waypoint",

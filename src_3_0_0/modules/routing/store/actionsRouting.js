@@ -95,7 +95,7 @@ export default {
      */
     async fetchTextByCoordinates ({state, dispatch}, {coordinates}) {
         let geosearchResult = null;
-
+console.log('---------ööö', state);
         try {
             // Possible to change Geosearch by changing function depending on config
             if (state.geosearch.type === "NOMINATIM") {
@@ -105,6 +105,7 @@ export default {
             }
             else if (state.geosearch.type === "BKG") {
                 geosearchResult = await fetchRoutingBkgGeosearchReverse(coordinates);
+                console.log("geosearchResult", geosearchResult);
             }
             else {
                 throw new Error("Geosearch is not configured correctly.");
