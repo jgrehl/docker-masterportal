@@ -1,5 +1,5 @@
 import axios from "axios";
-import store from "../../../../../../../app-store";
+import store from "../../../../../../app-store";
 import {expect} from "chai";
 import sinon from "sinon";
 import {RoutingGeosearchResult} from "../../../../js/classes/routing-geosearch-result";

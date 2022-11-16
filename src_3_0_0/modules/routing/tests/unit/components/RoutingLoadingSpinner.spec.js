@@ -16,22 +16,6 @@ localVue.use(Vuex);
 config.mocks.$t = key => key;
 
 describe("src/modules/routing/components/RoutingLoadingSpinner.vue", () => {
-    const mockConfigJson = {
-        Portalconfig: {
-            menu: {
-                tools: {
-                    children: {
-                        routing:
-                            {
-                                "name": "translate#common:menu.tools.routing",
-                                "icon": "bi-signpost-2-fill",
-                                "renderToWindow": true
-                            }
-                    }
-                }
-            }
-        }
-    };
     let store,
         wrapper;
 
@@ -39,7 +23,7 @@ describe("src/modules/routing/components/RoutingLoadingSpinner.vue", () => {
         store = new Vuex.Store({
             namespaced: true,
             modules: {
-                Tools: {
+                Modules: {
                     namespaced: true,
                     modules: {
                         Routing:
@@ -62,9 +46,6 @@ describe("src/modules/routing/components/RoutingLoadingSpinner.vue", () => {
                         addSingleAlert: sinon.stub()
                     }
                 }
-            },
-            state: {
-                configJson: mockConfigJson
             }
         });
     });
