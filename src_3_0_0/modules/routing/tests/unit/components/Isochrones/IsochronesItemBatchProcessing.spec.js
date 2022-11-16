@@ -11,8 +11,8 @@ import mutationsIsochrones from "../../../../store/isochrones/mutationsIsochrone
 import actionsIsochrones from "../../../../store/isochrones/actionsIsochrones";
 import gettersIsochrones from "../../../../store/isochrones/gettersIsochrones";
 import stateIsochrones from "../../../../store/isochrones/stateIsochrones";
-import {RoutingIsochrones} from "../../../../utils/classes/routing-isochrones";
-import {RoutingIsochronesArea} from "../../../../utils/classes/routing-isochrones-area";
+import {RoutingIsochrones} from "../../../../js/classes/routing-isochrones";
+import {RoutingIsochronesArea} from "../../../../js/classes/routing-isochrones-area";
 
 const localVue = createLocalVue();
 
