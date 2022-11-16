@@ -9,6 +9,7 @@ import store from "../../../../app-store";
  * @returns {RoutingGeosearchResult[]} routingGeosearchResults
  */
 async function fetchRoutingBkgGeosearch (search) {
+    console.log("store.getters", store.getters);
     const serviceUrl = store.getters.getRestServiceById(state.geosearch.serviceId).url,
         url = `${serviceUrl}?count=${state.geosearch.limit}&properties=text`,
         parameter = `&query=${encodeURIComponent(search)}`,
@@ -29,7 +30,6 @@ async function fetchRoutingBkgGeosearch (search) {
  * @returns {RoutingGeosearchResult} routingGeosearchResult
  */
 async function fetchRoutingBkgGeosearchReverse (coordinates) {
-    console.log("getRestServiceById", store.getters.restServiceById(state.geosearchReverse.serviceId).url);
     const serviceUrl = store.getters.restServiceById(state.geosearchReverse.serviceId).url,
         filterQuery = "&filter=" + (state.geosearchReverse.filter ? state.geosearchReverse.filter : "typ:ort"),
         url = `${serviceUrl}?lon=${coordinates[0]}&lat=${coordinates[1]}&count=1&properties=text&distance=${state.geosearchReverse.distance}${filterQuery}`,
