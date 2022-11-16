@@ -2,13 +2,13 @@ import axios from "axios";
 import store from "../../../../../../app-store";
 import {expect} from "chai";
 import sinon from "sinon";
-import {RoutingGeosearchResult} from "../../../../utils/classes/routing-geosearch-result";
+import {RoutingGeosearchResult} from "../../../../js/classes/routing-geosearch-result";
 import {
     fetchRoutingNominatimGeosearch,
     fetchRoutingNominatimGeosearchReverse
-} from "../../../../utils/geosearch/routing-nominatim-geosearch";
+} from "../../../../js/geosearch/routing-nominatim-geosearch";
 
-describe("src/modules/routing/utils/geosearch/routing-nominatim-geosearch.js", () => {
+describe("src/modules/routing/js/geosearch/routing-nominatim-geosearch.js", () => {
     beforeEach(() => {
         sinon.stub(i18next, "t").callsFake((...args) => args);
         store.getters.getRestServiceById = () => ({url: "tmp"});

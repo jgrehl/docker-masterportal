@@ -1,9 +1,9 @@
 import {
     fetchRoutingNominatimGeosearch,
     fetchRoutingNominatimGeosearchReverse
-} from "../utils/geosearch/routing-nominatim-geosearch";
+} from "../js/geosearch/routing-nominatim-geosearch";
 import crs from "@masterportal/masterportalapi/src/crs";
-import {fetchRoutingBkgGeosearch, fetchRoutingBkgGeosearchReverse} from "../utils/geosearch/routing-bkg-geosearch";
+import {fetchRoutingBkgGeosearch, fetchRoutingBkgGeosearchReverse} from "../js/geosearch/routing-bkg-geosearch";
 import * as constantsRouting from "./constantsRouting";
 
 /**
@@ -79,10 +79,10 @@ export default {
             });
         }
         catch (err) {
-          /*   dispatch("Alerting/addSingleAlert", {
+            dispatch("Modules/Alerting/addSingleAlert", {
                 category: i18next.t("common:modules.alerting.categories.error"),
                 content: i18next.t("common:modules.tools.routing.errors.fetchingCoordinates")
-            }, {root: true}); */
+            }, {root: true});
         }
         return geosearchResults;
     },
@@ -95,7 +95,7 @@ export default {
      */
     async fetchTextByCoordinates ({state, dispatch}, {coordinates}) {
         let geosearchResult = null;
-console.log('---------ööö', state);
+
         try {
             // Possible to change Geosearch by changing function depending on config
             if (state.geosearch.type === "NOMINATIM") {
@@ -105,7 +105,6 @@ console.log('---------ööö', state);
             }
             else if (state.geosearch.type === "BKG") {
                 geosearchResult = await fetchRoutingBkgGeosearchReverse(coordinates);
-                console.log("geosearchResult", geosearchResult);
             }
             else {
                 throw new Error("Geosearch is not configured correctly.");
