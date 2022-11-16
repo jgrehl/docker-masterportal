@@ -8,7 +8,10 @@ import actions from "../../../store/actionsMapsAttributesMapper";
 const {
     setMapAttributes,
     registerMapListener,
+    unregisterMapListener,
     setInitialAttributes,
+    updateAttributesByChangeSize,
+    updateAttributesByClick,
     updateAttributesByMoveend,
     updateAttributesByChangeResolution
 } = actions;
@@ -56,17 +59,20 @@ describe("src_3_0_0/core/maps/store/actionsMapsAttributesMapper.js", () => {
         ];
     let commit,
         dispatch,
+        getters,
         map2d;
 
     beforeEach(() => {
         commit = sinon.spy();
         dispatch = sinon.spy();
+        getters = {
+            mode: "2D"
+        };
 
         mapCollection.clear();
         map2d = new Map({
             id: "ol",
             mode: "2D",
-            size: [50, 50],
             view: new View({
                 center: [10, 20],
                 options: options,
@@ -76,6 +82,7 @@ describe("src_3_0_0/core/maps/store/actionsMapsAttributesMapper.js", () => {
             })
         });
 
+        map2d.setSize([50, 50]);
         mapCollection.addMap(map2d, "2D");
     });
 
@@ -87,11 +94,12 @@ describe("src_3_0_0/core/maps/store/actionsMapsAttributesMapper.js", () => {
         it("Should dispatch map attributes", () => {
             setMapAttributes({dispatch});
 
-            expect(dispatch.callCount).to.equals(4);
+            expect(dispatch.callCount).to.equals(5);
             expect(dispatch.firstCall.args[0]).to.deep.equals("registerMapListener");
-            expect(dispatch.secondCall.args[0]).to.deep.equals("setInitialAttributes");
-            expect(dispatch.thirdCall.args[0]).to.deep.equals("updateAttributesByMoveend");
-            expect(dispatch.getCall(3).args[0]).to.deep.equals("updateAttributesByChangeResolution");
+            expect(dispatch.secondCall.args[0]).to.deep.equals("registerMapViewListener");
+            expect(dispatch.thirdCall.args[0]).to.deep.equals("setInitialAttributes");
+            expect(dispatch.getCall(3).args[0]).to.deep.equals("updateAttributesByMoveend");
+            expect(dispatch.getCall(4).args[0]).to.deep.equals("updateAttributesByChangeResolution");
         });
     });
 
@@ -99,13 +107,43 @@ describe("src_3_0_0/core/maps/store/actionsMapsAttributesMapper.js", () => {
         it("Should register listeners", () => {
             registerMapListener({dispatch});
 
-            expect(dispatch.calledTwice).to.be.true;
+            expect(dispatch.callCount).to.equals(4);
             expect(dispatch.firstCall.args).to.deep.equals(["registerListener", {
+                type: "change:size",
+                listener: "updateAttributesByChangeSize",
+                listenerType: "dispatch"
+            }]);
+            expect(dispatch.secondCall.args).to.deep.equals(["registerListener", {
+                type: "click",
+                listener: "updateAttributesByClick",
+                listenerType: "dispatch"
+            }]);
+            expect(dispatch.thirdCall.args).to.deep.equals(["registerListener", {
                 type: "moveend",
                 listener: "updateAttributesByMoveend",
                 listenerType: "dispatch"
             }]);
-            expect(dispatch.secondCall.args).to.deep.equals(["registerListener", {
+            expect(dispatch.getCall(3).args).to.deep.equals(["registerListener", {
+                type: "pointermove",
+                listener: "updateAttributesByPointer",
+                listenerType: "dispatch"
+            }]);
+        });
+    });
+
+    describe("unregisterMapListener", () => {
+        it("Should unregister listeners", () => {
+            unregisterMapListener({dispatch});
+
+            expect(dispatch.callCount).to.equals(2);
+
+            expect(dispatch.firstCall.args).to.deep.equals(["unregisterListener", {
+                type: "click",
+                listener: "updateAttributesByClick",
+                listenerType: "dispatch"
+            }]);
+
+            expect(dispatch.secondCall.args).to.deep.equals(["unregisterListener", {
                 type: "pointermove",
                 listener: "updateAttributesByPointer",
                 listenerType: "dispatch"
@@ -143,13 +181,37 @@ describe("src_3_0_0/core/maps/store/actionsMapsAttributesMapper.js", () => {
         });
     });
 
+    describe("updateAttributesByChangeSize", () => {
+        it("Should update attributes by change size event", () => {
+            updateAttributesByChangeSize({commit});
+
+            expect(commit.callCount).to.equals(1);
+            expect(commit.firstCall.args).to.deep.equals(["setSize", [50, 50]]);
+        });
+    });
+
+    describe("updateAttributesByClick", () => {
+        it("Should update attributes by click event", () => {
+            const evt = {
+                coordinate: [1, 2],
+                pixel: 100
+            };
+
+            updateAttributesByClick({getters, commit}, evt);
+
+            expect(commit.callCount).to.equals(2);
+            expect(commit.firstCall.args).to.deep.equals(["setClickCoordinate", [1, 2]]);
+            expect(commit.secondCall.args).to.deep.equals(["setClickPixel", 100]);
+        });
+    });
+
     describe("updateAttributesByMoveend", () => {
         it("Should update attributes by moveend event", () => {
             updateAttributesByMoveend({commit});
 
             expect(commit.callCount).to.equals(2);
             expect(commit.firstCall.args).to.deep.equals(["setCenter", [10, 20]]);
-            expect(commit.secondCall.args).to.deep.equals(["setExtent", [-122.29159522920523, -112.29159522920523, 142.29159522920523, 152.29159522920523]]);
+            expect(commit.secondCall.args).to.deep.equals(["setExtent", [-56.145797614602614, -46.145797614602614, 76.14579761460261, 86.14579761460261]]);
         });
     });
 
