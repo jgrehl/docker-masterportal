@@ -34,7 +34,6 @@ export default {
     },
     methods: {
         ...mapActions("Maps", ["changeMapMode"]),
-        ...mapActions("Alerting", ["addSingleAlert", "cleanup"]),
 
         /**
          * Triggers the change of the map from 2D to 3D and vice versa.
@@ -44,54 +43,6 @@ export default {
             const targetMode = this.mode === "2D" ? "3D" : "2D";
 
             this.changeMapMode(targetMode);
-
-            /*  this.addSingleAlert({
-                "title": "Title",
-                "content": "I am Info",
-                "mustBeConfirmed": true,
-                "creationDate": "01/01/24",
-                "multipleAlert": true});
-            this.addSingleAlert({
-                "title": "Title",
-                "category": "news",
-                "content": "I am News",
-                "creationDate": "01/01/24",
-                "mustBeConfirmed": true,
-                "multipleAlert": true}); */
-            this.addSingleAlert({
-                "title": "Title",
-                "category": "warning",
-                "content": "I am Warning",
-                "mustBeConfirmed": true,
-                "multipleAlert": true});
-            this.addSingleAlert({
-                "title": "Title",
-                "category": "error",
-                "content": "I am Error",
-                "mustBeConfirmed": true,
-                "multipleAlert": true});
-            this.addSingleAlert({
-                "title": "Title",
-                "category": "warning",
-                "content": "I am Warning2",
-                "mustBeConfirmed": true,
-                "multipleAlert": true});
-            /*
-            this.addSingleAlert({
-                "title": "Title",
-                "category": "success",
-                "content": "I am Success",
-                "mustBeConfirmed": true,
-                "multipleAlert": true});
-
-            this.addSingleAlert({
-                "title": "Title",
-                "category": "owncategory",
-                "content": "Welcome to 3D",
-                "creationDate": "01/01/24",
-                "mustBeConfirmed": true,
-                "multipleAlert": true}); */
-
         }
     }
 };
