@@ -359,7 +359,8 @@
                 "placeholder": "Hier bitte die WMS-URL eingeben.",
                 "textLoadLayer": "Layer Laden",
                 "ifInExtent": "&#10060; Die über den WMS bereitgestellten Geodaten liegen außerhalb des darstellbaren Bereichs. WMS hinzufügen ist nicht möglich.",
-                "checkVersion": "&#10060; WMS hinzufügen ist nur möglich wenn die Version des externen WMS Layers gleich oder größer als 1.3.0 ist."
+                "checkVersion": "&#10060; WMS hinzufügen ist nur möglich wenn die Version des externen WMS Layers gleich oder größer als 1.3.0 ist.",
+                "alreadyAdded": "Die Layer des angeforderten WMS wurden bereits hinzugefügt."
             },
             "contact": {
                 "error": {
