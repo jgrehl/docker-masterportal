@@ -21,5 +21,15 @@ export default {
      */
     removeLastEntry (state, side) {
         state.entries[side].pop();
+    },
+
+    /**
+     * Reset the one menu entry.
+     * @param {Object} state Local vuex state.
+     * @param {String} side The side to reset.
+     * @returns {void}
+     */
+    setEntry (state, side) {
+        state.entries[side] = [];
     }
 };
