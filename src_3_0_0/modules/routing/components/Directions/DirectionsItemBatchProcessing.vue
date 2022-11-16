@@ -54,18 +54,17 @@ export default {
                             this.downloadResults(file.name, result);
                         }
                         if (this.countFailed !== 0) {
-                           /*  this.addSingleAlert({
+                            this.addSingleAlert({
                                 category: this.$t("common:modules.alerting.categories.error"),
                                 content: this.$t("common:modules.tools.routing.directions.batchProcessing.errorSomeFailed", {countFailed: this.coundFailed})
-                            }); */
+                            });
                         }
                     }
                     catch (e) {
-                       /*  this.addSingleAlert({
+                        this.addSingleAlert({
                             category: this.$t("common:modules.alerting.categories.error"),
                             content: e.message
-                        }); */
-                        console.log( e.message);
+                        });
                     }
 
                     this.setIsLoadingDirections(false);
