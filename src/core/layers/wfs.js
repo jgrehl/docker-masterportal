@@ -61,8 +61,8 @@ WFSLayer.prototype.createLayer = function (attrs) {
         layerParams = {
         //     name: attrs.name,
         //     typ: attrs.typ,
-            gfiAttributes: attrs.gfiAttributes,
-            gfiTheme: attrs.gfiTheme,
+            // gfiAttributes: attrs.gfiAttributes,
+            // gfiTheme: attrs.gfiTheme,
             hitTolerance: attrs.hitTolerance,
             // altitudeMode: attrs.altitudeMode,
             alwaysOnTop: attrs.alwaysOnTop,
