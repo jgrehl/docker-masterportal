@@ -142,9 +142,6 @@
       "sections": [
         [
           {
-            "type": "getFeatureInfo"
-          },
-          {
             "type": "measure"
           },
           {
