@@ -6,7 +6,7 @@ import stateRouting from "../../../../store/stateRouting";
  * @returns {ol/Style} style
  */
 export default function createDirectionsAvoidAreasStyle () {
-    const styleSetting = stateRouting.directionsSettings.styleAvoidAreas;
+    const styleSetting = stateRouting.directionsSettings.styleAvoidAreas ? stateRouting.directionsSettings.styleAvoidAreas : stateRouting.Directions.settings.styleAvoidAreas;
 
     return new Style({
         fill: new Fill({
