@@ -2,12 +2,12 @@ import axios from "axios";
 import store from "../../../../../../../app-store";
 import {expect} from "chai";
 import sinon from "sinon";
-import {RoutingIsochrones} from "../../../../utils/classes/routing-isochrones";
-import {RoutingIsochronesArea} from "../../../../utils/classes/routing-isochrones-area";
-import {fetchRoutingOrsIsochrones} from "../../../../utils/isochrones/routing-ors-isochrones";
+import {RoutingIsochrones} from "../../../../js/classes/routing-isochrones";
+import {RoutingIsochronesArea} from "../../../../js/classes/routing-isochrones-area";
+import {fetchRoutingOrsIsochrones} from "../../../../js/isochrones/routing-ors-isochrones";
 import state from "../../../../store/stateRouting";
 
-describe("src/modules/routing/utils/directions/routing-ors-directions.js", () => {
+describe("src/modules/routing/js/directions/routing-ors-directions.js", () => {
     beforeEach(() => {
         sinon.stub(i18next, "t").callsFake((...args) => args);
         store.getters = {
