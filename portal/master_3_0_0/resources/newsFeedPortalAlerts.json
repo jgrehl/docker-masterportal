@@ -7,7 +7,7 @@
     "https://qs-geofos.fhhnet.stadt.hamburg.de/fhh-atlas/": ["oblique_2020", "fhh-atlas-ie11"],
     "https://geofos.fhhnet.stadt.hamburg.de/fhh-atlas/": ["oblique_2020", "fhh-atlas-ie11", "news_fhh-atlas"],
     "https://geofos/fhh-atlas/": ["oblique_2020", "fhh-atlas-ie11", "news_fhh-atlas"],
-    "https://localhost:9001/portal/master_3_0_0/": ["news-ais", "fhh-panorama"],
+    "https://localhost:9001/portal/master_3_0_0/": [],
     "https://geoportal.metropolregion.hamburg.de/mrhportal_abnahme/": ["qs-release"],
     "https://geoportal.metropolregion.hamburg.de/mrhportal_elmshorn_abnahme/": ["qs-release"],
     "https://geoportal.metropolregion.hamburg.de/roads_abnahme/": ["qs-release"],
