@@ -9,7 +9,7 @@ import store from "../../../../app-store";
  * @returns {RoutingGeosearchResult[]} routingGeosearchResults
  */
 async function fetchRoutingNominatimGeosearch (search) {
-    const serviceUrl = store.getters.getRestServiceById(state.geosearch.serviceId).url,
+    const serviceUrl = store.getters.restServiceById(state.geosearch.serviceId).url,
         url = `${serviceUrl}&countrycodes=de&format=json&limit=${state.geosearch.limit}&bounded=1`,
         parameter = `&q=${encodeURIComponent(search)}`,
         response = await axios.get(url + parameter);
@@ -29,7 +29,7 @@ async function fetchRoutingNominatimGeosearch (search) {
  * @returns {RoutingGeosearchResult} routingGeosearchResult
  */
 async function fetchRoutingNominatimGeosearchReverse (coordinates) {
-    const serviceUrl = store.getters.getRestServiceById(state.geosearchReverse.serviceId).url,
+    const serviceUrl = store.getters.restServiceById(state.geosearchReverse.serviceId).url,
         url = `${serviceUrl}&lon=${coordinates[0]}&lat=${coordinates[1]}&format=json&addressdetails=0`,
         response = await axios.get(url);
 
