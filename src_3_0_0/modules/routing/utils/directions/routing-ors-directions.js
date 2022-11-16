@@ -43,7 +43,7 @@ async function fetchRoutingOrsDirections ({
     avoidPolygons,
     instructions
 }) {
-    const serviceUrl = store.getters.getRestServiceById(state.directionsSettings.serviceId).url,
+    const serviceUrl = store.getters.restServiceById(state.directionsSettings.serviceId).url,
         url = `${serviceUrl}/v2/directions/${routingOrsSpeedProfile(speedProfile)}/geojson`;
     let result = null,
         feature = null,
