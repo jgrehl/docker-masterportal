@@ -9,6 +9,9 @@ const Config = {
         // WGS84
         ["EPSG:4326", "+title=WGS 84 (long/lat) +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"]
     ],
+    alerting: {
+        fetchBroadcastUrl: "./resources/newsFeedPortalAlerts.json"
+    },
     layerConf: "https://geodienste.hamburg.de/services-internet.json",
     restConf: "https://geodienste.hamburg.de/lgv-config/rest-services-internet.json",
     cesiumLibrary: "https://geoportal-hamburg.de/mastercode/cesium/1_95/Cesium.js"
