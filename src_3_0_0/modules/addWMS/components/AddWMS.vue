@@ -1,19 +1,17 @@
 <script>
 import {mapGetters, mapMutations} from "vuex";
-import getters from "../store/gettersAddWMS";
-import mutations from "../store/mutationsAddWMS";
 import {WMSCapabilities} from "ol/format.js";
 import {intersects} from "ol/extent";
 import crs from "@masterportal/masterportalapi/src/crs";
 import axios from "axios";
+import {processLayerConfig} from "../../../core/layers/js/layerProcessor";
 
 export default {
     name: "AddWMS",
     computed: {
         ...mapGetters(["portalConfig"]),
-        ...mapGetters("Modules/AddWMS", Object.keys(getters)),
-        // ...mapGetters("Modules/AddWMS", ["active", ]),
-        ...mapGetters("Maps", ["projection"])
+        ...mapGetters("Modules/AddWMS", ["active", "uniqueId", "invalidUrl", "wmsUrl", "version"]),
+        ...mapGetters("Maps", ["projection", "mode"])
     },
     watch: {
         /**
@@ -29,7 +27,7 @@ export default {
     },
     methods: {
         ...mapMutations(["addLayerToLayerConfig"]),
-        ...mapMutations("Modules/AddWMS", Object.keys(mutations)),
+        ...mapMutations("Modules/AddWMS", ["setInvalidUrl", "setVersion", "setWmsUrl", "setUniqueId"]),
 
         /**
          * Sets the focus to the first control
@@ -100,9 +98,9 @@ export default {
                             return;
                         }
 
-                        this.setVersion = version;
-                        this.setWmsUrl = url;
-                        // kommt noch
+                        this.setVersion(version);
+                        this.setWmsUrl(url);
+                        // @todo Ordner externe Fachdaten anlegen
                         // if (Radio.request("Parser", "getItemByAttributes", {id: "ExternalLayer"}) === undefined) {
                         //     Radio.trigger("Parser", "addFolder", "Externe Fachdaten", "ExternalLayer", "tree", 0);
                         //     Radio.trigger("ModelList", "renderTree");
@@ -159,16 +157,27 @@ export default {
                 object.Layer.forEach(layer => {
                     this.parseLayer(layer, this.getParsedTitle(object.Title), level + 1);
                 });
+
+                // @todo: Folder machen
                 // Radio.trigger("Parser", "addFolder", object.Title, this.getParsedTitle(object.Title), parentId, level, false, false, object.invertLayerOrder);
             }
             else {
-                // Vilma mutation mit this aufrufen in mapMutations aufnehmen
-                console.log("*** store", this.store.state);
-                this.addLayerToLayerConfig({layerConfigs: "layersStructured", parentKey: "Fachdaten"});
-                // Radio.trigger("Parser", "addLayer", object.Title, this.getParsedTitle(object.Title), parentId, level, object.Name, this.wmsUrl, this.version, {
-                //     maxScale: object?.MaxScaleDenominator?.toString(),
-                //     minScale: object?.MinScaleDenominator?.toString()
-                // });
+                // Vilma
+                // in eigene method machen: createLayerConfig
+                const layerConfig = [{
+                    id: this.getParsedTitle(object.Title),
+                    name: object.Title,
+                    typ: "WMS",
+                    layers: [object.Name],
+                    url: this.wmsUrl,
+                    version: this.version,
+                    visibility: true,
+                    showInLayerTree: true,
+                    maxScale: object?.MaxScaleDenominator?.toString(),
+                    minScale: object?.MinScaleDenominator?.toString()
+                }];
+
+                processLayerConfig(layerConfig, this.mode);
             }
         },
 
@@ -317,9 +326,6 @@ export default {
 
 <style lang="scss" scoped>
     @import "~variables";
-    .addWMS {
-        min-width: 400px;
-    }
     .WMS_example_text {
         margin-top: 10px;
         color: $light_grey;
