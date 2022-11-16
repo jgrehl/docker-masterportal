@@ -2,12 +2,12 @@ import axios from "axios";
 import store from "../../../../../../app-store";
 import {expect} from "chai";
 import sinon from "sinon";
-import {RoutingDirections} from "../../../../utils/classes/routing-directions";
-import {RoutingDirectionsSegment} from "../../../../utils/classes/routing-directions-segment";
-import {RoutingDirectionsStep} from "../../../../utils/classes/routing-directions-step";
-import {fetchRoutingOrsDirections} from "../../../../utils/directions/routing-ors-directions";
+import {RoutingDirections} from "../../../../js/classes/routing-directions";
+import {RoutingDirectionsSegment} from "../../../../js/classes/routing-directions-segment";
+import {RoutingDirectionsStep} from "../../../../js/classes/routing-directions-step";
+import {fetchRoutingOrsDirections} from "../../../../js/directions/routing-ors-directions";
 
-describe("src/modules/routing/utils/directions/routing-ors-directions.js", () => {
+describe("src/modules/routing/js/directions/routing-ors-directions.js", () => {
     beforeEach(() => {
         sinon.stub(i18next, "t").callsFake((...args) => args);
         store.getters = {

@@ -1,4 +1,4 @@
-import {fetchRoutingOrsIsochrones} from "../../utils/isochrones/routing-ors-isochrones";
+import {fetchRoutingOrsIsochrones} from "../../js/isochrones/routing-ors-isochrones";
 import Polygon from "ol/geom/Polygon";
 import Feature from "ol/Feature";
 
@@ -45,11 +45,10 @@ export default {
             commit("setRoutingIsochrones", result);
         }
         catch (err) {
-          /*   dispatch("Alerting/addSingleAlert", {
+            dispatch("Modules/Alerting/addSingleAlert", {
                 category: i18next.t("common:modules.alerting.categories.error"),
                 content: err.message
-            }, {root: true}); */
-            console.log(err.message);
+            }, {root: true});
         }
         commit("setIsLoadingIsochrones", false);
     },
@@ -95,8 +94,8 @@ export default {
                     coordinates,
                     {root: true}
                 ),
-                speedProfile: isoChroneSettings.speedProfile,
-                optimization: state.isochronesMethodOption,
+                speedProfile: state.settings.speedProfile,
+                optimization: state.settings.isochronesMethodOption,
                 avoidSpeedProfileOptions: selectedAvoidSpeedProfileOptions,
                 transformCoordinates: transformCoordinates
             });

@@ -1,5 +1,5 @@
-import {RoutingWaypoint} from "../../utils/classes/routing-waypoint";
-import {fetchRoutingOrsDirections} from "../../utils/directions/routing-ors-directions";
+import {RoutingWaypoint} from "../../js/classes/routing-waypoint";
+import {fetchRoutingOrsDirections} from "../../js/directions/routing-ors-directions";
 import Feature from "ol/Feature";
 import LineString from "ol/geom/LineString";
 
@@ -22,9 +22,7 @@ export default {
         await dispatch("resetRoutingDirectionsResults");
 
         try {
-            console.log('--------', state);
             const result = await dispatch("fetchDirections", {wgs84Coords: wgs84Coords, instructions: true});
-            console.log('tryresult', result);
 
             if (JSON.stringify(wgs84Coords) !== JSON.stringify(await dispatch("getDirectionsCoordinatesWgs84"))) {
                 return;
@@ -48,11 +46,10 @@ export default {
             commit("setRoutingDirections", result);
         }
         catch (err) {
-            /* dispatch("Alerting/addSingleAlert", {
+            dispatch("Modules/Alerting/addSingleAlert", {
                 category: i18next.t("common:modules.alerting.categories.info"),
                 content: err.message
-            }, {root: true}); */
-            console.log( err.message);
+            }, {root: true});
         }
         commit("setIsLoadingDirections", false);
     },
@@ -267,9 +264,6 @@ export default {
             commit("setMapListenerAdded", true);
         }
 
-       /*  dispatch("Maps/addLayerOnTop", directionsRouteLayer, {root: true});
-        dispatch("Maps/addLayerOnTop", directionsWaypointsLayer, {root: true});
-        dispatch("Maps/addLayerOnTop", directionsAvoidLayer, {root: true}); */
         dispatch("Maps/addLayer", directionsRouteLayer, {root: true});
         dispatch("Maps/addLayer", directionsWaypointsLayer, {root: true});
         dispatch("Maps/addLayer", directionsAvoidLayer, {root: true});
