@@ -16,22 +16,6 @@ localVue.use(Vuex);
 config.mocks.$t = key => key;
 
 describe("src/modules/routing/components/RoutingSpeedProfileIcon.vue", () => {
-    const mockConfigJson = {
-        Portalconfig: {
-            menu: {
-                tools: {
-                    children: {
-                        routing:
-                            {
-                                "name": "translate#common:menu.tools.routing",
-                                "icon": "bi-signpost-2-fill",
-                                "renderToWindow": true
-                            }
-                    }
-                }
-            }
-        }
-    };
     let store,
         wrapper,
         props;
@@ -40,32 +24,8 @@ describe("src/modules/routing/components/RoutingSpeedProfileIcon.vue", () => {
         store = new Vuex.Store({
             namespaced: true,
             modules: {
-                Tools: {
-                    namespaced: true,
-                    modules: {
-                        Routing:
-                        {
-                            namespaced: true,
-                            modules: {
-                                Directions,
-                                Isochrones
-                            },
-                            state: {...state},
-                            mutations,
-                            actions,
-                            getters
-                        }
-                    }
-                },
-                Alerting: {
-                    namespaced: true,
-                    actions: {
-                        addSingleAlert: sinon.stub()
-                    }
-                }
             },
             state: {
-                configJson: mockConfigJson
             }
         });
 

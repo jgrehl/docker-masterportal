@@ -11,7 +11,9 @@ describe("src/modules/routing/js/directions/routing-ors-directions.js", () => {
     beforeEach(() => {
         sinon.stub(i18next, "t").callsFake((...args) => args);
         store.getters = {
-            getRestServiceById: () => ({url: "tmp"})
+            restServiceById: () => {
+                return {url: "tmp"};
+            }
         };
     });
 
