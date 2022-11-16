@@ -123,6 +123,8 @@ describe("src_3_0_0/core/js/layers/layer2dVector.js", () => {
         beforeEach(() => {
             localAttributes = {
                 altitudeMode: "clampToGround",
+                gfiAttributes: "showAll",
+                gfiTheme: "default",
                 name: "The name",
                 typ: "Layer2d"
             };
@@ -133,6 +135,8 @@ describe("src_3_0_0/core/js/layers/layer2dVector.js", () => {
 
             expect(layer2d.getLayerParams(localAttributes)).to.deep.equals({
                 altitudeMode: "clampToGround",
+                gfiAttributes: "showAll",
+                gfiTheme: "default",
                 name: "The name",
                 typ: "Layer2d"
             });
