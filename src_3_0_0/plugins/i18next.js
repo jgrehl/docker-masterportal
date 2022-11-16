@@ -1,24 +1,32 @@
-import VueI18Next from "@panter/vue-i18next";
-import Vue from "vue";
-import HttpApi from "i18next-http-backend";
-import i18nextBrowserLanguageDetector from "i18next-browser-languagedetector";
+import i18next from "i18next";
+import I18NextVue from "i18next-vue";
+import LanguageDetector from "i18next-browser-languagedetector";
+import Backend from "i18next-http-backend";
 
-const exportContainer = {
-    instance: null
-};
 
-export default exportContainer;
+// const exportContainer = {
+//     instance: null
+// };
+
+// export default exportContainer;
 
 /**
  * Initialization. Wrapped in a function to avoid calling it initially
  * in a mochapack run.
  * @returns {object} VueI18Next instance
  */
-export function initiateVueI18Next () {
-    Vue.use(VueI18Next);
-    exportContainer.instance = new VueI18Next(i18next, {namespaces: ["additional", "common"]});
-    return exportContainer.instance;
+// export function initiateVueI18Next () {
+//     app.use(I18NextVue, {i18next});
+//     Vue.use(VueI18Next);
+//     exportContainer.instance = new VueI18Next(i18next, {namespaces: ["additional", "common"]});
+//     return exportContainer.instance;
+// }
+
+
+export function initiateVueI18Next (app) {
+    app.use(I18NextVue, {i18next});
 }
+
 
 /**
 * initialization of the language with i18next
@@ -48,10 +56,10 @@ export function initLanguage (portalLanguageConfig) {
 
     // init i18next
     if (Config.portalLanguage !== undefined && Config.portalLanguage.enabled) {
-        i18next.use(i18nextBrowserLanguageDetector);
+        i18next.use(LanguageDetector);
     }
     i18next
-        .use(HttpApi)
+        .use(Backend)
         .init({
             debug: portalLanguage.debug,
 
