@@ -1,6 +1,5 @@
 import CoordToolkit from "../coordToolkit/components/CoordToolkit.vue";
 import Folder from "../menu/components/MenuFolder.vue";
-import GetFeatureInfo from "../getFeatureInfo/components/GetFeatureInfo.vue";
 import PrintMap from "../print/components/PrintMap.vue";
 import Measure from "../measure/components/MeasureInMap.vue";
 import OpenConfig from "../openConfig/components/OpenConfig.vue";
@@ -19,7 +18,6 @@ const state = {
         contact: Contact,
         coordToolkit: CoordToolkit,
         folder: Folder,
-        getFeatureInfo: GetFeatureInfo,
         measure: Measure,
         openConfig: OpenConfig,
         print: PrintMap,
