@@ -8,6 +8,7 @@ import actions from "../../../store/actionsRouting";
 import getters from "../../../store/gettersRouting";
 import state from "../../../store/stateRouting";
 
+
 import Directions from "../../../store/directions/indexDirections";
 import Isochrones from "../../../store/isochrones/indexIsochrones";
 import Feature from "ol/Feature";
@@ -19,22 +20,6 @@ localVue.use(Vuex);
 config.mocks.$t = key => key;
 
 describe("src/modules/routing/components/RoutingDownload.vue", () => {
-    const mockConfigJson = {
-        Portalconfig: {
-            menu: {
-                tools: {
-                    children: {
-                        routing:
-                            {
-                                "name": "translate#common:menu.tools.routing",
-                                "icon": "bi-signpost-2-fill",
-                                "renderToWindow": true
-                            }
-                    }
-                }
-            }
-        }
-    };
     let store,
         wrapper,
         props;
@@ -43,7 +28,7 @@ describe("src/modules/routing/components/RoutingDownload.vue", () => {
         store = new Vuex.Store({
             namespaced: true,
             modules: {
-                Tools: {
+                Modules: {
                     namespaced: true,
                     modules: {
                         Routing:
@@ -53,22 +38,19 @@ describe("src/modules/routing/components/RoutingDownload.vue", () => {
                                 Directions,
                                 Isochrones
                             },
-                            state: {...state},
+                            state,
                             mutations,
                             actions,
                             getters
                         }
-                    }
-                },
-                Alerting: {
-                    namespaced: true,
-                    actions: {
-                        addSingleAlert: sinon.stub()
+                    },
+                    Alerting: {
+                        namespaced: true,
+                        actions: {
+                            addSingleAlert: sinon.stub()
+                        }
                     }
                 }
-            },
-            state: {
-                configJson: mockConfigJson
             }
         });
 
