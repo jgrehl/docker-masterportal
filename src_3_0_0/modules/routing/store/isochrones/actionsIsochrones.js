@@ -83,11 +83,11 @@ export default {
      * @param {Boolean} [params.transformCoordinates] the coordinates should be projected to local projection
      * @returns {RoutingIsochrones} routingIsochrones
      */
-    async fetchIsochrones ({state, dispatch, getters}, {wgs84Coords, transformCoordinates}) {
-        const {settings} = state,
+    async fetchIsochrones ({state, dispatch, getters, rootState}, {wgs84Coords, transformCoordinates}) {
+        const isoChroneSettings = rootState.Modules.Routing.isochronesSettings,
             {selectedAvoidSpeedProfileOptions} = getters;
 
-        if (settings.type === "ORS") {
+        if (isoChroneSettings.type === "ORS") {
             return fetchRoutingOrsIsochrones({
                 coordinates: wgs84Coords,
                 transformCoordinatesToLocal: coordinates => dispatch(
@@ -95,8 +95,8 @@ export default {
                     coordinates,
                     {root: true}
                 ),
-                speedProfile: settings.speedProfile,
-                optimization: settings.isochronesMethodOption,
+                speedProfile: isoChroneSettings.speedProfile,
+                optimization: state.isochronesMethodOption,
                 avoidSpeedProfileOptions: selectedAvoidSpeedProfileOptions,
                 transformCoordinates: transformCoordinates
             });
@@ -119,8 +119,6 @@ export default {
             commit("setMapListenerAdded", true);
         }
 
-    /*  dispatch("Maps/addLayerOnTop", isochronesAreaLayer, {root: true});
-        dispatch("Maps/addLayerOnTop", isochronesPointLayer, {root: true}); */
         dispatch("Maps/addLayer", isochronesAreaLayer, {root: true});
         dispatch("Maps/addLayer", isochronesPointLayer, {root: true});
         dispatch("createIsochronesPointDrawInteraction");
