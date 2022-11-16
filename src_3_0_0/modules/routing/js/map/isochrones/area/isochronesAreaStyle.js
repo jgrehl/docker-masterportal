@@ -7,7 +7,7 @@ import stateRouting from "../../../../store/stateRouting";
  * @returns {ol/Style} style
  */
 export default function createIsochronesAreaStyle (feature) {
-    const styleSetting = stateRouting.isochronesSettings.styleIsochrones,
+    const styleSetting = stateRouting.Isochrones.settings.styleIsochrones,
         color = feature.get("color");
 
     // general style
