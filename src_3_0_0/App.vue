@@ -24,7 +24,6 @@ export default {
         ...mapGetters([
             "allConfigsLoaded",
             "configJs",
-            "layerConfig",
             "portalConfig",
             "uiStyle",
             "visibleLayerConfigs"
