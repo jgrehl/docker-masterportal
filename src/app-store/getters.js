@@ -11,7 +11,6 @@ export default {
     uiStyle: state => (state?.urlParams?.uiStyle || state?.configJs?.uiStyle || "DEFAULT")?.toUpperCase(),
     // gfiWindow is deprecated in the next major-release
     gfiWindow: state => state?.configJs.gfiWindow,
-    ignoredKeys: state => state?.configJs.ignoredKeys || [],
     // metadata is deprecated in the next major-relase, because it is only used for proxyUrl
     metadata: state => state?.configJs.metadata || {},
     metaDataCatalogueId: state => state?.configJs?.metaDataCatalogueId || "",
