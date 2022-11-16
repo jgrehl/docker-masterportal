@@ -22,7 +22,9 @@ export default {
         await dispatch("resetRoutingDirectionsResults");
 
         try {
+            console.log('--------', state);
             const result = await dispatch("fetchDirections", {wgs84Coords: wgs84Coords, instructions: true});
+            console.log('tryresult', result);
 
             if (JSON.stringify(wgs84Coords) !== JSON.stringify(await dispatch("getDirectionsCoordinatesWgs84"))) {
                 return;
@@ -79,11 +81,13 @@ export default {
      * @returns {RoutingDirections} routingDirections
      */
     async fetchDirections ({state, getters, dispatch, rootState}, {wgs84Coords, instructions}) {
-        const {settings} = state,
+    // Issues????????????????
+        const // {settings} = state,
+            directionSettings = await rootState.Modules.Routing.directionsSettings,
             {selectedAvoidSpeedProfileOptions} = getters,
             avoidPolygons = await dispatch("getAvoidPolygonsWgs84");
 
-        if (settings.type === "ORS") {
+        if (directionSettings.type === "ORS") {
             return fetchRoutingOrsDirections({
                 coordinates: wgs84Coords,
                 language: i18next.language,
@@ -92,9 +96,9 @@ export default {
                     coordinates,
                     {root: true}
                 ),
-                speedProfile: settings.speedProfile,
+                speedProfile: state.settings.speedProfile,
                 avoidSpeedProfileOptions: selectedAvoidSpeedProfileOptions,
-                preference: settings.preference,
+                preference: state.settings.preference,
                 avoidPolygons: avoidPolygons,
                 instructions: instructions
             });
