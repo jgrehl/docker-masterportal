@@ -8,8 +8,6 @@
  * @property {String[]} supportedDevices Devices on which the module is displayed.
  * @property {String[]} supportedMapModes Map mode in which this module can be used.
  * @property {String[]} supportedTreeTypes Tree type in which this module is displayed.
- * @property {Number} uniqueId the unique id that is counted up for each added wms.
- * @property {Boolean} invalidUrl if invalid url is set to true, an error message is being displayed.
  * @property {Boolean} wmsUrl the wms url.
  * @property {Boolean} version the version of wms layer.
  */
@@ -21,8 +19,6 @@ const state = {
     supportedDevices: ["Desktop", "Mobile", "Table"],
     supportedMapModes: ["2D", "3D"],
     supportedTreeTypes: ["light"],
-    uniqueId: 100,
-    invalidUrl: false,
     wmsUrl: "",
     version: ""
 };
