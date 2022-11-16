@@ -3,7 +3,7 @@ import {mapGetters, mapActions} from "vuex";
 import * as constants from "./../store/constantsRouting";
 import {GeoJSON, GPX} from "ol/format.js";
 import convertFeaturesToKml from "../../../shared/js/utils/convertFeaturesToKml.js";
-import directionsRouteStyle from "../utils/map/directions/route/directionsRouteStyle";
+import directionsRouteStyle from "../js/map/directions/route/directionsRouteStyle";
 import Feature from "ol/Feature";
 
 export default {
