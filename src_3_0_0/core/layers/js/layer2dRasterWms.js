@@ -74,6 +74,10 @@ Layer2dRasterWms.prototype.getRawLayerAttributes = function (attributes) {
 Layer2dRasterWms.prototype.getLayerParams = function (attributes) {
     return {
         format: attributes.format,
+        gfiAsNewWindow: attributes.gfiAsNewWindow,
+        gfiAttributes: attributes.gfiAttributes,
+        gfiTheme: attributes.gfiTheme,
+        infoFormat: attributes.infoFormat,
         layers: attributes.layers,
         name: attributes.name,
         typ: attributes.typ
