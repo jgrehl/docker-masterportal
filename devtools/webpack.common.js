@@ -3,7 +3,7 @@ const webpack = require("webpack"),
     MiniCssExtractPlugin = require("mini-css-extract-plugin"),
     path = require("path"),
     fse = require("fs-extra"),
-    VueLoaderPlugin = require("vue-loader/lib/plugin"),
+    {VueLoaderPlugin} = require("vue-loader"),
 
     rootPath = path.resolve(__dirname, "../"),
     addonBasePath = path.resolve(rootPath, "addons"),
@@ -94,6 +94,7 @@ module.exports = function () {
         resolve: {
             alias: {
                 text: "text-loader",
+                vue: "@vue/compat",
                 "mixins": path.resolve(__dirname, "..", "src_3_0_0", "assets", "css", "mixins.scss"),
                 "variables": path.resolve(__dirname, "..", "src_3_0_0", "assets", "css", "variables.scss")
             }
@@ -146,8 +147,10 @@ module.exports = function () {
                     test: /\.vue$/,
                     loader: "vue-loader",
                     options: {
-                        loaders: {
-                            js: "esbuild-loader?"
+                        compilerOptions: {
+                            compatConfig: {
+                                MODE: 3
+                            }
                         }
                     }
                 },
@@ -180,6 +183,8 @@ module.exports = function () {
             // create global constant at compile time
             new webpack.DefinePlugin({
                 ADDONS: JSON.stringify(addonsRelPaths),
+                __VUE_OPTIONS_API__: true,
+                __VUE_PROD_DEVTOOLS__: false,
                 VUE_ADDONS: JSON.stringify(vueAddonsRelPaths)
             })
         ]
