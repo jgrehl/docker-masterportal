@@ -100,9 +100,9 @@ export default {
         <template
             v-for="(_, key) in menu.sections"
             v-else
+            :key="key"
         >
             <MenuContainerBodyItems
-                :key="key"
                 :id-appendix="side"
                 :path="path(key)"
             />
