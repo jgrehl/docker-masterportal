@@ -36,8 +36,8 @@ class RoutingIsochronesArea {
      * @returns {void}
      */
     calculateColor () {
-        const startColor = stateRouting.isochronesSettings.styleIsochrones.startColor,
-            endColor = stateRouting.isochronesSettings.styleIsochrones.endColor,
+        const startColor = stateRouting.Isochrones.settings.styleIsochrones.startColor,
+            endColor = stateRouting.Isochrones.settings.styleIsochrones.endColor,
             startValue = this.getValue() - this.getInterval(),
             endValue = this.getMaximum() - this.getInterval(),
             fraction = startValue === 0 || endValue === 0 ? 0 : startValue / endValue;
