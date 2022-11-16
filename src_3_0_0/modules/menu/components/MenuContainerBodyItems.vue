@@ -58,7 +58,7 @@ export default {
         >
             <MenuContainerBodyElement
                 :id="'mp-menu-body-items-element-' + key + '-' + idAppendix"
-                v-bind="chooseProperties (item)"
+                v-bind="chooseProperties(item)"
                 :path="[...path, key]"
             />
         </li>
