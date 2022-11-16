@@ -39,32 +39,23 @@ export default {
             await this.initRouting();
         }
         catch (e) {
-            /* this.addSingleAlert({
+            this.addSingleAlert({
                 category: this.$t("common:modules.alerting.categories.error"),
                 content: e.message
-            }); */
-            console.log( e.message);
+            });
             this.$emit("close");
         }
     },
     methods: {
         ...mapMutations("Modules/Routing", Object.keys(mutations)),
         ...mapActions("Modules/Routing", Object.keys(actions)),
-        ...mapActions("Alerting", ["addSingleAlert"]),
+        ...mapActions("Modules/Alerting", ["addSingleAlert"]),
         /**
          * Closes this tool window by setting active to false and removes the marker if it was placed.
          * @returns {void}
          */
         close () {
             this.setActive(false);
-            // set the backbone model to active false in modellist for changing css class in menu (menu/desktop/tool/view.toggleIsActiveClass)
-           /*  const model = Radio.request("ModelList", "getModelByAttributes", {
-                id: this.$store.state.Tools.Routing.id
-            });
-
-            if (model) {
-                model.set("isActive", false);
-            } */
         },
         /**
          * Changes the active tab
