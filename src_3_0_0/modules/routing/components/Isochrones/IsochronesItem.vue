@@ -75,6 +75,7 @@ export default {
             if (this.isInputDisabled) {
                 return;
             }
+
             this.settings.speedProfile = speedProfileId;
         },
         /**
