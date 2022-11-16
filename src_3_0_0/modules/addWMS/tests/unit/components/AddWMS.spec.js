@@ -9,21 +9,18 @@ const localVue = createLocalVue();
 localVue.use(Vuex);
 config.mocks.$t = key => key;
 
-describe("src/modules/tools/addWMS/components/AddWMS.vue", () => {
+describe("src/modules/addWMS/components/AddWMS.vue", () => {
     const
         mockConfigJson = {
             Portalconfig: {
-                menu: {
-                    tools: {
-                        children: {
-                            addWMS:
-                                {
-                                    "name": "translate#common:menu.tools.addWms",
-                                    "icon": ".bi-plus-lg",
-                                    "renderToWindow": true
-                                }
-                        }
-                    }
+                mainMenu: {
+                    sections: [
+                        [
+                            {
+                                type: "addWms"
+                            }
+                        ]
+                    ]
                 }
             }
         };
@@ -35,9 +32,10 @@ describe("src/modules/tools/addWMS/components/AddWMS.vue", () => {
         store = new Vuex.Store({
             namespaces: true,
             modules: {
-                Tools: {
+                Modules: {
                     namespaced: true,
                     modules: {
+                        namespaced: true,
                         AddWMS
                     }
                 }
@@ -53,7 +51,7 @@ describe("src/modules/tools/addWMS/components/AddWMS.vue", () => {
             };
         };
 
-        store.commit("Tools/AddWMS/setActive", true);
+        store.commit("Modules/AddWMS/setActive", true);
 
         const elem = document.createElement("div");
 
@@ -71,7 +69,7 @@ describe("src/modules/tools/addWMS/components/AddWMS.vue", () => {
 
 
     it("renders the AddWMS Module", () => {
-        expect(wrapper.find("#add-wms").exists()).to.be.true;
+        expect(wrapper.find("#addWMS").exists()).to.be.true;
     });
 
     it("rendes the text with empty input", async () => {
