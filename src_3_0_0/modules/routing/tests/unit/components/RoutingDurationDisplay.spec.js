@@ -1,14 +1,14 @@
 import Vuex from "vuex";
 import {expect} from "chai";
-import sinon from "sinon";
 import {config, shallowMount, createLocalVue} from "@vue/test-utils";
 import RoutingDurationDisplayComponent from "../../../components/RoutingDurationDisplay.vue";
 import mutations from "../../../store/mutationsRouting";
 import actions from "../../../store/actionsRouting";
 import getters from "../../../store/gettersRouting";
-import state from "../../../store/stateRouting";
-import Directions from "../../../store/directions/indexDirections";
-import Isochrones from "../../../store/isochrones/indexIsochrones";
+import mutationsDirections from "../../../store/directions/mutationsDirections";
+import actionsDirections from "../../../store/directions/actionsDirections";
+import gettersDirections from "../../../store/directions/gettersDirections";
+import stateDirections from "../../../store/directions/stateDirections";
 
 const localVue = createLocalVue();
 
@@ -16,22 +16,6 @@ localVue.use(Vuex);
 config.mocks.$t = key => key;
 
 describe("src/modules/routing/components/RoutingDurationDisplay.vue", () => {
-    const mockConfigJson = {
-        Portalconfig: {
-            menu: {
-                tools: {
-                    children: {
-                        routing:
-                            {
-                                "name": "translate#common:menu.tools.routing",
-                                "icon": "bi-signpost-2-fill",
-                                "renderToWindow": true
-                            }
-                    }
-                }
-            }
-        }
-    };
     let store,
         wrapper,
         props;
@@ -40,32 +24,27 @@ describe("src/modules/routing/components/RoutingDurationDisplay.vue", () => {
         store = new Vuex.Store({
             namespaced: true,
             modules: {
-                Tools: {
+                Modules: {
                     namespaced: true,
                     modules: {
                         Routing:
                         {
                             namespaced: true,
                             modules: {
-                                Directions,
-                                Isochrones
+                                Directions: {
+                                    namespaced: true,
+                                    state: stateDirections,
+                                    mutations: mutationsDirections,
+                                    actions: actionsDirections,
+                                    getters: gettersDirections
+                                }
                             },
-                            state: {...state},
                             mutations,
                             actions,
                             getters
                         }
                     }
-                },
-                Alerting: {
-                    namespaced: true,
-                    actions: {
-                        addSingleAlert: sinon.stub()
-                    }
                 }
-            },
-            state: {
-                configJson: mockConfigJson
             }
         });
 
