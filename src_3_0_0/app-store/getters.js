@@ -156,7 +156,7 @@ const getters = {
 
         return layerContainer.find(layerConf => layerConf.id === id);
     },
-    
+
     /**
      * Returns the restConfig whitch matches the id.
      * @param {Object} state state of the app-store.
@@ -166,7 +166,7 @@ const getters = {
         const matchingLayer = state.restConfig.filter(layer => layer.id === id);
 
         return matchingLayer[0];
-    },    
+    },
 
     /**
      * Returns all layer configurations to show in tree, if mode is 3D, else returns only 2d-layer configurations.
