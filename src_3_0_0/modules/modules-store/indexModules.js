@@ -2,6 +2,7 @@ import actions from "./actionsModules";
 import state from "./stateModules";
 
 import CoordToolkit from "../coordToolkit/store/indexCoordToolkit";
+import GetFeatureInfo from "../getFeatureInfo/store/indexGetFeatureInfo";
 import Measure from "../measure/store/indexMeasure";
 import OpenConfig from "../openConfig/store/indexOpenConfig";
 import Print from "../print/store/indexPrint";
@@ -17,6 +18,7 @@ export default {
     modules: {
         // modules must be copied, else tests fail in watch mode
         CoordToolkit: {...CoordToolkit},
+        GetFeatureInfo: {...GetFeatureInfo},
         Measure: {...Measure},
         OpenConfig: {...OpenConfig},
         Print: {...Print},
