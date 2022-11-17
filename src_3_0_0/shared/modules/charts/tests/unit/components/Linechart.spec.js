@@ -2,13 +2,13 @@ import Vuex from "vuex";
 import {shallowMount, createLocalVue} from "@vue/test-utils";
 import {expect} from "chai";
 import ChartJs from "chart.js";
-import LinechartItem from "../../LinechartItem.vue";
+import LinechartItem from "../../../components/LinechartItem.vue";
 
 const localVue = createLocalVue();
 
 localVue.use(Vuex);
 
-describe("src_3_0_0/shared/components/LinechartItem.vue", () => {
+describe("src_3_0_0/shared/modules/charts/components/LinechartItem.vue", () => {
     let wrapper;
 
     beforeEach(() => {
