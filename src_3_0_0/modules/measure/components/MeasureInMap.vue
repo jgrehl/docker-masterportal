@@ -71,7 +71,7 @@ export default {
         });
 
     },
-    destroyed () {
+    unmounted () {
         this.removeIncompleteDrawing();
         this.removeDrawInteraction();
     },
