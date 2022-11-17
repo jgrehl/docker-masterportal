@@ -1,13 +1,11 @@
 <script>
 import {mapActions, mapGetters} from "vuex";
 import isModuleVisible from "../../../shared/js/utils/isModuleVisible";
-import SimpleButton from "../../../shared/modules/buttons/components/SimpleButton.vue";
+import LightButton from "../../../shared/components/LightButton.vue";
 
 export default {
     name: "MenuContainerBodyElement",
-    components: {
-        SimpleButton
-    },
+    components: {LightButton},
     props: {
         /** Text displayed inside the element. */
         name: {
@@ -74,7 +72,7 @@ export default {
 
 <template>
     <div>
-        <SimpleButton
+        <LightButton
             v-if="checkIsVisible() && !($attrs.isVisibleInMenu === false)"
             :interaction="() => clickedMenuElement(path)"
             :text="name"

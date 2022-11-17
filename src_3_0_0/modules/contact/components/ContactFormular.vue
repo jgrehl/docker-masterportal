@@ -1,11 +1,18 @@
 <script>
 import {mapActions, mapGetters, mapMutations} from "vuex";
 import ContactFormularInput from "./ContactFormularInput.vue";
+import FlatButton from "../../../shared/components/FlatButton.vue";
 
 export default {
     name: "ContactFormular",
     components: {
-        ContactFormularInput
+        ContactFormularInput,
+        FlatButton
+    },
+    data () {
+        return {
+            sendIcon: "bi-send"
+        };
     },
     computed: {
         ...mapGetters("Modules/Contact", [
@@ -110,14 +117,14 @@ export default {
                 </label>
                 <p v-html="$t('common:modules.tools.contact.privacyPolicy.info', {privacyPolicyLink})" />
             </div>
-            <button
+            <FlatButton
                 id="module-contact-send-message"
+                aria-label="$t('modules.tools.contact.sendButton')"
                 type="submit"
-                class="btn btn-primary float-end"
+                :text="$t('modules.tools.contact.sendButton')"
+                :icon="sendIcon"
                 :disabled="!validForm"
-            >
-                {{ $t("common:modules.tools.contact.sendButton") }}
-            </button>
+            />
         </form>
     </div>
 </template>
