@@ -130,6 +130,7 @@ $secondary_table_style: #F2F2F2;  // background for table view style
   --bs-btn-border-radius: 16px;
   --bs-btn-hover-color: #fff;
   --bs-btn-hover-bg: #001B3D;
+  --bs-btn-hover-border-color: #001B3D; 
   --bs-btn-active-color: #fff;
   --bs-btn-active-bg: #151C27;
   --bs-btn-focus-color: #fff;
@@ -140,8 +141,9 @@ $secondary_table_style: #F2F2F2;  // background for table view style
   --bs-btn-bg: #3C5F94;
   --bs-btn-border-color: #3C5F94;
   --bs-btn-border-radius: 50px;
-  --bs-btn-hover-color: #fff;
-  --bs-btn-hover-bg: darken(#3C5F94, 15%);
+  --bs-btn-hover-color: #001B3D;
+  --bs-btn-hover-bg: #D6E3FF;
+  --bs-btn-hover-border-color: #D6E3FF; 
   --bs-btn-active-color: #fff;
   --bs-btn-active-bg: #151C27;
   --bs-btn-focus-color: #fff;
