@@ -175,6 +175,7 @@ describe("src_3_0_0/modules/scaleSwitcher/components/ScaleSwitcher.vue", () => {
             document.body.appendChild(elem);
         }
         wrapper = shallowMount(ScaleSwitcherComponent, {
+            attachTo: elem,
             global: {
                 plugins: [store]
             }});
