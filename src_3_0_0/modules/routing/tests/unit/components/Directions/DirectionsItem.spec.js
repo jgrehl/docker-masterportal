@@ -7,6 +7,7 @@ import DirectionsItemBatchProcessingComponent from "../../../../components/Direc
 import RoutingBatchProcessingCheckboxComponent from "../../../../components/RoutingBatchProcessingCheckbox.vue";
 import RoutingDownloadComponent from "../../../../components/RoutingDownload.vue";
 import mutations from "../../../../store/mutationsRouting";
+import state from "../../../../store/stateRouting";
 import actions from "../../../../store/actionsRouting";
 import getters from "../../../../store/gettersRouting";
 import mutationsDirections from "../../../../store/directions/mutationsDirections";
@@ -20,6 +21,24 @@ localVue.use(Vuex);
 config.mocks.$t = key => key;
 
 describe("src/modules/routing/components/Directions/DirectionsItem.vue", () => {
+    const mockConfigJson = {
+        configJson: {
+            Portalconfig: {
+                mainMenu: {
+                    sections: [
+                        [
+                            {
+                                "type": "routing",
+                                "name": "translate#common:menu.tools.routing",
+                                "icon": "bi-signpost-2-fill",
+                                "renderToWindow": true
+                            }
+                        ]
+                    ]
+                }
+            }
+        }
+    };
     let store,
         wrapper;
 
@@ -42,12 +61,13 @@ describe("src/modules/routing/components/Directions/DirectionsItem.vue", () => {
                             modules: {
                                 Directions: {
                                     namespaced: true,
-                                    state: stateDirections,
+                                    state: {...stateDirections},
                                     mutations: mutationsDirections,
                                     actions: actionsDirections,
                                     getters: gettersDirections
                                 }
                             },
+                            state: {...state},
                             mutations,
                             actions,
                             getters
@@ -65,6 +85,7 @@ describe("src/modules/routing/components/Directions/DirectionsItem.vue", () => {
                 }
             },
             state: {
+                configJson: mockConfigJson
             }
         });
         store.commit("Modules/Routing/setActive", true);

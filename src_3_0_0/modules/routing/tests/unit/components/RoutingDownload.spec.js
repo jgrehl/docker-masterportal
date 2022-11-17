@@ -1,3 +1,8 @@
+console.log('remove');
+// warnings
+// test package.json
+// close
+
 import Vuex from "vuex";
 import {expect} from "chai";
 import sinon from "sinon";
