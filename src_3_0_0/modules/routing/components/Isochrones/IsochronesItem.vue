@@ -10,7 +10,6 @@ import RoutingSliderInput from "../RoutingSliderInput.vue";
 import RoutingDownload from "../RoutingDownload.vue";
 import IsochronesItemBatchProcessing from "./IsochronesItemBatchProcessing.vue";
 import RoutingBatchProcessingCheckbox from "../RoutingBatchProcessingCheckbox.vue";
-import RoutingAvoidFeatures from "../RoutingAvoidFeatures.vue";
 import RoutingSpeedProfileIcon from "../RoutingSpeedProfileIcon.vue";
 
 export default {
@@ -21,7 +20,7 @@ export default {
         RoutingDownload,
         IsochronesItemBatchProcessing,
         RoutingBatchProcessingCheckbox,
-        RoutingAvoidFeatures,
+        RoutingAvoidFeatures: () => import("../RoutingAvoidFeatures.vue"),
         RoutingSpeedProfileIcon
     },
     data () {
@@ -55,6 +54,7 @@ export default {
             return this.currentValue < this.settings.minInterval ? this.currentValue : this.settings.minInterval;
         }
     },
+
     async created () {
         this.initIsochrones();
     },
