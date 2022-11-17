@@ -29,7 +29,8 @@
     },
     "extends": [
         "eslint:recommended",
-        "plugin:vue/recommended",
+        // "plugin:vue/recommended", // --> vue2
+        "plugin:vue/vue3-recommended", // --> vue3
         "plugin:vuejs-accessibility/recommended"
     ],
     "rules": {
