@@ -1,6 +1,6 @@
 <script>
 import {mapGetters, mapMutations} from "vuex";
-import {getLayerTypes3d} from "../../../core/layers/js/layerFactory";
+import layerFactory from "../../../core/layers/js/layerFactory";
 
 /**
  * Representation of a layer in layerTree.
@@ -59,7 +59,7 @@ export default {
      * @returns {boolean} true, if layer configuration shall be shown in tree
      */
         showInLayerTree () {
-            const layerTypes3d = getLayerTypes3d();
+            const layerTypes3d = layerFactory.getLayerTypes3d();
 
             return this.layerConf.showInLayerTree !== false && (this.mode === "2D" ? !layerTypes3d.includes(this.layerConf.typ.toUpperCase()) : true);
         }
@@ -84,7 +84,7 @@ export default {
             :class="['mt-0 d-flex flex-column align-self-start', isLayerVisible() ? 'bold' : '']"
             :for="'layertree-layer-checkbox' + layerConf.id"
         >
-            <h5>{{ layerConf.name }}</h5>
+            {{ layerConf.name }}
         </label>
     </div>
 </template>
