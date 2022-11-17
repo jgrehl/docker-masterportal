@@ -34,7 +34,7 @@ const layerTypes2d = {
  * @param {String} mapMode The current map mode.
  * @returns {Layer} The layer instance.
  */
-export function createLayer (layerConf, mapMode) {
+function createLayer (layerConf, mapMode) {
     const typ = layerConf?.typ?.toUpperCase();
     let layer;
 
@@ -52,6 +52,11 @@ export function createLayer (layerConf, mapMode) {
  * Return 3D layer names
  * @returns {Array} The 3D layer names as an array.
  */
-export function getLayerTypes3d () {
+function getLayerTypes3d () {
     return Object.keys(layerTypes3d);
 }
+
+export default {
+    createLayer,
+    getLayerTypes3d
+};
