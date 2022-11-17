@@ -9,7 +9,6 @@ import store from "../../../../app-store";
  * @returns {RoutingGeosearchResult[]} routingGeosearchResults
  */
 async function fetchRoutingBkgGeosearch (search) {
-    console.log("store.getters", store.getters);
     const serviceUrl = store.getters.getRestServiceById(state.geosearch.serviceId).url,
         url = `${serviceUrl}?count=${state.geosearch.limit}&properties=text`,
         parameter = `&query=${encodeURIComponent(search)}`,
