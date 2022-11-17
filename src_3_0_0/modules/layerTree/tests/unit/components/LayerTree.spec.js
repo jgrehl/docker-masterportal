@@ -15,7 +15,8 @@ describe("src_3_0_0/modules/layerTree/components/LayerTree.vue", () => {
         layers3D,
         layer2D_1,
         layer2D_2,
-        layer3D;
+        layer3D,
+        subjectDataLayers;
 
     beforeEach(() => {
         mapMode = "2D";
@@ -37,6 +38,18 @@ describe("src_3_0_0/modules/layerTree/components/LayerTree.vue", () => {
             typ: "Terrain3D",
             visibility: false
         };
+        layerBG_1 = {
+            id: "11",
+            name: "layerBG_1",
+            typ: "WMS",
+            visibility: true
+        };
+        layerBG_2 = {
+            id: "12",
+            name: "layerBG_2",
+            typ: "WFS",
+            visibility: false
+        };
         layers2D = [
             layer2D_1,
             layer2D_2
@@ -44,6 +57,11 @@ describe("src_3_0_0/modules/layerTree/components/LayerTree.vue", () => {
         layers3D = [
             layer3D
         ];
+        layersBG = [
+            layerBG_1,
+            layerBG_2
+        ];
+        subjectDataLayers = layers2D;
         store = createStore({
             namespaces: true,
             modules: {
@@ -55,11 +73,18 @@ describe("src_3_0_0/modules/layerTree/components/LayerTree.vue", () => {
                 }
             },
             getters: {
-                inTreeVisibleLayerConfigsByMode: () => (mode) => {
-                    if (mode === "2D") {
-                        return layers2D;
-                    }
-                    return layers2D.concat(layers3D);
+                layerConfig: () => {
+                    const config = {
+                        Fachdaten: {
+                            Layer: subjectDataLayers
+                        },
+                        Hintergrundkarten: {
+                            Layer: layersBG
+                        }
+                    };
+
+                    // console.log("test",config.Hintergrundkarten.Layer);
+                    return config;
                 }
             }
         });
@@ -70,14 +95,15 @@ describe("src_3_0_0/modules/layerTree/components/LayerTree.vue", () => {
     });
 
     it("renders the LayerTree without layers", () => {
-        layers2D = [];
+        subjectDataLayers = [];
+        layersBG = [];
         wrapper = shallowMount(LayerTreeComponent, {
             global: {
                 plugins: [store]
             }});
 
         expect(wrapper.find("#layer-tree").exists()).to.be.true;
-        expect(wrapper.findAll("layer-stub").length).to.be.equals(0);
+        expect(wrapper.findAll("layertreenode-stub").length).to.be.equals(0);
     });
 
     it("renders the LayerTree with 2D layers", () => {
@@ -87,18 +113,7 @@ describe("src_3_0_0/modules/layerTree/components/LayerTree.vue", () => {
             }});
 
         expect(wrapper.find("#layer-tree").exists()).to.be.true;
-        expect(wrapper.findAll("layer-stub").length).to.be.equals(2);
-    });
-
-    it("renders the LayerTree with 2D and 3D layers", () => {
-        mapMode = "3D";
-        wrapper = shallowMount(LayerTreeComponent, {
-            global: {
-                plugins: [store]
-            }});
-
-        expect(wrapper.find("#layer-tree").exists()).to.be.true;
-        expect(wrapper.findAll("layer-stub").length).to.be.equals(3);
+        expect(wrapper.findAll("layertreenode-stub").length).to.be.equals(4);
     });
 
     it("renders the LayerTree with 2D layers as children - check layers", () => {
@@ -108,23 +123,25 @@ describe("src_3_0_0/modules/layerTree/components/LayerTree.vue", () => {
             }});
 
         expect(wrapper.find("#layer-tree").exists()).to.be.true;
-        expect(wrapper.findAll("input").length).to.be.equals(2);
+        expect(wrapper.findAll("input").length).to.be.equals(4);
         expect(wrapper.find("#layertree-layer-" + layer2D_1.id).exists()).to.be.true;
         expect(wrapper.find("#layertree-layer-" + layer2D_2.id).exists()).to.be.true;
+        expect(wrapper.find("#layertree-layer-" + layerBG_1.id).exists()).to.be.true;
+        expect(wrapper.find("#layertree-layer-" + layerBG_2.id).exists()).to.be.true;
     });
 
     it("renders the LayerTree with 3D layers as children - check layers", () => {
         mapMode = "3D";
-        wrapper = mount(LayerTreeComponent, {
-            global: {
-                plugins: [store]
-            }});
+        subjectDataLayers = layers2D.concat(layers3D);
+        wrapper = mount(LayerTreeComponent, {store, localVue});
 
         expect(wrapper.find("#layer-tree").exists()).to.be.true;
-        expect(wrapper.findAll("input").length).to.be.equals(3);
+        expect(wrapper.findAll("input").length).to.be.equals(5);
         expect(wrapper.find("#layertree-layer-" + layer2D_1.id).exists()).to.be.true;
         expect(wrapper.find("#layertree-layer-" + layer2D_2.id).exists()).to.be.true;
         expect(wrapper.find("#layertree-layer-" + layer3D.id).exists()).to.be.true;
+        expect(wrapper.find("#layertree-layer-" + layerBG_1.id).exists()).to.be.true;
+        expect(wrapper.find("#layertree-layer-" + layerBG_2.id).exists()).to.be.true;
     });
 
 
