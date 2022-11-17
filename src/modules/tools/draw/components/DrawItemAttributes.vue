@@ -66,7 +66,7 @@ export default {
         this.setAttributesFromFeature();
         this.initAttributesKeyList();
     },
-    beforeDestroy () {
+    beforeUnmount () {
         this.resetStyle(this.selectedFeature);
     },
     methods: {

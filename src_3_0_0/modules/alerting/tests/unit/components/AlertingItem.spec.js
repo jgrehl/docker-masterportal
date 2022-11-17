@@ -5,13 +5,11 @@ import sinon from "sinon";
 import {config, shallowMount} from "@vue/test-utils";
 import {createStore} from "vuex";
 
-const
-    Storage = require("dom-storage");
+const Storage = require("dom-storage");
 
 global.localStorage = new Storage(null, {strict: true});
 
 config.global.mocks.$t = key => key;
-config.global.renderStubDefaultSlot = true;
 config.global.mocks.$i18n = {
     i18next: {
         options: {
@@ -104,10 +102,16 @@ describe("src/modules/alerting/components/AlertingItem.vue", function () {
         });
     });
 
+    afterEach(() => {
+        sinon.restore();
+    });
+
     it("Checking the initially displayed alerts", async function () {
         const
             mountingSettings = {
-                store,
+                global: {
+                    plugins: [store]
+                },
                 computed: {
                     currentUrl: () => "https://localhost:9001/portal/master_3_0_0/"
                 },
