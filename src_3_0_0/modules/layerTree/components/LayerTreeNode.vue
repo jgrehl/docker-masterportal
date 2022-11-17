@@ -1,5 +1,6 @@
 <script>
 import Layer from "./LayerComponent.vue";
+import getNestedValues from "../../../shared/js/utils/getNestedValues";
 
 /**
  * Representation of a node in layertree containing folders or layers.
@@ -27,8 +28,11 @@ export default {
             return Array.isArray(this.conf.Layer);
         },
         isLayer () {
-            return typeof this.conf === "object" && Object.hasOwn(this.conf, "id");
+            return typeof this.conf === "object" && Object.prototype.hasOwnProperty.call(this.conf, "id");
         }
+    },
+    created () {
+    // console.log("###", this.conf);
     },
     methods: {
         /**
@@ -40,6 +44,11 @@ export default {
             if (this.isFolder) {
                 this.isOpen = !this.isOpen;
             }
+        },
+        isLayerInFolderVisible () {
+            const layers = getNestedValues(this.conf, "Layer", "Ordner").flat(Infinity);
+
+            return layers.find(layer => layer.visibility === true) !== undefined;
         }
     }
 };
@@ -49,14 +58,14 @@ export default {
     <div class="no-list">
         <li v-if="isFolder">
             <div
-                :class="{ bold: isFolder, 'folder': true }"
+                :class="{ bold: isLayerInFolderVisible(), 'folder': true }"
                 @click="toggle"
             >
                 <i
                     :class="['fs-4', isOpen ? 'bi bi-folder2-open' : 'bi bi-folder2']"
                     role="img"
                 />
-                <h5>{{ conf.Titel }}</h5>
+                {{ conf.Titel }}
             </div>
             <ul v-show="isOpen">
                 <!--
