@@ -8,8 +8,6 @@
  * @property {String[]} supportedDevices Devices on which the module is displayed.
  * @property {String[]} supportedMapModes Map mode in which this module can be used.
  * @property {String[]} supportedTreeTypes Tree type in which this module is displayed.
- * @property {Boolean} wmsUrl the wms url.
- * @property {Boolean} version the version of wms layer.
  */
 const state = {
     active: false,
@@ -18,9 +16,7 @@ const state = {
     icon: "bi-plus-lg",
     supportedDevices: ["Desktop", "Mobile", "Table"],
     supportedMapModes: ["2D", "3D"],
-    supportedTreeTypes: ["light"],
-    wmsUrl: "",
-    version: ""
+    supportedTreeTypes: ["light"]
 };
 
 export default state;
