@@ -33,7 +33,7 @@ describe("src_3_0_0/shared/components/SimpleButton.vue", () => {
             icon = button.find("i");
 
         expect(button.exists()).to.be.true;
-        expect(button.classes()).to.contain(["btn", "btn-light", "d-flex", "align-items-center"]);
+        expect(button.classes()).to.eql(["btn", "btn-light", "d-flex", "align-items-center"]);
         expect(button.attributes("type")).to.equal("button");
         expect(button.text()).to.equal(text);
         expect(icon.exists()).to.be.true;
@@ -54,7 +54,7 @@ describe("src_3_0_0/shared/components/SimpleButton.vue", () => {
             icon = button.find("i");
 
         expect(button.exists()).to.be.true;
-        expect(button.classes()).to.contain(["btn", "btn-light", "d-flex", "align-items-center"]);
+        expect(button.classes()).to.eql(["btn", "btn-light", "d-flex", "align-items-center"]);
         expect(button.attributes("type")).to.equal("button");
         expect(button.text()).to.equal(text);
         expect(icon.exists()).to.be.false;
