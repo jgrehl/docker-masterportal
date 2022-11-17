@@ -34,6 +34,7 @@ export default {
                     :key="iii"
                 >
                     <LayerTreeNode
+                        :id="conf.id"
                         :conf="conf"
                     />
                 </div>
