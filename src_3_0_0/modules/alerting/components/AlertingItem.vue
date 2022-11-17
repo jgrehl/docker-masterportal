@@ -348,7 +348,7 @@ export default {
         }
         h3 {
             border:none;
-            color: $secondary_contrast;
+            color: $dark_blue;
             font-size:$font-size-lg;
             font-weight:bold;
             letter-spacing:initial;
@@ -358,7 +358,7 @@ export default {
         }
 
         div.singleAlertContainer {
-            color:$secondary_contrast;
+            color:$dark_blue;
             font-size:$font-size-base;
             margin-top:0;
             margin-bottom:0.3125rem;
