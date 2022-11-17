@@ -11,12 +11,14 @@ export default {
         return {
             uniqueId: 100,
             invalidUrl: false,
+            wmsUrl: "",
+            version: "",
             addedLayerIds: []
         };
     },
     computed: {
         ...mapGetters(["portalConfig", "layerConfig"]),
-        ...mapGetters("Modules/AddWMS", ["active", "wmsUrl", "version"]),
+        ...mapGetters("Modules/AddWMS", ["active"]),
         ...mapGetters("Maps", ["projection", "mode"])
     },
     watch: {
@@ -33,7 +35,6 @@ export default {
     },
     methods: {
         ...mapMutations(["addLayerToLayerConfig"]),
-        ...mapMutations("Modules/AddWMS", ["setVersion", "setWmsUrl"]),
 
         /**
          * Sets the focus to the first control
@@ -104,8 +105,8 @@ export default {
                             return;
                         }
 
-                        this.setVersion(version);
-                        this.setWmsUrl(url);
+                        this.version = version;
+                        this.wmsUrl = url;
                         // @todo Ordner externe Fachdaten anlegen
                         // if (Radio.request("Parser", "getItemByAttributes", {id: "ExternalLayer"}) === undefined) {
                         //     Radio.trigger("Parser", "addFolder", "Externe Fachdaten", "ExternalLayer", "tree", 0);
