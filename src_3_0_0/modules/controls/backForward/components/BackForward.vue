@@ -23,7 +23,7 @@ export default {
     mounted () {
         mapCollection.getMap("2D").on("moveend", this.memorizeMap);
     },
-    beforeDestroy () {
+    beforeUnmount () {
         mapCollection.getMap("2D").un("moveend", this.memorizeMap);
     },
     methods: {

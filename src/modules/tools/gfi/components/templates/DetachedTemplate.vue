@@ -18,14 +18,7 @@ export default {
         this.highlightVectorFeature();
         // this.setMarker();
     },
-    updated: function () {
-        if (this.isUpdated) {
-            this.highlightVectorFeature();
-            this.setMarker();
-            this.$emit("updateFeatureDone");
-        }
-    },
-    beforeDestroy: function () {
+    beforeUnmount: function () {
         this.removeHighlighting();
         this.removePointMarker();
     },
