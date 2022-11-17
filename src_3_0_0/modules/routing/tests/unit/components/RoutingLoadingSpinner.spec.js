@@ -3,12 +3,6 @@ import {expect} from "chai";
 import sinon from "sinon";
 import {config, shallowMount, createLocalVue} from "@vue/test-utils";
 import RoutingLoadingSpinnerComponent from "../../../components/RoutingLoadingSpinner.vue";
-import mutations from "../../../store/mutationsRouting";
-import actions from "../../../store/actionsRouting";
-import getters from "../../../store/gettersRouting";
-import state from "../../../store/stateRouting";
-import Directions from "../../../store/directions/indexDirections";
-import Isochrones from "../../../store/isochrones/indexIsochrones";
 
 const localVue = createLocalVue();
 
@@ -28,15 +22,7 @@ describe("src/modules/routing/components/RoutingLoadingSpinner.vue", () => {
                     modules: {
                         Routing:
                         {
-                            namespaced: true,
-                            modules: {
-                                Directions,
-                                Isochrones
-                            },
-                            state: {...state},
-                            mutations,
-                            actions,
-                            getters
+                            namespaced: true
                         }
                     }
                 },
