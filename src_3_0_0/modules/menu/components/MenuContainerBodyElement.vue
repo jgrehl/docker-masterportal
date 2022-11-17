@@ -1,7 +1,7 @@
 <script>
 import {mapActions, mapGetters} from "vuex";
 import isModuleVisible from "../../../shared/js/utils/isModuleVisible";
-import SimpleButton from "../../../shared/components/SimpleButton.vue";
+import SimpleButton from "../../../shared/modules/buttons/components/SimpleButton.vue";
 
 export default {
     name: "MenuContainerBodyElement",
