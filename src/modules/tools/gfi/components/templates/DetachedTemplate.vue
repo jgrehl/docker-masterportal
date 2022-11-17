@@ -18,7 +18,7 @@ export default {
         this.highlightVectorFeature();
         // this.setMarker();
     },
-    beforeDestroy: function () {
+    beforeUnmount: function () {
         this.removeHighlighting();
         this.removePointMarker();
     },
