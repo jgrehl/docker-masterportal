@@ -1,18 +1,18 @@
-import Vuex from "vuex";
-import {config, shallowMount, createLocalVue} from "@vue/test-utils";
 import AlertingStoreModule from "../../../store/indexAlerting";
 import AlertingItemComponent from "../../../components/AlertingItem.vue";
 import {expect} from "chai";
 import sinon from "sinon";
+import {config, shallowMount} from "@vue/test-utils";
+import {createStore} from "vuex";
 
 const
-    localVue = createLocalVue(),
     Storage = require("dom-storage");
 
 global.localStorage = new Storage(null, {strict: true});
-localVue.use(Vuex);
-config.mocks.$t = key => key;
-config.mocks.$i18n = {
+
+config.global.mocks.$t = key => key;
+config.global.renderStubDefaultSlot = true;
+config.global.mocks.$i18n = {
     i18next: {
         options: {
             isEnabled: () => sinon.stub(),
@@ -88,7 +88,7 @@ describe("src/modules/alerting/components/AlertingItem.vue", function () {
         };
 
     beforeEach(() => {
-        store = new Vuex.Store({
+        store = createStore({
             modules: {
                 Alerting: AlertingStoreModule
             },
@@ -115,8 +115,7 @@ describe("src/modules/alerting/components/AlertingItem.vue", function () {
                     fetchBroadcast: function () {
                         this.axiosCallback(alertingData);
                     }
-                },
-                localVue
+                }
             };
 
         let
