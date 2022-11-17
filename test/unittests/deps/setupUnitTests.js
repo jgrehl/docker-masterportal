@@ -6,6 +6,7 @@ global.SVGElement = window.SVGElement;
 
 /**
  * EnableAutoUnmount allows to automatically destroy Vue wrappers.
+ * No wrapper.destroy() is needed in each test.
  * Destroy logic is passed as callback to hook Function.
  */
 enableAutoUnmount(afterEach);
