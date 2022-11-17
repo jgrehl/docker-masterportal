@@ -4,7 +4,7 @@ import rawLayerList from "@masterportal/masterportalapi/src/rawLayerList";
 import isMobile from "../../../shared/js/utils/isMobile";
 import {convertSexagesimalFromString, convertSexagesimalToDecimal, convertSexagesimalFromDecimal} from "../js/convertSexagesimalCoordinates";
 import {requestGfi} from "../../../shared/js/api/wmsGetFeatureInfo";
-import {createLayer} from "../../../core/layers/js/layerFactory";
+import layerFactory from "../../../core/layers/js/layerFactory";
 
 export default {
     /**
@@ -87,7 +87,7 @@ export default {
             layerConfig = rootGetters.layerConfigById(state.heightLayerId);
 
             if (layerConfig) {
-                commit("setHeightLayer", createLayer(layerConfig));
+                commit("setHeightLayer", layerFactory.createLayer(layerConfig));
             }
         }
         if (!layerConfig) {
