@@ -106,8 +106,8 @@ describe("src/modules/tools/coordToolkit/store/gettersCoordToolkit.js", () => {
         it("returns the isVisibleInMenu default value from state", () => {
             expect(getters.isVisibleInMenu(stateCoord)).to.be.true;
         });
-        it("returns the deactivateGFI default value from state", () => {
-            expect(getters.deactivateGFI(stateCoord)).to.be.true;
+        it("returns the deactivateGfi default value from state", () => {
+            expect(getters.deactivateGfi(stateCoord)).to.be.true;
         });
 
     });

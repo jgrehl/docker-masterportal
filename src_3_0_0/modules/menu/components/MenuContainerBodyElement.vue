@@ -75,21 +75,13 @@ export default {
 <template>
     <div>
         <SimpleButton
-            v-if="checkIsVisible()"
+            v-if="checkIsVisible() && !$attrs.isInVisibleInMenu"
             :interaction="() => clickedMenuElement(path)"
             :text="name"
             :icon="showIcon ? icon : null"
             customclass="w-100 justify-content-start"
-            :class="$attrs.isInVisibleInMenu ? 'is-invisible' : ''"
         />
         <!-- TODO(roehlipa): Properly add description -->
         <!-- TODO(roehlipa): Buttons should look differently when mobile -->
     </div>
 </template>
-
-<style lang="scss" scoped>
-    .is-invisible {
-        display: none;
-    }
-</style>
-

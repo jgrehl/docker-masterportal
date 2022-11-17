@@ -1,6 +1,7 @@
 import menuState from "./stateMenu";
-import {generateSimpleGetters} from "../../../shared/js/utils/generators";
 import {badPathSymbol, idx} from "../../../shared/js/utils/idx";
+import {generateSimpleGetters} from "../../../shared/js/utils/generators";
+import upperFirst from "../../../shared/js/utils/upperFirst";
 
 const menuGetters = {
     ...generateSimpleGetters(menuState),
@@ -16,6 +17,21 @@ const menuGetters = {
             return rootState.Modules.componentMap[getters.objectFromPath(side, "last").type];
         }
         console.error(`Menu.componentMap: The given menu side ${side} is not allowed. Please use "mainMenu" or "secondaryMenu" instead.`);
+        return null;
+    },
+
+    /**
+     * @param {MenuState} _ Local vuex state (discarded).
+     * @param {Object} getters Local vuex getters.
+     * @param {Object} rootState vuex rootState.
+     * @param {Object} rootGetters Root getters.
+     * @returns {(function(side: String): Boolean|null)} Function returning gfi should deactivate.
+     */
+    deactivateGfi: (_, getters, rootState, rootGetters) => side => {
+        // eslint-disable-next-line new-cap
+        if (["mainMenu", "secondaryMenu"].includes(side) && rootGetters["Menu/Navigation/lastEntry"](side) !== null) {
+            return rootState.Modules[upperFirst(getters.objectFromPath(side, "last")?.type)]?.deactivateGfi || null;
+        }
         return null;
     },
 
