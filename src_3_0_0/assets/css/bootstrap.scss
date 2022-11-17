@@ -16,11 +16,13 @@
 // 3. Include remainder of required Bootstrap stylesheets
 @import "~bootstrap-icons/font/bootstrap-icons";
 
-.bootstrap-icon {
-    position: relative;
-    line-height: 1;
-    display: inline-block;
-    vertical-align: middle;
+.btn-icon {
+    padding-right: 1.5rem;
+    padding-left: 1rem;
+   i {
+        font-size: 1.125rem;
+        padding-right: .5rem;
+   }
 }
 
 // 4. Include any optional Bootstrap CSS as needed
