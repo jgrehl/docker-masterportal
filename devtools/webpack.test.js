@@ -31,13 +31,10 @@ module.exports = {
     // output: {
     //     devtoolModuleFilenameTemplate: "[absolute-resource-path]"
     // },
-
-    // resolve: {
-    //     alias: {
-    //         "vue": "@vue/compat",
-    //         "server-renderer": "@vue/server-renderer"
-    //     }
-    // },
+    resolve: {
+        alias: {
+            vue: "@vue/runtime-dom"
+        }},
     externals: [
         /^(bootstrap-slider|\$)$/i
     ],
@@ -85,7 +82,8 @@ module.exports = {
                         compatConfig: {
                             MODE: 3
                         }
-                    }
+                    },
+                    isServerBuild: false
                 }
             },
             {

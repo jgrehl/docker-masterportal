@@ -19,7 +19,7 @@ export default {
         target.focus();
         this.setLayerSwiperDomSwiper(target);
     },
-    beforeDestroy: function () {
+    beforeUnmount: function () {
         mapCollection.getMap(this.mode).un("postcompose", this.updateMap);
     },
     methods: {
