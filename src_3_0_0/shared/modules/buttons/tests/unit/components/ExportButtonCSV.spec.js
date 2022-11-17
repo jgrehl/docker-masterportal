@@ -1,14 +1,14 @@
 import Vuex from "vuex";
 import {config, shallowMount, createLocalVue} from "@vue/test-utils";
 import {expect} from "chai";
-import ExportButtonCSV from "../../ExportButtonCSV.vue";
+import ExportButtonCSV from "../../../components/ExportButtonCSV.vue";
 
 const localVue = createLocalVue();
 
 localVue.use(Vuex);
 config.mocks.$t = key => key;
 
-describe("src_3_0_0/shared/components/exportButtonCSV.vue", () => {
+describe("src_3_0_0/shared/modules/buttons/components/exportButtonCSV.vue", () => {
     before(() => {
         i18next.init({
             lng: "cimode",
