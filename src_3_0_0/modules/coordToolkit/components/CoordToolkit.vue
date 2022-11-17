@@ -58,7 +58,7 @@ export default {
             }
         }
     },
-    destroyed () {
+    unmounted () {
         this.resetErrorMessages("all");
         this.resetValues();
         this.setSupplyCoordInactive();
