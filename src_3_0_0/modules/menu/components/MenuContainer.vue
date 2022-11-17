@@ -2,7 +2,7 @@
 import {mapGetters, mapActions} from "vuex";
 import MenuContainerBody from "./MenuContainerBody.vue";
 import MenuContainerHeader from "./MenuContainerHeader.vue";
-import ResizeHandle from "../../../shared/components/ResizeHandle.vue";
+import ResizeHandle from "../../../shared/modules/resize/components/ResizeHandle.vue";
 import LayerTree from "../../layerTree/components/LayerTree.vue";
 
 
