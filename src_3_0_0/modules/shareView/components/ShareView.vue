@@ -2,15 +2,20 @@
 import {mapGetters, mapMutations} from "vuex";
 import mutations from "../store/mutationsShareView";
 import QRCode from "qrcode";
+import FlatButton from "../../../shared/components/FlatButton.vue";
 
 /**
  * Tool to share a view via link to twitter, facebook, qrCode or copy the link as well as any other app on mobile.
  */
 export default {
     name: "ShareView",
+    components: {FlatButton},
     data () {
         return {
-            qrDataUrl: null
+            qrDataUrl: null,
+            qrIcon: "bi-qr-code",
+            downloadIcon: "bi-download",
+            linkIcon: "bi-link"
         };
     },
     computed: {
@@ -98,7 +103,7 @@ export default {
         <div v-if="isMobile">
             <button
                 aria-label="$t('modules.tools.shareView.share')"
-                class="btn btn-primary"
+                class="btn btn-secondary btn-icon"
                 @click="share"
             >
                 <i class="bi-share" />
@@ -113,7 +118,7 @@ export default {
                 <a
                     id="twitter-btn"
                     aria-label="$t('modules.tools.shareView.shareTwitter')"
-                    class="btn btn-secondary"
+                    class="btn btn-secondary btn-icon mb-3"
                     :href="twitter"
                     target="_blank"
                     role="button"
@@ -126,7 +131,7 @@ export default {
                 <a
                     id="facebook-btn"
                     aria-label="$t('modules.tools.shareView.shareFacebook')"
-                    class="btn btn-secondary"
+                    class="btn btn-secondary btn-icon mb-3"
                     :href="facebook"
                     target="_blank"
                     role="button"
@@ -136,26 +141,22 @@ export default {
                 </a>
             </div>
             <div class="col-12">
-                <button
+                <FlatButton
                     id="copy-btn"
                     aria-label="$t('modules.tools.shareView.shareLink')"
-                    class="btn btn-secondary"
-                    @click="copyToClipboard"
-                >
-                    <i class="bi-link" />
-                    {{ $t("modules.tools.shareView.shareLink") }}
-                </button>
+                    :interaction="copyToClipboard"
+                    :text="$t('modules.tools.shareView.shareLink')"
+                    :icon="linkIcon"
+                />
             </div>
             <div class="col-12">
-                <button
+                <FlatButton
                     id="qr-btn"
-                    aria-label="$t('modules.tools.shareView.shareQR') "
-                    class="btn btn-secondary"
-                    @click="generateQRCodeDataURL"
-                >
-                    <i class="bi-qr-code" />
-                    {{ $t("modules.tools.shareView.shareQR") }}
-                </button>
+                    aria-label="$t('modules.tools.shareView.shareQR')"
+                    :interaction="generateQRCodeDataURL"
+                    :text="$t('modules.tools.shareView.shareQR')"
+                    :icon="qrIcon"
+                />
             </div>
             <div
                 v-if="qrDataUrl"
@@ -165,14 +166,18 @@ export default {
                     alt="qr Code"
                     :src="qrDataUrl"
                 >
-                <button
+                <FlatButton
                     aria-label="$t('modules.tools.shareView.downloadQR')"
-                    class="btn btn-secondary"
-                    @click="downloadQr"
-                >
-                    {{ $t("modules.tools.shareView.downloadQR") }}
-                </button>
+                    :interaction="downloadQr"
+                    :text="$t('modules.tools.shareView.downloadQR')"
+                    :icon="downloadIcon"
+                />
             </div>
         </div>
     </div>
 </template>
+
+<style lang="scss" scoped>
+@import "~variables";
+
+</style>
