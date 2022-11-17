@@ -20,7 +20,13 @@ export default {
         }
     },
     computed: {
-        ...mapGetters("Menu", ["componentFromPath", "mainMenu", "objectFromPath", "secondaryMenu"]),
+        ...mapGetters("Menu", [
+            "componentFromPath",
+            "deactivateGfi",
+            "mainMenu",
+            "objectFromPath",
+            "secondaryMenu"
+        ]),
         ...mapGetters("Menu/Navigation", ["lastEntry"]),
         ...mapGetters("Modules/GetFeatureInfo", ["menuSide"]),
         /**
@@ -49,7 +55,7 @@ export default {
     >
         <MenuNavigation :side="side" />
         <GetFeatureInfo
-            v-if="side === menuSide"
+            v-if="side === menuSide && !(deactivateGfi(side) === true)"
         />
         <component
             :is="componentFromPath(side)"
@@ -78,9 +84,5 @@ export default {
         align-items: stretch;
         padding: $padding;
         font-size: $font-size-base;
-    }
-
-    .is-invisible {
-        display: none;
     }
 </style>
