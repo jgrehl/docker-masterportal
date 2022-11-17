@@ -1,12 +1,12 @@
 <script>
 import axios from "axios";
 import moment from "moment";
-import {convertJsonToCsv} from "../js/utils/convertJsonToCsv.js";
+import {convertJsonToCsv} from "../../../js/utils/convertJsonToCsv.js";
 import {
     createCsvBlob,
     downloadBlobPerNavigator,
     downloadBlobPerHTML5
-} from "./exportButtonUtils.js";
+} from "../js/exportButtonUtils.js";
 
 export default {
     name: "ExportButtonCSV",
