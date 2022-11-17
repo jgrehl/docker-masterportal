@@ -13,6 +13,7 @@ import Isochrones from "../../../store/isochrones/indexIsochrones";
 const localVue = createLocalVue();
 
 localVue.use(Vuex);
+
 config.mocks.$t = key => key;
 
 describe("src/modules/routing/components/RoutingTemplate.vue", () => {
@@ -79,7 +80,7 @@ describe("src/modules/routing/components/RoutingTemplate.vue", () => {
                                 Directions,
                                 Isochrones
                             },
-                            state: {...state},
+                            state,
                             mutations,
                             actions,
                             getters

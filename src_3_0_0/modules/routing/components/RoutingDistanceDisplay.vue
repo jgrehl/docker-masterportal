@@ -27,7 +27,6 @@ export default {
          * @returns {Number} kilometer distance
          */
         kmDistance () {
-            console.log('this.roundedDistance', this.roundedDistance);
             return thousandsSeparator(Math.floor((this.roundedDistance / 1000) * 10) / 10);
         }
     }
