@@ -59,7 +59,7 @@ export default {
         this.initIsochrones();
     },
 
-    beforeDestroy () {
+    beforeUnmount () {
         this.closeIsochrones();
     },
 

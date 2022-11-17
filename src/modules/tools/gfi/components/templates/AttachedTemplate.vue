@@ -63,7 +63,7 @@ export default {
         this.createOverlay();
         this.createPopover();
     },
-    beforeDestroy () {
+    beforeUnmount () {
         mapCollection.getMap("2D").removeOverlay(this.overlay);
     },
     methods: {
