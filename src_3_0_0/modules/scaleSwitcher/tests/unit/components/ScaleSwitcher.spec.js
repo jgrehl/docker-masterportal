@@ -1,14 +1,11 @@
-import {config, shallowMount, createLocalVue} from "@vue/test-utils";
 import {expect} from "chai";
 import sinon from "sinon";
-import Vuex from "vuex";
+import {config, shallowMount} from "@vue/test-utils";
+import {createStore} from "vuex";
 
 import ScaleSwitcherComponent from "../../../components/ScaleSwitcher.vue";
 
-const localVue = createLocalVue();
-
-localVue.use(Vuex);
-config.mocks.$t = key => key;
+config.global.mocks.$t = key => key;
 
 describe("src_3_0_0/modules/scaleSwitcher/components/ScaleSwitcher.vue", () => {
     const scales = ["1000", "5000", "10000"],
@@ -36,7 +33,7 @@ describe("src_3_0_0/modules/scaleSwitcher/components/ScaleSwitcher.vue", () => {
     beforeEach(() => {
         mapCollection.clear();
 
-        store = new Vuex.Store({
+        store = createStore({
             namespaces: true,
             modules: {
                 Modules: {
@@ -105,29 +102,35 @@ describe("src_3_0_0/modules/scaleSwitcher/components/ScaleSwitcher.vue", () => {
     });
 
     afterEach(() => {
-        if (wrapper) {
-            wrapper.destroy();
-        }
         sinon.restore();
     });
 
     it("renders the scaleSwitcher", () => {
         active = true;
-        wrapper = shallowMount(ScaleSwitcherComponent, {store, localVue});
+        wrapper = shallowMount(ScaleSwitcherComponent, {
+            global: {
+                plugins: [store]
+            }});
 
         expect(wrapper.find("#scale-switcher").exists()).to.be.true;
     });
 
     it("do not render the scaleSwitchers select if not active", () => {
         active = false;
-        wrapper = shallowMount(ScaleSwitcherComponent, {store, localVue});
+        wrapper = shallowMount(ScaleSwitcherComponent, {
+            global: {
+                plugins: [store]
+            }});
 
         expect(wrapper.find("#scale-switcher").exists()).to.be.false;
     });
 
     it("has initially set all scales to select", () => {
         active = true;
-        wrapper = shallowMount(ScaleSwitcherComponent, {store, localVue});
+        wrapper = shallowMount(ScaleSwitcherComponent, {
+            global: {
+                plugins: [store]
+            }});
         const options = wrapper.findAll("option");
 
         expect(options.length).to.equal(scales.length);
@@ -138,7 +141,10 @@ describe("src_3_0_0/modules/scaleSwitcher/components/ScaleSwitcher.vue", () => {
 
     it("has initially selected scale", async () => {
         active = true;
-        wrapper = shallowMount(ScaleSwitcherComponent, {store, localVue});
+        wrapper = shallowMount(ScaleSwitcherComponent, {
+            global: {
+                plugins: [store]
+            }});
         const select = wrapper.find("select");
 
         expect(select.element.value).to.equals("1000");
@@ -146,7 +152,10 @@ describe("src_3_0_0/modules/scaleSwitcher/components/ScaleSwitcher.vue", () => {
 
     it("renders the correct value when select is changed", async () => {
         active = true;
-        wrapper = shallowMount(ScaleSwitcherComponent, {store, localVue});
+        wrapper = shallowMount(ScaleSwitcherComponent, {
+            global: {
+                plugins: [store]
+            }});
         const select = wrapper.find("select"),
             options = wrapper.findAll("option");
 
@@ -162,11 +171,13 @@ describe("src_3_0_0/modules/scaleSwitcher/components/ScaleSwitcher.vue", () => {
         const elem = document.createElement("div");
 
         active = true;
-
         if (document.body) {
             document.body.appendChild(elem);
         }
-        wrapper = shallowMount(ScaleSwitcherComponent, {store, localVue, attachTo: elem});
+        wrapper = shallowMount(ScaleSwitcherComponent, {
+            global: {
+                plugins: [store]
+            }});
         wrapper.vm.setFocusToFirstControl();
         await wrapper.vm.$nextTick();
         expect(wrapper.find("#scale-switcher-select").element).to.equal(document.activeElement);
