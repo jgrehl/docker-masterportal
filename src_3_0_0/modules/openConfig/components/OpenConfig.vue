@@ -87,7 +87,7 @@ export default {
         >
             <label
                 ref="file-upload-label"
-                class="btn btn-secondary"
+                class="btn btn-secondary btn-icon"
                 tabindex="0"
                 @keydown="triggerClickOnFileInput"
             >
@@ -97,7 +97,6 @@ export default {
                     @change="loadFile"
                 >
                 <span
-                    class="bootstrap-icon pe-4"
                     aria-hidden="true"
                 >
                     <i :class="icon" />
