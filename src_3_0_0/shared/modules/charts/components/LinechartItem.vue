@@ -1,7 +1,7 @@
 <script>
 import ChartJs from "chart.js";
-import deepAssign from "../js/utils/deepAssign.js";
-import thousandsSeparator from "../js/utils/thousandsSeparator.js";
+import deepAssign from "../../../js/utils/deepAssign.js";
+import thousandsSeparator from "../../../js/utils/thousandsSeparator.js";
 
 export default {
     name: "LinechartItem",
