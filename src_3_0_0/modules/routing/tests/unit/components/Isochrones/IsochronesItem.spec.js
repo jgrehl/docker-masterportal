@@ -16,28 +16,14 @@ import actionsIsochrones from "../../../../store/isochrones/actionsIsochrones";
 import gettersIsochrones from "../../../../store/isochrones/gettersIsochrones";
 import stateIsochrones from "../../../../store/isochrones/stateIsochrones";
 
+config.silent = true;
 const localVue = createLocalVue();
 
 localVue.use(Vuex);
 config.mocks.$t = key => key;
 
 describe("src/modules/routing/components/Isochrones/IsochronesItem.vue", () => {
-    const mockConfigJson = {
-        Portalconfig: {
-            mainMenu: {
-                sections: [
-                    [
-                        {
-                            "type": "routing",
-                            "name": "translate#common:menu.tools.routing",
-                            "icon": "bi-signpost-2-fill",
-                            "renderToWindow": true
-                        }
-                    ]
-                ]
-            }
-        }
-    };
+
     let store,
         wrapper;
 
@@ -66,12 +52,13 @@ describe("src/modules/routing/components/Isochrones/IsochronesItem.vue", () => {
                             modules: {
                                 Isochrones: {
                                     namespaced: true,
-                                    state: {...stateIsochrones},
+                                    state: stateIsochrones,
                                     mutations: mutationsIsochrones,
                                     actions: actionsIsochrones,
                                     getters: gettersIsochrones
                                 }
                             },
+                            state,
                             mutations,
                             actions,
                             getters
@@ -89,9 +76,6 @@ describe("src/modules/routing/components/Isochrones/IsochronesItem.vue", () => {
                         addInteraction: sinon.stub()
                     }
                 }
-            },
-            state: {
-                configJson: mockConfigJson
             }
         });
         store.commit("Modules/Routing/setActive", true);

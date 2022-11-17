@@ -1,14 +1,7 @@
 import Vuex from "vuex";
 import {expect} from "chai";
-import sinon from "sinon";
 import {config, shallowMount, createLocalVue} from "@vue/test-utils";
 import RoutingSpeedProfileIconComponent from "../../../components/RoutingSpeedProfileIcon.vue";
-import mutations from "../../../store/mutationsRouting";
-import actions from "../../../store/actionsRouting";
-import getters from "../../../store/gettersRouting";
-import state from "../../../store/stateRouting";
-import Directions from "../../../store/directions/indexDirections";
-import Isochrones from "../../../store/isochrones/indexIsochrones";
 
 const localVue = createLocalVue();
 
