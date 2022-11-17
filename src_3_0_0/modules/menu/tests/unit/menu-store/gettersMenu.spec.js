@@ -10,6 +10,7 @@ describe("src_3_0_0/modules/menu/menu-store/gettersMenu.js", () => {
         secondaryMenuSymbol = Symbol("secondaryMenu");
     let consoleErrorSpy,
         getters,
+        rootState,
         rootGetters,
         state;
 
@@ -24,6 +25,14 @@ describe("src_3_0_0/modules/menu/menu-store/gettersMenu.js", () => {
             mainMenu: null,
             secondaryMenu: null
         };
+        rootState = {
+            Modules: {
+                Measure: {
+                    deactivateGfi: true
+                },
+                ExampleModule: {}
+            }
+        };
         rootGetters = {
             Modules: {
                 componentMap: {
@@ -36,7 +45,8 @@ describe("src_3_0_0/modules/menu/menu-store/gettersMenu.js", () => {
             portalConfig: {
                 mainMenu: mainMenuSymbol,
                 secondaryMenu: secondaryMenuSymbol
-            }
+            },
+            "Menu/Navigation/lastEntry": sinon.stub()
         };
     });
 
@@ -78,6 +88,34 @@ describe("src_3_0_0/modules/menu/menu-store/gettersMenu.js", () => {
             expect(consoleErrorSpy.calledOnce).to.be.true;
             expect(consoleErrorSpy.firstCall.args.length).to.equal(1);
             expect(consoleErrorSpy.firstCall.args[0]).to.equal(`Menu.componentMap: The given menu side ${side} is not allowed. Please use "mainMenu" or "secondaryMenu" instead.`);
+        });
+    });
+
+    describe("deactivateGfi", () => {
+        let objectFromPathFake, side;
+
+        beforeEach(() => {
+            state = {};
+        });
+
+        it("should return true, if the activated module has and attribute 'deactivateGfi': true", () => {
+            const type = "measure";
+
+            objectFromPathFake = sinon.fake.returns({type});
+            getters.objectFromPath = objectFromPathFake;
+            side = "mainMenu";
+
+            expect(gettersMenu.deactivateGfi(undefined, getters, rootState, rootGetters)(side)).to.be.true;
+        });
+
+        it("should return null, if the activated module has no attribute 'deactivateGfi': true", () => {
+            const type = "exampleModule";
+
+            objectFromPathFake = sinon.fake.returns({type});
+            getters.objectFromPath = objectFromPathFake;
+            side = "mainMenu";
+
+            expect(gettersMenu.deactivateGfi(undefined, getters, rootState, rootGetters)(side)).to.be.null;
         });
     });
 
