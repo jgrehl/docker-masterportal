@@ -7,15 +7,19 @@ import {Vector} from "ol/layer.js";
 import mutations from "../store/mutationsPrint";
 import thousandsSeparator from "../../../shared/js/utils/thousandsSeparator";
 import getVisibleLayer from "../js/getVisibleLayer";
+import FlatButton from "../../../shared/components/FlatButton.vue";
 
 /**
  * Tool to print a part of the map
  */
 export default {
     name: "PrintMap",
+    components: {FlatButton},
     data () {
         return {
-            showHintInfoScale: false
+            showHintInfoScale: false,
+            printIcon: "bi-printer",
+            downloadIcon: "bi-download"
         };
     },
     computed: {
@@ -560,15 +564,14 @@ export default {
                 </div>
             </div>
             <div class="form-group form-group-sm row">
-                <div class="col-md-12 d-grid gap-2">
-                    <button
+                <div class="col-md-12 d-flex justify-content-center">
+                    <FlatButton
                         id="printBtn"
-                        type="button"
-                        class="btn btn-primary"
-                        @click="print"
-                    >
-                        {{ $t("common:modules.tools.print.printLabel") }}
-                    </button>
+                        aria-label="$t('modules.tools.print.printLabel')"
+                        :interaction="print"
+                        :text="$t('modules.tools.print.printLabel')"
+                        :icon="printIcon"
+                    />
                 </div>
             </div>
         </form>
@@ -606,16 +609,17 @@ export default {
                     </div>
                 </div>
                 <div class="col-md-6 d-grid gap-2 modules-print-download-button-container">
-                    <button
+                    <FlatButton
                         v-if="file.finishState"
-                        class="btn btn-primary btn-sm"
-                        @click="download($event.target, file.downloadUrl, file.filename)"
-                    >
-                        {{ $t("common:modules.tools.print.downloadFile") }}
-                    </button>
+                        aria-label="$t('modules.tools.print.downloadFile')"
+                        :interaction="($event) => download($event.target, file.downloadUrl, file.filename)"
+                        :text="$t('modules.tools.print.downloadFile')"
+                        :icon="downloadIcon"
+                    />
+
                     <button
                         v-else
-                        class="btn btn-outline-default btn-sm modules-print-download-button-disabled"
+                        class="btn btn-outline-default modules-print-download-button-disabled rounded-pill"
                         disabled
                     >
                         {{ $t("common:modules.tools.print.createDownloadFile") }}
@@ -684,7 +688,7 @@ export default {
 
             .modules-print-download-icon {
                 font-size: $font-size-lg;
-                color: $light_blue;
+                color: darkgreen;
             }
 
             .modules-print-download-button-disabled {
