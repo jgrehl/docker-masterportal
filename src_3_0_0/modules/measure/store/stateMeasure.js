@@ -39,6 +39,7 @@ const state = {
     supportedDevices: ["Desktop", "Mobile", "Table"],
     supportedMapModes: ["2D"],
     type: "measure",
+    deactivateGfi: true,
 
     // tool-specific config.json parameters
     earthRadius: 6378137,
