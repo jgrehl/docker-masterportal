@@ -1,6 +1,6 @@
 <script>
 import {mapGetters, mapMutations} from "vuex";
-import {getLayerTypes3d} from "../../../core/layers/js/layerFactory";
+import layerFactory from "../../../core/layers/js/layerFactory";
 import {Tooltip} from "bootstrap";
 
 export default {
@@ -52,7 +52,7 @@ export default {
         setVisibleLayers (visibleLayers, mapMode) {
             if (visibleLayers) {
                 if (mapMode === "2D") {
-                    const layerTypes3d = getLayerTypes3d(),
+                    const layerTypes3d = layerFactory.getLayerTypes3d(),
                         visible2DLayers = visibleLayers.filter(layer => {
                             return !layerTypes3d.includes(layer.typ.toUpperCase());
                         });
