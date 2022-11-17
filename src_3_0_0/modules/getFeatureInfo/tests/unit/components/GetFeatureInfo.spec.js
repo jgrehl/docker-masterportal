@@ -37,7 +37,10 @@ function getGfiStore () {
                     GetFeatureInfo: {
                         namespaced: true,
                         mutations: mockMutations,
-                        getters: mockGetters
+                        getters: mockGetters,
+                        actions: {
+                            addGfiToMenu: sinon.stub()
+                        }
                     }
                 }
             },

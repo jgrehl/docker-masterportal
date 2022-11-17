@@ -34,7 +34,7 @@
  * @property {Boolean} renderToWindow if true, tool is rendered in a window, else in sidebar (config-param)
  * @property {Boolean} resizableWindow if true, window is resizable (config-param)
  * @property {Boolean} isVisibleInMenu if true, tool is selectable in menu (config-param)
- * @property {Boolean} deactivateGFI flag if tool should deactivate gfi (config-param)
+ * @property {Boolean} deactivateGfi flag if tool should deactivate gfi (config-param)
  */
 const state = {
     icon: "bi-globe",
@@ -43,7 +43,7 @@ const state = {
     type: "coordToolkit",
     active: false,
     isVisibleInMenu: true,
-    deactivateGFI: true,
+    deactivateGfi: true,
     supportedDevices: ["Desktop", "Mobile", "Table"],
     supportedMapModes: ["2D", "3D"],
 
