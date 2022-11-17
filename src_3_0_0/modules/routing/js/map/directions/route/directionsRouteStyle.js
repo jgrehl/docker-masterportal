@@ -7,9 +7,8 @@ import stateRouting from "../../../../store/stateRouting";
  * @returns {ol/Style} style function
  */
 export default function createDirectionsRouteStyle (feature) {
-    console.log(stateRouting);
     // check if correct?
-    const styleSetting = stateRouting.directionsSettings.styleRoute? stateRouting.directionsSettings.styleRoute : stateRouting.Directions.settings.styleRoute,
+    const styleSetting = stateRouting.directionsSettings.styleRoute ? stateRouting.directionsSettings.styleRoute : stateRouting.Directions.settings.styleRoute,
         isHighlight = feature.get("isHighlight");
 
     if (isHighlight) {
