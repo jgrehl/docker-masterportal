@@ -1,4 +1,4 @@
-import {createLayer} from "./layerFactory";
+import layerFactory from "./layerFactory";
 import layerCollection from "./layerCollection";
 import store from "../../../app-store";
 
@@ -55,7 +55,7 @@ export function processLayerConfig (layerConfig, mapMode) {
             updateLayerAttributes(layer, layerConf);
         }
         else if (layerConf.visibility === true) {
-            layer = createLayer(layerConf, mapMode);
+            layer = layerFactory.createLayer(layerConf, mapMode);
             processLayer(layer, mapMode);
         }
     });
