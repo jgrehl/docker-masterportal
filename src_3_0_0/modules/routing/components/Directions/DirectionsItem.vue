@@ -9,7 +9,6 @@ import RoutingDurationDisplay from "../RoutingDurationDisplay.vue";
 import DirectionsItemBatchProcessing from "./DirectionsItemBatchProcessing.vue";
 import RoutingBatchProcessingCheckbox from "../RoutingBatchProcessingCheckbox.vue";
 import RoutingDownload from "../RoutingDownload.vue";
-import RoutingAvoidFeatures from "../RoutingAvoidFeatures.vue";
 import RoutingSpeedProfileIcon from "../RoutingSpeedProfileIcon.vue";
 import * as constants from "../../store/directions/constantsDirections";
 import * as constantsRouting from "../../store/constantsRouting";
@@ -23,7 +22,7 @@ export default {
         RoutingDownload,
         DirectionsItemBatchProcessing,
         RoutingBatchProcessingCheckbox,
-        RoutingAvoidFeatures,
+        RoutingAvoidFeatures: () => import("../RoutingAvoidFeatures.vue"),
         RoutingSpeedProfileIcon
     },
     data () {
