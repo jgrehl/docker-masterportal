@@ -4,6 +4,17 @@ import {generateSimpleMutations} from "../../../shared/js/utils/generators";
 
 export default {
     ...generateSimpleMutations(menuState),
+
+    /**
+     * Adds a module state to a menu side section.
+     * @param {Object} state the state
+     * @param {Object} moduleState State of a module.
+     * @returns {void}
+     */
+    addModuleToMenuSection (state, moduleState) {
+        state[moduleState.menuSide].sections[0].push(moduleState);
+    },
+
     /**
      * Toggles Menucontainers
      * @param {Object} currentState current state

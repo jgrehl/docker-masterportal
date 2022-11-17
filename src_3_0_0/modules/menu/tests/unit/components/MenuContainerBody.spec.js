@@ -4,6 +4,7 @@ import MenuContainerBody from "../../../components/MenuContainerBody.vue";
 import {expect} from "chai";
 import MenuNavigation from "../../../navigation/components/MenuNavigation.vue";
 import MenuContainerBodyItems from "../../../components/MenuContainerBodyItems.vue";
+import sinon from "sinon";
 
 const localVue = createLocalVue();
 
@@ -15,15 +16,15 @@ describe("src_3_0_0/modules/menu/MenuContainerBody.vue", () => {
     const sampleConfigObject = {name: "awesomeName"};
 
     beforeEach(() => {
-
         store = new Vuex.Store({
             namespaces: true,
             modules: {
                 Menu: {
                     namespaced: true,
                     getters: {
-                        objectFromPath: () => () => sampleConfigObject,
                         componentFromPath: () => () => ({}),
+                        objectFromPath: () => () => sampleConfigObject,
+                        deactivateGfi: () => sinon.stub(),
                         mainMenu: state => ({
                             sections: state.menuSections
                         }),
@@ -44,6 +45,17 @@ describe("src_3_0_0/modules/menu/MenuContainerBody.vue", () => {
                             namespaced: true,
                             getters: {
                                 lastEntry: () => () => null
+                            }
+                        }
+                    }
+                },
+                Modules: {
+                    namespaced: true,
+                    modules: {
+                        GetFeatureInfo: {
+                            namespaced: true,
+                            getters: {
+                                menuSide: () => "secondaryMenu"
                             }
                         }
                     }
@@ -97,6 +109,23 @@ describe("src_3_0_0/modules/menu/MenuContainerBody.vue", () => {
             mainMenuBodyWrapper = wrapper.find("#mp-body-secondaryMenu");
 
             expect(mainMenuBodyWrapper.findAllComponents(MenuContainerBodyItems).length).to.be.equal(sectionCount);
+        });
+    });
+    describe("GetFeatureInfo", () => {
+        it("render the GetFeatureInfo component", () => {
+            const wrapper = shallowMount(MenuContainerBody, {
+                store,
+                components: {
+                    GetFeatureInfo: {
+                        name: "GetFeatureInfo",
+                        template: "<span />"
+                    }
+                },
+                localVue,
+                propsData: {side: "secondaryMenu"}
+            });
+
+            expect(wrapper.findComponent({name: "GetFeatureInfo"}).exists()).to.be.true;
         });
     });
 });
