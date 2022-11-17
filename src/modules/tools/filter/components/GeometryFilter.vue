@@ -141,7 +141,7 @@ export default {
         this.initializeLayer(this.filterGeometry);
     },
 
-    beforeDestroy () {
+    beforeUnmount () {
         this.removeInteraction(this.draw);
         this.removeLayerFromMap(this.layer);
     },
