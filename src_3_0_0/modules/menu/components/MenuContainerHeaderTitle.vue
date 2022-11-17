@@ -66,7 +66,7 @@ export default {
         }
 
         h1 {
-            color: $secondary_contrast;
+            color: $dark_blue;
             font-size: $font_size_huge;
             flex-grow: 1;
             margin-left: 20px;
