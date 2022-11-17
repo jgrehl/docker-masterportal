@@ -67,6 +67,72 @@ describe("src_3_0_0/modules/menu/menu-store/actionsMenu.js", () => {
         });
     });
 
+    describe("addModule", () => {
+        it("should add module and return its position in menu navigation", () => {
+            const state = {
+                    secondaryMenu: {
+                        sections: [[0, 1, 2]]
+                    }
+                },
+                moduleState = {
+                    type: "getFeatureInfo",
+                    menuSide: "secondaryMenu"
+                },
+                position = actions.addModule({commit, state}, moduleState);
+
+            expect(position).to.equals(2);
+            expect(commit.calledOnce).to.be.true;
+            expect(commit.firstCall.args[0]).to.equals("addModuleToMenuSection");
+            expect(commit.firstCall.args[1]).to.equals(moduleState);
+        });
+    });
+
+    describe("mergeMenuState", () => {
+        it("should merge the configured menu with the state menu", () => {
+            const state = {
+                    mainMenu: {
+                        sections: [[]]
+                    },
+                    secondaryMenu: {
+                        sections: [[]]
+                    }
+                },
+                mainMenu = {
+                    expanded: false,
+                    sections: [
+                        [
+                            {
+                                type: "exampleModuleMain"
+                            }
+                        ]
+                    ]
+                },
+                secondaryMenu = {
+                    expanded: false,
+                    sections: [
+                        [
+                            {
+                                type: "exampleModuleMain"
+                            }
+                        ]
+                    ]
+                };
+
+            actions.mergeMenuState({commit, state}, {mainMenu, secondaryMenu});
+
+            expect(commit.calledThrice).to.be.true;
+            expect(commit.firstCall.args[0]).to.equals("setMainMenu");
+            expect(commit.firstCall.args[1]).to.deep.equals(mainMenu);
+            expect(commit.secondCall.args[0]).to.equals("setSecondaryMenu");
+            expect(commit.secondCall.args[1]).to.deep.equals(secondaryMenu);
+            expect(commit.thirdCall.args[0]).to.equals("Navigation/setEntries");
+            expect(commit.thirdCall.args[1]).to.deep.equals({
+                mainMenu: [],
+                secondaryMenu: []
+            });
+        });
+    });
+
     describe("clickedMenuElement", () => {
         const path = ["generic"];
         let element, focus, getElementById, getters, section;
