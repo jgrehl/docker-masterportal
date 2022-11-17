@@ -10,6 +10,14 @@ localVue.use(Vuex);
 config.mocks.$t = key => key;
 
 describe("src_3_0_0/modules/menu/MenuContainerBodyElement.vue", () => {
+    const
+        mockConfigJson = {
+            Portalconfig: {
+                tree: {
+                    type: "light"
+                }
+            }
+        };
     let store;
 
     beforeEach(() => {
@@ -24,7 +32,8 @@ describe("src_3_0_0/modules/menu/MenuContainerBodyElement.vue", () => {
                 }
             },
             getters: {
-                deviceMode: () => "Desktop"
+                deviceMode: () => "Desktop",
+                portalConfig: () => mockConfigJson.Portalconfig
             }
         });
     });
