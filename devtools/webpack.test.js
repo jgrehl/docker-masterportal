@@ -3,8 +3,7 @@
  */
 const webpack = require("webpack"),
     path = require("path"),
-    Vue = require("vue"),
-    VueLoaderPlugin = require("vue-loader/lib/plugin");
+    {VueLoaderPlugin} = require("vue-loader");
 
 require("regenerator-runtime/runtime");
 require("jsdom-global")();
@@ -16,7 +15,7 @@ global.XMLSerializer = window.XMLSerializer;
 URL.createObjectURL = function () {
     return false;
 };
-Vue.config.devtools = false;
+// Vue.config.devtools = false;
 
 module.exports = {
     mode: "development",
@@ -33,12 +32,12 @@ module.exports = {
     //     devtoolModuleFilenameTemplate: "[absolute-resource-path]"
     // },
 
-    resolve: {
-        alias: {
-            vue: "vue/dist/vue.js"
-        },
-        extensions: [".tsx", ".ts", ".js"]
-    },
+    // resolve: {
+    //     alias: {
+    //         "vue": "@vue/compat",
+    //         "server-renderer": "@vue/server-renderer"
+    //     }
+    // },
     externals: [
         /^(bootstrap-slider|\$)$/i
     ],
@@ -82,10 +81,11 @@ module.exports = {
                 test: /\.vue$/,
                 loader: "vue-loader",
                 options: {
-                    loaders: {
-                        js: "esbuild-loader?"
-                    },
-                    optimizeSSR: false
+                    compilerOptions: {
+                        compatConfig: {
+                            MODE: 3
+                        }
+                    }
                 }
             },
             {
@@ -128,6 +128,11 @@ module.exports = {
                         loader: "file-loader"
                     }
                 ]
+            },
+            {
+                test: /\.mjs$/,
+                include: /node_modules/,
+                type: "javascript/auto"
             }
         ]
     },
@@ -144,7 +149,11 @@ module.exports = {
             // requestAnimationFrame: "raf"
         }),
         new VueLoaderPlugin(),
-        new webpack.IgnorePlugin(/canvas/, /jsdom$/)
+        new webpack.IgnorePlugin(/canvas/, /jsdom$/),
+        new webpack.DefinePlugin({
+            __VUE_OPTIONS_API__: true,
+            __VUE_PROD_DEVTOOLS__: false
+        })
     ],
     node: {
         fs: "empty"
