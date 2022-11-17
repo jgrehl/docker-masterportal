@@ -3,7 +3,7 @@ import Map from "ol/Map";
 import sinon from "sinon";
 import View from "ol/View";
 
-import {createLayer} from "../../../js/layerFactory";
+import layerFactory from "../../../js/layerFactory";
 
 describe("src_3_0_0/core/js/layers/layerFactory.js", () => {
     let layerConfig,
@@ -57,21 +57,21 @@ describe("src_3_0_0/core/js/layers/layerFactory.js", () => {
 
     describe("createLayer", () => {
         it("should creates a layer with type WMS", () => {
-            const wmsLayer = createLayer(layerConfig[0]);
+            const wmsLayer = layerFactory.createLayer(layerConfig[0]);
 
             expect(wmsLayer).not.to.be.undefined;
             expect(wmsLayer.attributes.typ).to.equals("WMS");
         });
 
         it("should creates a layer with type TERRAIN3D, if mapMode is 3D", () => {
-            const terrainLayer = createLayer(layerConfig[2], "3D");
+            const terrainLayer = layerFactory.createLayer(layerConfig[2], "3D");
 
             expect(terrainLayer).not.to.be.undefined;
             expect(terrainLayer.attributes.typ).to.equals("Terrain3D");
         });
 
         it("should don't creates a layer with type TERRAIN3D, if mapMode is 2D", () => {
-            const terrainLayer = createLayer(layerConfig[2], "2D");
+            const terrainLayer = layerFactory.createLayer(layerConfig[2], "2D");
 
             expect(terrainLayer).to.be.undefined;
         });
