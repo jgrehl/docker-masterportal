@@ -58,7 +58,7 @@ export default {
                 supportedDevices = this.$attrs.supportedDevices,
                 supportedTreeTypes = this.$attrs.supportedTreeTypes;
 
-            return isModuleVisible(this.mode, this.deviceMode, this.portalConfig.tree?.type, supportedMapModes, supportedDevices, supportedTreeTypes);
+            return isModuleVisible(this.mode, this.deviceMode, this.portalConfig?.tree?.type, supportedMapModes, supportedDevices, supportedTreeTypes);
         }
     }
 
