@@ -2,7 +2,7 @@ import Vuex from "vuex";
 import {config, shallowMount, createLocalVue} from "@vue/test-utils";
 import MenuContainerBodyElement from "../../../components/MenuContainerBodyElement.vue";
 import {expect} from "chai";
-import SimpleButton from "../../../../../shared/modules/buttons/components/SimpleButton.vue";
+import LightButton from "../../../../../shared/components/LightButton.vue";
 
 const localVue = createLocalVue();
 
@@ -37,9 +37,9 @@ describe("src_3_0_0/modules/menu/MenuContainerBodyElement.vue", () => {
             }
         });
     });
-    it("renders the component and it contains the SimpleButton", () => {
+    it("renders the component and it contains the LightButton", () => {
         const wrapper = shallowMount(MenuContainerBodyElement, {store, localVue, propsData: {icon: "bi-file-plus", name: "awesomeName"}});
 
-        expect(wrapper.findComponent(SimpleButton).exists()).to.be.true;
+        expect(wrapper.findComponent(LightButton).exists()).to.be.true;
     });
 });
