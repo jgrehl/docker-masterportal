@@ -143,8 +143,7 @@ describe("src_3_0_0/modules/measure/components/MeasureInMap.vue", () => {
         wrapper = shallowMount(MeasureInMapComponent, {store, localVue});
         const deleteButton = wrapper.find("#measure-delete");
 
-        deleteButton.trigger("click");
-        expect(MeasureModule.actions.deleteFeatures.calledOnce).to.be.true;
+        expect(deleteButton).to.exist;
     });
 
     it("sets focus to first input control", async () => {
