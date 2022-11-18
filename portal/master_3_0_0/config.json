@@ -29,7 +29,7 @@
       "layerPillsAmount": 2
     },
     "mainMenu": {
-      "expanded": false,
+      "expanded": true,
       "title": {
         "text": "Master",
         "logo": "https://geodienste.hamburg.de/lgv-config/img/hh-logo.png",
@@ -38,9 +38,6 @@
       },
       "sections": [
         [
-          {
-            "type": "scaleSwitcher"
-          },
           {
             "type": "coordToolkit",
             "heightLayerId": "19173",
@@ -143,6 +140,9 @@
         [
           {
             "type": "measure"
+          },
+          {
+            "type": "scaleSwitcher"
           },
           {
             "name": "folder1",

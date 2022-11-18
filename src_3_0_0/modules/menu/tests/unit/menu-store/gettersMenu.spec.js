@@ -92,7 +92,7 @@ describe("src_3_0_0/modules/menu/menu-store/gettersMenu.js", () => {
     });
 
     describe("deactivateGfi", () => {
-        let objectFromPathFake, side;
+        let objectFromPathFake;
 
         beforeEach(() => {
             state = {};
@@ -103,9 +103,8 @@ describe("src_3_0_0/modules/menu/menu-store/gettersMenu.js", () => {
 
             objectFromPathFake = sinon.fake.returns({type});
             getters.objectFromPath = objectFromPathFake;
-            side = "mainMenu";
 
-            expect(gettersMenu.deactivateGfi(undefined, getters, rootState, rootGetters)(side)).to.be.true;
+            expect(gettersMenu.deactivateGfi(undefined, getters, rootState, rootGetters)).to.be.true;
         });
 
         it("should return null, if the activated module has no attribute 'deactivateGfi': true", () => {
@@ -113,9 +112,8 @@ describe("src_3_0_0/modules/menu/menu-store/gettersMenu.js", () => {
 
             objectFromPathFake = sinon.fake.returns({type});
             getters.objectFromPath = objectFromPathFake;
-            side = "mainMenu";
 
-            expect(gettersMenu.deactivateGfi(undefined, getters, rootState, rootGetters)(side)).to.be.null;
+            expect(gettersMenu.deactivateGfi(undefined, getters, rootState, rootGetters)).to.be.false;
         });
     });
 
