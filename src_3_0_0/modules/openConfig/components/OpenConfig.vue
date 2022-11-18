@@ -14,6 +14,7 @@ export default {
     },
     methods: {
         ...mapActions("Modules/OpenConfig", ["processConfigJsonOnload"]),
+        ...mapActions("Alerting", ["addSingleAlert"]),
 
         /**
          * Sets the focus to the first control
@@ -51,19 +52,18 @@ export default {
 
                 reader.onload = (evt) => {
                     this.processConfigJsonOnload(evt);
-                    /**
-                     * @todo Alerting ergänzen
-                     */
-                    console.warn(`Die Konfigurationsdatei "${targetFile?.name}"" wurde erfolgreich geladen`);
+                    this.addSingleAlert({
+                        "category": "succes",
+                        "content": this.$t("common:modules.tools.openConfig.loadFileSuccess", {targetFileName: targetFile?.name})
+                    });
                 };
                 reader.readAsText(event.target.files[0]);
             }
             else {
-                /**
-                 * @todo Alerting ergänzen
-                 */
-                console.warn(`Das Dateiformat ${targetFile?.name.split(".")[1]} wird nicht unterstützt. Bitte wählen Sie eine Datei mit der Endung ".json" aus.`);
-                console.warn(`The ${targetFile?.name.split(".")[1]} file format is not supported. Please select a file with the extension ".json"`);
+                this.addSingleAlert({
+                    "category": "error",
+                    "content": this.$t("common:modules.tools.openConfig.loadFileFailed", {targetFileName: targetFile?.name, targetFileFormat: targetFile?.name.split(".")[1]})
+                });
             }
         }
     }

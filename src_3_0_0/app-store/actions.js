@@ -11,6 +11,9 @@ export default {
      * Config entry portalConfig.tree.validLayerTypesAutoTree is respected.
      * If tree type is 'auto' , folder structure is build from layer's metadata contents for the active or first category configured in config.json unter 'tree'.
      * Replaces the extended layer in state.layerConf.
+     * @param {Object} param.commit the commit
+     * @param {Object} param.getters the getters
+     * @param {Object} param.state the state
      * @returns {void}
      */
     extendLayers ({commit, getters, state}) {
@@ -35,6 +38,7 @@ export default {
 
     /**
      * Commit the loaded config.js to the state.
+     * @param {Object} param.commit the commit
      * @param {Object} configJs The config.js
      * @returns {void}
      */
@@ -44,6 +48,8 @@ export default {
 
     /**
      * Load the config.json and commit it to the state.
+     * @param {Object} param.commit the commit
+     * @param {Object} param.state the state
      * @returns {void}
      */
     loadConfigJson ({commit, state}) {
@@ -67,6 +73,8 @@ export default {
 
     /**
      * Load the rest-services.json and commit it to the state.
+     * @param {Object} param.commit the commit
+     * @param {Object} param.state the state
      * @returns {void}
      */
     loadRestServicesJson ({commit, state}) {
@@ -82,16 +90,18 @@ export default {
 
     /**
      * Load the services.json via masterportalapi.
+     * @param {Object} param.state the state
+     * @param {Object} param.commit the commit
+     * @param {Object} param.dispatch the dispatch
      * @returns {void}
      */
-    loadServicesJson ({state, commit}) {
+    loadServicesJson ({state, commit, dispatch}) {
         initializeLayerList(state.configJs?.layerConf, (_, error) => {
             if (error) {
-                // Implementieren, wenn Alert da ist:
-                // Radio.trigger("Alert", "alert", {
-                //     text: "<strong>Die Datei '" + layerConfUrl + "' konnte nicht geladen werden!</strong>",
-                //     kategorie: "alert-warning"
-                // });
+                dispatch("Alerting/addSingleAlert", {
+                    "category": "error",
+                    "content": i18next.t("common:app-store.loadServicesJsonFailed", {layerConf: state.configJs?.layerConf})
+                }, {root: true});
             }
             else {
                 commit("setLoadedConfigs", "servicesJson");
