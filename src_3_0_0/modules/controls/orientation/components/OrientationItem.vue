@@ -77,6 +77,7 @@ export default {
     methods: {
         ...mapMutations("Controls/Orientation", Object.keys(mutations)),
         ...mapActions("Maps", ["setView"]),
+        ...mapActions("Alerting", ["addSingleAlert"]),
 
         setIsGeoLocationPossible () {
             this.isGeoLocationPossible = window.location.protocol === "https:" || ["localhost", "127.0.0.1"].indexOf(window.location.hostname);
@@ -139,7 +140,10 @@ export default {
          * @returns {void}
          */
         onError () {
-            // this.$store.dispatch("Alerting/addSingleAlert", "<strong>" + i18next.t("common:modules.controls.orientation.geolocationDeniedText") + " </strong>");
+            this.addSingleAlert({
+                category: "error",
+                content: `<strong>${i18next.t("common:modules.controls.orientation.geolocationDeniedText")}</strong>`
+            });
             this.isGeolocationDenied = true;
             if (this.geolocation !== null) {
                 this.untrack();
@@ -355,7 +359,10 @@ export default {
          * @returns {void}
          */
         onPOIError () {
-            // this.$store.dispatch("Alerting/addSingleAlert", "<strong>" + i18next.t("common:modules.controls.orientation.trackingDeniedText") + " </strong>" + evt.message);
+            this.addSingleAlert({
+                category: "error",
+                content: `<strong>${i18next.t("common:modules.controls.orientation.trackingDeniedText")}</strong>`
+            });
 
             if (this.geolocation !== null) {
                 this.untrack();
