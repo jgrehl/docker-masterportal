@@ -103,9 +103,6 @@ describe("src/modules/tools/coordToolkit/store/gettersCoordToolkit.js", () => {
         it("returns the icon default value from state", () => {
             expect(getters.icon(stateCoord)).to.equals("bi-globe");
         });
-        it("returns the isVisibleInMenu default value from state", () => {
-            expect(getters.isVisibleInMenu(stateCoord)).to.be.true;
-        });
         it("returns the deactivateGfi default value from state", () => {
             expect(getters.deactivateGfi(stateCoord)).to.be.true;
         });
