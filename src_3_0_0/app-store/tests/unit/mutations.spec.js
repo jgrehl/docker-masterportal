@@ -3,8 +3,7 @@ import mutations from "../../mutations";
 
 const {
         setLoadedConfigs,
-        replaceByIdInLayerConfig,
-        addLayerToLayerConfig
+        replaceByIdInLayerConfig
     } = mutations,
     id = "453",
     state = {
@@ -123,29 +122,6 @@ describe("src_3_0_0/app-store/mutations.js", () => {
 
             replaceByIdInLayerConfig(state, undefined);
             expect(state).to.be.deep.equals(stateCopy);
-        });
-
-        it("addLayerToLayerConfig", () => {
-            state.layerConfig.Fachdaten.Layer = [];
-            const layerToAdd = {
-                id: "I_m_the_id",
-                name: "Trees in Hamburg",
-                typ: "WMS",
-                layers: "trees",
-                url: "https://geodienste.hamburg.de/trees",
-                version: "1.4.3",
-                visibility: true,
-                showInLayerTree: true,
-                maxScale: 2000,
-                minScale: 12
-
-            };
-
-            addLayerToLayerConfig(state, {layerConfig: layerToAdd, parentKey: "Fachdaten"});
-
-            expect(state.layerConfig?.Fachdaten?.Layer.length).to.equal(1);
-            expect(state.layerConfig?.Fachdaten?.Layer[0]).to.deep.equal(layerToAdd);
-
         });
     });
 });
