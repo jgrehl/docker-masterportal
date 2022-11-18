@@ -1,4 +1,3 @@
-
 /**
  * Checks is a string an email address.
  * @param {string} value The eMail address to check.
