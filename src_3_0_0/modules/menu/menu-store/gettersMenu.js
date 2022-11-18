@@ -27,12 +27,19 @@ const menuGetters = {
      * @param {Object} rootGetters Root getters.
      * @returns {(function(side: String): Boolean|null)} Function returning gfi should deactivate.
      */
-    deactivateGfi: (_, getters, rootState, rootGetters) => side => {
+    deactivateGfi: (_, getters, rootState, rootGetters) => {
+        let deactivateGfi = false;
+
         // eslint-disable-next-line new-cap
-        if (["mainMenu", "secondaryMenu"].includes(side) && rootGetters["Menu/Navigation/lastEntry"](side) !== null) {
-            return rootState.Modules[upperFirst(getters.objectFromPath(side, "last")?.type)]?.deactivateGfi || null;
+        if (rootGetters["Menu/Navigation/lastEntry"]("mainMenu") !== null) {
+            deactivateGfi = rootState.Modules[upperFirst(getters.objectFromPath("mainMenu", "last")?.type)]?.deactivateGfi || deactivateGfi;
         }
-        return null;
+        // eslint-disable-next-line new-cap
+        if (rootGetters["Menu/Navigation/lastEntry"]("secondaryMenu") !== null) {
+            deactivateGfi = rootState.Modules[upperFirst(getters.objectFromPath("secondaryMenu", "last")?.type)]?.deactivateGfi || deactivateGfi;
+        }
+
+        return deactivateGfi;
     },
 
     /**
