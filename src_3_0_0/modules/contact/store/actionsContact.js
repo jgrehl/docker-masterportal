@@ -21,7 +21,10 @@ const actions = {
             content += ticketId;
         }
 
-        dispatch("Alerting/addSingleAlert", {content}, {root: true});
+        dispatch("Alerting/addSingleAlert", {
+            category: "success",
+            content: content
+        }, {root: true});
 
         // Always uncheck the privacy policy
         commit("setPrivacyPolicyAccepted", false);
@@ -45,10 +48,10 @@ const actions = {
      */
     showWarningAlert ({dispatch}, content) {
         dispatch(
-            "Alerting/addSingleAlert",
-            {content: i18next.t(content), category: "Warning"},
-            {root: true}
-        );
+            "Alerting/addSingleAlert", {
+                category: "warning",
+                content: i18next.t(content)
+            }, {root: true});
     },
     /**
      * Builds a HTML E-Mail and sends it via the backend mail server.
