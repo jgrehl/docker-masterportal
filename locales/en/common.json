@@ -32,6 +32,9 @@
         "black": "Black",
         "white": "White"
     },
+    "app-store": {
+      "loadServicesJsonFailed": "<strong>The file {{layerConf}} could not be loaded!</strong>"
+    },
     "mouseHover": {
         "infoText": "(more objects. Please zoom.)"
     },
@@ -381,6 +384,8 @@
             },
             "openConfig": {
               "explanation": "Open a map that you have saved as a local configuration file.",
+              "loadFileFailed": "The <b>{{targetFileName}}</b> configuration file was not loaded. The file format <b>{{targetFileFormat}}</b> is not supported. Please load a file in the <b>json</b> file format.",
+              "loadFileSuccess": "The <b>{targetFileName}}</b> configuration file was loaded successfully",
               "headline": "open map",
               "openFile": "Open configuration file"
             },
