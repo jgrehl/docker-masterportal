@@ -107,5 +107,23 @@ export default {
                 commit("setLoadedConfigs", "servicesJson");
             }
         });
+    },
+    /**
+     * Adds one layer to states layerConfig under the given parentKey.
+     * @param {Object} state store state
+     * @param {Object} payload the payload
+     * @param {Object[]} payload.layerConfig layer to add to the layerConfigs
+     * @param {String} payload.parentKey the key of the parent object
+     * @returns {Boolean} true or false
+     */
+    addLayerToLayerConfig ({state}, {layerConfig, parentKey}) {
+        const layerContainer = getNestedValues(state.layerConfig, "Layer", "Ordner").flat(Infinity),
+            matchingLayer = layerContainer.find(layer =>layer.id === layerConfig.id);
+
+        if (matchingLayer === undefined) {
+            state.layerConfig[parentKey].Layer.push(layerConfig);
+            return true;
+        }
+        return false;
     }
 };
