@@ -68,20 +68,12 @@ export default {
 <template>
     <div
         :class="[
-            'form-group',
             'has-feedback',
             validInput ? 'has-success' : '',
             !validInput && inputValue ? 'has-error' : ''
         ]"
     >
-        <div :class="htmlElement === 'input' ? 'input-group' : ''">
-            <label
-                :class="[
-                    'input-group-text',
-                    htmlElement === 'textarea' ? 'force-border' : ''
-                ]"
-                :for="`module-contact-${inputName}-input`"
-            >{{ labelText }}</label>
+        <div class="form-floating mb-3">
             <component
                 :is="htmlElement"
                 :id="`module-contact-${inputName}-input`"
@@ -92,14 +84,21 @@ export default {
                 :class="[(htmlElement === 'select' ? 'form-select' : 'form-control'), (validInput ? 'is-valid' : '')]"
                 :aria-describedby="`module-contact-${inputName}-help`"
                 :placeholder="$t(`common:modules.tools.contact.placeholder.${inputName}`)"
-                :rows="htmlElement === 'textarea' ? rows : ''"
+                :style="htmlElement === 'textarea' ? 'height: 100px' : ''"
                 @keyup="changeFunction($event.currentTarget.value)"
             />
+
+            <label
+                :class="[
+                    htmlElement === 'textarea' ? 'force-border' : ''
+                ]"
+                :for="`module-contact-${inputName}-input`"
+            >{{ labelText }}</label>
         </div>
         <span
             v-if="!validInput"
             :id="`module-contact-${inputName}-help`"
-            class="help-block"
+            class="help-block mt-1 mb-3"
         >
             {{ $t(
                 `common:modules.tools.contact.error.${inputName + (inputName === "message" ? "Input" : "")}`,
@@ -112,34 +111,12 @@ export default {
 <style lang="scss" scoped>
 @import "~variables";
 
-.input-group-text:first-child.force-border {
-    border-right: 1px solid $light_grey;
-}
-
-.has-error .input-group-text:first-child.force-border {
-    border-right: 1px solid $light_red;
-}
-
-.has-success .input-group-text:first-child.force-border {
-    border-right: 1px solid #3c763d;
-}
-
 .lift-tick {
     margin-top: -4px;
 }
 
-.form-control {
-    resize: none;
-}
-
-.input-group-text {
-    min-width: 65px;
-}
-
 .help-block {
     display: block;
-    margin-top: 5px;
-    margin-bottom: 10px;
     color: $dark_grey;
 }
 
