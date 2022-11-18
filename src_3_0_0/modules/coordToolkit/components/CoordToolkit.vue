@@ -97,7 +97,6 @@ export default {
             "initHeightLayer",
             "copyCoordinates"
         ]),
-        ...mapActions("Alerting", ["addSingleAlert"]),
         ...mapActions("Maps", {
             addPointerMoveHandlerToMap: "registerListener",
             removePointerMoveHandlerFromMap: "unregisterListener"
