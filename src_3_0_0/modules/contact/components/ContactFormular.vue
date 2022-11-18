@@ -54,12 +54,13 @@ export default {
         <div
             v-if="contactInfo"
             id="module-contact-addionalInformation"
-            class="form-group contents"
+            class="form-floating"
         >
             {{ contactInfo }}
         </div>
         <form
-            class="contents"
+            class="needs-validation"
+            novalidate
             @submit.prevent="send"
         >
             <ContactFormularInput
@@ -138,10 +139,5 @@ export default {
         label, span {
             cursor: pointer;
         }
-    }
-
-    .contents {
-        /* avoids making the form broader */
-        max-width: 300px;
     }
 </style>
