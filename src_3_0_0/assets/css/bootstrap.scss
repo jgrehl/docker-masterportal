@@ -16,6 +16,7 @@
 // 3. Include remainder of required Bootstrap stylesheets
 @import "~bootstrap-icons/font/bootstrap-icons";
 
+// for the general buttons
 .btn-icon {
     padding-right: 1.5rem;
     padding-left: 1rem;
@@ -23,6 +24,14 @@
         font-size: 1.125rem;
         padding-right: .5rem;
    }
+}
+
+// important for control-buttons
+.bootstrap-icon {
+    position: relative;
+    line-height: 1;
+    display: inline-block;
+    vertical-align: middle;
 }
 
 // 4. Include any optional Bootstrap CSS as needed
