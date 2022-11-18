@@ -354,5 +354,32 @@ describe("src_3_0_0/app-store/actions.js", () => {
             expect(commit.thirdCall.args[1].layerConfigs[0].layer).to.deep.equals(layerList[6]);
             expect(commit.lastCall.args[1].layerConfigs[0].layer).to.deep.equals(layerList[5]);
         });
+
+        it("addLayerToLayerConfig", () => {
+            layerConfig = {
+                Fachdaten: {
+                    Layer: []
+                }
+            };
+            state.layerConfig = layerConfig;
+            const layerToAdd = {
+                id: "I_m_the_id",
+                name: "Trees in Hamburg",
+                typ: "WMS",
+                layers: "trees",
+                url: "https://geodienste.hamburg.de/trees",
+                version: "1.4.3",
+                visibility: true,
+                showInLayerTree: true,
+                maxScale: 2000,
+                minScale: 12
+
+            };
+
+            actions.addLayerToLayerConfig({state}, {layerConfig: layerToAdd, parentKey: "Fachdaten"});
+            expect(state.layerConfig?.Fachdaten?.Layer.length).to.equal(1);
+            expect(state.layerConfig?.Fachdaten?.Layer[0]).to.deep.equal(layerToAdd);
+
+        });
     });
 });
