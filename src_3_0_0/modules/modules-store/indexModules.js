@@ -17,6 +17,7 @@ import Print from "../print/store/indexPrint";
 import Routing from "../routing/store/indexRouting";
 import ScaleSwitcher from "../scaleSwitcher/store/indexScaleSwitcher";
 import ShareView from "../shareView/store/indexShareView";
+import WfsSearch from "../wfsSearch/store/indexWfsSearch";
 
 export default {
     namespaced: true,
@@ -39,6 +40,7 @@ export default {
         Routing: {...Routing},
         Print: {...Print},
         ScaleSwitcher: {...ScaleSwitcher},
-        ShareView: {...ShareView}
+        ShareView: {...ShareView},
+        WfsSearch: {...WfsSearch}
     }
 };
