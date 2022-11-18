@@ -27,10 +27,16 @@ export default {
             }
             navigator.clipboard.writeText(toCopy)
                 .then(() => {
-                    dispatch("Alerting/addSingleAlert", {content: i18next.t("common:modules.util.copyToClipboard.contentSaved")}, {root: true});
+                    dispatch("Alerting/addSingleAlert", {
+                        category: "success",
+                        content: i18next.t("common:modules.util.copyToClipboard.contentSaved")
+                    }, {root: true});
                 })
                 .catch(err => {
-                    dispatch("Alerting/addSingleAlert", {content: i18next.t("common:modules.util.copyToClipboard.contentNotSaved")}, {root: true});
+                    dispatch("Alerting/addSingleAlert", {
+                        category: "error",
+                        content: i18next.t("common:modules.util.copyToClipboard.contentNotSaved")
+                    }, {root: true});
                     console.error(`CopyToClipboard: ${err}`);
                 });
         }

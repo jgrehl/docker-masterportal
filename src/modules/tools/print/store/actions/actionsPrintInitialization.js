@@ -29,8 +29,8 @@ export default {
         //     commit("setEventListener", canvasLayer.on("postrender", evt => dispatch("createPrintMask", evt)));
         // }
         if (!state.active) {
-            dispatch("Maps/unregisterListener", {type: state.eventListener}, {root: true});
-            commit("setEventListener", undefined);
+            // dispatch("Maps/unregisterListener", {type: state.eventListener}, {root: true});
+            // commit("setEventListener", undefined);
             if (state.invisibleLayer) {
                 dispatch("setOriginalPrintLayer");
                 commit("setHintInfo", "");
