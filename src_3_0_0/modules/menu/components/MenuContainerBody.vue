@@ -55,7 +55,7 @@ export default {
     >
         <MenuNavigation :side="side" />
         <GetFeatureInfo
-            v-if="side === menuSide && !(deactivateGfi(side) === true)"
+            v-if="side === menuSide && !(deactivateGfi === true)"
         />
         <component
             :is="componentFromPath(side)"
