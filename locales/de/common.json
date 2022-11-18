@@ -32,6 +32,9 @@
         "black": "Schwarz",
         "white": "Weiß"
     },
+    "app-store": {
+      "loadServicesJsonFailed": "<strong>Die Datei {{layerConf}} konnte nicht geladen werden!</strong>"
+    },
     "mouseHover": {
         "infoText": "(weitere Objekte. Bitte zoomen.)"
     },
@@ -385,6 +388,8 @@
             },
             "openConfig": {
               "explanation": "Öffnen Sie eine Karte, die Sie als lokale Konfigurationsdatei abgespeichert haben.",
+              "loadFileFailed": "Die Konfigurationsdatei <b>{{targetFileName}}</b> wurde nicht geladen. Das Dateiformat <b>{{targetFileFormat}}</b> wird nicht unterstützt. Bitte laden Sie eine Datei im Dateiformat <b>json</b>.",
+              "loadFileSuccess": "Die Konfigurationsdatei <b>{{targetFileName}}</b> wurde erfolgreich geladen",
               "headline": "Karte öffnen",
               "openFile": "Konfigurationsdatei öffnen"
             },
