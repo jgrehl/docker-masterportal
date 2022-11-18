@@ -434,28 +434,26 @@ export default {
             >
                 {{ $t("modules.tools.coordToolkit.hintSearch") }}
             </div>
-            <div class="form-group form-group-sm row">
+            <div class="form-floating mb-3">
+                <select
+                    id="coordSystemField"
+                    ref="coordSystemField"
+                    class="form-select"
+                    @change="selectionChanged($event)"
+                >
+                    <option
+                        v-for="(projection, i) in projections"
+                        :key="i"
+                        :value="projection.id"
+                        :SELECTED="projection.id === currentProjection.id"
+                    >
+                        {{ projection.title ? projection.title : projection.name }}
+                    </option>
+                </select>
                 <label
                     for="coordSystemField"
                     :class="getLabelClass()"
                 >{{ $t("modules.tools.coordToolkit.coordSystemField") }}</label>
-                <div :class="getInputDivClass()">
-                    <select
-                        id="coordSystemField"
-                        ref="coordSystemField"
-                        class="font-arial form-select form-select-sm float-start"
-                        @change="selectionChanged($event)"
-                    >
-                        <option
-                            v-for="(projection, i) in projections"
-                            :key="i"
-                            :value="projection.id"
-                            :SELECTED="projection.id === currentProjection.id"
-                        >
-                            {{ projection.title ? projection.title : projection.name }}
-                        </option>
-                    </select>
-                </div>
             </div>
             <div
                 :class="getClassForEasting()"

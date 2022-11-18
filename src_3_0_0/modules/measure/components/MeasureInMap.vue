@@ -1,6 +1,7 @@
 <script>
 import {mapActions, mapGetters, mapMutations} from "vuex";
 import MeasureInMapTooltip from "./MeasureInMapTooltip.vue";
+import FlatButton from "../../../shared/components/FlatButton.vue";
 
 /**
  * Measurement tool to measure lines and areas in the map.
@@ -8,7 +9,13 @@ import MeasureInMapTooltip from "./MeasureInMapTooltip.vue";
 export default {
     name: "MeasureInMap",
     components: {
-        MeasureInMapTooltip
+        MeasureInMapTooltip,
+        FlatButton
+    },
+    data () {
+        return {
+            deleteIcon: "bi-trash"
+        };
     },
     computed: {
         ...mapGetters("Modules/Measure", [
@@ -124,97 +131,80 @@ export default {
         id="measure"
     >
         <MeasureInMapTooltip />
-        <form
-            class="form-horizontal"
-            role="form"
-        >
-            <div class="form-group form-group-sm row">
-                <label
-                    for="measure-tool-geometry-select"
-                    class="col-md-5 col-form-label"
-                >
-                    {{ $t("modules.tools.measure.geometry") }}
-                </label>
-                <div class="col-md-7">
-                    <select
-                        id="measure-tool-geometry-select"
-                        ref="measure-tool-geometry-select"
-                        class="font-arial form-select form-select-sm float-start"
-                        :disabled="is3DMode()"
-                        :value="selectedGeometry"
-                        @change="setSelectedGeometry($event.target.value)"
-                    >
-                        <option
-                            v-for="geometryValue in geometryValues"
-                            :key="'measure-tool-geometry-select-' + geometryValue"
-                            :value="geometryValue"
-                        >
-                            {{ is3DMode()
-                                ? selectedGeometry
-                                : $t("modules.tools.measure." +
-                                    (geometryValue === "LineString" ? "stretch" : "area"))
-                            }}
-                        </option>
-                    </select>
-                </div>
-            </div>
-            <div class="form-group form-group-sm row">
-                <label
-                    for="measure-tool-unit-select"
-                    class="col-md-5 col-form-label"
-                >
-                    {{ $t("modules.tools.measure.measure") }}
-                </label>
-                <div class="col-md-7">
-                    <select
-                        id="measure-tool-unit-select"
-                        ref="measure-tool-unit-select"
-                        class="font-arial form-select form-select-sm float-start"
-                        :value="selectedUnit"
-                        @change="setSelectedUnit($event.target.value)"
-                    >
-                        <option
-                            v-for="(unit, i) in currentUnits"
-                            :key="'measure-tool-unit-select-' + i"
-                            :value="i"
-                        >
-                            {{ unit }}
-                        </option>
-                    </select>
-                </div>
-            </div>
-            <div
-                v-if="isDefaultStyle()"
-                class="form-group form-group-sm row"
+        <div class="form-floating mb-3">
+            <select
+                id="measure-tool-geometry-select"
+                ref="measure-tool-geometry-select"
+                class="form-select"
+                aria-label="..."
+                :disabled="is3DMode()"
+                :value="selectedGeometry"
+                @change="setSelectedGeometry($event.target.value)"
             >
-                <div class="col-md-12 inaccuracy-list">
-                    {{ $t("modules.tools.measure.influenceFactors") }}
-                    <ul>
-                        <li>{{ $t("modules.tools.measure.scale") }}</li>
-                        <li>{{ $t("modules.tools.measure.resolution") }}</li>
-                        <li>{{ $t("modules.tools.measure.screenResolution") }}</li>
-                        <li>{{ $t("modules.tools.measure.inputAccuracy") }}</li>
-                        <li>{{ $t("modules.tools.measure.measureDistance") }}</li>
-                    </ul>
-                </div>
+                <option
+                    v-for="geometryValue in geometryValues"
+                    :key="'measure-tool-geometry-select-' + geometryValue"
+                    :value="geometryValue"
+                >
+                    {{ is3DMode()
+                        ? selectedGeometry
+                        : $t("modules.tools.measure." +
+                            (geometryValue === "LineString" ? "stretch" : "area"))
+                    }}
+                </option>
+            </select>
+            <label for="measure-tool-geometry-select">
+                {{ $t("modules.tools.measure.geometry") }}
+            </label>
+        </div>
+
+        <div class="form-floating">
+            <select
+                id="measure-tool-unit-select"
+                ref="measure-tool-unit-select"
+                class="form-select"
+                aria-label="..."
+                :value="selectedUnit"
+                @change="setSelectedUnit($event.target.value)"
+            >
+                <option
+                    v-for="(unit, i) in currentUnits"
+                    :key="'measure-tool-unit-select-' + i"
+                    :value="i"
+                >
+                    {{ unit }}
+                </option>
+            </select>
+            <label for="measure-tool-unit-select">
+                {{ $t("modules.tools.measure.measure") }}
+            </label>
+        </div>
+        <div
+            v-if="isDefaultStyle()"
+        >
+            <div class="inaccuracy-list">
+                {{ $t("modules.tools.measure.influenceFactors") }}
+                <ul>
+                    <li>{{ $t("modules.tools.measure.scale") }}</li>
+                    <li>{{ $t("modules.tools.measure.resolution") }}</li>
+                    <li>{{ $t("modules.tools.measure.screenResolution") }}</li>
+                    <li>{{ $t("modules.tools.measure.inputAccuracy") }}</li>
+                    <li>{{ $t("modules.tools.measure.measureDistance") }}</li>
+                </ul>
             </div>
-            <div class="form-group form-group-sm row">
-                <div class="col-md-12">
-                    <button
-                        id="measure-delete"
-                        type="button"
-                        class="btn btn-primary col-md-12"
-                        @click="deleteFeatures"
-                    >
-                        {{ $t('modules.tools.measure.deleteMeasurements') }}
-                    </button>
-                </div>
-            </div>
-        </form>
+        </div>
+        <FlatButton
+            id="measure-delete"
+            aria-label="$t('modules.tools.measure.deleteMeasurements')"
+            :interaction="deleteFeatures"
+            :text="$t('modules.tools.measure.deleteMeasurements')"
+            :icon="deleteIcon"
+        />
     </div>
 </template>
 
 <style lang="scss" scoped>
+@import "~variables";
 
 .inaccuracy-list {
     max-width: 270px;
