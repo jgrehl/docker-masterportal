@@ -8,18 +8,21 @@ import mutations from "../store/mutationsPrint";
 import thousandsSeparator from "../../../shared/js/utils/thousandsSeparator";
 import getVisibleLayer from "../js/getVisibleLayer";
 import FlatButton from "../../../shared/components/FlatButton.vue";
+import InputText from "../../../shared/components/InputText.vue";
 
 /**
  * Tool to print a part of the map
  */
 export default {
     name: "PrintMap",
-    components: {FlatButton},
+    components: {FlatButton, InputText},
     data () {
         return {
             showHintInfoScale: false,
             printIcon: "bi-printer",
-            downloadIcon: "bi-download"
+            downloadIcon: "bi-download",
+            docTitleId: "docTitle",
+            outputFileTitleId: "outputFileTitle"
         };
     },
     computed: {
@@ -363,116 +366,94 @@ export default {
             id="printToolNew"
             class="form-horizontal"
         >
-            <div class="form-group form-group-sm row">
-                <label
-                    class="col-md-5 col-form-label"
-                    for="docTitle"
-                >{{ $t("common:modules.tools.print.titleLabel") }}</label>
-                <div class="col-md-7">
-                    <input
-                        id="docTitle"
-                        v-model="documentTitle"
-                        type="text"
-                        class="form-control form-control-sm"
-                        maxLength="45"
-                    >
-                </div>
+            <div>
+                <InputText
+                    :id="docTitleId"
+                    v-model="documentTitle"
+                    :label="$t('modules.tools.print.titleLabel')"
+                    :placeholder="$t('modules.tools.print.titleLabel')"
+                />
             </div>
-            <div class="form-group form-group-sm row">
-                <label
-                    class="col-md-5 col-form-label"
-                    for="printLayout"
-                >{{ $t("common:modules.tools.print.layoutLabel") }}</label>
-                <div class="col-md-7">
-                    <select
-                        id="printLayout"
-                        class="form-select form-select-sm"
-                        @change="layoutChanged($event.target.value)"
-                    >
-                        <option
-                            v-for="(layout, i) in shownLayoutList"
-                            :key="i"
-                            :value="layout.name"
-                            :selected="layout.name === currentLayoutName"
-                        >
-                            {{ layout.name }}
-                        </option>
-                    </select>
-                </div>
-            </div>
-            <div class="form-group form-group-sm row">
-                <label
-                    class="col-md-5 col-form-label"
-                    for="printFormat"
+            <div class="form-floating">
+                <select
+                    id="printLayout"
+                    class="form-select"
+                    aria-label="$t('modules.tools.print.layoutLabel')"
+                    @change="layoutChanged($event.target.value)"
                 >
+                    <option
+                        v-for="(layout, i) in shownLayoutList"
+                        :key="i"
+                        :value="layout.name"
+                        :selected="layout.name === currentLayoutName"
+                    >
+                        {{ layout.name }}
+                    </option>
+                </select>
+                <label for="printLayout">
+                    {{ $t("modules.tools.print.layoutLabel") }}
+                </label>
+            </div>
+            <div class="form-floating mb-3">
+                <select
+                    id="printFormat"
+                    class="form-select"
+                    @change="setCurrentFormat($event.target.value)"
+                >
+                    <option
+                        v-for="(format, i) in shownFormatList"
+                        :key="i"
+                        :value="format"
+                        :selected="format === currentFormat"
+                    >
+                        {{ format }}
+                    </option>
+                </select>
+                <label for="printFormat">
                     {{ $t("common:modules.tools.print.formatLabel") }}
                 </label>
-                <div class="col-md-7">
-                    <select
-                        id="printFormat"
-                        class="form-select form-select-sm"
-                        @change="setCurrentFormat($event.target.value)"
-                    >
-                        <option
-                            v-for="(format, i) in shownFormatList"
-                            :key="i"
-                            :value="format"
-                            :selected="format === currentFormat"
-                        >
-                            {{ format }}
-                        </option>
-                    </select>
-                </div>
             </div>
             <div
                 v-if="dpiList.length > 0"
-                class="form-group form-group-sm row"
+                class="form-floating mb-3"
             >
-                <label
-                    class="col-md-5 col-form-label"
-                    for="printDpi"
+                <select
+                    id="printDpi"
+                    class="form-select"
+                    @change="setDpiForPdf($event.target.value)"
                 >
+                    <option
+                        v-for="(dpi, i) in dpiList"
+                        :key="i"
+                        :value="dpi"
+                        :selected="dpi === dpiForPdf"
+                    >
+                        {{ dpi }}
+                    </option>
+                </select>
+                <label for="printDpi">
                     {{ $t("common:modules.tools.print.dpiLabel") }}
                 </label>
-                <div class="col-md-7">
-                    <select
-                        id="printDpi"
-                        class="form-select form-select-sm"
-                        @change="setDpiForPdf($event.target.value)"
-                    >
-                        <option
-                            v-for="(dpi, i) in dpiList"
-                            :key="i"
-                            :value="dpi"
-                            :selected="dpi === dpiForPdf"
-                        >
-                            {{ dpi }}
-                        </option>
-                    </select>
-                </div>
             </div>
-            <div class="form-group form-group-sm row scale">
-                <label
-                    class="col-md-5 col-form-label"
-                    for="printScale"
-                >{{ $t("common:modules.tools.print.scaleLabel") }}</label>
-                <div class="col-md-7">
-                    <select
-                        id="printScale"
-                        v-model="currentScale"
-                        class="form-select form-select-sm"
-                        @change="scaleChanged($event)"
+            <div class="form-floating scale">
+                <select
+                    id="printScale"
+                    v-model="currentScale"
+                    class="form-select"
+                    @change="scaleChanged($event)"
+                >
+                    <option
+                        v-for="(scale, i) in scaleList"
+                        :key="i"
+                        :value="scale"
+                        :selected="scale === currentScale"
                     >
-                        <option
-                            v-for="(scale, i) in scaleList"
-                            :key="i"
-                            :value="scale"
-                            :selected="scale === currentScale"
-                        >
-                            1 : {{ returnScale(scale) }}
-                        </option>
-                    </select>
-                </div>
+                        1 : {{ returnScale(scale) }}
+                    </option>
+                </select>
+                <label for="printScale">
+                    {{ $t("common:modules.tools.print.scaleLabel") }}
+                </label>
                 <div
                     :class="{
                         'hint': true,
@@ -499,19 +480,12 @@ export default {
                 v-if="printService === 'plotservice'"
                 class="form-group form-group-sm row"
             >
-                <label
-                    class="col-md-5 col-form-label"
-                    for="outputFileTitle"
-                >{{ $t("common:modules.tools.print.outputfileTitleLabel") }}</label>
-                <div class="col-md-7">
-                    <input
-                        id="outputFileTitle"
-                        v-model="outputTitle"
-                        type="text"
-                        class="form-control form-control-sm"
-                        maxLength="45"
-                    >
-                </div>
+                <InputText
+                    :id="outputFileTitleId"
+                    v-model="outputTitle"
+                    :label="$t('modules.tools.print.outputfileTitleLabel')"
+                    :placeholder="$t('modules.tools.print.outputfileTitleLabel')"
+                />
                 <small
                     id="outputFileTitleWarning"
                     class="offset-md-5 col-md-7 active"
