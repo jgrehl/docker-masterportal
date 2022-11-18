@@ -4,7 +4,7 @@ import sinon from "sinon";
 import actionsModules from "../../../modules-store/actionsModules";
 
 const {
-    mergeModuleState,
+    mergeModulesState,
     addAttributesToModuleState
 } = actionsModules;
 
@@ -18,35 +18,35 @@ describe("src_3_0_0/modules/modules-store/actions.js", () => {
         dispatch = sinon.spy();
 
         portalConfig = {
-            "mainMenu": {
-                "sections": [
+            mainMenu: {
+                sections: [
                     [
                         {
-                            "title": "common:menu.tools.scaleSwitcher",
-                            "icon": "bi-1-square-fill",
-                            "type": "scaleSwitcher"
+                            title: "common:menu.tools.scaleSwitcher",
+                            icon: "bi-1-square-fill",
+                            type: "scaleSwitcher"
                         },
                         {
-                            "title": "folder1",
-                            "icon": "bi-file-plus",
-                            "type": "folder",
-                            "elements": [
+                            title: "folder1",
+                            icon: "bi-file-plus",
+                            type: "folder",
+                            elements: [
                                 {
-                                    "type": "folder",
-                                    "title": "folder1_1",
-                                    "icon": "bi-1-square-fill",
-                                    "elements": [
+                                    type: "folder",
+                                    title: "folder1_1",
+                                    icon: "bi-1-square-fill",
+                                    elements: [
                                         {
-                                            "type": "folder",
-                                            "title": "folder1_1_1",
-                                            "icon": "bi-file-plus",
-                                            "elements": []
+                                            type: "folder",
+                                            title: "folder1_1_1",
+                                            icon: "bi-file-plus",
+                                            elements: []
                                         },
                                         {
-                                            "type": "folder",
-                                            "title": "folder1_1_2",
-                                            "icon": "bi-file-plus",
-                                            "elements": []
+                                            type: "folder",
+                                            title: "folder1_1_2",
+                                            icon: "bi-file-plus",
+                                            elements: []
                                         }
                                     ]
                                 }
@@ -64,7 +64,7 @@ describe("src_3_0_0/modules/modules-store/actions.js", () => {
 
     describe("mergeModuleState", () => {
         it("should start addAttributesToModuleState for every sections", () => {
-            mergeModuleState({dispatch}, portalConfig);
+            mergeModulesState({dispatch}, portalConfig);
 
             expect(dispatch.calledOnce).to.be.true;
             expect(dispatch.firstCall.args[0]).to.equals("addAttributesToModuleState");

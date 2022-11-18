@@ -19,10 +19,10 @@ export default {
         };
     },
     computed: {
-        ...mapGetters({
-            uiStyle: "uiStyle",
-            ignoredKeys: "ignoredKeys"
-        }),
+        ...mapGetters([
+            "ignoredKeys",
+            "uiStyle"
+        ]),
         ...mapGetters("Modules/GetFeatureInfo", [
             "active",
             "currentFeature",
