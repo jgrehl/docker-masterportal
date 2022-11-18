@@ -70,28 +70,25 @@ export default {
     <div
         v-if="active"
         id="scale-switcher"
-        class="row"
+        class="form-floating"
     >
-        <label
-            for="scale-switcher-select"
-            class="col-md-5 col-form-label"
-        >{{ $t("modules.tools.scaleSwitcher.label") }}</label>
-        <div class="col-md-7">
-            <select
-                id="scale-switcher-select"
-                ref="scale-switcher-select"
-                v-model="scale"
-                class="font-arial form-select form-select-sm float-start"
-                @change="setResolutionByIndex($event.target.selectedIndex)"
+        <select
+            id="scale-switcher-select"
+            ref="scale-switcher-select"
+            v-model="scale"
+            class="font-arial form-select form-select-sm float-start"
+            @change="setResolutionByIndex($event.target.selectedIndex)"
+        >
+            <option
+                v-for="(scaleValue, i) in scales"
+                :key="i"
+                :value="scaleValue"
             >
-                <option
-                    v-for="(scaleValue, i) in scales"
-                    :key="i"
-                    :value="scaleValue"
-                >
-                    1 : {{ scaleValue }}
-                </option>
-            </select>
-        </div>
+                1 : {{ scaleValue }}
+            </option>
+        </select>
+        <label for="scale-switcher-select">
+            {{ $t("modules.tools.scaleSwitcher.label") }}
+        </label>
     </div>
 </template>
