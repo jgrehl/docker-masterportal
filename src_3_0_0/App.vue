@@ -41,7 +41,7 @@ export default {
             }
         },
         portalConfig (portalConfig) {
-            this.mergeModuleState(portalConfig);
+            this.mergeModulesState(portalConfig);
         }
     },
     created () {
@@ -58,7 +58,7 @@ export default {
             "loadServicesJson"
         ]),
         ...mapActions("Modules", [
-            "mergeModuleState"
+            "mergeModulesState"
         ]),
 
         /**
