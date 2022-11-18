@@ -1,5 +1,5 @@
 <script>
-import {mapGetters, mapMutations} from "vuex";
+import {mapGetters, mapActions} from "vuex";
 import {WMSCapabilities} from "ol/format.js";
 import {intersects} from "ol/extent";
 import crs from "@masterportal/masterportalapi/src/crs";
@@ -12,8 +12,7 @@ export default {
             uniqueId: 100,
             invalidUrl: false,
             wmsUrl: "",
-            version: "",
-            addedLayerIds: []
+            version: ""
         };
     },
     computed: {
@@ -34,7 +33,8 @@ export default {
         }
     },
     methods: {
-        ...mapMutations(["addLayerToLayerConfig"]),
+        ...mapActions(["addLayerToLayerConfig"]),
+        ...mapActions("Alerting", ["addSingleAlert"]),
 
         /**
          * Sets the focus to the first control
@@ -73,7 +73,10 @@ export default {
                 return;
             }
             else if (url.includes("http:")) {
-                this.$store.dispatch("Alerting/addSingleAlert", i18next.t("common:modules.tools.addWMS.errorHttpsMessage"));
+                this.addSingleAlert({
+                    content: i18next.t("common:modules.tools.addWMS.errorHttpsMessage"),
+                    category: "error",
+                    title: i18next.t("common:modules.tools.addWMS.errorTitle")});
                 return;
             }
             axios({
@@ -101,7 +104,11 @@ export default {
                         }
 
                         if (!checkExtent) {
-                            this.$store.dispatch("Alerting/addSingleAlert", i18next.t("common:modules.tools.addWMS.ifInExtent"));
+                            this.addSingleAlert({
+                                content: i18next.t("common:modules.tools.addWMS.ifInExtent"),
+                                category: "error",
+                                title: i18next.t("common:modules.tools.addWMS.errorTitle")
+                            });
                             return;
                         }
 
@@ -145,7 +152,11 @@ export default {
          * @returns {void}
          */
         displayErrorMessage: function () {
-            this.$store.dispatch("Alerting/addSingleAlert", i18next.t("common:modules.tools.addWMS.errorMessage"));
+            this.addSingleAlert({
+                content: i18next.t("common:modules.tools.addWMS.errorMessage"),
+                category: "error",
+                title: i18next.t("common:modules.tools.addWMS.errorTitle")
+            });
         },
 
         /**
@@ -178,18 +189,25 @@ export default {
                     minScale: object?.MinScaleDenominator?.toString()
                 };
 
-                if (!this.addedLayerIds.includes(layerObject.id)) {
-                    this.addedLayerIds.push(layerObject.id);
-                    this.addLayerToLayerConfig({layerConfig: layerObject, parentKey: "Fachdaten"});
+                this.addLayerToLayerConfig({layerConfig: layerObject, parentKey: "Fachdaten"}).then((addedLayer) => {
+                    if (addedLayer) {
+                        this.addSingleAlert({
+                            content: i18next.t("common:modules.tools.addWMS.completeMessage"),
+                            category: "success",
+                            title: i18next.t("common:modules.tools.addWMS.alertTitleSuccess")});
+                        this.$refs.wmsUrl.value = "";
+                    }
                     // @todo Radio.trigger("ModelList", "closeAllExpandedFolder");
                     // @todo replace alert message if neccessary
-                    this.$store.dispatch("Alerting/addSingleAlert", i18next.t("common:modules.tools.addWMS.completeMessage"));
-                    this.$refs.wmsUrl.value = "";
-                }
-                else {
-                    this.$store.dispatch("Alerting/addSingleAlert", i18next.t("common:modules.tools.addWMS.alreadyAdded"));
-                    this.$refs.wmsUrl.value = "";
-                }
+                    else {
+                        this.addSingleAlert({
+                            content: i18next.t("common:modules.tools.addWMS.alreadyAdded"),
+                            category: "warning",
+                            title: i18next.t("common:modules.tools.addWMS.errorTitle")});
+                        this.$refs.wmsUrl.value = "";
+                    }
+                });
+
             }
         },
 
