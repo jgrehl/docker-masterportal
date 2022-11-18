@@ -26,6 +26,7 @@ describe("src/modules/tools/contact/store/actionsContact.js", () => {
         it("calls all expected commits and dispatches when configured to do so", done => {
             testAction(onSendSuccess, payload, state, {}, [
                 {type: "Alerting/addSingleAlert", payload: {
+                    category: "success",
                     content: i18next.t("common:modules.tools.contact.successMessage") +
                         "\r\n" +
                         i18next.t("common:modules.tools.contact.successTicket") +
@@ -45,6 +46,7 @@ describe("src/modules/tools/contact/store/actionsContact.js", () => {
 
             testAction(onSendSuccess, payload, state, {}, [
                 {type: "Alerting/addSingleAlert", payload: {
+                    category: "success",
                     content: i18next.t("common:modules.tools.contact.successMessage")
                 }, dispatch: true},
                 {type: "setPrivacyPolicyAccepted", payload: false, commit: true},
@@ -61,6 +63,7 @@ describe("src/modules/tools/contact/store/actionsContact.js", () => {
 
             testAction(onSendSuccess, payload, state, {}, [
                 {type: "Alerting/addSingleAlert", payload: {
+                    category: "success",
                     content: i18next.t("common:modules.tools.contact.successMessage") +
                         "\r\n" +
                         i18next.t("common:modules.tools.contact.successTicket") +
@@ -76,6 +79,7 @@ describe("src/modules/tools/contact/store/actionsContact.js", () => {
 
             testAction(onSendSuccess, payload, state, {}, [
                 {type: "Alerting/addSingleAlert", payload: {
+                    category: "success",
                     content: i18next.t("common:modules.tools.contact.successMessage") +
                         "\r\n" +
                         i18next.t("common:modules.tools.contact.successTicket") +

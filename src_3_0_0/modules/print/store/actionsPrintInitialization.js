@@ -189,7 +189,10 @@ export default {
         * layers will not be printed.
         */
         if (foundVectorTileLayers.length && state.active) {
-            dispatch("Alerting/addSingleAlert", i18next.t("common:modules.tools.print.vtlWarning"), {root: true});
+            dispatch("Alerting/addSingleAlert", {
+                "category": "warning",
+                "content": i18next.t("common:modules.tools.print.vtlWarning")
+            }, {root: true});
         }
 
         commit("setVisibleLayer", state.visibleLayerList);
@@ -198,6 +201,11 @@ export default {
             const canvasLayer = Canvas.getCanvasLayer(state.visibleLayerList);
 
             commit("setEventListener", canvasLayer.on("postrender", evt => dispatch("createPrintMask", evt)));
+        }
+
+        if (!state.active) {
+            dispatch("Maps/unregisterListener", {type: state.eventListener}, {root: true});
+            commit("setEventListener", undefined);
         }
 
         mapCollection.getMap("2D").render();
@@ -220,7 +228,10 @@ export default {
         hintInfo = hintInfo + "<br>" + invisibleLayerNames;
 
         if (invisibleLayer.length && hintInfo !== state.hintInfo) {
-            dispatch("Alerting/addSingleAlert", hintInfo, {root: true});
+            dispatch("Alerting/addSingleAlert", {
+                "category": "info",
+                "content": hintInfo
+            }, {root: true});
             commit("setHintInfo", hintInfo);
         }
 
