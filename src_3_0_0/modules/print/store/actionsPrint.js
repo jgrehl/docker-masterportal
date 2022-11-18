@@ -122,11 +122,12 @@ const actions = {
 
     /**
      * sets the metadata for print
+     * @param {Object} param.dispatch the dispatch
      * @param {Object} param.rootGetters the rootGetters
      * @param {Object} cswObject the object with all the info
      * @returns {void}
      */
-    getMetaDataForPrint: async function ({rootGetters}, cswObject) {
+    getMetaDataForPrint: async function ({dispatch, rootGetters}, cswObject) {
         const cswObj = cswObject;
         let metadata;
 
@@ -151,10 +152,10 @@ const actions = {
         }
 
         if (typeof metadata === "undefined") {
-            /**
-             * @todo Alerting
-             */
-            // dispatch("Alerting/addSingleAlert", i18next.t("common:modules.layerInformation.errorMessage", {cswObjCswUrl: cswObj.cswUrl}), {root: true});
+            dispatch("Alerting/addSingleAlert", {
+                "category": "error",
+                "content": i18next.t("common:modules.layerInformation.errorMessage", {cswObjCswUrl: cswObj.cswUrl})
+            }, {root: true});
         }
         else {
             cswObj.parsedData = {};
@@ -314,10 +315,10 @@ const actions = {
 
         // Error processing...
         if (response.status === "error") {
-            /**
-             * @todo Alerting
-             */
-            // dispatch("Alerting/addSingleAlert", i18next.t("common:modules.tools.print.waitForPrintErrorMessage"), {root: true});
+            dispatch("Alerting/addSingleAlert", {
+                "category": "error",
+                "content": i18next.t("common:modules.tools.print.waitForPrintErrorMessage")
+            }, {root: true});
             console.error("Error: " + response.error);
         }
         else if (response.done) {
