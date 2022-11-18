@@ -182,10 +182,7 @@ export default {
             "updateCanvasLayer",
             "getAttributeInLayoutByName"
         ]),
-        /**
-         * @todo alerting
-         */
-        // ...mapActions("Alerting", ["addSingleAlert"]),
+        ...mapActions("Alerting", ["addSingleAlert"]),
 
         /**
          * Waits until the features of Vector layers are loaded and then renders the canvas again.
@@ -297,10 +294,10 @@ export default {
                 });
             }
             else {
-                /**
-                 * @todo Alerting
-                 */
-                // this.addSingleAlert(this.$t("common:modules.tools.print.alertMessage"));
+                this.addSingleAlert({
+                    "category": "error",
+                    "content": this.$t("common:modules.tools.print.alertMessage")
+                });
             }
         },
 
