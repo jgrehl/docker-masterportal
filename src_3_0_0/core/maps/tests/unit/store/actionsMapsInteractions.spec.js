@@ -8,7 +8,8 @@ import actions from "../../../store/actionsMapsInteractions";
 const {
     registerListener,
     resetView,
-    unregisterListener
+    unregisterListener,
+    setCenter
 } = actions;
 
 describe("src_3_0_0/core/maps/store/actionsMapsInteractions.js", () => {
@@ -69,6 +70,17 @@ describe("src_3_0_0/core/maps/store/actionsMapsInteractions.js", () => {
         it("unregister pointermove listener from ol map", () => {
             unregisterListener({}, payload);
             expect(Object.keys(olMap.listeners_)).not.include("pointermove");
+        });
+    });
+
+    describe("setCenter", () => {
+        it("set the center", () => {
+            const commit = sinon.spy(),
+                coordinates = [575575.269, 5939992.777];
+
+            setCenter({commit}, coordinates);
+
+            expect(mapCollection.getMapView("2D").getCenter()).to.deep.equals(coordinates);
         });
     });
 });
