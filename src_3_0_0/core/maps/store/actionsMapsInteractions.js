@@ -103,6 +103,31 @@ export default {
     },
 
     /**
+     * Sets the center of the current view.
+     * @param {Object} param store context
+     * @param {Object} param.getters the getters
+     * @param {Object} param.commit the commit
+     * @param {number[]} coords An array of numbers representing a xy-coordinate
+     * @returns {void}
+     */
+    setCenter ({commit}, coords) {
+        const view = mapCollection.getMapView("2D");
+        let first2Coords = [coords[0], coords[1]];
+
+        if (first2Coords.some(coord => typeof coord !== "number")) {
+            console.warn("Given coordinates must be of type integer! Although it might not break, something went wrong and needs to be checked!");
+            first2Coords = first2Coords.map(singleCoord => parseInt(singleCoord, 10));
+        }
+        if (Array.isArray(first2Coords) && first2Coords.length === 2) {
+            commit("setCenter", coords);
+            view.setCenter(coords);
+        }
+        else {
+            console.warn("Center was not set. Probably there is a data type error. The format of the coordinate must be an array with two numbers.");
+        }
+    },
+
+    /**
      * Adds an interaction to the map.
      * @param {Object} _ not used
      * @param {module:ol/interaction/Interaction} interaction - Interaction to be added to map.
