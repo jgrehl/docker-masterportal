@@ -2,7 +2,6 @@
 import ModalItem from "../../../shared/components/modals/components/ModalItem.vue";
 import ListItem from "../../../shared/components/list/components/ListItem.vue";
 import {mapActions, mapGetters, mapMutations} from "vuex";
-// import {getComponent} from "../../../../utils/getComponent";
 import WfsSearchLiteral from "./WfsSearchLiteral.vue";
 import actions from "../store/actionsWfsSearch";
 import getters from "../store/gettersWfsSearch";
@@ -49,10 +48,6 @@ export default {
         },
         showResults () {
             return this.showResultList;
-        },
-        getComponent (componentId) {
-            console.log("radio", Radio.request("ModelList", "getModelByAttributes", {id: componentId}));
-            return Radio.request("ModelList", "getModelByAttributes", {id: componentId});
         }
     },
     watch: {
@@ -85,11 +80,6 @@ export default {
         close () {
             this.setActive(false);
             this.resetModule(true);
-            const model = this.getComponent(this.id);
-
-            if (model) {
-                model.set("isActive", false);
-            }
         },
         resetUI () {
             // Reset input fields
