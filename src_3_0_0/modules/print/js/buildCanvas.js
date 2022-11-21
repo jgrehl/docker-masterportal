@@ -9,15 +9,13 @@ const CanvasModel = {
      * @returns {Object} - LayerObject for print mask.
      */
     getCanvasLayer: function (layerList) {
-        const currentResolution = store.getters["Maps/resolution"];
-        let canvasLayerList = [],
-            canvasLayer = {};
+        const currentResolution = store.getters["Maps/resolution"],
+            canvasLayerList = [];
+        let canvasLayer = {};
 
         layerList.forEach(layer => {
             canvasLayerList.push(this.buildCanvasLayerType(layer, currentResolution));
         });
-
-        canvasLayerList = canvasLayerList.reverse();
 
         for (const layer of canvasLayerList) {
             if (typeof layer !== "undefined") {
