@@ -153,8 +153,8 @@ const actions = {
 
         if (typeof metadata === "undefined") {
             dispatch("Alerting/addSingleAlert", {
-                "category": "error",
-                "content": i18next.t("common:modules.layerInformation.errorMessage", {cswObjCswUrl: cswObj.cswUrl})
+                category: "error",
+                content: i18next.t("common:modules.layerInformation.errorMessage", {cswObjCswUrl: cswObj.cswUrl})
             }, {root: true});
         }
         else {
@@ -316,8 +316,8 @@ const actions = {
         // Error processing...
         if (response.status === "error") {
             dispatch("Alerting/addSingleAlert", {
-                "category": "error",
-                "content": i18next.t("common:modules.tools.print.waitForPrintErrorMessage")
+                category: "error",
+                content: i18next.t("common:modules.tools.print.waitForPrintErrorMessage")
             }, {root: true});
             console.error("Error: " + response.error);
         }
