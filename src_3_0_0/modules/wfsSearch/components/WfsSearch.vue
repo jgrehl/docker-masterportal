@@ -1,15 +1,13 @@
 <script>
 import ModalItem from "../../../shared/components/modals/components/ModalItem.vue";
 import ListItem from "../../../shared/components/list/components/ListItem.vue";
-// import LoaderOverlay from "../../../../utils/loaderOverlay";
 import {mapActions, mapGetters, mapMutations} from "vuex";
-// import ToolTemplate from "../../ToolTemplate.vue";
 // import {getComponent} from "../../../../utils/getComponent";
 import WfsSearchLiteral from "./WfsSearchLiteral.vue";
 import actions from "../store/actionsWfsSearch";
 import getters from "../store/gettersWfsSearch";
 import mutations from "../store/mutationsWfsSearch";
-import {createUserHelp} from "../js/literalFunctions";
+// import {createUserHelp} from "../js/literalFunctions";
 import {searchFeatures} from "../js/requests";
 import isObject from "../../../shared/js/utils/isObject";
 
@@ -18,12 +16,12 @@ export default {
     components: {
         WfsSearchLiteral,
         ListItem,
-        // ToolTemplate,
         ModalItem
     },
     computed: {
         ...mapGetters("Modules/WfsSearch", Object.keys(getters)),
-        ...mapGetters("Language", ["currentLocale"]),
+        // @todo ?
+        // ...mapGetters("Language", ["currentLocale"]),
         headers () {
             if (this.results.length === 0) {
                 return null;
@@ -60,12 +58,14 @@ export default {
     watch: {
         active (val) {
             (val ? this.prepareModule : this.resetModule)();
-        },
-        currentLocale () {
-            if (this.active && this.userHelp !== "hide") {
-                createUserHelp(this.currentInstance.literals);
-            }
         }
+        // ,
+        // @todo ?
+        // currentLocale () {
+        //     if (this.active && this.userHelp !== "hide") {
+        //         createUserHelp(this.currentInstance.literals);
+        //     }
+        // }
     },
     created () {
         this.$on("close", this.close);
@@ -73,8 +73,8 @@ export default {
     methods: {
         ...mapMutations("Modules/WfsSearch", Object.keys(mutations)),
         ...mapActions("Modules/WfsSearch", Object.keys(actions)),
-        ...mapActions("MapMarker", ["placingPointMarker"]),
-        ...mapActions("Maps", ["setCenter", "setZoomLevel"]),
+        // ...mapActions("MapMarker", ["placingPointMarker"]),
+        ...mapActions("Maps", ["setCenter", "setZoom"]),
         searchFeatures,
         /**
          * Function called when the window of the tool is closed.
@@ -122,7 +122,8 @@ export default {
                 this.setShowResultList(true);
             }
             else if (features.length > 0) {
-                this.placingPointMarker(features[0].getGeometry().getCoordinates());
+            // @todo placing Point Marker
+            // this.placingPointMarker(features[0].getGeometry().getCoordinates());
                 this.setCenter(features[0].getGeometry().getCoordinates());
                 this.setZoomLevel(this.zoomLevel);
                 this.setShowResultList(false);
@@ -197,13 +198,15 @@ export default {
                     />
                 </div>
                 <hr>
-                <template v-for="(literal, i) of currentInstance.literals">
+                <div
+                    v-for="(literal, i) of currentInstance.literals"
+                    :key="'tool-wfsSearch-clause' + i"
+                >
                     <WfsSearchLiteral
-                        :key="'tool-wfsSearch-clause' + i"
                         :literal="literal"
                     />
                     <hr :key="'tool-wfsSearch-clause-divider' + i">
-                </template>
+                </div>
                 <div class="form-group form-group-sm row">
                     <div class="col-md-6">
                         <button
