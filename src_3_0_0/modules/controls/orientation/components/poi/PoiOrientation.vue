@@ -94,8 +94,8 @@ export default {
                 featInCircle.sort((featureA, featureB) => featureA.dist2Pos - featureB.dist2Pos);
 
                 poiFeatures.push({
-                    "category": distance,
-                    "features": featInCircle
+                    category: distance,
+                    features: featInCircle
                 });
             });
 
