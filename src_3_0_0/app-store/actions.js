@@ -99,8 +99,8 @@ export default {
         initializeLayerList(state.configJs?.layerConf, (_, error) => {
             if (error) {
                 dispatch("Alerting/addSingleAlert", {
-                    "category": "error",
-                    "content": i18next.t("common:app-store.loadServicesJsonFailed", {layerConf: state.configJs?.layerConf})
+                    category: "error",
+                    content: i18next.t("common:app-store.loadServicesJsonFailed", {layerConf: state.configJs?.layerConf})
                 }, {root: true});
             }
             else {
