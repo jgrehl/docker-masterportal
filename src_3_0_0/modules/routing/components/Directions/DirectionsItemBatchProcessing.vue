@@ -22,13 +22,13 @@ export default {
         };
     },
     computed: {
-        ...mapGetters("Modules/Routing", ["taskHandler"])
+        ...mapGetters("Modules/Routing", ["taskHandler", "directionsSettings"])
     },
     methods: {
         ...mapMutations("Modules/Routing/Directions", Object.keys(mutations)),
         ...mapMutations("Modules/Routing", ["setTaskHandler"]),
         ...mapActions("Modules/Routing/Directions", ["fetchDirections", "resetRoutingDirectionsResults"]),
-        ...mapActions("Modules/Alerting", ["addSingleAlert"]),
+        //...mapActions("Modules/Alerting", ["addSingleAlert"]),
         /**
          * Called when files are added by the user to process
          * loading animation is shown while processing and an error is shown to the user if something happens while processing
@@ -36,7 +36,7 @@ export default {
          * @returns {void}
          */
         addFiles (files) {
-            files.forEach(file => {
+            Array.from(files).forEach(file => {
                 const reader = new FileReader();
 
                 reader.onload = async f => {
@@ -54,17 +54,17 @@ export default {
                             this.downloadResults(file.name, result);
                         }
                         if (this.countFailed !== 0) {
-                            this.addSingleAlert({
+                            /* this.addSingleAlert({
                                 category: this.$t("common:modules.alerting.categories.error"),
                                 content: this.$t("common:modules.tools.routing.directions.batchProcessing.errorSomeFailed", {countFailed: this.coundFailed})
-                            });
+                            }); */
                         }
                     }
                     catch (e) {
-                        this.addSingleAlert({
+                       /*  this.addSingleAlert({
                             category: this.$t("common:modules.alerting.categories.error"),
                             content: e.message
-                        });
+                        }); */
                     }
 
                     this.setIsLoadingDirections(false);
@@ -148,8 +148,8 @@ export default {
                     reject(new Error(this.$t("common:modules.tools.routing.directions.batchProcessing.errorNoEntries")));
                     return;
                 }
-                if (count > this.settings.batchProcessing.limit) {
-                    reject(new Error(this.$t("common:modules.tools.routing.directions.batchProcessing.errorToManyEntriesInFile", {limit: this.settings.batchProcessing.limit})));
+                if (this.settings.batchProcessing.limit && count > this.settings.batchProcessing.limit) {
+                    reject(new Error(this.$t("common:modules.tools.routing.directions.batchProcessing.errorToManyEntriesInFile", {limit: this.directionsSettings.batchProcessing.limit})));
                     return;
                 }
 
@@ -173,9 +173,10 @@ export default {
 
                     tasks.push(() => this.parseLineParts(lineParts));
                 }
+
                 this.setTaskHandler(new RoutingTaskHandler(
                     tasks,
-                    this.settings.batchProcessing.maximumConcurrentRequests,
+                    this.settings.batchProcessing.maximumConcurrentRequests ? this.settings.batchProcessing.maximumConcurrentRequests : this.$store.getters["Modules/Routing/Isochrones/settings"].batchProcessing.maximumConcurrentRequests,
                     (allResults, newResult) => allResults.push(newResult),
                     (results) => resolve(results)
                 ));
