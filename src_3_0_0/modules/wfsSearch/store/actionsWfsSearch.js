@@ -26,7 +26,7 @@ const actions = {
         const {currentInstance} = getters,
             {requestConfig: {layerId, likeFilter, restLayerId, storedQueryId}, title} = currentInstance,
             wfs = restLayerId
-                ? rootGetters.getRestServiceById(restLayerId)
+                ? rootGetters.restServiceById(restLayerId)
                 : Radio.request("ModelList", "getModelByAttributes", {id: layerId});
 
         if (wfs) {
@@ -95,7 +95,8 @@ const actions = {
         commit("setSearched", false);
         commit("setResults", []);
         commit("setSelectedOptions", {});
-        dispatch("MapMarker/removePointMarker", null, {root: true});
+        // @todo
+        // dispatch("MapMarker/removePointMarker", null, {root: true});
         resetFieldValues(getters.currentInstance.literals);
 
         // Reset dropdowns

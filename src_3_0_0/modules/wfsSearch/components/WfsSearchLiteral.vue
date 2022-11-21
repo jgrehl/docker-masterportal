@@ -34,14 +34,14 @@ export default {
     />
     <!-- NOTE: This div can be styled for visual highlighting -->
     <div v-else-if="literal.clause">
-        <template
+        <div
             v-for="(lit, i) of literal.clause.literals"
+            :key="'tool-wfsSearch-clause-literal' + i"
         >
             <WfsSearchLiteral
-                :key="'tool-wfsSearch-clause-literal' + i"
                 :literal="lit"
             />
-        </template>
+        </div>
     </div>
 </template>
 
