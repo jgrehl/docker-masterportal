@@ -30,33 +30,16 @@ export default {
         }
     },
     async created () {
-        this.$on("close", this.close);
-        // updateMap is called too late in Tool.vue when routing tool is set to active:true in config.json
-        if (!this.renderToWindow) {
-            mapCollection.getMap("2D").updateSize();
-        }
-        try {
-            await this.initRouting();
-        }
-        catch (e) {
-            this.addSingleAlert({
-                category: this.$t("common:modules.alerting.categories.error"),
-                content: e.message
-            });
-            this.$emit("close");
-        }
+        await this.initRouting();
+    },
+    destroyed () {
+        store.dispatch("Modules/Routing/Isochrones/closeIsochrones");
+        store.dispatch("Modules/Routing/Directions/closeDirections");
     },
     methods: {
         ...mapMutations("Modules/Routing", Object.keys(mutations)),
         ...mapActions("Modules/Routing", Object.keys(actions)),
         ...mapActions("Modules/Alerting", ["addSingleAlert"]),
-        /**
-         * Closes this tool window by setting active to false and removes the marker if it was placed.
-         * @returns {void}
-         */
-        close () {
-            this.setActive(false);
-        },
         /**
          * Changes the active tab
          * Will not change the tab if a batch process is running
