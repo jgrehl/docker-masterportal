@@ -33,6 +33,7 @@ export default {
     },
     computed: {
         ...mapGetters("Modules/Routing/Directions", Object.keys(getters)),
+        ...mapGetters("Modules/Routing", ["directionsSettings"]),
         /**
          * Checks if current map mode is "AVOID_AREAS"
          * @returns {Boolean} true if mode is "AVOID_AREAS"
@@ -145,7 +146,7 @@ export default {
          * @returns {void}
          */
         onBatchProcessingCheckboxInput (input) {
-            this.settings.batchProcessing.active = input;
+            this.directionsSettings.batchProcessing.active = input;
         }
     }
 };
@@ -165,16 +166,16 @@ export default {
 
         <hr>
 
-        <template v-if="settings.batchProcessing.enabled">
+        <template v-if="directionsSettings.batchProcessing.enabled">
             <RoutingBatchProcessingCheckbox
-                :batch-processing="settings.batchProcessing"
+                :batch-processing="directionsSettings.batchProcessing"
                 @input="onBatchProcessingCheckboxInput($event)"
             />
 
             <hr>
         </template>
 
-        <template v-if="settings.batchProcessing.enabled && settings.batchProcessing.active">
+        <template v-if="directionsSettings.batchProcessing.enabled && directionsSettings.batchProcessing.active">
             <DirectionsItemBatchProcessing :settings="settings" />
         </template>
         <template v-else>
@@ -388,7 +389,7 @@ export default {
             @removeAvoidOption="onRemoveAvoidOption($event)"
         />
 
-        <template v-if="!(settings.batchProcessing.enabled && settings.batchProcessing.active)">
+        <template v-if="!(directionsSettings.batchProcessing.enabled && directionsSettings.batchProcessing.active)">
             <hr>
 
             <div
