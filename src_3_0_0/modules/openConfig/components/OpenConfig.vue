@@ -53,16 +53,16 @@ export default {
                 reader.onload = (evt) => {
                     this.processConfigJsonOnload(evt);
                     this.addSingleAlert({
-                        "category": "succes",
-                        "content": this.$t("common:modules.tools.openConfig.loadFileSuccess", {targetFileName: targetFile?.name})
+                        category: "succes",
+                        content: this.$t("common:modules.tools.openConfig.loadFileSuccess", {targetFileName: targetFile?.name})
                     });
                 };
                 reader.readAsText(event.target.files[0]);
             }
             else {
                 this.addSingleAlert({
-                    "category": "error",
-                    "content": this.$t("common:modules.tools.openConfig.loadFileFailed", {targetFileName: targetFile?.name, targetFileFormat: targetFile?.name.split(".")[1]})
+                    category: "error",
+                    content: this.$t("common:modules.tools.openConfig.loadFileFailed", {targetFileName: targetFile?.name, targetFileFormat: targetFile?.name.split(".")[1]})
                 });
             }
         }
