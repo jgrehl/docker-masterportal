@@ -104,13 +104,6 @@ describe("src/modules/routing/components/RoutingTemplate.vue", () => {
         store.commit("Modules/Routing/setActive", true);
     });
 
-    afterEach(() => {
-        store.commit("Modules/Routing/setActive", false);
-        if (wrapper) {
-            wrapper.destroy();
-        }
-    });
-
     it("renders Routing", () => {
         wrapper = shallowMount(RoutingComponent, {store, localVue});
         expect(wrapper.find("#routing").exists()).to.be.true;
@@ -133,13 +126,5 @@ describe("src/modules/routing/components/RoutingTemplate.vue", () => {
         store.commit("Modules/Routing/setActiveRoutingToolOption", "ISOCHRONES");
         wrapper = mount(RoutingComponent, {store, localVue});
         expect(wrapper.find("#routing-isochrones").exists()).to.be.true;
-    });
-
-    it("closes routing tool on close", async () => {
-        wrapper = shallowMount(RoutingComponent, {store, localVue});
-        wrapper.vm.close();
-        await wrapper.vm.$nextTick();
-        expect(store.state.Modules.Routing.active).to.be.false;
-        expect(wrapper.find("#routing").exists()).to.be.false;
     });
 });
