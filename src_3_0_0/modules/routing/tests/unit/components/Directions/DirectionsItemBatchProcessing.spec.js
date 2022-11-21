@@ -57,6 +57,12 @@ describe("src/modules/routing/components/Directions/DirectionsItemBatchProcessin
                     limit: 1000,
                     maximumConcurrentRequests: 1
                 }
+            },
+            directionsSettings: {
+                batchProcessing: {
+                    limit: 1000,
+                    maximumConcurrentRequests: 1
+                }
             }
         };
         sinon.stub(i18next, "t").callsFake((...args) => args);

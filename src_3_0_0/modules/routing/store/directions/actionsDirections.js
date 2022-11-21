@@ -78,9 +78,8 @@ export default {
      * @returns {RoutingDirections} routingDirections
      */
     async fetchDirections ({state, getters, dispatch, rootState}, {wgs84Coords, instructions}) {
-    // Issues????????????????
-        const // {settings} = state,
-            directionSettings = await rootState.Modules.Routing.directionsSettings,
+
+        const directionSettings = await rootState.Modules.Routing.directionsSettings,
             {selectedAvoidSpeedProfileOptions} = getters,
             avoidPolygons = await dispatch("getAvoidPolygonsWgs84");
 
