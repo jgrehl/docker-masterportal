@@ -31,6 +31,7 @@ export default {
     },
     computed: {
         ...mapGetters("Modules/Routing/Isochrones", Object.keys(getters)),
+        ...mapGetters("Modules/Routing/", ["isochronesSettings"]),
         /**
          * Computed distance/time value for the current active slider
          * @returns {Number} value for the current active slider
@@ -154,7 +155,7 @@ export default {
          * @returns {void}
          */
         onBatchProcessingCheckboxInput (input) {
-            this.settings.batchProcessing.active = input;
+            this.isochronesSettings.batchProcessing.active = input;
         }
     }
 };
@@ -174,17 +175,17 @@ export default {
 
         <hr>
 
-        <template v-if="settings.batchProcessing.enabled">
+        <template v-if="isochronesSettings.batchProcessing.enabled">
             <RoutingBatchProcessingCheckbox
-                :batch-processing="settings.batchProcessing"
+                :batch-processing="isochronesSettings.batchProcessing"
                 @input="onBatchProcessingCheckboxInput($event)"
             />
 
             <hr>
         </template>
 
-        <template v-if="settings.batchProcessing.enabled && settings.batchProcessing.active">
-            <IsochronesItemBatchProcessing :settings="settings" />
+        <template v-if="isochronesSettings.batchProcessing.enabled && isochronesSettings.batchProcessing.active">
+            <IsochronesItemBatchProcessing :settings="isochronesSettings" />
         </template>
         <template v-else>
             <h6>{{ $t('common:modules.tools.routing.isochrones.startpoint') }}</h6>
@@ -278,7 +279,7 @@ export default {
             @removeAvoidOption="onRemoveAvoidOption($event)"
         />
 
-        <template v-if="!(settings.batchProcessing.enabled && settings.batchProcessing.active)">
+        <template v-if="!(isochronesSettings.batchProcessing.enabled && isochronesSettings.batchProcessing.active)">
             <hr>
 
             <div class="d-flex flex-column">
