@@ -190,8 +190,8 @@ export default {
         */
         if (foundVectorTileLayers.length && state.active) {
             dispatch("Alerting/addSingleAlert", {
-                "category": "warning",
-                "content": i18next.t("common:modules.tools.print.vtlWarning")
+                category: "warning",
+                content: i18next.t("common:modules.tools.print.vtlWarning")
             }, {root: true});
         }
 
@@ -229,8 +229,8 @@ export default {
 
         if (invisibleLayer.length && hintInfo !== state.hintInfo) {
             dispatch("Alerting/addSingleAlert", {
-                "category": "info",
-                "content": hintInfo
+                category: "info",
+                content: hintInfo
             }, {root: true});
             commit("setHintInfo", hintInfo);
         }

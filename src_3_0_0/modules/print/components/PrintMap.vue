@@ -295,8 +295,8 @@ export default {
             }
             else {
                 this.addSingleAlert({
-                    "category": "error",
-                    "content": this.$t("common:modules.tools.print.alertMessage")
+                    category: "error",
+                    content: this.$t("common:modules.tools.print.alertMessage")
                 });
             }
         },
