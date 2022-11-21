@@ -31,29 +31,6 @@ export default {
 
         view.background = value;
     },
-    /**
-     * Sets the center of the current view.
-     * @param {Object} param store context
-     * @param {Object} param.getters the getters
-     * @param {Object} param.commit the commit
-     * @param {number[]} coords An array of numbers representing a xy-coordinate
-     * @returns {void}
-     */
-    setCenter ({commit, getters}, coords) {
-        let first2Coords = [coords[0], coords[1]];
-
-        if (first2Coords.some(coord => typeof coord !== "number")) {
-            console.warn("Given coordinates must be of type integer! Although it might not break, something went wrong and needs to be checked!");
-            first2Coords = first2Coords.map(singleCoord => parseInt(singleCoord, 10));
-        }
-        if (Array.isArray(first2Coords) && first2Coords.length === 2) {
-            commit("setCenter", coords);
-            getters.getView.setCenter(coords);
-        }
-        else {
-            console.warn("Center was not set. Probably there is a data type error. The format of the coordinate must be an array with two numbers.");
-        }
-    },
 
     /**
      * toggles the maps background
