@@ -12,11 +12,11 @@ import {searchFeatures} from "../js/requests";
 /**
  * Validates that the prop for the type is correct.
  *
- * @param {String} type The type to be validated.
+ * @param {String} similarityType The type to be validated.
  * @returns {Boolean} Whether a correct type was given or not.
  */
-function validate (type) {
-    return ["equal", "like"].indexOf(type) !== -1;
+function validate (similarityType) {
+    return ["equal", "like"].indexOf(similarityType) !== -1;
 }
 
 export default {
@@ -62,7 +62,7 @@ export default {
             type: [Object, Array],
             default: undefined
         },
-        type: {
+        similarityType: {
             type: [String, Array],
             default: "equal",
             validator: function (type) {
@@ -88,7 +88,7 @@ export default {
                     options: Array.isArray(this.options) && !isObject(this.options[0]) ? this.options[this.parameterIndex] : this.options,
                     required: this.multipleValues(this.required),
                     suggestionsConfig: this.multipleValues(this.suggestionsConfig),
-                    type: this.multipleValues(this.type)
+                    similarityType: this.multipleValues(this.similarityType)
                 };
             }
             return this.$props;
@@ -200,7 +200,7 @@ export default {
                 // NOTE: Functionality like lodash.throttle would be nice to have here
                 this.showLoader = true;
                 const fieldName = Array.isArray(this.fieldName) ? this.fieldName[this.parameterIndex] : this.fieldName,
-                    xmlFilter = buildXmlFilter({fieldName, type: "like", value}),
+                    xmlFilter = buildXmlFilter({fieldName, similarityType: "like", value}),
                     suggestions = await searchFeatures(this.$store, this.currentInstance, this.service, xmlFilter, this?.suggestionsConfig?.featureType);
 
                 this.showLoader = false;
