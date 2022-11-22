@@ -139,15 +139,15 @@ export default {
                 >
                     <div class="form-group form-group-sm row">
                         <label
-                            id="tool-wfsSearch-instances-select-label"
+                            id="module-wfsSearch-instances-select-label"
                             class="col-md-5 col-form-label"
-                            for="tool-wfsSearch-instances-select"
+                            for="module-wfsSearch-instances-select"
                         >
                             {{ $t("common:modules.tools.wfsSearch.instancesSelectLabel") }}
                         </label>
                         <div class="col-md-7">
                             <select
-                                id="tool-wfsSearch-instances-select"
+                                id="module-wfsSearch-instances-select"
                                 class="form-select form-select-sm"
                                 @change="instanceChanged($event.currentTarget.value)"
                             >
@@ -165,15 +165,15 @@ export default {
                 </template>
                 <div
                     v-if="userHelp !== 'hide'"
-                    id="tool-wfsSearch-userHelp"
+                    id="module-wfsSearch-userHelp"
                     class="form-group form-group-sm row"
                 >
                     <i
-                        id="tool-wfsSearch-userHelp-icon"
+                        id="module-wfsSearch-userHelp-icon"
                         class="col-md-1 bi-info-circle-fill"
                     />
                     <span
-                        id="tool-wfsSearch-userHelp-text"
+                        id="module-wfsSearch-userHelp-text"
                         class="col-md-11"
                         :aria-label="$t('common:modules.tools.wfsSearch.userHelp.label')"
                         v-html="$t('common:modules.tools.wfsSearch.userHelp.text', {userHelp})"
@@ -182,17 +182,17 @@ export default {
                 <hr>
                 <div
                     v-for="(literal, i) of currentInstance.literals"
-                    :key="'tool-wfsSearch-clause' + i"
+                    :key="'module-wfsSearch-clause' + i"
                 >
                     <WfsSearchLiteral
                         :literal="literal"
                     />
-                    <hr :key="'tool-wfsSearch-clause-divider' + i">
+                    <hr :key="'module-wfsSearch-clause-divider' + i">
                 </div>
                 <div class="form-group form-group-sm row">
                     <div class="col-md-6">
                         <button
-                            id="tool-wfsSearch-button-resetUI"
+                            id="module-wfsSearch-button-resetUI"
                             type="button"
                             class="btn btn-secondary col-md-12"
                             @click="resetUI"
@@ -202,7 +202,7 @@ export default {
                     </div>
                     <div class="col-md-6">
                         <input
-                            id="tool-wfsSearch-button-search"
+                            id="module-wfsSearch-button-search"
                             type="submit"
                             class="btn btn-primary col-md-12"
                             :disabled="requiredFields"
@@ -214,7 +214,7 @@ export default {
                         class="col-md-12"
                     >
                         <button
-                            id="tool-wfsSearch-button-showResults"
+                            id="module-wfsSearch-button-showResults"
                             class="btn btn-secondary col-md-12"
                             :disabled="results.length === 0 || !headers"
                             @click="setShowResultList(true)"
@@ -239,7 +239,7 @@ export default {
                     <hr>
                 </header>
                 <ListItem
-                    :key="'tool-wfsSearch-list'"
+                    :key="'module-wfsSearch-list'"
                     :identifier="$t(name)"
                     :geometry-name="geometryName"
                     :table-heads="headers"
