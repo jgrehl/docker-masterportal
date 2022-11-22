@@ -4,7 +4,6 @@ import ListItem from "../../../shared/components/list/components/ListItem.vue";
 import {mapActions, mapGetters, mapMutations} from "vuex";
 import WfsSearchLiteral from "./WfsSearchLiteral.vue";
 import actions from "../store/actionsWfsSearch";
-import getters from "../store/gettersWfsSearch";
 import mutations from "../store/mutationsWfsSearch";
 // import {createUserHelp} from "../js/literalFunctions";
 import {searchFeatures} from "../js/requests";
@@ -18,7 +17,22 @@ export default {
         ModalItem
     },
     computed: {
-        ...mapGetters("Modules/WfsSearch", Object.keys(getters)),
+        ...mapGetters("Modules/WfsSearch", [
+            "active",
+            "name",
+            "initialWidth",
+            "instances",
+            "userHelp",
+            "results",
+            "searched",
+            "service",
+            "showResultList",
+            "zoomLevel",
+            "resultsPerPage",
+            "multiSelect",
+            "currentInstance",
+            "requiredFields"
+        ]),
         // @todo ?
         // ...mapGetters("Language", ["currentLocale"]),
         headers () {
@@ -75,7 +89,7 @@ export default {
 
         resetUI () {
             // Reset input fields
-            const inputFields = document.getElementsByClassName("tool-wfsSearch-field-input");
+            const inputFields = document.getElementsByClassName("module-wfsSearch-field-input");
 
             for (const input of inputFields) {
                 input.value = "";
@@ -119,15 +133,7 @@ export default {
 </script>
 
 <template>
-    <div
-        :title="$t(name)"
-        :icon="icon"
-        :active="active"
-        :render-to-window="renderToWindow"
-        :resizable-window="resizableWindow"
-        :deactivate-g-f-i="deactivateGFI"
-        :initial-width="initialWidth"
-    >
+    <div>
         <div>
             <form
                 class="form-horizontal"
@@ -227,7 +233,6 @@ export default {
         </div>
         <ModalItem
             :title="$t(name)"
-            :icon="icon"
             :show-modal="showResults"
             modal-inner-wrapper-style="padding: 10px;min-width: 70vw;"
             modal-content-container-style="padding: 0;overflow: auto;max-height: 70vh;"
