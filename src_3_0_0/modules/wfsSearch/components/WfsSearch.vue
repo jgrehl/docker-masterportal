@@ -3,8 +3,6 @@ import ModalItem from "../../../shared/components/modals/components/ModalItem.vu
 import ListItem from "../../../shared/components/list/components/ListItem.vue";
 import {mapActions, mapGetters, mapMutations} from "vuex";
 import WfsSearchLiteral from "./WfsSearchLiteral.vue";
-import actions from "../store/actionsWfsSearch";
-import mutations from "../store/mutationsWfsSearch";
 // import {createUserHelp} from "../js/literalFunctions";
 import {searchFeatures} from "../js/requests";
 import isObject from "../../../shared/js/utils/isObject";
@@ -80,8 +78,18 @@ export default {
         this.resetModule(true);
     },
     methods: {
-        ...mapMutations("Modules/WfsSearch", Object.keys(mutations)),
-        ...mapActions("Modules/WfsSearch", Object.keys(actions)),
+        ...mapMutations("Modules/WfsSearch", [
+            "setSearched",
+            "setResults",
+            "setShowResultList",
+            "setZoomLevel"
+        ]),
+        ...mapActions("Modules/WfsSearch", [
+            "instanceChanged",
+            "prepareModule",
+            "resetModule",
+            "resetResult"
+        ]),
         // @todo placing Point Markere
         ...mapActions("MapMarker", ["placingPointMarker"]),
         ...mapActions("Maps", ["setCenter", "setZoom"]),
