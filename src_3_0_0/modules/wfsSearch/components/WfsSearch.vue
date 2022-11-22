@@ -51,11 +51,7 @@ export default {
         }
     },
     watch: {
-        active (val) {
-            (val ? this.prepareModule : this.resetModule)();
-        }
-        // ,
-        // @todo ?
+        // @todo if neccessary?
         // currentLocale () {
         //     if (this.active && this.userHelp !== "hide") {
         //         createUserHelp(this.currentInstance.literals);
@@ -63,24 +59,20 @@ export default {
         // }
     },
     created () {
-        this.$on("close", this.close);
+        this.prepareModule();
+
+    },
+    destroyed () {
+        this.resetModule(true);
     },
     methods: {
         ...mapMutations("Modules/WfsSearch", Object.keys(mutations)),
         ...mapActions("Modules/WfsSearch", Object.keys(actions)),
-        // ...mapActions("MapMarker", ["placingPointMarker"]),
+        // @todo placing Point Markere
+        ...mapActions("MapMarker", ["placingPointMarker"]),
         ...mapActions("Maps", ["setCenter", "setZoom"]),
         searchFeatures,
-        /**
-         * Function called when the window of the tool is closed.
-         * Resets the whole component and sets it inactive.
-         *
-         * @returns {void}
-         */
-        close () {
-            this.setActive(false);
-            this.resetModule(true);
-        },
+
         resetUI () {
             // Reset input fields
             const inputFields = document.getElementsByClassName("tool-wfsSearch-field-input");
@@ -113,7 +105,7 @@ export default {
             }
             else if (features.length > 0) {
             // @todo placing Point Marker
-            // this.placingPointMarker(features[0].getGeometry().getCoordinates());
+                this.placingPointMarker(features[0].getGeometry().getCoordinates());
                 this.setCenter(features[0].getGeometry().getCoordinates());
                 this.setZoomLevel(this.zoomLevel);
                 this.setShowResultList(false);
