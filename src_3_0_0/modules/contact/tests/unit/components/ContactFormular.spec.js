@@ -1,17 +1,12 @@
-import Vuex from "vuex";
-import {config, mount, createLocalVue} from "@vue/test-utils";
+import {createStore} from "vuex";
+import {config, mount} from "@vue/test-utils";
 import {expect} from "chai";
 import sinon from "sinon";
 
 import ContactComponent from "../../../components/ContactFormular.vue";
 import ContactModule from "../../../store/indexContact";
 
-const localVue = createLocalVue();
-
-localVue.use(Vuex);
-config.mocks.$t = key => key;
-
-localVue.use(Vuex);
+config.global.mocks.$t = key => key;
 
 /**
  * Fills all form fields with joke data for testing..
@@ -38,7 +33,7 @@ describe("src/modules/contact/components/ContactFormular.vue", () => {
 
         ContactModule.state.serviceId = undefined;
 
-        store = new Vuex.Store({
+        store = createStore({
             namespaces: true,
             modules: {
                 Modules: {
@@ -58,22 +53,27 @@ describe("src/modules/contact/components/ContactFormular.vue", () => {
     });
 
     afterEach(() => {
-        if (wrapper) {
-            wrapper.destroy();
-        }
+        sinon.restore();
     });
 
     it("has a disabled save button if the form is not completed", () => {
-        wrapper = mount(ContactComponent, {store, localVue});
+        wrapper = mount(ContactComponent, {
+            global: {
+                plugins: [store]
+            }});
+
 
         const sendButton = wrapper.find("#module-contact-send-message");
 
         expect(sendButton.exists()).to.be.true;
-        expect(sendButton.attributes("disabled")).to.equal("disabled");
+        expect(sendButton.attributes("disabled")).to.equal("");
     });
 
     it("has an enabled & working save button if the form is completed", async () => {
-        wrapper = mount(ContactComponent, {store, localVue});
+        wrapper = mount(ContactComponent, {
+            global: {
+                plugins: [store]
+            }});
 
         const sendButton = wrapper.find("#module-contact-send-message"),
             nameInput = wrapper.find("#module-contact-username-input"),
@@ -85,7 +85,7 @@ describe("src/modules/contact/components/ContactFormular.vue", () => {
         await wrapper.vm.$nextTick();
 
         expect(sendButton.exists()).to.be.true;
-        expect(sendButton.attributes().disabled).not.to.equal("disabled");
+        expect(sendButton.attributes().disabled).to.be.undefined;
 
         sendButton.trigger("submit");
         expect(ContactModule.actions.send.calledOnce).to.be.true;
@@ -93,7 +93,10 @@ describe("src/modules/contact/components/ContactFormular.vue", () => {
 
     it("keeps the send button disabled if any field is missing", async () => {
 
-        wrapper = mount(ContactComponent, {store, localVue});
+        wrapper = mount(ContactComponent, {
+            global: {
+                plugins: [store]
+            }});
 
         const sendButton = wrapper.find("#module-contact-send-message"),
             nameInput = wrapper.find("#module-contact-username-input"),
@@ -110,7 +113,7 @@ describe("src/modules/contact/components/ContactFormular.vue", () => {
             await wrapper.vm.$nextTick();
 
             expect(sendButton.exists()).to.be.true;
-            expect(sendButton.attributes().disabled).to.equal("disabled");
+            expect(sendButton.attributes().disabled).to.equal("");
         }
     });
 
@@ -118,7 +121,10 @@ describe("src/modules/contact/components/ContactFormular.vue", () => {
         ContactModule.state.contactInfo = "If you live nearby, why not shout the message out from your window at 3AM?";
         ContactModule.state.showPrivacyPolicy = true;
 
-        wrapper = mount(ContactComponent, {store, localVue});
+        wrapper = mount(ContactComponent, {
+            global: {
+                plugins: [store]
+            }});
 
         const sendButton = wrapper.find("#module-contact-send-message"),
             nameInput = wrapper.find("#module-contact-username-input"),
@@ -133,12 +139,12 @@ describe("src/modules/contact/components/ContactFormular.vue", () => {
         fillFields({nameInput, mailInput, phoneInput, messageInput});
         await wrapper.vm.$nextTick();
 
-        expect(sendButton.attributes().disabled).to.equal("disabled");
+        expect(sendButton.attributes().disabled).to.equal("");
 
         checkbox.trigger("click");
         await wrapper.vm.$nextTick();
 
-        expect(sendButton.attributes().disabled).not.to.equal("disabled");
+        expect(sendButton.attributes().disabled).to.be.undefined;
     });
 
     it("sets focus to first input control", async () => {
@@ -147,7 +153,11 @@ describe("src/modules/contact/components/ContactFormular.vue", () => {
         if (document.body) {
             document.body.appendChild(elem);
         }
-        wrapper = mount(ContactComponent, {store, localVue, attachTo: elem});
+        wrapper = mount(ContactComponent, {
+            attachTo: elem,
+            global: {
+                plugins: [store]
+            }});
 
         await wrapper.vm.$nextTick();
         expect(wrapper.find("#module-contact-username-input").element).to.equal(document.activeElement);
