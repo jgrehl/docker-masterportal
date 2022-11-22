@@ -1,21 +1,18 @@
-import {config, mount, createLocalVue} from "@vue/test-utils";
+import {createStore} from "vuex";
+import {config, mount} from "@vue/test-utils";
 import {expect} from "chai";
 import sinon from "sinon";
-import Vuex from "vuex";
 
 import TotalView from "../../../components/TotalView.vue";
 
-const localVue = createLocalVue();
-
-localVue.use(Vuex);
-config.mocks.$t = key => key;
+config.global.mocks.$t = key => key;
 
 describe("src_3_0_0/modules/controls/totalView/components/TotalView.vue", () => {
     const resetViewSpy = sinon.spy();
     let store;
 
     beforeEach(() => {
-        store = new Vuex.Store({
+        store = createStore({
             namespaced: true,
             modules: {
                 Controls: {
@@ -50,14 +47,20 @@ describe("src_3_0_0/modules/controls/totalView/components/TotalView.vue", () => 
     });
 
     it("renders the totalView button", () => {
-        const wrapper = mount(TotalView, {store, localVue});
+        const wrapper = mount(TotalView, {
+            global: {
+                plugins: [store]
+            }});
 
         expect(wrapper.find("#total-view-button").exists()).to.be.true;
         expect(wrapper.findAll("button")).to.have.length(1);
     });
 
     it("should trigger the action resetView if button is clicked", async () => {
-        const wrapper = mount(TotalView, {store, localVue});
+        const wrapper = mount(TotalView, {
+            global: {
+                plugins: [store]
+            }});
 
         await wrapper.find("#total-view-button > button").trigger("click");
 

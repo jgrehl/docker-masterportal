@@ -1,14 +1,11 @@
-import {config, mount, createLocalVue} from "@vue/test-utils";
+import {createStore} from "vuex";
+import {config, mount} from "@vue/test-utils";
 import {expect} from "chai";
 import sinon from "sinon";
-import Vuex from "vuex";
 
 import ZoomInAndOut from "../../../components/ZoomInAndOut.vue";
 
-const localVue = createLocalVue();
-
-localVue.use(Vuex);
-config.mocks.$t = key => key;
+config.global.mocks.$t = key => key;
 
 describe("src_3_0_0/modules/controls/zoom/components/ZoomInAndOut.vue", () => {
     const decreaseZoomSpy = sinon.spy(),
@@ -16,7 +13,7 @@ describe("src_3_0_0/modules/controls/zoom/components/ZoomInAndOut.vue", () => {
     let store;
 
     beforeEach(() => {
-        store = new Vuex.Store({
+        store = createStore({
             namespaced: true,
             modules: {
                 Controls: {
@@ -51,14 +48,20 @@ describe("src_3_0_0/modules/controls/zoom/components/ZoomInAndOut.vue", () => {
     });
 
     it("renders the ZoomInAndOut buttons", () => {
-        const wrapper = mount(ZoomInAndOut, {store, localVue});
+        const wrapper = mount(ZoomInAndOut, {
+            global: {
+                plugins: [store]
+            }});
 
         expect(wrapper.find("#zoom-in-and-out-buttons").exists()).to.be.true;
         expect(wrapper.findAll("button")).to.have.length(2);
     });
 
     it("should trigger the action increaseZoom if button plus is clicked", async () => {
-        const wrapper = mount(ZoomInAndOut, {store, localVue}),
+        const wrapper = mount(ZoomInAndOut, {
+                global: {
+                    plugins: [store]
+                }}),
             buttons = wrapper.findAll("#zoom-in-and-out-buttons > button");
 
         await buttons.at(0).trigger("click");
@@ -66,7 +69,10 @@ describe("src_3_0_0/modules/controls/zoom/components/ZoomInAndOut.vue", () => {
     });
 
     it("should trigger the action decreaseZoom if button minus is clicked", async () => {
-        const wrapper = mount(ZoomInAndOut, {store, localVue}),
+        const wrapper = mount(ZoomInAndOut, {
+                global: {
+                    plugins: [store]
+                }}),
             buttons = wrapper.findAll("#zoom-in-and-out-buttons > button");
 
         await buttons.at(1).trigger("click");
