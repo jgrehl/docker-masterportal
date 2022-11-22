@@ -1,20 +1,17 @@
-import Vuex from "vuex";
-import {config, createLocalVue, shallowMount} from "@vue/test-utils";
+import {createStore} from "vuex";
+import {config, shallowMount} from "@vue/test-utils";
 import {expect} from "chai";
 import PoiChoiceComponent from "../../../../components/poi/PoiChoice.vue";
 import sinon from "sinon";
 
-const localVue = createLocalVue();
-
-localVue.use(Vuex);
-config.mocks.$t = key => key;
+config.global.mocks.$t = key => key;
 
 describe("src_3_0_0/modules/controls/orientation/components/PoiChoice.vue", () => {
     let store,
         wrapper;
 
     beforeEach(() => {
-        store = new Vuex.Store({
+        store = createStore({
             namespaced: true,
             modules: {
                 Controls: {
@@ -42,26 +39,24 @@ describe("src_3_0_0/modules/controls/orientation/components/PoiChoice.vue", () =
         });
 
         wrapper = shallowMount(PoiChoiceComponent, {
-            store,
-            computed: {
-                choices () {
-                    return {
-                        "currentPosition": "current location",
-                        "customPosition": "custom location"
-                    };
-                }
-            },
-            localVue
+            global: {
+                plugins: [store]
+            }
         });
     });
+
+    after(() => {
+        sinon.restore();
+    });
+
 
     describe("Render Component", function () {
         it("renders the Poi choice component", () => {
             expect(wrapper.find(".poi-choice").exists()).to.be.true;
             expect(wrapper.find(".choice-content").exists()).to.be.true;
-            expect(wrapper.find(".choice-content >label.currentPosition").text()).to.equal("current location");
+            expect(wrapper.find(".choice-content >label.currentPosition").text()).to.equal("common:modules.controls.orientation.poiChoiceCurrentPostion");
             expect(wrapper.find(".choice-content >label.currentPosition input").element.value).to.equal("currentPosition");
-            expect(wrapper.find(".choice-content >label.customPosition").text()).to.equal("custom location");
+            expect(wrapper.find(".choice-content >label.customPosition").text()).to.equal("common:modules.controls.orientation.poiChoiceCustomPostion");
             expect(wrapper.find(".choice-content >label.customPosition input").element.value).to.equal("customPosition");
         });
 
