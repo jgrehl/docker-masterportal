@@ -90,13 +90,13 @@ const actions = {
      * Also removes the map marker.
      * @returns {void}
      */
-    resetResult ({commit, getters, state}) {
+    resetResult ({commit, dispatch, getters, state}) {
         commit("setValuesReset", true);
         commit("setSearched", false);
         commit("setResults", []);
         commit("setSelectedOptions", {});
-        // @todo
-        // dispatch("MapMarker/removePointMarker", null, {root: true});
+        // @todo remove point marker
+        dispatch("MapMarker/removePointMarker", null, {root: true});
         resetFieldValues(getters.currentInstance.literals);
 
         // Reset dropdowns
