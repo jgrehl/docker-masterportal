@@ -47,7 +47,8 @@ export default {
         }
         catch (err) {
             dispatch("Modules/Alerting/addSingleAlert", {
-                category: i18next.t("common:modules.alerting.categories.info"),
+                category: "error",
+                title: i18next.t("common:modules.alerting.categories.info"),
                 content: err.message
             }, {root: true});
         }
