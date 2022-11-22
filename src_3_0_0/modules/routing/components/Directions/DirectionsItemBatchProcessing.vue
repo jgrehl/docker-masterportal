@@ -149,7 +149,8 @@ export default {
                     return;
                 }
                 if (this.settings.batchProcessing.limit && count > this.settings.batchProcessing.limit) {
-                    reject(new Error(this.$t("common:modules.tools.routing.directions.batchProcessing.errorToManyEntriesInFile", {limit: this.directionsSettings.batchProcessing.limit})));
+                    console.log("should return");
+                    reject(new Error(this.$t("common:modules.tools.routing.directions.batchProcessing.errorToManyEntriesInFile", {limit: this.settings.batchProcessing.limit})));
                     return;
                 }
 
@@ -176,7 +177,7 @@ export default {
 
                 this.setTaskHandler(new RoutingTaskHandler(
                     tasks,
-                    this.settings.batchProcessing.maximumConcurrentRequests ? this.settings.batchProcessing.maximumConcurrentRequests : this.$store.getters["Modules/Routing/Isochrones/settings"].batchProcessing.maximumConcurrentRequests,
+                    this.settings.batchProcessing.maximumConcurrentRequests ? this.settings.batchProcessing.maximumConcurrentRequests : this.$store.getters["Modules/Routing/Directions/settings"].batchProcessing.maximumConcurrentRequests,
                     (allResults, newResult) => allResults.push(newResult),
                     (results) => resolve(results)
                 ));
