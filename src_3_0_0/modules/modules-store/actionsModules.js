@@ -53,7 +53,7 @@ export default {
      * @returns {void}
      */
     addAttributesToModuleState ({commit, dispatch}, items) {
-        Array.from(items).forEach(item => {
+        items.forEach(item => {
             if (item?.type === "folder") {
                 dispatch("addAttributesToModuleState", item.elements);
             }
