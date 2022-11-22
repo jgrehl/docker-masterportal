@@ -139,7 +139,7 @@
                       "literals": [
                         {
                           "field": {
-                            "type": "equal",
+                            "queryType": "equal",
                             "inputLabel": "common:modules.tools.wfsSearch.district",
                             "fieldName": "gemarkung",
                             "usesId": true,
@@ -149,7 +149,7 @@
                         },
                         {
                           "field": {
-                            "type": "equal",
+                            "queryType": "equal",
                             "inputLabel": "common:modules.tools.wfsSearch.parcelNumber",
                             "fieldName": "flurstuecksnummer",
                             "required": true
