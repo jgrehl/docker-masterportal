@@ -26,8 +26,6 @@ export default {
      * @returns {void}
      */
     checkNonOptionalConfigFields ({state}) {
-        console.log('------------------------');
-        console.log(state);
         const checkPaths = constantsRouting.nonOptionalConfigFields.map(field => field.split(".")),
             missing = checkPaths.filter(path => {
                 const val = path.reduce((partObj, partPath) => {
@@ -36,10 +34,10 @@ export default {
 
                 return val === undefined || val === null;
             });
-console.log(state);
-  /*   if (missing.length > 0) {
-            throw new Error("Routing tool is not configured correctly. The following required fields are missing: "  + missing.map(m => m.join(".")).join(", "));
-        } */
+
+        if (missing.length > 0) {
+            throw new Error("Routing tool is not configured correctly. The following required fields are missing: " + missing.map(m => m.join(".")).join(", "));
+        }
     },
     /**
      * Async fetch Coordinates by text.
