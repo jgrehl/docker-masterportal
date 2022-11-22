@@ -1,7 +1,6 @@
 <script>
 import {mapActions, mapGetters, mapMutations} from "vuex";
 import actions from "../store/actionsWfsSearch";
-import getters from "../store/gettersWfsSearch";
 import mutations from "../store/mutationsWfsSearch";
 import isObject from "../../../shared/js/utils/isObject";
 import {buildXmlFilter} from "../js/buildFilter";
@@ -72,7 +71,14 @@ export default {
     },
     data: () => ({parameterIndex: 0, showLoader: false, suggestions: [], value: ""}),
     computed: {
-        ...mapGetters("Modules/WfsSearch", Object.keys(getters)),
+        ...mapGetters("Modules/WfsSearch", [
+            "parsedSource",
+            "requiredValues",
+            "selectedOptions",
+            "service",
+            "valuesReset",
+            "currentInstance"
+        ]),
         selectableParameters () {
             // This could be checked with any required value
             if (Array.isArray(this.fieldName)) {
