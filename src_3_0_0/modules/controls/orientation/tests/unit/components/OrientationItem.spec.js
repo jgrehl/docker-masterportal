@@ -1,19 +1,16 @@
-import Vuex from "vuex";
-import {config, createLocalVue, mount} from "@vue/test-utils";
+import {createStore} from "vuex";
+import {config, mount} from "@vue/test-utils";
 import {expect} from "chai";
 import sinon from "sinon";
 import OrientationItemComponent from "../../../components/OrientationItem.vue";
 
-const localVue = createLocalVue();
-
-localVue.use(Vuex);
-config.mocks.$t = key => key;
+config.global.mocks.$t = key => key;
 
 describe("src_3_0_0/modules/controls/orientation/components/OrientationItem.vue", () => {
     let store;
 
     beforeEach(() => {
-        store = new Vuex.Store({
+        store = createStore({
             namespaced: true,
             modules: {
                 Controls: {
@@ -48,26 +45,38 @@ describe("src_3_0_0/modules/controls/orientation/components/OrientationItem.vue"
     });
 
     it("renders the Orientation component", () => {
-        const wrapper = mount(OrientationItemComponent, {store, localVue});
+        const wrapper = mount(OrientationItemComponent, {
+            global: {
+                plugins: [store]
+            }});
 
         expect(wrapper.find(".orientationButtons").exists()).to.be.true;
         expect(wrapper.find("#geolocation_marker").exists()).to.be.true;
     });
 
     it("renders the Orientation button", () => {
-        const wrapper = mount(OrientationItemComponent, {store, localVue});
+        const wrapper = mount(OrientationItemComponent, {
+            global: {
+                plugins: [store]
+            }});
 
         expect(wrapper.find("#geolocate").exists()).to.be.true;
     });
 
     it("will not render the Poi Orientation button", () => {
-        const wrapper = mount(OrientationItemComponent, {store, localVue});
+        const wrapper = mount(OrientationItemComponent, {
+            global: {
+                plugins: [store]
+            }});
 
         expect(wrapper.find("#geolocatePOI").exists()).to.be.false;
     });
 
     it("will union the array", () => {
-        const wrapper = mount(OrientationItemComponent, {store, localVue}),
+        const wrapper = mount(OrientationItemComponent, {
+                global: {
+                    plugins: [store]
+                }}),
             arr1 = [3, 3, 4],
             arr2 = [5, 6, 7],
             arr = [3, 4, 5, 6, 7];
