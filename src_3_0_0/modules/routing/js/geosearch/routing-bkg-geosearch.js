@@ -2,7 +2,6 @@ import axios from "axios";
 import {RoutingGeosearchResult} from "../classes/routing-geosearch-result";
 import state from "./../../store/stateRouting";
 import store from "../../../../app-store";
-
 /**
  * Requests POIs from text from BKG
  * @param {String} search text to search with
