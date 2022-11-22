@@ -1,14 +1,11 @@
-import {config, shallowMount, mount, createLocalVue} from "@vue/test-utils";
+import {createStore} from "vuex";
+import {config, shallowMount, mount} from "@vue/test-utils";
 import {expect} from "chai";
 import sinon from "sinon";
-import Vuex from "vuex";
 
 import LayerTreeComponent from "../../../components/LayerTree.vue";
 
-const localVue = createLocalVue();
-
-localVue.use(Vuex);
-config.mocks.$t = key => key;
+config.global.mocks.$t = key => key;
 
 describe("src_3_0_0/modules/layerTree/components/LayerTree.vue", () => {
     let store,
@@ -47,7 +44,7 @@ describe("src_3_0_0/modules/layerTree/components/LayerTree.vue", () => {
         layers3D = [
             layer3D
         ];
-        store = new Vuex.Store({
+        store = createStore({
             namespaces: true,
             modules: {
                 Maps: {
@@ -69,22 +66,25 @@ describe("src_3_0_0/modules/layerTree/components/LayerTree.vue", () => {
     });
 
     afterEach(() => {
-        if (wrapper) {
-            wrapper.destroy();
-        }
         sinon.restore();
     });
 
     it("renders the LayerTree without layers", () => {
         layers2D = [];
-        wrapper = shallowMount(LayerTreeComponent, {store, localVue});
+        wrapper = shallowMount(LayerTreeComponent, {
+            global: {
+                plugins: [store]
+            }});
 
         expect(wrapper.find("#layer-tree").exists()).to.be.true;
         expect(wrapper.findAll("layer-stub").length).to.be.equals(0);
     });
 
     it("renders the LayerTree with 2D layers", () => {
-        wrapper = shallowMount(LayerTreeComponent, {store, localVue});
+        wrapper = shallowMount(LayerTreeComponent, {
+            global: {
+                plugins: [store]
+            }});
 
         expect(wrapper.find("#layer-tree").exists()).to.be.true;
         expect(wrapper.findAll("layer-stub").length).to.be.equals(2);
@@ -92,14 +92,20 @@ describe("src_3_0_0/modules/layerTree/components/LayerTree.vue", () => {
 
     it("renders the LayerTree with 2D and 3D layers", () => {
         mapMode = "3D";
-        wrapper = shallowMount(LayerTreeComponent, {store, localVue});
+        wrapper = shallowMount(LayerTreeComponent, {
+            global: {
+                plugins: [store]
+            }});
 
         expect(wrapper.find("#layer-tree").exists()).to.be.true;
         expect(wrapper.findAll("layer-stub").length).to.be.equals(3);
     });
 
     it("renders the LayerTree with 2D layers as children - check layers", () => {
-        wrapper = mount(LayerTreeComponent, {store, localVue});
+        wrapper = mount(LayerTreeComponent, {
+            global: {
+                plugins: [store]
+            }});
 
         expect(wrapper.find("#layer-tree").exists()).to.be.true;
         expect(wrapper.findAll("input").length).to.be.equals(2);
@@ -109,7 +115,10 @@ describe("src_3_0_0/modules/layerTree/components/LayerTree.vue", () => {
 
     it("renders the LayerTree with 3D layers as children - check layers", () => {
         mapMode = "3D";
-        wrapper = mount(LayerTreeComponent, {store, localVue});
+        wrapper = mount(LayerTreeComponent, {
+            global: {
+                plugins: [store]
+            }});
 
         expect(wrapper.find("#layer-tree").exists()).to.be.true;
         expect(wrapper.findAll("input").length).to.be.equals(3);
