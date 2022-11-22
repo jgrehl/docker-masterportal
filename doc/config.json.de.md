@@ -3608,7 +3608,7 @@ Es können mehrere Formulare (**[SearchInstances](#markdown-header-portalconfigm
                             "literals": [
                                 {
                                     "field": {
-                                        "type": "equal",
+                                        "queryType": "equal",
                                         "fieldName": "gemarkung",
                                         "inputLabel": "Gemarkung",
                                         "options": ""
@@ -3616,7 +3616,7 @@ Es können mehrere Formulare (**[SearchInstances](#markdown-header-portalconfigm
                                 },
                                 {
                                     "field": {
-                                        "type": "equal",
+                                        "queryType": "equal",
                                         "fieldName": "flur",
                                         "inputLabel": "Flur",
                                         "options": "flur"
@@ -3669,7 +3669,7 @@ Eine Instanz der WFS Suche, welche durch ein Dropdown Menü im Werkzeug ausgewä
                 "literals": [
                     {
                         "field": {
-                            "type": "equal",
+                            "queryType": "equal",
                             "fieldName": "gemarkung",
                             "inputLabel": "Gemarkung",
                             "options": ""
@@ -3677,7 +3677,7 @@ Eine Instanz der WFS Suche, welche durch ein Dropdown Menü im Werkzeug ausgewä
                     },
                     {
                         "field": {
-                            "type": "equal",
+                            "queryType": "equal",
                             "fieldName": "flur",
                             "inputLabel": "Flur",
                             "options": "flur"
@@ -3711,7 +3711,7 @@ Zu beachten ist jedoch, dass ein Feld innerhalb einer Klausel verpackt sein muss
         "literals": [
             {
                 "field": {
-                    "type": "equal",
+                    "queryType": "equal",
                     "fieldName": "gemarkung",
                     "inputLabel": "Gemarkung",
                     "options": ""
@@ -3719,7 +3719,7 @@ Zu beachten ist jedoch, dass ein Feld innerhalb einer Klausel verpackt sein muss
             },
             {
                 "field": {
-                    "type": "equal",
+                    "queryType": "equal",
                     "fieldName": "flur",
                     "inputLabel": "Flur",
                     "options": "flur"
@@ -3733,7 +3733,7 @@ Zu beachten ist jedoch, dass ein Feld innerhalb einer Klausel verpackt sein muss
 ```json
 {
     "field": {
-        "type": "equal",
+        "queryType": "equal",
         "fieldName": "rivers",
         "inputLabel": "Flüsse",
         "options": [
@@ -3776,7 +3776,7 @@ Eine Klausel (`clause`) definiert die Art und Weise wie verschiedene `literals` 
         "literals": [
             {
                 "field": {
-                    "type": "equal",
+                    "queryType": "equal",
                     "fieldName": "gemarkung",
                     "inputLabel": "Gemarkung",
                     "options": ""
@@ -3784,7 +3784,7 @@ Eine Klausel (`clause`) definiert die Art und Weise wie verschiedene `literals` 
             },
             {
                 "field": {
-                    "type": "equal",
+                    "queryType": "equal",
                     "fieldName": "flur",
                     "inputLabel": "Flur",
                     "options": "flur"
@@ -3807,7 +3807,7 @@ Eine Konfiguration wie
 ```json
 {
     "field": {
-        "type": ["equal", "like"],
+        "queryType": ["equal", "like"],
         "fieldName": ["flst", "gmkr"],
         "inputLabel": ["Flurstück", "Gemarkungsnummer"]
     }
@@ -3846,7 +3846,7 @@ In diesem Fall sollte die Reihenfolge in der Konfiguration wie folgt aussehen:
         "literals": [
             {
                 "field": {
-                    "type": "equal",
+                    "queryType": "equal",
                     "fieldName": "objects",
                     "inputLabel": "Objekte",
                     "options": ""
@@ -3854,7 +3854,7 @@ In diesem Fall sollte die Reihenfolge in der Konfiguration wie folgt aussehen:
             },
             {
                 "field": {
-                    "type": "equal",
+                    "queryType": "equal",
                     "fieldName": "foo",
                     "inputLabel": "Foo",
                     "options": "foo"
@@ -3862,7 +3862,7 @@ In diesem Fall sollte die Reihenfolge in der Konfiguration wie folgt aussehen:
             },
             {
                 "field": {
-                    "type": "equal",
+                    "queryType": "equal",
                     "fieldName": "bar",
                     "inputLabel": "Bar",
                     "options": "foo.bar"
@@ -3882,7 +3882,7 @@ In diesem Fall sollte die Reihenfolge in der Konfiguration wie folgt aussehen:
 |inputTitle|nein|String/String[]||Wert, welcher beim Hovern über das UI Element angezeigt wird. Kann ein Übersetzungsschlüssel sein.|false|
 |required|nein|Boolean/Boolean[]|false|Legt fest, ob das Feld ausgefüllt werden muss.|false|
 |options|nein|String/**[option](#markdown-header-portalconfigmenutoolwfssearchsearchinstanceliteralfieldoption)**[]/String[]||Falls `options` ein Array (egal ob an Strings oder **[options](#markdown-header-portalconfigmenutoolwfssearchsearchinstanceliteralfieldoption)**) ist werden die gegeben Werte für die Auswahl verwendet. Diese Optionen können entweder eine **[option](#markdown-header-portalconfigmenutoolwfssearchsearchinstanceliteralfieldoption)** oder einfache Werte (`String` / `Number`) sein. Im zweiten Fall werden die einfachen Werte sowohl für die Id als auch den `displayName` verwendet.  <br /> Falls `options` ein String ist, existieren verschiedene Möglichkeiten: <ul><li>Falls der String leer ist, werden die Schlüssel der **[selectSource](#markdown-header-portalconfigmenutoolwfssearchsearchinstance)** verwendet.</li><li>Falls der String nicht leer ist, wird angenommen, dass ein anderes Feld mit `options=""` existiert; andernfalls wird das Feld deaktiviert. Es wird zudem angenommen, dass der String ein Array in **[selectSource](#markdown-header-portalconfigmenutoolwfssearchsearchinstance)** mit weiteren Optionen repräsentiert.</li></ul> **Zu beachten**: Der Parameter `options` kann auch als multidimensionales Array **[option](#markdown-header-portalconfigmenutoolwfssearchsearchinstanceliteralfieldoption)**[][] angegeben werden, welches allerdings nicht für Masterportal Admin parametrisiert werden kann. Dies findet Anwendung, wenn ein **[option](#markdown-header-portalconfigmenutoolwfssearchsearchinstanceliteralfieldoption)**[] verwendet werden soll, jedoch mehrere Parameter in einem `field` hinterlegt werden sollen.|true|
-|type|nein|enum["equal", "like"]/enum["equal", "like"][]||Wird für die Verwendung mit einem WFS@1.1.0 vorausgesetzt. Der `type` legt fest, wie das Feld mit dem Wert des Dienstes verglichen werden soll.|false|
+|queryType|nein|enum["equal", "like"]/enum["equal", "like"][]||Wird für die Verwendung mit einem WFS@1.1.0 vorausgesetzt. Der `queryType` legt fest, wie das Feld mit dem Wert des Dienstes verglichen werden soll.|false|
 |usesId|nein|Boolean/Boolean[]|false|Nur relevant, wenn der Parameter `options` gesetzt und ein leerer String (Rootelement) ist. Legt fest, ob der Schlüssel des Objektes aus der externen Quelle als Wert für die Query verwendet werden soll oder ob das Objekt eine Id gesetzt hat, welche stattdessen Anwendung finden soll.|false|
 
 **Beispiel**
@@ -3890,7 +3890,7 @@ In diesem Fall sollte die Reihenfolge in der Konfiguration wie folgt aussehen:
 ```json
 {
     "field": {
-        "type": "equal",
+        "queryType": "equal",
         "fieldName": "rivers",
         "inputLabel": "Flüsse",
         "options": [

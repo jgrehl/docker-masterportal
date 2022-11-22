@@ -11,16 +11,17 @@ const localVue = createLocalVue();
 localVue.use(Vuex);
 config.mocks.$t = key => key;
 
-describe("src/modules/tools/wfsSearch/components/WfsSearchLiteral.vue", () => {
+describe("src/modules/wfsSearch/components/WfsSearchLiteral.vue", () => {
     let store;
 
     beforeEach(() => {
         store = new Vuex.Store({
             namespaces: true,
             modules: {
-                Tools: {
+                Modules: {
                     namespaced: true,
                     modules: {
+                        namespaced: true,
                         WfsSearch: WfsSearchModule
                     }
                 }
