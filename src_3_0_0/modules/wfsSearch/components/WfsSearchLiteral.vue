@@ -26,7 +26,7 @@ export default {
 <template>
     <WfsSearchField
         v-if="literal.field"
-        :key="`tool-wfsSearch-clause-literal-field-${literal.field.id}-${literal.field.fieldName}`"
+        :key="`module-wfsSearch-clause-literal-field-${literal.field.id}-${literal.field.fieldName}`"
         :dropdown-input-uses-id="literal.field.usesId"
         :field-id="literal.field.id"
         :suggestions-config="suggestions"
@@ -36,7 +36,7 @@ export default {
     <div v-else-if="literal.clause">
         <div
             v-for="(lit, i) of literal.clause.literals"
-            :key="'tool-wfsSearch-clause-literal' + i"
+            :key="'module-wfsSearch-clause-literal' + i"
         >
             <WfsSearchLiteral
                 :literal="lit"
