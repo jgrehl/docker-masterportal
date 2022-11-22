@@ -114,7 +114,7 @@ export default {
 
                         this.version = version;
                         this.wmsUrl = url;
-                        // @todo Ordner externe Fachdaten anlegen
+                        // @todo add folder external subject data if neccessary
                         // if (Radio.request("Parser", "getItemByAttributes", {id: "ExternalLayer"}) === undefined) {
                         //     Radio.trigger("Parser", "addFolder", "Externe Fachdaten", "ExternalLayer", "tree", 0);
                         //     Radio.trigger("ModelList", "renderTree");
@@ -172,7 +172,7 @@ export default {
                 object.Layer.forEach(layer => {
                     this.parseLayer(layer, this.getParsedTitle(object.Title), level + 1);
                 });
-                // @todo: Folder machen
+                // @todo: add folder
                 // Radio.trigger("Parser", "addFolder", object.Title, this.getParsedTitle(object.Title), parentId, level, false, false, object.invertLayerOrder);
             }
             else {
