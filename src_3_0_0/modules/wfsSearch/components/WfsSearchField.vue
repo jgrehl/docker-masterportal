@@ -1,7 +1,5 @@
 <script>
-import {mapActions, mapGetters, mapMutations} from "vuex";
-import actions from "../store/actionsWfsSearch";
-import mutations from "../store/mutationsWfsSearch";
+import {mapGetters, mapMutations} from "vuex";
 import isObject from "../../../shared/js/utils/isObject";
 import {buildXmlFilter} from "../js/buildFilter";
 import {fieldValueChanged} from "../js/literalFunctions";
@@ -177,8 +175,12 @@ export default {
         }
     },
     methods: {
-        ...mapMutations("Modules/WfsSearch", Object.keys(mutations)),
-        ...mapActions("Modules/WfsSearch", Object.keys(actions)),
+        ...mapMutations("Modules/WfsSearch", [
+            "setValuesReset",
+            "setRequiredValues",
+            "setSelectedOptions",
+            "addOptions"
+        ]),
         /**
          * The array check needs to be done for every property which is not required
          * to check if multiple parameters can be selected from this field and if every
