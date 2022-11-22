@@ -1,14 +1,11 @@
-import Vuex from "vuex";
-import {config, createLocalVue, shallowMount} from "@vue/test-utils";
+import {createStore} from "vuex";
+import {config, shallowMount} from "@vue/test-utils";
 import {expect} from "chai";
 import PoiOrientationComponent from "../../../../components/poi/PoiOrientation.vue";
 import Feature from "ol/Feature.js";
 import sinon from "sinon";
 
-const localVue = createLocalVue();
-
-localVue.use(Vuex);
-config.mocks.$t = key => key;
+config.global.mocks.$t = key => key;
 
 describe("src_3_0_0/modules/controls/orientation/components/PoiOrientation.vue", () => {
     let store,
@@ -16,7 +13,7 @@ describe("src_3_0_0/modules/controls/orientation/components/PoiOrientation.vue",
         wrapper;
 
     beforeEach(() => {
-        store = new Vuex.Store({
+        store = createStore({
             namespaced: true,
             modules: {
                 Controls: {
@@ -56,11 +53,13 @@ describe("src_3_0_0/modules/controls/orientation/components/PoiOrientation.vue",
             }
         };
 
-        wrapper = shallowMount(PoiOrientationComponent, {
-            store,
-            propsData: propsData,
-            localVue
-        });
+        wrapper = shallowMount(PoiOrientationComponent,
+            {
+                global: {
+                    plugins: [store]
+                },
+                propsData: propsData
+            });
     });
 
     after(() => {
