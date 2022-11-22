@@ -1,14 +1,11 @@
-import {config, mount, createLocalVue} from "@vue/test-utils";
+import {createStore} from "vuex";
+import {config, mount} from "@vue/test-utils";
 import {expect} from "chai";
 import sinon from "sinon";
-import Vuex from "vuex";
 
 import Button3dItem from "../../../components/Button3dItem.vue";
 
-const localVue = createLocalVue();
-
-localVue.use(Vuex);
-config.mocks.$t = key => key;
+config.global.mocks.$t = key => key;
 
 describe("src_3_0_0/modules/controls/button3d/components/Button3dItem.vue", () => {
     const changeMapModeSpy = sinon.spy();
@@ -22,7 +19,7 @@ describe("src_3_0_0/modules/controls/button3d/components/Button3dItem.vue", () =
     });
 
     beforeEach(() => {
-        store = new Vuex.Store({
+        store = createStore({
             namespaced: true,
             modules: {
                 Controls: {
@@ -55,14 +52,20 @@ describe("src_3_0_0/modules/controls/button3d/components/Button3dItem.vue", () =
     });
 
     it("renders the button3d button", () => {
-        const wrapper = mount(Button3dItem, {store, localVue});
+        const wrapper = mount(Button3dItem, {
+            global: {
+                plugins: [store]
+            }});
 
         expect(wrapper.find("#button-3d-button > button").exists()).to.be.true;
         expect(wrapper.findAll("button")).to.have.length(1);
     });
 
     it("should trigger change map mode with target mode 3D", async () => {
-        const wrapper = mount(Button3dItem, {store, localVue});
+        const wrapper = mount(Button3dItem, {
+            global: {
+                plugins: [store]
+            }});
 
         await wrapper.find("#button-3d-button > button").trigger("click");
 
