@@ -28,7 +28,7 @@ export default {
         ...mapMutations("Modules/Routing/Isochrones", Object.keys(mutations)),
         ...mapMutations("Modules/Routing", ["setTaskHandler"]),
         ...mapActions("Modules/Routing/Isochrones", ["fetchIsochrones", "resetIsochronesResult"]),
-        //...mapActions("Modules/Alerting", ["addSingleAlert"]),
+        ...mapActions("Modules/Alerting", ["addSingleAlert"]),
         /**
          * Called when files are added by the user to process
          * loading animation is shown while processing and an error is shown to the user if something happens while processing
@@ -54,17 +54,19 @@ export default {
                             this.downloadResults(file.name, result);
                         }
                         if (this.countFailed !== 0) {
-                          /*   this.addSingleAlert({
-                                category: this.$t("common:modules.alerting.categories.error"),
+                            this.addSingleAlert({
+                                title: this.$t("common:modules.alerting.categories.error"),
+                                category: "error",
                                 content: this.$t("common:modules.tools.routing.isochrones.batchProcessing.errorSomeFailed", {countFailed: this.coundFailed})
-                            }); */
+                            });
                         }
                     }
                     catch (e) {
-                        /* this.addSingleAlert({
-                            category: this.$t("common:modules.alerting.categories.error"),
+                        this.addSingleAlert({
+                            category: "error",
+                            title: this.$t("common:modules.alerting.categories.error"),
                             content: e.message
-                        }); */
+                        });
                     }
                     this.setIsLoadingIsochrones(false);
 
