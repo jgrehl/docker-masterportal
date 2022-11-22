@@ -1,14 +1,11 @@
-import {config, shallowMount, createLocalVue} from "@vue/test-utils";
+import {createStore} from "vuex";
+import {config, shallowMount} from "@vue/test-utils";
 import {expect} from "chai";
 import sinon from "sinon";
-import Vuex from "vuex";
 
 import LayerComponent from "../../../components/LayerComponent.vue";
 
-const localVue = createLocalVue();
-
-localVue.use(Vuex);
-config.mocks.$t = key => key;
+config.global.mocks.$t = key => key;
 
 describe("src_3_0_0/modules/layerTree/components/Layer.vue", () => {
     let store,
@@ -28,7 +25,7 @@ describe("src_3_0_0/modules/layerTree/components/Layer.vue", () => {
             layerConf: layer
         };
         replaceByIdInLayerConfigSpy = sinon.spy();
-        store = new Vuex.Store({
+        store = createStore({
             namespaces: true,
             modules: {
                 Modules: {
@@ -46,20 +43,27 @@ describe("src_3_0_0/modules/layerTree/components/Layer.vue", () => {
     });
 
     afterEach(() => {
-        if (wrapper) {
-            wrapper.destroy();
-        }
         sinon.restore();
     });
 
     it("renders the layer given as property to the component", () => {
-        wrapper = shallowMount(LayerComponent, {store, propsData: propsData, localVue});
+        wrapper = shallowMount(LayerComponent, {
+            global: {
+                plugins: [store]
+            },
+            propsData
+        });
 
         expect(wrapper.find("#layertree-layer-" + propsData.layerConf.id).exists()).to.be.true;
     });
 
     it("renders layer with visibility false and checkbox", () => {
-        wrapper = shallowMount(LayerComponent, {store, propsData: propsData, localVue});
+        wrapper = shallowMount(LayerComponent, {
+            global: {
+                plugins: [store]
+            },
+            propsData
+        });
 
         expect(wrapper.find("#layertree-layer-" + propsData.layerConf.id).exists()).to.be.true;
         expect(wrapper.findAll("input").length).to.be.equals(1);
@@ -71,7 +75,12 @@ describe("src_3_0_0/modules/layerTree/components/Layer.vue", () => {
     it("renders layer with visibility true and checkbox, name is bold", () => {
         propsData.layerConf.visibility = true;
 
-        wrapper = shallowMount(LayerComponent, {store, propsData: propsData, localVue});
+        wrapper = shallowMount(LayerComponent, {
+            global: {
+                plugins: [store]
+            },
+            propsData
+        });
 
         expect(wrapper.find("#layertree-layer-" + propsData.layerConf.id).exists()).to.be.true;
         expect(wrapper.findAll("input").length).to.be.equals(1);
@@ -92,7 +101,12 @@ describe("src_3_0_0/modules/layerTree/components/Layer.vue", () => {
         };
         let checkbox = null;
 
-        wrapper = shallowMount(LayerComponent, {store, propsData: propsData, localVue});
+        wrapper = shallowMount(LayerComponent, {
+            global: {
+                plugins: [store]
+            },
+            propsData
+        });
 
         expect(wrapper.find("#layertree-layer-" + propsData.layerConf.id).exists()).to.be.true;
         expect(wrapper.findAll("input").length).to.be.equals(1);
@@ -118,7 +132,12 @@ describe("src_3_0_0/modules/layerTree/components/Layer.vue", () => {
         let checkbox = null;
 
         propsData.layerConf.visibility = true;
-        wrapper = shallowMount(LayerComponent, {store, propsData: propsData, localVue});
+        wrapper = shallowMount(LayerComponent, {
+            global: {
+                plugins: [store]
+            },
+            propsData
+        });
 
         expect(wrapper.find("#layertree-layer-" + propsData.layerConf.id).exists()).to.be.true;
         expect(wrapper.findAll("input").length).to.be.equals(1);
