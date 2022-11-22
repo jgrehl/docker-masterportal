@@ -1,14 +1,11 @@
-import Vuex from "vuex";
-import {config, shallowMount, createLocalVue} from "@vue/test-utils";
+import {createStore} from "vuex";
+import {config, shallowMount} from "@vue/test-utils";
 import LayerPillsComponent from "../../../components/LayerPills.vue";
 import LayerPills from "../../../store/indexLayerPills";
 import {expect} from "chai";
 import sinon from "sinon";
 
-const localVue = createLocalVue();
-
-localVue.use(Vuex);
-config.mocks.$t = key => key;
+config.global.mocks.$t = key => key;
 
 
 describe("src_3_0_0/modules/LayerPills.vue", () => {
@@ -33,7 +30,7 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
         };
         startIndex = 0;
         endIndex = 2;
-        store = new Vuex.Store({
+        store = createStore({
             namespaced: true,
             modules: {
                 LayerPills,
@@ -73,21 +70,24 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
     });
 
     afterEach(() => {
-        if (wrapper) {
-            wrapper.destroy();
-        }
         sinon.restore();
     });
 
     describe("renders or does not render div", () => {
         it("renders div", () => {
-            wrapper = shallowMount(LayerPillsComponent, {store, localVue});
+            wrapper = shallowMount(LayerPillsComponent, {
+                global: {
+                    plugins: [store]
+                }});
             expect(wrapper.find("#layer-pills").exists()).to.be.true;
         });
 
         it("no visibleSubjectDataLayers", () => {
             store.commit("setVisibleSubjectDataLayerConfigs", []);
-            wrapper = shallowMount(LayerPillsComponent, {store, localVue});
+            wrapper = shallowMount(LayerPillsComponent, {
+                global: {
+                    plugins: [store]
+                }});
 
             expect(wrapper.find("#layer-pills").exists()).to.be.false;
         });
@@ -98,7 +98,10 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
                     layerPillsAmount: 0
                 }
             });
-            wrapper = shallowMount(LayerPillsComponent, {store, localVue});
+            wrapper = shallowMount(LayerPillsComponent, {
+                global: {
+                    plugins: [store]
+                }});
 
             expect(wrapper.find("#layer-pills").exists()).to.be.false;
         });
@@ -108,7 +111,10 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
                     layerPillsAmount: 0
                 }
             });
-            wrapper = shallowMount(LayerPillsComponent, {store, localVue});
+            wrapper = shallowMount(LayerPillsComponent, {
+                global: {
+                    plugins: [store]
+                }});
 
             expect(wrapper.find("#layer-pills").exists()).to.be.false;
         });
@@ -116,14 +122,20 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
 
     describe("left scroll enabled and disabled", () => {
         it("left scroll is disabled", () => {
-            wrapper = shallowMount(LayerPillsComponent, {store, localVue});
+            wrapper = shallowMount(LayerPillsComponent, {
+                global: {
+                    plugins: [store]
+                }});
             expect(wrapper.find("#layerpills-left-button").element.disabled).to.be.true;
         });
         it("left scroll is enabled and button click triggers moveLayerPills method", async () => {
             const clickSpy = sinon.spy(LayerPillsComponent.methods, "moveLayerPills");
             let rightButton = null;
 
-            wrapper = shallowMount(LayerPillsComponent, {store, localVue});
+            wrapper = shallowMount(LayerPillsComponent, {
+                global: {
+                    plugins: [store]
+                }});
             await wrapper.vm.$nextTick();
             rightButton = wrapper.find("#layerpills-right-button");
 
@@ -137,7 +149,10 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
     });
     describe("right scroll enabeld and disabled", () => {
         it("right scroll is enabled", async () => {
-            wrapper = shallowMount(LayerPillsComponent, {store, localVue});
+            wrapper = shallowMount(LayerPillsComponent, {
+                global: {
+                    plugins: [store]
+                }});
 
             await wrapper.vm.$nextTick();
             expect(wrapper.find("#layerpills-right-button").element.disabled).to.be.false;
@@ -145,7 +160,10 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
         it("right scroll is disabled when no further layer available", async () => {
             let rightButton = null;
 
-            wrapper = shallowMount(LayerPillsComponent, {store, localVue});
+            wrapper = shallowMount(LayerPillsComponent, {
+                global: {
+                    plugins: [store]
+                }});
 
             rightButton = wrapper.find("#layerpills-right-button");
             await wrapper.vm.$nextTick();
@@ -162,7 +180,10 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
 
     describe("close layerPill", () => {
         it("count close-buttons", () => {
-            wrapper = shallowMount(LayerPillsComponent, {store, localVue});
+            wrapper = shallowMount(LayerPillsComponent, {
+                global: {
+                    plugins: [store]
+                }});
 
             expect(wrapper.findAll(".close-button").length).to.equals(endIndex);
         });
@@ -170,7 +191,10 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
 
     describe("method testing", () => {
         it("setVisibleLayers", () => {
-            wrapper = shallowMount(LayerPillsComponent, {store, localVue});
+            wrapper = shallowMount(LayerPillsComponent, {
+                global: {
+                    plugins: [store]
+                }});
             wrapper.vm.setVisibleLayers(visibleLayers, "2D");
 
             expect(store.state.LayerPills.visibleSubjectDataLayers).to.deep.equal(visibleLayers);
@@ -183,7 +207,10 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
                 {id: 3, name: "layer4", typ: "WFS"}
             ];
 
-            wrapper = shallowMount(LayerPillsComponent, {store, localVue});
+            wrapper = shallowMount(LayerPillsComponent, {
+                global: {
+                    plugins: [store]
+                }});
             wrapper.vm.setVisibleLayers(visibleLayers3D2D, "2D");
 
             expect(store.state.LayerPills.visibleSubjectDataLayers).to.deep.equal([
@@ -192,7 +219,10 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
             );
         });
         it("moveLayerPills to the right increases and to the left decreases start and end index by 1", () => {
-            wrapper = shallowMount(LayerPillsComponent, {store, localVue});
+            wrapper = shallowMount(LayerPillsComponent, {
+                global: {
+                    plugins: [store]
+                }});
             expect(store.state.LayerPills.startIndex).to.equal(0);
             expect(store.state.LayerPills.endIndex).to.equal(2);
             wrapper.vm.moveLayerPills("right");
@@ -206,25 +236,37 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
 
     describe("watchers", () => {
         it("startIndex < 0", () => {
-            wrapper = shallowMount(LayerPillsComponent, {store, localVue});
+            wrapper = shallowMount(LayerPillsComponent, {
+                global: {
+                    plugins: [store]
+                }});
             wrapper.vm.$options.watch.startIndex.call(wrapper.vm, 0);
 
             expect(store.state.LayerPills.leftScrollDisabled).to.equal(true);
         });
         it("startIndex > 0", () => {
-            wrapper = shallowMount(LayerPillsComponent, {store, localVue});
+            wrapper = shallowMount(LayerPillsComponent, {
+                global: {
+                    plugins: [store]
+                }});
             wrapper.vm.$options.watch.startIndex.call(wrapper.vm, 2);
 
             expect(store.state.LayerPills.leftScrollDisabled).to.equal(false);
         });
         it("endIndex < visibleSubjectDataLayers.length", () => {
-            wrapper = shallowMount(LayerPillsComponent, {store, localVue});
+            wrapper = shallowMount(LayerPillsComponent, {
+                global: {
+                    plugins: [store]
+                }});
             wrapper.vm.$options.watch.endIndex.call(wrapper.vm, 0);
 
             expect(store.state.LayerPills.rightScrollDisabled).to.equal(false);
         });
         it("endIndex >= visibleSubjectDataLayers.length", () => {
-            wrapper = shallowMount(LayerPillsComponent, {store, localVue});
+            wrapper = shallowMount(LayerPillsComponent, {
+                global: {
+                    plugins: [store]
+                }});
             wrapper.vm.$options.watch.endIndex.call(wrapper.vm, 4);
 
             expect(store.state.LayerPills.rightScrollDisabled).to.equal(true);
