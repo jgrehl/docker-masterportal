@@ -58,6 +58,8 @@
         - mocha: 10.0.0 to 10.1.0
         - vue-loader: 15.9.8 to 17.0.0
 
+- in wfsSearch the 'field'-property type was renamed to queryType
+
 ### Deprecated
 
 ### Removed
