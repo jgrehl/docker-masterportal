@@ -90,7 +90,7 @@ const actions = {
      * Also removes the map marker.
      * @returns {void}
      */
-    resetResult ({commit, dispatch, getters, state}) {
+    resetResult ({commit, getters, state}) {
         commit("setValuesReset", true);
         commit("setSearched", false);
         commit("setResults", []);
