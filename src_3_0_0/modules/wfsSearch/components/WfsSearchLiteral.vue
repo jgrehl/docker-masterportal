@@ -1,7 +1,5 @@
 <script>
 import WfsSearchField from "./WfsSearchField.vue";
-import {mapGetters} from "vuex";
-import getters from "../store/gettersWfsSearch";
 
 export default {
     name: "WfsSearchLiteral",
@@ -15,7 +13,6 @@ export default {
         }
     },
     computed: {
-        ...mapGetters("Modules/WfsSearch", Object.keys(getters)),
         suggestions () {
             return this.currentInstance?.suggestions;
         }
