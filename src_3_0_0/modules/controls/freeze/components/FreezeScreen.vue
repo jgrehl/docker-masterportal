@@ -56,7 +56,7 @@ export default {
         />
         <FreezeScreenUnfreeze
             v-if="isFreezed"
-            @hideFreezeWin="hideFreezeWin"
+            @hide-freeze-win="hideFreezeWin"
         />
     </div>
 </template>
