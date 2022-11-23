@@ -52,6 +52,20 @@ describe("src_3_0_0/modules/menu/menu-store/gettersMenu.js", () => {
 
     afterEach(sinon.restore);
 
+    describe("componentsAlwaysActivated", () => {
+        beforeEach(() => {
+            rootGetters = {
+                "Modules/componentMap": {
+                    component: sinon.stub()
+                }
+            };
+        });
+
+        it("should return an array'", () => {
+            expect(gettersMenu.componentsAlwaysActivated(undefined, undefined, rootState, rootGetters)).to.be.an("array");
+        });
+    });
+
     describe("componentFromPath", () => {
         const type = "component";
         let objectFromPathFake, side;
@@ -91,29 +105,31 @@ describe("src_3_0_0/modules/menu/menu-store/gettersMenu.js", () => {
         });
     });
 
-    describe("deactivateGfi", () => {
-        let objectFromPathFake;
-
+    describe("deactivateModule", () => {
         beforeEach(() => {
-            state = {};
+            state = {
+                activeModuleMouseMapInteractions: "GetFeatureInfo"
+            };
         });
 
-        it("should return true, if the activated module has and attribute 'deactivateGfi': true", () => {
+        it("should return true, if module hasMouseMapInteractions === true and is not equal activeModuleMouseMapInteractions", () => {
             const type = "measure";
 
-            objectFromPathFake = sinon.fake.returns({type});
-            getters.objectFromPath = objectFromPathFake;
+            rootGetters = {
+                "Modules/Measure/hasMouseMapInteractions": true
+            };
 
-            expect(gettersMenu.deactivateGfi(undefined, getters, rootState, rootGetters)).to.be.true;
+            expect(gettersMenu.deactivateModule(state, undefined, undefined, rootGetters)(type)).to.be.true;
         });
 
-        it("should return null, if the activated module has no attribute 'deactivateGfi': true", () => {
-            const type = "exampleModule";
+        it("should return false, if module hasMouseMapInteractions === false and is not equal activeModuleMouseMapInteractions", () => {
+            const type = "measure";
 
-            objectFromPathFake = sinon.fake.returns({type});
-            getters.objectFromPath = objectFromPathFake;
+            rootGetters = {
+                "Modules/Measure/hasMouseMapInteractions": false
+            };
 
-            expect(gettersMenu.deactivateGfi(undefined, getters, rootState, rootGetters)).to.be.false;
+            expect(gettersMenu.deactivateModule(state, undefined, undefined, rootGetters)(type)).to.be.false;
         });
     });
 
@@ -332,48 +348,6 @@ describe("src_3_0_0/modules/menu/menu-store/gettersMenu.js", () => {
         });
     });
 
-    describe("titleBySide", () => {
-        const exampleTitle = {
-            text: "Precise name",
-            logo: "some png source",
-            link: "https://valid.url.com",
-            toolTip: "More info"
-        };
-
-        it("should return the mainTitle properties as well as the side as idAppendix if the side is 'mainMenu' and 'mainTitle' is defined", () => {
-            getters.mainTitle = exampleTitle;
-
-            const side = "mainMenu",
-                nameObject = gettersMenu.titleBySide(undefined, getters)(side);
-
-            expect(nameObject).to.not.equal(null);
-            expect(nameObject.text).to.equal(exampleTitle.text);
-            expect(nameObject.logo).to.equal(exampleTitle.logo);
-            expect(nameObject.link).to.equal(exampleTitle.link);
-            expect(nameObject.toolTip).to.equal(exampleTitle.toolTip);
-            expect(nameObject.idAppendix).to.equal(side);
-        });
-        it("should return the mainTitle properties as well as the side as idAppendix if the side is 'secondaryMenu' and 'secondaryTitle' is defined", () => {
-            getters.secondaryTitle = exampleTitle;
-
-            const side = "secondaryMenu",
-                nameObject = gettersMenu.titleBySide(undefined, getters)(side);
-
-            expect(nameObject).to.not.equal(null);
-            expect(nameObject.text).to.equal(exampleTitle.text);
-            expect(nameObject.logo).to.equal(exampleTitle.logo);
-            expect(nameObject.link).to.equal(exampleTitle.link);
-            expect(nameObject.toolTip).to.equal(exampleTitle.toolTip);
-            expect(nameObject.idAppendix).to.equal(side);
-        });
-        it("should return null if a given side does not have a name defined", () => {
-            expect(gettersMenu.titleBySide(undefined, getters)("mainMenu")).to.equal(null);
-        });
-        it("should return null if a given side does not equal 'mainMenu' or 'secondaryMenu'", () => {
-            expect(gettersMenu.titleBySide(undefined, getters)("newMenu")).to.equal(null);
-        });
-    });
-
     describe("section", () => {
         const goodPath = Symbol("woowee we found something");
         let foundSection, path;
@@ -428,6 +402,48 @@ describe("src_3_0_0/modules/menu/menu-store/gettersMenu.js", () => {
             expect(consoleErrorSpy.calledOnce).to.be.true;
             expect(consoleErrorSpy.firstCall.args.length).to.equal(1);
             expect(consoleErrorSpy.firstCall.args[0]).to.equal(`Menu: The given menu ${path[0]} is not configured in the config.json.`);
+        });
+    });
+
+    describe("titleBySide", () => {
+        const exampleTitle = {
+            text: "Precise name",
+            logo: "some png source",
+            link: "https://valid.url.com",
+            toolTip: "More info"
+        };
+
+        it("should return the mainTitle properties as well as the side as idAppendix if the side is 'mainMenu' and 'mainTitle' is defined", () => {
+            getters.mainTitle = exampleTitle;
+
+            const side = "mainMenu",
+                nameObject = gettersMenu.titleBySide(undefined, getters)(side);
+
+            expect(nameObject).to.not.equal(null);
+            expect(nameObject.text).to.equal(exampleTitle.text);
+            expect(nameObject.logo).to.equal(exampleTitle.logo);
+            expect(nameObject.link).to.equal(exampleTitle.link);
+            expect(nameObject.toolTip).to.equal(exampleTitle.toolTip);
+            expect(nameObject.idAppendix).to.equal(side);
+        });
+        it("should return the mainTitle properties as well as the side as idAppendix if the side is 'secondaryMenu' and 'secondaryTitle' is defined", () => {
+            getters.secondaryTitle = exampleTitle;
+
+            const side = "secondaryMenu",
+                nameObject = gettersMenu.titleBySide(undefined, getters)(side);
+
+            expect(nameObject).to.not.equal(null);
+            expect(nameObject.text).to.equal(exampleTitle.text);
+            expect(nameObject.logo).to.equal(exampleTitle.logo);
+            expect(nameObject.link).to.equal(exampleTitle.link);
+            expect(nameObject.toolTip).to.equal(exampleTitle.toolTip);
+            expect(nameObject.idAppendix).to.equal(side);
+        });
+        it("should return null if a given side does not have a name defined", () => {
+            expect(gettersMenu.titleBySide(undefined, getters)("mainMenu")).to.equal(null);
+        });
+        it("should return null if a given side does not equal 'mainMenu' or 'secondaryMenu'", () => {
+            expect(gettersMenu.titleBySide(undefined, getters)("newMenu")).to.equal(null);
         });
     });
 });
