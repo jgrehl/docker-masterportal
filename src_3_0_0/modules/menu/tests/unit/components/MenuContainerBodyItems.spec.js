@@ -1,13 +1,10 @@
-import Vuex from "vuex";
-import {config, shallowMount, createLocalVue} from "@vue/test-utils";
+import {createStore} from "vuex";
+import {config, shallowMount} from "@vue/test-utils";
 import MenuContainerBodyItems from "../../../components/MenuContainerBodyItems.vue";
 import {expect} from "chai";
 import MenuContainerBodyElement from "../../../components/MenuContainerBodyElement.vue";
 
-const localVue = createLocalVue();
-
-localVue.use(Vuex);
-config.mocks.$t = key => key;
+config.global.mocks.$t = key => key;
 
 describe("src_3_0_0/modules/menu/MenuContainerBodyItems.vue", () => {
     let store;
@@ -18,7 +15,7 @@ describe("src_3_0_0/modules/menu/MenuContainerBodyItems.vue", () => {
     ];
 
     beforeEach(() => {
-        store = new Vuex.Store({
+        store = createStore({
             namespaces: true,
             modules: {
                 Menu: {
@@ -40,28 +37,49 @@ describe("src_3_0_0/modules/menu/MenuContainerBodyItems.vue", () => {
     });
 
     it("renders the component as main menu", () => {
-        const wrapper = shallowMount(MenuContainerBodyItems, {store, localVue, propsData: {idAppendix: "mainMenu"}});
+        const wrapper = shallowMount(MenuContainerBodyItems, {
+            global: {
+                plugins: [store]
+            },
+            propsData: {idAppendix: "mainMenu"}
+        });
 
         expect(wrapper.find("#mp-menu-body-items-mainMenu").exists()).to.be.true;
     });
 
     it("contains a list element and a MenuContainerBodyElements in the main menu for each configured section item", () => {
         store.commit("Menu/setTestSection", sampleSection);
-        const wrapper = shallowMount(MenuContainerBodyItems, {store, localVue, propsData: {idAppendix: "mainMenu"}});
+        const wrapper = shallowMount(MenuContainerBodyItems, {
+            global: {
+                plugins: [store]
+            },
+            propsData: {idAppendix: "mainMenu"}
+        });
+
 
         expect(wrapper.findAll("li").length).to.be.equal(sampleSection.length);
         expect(wrapper.findAllComponents(MenuContainerBodyElement).length).to.be.equal(sampleSection.length);
     });
 
     it("renders the component as secondary menu", () => {
-        const wrapper = shallowMount(MenuContainerBodyItems, {store, localVue, propsData: {idAppendix: "secondaryMenu"}});
+        const wrapper = shallowMount(MenuContainerBodyItems, {
+            global: {
+                plugins: [store]
+            },
+            propsData: {idAppendix: "secondaryMenu"}
+        });
 
         expect(wrapper.find("#mp-menu-body-items-secondaryMenu").exists()).to.be.true;
     });
 
     it("contains a list element and a MenuContainerBodyElements in the main menu for each configured section item", () => {
         store.commit("Menu/setTestSection", sampleSection);
-        const wrapper = shallowMount(MenuContainerBodyItems, {store, localVue, propsData: {idAppendix: "secondaryMenu"}});
+        const wrapper = shallowMount(MenuContainerBodyItems, {
+            global: {
+                plugins: [store]
+            },
+            propsData: {idAppendix: "secondaryMenu"}
+        });
 
         expect(wrapper.findAll("li").length).to.be.equal(sampleSection.length);
         expect(wrapper.findAllComponents(MenuContainerBodyElement).length).to.be.equal(sampleSection.length);
