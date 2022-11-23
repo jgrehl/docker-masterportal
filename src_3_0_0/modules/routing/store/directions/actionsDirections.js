@@ -46,7 +46,7 @@ export default {
             commit("setRoutingDirections", result);
         }
         catch (err) {
-            dispatch("Modules/Alerting/addSingleAlert", {
+            dispatch("Alerting/addSingleAlert", {
                 category: "error",
                 title: i18next.t("common:modules.alerting.categories.info"),
                 content: err.message
