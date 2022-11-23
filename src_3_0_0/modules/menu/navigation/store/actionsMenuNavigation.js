@@ -1,4 +1,4 @@
-import Vue from "vue";
+import {nextTick} from "vue";
 import upperFirst from "../../../../shared/js/utils/upperFirst";
 
 const actions = {
@@ -16,7 +16,9 @@ const actions = {
         if (type && type !== "folder") {
             dispatch("Menu/setElementActive", {moduleNamespace: upperFirst(type), isActive: false}, {root: true});
         }
-        Vue.nextTick(() => commit("removeLastEntry", side));
+        nextTick(() => {
+            commit("removeLastEntry", side);
+        });
     }
 };
 
