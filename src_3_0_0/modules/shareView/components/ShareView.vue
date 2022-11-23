@@ -112,13 +112,12 @@ export default {
         </div>
         <div
             v-else
-            class="row"
         >
             <div class="col-12">
                 <a
                     id="twitter-btn"
                     aria-label="$t('modules.tools.shareView.shareTwitter')"
-                    class="btn btn-secondary btn-icon mb-3"
+                    class="btn btn-secondary btn-icon mb-3 pe-4 ps-3"
                     :href="twitter"
                     target="_blank"
                     role="button"
@@ -131,7 +130,7 @@ export default {
                 <a
                     id="facebook-btn"
                     aria-label="$t('modules.tools.shareView.shareFacebook')"
-                    class="btn btn-secondary btn-icon mb-3"
+                    class="btn btn-secondary btn-icon mb-3 pe-4 ps-3"
                     :href="facebook"
                     target="_blank"
                     role="button"
