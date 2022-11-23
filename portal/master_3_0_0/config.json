@@ -10,6 +10,19 @@
     },
     "controls": {
       "zoom": true,
+      "startModule": {
+        "secondaryMenu": [
+          {
+            "type": "shareView"
+          }
+        ],
+        "mainMenu": [
+          {
+            "type": "scaleSwitcher",
+            "icon": "bi-folder-plus"
+          }
+        ]
+      },
       "totalView": true,
       "button3d": true,
       "expandable": {
@@ -45,9 +58,6 @@
             "heightValueWater": "-20",
             "heightValueBuilding": "200",
             "zoomLevel": 5
-          },
-          {
-            "type": "shareView"
           },
           {
             "type": "openConfig"
@@ -140,9 +150,6 @@
         [
           {
             "type": "measure"
-          },
-          {
-            "type": "scaleSwitcher"
           },
           {
             "name": "folder1",
