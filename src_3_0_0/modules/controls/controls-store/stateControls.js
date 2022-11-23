@@ -2,9 +2,10 @@ import BackForward from "../backForward/components/BackForward.vue";
 import Button3d from "../button3d/components/Button3dItem.vue";
 import FreezeScreen from "../freeze/components/FreezeScreen.vue";
 import FullScreen from "../fullScreen/components/FullScreen.vue";
+import Orientation from "../orientation/components/OrientationItem.vue";
+import StartModule from "../startModule/components/StartModule.vue";
 import TotalView from "../totalView/components/TotalView.vue";
 import ZoomInAndOut from "../zoom/components/ZoomInAndOut.vue";
-import Orientation from "../orientation/components/OrientationItem.vue";
 
 /**
  * User type definition
@@ -18,9 +19,10 @@ const state = {
         button3d: Button3d,
         freeze: FreezeScreen,
         fullScreen: FullScreen,
+        orientation: Orientation,
+        startModule: StartModule,
         totalView: TotalView,
-        zoom: ZoomInAndOut,
-        orientation: Orientation
+        zoom: ZoomInAndOut
     },
 
     activatedExpandable: false
