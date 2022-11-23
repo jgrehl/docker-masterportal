@@ -1,15 +1,12 @@
-import Vuex from "vuex";
-import {config, mount, createLocalVue} from "@vue/test-utils";
+import {createStore} from "vuex";
+import {config, mount} from "@vue/test-utils";
 import MenuNavigation from "../../../components/MenuNavigation.vue";
 import {expect} from "chai";
 import mutations from "../../../store/mutationsMenuNavigation.js";
 import state from "../../../store/stateMenuNavigation.js";
 import sinon from "sinon";
 
-const localVue = createLocalVue();
-
-localVue.use(Vuex);
-config.mocks.$t = key => key;
+config.global.mocks.$t = key => key;
 
 describe("src_3_0_0/core/menu/navigation/components/MenuNavigation.vue", () => {
     let store, navigateBackSpy;
@@ -20,7 +17,7 @@ describe("src_3_0_0/core/menu/navigation/components/MenuNavigation.vue", () => {
     beforeEach(() => {
         navigateBackSpy = sinon.spy();
 
-        store = new Vuex.Store({
+        store = createStore({
             namespaces: true,
             modules: {
                 Menu: {
@@ -51,19 +48,25 @@ describe("src_3_0_0/core/menu/navigation/components/MenuNavigation.vue", () => {
     afterEach(sinon.restore);
 
     it("renders the navigation in the main menu side", () => {
-        const wrapper = mount(MenuNavigation, {store, localVue, propsData: {side: "mainMenu"}});
+        const wrapper = mount(MenuNavigation, {global: {
+            plugins: [store]
+        }, propsData: {side: "mainMenu"}});
 
         expect(wrapper.find("#mp-navigation-mainMenu").exists()).to.be.true;
     });
 
     it("renders the navigation in the secondary menu side", () => {
-        const wrapper = mount(MenuNavigation, {store, localVue, propsData: {side: "secondaryMenu"}});
+        const wrapper = mount(MenuNavigation, {global: {
+            plugins: [store]
+        }, propsData: {side: "secondaryMenu"}});
 
         expect(wrapper.find("#mp-navigation-secondaryMenu").exists()).to.be.true;
     });
 
     it("calls the navigateBack function every time the navigation is clicked", async () => {
-        const wrapper = mount(MenuNavigation, {store, localVue, propsData: {side: "mainMenu"}}),
+        const wrapper = mount(MenuNavigation, {global: {
+                plugins: [store]
+            }, propsData: {side: "mainMenu"}}),
             navigation = wrapper.find("#mp-navigation-mainMenu");
 
         navigation.trigger("click");

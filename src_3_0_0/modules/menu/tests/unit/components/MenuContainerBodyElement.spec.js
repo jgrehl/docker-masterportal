@@ -1,13 +1,10 @@
-import Vuex from "vuex";
-import {config, shallowMount, createLocalVue} from "@vue/test-utils";
+import {createStore} from "vuex";
+import {config, shallowMount} from "@vue/test-utils";
 import MenuContainerBodyElement from "../../../components/MenuContainerBodyElement.vue";
 import {expect} from "chai";
 import LightButton from "../../../../../shared/modules/buttons/components/LightButton.vue";
 
-const localVue = createLocalVue();
-
-localVue.use(Vuex);
-config.mocks.$t = key => key;
+config.global.mocks.$t = key => key;
 
 describe("src_3_0_0/modules/menu/MenuContainerBodyElement.vue", () => {
     const
@@ -21,7 +18,7 @@ describe("src_3_0_0/modules/menu/MenuContainerBodyElement.vue", () => {
     let store;
 
     beforeEach(() => {
-        store = new Vuex.Store({
+        store = createStore({
             namespaced: true,
             modules: {
                 Maps: {
@@ -37,8 +34,14 @@ describe("src_3_0_0/modules/menu/MenuContainerBodyElement.vue", () => {
             }
         });
     });
-    it("renders the component and it contains the LightButton", () => {
-        const wrapper = shallowMount(MenuContainerBodyElement, {store, localVue, propsData: {icon: "bi-file-plus", name: "awesomeName"}});
+
+    it("renders the component and it contains the SimpleButton", () => {
+        const wrapper = shallowMount(MenuContainerBodyElement, {
+            global: {
+                plugins: [store]
+            },
+            propsData: {icon: "bi-file-plus", name: "awesomeName"}
+        });
 
         expect(wrapper.findComponent(LightButton).exists()).to.be.true;
     });
