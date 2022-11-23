@@ -668,7 +668,7 @@ Konfiguration der layerInformation.
 |freeze|nein|Boolean|false|Legt fest, ob ein "Ansicht sperren" Button angezeigt werden soll. Im Style 'TABLE' erscheint dieser im Werkzeug-Fenster.|false|
 |backforward|nein|**[backForward](#markdown-header-portalconfigcontrolsbackforward)**|false|Deprecated in 3.0.0. Bitte "backForward" verwenden.|false|
 |backForward|nein|**[backForward](#markdown-header-portalconfigcontrolsbackforward)**|false|Zeigt Buttons zur Steuerung der letzten und nächsten Kartenansichten an.|false|
-|startTool|nein|**[startTool](#markdown-header-portalconfigcontrolsbackforward)**|false|Zeigt Buttons für die konfigurierten Werkezeuge an. Über diese lassen sich die jeweiligen Werkzeuge öffnen und schließen.|false|
+|startModule|nein|**[startModule](#markdown-header-portalconfigcontrolsbackforward)**|false|Zeigt Buttons für die konfigurierten Werkezeuge an. Über diese lassen sich die jeweiligen Werkzeuge öffnen und schließen.|false|
 
 Controls können in der config.json in die Ebene "expandable" verschachtelt werden und sind somit nicht mehr in der Leiste an der Seite, sondern über den Button mit den drei Punkten aufklappbar.
 
@@ -845,21 +845,41 @@ Das Attribut backForward kann vom Typ Boolean oder Object sein. Wenn es vom Typ 
 
 ***
 
-#### Portalconfig.controls.startTool
+#### Portalconfig.controls.startModule
 
-Das Attribut startTool muss vom Typ Object sein. Es wird für jedes konfigurierte Werkzeug ein Button angezeigt, über den sich das jeweilige Werkzeug öffen und schließen lässt. Vorraussetzung ist, dass die Werkzeuge ebenfalls unter **[Tools](Portalconfig.menu.tools)** konfiguriert sind.
+Das Attribut startModule muss vom Typ Object sein. Es wird für jedes konfigurierte Modul ein Button angezeigt, über den sich das jeweilige Modul öffen und schließen lässt. Vorraussetzung ist, dass die Module ebenfalls unter **[Tools](Portalconfig.menu.tools)** konfiguriert sind.
 
-|Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
+|Name|Verpflichtend|Typ|Default|Befschreibung|Expert|
 |----|-------------|---|-------|------------|------|
-|tools|ja|String[]||Hier werden die Werkezeuge zu denen jeweils ein Button angeziegt werden soll konfiguriert.|false|
+|mainMenu|nein|**[mainMenu](#markdown-header-portalconfigcontrolsstartmodulemainMenu)**||Hier werden die Module zu denen jeweils ein Button angezeigt werden soll konfiguriert. Diese werden beim öffnen in dem `mainMenu` dargestellt.|false|
+|secondaryMenu|nein|**[secondaryMenu](#markdown-header-portalconfigcontrolsstartmodulesecondaryMenu)**||Hier werden die Module zu denen jeweils ein Button angezeigt werden soll konfiguriert. Diese werden beim öffnen in dem `secondaryMenu` dargestellt.|false|
 
-**Beispiel startTool:**
+**Beispiel startModule:**
 ```
 #!json
-"startTool": {
-    "tools": ["selectFeatures", "draw"]
+"startModule": {
+    "mainMenu": [
+        {
+            "type": "scaleSwitcher"
+        }
+    ],
+    "secondaryMenu": [
+        {
+            "type": "myModule"
+        }
+    ]
 }
 ```
+
+***
+
+##### Portalconfig.controls.startModule.mainMenu
+Hier werden die Module zu denen jeweils ein Button angezeigt werden soll konfiguriert. Diese werden beim öffnen in dem `mainMenu` dargestellt.
+
+***
+
+##### Portalconfig.controls.startModule.secondaryMenu
+Hier werden die Module zu denen jeweils ein Button angezeigt werden soll konfiguriert. Diese werden beim öffnen in dem `secondaryMenu` dargestellt.
 
 ***
 
