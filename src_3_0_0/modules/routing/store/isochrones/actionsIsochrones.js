@@ -45,7 +45,7 @@ export default {
             commit("setRoutingIsochrones", result);
         }
         catch (err) {
-            dispatch("Modules/Alerting/addSingleAlert", {
+            dispatch("Alerting/addSingleAlert", {
                 category: "error",
                 title: i18next.t("common:modules.alerting.categories.error"),
                 content: err.message
