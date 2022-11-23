@@ -1,13 +1,9 @@
 import sinon from "sinon";
-import Vuex from "vuex";
-import {config, mount, createLocalVue} from "@vue/test-utils";
+import {config, mount} from "@vue/test-utils";
 import {expect} from "chai";
 import LightButton from "../../../components/LightButton.vue";
 
-const localVue = createLocalVue();
-
-localVue.use(Vuex);
-config.mocks.$t = key => key;
+config.global.mocks.$t = key => key;
 
 describe("src_3_0_0/shared/components/LightButton.vue", () => {
     let interactionSpy;
@@ -22,7 +18,6 @@ describe("src_3_0_0/shared/components/LightButton.vue", () => {
         const iconString = "bi-list",
             text = "My List",
             wrapper = mount(LightButton, {
-                localVue,
                 propsData: {text, interaction: interactionSpy, icon: iconString}
             }),
             button = wrapper.find("button"),
@@ -43,7 +38,6 @@ describe("src_3_0_0/shared/components/LightButton.vue", () => {
     it("should render a button without an icon if not configured and trigger the given interaction on click", () => {
         const text = "My List",
             wrapper = mount(LightButton, {
-                localVue,
                 propsData: {text, interaction: interactionSpy}
             }),
             button = wrapper.find("button"),
