@@ -65,7 +65,8 @@ export default {
 
     },
     destroyed () {
-        this.setActive(false);
+        this.removeIncompleteDrawing();
+        this.removeDrawInteraction();
     },
     mounted () {
         if (this.active) {
@@ -119,6 +120,7 @@ export default {
 
 <template lang="html">
     <div
+        v-if="active"
         id="measure"
     >
         <MeasureInMapTooltip />

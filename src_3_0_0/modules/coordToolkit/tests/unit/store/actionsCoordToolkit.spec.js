@@ -4,7 +4,7 @@ import crs from "@masterportal/masterportalapi/src/crs";
 import sinon from "sinon";
 import {expect} from "chai";
 
-describe("src/modules/tools/coord/store/actionsCoordToolkit.js", () => {
+describe("src_3_0_0/modules/coord/store/actionsCoordToolkit.js", () => {
     let commit, dispatch, getters;
     const namedProjections = [
         ["EPSG:31467", "+title=Bessel/Gauß-Krüger 3 +proj=tmerc +lat_0=0 +lon_0=9 +k=1 +x_0=3500000 +y_0=0 +ellps=bessel +datum=potsdam +units=m +no_defs"],

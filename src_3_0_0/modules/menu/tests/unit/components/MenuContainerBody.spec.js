@@ -22,7 +22,15 @@ describe("src_3_0_0/modules/menu/MenuContainerBody.vue", () => {
                 Menu: {
                     namespaced: true,
                     getters: {
+                        componentsAlwaysActivated: () => [{
+                            menuSide: "secondaryMenu",
+                            module: {
+                                name: "GetFeatureInfo",
+                                template: "<span />"
+                            }
+                        }],
                         componentFromPath: () => () => ({}),
+                        deactivateModule: () => () => false,
                         objectFromPath: () => () => sampleConfigObject,
                         deactivateGfi: () => sinon.stub(),
                         mainMenu: state => ({
@@ -45,17 +53,6 @@ describe("src_3_0_0/modules/menu/MenuContainerBody.vue", () => {
                             namespaced: true,
                             getters: {
                                 lastEntry: () => () => null
-                            }
-                        }
-                    }
-                },
-                Modules: {
-                    namespaced: true,
-                    modules: {
-                        GetFeatureInfo: {
-                            namespaced: true,
-                            getters: {
-                                menuSide: () => "secondaryMenu"
                             }
                         }
                     }
@@ -115,12 +112,6 @@ describe("src_3_0_0/modules/menu/MenuContainerBody.vue", () => {
         it("render the GetFeatureInfo component", () => {
             const wrapper = shallowMount(MenuContainerBody, {
                 store,
-                components: {
-                    GetFeatureInfo: {
-                        name: "GetFeatureInfo",
-                        template: "<span />"
-                    }
-                },
                 localVue,
                 propsData: {side: "secondaryMenu"}
             });

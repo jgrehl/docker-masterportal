@@ -1,4 +1,5 @@
 import actions from "./actionsModules";
+import getters from "./gettersModules";
 import state from "./stateModules";
 
 import CoordToolkit from "../coordToolkit/store/indexCoordToolkit";
@@ -14,6 +15,7 @@ import AddWMS from "../addWMS/store/indexAddWMS";
 export default {
     namespaced: true,
     actions,
+    getters,
     state: {...state},
     modules: {
         // modules must be copied, else tests fail in watch mode
