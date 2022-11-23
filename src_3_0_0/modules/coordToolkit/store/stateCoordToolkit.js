@@ -2,7 +2,7 @@
  * User type definition
  * @typedef {Object} CoordToolkitState
  * @property {Boolean} active if true, CoordToolkit will rendered
- * @property {String} id id of the CoordToolkit component
+ * @property {Boolean} hasMouseMapInteractions If this attribute is true, then all other modules will be deactivated when this attribute is also true. Only one module with this attribute true may be open at the same time, since conflicts can arise in the card interactions.
  * @property {String} [mode="supply"] may be 'search' or 'supply'
  * @property {module:ol/interaction/Pointer} selectPointerMove contains interaction listener to map
  * @property {Object[]} projections list of available projections
@@ -31,15 +31,13 @@
  * @property {String} zoomLevel used by search
  * @property {String} name displayed as title (config-param)
  * @property {String} icon icon next to title (config-param)
- * @property {Boolean} deactivateGfi flag if tool should deactivate gfi (config-param)
  */
 const state = {
     icon: "bi-globe",
-    id: "coordToolkit",
+    hasMouseMapInteractions: true,
     name: "common:menu.tools.coordToolkit",
     type: "coordToolkit",
     active: false,
-    deactivateGfi: true,
     supportedDevices: ["Desktop", "Mobile", "Table"],
     supportedMapModes: ["2D", "3D"],
 

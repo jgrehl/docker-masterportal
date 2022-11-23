@@ -17,7 +17,7 @@ const localVue = createLocalVue(),
 localVue.use(Vuex);
 config.mocks.$t = key => key;
 
-describe("src/modules/coordToolkit/components/CoordToolkit.vue", () => {
+describe("src_3_0_0/modules/coordToolkit/components/CoordToolkit.vue", () => {
     const mockState = {
 
             mode: "2D"
@@ -213,15 +213,6 @@ describe("src/modules/coordToolkit/components/CoordToolkit.vue", () => {
         expect(selected.at(0).attributes().value).to.equal("http://www.opengis.net/gml/srs/epsg.xml#25832");
     });
     describe("CoordToolkit.vue methods", () => {
-        it("close sets active to false", async () => {
-            wrapper = shallowMount(CoordToolkitComponent, {store, localVue});
-            expect(store.state.Modules.CoordToolkit.active).to.be.true;
-            wrapper.vm.close();
-            await wrapper.vm.$nextTick();
-
-            expect(store.state.Modules.CoordToolkit.active).to.be.false;
-            expect(wrapper.find("#supply-coord").exists()).to.be.false;
-        });
         it("method selectionChanged sets currentProjection", () => {
             const value = "http://www.opengis.net/gml/srs/epsg.xml#31467",
                 event = {

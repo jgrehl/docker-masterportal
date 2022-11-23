@@ -30,7 +30,8 @@ describe("src_3_0_0/modules/openConfig/components/OpenConfig.vue", () => {
                         OpenConfig: {
                             namespaced: true,
                             getters: {
-                                icon: sinon.stub()
+                                active: () => true,
+                                icon: () => sinon.stub()
                             }
                         }
                     }

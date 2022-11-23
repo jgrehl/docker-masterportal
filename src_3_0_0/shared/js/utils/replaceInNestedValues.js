@@ -82,6 +82,9 @@ function addToObserver (obj, key, replacement) {
     if (typeof replacement === "object") {
         Object.keys(replacement).forEach(aKey => {
             if (!Object.hasOwn(obj, aKey)) {
+                // console.log(obj);
+                // console.log(aKey);
+                // console.log(replacement[aKey]);
                 Vue.set(obj, aKey, replacement[aKey]);
             }
         });
