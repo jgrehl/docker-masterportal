@@ -1,14 +1,11 @@
-import Vuex from "vuex";
-import {config, mount, createLocalVue} from "@vue/test-utils";
+import {createStore} from "vuex";
+import {config, mount} from "@vue/test-utils";
 import {expect} from "chai";
 import PrintComponent from "../../../components/PrintMap.vue";
 import Print from "../../../store/indexPrint";
 import sinon from "sinon";
 
-const localVue = createLocalVue();
-
-localVue.use(Vuex);
-config.mocks.$t = key => key;
+config.global.mocks.$t = key => key;
 
 describe("src_3_0_0/modules/Print/components/PrintMap.vue", () => {
     const scales = ["1000", "5000", "10000"],
@@ -39,7 +36,7 @@ describe("src_3_0_0/modules/Print/components/PrintMap.vue", () => {
     });
 
     beforeEach(() => {
-        store = new Vuex.Store({
+        store = createStore({
             namespaced: true,
             modules: {
                 Modules: {
@@ -61,7 +58,10 @@ describe("src_3_0_0/modules/Print/components/PrintMap.vue", () => {
 
         store.commit("Modules/Print/setActive", true);
 
-        wrapper = mount(PrintComponent, {store, localVue});
+        wrapper = mount(PrintComponent, {
+            global: {
+                plugins: [store]
+            }});
     });
 
     afterEach(sinon.restore);
@@ -90,7 +90,7 @@ describe("src_3_0_0/modules/Print/components/PrintMap.vue", () => {
             store.commit("Modules/Print/setLayoutList", layoutList);
             wrapper.vm.layoutChanged(value);
             expect(store.state.Modules.Print.currentLayoutName).to.be.equals(value);
-            expect(store.state.Modules.Print.currentLayout).to.be.equals(printLayout);
+            expect(store.state.Modules.Print.currentLayout).to.be.deep.equals(printLayout);
             expect(store.state.Modules.Print.isGfiAvailable).to.be.equals(false);
             expect(store.state.Modules.Print.isLegendAvailable).to.be.equals(false);
         });
@@ -136,7 +136,10 @@ describe("src_3_0_0/modules/Print/components/PrintMap.vue", () => {
                 filename: "Maus"
             }]);
 
-            wrapper = mount(PrintComponent, {store, localVue});
+            wrapper = mount(PrintComponent, {
+                global: {
+                    plugins: [store]
+                }});
 
             expect(wrapper.find("#modules-print-downloads-container").exists()).to.be.true;
             expect(wrapper.find(".modules-print-download-title-container").exists()).to.be.true;
@@ -157,7 +160,10 @@ describe("src_3_0_0/modules/Print/components/PrintMap.vue", () => {
                 filename: "Duck"
             }]);
 
-            wrapper = mount(PrintComponent, {store, localVue});
+            wrapper = mount(PrintComponent, {
+                global: {
+                    plugins: [store]
+                }});
 
             expect(wrapper.find("#modules-print-downloads-container").exists()).to.be.true;
             expect(wrapper.find(".modules-print-download-title-container").exists()).to.be.true;
