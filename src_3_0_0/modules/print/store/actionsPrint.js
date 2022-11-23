@@ -112,15 +112,6 @@ const actions = {
     },
 
     /**
-     * Gets the Gfi Information
-     * @param {Object} param.commit the commit
-     * @returns {void}
-     */
-    getGfiForPrint: async function ({commit}) {
-        commit("setGfiForPrint", []);
-    },
-
-    /**
      * sets the metadata for print
      * @param {Object} param.dispatch the dispatch
      * @param {Object} param.rootGetters the rootGetters
