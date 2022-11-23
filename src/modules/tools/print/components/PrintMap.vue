@@ -1,6 +1,4 @@
-<script>
-import {mapGetters} from "vuex";
-import {getComponent} from "../../../../utils/getComponent";
+<script>import {getComponent} from "../../../../utils/getComponent";
 import getVisibleLayer from "../utils/getVisibleLayer";
 
 /**
@@ -8,9 +6,6 @@ import getVisibleLayer from "../utils/getVisibleLayer";
  */
 export default {
     name: "PrintMap",
-    computed: {
-        ...mapGetters("Tools/Gfi", ["currentFeature"])
-    },
 
     /**
      * Lifecycle hook: adds a "close"-Listener to close the tool.
@@ -98,29 +93,6 @@ export default {
                                 class="form-check-input"
                                 :checked="isLegendSelected"
                                 @change="setIsLegendSelected($event.target.checked)"
-                            >
-                        </div>
-                    </div>
-                </div>
-                <div
-                    v-if="isGfiAvailable"
-                    class="form-group form-group-sm row"
-                >
-                    <label
-                        class="col-md-5 col-form-label pt-0"
-                        for="printGfi"
-                    >
-                        {{ $t("common:modules.tools.print.withInfoLabel") }}
-                    </label>
-                    <div class="col-md-7">
-                        <div class="form-check">
-                            <input
-                                id="printGfi"
-                                type="checkbox"
-                                class="form-check-input"
-                                :disabled="currentFeature === null"
-                                :checked="isGfiSelected"
-                                @change="setIsGfiSelected($event.target.checked)"
                             >
                         </div>
                     </div>
