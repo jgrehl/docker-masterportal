@@ -90,22 +90,28 @@ export default {
         },
         /**
          * Whenever gfiFeatures changes, set pagerIndex to zero.
+         * @param {Object[]} gfiFeatures The gfi features.
          * @returns {void}
          */
-        gfiFeatures: function () {
+        gfiFeatures: function (gfiFeatures) {
             this.pagerIndex = 0;
+
+            if (gfiFeatures?.length > 0) {
+                this.setActive(true);
+            }
         }
-    },
-    mounted () {
-        this.addGfiToMenu();
     },
     beforeUpdate () {
         this.createMappedProperties(this.feature);
     },
     methods: {
-        ...mapActions("Modules/GetFeatureInfo", ["addGfiToMenu", "updateClick"]),
+        ...mapActions("Modules/GetFeatureInfo", ["updateClick"]),
         ...mapActions("Maps", ["registerListener", "unregisterListener"]),
-        ...mapMutations("Modules/GetFeatureInfo", ["setGfiFeatures", "setCurrentFeature"]),
+        ...mapMutations("Modules/GetFeatureInfo", [
+            "setActive",
+            "setGfiFeatures",
+            "setCurrentFeature"
+        ]),
 
         /**
          * Reset means to set the gfiFeatures to null.

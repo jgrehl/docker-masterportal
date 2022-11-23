@@ -10,7 +10,7 @@ const {setProjections, setExample} = mutations,
         ["EPSG:4326", "+title=WGS 84 (long/lat) +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"]
     ];
 
-describe("src/modules/tools/coordToolkit/store/mutationsCoordToolkit.js", () => {
+describe("src_3_0_0/modules/coordToolkit/store/mutationsCoordToolkit.js", () => {
 
     before(() => {
         crs.registerProjections(namedProjections);
