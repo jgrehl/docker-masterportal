@@ -79,7 +79,7 @@ export default {
             commit("setGfiForPrint", [rootGetters["Tools/Gfi/currentFeature"].getMappedProperties(), rootGetters["Tools/Gfi/currentFeature"].getTitle(), rootGetters["Maps/clickCoordinate"]]);
         }
         else {
-            // commit("setGfiForPrint", []);
+            commit("setGfiForPrint", []);
         }
     }
 };
