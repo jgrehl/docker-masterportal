@@ -64,16 +64,4 @@ describe("src_3_0_0/core/menu/navigation/store/actionsMenuNavigation.js", () => 
             expect(commit.firstCall.args[1]).to.equal(side);
         });
     });
-
-    describe("resetMenu", () => {
-        it("should commit setEntry with side", () => {
-            const side = "secondaryMenu";
-
-            actions.resetMenu({commit}, side);
-
-            expect(commit.calledOnce).to.be.true;
-            expect(commit.firstCall.args[0]).to.equals("setEntry");
-            expect(commit.firstCall.args[1]).to.equals(side);
-        });
-    });
 });
