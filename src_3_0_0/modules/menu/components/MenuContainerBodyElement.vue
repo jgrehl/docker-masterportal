@@ -75,7 +75,7 @@ export default {
 <template>
     <div>
         <SimpleButton
-            v-if="checkIsVisible() && !$attrs.isInVisibleInMenu"
+            v-if="checkIsVisible() && !($attrs.isVisibleInMenu === false)"
             :interaction="() => clickedMenuElement(path)"
             :text="name"
             :icon="showIcon ? icon : null"

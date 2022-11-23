@@ -3,21 +3,6 @@ import {getVisibleWmsLayersAtResolution} from "../js/getLayers";
 
 export default {
     /**
-     * Adds the gfi state to the menu
-     * Note: Necessary so that the gfi is always active even without configuration,.
-     * @param {Object} param store context
-     * @param {Object} param.commit the commit
-     * @param {Object} param.dispatch the dispatch
-     * @param {Object} param.state the state
-     * @returns {void}
-     */
-    async addGfiToMenu ({commit, dispatch, state}) {
-        const positionInMenu = dispatch("Menu/addModule", state, {root: true});
-
-        commit("setPath", [state.menuSide, "sections", 0, await positionInMenu]);
-    },
-
-    /**
      * Updates the click coordinate and the related pixel depending on the map mode.
      * If Gfi Tool is active, the features of this coordinate/pixel are set.
      * @param {Object} param store context
@@ -40,11 +25,10 @@ export default {
      * @param {Object} param.getters the getter
      * @param {Object} param.commit the commit
      * @param {Object} param.dispatch the dispatch
-     * @param {Object} param.state the state
      * @param {Object} param.rootGetters the rootGetters
      * @returns {void}
      */
-    collectGfiFeatures ({getters, commit, dispatch, state, rootGetters}) {
+    collectGfiFeatures ({getters, commit, dispatch, rootGetters}) {
         const clickCoordinate = rootGetters["Maps/clickCoordinate"],
             resolution = rootGetters["Maps/resolution"],
             projection = rootGetters["Maps/projection"],
@@ -75,10 +59,8 @@ export default {
                     mode = rootGetters["Maps/mode"],
                     allGfiFeatures = gfiFeaturesAtPixel(clickPixel, clickCartesianCoordinate, mode).concat(...gfiFeatures);
 
-                dispatch("Menu/Navigation/resetMenu", state.menuSide, {root: true});
                 // only commit if features found
                 if (allGfiFeatures.length > 0) {
-                    dispatch("Menu/clickedMenuElement", state.path, {root: true});
                     commit("setGfiFeatures", allGfiFeatures);
                 }
             })
