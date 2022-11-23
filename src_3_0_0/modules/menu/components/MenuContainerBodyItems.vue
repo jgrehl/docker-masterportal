@@ -50,7 +50,7 @@ export default {
 <template>
     <ul
         :id="'mp-menu-body-items-' + idAppendix"
-        class="nav flex-column"
+        class="nav flex-column ms-2"
     >
         <li
             v-for="(item, key) in section(path)"
