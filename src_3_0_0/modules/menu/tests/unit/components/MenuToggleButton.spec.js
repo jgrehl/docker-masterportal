@@ -1,19 +1,16 @@
+import {createStore} from "vuex";
 import sinon from "sinon";
-import Vuex from "vuex";
-import {config, mount, createLocalVue} from "@vue/test-utils";
+import {config, mount} from "@vue/test-utils";
 import {expect} from "chai";
 import MenuToggleButton from "../../../components/MenuToggleButton.vue";
 
-const localVue = createLocalVue();
-
-localVue.use(Vuex);
-config.mocks.$t = key => key;
+config.global.mocks.$t = key => key;
 
 describe("src_3_0_0/modules/menu/MenuToggleButton.vue", () => {
     let store;
 
     beforeEach(() => {
-        store = new Vuex.Store({
+        store = createStore({
             namespaces: true,
             modules: {
                 Menu: {
@@ -22,7 +19,9 @@ describe("src_3_0_0/modules/menu/MenuToggleButton.vue", () => {
                         mainExpanded: sinon.stub(),
                         secondaryExpanded: sinon.stub(),
                         mainToggleButtonIcon: () => "bi-list",
-                        secondaryToggleButtonIcon: () => "bi-tools"
+                        secondaryToggleButtonIcon: () => "bi-tools",
+                        mainExpanded: sinon.stub(),
+                        secondaryExpanded: sinon.stub()
                     }
                 }
             }
@@ -34,8 +33,9 @@ describe("src_3_0_0/modules/menu/MenuToggleButton.vue", () => {
     it("should render the button including 'mainToggleButtonIcon' as the icon class for side 'main'", () => {
         const side = "mainMenu",
             wrapper = mount(MenuToggleButton, {
-                localVue,
-                store,
+                global: {
+                    plugins: [store]
+                },
                 propsData: {side}
             }),
             button = wrapper.find(`#${side}-toggle-button`),
@@ -51,8 +51,9 @@ describe("src_3_0_0/modules/menu/MenuToggleButton.vue", () => {
     it("should render the button including 'secondaryToggleButtonIcon' as the icon class for side 'secondaryMenu'", () => {
         const side = "secondaryMenu",
             wrapper = mount(MenuToggleButton, {
-                localVue,
-                store,
+                global: {
+                    plugins: [store]
+                },
                 propsData: {side}
             }),
             button = wrapper.find(`#${side}-toggle-button`),

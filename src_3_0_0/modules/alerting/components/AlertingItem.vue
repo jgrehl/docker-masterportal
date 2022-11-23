@@ -8,7 +8,8 @@ export default {
 
     data () {
         return {
-            availableLocalStorage: false
+            availableLocalStorage: false,
+            currentUrl: document.URL.replace(/#.*$/, "").replace(/\/*\?.*$/, "/").replace(/\bwww.\b/, "")
         };
     },
     computed: {
@@ -22,15 +23,6 @@ export default {
             "alerts",
             "sortedAlerts"
         ]),
-        /**
-         * Reads current URL and returns it without hash and without get params, always ending with slash.
-         * This is needed to have a normalized URL to compare with configured BroadcastConfig URLs;
-         * see example file /portal/master/resources/broadcastedPortalAlerts.json
-         * @returns {String} The normalized current browser URL
-         */
-        currentUrl: () => {
-            return document.URL.replace(/#.*$/, "").replace(/\/*\?.*$/, "/").replace(/\bwww.\b/, "");
-        },
         /**
          * Console mapping to be able to debug in template.
          * @returns {void}
@@ -224,6 +216,8 @@ export default {
 </script>
 
 <template>
+    <span>{{ showTheModal }}</span>
+    <span>{{ alerts.length }}</span>
     <div
         v-if="showTheModal && alerts.length>0"
         id="alertModal"
