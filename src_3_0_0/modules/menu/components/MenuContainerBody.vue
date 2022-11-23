@@ -1,13 +1,11 @@
 <script>
 import MenuContainerBodyItems from "./MenuContainerBodyItems.vue";
 import MenuNavigation from "../navigation/components/MenuNavigation.vue";
-import {mapGetters} from "vuex";
-import GetFeatureInfo from "../../getFeatureInfo/components/GetFeatureInfo.vue";
+import {mapGetters, mapMutations} from "vuex";
 
 export default {
     name: "MenuContainerBody",
     components: {
-        GetFeatureInfo,
         MenuContainerBodyItems,
         MenuNavigation
     },
@@ -21,14 +19,15 @@ export default {
     },
     computed: {
         ...mapGetters("Menu", [
+            "componentsAlwaysActivated",
             "componentFromPath",
-            "deactivateGfi",
+            "deactivateModule",
             "mainMenu",
             "objectFromPath",
             "secondaryMenu"
         ]),
         ...mapGetters("Menu/Navigation", ["lastEntry"]),
-        ...mapGetters("Modules/GetFeatureInfo", ["menuSide"]),
+
         /**
          * @returns {object} Menu configuration for the given menu.
          */
@@ -36,7 +35,31 @@ export default {
             return this.side === "mainMenu" ? this.mainMenu : this.secondaryMenu;
         }
     },
+    watch: {
+        /**
+         * Watch on componentsAlwaysActivated and adds this components to menu section.
+         * @param {Object[]} components The always active actions.
+         * @returns {void}
+         */
+        componentsAlwaysActivated (components) {
+            components.forEach(component => {
+                const name = component.module.name,
+                    side = component.menuSide;
+
+                if (this[side].sections[0].find(module => module.type === name) === undefined) {
+                    this.addModuleToMenuSection({
+                        module: {
+                            type: name
+                        },
+                        side: side
+                    });
+                }
+            });
+        }
+    },
     methods: {
+        ...mapMutations("Menu", ["addModuleToMenuSection"]),
+
         /**
          * @param {Number} sectionIndex Index inside of a section of a menu.
          * @returns {Array} Returns the path for a section inside the menu this component is rendered in.
@@ -54,9 +77,13 @@ export default {
         class="mp-menu-body"
     >
         <MenuNavigation :side="side" />
-        <GetFeatureInfo
-            v-if="side === menuSide && !(deactivateGfi === true)"
-        />
+        <template v-for="component in componentsAlwaysActivated">
+            <component
+                :is="component.module"
+                v-if="side === component.menuSide && !deactivateModule(component.module.name)"
+                :key="'module-' + component.module.name"
+            />
+        </template>
         <component
             :is="componentFromPath(side)"
             v-bind="{idAppendix: side, ...objectFromPath(side, 'last')}"
