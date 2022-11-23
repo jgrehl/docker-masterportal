@@ -1,3 +1,4 @@
+import Vue from "vue";
 import Vuex from "vuex";
 import {config, shallowMount, createLocalVue} from "@vue/test-utils";
 import {expect} from "chai";
@@ -115,21 +116,23 @@ describe("src_3_0_0/modules/measure/components/MeasureInMap.vue", () => {
             .and.to.contain("km")
             .and.not.to.contain("²");
 
-        // select "Polygon" geometry
-        geometrySelect.element.value = "Polygon";
-        geometrySelect.trigger("change");
-        await wrapper.vm.$nextTick();
-        expect(MeasureModule.mutations.setSelectedGeometry.calledOnce).to.be.true;
 
-        // draw interaction should have been remade on geometry change
-        expect(MeasureModule.actions.createDrawInteraction.calledOnce).to.be.true;
+        await geometrySelect.trigger("change");
 
-        // after changing to "Polygon", m²/km² are the units
-        expect(geometrySelect.element.value).equals("Polygon");
+        Vue.nextTick(async () => {
+            expect(MeasureModule.mutations.setSelectedGeometry.calledOnce).to.be.true;
+
+            // draw interaction should have been remade on geometry change
+            expect(MeasureModule.actions.createDrawInteraction.calledOnce).to.be.true;
+
+            // after changing to "Polygon", m²/km² are the units
+            expect(geometrySelect.element.value).equals("Polygon");
+        });
 
         // check if changing unit produces expected effects
         expect(unitSelect.element.value).equals("0");
         unitSelect.element.value = "1";
+
         unitSelect.trigger("change");
         await wrapper.vm.$nextTick();
         expect(unitSelect.element.value).equals("1");
