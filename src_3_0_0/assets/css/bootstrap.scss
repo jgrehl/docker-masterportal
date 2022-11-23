@@ -78,3 +78,7 @@
 .form-select-sm, .form-control-sm, .form-select, .form-control {
     font-size: inherit;
 }
+
+.form-floating > label {
+    padding: .75rem;
+}
