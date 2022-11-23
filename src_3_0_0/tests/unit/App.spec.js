@@ -1,13 +1,9 @@
-import Vuex from "vuex";
+import {createStore} from "vuex";
 import {expect} from "chai";
 import sinon from "sinon";
-import {shallowMount, createLocalVue} from "@vue/test-utils";
+import {shallowMount} from "@vue/test-utils";
 import AppComponent from "../../App.vue";
 import maps from "../../core/maps/js/maps.js";
-
-const localVue = createLocalVue();
-
-localVue.use(Vuex);
 
 describe("src_3_0_0/App.vue", () => {
     let store,
@@ -25,7 +21,7 @@ describe("src_3_0_0/App.vue", () => {
             loadServicesJson: sinon.spy()
         };
 
-        store = new Vuex.Store({
+        store = createStore({
             namespaced: true,
             getters: {
                 allConfigsLoaded: sinon.stub(),
@@ -57,7 +53,10 @@ describe("src_3_0_0/App.vue", () => {
     });
 
     it("loads config on creating App", () => {
-        wrapper = shallowMount(AppComponent, {store, localVue});
+        wrapper = shallowMount(AppComponent, {
+            global: {
+                plugins: [store]
+            }});
 
         expect(wrapper.find("#masterportal-container").exists()).to.be.true;
         expect(actions.loadConfigJson.calledOnce).to.be.true;
@@ -67,13 +66,19 @@ describe("src_3_0_0/App.vue", () => {
     });
 
     it("sets mapCollection as global variable", () => {
-        wrapper = shallowMount(AppComponent, {store, localVue});
+        wrapper = shallowMount(AppComponent, {
+            global: {
+                plugins: [store]
+            }});
 
         expect(global.mapCollection).to.be.not.undefined;
     });
 
     it("watcher allConfigsLoaded is true", () => {
-        wrapper = shallowMount(AppComponent, {store, localVue});
+        wrapper = shallowMount(AppComponent, {
+            global: {
+                plugins: [store]
+            }});
 
         wrapper.vm.$options.watch.allConfigsLoaded.call(wrapper.vm, true);
         expect(actions.extendLayers.calledOnce).to.be.true;
@@ -81,7 +86,10 @@ describe("src_3_0_0/App.vue", () => {
     });
 
     it("watcher allConfigsLoaded is false", () => {
-        wrapper = shallowMount(AppComponent, {store, localVue});
+        wrapper = shallowMount(AppComponent, {
+            global: {
+                plugins: [store]
+            }});
 
         wrapper.vm.$options.watch.allConfigsLoaded.call(wrapper.vm, false);
         expect(actions.extendLayers.notCalled).to.be.true;
