@@ -77,7 +77,6 @@ export default {
     justify-content: center;
     white-space: nowrap;
     min-height: 2.5rem;
-    max-width: fit-content;
     padding-right: 1.5rem;
     padding-left: 1rem;
 
