@@ -40,7 +40,6 @@ export default {
                     properties = stateProperties;
                 }
             }
-            // console.log("### properties:", properties);
 
             return properties;
         }
