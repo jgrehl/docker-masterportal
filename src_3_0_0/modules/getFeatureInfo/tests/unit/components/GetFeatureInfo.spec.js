@@ -11,12 +11,13 @@ const localVue = createLocalVue(),
         setGfiFeatures: () => sinon.stub()
     },
     mockGetters = {
-        desktopType: () => "",
-        centerMapToClickPoint: () => sinon.stub(),
         active: () => true,
-        gfiFeaturesReverse: () => sinon.stub(),
+        centerMapToClickPoint: () => sinon.stub(),
         currentFeature: () => sinon.stub(),
+        desktopType: () => "",
+        gfiFeaturesReverse: () => sinon.stub(),
         highlightVectorRules: () => false,
+        menuSide: () => false,
         showMarker: () => sinon.stub()
     };
 
@@ -55,6 +56,13 @@ function getGfiStore () {
                     setCenter: sinon.stub(),
                     registerListener: sinon.stub(),
                     unregisterListener: sinon.stub()
+                }
+            },
+            Menu: {
+                namespaced: true,
+                actions: {
+                    activateMenuNavigation: sinon.stub(),
+                    resetMenu: sinon.stub()
                 }
             }
         },
