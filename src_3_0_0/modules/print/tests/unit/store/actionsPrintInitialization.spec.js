@@ -9,6 +9,7 @@ const {
     chooseCurrentLayout,
     parseMapfishCapabilities,
     parsePlotserviceCapabilities,
+    getGfiForPrint,
     getAttributeInLayoutByName,
     togglePostrenderListener,
     setPrintLayers,
@@ -125,6 +126,27 @@ describe("src_3_0_0/modules/print/store/actionsPrintInitialization.js", () => {
             testAction(parsePlotserviceCapabilities, payload, {}, {}, [
                 {type: "setLayoutList", payload: payload.layouts}
             ], {}, done);
+        });
+    });
+
+    describe("getGfiForPrint", function () {
+        it("should set empty gfi for print", done => {
+
+            // action, payload, state, rootState, expectedMutationsAndActions, getters = {}, done, rootGetters
+            testAction(getGfiForPrint, null, {}, {}, [
+                {type: "setGfiForPrint", payload: []}
+            ], {}, done, {"Modules/GetFeatureInfo/currentFeature": null});
+        });
+        it("should set gfi for print", done => {
+            const feature = {
+                getTitle: () => "TestTitle",
+                getMappedProperties: () => "TestProperties"
+            };
+
+            // action, payload, state, rootState, expectedMutationsAndActions, getters = {}, done, rootGetters
+            testAction(getGfiForPrint, null, {}, {}, [
+                {type: "setGfiForPrint", payload: ["TestProperties", "TestTitle", undefined]}
+            ], {}, done, {"Modules/GetFeatureInfo/currentFeature": feature, "Map/clickCoord": undefined});
         });
     });
 

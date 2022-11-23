@@ -30,8 +30,10 @@ export default {
             "fileDownloads",
             "filename",
             "formatList",
-            "layoutMapInfo",
+            "isGfiAvailable",
+            "isGfiSelected",
             "isScaleSelectedManually",
+            "layoutMapInfo",
             "layoutList",
             "printMapMarker",
             "printService",
@@ -41,6 +43,7 @@ export default {
             "visibleLayerList"
         ]),
         ...mapGetters("Maps", ["scales, size", "scale"]),
+        ...mapGetters("Modules/GetFeatureInfo", ["currentFeature"]),
 
         currentScale: {
             get () {
@@ -529,6 +532,29 @@ export default {
                             :checked="autoAdjustScale && !isScaleSelectedManually"
                             class="form-check-input"
                             @change="setAutoAdjustScale($event.target.checked)"
+                        >
+                    </div>
+                </div>
+            </div>
+            <div
+                v-if="isGfiAvailable"
+                class="form-group form-group-sm row"
+            >
+                <label
+                    class="col-md-5 col-form-label pt-0"
+                    for="printGfi"
+                >
+                    {{ $t("common:modules.tools.print.withInfoLabel") }}
+                </label>
+                <div class="col-md-7">
+                    <div class="form-check">
+                        <input
+                            id="printGfi"
+                            type="checkbox"
+                            class="form-check-input"
+                            :disabled="currentFeature === null"
+                            :checked="isGfiSelected"
+                            @change="setIsGfiSelected($event.target.checked)"
                         >
                     </div>
                 </div>
