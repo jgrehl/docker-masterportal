@@ -23,7 +23,13 @@ export default {
     },
     computed: {
         ...mapGetters("Maps", ["clickCoordinate"]),
-        ...mapGetters("Modules/GetFeatureInfo", ["centerMapToClickPoint", "showMarker", "highlightVectorRules", "currentFeature"]),
+        ...mapGetters("Modules/GetFeatureInfo", [
+            "centerMapToClickPoint",
+            "currentFeature",
+            "highlightVectorRules",
+            "menuSide",
+            "showMarker"
+        ]),
 
         /**
          * Returns the title of the gfi.
@@ -42,7 +48,7 @@ export default {
             return getTheme(this.feature.getTheme(), this.$options.components, this.$gfiThemeAddons);
         }
     },
-    created: function () {
+    created () {
         if (this.feature.getMimeType() === "text/html") {
             this.isContentHtml = true;
         }
@@ -50,12 +56,20 @@ export default {
             this.hideMarker();
         });
     },
-    mounted: function () {
+    mounted () {
+        const menuItem = {
+            side: this.menuSide,
+            module: {type: this.$parent.$options.name}
+        };
+
+        this.resetMenu(menuItem);
+        this.activateMenuNavigation(menuItem);
         this.setMarker();
     },
     methods: {
         ...mapMutations("Modules/GetFeatureInfo", ["setShowMarker"]),
         ...mapActions("Maps", ["setCenter"]),
+        ...mapActions("Menu", ["activateMenuNavigation", "resetMenu"]),
 
         /**
          * Sets the center of the view on the clickCoord and place the MapMarker on it
