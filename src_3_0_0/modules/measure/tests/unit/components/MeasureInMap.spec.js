@@ -1,15 +1,12 @@
-import Vue from "vue";
-import Vuex from "vuex";
-import {config, shallowMount, createLocalVue} from "@vue/test-utils";
+import {createStore} from "vuex";
+import {config, shallowMount} from "@vue/test-utils";
+import {nextTick} from "vue";
 import {expect} from "chai";
 import sinon from "sinon";
 import MeasureInMapComponent from "../../../components/MeasureInMap.vue";
 import MeasureModule from "../../../store/indexMeasure";
 
-const localVue = createLocalVue();
-
-localVue.use(Vuex);
-config.mocks.$t = key => key;
+config.global.mocks.$t = key => key;
 
 describe("src_3_0_0/modules/measure/components/MeasureInMap.vue", () => {
     let store,
@@ -40,7 +37,7 @@ describe("src_3_0_0/modules/measure/components/MeasureInMap.vue", () => {
         MeasureModule.mutations.setSelectedGeometry = sinon.spy();
         MeasureModule.mutations.setSelectedUnit = sinon.spy();
 
-        store = new Vuex.Store({
+        store = createStore({
             namespaces: true,
             modules: {
                 namespaced: true,
@@ -85,9 +82,6 @@ describe("src_3_0_0/modules/measure/components/MeasureInMap.vue", () => {
     });
 
     afterEach(() => {
-        if (wrapper) {
-            wrapper.destroy();
-        }
         MeasureModule.actions.createDrawInteraction = origcreateDrawInteraction;
         MeasureModule.actions.deleteFeatures = origdeleteFeatures;
         sinon.restore();
@@ -95,7 +89,10 @@ describe("src_3_0_0/modules/measure/components/MeasureInMap.vue", () => {
 
 
     it("renders the measure tool with the expected form fields", () => {
-        wrapper = shallowMount(MeasureInMapComponent, {store, localVue});
+        wrapper = shallowMount(MeasureInMapComponent, {
+            global: {
+                plugins: [store]
+            }});
 
         expect(wrapper.find("#measure").exists()).to.be.true;
         expect(wrapper.find("#measure-tool-geometry-select").exists()).to.be.true;
@@ -105,7 +102,10 @@ describe("src_3_0_0/modules/measure/components/MeasureInMap.vue", () => {
     });
 
     it("select element interaction produces expected mutations, actions, and updates", () => {
-        wrapper = shallowMount(MeasureInMapComponent, {store, localVue});
+        wrapper = shallowMount(MeasureInMapComponent, {
+            global: {
+                plugins: [store]
+            }});
         const geometrySelect = wrapper.find("#measure-tool-geometry-select"),
             unitSelect = wrapper.find("#measure-tool-unit-select");
 
@@ -119,7 +119,7 @@ describe("src_3_0_0/modules/measure/components/MeasureInMap.vue", () => {
 
         geometrySelect.trigger("change");
 
-        Vue.nextTick(async () => {
+        nextTick(async () => {
             expect(MeasureModule.mutations.setSelectedGeometry.calledOnce).to.be.true;
 
             // draw interaction should have been remade on geometry change
@@ -143,7 +143,10 @@ describe("src_3_0_0/modules/measure/components/MeasureInMap.vue", () => {
     });
 
     it("clicking delete will call the appropriate action", async () => {
-        wrapper = shallowMount(MeasureInMapComponent, {store, localVue});
+        wrapper = shallowMount(MeasureInMapComponent, {
+            global: {
+                plugins: [store]
+            }});
         const deleteButton = wrapper.find("#measure-delete");
 
         expect(deleteButton).to.exist;
@@ -155,7 +158,11 @@ describe("src_3_0_0/modules/measure/components/MeasureInMap.vue", () => {
         if (document.body) {
             document.body.appendChild(elem);
         }
-        wrapper = shallowMount(MeasureInMapComponent, {store, localVue, attachTo: elem});
+        wrapper = shallowMount(MeasureInMapComponent, {
+            global: {
+                plugins: [store]
+            },
+            attachTo: elem});
 
         wrapper.vm.setFocusToFirstControl();
         await wrapper.vm.$nextTick();
@@ -165,7 +172,10 @@ describe("src_3_0_0/modules/measure/components/MeasureInMap.vue", () => {
     it("createDrawInteraction should not called if active is false and setSelectedGeometry is changend", async () => {
         store.commit("Modules/Measure/setActive", false);
 
-        wrapper = shallowMount(MeasureInMapComponent, {store, localVue});
+        wrapper = shallowMount(MeasureInMapComponent, {
+            global: {
+                plugins: [store]
+            }});
 
         store.commit("Modules/Measure/setSelectedGeometry", "123");
         await wrapper.vm.$nextTick;
