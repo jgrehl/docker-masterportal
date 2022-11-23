@@ -112,7 +112,7 @@ export default {
 
 <style lang="scss" scoped>
 @import "~variables";
-    .mp-menu-body{
+    .mp-menu-body {
         display: flex;
         flex-direction: column;
         align-items: stretch;
