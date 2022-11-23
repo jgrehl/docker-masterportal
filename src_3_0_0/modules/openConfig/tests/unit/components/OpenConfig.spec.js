@@ -1,15 +1,12 @@
-import {config, shallowMount, createLocalVue} from "@vue/test-utils";
+import {createStore} from "vuex";
+import {nextTick} from "vue";
+import {config, shallowMount} from "@vue/test-utils";
 import {expect} from "chai";
 import sinon from "sinon";
-import Vue from "vue";
-import Vuex from "vuex";
 
 import OpenConfigComponent from "../../../components/OpenConfig.vue";
 
-const localVue = createLocalVue();
-
-localVue.use(Vuex);
-config.mocks.$t = key => key;
+config.global.mocks.$t = key => key;
 
 describe("src_3_0_0/modules/openConfig/components/OpenConfig.vue", () => {
     let store,
@@ -20,7 +17,7 @@ describe("src_3_0_0/modules/openConfig/components/OpenConfig.vue", () => {
         warn = sinon.spy();
         sinon.stub(console, "warn").callsFake(warn);
 
-        store = new Vuex.Store({
+        store = createStore({
             namespaces: true,
             modules: {
                 Modules: {
@@ -35,6 +32,12 @@ describe("src_3_0_0/modules/openConfig/components/OpenConfig.vue", () => {
                             }
                         }
                     }
+                },
+                Alerting: {
+                    namespaced: true,
+                    actions: {
+                        addSingleAlert: sinon.stub()
+                    }
                 }
             }
         });
@@ -45,7 +48,11 @@ describe("src_3_0_0/modules/openConfig/components/OpenConfig.vue", () => {
     });
 
     it("renders the openConfig", () => {
-        wrapper = shallowMount(OpenConfigComponent, {store, localVue});
+        wrapper = shallowMount(OpenConfigComponent, {
+            global: {
+                plugins: [store]
+            }
+        });
 
         expect(wrapper.find("#open-config").exists()).to.be.true;
         expect(wrapper.find("h2").exists()).to.be.true;
@@ -60,10 +67,13 @@ describe("src_3_0_0/modules/openConfig/components/OpenConfig.vue", () => {
     });
 
     it("should trigger function triggerClickOnFileInput on keydown", async () => {
-        Vue.nextTick(async () => {
+        nextTick(async () => {
             const openConfigComponentSpy = sinon.spy(OpenConfigComponent.methods, "triggerClickOnFileInput");
 
-            wrapper = shallowMount(OpenConfigComponent, {store, localVue});
+            wrapper = shallowMount(OpenConfigComponent, {
+                global: {
+                    plugins: [store]
+                }});
             await wrapper.find("#open-config-input-button > label").trigger("keydown");
 
             expect(openConfigComponentSpy.calledOnce).to.be.true;
@@ -71,10 +81,14 @@ describe("src_3_0_0/modules/openConfig/components/OpenConfig.vue", () => {
     });
 
     it("should trigger function loadFile on change input", async () => {
-        Vue.nextTick(async () => {
+        nextTick(async () => {
             const loadFileSpy = sinon.spy(OpenConfigComponent.methods, "loadFile");
 
-            wrapper = shallowMount(OpenConfigComponent, {store, localVue});
+            wrapper = shallowMount(OpenConfigComponent, {
+                global: {
+                    plugins: [store]
+                }
+            });
             await wrapper.find("#open-config-input-button > label > input").trigger("change");
 
             expect(loadFileSpy.calledOnce).to.be.true;
