@@ -67,21 +67,6 @@ export default {
     },
 
     /**
-     * Gets the Gfi Information
-     * @param {Object} param.rootGetters the rootgetters
-     * @param {Object} param.commit the commit
-     * @returns {void}
-     */
-    getGfiForPrint: function ({rootGetters, commit}) {
-        if (rootGetters["Tools/Gfi/currentFeature"] !== null) {
-            commit("setGfiForPrint", [rootGetters["Tools/Gfi/currentFeature"].getMappedProperties(), rootGetters["Tools/Gfi/currentFeature"].getTitle(), rootGetters["Maps/clickCoordinate"]]);
-        }
-        else {
-            // commit("setGfiForPrint", []);
-        }
-    },
-
-    /**
      * Getting und showing the layer which is visible in print scale
      * @param {Object} param.state the state
      * @param {Object} param.commit the commit
