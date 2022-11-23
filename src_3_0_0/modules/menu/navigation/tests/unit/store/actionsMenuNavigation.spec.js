@@ -1,6 +1,6 @@
 import {expect} from "chai";
 import sinon from "sinon";
-import Vue from "vue";
+import {nextTick} from "vue";
 import actions from "../../../store/actionsMenuNavigation";
 
 describe("src_3_0_0/core/menu/navigation/store/actionsMenuNavigation.js", () => {
@@ -18,7 +18,7 @@ describe("src_3_0_0/core/menu/navigation/store/actionsMenuNavigation.js", () => 
     afterEach(sinon.restore);
 
     describe("navigateBack", () => {
-        it("should dispatch the deactivation of the element if it is not a folder and commit the removal of the last navigation element", async () => {
+        it("should dispatch the deactivation of the element if it is not a folder and commit the removal of the last navigation element", () => {
             objectFromPathSpy.returns({type: genericItemType});
             const side = "mainMenu";
 
@@ -38,11 +38,12 @@ describe("src_3_0_0/core/menu/navigation/store/actionsMenuNavigation.js", () => 
             });
             expect(dispatch.firstCall.args[2]).to.eql({root: true});
 
-            await Vue.nextTick();
-            expect(commit.calledOnce).to.be.true;
-            expect(commit.firstCall.args.length).to.equal(2);
-            expect(commit.firstCall.args[0]).to.equal("removeLastEntry");
-            expect(commit.firstCall.args[1]).to.equal(side);
+            nextTick(() => {
+                expect(commit.calledOnce).to.be.true;
+                expect(commit.firstCall.args.length).to.equal(2);
+                expect(commit.firstCall.args[0]).to.equal("removeLastEntry");
+                expect(commit.firstCall.args[1]).to.equal(side);
+            });
         });
         it("should only commit the removal of the last navigation element if it is a folder", async () => {
             objectFromPathSpy.returns({type: folderItemType});
@@ -57,11 +58,12 @@ describe("src_3_0_0/core/menu/navigation/store/actionsMenuNavigation.js", () => 
 
             expect(dispatch.notCalled).to.be.true;
 
-            await Vue.nextTick();
-            expect(commit.calledOnce).to.be.true;
-            expect(commit.firstCall.args.length).to.equal(2);
-            expect(commit.firstCall.args[0]).to.equal("removeLastEntry");
-            expect(commit.firstCall.args[1]).to.equal(side);
+            nextTick(() => {
+                expect(commit.calledOnce).to.be.true;
+                expect(commit.firstCall.args.length).to.equal(2);
+                expect(commit.firstCall.args[0]).to.equal("removeLastEntry");
+                expect(commit.firstCall.args[1]).to.equal(side);
+            });
         });
     });
 });
