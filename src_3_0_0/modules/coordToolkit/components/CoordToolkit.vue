@@ -58,9 +58,6 @@ export default {
             }
         }
     },
-    created () {
-        this.$on("close", this.close);
-    },
     destroyed () {
         this.resetErrorMessages("all");
         this.resetValues();
@@ -246,13 +243,6 @@ export default {
             if (this.eventHandler) {
                 this.eventHandler.destroy();
             }
-        },
-        /**
-         * Closes this tool window by setting active to false
-         * @returns {void}
-         */
-        close () {
-            this.setActive(false);
         },
         /**
          * Returns true, if given checkboxId is equals curent mode in state.
