@@ -1,25 +1,24 @@
-import Vuex from "vuex";
-import {config, shallowMount, createLocalVue} from "@vue/test-utils";
+import {createStore} from "vuex";
+import {config, shallowMount} from "@vue/test-utils";
 import MenuContainer from "../../../components/MenuContainer.vue";
 import MenuContainerHeader from "../../../components/MenuContainerHeader.vue";
 import MenuContainerBody from "../../../components/MenuContainerBody.vue";
 import {expect} from "chai";
 import sinon from "sinon";
 
-const localVue = createLocalVue();
-
-localVue.use(Vuex);
-config.mocks.$t = key => key;
+config.global.mocks.$t = key => key;
 
 describe("src_3_0_0/modules/menu/MenuContainer.vue", () => {
     let store;
     const sampleMainMenuPath = ["mainMenu", "sections", 0, 1, "elements", 0];
 
     beforeEach(() => {
-
-        store = new Vuex.Store({
+        store = createStore({
             namespaces: true,
             getters: {
+                isMobile: (state) => state.isMobile,
+                mainMenu: sinon.stub(),
+                secondaryMenu: sinon.stub(),
                 mainMenuFromConfig: sinon.stub(),
                 secondaryMenuFromConfig: sinon.stub(),
                 uiStyle: sinon.stub()
@@ -67,9 +66,18 @@ describe("src_3_0_0/modules/menu/MenuContainer.vue", () => {
         });
     });
 
+    afterEach(() => {
+        sinon.restore();
+    });
+
     describe("mainMenu", () => {
         it("renders the component but doesnt show it initially and it contains all default elements", () => {
-            const wrapper = shallowMount(MenuContainer, {store, localVue, propsData: {side: "mainMenu"}}),
+            const wrapper = shallowMount(MenuContainer, {
+                    global: {
+                        plugins: [store]
+                    },
+                    propsData: {side: "mainMenu"}
+                }),
                 mainMenuWrapper = wrapper.find("#mp-menu-mainMenu");
 
             expect(mainMenuWrapper.exists()).to.be.true;
@@ -81,7 +89,12 @@ describe("src_3_0_0/modules/menu/MenuContainer.vue", () => {
 
         it("opens the menu if initial open is true", () => {
             store.commit("Menu/setTestMainMenuExpanded", true);
-            const wrapper = shallowMount(MenuContainer, {store, localVue, propsData: {side: "mainMenu"}});
+            const wrapper = shallowMount(MenuContainer, {
+                global: {
+                    plugins: [store]
+                },
+                propsData: {side: "mainMenu"}
+            });
 
             expect(wrapper.find("#mp-menu-mainMenu").classes()).to.contain("show");
         });
@@ -89,7 +102,12 @@ describe("src_3_0_0/modules/menu/MenuContainer.vue", () => {
     });
     describe("secondaryMenu", () => {
         it("renders the component but doesnt show it initially and it contains all default elements", () => {
-            const wrapper = shallowMount(MenuContainer, {store, localVue, propsData: {side: "secondaryMenu"}}),
+            const wrapper = shallowMount(MenuContainer, {
+                    global: {
+                        plugins: [store]
+                    },
+                    propsData: {side: "secondaryMenu"}
+                }),
                 secondaryMenuWrapper = wrapper.find("#mp-menu-secondaryMenu");
 
             expect(secondaryMenuWrapper.exists()).to.be.true;
@@ -101,7 +119,12 @@ describe("src_3_0_0/modules/menu/MenuContainer.vue", () => {
 
         it("opens the menu if initial open is true", () => {
             store.commit("Menu/setTestSecondaryMenuExpanded", true);
-            const wrapper = shallowMount(MenuContainer, {store, localVue, propsData: {side: "secondaryMenu"}});
+            const wrapper = shallowMount(MenuContainer, {
+                global: {
+                    plugins: [store]
+                },
+                propsData: {side: "secondaryMenu"}
+            });
 
             expect(wrapper.find("#mp-menu-secondaryMenu").classes()).to.contain("show");
         });

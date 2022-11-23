@@ -1,6 +1,6 @@
-import Vuex from "vuex";
+import {createStore} from "vuex";
 import {Polygon, LineString} from "ol/geom.js";
-import {config, shallowMount, createLocalVue} from "@vue/test-utils";
+import {config, shallowMount} from "@vue/test-utils";
 import {expect} from "chai";
 import VectorLayer from "ol/layer/Vector.js";
 import VectorSource from "ol/source/Vector.js";
@@ -8,10 +8,7 @@ import {Style} from "ol/style.js";
 
 import MeasureInMapTooltipComponent from "../../../components/MeasureInMapTooltip.vue";
 
-const localVue = createLocalVue();
-
-localVue.use(Vuex);
-config.mocks.$t = key => key;
+config.global.mocks.$t = key => key;
 
 describe("src_3_0_0/modules/measure/components/MeasureInMapTooltip.vue", () => {
     let store;
@@ -24,8 +21,8 @@ describe("src_3_0_0/modules/measure/components/MeasureInMapTooltip.vue", () => {
      * @param {string} selectedGeometry current selected geometry
      * @returns {void}
      */
-    function createStore (isBeingDrawnLine = true, isBeingDrawnPoly = false, featureId = "lineId", selectedGeometry = "LineString") {
-        store = new Vuex.Store({
+    function createTestStore (isBeingDrawnLine = true, isBeingDrawnPoly = false, featureId = "lineId", selectedGeometry = "LineString") {
+        store = createStore({
             namespaces: true,
             modules: {
                 namespaced: true,
@@ -69,11 +66,11 @@ describe("src_3_0_0/modules/measure/components/MeasureInMapTooltip.vue", () => {
     }
 
     it("LineString: generateTextPoint creates a tooltip-feature with 2 styles", () => {
-        createStore();
+        createTestStore();
         const wrapper = shallowMount(MeasureInMapTooltipComponent, {
-                store,
-                localVue
-            }),
+                global: {
+                    plugins: [store]
+                }}),
             tp = wrapper.vm.generateTextPoint("lineId"),
             style = tp.style_;
 
@@ -84,11 +81,11 @@ describe("src_3_0_0/modules/measure/components/MeasureInMapTooltip.vue", () => {
         expect(tp.getGeometry().getLastCoordinate()).to.deep.equal([1000, 0]);
     });
     it("LineString: setValueAtTooltipLayer changes text of style", () => {
-        createStore();
+        createTestStore();
         const wrapper = shallowMount(MeasureInMapTooltipComponent, {
-            store,
-            localVue
-        });
+            global: {
+                plugins: [store]
+            }});
         let style = null;
 
         wrapper.vm.currentTextPoint = wrapper.vm.generateTextPoint("lineId");
@@ -102,11 +99,11 @@ describe("src_3_0_0/modules/measure/components/MeasureInMapTooltip.vue", () => {
         expect(style[1].text_.text_).to.be.equals("modules.tools.measure.finishWithDoubleClick");
     });
     it("LineString: generateTextStyles returns two styles with measure content", () => {
-        createStore();
+        createTestStore();
         const wrapper = shallowMount(MeasureInMapTooltipComponent, {
-                store,
-                localVue
-            }),
+                global: {
+                    plugins: [store]
+                }}),
             feature = {
                 get: key => ({
                     isBeingDrawn: true
@@ -120,11 +117,11 @@ describe("src_3_0_0/modules/measure/components/MeasureInMapTooltip.vue", () => {
         expect(styles[1].text_.text_).to.be.equals("modules.tools.measure.finishWithDoubleClick");
     });
     it("does not render complete tooltips for finished features", () => {
-        createStore(false);
+        createTestStore(false);
         const wrapper = shallowMount(MeasureInMapTooltipComponent, {
-                store,
-                localVue
-            }),
+                global: {
+                    plugins: [store]
+                }}),
 
             tp = wrapper.vm.generateTextPoint("lineId"),
             style = tp.style_;
@@ -137,11 +134,11 @@ describe("src_3_0_0/modules/measure/components/MeasureInMapTooltip.vue", () => {
         expect(style[1].text_.text_).to.be.equals("");
     });
     it("Polygon: generateTextPoint creates a tooltip-feature with 2 styles", () => {
-        createStore(false, true, "polygonId");
+        createTestStore(false, true, "polygonId");
         const wrapper = shallowMount(MeasureInMapTooltipComponent, {
-                store,
-                localVue
-            }),
+                global: {
+                    plugins: [store]
+                }}),
             tp = wrapper.vm.generateTextPoint("polygonId"),
             style = tp.style_;
 
@@ -152,11 +149,11 @@ describe("src_3_0_0/modules/measure/components/MeasureInMapTooltip.vue", () => {
         expect(tp.getGeometry().getLastCoordinate()).to.deep.equal([0, 1000]);
     });
     it("Polygon: generateTextStyles returns two styles with measure content", () => {
-        createStore(false, true, "polygonId");
+        createTestStore(false, true, "polygonId");
         const wrapper = shallowMount(MeasureInMapTooltipComponent, {
-                store,
-                localVue
-            }),
+                global: {
+                    plugins: [store]
+                }}),
             feature = {
                 get: key => ({
                     isBeingDrawn: true
@@ -170,11 +167,11 @@ describe("src_3_0_0/modules/measure/components/MeasureInMapTooltip.vue", () => {
         expect(styles[1].text_.text_).to.be.equals("modules.tools.measure.finishWithDoubleClick");
     });
     it("Polygon: setValueAtTooltipLayer changes text of style", () => {
-        createStore(false, true, "polygonId", "Polygon");
+        createTestStore(false, true, "polygonId", "Polygon");
         const wrapper = shallowMount(MeasureInMapTooltipComponent, {
-            store,
-            localVue
-        });
+            global: {
+                plugins: [store]
+            }});
         let style = null;
 
         wrapper.vm.currentTextPoint = wrapper.vm.generateTextPoint("polygonId");
