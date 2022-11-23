@@ -1,6 +1,6 @@
 import {expect} from "chai";
 import sinon from "sinon";
-import Vue from "vue";
+import {nextTick} from "vue";
 import actions from "../../../menu-store/actionsMenu";
 
 describe("src_3_0_0/modules/menu/menu-store/actionsMenu.js", () => {
@@ -180,12 +180,13 @@ describe("src_3_0_0/modules/menu/menu-store/actionsMenu.js", () => {
             expect(commit.firstCall.args[0]).to.equal("Menu/Navigation/addEntry");
             expect(commit.firstCall.args[1]).to.equal(path);
             expect(commit.firstCall.args[2]).to.eql({root: true});
-            await Vue.nextTick();
-            expect(dispatch.calledOnce).to.be.true;
-            expect(dispatch.firstCall.args.length).to.equal(2);
-            expect(dispatch.firstCall.args[0]).to.equal("setElementActive");
-            expect(dispatch.firstCall.args[1]).to.eql({moduleNamespace: "GenericElement", isActive: true});
-            expect(consoleError.notCalled).to.be.true;
+            nextTick(() => {
+                expect(dispatch.calledOnce).to.be.true;
+                expect(dispatch.firstCall.args.length).to.equal(2);
+                expect(dispatch.firstCall.args[0]).to.equal("setElementActive");
+                expect(dispatch.firstCall.args[1]).to.eql({moduleNamespace: "GenericElement", isActive: true});
+                expect(consoleError.notCalled).to.be.true;
+            });
         });
         it("should commit the path for the element and focus the first sub-element if it's a folder", async () => {
             element.type = "folder";
@@ -201,12 +202,13 @@ describe("src_3_0_0/modules/menu/menu-store/actionsMenu.js", () => {
             expect(commit.firstCall.args[2]).to.eql({root: true});
             expect(dispatch.notCalled).to.be.true;
             expect(consoleError.notCalled).to.be.true;
-            await Vue.nextTick();
-            expect(getElementById.calledOnce).to.be.true;
-            expect(getElementById.firstCall.args.length).to.equal(1);
-            expect(getElementById.firstCall.args[0]).to.equal(`menu-offcanvas-body-items-element-0-${path[0]}`);
-            expect(focus.calledOnce).to.be.true;
-            expect(focus.firstCall.args.length).to.equal(0);
+            nextTick(() => {
+                expect(getElementById.calledOnce).to.be.true;
+                expect(getElementById.firstCall.args.length).to.equal(1);
+                expect(getElementById.firstCall.args[0]).to.equal(`menu-offcanvas-body-items-element-0-${path[0]}`);
+                expect(focus.calledOnce).to.be.true;
+                expect(focus.firstCall.args.length).to.equal(0);
+            });
         });
     });
 
