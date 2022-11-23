@@ -1,12 +1,9 @@
-import Vuex from "vuex";
-import {config, mount, createLocalVue} from "@vue/test-utils";
+import {createStore} from "vuex";
+import {config, mount} from "@vue/test-utils";
 import {expect} from "chai";
 import MenuContainerHeaderTitle from "../../../components/MenuContainerHeaderTitle.vue";
 
-const localVue = createLocalVue();
-
-localVue.use(Vuex);
-config.mocks.$t = key => key;
+config.global.mocks.$t = key => key;
 
 describe("src_3_0_0/modules/menu/MenuContainerHeaderTitle.vue", () => {
     const idAppendix = "mainMenu",
@@ -15,15 +12,16 @@ describe("src_3_0_0/modules/menu/MenuContainerHeaderTitle.vue", () => {
     let store;
 
     beforeEach(() => {
-        store = new Vuex.Store({
+        store = createStore({
             namespaces: true
         });
     });
 
     it("should render the component and display an anchor tag with '#' as href and include the text if the view is not mobile and only text is given as a prop", () => {
         const wrapper = mount(MenuContainerHeaderTitle, {
-                localVue,
-                store,
+                global: {
+                    plugins: [store]
+                },
                 propsData: {idAppendix, text: nameText}
             }),
             anchor = wrapper.find(id);
@@ -40,8 +38,9 @@ describe("src_3_0_0/modules/menu/MenuContainerHeaderTitle.vue", () => {
     it("should render the component and display an anchor tag with the given link as href and include the text if the view is not mobile and text as well as link are given as props", () => {
         const link = "https://some.url.com",
             wrapper = mount(MenuContainerHeaderTitle, {
-                localVue,
-                store,
+                global: {
+                    plugins: [store]
+                },
                 propsData: {idAppendix, text: nameText, link}
             }),
             anchor = wrapper.find(id);
@@ -58,8 +57,9 @@ describe("src_3_0_0/modules/menu/MenuContainerHeaderTitle.vue", () => {
     it("should render the component and display an anchor tag with '#' as href, include the text and display an image if the view is not mobile and text as well as logo are given as props", () => {
         const logo = "some png",
             wrapper = mount(MenuContainerHeaderTitle, {
-                localVue,
-                store,
+                global: {
+                    plugins: [store]
+                },
                 propsData: {idAppendix, text: nameText, logo}
             }),
             anchor = wrapper.find(id);
@@ -78,8 +78,9 @@ describe("src_3_0_0/modules/menu/MenuContainerHeaderTitle.vue", () => {
     it("should render the component and display an anchor tag with '#' as href, include the text and use the toolTip as title prop of the anchor if the view is not mobile and text as well as toolTip are given as props", () => {
         const toolTip = "Opens something",
             wrapper = mount(MenuContainerHeaderTitle, {
-                localVue,
-                store,
+                global: {
+                    plugins: [store]
+                },
                 propsData: {idAppendix, text: nameText, toolTip}
             }),
             anchor = wrapper.find(id);
