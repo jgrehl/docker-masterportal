@@ -1,4 +1,3 @@
-import Vue from "vue";
 
 /**
  * Replaces all entries for a key of an object with the replacement if condition is true at object to replace.
@@ -47,14 +46,12 @@ function replaceInNestedValuesHelper (obj, searchKey, maxDepth, result, depth, r
     Object.keys(obj).forEach(key => {
         if (key === searchKey) {
             if (obj[key][condition.key] === condition.value && obj[key] !== replacement) {
-                addToObserver(obj, key, replacement);
                 obj[key] = replacement;
                 result.push(replacement);
             }
             else if (Array.isArray(obj[key])) {
                 obj[key].forEach(element => {
                     if (element[condition.key] === condition.value && element !== replacement) {
-                        addToObserver(element, key, replacement);
                         Object.assign(element, replacement);
                         result.push(element);
                     }
@@ -68,28 +65,4 @@ function replaceInNestedValuesHelper (obj, searchKey, maxDepth, result, depth, r
             replaceInNestedValuesHelper(obj[key], searchKey, maxDepth, result, depth + 1, replacement, condition, searchKeyForArrays);
         }
     });
-}
-
-/**
- * Informs Vue about new properties at obj to observe them.
- * @link https://v2.vuejs.org/v2/api/#Vue-set
- * @param {Object} obj to change porperties of
- * @param {String} key key of property
- * @param {*} replacement the replacement at the key
- * @returns {void}
- */
-function addToObserver (obj, key, replacement) {
-    if (typeof replacement === "object") {
-        Object.keys(replacement).forEach(aKey => {
-            if (!Object.hasOwn(obj, aKey)) {
-                // console.log(obj);
-                // console.log(aKey);
-                // console.log(replacement[aKey]);
-                Vue.set(obj, aKey, replacement[aKey]);
-            }
-        });
-    }
-    else if (!Object.hasOwn(obj, key)) {
-        Vue.set(obj, key, replacement);
-    }
 }
