@@ -79,14 +79,6 @@ label {
     margin-bottom: 0;
 }
 
-.form-group {
-    margin-bottom: 1rem;
-}
-
-.form-group:last-child {
-    margin-bottom: 0;
-}
-
 .cluster {
     font-size:25px;
     border-radius:30px!important;
@@ -249,22 +241,3 @@ label {
     line-height: 130%;
     margin-top: 5%;
 }
-
-
-
-
-/* only for firefox */
-/* @-moz-document url-prefix() { 
-    .form-group-sm .form-control{
-        padding-right: 0;
-        padding-top: 0;
-        padding-bottom: 0;
-      }
-      input[type=number]{
-        padding-right: 0;
-        padding-top: 0;
-        padding-bottom: 0;
-      }
-} */
-
-
