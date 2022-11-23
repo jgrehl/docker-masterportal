@@ -17,9 +17,9 @@ describe("src_3_0_0/modules/shareView/components/ShareView.vue", () => {
                 sections: [
                     {
                         shareView: {
-                            "title": "Share",
-                            "icon": "bi-share",
-                            "itemType": "shareView"
+                            title: "Share",
+                            icon: "bi-share",
+                            itemType: "shareView"
                         }
                     }
                 ]
@@ -46,7 +46,8 @@ describe("src_3_0_0/modules/shareView/components/ShareView.vue", () => {
                         ShareView: {
                             namespaced: true,
                             getters: {
-                                url: sinon.stub()
+                                active: () => true,
+                                url: () => sinon.stub()
                             }
                         }
                     }
@@ -74,6 +75,7 @@ describe("src_3_0_0/modules/shareView/components/ShareView.vue", () => {
         if (wrapper) {
             wrapper.destroy();
         }
+        sinon.restore();
     });
 
     after(() => {
