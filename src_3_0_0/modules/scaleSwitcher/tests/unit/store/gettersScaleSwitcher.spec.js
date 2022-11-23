@@ -7,7 +7,6 @@ const {
     name,
     type,
     active,
-    deactivateGfi,
     hasMouseMapInteractions,
     supportedDevices,
     supportedMapModes
@@ -36,9 +35,6 @@ describe("src_3_0_0/modules/scaleSwitcher/store/gettersScaleSwitcher.js", () => 
     });
 
     describe("testing default values", () => {
-        it("returns the deactivateGfi default value from state", () => {
-            expect(deactivateGfi(stateScaleSwitcher)).to.be.false;
-        });
         it("returns the hasMouseMapInteractions default value from state", () => {
             expect(hasMouseMapInteractions(stateScaleSwitcher)).to.be.false;
         });

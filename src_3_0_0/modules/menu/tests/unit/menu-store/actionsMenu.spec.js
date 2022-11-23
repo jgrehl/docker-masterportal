@@ -67,68 +67,78 @@ describe("src_3_0_0/modules/menu/menu-store/actionsMenu.js", () => {
         });
     });
 
-    describe("addModule", () => {
-        it("should add module and return its position in menu navigation", () => {
-            const state = {
+    describe("activateMenuNavigation", () => {
+        it("should add navigation entry and set activeModuleMouseMapInteractions", () => {
+            const getters = {
                     secondaryMenu: {
-                        sections: [[0, 1, 2]]
+                        sections: [
+                            [
+                                {
+                                    type: "exampleModule"
+                                }
+                            ]
+                        ]
                     }
                 },
-                moduleState = {
-                    type: "getFeatureInfo",
-                    menuSide: "secondaryMenu"
-                },
-                position = actions.addModule({commit, state}, moduleState);
+                side = "secondaryMenu",
+                module = {
+                    type: "exampleModule"
+                };
 
-            expect(position).to.equals(2);
+            actions.activateMenuNavigation({commit, dispatch, getters}, {side, module});
+
             expect(commit.calledOnce).to.be.true;
-            expect(commit.firstCall.args[0]).to.equals("addModuleToMenuSection");
-            expect(commit.firstCall.args[1]).to.equals(moduleState);
+            expect(commit.firstCall.args[0]).to.equals("Menu/Navigation/addEntry");
+            expect(commit.firstCall.args[1]).to.deep.equals(["secondaryMenu", "sections", 0, 0]);
+
+            expect(dispatch.calledOnce).to.be.true;
+            expect(dispatch.firstCall.args[0]).to.equals("setActiveModuleMouseMapInteractions");
+            expect(dispatch.firstCall.args[1]).to.deep.equals({
+                type: "exampleModule",
+                isActive: true
+            });
         });
     });
 
-    describe("mergeMenuState", () => {
-        it("should merge the configured menu with the state menu", () => {
-            const state = {
-                    mainMenu: {
-                        sections: [[]]
-                    },
+    describe("deactivateMenuElements", () => {
+        it("should deactivate all modules, expect folder and given module", () => {
+            const getters = {
                     secondaryMenu: {
-                        sections: [[]]
+                        sections: [
+                            [
+                                {
+                                    type: "exampleModule"
+                                },
+                                {
+                                    type: "abc"
+                                },
+                                {
+                                    type: "xyz"
+                                },
+                                {
+                                    type: "folder"
+                                }
+                            ]
+                        ]
                     }
                 },
-                mainMenu = {
-                    expanded: false,
-                    sections: [
-                        [
-                            {
-                                type: "exampleModuleMain"
-                            }
-                        ]
-                    ]
-                },
-                secondaryMenu = {
-                    expanded: false,
-                    sections: [
-                        [
-                            {
-                                type: "exampleModuleMain"
-                            }
-                        ]
-                    ]
+                side = "secondaryMenu",
+                module = {
+                    type: "exampleModule"
                 };
 
-            actions.mergeMenuState({commit, state}, {mainMenu, secondaryMenu});
+            actions.deactivateMenuElements({dispatch, getters}, {side, module});
 
-            expect(commit.calledThrice).to.be.true;
-            expect(commit.firstCall.args[0]).to.equals("setMainMenu");
-            expect(commit.firstCall.args[1]).to.deep.equals(mainMenu);
-            expect(commit.secondCall.args[0]).to.equals("setSecondaryMenu");
-            expect(commit.secondCall.args[1]).to.deep.equals(secondaryMenu);
-            expect(commit.thirdCall.args[0]).to.equals("Navigation/setEntries");
-            expect(commit.thirdCall.args[1]).to.deep.equals({
-                mainMenu: [],
-                secondaryMenu: []
+            expect(dispatch.calledTwice).to.be.true;
+            expect(dispatch.firstCall.args[0]).to.equals("setElementActive");
+            expect(dispatch.firstCall.args[1]).to.deep.equals({
+                moduleNamespace: "Abc",
+                isActive: false
+            });
+            expect(dispatch.secondCall.args[0]).to.equals("setElementActive");
+            expect(dispatch.secondCall.args[1]).to.deep.equals({
+                moduleNamespace: "Xyz",
+                isActive: false
             });
         });
     });
@@ -200,6 +210,70 @@ describe("src_3_0_0/modules/menu/menu-store/actionsMenu.js", () => {
         });
     });
 
+    describe("mergeMenuState", () => {
+        it("should merge the configured menu with the state menu", () => {
+            const state = {
+                    mainMenu: {
+                        sections: [[]]
+                    },
+                    secondaryMenu: {
+                        sections: [[]]
+                    }
+                },
+                mainMenu = {
+                    expanded: false,
+                    sections: [
+                        [
+                            {
+                                type: "exampleModuleMain"
+                            }
+                        ]
+                    ]
+                },
+                secondaryMenu = {
+                    expanded: false,
+                    sections: [
+                        [
+                            {
+                                type: "exampleModuleMain"
+                            }
+                        ]
+                    ]
+                };
+
+            actions.mergeMenuState({commit, state}, {mainMenu, secondaryMenu});
+
+            expect(commit.calledThrice).to.be.true;
+            expect(commit.firstCall.args[0]).to.equals("setMainMenu");
+            expect(commit.firstCall.args[1]).to.deep.equals(mainMenu);
+            expect(commit.secondCall.args[0]).to.equals("setSecondaryMenu");
+            expect(commit.secondCall.args[1]).to.deep.equals(secondaryMenu);
+            expect(commit.thirdCall.args[0]).to.equals("Navigation/setEntries");
+            expect(commit.thirdCall.args[1]).to.deep.equals({
+                mainMenu: [],
+                secondaryMenu: []
+            });
+        });
+    });
+
+    describe("resetMenu", () => {
+        it("should reset menu navigation and deactivate menu elements", () => {
+            const side = "secondaryMenu",
+                module = {
+                    type: "exampleModule"
+                };
+
+            actions.resetMenu({commit, dispatch}, {side, module});
+
+            expect(commit.calledOnce).to.be.true;
+            expect(commit.firstCall.args[0]).to.equals("Navigation/setEntry");
+            expect(commit.firstCall.args[1]).to.equals("secondaryMenu");
+
+            expect(dispatch.calledOnce).to.be.true;
+            expect(dispatch.firstCall.args[0]).to.equals("deactivateMenuElements");
+            expect(dispatch.firstCall.args[1]).to.deep.equals({side, module});
+        });
+    });
     describe("setElementActive", () => {
         const isActive = true,
             moduleNamespace = "ModuleName",
@@ -211,17 +285,23 @@ describe("src_3_0_0/modules/menu/menu-store/actionsMenu.js", () => {
                 _actions: {}
             };
         });
+
         it("should dispatch the setActive action if it is present for the given moduleNamespace", () => {
             context._actions[functionName] = Symbol("I'm a setActive action!");
             const setElementActive = actions.setElementActive.bind(context);
 
             setElementActive({commit, dispatch}, {moduleNamespace, isActive});
 
-            expect(dispatch.calledOnce).to.be.true;
-            expect(dispatch.firstCall.args.length).to.equal(3);
-            expect(dispatch.firstCall.args[0]).to.equal(functionName);
-            expect(dispatch.firstCall.args[1]).to.equal(isActive);
-            expect(dispatch.firstCall.args[2]).to.eql({root: true});
+            expect(dispatch.calledTwice).to.be.true;
+            expect(dispatch.firstCall.args[0]).to.equal("setActiveModuleMouseMapInteractions");
+            expect(dispatch.firstCall.args[1]).to.deep.equal({
+                type: "ModuleName",
+                isActive: true
+            });
+            expect(dispatch.secondCall.args.length).to.equal(3);
+            expect(dispatch.secondCall.args[0]).to.equal(functionName);
+            expect(dispatch.secondCall.args[1]).to.equal(isActive);
+            expect(dispatch.secondCall.args[2]).to.eql({root: true});
             expect(commit.notCalled).to.be.true;
         });
         it("should commit the setActive mutation if no setActive action is present for the given moduleNamespace", () => {
@@ -229,12 +309,17 @@ describe("src_3_0_0/modules/menu/menu-store/actionsMenu.js", () => {
 
             setElementActive({commit, dispatch}, {moduleNamespace, isActive});
 
+            expect(dispatch.calledOnce).to.be.true;
+            expect(dispatch.firstCall.args[0]).to.equal("setActiveModuleMouseMapInteractions");
+            expect(dispatch.firstCall.args[1]).to.deep.equal({
+                type: "ModuleName",
+                isActive: true
+            });
             expect(commit.calledOnce).to.be.true;
             expect(commit.firstCall.args.length).to.equal(3);
             expect(commit.firstCall.args[0]).to.equal(functionName);
             expect(commit.firstCall.args[1]).to.equal(isActive);
             expect(commit.firstCall.args[2]).to.eql({root: true});
-            expect(dispatch.notCalled).to.be.true;
         });
     });
 });
