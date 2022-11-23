@@ -20,7 +20,7 @@ export default {
 <template lang="html">
     <div
         id="layer-tree"
-        class="layer-tree"
+        class="layer-tree me-3"
     >
         <div
             v-for="(layerConf) in inTreeVisibleLayerConfigsByMode(mode)"
@@ -38,6 +38,8 @@ export default {
     .layer-tree{
         padding: $padding;
         font-size: $font-size-base;
+        overflow-y: auto;
+        max-height: 500px;
     }
 
 </style>
