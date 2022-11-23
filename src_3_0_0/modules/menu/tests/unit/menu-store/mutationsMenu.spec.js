@@ -13,17 +13,16 @@ describe("src_3_0_0/core/menu/menu-store/mutationsMenu.js", () => {
                     secondaryMenu: {
                         sections: [[]]
                     }
-
                 },
-                moduleState = {
-                    type: "exampleModule",
-                    menuSide: "mainMenu"
+                side = "mainMenu",
+                module = {
+                    type: "exampleModule"
                 };
 
-            addModuleToMenuSection(state, moduleState);
+            addModuleToMenuSection(state, {side, module});
 
             expect(state.mainMenu.sections[0].length).to.equals(1);
-            expect(state.mainMenu.sections[0]).to.includes(moduleState);
+            expect(state.mainMenu.sections[0]).to.includes(module);
         });
     });
 });

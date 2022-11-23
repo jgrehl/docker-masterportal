@@ -8,6 +8,31 @@ const menuGetters = {
 
     /**
      * @param {MenuState} _ Local vuex state (discarded).
+     * @param {MenuState} __ Local vuex getters (discarded).
+     * @param {Object} rootState vuex rootState.
+     * @param {Object} rootGetters vuex rootGetters.
+     * @returns {Object[]} components always activated
+     */
+    componentsAlwaysActivated: (_, __, rootState, rootGetters) => {
+        const componentMap = rootGetters["Modules/componentMap"],
+            componentAlwaysActivated = [];
+
+        Object.keys(componentMap).forEach(moduleKey => {
+            const module = rootState.Modules[upperFirst(moduleKey)];
+
+            if (module?.alwaysActivated) {
+                componentAlwaysActivated.push({
+                    module: componentMap[moduleKey],
+                    menuSide: module.menuSide || "secondaryMenu"
+                });
+            }
+        });
+
+        return componentAlwaysActivated;
+    },
+
+    /**
+     * @param {MenuState} _ Local vuex state (discarded).
      * @param {Object} getters Local vuex getters.
      * @param {Object} rootState vuex rootState.
      * @returns {(function(side: String): Object)} Function returning component identified via componentMap.
@@ -21,25 +46,20 @@ const menuGetters = {
     },
 
     /**
-     * @param {MenuState} _ Local vuex state (discarded).
-     * @param {Object} getters Local vuex getters.
-     * @param {Object} rootState vuex rootState.
-     * @param {Object} rootGetters Root getters.
-     * @returns {(function(side: String): Boolean|null)} Function returning gfi should deactivate.
+     * @param {MenuState} state Local vuex state.
+     * @param {Object} _ Local vuex getters (discarded).
+     * @param {Object} __ vuex rootState (discarded).
+     * @param {Object} rootGetters vuex rootGetters.
+     * @returns {(function(type: String): Boolean)} Function returning component identified via deactivateModule.
      */
-    deactivateGfi: (_, getters, rootState, rootGetters) => {
-        let deactivateGfi = false;
-
-        // eslint-disable-next-line new-cap
-        if (rootGetters["Menu/Navigation/lastEntry"]("mainMenu") !== null) {
-            deactivateGfi = rootState.Modules[upperFirst(getters.objectFromPath("mainMenu", "last")?.type)]?.deactivateGfi || deactivateGfi;
-        }
-        // eslint-disable-next-line new-cap
-        if (rootGetters["Menu/Navigation/lastEntry"]("secondaryMenu") !== null) {
-            deactivateGfi = rootState.Modules[upperFirst(getters.objectFromPath("secondaryMenu", "last")?.type)]?.deactivateGfi || deactivateGfi;
+    deactivateModule: (state, _, __, rootGetters) => type => {
+        if (rootGetters[`Modules/${upperFirst(type)}/hasMouseMapInteractions`]
+            && upperFirst(type) !== state.activeModuleMouseMapInteractions
+        ) {
+            return true;
         }
 
-        return deactivateGfi;
+        return false;
     },
 
     /**
@@ -111,6 +131,26 @@ const menuGetters = {
     /**
      * @param {MenuState} _ Local vuex state (discarded).
      * @param {Object} getters Local vuex getters.
+     * @returns {(function(path: Array): Object|null)} Function returning a section of the menu.
+     */
+    section: (_, getters) => path => {
+        if (path && getters[path[0]]) {
+            const section = idx(getters, path);
+
+            if (section === badPathSymbol) {
+                console.error(`Menu.getters.section: ${badPathSymbol.description} ${path}.`);
+                return null;
+            }
+            return section;
+        }
+
+        console.error(`Menu: The given menu ${path[0]} is not configured in the config.json.`);
+        return null;
+    },
+
+    /**
+     * @param {MenuState} _ Local vuex state (discarded).
+     * @param {Object} getters Local vuex getters.
      * @returns {function(side: String): {title: string, idAppendix: string}|null} Function returning an object including the title and an appendix for the titles id to make it unique; may return null if no title is configured.
      */
     titleBySide: (_, getters) => side => {
@@ -120,25 +160,6 @@ const menuGetters = {
         if (side === "secondaryMenu" && getters.secondaryTitle) {
             return {...getters.secondaryTitle, idAppendix: side};
         }
-        return null;
-    },
-
-    /**
-     * @param {MenuState} _ Local vuex state (discarded).
-     * @param {Object} getters Local vuex getters.
-     * @returns {(function(path: Array): Object|null)} Function returning a section of the menu.
-     */
-    section: (_, getters) => path => {
-        if (getters[path[0]]) {
-            const section = idx(getters, path);
-
-            if (section === badPathSymbol) {
-                console.error(`Menu.getters.section: ${badPathSymbol.description} ${path}.`);
-                return null;
-            }
-            return section;
-        }
-        console.error(`Menu: The given menu ${path[0]} is not configured in the config.json.`);
         return null;
     }
 };

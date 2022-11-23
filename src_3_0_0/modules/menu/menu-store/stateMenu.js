@@ -1,6 +1,7 @@
 /**
  * Menu state definition.
  * @typedef {Object} MenuState
+ * @property {String} activeModuleMouseMapInteractions Module that has mouse map actions and is currently activated.
  * @property {Object} mainMenu the main menu settings.
  * @property {Boolean} mainMenu.expanded Specifies whether the main menu is opened.
  * @property {Object[]} mainMenu.sections The main menu sections.
@@ -13,6 +14,7 @@
  * @property {String} secondaryMenu.toggleButtonIcon The secondary menu toggle button icon.
  */
 export default {
+    activeModuleMouseMapInteractions: "GetFeatureInfo",
     mainMenu: {
         expanded: false,
         title: null,

@@ -3,7 +3,7 @@ import sinon from "sinon";
 import getters from "../../../store/gettersCoordToolkit";
 import toolKitState from "../../../store/stateCoordToolkit";
 
-describe("src/modules/tools/coordToolkit/store/gettersCoordToolkit.js", () => {
+describe("src_3_0_0/modules/coordToolkit/store/gettersCoordToolkit.js", () => {
     let stateCoord;
 
     describe("getters supplyCoord", () => {
@@ -96,6 +96,7 @@ describe("src/modules/tools/coordToolkit/store/gettersCoordToolkit.js", () => {
             expect(getters.coordinatesNorthing(state).value).to.be.equals(northing.value);
         });
     });
+
     describe("testing default values", () => {
         it("returns the name default value from state", () => {
             expect(getters.name(stateCoord)).to.be.equals("common:menu.tools.coordToolkit");
@@ -103,11 +104,8 @@ describe("src/modules/tools/coordToolkit/store/gettersCoordToolkit.js", () => {
         it("returns the icon default value from state", () => {
             expect(getters.icon(stateCoord)).to.equals("bi-globe");
         });
-        it("returns the deactivateGfi default value from state", () => {
-            expect(getters.deactivateGfi(stateCoord)).to.be.true;
-        });
-
     });
+
     describe("getters SearchByCoord", () => {
 
         describe("getEastingError", () => {

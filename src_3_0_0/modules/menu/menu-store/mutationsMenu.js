@@ -8,11 +8,11 @@ export default {
     /**
      * Adds a module state to a menu side section.
      * @param {Object} state the state
-     * @param {Object} moduleState State of a module.
+     * @param {Object} module Type of a module.
      * @returns {void}
      */
-    addModuleToMenuSection (state, moduleState) {
-        state[moduleState.menuSide].sections[0].push(moduleState);
+    addModuleToMenuSection (state, {side, module}) {
+        state[side].sections[0].push(module);
     },
 
     /**

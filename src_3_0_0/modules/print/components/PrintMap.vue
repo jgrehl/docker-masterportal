@@ -348,7 +348,10 @@ export default {
 </script>
 
 <template lang="html">
-    <div id="modules-print">
+    <div
+        v-if="active"
+        id="modules-print"
+    >
         <form
             id="printToolNew"
             class="form-horizontal"

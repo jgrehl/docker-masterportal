@@ -13,21 +13,10 @@ const actions = {
         // eslint-disable-next-line new-cap
         const {type} = rootGetters["Menu/objectFromPath"](side, "last");
 
-        if (type !== "folder") {
+        if (type && type !== "folder") {
             dispatch("Menu/setElementActive", {moduleNamespace: upperFirst(type), isActive: false}, {root: true});
         }
         Vue.nextTick(() => commit("removeLastEntry", side));
-    },
-
-    /**
-     * Resets one side of menu.
-     * @param {Object} param store context
-     * @param {Object} param.commit the commit
-     * @param {String} side The menu side to reset.
-     * @returns {void}
-     */
-    resetMenu ({commit}, side) {
-        commit("setEntry", side);
     }
 };
 

@@ -26,9 +26,10 @@ describe("src_3_0_0/modules/getFeatureInfo/components/GetFeatureInfoDetached.vue
         },
         mockGetters = {
             centerMapToClickPoint: () => sinon.stub(),
-            showMarker: () => sinon.stub(),
+            currentFeature: () => sinon.stub(),
+            menuSide: () => sinon.stub(),
             highlightVectorRules: () => highlightVectorRules,
-            currentFeature: () => sinon.stub()
+            showMarker: () => sinon.stub()
         },
         olFeature = new Feature({
             name: "feature123"
@@ -79,6 +80,13 @@ describe("src_3_0_0/modules/getFeatureInfo/components/GetFeatureInfoDetached.vue
                     actions: {
                         removePointMarker: sinon.stub(),
                         placingPointMarker: sinon.stub()
+                    }
+                },
+                Menu: {
+                    namespaced: true,
+                    actions: {
+                        activateMenuNavigation: sinon.stub(),
+                        resetMenu: sinon.stub()
                     }
                 }
             }
