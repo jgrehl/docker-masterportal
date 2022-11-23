@@ -18,6 +18,7 @@ export default {
             required: true
         }
     },
+    emits: ["hide"],
     data () {
         return {
             poiFeatures: []

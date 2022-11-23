@@ -82,6 +82,7 @@ export default {
             default: "offsetParent"
         }
     },
+    emits: ["endResizing", "leftScreen", "resizing", "startResizing"],
     data: () => ({
         deltaCursorPosition: {x: 0, y: 0}, // Cursor position difference during resizing, modified by rotation
         initialCursorPosition: {x: 0, y: 0},

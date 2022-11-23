@@ -3,6 +3,7 @@ build/
 dist/
 portalconfigs/
 scripte/
+src/
 jsdoc/
 lib/
 examples/
