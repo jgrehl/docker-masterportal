@@ -8,6 +8,7 @@ import source from "../js/measureSource";
  * @typedef {object} MeasureState
  * @property {boolean} active if true, Measure will rendered
  * @property {string} name displayed as title (config-param)
+ * @property {Boolean} hasMouseMapInteractions If this attribute is true, then all other modules will be deactivated when this attribute is also true. Only one module with this attribute true may be open at the same time, since conflicts can arise in the card interactions.
  * @property {string} icon icon next to title (config-param)
  * @property {number} earthRadius earth radius to assume for length/area calculations (config-param)
  * @property {string} measurementAccuracy indicates how accurately the measurement result is displayed for m and m².
@@ -35,11 +36,11 @@ const state = {
     active: false,
     // defaults for config.json tool parameters
     name: "common:menu.tools.measure",
+    hasMouseMapInteractions: true,
     icon: "bi-arrows-angle-expand",
     supportedDevices: ["Desktop", "Mobile", "Table"],
     supportedMapModes: ["2D"],
     type: "measure",
-    deactivateGfi: true,
 
     // tool-specific config.json parameters
     earthRadius: 6378137,
