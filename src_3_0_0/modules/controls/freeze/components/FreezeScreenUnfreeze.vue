@@ -6,6 +6,7 @@
  */
 export default {
     name: "FreezeScreenUnfreeze",
+    emits: ["hideFreezeWin"],
     mounted () {
         this.$nextTick(() => {
             if (this.$refs.unfreeze) {
