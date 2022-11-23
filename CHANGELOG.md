@@ -191,7 +191,7 @@
 ### __Breaking Changes__
 - The Virtual City Planner tool (virtualcityPLANNER) has been removed
 - new config.json parameter 'tree' added. Containes:
-  - 'type' (was 'treeType' at root before), the following params are possible: "auto" ( = old "default") or nothing
+  - 'type' (was 'treeType' at root before), the following params are possible: "auto" ( = old "default") or "light"
   - 'validLayerTypesAutoTree' (new parameter) only for tree type 'auto'
   - 'layerIDsToIgnore' (moved from config.js) only for tree type 'auto'
   - 'metaIDsToMerge' (moved from config.js) only for tree type 'auto'
@@ -205,6 +205,7 @@
     - The `gfi` module has been renamed to `getFeatureInfo` and is now configured at the top level in config.json/portalconfigs.
     - The menu side can be accessed under Portalconfig.getFeatureInfo.menuSide.
 - The `startTool` control has been renamed to `startModule`. Modules are now completely configured within the control.
+- Update from vue 2 to vue 3
 
 ### Added
 - GFI: nested object values can now be addressed from "gfiAttributes" by dot notation. See [services.json](https://bitbucket.org/geowerkstatt-hamburg/masterportal/src/dev/doc/services.json.md#markdown-header-gfi_attributes) .
@@ -302,6 +303,10 @@
 - treeType 'default': 3D-data can be configured in folders in config.json
 - FeatureLister:
   - The FeatureLister now works for layer-typ "WFS" and "GeoJSON".
+- The following NPM package was added:
+    - devDependencies:
+        - @vue/compiler-sfc
+        - i18next-vue
 - A new module `OpenConfig` has been implemented, which can be used to load a new configuration file (config.json) at runtime.
 - Modules can now have an attribute `hasMouseMapInteractions`. Only one module that has this attribute set to `true` can be open at the same time.
 
@@ -341,11 +346,27 @@
   - 'metaIDsToMerge'
   - 'metaIDsToIgnore'
   - 'layerIDsToStyle'
-- the Control-Bar Design
+- The Control-Bar Design
+- The following NPM packages have been updated:
+    - dependencies:
+        - @masterportal/masterportalapi: 2.8.0 to 2.9.0
+        - @popperjs/core: 2.11.5 to 2.11.6
+        - bootstrap: 5.2.0 to 5.2.2
+        - i18next-browser-languagedetector: 6.1.4 to 6.1.8
+        - i18next-http-backend: 1.4.1 to 1.4.5
+        - moment-timezone: 0.5.34 to 0.5.37
+        - vue: 2.7.8 to 3.1.0 
+        - vuex: 3.6.2 to 4.0.2
+    - devDependencies
+        - @masterportal/mpconfigparser: 1.3.0 to 1.3.1
+        - @vue/test-utils: 1.3.0 to 2.2.3
+        - mocha: 10.0.0 to 10.1.0
+        - vue-loader: 15.9.8 to 17.0.0
 
 ### Removed
 - The following NPM packages are removed:
     - dependencies
+        - @panter/vue-i18next
         - backbone
         - backbone.radio
         - bootstrap-colorpicker
@@ -356,6 +377,8 @@
         - rbush
         - rbush-knn
         - vcs-oblique
+        - vue-template-compiler
+        - vue2-datepicker
     - devDependencies:
         - eslint-plugin-backbone
         - eslint-plugin-you-dont-need-lodash-underscore
