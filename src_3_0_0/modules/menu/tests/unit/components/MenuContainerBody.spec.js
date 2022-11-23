@@ -1,22 +1,20 @@
-import Vuex from "vuex";
-import {config, shallowMount, createLocalVue} from "@vue/test-utils";
+import {createStore} from "vuex";
+import {config, shallowMount} from "@vue/test-utils";
 import MenuContainerBody from "../../../components/MenuContainerBody.vue";
 import {expect} from "chai";
 import MenuNavigation from "../../../navigation/components/MenuNavigation.vue";
 import MenuContainerBodyItems from "../../../components/MenuContainerBodyItems.vue";
 import sinon from "sinon";
 
-const localVue = createLocalVue();
-
-localVue.use(Vuex);
-config.mocks.$t = key => key;
+config.global.mocks.$t = key => key;
 
 describe("src_3_0_0/modules/menu/MenuContainerBody.vue", () => {
     let store;
     const sampleConfigObject = {name: "awesomeName"};
 
     beforeEach(() => {
-        store = new Vuex.Store({
+
+        store = createStore({
             namespaces: true,
             modules: {
                 Menu: {
@@ -61,9 +59,15 @@ describe("src_3_0_0/modules/menu/MenuContainerBody.vue", () => {
             }
         });
     });
+
     describe("mainMenu", () => {
         it("renders the component and it contains the MenuNavigation", () => {
-            const wrapper = shallowMount(MenuContainerBody, {store, localVue, propsData: {side: "mainMenu"}}),
+            const wrapper = shallowMount(MenuContainerBody, {
+                    global: {
+                        plugins: [store]
+                    },
+                    propsData: {side: "mainMenu"}
+                }),
                 mainMenuBodyWrapper = wrapper.find("#mp-body-mainMenu");
 
             expect(mainMenuBodyWrapper.exists()).to.be.true;
@@ -79,7 +83,12 @@ describe("src_3_0_0/modules/menu/MenuContainerBody.vue", () => {
                 store.commit("Menu/addTestMenuSection", [{}]);
             }
 
-            wrapper = shallowMount(MenuContainerBody, {store, localVue, propsData: {side: "mainMenu"}});
+            wrapper = shallowMount(MenuContainerBody, {
+                global: {
+                    plugins: [store]
+                },
+                propsData: {side: "mainMenu"}
+            });
             mainMenuBodyWrapper = wrapper.find("#mp-body-mainMenu");
 
             expect(mainMenuBodyWrapper.findAllComponents(MenuContainerBodyItems).length).to.be.equal(sectionCount);
@@ -87,7 +96,12 @@ describe("src_3_0_0/modules/menu/MenuContainerBody.vue", () => {
     });
     describe("secondaryMenu", () => {
         it("renders the component and it contains the MenuNavigation", () => {
-            const wrapper = shallowMount(MenuContainerBody, {store, localVue, propsData: {side: "secondaryMenu"}}),
+            const wrapper = shallowMount(MenuContainerBody, {
+                    global: {
+                        plugins: [store]
+                    },
+                    propsData: {side: "secondaryMenu"}
+                }),
                 mainMenuBodyWrapper = wrapper.find("#mp-body-secondaryMenu");
 
             expect(mainMenuBodyWrapper.exists()).to.be.true;
@@ -103,7 +117,12 @@ describe("src_3_0_0/modules/menu/MenuContainerBody.vue", () => {
                 store.commit("Menu/addTestMenuSection", [{}]);
             }
 
-            wrapper = shallowMount(MenuContainerBody, {store, localVue, propsData: {side: "secondaryMenu"}});
+            wrapper = shallowMount(MenuContainerBody, {
+                global: {
+                    plugins: [store]
+                },
+                propsData: {side: "secondaryMenu"}
+            });
             mainMenuBodyWrapper = wrapper.find("#mp-body-secondaryMenu");
 
             expect(mainMenuBodyWrapper.findAllComponents(MenuContainerBodyItems).length).to.be.equal(sectionCount);
