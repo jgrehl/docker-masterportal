@@ -39,7 +39,6 @@ export default {
     methods: {
         ...mapMutations("Modules/Routing", Object.keys(mutations)),
         ...mapActions("Modules/Routing", Object.keys(actions)),
-        ...mapActions("Modules/Alerting", ["addSingleAlert"]),
         /**
          * Changes the active tab
          * Will not change the tab if a batch process is running
