@@ -4,6 +4,7 @@ import mutations from "../../store/mutationsOrientation";
 
 export default {
     name: "PoiChoice",
+    emits: ["track"],
     computed: {
         ...mapGetters("Controls/Orientation", ["poiMode"]),
         choices () {
