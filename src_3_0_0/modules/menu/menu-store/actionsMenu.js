@@ -1,4 +1,4 @@
-import Vue from "vue";
+import {nextTick} from "vue";
 import upperFirst from "../../../shared/js/utils/upperFirst";
 
 export default {
@@ -62,10 +62,14 @@ export default {
         if (type) {
             commit("Menu/Navigation/addEntry", path, {root: true});
             if (type === "folder") {
-                Vue.nextTick(() => document.getElementById(`menu-offcanvas-body-items-element-0-${path[0]}`)?.focus());
+                nextTick(() => {
+                    document.getElementById(`menu-offcanvas-body-items-element-0-${path[0]}`)?.focus();
+                });
                 return;
             }
-            Vue.nextTick(() => dispatch("setElementActive", {moduleNamespace: upperFirst(type), isActive: true}));
+            nextTick(() => {
+                dispatch("setElementActive", {moduleNamespace: upperFirst(type), isActive: true});
+            });
             return;
         }
 
