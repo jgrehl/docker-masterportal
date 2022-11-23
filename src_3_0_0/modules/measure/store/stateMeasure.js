@@ -35,9 +35,11 @@ import source from "../js/measureSource";
 const state = {
     active: false,
     // defaults for config.json tool parameters
+    description: "",
     name: "common:menu.tools.measure",
     hasMouseMapInteractions: true,
     icon: "bi-arrows-angle-expand",
+    showDescription: false,
     supportedDevices: ["Desktop", "Mobile", "Table"],
     supportedMapModes: ["2D"],
     type: "measure",
