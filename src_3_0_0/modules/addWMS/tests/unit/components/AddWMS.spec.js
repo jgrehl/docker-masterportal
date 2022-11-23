@@ -1,13 +1,10 @@
-import Vuex from "vuex";
-import {config, createLocalVue, shallowMount} from "@vue/test-utils";
+import {createStore} from "vuex";
+import {config, shallowMount} from "@vue/test-utils";
 import {expect} from "chai";
 import AddWMSComponent from "../../../components/AddWMS.vue";
 import AddWMS from "../../../store/indexAddWMS";
 
-const localVue = createLocalVue();
-
-localVue.use(Vuex);
-config.mocks.$t = key => key;
+config.global.mocks.$t = key => key;
 
 describe("src/modules/addWMS/components/AddWMS.vue", () => {
     const
@@ -29,7 +26,7 @@ describe("src/modules/addWMS/components/AddWMS.vue", () => {
         componentData;
 
     beforeEach(() => {
-        store = new Vuex.Store({
+        store = createStore({
             namespaces: true,
             modules: {
                 Modules: {
@@ -58,15 +55,14 @@ describe("src/modules/addWMS/components/AddWMS.vue", () => {
         if (document.body) {
             document.body.appendChild(elem);
         }
-        wrapper = shallowMount(AddWMSComponent, {store, localVue, data: componentData, attachTo: elem});
+        wrapper = shallowMount(AddWMSComponent, {
+            global: {
+                plugins: [store]
+            },
+            data: componentData,
+            attachTo: elem
+        });
     });
-
-    afterEach(() => {
-        if (wrapper) {
-            wrapper.destroy();
-        }
-    });
-
 
     it("renders the AddWMS Module", () => {
         expect(wrapper.find("#addWMS").exists()).to.be.true;
