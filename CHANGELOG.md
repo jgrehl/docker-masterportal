@@ -17,12 +17,14 @@
 - controls: a control can only be configured in config.json as "expandable". "bottomControl" is not longer supported.
 - 'supportedTreeTypes': attribute was added like 'supportedDevices' and 'supportedMapModes' to make it configurable in which tree type the module should be displayed; default value is light.
 - getFeatureInfo: The `gfi` module has been renamed to `getFeatureInfo` and is now configured at the top level in config.json/portalconfigs.
+- The `startTool` control has been renamed to `startModule`. Modules are now completely configured within the control.
 
 ### Added
 - The following NPM package was added:
     - devDependencies:
         -@babel/plugin-transform-modules-commonjs
 - A new module `OpenConfig` has been implemented, which can be used to load a new configuration file (config.json) at runtime.
+- Modules can now have an attribute `hasMouseMapInteractions`. Only one module that has this attribute set to `true` can be open at the same time.
 
 ### Changed
 - Parameters moved from config.js to config.json:
