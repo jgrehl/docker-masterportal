@@ -15,21 +15,6 @@ import StaticImageSource from "ol/source/ImageStatic.js";
 
 
 const BuildSpecModel = {
-    defaults: {
-        uniqueIdList: [],
-        visibleLayerIds: null,
-        layout: null,
-        attributes: {
-            map: null,
-            title: "",
-            showLegend: false,
-            legend: "",
-            showGfi: false,
-            gfi: null,
-            scale: null
-        }
-    },
-
     /**
      * returns vector layer information
      * @param {ol.layer.Vector} layer vector layer with vector source
