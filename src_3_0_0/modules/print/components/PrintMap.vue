@@ -374,7 +374,7 @@ export default {
                     :placeholder="$t('modules.tools.print.titleLabel')"
                 />
             </div>
-            <div class="form-floating">
+            <div class="form-floating mb-3">
                 <select
                     id="printLayout"
                     class="form-select"
@@ -493,26 +493,20 @@ export default {
                     {{ $t("common:modules.tools.print.validationWarning") }}
                 </small>
             </div>
-            <div
-                class="form-group form-group-sm row"
-            >
+            <div class="form-check">
+                <input
+                    id="autoAdjustScale"
+                    type="checkbox"
+                    :checked="autoAdjustScale && !isScaleSelectedManually"
+                    class="form-check-input"
+                    @change="setAutoAdjustScale($event.target.checked)"
+                >
                 <label
-                    class="col-md-5 control-label"
+                    class="form-check-label"
                     for="autoAdjustScale"
                 >
                     {{ $t("common:modules.tools.print.autoAdjustScale") }}
                 </label>
-                <div class="col-sm-7">
-                    <div class="checkbox">
-                        <input
-                            id="autoAdjustScale"
-                            type="checkbox"
-                            :checked="autoAdjustScale && !isScaleSelectedManually"
-                            class="form-check-input"
-                            @change="setAutoAdjustScale($event.target.checked)"
-                        >
-                    </div>
-                </div>
             </div>
             <div
                 v-if="isGfiAvailable"
