@@ -28,7 +28,7 @@ export default {
         ...mapMutations("Modules/Routing/Isochrones", Object.keys(mutations)),
         ...mapMutations("Modules/Routing", ["setTaskHandler"]),
         ...mapActions("Modules/Routing/Isochrones", ["fetchIsochrones", "resetIsochronesResult"]),
-        ...mapActions("Modules/Alerting", ["addSingleAlert"]),
+        ...mapActions("Alerting", ["addSingleAlert"]),
         /**
          * Called when files are added by the user to process
          * loading animation is shown while processing and an error is shown to the user if something happens while processing

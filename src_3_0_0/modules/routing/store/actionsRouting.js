@@ -75,7 +75,7 @@ export default {
             });
         }
         catch (err) {
-            dispatch("Modules/Alerting/addSingleAlert", {
+            dispatch("Alerting/addSingleAlert", {
                 category: "error",
                 title: i18next.t("common:modules.alerting.categories.error"),
                 content: i18next.t("common:modules.tools.routing.errors.fetchingCoordinates")
