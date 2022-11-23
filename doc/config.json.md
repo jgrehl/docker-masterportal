@@ -708,7 +708,7 @@ Configuration of layerInformation.
 |freeze|no|Boolean|false|Whether a "lock view" button is shown. Within the `TABLE` style, this element is part of the tool window.|false|
 |backforward|no|**[backForward](#markdown-header-portalconfigcontrolsbackforward)**|false|_Deprecated in 3.0.0. Please use "backForward" instead._|false|
 |backForward|no|**[backForward](#markdown-header-portalconfigcontrolsbackforward)**|false|Shows buttons to jump to previous and next map views.|false|
-|startTool|no|**[startTool](#markdown-header-portalconfigcontrolsbackforward)**|false|Displays buttons for the configured tools. These can be used to open and close the respective tools.|false|
+|startModule|no|**[startModule](#markdown-header-portalconfigcontrolsbackforward)**|false|Displays buttons for the configured tools. These can be used to open and close the respective tools.|false|
 
 Controls can be configured to be expandable so they will not initially show up in the sidebar but if you click the button with the three dots. You need to add the object "expandable" to the controls configuration.
 
@@ -905,23 +905,44 @@ The attribute backForward may be of type boolean or object. If of type boolean, 
 
 ***
 
-#### Portalconfig.controls.startTool
+#### Portalconfig.controls.startModule
 
-The startTool attribute must be of type Object. A button is displayed for each configured tool, which can be used to open and close the respective tool. The requirement is that the tools are also configured under **[Tools](Portalconfig.menu.tools)**.
+The startModule attribute must be of type Object. A button is displayed for each configured module, which can be used to open and close the respective module. The requirement is that the modules are also configured under **[Tools](Portalconfig.menu.tools)**.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
-|tools|yes|String[]||Here you can configure the tools to which a button is to be attached..|false|
+|mainMenu|no|**[mainMenu](#markdown-header-portalconfigcontrolsstartmodulemainMenu)**||Here you can configure the modules for which a button should be displayed. These will be displayed in the `mainMenu` when opened.|false|
+|secondaryMenu|no|**[secondaryMenu](#markdown-header-portalconfigcontrolsstartmodulesecondaryMenu)**||Here you can configure the modules for which a button should be displayed. These will be displayed in the `secondaryMenu` when opened.|false|
 
-**Example startTool:**
+**Example startModule:**
 ```
 #!json
-"startTool": {
-    "tools": ["selectFeatures", "draw"]
+"startModule": {
+    "mainMenu": [
+        {
+            "type": "scaleSwitcher"
+        }
+    ],
+    "secondaryMenu": [
+        {
+            "type": "myModule"
+        }
+    ]
 }
 ```
 
 ***
+
+##### Portalconfig.controls.startModule.mainMenu
+Here you can configure the modules for which a button is to be displayed. These are displayed in the `mainMenu` when opened.
+
+***
+
+##### Portalconfig.controls.startModule.secondaryMenu
+Here you can configure the modules for which a button is to be displayed. These are displayed in the `secondaryMenu` when opened.
+
+***
+
 
 ### Portalconfig.portalTitle
 

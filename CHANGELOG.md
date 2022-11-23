@@ -202,6 +202,7 @@
 - controls: a control can only be configured in config.json as "expandable". "bottomControl" is not longer supported.
 - 'supportedTreeTypes': attribute was added like 'supportedDevices' and 'supportedMapModes' to make it configurable in which tree type the module should be displayed; default value is light.
 - getFeatureInfo: The `gfi` module has been renamed to `getFeatureInfo` and is now configured at the top level in config.json/portalconfigs.
+- The `startTool` control has been renamed to `startModule`. Modules are now completely configured within the control.
 
 ### Added
 - GFI: nested object values can now be addressed from "gfiAttributes" by dot notation. See [services.json](https://bitbucket.org/geowerkstatt-hamburg/masterportal/src/dev/doc/services.json.md#markdown-header-gfi_attributes) .
@@ -300,6 +301,7 @@
 - FeatureLister:
   - The FeatureLister now works for layer-typ "WFS" and "GeoJSON".
 - A new module `OpenConfig` has been implemented, which can be used to load a new configuration file (config.json) at runtime.
+- Modules can now have an attribute `hasMouseMapInteractions`. Only one module that has this attribute set to `true` can be open at the same time.
 
 ### Changed
 - Update GeoJSON, WFS, OAF getFeaturesFilterFunction filtert kann nach exakter Geometrie filtern.
