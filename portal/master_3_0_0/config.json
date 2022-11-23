@@ -13,13 +13,7 @@
       "startModule": {
         "secondaryMenu": [
           {
-            "type": "shareView"
-          }
-        ],
-        "mainMenu": [
-          {
-            "type": "scaleSwitcher",
-            "icon": "bi-folder-plus"
+            "type": "scaleSwitcher"
           }
         ]
       },
@@ -150,6 +144,9 @@
         [
           {
             "type": "measure"
+          },
+          {
+            "type": "shareView"
           },
           {
             "name": "folder1",
