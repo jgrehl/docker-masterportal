@@ -131,10 +131,16 @@ export default {
     /**
      * Gets the Gfi Information
      * @param {Object} param.commit the commit
+     * @param {Object} param.rootGetters the rootGetters
      * @returns {void}
      */
-    getGfiForPrint: function ({commit}) {
-        commit("setGfiForPrint", []);
+    getGfiForPrint: function ({commit, rootGetters}) {
+        if (rootGetters["Modules/GetFeatureInfo/currentFeature"] !== null) {
+            commit("setGfiForPrint", [rootGetters["Modules/GetFeatureInfo/currentFeature"].getMappedProperties(), rootGetters["Modules/GetFeatureInfo/currentFeature"].getTitle(), rootGetters["Maps/clickCoordinate"]]);
+        }
+        else {
+            commit("setGfiForPrint", []);
+        }
     },
 
     /**
