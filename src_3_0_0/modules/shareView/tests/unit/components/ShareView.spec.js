@@ -1,14 +1,11 @@
-import Vuex from "vuex";
-import {config, shallowMount, createLocalVue} from "@vue/test-utils";
+import {createStore} from "vuex";
+import {config, shallowMount} from "@vue/test-utils";
 import ShareViewComponent from "../../../components/ShareView.vue";
 import ShareView from "../../../store/indexShareView";
 import {expect} from "chai";
 import sinon from "sinon";
 
-const localVue = createLocalVue();
-
-localVue.use(Vuex);
-config.mocks.$t = key => key;
+config.global.mocks.$t = key => key;
 
 describe("src_3_0_0/modules/shareView/components/ShareView.vue", () => {
     const mockConfigJson = {
@@ -37,7 +34,7 @@ describe("src_3_0_0/modules/shareView/components/ShareView.vue", () => {
     beforeEach(() => {
         mapCollection.clear();
 
-        store = new Vuex.Store({
+        store = createStore({
             namespaces: true,
             modules: {
                 Modules: {
@@ -72,9 +69,6 @@ describe("src_3_0_0/modules/shareView/components/ShareView.vue", () => {
     });
 
     afterEach(() => {
-        if (wrapper) {
-            wrapper.destroy();
-        }
         sinon.restore();
     });
 
@@ -83,7 +77,10 @@ describe("src_3_0_0/modules/shareView/components/ShareView.vue", () => {
     });
 
     it("renders the shareView component", () => {
-        wrapper = shallowMount(ShareViewComponent, {store, localVue});
+        wrapper = shallowMount(ShareViewComponent, {
+            global: {
+                plugins: [store]
+            }});
 
         expect(wrapper.find("#share-view").exists()).to.be.true;
         expect(wrapper.find("#twitter-btn").exists()).to.be.true;
