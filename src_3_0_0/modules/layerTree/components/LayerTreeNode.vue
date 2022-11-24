@@ -49,6 +49,10 @@ export default {
             const layers = getNestedValues(this.conf, "Layer", "Ordner").flat(Infinity);
 
             return layers.find(layer => layer.visibility === true) !== undefined;
+        },
+        log (prefix, value) {
+           console.log(prefix, value);
+           return value;
         }
     }
 };
@@ -56,6 +60,7 @@ export default {
 
 <template>
     <div class="no-list">
+        <span>{{log("node",conf)}}</span>
         <li v-if="isFolder">
             <div
                 :class="{ bold: isLayerInFolderVisible(), 'folder': true }"
