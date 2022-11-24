@@ -19,11 +19,11 @@ export default {
         expanded: false,
         title: null,
         toggleButtonIcon: "bi-list",
-        sections: []
+        sections: [[]]
     },
     secondaryMenu: {
         expanded: false,
-        sections: [],
+        sections: [[]],
         title: null,
         toggleButtonIcon: "bi-tools"
     }
