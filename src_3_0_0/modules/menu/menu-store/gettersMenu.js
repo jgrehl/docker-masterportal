@@ -7,6 +7,7 @@ const menuGetters = {
     ...generateSimpleGetters(menuState),
 
     /**
+     * Returns all modules with the attribute alwaysActivated: true.
      * @param {MenuState} _ Local vuex state (discarded).
      * @param {MenuState} __ Local vuex getters (discarded).
      * @param {Object} rootState vuex rootState.
@@ -46,6 +47,7 @@ const menuGetters = {
     },
 
     /**
+     * Returns, if a module with attribute hasMouseMapInteractions will be deactivated.
      * @param {MenuState} state Local vuex state.
      * @param {Object} _ Local vuex getters (discarded).
      * @param {Object} __ vuex rootState (discarded).
