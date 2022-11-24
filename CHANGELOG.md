@@ -201,7 +201,9 @@
 - the attribute 'cache' on the layer is no longer taken into account with tree.type 'auto
 - controls: a control can only be configured in config.json as "expandable". "bottomControl" is not longer supported.
 - 'supportedTreeTypes': attribute was added like 'supportedDevices' and 'supportedMapModes' to make it configurable in which tree type the module should be displayed; default value is light.
-- getFeatureInfo: The `gfi` module has been renamed to `getFeatureInfo` and is now configured at the top level in config.json/portalconfigs.
+- getFeatureInfo:
+    - The `gfi` module has been renamed to `getFeatureInfo` and is now configured at the top level in config.json/portalconfigs.
+    - The menu side can be accessed under Portalconfig.getFeatureInfo.menuSide.
 - The `startTool` control has been renamed to `startModule`. Modules are now completely configured within the control.
 
 ### Added
