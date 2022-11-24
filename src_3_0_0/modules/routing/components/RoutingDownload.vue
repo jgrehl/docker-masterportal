@@ -225,7 +225,7 @@ export default {
         <div class="form-group form-group-sm">
             <div class="col-12 d-grid gap-2">
                 <button
-                    class="btn btn-sm"
+                    class="btn"
                     type="button"
                     :disabled="isDisabled"
                     @click="downloadResult()"
@@ -239,22 +239,3 @@ export default {
         </div>
     </div>
 </template>
-
-<style scoped>
-.d-flex {
-    display: flex;
-}
-.flex-column {
-    flex-direction: column;
-}
-.justify-content-between {
-    justify-content: space-between;
-}
-.align-self-center {
-    align-self: center;
-}
-
-.mb-2 {
-    margin-bottom: 0.5rem;
-}
-</style>

@@ -26,9 +26,3 @@ export default {
         </span>
     </label>
 </template>
-
-<style scoped>
-.pointer {
-    cursor: pointer;
-}
-</style>
