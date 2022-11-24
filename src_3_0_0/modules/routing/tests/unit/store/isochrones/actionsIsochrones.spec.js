@@ -76,6 +76,9 @@ describe("src/modules/routing/store/isochrones/actionsIsochrones.js", () => {
         rootState = {
             Maps: {
                 mode: "2D"
+            },
+            Modules: {
+                Routing: {}
             }
         };
 
