@@ -3,9 +3,7 @@
  * @typedef {Object} RoutingState
  * @property {Boolean} active If true, routing will rendered.
  * @property {String} type The type of the module.
-
  * @property {String} icon Icon next to title (config-param).
- * @property {Boolean} deactivateGFI The GFI will be disabled when opening this module if the attribute is true.
  * @property {String[]} supportedDevices Devices on which the module is displayed.
  * @property {String[]} supportedMapModes Map mode in which this module can be used.
 
@@ -26,7 +24,6 @@ const state = {
     // mandatory defaults for config.json parameters
     name: "common:menu.tools.routing",
     icon: "bi-signpost-2-fill",
-    deactivateGFI: false,
     supportedDevices: ["Desktop", "Mobile", "Table"],
     supportedMapModes: ["2D", "3D"],
 
