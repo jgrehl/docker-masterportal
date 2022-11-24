@@ -138,7 +138,7 @@ describe("src_3_0_0/modules/measure/components/MeasureInMap.vue", () => {
         expect(unitSelect.element.value).equals("1");
         expect(MeasureModule.mutations.setSelectedUnit.calledOnce).to.be.true;
 
-        // // no further draw interaction recreation should have happened
+        // no further draw interaction recreation should have happened
         expect(MeasureModule.actions.createDrawInteraction.calledOnce).to.be.true;
     });
 
