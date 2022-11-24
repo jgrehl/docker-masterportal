@@ -213,10 +213,9 @@ export default {
                 </span>
             </div>
         </div>
-
         <ul
             v-show="searchResults.length > 0 && isFocused"
-            class="dropdown-menu-search dropdown-menu-left"
+            class="list-group dropdown-menu-search dropdown-menu-left"
         >
             <li
                 v-for="(searchResult, index) of searchResults"
@@ -225,7 +224,7 @@ export default {
                 @mousedown="selectSearchResult(searchResult)"
             >
                 {{ searchResult.displayName }}
-            </li>
+            </li> -->
         </ul>
     </div>
 </template>
@@ -248,7 +247,15 @@ label {
     cursor: pointer;
 }
 
+li:hover {
+     cursor: pointer;
+     background: $light-grey;
+     font-size:$font-size-base;
+}
+
 .dropdown-menu-search {
+    height: 200px;
+    overflow: auto;
     width: 300px;
     top: unset;
     left: 20px;
