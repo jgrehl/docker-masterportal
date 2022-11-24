@@ -1,3 +1,24 @@
+/**
+ * User type definition
+ * @typedef {Object} RoutingState
+ * @property {Boolean} active If true, routing will rendered.
+ * @property {String} type The type of the module.
+
+ * @property {String} icon Icon next to title (config-param).
+ * @property {Boolean} deactivateGFI The GFI will be disabled when opening this module if the attribute is true.
+ * @property {String[]} supportedDevices Devices on which the module is displayed.
+ * @property {String[]} supportedMapModes Map mode in which this module can be used.
+
+ * @property {String} activeRoutingToolOption Navigation Parameter which raouting mode is actived from begin.
+ * @property {String[]} routingToolOptions routingToolOptions: ["DIRECTIONS", "ISOCHRONES"].
+ * @property {Object} taskHandler Used to keep Track of the current process of batchProcessing.
+ * @property {Object} download Download Parameter.
+ * @property {Object} geosearch Routing Geosearch Parameter. // type: "NOMINATIM", serviceId: "nominatim_suche" or type: "BKG",serviceId: "bkg_geosearch".
+ * @property {Object} geosearchReverse Routing GeosearchReverse Parameters.  // type: "NOMINATIM",serviceId: "nominatim_reverse"type: "BKG",serviceId: "bkg_geosearch".
+ * @property {Object} directionsSettings Routing Direction Parameters. // type: "ORS",serviceId: "bkg_ors".
+ * @property {Object} isochronesSettings Routing Isochrones Parameters. // type: "ORS",serviceId: "bkg_ors".
+*/
+
 const state = {
     // mandatory
     active: false,
@@ -5,53 +26,31 @@ const state = {
     // mandatory defaults for config.json parameters
     name: "common:menu.tools.routing",
     icon: "bi-signpost-2-fill",
-    renderToWindow: false,
-    resizableWindow: true,
-    isVisibleInMenu: true,
     deactivateGFI: false,
     supportedDevices: ["Desktop", "Mobile", "Table"],
     supportedMapModes: ["2D", "3D"],
 
     // Navigation Parameter
     activeRoutingToolOption: "DIRECTIONS",
-    // entries in config.json are only added and dont replace routingToolOptions
-    // Defaults are set in gettersRouting.js
     routingToolOptions: [],
-    // routingToolOptions: ["DIRECTIONS", "ISOCHRONES"],
-
-    // Used to keep Track of the current process of batchProcessing
     taskHandler: null,
-
-    // Download Parameter
     download: {
         fileName: "",
         format: "GEOJSON"
     },
-
-    // Routing Geosearch Parameter
     geosearch: {
         minChars: 3,
         limit: 10,
-        // type: "NOMINATIM",
-        // serviceId: "nominatim_suche"
-        // type: "BKG",
-        // serviceId: "bkg_geosearch"
         type: null,
         serviceId: null
     },
     geosearchReverse: {
-        // type: "NOMINATIM",
-        // serviceId: "nominatim_reverse"
-        // type: "BKG",
-        // serviceId: "bkg_geosearch"
         type: null,
         serviceId: null,
         distance: 1000,
         filter: null
     },
     directionsSettings: {
-        // type: "ORS",
-        // serviceId: "bkg_ors",
         type: null,
         serviceId: null,
         speedProfile: "CAR",
@@ -83,17 +82,13 @@ const state = {
             pointLineWidth: 4
         },
         batchProcessing: {
-            // If BatchProcessing should be displayed
             enabled: false,
-            // Is Checkbox checked?
             active: false,
             limit: 1000,
             maximumConcurrentRequests: 3
         }
     },
     isochronesSettings: {
-        // type: "ORS",
-        // serviceId: "bkg_ors",
         type: null,
         serviceId: null,
         speedProfile: "CAR",
@@ -101,11 +96,9 @@ const state = {
         distanceValue: 30,
         minDistance: 1,
         maxDistance: 400,
-        // Time
         timeValue: 30,
         minTime: 1,
         maxTime: 180,
-        // Interval
         intervalValue: 15,
         minInterval: 3,
         maxInterval: 30,
@@ -123,9 +116,7 @@ const state = {
             endColor: [245, 66, 66]
         },
         batchProcessing: {
-            // If BatchProcessing should be displayed
             enabled: false,
-            // Is Checkbox checked?
             active: false,
             limit: 1000,
             maximumConcurrentRequests: 3
