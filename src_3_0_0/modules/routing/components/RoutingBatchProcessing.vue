@@ -199,26 +199,6 @@ export default {
 
 <style lang="scss" scoped>
 @import "~variables";
-
-.d-flex {
-    display: flex;
-}
-.d-none {
-    display: none;
-}
-
-.flex-column {
-    flex-direction: column;
-}
-
-.mb-2 {
-    margin-bottom: 0.5rem;
-}
-
-.pointer {
-    cursor: pointer;
-}
-
 .bg-light-pink {
     background: #e8c9c9;
 }
