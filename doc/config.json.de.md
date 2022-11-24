@@ -874,12 +874,12 @@ Das Attribut startModule muss vom Typ Object sein. Es wird für jedes konfigurie
 ***
 
 ##### Portalconfig.controls.startModule.mainMenu
-Hier werden die Module zu denen jeweils ein Button angezeigt werden soll konfiguriert. Diese werden beim öffnen in dem `mainMenu` dargestellt.
+Hier werden die Module zu denen jeweils ein Button angezeigt werden soll konfiguriert. Diese werden beim Öffnen in dem `mainMenu` dargestellt.
 
 ***
 
 ##### Portalconfig.controls.startModule.secondaryMenu
-Hier werden die Module zu denen jeweils ein Button angezeigt werden soll konfiguriert. Diese werden beim öffnen in dem `secondaryMenu` dargestellt.
+Hier werden die Module zu denen jeweils ein Button angezeigt werden soll konfiguriert. Diese werden beim Öffnen in dem `secondaryMenu` dargestellt.
 
 ***
 
