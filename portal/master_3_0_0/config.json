@@ -118,44 +118,20 @@
             "zoomLevel": 7,
             "instances": [
               {
-                "title": "translate#common:menu.tools.parcelSearch",
-                "userHelp": "hide",
+                "title": "Hamburger Kindertagesstättensuche",
                 "requestConfig": {
-                  "gazetteer": {
-                    "namespaces": [
-                      "http://www.adv-online.de/namespaces/adv/dog",
-                      "http://geodienste.hamburg.de/dog_gages/services/wfs_dog?SERVICE=WFS&VERSION=2.0.0&REQUEST=DescribeFeatureType&OUTPUTFORMAT=application/gml+xml;+version=3.2&TYPENAME=dog:Flurstueckskoordinaten&NAMESPACES=xmlns(dog,http://www.adv-online.de/namespaces/adv/dog)"
-                    ],
-                    "memberSuffix": "member"
-                  },
-                  "restLayerId": "6",
-                  "storedQueryId": "Flurstueck"
+                  "layerId": "753"
                 },
-                "selectSource": "https://geodienste.hamburg.de/lgv-config/gemarkungen_hh.json",
+                "resultList": {
+                  "Ort": "Ort",
+                  "Name": "Name"
+                },
                 "literals": [
                   {
-                    "clause": {
-                      "type": "and",
-                      "literals": [
-                        {
-                          "field": {
-                            "queryType": "equal",
-                            "inputLabel": "common:modules.tools.wfsSearch.district",
-                            "fieldName": "gemarkung",
-                            "usesId": true,
-                            "options": "",
-                            "required": true
-                          }
-                        },
-                        {
-                          "field": {
-                            "queryType": "equal",
-                            "inputLabel": "common:modules.tools.wfsSearch.parcelNumber",
-                            "fieldName": "flurstuecksnummer",
-                            "required": true
-                          }
-                        }
-                      ]
+                    "field": {
+                      "queryType": "like",
+                      "inputLabel": "Name",
+                      "fieldName": "Name"
                     }
                   }
                 ]

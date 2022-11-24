@@ -122,7 +122,7 @@ export default {
             });
 
             if (this.instances[0]?.resultList !== undefined) {
-                document.getElementById("tool-wfsSearch-button-showResults").focus();
+                document.getElementById("module-wfsSearch-button-showResults").focus();
                 this.setShowResultList(true);
             }
             else if (features.length > 0) {
