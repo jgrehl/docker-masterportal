@@ -82,6 +82,9 @@ describe("src/modules/routing/store/directions/actionsDirections.js", () => {
         rootState = {
             Maps: {
                 mode: "2D"
+            },
+            Modules: {
+                Routing: {}
             }
         };
 
