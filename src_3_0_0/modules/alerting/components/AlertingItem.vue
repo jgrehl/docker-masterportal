@@ -284,7 +284,7 @@ export default {
                                     </h2>
                                 </div>
                                 <button
-                                    v-if="!checkCategory(singleAlert.category)"
+                                    v-if="!checkCategory(singleAlert.category) && alerts.length >1"
                                     type="button"
                                     class="btn btn-close btn-sm col-1 me-2"
                                     aria-label="Close"
