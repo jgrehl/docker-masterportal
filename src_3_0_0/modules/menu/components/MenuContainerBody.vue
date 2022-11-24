@@ -42,20 +42,11 @@ export default {
          * @returns {void}
          */
         componentsAlwaysActivated (components) {
-            components.forEach(component => {
-                const name = component.module.name,
-                    side = component.menuSide;
-
-                if (this[side].sections[0].find(module => module.type === name) === undefined) {
-                    this.addModuleToMenuSection({
-                        module: {
-                            type: name
-                        },
-                        side: side
-                    });
-                }
-            });
+            this.updateModuleInMenuSection(components);
         }
+    },
+    mounted () {
+        this.updateModuleInMenuSection(this.componentsAlwaysActivated);
     },
     methods: {
         ...mapMutations("Menu", ["addModuleToMenuSection"]),
@@ -66,6 +57,22 @@ export default {
          */
         path (sectionIndex) {
             return [this.side, "sections", sectionIndex];
+        },
+
+        updateModuleInMenuSection (components) {
+            components.forEach(component => {
+                const name = component.module.name,
+                    side = component.menuSide;
+
+                if (this[side].sections[0]?.find(module => module.type === name) === undefined) {
+                    this.addModuleToMenuSection({
+                        module: {
+                            type: name
+                        },
+                        side: side
+                    });
+                }
+            });
         }
     }
 };
