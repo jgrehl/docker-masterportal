@@ -1,5 +1,5 @@
 <script>
-import {mapGetters} from "vuex";
+import {createLogger, mapGetters} from "vuex";
 import LayerTreeNode from "./LayerTreeNode.vue";
 
 /**
@@ -12,6 +12,13 @@ export default {
     },
     computed: {
         ...mapGetters(["layerConfig"])
+    },
+    methods: {
+       
+        log (prefix, value) {
+           console.log(prefix, value);
+           return value;
+        }
     }
 };
 </script>
@@ -22,18 +29,19 @@ export default {
         class="layer-tree me-3"
     >
         <div
-            v-for="(layerConfigKey, i) in Object.keys(layerConfig)"
+            v-for="(layerConfigKey, i) in log('#',Object.keys(layerConfig))"
             :key="i"
         >
             <div
-                v-for="(subKey, ii) in Object.keys(layerConfig[layerConfigKey])"
+                v-for="(subKey, ii) in log('##',Object.keys(layerConfig[layerConfigKey]))"
                 :key="ii"
             >
                 <div
-                    v-for="(conf, iii) in layerConfig[layerConfigKey][subKey]"
+                    v-for="(conf, iii) in log('###',layerConfig[layerConfigKey][subKey])"
                     :key="iii"
                 >
                     <LayerTreeNode
+                        v-if="typeof conf !== 'string'"
                         :id="conf.id"
                         :conf="conf"
                     />
