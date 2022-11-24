@@ -8,7 +8,7 @@ import store from "../../../../app-store";
  * @returns {RoutingGeosearchResult[]} routingGeosearchResults
  */
 async function fetchRoutingBkgGeosearch (search) {
-    const serviceUrl = store.getters.getRestServiceById(state.geosearch.serviceId).url,
+    const serviceUrl = store.getters.restServiceById(state.geosearch.serviceId).url,
         url = `${serviceUrl}?count=${state.geosearch.limit}&properties=text`,
         parameter = `&query=${encodeURIComponent(search)}`,
         response = await axios.get(url + parameter);
