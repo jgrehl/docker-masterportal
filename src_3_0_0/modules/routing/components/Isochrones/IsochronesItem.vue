@@ -307,7 +307,7 @@ export default {
                         class="d-flex mb-2 ms-2"
                     >
                         <div
-                            class="legendecontainer px-2"
+                            class="legend-container px-2"
                             :style="{backgroundColor: area.getColorRgbString()}"
                         >
                             <span>{{ area.getDisplayValue() }}</span>
@@ -332,7 +332,7 @@ export default {
 .helptext {
     max-width: calc(350px - 3rem);
 }
-.legendecontainer {
+.legend-container {
     width: 56px;
     text-align: center;
 }
