@@ -17,24 +17,6 @@ localVue.use(Vuex);
 config.mocks.$t = key => key;
 
 describe("src/modules/routing/components/RoutingTemplate.vue", () => {
-    const mockConfigJson = {
-        configJson: {
-            Portalconfig: {
-                mainMenu: {
-                    sections: [
-                        [
-                            {
-                                "type": "routing",
-                                "name": "translate#common:menu.tools.routing",
-                                "icon": "bi-signpost-2-fill",
-                                "renderToWindow": true
-                            }
-                        ]
-                    ]
-                }
-            }
-        }
-    };
     let store,
         wrapper;
 
@@ -97,10 +79,16 @@ describe("src/modules/routing/components/RoutingTemplate.vue", () => {
             getters: {
                 uiStyle: () => ""
             },
-            state: {
-                configJson: mockConfigJson
-            }
+            state: state
         });
+        store.state.geosearch.type = "BKG";
+        store.state.geosearchReverse.serviceId = "1";
+        store.state.geosearchReverse.type = "BKG";
+        store.state.geosearch.serviceId = "1";
+        store.state.isochronesSettings.type = "ORS";
+        store.state.isochronesSettings.serviceId = "1";
+        store.state.directionsSettings.type = "ORS";
+        store.state.directionsSettings.serviceId = "1";
         store.commit("Modules/Routing/setActive", true);
     });
 
