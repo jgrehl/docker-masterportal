@@ -10,14 +10,10 @@ localVue.use(Vuex);
 config.mocks.$t = key => key;
 
 describe("src_3_0_0/modules/controls/startModule/components/StartModule.vue", () => {
-    let activateMenuNavigationSpy = sinon.spy(),
-        resetMenuSpy = sinon.spy(),
-        setActiveSpy = sinon.spy(),
+    let setActiveSpy = sinon.spy(),
         store;
 
     beforeEach(() => {
-        activateMenuNavigationSpy = sinon.spy();
-        resetMenuSpy = sinon.spy();
         setActiveSpy = sinon.spy();
 
         store = new Vuex.Store({
@@ -28,7 +24,12 @@ describe("src_3_0_0/modules/controls/startModule/components/StartModule.vue", ()
                     modules: {
                         StartModule: {
                             namespaced: true,
+                            actions: {
+                                setConfiguredModuleStates: sinon.stub(),
+                                onClick: sinon.stub()
+                            },
                             getters: {
+                                configuredModuleStates: () => [],
                                 mainMenu: () => [],
                                 secondaryMenu: () => [{
                                     type: "selectFeatures"
@@ -61,13 +62,6 @@ describe("src_3_0_0/modules/controls/startModule/components/StartModule.vue", ()
                             }
                         }
                     }
-                },
-                Menu: {
-                    namespaced: true,
-                    actions: {
-                        activateMenuNavigation: activateMenuNavigationSpy,
-                        resetMenu: resetMenuSpy
-                    }
                 }
             }
         });
@@ -82,68 +76,6 @@ describe("src_3_0_0/modules/controls/startModule/components/StartModule.vue", ()
             const wrapper = shallowMount(StartModuleComponent, {store, localVue});
 
             expect(wrapper.find("div#start-module-button").exists()).to.be.true;
-        });
-    });
-
-    describe("getValidToolStates", () => {
-        it("should return the valid modules", () => {
-            const wrapper = shallowMount(StartModuleComponent, {store, localVue});
-
-            expect(wrapper.vm.configuredModuleStates.length).equals(2);
-            expect(Object.keys(wrapper.vm.configuredModuleStates[0].state)).to.be.an("array").that.includes(
-                "name", "type", "alwaysActivated", "isVisibleInMenu", "menuSide"
-            );
-            expect(Object.keys(wrapper.vm.configuredModuleStates[1].state)).to.be.an("array").that.includes(
-                "name", "type", "alwaysActivated", "isVisibleInMenu", "menuSide"
-            );
-        });
-    });
-
-    describe("onClick", () => {
-        it("should reset meu and activate menu navigation, if module is active === false", () => {
-            const wrapper = shallowMount(StartModuleComponent, {store, localVue});
-
-            wrapper.vm.onClick({
-                active: false,
-                type: "selectFeatures"
-            }, "secondaryMenu");
-
-            expect(resetMenuSpy.calledOnce).to.be.true;
-            expect(resetMenuSpy.firstCall.args[1]).to.deep.equals({
-                side: "secondaryMenu",
-                module: {
-                    type: "SelectFeatures"
-                }
-            });
-            expect(activateMenuNavigationSpy.calledOnce).to.be.true;
-            expect(resetMenuSpy.firstCall.args[1]).to.deep.equals({
-                side: "secondaryMenu",
-                module: {
-                    type: "SelectFeatures"
-                }
-            });
-            expect(setActiveSpy.calledOnce).to.be.true;
-            expect(setActiveSpy.firstCall.args[1]).to.be.true;
-        });
-
-        it("should reset meu and don't activate menu navigation, if module is active === true", () => {
-            const wrapper = shallowMount(StartModuleComponent, {store, localVue});
-
-            wrapper.vm.onClick({
-                active: true,
-                type: "selectFeatures"
-            }, "secondaryMenu");
-
-            expect(resetMenuSpy.calledOnce).to.be.true;
-            expect(resetMenuSpy.firstCall.args[1]).to.deep.equals({
-                side: "secondaryMenu",
-                module: {
-                    type: "SelectFeatures"
-                }
-            });
-            expect(activateMenuNavigationSpy.notCalled).to.be.true;
-            expect(setActiveSpy.calledOnce).to.be.true;
-            expect(setActiveSpy.firstCall.args[1]).to.be.false;
         });
     });
 });
