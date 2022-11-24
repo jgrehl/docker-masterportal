@@ -107,17 +107,3 @@ export default {
         </div>
     </div>
 </template>
-
-<style scoped>
-
-.d-flex {
-    display: flex;
-}
-.flex-column {
-    flex-direction: column;
-}
-
-.pointer {
-    cursor: pointer;
-}
-</style>
