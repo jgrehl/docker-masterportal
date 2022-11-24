@@ -51,35 +51,37 @@ export default {
         if (search.length < state.geosearch.minChars) {
             return geosearchResults;
         }
-        try {
-            // Possible to change Geosearch by changing function depending on config
-            if (state.geosearch.type === "NOMINATIM") {
-                geosearchResults = await fetchRoutingNominatimGeosearch(search);
-            }
-            else if (state.geosearch.type === "BKG") {
-                geosearchResults = await fetchRoutingBkgGeosearch(search);
-            }
-            else {
-                throw new Error("Geosearch is not configured correctly.");
-            }
+        if (search.length > 0) {
+            try {
+                // Possible to change Geosearch by changing function depending on config
+                if (state.geosearch.type === "NOMINATIM") {
+                    geosearchResults = await fetchRoutingNominatimGeosearch(search);
+                }
+                else if (state.geosearch.type === "BKG") {
+                    geosearchResults = await fetchRoutingBkgGeosearch(search);
+                }
+                else {
+                    throw new Error("Geosearch is not configured correctly.");
+                }
 
-            // Transform WGS84 Coordinates to Local Projection
-            geosearchResults.forEach(async geosearchResult => {
-                const coordinatesLocal = await dispatch(
-                    "Modules/Routing/transformCoordinatesWgs84ToLocalProjection",
-                    [geosearchResult.getLng(), geosearchResult.getLat()],
-                    {root: true}
-                );
+                // Transform WGS84 Coordinates to Local Projection
+                geosearchResults.forEach(async geosearchResult => {
+                    const coordinatesLocal = await dispatch(
+                        "Modules/Routing/transformCoordinatesWgs84ToLocalProjection",
+                        [geosearchResult.getLng(), geosearchResult.getLat()],
+                        {root: true}
+                    );
 
-                geosearchResult.setCoordinates(coordinatesLocal);
-            });
-        }
-        catch (err) {
-            dispatch("Alerting/addSingleAlert", {
-                category: "error",
-                title: i18next.t("common:modules.alerting.categories.error"),
-                content: i18next.t("common:modules.tools.routing.errors.fetchingCoordinates")
-            }, {root: true});
+                    geosearchResult.setCoordinates(coordinatesLocal);
+                });
+            }
+            catch (err) {
+                dispatch("Alerting/addSingleAlert", {
+                    category: "error",
+                    title: i18next.t("common:modules.alerting.categories.error"),
+                    content: i18next.t("common:modules.tools.routing.errors.fetchingCoordinates")
+                }, {root: true});
+            }
         }
         return geosearchResults;
     },
