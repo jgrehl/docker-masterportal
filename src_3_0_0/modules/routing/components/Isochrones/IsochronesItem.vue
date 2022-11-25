@@ -1,6 +1,5 @@
 <script>
 import {mapGetters, mapActions, mapMutations} from "vuex";
-import getters from "../../store/isochrones/gettersIsochrones";
 import actions from "../../store/isochrones/actionsIsochrones";
 import mutations from "../../store/isochrones/mutationsIsochrones";
 import * as constants from "../../store/isochrones/constantsIsochrones";
@@ -30,7 +29,7 @@ export default {
         };
     },
     computed: {
-        ...mapGetters("Modules/Routing/Isochrones", Object.keys(getters)),
+        ...mapGetters("Modules/Routing/Isochrones", ["isInputDisabled", "isochronesPointDrawInteraction", "isochronesPointModifyInteraction", "waypoint", "routingIsochrones", "routingAvoidFeaturesOptions", "settings"]),
         ...mapGetters("Modules/Routing/", ["isochronesSettings"]),
         /**
          * Computed distance/time value for the current active slider
