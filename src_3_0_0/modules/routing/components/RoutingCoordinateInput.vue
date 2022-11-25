@@ -224,7 +224,7 @@ export default {
                 @mousedown="selectSearchResult(searchResult)"
             >
                 {{ searchResult.displayName }}
-            </li> -->
+            </li>
         </ul>
     </div>
 </template>
@@ -251,6 +251,11 @@ li:hover {
      cursor: pointer;
      background: $light-grey;
      font-size:$font-size-base;
+}
+
+.list-group {
+    position: absolute;
+    z-index: 999;
 }
 
 .dropdown-menu-search {
