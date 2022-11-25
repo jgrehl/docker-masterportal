@@ -1,6 +1,5 @@
 <script>
 import {mapActions, mapGetters, mapMutations} from "vuex";
-import mutations from "../../store/directions/mutationsDirections";
 import RoutingBatchProcessing from "../RoutingBatchProcessing.vue";
 import {RoutingTaskHandler} from "../../js/classes/routing-task-handler";
 
@@ -25,7 +24,7 @@ export default {
         ...mapGetters("Modules/Routing", ["taskHandler", "directionsSettings"])
     },
     methods: {
-        ...mapMutations("Modules/Routing/Directions", Object.keys(mutations)),
+        ...mapMutations("Modules/Routing/Directions", ["IsLoadingDirections", "taskHandler"]),
         ...mapMutations("Modules/Routing", ["setTaskHandler"]),
         ...mapActions("Modules/Routing/Directions", ["fetchDirections", "resetRoutingDirectionsResults"]),
         ...mapActions("Alerting", ["addSingleAlert"]),
