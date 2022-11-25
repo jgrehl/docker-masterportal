@@ -1,7 +1,5 @@
 <script>
 import {mapGetters, mapActions, mapMutations} from "vuex";
-import getters from "../store/gettersRouting";
-import actions from "../store/actionsRouting";
 import mutations from "../store/mutationsRouting";
 import * as constantsRouting from "../store/constantsRouting";
 import RoutingLoadingSpinner from "./RoutingLoadingSpinner.vue";
@@ -18,7 +16,7 @@ export default {
         };
     },
     computed: {
-        ...mapGetters("Modules/Routing", Object.keys(getters)),
+        ...mapGetters("Modules/Routing", ["active", "activeRoutingToolOption", "routingToolOptions", "taskHandler", "filteredRoutingToolOptions"]),
         ...mapGetters("Modules/Routing/Directions", ["isLoadingDirections"]),
         ...mapGetters("Modules/Routing/Isochrones", ["isLoadingIsochrones"]),
         /**
@@ -38,7 +36,7 @@ export default {
     },
     methods: {
         ...mapMutations("Modules/Routing", Object.keys(mutations)),
-        ...mapActions("Modules/Routing", Object.keys(actions)),
+        ...mapActions("Modules/Routing", ["initRouting"]),
         /**
          * Changes the active tab
          * Will not change the tab if a batch process is running
