@@ -199,6 +199,7 @@ export default {
                     :key="'module-wfsSearch-clause' + i"
                 >
                     <WfsSearchLiteral
+                        v-if="literal.field?.id"
                         :literal="literal"
                     />
                     <hr :key="'module-wfsSearch-clause-divider' + i">
