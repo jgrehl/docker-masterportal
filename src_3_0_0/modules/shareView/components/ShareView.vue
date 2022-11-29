@@ -2,7 +2,7 @@
 import {mapGetters, mapMutations} from "vuex";
 import mutations from "../store/mutationsShareView";
 import QRCode from "qrcode";
-import FlatButton from "../../../shared/components/FlatButton.vue";
+import FlatButton from "../../../shared/modules/buttons/components/FlatButton.vue";
 
 /**
  * Tool to share a view via link to twitter, facebook, qrCode or copy the link as well as any other app on mobile.
