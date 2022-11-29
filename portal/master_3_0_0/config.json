@@ -173,17 +173,19 @@
       "sections": [
         [
           {
-            "type": "measure",
-            "showDescription": true,
-            "description": "Miss eine Strecke oder Fläche."
-          },
-          {
             "type": "scaleSwitcher",
             "showDescription": true,
             "description": "Stelle den Maßstab um, ganz ohne zu scrollen."
           },
           {
-            "type": "shareView"
+            "type": "shareView",
+            "showDescription": true,
+            "description": "Teile einen Link zur Karte."
+          },
+          {
+            "type": "measure",
+            "showDescription": true,
+            "description": "Miss eine Strecke oder Fläche."
           },
           {
             "name": "folder1",
