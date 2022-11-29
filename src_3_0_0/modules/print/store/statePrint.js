@@ -2,9 +2,11 @@
  * Print Tool
  * @typedef {Object} PrintState
  * @property {Boolean} active if true, print tool will rendered
+ * @property {String} description The descritption that should be shown in the button in the right menu.
  * @property {String} filename output filename
  * @property {String} icon icon of the print
  * @property {String} name name of the print
+ * @property {Boolean} showDescription If true, description will be shown.
  * @property {String[]} supportedDevices Devices on which the module is displayed.
  * @property {String[]} supportedMapModes Map mode in which this module can be used.
  * @property {String} title title for the report
@@ -49,9 +51,11 @@
  */
 const state = {
     active: false,
+    description: "",
     filename: "report",
     icon: "bi-printer-fill",
     name: "common:menu.tools.print",
+    showDescription: false,
     supportedDevices: ["Desktop", "Table"],
     supportedMapModes: ["2D"],
     title: "PrintResult",
