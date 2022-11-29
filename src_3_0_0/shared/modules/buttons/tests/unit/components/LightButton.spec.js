@@ -2,11 +2,7 @@ import sinon from "sinon";
 import Vuex from "vuex";
 import {config, mount, createLocalVue} from "@vue/test-utils";
 import {expect} from "chai";
-<<<<<<<< HEAD:src_3_0_0/shared/modules/buttons/tests/unit/components/SimpleButton.spec.js
-import SimpleButton from "../../../components/SimpleButton.vue";
-========
-import LightButton from "../LightButton.vue";
->>>>>>>> 208a3029e8 (BG-3491 added all the buttons and tests):src_3_0_0/shared/modules/buttons/tests/unit/components/LightButton.spec.js
+import LightButton from "../../../components/LightButton.vue";
 
 const localVue = createLocalVue();
 
