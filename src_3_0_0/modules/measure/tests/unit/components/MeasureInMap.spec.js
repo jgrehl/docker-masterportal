@@ -104,7 +104,7 @@ describe("src_3_0_0/modules/measure/components/MeasureInMap.vue", () => {
         expect(wrapper.find("#measure-delete").exists()).to.be.true;
     });
 
-    it("select element interaction produces expected mutations, actions, and updates", async () => {
+    it("select element interaction produces expected mutations, actions, and updates", () => {
         wrapper = shallowMount(MeasureInMapComponent, {store, localVue});
         const geometrySelect = wrapper.find("#measure-tool-geometry-select"),
             unitSelect = wrapper.find("#measure-tool-unit-select");
@@ -117,7 +117,7 @@ describe("src_3_0_0/modules/measure/components/MeasureInMap.vue", () => {
             .and.not.to.contain("²");
 
 
-        await geometrySelect.trigger("change");
+        geometrySelect.trigger("change");
 
         Vue.nextTick(async () => {
             expect(MeasureModule.mutations.setSelectedGeometry.calledOnce).to.be.true;
@@ -134,7 +134,7 @@ describe("src_3_0_0/modules/measure/components/MeasureInMap.vue", () => {
         unitSelect.element.value = "1";
 
         unitSelect.trigger("change");
-        await wrapper.vm.$nextTick();
+        wrapper.vm.$nextTick();
         expect(unitSelect.element.value).equals("1");
         expect(MeasureModule.mutations.setSelectedUnit.calledOnce).to.be.true;
 
