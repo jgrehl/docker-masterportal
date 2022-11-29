@@ -2,7 +2,7 @@ import Vuex from "vuex";
 import {config, shallowMount, createLocalVue} from "@vue/test-utils";
 import MenuContainerBodyElement from "../../../components/MenuContainerBodyElement.vue";
 import {expect} from "chai";
-import LightButton from "../../../../../shared/components/LightButton.vue";
+import LightButton from "../../../../../shared/modules/buttons/components/LightButton.vue";
 
 const localVue = createLocalVue();
 

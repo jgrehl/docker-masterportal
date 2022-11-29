@@ -7,9 +7,11 @@ import source from "../js/measureSource";
  * Measure tool state definition.
  * @typedef {object} MeasureState
  * @property {boolean} active if true, Measure will rendered
+ * @property {String} description The descritption that should be shown in the button in the right menu.
  * @property {string} name displayed as title (config-param)
  * @property {Boolean} hasMouseMapInteractions If this attribute is true, then all other modules will be deactivated when this attribute is also true. Only one module with this attribute true may be open at the same time, since conflicts can arise in the card interactions.
  * @property {string} icon icon next to title (config-param)
+ * @property {Boolean} showDescription If true, description will be shown.
  * @property {number} earthRadius earth radius to assume for length/area calculations (config-param)
  * @property {string} measurementAccuracy indicates how accurately the measurement result is displayed for m and m².
  *                                        Options are "decimeter" for one decimal place. "meter" for no decimal place.

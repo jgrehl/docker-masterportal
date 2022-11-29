@@ -2,7 +2,7 @@ import sinon from "sinon";
 import Vuex from "vuex";
 import {config, mount, createLocalVue} from "@vue/test-utils";
 import {expect} from "chai";
-import FlatButton from "../FlatButton.vue";
+import FlatButton from "../../../components/FlatButton.vue";
 
 const localVue = createLocalVue();
 

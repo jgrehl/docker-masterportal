@@ -1,7 +1,7 @@
 <script>
 import {mapActions, mapGetters, mapMutations} from "vuex";
 import MeasureInMapTooltip from "./MeasureInMapTooltip.vue";
-import FlatButton from "../../../shared/components/FlatButton.vue";
+import FlatButton from "../../../shared/modules/buttons/components/FlatButton.vue";
 
 /**
  * Measurement tool to measure lines and areas in the map.
