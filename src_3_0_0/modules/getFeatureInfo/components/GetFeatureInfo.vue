@@ -221,7 +221,7 @@ export default {
 @import "~variables";
 
     .gfi {
-        color: $secondary_contrast;
+        color: $dark_blue;
     }
     .bold{
         font-weight: bold;
