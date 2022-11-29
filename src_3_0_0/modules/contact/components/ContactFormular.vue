@@ -1,7 +1,7 @@
 <script>
 import {mapActions, mapGetters, mapMutations} from "vuex";
 import ContactFormularInput from "./ContactFormularInput.vue";
-import FlatButton from "../../../shared/components/FlatButton.vue";
+import FlatButton from "../../../shared/modules/buttons/components/FlatButton.vue";
 
 export default {
     name: "ContactFormular",
