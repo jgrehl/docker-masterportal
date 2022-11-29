@@ -7,8 +7,8 @@ import {Vector} from "ol/layer.js";
 import mutations from "../store/mutationsPrint";
 import thousandsSeparator from "../../../shared/js/utils/thousandsSeparator";
 import getVisibleLayer from "../js/getVisibleLayer";
-import FlatButton from "../../../shared/components/FlatButton.vue";
-import InputText from "../../../shared/components/InputText.vue";
+import FlatButton from "../../../shared/modules/buttons/components/FlatButton.vue";
+import InputText from "../../../shared/modules/inputs/components/InputText.vue";
 
 /**
  * Tool to print a part of the map
