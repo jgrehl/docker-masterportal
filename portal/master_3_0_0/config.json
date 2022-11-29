@@ -54,6 +54,36 @@
             "zoomLevel": 5
           },
           {
+            "type": "routing",
+            "icon": "bi-signpost-2",
+            "geosearch": {
+              "type": "BKG",
+              "serviceId": "5"
+            },
+            "geosearchReverse": {
+              "type": "BKG",
+              "serviceId": "5"
+            },
+            "directionsSettings": {
+              "type": "ORS",
+              "serviceId": "bkg_ors",
+              "speedProfile": "CAR",
+              "batchProcessing": {
+                "enabled": false,
+                "active": false
+              }
+            },
+            "isochronesSettings": {
+              "type": "ORS",
+              "serviceId": "bkg_ors",
+              "speedProfile": "CAR",
+              "batchProcessing": {
+                "enabled": false,
+                "active": false
+              }
+            }
+          },
+          {
             "type": "openConfig"
           },
           {
