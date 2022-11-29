@@ -2,7 +2,7 @@ import sinon from "sinon";
 import Vuex from "vuex";
 import {config, mount, createLocalVue} from "@vue/test-utils";
 import {expect} from "chai";
-import InputText from "../InputText.vue";
+import InputText from "../../../components/InputText.vue";
 
 const localVue = createLocalVue();
 

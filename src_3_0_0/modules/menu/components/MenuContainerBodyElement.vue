@@ -1,7 +1,7 @@
 <script>
 import {mapActions, mapGetters} from "vuex";
 import isModuleVisible from "../../../shared/js/utils/isModuleVisible";
-import LightButton from "../../../shared/components/LightButton.vue";
+import LightButton from "../../../shared/modules/buttons/components/LightButton.vue";
 
 export default {
     name: "MenuContainerBodyElement",
