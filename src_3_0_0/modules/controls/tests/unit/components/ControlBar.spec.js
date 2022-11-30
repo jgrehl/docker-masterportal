@@ -40,7 +40,8 @@ describe("src_3_0_0/modules/controls/components/ControlBar.vue", () => {
             getters: {
                 controlsConfig: () => sinon.stub(),
                 deviceMode: sinon.stub(),
-                uiStyle: sinon.stub()
+                uiStyle: sinon.stub(),
+                portalConfig: sinon.stub()
             }
         });
     });
