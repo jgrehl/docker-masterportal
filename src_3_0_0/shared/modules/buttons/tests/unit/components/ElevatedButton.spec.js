@@ -1,13 +1,9 @@
 import sinon from "sinon";
-import Vuex from "vuex";
-import {config, mount, createLocalVue} from "@vue/test-utils";
+import {config, mount} from "@vue/test-utils";
 import {expect} from "chai";
 import ElevatedButton from "../../../components/ElevatedButton.vue";
 
-const localVue = createLocalVue();
-
-localVue.use(Vuex);
-config.mocks.$t = key => key;
+config.global.mocks.$t = key => key;
 
 describe("src_3_0_0/shared/components/ElevatedButton.vue", () => {
     let interactionSpy;
@@ -22,8 +18,7 @@ describe("src_3_0_0/shared/components/ElevatedButton.vue", () => {
         const iconString = "bi-list",
             text = "My super nice elevated Button",
             wrapper = mount(ElevatedButton, {
-                localVue,
-                propsData: {text, interaction: interactionSpy, icon: iconString}
+                props: {text, interaction: interactionSpy, icon: iconString}
             }),
             button = wrapper.find("button"),
             icon = button.find("i");

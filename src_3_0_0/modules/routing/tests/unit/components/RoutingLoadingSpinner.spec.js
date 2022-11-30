@@ -1,20 +1,17 @@
-import Vuex from "vuex";
+import {createStore} from "vuex";
 import {expect} from "chai";
 import sinon from "sinon";
-import {config, shallowMount, createLocalVue} from "@vue/test-utils";
+import {config, shallowMount} from "@vue/test-utils";
 import RoutingLoadingSpinnerComponent from "../../../components/RoutingLoadingSpinner.vue";
 
-const localVue = createLocalVue();
-
-localVue.use(Vuex);
-config.mocks.$t = key => key;
+config.global.mocks.$t = key => key;
 
 describe("src/modules/routing/components/RoutingLoadingSpinner.vue", () => {
     let store,
         wrapper;
 
     beforeEach(() => {
-        store = new Vuex.Store({
+        store = createStore({
             namespaced: true,
             modules: {
                 Modules: {
@@ -37,15 +34,14 @@ describe("src/modules/routing/components/RoutingLoadingSpinner.vue", () => {
     });
 
     afterEach(() => {
-        if (wrapper) {
-            wrapper.destroy();
-        }
+        sinon.restore();
     });
 
     it("renders RoutingLoadingSpinnerComponent", () => {
         wrapper = shallowMount(RoutingLoadingSpinnerComponent, {
-            store,
-            localVue
+            global: {
+                plugins: [store]
+            }
         });
         expect(wrapper.find(".spinner").exists()).to.be.true;
     });
