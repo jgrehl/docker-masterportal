@@ -13,7 +13,7 @@
       "startModule": {
         "secondaryMenu": [
           {
-            "type": "scaleSwitcher"
+            "type": "addWMS"
           }
         ]
       },
@@ -36,7 +36,7 @@
       "layerPillsAmount": 2
     },
     "mainMenu": {
-      "expanded": false,
+      "expanded": true,
       "title": {
         "text": "Master",
         "logo": "https://geodienste.hamburg.de/lgv-config/img/hh-logo.png",
@@ -112,9 +112,6 @@
             ]
           },
           {
-            "type": "addWMS"
-          },
-          {
             "name": "folder1",
             "icon": "bi-folder-plus",
             "type": "folder",
@@ -169,7 +166,7 @@
       ]
     },
     "secondaryMenu": {
-      "expanded": true,
+      "expanded": false,
       "sections": [
         [
           {
@@ -186,57 +183,6 @@
             "type": "measure",
             "showDescription": true,
             "description": "Miss eine Strecke oder Fläche."
-          },
-          {
-            "name": "folder1",
-            "icon": "bi-file-plus",
-            "type": "folder",
-            "elements": [
-              {
-                "name": "folder1_1",
-                "icon": "bi-file-plus",
-                "type": "folder",
-                "elements": [
-                  {
-                    "name": "folder1_1_1",
-                    "icon": "bi-file-plus",
-                    "type": "folder",
-                    "elements": []
-                  },
-                  {
-                    "name": "folder1_1_2",
-                    "icon": "bi-file-plus",
-                    "type": "folder",
-                    "elements": []
-                  }
-                ]
-              },
-              {
-                "name": "folder1_2",
-                "icon": "bi-file-plus",
-                "type": "folder",
-                "elements": []
-              }
-            ]
-          },
-          {
-            "name": "folder2",
-            "icon": "bi-file-plus",
-            "type": "folder",
-            "elements": [
-              {
-                "name": "folder2_1",
-                "icon": "bi-file-plus",
-                "type": "folder",
-                "elements": []
-              },
-              {
-                "name": "folder2_2",
-                "icon": "bi-file-plus",
-                "type": "folder",
-                "elements": []
-              }
-            ]
           }
         ]
       ]
@@ -396,7 +342,7 @@
           "id": "18106",
           "name": "Elektro Ladestandorte Hamburg",
           "typ": "SensorThings",
-          "visibility": true,
+          "visibility": false,
           "loadThingsOnlyInCurrentExtent": true
         },
         {
