@@ -240,6 +240,6 @@ export default {
         :structure-text="$t('common:modules.tools.routing.isochrones.batchProcessing.structure')"
         example-text="1;8.12;50.67"
         @filesadded="addFiles($event)"
-        @cancelProcess="taskHandler.cancelRun()"
+        @cancel-process="taskHandler.cancelRun()"
     />
 </template>

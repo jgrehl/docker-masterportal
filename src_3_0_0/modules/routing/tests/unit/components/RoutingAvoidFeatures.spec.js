@@ -1,13 +1,10 @@
-import Vuex from "vuex";
+import {createStore} from "vuex";
 import {expect} from "chai";
 import sinon from "sinon";
-import {config, shallowMount, createLocalVue} from "@vue/test-utils";
+import {config, shallowMount} from "@vue/test-utils";
 import RoutingAvoidFeaturesComponent from "../../../components/RoutingAvoidFeatures.vue";
 
-const localVue = createLocalVue();
-
-localVue.use(Vuex);
-config.mocks.$t = key => key;
+config.global.mocks.$t = key => key;
 
 describe("src/modules/routing/components/RoutingAvoidFeatures.vue", () => {
     let store,
@@ -25,7 +22,7 @@ describe("src/modules/routing/components/RoutingAvoidFeatures.vue", () => {
 
         mapCollection.clear();
         mapCollection.addMap(map, "ol", "2D");
-        store = new Vuex.Store({
+        store = createStore({
             namespaced: true,
             modules: {
             },
@@ -38,20 +35,20 @@ describe("src/modules/routing/components/RoutingAvoidFeatures.vue", () => {
         });
     });
 
+
     afterEach(() => {
-        if (wrapper) {
-            wrapper.destroy();
-        }
+        sinon.restore();
     });
 
     it("renders RoutingAvoidFeatures", () => {
         wrapper = shallowMount(RoutingAvoidFeaturesComponent, {
-            store,
-            localVue,
+            global: {
+                plugins: [store]
+            },
             data: () => ({
                 showAvoidFeatures: true
             }),
-            propsData: {
+            props: {
                 activeAvoidFeaturesOptions: [],
                 settings: {
                     speedProfile: "PKW"
@@ -63,12 +60,13 @@ describe("src/modules/routing/components/RoutingAvoidFeatures.vue", () => {
 
     it("renders RoutingAvoidFeaturesOptions", () => {
         wrapper = shallowMount(RoutingAvoidFeaturesComponent, {
-            store,
-            localVue,
+            global: {
+                plugins: [store]
+            },
             data: () => ({
                 showAvoidFeatures: true
             }),
-            propsData: {
+            props: {
                 activeAvoidFeaturesOptions: [],
                 settings: {
                     speedProfile: "PKW"
@@ -80,12 +78,13 @@ describe("src/modules/routing/components/RoutingAvoidFeatures.vue", () => {
 
     it("does not render RoutingAvoidFeaturesOptions", () => {
         wrapper = shallowMount(RoutingAvoidFeaturesComponent, {
-            store,
-            localVue,
+            global: {
+                plugins: [store]
+            },
             data: () => ({
                 showAvoidFeatures: false
             }),
-            propsData: {
+            props: {
                 activeAvoidFeaturesOptions: [],
                 settings: {
                     speedProfile: "PKW"
@@ -98,12 +97,13 @@ describe("src/modules/routing/components/RoutingAvoidFeatures.vue", () => {
 
     it("checks input checked", () => {
         wrapper = shallowMount(RoutingAvoidFeaturesComponent, {
-            store,
-            localVue,
+            global: {
+                plugins: [store]
+            },
             data: () => ({
                 showAvoidFeatures: true
             }),
-            propsData: {
+            props: {
                 activeAvoidFeaturesOptions: ["HIGHWAYS"],
                 settings: {
                     speedProfile: "CAR"
@@ -115,12 +115,13 @@ describe("src/modules/routing/components/RoutingAvoidFeatures.vue", () => {
 
     it("checks input not checked", () => {
         wrapper = shallowMount(RoutingAvoidFeaturesComponent, {
-            store,
-            localVue,
+            global: {
+                plugins: [store]
+            },
             data: () => ({
                 showAvoidFeatures: true
             }),
-            propsData: {
+            props: {
                 activeAvoidFeaturesOptions: [],
                 settings: {
                     speedProfile: "CAR"
@@ -132,12 +133,13 @@ describe("src/modules/routing/components/RoutingAvoidFeatures.vue", () => {
 
     it("checks input disabled", () => {
         wrapper = shallowMount(RoutingAvoidFeaturesComponent, {
-            store,
-            localVue,
+            global: {
+                plugins: [store]
+            },
             data: () => ({
                 showAvoidFeatures: true
             }),
-            propsData: {
+            props: {
                 activeAvoidFeaturesOptions: ["HIGHWAYS"],
                 settings: {
                     speedProfile: "CAR"
@@ -150,12 +152,13 @@ describe("src/modules/routing/components/RoutingAvoidFeatures.vue", () => {
 
     it("checks input not disabled", () => {
         wrapper = shallowMount(RoutingAvoidFeaturesComponent, {
-            store,
-            localVue,
+            global: {
+                plugins: [store]
+            },
             data: () => ({
                 showAvoidFeatures: true
             }),
-            propsData: {
+            props: {
                 activeAvoidFeaturesOptions: ["HIGHWAYS"],
                 settings: {
                     speedProfile: "CAR"
@@ -168,12 +171,13 @@ describe("src/modules/routing/components/RoutingAvoidFeatures.vue", () => {
 
     it("checks input emit on adding feature to be avoided", async () => {
         wrapper = shallowMount(RoutingAvoidFeaturesComponent, {
-            store,
-            localVue,
+            global: {
+                plugins: [store]
+            },
             data: () => ({
                 showAvoidFeatures: true
             }),
-            propsData: {
+            props: {
                 activeAvoidFeaturesOptions: [],
                 settings: {
                     speedProfile: "CAR"
@@ -191,12 +195,13 @@ describe("src/modules/routing/components/RoutingAvoidFeatures.vue", () => {
 
     it("checks input emit on removing feature to be avoided", async () => {
         wrapper = shallowMount(RoutingAvoidFeaturesComponent, {
-            store,
-            localVue,
+            global: {
+                plugins: [store]
+            },
             data: () => ({
                 showAvoidFeatures: true
             }),
-            propsData: {
+            props: {
                 activeAvoidFeaturesOptions: ["HIGHWAYS"],
                 settings: {
                     speedProfile: "CAR"

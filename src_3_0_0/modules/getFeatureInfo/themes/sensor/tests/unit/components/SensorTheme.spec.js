@@ -1,29 +1,29 @@
+import {createStore} from "vuex";
 import {expect} from "chai";
 import moment from "moment";
-import {shallowMount, createLocalVue} from "@vue/test-utils";
+import {config, shallowMount} from "@vue/test-utils";
 import sinon from "sinon";
-import Vuex from "vuex";
 
 import SensorTheme from "../../../components/SensorTheme.vue";
 import SensorChartsData from "../../../components/SensorThemeData.vue";
 import SensorChartsBarChart from "../../../components/SensorThemeBarChart.vue";
 
-const localVue = createLocalVue();
-
-localVue.use(Vuex);
+config.global.mocks.$t = key => key;
 
 describe("src_3_0_0/modules/getFeatureInfo/themes/senor/components/SensorTheme.vue", () => {
     let wrapper;
 
     beforeEach(() => {
         wrapper = shallowMount(SensorTheme, {
-            store: new Vuex.Store({
-                namespaced: true,
-                getters: {
-                    layerConfigById: () => sinon.stub()
-                }
-            }),
-            propsData: {
+            global: {
+                plugins: [createStore({
+                    namespaced: true,
+                    getters: {
+                        layerConfigById: () => sinon.stub()
+                    }
+                })]
+            },
+            props: {
                 feature: {
                     getMappedProperties: function () {
                         return {
@@ -52,10 +52,6 @@ describe("src_3_0_0/modules/getFeatureInfo/themes/senor/components/SensorTheme.v
                         return 456;
                     }
                 }
-            },
-            localVue,
-            mocks: {
-                $t: (msg) => msg
             }
         });
     });
@@ -81,13 +77,15 @@ describe("src_3_0_0/modules/getFeatureInfo/themes/senor/components/SensorTheme.v
 
     it("should return periodLength 3 and periodUnit 'month' for incorrect input data", () => {
         const wrapper1 = shallowMount(SensorTheme, {
-            store: new Vuex.Store({
-                namespaced: true,
-                getters: {
-                    layerConfigById: () => sinon.stub()
-                }
-            }),
-            propsData: {
+            global: {
+                plugins: [createStore({
+                    namespaced: true,
+                    getters: {
+                        layerConfigById: () => sinon.stub()
+                    }
+                })]
+            },
+            props: {
                 feature: {
                     getMappedProperties: function () {
                         return {
@@ -120,10 +118,6 @@ describe("src_3_0_0/modules/getFeatureInfo/themes/senor/components/SensorTheme.v
                         return 456;
                     }
                 }
-            },
-            localVue,
-            mocks: {
-                $t: (msg) => msg
             }
         });
 
@@ -133,13 +127,15 @@ describe("src_3_0_0/modules/getFeatureInfo/themes/senor/components/SensorTheme.v
 
     it("should return periodLength 10 and periodUnit 'year' for these configured data", () => {
         const wrapper2 = shallowMount(SensorTheme, {
-            store: new Vuex.Store({
-                namespaced: true,
-                getters: {
-                    layerConfigById: () => sinon.stub()
-                }
-            }),
-            propsData: {
+            global: {
+                plugins: [createStore({
+                    namespaced: true,
+                    getters: {
+                        layerConfigById: () => sinon.stub()
+                    }
+                })]
+            },
+            props: {
                 feature: {
                     getMappedProperties: function () {
                         return {
@@ -172,10 +168,6 @@ describe("src_3_0_0/modules/getFeatureInfo/themes/senor/components/SensorTheme.v
                         return 456;
                     }
                 }
-            },
-            localVue,
-            mocks: {
-                $t: (msg) => msg
             }
         });
 
@@ -190,13 +182,13 @@ describe("src_3_0_0/modules/getFeatureInfo/themes/senor/components/SensorTheme.v
 
     it("should render div > div with class 'sensor-text' if header is exists", () => {
         expect(wrapper.find("div > div").exists()).to.be.true;
-        expect(wrapper.find("div > div").classes("sensor-text")).to.be.true;
+        expect(wrapper.findAll("div > div")[1].classes("sensor-text")).to.be.true;
     });
 
     it("should render the header", () => {
-        expect(wrapper.findAll("div > div > strong").wrappers[0].text()).equals("common:modules.tools.gfi.themes.sensor.sensor.header.name: Name");
-        expect(wrapper.findAll("div > div > strong").wrappers[1].text()).equals("common:modules.tools.gfi.themes.sensor.sensor.header.description: Beschreibung");
-        expect(wrapper.findAll("div > div > strong").wrappers[2].text()).equals("common:modules.tools.gfi.themes.sensor.sensor.header.ownerThing: Eigentümer");
+        expect(wrapper.findAll("div > div > strong")[0].text()).equals("common:modules.tools.gfi.themes.sensor.sensor.header.name: Name");
+        expect(wrapper.findAll("div > div > strong")[1].text()).equals("common:modules.tools.gfi.themes.sensor.sensor.header.description: Beschreibung");
+        expect(wrapper.findAll("div > div > strong")[2].text()).equals("common:modules.tools.gfi.themes.sensor.sensor.header.ownerThing: Eigentümer");
     });
 
     it("should render a menulist (div > div > ul) with class 'nav nav-pills'", () => {
@@ -211,22 +203,24 @@ describe("src_3_0_0/modules/getFeatureInfo/themes/senor/components/SensorTheme.v
     });
 
     it("should render the four tabs in menulist for chart values configured as array", () => {
-        expect(wrapper.findAll("div > div > ul > li > a").wrappers.length).equals(4);
-        expect(wrapper.findAll("div > div > ul > li > a").wrappers[0].text()).equals("common:modules.tools.gfi.themes.sensor.sensor.dataName");
-        expect(wrapper.findAll("div > div > ul > li > a").wrappers[1].text()).equals("available");
-        expect(wrapper.findAll("div > div > ul > li > a").wrappers[2].text()).equals("charging");
-        expect(wrapper.findAll("div > div > ul > li > a").wrappers[3].text()).equals("outoforder");
+        expect(wrapper.findAll("div > div > ul > li > a").length).equals(4);
+        expect(wrapper.findAll("div > div > ul > li > a")[0].text()).equals("common:modules.tools.gfi.themes.sensor.sensor.dataName");
+        expect(wrapper.findAll("div > div > ul > li > a")[1].text()).equals("available");
+        expect(wrapper.findAll("div > div > ul > li > a")[2].text()).equals("charging");
+        expect(wrapper.findAll("div > div > ul > li > a")[3].text()).equals("outoforder");
     });
 
     it("should render the 4 tabs in menulist for chart values and data configured as object", () => {
         const wrapper1 = shallowMount(SensorTheme, {
-            store: new Vuex.Store({
-                namespaced: true,
-                getters: {
-                    layerConfigById: () => sinon.stub()
-                }
-            }),
-            propsData: {
+            global: {
+                plugins: [createStore({
+                    namespaced: true,
+                    getters: {
+                        layerConfigById: () => sinon.stub()
+                    }
+                })]
+            },
+            props: {
                 feature: {
                     getMappedProperties: function () {
                         return {
@@ -271,56 +265,52 @@ describe("src_3_0_0/modules/getFeatureInfo/themes/senor/components/SensorTheme.v
                         return 456;
                     }
                 }
-            },
-            localVue,
-            mocks: {
-                $t: (msg) => msg
             }
         });
 
-        expect(wrapper1.findAll("div > div > ul > li > a").wrappers.length).equals(4);
-        expect(wrapper1.findAll("div > div > ul > li > a").wrappers[0].text()).equals("Daten");
-        expect(wrapper1.findAll("div > div > ul > li > a").wrappers[1].text()).equals("Verfügbar");
-        expect(wrapper1.findAll("div > div > ul > li > a").wrappers[2].text()).equals("Auslastung");
-        expect(wrapper1.findAll("div > div > ul > li > a").wrappers[3].text()).equals("Außer Betrieb");
+        expect(wrapper1.findAll("div > div > ul > li > a").length).equals(4);
+        expect(wrapper1.findAll("div > div > ul > li > a")[0].text()).equals("Daten");
+        expect(wrapper1.findAll("div > div > ul > li > a")[1].text()).equals("Verfügbar");
+        expect(wrapper1.findAll("div > div > ul > li > a")[2].text()).equals("Auslastung");
+        expect(wrapper1.findAll("div > div > ul > li > a")[3].text()).equals("Außer Betrieb");
     });
 
     it("should render 4 components => 1 SensorChartsData and 3 SensorChartsBarChart", () => {
-        expect(wrapper.findAllComponents(SensorChartsData).wrappers.length).equals(1);
-        expect(wrapper.findAllComponents(SensorChartsBarChart).wrappers.length).equals(3);
+        expect(wrapper.findAllComponents(SensorChartsData).length).equals(1);
+        expect(wrapper.findAllComponents(SensorChartsBarChart).length).equals(3);
     });
 
     it("should only data tab is active and the other tabs disabled by default", () => {
-        expect(wrapper.findAll("div > div > ul > li").wrappers[0].find("a").classes("active")).to.be.true;
-        expect(wrapper.findAll("div > div > ul > li").wrappers[0].classes("disabled")).to.be.false;
-        expect(wrapper.findAll("div > div > ul > li").wrappers[1].find("a").classes("active")).to.be.false;
-        expect(wrapper.findAll("div > div > ul > li").wrappers[1].classes("disabled")).to.be.true;
-        expect(wrapper.findAll("div > div > ul > li").wrappers[2].find("a").classes("active")).to.be.false;
-        expect(wrapper.findAll("div > div > ul > li").wrappers[2].classes("disabled")).to.be.true;
-        expect(wrapper.findAll("div > div > ul > li").wrappers[3].find("a").classes("active")).to.be.false;
-        expect(wrapper.findAll("div > div > ul > li").wrappers[3].classes("disabled")).to.be.true;
+        expect(wrapper.findAll("div > div > ul > li")[0].find("a").classes("active")).to.be.true;
+        expect(wrapper.findAll("div > div > ul > li")[0].classes("disabled")).to.be.false;
+        expect(wrapper.findAll("div > div > ul > li")[1].find("a").classes("active")).to.be.false;
+        expect(wrapper.findAll("div > div > ul > li")[1].classes("disabled")).to.be.true;
+        expect(wrapper.findAll("div > div > ul > li")[2].find("a").classes("active")).to.be.false;
+        expect(wrapper.findAll("div > div > ul > li")[2].classes("disabled")).to.be.true;
+        expect(wrapper.findAll("div > div > ul > li")[3].find("a").classes("active")).to.be.false;
+        expect(wrapper.findAll("div > div > ul > li")[3].classes("disabled")).to.be.true;
     });
 
     it("should only data tab is active and the other tabs are not disabled if processedHistoricalDataByWeekday is not empty", async () => {
         await wrapper.setData({processedHistoricalDataByWeekday: [1, 2, 3]});
 
-        expect(wrapper.findAll("div > div > ul > li").wrappers[0].find("a").classes("active")).to.be.true;
-        expect(wrapper.findAll("div > div > ul > li").wrappers[0].classes("disabled")).to.be.false;
-        expect(wrapper.findAll("div > div > ul > li").wrappers[1].find("a").classes("active")).to.be.false;
-        expect(wrapper.findAll("div > div > ul > li").wrappers[1].classes("disabled")).to.be.false;
-        expect(wrapper.findAll("div > div > ul > li").wrappers[2].find("a").classes("active")).to.be.false;
-        expect(wrapper.findAll("div > div > ul > li").wrappers[2].classes("disabled")).to.be.false;
-        expect(wrapper.findAll("div > div > ul > li").wrappers[3].find("a").classes("active")).to.be.false;
-        expect(wrapper.findAll("div > div > ul > li").wrappers[3].classes("disabled")).to.be.false;
+        expect(wrapper.findAll("div > div > ul > li")[0].find("a").classes("active")).to.be.true;
+        expect(wrapper.findAll("div > div > ul > li")[0].classes("disabled")).to.be.false;
+        expect(wrapper.findAll("div > div > ul > li")[1].find("a").classes("active")).to.be.false;
+        expect(wrapper.findAll("div > div > ul > li")[1].classes("disabled")).to.be.false;
+        expect(wrapper.findAll("div > div > ul > li")[2].find("a").classes("active")).to.be.false;
+        expect(wrapper.findAll("div > div > ul > li")[2].classes("disabled")).to.be.false;
+        expect(wrapper.findAll("div > div > ul > li")[3].find("a").classes("active")).to.be.false;
+        expect(wrapper.findAll("div > div > ul > li")[3].classes("disabled")).to.be.false;
     });
 
     it("should activate charging tab by click it", async () => {
         await wrapper.setData({processedHistoricalDataByWeekday: [1, 2, 3]});
-        await wrapper.findAll("div > div > ul > li > a").wrappers[2].trigger("click");
+        await wrapper.findAll("div > div > ul > li > a")[2].trigger("click");
 
-        expect(wrapper.findAll("div > div > ul > li").wrappers[0].find("a").classes("active")).to.be.false;
-        expect(wrapper.findAll("div > div > ul > li").wrappers[1].find("a").classes("active")).to.be.false;
-        expect(wrapper.findAll("div > div > ul > li").wrappers[2].find("a").classes("active")).to.be.true;
-        expect(wrapper.findAll("div > div > ul > li").wrappers[3].find("a").classes("active")).to.be.false;
+        expect(wrapper.findAll("div > div > ul > li")[0].find("a").classes("active")).to.be.false;
+        expect(wrapper.findAll("div > div > ul > li")[1].find("a").classes("active")).to.be.false;
+        expect(wrapper.findAll("div > div > ul > li")[2].find("a").classes("active")).to.be.true;
+        expect(wrapper.findAll("div > div > ul > li")[3].find("a").classes("active")).to.be.false;
     });
 });

@@ -30,7 +30,7 @@ export default {
     async created () {
         await this.initRouting();
     },
-    destroyed () {
+    unmounted () {
         store.dispatch("Modules/Routing/Isochrones/closeIsochrones");
         store.dispatch("Modules/Routing/Directions/closeDirections");
     },
