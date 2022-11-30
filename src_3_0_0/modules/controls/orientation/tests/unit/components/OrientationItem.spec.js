@@ -8,6 +8,9 @@ config.global.mocks.$t = key => key;
 
 describe("src_3_0_0/modules/controls/orientation/components/OrientationItem.vue", () => {
     let store;
+    const mockAlertingActions = {
+        addSingleAlert: sinon.stub()
+    };
 
     beforeEach(() => {
         store = createStore({
@@ -32,6 +35,11 @@ describe("src_3_0_0/modules/controls/orientation/components/OrientationItem.vue"
                             }
                         }
                     }
+                },
+                Alerting: {
+                    namespaced: true,
+                    actions: mockAlertingActions
+
                 }
             },
             getters: {
