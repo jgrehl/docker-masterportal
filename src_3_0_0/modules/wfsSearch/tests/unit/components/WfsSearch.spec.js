@@ -14,11 +14,18 @@ config.mocks.$t = key => key;
 
 describe("src/modules/wfsSearch/components/WfsSearch.vue", () => {
     const arbitraryFeature = {
-        getGeometryName: () => "Klein bottle"
-    };
+            getGeometryName: () => "Klein bottle"
+        },
+        mockMapMarkerActions = {
+            removePointMarker: sinon.stub()
+        },
+        mockAlertingActions = {
+            addSingleAlert: sinon.stub()
+        };
 
     let instances,
-        store;
+        store,
+        layer;
 
     beforeEach(() => {
         const map = {
@@ -32,9 +39,23 @@ describe("src/modules/wfsSearch/components/WfsSearch.vue", () => {
 
         instances = [{
             title: "Test WfsSearch",
-            resultList: {},
-            literals: [{}]
+            requestConfig: {
+                layerId: "753"
+            },
+            resultList: {
+                "Ort": "Ort",
+                "Name": "Name"
+            },
+            literals: [{field: {
+                id: "fieldId",
+                queryType: "like",
+                inputLabel: "Name",
+                fieldName: "Name"
+            }}]
         }];
+        layer = {
+            id: "753"
+        };
         store = new Vuex.Store({
             namespaces: true,
             modules: {
@@ -45,6 +66,15 @@ describe("src/modules/wfsSearch/components/WfsSearch.vue", () => {
                         WfsSearch: WfsSearchModule
                     }
                 },
+                MapMarker: {
+                    namespaced: true,
+                    actions: mockMapMarkerActions
+                },
+                Alerting: {
+                    namespaced: true,
+                    actions: mockAlertingActions
+
+                },
                 Language: {
                     namespaced: true,
                     getters: {
@@ -53,14 +83,14 @@ describe("src/modules/wfsSearch/components/WfsSearch.vue", () => {
                 }
             },
             getters: {
-                uiStyle: sinon.stub()
+                uiStyle: sinon.stub(),
+                layerConfigById: () => () => layer
             }
         });
-        store.commit("Modules/WfsSearch/setActive", true);
     });
     afterEach(sinon.restore);
 
-    it("renders a literal", () => {
+    it("renders a literal", async () => {
         store.commit("Modules/WfsSearch/setInstances", instances);
         const wrapper = mount(WfsSearch, {
             localVue,
@@ -70,7 +100,17 @@ describe("src/modules/wfsSearch/components/WfsSearch.vue", () => {
         expect(wrapper.findComponent(WfsSearchLiteral).exists()).to.be.true;
     });
     it("renders multiple literals if configured", () => {
-        instances[0].literals.push({}, {});
+        instances[0].literals.push({field: {
+            id: "fieldId2",
+            queryType: "like",
+            inputLabel: "Name2",
+            fieldName: "Name2"
+        }}, {field: {
+            id: "fieldId3",
+            queryType: "like",
+            inputLabel: "Name3",
+            fieldName: "Name3"
+        }});
         store.commit("Modules/WfsSearch/setInstances", instances);
         const wrapper = mount(WfsSearch, {
             localVue,
@@ -128,19 +168,26 @@ describe("src/modules/wfsSearch/components/WfsSearch.vue", () => {
         expect(searchInput.element.value).to.equal("common:modules.tools.wfsSearch.searchButton");
         expect(searchInput.element.type).to.equal("submit");
     });
-    it("renders a clickable button to show the search results if the user searched and results were found", () => {
-        store.commit("Modules/WfsSearch/setSearched", true);
-        store.commit("Modules/WfsSearch/setResults", [{}]);
+    it.only("renders a clickable button to show the search results if the user searched and results were found", async () => {
+        store.commit("Modules/WfsSearch/setResults", [{Ort: "Hamburg", Name: "KiTa Rübennasen"}]);
         store.commit("Modules/WfsSearch/setInstances", instances);
-        const wrapper = mount(WfsSearch, {
-                localVue,
-                store
-            }),
-            searchButton = wrapper.find("#module-wfsSearch-button-showResults");
 
-        expect(searchButton.exists()).to.be.true;
-        expect(searchButton.text()).to.equal("common:modules.tools.wfsSearch.showResults (1)");
-        expect(searchButton.element.disabled).to.be.false;
+        const wrapper = mount(WfsSearch, {
+            localVue,
+            store
+        });
+        let showResultsButton = null;
+
+        store.commit("Modules/WfsSearch/setSearched", true);
+        await wrapper.vm.$nextTick();
+        showResultsButton = wrapper.find("#module-wfsSearch-button-showResults");
+        showResultsButton.element.disabled = false;
+
+        console.log("******", showResultsButton.element.disabled);
+
+        // expect(showResultsButton.exists()).to.be.true;
+        // expect(showResultsButton.text()).to.equal("common:modules.tools.wfsSearch.showResults (1)");
+        expect(showResultsButton.element.disabled).to.be.false;
     });
     it("renders a disabled button if the user searched and no results were found", () => {
         store.commit("Modules/WfsSearch/setSearched", true);
