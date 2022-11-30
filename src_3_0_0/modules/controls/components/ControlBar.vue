@@ -116,7 +116,7 @@ export default {
                 supportedDevices = this.$store.getters[`Controls/${upperFirst(key)}/supportedDevices`],
                 supportedTreeTypes = this.$store.getters[`Controls/${upperFirst(key)}/supportedTreeTypes`];
 
-            return isModuleVisible(this.mode, this.deviceMode, this.portalConfig.tree?.type, supportedMapModes, supportedDevices, supportedTreeTypes);
+            return isModuleVisible(this.mode, this.deviceMode, this.portalConfig?.tree?.type, supportedMapModes, supportedDevices, supportedTreeTypes);
         }
     }
 };
