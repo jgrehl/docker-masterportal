@@ -1,13 +1,11 @@
-import Vuex from "vuex";
+import {createStore} from "vuex";
 import {expect} from "chai";
-import {config, shallowMount, createLocalVue} from "@vue/test-utils";
+import {config, shallowMount} from "@vue/test-utils";
 import RoutingDistanceDisplayComponent from "../../../components/RoutingDistanceDisplay.vue";
+import Routing from "../../../store/indexRouting";
 import thousandsSeparator from "../../../../../shared/js/utils/thousandsSeparator";
 
-const localVue = createLocalVue();
-
-localVue.use(Vuex);
-config.mocks.$t = key => key;
+config.global.mocks.$t = key => key;
 
 describe("src/modules/routing/components/RoutingDistanceDisplay.vue", () => {
     let store,
@@ -15,8 +13,16 @@ describe("src/modules/routing/components/RoutingDistanceDisplay.vue", () => {
         props;
 
     beforeEach(() => {
-        store = new Vuex.Store({
-            namespaced: true
+        store = createStore({
+            namespaced: true,
+            modules: {
+                Modules: {
+                    namespaced: true,
+                    modules: {
+                        Routing
+                    }
+                }
+            }
         });
 
         props = {
@@ -24,17 +30,12 @@ describe("src/modules/routing/components/RoutingDistanceDisplay.vue", () => {
         };
     });
 
-    afterEach(() => {
-        if (wrapper) {
-            wrapper.destroy();
-        }
-    });
-
     it("renders RoutingDistanceDisplayComponent", () => {
         wrapper = shallowMount(RoutingDistanceDisplayComponent, {
-            store,
-            localVue,
-            propsData: props
+            global: {
+                plugins: [store]
+            },
+            props: props
         });
         expect(wrapper.find("span").exists()).to.be.true;
     });
@@ -42,9 +43,10 @@ describe("src/modules/routing/components/RoutingDistanceDisplay.vue", () => {
     it("renders distance in m", () => {
         props.distance = 999;
         wrapper = shallowMount(RoutingDistanceDisplayComponent, {
-            store,
-            localVue,
-            propsData: props
+            global: {
+                plugins: [store]
+            },
+            props: props
         });
         expect(wrapper.find("span").text()).equal("999 m");
     });
@@ -52,9 +54,10 @@ describe("src/modules/routing/components/RoutingDistanceDisplay.vue", () => {
     it("renders distance in km", () => {
         props.distance = 1234;
         wrapper = shallowMount(RoutingDistanceDisplayComponent, {
-            store,
-            localVue,
-            propsData: props
+            global: {
+                plugins: [store]
+            },
+            props: props
         });
         const expectedResult = thousandsSeparator(1.2);
 
