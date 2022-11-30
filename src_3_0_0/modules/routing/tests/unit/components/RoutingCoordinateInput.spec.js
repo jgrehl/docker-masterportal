@@ -1,14 +1,13 @@
-import Vuex from "vuex";
+import {createStore} from "vuex";
 import {expect} from "chai";
 import sinon from "sinon";
-import {config, shallowMount, createLocalVue} from "@vue/test-utils";
+import {config, shallowMount} from "@vue/test-utils";
 import RoutingCoordinateInputComponent from "../../../components/RoutingCoordinateInput.vue";
+import Routing from "../../../store/indexRouting";
 import {RoutingWaypoint} from "../../../js/classes/routing-waypoint";
 import {RoutingGeosearchResult} from "../../../js/classes/routing-geosearch-result";
-const localVue = createLocalVue();
 
-localVue.use(Vuex);
-config.mocks.$t = key => key;
+config.global.mocks.$t = key => key;
 
 describe("src/modules/routing/components/RoutingCoordinateInput.vue", () => {
     let store,
@@ -16,8 +15,16 @@ describe("src/modules/routing/components/RoutingCoordinateInput.vue", () => {
         props;
 
     beforeEach(() => {
-        store = new Vuex.Store({
-            namespaced: true
+        store = createStore({
+            namespaced: true,
+            modules: {
+                Modules: {
+                    namespaced: true,
+                    modules: {
+                        Routing
+                    }
+                }
+            }
         });
 
         props = {
@@ -32,25 +39,25 @@ describe("src/modules/routing/components/RoutingCoordinateInput.vue", () => {
     });
 
     afterEach(() => {
-        if (wrapper) {
-            wrapper.destroy();
-        }
+        sinon.restore();
     });
 
     it("renders RoutingCoordinateInputComponent", () => {
         wrapper = shallowMount(RoutingCoordinateInputComponent, {
-            store,
-            localVue,
-            propsData: props
+            global: {
+                plugins: [store]
+            },
+            props: props
         });
         expect(wrapper.find(".form-group-sm.mb-4.mx-0").exists()).to.be.true;
     });
 
     it("emits moveWaypointUp", async () => {
         wrapper = shallowMount(RoutingCoordinateInputComponent, {
-            store,
-            localVue,
-            propsData: props
+            global: {
+                plugins: [store]
+            },
+            props: props
         });
         const input = wrapper.find(".bi-chevron-up");
 
@@ -61,9 +68,10 @@ describe("src/modules/routing/components/RoutingCoordinateInput.vue", () => {
 
     it("emits moveWaypointDown", async () => {
         wrapper = shallowMount(RoutingCoordinateInputComponent, {
-            store,
-            localVue,
-            propsData: props
+            global: {
+                plugins: [store]
+            },
+            props: props
         });
         const input = wrapper.find(".bi-chevron-down");
 
@@ -74,9 +82,10 @@ describe("src/modules/routing/components/RoutingCoordinateInput.vue", () => {
 
     it("emits removeWaypoint", async () => {
         wrapper = shallowMount(RoutingCoordinateInputComponent, {
-            store,
-            localVue,
-            propsData: props
+            global: {
+                plugins: [store]
+            },
+            props: props
         });
         const input = wrapper.find(".bootstrap-icon.m-2 > .bi-x-lg");
 
@@ -87,9 +96,10 @@ describe("src/modules/routing/components/RoutingCoordinateInput.vue", () => {
 
     it("renders resetInputButton", async () => {
         wrapper = shallowMount(RoutingCoordinateInputComponent, {
-            store,
-            localVue,
-            propsData: props
+            global: {
+                plugins: [store]
+            },
+            props: props
         });
         wrapper.setData({search: "testsearch"});
         await wrapper.vm.$nextTick();
@@ -98,9 +108,10 @@ describe("src/modules/routing/components/RoutingCoordinateInput.vue", () => {
 
     it("renders searchResults", async () => {
         wrapper = shallowMount(RoutingCoordinateInputComponent, {
-            store,
-            localVue,
-            propsData: props
+            global: {
+                plugins: [store]
+            },
+            props: props
         });
         wrapper.setData({
             searchResults: [
@@ -118,9 +129,10 @@ describe("src/modules/routing/components/RoutingCoordinateInput.vue", () => {
     describe("tests isInputtextWgs84Coordinate", () => {
         it("should return [8, 52] for '8, 52'", () => {
             wrapper = shallowMount(RoutingCoordinateInputComponent, {
-                store,
-                localVue,
-                propsData: props
+                global: {
+                    plugins: [store]
+                },
+                props: props
             });
             wrapper.setData({search: "8, 52"});
             expect(wrapper.vm.isInputtextWgs84Coordinate()).deep.to.equal([8, 52]);
@@ -128,9 +140,10 @@ describe("src/modules/routing/components/RoutingCoordinateInput.vue", () => {
 
         it("should return [8.12, 52.34] for '8.12, 52.34'", () => {
             wrapper = shallowMount(RoutingCoordinateInputComponent, {
-                store,
-                localVue,
-                propsData: props
+                global: {
+                    plugins: [store]
+                },
+                props: props
             });
             wrapper.setData({search: "8.12, 52.34"});
             expect(wrapper.vm.isInputtextWgs84Coordinate()).deep.to.equal([8.12, 52.34]);
@@ -138,9 +151,10 @@ describe("src/modules/routing/components/RoutingCoordinateInput.vue", () => {
 
         it("should return false for '8,12 52,34'", () => {
             wrapper = shallowMount(RoutingCoordinateInputComponent, {
-                store,
-                localVue,
-                propsData: props
+                global: {
+                    plugins: [store]
+                },
+                props: props
             });
             wrapper.setData({search: "8,12 52,34"});
             expect(wrapper.vm.isInputtextWgs84Coordinate()).to.be.false;
@@ -148,9 +162,10 @@ describe("src/modules/routing/components/RoutingCoordinateInput.vue", () => {
 
         it("should return false for 'test'", () => {
             wrapper = shallowMount(RoutingCoordinateInputComponent, {
-                store,
-                localVue,
-                propsData: props
+                global: {
+                    plugins: [store]
+                },
+                props: props
             });
             wrapper.setData({search: "test"});
             expect(wrapper.vm.isInputtextWgs84Coordinate()).to.be.false;
@@ -160,9 +175,10 @@ describe("src/modules/routing/components/RoutingCoordinateInput.vue", () => {
     describe("test component methods", () => {
         it("'selectSearchResult' should select search result on waypoint and emit 'searchResultSelected'", async () => {
             wrapper = shallowMount(RoutingCoordinateInputComponent, {
-                store,
-                localVue,
-                propsData: props
+                global: {
+                    plugins: [store]
+                },
+                props: props
             });
             wrapper.setData({
                 searchResults: [
@@ -180,9 +196,10 @@ describe("src/modules/routing/components/RoutingCoordinateInput.vue", () => {
 
         it("'selectWgs84Coordinate' should select search result on waypoint after wgs84 coordinates were entered and emit 'searchResultSelected'", async () => {
             wrapper = shallowMount(RoutingCoordinateInputComponent, {
-                store,
-                localVue,
-                propsData: props
+                global: {
+                    plugins: [store]
+                },
+                props: props
             });
             wrapper.vm.transformCoordinatesWgs84ToLocalProjection = (coordinates) => coordinates;
             wrapper.setData({search: "8, 52"});
@@ -196,9 +213,10 @@ describe("src/modules/routing/components/RoutingCoordinateInput.vue", () => {
 
         it("'resetInput' should reset 'searchResults' and 'search'", async () => {
             wrapper = shallowMount(RoutingCoordinateInputComponent, {
-                store,
-                localVue,
-                propsData: props
+                global: {
+                    plugins: [store]
+                },
+                props: props
             });
             wrapper.setData({
                 search: "test",
@@ -216,9 +234,10 @@ describe("src/modules/routing/components/RoutingCoordinateInput.vue", () => {
         it("'resetInput' should reset 'searchResults' and 'search' to waypoint displayName", async () => {
             props.waypoint.setDisplayName("waypointnametest");
             wrapper = shallowMount(RoutingCoordinateInputComponent, {
-                store,
-                localVue,
-                propsData: props
+                global: {
+                    plugins: [store]
+                },
+                props: props
             });
             wrapper.setData({
                 search: "test",

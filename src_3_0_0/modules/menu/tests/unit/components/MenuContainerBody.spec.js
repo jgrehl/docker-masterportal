@@ -131,8 +131,9 @@ describe("src_3_0_0/modules/menu/MenuContainerBody.vue", () => {
     describe("GetFeatureInfo", () => {
         it("render the GetFeatureInfo component", () => {
             const wrapper = shallowMount(MenuContainerBody, {
-                store,
-                localVue,
+                global: {
+                    plugins: [store]
+                },
                 propsData: {side: "secondaryMenu"}
             });
 

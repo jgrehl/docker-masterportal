@@ -1,26 +1,22 @@
-import Vuex from "vuex";
-import {shallowMount, createLocalVue} from "@vue/test-utils";
+import {config, shallowMount} from "@vue/test-utils";
 import {expect} from "chai";
 import ChartJs from "chart.js";
 import LinechartItem from "../../../components/LinechartItem.vue";
 
-const localVue = createLocalVue();
-
-localVue.use(Vuex);
+config.global.mocks.$t = key => key;
 
 describe("src_3_0_0/shared/modules/charts/components/LinechartItem.vue", () => {
     let wrapper;
 
     beforeEach(() => {
         wrapper = shallowMount(LinechartItem, {
-            propsData: {
+            props: {
                 data: {
                     labels: [],
                     datasets: []
                 },
                 givenOptions: {}
-            },
-            localVue
+            }
         });
     });
 

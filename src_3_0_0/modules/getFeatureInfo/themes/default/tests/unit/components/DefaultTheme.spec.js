@@ -1,19 +1,17 @@
-import Vuex from "vuex";
-import {shallowMount, createLocalVue} from "@vue/test-utils";
+import {nextTick} from "vue";
+import {config, shallowMount} from "@vue/test-utils";
 import {expect} from "chai";
 import sinon from "sinon";
 import DefaultTheme from "../../../components/DefaultTheme.vue";
 
-const localVue = createLocalVue();
-
-localVue.use(Vuex);
+config.global.mocks.$t = key => key;
 
 describe("src_3_0_0/modules/getFeatureInfo/themes/default/components/DefaultTheme.vue", () => {
     let wrapper;
 
     beforeEach(() => {
         wrapper = shallowMount(DefaultTheme, {
-            propsData: {
+            props: {
                 feature: {
                     getMappedProperties: function () {
                         return {
@@ -42,10 +40,6 @@ describe("src_3_0_0/modules/getFeatureInfo/themes/default/components/DefaultThem
                     getGfiUrl: () => "http",
                     getMimeType: () => "text/xml"
                 }
-            },
-            localVue,
-            mocks: {
-                $t: (msg) => msg
             }
         });
     });
@@ -57,58 +51,58 @@ describe("src_3_0_0/modules/getFeatureInfo/themes/default/components/DefaultThem
         });
 
         it("should render table headers without underscore", () => {
-            wrapper.findAll("th").wrappers.forEach(function (th) {
+            wrapper.findAll("th").forEach(function (th) {
                 expect(th.text().search("_")).to.be.equal(-1);
             });
         });
 
         it("should always upper case the first letter in the table headers", () => {
-            wrapper.findAll("th").wrappers.forEach(function (th) {
+            wrapper.findAll("th").forEach(function (th) {
                 expect(th.text().charAt(0) === th.text().charAt(0).toUpperCase()).to.be.true;
             });
         });
 
         it("should link all properties as phone number if the property starts with '+[xx]' (x = any Number)", () => {
-            wrapper.findAll("a[href^='tel']").wrappers.forEach(function (a) {
+            wrapper.findAll("a[href^='tel']").forEach(function (a) {
                 expect(a.attributes("href")).to.have.string("tel:");
             });
         });
 
         it("should remove minus in all linked phone numbers", () => {
-            wrapper.findAll("a[href^='tel']").wrappers.forEach(function (a) {
+            wrapper.findAll("a[href^='tel']").forEach(function (a) {
                 expect(a.attributes("href").search("-")).to.be.equal(-1);
             });
         });
 
         it("should remove blanks in all linked phone numbers", () => {
-            wrapper.findAll("a[href^='tel']").wrappers.forEach(function (a) {
+            wrapper.findAll("a[href^='tel']").forEach(function (a) {
                 expect(a.attributes("href").search(" ")).to.be.equal(-1);
             });
         });
 
         it("should render all urls as 'Link'", () => {
-            wrapper.find("table").findAll("a[target='_blank']").wrappers.forEach(function (a) {
+            wrapper.find("table").findAll("a[target='_blank']").forEach(function (a) {
                 expect(a.text()).to.be.equal("Link");
             });
         });
 
         it("should render all properties as email if the property contains an @", () => {
-            wrapper.findAll("a[href^=mailto]").wrappers.forEach(a => {
+            wrapper.findAll("a[href^=mailto]").forEach(a => {
                 expect(a.attributes("href")).to.have.string("@");
             });
         });
 
         it("should the value as html if the value includes the tag <br>", () => {
-            const countTdTags = wrapper.findAll("td").wrappers.length;
+            const countTdTags = wrapper.findAll("td").length;
 
-            expect(wrapper.findAll("td").wrappers[countTdTags - 4].text()).equals("TestBrTag");
-            expect(wrapper.findAll("td").wrappers[countTdTags - 3].text()).equals("moinA123");
+            expect(wrapper.findAll("td")[countTdTags - 4].text()).equals("TestBrTag");
+            expect(wrapper.findAll("td")[countTdTags - 3].text()).equals("moinA123");
         });
         it("should render as string with <br> tags for each part of an array if value is an array", () => {
-            const countTdTags = wrapper.findAll("td").wrappers.length;
+            const countTdTags = wrapper.findAll("td").length;
 
-            expect(wrapper.findAll("td").wrappers[countTdTags - 2].text()).equals("TestArray");
-            expect(wrapper.findAll("td").wrappers[countTdTags - 1].text()).equals("moinB123");
+            expect(wrapper.findAll("td")[countTdTags - 2].text()).equals("TestArray");
+            expect(wrapper.findAll("td")[countTdTags - 1].text()).equals("moinB123");
         });
 
         it("should render an a and img if imageAttribute is existst in feature.properties", () => {
@@ -123,7 +117,7 @@ describe("src_3_0_0/modules/getFeatureInfo/themes/default/components/DefaultThem
 
         it("should the img have the source of gfiTheme params as string", () => {
             const wrapper1 = shallowMount(DefaultTheme, {
-                propsData: {
+                props: {
                     feature: {
                         getProperties: function () {
                             return {
@@ -142,10 +136,6 @@ describe("src_3_0_0/modules/getFeatureInfo/themes/default/components/DefaultThem
                         getGfiUrl: () => "",
                         getMimeType: () => "text/xml"
                     }
-                },
-                localVue,
-                mocks: {
-                    $t: (msg) => msg
                 }
             });
 
@@ -154,7 +144,7 @@ describe("src_3_0_0/modules/getFeatureInfo/themes/default/components/DefaultThem
 
         it("should the img have the source of first found element gfiTheme params as array, the order is specified by imageLinks", () => {
             const wrapper2 = shallowMount(DefaultTheme, {
-                propsData: {
+                props: {
                     feature: {
                         getProperties: function () {
                             return {
@@ -173,10 +163,6 @@ describe("src_3_0_0/modules/getFeatureInfo/themes/default/components/DefaultThem
                         getMimeType: () => "text/xml",
                         getGfiUrl: () => ""
                     }
-                },
-                localVue,
-                mocks: {
-                    $t: (msg) => msg
                 }
             });
 
@@ -185,7 +171,7 @@ describe("src_3_0_0/modules/getFeatureInfo/themes/default/components/DefaultThem
 
         it("should show no attribute is available message if getMappedProperties is empty", () => {
             const wrapper1 = shallowMount(DefaultTheme, {
-                propsData: {
+                props: {
                     feature: {
                         getProperties: () => {
                             return {};
@@ -204,10 +190,6 @@ describe("src_3_0_0/modules/getFeatureInfo/themes/default/components/DefaultThem
                         getGfiUrl: () => "",
                         getMimeType: () => "text/xml"
                     }
-                },
-                localVue,
-                mocks: {
-                    $t: (msg) => msg
                 }
             });
 
@@ -216,16 +198,12 @@ describe("src_3_0_0/modules/getFeatureInfo/themes/default/components/DefaultThem
 
         it("should show an iframe if the mimeType is text/html", () => {
             const wrapperHtml = shallowMount(DefaultTheme, {
-                propsData: {
+                props: {
                     feature: {
                         getTheme: () => sinon.stub(),
                         getDocument: () => "lalala",
                         getMimeType: () => "text/html"
                     }
-                },
-                localVue,
-                mocks: {
-                    $t: (msg) => msg
                 }
             });
 
@@ -271,8 +249,9 @@ describe("src_3_0_0/modules/getFeatureInfo/themes/default/components/DefaultThem
                     getMimeType: () => "text/xml"
                 }
             });
-
-            expect(wrapper.vm.beautifyKeysParam).equals(false);
+            nextTick(() => {
+                expect(wrapper.vm.beautifyKeysParam).equals(false);
+            });
         });
 
         it("should have beautifyKeys enabled by default", async () => {
