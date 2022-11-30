@@ -65,24 +65,76 @@ export default {
 <template lang="html">
     <div
         v-if="showInLayerTree()"
-        :id="'layertree-layer-' + conf.id"
-        class="form-check"
+        :id="'layer-tree-layer-' + layerConf.id"
+        class="layer-tree-layer form-check"
     >
-        <input
-            :id="'layertree-layer-checkbox-' + conf.id"
-            v-model="checkboxValue"
-            type="checkbox"
-            class="form-check-input"
-            @click="visibilityInLayerTreeChanged(!isLayerVisible)"
-        >
-        <label
-            :class="['mt-0 d-flex flex-column align-self-start', isLayerVisible ? 'bold' : '']"
-            :for="'layertree-layer-checkbox-' + conf.id"
-        >
-            {{ conf.name }}
-        </label>
+        <div class="layer-tree-layer-title">
+            <input
+                :id="'layer-tree-layer-checkbox' + layerConf.id"
+                v-model="checkboxValue"
+                type="checkbox"
+                class="layer-tree-layer-checkbox form-check-input"
+                @click="visibilityInLayerTreeChanged(!isLayerVisible())"
+                @keydown="visibilityInLayerTreeChanged(!isLayerVisible())"
+            >
+            <label
+                :class="['layer-tree-layer-label', 'mt-0 d-flex flex-column align-self-start', isLayerVisible() ? 'bold' : '']"
+                :for="'layer-tree-layer-checkbox' + layerConf.id"
+                tabindex="0"
+            >
+                <span>
+                    {{ layerConf.name }}
+                </span>
+            </label>
+        </div>
+        <div class="layer-tree-layer-icons">
+            <span
+                class="layer-tree-layer-info bootstrap-icon"
+                tabindex="0"
+                :title="$t('common:tree.infosAndLegend')"
+                @click="openLayerInformation($event, layerConf)"
+                @keydown="openLayerInformation($event, layerConf)"
+            >
+                <i class="bi bi-info-circle-fill" />
+            </span>
+        </div>
     </div>
 </template>
 
 <style lang="scss" scoped>
+    @import "~variables";
+    @import "~mixins";
+
+    .layer-tree-layer {
+        display: flex;
+        justify-content: space-between;
+        font-size: $font-size-base;
+
+        .layer-tree-layer-title, .layer-tree-layer-checkbox {
+            &:hover {
+                @include primary_action_hover;
+            }
+            &:focus {
+                @include primary_action_focus;
+            }
+
+            .bold {
+                font-weight: bold;
+            }
+            .layer-tree-layer-label {
+                flex-basis: 90%;
+            }
+        }
+
+        .layer-tree-layer-icons {
+            .layer-tree-layer-info {
+                &:hover {
+                    @include primary_action_hover;
+                }
+                &:focus {
+                    @include primary_action_focus;
+                }
+            }
+        }
+    }
 </style>
