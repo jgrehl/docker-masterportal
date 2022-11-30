@@ -30,10 +30,11 @@ export default {
 
 <template>
     <div id="start-module-button">
-        <template v-for="configuredModule in configuredModuleStates">
+        <template v-for="configuredModule in configuredModuleStates"
+        :key="'control-module-' + configuredModule.state.type"
+        >
             <component
                 :is="component"
-                :key="'control-module-' + configuredModule.state.type"
                 :icon-name="configuredModule.state.icon"
                 class="control"
                 :title="$t(configuredModule.state.name)"
