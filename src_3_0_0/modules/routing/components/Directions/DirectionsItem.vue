@@ -10,6 +10,7 @@ import DirectionsItemBatchProcessing from "./DirectionsItemBatchProcessing.vue";
 import RoutingBatchProcessingCheckbox from "../RoutingBatchProcessingCheckbox.vue";
 import RoutingDownload from "../RoutingDownload.vue";
 import RoutingSpeedProfileIcon from "../RoutingSpeedProfileIcon.vue";
+import RoutingAvoidFeatures from "../RoutingAvoidFeatures.vue";
 import * as constants from "../../store/directions/constantsDirections";
 import * as constantsRouting from "../../store/constantsRouting";
 
@@ -22,7 +23,7 @@ export default {
         RoutingDownload,
         DirectionsItemBatchProcessing,
         RoutingBatchProcessingCheckbox,
-        RoutingAvoidFeatures: () => import("../RoutingAvoidFeatures.vue"),
+        RoutingAvoidFeatures: RoutingAvoidFeatures,
         RoutingSpeedProfileIcon
     },
     data () {
@@ -52,7 +53,7 @@ export default {
     async created () {
         this.initDirections();
     },
-    beforeDestroy () {
+    beforeUnmount () {
         this.closeDirections();
     },
     methods: {
@@ -161,7 +162,7 @@ export default {
             :speed-profile-id="option"
             :fill-color="option === settings.speedProfile ? '#0077ff' : '#000000'"
             :tooltip="$t('common:modules.tools.routing.speedprofiles.' + option)"
-            @click.native="changeSpeedProfile(option)"
+            @click="changeSpeedProfile(option)"
         />
 
         <hr>
@@ -194,10 +195,10 @@ export default {
                     :key="index"
                     :count-waypoints="waypoints.length"
                     :waypoint="waypoint"
-                    @moveWaypointUp="moveWaypointUp(waypoint.index)"
-                    @moveWaypointDown="moveWaypointDown(waypoint.index)"
-                    @removeWaypoint="removeWaypoint({index: waypoint.index, reload: true})"
-                    @searchResultSelected="findDirections()"
+                    @move-waypoint-up="moveWaypointUp(waypoint.index)"
+                    @move-waypoint-down="moveWaypointDown(waypoint.index)"
+                    @remove-waypoint="removeWaypoint({index: waypoint.index, reload: true})"
+                    @search-resultselected="findDirections()"
                 />
             </form>
 
@@ -385,8 +386,8 @@ export default {
             :settings="settings"
             :active-avoid-features-options="routingAvoidFeaturesOptions"
             :disabled="isInputDisabled"
-            @addAvoidOption="onAddAvoidOption($event)"
-            @removeAvoidOption="onRemoveAvoidOption($event)"
+            @add-avoid-option="onAddAvoidOption($event)"
+            @remove-avoid-option="onRemoveAvoidOption($event)"
         />
 
         <template v-if="!(directionsSettings.batchProcessing.enabled && directionsSettings.batchProcessing.active)">
@@ -410,10 +411,10 @@ export default {
 
                 <hr class="mb-0">
 
-                <template 
+                <template
                     v-for="(segment, segmentIndex) of routingDirections.segments"
                     :key="'segment_header_' + segmentIndex"
-                    >
+                >
                     <div
                         class="d-flex pointer step pl-2 py-4"
                         @mouseover="highlightRoute({fromWaypointIndex: segmentIndex, toWaypointIndex: segmentIndex + 1})"
@@ -468,9 +469,11 @@ export default {
                     >
                         <template
                             v-for="(step, stepIndex) of segment.steps"
+                            :key="stepIndex"
                         >
                             <div
                                 v-if="stepIndex !== segment.steps.length - 1"
+                                v-bind="step"
                                 class="ms-4 d-flex flex-column"
                                 @mouseover="highlightRoute({coordsIndex: step.getWaypoints()})"
                                 @focus="highlightRoute({coordsIndex: step.getWaypoints()})"

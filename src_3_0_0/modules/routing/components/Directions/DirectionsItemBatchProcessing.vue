@@ -24,7 +24,7 @@ export default {
         ...mapGetters("Modules/Routing", ["taskHandler", "directionsSettings"])
     },
     methods: {
-        ...mapMutations("Modules/Routing/Directions", ["IsLoadingDirections", "taskHandler"]),
+        ...mapMutations("Modules/Routing/Directions", ["IsLoadingDirections"]),
         ...mapMutations("Modules/Routing", ["setTaskHandler"]),
         ...mapActions("Modules/Routing/Directions", ["fetchDirections", "resetRoutingDirectionsResults"]),
         ...mapActions("Alerting", ["addSingleAlert"]),
@@ -242,6 +242,6 @@ export default {
         :structure-text="$t('common:modules.tools.routing.directions.batchProcessing.structure')"
         example-text="1;8.12;50.67;9.12;51.67"
         @filesadded="addFiles($event)"
-        @cancelProcess="taskHandler.cancelRun()"
+        @cancel-process="taskHandler.cancelRun()"
     />
 </template>
