@@ -34,7 +34,8 @@ describe("src_3_0_0/modules/menu/MenuFolder.vue", () => {
                 }
             },
             getters: {
-                deviceMode: () => "Desktop"
+                deviceMode: () => "Desktop",
+                portalConfig: () => sinon.stub()
             }
         });
     });
