@@ -410,9 +410,11 @@ export default {
 
                 <hr class="mb-0">
 
-                <template v-for="(segment, segmentIndex) of routingDirections.segments">
+                <template 
+                    v-for="(segment, segmentIndex) of routingDirections.segments"
+                    :key="'segment_header_' + segmentIndex"
+                    >
                     <div
-                        :key="'segment_header_' + segmentIndex"
                         class="d-flex pointer step pl-2 py-4"
                         @mouseover="highlightRoute({fromWaypointIndex: segmentIndex, toWaypointIndex: segmentIndex + 1})"
                         @focus="highlightRoute({fromWaypointIndex: segmentIndex, toWaypointIndex: segmentIndex + 1})"
@@ -458,20 +460,17 @@ export default {
                     </div>
 
                     <hr
-                        :key="'segment_divider_' + segmentIndex"
                         class="m-0"
                     >
 
                     <div
                         v-if="segment.displayDetails"
-                        :key="'segment_content_' + segmentIndex"
                     >
                         <template
                             v-for="(step, stepIndex) of segment.steps"
                         >
                             <div
                                 v-if="stepIndex !== segment.steps.length - 1"
-                                :key="'segment_' + segmentIndex + '_step_' + stepIndex"
                                 class="ms-4 d-flex flex-column"
                                 @mouseover="highlightRoute({coordsIndex: step.getWaypoints()})"
                                 @focus="highlightRoute({coordsIndex: step.getWaypoints()})"
