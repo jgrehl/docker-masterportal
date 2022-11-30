@@ -477,7 +477,7 @@ describe("src_3_0_0/core/js/layers/layer2dVectorTile.js", () => {
             expect(set.notCalled).to.be.true;
             expect(setStyleById.notCalled).to.be.true;
             expect(setStyleByDefinition.notCalled).to.be.true;
-            expect(console.warn.called).to.be.true;
+            expect(warn.called).to.be.true;
         });
     });
 

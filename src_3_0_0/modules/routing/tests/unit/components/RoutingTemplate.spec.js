@@ -1,6 +1,6 @@
-import Vuex from "vuex";
+import {createStore} from "vuex";
 import {expect} from "chai";
-import {config, shallowMount, createLocalVue, mount} from "@vue/test-utils";
+import {config, shallowMount, mount} from "@vue/test-utils";
 import RoutingComponent from "../../../components/RoutingTemplate.vue";
 import sinon from "sinon";
 import mutations from "../../../store/mutationsRouting";
@@ -10,11 +10,7 @@ import state from "../../../store/stateRouting";
 import Directions from "../../../store/directions/indexDirections";
 import Isochrones from "../../../store/isochrones/indexIsochrones";
 
-const localVue = createLocalVue();
-
-localVue.use(Vuex);
-
-config.mocks.$t = key => key;
+config.global.mocks.$t = key => key;
 
 describe("src/modules/routing/components/RoutingTemplate.vue", () => {
     let store,
@@ -34,7 +30,7 @@ describe("src/modules/routing/components/RoutingTemplate.vue", () => {
         mapCollection.clear();
         mapCollection.addMap(map, "2D");
 
-        store = new Vuex.Store({
+        store = createStore({
             namespaced: true,
             modules: {
                 Maps: {
@@ -93,26 +89,37 @@ describe("src/modules/routing/components/RoutingTemplate.vue", () => {
     });
 
     it("renders Routing", () => {
-        wrapper = shallowMount(RoutingComponent, {store, localVue});
+        wrapper = shallowMount(RoutingComponent, {
+            global: {
+                plugins: [store]
+            }});
         expect(wrapper.find("#routing").exists()).to.be.true;
     });
 
-
     it("not renders routing", () => {
         store.commit("Modules/Routing/setActive", false);
-        wrapper = shallowMount(RoutingComponent, {store, localVue});
+        wrapper = shallowMount(RoutingComponent, {
+            global: {
+                plugins: [store]
+            }});
         expect(wrapper.find("#routing").exists()).to.be.false;
     });
 
     it("renders directions", () => {
         store.commit("Modules/Routing/setActiveRoutingToolOption", "DIRECTIONS");
-        wrapper = mount(RoutingComponent, {store, localVue});
+        wrapper = mount(RoutingComponent, {
+            global: {
+                plugins: [store]
+            }});
         expect(wrapper.find("#routing-directions").exists()).to.be.true;
     });
 
     it("renders isochrones", () => {
         store.commit("Modules/Routing/setActiveRoutingToolOption", "ISOCHRONES");
-        wrapper = mount(RoutingComponent, {store, localVue});
+        wrapper = mount(RoutingComponent, {
+            global: {
+                plugins: [store]
+            }});
         expect(wrapper.find("#routing-isochrones").exists()).to.be.true;
     });
 });

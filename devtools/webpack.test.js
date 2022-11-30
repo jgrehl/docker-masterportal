@@ -33,7 +33,7 @@ module.exports = {
     // },
     resolve: {
         alias: {
-            vue: "@vue/runtime-dom"
+            vue: "vue/dist/vue.esm-bundler.js"
         }},
     externals: [
         /^(bootstrap-slider|\$)$/i
