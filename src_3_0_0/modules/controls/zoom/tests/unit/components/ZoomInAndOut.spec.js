@@ -9,7 +9,10 @@ config.global.mocks.$t = key => key;
 
 describe("src_3_0_0/modules/controls/zoom/components/ZoomInAndOut.vue", () => {
     const decreaseZoomSpy = sinon.spy(),
-        increaseZoomSpy = sinon.spy();
+        increaseZoomSpy = sinon.spy(),
+        mockAlertingActions = {
+            addSingleAlert: sinon.stub()
+        };
     let store;
 
     beforeEach(() => {
@@ -38,6 +41,11 @@ describe("src_3_0_0/modules/controls/zoom/components/ZoomInAndOut.vue", () => {
                         decreaseZoom: decreaseZoomSpy,
                         increaseZoom: increaseZoomSpy
                     }
+                },
+                Alerting: {
+                    namespaced: true,
+                    actions: mockAlertingActions
+
                 }
             }
         });
