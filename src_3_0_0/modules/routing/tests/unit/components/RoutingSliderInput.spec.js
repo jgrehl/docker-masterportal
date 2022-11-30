@@ -1,17 +1,14 @@
-import Vuex from "vuex";
+import {createStore} from "vuex";
 import {expect} from "chai";
 import sinon from "sinon";
-import {config, shallowMount, createLocalVue} from "@vue/test-utils";
+import {config, shallowMount} from "@vue/test-utils";
 import RoutingSliderInputComponent from "../../../components/RoutingSliderInput.vue";
 import mutations from "../../../store/mutationsRouting";
 import actions from "../../../store/actionsRouting";
 import getters from "../../../store/gettersRouting";
 import state from "../../../store/stateRouting";
 
-const localVue = createLocalVue();
-
-localVue.use(Vuex);
-config.mocks.$t = key => key;
+config.global.mocks.$t = key => key;
 
 describe("src/modules/routing/components/RoutingSliderInput.vue", () => {
     let store,
@@ -19,7 +16,7 @@ describe("src/modules/routing/components/RoutingSliderInput.vue", () => {
         props;
 
     beforeEach(() => {
-        store = new Vuex.Store({
+        store = createStore({
             namespaced: true,
             modules: {
                 Modules: {
@@ -58,16 +55,15 @@ describe("src/modules/routing/components/RoutingSliderInput.vue", () => {
     });
 
     afterEach(() => {
-        if (wrapper) {
-            wrapper.destroy();
-        }
+        sinon.restore();
     });
 
     it("renders RoutingSliderInputComponent", () => {
         wrapper = shallowMount(RoutingSliderInputComponent, {
-            store,
-            localVue,
-            propsData: props
+            global: {
+                plugins: [store]
+            },
+            props: props
         });
         expect(wrapper.find("#routing-slider-input-test").exists()).to.be.true;
     });
