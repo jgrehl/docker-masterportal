@@ -46,7 +46,8 @@ describe("src_3_0_0/modules/menu/MenuContainerBody.vue", () => {
                     mutations: {
                         addTestMenuSection: (state, section) => {
                             state.menuSections.push(section);
-                        }
+                        },
+                        addModuleToMenuSection: sinon.stub()
                     },
                     modules: {
                         Navigation: {
