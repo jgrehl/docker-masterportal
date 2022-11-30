@@ -7,20 +7,14 @@ import VectorLayer from "ol/layer/Vector.js";
 import VectorSource from "ol/source/Vector.js";
 
 import Layer2dVectorSensorThings from "../../../js/layer2dVectorSensorThings";
-import SensorThingsHttp from "../../../../../shared/js/api/sensorThingsHttp";
-import sensorThingsMqtt from "../../../../../shared/js/api/sensorThingsMqtt";
 
 describe("src_3_0_0/core/js/layers/layer2dVectorSensorThings.js", () => {
     let attributes,
         errorStub,
         sensorThingsLayer,
-        warn;
+        warnStub;
 
     before(() => {
-        warn = sinon.spy();
-        sinon.stub(console, "warn").callsFake(warn);
-        sinon.stub(console, "error").callsFake(errorStub);
-
         mapCollection.clear();
         const map = {
             id: "ol",
@@ -37,16 +31,16 @@ describe("src_3_0_0/core/js/layers/layer2dVectorSensorThings.js", () => {
         };
 
         mapCollection.addMap(map, "2D");
-
-        sinon.stub(sensorThingsMqtt, "SensorThingsMqtt").returns({
-            on: () => sinon.stub()
-        });
-        sinon.stub(SensorThingsHttp, "SensorThingsHttp").returns({
-            get: () => sinon.stub()
-        });
     });
 
     beforeEach(() => {
+        warnStub = sinon.stub();
+        errorStub = sinon.stub();
+        sinon.stub(console, "warn").callsFake(warnStub);
+        sinon.stub(console, "error").callsFake(errorStub);
+        sinon.stub(Layer2dVectorSensorThings.prototype, "createMqttConnectionToSensorThings").callsFake(sinon.stub());
+        sinon.stub(Layer2dVectorSensorThings.prototype, "callSensorThingsAPI").callsFake(sinon.stub());
+        sinon.stub(Layer2dVectorSensorThings.prototype, "initializeSensorThings").callsFake(sinon.stub());
         attributes = {
             id: "id",
             name: "sensorThingsTestLayer",
@@ -58,7 +52,7 @@ describe("src_3_0_0/core/js/layers/layer2dVectorSensorThings.js", () => {
         sensorThingsLayer = new Layer2dVectorSensorThings(attributes);
     });
 
-    after(() => {
+    afterEach(() => {
         sinon.restore();
     });
 
@@ -67,7 +61,7 @@ describe("src_3_0_0/core/js/layers/layer2dVectorSensorThings.js", () => {
             const staLayer = new Layer2dVectorSensorThings({});
 
             expect(staLayer).not.to.be.undefined;
-            expect(warn.notCalled).to.be.true;
+            expect(warnStub.notCalled).to.be.true;
         });
 
         it("should create an ol/VectorLayer with source and style", () => {

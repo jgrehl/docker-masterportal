@@ -10,6 +10,7 @@ import RoutingDownload from "../RoutingDownload.vue";
 import IsochronesItemBatchProcessing from "./IsochronesItemBatchProcessing.vue";
 import RoutingBatchProcessingCheckbox from "../RoutingBatchProcessingCheckbox.vue";
 import RoutingSpeedProfileIcon from "../RoutingSpeedProfileIcon.vue";
+import RoutingAvoidFeatures from "../RoutingAvoidFeatures.vue";
 
 export default {
     name: "IsochronesItem",
@@ -19,7 +20,7 @@ export default {
         RoutingDownload,
         IsochronesItemBatchProcessing,
         RoutingBatchProcessingCheckbox,
-        RoutingAvoidFeatures: () => import("../RoutingAvoidFeatures.vue"),
+        RoutingAvoidFeatures: RoutingAvoidFeatures,
         RoutingSpeedProfileIcon
     },
     data () {
@@ -59,7 +60,7 @@ export default {
         this.initIsochrones();
     },
 
-    beforeDestroy () {
+    beforeUnmount () {
         this.closeIsochrones();
     },
 
@@ -169,7 +170,7 @@ export default {
             :speed-profile-id="option"
             :fill-color="option === settings.speedProfile ? '#0077ff' : '#000000'"
             :tooltip="$t('common:modules.tools.routing.speedprofiles.' + option)"
-            @click.native="changeSpeedProfile(option)"
+            @click="changeSpeedProfile(option)"
         />
 
         <hr>
@@ -202,8 +203,8 @@ export default {
                 <RoutingCoordinateInput
                     :count-waypoints="1"
                     :waypoint="waypoint"
-                    @removeWaypoint="onRemoveWaypoint()"
-                    @searchResultSelected="zoomOnWaypoint()"
+                    @remove-waypoint="onRemoveWaypoint()"
+                    @search-result-selected="zoomOnWaypoint()"
                 />
             </form>
         </template>
@@ -274,8 +275,8 @@ export default {
             :settings="settings"
             :active-avoid-features-options="routingAvoidFeaturesOptions"
             :disabled="isInputDisabled"
-            @addAvoidOption="onAddAvoidOption($event)"
-            @removeAvoidOption="onRemoveAvoidOption($event)"
+            @add-avoid-option="onAddAvoidOption($event)"
+            @remove-avoid-option="onRemoveAvoidOption($event)"
         />
 
         <template v-if="!(isochronesSettings.batchProcessing.enabled && isochronesSettings.batchProcessing.active)">

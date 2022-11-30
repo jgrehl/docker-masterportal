@@ -6,7 +6,8 @@ export default {
             type: Object,
             required: true
         }
-    }
+    },
+    emits: ["input"]
 };
 </script>
 
