@@ -1,7 +1,7 @@
-import Vuex from "vuex";
+import {createStore} from "vuex";
 import {expect} from "chai";
 import sinon from "sinon";
-import {config, shallowMount, createLocalVue} from "@vue/test-utils";
+import {config, shallowMount} from "@vue/test-utils";
 import DirectionsItemBatchProcessingComponent from "../../../../components/Directions/DirectionsItemBatchProcessing.vue";
 import RoutingBatchProcessingComponent from "../../../../components/RoutingBatchProcessing.vue";
 import mutations from "../../../../store/mutationsRouting";
@@ -12,16 +12,13 @@ import actionsDirections from "../../../../store/directions/actionsDirections";
 import gettersDirections from "../../../../store/directions/gettersDirections";
 import stateDirections from "../../../../store/directions/stateDirections";
 
-const localVue = createLocalVue();
-
-localVue.use(Vuex);
-config.mocks.$t = key => key;
+config.global.mocks.$t = key => key;
 
 describe("src/modules/routing/components/Directions/DirectionsItemBatchProcessing.vue", () => {
     let store, wrapper, props;
 
     beforeEach(() => {
-        store = new Vuex.Store({
+        store = createStore({
             namespaced: true,
             modules: {
                 Modules: {
@@ -69,27 +66,25 @@ describe("src/modules/routing/components/Directions/DirectionsItemBatchProcessin
     });
 
     afterEach(() => {
-        if (wrapper) {
-            wrapper.destroy();
-        }
         sinon.restore();
     });
 
     it("renders DirectionsBatchProcessingComponent", () => {
         wrapper = shallowMount(DirectionsItemBatchProcessingComponent, {
-            store,
-            localVue,
-            propsData: props
+            global: {
+                plugins: [store]
+            },
+            props: props
         });
-        expect(wrapper.findComponent(RoutingBatchProcessingComponent).exists())
-            .to.be.true;
+        expect(wrapper.findComponent(RoutingBatchProcessingComponent).exists()).to.be.true;
     });
 
     it("should create CSV download filename", () => {
         wrapper = shallowMount(DirectionsItemBatchProcessingComponent, {
-            store,
-            localVue,
-            propsData: props
+            global: {
+                plugins: [store]
+            },
+            props: props
         });
         const filenameGeojson = "testgeo.geojson",
             filenameCsv = "testcsv.csv";
@@ -104,9 +99,10 @@ describe("src/modules/routing/components/Directions/DirectionsItemBatchProcessin
 
     it("should create csv string", () => {
         wrapper = shallowMount(DirectionsItemBatchProcessingComponent, {
-            store,
-            localVue,
-            propsData: props
+            global: {
+                plugins: [store]
+            },
+            props: props
         });
         const downloadObjects = [
                 {
@@ -152,9 +148,10 @@ DEGAC00000007133;13.0285;52.30963;8.8615;48.82629;1020.57;12.34;CAR`;
     describe("test csv parsing", () => {
         it("should process csv without errors", async () => {
             wrapper = shallowMount(DirectionsItemBatchProcessingComponent, {
-                store,
-                localVue,
-                propsData: props
+                global: {
+                    plugins: [store]
+                },
+                props: props
             });
             wrapper.vm.fetchDirections = () => ({
                 distance: 12.34,
@@ -204,9 +201,10 @@ DEGAC00000007133;13.0285;52.30963;8.8615;48.82629`,
 
         it("should throw error with empty csv", async () => {
             wrapper = shallowMount(DirectionsItemBatchProcessingComponent, {
-                store,
-                localVue,
-                propsData: props
+                global: {
+                    plugins: [store]
+                },
+                props: props
             });
 
             try {
@@ -222,9 +220,10 @@ DEGAC00000007133;13.0285;52.30963;8.8615;48.82629`,
         it("should throw error with csv too large", async () => {
             props.settings.batchProcessing.limit = 1;
             wrapper = shallowMount(DirectionsItemBatchProcessingComponent, {
-                store,
-                localVue,
-                propsData: props
+                global: {
+                    plugins: [store]
+                },
+                props: props
             });
 
             try {
@@ -241,9 +240,10 @@ DEGAC00000007133;13.0285;52.30963;8.8615;48.82629`);
 
         it("should throw error with csv row with too many columns", async () => {
             wrapper = shallowMount(DirectionsItemBatchProcessingComponent, {
-                store,
-                localVue,
-                propsData: props
+                global: {
+                    plugins: [store]
+                },
+                props: props
             });
 
             try {
@@ -260,9 +260,10 @@ DEGAC00000007133;13.0285;52.30963;8.8615;48.82629;1`);
 
         it("should throw error with coordinate not being a number", async () => {
             wrapper = shallowMount(DirectionsItemBatchProcessingComponent, {
-                store,
-                localVue,
-                propsData: props
+                global: {
+                    plugins: [store]
+                },
+                props: props
             });
 
             try {

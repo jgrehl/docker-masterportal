@@ -8,11 +8,6 @@ describe("src_3_0_0/core/js/layers/layer2dVector.js", () => {
         warn;
 
     before(() => {
-        error = sinon.spy();
-        warn = sinon.spy();
-        sinon.stub(console, "error").callsFake(error);
-        sinon.stub(console, "warn").callsFake(warn);
-
         mapCollection.clear();
         const map = {
             id: "ol",
@@ -32,12 +27,16 @@ describe("src_3_0_0/core/js/layers/layer2dVector.js", () => {
     });
 
     beforeEach(() => {
+        error = sinon.spy();
+        warn = sinon.spy();
+        sinon.stub(console, "error").callsFake(error);
+        sinon.stub(console, "warn").callsFake(warn);
         attributes = {
             altitudeMode: "clampToGround"
         };
     });
 
-    after(() => {
+    afterEach(() => {
         sinon.restore();
     });
 

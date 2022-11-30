@@ -19,9 +19,7 @@ describe("src_3_0_0/modules/menu/MenuToggleButton.vue", () => {
                         mainExpanded: sinon.stub(),
                         secondaryExpanded: sinon.stub(),
                         mainToggleButtonIcon: () => "bi-list",
-                        secondaryToggleButtonIcon: () => "bi-tools",
-                        mainExpanded: sinon.stub(),
-                        secondaryExpanded: sinon.stub()
+                        secondaryToggleButtonIcon: () => "bi-tools"
                     }
                 }
             }

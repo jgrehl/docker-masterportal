@@ -1,13 +1,9 @@
 import sinon from "sinon";
-import Vuex from "vuex";
-import {config, mount, createLocalVue} from "@vue/test-utils";
+import {config, mount} from "@vue/test-utils";
 import {expect} from "chai";
 import InputText from "../../../components/InputText.vue";
 
-const localVue = createLocalVue();
-
-localVue.use(Vuex);
-config.mocks.$t = key => key;
+config.global.mocks.$t = key => key;
 
 describe("src_3_0_0/shared/components/InputText.vue", () => {
 
@@ -18,8 +14,7 @@ describe("src_3_0_0/shared/components/InputText.vue", () => {
             label = "My super nice Input",
             placeholder = "world's best placeholder",
             wrapper = mount(InputText, {
-                localVue,
-                propsData: {id, label, placeholder}
+                props: {id, label, placeholder}
             }),
             input = wrapper.find("input");
 
@@ -34,8 +29,7 @@ describe("src_3_0_0/shared/components/InputText.vue", () => {
             placeholder = "world's best placeholder",
             type = "mail",
             wrapper = mount(InputText, {
-                localVue,
-                propsData: {id, label, placeholder, type}
+                props: {id, label, placeholder, type}
             }),
             input = wrapper.find("input");
 
