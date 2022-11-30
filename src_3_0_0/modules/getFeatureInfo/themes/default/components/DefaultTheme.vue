@@ -242,8 +242,9 @@ export default {
             v-if="showFavoriteIcons && mimeType !== 'text/html'"
             class="favorite-icon-container"
         >
-            <template v-for="component in importedComponents"
-            :key="'favorite-' + component.name"
+            <template
+                v-for="component in importedComponents"
+                :key="'favorite-' + component.name"
             >
                 <component
                     :is="component"
