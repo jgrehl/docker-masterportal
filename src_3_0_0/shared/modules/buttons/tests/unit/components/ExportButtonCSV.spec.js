@@ -1,12 +1,8 @@
-import Vuex from "vuex";
-import {config, shallowMount, createLocalVue} from "@vue/test-utils";
+import {config, shallowMount} from "@vue/test-utils";
 import {expect} from "chai";
 import ExportButtonCSV from "../../../components/ExportButtonCSV.vue";
 
-const localVue = createLocalVue();
-
-localVue.use(Vuex);
-config.mocks.$t = key => key;
+config.global.mocks.$t = key => key;
 
 describe("src_3_0_0/shared/modules/buttons/components/exportButtonCSV.vue", () => {
     before(() => {
@@ -15,18 +11,16 @@ describe("src_3_0_0/shared/modules/buttons/components/exportButtonCSV.vue", () =
             debug: false
         });
     });
-    describe("createFilename", () => {
+    it("createFilename", () => {
         const wrapper = shallowMount(ExportButtonCSV, {
-            propsData: {},
-            localVue
+            props: {}
         });
 
         expect(wrapper.vm.createFilename("prefix", "YYYY")).to.equal("prefix" + String(new Date().getFullYear()) + ".csv");
     });
-    describe("template", () => {
+    it("template", () => {
         const wrapper = shallowMount(ExportButtonCSV, {
-            propsData: {},
-            localVue
+            props: {}
         });
 
         expect(wrapper.find("button").exists()).to.be.true;
