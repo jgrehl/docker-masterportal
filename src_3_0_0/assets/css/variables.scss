@@ -130,7 +130,7 @@ $secondary_table_style: #F2F2F2;  // background for table view style
   --bs-btn-border-radius: 16px;
   --bs-btn-hover-color: #fff;
   --bs-btn-hover-bg: #001B3D;
-  --bs-btn-hover-border-color: #001B3D; 
+  --bs-btn-hover-border-color: #001B3D;
   --bs-btn-active-color: #fff;
   --bs-btn-active-bg: #151C27;
   --bs-btn-focus-color: #fff;
@@ -143,12 +143,12 @@ $secondary_table_style: #F2F2F2;  // background for table view style
   --bs-btn-border-radius: 50px;
   --bs-btn-hover-color: #001B3D;
   --bs-btn-hover-bg: #D6E3FF;
-  --bs-btn-hover-border-color: #D6E3FF; 
+  --bs-btn-hover-border-color: #D6E3FF;
   --bs-btn-active-color: #fff;
   --bs-btn-active-bg: #151C27;
   --bs-btn-focus-color: #fff;
   --bs-btn-focus-bg: #151C27;
-  --bs-btn-box-shadow: none;  
+  --bs-btn-box-shadow: none;
 }
 
 .btn-light {
@@ -158,7 +158,7 @@ $secondary_table_style: #F2F2F2;  // background for table view style
   --bs-btn-border-radius: 50px;
   --bs-btn-hover-color: #151C27;
   --bs-btn-hover-bg: #DCE2F3;
-  --bs-btn-hover-border-color: #DCE2F3; 
+  --bs-btn-hover-border-color: #DCE2F3;
   --bs-btn-active-color: #fff;
   --bs-btn-active-bg: #151C27;
   --bs-btn-focus-color: #fff;
@@ -260,8 +260,8 @@ $custom-colors: (
 $theme-colors: map-merge($theme-colors, $custom-colors);
 
 
-@import "../node_modules/bootstrap/scss/maps";
-@import "../node_modules/bootstrap/scss/mixins";
+@import "../../../node_modules/bootstrap/scss/maps";
+@import "../../../node_modules/bootstrap/scss/mixins";
 
 
 /*
