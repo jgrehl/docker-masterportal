@@ -1,7 +1,7 @@
-import Vuex from "vuex";
+import {createStore} from "vuex";
 import {expect} from "chai";
 import sinon from "sinon";
-import {config, shallowMount, createLocalVue} from "@vue/test-utils";
+import {config, shallowMount} from "@vue/test-utils";
 import RoutingDownloadComponent from "../../../components/RoutingDownload.vue";
 import mutations from "../../../store/mutationsRouting";
 import actions from "../../../store/actionsRouting";
@@ -14,10 +14,7 @@ import Isochrones from "../../../store/isochrones/indexIsochrones";
 import Feature from "ol/Feature";
 import LineString from "ol/geom/LineString";
 
-const localVue = createLocalVue();
-
-localVue.use(Vuex);
-config.mocks.$t = key => key;
+config.global.mocks.$t = key => key;
 
 describe("src/modules/routing/components/RoutingDownload.vue", () => {
     let store,
@@ -25,7 +22,7 @@ describe("src/modules/routing/components/RoutingDownload.vue", () => {
         props;
 
     beforeEach(() => {
-        store = new Vuex.Store({
+        store = createStore({
             namespaced: true,
             modules: {
                 Modules: {
@@ -60,16 +57,15 @@ describe("src/modules/routing/components/RoutingDownload.vue", () => {
     });
 
     afterEach(() => {
-        if (wrapper) {
-            wrapper.destroy();
-        }
+        sinon.restore();
     });
 
     it("renders RoutingDownloadComponent", () => {
         wrapper = shallowMount(RoutingDownloadComponent, {
-            store,
-            localVue,
-            propsData: props
+            global: {
+                plugins: [store]
+            },
+            props: props
         });
         expect(wrapper.find("#routing-download").exists()).to.be.true;
     });
@@ -77,18 +73,20 @@ describe("src/modules/routing/components/RoutingDownload.vue", () => {
     it("filters GPX download option", () => {
         props.hideGpx = true;
         wrapper = shallowMount(RoutingDownloadComponent, {
-            store,
-            localVue,
-            propsData: props
+            global: {
+                plugins: [store]
+            },
+            props: props
         });
         expect(wrapper.vm.downloadFormatOptions.includes("GPS")).to.be.false;
     });
 
     it("disables input without filename", () => {
         wrapper = shallowMount(RoutingDownloadComponent, {
-            store,
-            localVue,
-            propsData: props
+            global: {
+                plugins: [store]
+            },
+            props: props
         });
         wrapper.vm.download.fileName = "";
         expect(wrapper.vm.isDisabled).to.be.true;
@@ -96,9 +94,10 @@ describe("src/modules/routing/components/RoutingDownload.vue", () => {
 
     it("enables input with filename", () => {
         wrapper = shallowMount(RoutingDownloadComponent, {
-            store,
-            localVue,
-            propsData: props
+            global: {
+                plugins: [store]
+            },
+            props: props
         });
         wrapper.vm.download.fileName = "testfilename";
         expect(wrapper.vm.isDisabled).to.be.false;
@@ -107,9 +106,10 @@ describe("src/modules/routing/components/RoutingDownload.vue", () => {
     it("returns features for 'DIRECTIONS'", () => {
         store.commit("Modules/Routing/setActiveRoutingToolOption", "DIRECTIONS");
         wrapper = shallowMount(RoutingDownloadComponent, {
-            store,
-            localVue,
-            propsData: props
+            global: {
+                plugins: [store]
+            },
+            props: props
         });
         expect("isHighlight" in wrapper.vm.getDownloadFeatures()[0].getProperties()).to.be.true;
     });
@@ -117,18 +117,20 @@ describe("src/modules/routing/components/RoutingDownload.vue", () => {
     it("returns features for 'ISOCHRONES'", () => {
         store.commit("Modules/Routing/setActiveRoutingToolOption", "ISOCHRONES");
         wrapper = shallowMount(RoutingDownloadComponent, {
-            store,
-            localVue,
-            propsData: props
+            global: {
+                plugins: [store]
+            },
+            props: props
         });
         expect(wrapper.vm.getDownloadFeatures().length).equal(0);
     });
 
     it("converts feature to 'GEOJSON'", async () => {
         wrapper = shallowMount(RoutingDownloadComponent, {
-            store,
-            localVue,
-            propsData: props
+            global: {
+                plugins: [store]
+            },
+            props: props
         });
         wrapper.vm.download.format = "GEOJSON";
         wrapper.vm.transformCoordinatesLocalToWgs84Projection = (coordinates) => coordinates;
@@ -143,9 +145,10 @@ describe("src/modules/routing/components/RoutingDownload.vue", () => {
 
     it("converts feature to 'GPX'", async () => {
         wrapper = shallowMount(RoutingDownloadComponent, {
-            store,
-            localVue,
-            propsData: props
+            global: {
+                plugins: [store]
+            },
+            props: props
         });
         wrapper.vm.download.format = "GPX";
         wrapper.vm.transformCoordinatesLocalToWgs84Projection = (coordinates) => coordinates;
@@ -160,9 +163,10 @@ describe("src/modules/routing/components/RoutingDownload.vue", () => {
 
     it("should add file type to file name", async () => {
         wrapper = shallowMount(RoutingDownloadComponent, {
-            store,
-            localVue,
-            propsData: props
+            global: {
+                plugins: [store]
+            },
+            props: props
         });
         wrapper.vm.download.format = "GEOJSON";
         wrapper.vm.download.fileName = "test";

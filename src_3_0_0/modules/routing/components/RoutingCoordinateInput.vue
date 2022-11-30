@@ -14,6 +14,7 @@ export default {
             required: true
         }
     },
+    emits: ["moveWaypointDown", "moveWaypointUp", "searchResultSelected", "removeWaypoint"],
     data () {
         return {
             search: this.waypoint.getDisplayName()

@@ -59,7 +59,6 @@ describe("src_3_0_0/shared/components/LightButton.vue", () => {
             iconString = "bi-list",
             descriptionString = "Hier könnte Ihre Werbung stehen",
             wrapper = mount(LightButton, {
-                localVue,
                 propsData: {text, interaction: interactionSpy, icon: iconString, description: descriptionString}
             }),
             button = wrapper.find("button"),

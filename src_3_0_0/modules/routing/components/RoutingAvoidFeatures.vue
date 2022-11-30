@@ -16,6 +16,7 @@ export default {
             required: false
         }
     },
+    emits: ["addAvoidOption", "removeAvoidOption"],
     data () {
         return {
             showAvoidFeatures: false
