@@ -1,12 +1,11 @@
-import Vuex from "vuex";
-import {config, shallowMount, mount, createLocalVue} from "@vue/test-utils";
+import {createStore} from "vuex";
+import {config, shallowMount, mount} from "@vue/test-utils";
 import {expect} from "chai";
 import sinon from "sinon";
 
 import GfiComponent from "../../../components/GetFeatureInfo.vue";
 
-const localVue = createLocalVue(),
-    mockMutations = {
+const mockMutations = {
         setCurrentFeature: () => sinon.stub(),
         setGfiFeatures: () => sinon.stub()
     },
@@ -21,15 +20,21 @@ const localVue = createLocalVue(),
         showMarker: () => sinon.stub()
     };
 
-localVue.use(Vuex);
-config.mocks.$t = key => key;
+config.global.mocks.$t = key => key;
+config.global.mocks.$gfiThemeAddons = [];
 
 /**
  * Returns the store.
+ * @param {Boolean} mobile true or false
+ * @param {String} uiStyle the uiStyle
+ * @param {Array} gfiFeatures the features
+ * @param {Array} mapSize the maps size
  * @returns {object} the store
  */
-function getGfiStore () {
-    return new Vuex.Store({
+function getGfiStore (mobile, uiStyle, gfiFeatures, mapSize) {
+    mockGetters.gfiFeaturesReverse = () => gfiFeatures;
+
+    return createStore({
         namespaced: true,
         modules: {
             Modules: {
@@ -50,7 +55,7 @@ function getGfiStore () {
                 getters: {
                     clickCoordinate: () => sinon.stub(),
                     mode: () => "2D",
-                    size: sinon.stub()
+                    size: mapSize ? () => mapSize : sinon.stub()
                 },
                 actions: {
                     setCenter: sinon.stub(),
@@ -67,91 +72,98 @@ function getGfiStore () {
             }
         },
         getters: {
-            mobile: () => sinon.stub(),
+            mobile: () => mobile ? mobile : sinon.stub(),
             gfiWindow: () => "",
-            uiStyle: () => sinon.stub(),
+            uiStyle: () => uiStyle ? uiStyle : sinon.stub(),
             ignoredKeys: () => sinon.stub()
         }
     });
 }
 
 
+afterEach(() => {
+    sinon.restore();
+});
+
+
 describe("src_3_0_0/modules/getFeatureInfo/components/GetFeatureInfo.vue", () => {
     it("should find the child component GetFeatureInfoDetached", () => {
-        const wrapper = shallowMount(GfiComponent, {
+        const gfiFeatures = [{
+                getGfiUrl: () => null,
+                getFeatures: () => sinon.stub(),
+                getProperties: () => {
+                    return {};
+                }
+            }],
+            store = getGfiStore(false, "", gfiFeatures, []);
+        let wrapper = null;
+
+        store.state.Modules.GetFeatureInfo.active = true;
+        wrapper = shallowMount(GfiComponent, {
             components: {
                 GetFeatureInfoDetached: {
                     name: "GetFeatureInfoDetached",
                     template: "<span />"
                 }
             },
-            computed: {
-                isMobile: () => false,
-                desktopType: () => "",
-                active: () => true,
-                uiStyle: () => "",
-                gfiFeatures: () => [{
-                    getGfiUrl: () => null,
-                    getFeatures: () => sinon.stub(),
-                    getProperties: () => {
-                        return {};
-                    }
-                }],
-                gfiFeaturesReverse: () => sinon.stub(),
-                mapSize: () => []
-            },
-            store: getGfiStore,
-            localVue
+            global: {
+                plugins: [store]
+            }
         });
 
         expect(wrapper.findComponent({name: "GetFeatureInfoDetached"}).exists()).to.be.true;
     });
 
     it("no child component should be found if gfi is not activated", () => {
-        const wrapper = shallowMount(GfiComponent, {
-            components: {
-                GetFeatureInfoDetached: {
-                    name: "GetFeatureInfoDetached",
-                    template: "<span />"
+        const store = getGfiStore(undefined, undefined, null, []),
+            wrapper = shallowMount(GfiComponent, {
+                components: {
+                    GetFeatureInfoDetached: {
+                        name: "GetFeatureInfoDetached",
+                        template: "<span />"
+                    }
+                },
+                global: {
+                    plugins: [store]
                 }
-            },
-            computed: {
-                active: () => false,
-                gfiFeatures: () => null,
-                gfiFeaturesReverse: () => sinon.stub(),
-                mapSize: () => []
-            },
-            store: getGfiStore,
-            localVue
-        });
+            });
 
         expect(wrapper.findComponent({name: "GetFeatureInfoDetached"}).exists()).to.be.false;
     });
 
     it("no child component should be found if gfi has no features", () => {
-        const wrapper = shallowMount(GfiComponent, {
+        const store = getGfiStore(true, undefined, [], []);
+        let wrapper = null;
+
+        store.state.Modules.GetFeatureInfo.active = true;
+        wrapper = shallowMount(GfiComponent, {
             components: {
                 GetFeatureInfoDetached: {
                     name: "GetFeatureInfoDetached",
                     template: "<span />"
                 }
             },
-            computed: {
-                isMobile: () => true,
-                active: () => true,
-                gfiFeatures: () => [],
-                gfiFeaturesReverse: () => sinon.stub(),
-                mapSize: () => []
-            },
-            store: getGfiStore,
-            localVue
+            global: {
+                plugins: [store]
+            }
         });
 
         expect(wrapper.findComponent({name: "GetFeatureInfoDetached"}).exists()).to.be.false;
     });
 
     it("should set pagerIndex to zero if gfiFeatures change", () => {
-        const wrapper = shallowMount(GfiComponent, {
+        const gfiFeatures = [{
+                getGfiUrl: () => null,
+                getFeatures: () => sinon.stub(),
+                getProperties: () => {
+                    return {};
+                }
+            }],
+            store = getGfiStore(false, undefined, gfiFeatures, []);
+        let wrapper = null;
+
+        store.state.Modules.GetFeatureInfo.active = true;
+        wrapper = shallowMount(GfiComponent, {
             components: {
                 GetFeatureInfoDetached: {
                     name: "GetFeatureInfoDetached",
@@ -163,21 +175,9 @@ describe("src_3_0_0/modules/getFeatureInfo/components/GetFeatureInfo.vue", () =>
                     pagerIndex: 1
                 };
             },
-            computed: {
-                isMobile: () => false,
-                active: () => true,
-                mapSize: () => [],
-                gfiFeatures: () => [{
-                    getGfiUrl: () => null,
-                    getFeatures: () => sinon.stub(),
-                    getProperties: () => {
-                        return {};
-                    }
-                }],
-                gfiFeaturesReverse: () => sinon.stub()
-            },
-            store: getGfiStore,
-            localVue
+            global: {
+                plugins: [store]
+            }
         });
 
         wrapper.vm.$options.watch.gfiFeatures.call(wrapper.vm, null);
@@ -185,115 +185,107 @@ describe("src_3_0_0/modules/getFeatureInfo/components/GetFeatureInfo.vue", () =>
     });
 
     it("should display the footer", () => {
-        const store = getGfiStore(),
-            wrapper = mount(GfiComponent, {
-                computed: {
-                    isMobile: () => true,
-                    active: () => true,
-                    gfiFeatures: () => [{
-                        getTheme: () => "default",
-                        getTitle: () => "Feature 1",
-                        getMimeType: () => "text/html",
-                        getGfiUrl: () => null,
-                        getMappedProperties: () => null,
-                        getProperties: () => {
-                            return {};
-                        },
-                        getlayerId: () => null,
-                        getFeatures: () => []
-                    },
-                    {}],
-                    gfiFeaturesReverse: () => sinon.stub(),
-                    mapSize: () => []
+        const gfiFeatures = [{
+                getTheme: () => "default",
+                getTitle: () => "Feature 1",
+                getMimeType: () => "text/html",
+                getGfiUrl: () => null,
+                getMappedProperties: () => null,
+                getProperties: () => {
+                    return {};
                 },
-                store,
-                localVue
-            });
+                getlayerId: () => null,
+                getFeatures: () => []
+            },
+            {}],
+            store = getGfiStore(true, undefined, gfiFeatures, []);
+        let wrapper = null;
+
+        store.state.Modules.GetFeatureInfo.active = true;
+        wrapper = mount(GfiComponent, {
+            global: {
+                plugins: [store]
+            }
+        });
 
         expect(wrapper.find(".pager-left").exists()).to.be.true;
         expect(wrapper.find(".pager-right").exists()).to.be.true;
     });
 
     it("should display the next feature if pager-right is clicked", async () => {
-        const store = getGfiStore(),
-            wrapper = mount(GfiComponent, {
-                computed: {
-                    isMobile: () => true,
-                    desktopType: () => "",
-                    active: () => true,
-                    gfiFeatures: () => [{
-                        getTheme: () => "default",
-                        getTitle: () => "Feature 1",
-                        getMimeType: () => "text/html",
-                        getGfiUrl: () => null,
-                        getMappedProperties: () => null,
-                        getAttributesToShow: () => sinon.stub(),
-                        getProperties: () => {
-                            return {};
-                        },
-                        getlayerId: () => null,
-                        getFeatures: () => []
-                    },
-                    {
-                        getTheme: () => "default",
-                        getTitle: () => "Feature 2",
-                        getMimeType: () => "text/html",
-                        getGfiUrl: () => null,
-                        getAttributesToShow: () => sinon.stub(),
-                        getProperties: () => {
-                            return {};
-                        },
-                        getlayerId: () => null,
-                        getFeatures: () => []
-                    }],
-                    gfiFeaturesReverse: () => sinon.stub(),
-                    mapSize: () => []
+        const gfiFeatures = [{
+                getTheme: () => "default",
+                getTitle: () => "Feature 1",
+                getMimeType: () => "text/html",
+                getGfiUrl: () => null,
+                getMappedProperties: () => null,
+                getAttributesToShow: () => sinon.stub(),
+                getProperties: () => {
+                    return {};
                 },
-                store,
-                localVue
-            });
+                getlayerId: () => null,
+                getFeatures: () => []
+            },
+            {
+                getTheme: () => "default",
+                getTitle: () => "Feature 2",
+                getMimeType: () => "text/html",
+                getGfiUrl: () => null,
+                getAttributesToShow: () => sinon.stub(),
+                getProperties: () => {
+                    return {};
+                },
+                getlayerId: () => null,
+                getFeatures: () => []
+            }],
+            store = getGfiStore(true, undefined, gfiFeatures, []);
+        let wrapper = null;
+
+        store.state.Modules.GetFeatureInfo.active = true;
+        wrapper = mount(GfiComponent, {
+            global: {
+                plugins: [store]
+            }
+        });
 
         await wrapper.find(".pager-right").trigger("click");
         expect(wrapper.find(".gfi > div > span").text()).to.equal("Feature 2");
     });
 
     it("should display the previous feature if pager-left is clicked", async () => {
-        const store = getGfiStore(),
-            wrapper = mount(GfiComponent, {
-                computed: {
-                    isMobile: () => true,
-                    desktopType: () => "",
-                    active: () => true,
-                    gfiFeatures: () => [{
-                        getTheme: () => "default",
-                        getTitle: () => "Feature 1",
-                        getGfiUrl: () => null,
-                        getMimeType: () => "text/html",
-                        getAttributesToShow: () => sinon.stub(),
-                        getMappedProperties: () => null,
-                        getProperties: () => {
-                            return {};
-                        },
-                        getFeatures: () => []
-                    },
-                    {
-                        getTheme: () => "default",
-                        getTitle: () => "Feature 2",
-                        getGfiUrl: () => null,
-                        getMimeType: () => "text/html",
-                        getAttributesToShow: () => sinon.stub(),
-                        getMappedProperties: () => null,
-                        getProperties: () => {
-                            return {};
-                        },
-                        getFeatures: () => []
-                    }],
-                    gfiFeaturesReverse: () => sinon.stub(),
-                    mapSize: () => []
+        const gfiFeatures = [{
+                getTheme: () => "default",
+                getTitle: () => "Feature 1",
+                getGfiUrl: () => null,
+                getMimeType: () => "text/html",
+                getAttributesToShow: () => sinon.stub(),
+                getMappedProperties: () => null,
+                getProperties: () => {
+                    return {};
                 },
-                store,
-                localVue
-            });
+                getFeatures: () => []
+            },
+            {
+                getTheme: () => "default",
+                getTitle: () => "Feature 2",
+                getGfiUrl: () => null,
+                getMimeType: () => "text/html",
+                getAttributesToShow: () => sinon.stub(),
+                getMappedProperties: () => null,
+                getProperties: () => {
+                    return {};
+                },
+                getFeatures: () => []
+            }],
+            store = getGfiStore(true, undefined, gfiFeatures, []);
+        let wrapper = null;
+
+        store.state.Modules.GetFeatureInfo.active = true;
+        wrapper = mount(GfiComponent, {
+            global: {
+                plugins: [store]
+            }
+        });
 
         wrapper.setData({pagerIndex: 1});
         await wrapper.find(".pager-left").trigger("click");
@@ -301,122 +293,113 @@ describe("src_3_0_0/modules/getFeatureInfo/components/GetFeatureInfo.vue", () =>
     });
 
     it("should disabled left pager if pagerIndex is zero", () => {
-        const wrapper = mount(GfiComponent, {
-            computed: {
-                isMobile: () => true,
-                desktopType: () => "",
-                active: () => true,
-                gfiFeatures: () => [{
-                    getTheme: () => "default",
-                    getTitle: () => "Feature 1",
-                    getGfiUrl: () => null,
-                    getMimeType: () => "text/html",
-                    getAttributesToShow: () => sinon.stub(),
-                    getProperties: () => {
-                        return {};
-                    },
-                    getFeatures: () => [],
-                    "attributesToShow": sinon.stub()
+        const gfiFeatures = [{
+                getTheme: () => "default",
+                getTitle: () => "Feature 1",
+                getGfiUrl: () => null,
+                getMimeType: () => "text/html",
+                getAttributesToShow: () => sinon.stub(),
+                getProperties: () => {
+                    return {};
                 },
-                {}],
-                gfiFeaturesReverse: () => sinon.stub(),
-                mapSize: () => []
+                getFeatures: () => [],
+                attributesToShow: sinon.stub()
             },
-            store: getGfiStore(),
-            localVue
+            {}],
+            store = getGfiStore(true, undefined, gfiFeatures, []);
+        let wrapper = null;
+
+        store.state.Modules.GetFeatureInfo.active = true;
+        wrapper = mount(GfiComponent, {
+            global: {
+                plugins: [store]
+            }
         });
 
         expect(wrapper.find(".pager-left").classes("disabled")).to.be.true;
     });
 
     it("should enabled right pager if pagerIndex is zero", () => {
-        const store = getGfiStore(),
-            wrapper = mount(GfiComponent, {
-                computed: {
-                    isMobile: () => true,
-                    desktopType: () => "",
-                    active: () => true,
-                    gfiFeatures: () => [{
-                        getTheme: () => "default",
-                        getTitle: () => "Feature 1",
-                        getGfiUrl: () => null,
-                        getMimeType: () => "text/html",
-                        getAttributesToShow: () => sinon.stub(),
-                        getProperties: () => {
-                            return {};
-                        },
-                        getFeatures: () => []
-                    },
-                    {}],
-                    gfiFeaturesReverse: () => sinon.stub(),
-                    mapSize: () => []
+        const gfiFeatures = [{
+                getTheme: () => "default",
+                getTitle: () => "Feature 1",
+                getGfiUrl: () => null,
+                getMimeType: () => "text/html",
+                getAttributesToShow: () => sinon.stub(),
+                getProperties: () => {
+                    return {};
                 },
-                store,
-                localVue
-            });
+                getFeatures: () => []
+            },
+            {}],
+            store = getGfiStore(true, undefined, gfiFeatures, []);
+        let wrapper = null;
+
+        store.state.Modules.GetFeatureInfo.active = true;
+        wrapper = mount(GfiComponent, {
+            global: {
+                plugins: [store]
+            }
+        });
 
         expect(wrapper.find(".pager-right").classes("disabled")).to.be.false;
     });
 
     it("should disabled right pager if pagerIndex === gfiFeatures.length - 1", () => {
-        const wrapper = mount(GfiComponent, {
+        const gfiFeatures = [{}, {
+                getTheme: () => "default",
+                getTitle: () => "Feature 1",
+                getGfiUrl: () => null,
+                getMimeType: () => "text/html",
+                getMappedProperties: () => null,
+                getProperties: () => {
+                    return {};
+                },
+                getFeatures: () => []
+            }],
+            store = getGfiStore(true, undefined, gfiFeatures, []);
+        let wrapper = null;
+
+        store.state.Modules.GetFeatureInfo.active = true;
+        wrapper = mount(GfiComponent, {
             data () {
                 return {
                     pagerIndex: 1
                 };
             },
-            computed: {
-                isMobile: () => true,
-                desktopType: () => "",
-                active: () => true,
-                gfiFeatures: () => [{}, {
-                    getTheme: () => "default",
-                    getTitle: () => "Feature 1",
-                    getGfiUrl: () => null,
-                    getMimeType: () => "text/html",
-                    getMappedProperties: () => null,
-                    getProperties: () => {
-                        return {};
-                    },
-                    getFeatures: () => []
-                }],
-                gfiFeaturesReverse: () => sinon.stub(),
-                mapSize: () => []
-            },
-            store: getGfiStore(),
-            localVue
+            global: {
+                plugins: [store]
+            }
         });
 
         expect(wrapper.find(".pager-right").classes("disabled")).to.be.true;
     });
 
     it("should enable left pager if pagerIndex === gfiFeatures.length - 1", () => {
-        const wrapper = mount(GfiComponent, {
+        const gfiFeatures = [{}, {
+                getTheme: () => "default",
+                getTitle: () => "Feature 1",
+                getGfiUrl: () => null,
+                getMimeType: () => "text/html",
+                getMappedProperties: () => null,
+                getProperties: () => {
+                    return {};
+                },
+                getFeatures: () => []
+            }],
+            store = getGfiStore(true, undefined, gfiFeatures, []);
+        let wrapper = null;
+
+        store.state.Modules.GetFeatureInfo.active = true;
+        wrapper = mount(GfiComponent, {
             data () {
                 return {
                     pagerIndex: 1
                 };
             },
-            computed: {
-                isMobile: () => true,
-                desktopType: () => "",
-                active: () => true,
-                gfiFeatures: () => [{}, {
-                    getTheme: () => "default",
-                    getTitle: () => "Feature 1",
-                    getGfiUrl: () => null,
-                    getMimeType: () => "text/html",
-                    getMappedProperties: () => null,
-                    getProperties: () => {
-                        return {};
-                    },
-                    getFeatures: () => []
-                }],
-                gfiFeaturesReverse: () => sinon.stub(),
-                mapSize: () => []
-            },
-            store: getGfiStore,
-            localVue
+            global: {
+                plugins: [store]
+            }
         });
 
         expect(wrapper.find(".pager-left").classes("disabled")).to.be.false;
@@ -424,30 +407,28 @@ describe("src_3_0_0/modules/getFeatureInfo/components/GetFeatureInfo.vue", () =>
 
 
     it("should enable left pager and right pager if pagerIndex is between zero and gfiFeature.length - 1", () => {
-        const wrapper = mount(GfiComponent, {
+        const gfiFeatures = [{}, {
+                getTheme: () => "default",
+                getTitle: () => "Feature 1",
+                getGfiUrl: () => null,
+                getMimeType: () => "text/html",
+                getMappedProperties: () => null,
+                getProperties: () => sinon.stub(),
+                getFeatures: () => sinon.stub()
+            }, {}],
+            store = getGfiStore(true, undefined, gfiFeatures, []);
+        let wrapper = null;
+
+        store.state.Modules.GetFeatureInfo.active = true;
+        wrapper = mount(GfiComponent, {
             data () {
                 return {
                     pagerIndex: 1
                 };
             },
-            computed: {
-                isMobile: () => true,
-                desktopType: () => "",
-                active: () => true,
-                gfiFeatures: () => [{}, {
-                    getTheme: () => "default",
-                    getTitle: () => "Feature 1",
-                    getGfiUrl: () => null,
-                    getMimeType: () => "text/html",
-                    getMappedProperties: () => null,
-                    getProperties: () => sinon.stub(),
-                    getFeatures: () => sinon.stub()
-                }, {}],
-                gfiFeaturesReverse: () => sinon.stub(),
-                mapSize: () => []
-            },
-            store: getGfiStore,
-            localVue
+            global: {
+                plugins: [store]
+            }
         });
 
         expect(wrapper.find(".pager-left").classes("disabled")).to.be.false;
@@ -455,25 +436,22 @@ describe("src_3_0_0/modules/getFeatureInfo/components/GetFeatureInfo.vue", () =>
     });
 
     it("should find a new detached component, if componentKey was changed", async () => {
-        const wrapper = shallowMount(GfiComponent, {
-            computed: {
-                isMobile: () => false,
-                desktopType: () => "",
-                active: () => true,
-                uiStyle: () => "",
-                gfiFeatures: () => [{
-                    getGfiUrl: () => null,
-                    getFeatures: () => sinon.stub(),
-                    getProperties: () => sinon.stub()
-                }],
-                gfiFeaturesReverse: () => sinon.stub(),
-                mapSize: () => []
-            },
-            store: getGfiStore,
-            localVue
-        });
-        let firstDetachedComponent = "",
+        const gfiFeatures = [{
+                getGfiUrl: () => null,
+                getFeatures: () => sinon.stub(),
+                getProperties: () => sinon.stub()
+            }],
+            store = getGfiStore(false, "", gfiFeatures, []);
+        let wrapper = null,
+            firstDetachedComponent = "",
             secondDetachedComponent = "";
+
+        store.state.Modules.GetFeatureInfo.active = true;
+        wrapper = shallowMount(GfiComponent, {
+            global: {
+                plugins: [store]
+            }
+        });
 
         firstDetachedComponent = wrapper.findComponent({name: "GetFeatureInfoDetached"});
         await wrapper.setData({componentKey: true});

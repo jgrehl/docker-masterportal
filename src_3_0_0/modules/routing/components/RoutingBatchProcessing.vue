@@ -23,6 +23,7 @@ export default {
             required: true
         }
     },
+    emits: ["cancelProcess", "filesadded"],
     data () {
         return {
             dzIsDropHovering: false

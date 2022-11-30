@@ -1,7 +1,7 @@
-import Vuex from "vuex";
+import {createStore} from "vuex";
 import {expect} from "chai";
 import sinon from "sinon";
-import {config, shallowMount, createLocalVue} from "@vue/test-utils";
+import {config, shallowMount} from "@vue/test-utils";
 import IsochronesComponent from "../../../../components/Isochrones/IsochronesItem.vue";
 import IsochronesItemBatchProcessingComponent from "../../../../components/Isochrones/IsochronesItemBatchProcessing.vue";
 import RoutingBatchProcessingCheckboxComponent from "../../../../components/RoutingBatchProcessingCheckbox.vue";
@@ -17,10 +17,7 @@ import gettersIsochrones from "../../../../store/isochrones/gettersIsochrones";
 import stateIsochrones from "../../../../store/isochrones/stateIsochrones";
 
 config.silent = true;
-const localVue = createLocalVue();
-
-localVue.use(Vuex);
-config.mocks.$t = key => key;
+config.global.mocks.$t = key => key;
 
 describe("src/modules/routing/components/Isochrones/IsochronesItem.vue", () => {
 
@@ -40,7 +37,7 @@ describe("src/modules/routing/components/Isochrones/IsochronesItem.vue", () => {
 
 
     beforeEach(() => {
-        store = new Vuex.Store({
+        store = createStore({
             namespaced: true,
             modules: {
                 Modules: {
@@ -84,32 +81,37 @@ describe("src/modules/routing/components/Isochrones/IsochronesItem.vue", () => {
 
     afterEach(() => {
         sinon.restore();
-        if (wrapper) {
-            wrapper.destroy();
-        }
     });
 
     it("renders Isochrones", () => {
-        wrapper = shallowMount(IsochronesComponent, {store, localVue});
+        wrapper = shallowMount(IsochronesComponent, {global: {
+            plugins: [store]
+        }});
         expect(wrapper.find("#routing-isochrones").exists()).to.be.true;
     });
 
     it("renders IsochronesBatchProcessingCheckbox", async () => {
-        wrapper = shallowMount(IsochronesComponent, {store, localVue});
+        wrapper = shallowMount(IsochronesComponent, {global: {
+            plugins: [store]
+        }});
         wrapper.vm.settings.batchProcessing.enabled = true;
         await wrapper.vm.$nextTick();
         expect(wrapper.findComponent(RoutingBatchProcessingCheckboxComponent).exists()).to.be.true;
     });
 
     it("doesn't render IsochronesBatchProcessingCheckbox", async () => {
-        wrapper = shallowMount(IsochronesComponent, {store, localVue});
+        wrapper = shallowMount(IsochronesComponent, {global: {
+            plugins: [store]
+        }});
         wrapper.vm.settings.batchProcessing.enabled = false;
         await wrapper.vm.$nextTick();
         expect(wrapper.findComponent(RoutingBatchProcessingCheckboxComponent).exists()).to.be.false;
     });
 
     it("renders IsochronesBatchProcessing", async () => {
-        wrapper = shallowMount(IsochronesComponent, {store, localVue});
+        wrapper = shallowMount(IsochronesComponent, {global: {
+            plugins: [store]
+        }});
         wrapper.vm.settings.batchProcessing.enabled = true;
         wrapper.vm.settings.batchProcessing.active = true;
         await wrapper.vm.$nextTick();
@@ -117,7 +119,9 @@ describe("src/modules/routing/components/Isochrones/IsochronesItem.vue", () => {
     });
 
     it("doesn't render IsochronesBatchProcessing", async () => {
-        wrapper = shallowMount(IsochronesComponent, {store, localVue});
+        wrapper = shallowMount(IsochronesComponent, {global: {
+            plugins: [store]
+        }});
         wrapper.vm.settings.batchProcessing.enabled = true;
         wrapper.vm.settings.batchProcessing.active = false;
         await wrapper.vm.$nextTick();
@@ -125,14 +129,18 @@ describe("src/modules/routing/components/Isochrones/IsochronesItem.vue", () => {
     });
 
     it("renders RoutingCoordinateInput", async () => {
-        wrapper = shallowMount(IsochronesComponent, {store, localVue});
+        wrapper = shallowMount(IsochronesComponent, {global: {
+            plugins: [store]
+        }});
         wrapper.vm.settings.batchProcessing.enabled = false;
         await wrapper.vm.$nextTick();
         expect(wrapper.find("#routing-isochrones-coordinate-input-form").exists()).to.be.true;
     });
 
     it("doesn't render RoutingCoordinateInput", async () => {
-        wrapper = shallowMount(IsochronesComponent, {store, localVue});
+        wrapper = shallowMount(IsochronesComponent, {global: {
+            plugins: [store]
+        }});
         wrapper.vm.settings.batchProcessing.enabled = true;
         wrapper.vm.settings.batchProcessing.active = true;
         await wrapper.vm.$nextTick();
@@ -140,7 +148,9 @@ describe("src/modules/routing/components/Isochrones/IsochronesItem.vue", () => {
     });
 
     it("renders RoutingSliderInput - DISTANCE", async () => {
-        wrapper = shallowMount(IsochronesComponent, {store, localVue});
+        wrapper = shallowMount(IsochronesComponent, {global: {
+            plugins: [store]
+        }});
         wrapper.vm.settings.isochronesMethodOption = "DISTANCE";
         await wrapper.vm.$nextTick();
         expect(
@@ -156,7 +166,9 @@ describe("src/modules/routing/components/Isochrones/IsochronesItem.vue", () => {
     });
 
     it("renders RoutingSliderInput - TIME", async () => {
-        wrapper = shallowMount(IsochronesComponent, {store, localVue});
+        wrapper = shallowMount(IsochronesComponent, {global: {
+            plugins: [store]
+        }});
         wrapper.vm.settings.isochronesMethodOption = "TIME";
         await wrapper.vm.$nextTick();
         expect(
@@ -175,7 +187,9 @@ describe("src/modules/routing/components/Isochrones/IsochronesItem.vue", () => {
         store.commit("Modules/Routing/Isochrones/setRoutingIsochrones", {
             getAreas: () => []
         });
-        wrapper = shallowMount(IsochronesComponent, {store, localVue});
+        wrapper = shallowMount(IsochronesComponent, {global: {
+            plugins: [store]
+        }});
         wrapper.vm.settings.batchProcessing.enabled = false;
         await wrapper.vm.$nextTick();
         expect(wrapper.find("#routing-isochrones-result-isochrones").exists()).to.be.true;
@@ -184,7 +198,9 @@ describe("src/modules/routing/components/Isochrones/IsochronesItem.vue", () => {
 
     it("doesn't render isochrones result", async () => {
         store.commit("Modules/Routing/Isochrones/setRoutingIsochrones", null);
-        wrapper = shallowMount(IsochronesComponent, {store, localVue});
+        wrapper = shallowMount(IsochronesComponent, {global: {
+            plugins: [store]
+        }});
         wrapper.vm.settings.batchProcessing.enabled = false;
         await wrapper.vm.$nextTick();
         expect(wrapper.find("#routing-isochrones-result-isochrones").exists()).to.be.false;
@@ -192,7 +208,9 @@ describe("src/modules/routing/components/Isochrones/IsochronesItem.vue", () => {
     });
 
     it("computes currentValue depending on method option", () => {
-        wrapper = shallowMount(IsochronesComponent, {store, localVue});
+        wrapper = shallowMount(IsochronesComponent, {global: {
+            plugins: [store]
+        }});
         wrapper.vm.settings.distanceValue = 10;
         wrapper.vm.settings.timeValue = 20;
         wrapper.vm.settings.isochronesMethodOption = "TIME";
@@ -202,7 +220,9 @@ describe("src/modules/routing/components/Isochrones/IsochronesItem.vue", () => {
     });
 
     it("computes maxInterval depending on currentValue", () => {
-        wrapper = shallowMount(IsochronesComponent, {store, localVue});
+        wrapper = shallowMount(IsochronesComponent, {global: {
+            plugins: [store]
+        }});
         wrapper.vm.settings.distanceValue = 10;
         wrapper.vm.settings.isochronesMethodOption = "DISTANCE";
         wrapper.vm.settings.maxInterval = 15;
@@ -212,7 +232,9 @@ describe("src/modules/routing/components/Isochrones/IsochronesItem.vue", () => {
     });
 
     it("should setIntervalValue on changeMethodOption if value smaller than intervalValue", () => {
-        wrapper = shallowMount(IsochronesComponent, {store, localVue});
+        wrapper = shallowMount(IsochronesComponent, {global: {
+            plugins: [store]
+        }});
         wrapper.vm.settings.distanceValue = 10;
         wrapper.vm.settings.intervalValue = 30;
         wrapper.vm.settings.isochronesMethodOption = "TIME";
@@ -221,7 +243,9 @@ describe("src/modules/routing/components/Isochrones/IsochronesItem.vue", () => {
     });
 
     it("should setIntervalValue on setDistanceValue if value smaller than intervalValue", () => {
-        wrapper = shallowMount(IsochronesComponent, {store, localVue});
+        wrapper = shallowMount(IsochronesComponent, {global: {
+            plugins: [store]
+        }});
         wrapper.vm.settings.distanceValue = 30;
         wrapper.vm.settings.intervalValue = 30;
         wrapper.vm.setDistanceValue(20);
@@ -229,7 +253,9 @@ describe("src/modules/routing/components/Isochrones/IsochronesItem.vue", () => {
     });
 
     it("should setIntervalValue on setTimeValue if value smaller than intervalValue", () => {
-        wrapper = shallowMount(IsochronesComponent, {store, localVue});
+        wrapper = shallowMount(IsochronesComponent, {global: {
+            plugins: [store]
+        }});
         wrapper.vm.settings.timeValue = 30;
         wrapper.vm.settings.intervalValue = 30;
         wrapper.vm.setTimeValue(20);

@@ -52,9 +52,10 @@ export default {
         if (this.feature.getMimeType() === "text/html") {
             this.isContentHtml = true;
         }
-        this.$on("hidemarker", () => {
-            this.hideMarker();
-        });
+        // @todo aktivieren und nach Vue3 portieren, wenn noetig. Unklar, wann das event "hidemarker" geworfen wird
+        // this.$on("hidemarker", () => {
+        //     this.hideMarker();
+        // });
     },
     mounted () {
         const menuItem = {
