@@ -635,7 +635,7 @@ export default {
 <style lang="scss" scoped>
 @import "~variables";
 
-    @media (max-width: 767px) {
+    @include media-breakpoint-down(md) {
         .checkbox-container .form-inline {
             font-size: $font-size-base;
         }
@@ -699,7 +699,7 @@ export default {
         padding-left: 0;
         max-width: 50px;
     }
-   @media (max-width: 767px) {
+    @include media-breakpoint-down(md) {
         .eastingToBottomNoError{
             transform: translate(0px, 70px)
         }
