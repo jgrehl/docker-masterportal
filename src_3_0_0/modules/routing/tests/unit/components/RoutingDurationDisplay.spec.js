@@ -1,6 +1,6 @@
-import Vuex from "vuex";
+import {createStore} from "vuex";
 import {expect} from "chai";
-import {config, shallowMount, createLocalVue} from "@vue/test-utils";
+import {config, shallowMount} from "@vue/test-utils";
 import RoutingDurationDisplayComponent from "../../../components/RoutingDurationDisplay.vue";
 import mutations from "../../../store/mutationsRouting";
 import actions from "../../../store/actionsRouting";
@@ -10,10 +10,7 @@ import actionsDirections from "../../../store/directions/actionsDirections";
 import gettersDirections from "../../../store/directions/gettersDirections";
 import stateDirections from "../../../store/directions/stateDirections";
 
-const localVue = createLocalVue();
-
-localVue.use(Vuex);
-config.mocks.$t = key => key;
+config.global.mocks.$t = key => key;
 
 describe("src/modules/routing/components/RoutingDurationDisplay.vue", () => {
     let store,
@@ -21,7 +18,7 @@ describe("src/modules/routing/components/RoutingDurationDisplay.vue", () => {
         props;
 
     beforeEach(() => {
-        store = new Vuex.Store({
+        store = createStore({
             namespaced: true,
             modules: {
                 Modules: {
@@ -53,17 +50,12 @@ describe("src/modules/routing/components/RoutingDurationDisplay.vue", () => {
         };
     });
 
-    afterEach(() => {
-        if (wrapper) {
-            wrapper.destroy();
-        }
-    });
-
     it("renders RoutingDurationDisplayComponent", () => {
         wrapper = shallowMount(RoutingDurationDisplayComponent, {
-            store,
-            localVue,
-            propsData: props
+            global: {
+                plugins: [store]
+            },
+            props: props
         });
         expect(wrapper.find("span").exists()).to.be.true;
     });
@@ -71,9 +63,10 @@ describe("src/modules/routing/components/RoutingDurationDisplay.vue", () => {
     it("renders duration < 60 as '1 min'", () => {
         props.duration = 1;
         wrapper = shallowMount(RoutingDurationDisplayComponent, {
-            store,
-            localVue,
-            propsData: props
+            global: {
+                plugins: [store]
+            },
+            props: props
         });
         expect(wrapper.find("span").text()).equal("< 1 min");
     });
@@ -81,9 +74,10 @@ describe("src/modules/routing/components/RoutingDurationDisplay.vue", () => {
     it("renders duration < 3600 as minutes", () => {
         props.duration = 3599;
         wrapper = shallowMount(RoutingDurationDisplayComponent, {
-            store,
-            localVue,
-            propsData: props
+            global: {
+                plugins: [store]
+            },
+            props: props
         });
         expect(wrapper.find("span").text()).equal("59 min");
     });
@@ -91,9 +85,10 @@ describe("src/modules/routing/components/RoutingDurationDisplay.vue", () => {
     it("renders duration >= 3600 as hours", () => {
         props.duration = 3600;
         wrapper = shallowMount(RoutingDurationDisplayComponent, {
-            store,
-            localVue,
-            propsData: props
+            global: {
+                plugins: [store]
+            },
+            props: props
         });
         expect(wrapper.find("span").text()).equal("1 h");
     });
@@ -101,9 +96,10 @@ describe("src/modules/routing/components/RoutingDurationDisplay.vue", () => {
     it("renders duration >= 3600 as hours with remaining minutes", () => {
         props.duration = 3660;
         wrapper = shallowMount(RoutingDurationDisplayComponent, {
-            store,
-            localVue,
-            propsData: props
+            global: {
+                plugins: [store]
+            },
+            props: props
         });
         expect(wrapper.find(".minutesminushours").text()).equal("1 min");
     });

@@ -1,7 +1,7 @@
-import Vuex from "vuex";
+import {createStore} from "vuex";
 import {expect} from "chai";
 import sinon from "sinon";
-import {config, shallowMount, createLocalVue} from "@vue/test-utils";
+import {config, shallowMount} from "@vue/test-utils";
 import IsochronesItemBatchProcessingComponent from "../../../../components/Isochrones/IsochronesItemBatchProcessing.vue";
 import mutations from "../../../../store/mutationsRouting";
 import actions from "../../../../store/actionsRouting";
@@ -13,16 +13,13 @@ import stateIsochrones from "../../../../store/isochrones/stateIsochrones";
 import {RoutingIsochrones} from "../../../../js/classes/routing-isochrones";
 import {RoutingIsochronesArea} from "../../../../js/classes/routing-isochrones-area";
 
-const localVue = createLocalVue();
-
-localVue.use(Vuex);
-config.mocks.$t = key => key;
+config.global.mocks.$t = key => key;
 
 describe("src/modules/routing/components/Isochrones/IsochronesItemBatchProcessing.vue", () => {
     let store, wrapper, props;
 
     beforeEach(() => {
-        store = new Vuex.Store({
+        store = createStore({
             namespaced: true,
             modules: {
                 Modules: {
@@ -63,17 +60,15 @@ describe("src/modules/routing/components/Isochrones/IsochronesItemBatchProcessin
     });
 
     afterEach(() => {
-        if (wrapper) {
-            wrapper.destroy();
-        }
         sinon.restore();
     });
 
     it("renders IsochronesBatchProcessingComponent", () => {
         wrapper = shallowMount(IsochronesItemBatchProcessingComponent, {
-            store,
-            localVue,
-            propsData: props
+            global: {
+                plugins: [store]
+            },
+            props: props
         });
         expect(
             wrapper.findComponent(IsochronesItemBatchProcessingComponent).exists()
@@ -82,9 +77,10 @@ describe("src/modules/routing/components/Isochrones/IsochronesItemBatchProcessin
 
     it("should create CSV download filename", () => {
         wrapper = shallowMount(IsochronesItemBatchProcessingComponent, {
-            store,
-            localVue,
-            propsData: props
+            global: {
+                plugins: [store]
+            },
+            props: props
         });
         const filenameGeojson = "testgeo.geojson",
             filenameCsv = "testcsv.csv";
@@ -100,9 +96,10 @@ describe("src/modules/routing/components/Isochrones/IsochronesItemBatchProcessin
     describe("test csv parsing", () => {
         it("should process csv without errors", async () => {
             wrapper = shallowMount(IsochronesItemBatchProcessingComponent, {
-                store,
-                localVue,
-                propsData: props
+                global: {
+                    plugins: [store]
+                },
+                props: props
             });
             wrapper.vm.fetchIsochrones = () => {
                 const iso1 = new RoutingIsochrones([
@@ -333,9 +330,10 @@ DEGAC00000007133;13.0285;52.30963`,
 
         it("should throw error with empty csv", async () => {
             wrapper = shallowMount(IsochronesItemBatchProcessingComponent, {
-                store,
-                localVue,
-                propsData: props
+                global: {
+                    plugins: [store]
+                },
+                props: props
             });
 
             try {
@@ -353,9 +351,10 @@ DEGAC00000007133;13.0285;52.30963`,
         it("should throw error with csv too large", async () => {
             props.settings.batchProcessing.limit = 1;
             wrapper = shallowMount(IsochronesItemBatchProcessingComponent, {
-                store,
-                localVue,
-                propsData: props
+                global: {
+                    plugins: [store]
+                },
+                props: props
             });
 
             try {
@@ -374,9 +373,10 @@ DEGAC00000007133;13.0285;52.30963`);
 
         it("should throw error with csv row with too many columns", async () => {
             wrapper = shallowMount(IsochronesItemBatchProcessingComponent, {
-                store,
-                localVue,
-                propsData: props
+                global: {
+                    plugins: [store]
+                },
+                props: props
             });
 
             try {
@@ -395,9 +395,10 @@ DEGAC00000007133;13.0285;52.30963;1`);
 
         it("should throw error with coordinate not being a number", async () => {
             wrapper = shallowMount(IsochronesItemBatchProcessingComponent, {
-                store,
-                localVue,
-                propsData: props
+                global: {
+                    plugins: [store]
+                },
+                props: props
             });
 
             try {

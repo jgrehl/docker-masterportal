@@ -1,13 +1,10 @@
-import Vuex from "vuex";
-import {config, createLocalVue, shallowMount} from "@vue/test-utils";
+import {createStore} from "vuex";
+import {config, shallowMount} from "@vue/test-utils";
 import {expect} from "chai";
 import StartModuleComponent from "../../../components/StartModule.vue";
 import sinon from "sinon";
 
-const localVue = createLocalVue();
-
-localVue.use(Vuex);
-config.mocks.$t = key => key;
+config.global.mocks.$t = key => key;
 
 describe("src_3_0_0/modules/controls/startModule/components/StartModule.vue", () => {
     let setActiveSpy = sinon.spy(),
@@ -16,7 +13,7 @@ describe("src_3_0_0/modules/controls/startModule/components/StartModule.vue", ()
     beforeEach(() => {
         setActiveSpy = sinon.spy();
 
-        store = new Vuex.Store({
+        store = createStore({
             namespaces: true,
             modules: {
                 Controls: {
@@ -73,7 +70,10 @@ describe("src_3_0_0/modules/controls/startModule/components/StartModule.vue", ()
 
     describe("render control", () => {
         it("should render the control", () => {
-            const wrapper = shallowMount(StartModuleComponent, {store, localVue});
+            const wrapper = shallowMount(StartModuleComponent, {
+                global: {
+                    plugins: [store]
+                }});
 
             expect(wrapper.find("div#start-module-button").exists()).to.be.true;
         });

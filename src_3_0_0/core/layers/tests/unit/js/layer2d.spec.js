@@ -7,12 +7,12 @@ import Layer2d from "../../../js/layer2d";
 describe("src_3_0_0/core/js/layers/layer2d.js", () => {
     let warn;
 
-    before(() => {
+    beforeEach(() => {
         warn = sinon.spy();
         sinon.stub(console, "warn").callsFake(warn);
     });
 
-    after(() => {
+    afterEach(() => {
         sinon.restore();
     });
 
@@ -61,7 +61,7 @@ describe("src_3_0_0/core/js/layers/layer2d.js", () => {
             stopAutoRefreshSpy,
             layer2d;
 
-        before(() => {
+        beforeEach(() => {
             controlAutoRefreshSpy = sinon.spy(Layer2d.prototype, "controlAutoRefresh");
             startAutoRefreshSpy = sinon.spy(Layer2d.prototype, "startAutoRefresh");
             stopAutoRefreshSpy = sinon.spy(Layer2d.prototype, "stopAutoRefresh");
@@ -70,6 +70,10 @@ describe("src_3_0_0/core/js/layers/layer2d.js", () => {
                 id: 123456,
                 visibility: true
             });
+        });
+
+        afterEach(() => {
+            sinon.restore();
         });
 
         it("should start the function controlAutoRefresh and startAutoRefreshSpy when a layer is created", () => {

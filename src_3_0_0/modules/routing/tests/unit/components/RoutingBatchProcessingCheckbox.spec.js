@@ -1,12 +1,9 @@
-import Vuex from "vuex";
+import {createStore} from "vuex";
 import {expect} from "chai";
-import {config, shallowMount, createLocalVue} from "@vue/test-utils";
+import {config, shallowMount} from "@vue/test-utils";
 import RoutingBatchProcessingCheckboxComponent from "../../../components/RoutingBatchProcessingCheckbox.vue";
 
-const localVue = createLocalVue();
-
-localVue.use(Vuex);
-config.mocks.$t = key => key;
+config.global.mocks.$t = key => key;
 
 describe("src/modules/routing/components/RoutingBatchProcessingCheckbox.vue", () => {
     let store,
@@ -14,7 +11,7 @@ describe("src/modules/routing/components/RoutingBatchProcessingCheckbox.vue", ()
         props;
 
     beforeEach(() => {
-        store = new Vuex.Store({
+        store = createStore({
             namespaced: true,
             modules: {
             }
@@ -27,17 +24,12 @@ describe("src/modules/routing/components/RoutingBatchProcessingCheckbox.vue", ()
         };
     });
 
-    afterEach(() => {
-        if (wrapper) {
-            wrapper.destroy();
-        }
-    });
-
     it("renders RoutingBatchProcessingCheckboxComponent", () => {
         wrapper = shallowMount(RoutingBatchProcessingCheckboxComponent, {
-            store,
-            localVue,
-            propsData: props
+            global: {
+                plugins: [store]
+            },
+            props: props
         });
         expect(wrapper.find("#routing-batch-processing-checkbox").exists()).to.be.true;
         expect(wrapper.find("input").element.checked).to.be.false;
@@ -46,9 +38,10 @@ describe("src/modules/routing/components/RoutingBatchProcessingCheckbox.vue", ()
     it("changes checked input", () => {
         props.batchProcessing.active = true;
         wrapper = shallowMount(RoutingBatchProcessingCheckboxComponent, {
-            store,
-            localVue,
-            propsData: props
+            global: {
+                plugins: [store]
+            },
+            props: props
         });
         expect(wrapper.find("input").element.checked).to.be.true;
     });
@@ -56,9 +49,10 @@ describe("src/modules/routing/components/RoutingBatchProcessingCheckbox.vue", ()
 
     it("emits input on change", async () => {
         wrapper = shallowMount(RoutingBatchProcessingCheckboxComponent, {
-            store,
-            localVue,
-            propsData: props
+            global: {
+                plugins: [store]
+            },
+            props: props
         });
         const input = wrapper.find("input");
 
