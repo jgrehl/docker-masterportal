@@ -1,5 +1,5 @@
-import Vuex from "vuex";
-import {config, mount, createLocalVue} from "@vue/test-utils";
+import {createStore} from "vuex";
+import {config, mount} from "@vue/test-utils";
 import {expect} from "chai";
 import sinon from "sinon";
 import Feature from "ol/Feature";
@@ -7,10 +7,8 @@ import Point from "ol/geom/Point";
 
 import DetachedTemplate from "../../../components/GetFeatureInfoDetached.vue";
 
-const localVue = createLocalVue();
-
-config.mocks.$t = key => key;
-localVue.use(Vuex);
+config.global.mocks.$t = key => key;
+config.global.mocks.$gfiThemeAddons = [];
 
 describe("src_3_0_0/modules/getFeatureInfo/components/GetFeatureInfoDetached.vue", () => {
     const highlightVectorRules = {
@@ -51,7 +49,7 @@ describe("src_3_0_0/modules/getFeatureInfo/components/GetFeatureInfoDetached.vue
     });
 
     beforeEach(() => {
-        store = new Vuex.Store({
+        store = createStore({
             namespaced: true,
             modules: {
                 Modules: {
@@ -111,17 +109,9 @@ describe("src_3_0_0/modules/getFeatureInfo/components/GetFeatureInfoDetached.vue
                     template: "<span />"
                 }
             },
-            computed: {
-                styleAll: () => [{
-                    "right": ""
-                }],
-                styleContent: () => [{
-                    "max-width": "",
-                    "max-height": ""
-                }]
-            },
-            store: store,
-            localVue
+            global: {
+                plugins: [store]
+            }
         });
 
         expect(wrapper.find("span").text()).to.be.equal("Hallo");
@@ -145,17 +135,9 @@ describe("src_3_0_0/modules/getFeatureInfo/components/GetFeatureInfoDetached.vue
                     template: "<span />"
                 }
             },
-            computed: {
-                styleAll: () => [{
-                    "right": ""
-                }],
-                styleContent: () => [{
-                    "max-width": "",
-                    "max-height": ""
-                }]
-            },
-            store: store,
-            localVue
+            global: {
+                plugins: [store]
+            }
         });
 
         expect(wrapper.findComponent({name: "DefaultTheme"}).exists()).to.be.true;
@@ -182,8 +164,9 @@ describe("src_3_0_0/modules/getFeatureInfo/components/GetFeatureInfoDetached.vue
                 slots: {
                     footer: "<div class=\"gfi-footer\">Footer</div>"
                 },
-                store: store,
-                localVue
+                global: {
+                    plugins: [store]
+                }
             }),
             footer = wrapper.find(".gfi-footer");
 
@@ -208,8 +191,9 @@ describe("src_3_0_0/modules/getFeatureInfo/components/GetFeatureInfoDetached.vue
                     template: "<span />"
                 }
             },
-            store: store,
-            localVue
+            global: {
+                plugins: [store]
+            }
         });
 
         expect(wrapper.vm.isContentHtml).to.be.true;
@@ -233,8 +217,9 @@ describe("src_3_0_0/modules/getFeatureInfo/components/GetFeatureInfoDetached.vue
                     template: "<span />"
                 }
             },
-            store: store,
-            localVue
+            global: {
+                plugins: [store]
+            }
         });
 
         expect(wrapper.vm.isContentHtml).to.be.false;
