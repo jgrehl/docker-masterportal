@@ -110,7 +110,7 @@ export default {
             :class="['mt-0 d-flex flex-column', isLayerVisible ? 'bold' : '']"
             :for="('layertree-layer-checkbox' + conf.Titel)"
         >
-            {{ 'alle auswählen' }}
+            {{ $t("common:tree.selectAll") }}
         </label>
     </div>
 </template>
