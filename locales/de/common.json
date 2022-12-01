@@ -425,7 +425,7 @@
                     "A3 Hochformat": "A3 Hochformat",
                     "A3 Querformat": "A3 Querformat"
                 },
-                "hintInfoScale": "Der ausgewählte Druckmaßstab weicht vom Maßstab im Kartenfenster ab. Das kann zu einem veränderten Kartenlayout im Druck führen.",
+                "hintInfoScale": "Wenn der ausgewählte Druckmaßstab vom Maßstab im Kartenfenster abweicht, kann dies zu einem veränderten Kartenlayout im Druck führen.",
                 "invisibleLayer": "Folgende Themen können im ausgewählten Druckmaßstab {{scale}} nicht gedruckt werden:"
             },
             "shadow": {
