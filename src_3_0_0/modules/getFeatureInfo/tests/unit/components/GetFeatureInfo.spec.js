@@ -184,6 +184,40 @@ describe("src_3_0_0/modules/getFeatureInfo/components/GetFeatureInfo.vue", () =>
         expect(wrapper.vm.pagerIndex).to.equal(0);
     });
 
+    it("should call reset if active is false", () => {
+        const gfiFeatures = [{
+                getGfiUrl: () => null,
+                getFeatures: () => sinon.stub(),
+                getProperties: () => {
+                    return {};
+                }
+            }],
+            store = getGfiStore(false, undefined, gfiFeatures, []),
+            spyReset = sinon.spy(GfiComponent.methods, "reset");
+        let wrapper = null;
+
+        store.state.Modules.GetFeatureInfo.active = true;
+        wrapper = shallowMount(GfiComponent, {
+            components: {
+                GetFeatureInfoDetached: {
+                    name: "GetFeatureInfoDetached",
+                    template: "<span />"
+                }
+            },
+            data () {
+                return {
+                    pagerIndex: 1
+                };
+            },
+            global: {
+                plugins: [store]
+            }
+        });
+
+        wrapper.vm.$options.watch.active.call(wrapper.vm, false);
+        expect(spyReset.calledOnce).to.be.true;
+    });
+
     it("should display the footer", () => {
         const gfiFeatures = [{
                 getTheme: () => "default",
