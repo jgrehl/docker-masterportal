@@ -54,7 +54,7 @@ export default {
                 if (mapMode === "2D") {
                     const layerTypes3d = layerFactory.getLayerTypes3d(),
                         visible2DLayers = visibleLayers.filter(layer => {
-                            return !layerTypes3d.includes(layer.typ.toUpperCase());
+                            return !layerTypes3d.includes(layer.typ?.toUpperCase());
                         });
 
                     this.setVisibleSubjectDataLayers(visible2DLayers);
