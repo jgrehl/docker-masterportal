@@ -117,7 +117,8 @@
         "externalTechnicalData": "External technical data",
         "selectedFeatures": "Selection:",
         "filterIconText": "Open filter",
-        "scaleText": "Displayed in the following scale range: "
+        "scaleText": "Displayed in the following scale range: ",
+        "selectAll": "select all"
     },
     "date": "Date",
     "time": "Time",
