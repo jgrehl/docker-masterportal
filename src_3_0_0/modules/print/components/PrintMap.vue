@@ -59,14 +59,14 @@ export default {
                 this.setCurrentScale(value);
             }
         },
-        documentTitle: {
-            get () {
-                return this.title;
-            },
-            set (value) {
-                this.setTitle(value);
-            }
-        },
+        // documentTitle: {
+        //     get () {
+        //         return this.title;
+        //     },
+        //     set (value) {
+        //         this.setTitle(value);
+        //     }
+        // },
         dpiForPdf: {
             get () {
                 return this.$store.state.Modules.Print.dpiForPdf;
@@ -368,10 +368,10 @@ export default {
             <div>
                 <InputText
                     :id="docTitleId"
-                    :model="documentTitle"
                     :label="$t('modules.tools.print.titleLabel')"
                     :placeholder="$t('modules.tools.print.titleLabel')"
-                    :value="$t('modules.tools.print.titleLabel')"
+                    :value="title"
+                    :input="setTitle"
                 />
             </div>
             <div class="form-floating mb-3">
