@@ -49,8 +49,6 @@ export default {
          * @returns {Boolean} gfi visibility
          */
         isVisible: function () {
-            // console.log("#### this.gfiFeatures",this.gfiFeatures);
-            // console.log("this.active",this.active);
             return this.gfiFeatures !== null && this.active;
         },
         /**
@@ -58,7 +56,6 @@ export default {
          * @returns {?Object} - the current feature
          */
         feature: function () {
-            // console.log("???????????????????", this.gfiFeatures);
             if (this.gfiFeatures !== null && Array.isArray(this.gfiFeatures) && this.gfiFeatures.length > 0) {
                 return this.gfiFeatures[this.pagerIndex];
             }
