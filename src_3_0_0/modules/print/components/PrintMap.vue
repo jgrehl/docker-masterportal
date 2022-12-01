@@ -18,7 +18,6 @@ export default {
     components: {FlatButton, InputText},
     data () {
         return {
-            showHintInfoScale: false,
             printIcon: "bi-printer",
             downloadIcon: "bi-download",
             docTitleId: "docTitle",
@@ -369,9 +368,10 @@ export default {
             <div>
                 <InputText
                     :id="docTitleId"
-                    v-model="documentTitle"
+                    :model="documentTitle"
                     :label="$t('modules.tools.print.titleLabel')"
                     :placeholder="$t('modules.tools.print.titleLabel')"
+                    :value="$t('modules.tools.print.titleLabel')"
                 />
             </div>
             <div class="form-floating mb-3">
@@ -454,26 +454,13 @@ export default {
                 <label for="printScale">
                     {{ $t("common:modules.tools.print.scaleLabel") }}
                 </label>
-                <div
-                    :class="{
-                        'hint': true,
-                        'grey-icon': currentScale === currentMapScale
-                    }"
-                    @mouseover="showHintInfoScale = true"
-                    @focusin="showHintInfoScale = true"
-                    @mouseleave="showHintInfoScale = false"
-                    @focusout="showHintInfoScale = false"
-                >
-                    <span class="bootstrap-icon">
+                <div class="row info mb-3 mt-2">
+                    <span class="col-1 info-icon d-flex align-items-center">
                         <i class="bi-info-circle-fill" />
                     </span>
-                </div>
-                <div
-                    v-if="currentScale !== currentMapScale"
-                    v-show="showHintInfoScale"
-                    class="hint-info"
-                >
-                    {{ $t("common:modules.tools.print.hintInfoScale") }}
+                    <div class="col info-text ps-3">
+                        {{ $t("common:modules.tools.print.hintInfoScale") }}
+                    </div>
                 </div>
             </div>
             <div
@@ -493,16 +480,18 @@ export default {
                     {{ $t("common:modules.tools.print.validationWarning") }}
                 </small>
             </div>
-            <div class="form-check">
+            <div class="form-check form-switch mb-3 d-flex align-items-center">
                 <input
                     id="autoAdjustScale"
                     type="checkbox"
+                    role="switch"
+                    aria-checked="print with info"
                     :checked="autoAdjustScale && !isScaleSelectedManually"
                     class="form-check-input"
                     @change="setAutoAdjustScale($event.target.checked)"
                 >
                 <label
-                    class="form-check-label"
+                    class="form-check-label ps-2 pt-2"
                     for="autoAdjustScale"
                 >
                     {{ $t("common:modules.tools.print.autoAdjustScale") }}
@@ -511,17 +500,19 @@ export default {
             <div
                 v-if="isGfiAvailable"
             >
-                <div class="form-check">
+                <div class="form-check form-switch mb-3 d-flex align-items-center">
                     <input
                         id="printGfi"
                         type="checkbox"
+                        role="switch"
+                        aria-checked="print with info"
                         class="form-check-input"
                         :disabled="currentFeature === null"
                         :checked="isGfiSelected"
                         @change="setIsGfiSelected($event.target.checked)"
                     >
                     <label
-                        class="col-md-5 col-form-label pt-0"
+                        class="form-check-label ps-2 pt-2"
                         for="printGfi"
                     >
                         {{ $t("common:modules.tools.print.withInfoLabel") }}
@@ -547,7 +538,7 @@ export default {
                 :key="file.index"
                 class="row"
             >
-                <div class="col-md-4 modules-print-download-title-container">
+                <div class="col-md-3 modules-print-download-title-container">
                     <span
                         v-if="printService === 'plotservice'"
                         class="modules-print-download-title"
@@ -573,7 +564,7 @@ export default {
                         <i class="bi-check-lg" />
                     </div>
                 </div>
-                <div class="col-md-6 d-grid gap-2 modules-print-download-button-container">
+                <div class="col-md-7 d-grid gap-2 modules-print-download-button-container">
                     <FlatButton
                         v-if="file.finishState"
                         aria-label="$t('modules.tools.print.downloadFile')"
@@ -598,32 +589,17 @@ export default {
 <style lang="scss" scoped>
     @import "~variables";
 
-    .form-group {
-        &.scale{
-            position: relative;
-            .hint {
-                position: absolute;
-                width: 20px;
-                right: -5px;
-                top: 7px;
-                cursor: pointer;
-                text-align: center;
-            }
-            .hint-info {
-                position: absolute;
-                left: 0;
-                top: 25px;
-                width: 100%;
-                z-index: 10;
-                background: $white;
-                border: 1px solid $dark_grey;
-                padding: 5px;
-            }
-            .grey-icon {
-                span {
-                    color: $light_grey;
-                }
-            }
+    .form-check-input {
+        width: 2.5rem;
+        height: 1.5rem;
+    }
+    .info {
+        max-width: fit-content;
+        .info-icon {
+            font-size: 1.5rem;
+        }
+        .info-text {
+            font-size: $font-size-sm;
         }
     }
 
@@ -662,9 +638,9 @@ export default {
             }
 
             .modules-print-download-loader {
-                border: 4px solid $light_grey;
+                border: 4px solid $primary;
                 border-radius: 50%;
-                border-top: 4px solid $light_blue;
+                border-top: 4px solid $dark_blue;
                 width: 25px;
                 height: 25px;
                 -webkit-animation: spin 1s linear infinite; /* Safari */
