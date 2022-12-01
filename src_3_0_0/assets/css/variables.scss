@@ -88,6 +88,7 @@ $light_grey_outline: #050505;
 */
 $dark_blue: #151C27;
 $primary: #D6E3FF;
+$secondary: #3C5F94;
 $white: #ffffff;
 $black: #000;
 $light_red: #E10019;
@@ -166,6 +167,18 @@ $secondary_table_style: #F2F2F2;  // background for table view style
   --bs-btn-box-shadow: none;
 }
 
+/*
+ * switches and checkboxes
+ */
+
+$form-check-input-checked-bg-color: #001B3D;
+$form-check-input-border: 1px solid #75777D;
+$form-check-input-focus-border: 1px solid #75777D;
+
+/*
+ * Inputs
+ */
+$input-focus-border-color: #3C5F94;
 
 /* ACCENT: Action
  * Action color for certain special accents
