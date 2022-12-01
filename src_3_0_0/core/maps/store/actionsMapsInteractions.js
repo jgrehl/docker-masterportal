@@ -121,6 +121,18 @@ export default {
     removeInteraction (_, interaction) {
         const map = mapCollection.getMap("2D");
 
-        map.removeInteraction(interaction);
+        if (map.removeInteraction(interaction) === undefined) {
+            const interactions = map.getInteractions().getArray(),
+                index = interactions.findIndex((anInteraction) => {
+                    return anInteraction.ol_uid === interaction.ol_uid;
+                });
+
+            if (index > -1) {
+                interactions.splice(index, 1);
+            }
+            else {
+                console.warn("interaction cannot be removed from map:", interaction);
+            }
+        }
     }
 };
