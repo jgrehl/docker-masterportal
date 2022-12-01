@@ -1,5 +1,6 @@
 <script>
 import Layer from "./LayerComponent.vue";
+import Folder from "./FolderComponent.vue";
 import getNestedValues from "../../../shared/js/utils/getNestedValues";
 
 /**
@@ -7,7 +8,7 @@ import getNestedValues from "../../../shared/js/utils/getNestedValues";
  */
 export default {
     name: "LayerTreeNode",
-    components: {Layer},
+    components: {Layer, Folder},
     /** current configuration */
     props: {
         conf: {
@@ -17,42 +18,36 @@ export default {
     },
     data () {
         return {
-            isOpen: false
+            isOpen: false,
+            layers: []
         };
     },
     computed: {
         isFolder () {
-            return Array.isArray(this.conf.Ordner);
+            return Array.isArray(this.conf.Ordner) || this.conf.Titel;
         },
         isLayerArray () {
             return Array.isArray(this.conf.Layer);
         },
         isLayer () {
             return typeof this.conf === "object" && Object.prototype.hasOwnProperty.call(this.conf, "id");
+        },
+        isLayerInFolderVisible () {
+            return this.layers.find(layer => layer.visibility === true) !== undefined;
         }
     },
     created () {
-    // console.log("###", this.conf);
+        this.layers = getNestedValues(this.conf, "Layer", "Ordner").flat(Infinity);
     },
     methods: {
         /**
-         * Replaces the value of current layerConf's visibility in state's layerConfig
-         * @param {Boolean} value visible or not
+         * Toggles a folder, changes data-property isOpen.
          * @returns {void}
          */
-        toggle () {
+        toggleFolder () {
             if (this.isFolder) {
                 this.isOpen = !this.isOpen;
             }
-        },
-        isLayerInFolderVisible () {
-            const layers = getNestedValues(this.conf, "Layer", "Ordner").flat(Infinity);
-
-            return layers.find(layer => layer.visibility === true) !== undefined;
-        },
-        log (prefix, value) {
-           console.log(prefix, value);
-           return value;
         }
     }
 };
@@ -60,41 +55,47 @@ export default {
 
 <template>
     <div class="no-list">
-        <span>{{log("node",conf)}}</span>
         <li v-if="isFolder">
-            <div
-                :class="{ bold: isLayerInFolderVisible(), 'folder': true }"
-                @click="toggle"
-            >
-                <i
-                    :class="['fs-4', isOpen ? 'bi bi-folder2-open' : 'bi bi-folder2']"
-                    role="img"
-                />
-                {{ conf.Titel }}
-            </div>
+            <Folder
+                :conf="conf"
+                :is-open="isOpen"
+                @isOpen="toggleFolder()"
+            />
+
             <ul v-show="isOpen">
-                <!--
-                    A component can recursively render itself using its
-                    "name" option (inferred from filename if using SFC)
-                -->
+                <div v-if="isLayerArray">
+                    <Layer
+                        v-for="(layer, i) in conf.Layer"
+                        :key="'layer' + i"
+                        :layer-conf="layer"
+                    />
+                </div>
+                <Layer
+                    v-if="isLayer"
+                    :layer-conf="conf"
+                />
                 <LayerTreeNode
                     v-for="(node, i) in conf.Ordner"
-                    :key="i"
+                    :key="'folder'+i"
                     :conf="node"
                 />
             </ul>
         </li>
-        <div v-if="isLayerArray">
+        <template
+            v-else
+        >
+            <div v-if="isLayerArray">
+                <Layer
+                    v-for="(layer, i) in conf.Layer"
+                    :key="'layer' + i"
+                    :layer-conf="layer"
+                />
+            </div>
             <Layer
-                v-for="(layer, i) in conf.Layer"
-                :key="i"
-                :layer-conf="layer"
+                v-if="isLayer"
+                :layer-conf="conf"
             />
-        </div>
-        <Layer
-            v-if="isLayer"
-            :layer-conf="conf"
-        />
+        </template>
     </div>
 </template>
 
