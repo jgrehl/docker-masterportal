@@ -14,7 +14,17 @@ export default {
             type: String,
             required: true
         },
+        value: {
+            type: String,
+            default: null,
+            required: false
+        },
         type: {
+            type: String,
+            default: null,
+            required: false
+        },
+        model: {
             type: String,
             default: null,
             required: false
@@ -30,6 +40,8 @@ export default {
             :type="type"
             class="form-control"
             :placeholder="placeholder"
+            :value="value"
+            :v-model="model"
         >
         <label :for="id">{{ $t(label) }}</label>
     </div>
@@ -38,4 +50,7 @@ export default {
 <style lang="scss" scoped>
 @import "~variables";
 
+.form-control:focus ~ label {
+    color: $secondary;
+}
 </style>
