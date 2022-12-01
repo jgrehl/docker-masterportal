@@ -59,8 +59,6 @@ export default {
             {{ contactInfo }}
         </div>
         <form
-            class="needs-validation"
-            novalidate
             @submit.prevent="send"
         >
             <ContactFormularInput
