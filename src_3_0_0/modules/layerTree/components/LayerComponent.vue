@@ -61,7 +61,7 @@ export default {
         showInLayerTree () {
             const layerTypes3d = layerFactory.getLayerTypes3d();
 
-            return this.layerConf.showInLayerTree !== false && (this.mode === "2D" ? !layerTypes3d.includes(this.layerConf.typ.toUpperCase()) : true);
+            return this.layerConf.showInLayerTree !== false && (this.mode === "2D" ? !layerTypes3d.includes(this.layerConf.typ?.toUpperCase()) : true);
         }
     }
 };
