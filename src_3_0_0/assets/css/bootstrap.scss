@@ -82,3 +82,7 @@
 .form-floating > label {
     padding: .75rem;
 }
+
+.form-floating > .form-select:focus ~ label {
+    color: $secondary;
+}
