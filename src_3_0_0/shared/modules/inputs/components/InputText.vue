@@ -24,8 +24,8 @@ export default {
             default: null,
             required: false
         },
-        model: {
-            type: String,
+        input: {
+            type: Function,
             default: null,
             required: false
         }
@@ -41,7 +41,7 @@ export default {
             class="form-control"
             :placeholder="placeholder"
             :value="value"
-            :v-model="model"
+            @input="event => input(event.target.value)"
         >
         <label :for="id">{{ $t(label) }}</label>
     </div>
