@@ -68,12 +68,13 @@ export default {
 <template>
     <div
         :class="[
-            'has-feedback',
-            validInput ? 'has-success' : '',
-            !validInput && inputValue ? 'has-error' : ''
+            'has-feedback'
         ]"
     >
-        <div class="form-floating mb-3">
+        <div
+            class="form-floating"
+            :class="validInput ? 'mb-5' : 'mb-3'"
+        >
             <component
                 :is="htmlElement"
                 :id="`module-contact-${inputName}-input`"
@@ -81,7 +82,7 @@ export default {
                 :value="inputValue"
                 :autocomplete="autocomplete"
                 :type="htmlElement === 'input' ? inputType : ''"
-                :class="[(htmlElement === 'select' ? 'form-select' : 'form-control'), (validInput ? 'is-valid' : '')]"
+                :class="[(htmlElement === 'select' ? 'form-select' : 'form-control'), (validInput ? 'is-valid' : 'is-invalid')]"
                 :aria-describedby="`module-contact-${inputName}-help`"
                 :placeholder="$t(`common:modules.tools.contact.placeholder.${inputName}`)"
                 :style="htmlElement === 'textarea' ? 'height: 100px' : ''"
@@ -94,17 +95,16 @@ export default {
                 ]"
                 :for="`module-contact-${inputName}-input`"
             >{{ labelText }}</label>
+            <span
+                :id="`module-contact-${inputName}-help`"
+                class="invalid-feedback"
+            >
+                {{ $t(
+                    `common:modules.tools.contact.error.${inputName + (inputName === "message" ? "Input" : "")}`,
+                    {length: minMessageLength}
+                ) }}
+            </span>
         </div>
-        <span
-            v-if="!validInput"
-            :id="`module-contact-${inputName}-help`"
-            class="help-block mt-1 mb-3"
-        >
-            {{ $t(
-                `common:modules.tools.contact.error.${inputName + (inputName === "message" ? "Input" : "")}`,
-                {length: minMessageLength}
-            ) }}
-        </span>
     </div>
 </template>
 
