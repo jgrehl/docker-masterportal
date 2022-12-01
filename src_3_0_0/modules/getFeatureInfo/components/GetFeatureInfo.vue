@@ -63,6 +63,11 @@ export default {
         }
     },
     watch: {
+        active (value) {
+            if (!value) {
+                this.reset();
+            }
+        },
         /**
          * Whenever the map click coordinate changes updateClick action will call.
          * @returns {void}
