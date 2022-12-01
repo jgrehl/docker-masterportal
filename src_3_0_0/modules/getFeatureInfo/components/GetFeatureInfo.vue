@@ -63,6 +63,11 @@ export default {
         }
     },
     watch: {
+        /**
+         * Resets component, if active is false.
+         * @param {Boolean} value active
+         * @returns {void}
+         */
         active (value) {
             if (!value) {
                 this.reset();
