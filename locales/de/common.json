@@ -121,7 +121,8 @@
         "externalTechnicalData": "Externe Fachdaten",
         "selectedFeatures": "Auswahl:",
         "filterIconText": "Filter öffnen",
-        "scaleText": "Wird im folgenden Maßstabsbereich angezeigt: "
+        "scaleText": "Wird im folgenden Maßstabsbereich angezeigt: ",
+        "selectAll": "alle auswählen"
     },
     "date": "Datum",
     "time": "Zeit",
