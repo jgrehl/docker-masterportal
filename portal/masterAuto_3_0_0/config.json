@@ -227,17 +227,18 @@
     "Fachdaten": {
       "Layer": [
         {
-          "id": "10220",
-          "name": "Dauerzählstellen (Rad) Hamburg",
+          "id" : "2423",
+          "name" : "Gemarkungen",
           "typ": "WMS",
-          "visibility": false,
+          "visibility": true,
           "showInLayerTree": true
         },
         {
           "id": "2426",
           "name": "Bezirke",
           "typ": "WMS",
-          "visibility": true
+          "visibility": true,
+          "showInLayerTree": true
         }
       ]
     }
