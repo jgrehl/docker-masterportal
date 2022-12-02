@@ -13,8 +13,6 @@ function uniqueId (prefix) {
     return prefix ? prefix + localIdCounter : localIdCounter;
 }
 
-export default uniqueId;
-
 /**
  * gets the current idCounter
  * @returns {Integer}  the current idCounter
@@ -31,3 +29,7 @@ function getIdCounter () {
 function incIdCounter () {
     idCounter++;
 }
+
+module.exports = {
+    uniqueId
+};

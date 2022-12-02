@@ -49,7 +49,7 @@ describe("src_3_0_0/modules/openConfig/store/actionsOpenConfig.js", () => {
             expect(commit.calledTwice).to.be.true;
             expect(commit.firstCall.args[0]).to.equals("setPortalConfig");
             expect(commit.firstCall.args[1]).to.deep.equals({});
-            expect(commit.secondCall.args[0]).to.equals("setLayerConfig");
+            expect(commit.secondCall.args[0]).to.equals("setLayerConfigByParentKey");
             expect(commit.secondCall.args[1]).to.deep.equals({});
 
             expect(dispatch.calledOnce).to.be.true;
