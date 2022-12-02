@@ -13,7 +13,7 @@ const mutations = {
      * @param {String} payload.parentKey the key of the parent object
      * @returns {void}
      */
-    setInLayerConfig (state, {layerConfigs, parentKey}) {
+    setLayerConfigByParentKey (state, {layerConfigs, parentKey}) {
         state.layerConfig[parentKey] = layerConfigs;
     },
     /**

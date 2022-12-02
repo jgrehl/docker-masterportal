@@ -24,7 +24,7 @@ export default {
     },
     computed: {
         isFolder () {
-            return Array.isArray(this.conf.Ordner) || this.conf.Titel;
+            return Array.isArray(this.conf.Ordner) || Object.prototype.hasOwnProperty.call(this.conf, "Titel");
         },
         isLayerArray () {
             return Array.isArray(this.conf.Layer);
@@ -67,12 +67,12 @@ export default {
                     <Layer
                         v-for="(layer, i) in conf.Layer"
                         :key="'layer' + i"
-                        :layer-conf="layer"
+                        :conf="layer"
                     />
                 </div>
                 <Layer
                     v-if="isLayer"
-                    :layer-conf="conf"
+                    :conf="conf"
                 />
                 <LayerTreeNode
                     v-for="(node, i) in conf.Ordner"
@@ -86,14 +86,14 @@ export default {
         >
             <div v-if="isLayerArray">
                 <Layer
-                    v-for="(layer, i) in conf.Layer"
+                    v-for="(layer2, i) in conf.Layer"
                     :key="'layer' + i"
-                    :layer-conf="layer"
+                    :conf="layer2"
                 />
             </div>
             <Layer
                 v-if="isLayer"
-                :layer-conf="conf"
+                :conf="conf"
             />
         </template>
     </div>

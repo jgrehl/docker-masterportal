@@ -9,7 +9,7 @@ export default {
     name: "LayerComponent",
     /** current layer configuration */
     props: {
-        layerConf: {
+        conf: {
             type: Object,
             required: true
         }
@@ -18,17 +18,20 @@ export default {
         ...mapGetters("Maps", ["mode"]),
         checkboxValue: {
             get () {
-                return this.isLayerVisible();
+                return this.isLayerVisible;
             },
             set () {
                 // v-model: setter must be here, but does nothing - setting is handeled by click-event
             }
+        },
+        isLayerVisible () {
+            return typeof this.conf.visibility === "boolean" ? this.conf.visibility : false;
         }
     },
     methods: {
         ...mapMutations(["replaceByIdInLayerConfig"]),
         /**
-         * Replaces the value of current layerConf's visibility in state's layerConfig
+         * Replaces the value of current conf's visibility in state's layerConfig
          * @param {Boolean} value visible or not
          * @returns {void}
          */
@@ -36,23 +39,15 @@ export default {
             this.replaceByIdInLayerConfig(
                 {
                     layerConfigs: [{
-                        id: this.layerConf.id,
+                        id: this.conf.id,
                         layer: {
-                            id: this.layerConf.id,
+                            id: this.conf.id,
                             visibility: value
                         }
                     }]
                 }
             );
         },
-        /**
-         * Returns the value of layerConf's attribute visibility
-         * @returns {Boolean} the value of layerConf's attribute visibility
-         */
-        isLayerVisible () {
-            return typeof this.layerConf.visibility === "boolean" ? this.layerConf.visibility : false;
-        },
-
         /**
      * Returns true, if layer configuration shall be shown in tree in current map mode.
      * Filteres by attribute 'showInLayerTree'.
@@ -61,7 +56,7 @@ export default {
         showInLayerTree () {
             const layerTypes3d = layerFactory.getLayerTypes3d();
 
-            return this.layerConf.showInLayerTree !== false && (this.mode === "2D" ? !layerTypes3d.includes(this.layerConf.typ?.toUpperCase()) : true);
+            return this.conf.showInLayerTree !== false && (this.mode === "2D" ? !layerTypes3d.includes(this.conf.typ?.toUpperCase()) : true);
         }
     }
 };
@@ -70,21 +65,21 @@ export default {
 <template lang="html">
     <div
         v-if="showInLayerTree()"
-        :id="'layertree-layer-' + layerConf.id"
+        :id="'layertree-layer-' + conf.id"
         class="form-check"
     >
         <input
-            :id="'layertree-layer-checkbox' + layerConf.id"
+            :id="'layertree-layer-checkbox-' + conf.id"
             v-model="checkboxValue"
             type="checkbox"
             class="form-check-input"
-            @click="visibilityInLayerTreeChanged(!isLayerVisible())"
+            @click="visibilityInLayerTreeChanged(!isLayerVisible)"
         >
         <label
-            :class="['mt-0 d-flex flex-column align-self-start', isLayerVisible() ? 'bold' : '']"
-            :for="'layertree-layer-checkbox' + layerConf.id"
+            :class="['mt-0 d-flex flex-column align-self-start', isLayerVisible ? 'bold' : '']"
+            :for="'layertree-layer-checkbox-' + conf.id"
         >
-            {{ layerConf.name }}
+            {{ conf.name }}
         </label>
     </div>
 </template>
