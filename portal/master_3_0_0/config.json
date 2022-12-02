@@ -290,485 +290,152 @@
             ]
         },
         "Fachdaten": {
-            "Ordner": [
-                {
-                    "Ordner": [
-                        {
-                            "Layer": [
-                                {
-                                    "id": "21999",
-                                    "name": "Quartiere",
-                                    "url": "https://geodienste.hamburg.de/HH_WMS_Mrh_elmshorn_stadtbereiche_und_quartiere",
-                                    "typ": "WMS",
-                                    "layers": "mrh_elmshorn_quartiere",
-                                    "format": "image/png",
-                                    "version": "1.3.0",
-                                    "singleTile": true,
-                                    "transparent": true,
-                                    "transparency": 0,
-                                    "urlIsVisible": true,
-                                    "tilesize": 512,
-                                    "gutter": 20,
-                                    "minScale": "0",
-                                    "maxScale": "2500000",
-                                    "infoFormat": "text/xml",
-                                    "gfiAttributes": {
-                                        "name": "Name"
-                                    },
-                                    "gfiTheme": "default",
-                                    "layerAttribution": "nicht vorhanden",
-                                    "legendURL": "",
-                                    "cache": false,
-                                    "featureCount": 5,
-                                    "datasets": [
-                                        {
-                                            "md_id": "774140cd-a986-43a5-a3a5-f22bcc435bc0",
-                                            "csw_url": "http://www.sh-mis.schleswig-holstein.de/soapServices/CSWStartup",
-                                            "show_doc_url": "https://sh-mis.gdi-sh.de/catalog/Query/ShowCSWInfo.do?fileIdentifier=",
-                                            "rs_id": "774140cd-a986-43a5-a3a5-f22bcc435bc0 ",
-                                            "md_name": "Stadtquartiere und Stadtbereiche der Stadt Elmshorn (GDIMRH)",
-                                            "bbox": "258667.117809902,5238994.22844245,935307.973298932,6089130.65798567",
-                                            "kategorie_opendata": [
-                                                "Sonstiges"
-                                            ],
-                                            "kategorie_inspire": [
-                                                "kein INSPIRE-Thema"
-                                            ],
-                                            "kategorie_organisation": "Stadt Elmshorn"
-                                        }
-                                    ],
-                                    "notSupportedFor3DNeu": false,
-                                    "showInLayerTree": false
-                                },
-                                {
-                                    "id": "22000",
-                                    "name": "Stadtbereiche",
-                                    "url": "https://geodienste.hamburg.de/HH_WMS_Mrh_elmshorn_stadtbereiche_und_quartiere",
-                                    "typ": "WMS",
-                                    "layers": "mrh_elmshorn_stadtbereiche",
-                                    "format": "image/png",
-                                    "version": "1.3.0",
-                                    "singleTile": true,
-                                    "transparent": true,
-                                    "transparency": 0,
-                                    "urlIsVisible": true,
-                                    "tilesize": 512,
-                                    "gutter": 20,
-                                    "minScale": "0",
-                                    "maxScale": "2500000",
-                                    "infoFormat": "text/xml",
-                                    "gfiAttributes": {
-                                        "name": "Name"
-                                    },
-                                    "gfiTheme": "default",
-                                    "layerAttribution": "nicht vorhanden",
-                                    "legendURL": "",
-                                    "cache": false,
-                                    "featureCount": 5,
-                                    "datasets": [
-                                        {
-                                            "md_id": "774140cd-a986-43a5-a3a5-f22bcc435bc0",
-                                            "csw_url": "http://www.sh-mis.schleswig-holstein.de/soapServices/CSWStartup",
-                                            "show_doc_url": "https://sh-mis.gdi-sh.de/catalog/Query/ShowCSWInfo.do?fileIdentifier=",
-                                            "rs_id": "774140cd-a986-43a5-a3a5-f22bcc435bc0 ",
-                                            "md_name": "Stadtquartiere und Stadtbereiche der Stadt Elmshorn (GDIMRH)",
-                                            "bbox": "258667.117809902,5238994.22844245,935307.973298932,6089130.65798567",
-                                            "kategorie_opendata": [
-                                                "Sonstiges"
-                                            ],
-                                            "kategorie_inspire": [
-                                                "kein INSPIRE-Thema"
-                                            ],
-                                            "kategorie_organisation": "Stadt Elmshorn"
-                                        }
-                                    ],
-                                    "notSupportedFor3DNeu": false,
-                                    "showInLayerTree": false
-                                }
-                            ],
-                            "Titel": "Stadtquartiere und Stadtbereiche der Stadt Elmshorn (GDIMRH)"
-                        }
-                    ],
-                    "Titel": "Sonstiges",
+            "Layer": [
+              {
+                "id": "10220",
+                "name": "Dauerzählstellen (Rad) Hamburg",
+                "typ": "WMS",
+                "visibility": true
+              },
+              {
+                "id": "2426",
+                "name": "Bezirke",
+                "typ": "WMS",
+                "visibility": true
+              },
+              {
+                "Titel": "Emissionen",
+                "Ordner": [
+                  {
+                    "Titel": "Lärmschutzbereiche Flughafen Hamburg (FluLärmHmbV)",
                     "Layer": [
-                        {
-                            "id": "22799",
-                            "name": "Digitales Basis-Landschaftsmodell",
-                            "url": "https://geoportal.metropolregion.hamburg.de/elmshorn_wms_webatlasde",
-                            "typ": "WMS",
-                            "layers": "webatlasde",
-                            "format": "image/jpeg",
-                            "version": "1.3.0",
-                            "singleTile": false,
-                            "transparent": false,
-                            "transparency": 0,
-                            "urlIsVisible": false,
-                            "tilesize": 512,
-                            "gutter": 0,
-                            "minScale": "0",
-                            "maxScale": "2500000",
-                            "infoFormat": "text/xml",
-                            "gfiAttributes": "showAll",
-                            "gfiTheme": "default",
-                            "layerAttribution": "nicht vorhanden",
-                            "legendURL": "",
-                            "cache": false,
-                            "featureCount": 1,
-                            "datasets": [
-                                {
-                                    "md_id": "66656563-c818-4587-bde1-f4bed2787851",
-                                    "csw_url": "https://mis.bkg.bund.de/csw",
-                                    "show_doc_url": "https://mis.bkg.bund.de/trefferanzeige?docuuid=",
-                                    "rs_id": "https://registry.gdi-de.org/id/de.bund.bkg.csw/DEBKG00M00000110",
-                                    "md_name": "Digitales Basis-Landschaftsmodell",
-                                    "bbox": "263002.319897266,5239964.74261443,885682.268348169,6117996.57068428",
-                                    "kategorie_opendata": [
-                                        "Sonstiges"
-                                    ],
-                                    "kategorie_inspire": [
-                                        "kein INSPIRE-Thema"
-                                    ],
-                                    "kategorie_organisation": "Bundesamt für Kartographie und Geodäsie (BKG)"
-                                }
-                            ],
-                            "notSupportedFor3DNeu": false,
-                            "showInLayerTree": false
-                        },
-                        {
-                            "id": "7887",
-                            "name": "PEGELONLINE Aktuelle Wasserstände",
-                            "url": "http://www.pegelonline.wsv.de/webservices/gis/wms/aktuell/mnwmhw",
-                            "typ": "WMS",
-                            "layers": "PegelonlineMesspegel",
-                            "format": "image/png",
-                            "version": "1.1.1",
-                            "singleTile": false,
-                            "transparent": true,
-                            "transparency": 0,
-                            "urlIsVisible": true,
-                            "tilesize": 512,
-                            "gutter": 0,
-                            "minScale": "0",
-                            "maxScale": "2500000",
-                            "gfiAttributes": "ignore",
-                            "gfiTheme": "default",
-                            "layerAttribution": "nicht vorhanden",
-                            "legendURL": "https://geoportal.metropolregion.hamburg.de/legende_mrh/pegelonline.png",
-                            "cache": false,
-                            "featureCount": 10,
-                            "datasets": [
-                                {
-                                    "md_id": "e2932050-d8f4-4258-8464-33587d42bd33",
-                                    "csw_url": "https://gdk.gdi-de.org/gdi-de/srv/eng/csw",
-                                    "show_doc_url": "https://gdk.gdi-de.org/gdi-de/srv/ger/catalog.search#/metadata/",
-                                    "rs_id": "",
-                                    "md_name": "PEGELONLINE Aktuelle Wasserstände",
-                                    "bbox": "260134.860473541,5237821.31281896,884847.568446263,6111378.19620446",
-                                    "kategorie_opendata": [
-                                        "Sonstiges"
-                                    ],
-                                    "kategorie_inspire": [
-                                        "kein INSPIRE-Thema"
-                                    ],
-                                    "kategorie_organisation": "Generaldirektion Wasserstraßen und Schifffahrt (GDWS)"
-                                }
-                            ],
-                            "notSupportedFor3DNeu": false,
-                            "showInLayerTree": false
-                        }
-                    ]
-                },
-                {
-                    "Ordner": [
-                        {
-                            "Layer": [
-                                {
-                                    "id": "96",
-                                    "name": "Straßenverkehr Nacht 2017",
-                                    "url": "https://geodienste.hamburg.de/HH_WMS_Strassenverkehr",
-                                    "typ": "WMS",
-                                    "layers": "strassenverkehr_nacht_2017",
-                                    "format": "image/png",
-                                    "version": "1.3.0",
-                                    "singleTile": false,
-                                    "transparent": true,
-                                    "transparency": 0,
-                                    "tilesize": 512,
-                                    "gutter": 0,
-                                    "minScale": "0",
-                                    "maxScale": "2500000",
-                                    "infoFormat": "text/xml",
-                                    "gfiAttributes": {
-                                        "klasse": "Klasse"
-                                    },
-                                    "gfiTheme": "default",
-                                    "layerAttribution": "nicht vorhanden",
-                                    "legendURL": "",
-                                    "cache": false,
-                                    "featureCount": 1,
-                                    "datasets": [
-                                        {
-                                            "md_id": "030A8F47-EBEF-4669-94FC-0299BB7D5C88",
-                                            "csw_url": "https://metaver.de/csw",
-                                            "show_doc_url": "https://metaver.de/trefferanzeige?cmd=doShowDocument&docuuid=",
-                                            "rs_id": "https://registry.gdi-de.org/id/de.hh/9947729f-0c35-44e5-ae77-9d55063cce41",
-                                            "md_name": "Lärmkarten Hamburg (§47c BlmSchG)",
-                                            "bbox": "461468.97,5916367.23,587010.91,5980347.76",
-                                            "kategorie_opendata": [
-                                                "Umwelt und Klima"
-                                            ],
-                                            "kategorie_inspire": [
-                                                "Gesundheit und Sicherheit"
-                                            ],
-                                            "kategorie_organisation": "Behörde für Umwelt und Energie (BUE)"
-                                        }
-                                    ],
-                                    "showInLayerTree": false
-                                },
-                                {
-                                    "id": "95",
-                                    "name": "Straßenverkehr Tag Abend Nacht 2017",
-                                    "url": "https://geodienste.hamburg.de/HH_WMS_Strassenverkehr",
-                                    "typ": "WMS",
-                                    "layers": "strassenverkehr_tag_abend_nacht_2017",
-                                    "format": "image/png",
-                                    "version": "1.3.0",
-                                    "singleTile": false,
-                                    "transparent": true,
-                                    "transparency": 0,
-                                    "tilesize": 512,
-                                    "gutter": 0,
-                                    "minScale": "0",
-                                    "maxScale": "2500000",
-                                    "infoFormat": "text/xml",
-                                    "gfiAttributes": {
-                                        "klasse": "Klasse"
-                                    },
-                                    "gfiTheme": "default",
-                                    "layerAttribution": "nicht vorhanden",
-                                    "legendURL": "",
-                                    "cache": false,
-                                    "featureCount": 1,
-                                    "datasets": [
-                                        {
-                                            "md_id": "030A8F47-EBEF-4669-94FC-0299BB7D5C88",
-                                            "csw_url": "https://metaver.de/csw",
-                                            "show_doc_url": "https://metaver.de/trefferanzeige?cmd=doShowDocument&docuuid=",
-                                            "rs_id": "https://registry.gdi-de.org/id/de.hh/9947729f-0c35-44e5-ae77-9d55063cce41",
-                                            "md_name": "Lärmkarten Hamburg (§47c BlmSchG)",
-                                            "bbox": "461468.97,5916367.23,587010.91,5980347.76",
-                                            "kategorie_opendata": [
-                                                "Umwelt und Klima"
-                                            ],
-                                            "kategorie_inspire": [
-                                                "Gesundheit und Sicherheit"
-                                            ],
-                                            "kategorie_organisation": "Behörde für Umwelt und Energie (BUE)"
-                                        }
-                                    ],
-                                    "showInLayerTree": false
-                                }
-                            ],
-                            "Titel": "Lärmkarten Hamburg (§47c BlmSchG)"
-                        },
-                        {
-                            "Layer": [
-                                {
-                                    "id": "1102",
-                                    "name": "Blattschnitte",
-                                    "url": "https://geodienste.hamburg.de/HH_WMS_UESG",
-                                    "typ": "WMS",
-                                    "layers": "uesg_blattschnitte",
-                                    "format": "image/png",
-                                    "version": "1.3.0",
-                                    "singleTile": false,
-                                    "transparent": true,
-                                    "transparency": 0,
-                                    "tilesize": 512,
-                                    "gutter": 0,
-                                    "minScale": "0",
-                                    "maxScale": "2500000",
-                                    "gfiAttributes": "showAll",
-                                    "gfiTheme": "default",
-                                    "layerAttribution": "nicht vorhanden",
-                                    "legendURL": "",
-                                    "cache": false,
-                                    "featureCount": 1,
-                                    "datasets": [
-                                        {
-                                            "md_id": "0879B86F-4F44-45AA-BA5B-021D9D30AAEF",
-                                            "csw_url": "https://metaver.de/csw",
-                                            "show_doc_url": "https://metaver.de/trefferanzeige?cmd=doShowDocument&docuuid=",
-                                            "rs_id": "https://registry.gdi-de.org/id/de.hh/d7544318-138c-4f3d-b6eb-5bfd081627aa",
-                                            "md_name": "Überschwemmungsgebiete Hamburg",
-                                            "bbox": "461468.97,5916367.23,587010.91,5980347.76",
-                                            "kategorie_opendata": [
-                                                "Umwelt und Klima"
-                                            ],
-                                            "kategorie_inspire": [
-                                                "Gebiete mit naturbedingten Risiken"
-                                            ],
-                                            "kategorie_organisation": "Behörde für Umwelt und Energie (BUE)"
-                                        }
-                                    ],
-                                    "showInLayerTree": false
-                                },
-                                {
-                                    "id": "1103",
-                                    "name": "Überschwemmungsgebiete",
-                                    "url": "https://geodienste.hamburg.de/HH_WMS_UESG",
-                                    "typ": "WMS",
-                                    "layers": "ueberschwemmungsgebiete",
-                                    "format": "image/png",
-                                    "version": "1.3.0",
-                                    "singleTile": true,
-                                    "transparent": true,
-                                    "transparency": 0,
-                                    "tilesize": 512,
-                                    "gutter": 0,
-                                    "minScale": "0",
-                                    "maxScale": "2500000",
-                                    "infoFormat": "text/xml",
-                                    "gfiAttributes": {
-                                        "name": "Name",
-                                        "status": "Status",
-                                        "verordnung": "Verordnung vom",
-                                        "info": "Info/Kontakt",
-                                        "geom": "geom"
-                                    },
-                                    "gfiTheme": "default",
-                                    "layerAttribution": "nicht vorhanden",
-                                    "legendURL": "",
-                                    "cache": false,
-                                    "featureCount": 1,
-                                    "datasets": [
-                                        {
-                                            "md_id": "0879B86F-4F44-45AA-BA5B-021D9D30AAEF",
-                                            "csw_url": "https://metaver.de/csw",
-                                            "show_doc_url": "https://metaver.de/trefferanzeige?cmd=doShowDocument&docuuid=",
-                                            "rs_id": "https://registry.gdi-de.org/id/de.hh/d7544318-138c-4f3d-b6eb-5bfd081627aa",
-                                            "md_name": "Überschwemmungsgebiete Hamburg",
-                                            "bbox": "461468.97,5916367.23,587010.91,5980347.76",
-                                            "kategorie_opendata": [
-                                                "Umwelt und Klima"
-                                            ],
-                                            "kategorie_inspire": [
-                                                "Gebiete mit naturbedingten Risiken"
-                                            ],
-                                            "kategorie_organisation": "Behörde für Umwelt und Energie (BUE)"
-                                        }
-                                    ],
-                                    "showInLayerTree": false
-                                }
-                            ],
-                            "Titel": "Überschwemmungsgebiete Hamburg"
-                        }
+                      {
+                        "id": "2431",
+                        "visibility": false
+                      },
+                      {
+                        "id": "2430",
+                        "visibility": false
+                      },
+                      {
+                        "id": "2429"
+                      }
                     ],
-                    "Titel": "Umwelt und Klima",
-                    "Layer": [
-                        {
-                            "id": "685",
-                            "name": "Einbau Ersatzbaustoffe",
-                            "url": "https://geodienste.hamburg.de/HH_WMS_Grundwasserschutz",
-                            "typ": "WMS",
-                            "layers": "u12_f_einbau_ersatzbaustoffe",
-                            "format": "image/png",
-                            "version": "1.3.0",
-                            "singleTile": true,
-                            "transparent": true,
-                            "transparency": 0,
-                            "tilesize": 512,
-                            "gutter": 0,
-                            "minScale": "0",
-                            "maxScale": "2500000",
-                            "infoFormat": "text/xml",
-                            "gfiAttributes": {
-                                "klasse": "Eignungsklasse",
-                                "eignung": "Eignung",
-                                "info": "Info",
-                                "rechtsgrundlage": "Rechtsgrundlage",
-                                "stand_bearbeitung": "Stand Bearbeitung",
-                                "geom": "geom"
-                            },
-                            "gfiTheme": "default",
-                            "layerAttribution": "nicht vorhanden",
-                            "legendURL": "",
-                            "cache": false,
-                            "featureCount": 1,
-                            "datasets": [
-                                {
-                                    "md_id": "59CCF77B-B8CC-4977-B7BF-6375DACF507D",
-                                    "csw_url": "https://metaver.de/csw",
-                                    "show_doc_url": "https://metaver.de/trefferanzeige?cmd=doShowDocument&docuuid=",
-                                    "rs_id": "https://registry.gdi-de.org/id/de.hh/662bf0be-f7f0-4170-bfdb-b4967cfcef52",
-                                    "md_name": "Einbau Ersatzbaustoffe",
-                                    "bbox": "461468.97,5916367.23,587010.91,5980347.76",
-                                    "kategorie_opendata": [
-                                        "Umwelt und Klima"
-                                    ],
-                                    "kategorie_inspire": [
-                                        "kein INSPIRE-Thema"
-                                    ],
-                                    "kategorie_organisation": "Behörde für Umwelt und Energie (BUE)"
-                                }
-                            ],
-                            "showInLayerTree": false
-                        },
-                        {
-                            "id": "182",
-                            "name": "Straßenbaumkataster Hamburg",
-                            "url": "https://geodienste.hamburg.de/HH_WMS_Strassenbaumkataster",
-                            "typ": "WMS",
-                            "layers": "strassenbaum",
-                            "format": "image/png",
-                            "version": "1.3.0",
-                            "singleTile": false,
-                            "transparent": true,
-                            "transparency": 0,
-                            "tilesize": 256,
-                            "gutter": 70,
-                            "minScale": "0",
-                            "maxScale": "2500000",
-                            "infoFormat": "text/xml",
-                            "gfiAttributes": {
-                                "baumnummer": "Baumnummer",
-                                "gattung": "Gattung",
-                                "art": "Baumart",
-                                "sorte": "Sorte",
-                                "strasse": "Straße",
-                                "bezirk": "Bezirk",
-                                "kronendurchmesser_z": "Kronendurchmesser",
-                                "stammumfang_z": "Stammumfang",
-                                "geom": "geom",
-                                "pflanzjahr_portal": "Pflanzjahr"
-                            },
-                            "gfiTheme": "default",
-                            "layerAttribution": "nicht vorhanden",
-                            "legendURL": "",
-                            "cache": false,
-                            "featureCount": 50,
-                            "datasets": [
-                                {
-                                    "md_id": "C1C61928-C602-4E37-AF31-2D23901E2540",
-                                    "csw_url": "https://metaver.de/csw",
-                                    "show_doc_url": "https://metaver.de/trefferanzeige?cmd=doShowDocument&docuuid=",
-                                    "rs_id": "https://registry.gdi-de.org/id/de.hh/C1C61928-C602-4E37-AF31-2D23901E2540",
-                                    "md_name": "Straßenbaumkataster Hamburg",
-                                    "bbox": "461468.97,5916367.23,587010.91,5980347.76",
-                                    "kategorie_opendata": [
-                                        "Umwelt und Klima"
-                                    ],
-                                    "kategorie_inspire": [
-                                        "kein INSPIRE-Thema"
-                                    ],
-                                    "kategorie_organisation": "Behörde für Umwelt und Energie (BUE)"
-                                }
-                            ],
-                            "showInLayerTree": false
-                        }
+                    "Ordner": [
+                      {
+                        "Titel": "Überschwemmungsgebiete",
+                        "Layer": [
+                          {
+                            "id": "1103",
+                            "visibility": false
+                          }
+                        ]
+                      }
                     ]
+                  }
+                ]
+              },
+              {
+                "id": "1933",
+                "typ": "WMS",
+                "visibility": false,
+                "styles": [
+                  "geofox_stations"
+                ],
+                "name": [
+                  "HVV Haltestellen"
+                ]
+              },
+              {
+                "id": "1711",
+                "name": "Krankenhäuser",
+                "typ": "WFS",
+                "visibility": false
+              },
+              {
+                "id": "52",
+                "name": "Parkhäuser",
+                "typ": "WFS",
+                "visibility": false,
+                "autoRefresh": 5000
+              },
+              {
+                "id": "8712",
+                "name": "de.hh.up:staatliche schulen",
+                "typ": "WFS",
+                "visibility": false,
+                "clusterDistance": 60,
+                "showInLayerTree": false
+              },
+              {
+                "id": "19173"
+              },
+              {
+                "id": "18106",
+                "name": "Elektro Ladestandorte Hamburg",
+                "typ": "SensorThings",
+                "visibility": false,
+                "loadThingsOnlyInCurrentExtent": true
+              },
+              {
+                "id": "OAF",
+                "name": "Schulen",
+                "typ": "OAF",
+                "visibility": false,
+                "url": "https://api.hamburg.de/datasets/v1/schulen",
+                "collection": "staatliche_schulen",
+                "bbox": "",
+                "bboxCrs": "",
+                "datetime": "",
+                "crs": "EPSG:25832",
+                "params": {
+                  "anzahl_schueler": ">1000"
                 }
+              },
+              {
+                "id": "GeoJSON",
+                "name": "Beiträge",
+                "typ": "GeoJSON",
+                "visibility": false,
+                "url": "./resources/example_geojson.json"
+              },
+              {
+                "id": "StaticImage",
+                "name": "Lärmberechnung",
+                "typ": "StaticImage",
+                "visibility": false,
+                "url": "https://geodienste.hamburg.de/lgv-config/img/Laerm-Test_300dpi.png",
+                "extent": [
+                  568426.27,
+                  5931985.58,
+                  569614.86,
+                  5933174.11
+                ]
+              },
+              {
+                "id": "Entities3D",
+                "name": "3D-Entities Testlayer",
+                "typ": "Entities3D",
+                "visibility": true,
+                "entities": [
+                  {
+                    "url": "https://daten-hamburg.de/gdi3d/datasource-data/Simple_Building.glb",
+                    "attributes": {
+                      "name": "Einfaches Haus in Planten und Blomen"
+                    },
+                    "latitude": 53.5631,
+                    "longitude": 9.9800,
+                    "height": 12,
+                    "heading": 0,
+                    "pitch": 0,
+                    "roll": 0,
+                    "scale": 5,
+                    "allowPicking": true,
+                    "show": true
+                  }
+                ]
+              }
             ]
-        }
+          }
     }
 }
