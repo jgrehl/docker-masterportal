@@ -1,6 +1,7 @@
 <script>
-import {mapGetters, mapMutations} from "vuex";
+import {mapMutations} from "vuex";
 import getNestedValues from "../../../shared/js/utils/getNestedValues";
+import {uniqueId} from "../../../shared/js/utils/uniqueId.js";
 
 /**
  * Representation of a folder in layerTree.
@@ -24,7 +25,6 @@ export default {
         };
     },
     computed: {
-        ...mapGetters("Maps", ["mode"]),
         checkboxValue: {
             get () {
                 return this.allLayersVisible;
@@ -33,14 +33,14 @@ export default {
                 // v-model: setter must be here, but does nothing - setting is handeled by click-event
             }
         },
-        isLayerVisible () {
-            return typeof this.conf.visibility === "boolean" ? this.conf.visibility : false;
-        },
         allLayersVisible () {
             return this.layers.filter(layer => layer.visibility === true).length === this.layers.length;
         },
         isLayerInFolderVisible () {
             return this.layers.find(layer => layer.visibility === true) !== undefined;
+        },
+        folderId () {
+            return uniqueId(this.conf.Titel.replace(/[^a-zA-Z0-9]/g, ""));
         }
     },
     created () {
@@ -98,7 +98,7 @@ export default {
         </div>
         <input
             v-if="(layers.length > 1)"
-            :id="('layertree-folder-checkbox' + conf.Titel)"
+            :id="('layertree-folder-checkbox-' + folderId)"
             v-model="checkboxValue"
             type="checkbox"
             class="form-check-input"
@@ -107,8 +107,8 @@ export default {
         >
         <label
             v-if="(layers.length > 1)"
-            :class="['mt-0 d-flex flex-column', isLayerVisible ? 'bold' : '']"
-            :for="('layertree-layer-checkbox' + conf.Titel)"
+            class="mt-0 d-flex flex-column"
+            :for="('layertree-folder-checkbox-' + folderId)"
         >
             {{ $t("common:tree.selectAll") }}
         </label>
