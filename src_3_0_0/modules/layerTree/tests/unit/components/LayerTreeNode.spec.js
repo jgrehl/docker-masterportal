@@ -134,7 +134,7 @@ describe("src_3_0_0/modules/layerTree/components/LayerTreeNode.vue", () => {
         inputs = wrapper.findAll("input");
 
         expect(wrapper.find(".no-list").exists()).to.be.true;
-        // only 2 folder: one Ordner in config has only one layer and therefore no folder
+        // only 2 folder: one Ordner in config has only one layer and therefore no checkbox
         expect(inputs.filter(input => input.attributes().id.startsWith("layertree-folder-checkbox-")).length).to.be.equals(2);
         // 3 layer
         expect(inputs.filter(input => input.attributes().id.startsWith("layertree-layer-checkbox-")).length).to.be.equals(3);
@@ -143,27 +143,5 @@ describe("src_3_0_0/modules/layerTree/components/LayerTreeNode.vue", () => {
         expect(wrapper.find("#layertree-layer-" + layer_3.id).exists()).to.be.true;
         expect(wrapper.findAll(".folder").length).to.be.equals(3);
     });
-    // it.only("click on folder shall open and close it", async () => {
-    //     let folders = null;
-
-    //     propsData = {
-    //         conf : layersWithFolder
-    //     };
-    //     wrapper = mount(LayerTreeNode, {store, propsData: propsData, localVue});
-    //     folders = wrapper.findAll(".folder");
-    //     // console.log(wrapper.html());
-
-    //     expect(wrapper.find(".no-list").exists()).to.be.true;
-    //     expect(wrapper.find("#layertree-layer-" + layer_1.id).exists()).to.be.true;
-    //     expect(wrapper.find("#layertree-layer-" + layer_2.id).exists()).to.be.true;
-    //     expect(wrapper.find("#layertree-layer-" + layer_3.id).exists()).to.be.true;
-    //     expect(folders.length).to.be.equals(3);
-    //     expect(folders.at(0).props().isOpen).to.be.false;
-
-    //     folders.at(0).trigger("click");
-    //     await wrapper.vm.$nextTick();
-    //     expect(folders.at(0).props().isOpen).to.be.true;
-    // });
-
-
+ 
 });
