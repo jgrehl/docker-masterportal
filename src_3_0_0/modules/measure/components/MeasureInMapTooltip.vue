@@ -3,7 +3,7 @@ import {mapGetters} from "vuex";
 import {Fill, Stroke, Style, Text} from "ol/style.js";
 import {Polygon, LineString, Point} from "ol/geom.js";
 import Feature from "ol/Feature.js";
-import uniqueId from "../../../shared/js/utils/uniqueId.js";
+import {uniqueId} from "../../../shared/js/utils/uniqueId.js";
 
 /**
  * Tooltip shown in the map to indicate measurement results and deviance.

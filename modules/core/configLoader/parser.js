@@ -845,11 +845,11 @@ const Parser = Backbone.Model.extend(/** @lends Parser.prototype */{
      * @param  {String} value - Prefix for Uniq-Id
      * @return {String} value - Uniq-Id
      */
-    createUniqId: function (value) {
-        const trimmedValue = value.replace(/[^a-zA-Z0-9]/g, "");
+    // createUniqId: function (value) {
+    //     const trimmedValue = value.replace(/[^a-zA-Z0-9]/g, "");
 
-        return uniqueId(trimmedValue);
-    },
+        // return uniqueId(trimmedValue);
+    // },
 
     /**
      * todo
