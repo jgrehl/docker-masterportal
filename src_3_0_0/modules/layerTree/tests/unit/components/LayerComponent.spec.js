@@ -32,24 +32,24 @@ describe("src_3_0_0/modules/layerTree/components/Layer.vue", () => {
             visibility: false
         };
         propsData = {
-            layerConf: layer
+            conf: layer
         };
         replaceByIdInLayerConfigSpy = sinon.spy();
         sinon.stub(layerFactory, "getLayerTypes3d").returns(["TERRAIN3D"]);
         store = createStore({
             namespaces: true,
             modules: {
-                Maps: {
-                    namespaced: true,
-                    getters: {
-                        mode: () => mapMode
-                    }
-                },
                 Modules: {
                     namespaced: true,
                     modules: {
                         namespaced: true,
                         LayerComponent
+                    }
+                },
+                Maps: {
+                    namespaced: true,
+                    getters: {
+                        mode: () => mapMode
                     }
                 }
             },
@@ -71,7 +71,7 @@ describe("src_3_0_0/modules/layerTree/components/Layer.vue", () => {
             propsData
         });
 
-        expect(wrapper.find("#layertree-layer-" + propsData.layerConf.id).exists()).to.be.true;
+        expect(wrapper.find("#layertree-layer-" + propsData.conf.id).exists()).to.be.true;
     });
 
     it("renders layer with visibility false and checkbox", () => {
@@ -82,15 +82,15 @@ describe("src_3_0_0/modules/layerTree/components/Layer.vue", () => {
             propsData
         });
 
-        expect(wrapper.find("#layertree-layer-" + propsData.layerConf.id).exists()).to.be.true;
+        expect(wrapper.find("#layertree-layer-" + propsData.conf.id).exists()).to.be.true;
         expect(wrapper.findAll("input").length).to.be.equals(1);
         expect(wrapper.find("input").attributes("type")).to.be.equals("checkbox");
-        expect(wrapper.find("h5").text()).to.equal(propsData.layerConf.name);
+        expect(wrapper.find("label").text()).to.equal(propsData.conf.name);
         expect(wrapper.find("label").attributes("class")).not.to.include("bold");
     });
 
     it("renders layer with visibility true and checkbox, name is bold", () => {
-        propsData.layerConf.visibility = true;
+        propsData.conf.visibility = true;
 
         wrapper = shallowMount(LayerComponent, {
             global: {
@@ -99,41 +99,58 @@ describe("src_3_0_0/modules/layerTree/components/Layer.vue", () => {
             propsData
         });
 
-        expect(wrapper.find("#layertree-layer-" + propsData.layerConf.id).exists()).to.be.true;
+        expect(wrapper.find("#layertree-layer-" + propsData.conf.id).exists()).to.be.true;
         expect(wrapper.findAll("input").length).to.be.equals(1);
         expect(wrapper.find("input").attributes("type")).to.be.equals("checkbox");
-        expect(wrapper.find("h5").text()).to.equal(propsData.layerConf.name);
+        expect(wrapper.find("label").text()).to.equal(propsData.conf.name);
         expect(wrapper.find("label").attributes("class")).to.include("bold");
     });
 
     it("method showInLayerTree - do not show layer with showInLayerTree = false", () => {
-        propsData.layerConf.visibility = true;
-        propsData.layerConf.showInLayerTree = false;
+        propsData.conf.visibility = true;
+        propsData.conf.showInLayerTree = false;
 
         wrapper = shallowMount(LayerComponent, {store, propsData: propsData, localVue});
         wrapper.vm.showInLayerTree();
 
-        expect(wrapper.find("#layertree-layer-" + propsData.layerConf.id).exists()).to.be.false;
+        expect(wrapper.find("#layertree-layer-" + propsData.conf.id).exists()).to.be.false;
     });
     it("method showInLayerTree - show layer with showInLayerTree = true", () => {
-        propsData.layerConf.showInLayerTree = false;
+        propsData.conf.showInLayerTree = false;
 
         wrapper = shallowMount(LayerComponent, {store, propsData: propsData, localVue});
         wrapper.vm.showInLayerTree();
 
-        expect(wrapper.find("#layertree-layer-" + propsData.layerConf.id).exists()).to.be.false;
+        expect(wrapper.find("#layertree-layer-" + propsData.conf.id).exists()).to.be.false;
     });
     it("method showInLayerTree - show 3D-Layer", () => {
         mapMode = "3D";
-        propsData.layerConf = layer3D;
+        propsData.conf = layer3D;
 
         wrapper = shallowMount(LayerComponent, {store, propsData: propsData, localVue});
         wrapper.vm.showInLayerTree();
 
-        expect(wrapper.find("#layertree-layer-" + propsData.layerConf.id).exists()).to.be.true;
+        expect(wrapper.find("#layertree-layer-" + propsData.conf.id).exists()).to.be.true;
+    });
+    it("computed property isLayerVisible with visibility=false ", () => {
+        wrapper = shallowMount(LayerComponent, {store, propsData: propsData, localVue});
+
+        expect(wrapper.vm.isLayerVisible).to.be.false;
+    });
+    it("computed property isLayerVisible with visibility=undefined ", () => {
+        layer.visibility = undefined;
+        wrapper = shallowMount(LayerComponent, {store, propsData: propsData, localVue});
+
+        expect(wrapper.vm.isLayerVisible).to.be.false;
+    });
+    it("computed property isLayerVisible with visibility=true ", () => {
+        layer.visibility = true;
+        wrapper = shallowMount(LayerComponent, {store, propsData: propsData, localVue});
+
+        expect(wrapper.vm.isLayerVisible).to.be.true;
     });
 
-    it("click on checkbox of layer with visibility false", async () => {
+    it("click on checkbox of layer with visibility false, call replaceByIdInLayerConfig", async () => {
         const spyArg = {
             layerConfigs: [{
                 id: layer.id,
@@ -152,7 +169,7 @@ describe("src_3_0_0/modules/layerTree/components/Layer.vue", () => {
             propsData
         });
 
-        expect(wrapper.find("#layertree-layer-" + propsData.layerConf.id).exists()).to.be.true;
+        expect(wrapper.find("#layertree-layer-" + propsData.conf.id).exists()).to.be.true;
         expect(wrapper.findAll("input").length).to.be.equals(1);
 
         checkbox = wrapper.find("input");
@@ -183,7 +200,7 @@ describe("src_3_0_0/modules/layerTree/components/Layer.vue", () => {
             propsData
         });
 
-        expect(wrapper.find("#layertree-layer-" + propsData.layerConf.id).exists()).to.be.true;
+        expect(wrapper.find("#layertree-layer-" + propsData.conf.id).exists()).to.be.true;
         expect(wrapper.findAll("input").length).to.be.equals(1);
 
         checkbox = wrapper.find("input");

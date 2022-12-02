@@ -12,7 +12,7 @@ const actions = {
 
         layerCollection.clear();
         commit("setPortalConfig", configJson.Portalconfig, {root: true});
-        commit("setLayerConfig", configJson.Themenconfig, {root: true});
+        commit("setLayerConfigByParentKey", configJson.Themenconfig, {root: true});
         dispatch("extendLayers", null, {root: true});
     }
 };
