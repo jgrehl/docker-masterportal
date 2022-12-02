@@ -1,4 +1,5 @@
 const Config = {
+    ignoredKeys: ["BOUNDEDBY", "SHAPE", "SHAPE_LENGTH", "SHAPE_AREA", "OBJECTID", "GLOBALID", "GEOMETRY", "SHP", "SHP_AREA", "SHP_LENGTH", "GEOM"],
     namedProjections: [
         // GK DHDN
         ["EPSG:31467", "+title=Bessel/Gauß-Krüger 3 +proj=tmerc +lat_0=0 +lon_0=9 +k=1 +x_0=3500000 +y_0=0 +ellps=bessel +datum=potsdam +units=m +no_defs"],
@@ -12,8 +13,7 @@ const Config = {
     alerting: {
         fetchBroadcastUrl: "./resources/newsFeedPortalAlerts.json"
     },
-    // layerConf: "https://geodienste.hamburg.de/services-internet.json",
-    layerConf: "./resources/servicesMasterAuto.json",
+    layerConf: "https://geodienste.hamburg.de/services-internet.json",
     restConf: "https://geodienste.hamburg.de/lgv-config/rest-services-internet.json",
     cesiumLibrary: "https://geoportal-hamburg.de/mastercode/cesium/1_95/Cesium.js"
 };
