@@ -182,8 +182,8 @@ const CustomTreeParser = Parser.extend(/** @lends CustomTreeParser.prototype */{
                 this.addItem({
                     type: "folder",
                     parentId: parentId,
-                    name: folder.Titel,
-                    id: folder.id,
+                    // name: folder.Titel,
+                    // id: folder.id,
                     isFolderSelectable: isFolderSelectable,
                     level: level,
                     icon: "bi-plus-circle-fill",
