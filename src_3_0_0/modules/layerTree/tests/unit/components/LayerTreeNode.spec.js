@@ -1,4 +1,4 @@
-import {config, shallowMount, createLocalVue} from "@vue/test-utils";
+import {config, mount, shallowMount, createLocalVue} from "@vue/test-utils";
 import {expect} from "chai";
 import sinon from "sinon";
 import Vuex from "vuex";
@@ -10,21 +10,51 @@ const localVue = createLocalVue();
 localVue.use(Vuex);
 config.mocks.$t = key => key;
 
-describe.skip("src_3_0_0/modules/layerTree/components/LayerTreeNode.vue", () => {
+describe("src_3_0_0/modules/layerTree/components/LayerTreeNode.vue", () => {
     let store,
         wrapper,
-        layer,
+        layer_1,
+        layer_2,
+        layer_3,
+        layersWithFolder,
         propsData;
 
     beforeEach(() => {
-        layer = {
+        layer_1 = {
             id: "1",
-            name: "layer",
+            name: "layer_1",
             typ: "WMS",
             visibility: false
         };
+        layer_2 = {
+            id: "2",
+            name: "layer_2",
+            typ: "WMS",
+            visibility: false
+        };
+        layer_3 = {
+            id: "3",
+            name: "layer_3",
+            typ: "WFS",
+            visibility: true
+        };
         propsData = {
-            conf: layer
+            conf: layer_1
+        };
+        layersWithFolder = {
+            Titel: "Titel Ebene 1",
+            Ordner: [
+                {
+                    Titel: "Titel Ebene 2",
+                    Layer: [layer_1, layer_2],
+                    Ordner: [
+                        {
+                            Titel: "Titel Ebene 3",
+                            Layer: [layer_3]
+                        }
+                    ]
+                }
+            ]
         };
         store = new Vuex.Store({
             namespaces: true,
@@ -34,6 +64,12 @@ describe.skip("src_3_0_0/modules/layerTree/components/LayerTreeNode.vue", () => 
                     modules: {
                         namespaced: true,
                         LayerTreeNode
+                    }
+                },
+                Maps: {
+                    namespaced: true,
+                    getters: {
+                        mode: () => "2D"
                     }
                 }
             }
@@ -47,84 +83,87 @@ describe.skip("src_3_0_0/modules/layerTree/components/LayerTreeNode.vue", () => 
         sinon.restore();
     });
 
-    it("renders the layer given as property to the component", () => {
-        wrapper = shallowMount(LayerComponent, {store, propsData: propsData, localVue});
+    it("renders a simple layer", () => {
+        wrapper = shallowMount(LayerTreeNode, {store, propsData: propsData, localVue});
 
-        expect(wrapper.find("#layertree-layer-" + propsData.layerConf.id).exists()).to.be.true;
+        expect(wrapper.find(".no-list").exists()).to.be.true;
+        expect(wrapper.findAll("layertreenode-stub").length).to.be.equals(0);
+        expect(wrapper.findAll("layer-stub").length).to.be.equals(1);
+        expect(wrapper.vm.isFolder).to.be.false;
+        expect(wrapper.vm.isLayerArray).to.be.false;
+        expect(wrapper.vm.isLayer).to.be.true;
+        expect(wrapper.vm.isLayerInFolderVisible).to.be.false;
     });
-
-    it("renders layer with visibility false and checkbox", () => {
-        wrapper = shallowMount(LayerComponent, {store, propsData: propsData, localVue});
-
-        expect(wrapper.find("#layertree-layer-" + propsData.layerConf.id).exists()).to.be.true;
-        expect(wrapper.findAll("input").length).to.be.equals(1);
-        expect(wrapper.find("input").attributes("type")).to.be.equals("checkbox");
-        expect(wrapper.find("h5").text()).to.equal(propsData.layerConf.name);
-        expect(wrapper.find("label").attributes("class")).not.to.include("bold");
-    });
-
-    it("renders layer with visibility true and checkbox, name is bold", () => {
-        propsData.layerConf.visibility = true;
-
-        wrapper = shallowMount(LayerComponent, {store, propsData: propsData, localVue});
-
-        expect(wrapper.find("#layertree-layer-" + propsData.layerConf.id).exists()).to.be.true;
-        expect(wrapper.findAll("input").length).to.be.equals(1);
-        expect(wrapper.find("input").attributes("type")).to.be.equals("checkbox");
-        expect(wrapper.find("h5").text()).to.equal(propsData.layerConf.name);
-        expect(wrapper.find("label").attributes("class")).to.include("bold");
-    });
-
-    it("click on checkbox of layer with visibility false", async () => {
-        const spyArg = {
-            layerConfigs: [{
-                id: layer.id,
-                layer: {
-                    id: layer.id,
-                    visibility: true
-                }
-            }]
+    it("renders a list of layers, but no folder", () => {
+        propsData = {
+            conf: {Layer: [layer_1, layer_2]}
         };
-        let checkbox = null;
+        wrapper = shallowMount(LayerTreeNode, {store, propsData: propsData, localVue});
 
-        wrapper = shallowMount(LayerComponent, {store, propsData: propsData, localVue});
-
-        expect(wrapper.find("#layertree-layer-" + propsData.layerConf.id).exists()).to.be.true;
-        expect(wrapper.findAll("input").length).to.be.equals(1);
-
-        checkbox = wrapper.find("input");
-        checkbox.trigger("click");
-        await wrapper.vm.$nextTick();
-
-        expect(replaceByIdInLayerConfigSpy.calledOnce).to.be.true;
-        expect(replaceByIdInLayerConfigSpy.firstCall.args[1]).to.be.deep.equals(spyArg);
+        expect(wrapper.find(".no-list").exists()).to.be.true;
+        expect(wrapper.findAll("layertreenode-stub").length).to.be.equals(0);
+        expect(wrapper.findAll("layer-stub").length).to.be.equals(2);
+        expect(wrapper.vm.layers.length).to.be.equals(2);
+        expect(wrapper.vm.isFolder).to.be.false;
+        expect(wrapper.vm.isLayerArray).to.be.true;
+        expect(wrapper.vm.isLayer).to.be.false;
+        expect(wrapper.vm.isLayerInFolderVisible).to.be.false;
     });
-
-    it("click on checkbox of layer with visibility true", async () => {
-        const spyArg = {
-            layerConfigs: [{
-                id: layer.id,
-                layer: {
-                    id: layer.id,
-                    visibility: false
-                }
-            }]
+    it("renders folder and layers, no child components", () => {
+        propsData = {
+            conf: layersWithFolder
         };
-        let checkbox = null;
+        wrapper = shallowMount(LayerTreeNode, {store, propsData: propsData, localVue});
 
-        propsData.layerConf.visibility = true;
-        wrapper = shallowMount(LayerComponent, {store, propsData: propsData, localVue});
-
-        expect(wrapper.find("#layertree-layer-" + propsData.layerConf.id).exists()).to.be.true;
-        expect(wrapper.findAll("input").length).to.be.equals(1);
-
-        checkbox = wrapper.find("input");
-        checkbox.trigger("click");
-        await wrapper.vm.$nextTick();
-
-        expect(replaceByIdInLayerConfigSpy.calledOnce).to.be.true;
-        expect(replaceByIdInLayerConfigSpy.firstCall.args[1]).to.be.deep.equals(spyArg);
+        expect(wrapper.find(".no-list").exists()).to.be.true;
+        expect(wrapper.findAll("layertreenode-stub").length).to.be.equals(1);
+        expect(wrapper.findAll("folder-stub").length).to.be.equals(1);
+        expect(wrapper.vm.layers.length).to.be.equals(3);
+        expect(wrapper.vm.isFolder).to.be.true;
+        expect(wrapper.vm.isLayerArray).to.be.false;
+        expect(wrapper.vm.isLayer).to.be.false;
+        expect(wrapper.vm.isLayerInFolderVisible).to.be.true;
     });
+    it("renders folder and layers with child components", () => {
+        let inputs = null;
+
+        propsData = {
+            conf: layersWithFolder
+        };
+        wrapper = mount(LayerTreeNode, {store, propsData: propsData, localVue});
+        inputs = wrapper.findAll("input");
+
+        expect(wrapper.find(".no-list").exists()).to.be.true;
+        // only 2 folder: one Ordner in config has only one layer and therefore no folder
+        expect(inputs.filter(input => input.attributes().id.startsWith("layertree-folder-checkbox-")).length).to.be.equals(2);
+        // 3 layer
+        expect(inputs.filter(input => input.attributes().id.startsWith("layertree-layer-checkbox-")).length).to.be.equals(3);
+        expect(wrapper.find("#layertree-layer-" + layer_1.id).exists()).to.be.true;
+        expect(wrapper.find("#layertree-layer-" + layer_2.id).exists()).to.be.true;
+        expect(wrapper.find("#layertree-layer-" + layer_3.id).exists()).to.be.true;
+        expect(wrapper.findAll(".folder").length).to.be.equals(3);
+    });
+    // it.only("click on folder shall open and close it", async () => {
+    //     let folders = null;
+
+    //     propsData = {
+    //         conf : layersWithFolder
+    //     };
+    //     wrapper = mount(LayerTreeNode, {store, propsData: propsData, localVue});
+    //     folders = wrapper.findAll(".folder");
+    //     // console.log(wrapper.html());
+
+    //     expect(wrapper.find(".no-list").exists()).to.be.true;
+    //     expect(wrapper.find("#layertree-layer-" + layer_1.id).exists()).to.be.true;
+    //     expect(wrapper.find("#layertree-layer-" + layer_2.id).exists()).to.be.true;
+    //     expect(wrapper.find("#layertree-layer-" + layer_3.id).exists()).to.be.true;
+    //     expect(folders.length).to.be.equals(3);
+    //     expect(folders.at(0).props().isOpen).to.be.false;
+
+    //     folders.at(0).trigger("click");
+    //     await wrapper.vm.$nextTick();
+    //     expect(folders.at(0).props().isOpen).to.be.true;
+    // });
 
 
 });
