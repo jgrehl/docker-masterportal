@@ -1,5 +1,5 @@
 import {expect} from "chai";
-import uniqueId from "../../uniqueId";
+import {uniqueId} from "../../uniqueId";
 
 describe("src_3_0_0/shared/js/utils/uniqueId.js", () => {
     it("should increment the uniqueId internaly", () => {
