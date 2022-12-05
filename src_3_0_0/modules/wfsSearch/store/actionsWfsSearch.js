@@ -2,9 +2,7 @@ import axios from "axios";
 import handleAxiosResponse from "../../../shared/js/utils/handleAxiosResponse";
 import {setLikeFilterProperties} from "../js/buildFilter";
 import {createUserHelp, prepareLiterals, resetFieldValues} from "../js/literalFunctions";
-import layerCollection from "../../../core/layers/js/layerCollection";
-import {createLayer, getLayerTypes3d} from "../../../core/layers/js/layerFactory";
-import {rawLayerList} from "@masterportal/masterportalapi/src";
+import getLayerConfigById from "../../../shared/js/utils/getLayerConfigById";
 
 const actions = {
     /**
@@ -23,76 +21,38 @@ const actions = {
      *
      * @returns {void}
      */
-    prepareModule ({commit, dispatch, getters}) {
+    prepareModule ({commit, dispatch, getters, rootGetters}) {
         dispatch("resetModule", false);
 
         const {currentInstance} = getters,
-            {requestConfig: {layerId, likeFilter, restLayerId, storedQueryId}, title} = currentInstance;
+            {requestConfig: {layerId, likeFilter, restLayerId, storedQueryId}, title} = currentInstance,
+            wfs = restLayerId
+                ? rootGetters.getRestServiceById(restLayerId)
+                : getLayerConfigById({rootGetters}, {id: layerId});
 
-        dispatch("getWFSById", {id: restLayerId ? restLayerId : layerId, type: restLayerId ? "restLayerId" : "layerId"}).then((wfs) => {
-            if (wfs) {
-                const {selectSource} = currentInstance,
-                    service = {url: wfs.url || (wfs.get ? wfs.get("url") : undefined)};
+        if (wfs) {
+            const {selectSource} = currentInstance,
+                service = {url: wfs.url || (wfs.get ? wfs.get("url") : undefined)};
 
-                // NOTE: The extra object is sadly needed so that the object is reactive :(
-                commit("setRequiredValues", {...prepareLiterals(currentInstance.literals)});
-                commit("setUserHelp", currentInstance.userHelp || createUserHelp(currentInstance.literals));
+            // NOTE: The extra object is sadly needed so that the object is reactive :(
+            commit("setRequiredValues", {...prepareLiterals(currentInstance.literals)});
+            commit("setUserHelp", currentInstance.userHelp || createUserHelp(currentInstance.literals));
 
-                if (selectSource) {
-                    dispatch("retrieveData");
-                }
-                if (likeFilter) {
-                    setLikeFilterProperties(likeFilter);
-                }
-                if (!storedQueryId && layerId) {
-                    service.typeName = wfs.featureType || (wfs.get ? wfs.get("featureType") : undefined);
-                }
-                commit("setService", service);
+            if (selectSource) {
+                dispatch("retrieveData");
             }
-            else {
-                dispatch("resetModule", true);
-                dispatch("Alerting/addSingleAlert", i18next.t("common:modules.tools.wfsSearch.wrongConfig", {id: restLayerId ? restLayerId : layerId, title}), {root: true});
+            if (likeFilter) {
+                setLikeFilterProperties(likeFilter);
             }
-        }
-        );
-    },
-    /**
-     * Gets the WFS depending on id and layer type defined in the config.json
-     *
-     * @returns {object} - wfs object
-     */
-    getWFSById ({rootGetters}, {id, type}) {
-        if (type === "restLayerId") {
-            return rootGetters.restServiceById(id);
-        }
-        else if (type === "layerId") {
-            const layerInLayerCollection = layerCollection.getLayerById(id);
-            let layerConfig = null;
-
-
-            if (layerInLayerCollection === undefined) {
-                layerConfig = rootGetters.layerConfigById(id);
-
-                if (layerConfig === undefined) {
-
-                    const rawLayer = rawLayerList.getLayerWhere({id: id}),
-                        rawLayerMapMode = getLayerTypes3d().includes(rawLayer?.typ) ? "3D" : "2D";
-
-                    if (rawLayer) {
-                        const layer = createLayer(rawLayer, rawLayerMapMode);
-
-                        return layer.attributes;
-                    }
-                }
-                else {
-                    return layerConfig;
-                }
+            if (!storedQueryId && layerId) {
+                service.typeName = wfs.featureType || (wfs.get ? wfs.get("featureType") : undefined);
             }
-
-            return layerInLayerCollection;
+            commit("setService", service);
         }
-
-        return null;
+        else {
+            dispatch("resetModule", true);
+            dispatch("Alerting/addSingleAlert", i18next.t("common:modules.tools.wfsSearch.wrongConfig", {id: restLayerId ? restLayerId : layerId, title}), {root: true});
+        }
     },
     /**
      * Resets state parameters to its initial state.
