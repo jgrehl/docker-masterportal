@@ -267,11 +267,11 @@ export default {
         </div>
         <table
             v-if="mimeType !== 'text/html'"
-            class="table table-hover"
+            class="table table-hover table-striped"
         >
             <tbody v-if="mappedPropertiesExists(feature)">
                 <tr v-if="!hasMappedProperties(feature)">
-                    <td class="bold">
+                    <td>
                         {{ $t("modules.tools.gfi.themes.default.noAttributeAvailable") }}
                     </td>
                 </tr>
@@ -352,13 +352,6 @@ export default {
 <style lang="scss" scoped>
 @import "~variables";
 
-.table > tbody > tr > td {
-    padding: 5px 8px;
-    font-size: $font-size-base;
-    &.bold{
-        font-family: $font_family_accent;
-    }
-}
 .gfi-iFrame {
     height: 450px;
     resize: both;
@@ -396,5 +389,8 @@ export default {
 }
 .table {
     margin-bottom: 0;
+    @include media-breakpoint-up(sm) {
+        max-width: 400px;
+    }
 }
 </style>
