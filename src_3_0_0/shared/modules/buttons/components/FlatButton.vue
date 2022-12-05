@@ -26,6 +26,7 @@ export default {
     <button
         class="btn btn-secondary d-flex align-items-center mb-3"
         type="button"
+        :aria-label="text"
         @click="interaction"
     >
         <i
