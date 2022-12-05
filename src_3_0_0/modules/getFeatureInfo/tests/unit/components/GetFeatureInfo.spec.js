@@ -283,7 +283,7 @@ describe("src_3_0_0/modules/getFeatureInfo/components/GetFeatureInfo.vue", () =>
         });
 
         await wrapper.find(".pager-right").trigger("click");
-        expect(wrapper.find(".gfi > div > span").text()).to.equal("Feature 2");
+        expect(wrapper.find(".gfi > div > div").text()).to.equal("Feature 2");
     });
 
     it("should display the previous feature if pager-left is clicked", async () => {
@@ -323,7 +323,7 @@ describe("src_3_0_0/modules/getFeatureInfo/components/GetFeatureInfo.vue", () =>
 
         wrapper.setData({pagerIndex: 1});
         await wrapper.find(".pager-left").trigger("click");
-        expect(wrapper.find(".gfi > div > span").text()).to.equal("Feature 1");
+        expect(wrapper.find(".gfi > div > div").text()).to.equal("Feature 1");
     });
 
     it("should disabled left pager if pagerIndex is zero", () => {
