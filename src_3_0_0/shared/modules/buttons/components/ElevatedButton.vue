@@ -23,6 +23,7 @@ export default {
     <button
         class="btn btn-primary d-flex align-items-center"
         type="button"
+        :aria-label="text"
         @click="interaction"
     >
         <i
