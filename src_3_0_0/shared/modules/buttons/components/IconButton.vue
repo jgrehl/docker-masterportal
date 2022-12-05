@@ -9,6 +9,10 @@ export default {
                 return true;
             }
         },
+        aria: {
+            type: String,
+            required: true
+        },
         icon: {
             type: String,
             default: null,
@@ -28,6 +32,7 @@ export default {
         tabindex="0"
         class="btn btn-primary d-flex align-items-center my-auto"
         type="button"
+        :aria-label="aria"
         :class="classArray"
         @click="interaction"
         @keydown.enter="interaction"
