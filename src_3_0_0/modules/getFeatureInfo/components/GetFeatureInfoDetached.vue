@@ -112,7 +112,9 @@ export default {
 
 <template>
     <div>
-        <span>{{ translate(title) }}</span>
+        <div class="bold mb-3">
+            {{ translate(title) }}
+        </div>
         <component
             :is="theme"
             :feature="feature"
