@@ -178,6 +178,12 @@ export default {
             document.querySelector("body").classList.remove("resize-handle-is-resizing");
         }
     },
+    mounted () {
+        if (this.$el.offsetParent !== null) {
+            this.saveInitialDimensions();
+            this.setNewSize();
+        }
+    },
     methods: {
         getTransformation (style) {
             return style.getPropertyValue("-webkit-transform") ||

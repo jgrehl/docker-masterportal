@@ -59,7 +59,9 @@ export function getMetadata (json) {
 export function getMdIdentification (json) {
     return json.GetRecordByIdResponse?.MD_Metadata?.identificationInfo?.MD_DataIdentification
         ||
-        json.GetRecordByIdResponse?.MD_Metadata?.identificationInfo?.SV_ServiceIdentification;
+        json.GetRecordByIdResponse?.MD_Metadata?.identificationInfo?.SV_ServiceIdentification
+        ||
+        json.MD_Metadata?.identificationInfo?.MD_DataIdentification;
 }
 
 /**
@@ -121,7 +123,7 @@ function parseFrequenzy (json) {
  * @param {String} dateType - the type of the date (e.g. publication)
  * @returns {String|undefined} formatted date
  */
-function parseDate (json, dateType) {
+export function parseDate (json, dateType) {
     const dates = getMdIdentification(json)?.citation?.CI_Citation?.date;
     let dateValue;
 
