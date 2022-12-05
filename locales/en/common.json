@@ -789,6 +789,8 @@
                         "fromCompareList": "Remove from compare list"
                     }
                 },
+                "buttonForward": "Show further information",
+                "buttonBack": "Show previous information",
                 "themes": {
                     "default": {
                         "imgAlt": "No image could be loaded.",

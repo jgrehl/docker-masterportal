@@ -206,17 +206,19 @@ export default {
             >
                 <div class="gfi-footer d-flex justify-content-around mt-3">
                     <IconButton
+                        :aria="$t('modules.tools.gfi.buttonBack')"
                         :class-array="[pagerIndex < 1 ? 'disabled' : '', 'pager-left', 'pager']"
-                        :interaction="decreasePagerIndex"
                         :icon="leftIcon"
+                        :interaction="decreasePagerIndex"
                     />
                     <span class="my-auto">
                         {{ pagerIndex+1 + "/" + gfiFeatures.length }}
                     </span>
                     <IconButton
+                        :aria="$t('modules.tools.gfi.buttonForward')"
                         :class-array="[pagerIndex === gfiFeatures.length - 1 ? 'disabled' : '', 'pager-right', 'pager']"
-                        :interaction="increasePagerIndex"
                         :icon="rightIcon"
+                        :interaction="increasePagerIndex"
                     />
                 </div>
             </template>

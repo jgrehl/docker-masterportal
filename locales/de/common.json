@@ -794,6 +794,8 @@
                         "fromCompareList": "Von der Vergleichsliste entfernen"
                     }
                 },
+                "buttonForward": "Weitere Informationen anzeigen",
+                "buttonBack": "Vorherige Informationen anzeigen",
                 "themes": {
                     "default": {
                         "imgAlt": "Es konnte kein Bild geladen werden.",
