@@ -34,6 +34,7 @@ export default {
         v-if="description"
         class="btn btn-light btn-description d-flex align-items-center row py-3"
         type="button"
+        :aria-label="text"
         :class="customclass"
         @click="interaction"
     >
