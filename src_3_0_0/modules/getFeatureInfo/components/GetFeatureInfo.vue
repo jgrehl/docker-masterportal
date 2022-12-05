@@ -4,18 +4,23 @@ import {mapGetters, mapMutations, mapActions} from "vuex";
 import GetFeatureInfoDetached from "./GetFeatureInfoDetached.vue";
 import {mapAttributes} from "../../../shared/js/utils/attributeMapper";
 import omit from "../../../shared/js/utils/omit";
+import IconButton from "../../../shared/modules/buttons/components/IconButton.vue";
 
 export default {
     name: "GetFeatureInfo",
     components: {
-        GetFeatureInfoDetached
+        GetFeatureInfoDetached,
+        IconButton
     },
     data () {
         return {
             // current index of the pagination and so also for the feature in the gfiFeatures
             pagerIndex: 0,
             // key for re-render child(detached) component
-            componentKey: false
+            componentKey: false,
+            // icons for buttons
+            leftIcon: "bi-chevron-left",
+            rightIcon: "bi-chevron-right"
         };
     },
     computed: {
@@ -199,27 +204,20 @@ export default {
                 v-if="gfiFeatures.length > 1"
                 #footer
             >
-                <div class="gfi-footer">
-                    <div
-                        :class="[pagerIndex < 1 ? 'disabled' : '', 'pager-left', 'pager']"
-                        tabindex="0"
-                        @click="decreasePagerIndex"
-                        @keydown.enter="decreasePagerIndex"
-                    >
-                        <span class="bootstrap-icon">
-                            <i class="bi-chevron-left" />
-                        </span>
-                    </div>
-                    <div
-                        tabindex="0"
-                        :class="[pagerIndex === gfiFeatures.length - 1 ? 'disabled' : '', 'pager-right', 'pager']"
-                        @click="increasePagerIndex"
-                        @keydown.enter="increasePagerIndex"
-                    >
-                        <span class="bootstrap-icon">
-                            <i class="bi-chevron-right" />
-                        </span>
-                    </div>
+                <div class="gfi-footer d-flex justify-content-around mt-3">
+                    <IconButton
+                        :class-array="[pagerIndex < 1 ? 'disabled' : '', 'pager-left', 'pager']"
+                        :interaction="decreasePagerIndex"
+                        :icon="leftIcon"
+                    />
+                    <span class="my-auto">
+                        {{ pagerIndex+1 + "/" + gfiFeatures.length }}
+                    </span>
+                    <IconButton
+                        :class-array="[pagerIndex === gfiFeatures.length - 1 ? 'disabled' : '', 'pager-right', 'pager']"
+                        :interaction="increasePagerIndex"
+                        :icon="rightIcon"
+                    />
                 </div>
             </template>
         </component>
@@ -232,36 +230,6 @@ export default {
 
     .gfi {
         color: $dark_blue;
-    }
-    .bold{
-        font-weight: bold;
-    }
-    .gfi-footer {
-        color: $dark_grey;
-        font-size: $font_size_huge;
-            .pager {
-            background-color: $secondary;
-            padding: 6px;
-            cursor: pointer;
-            width: 50%;
-            margin: 0;
-            text-align: center;
-            list-style: none;
-        }
-
-        .pager-left {
-            float: left;
-            border-right: 1px solid $light_grey;
-        }
-
-        .pager-right {
-            float: right;
-        }
-        .disabled {
-            cursor: not-allowed;
-            background-color: lighten($light_grey_inactive, 40%);
-            color: $light_grey_inactive_contrast;
-        }
     }
 
 </style>
