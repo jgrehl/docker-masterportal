@@ -106,7 +106,7 @@ describe("src_3_0_0/modules/getFeatureInfo/components/GetFeatureInfoDetached.vue
             components: {
                 DefaultTheme: {
                     name: "DefaultTheme",
-                    template: "<span />"
+                    template: "<div />"
                 }
             },
             global: {
@@ -114,7 +114,7 @@ describe("src_3_0_0/modules/getFeatureInfo/components/GetFeatureInfoDetached.vue
             }
         });
 
-        expect(wrapper.find("span").text()).to.be.equal("Hallo");
+        expect(wrapper.find("div").text()).to.be.equal("Hallo");
     });
 
     it("should have the child component default (-Theme)", () => {
