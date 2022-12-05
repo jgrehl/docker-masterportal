@@ -13,10 +13,7 @@ localVue.use(Vuex);
 config.mocks.$t = key => key;
 
 describe("src/modules/wfsSearch/components/WfsSearch.vue", () => {
-    const arbitraryFeature = {
-            getGeometryName: () => "Klein bottle"
-        },
-        mockMapMarkerActions = {
+    const mockMapMarkerActions = {
             removePointMarker: sinon.stub()
         },
         mockAlertingActions = {
@@ -43,8 +40,8 @@ describe("src/modules/wfsSearch/components/WfsSearch.vue", () => {
                 layerId: "753"
             },
             resultList: {
-                "Ort": "Ort",
-                "Name": "Name"
+                Ort: "Ort",
+                Name: "Name"
             },
             literals: [{field: {
                 id: "fieldId",
@@ -168,8 +165,7 @@ describe("src/modules/wfsSearch/components/WfsSearch.vue", () => {
         expect(searchInput.element.value).to.equal("common:modules.tools.wfsSearch.searchButton");
         expect(searchInput.element.type).to.equal("submit");
     });
-    it.only("renders a clickable button to show the search results if the user searched and results were found", async () => {
-        store.commit("Modules/WfsSearch/setResults", [{Ort: "Hamburg", Name: "KiTa Rübennasen"}]);
+    it("renders a clickable button to show the search results if the user searched and results were found", async () => {
         store.commit("Modules/WfsSearch/setInstances", instances);
 
         const wrapper = mount(WfsSearch, {
@@ -179,25 +175,28 @@ describe("src/modules/wfsSearch/components/WfsSearch.vue", () => {
         let showResultsButton = null;
 
         store.commit("Modules/WfsSearch/setSearched", true);
+        store.commit("Modules/WfsSearch/setResults", [{Ort: "Hamburg", Name: "KiTa Rübennasen"}]);
         await wrapper.vm.$nextTick();
         showResultsButton = wrapper.find("#module-wfsSearch-button-showResults");
         showResultsButton.element.disabled = false;
 
-        console.log("******", showResultsButton.element.disabled);
-
-        // expect(showResultsButton.exists()).to.be.true;
-        // expect(showResultsButton.text()).to.equal("common:modules.tools.wfsSearch.showResults (1)");
+        expect(showResultsButton.exists()).to.be.true;
+        expect(showResultsButton.text()).to.equal("common:modules.tools.wfsSearch.showResults (1)");
         expect(showResultsButton.element.disabled).to.be.false;
     });
-    it("renders a disabled button if the user searched and no results were found", () => {
+    it("renders a disabled button if the user searched and no results were found", async () => {
+        store.commit("Modules/WfsSearch/setInstances", instances);
+
+        const wrapper = mount(WfsSearch, {
+            localVue,
+            store
+        });
+        let searchButton = null;
+
         store.commit("Modules/WfsSearch/setSearched", true);
         store.commit("Modules/WfsSearch/setResults", []);
-        store.commit("Modules/WfsSearch/setInstances", instances);
-        const wrapper = mount(WfsSearch, {
-                localVue,
-                store
-            }),
-            searchButton = wrapper.find("#module-wfsSearch-button-showResults");
+        await wrapper.vm.$nextTick();
+        searchButton = wrapper.find("#module-wfsSearch-button-showResults");
 
         expect(searchButton.exists()).to.be.true;
         expect(searchButton.text()).to.equal("common:modules.tools.wfsSearch.showResults (0)");
@@ -215,60 +214,5 @@ describe("src/modules/wfsSearch/components/WfsSearch.vue", () => {
             searchButton = wrapper.find("#module-wfsSearch-button-showResults");
 
         expect(searchButton.exists()).to.be.false;
-    });
-    it("renders a pagination when more results than are to be shown are available", () => {
-        store.commit("Modules/WfsSearch/setSearched", true);
-        store.commit("Modules/WfsSearch/setResultsPerPage", 2);
-        store.commit("Modules/WfsSearch/setShowResultList", true);
-        store.commit("Modules/WfsSearch/setResults", [
-            arbitraryFeature, arbitraryFeature, arbitraryFeature,
-            arbitraryFeature, arbitraryFeature
-        ]);
-        store.commit("Modules/WfsSearch/setInstances", instances);
-
-        const wrapper = mount(WfsSearch, {
-                localVue,
-                store
-            }),
-            pagination = wrapper.find("ul.pagination");
-
-        expect(pagination.exists()).to.be.true;
-        expect(pagination.findAll("li").length).to.equal(3);
-    });
-    it("doesn't render a pagination when 0 is chosen for 'resultsPerPage'", () => {
-        store.commit("Modules/WfsSearch/setSearched", true);
-        store.commit("Modules/WfsSearch/setResultsPerPage", 0);
-        store.commit("Modules/WfsSearch/setShowResultList", true);
-        store.commit("Modules/WfsSearch/setResults", [
-            arbitraryFeature, arbitraryFeature, arbitraryFeature,
-            arbitraryFeature, arbitraryFeature
-        ]);
-        store.commit("Modules/WfsSearch/setInstances", instances);
-
-        const wrapper = mount(WfsSearch, {
-                localVue,
-                store
-            }),
-            pagination = wrapper.find("ul.pagination");
-
-        expect(pagination.exists()).to.be.false;
-    });
-    it("doesn't render a pagination when resultsPerPage is larger than result list length", () => {
-        store.commit("Modules/WfsSearch/setSearched", true);
-        store.commit("Modules/WfsSearch/setResultsPerPage", 9001);
-        store.commit("Modules/WfsSearch/setShowResultList", true);
-        store.commit("Modules/WfsSearch/setResults", [
-            arbitraryFeature, arbitraryFeature, arbitraryFeature,
-            arbitraryFeature, arbitraryFeature
-        ]);
-        store.commit("Modules/WfsSearch/setInstances", instances);
-
-        const wrapper = mount(WfsSearch, {
-                localVue,
-                store
-            }),
-            pagination = wrapper.find("ul.pagination");
-
-        expect(pagination.exists()).to.be.false;
     });
 });
