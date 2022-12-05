@@ -1,5 +1,5 @@
 <script>
-import {mapGetters, mapMutations} from "vuex";
+import {mapActions, mapGetters, mapMutations} from "vuex";
 import layerFactory from "../../../core/layers/js/layerFactory";
 
 /**
@@ -30,6 +30,8 @@ export default {
     },
     methods: {
         ...mapMutations(["replaceByIdInLayerConfig"]),
+        ...mapActions("Modules/LayerInformation", ["layerInfo", "startLayerInformation"]),
+
         /**
          * Replaces the value of current conf's visibility in state's layerConfig
          * @param {Boolean} value visible or not
@@ -66,21 +68,22 @@ export default {
     <div
         v-if="showInLayerTree()"
         :id="'layer-tree-layer-' + layerConf.id"
-        class="layer-tree-layer form-check"
+        class="layer-tree-layer form-check d-flex justify-content-between"
     >
-        <div class="layer-tree-layer-title">
+        <div class="layer-tree-layer-title pe-2">
             <input
                 :id="'layer-tree-layer-checkbox' + layerConf.id"
                 v-model="checkboxValue"
                 type="checkbox"
                 class="layer-tree-layer-checkbox form-check-input"
                 @click="visibilityInLayerTreeChanged(!isLayerVisible())"
-                @keydown="visibilityInLayerTreeChanged(!isLayerVisible())"
+                @keydown="event => event.key === 'Enter' ? visibilityInLayerTreeChanged(!isLayerVisible()) : null"
             >
             <label
                 :class="['layer-tree-layer-label', 'mt-0 d-flex flex-column align-self-start', isLayerVisible() ? 'bold' : '']"
                 :for="'layer-tree-layer-checkbox' + layerConf.id"
                 tabindex="0"
+                :aria-label="$t('layerConf.name')"
             >
                 <span>
                     {{ layerConf.name }}
@@ -88,15 +91,17 @@ export default {
             </label>
         </div>
         <div class="layer-tree-layer-icons">
-            <span
-                class="layer-tree-layer-info bootstrap-icon"
+            <button
+                class="layer-tree-layer-info btn"
                 tabindex="0"
+                :disabled="!layerConf?.datasets?.length > 0"
                 :title="$t('common:tree.infosAndLegend')"
-                @click="openLayerInformation($event, layerConf)"
-                @keydown="openLayerInformation($event, layerConf)"
+                :aria-label="$t('common:tree.infosAndLegend')"
+                @click="startLayerInformation(layerConf)"
+                @keydown="event => event.key === 'Enter' ? startLayerInformation(layerConf) : null"
             >
-                <i class="bi bi-info-circle-fill" />
-            </span>
+                <i class="bi bi-info-circle" />
+            </button>
         </div>
     </div>
 </template>
@@ -106,8 +111,6 @@ export default {
     @import "~mixins";
 
     .layer-tree-layer {
-        display: flex;
-        justify-content: space-between;
         font-size: $font-size-base;
 
         .layer-tree-layer-title, .layer-tree-layer-checkbox {
@@ -121,9 +124,10 @@ export default {
             .bold {
                 font-weight: bold;
             }
-            .layer-tree-layer-label {
-                flex-basis: 90%;
-            }
+        }
+
+        .layer-tree-layer-label {
+            cursor: pointer;
         }
 
         .layer-tree-layer-icons {
