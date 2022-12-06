@@ -126,7 +126,7 @@ describe("src_3_0_0/modules/layerTree/components/LayerTree.vue", () => {
             }});
 
         expect(wrapper.find("#layer-tree").exists()).to.be.true;
-        expect(wrapper.findAll("layertreenode-stub").length).to.be.equals(0);
+        expect(wrapper.findAll("layer-tree-node-stub").length).to.be.equals(0);
     });
 
     it("renders the LayerTree with 2D layers", () => {
@@ -136,15 +136,18 @@ describe("src_3_0_0/modules/layerTree/components/LayerTree.vue", () => {
             }});
 
         expect(wrapper.find("#layer-tree").exists()).to.be.true;
-        expect(wrapper.findAll("layertreenode-stub").length).to.be.equals(4);
+        expect(wrapper.findAll("layer-tree-node-stub").length).to.be.equals(4);
     });
 
     it("renders the LayerTree with 2D layers in folder structure", () => {
         subjectDataLayers = layersWithFolder;
-        wrapper = shallowMount(LayerTreeComponent, {store, localVue});
+        wrapper = shallowMount(LayerTreeComponent, {
+            global: {
+                plugins: [store]
+            }});
 
         expect(wrapper.find("#layer-tree").exists()).to.be.true;
-        expect(wrapper.findAll("layertreenode-stub").length).to.be.equals(3);
+        expect(wrapper.findAll("layer-tree-node-stub").length).to.be.equals(3);
     });
 
     it("renders the LayerTree with 2D layers as children - check layers", () => {
@@ -165,7 +168,10 @@ describe("src_3_0_0/modules/layerTree/components/LayerTree.vue", () => {
         let inputs = null;
 
         subjectDataLayers = layersWithFolder;
-        wrapper = mount(LayerTreeComponent, {store, localVue});
+        wrapper = mount(LayerTreeComponent, {
+            global: {
+                plugins: [store]
+            }});
         inputs = wrapper.findAll("input");
 
         expect(wrapper.find("#layer-tree").exists()).to.be.true;
@@ -183,7 +189,10 @@ describe("src_3_0_0/modules/layerTree/components/LayerTree.vue", () => {
     it("renders the LayerTree with 3D layers as children - check layers", () => {
         mapMode = "3D";
         subjectDataLayers = layers2D.concat(layers3D);
-        wrapper = mount(LayerTreeComponent, {store, localVue});
+        wrapper = mount(LayerTreeComponent, {
+            global: {
+                plugins: [store]
+            }});
 
         expect(wrapper.find("#layer-tree").exists()).to.be.true;
         expect(wrapper.findAll("input").length).to.be.equals(5);
