@@ -41,8 +41,11 @@ export default {
          * @param {Object[]} components The always active actions.
          * @returns {void}
          */
-        componentsAlwaysActivated (components) {
-            this.updateModuleInMenuSection(components);
+        componentsAlwaysActivated: {
+            handler (components) {
+                this.updateModuleInMenuSection(components);
+            },
+            deep: true
         }
     },
     mounted () {

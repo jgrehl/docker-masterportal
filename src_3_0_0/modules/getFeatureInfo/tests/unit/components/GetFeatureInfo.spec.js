@@ -45,7 +45,8 @@ function getGfiStore (mobile, uiStyle, gfiFeatures, mapSize) {
                         mutations: mockMutations,
                         getters: mockGetters,
                         actions: {
-                            addGfiToMenu: sinon.stub()
+                            addGfiToMenu: sinon.stub(),
+                            updateClick: sinon.stub()
                         }
                     }
                 }
@@ -151,7 +152,7 @@ describe("src_3_0_0/modules/getFeatureInfo/components/GetFeatureInfo.vue", () =>
         expect(wrapper.findComponent({name: "GetFeatureInfoDetached"}).exists()).to.be.false;
     });
 
-    it("should set pagerIndex to zero if gfiFeatures change", () => {
+    it("should set pagerIndex to zero if clickCoordinate change", () => {
         const gfiFeatures = [{
                 getGfiUrl: () => null,
                 getFeatures: () => sinon.stub(),
@@ -180,7 +181,7 @@ describe("src_3_0_0/modules/getFeatureInfo/components/GetFeatureInfo.vue", () =>
             }
         });
 
-        wrapper.vm.$options.watch.gfiFeatures.call(wrapper.vm, null);
+        wrapper.vm.$options.watch.clickCoordinate.call(wrapper.vm, null);
         expect(wrapper.vm.pagerIndex).to.equal(0);
     });
 
