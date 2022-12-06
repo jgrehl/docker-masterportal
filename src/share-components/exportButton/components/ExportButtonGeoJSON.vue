@@ -69,7 +69,7 @@ export default {
          */
         handleDownloadError (msg) {
             console.warn(msg);
-            this.$store.dispatch("Alerting/addSingleAlert", i18next.t("common:modules.exportButton.error.download"));
+            this.$store.dispatch("Alerting/addSingleAlert", this.$t("common:modules.exportButton.error.download"));
         },
         /**
          * triggers the download based on the given props
