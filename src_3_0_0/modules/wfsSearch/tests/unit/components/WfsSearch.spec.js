@@ -1,5 +1,5 @@
-import Vuex from "vuex";
-import {config, mount, createLocalVue} from "@vue/test-utils";
+import {createStore} from "vuex";
+import {config, mount} from "@vue/test-utils";
 import {expect} from "chai";
 import sinon from "sinon";
 
@@ -7,10 +7,7 @@ import WfsSearchLiteral from "../../../components/WfsSearchLiteral.vue";
 import WfsSearch from "../../../components/WfsSearch.vue";
 import WfsSearchModule from "../../../store/indexWfsSearch";
 
-const localVue = createLocalVue();
-
-localVue.use(Vuex);
-config.mocks.$t = key => key;
+config.global.mocks.$t = key => key;
 
 describe("src/modules/wfsSearch/components/WfsSearch.vue", () => {
     const mockMapMarkerActions = {
@@ -53,7 +50,7 @@ describe("src/modules/wfsSearch/components/WfsSearch.vue", () => {
         layer = {
             id: "753"
         };
-        store = new Vuex.Store({
+        store = createStore({
             namespaces: true,
             modules: {
                 Modules: {
@@ -90,8 +87,9 @@ describe("src/modules/wfsSearch/components/WfsSearch.vue", () => {
     it("renders a literal", async () => {
         store.commit("Modules/WfsSearch/setInstances", instances);
         const wrapper = mount(WfsSearch, {
-            localVue,
-            store
+            global: {
+                plugins: [store]
+            }
         });
 
         expect(wrapper.findComponent(WfsSearchLiteral).exists()).to.be.true;
@@ -110,8 +108,9 @@ describe("src/modules/wfsSearch/components/WfsSearch.vue", () => {
         }});
         store.commit("Modules/WfsSearch/setInstances", instances);
         const wrapper = mount(WfsSearch, {
-            localVue,
-            store
+            global: {
+                plugins: [store]
+            }
         });
 
         expect(wrapper.findAllComponents(WfsSearchLiteral).length).to.equal(3);
@@ -123,8 +122,9 @@ describe("src/modules/wfsSearch/components/WfsSearch.vue", () => {
         });
         store.commit("Modules/WfsSearch/setInstances", instances);
         const wrapper = mount(WfsSearch, {
-            localVue,
-            store
+            global: {
+                plugins: [store]
+            }
         });
 
         expect(wrapper.find("#module-wfsSearch-instances-select-label").exists()).to.be.true;
@@ -134,8 +134,9 @@ describe("src/modules/wfsSearch/components/WfsSearch.vue", () => {
         store.commit("Modules/WfsSearch/setUserHelp", "test");
         store.commit("Modules/WfsSearch/setInstances", instances);
         const wrapper = mount(WfsSearch, {
-            localVue,
-            store
+            global: {
+                plugins: [store]
+            }
         });
 
         expect(wrapper.find("#module-wfsSearch-userHelp").exists()).to.be.true;
@@ -145,8 +146,9 @@ describe("src/modules/wfsSearch/components/WfsSearch.vue", () => {
     it("renders a button to reset the UI", () => {
         store.commit("Modules/WfsSearch/setInstances", instances);
         const wrapper = mount(WfsSearch, {
-                localVue,
-                store
+                global: {
+                    plugins: [store]
+                }
             }),
             resetButton = wrapper.find("#module-wfsSearch-button-resetUI");
 
@@ -156,8 +158,9 @@ describe("src/modules/wfsSearch/components/WfsSearch.vue", () => {
     it("renders an input element of type submit to search", () => {
         store.commit("Modules/WfsSearch/setInstances", instances);
         const wrapper = mount(WfsSearch, {
-                localVue,
-                store
+                global: {
+                    plugins: [store]
+                }
             }),
             searchInput = wrapper.find("#module-wfsSearch-button-search");
 
@@ -169,8 +172,9 @@ describe("src/modules/wfsSearch/components/WfsSearch.vue", () => {
         store.commit("Modules/WfsSearch/setInstances", instances);
 
         const wrapper = mount(WfsSearch, {
-            localVue,
-            store
+            global: {
+                plugins: [store]
+            }
         });
         let showResultsButton = null;
 
@@ -188,8 +192,9 @@ describe("src/modules/wfsSearch/components/WfsSearch.vue", () => {
         store.commit("Modules/WfsSearch/setInstances", instances);
 
         const wrapper = mount(WfsSearch, {
-            localVue,
-            store
+            global: {
+                plugins: [store]
+            }
         });
         let searchButton = null;
 
@@ -208,8 +213,9 @@ describe("src/modules/wfsSearch/components/WfsSearch.vue", () => {
         delete instances[0].resultList;
         store.commit("Modules/WfsSearch/setInstances", instances);
         const wrapper = mount(WfsSearch, {
-                localVue,
-                store
+                global: {
+                    plugins: [store]
+                }
             }),
             searchButton = wrapper.find("#module-wfsSearch-button-showResults");
 
