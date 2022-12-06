@@ -158,5 +158,19 @@ export default {
                 commit("setActiveModuleMouseMapInteractions", "GetFeatureInfo");
             }
         }
+    },
+
+    /**
+     * Resets menu an deactivate menu navigation
+     * @param {Object} param store context
+     * @param {Object} param.dispatch the dispatch
+     * @param {Object} menuItem The menu item.
+     * @param {String} menuItem.side The menu side to reset.
+     * @param {Object} menuItem.module The module type.
+     * @returns {void}
+     */
+    startItemInMenu ({dispatch}, menuItem) {
+        dispatch("resetMenu", menuItem);
+        dispatch("activateMenuNavigation", menuItem);
     }
 };
