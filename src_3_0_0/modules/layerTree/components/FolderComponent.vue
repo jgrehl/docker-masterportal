@@ -26,16 +26,13 @@ export default {
         };
     },
     computed: {
-        checkboxValue: {
+        allLayersVisible: {
             get () {
-                return this.allLayersVisible;
+                return this.layers.filter(layer => layer.visibility === true).length === this.layers.length;
             },
             set () {
                 // v-model: setter must be here, but does nothing - setting is handeled by click-event
             }
-        },
-        allLayersVisible () {
-            return this.layers.filter(layer => layer.visibility === true).length === this.layers.length;
         },
         isLayerInFolderVisible () {
             return this.layers.find(layer => layer.visibility === true) !== undefined;
@@ -86,6 +83,21 @@ export default {
     <div
         class="folder"
     >
+        <input
+            v-if="(layers.length > 1)"
+            :id="('layertree-folder-checkbox-' + folderId)"
+            v-model="allLayersVisible"
+            type="checkbox"
+            class="form-check-input"
+            @click="visibilityInLayerTreeChanged($event.target.checked)"
+            @keydown="visibilityInLayerTreeChanged($event.target.checked)"
+        >
+        <label
+            class="d-none"
+            :for="('layertree-folder-checkbox-' + folderId)"
+        >
+            {{ $t("common:tree.selectAll") }}
+        </label>
         <div
             :class="{ bold: isLayerInFolderVisible}"
             @click="toggleFolder"
@@ -97,32 +109,13 @@ export default {
             />
             {{ conf.Titel }}
         </div>
-        <input
-            v-if="(layers.length > 1)"
-            :id="('layertree-folder-checkbox-' + folderId)"
-            v-model="checkboxValue"
-            type="checkbox"
-            class="form-check-input"
-            @click="visibilityInLayerTreeChanged($event.target.checked)"
-            @keydown="visibilityInLayerTreeChanged($event.target.checked)"
-        >
-        <label
-            v-if="(layers.length > 1)"
-            class="mt-0 d-flex flex-column"
-            :for="('layertree-folder-checkbox-' + folderId)"
-        >
-            {{ $t("common:tree.selectAll") }}
-        </label>
     </div>
 </template>
 
 <style lang="scss" scoped>
-    .bold {
-        font-weight: bold;
-    }
     .folder{
         display: flex;
-        gap: 10px;
+        gap: 0.25rem;
         align-items: center;
     }
 </style>

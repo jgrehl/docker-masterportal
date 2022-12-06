@@ -56,7 +56,7 @@ export default {
         showInLayerTree () {
             const layerTypes3d = layerFactory.getLayerTypes3d();
 
-            return this.conf.showInLayerTree !== false && (this.mode === "2D" ? !layerTypes3d.includes(this.conf.typ?.toUpperCase()) : true);
+            return this.conf.showInLayerTree === true && (this.mode === "2D" ? !layerTypes3d.includes(this.conf.typ?.toUpperCase()) : true);
         }
     }
 };
@@ -85,13 +85,4 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-    @import "~variables";
-    .bold {
-        font-weight: bold;
-    }
-
-    h5 {
-        font-size: $font-size-base;
-    }
-
 </style>
