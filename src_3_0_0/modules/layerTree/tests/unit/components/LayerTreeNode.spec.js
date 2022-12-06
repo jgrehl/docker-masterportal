@@ -63,7 +63,13 @@ describe("src_3_0_0/modules/layerTree/components/LayerTreeNode.vue", () => {
                     namespaced: true,
                     modules: {
                         namespaced: true,
-                        LayerTreeNode
+                        LayerTreeNode,
+                        LayerInformation: {
+                            namespaced: true,
+                            getters: {
+                                icon: sinon.stub()
+                            }
+                        }
                     }
                 },
                 Maps: {
@@ -153,12 +159,12 @@ describe("src_3_0_0/modules/layerTree/components/LayerTreeNode.vue", () => {
 
         expect(wrapper.find(".no-list").exists()).to.be.true;
         // only 2 folder: one Ordner in config has only one layer and therefore no checkbox
-        expect(inputs.filter(input => input.attributes().id.startsWith("layertree-folder-checkbox-")).length).to.be.equals(2);
+        expect(inputs.filter(input => input.attributes().id.startsWith("layer-tree-folder-checkbox-")).length).to.be.equals(2);
         // 3 layer
-        expect(inputs.filter(input => input.attributes().id.startsWith("layertree-layer-checkbox-")).length).to.be.equals(3);
-        expect(wrapper.find("#layertree-layer-" + layer_1.id).exists()).to.be.true;
-        expect(wrapper.find("#layertree-layer-" + layer_2.id).exists()).to.be.true;
-        expect(wrapper.find("#layertree-layer-" + layer_3.id).exists()).to.be.true;
+        expect(inputs.filter(input => input.attributes().id.startsWith("layer-tree-layer-checkbox-")).length).to.be.equals(3);
+        expect(wrapper.find("#layer-tree-layer-" + layer_1.id).exists()).to.be.true;
+        expect(wrapper.find("#layer-tree-layer-" + layer_2.id).exists()).to.be.true;
+        expect(wrapper.find("#layer-tree-layer-" + layer_3.id).exists()).to.be.true;
         expect(wrapper.findAll(".folder").length).to.be.equals(3);
     });
 
