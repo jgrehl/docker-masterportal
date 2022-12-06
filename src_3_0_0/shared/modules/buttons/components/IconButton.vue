@@ -32,6 +32,7 @@ export default {
         tabindex="0"
         class="btn btn-primary d-flex align-items-center my-auto"
         type="button"
+        :title="aria"
         :aria-label="aria"
         :class="classArray"
         @click="interaction"
