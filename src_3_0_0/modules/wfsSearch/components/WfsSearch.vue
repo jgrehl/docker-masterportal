@@ -74,7 +74,7 @@ export default {
         this.prepareModule();
 
     },
-    destroyed () {
+    unmounted () {
         this.resetModule(true);
     },
     methods: {
@@ -245,10 +245,10 @@ export default {
             :show-modal="showResults"
             modal-inner-wrapper-style="padding: 10px;min-width: 70vw;"
             modal-content-container-style="padding: 0;overflow: auto;max-height: 70vh;"
-            @modalHid="setShowResultList(false)"
+            @modal-hid="setShowResultList(false)"
         >
             <template v-if="showResults && results.length">
-                <header slot="header">
+                <header>
                     <h4>{{ currentInstance.resultDialogTitle ? $t(currentInstance.resultDialogTitle) : $t(name) }}</h4>
                     <hr>
                 </header>
@@ -265,7 +265,7 @@ export default {
                 />
             </template>
             <template v-else>
-                <header slot="header">
+                <header>
                     <h4>{{ $t(name) }}</h4>
                     <hr>
                 </header>
