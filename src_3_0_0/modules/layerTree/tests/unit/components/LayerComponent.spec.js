@@ -110,7 +110,13 @@ describe("src_3_0_0/modules/layerTree/components/Layer.vue", () => {
         propsData.conf.visibility = true;
         propsData.conf.showInLayerTree = false;
 
-        wrapper = shallowMount(LayerComponent, {store, propsData: propsData, localVue});
+        wrapper = shallowMount(LayerComponent, {
+            global: {
+                plugins: [store]
+            },
+            propsData
+        });
+
         wrapper.vm.showInLayerTree();
 
         expect(wrapper.find("#layertree-layer-" + propsData.conf.id).exists()).to.be.false;
@@ -118,7 +124,13 @@ describe("src_3_0_0/modules/layerTree/components/Layer.vue", () => {
     it("method showInLayerTree - show layer with showInLayerTree = true", () => {
         propsData.conf.showInLayerTree = false;
 
-        wrapper = shallowMount(LayerComponent, {store, propsData: propsData, localVue});
+        wrapper = shallowMount(LayerComponent, {
+            global: {
+                plugins: [store]
+            },
+            propsData
+        });
+
         wrapper.vm.showInLayerTree();
 
         expect(wrapper.find("#layertree-layer-" + propsData.conf.id).exists()).to.be.false;
@@ -127,25 +139,49 @@ describe("src_3_0_0/modules/layerTree/components/Layer.vue", () => {
         mapMode = "3D";
         propsData.conf = layer3D;
 
-        wrapper = shallowMount(LayerComponent, {store, propsData: propsData, localVue});
+        wrapper = shallowMount(LayerComponent, {
+            global: {
+                plugins: [store]
+            },
+            propsData
+        });
+
         wrapper.vm.showInLayerTree();
 
         expect(wrapper.find("#layertree-layer-" + propsData.conf.id).exists()).to.be.true;
     });
     it("computed property isLayerVisible with visibility=false ", () => {
-        wrapper = shallowMount(LayerComponent, {store, propsData: propsData, localVue});
+        wrapper = shallowMount(LayerComponent, {
+            global: {
+                plugins: [store]
+            },
+            propsData
+        });
+
 
         expect(wrapper.vm.isLayerVisible).to.be.false;
     });
     it("computed property isLayerVisible with visibility=undefined ", () => {
         layer.visibility = undefined;
-        wrapper = shallowMount(LayerComponent, {store, propsData: propsData, localVue});
+        wrapper = shallowMount(LayerComponent, {
+            global: {
+                plugins: [store]
+            },
+            propsData
+        });
+
 
         expect(wrapper.vm.isLayerVisible).to.be.false;
     });
     it("computed property isLayerVisible with visibility=true ", () => {
         layer.visibility = true;
-        wrapper = shallowMount(LayerComponent, {store, propsData: propsData, localVue});
+        wrapper = shallowMount(LayerComponent, {
+            global: {
+                plugins: [store]
+            },
+            propsData
+        });
+
 
         expect(wrapper.vm.isLayerVisible).to.be.true;
     });
@@ -192,7 +228,7 @@ describe("src_3_0_0/modules/layerTree/components/Layer.vue", () => {
         };
         let checkbox = null;
 
-        propsData.layerConf.visibility = true;
+        propsData.conf.visibility = true;
         wrapper = shallowMount(LayerComponent, {
             global: {
                 plugins: [store]
