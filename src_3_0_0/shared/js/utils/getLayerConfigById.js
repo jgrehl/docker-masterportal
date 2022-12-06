@@ -9,27 +9,30 @@ import {rawLayerList} from "@masterportal/masterportalapi/src";
  * @returns {Object}  layerConfig
  */
 export default function getLayerConfigById (context, {id}) {
-    const layerInLayerCollection = layerCollection.getLayerById(id);
-    let layerConfig = null;
+    if (id) {
+        const layerInLayerCollection = layerCollection.getLayerById(id);
+        let layerConfig = null;
 
-    if (layerInLayerCollection === undefined) {
-        layerConfig = context?.rootGetters?.layerConfigById(id);
+        if (layerInLayerCollection === undefined) {
+            layerConfig = context?.rootGetters?.layerConfigById(id);
 
-        if (layerConfig === undefined) {
-            const rawLayer = rawLayerList.getLayerWhere({id: id}),
-                rawLayerMapMode = getLayerTypes3d().includes(rawLayer?.typ) ? "3D" : "2D";
+            if (layerConfig === undefined) {
+                const rawLayer = rawLayerList.getLayerWhere({id: id}),
+                    rawLayerMapMode = getLayerTypes3d().includes(rawLayer?.typ) ? "3D" : "2D";
 
-            if (rawLayer) {
-                const layer = createLayer(rawLayer, rawLayerMapMode);
+                if (rawLayer) {
+                    const layer = createLayer(rawLayer, rawLayerMapMode);
 
-                return layer.attributes;
+                    return layer.attributes;
+                }
+            }
+            else {
+                return layerConfig;
             }
         }
-        else {
-            return layerConfig;
-        }
-    }
 
-    return layerInLayerCollection;
+        return layerInLayerCollection;
+    }
+    return null;
 }
 
