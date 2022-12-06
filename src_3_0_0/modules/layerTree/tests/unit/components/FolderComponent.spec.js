@@ -1,15 +1,12 @@
-import {config, shallowMount, createLocalVue} from "@vue/test-utils";
+import {createStore} from "vuex";
+import {config, shallowMount} from "@vue/test-utils";
 import {expect} from "chai";
 import sinon from "sinon";
-import Vuex from "vuex";
 
 import uniqueIdModule from "../../../../../shared/js/utils/uniqueId.js";
 import FolderComponent from "../../../components/FolderComponent.vue";
 
-const localVue = createLocalVue();
-
-localVue.use(Vuex);
-config.mocks.$t = key => key;
+config.global.mocks.$t = key => key;
 
 describe("src_3_0_0/modules/layerTree/components/FolderComponent.vue", () => {
     let store,
@@ -60,7 +57,7 @@ describe("src_3_0_0/modules/layerTree/components/FolderComponent.vue", () => {
             conf: folder,
             isOpen: false
         };
-        store = new Vuex.Store({
+        store = createStore({
             namespaces: true,
             modules: {
                 Modules: {
@@ -83,9 +80,6 @@ describe("src_3_0_0/modules/layerTree/components/FolderComponent.vue", () => {
     });
 
     afterEach(() => {
-        if (wrapper) {
-            wrapper.destroy();
-        }
         sinon.restore();
     });
 
@@ -98,7 +92,12 @@ describe("src_3_0_0/modules/layerTree/components/FolderComponent.vue", () => {
                 }
             ]
         };
-        wrapper = shallowMount(FolderComponent, {store, propsData: propsData, localVue});
+        wrapper = shallowMount(FolderComponent, {
+            global: {
+                plugins: [store]
+            },
+            propsData: propsData
+        });
 
         expect(wrapper.find(".folder").exists()).to.be.true;
         expect(wrapper.find("input").exists()).to.be.false;
@@ -113,7 +112,12 @@ describe("src_3_0_0/modules/layerTree/components/FolderComponent.vue", () => {
                 }
             ]
         };
-        wrapper = shallowMount(FolderComponent, {store, propsData: propsData, localVue});
+        wrapper = shallowMount(FolderComponent, {
+            global: {
+                plugins: [store]
+            },
+            propsData: propsData
+        });
 
         expect(wrapper.find(".folder").exists()).to.be.true;
         expect(wrapper.find("input").exists()).to.be.true;
@@ -122,7 +126,12 @@ describe("src_3_0_0/modules/layerTree/components/FolderComponent.vue", () => {
     it("renders a folder with layers and folders - not bold with checkbox", () => {
         let inputs = null;
 
-        wrapper = shallowMount(FolderComponent, {store, propsData: propsData, localVue});
+        wrapper = shallowMount(FolderComponent, {
+            global: {
+                plugins: [store]
+            },
+            propsData: propsData
+        });
         inputs = wrapper.findAll("input");
 
         expect(wrapper.find(".folder").exists()).to.be.true;
@@ -137,7 +146,12 @@ describe("src_3_0_0/modules/layerTree/components/FolderComponent.vue", () => {
         let inputs = null;
 
         layer_3.visibility = true;
-        wrapper = shallowMount(FolderComponent, {store, propsData: propsData, localVue});
+        wrapper = shallowMount(FolderComponent, {
+            global: {
+                plugins: [store]
+            },
+            propsData: propsData
+        });
         inputs = wrapper.findAll("input");
 
         expect(wrapper.find(".folder").exists()).to.be.true;
@@ -153,7 +167,12 @@ describe("src_3_0_0/modules/layerTree/components/FolderComponent.vue", () => {
         let aFolder = null;
 
         layer_3.visibility = true;
-        wrapper = shallowMount(FolderComponent, {store, propsData: propsData, localVue});
+        wrapper = shallowMount(FolderComponent, {
+            global: {
+                plugins: [store]
+            },
+            propsData: propsData
+        });
         aFolder = wrapper.find(".folder > div");
 
         expect(wrapper.find("i").classes()).to.include("bi-folder2");
@@ -170,7 +189,12 @@ describe("src_3_0_0/modules/layerTree/components/FolderComponent.vue", () => {
         let input = null;
 
         layer_3.visibility = true;
-        wrapper = shallowMount(FolderComponent, {store, propsData: propsData, localVue});
+        wrapper = shallowMount(FolderComponent, {
+            global: {
+                plugins: [store]
+            },
+            propsData: propsData
+        });
         input = wrapper.find("input");
 
         expect(wrapper.find("i").classes()).to.include("bi-folder2");
@@ -182,7 +206,12 @@ describe("src_3_0_0/modules/layerTree/components/FolderComponent.vue", () => {
         expect(visibilityInLayerTreeChangedSpy.calledOnce).to.be.true;
     });
     it("computed properties - no layer visible", () => {
-        wrapper = shallowMount(FolderComponent, {store, propsData: propsData, localVue});
+        wrapper = shallowMount(FolderComponent, {
+            global: {
+                plugins: [store]
+            },
+            propsData: propsData
+        });
 
         expect(wrapper.find(".folder").exists()).to.be.true;
         expect(wrapper.vm.allLayersVisible).to.be.false;
@@ -191,7 +220,12 @@ describe("src_3_0_0/modules/layerTree/components/FolderComponent.vue", () => {
     });
     it("computed properties - one layer visible", () => {
         layer_3.visibility = true;
-        wrapper = shallowMount(FolderComponent, {store, propsData: propsData, localVue});
+        wrapper = shallowMount(FolderComponent, {
+            global: {
+                plugins: [store]
+            },
+            propsData: propsData
+        });
 
         expect(wrapper.find(".folder").exists()).to.be.true;
         expect(wrapper.vm.allLayersVisible).to.be.false;
@@ -202,7 +236,12 @@ describe("src_3_0_0/modules/layerTree/components/FolderComponent.vue", () => {
         layer_1.visibility = true;
         layer_2.visibility = true;
         layer_3.visibility = true;
-        wrapper = shallowMount(FolderComponent, {store, propsData: propsData, localVue});
+        wrapper = shallowMount(FolderComponent, {
+            global: {
+                plugins: [store]
+            },
+            propsData: propsData
+        });
 
         expect(wrapper.find(".folder").exists()).to.be.true;
         expect(wrapper.vm.allLayersVisible).to.be.true;
