@@ -74,9 +74,9 @@ export default {
             }
             else if (url.includes("http:")) {
                 this.addSingleAlert({
-                    content: i18next.t("common:modules.tools.addWMS.errorHttpsMessage"),
+                    content: this.$t("common:modules.tools.addWMS.errorHttpsMessage"),
                     category: "error",
-                    title: i18next.t("common:modules.tools.addWMS.errorTitle")});
+                    title: this.$t("common:modules.tools.addWMS.errorTitle")});
                 return;
             }
             axios({
@@ -105,9 +105,9 @@ export default {
 
                         if (!checkExtent) {
                             this.addSingleAlert({
-                                content: i18next.t("common:modules.tools.addWMS.ifInExtent"),
+                                content: this.$t("common:modules.tools.addWMS.ifInExtent"),
                                 category: "error",
-                                title: i18next.t("common:modules.tools.addWMS.errorTitle")
+                                title: this.$t("common:modules.tools.addWMS.errorTitle")
                             });
                             return;
                         }
@@ -153,9 +153,9 @@ export default {
          */
         displayErrorMessage: function () {
             this.addSingleAlert({
-                content: i18next.t("common:modules.tools.addWMS.errorMessage"),
+                content: this.$t("common:modules.tools.addWMS.errorMessage"),
                 category: "error",
-                title: i18next.t("common:modules.tools.addWMS.errorTitle")
+                title: this.$t("common:modules.tools.addWMS.errorTitle")
             });
         },
 
@@ -192,18 +192,18 @@ export default {
                 this.addLayerToLayerConfig({layerConfig: layerObject, parentKey: "Fachdaten"}).then((addedLayer) => {
                     if (addedLayer) {
                         this.addSingleAlert({
-                            content: i18next.t("common:modules.tools.addWMS.completeMessage"),
+                            content: this.$t("common:modules.tools.addWMS.completeMessage"),
                             category: "success",
-                            title: i18next.t("common:modules.tools.addWMS.alertTitleSuccess")});
+                            title: this.$t("common:modules.tools.addWMS.alertTitleSuccess")});
                         this.$refs.wmsUrl.value = "";
                     }
                     // @todo Radio.trigger("ModelList", "closeAllExpandedFolder");
                     // @todo replace alert message if neccessary
                     else {
                         this.addSingleAlert({
-                            content: i18next.t("common:modules.tools.addWMS.alreadyAdded"),
+                            content: this.$t("common:modules.tools.addWMS.alreadyAdded"),
                             category: "warning",
-                            title: i18next.t("common:modules.tools.addWMS.errorTitle")});
+                            title: this.$t("common:modules.tools.addWMS.errorTitle")});
                         this.$refs.wmsUrl.value = "";
                     }
                 });
