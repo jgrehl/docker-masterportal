@@ -59,7 +59,7 @@ export default {
             <Folder
                 :conf="conf"
                 :is-open="isOpen"
-                @isOpen="toggleFolder()"
+                @is-open="toggleFolder()"
             />
 
             <ul v-show="isOpen">
