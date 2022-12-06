@@ -25,6 +25,7 @@ export default {
         type="button"
         :aria-label="text"
         @click="interaction"
+        @keydown.enter="interaction"
     >
         <i
             v-if="icon !== null"
