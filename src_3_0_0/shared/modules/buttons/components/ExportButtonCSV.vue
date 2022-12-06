@@ -273,6 +273,7 @@ export default {
         type="button"
         class="btn btn-primary exportButton"
         @click="download()"
+        @keydown.enter="download()"
     >
         <span
             id="bootstrap-icon"
