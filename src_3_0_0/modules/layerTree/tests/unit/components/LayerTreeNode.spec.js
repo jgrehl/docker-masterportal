@@ -143,5 +143,5 @@ describe("src_3_0_0/modules/layerTree/components/LayerTreeNode.vue", () => {
         expect(wrapper.find("#layertree-layer-" + layer_3.id).exists()).to.be.true;
         expect(wrapper.findAll(".folder").length).to.be.equals(3);
     });
- 
+
 });
