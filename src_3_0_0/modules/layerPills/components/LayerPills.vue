@@ -11,11 +11,17 @@ export default {
         ...mapGetters("Maps", ["mode"])
     },
     watch: {
-        visibleSubjectDataLayerConfigs (value) {
-            this.setVisibleLayers(value, this.mode);
+        visibleSubjectDataLayerConfigs: {
+            handler (value) {
+                this.setVisibleLayers(value, this.mode);
+            },
+            deep: true
         },
-        visibleSubjectDataLayers (value) {
-            this.setRightScrollDisabled(value.length <= this.layerPillsAmount);
+        visibleSubjectDataLayers: {
+            handler (value) {
+                this.setRightScrollDisabled(value.length <= this.layerPillsAmount);
+            },
+            deep: true
         },
         mode (value) {
             this.setVisibleLayers(this.visibleSubjectDataLayerConfigs, value);
