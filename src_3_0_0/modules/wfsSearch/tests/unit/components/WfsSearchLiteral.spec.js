@@ -1,21 +1,18 @@
-import Vuex from "vuex";
-import {config, shallowMount, createLocalVue} from "@vue/test-utils";
+import {createStore} from "vuex";
+import {config, mount, shallowMount} from "@vue/test-utils";
 import {expect} from "chai";
 
 import WfsSearchField from "../../../components/WfsSearchField.vue";
 import WfsSearchLiteral from "../../../components/WfsSearchLiteral.vue";
 import WfsSearchModule from "../../../store/indexWfsSearch";
 
-const localVue = createLocalVue();
-
-localVue.use(Vuex);
-config.mocks.$t = key => key;
+config.global.mocks.$t = key => key;
 
 describe("src/modules/wfsSearch/components/WfsSearchLiteral.vue", () => {
     let store;
 
     beforeEach(() => {
-        store = new Vuex.Store({
+        store = createStore({
             namespaces: true,
             modules: {
                 Modules: {
@@ -31,9 +28,10 @@ describe("src/modules/wfsSearch/components/WfsSearchLiteral.vue", () => {
 
     it("renders a field when literal has field", () => {
         const wrapper = shallowMount(WfsSearchLiteral, {
-            localVue,
-            store,
-            propsData: {
+            global: {
+                plugins: [store]
+            },
+            props: {
                 literal: {
                     field: {
                         id: "test",
@@ -49,10 +47,11 @@ describe("src/modules/wfsSearch/components/WfsSearchLiteral.vue", () => {
     });
 
     it("renders more literals when literal has clause", () => {
-        const wrapper = shallowMount(WfsSearchLiteral, {
-            localVue,
-            store,
-            propsData: {
+        const wrapper = mount(WfsSearchLiteral, {
+            global: {
+                plugins: [store]
+            },
+            props: {
                 literal: {
                     clause: {
                         literals: [
@@ -65,8 +64,7 @@ describe("src/modules/wfsSearch/components/WfsSearchLiteral.vue", () => {
             }
         });
 
-        // 4 includes the main literal itself and the 3 children above
-        expect(wrapper.findAllComponents(WfsSearchLiteral).length).to.equal(4);
+        expect(wrapper.findAllComponents(WfsSearchLiteral).length).to.equal(3);
 
         // child fields are not rendered due to shallow mounting
         expect(wrapper.findComponent(WfsSearchField).exists()).to.be.false;
@@ -74,16 +72,16 @@ describe("src/modules/wfsSearch/components/WfsSearchLiteral.vue", () => {
 
     it("renders nothing on empty literal", () => {
         const wrapper = shallowMount(WfsSearchLiteral, {
-            localVue,
-            store,
-            propsData: {
+            global: {
+                plugins: [store]
+            },
+            props: {
                 literal: {}
             }
         });
 
         expect(wrapper.find("div").exists()).to.be.false;
         expect(wrapper.findComponent(WfsSearchField).exists()).to.be.false;
-        // only the literal itself
-        expect(wrapper.findAllComponents(WfsSearchLiteral).length).to.equal(1);
+        expect(wrapper.findAllComponents(WfsSearchLiteral).length).to.equal(0);
     });
 });
