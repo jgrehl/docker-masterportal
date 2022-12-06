@@ -85,7 +85,7 @@ export default {
     >
         <input
             v-if="(layers.length > 1)"
-            :id="('layertree-folder-checkbox-' + folderId)"
+            :id="('layer-tree-folder-checkbox-' + folderId)"
             v-model="allLayersVisible"
             type="checkbox"
             class="form-check-input"
@@ -94,7 +94,7 @@ export default {
         >
         <label
             class="d-none"
-            :for="('layertree-folder-checkbox-' + folderId)"
+            :for="('layer-tree-folder-checkbox-' + folderId)"
         >
             {{ $t("common:tree.selectAll") }}
         </label>
