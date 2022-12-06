@@ -22,12 +22,13 @@ export default {
             "downloadLinks",
             "layerInfo",
             "metaURLs",
+            "noMetadataLoaded",
             "periodicityKey",
             "showUrlGlobal",
             "title"
         ]),
         showAdditionalMetaData () {
-            return this.layerInfo.metaURL !== null && typeof this.abstractText !== "undefined" && this.abstractText !== this.noMetaDataMessage && this.abstractText !== this.noMetadataLoaded;
+            return this.layerInfo.metaURL !== null && typeof this.abstractText !== "undefined" && this.abstractText !== this.noMetadataLoaded;
         },
         showCustomMetaData () {
             return this.customText;
