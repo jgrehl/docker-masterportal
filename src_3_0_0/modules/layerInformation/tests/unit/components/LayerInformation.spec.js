@@ -1,19 +1,16 @@
-import Vuex from "vuex";
-import {config, mount, createLocalVue} from "@vue/test-utils";
+import {createStore} from "vuex";
+import {config, mount} from "@vue/test-utils";
 import {expect} from "chai";
 import LayerInformationComponent from "../../../components/LayerInformation.vue";
 import sinon from "sinon";
 
-const localVue = createLocalVue();
-
-localVue.use(Vuex);
-config.mocks.$t = key => key;
+config.global.mocks.$t = key => key;
 
 describe("src_3_0_0/modules/layerInformation/components/LayerInformation.vue", () => {
     let store;
 
     beforeEach(() => {
-        store = new Vuex.Store({
+        store = createStore({
             namespaced: true,
             modules: {
                 namespaced: true,
@@ -56,8 +53,9 @@ describe("src_3_0_0/modules/layerInformation/components/LayerInformation.vue", (
 
     it("should have an existing title", () => {
         const wrapper = mount(LayerInformationComponent, {
-            store,
-            localVue
+            global: {
+                plugins: [store]
+            }
         });
 
         expect(wrapper.find(".subtitle")).to.exist;
@@ -65,15 +63,20 @@ describe("src_3_0_0/modules/layerInformation/components/LayerInformation.vue", (
 
     it("should have a close button", async () => {
         const wrapper = mount(LayerInformationComponent, {
-            store,
-            localVue
+            global: {
+                plugins: [store]
+            }
         });
 
         expect(wrapper.find(".bi-x-lg")).to.exist;
     });
 
     it("should check if dropdown for group layer to not exists", async () => {
-        const wrapper = mount(LayerInformationComponent, {store, localVue});
+        const wrapper = mount(LayerInformationComponent, {
+            global: {
+                plugins: [store]
+            }
+        });
 
         expect(wrapper.find("#changeLayerInfo").exists()).to.be.false;
     });
