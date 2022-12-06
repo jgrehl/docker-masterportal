@@ -8,7 +8,7 @@ import LayerComponent from "../../../components/LayerComponent.vue";
 
 config.global.mocks.$t = key => key;
 
-describe("src_3_0_0/modules/layerTree/components/Layer.vue", () => {
+describe("src_3_0_0/modules/layerTree/components/LayerComponent.vue", () => {
     let store,
         wrapper,
         layer,
@@ -23,13 +23,15 @@ describe("src_3_0_0/modules/layerTree/components/Layer.vue", () => {
             id: "1",
             name: "layer",
             typ: "WMS",
-            visibility: false
+            visibility: false,
+            showInLayerTree: true
         };
         layer3D = {
             id: "3",
             name: "layer3D",
             typ: "Terrain3D",
-            visibility: false
+            visibility: false,
+            showInLayerTree: true
         };
         propsData = {
             conf: layer
