@@ -2,7 +2,7 @@ import axios from "axios";
 import handleAxiosResponse from "../../../shared/js/utils/handleAxiosResponse";
 import {setLikeFilterProperties} from "../js/buildFilter";
 import {createUserHelp, prepareLiterals, resetFieldValues} from "../js/literalFunctions";
-import getLayerConfigById from "../../../shared/js/utils/getLayerConfigById";
+import {rawLayerList} from "@masterportal/masterportalapi/src";
 
 const actions = {
     /**
@@ -28,7 +28,7 @@ const actions = {
             {requestConfig: {layerId, likeFilter, restLayerId, storedQueryId}, title} = currentInstance,
             wfs = restLayerId
                 ? rootGetters.getRestServiceById(restLayerId)
-                : getLayerConfigById({rootGetters}, {id: layerId});
+                : rawLayerList.getLayerWhere({id: layerId});
 
         if (wfs) {
             const {selectSource} = currentInstance,
