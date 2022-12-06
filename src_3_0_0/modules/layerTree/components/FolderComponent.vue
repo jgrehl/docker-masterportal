@@ -19,6 +19,7 @@ export default {
             required: true
         }
     },
+    emits: ["isOpen"],
     data () {
         return {
             layers: []
