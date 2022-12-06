@@ -5,14 +5,7 @@ import LightButton from "../../../components/LightButton.vue";
 
 config.global.mocks.$t = key => key;
 
-<<<<<<<< HEAD:src_3_0_0/shared/modules/buttons/tests/unit/components/LightButton.spec.js
 describe("src_3_0_0/shared/components/LightButton.vue", () => {
-========
-localVue.use(Vuex);
-config.mocks.$t = key => key;
-
-describe("src_3_0_0/shared/components/SimpleButton.vue", () => {
->>>>>>>> 94d76c76d3 (update move files into new folder structure):src_3_0_0/shared/components/tests/SimpleButton.spec.js
     let interactionSpy;
 
     beforeEach(() => {
