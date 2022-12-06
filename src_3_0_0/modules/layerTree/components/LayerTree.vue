@@ -11,7 +11,21 @@ export default {
         LayerTreeNode
     },
     computed: {
-        ...mapGetters(["layerConfig"])
+        ...mapGetters(["layerConfig"]),
+        confs () {
+            const configs = [];
+
+            Object.keys(this.layerConfig).forEach(layerConfigKey => {
+                Object.keys(this.layerConfig[layerConfigKey]).forEach(subKey => {
+                    if (Array.isArray(this.layerConfig[layerConfigKey][subKey])) {
+                        this.layerConfig[layerConfigKey][subKey].forEach(conf => {
+                            configs.push(conf);
+                        });
+                    }
+                });
+            });
+            return configs;
+        }
     }
 };
 </script>
@@ -21,26 +35,16 @@ export default {
         id="layer-tree"
         class="layer-tree me-3"
     >
-        <div
-            v-for="(layerConfigKey, i) in Object.keys(layerConfig)"
-            :key="i"
+        <template
+            v-for="(conf, index) in confs"
+            :key="index"
         >
-            <div
-                v-for="(subKey, ii) in Object.keys(layerConfig[layerConfigKey])"
-                :key="ii"
-            >
-                <div
-                    v-for="(conf, iii) in layerConfig[layerConfigKey][subKey]"
-                    :key="iii"
-                >
-                    <LayerTreeNode
-                        v-if="typeof conf !== 'string'"
-                        :id="conf.id"
-                        :conf="conf"
-                    />
-                </div>
-            </div>
-        </div>
+            <LayerTreeNode
+                v-if="typeof conf !== 'string'"
+                :id="conf.id"
+                :conf="conf"
+            />
+        </template>
     </div>
 </template>
 
