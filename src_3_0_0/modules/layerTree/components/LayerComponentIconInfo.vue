@@ -35,7 +35,7 @@ export default {
             :title="$t('common:tree.infosAndLegend')"
             :aria-label="$t('common:tree.infosAndLegend')"
             @click="startLayerInformation(layerConf)"
-            @keydown="event => event.key === 'Enter' ? startLayerInformation(layerConf) : null"
+            @keydown.enter="startLayerInformation(layerConf)"
         >
             <i :class="icon" />
         </button>
