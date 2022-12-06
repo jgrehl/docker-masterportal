@@ -215,9 +215,9 @@ export default {
          */
         colorContourLabelComputed () {
             if (this.drawType.id === "drawDoubleCircle" && this.currentInteraction !== "modify") {
-                return this.$i18n.i18next.t("common:modules.tools.draw.innerColorContour");
+                return this.$i18n.this.$t("common:modules.tools.draw.innerColorContour");
             }
-            return this.$i18n.i18next.t("common:modules.tools.draw.colorContour");
+            return this.$i18n.this.$t("common:modules.tools.draw.colorContour");
         },
         /**
          * computed property of the label for the normal innerRadius - in case this is a double circle
@@ -225,9 +225,9 @@ export default {
          */
         innerRadiusLabelComputed () {
             if (this.drawType.id === "drawDoubleCircle" && this.currentInteraction !== "modify") {
-                return this.$i18n.i18next.t("common:modules.tools.draw.innerRadius");
+                return this.$i18n.this.$t("common:modules.tools.draw.innerRadius");
             }
-            return this.$i18n.i18next.t("common:modules.tools.draw.radius");
+            return this.$i18n.this.$t("common:modules.tools.draw.radius");
         },
 
         /**
