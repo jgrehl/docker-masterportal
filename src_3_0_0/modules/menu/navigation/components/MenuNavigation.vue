@@ -20,7 +20,7 @@ export default {
          * @returns {String} Value to be displayed.
          */
         entry () {
-            return !this.previousEntry(this.side) ? i18next.t("common:menu.name") : this.objectFromPath(this.side, "previous").name;
+            return !this.previousEntry(this.side) ? this.$t("common:menu.name") : this.objectFromPath(this.side, "previous").name;
         }
     },
     methods: {
