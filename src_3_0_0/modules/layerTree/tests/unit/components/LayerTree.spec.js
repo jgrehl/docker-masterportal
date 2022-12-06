@@ -102,6 +102,17 @@ describe("src_3_0_0/modules/layerTree/components/LayerTree.vue", () => {
                     getters: {
                         mode: () => mapMode
                     }
+                },
+                Modules: {
+                    namespaced: true,
+                    modules: {
+                        LayerInformation: {
+                            namespaced: true,
+                            getters: {
+                                icon: sinon.stub()
+                            }
+                        }
+                    }
                 }
             },
             getters: {
@@ -164,10 +175,10 @@ describe("src_3_0_0/modules/layerTree/components/LayerTree.vue", () => {
 
         expect(wrapper.find("#layer-tree").exists()).to.be.true;
         expect(wrapper.findAll("input").length).to.be.equals(4);
-        expect(wrapper.find("#layertree-layer-" + layer2D_1.id).exists()).to.be.true;
-        expect(wrapper.find("#layertree-layer-" + layer2D_2.id).exists()).to.be.true;
-        expect(wrapper.find("#layertree-layer-" + layerBG_1.id).exists()).to.be.true;
-        expect(wrapper.find("#layertree-layer-" + layerBG_2.id).exists()).to.be.true;
+        expect(wrapper.find("#layer-tree-layer-" + layer2D_1.id).exists()).to.be.true;
+        expect(wrapper.find("#layer-tree-layer-" + layer2D_2.id).exists()).to.be.true;
+        expect(wrapper.find("#layer-tree-layer-" + layerBG_1.id).exists()).to.be.true;
+        expect(wrapper.find("#layer-tree-layer-" + layerBG_2.id).exists()).to.be.true;
     });
 
     it("renders the LayerTree with 2D layers in folder structure - check layers", () => {
@@ -185,11 +196,11 @@ describe("src_3_0_0/modules/layerTree/components/LayerTree.vue", () => {
         expect(inputs.filter(input => input.attributes().id.startsWith("layertree-folder-checkbox-")).length).to.be.equals(2);
         // 2 bg-layer and 3 other subjectData-layer
         expect(inputs.filter(input => input.attributes().id.startsWith("layertree-layer-checkbox-")).length).to.be.equals(5);
-        expect(wrapper.find("#layertree-layer-" + layer2D_1.id).exists()).to.be.true;
-        expect(wrapper.find("#layertree-layer-" + layer2D_2.id).exists()).to.be.true;
-        expect(wrapper.find("#layertree-layer-" + layer2D_3.id).exists()).to.be.true;
-        expect(wrapper.find("#layertree-layer-" + layerBG_1.id).exists()).to.be.true;
-        expect(wrapper.find("#layertree-layer-" + layerBG_2.id).exists()).to.be.true;
+        expect(wrapper.find("#layer-tree-layer-" + layer2D_1.id).exists()).to.be.true;
+        expect(wrapper.find("#layer-tree-layer-" + layer2D_2.id).exists()).to.be.true;
+        expect(wrapper.find("#layer-tree-layer-" + layer2D_3.id).exists()).to.be.true;
+        expect(wrapper.find("#layer-tree-layer-" + layerBG_1.id).exists()).to.be.true;
+        expect(wrapper.find("#layer-tree-layer-" + layerBG_2.id).exists()).to.be.true;
     });
 
     it("renders the LayerTree with 3D layers as children - check layers", () => {
@@ -202,12 +213,10 @@ describe("src_3_0_0/modules/layerTree/components/LayerTree.vue", () => {
 
         expect(wrapper.find("#layer-tree").exists()).to.be.true;
         expect(wrapper.findAll("input").length).to.be.equals(5);
-        expect(wrapper.find("#layertree-layer-" + layer2D_1.id).exists()).to.be.true;
-        expect(wrapper.find("#layertree-layer-" + layer2D_2.id).exists()).to.be.true;
-        expect(wrapper.find("#layertree-layer-" + layer3D.id).exists()).to.be.true;
-        expect(wrapper.find("#layertree-layer-" + layerBG_1.id).exists()).to.be.true;
-        expect(wrapper.find("#layertree-layer-" + layerBG_2.id).exists()).to.be.true;
+        expect(wrapper.find("#layer-tree-layer-" + layer2D_1.id).exists()).to.be.true;
+        expect(wrapper.find("#layer-tree-layer-" + layer2D_2.id).exists()).to.be.true;
+        expect(wrapper.find("#layer-tree-layer-" + layer3D.id).exists()).to.be.true;
+        expect(wrapper.find("#layer-tree-layer-" + layerBG_1.id).exists()).to.be.true;
+        expect(wrapper.find("#layer-tree-layer-" + layerBG_2.id).exists()).to.be.true;
     });
-
-
 });
