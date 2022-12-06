@@ -145,7 +145,7 @@ export default {
         onError () {
             this.addSingleAlert({
                 category: "error",
-                content: `<strong>${i18next.t("common:modules.controls.orientation.geolocationDeniedText")}</strong>`
+                content: `<strong>${this.$t("common:modules.controls.orientation.geolocationDeniedText")}</strong>`
             });
             this.isGeolocationDenied = true;
             if (this.geolocation !== null) {
@@ -364,7 +364,7 @@ export default {
         onPOIError () {
             this.addSingleAlert({
                 category: "error",
-                content: `<strong>${i18next.t("common:modules.controls.orientation.trackingDeniedText")}</strong>`
+                content: `<strong>${this.$t("common:modules.controls.orientation.trackingDeniedText")}</strong>`
             });
 
             if (this.geolocation !== null) {
