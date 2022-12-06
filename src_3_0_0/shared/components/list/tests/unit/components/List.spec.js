@@ -1,5 +1,5 @@
-import Vuex from "vuex";
-import {config, shallowMount, createLocalVue} from "@vue/test-utils";
+import {createStore} from "vuex";
+import {config, shallowMount} from "@vue/test-utils";
 import {expect} from "chai";
 import sinon from "sinon";
 import Feature from "ol/Feature";
@@ -8,10 +8,7 @@ import Map from "ol/Map";
 
 import ListItem from "../../../components/ListItem.vue";
 
-const localVue = createLocalVue();
-
-localVue.use(Vuex);
-config.mocks.$t = key => key;
+config.global.mocks.$t = key => key;
 
 describe("src/share-components/list/components/ListItem.vue", () => {
     const olFeature = new Feature(),
@@ -36,7 +33,7 @@ describe("src/share-components/list/components/ListItem.vue", () => {
     });
 
     beforeEach(() => {
-        store = new Vuex.Store({
+        store = createStore({
             namespaces: true,
             modules: {
                 MapMarker: {
@@ -61,9 +58,10 @@ describe("src/share-components/list/components/ListItem.vue", () => {
 
     it("should zoom to extent of a given feature", async () => {
         const wrapper = shallowMount(ListItem, {
-                store,
-                propsData: props,
-                localVue
+                global: {
+                    plugins: [store]
+                },
+                props: props
             }),
             feature = new Feature(),
             spyZoomToExtent = sinon.spy(wrapper.vm, "zoomToExtent");
@@ -90,9 +88,10 @@ describe("src/share-components/list/components/ListItem.vue", () => {
 
     it("should zoom to combined extent of given features in multiSelect mode", async () => {
         const wrapper = shallowMount(ListItem, {
-                store,
-                propsData: props,
-                localVue
+                global: {
+                    plugins: [store]
+                },
+                props: props
             }),
             featureOne = new Feature(),
             featureTwo = new Feature(),
