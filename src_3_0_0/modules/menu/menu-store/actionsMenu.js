@@ -161,7 +161,7 @@ export default {
     },
 
     /**
-     * Resets menu an deactivate menu navigation
+     * Resets menu and activate menu navigation.
      * @param {Object} param store context
      * @param {Object} param.dispatch the dispatch
      * @param {Object} menuItem The menu item.
