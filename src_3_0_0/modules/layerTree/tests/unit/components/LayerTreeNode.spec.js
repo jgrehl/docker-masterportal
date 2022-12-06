@@ -1,14 +1,11 @@
-import {config, mount, shallowMount, createLocalVue} from "@vue/test-utils";
+import {createStore} from "vuex";
+import {config, mount, shallowMount} from "@vue/test-utils";
 import {expect} from "chai";
 import sinon from "sinon";
-import Vuex from "vuex";
 
 import LayerTreeNode from "../../../components/LayerTreeNode.vue";
 
-const localVue = createLocalVue();
-
-localVue.use(Vuex);
-config.mocks.$t = key => key;
+config.global.mocks.$t = key => key;
 
 describe("src_3_0_0/modules/layerTree/components/LayerTreeNode.vue", () => {
     let store,
@@ -56,7 +53,7 @@ describe("src_3_0_0/modules/layerTree/components/LayerTreeNode.vue", () => {
                 }
             ]
         };
-        store = new Vuex.Store({
+        store = createStore({
             namespaces: true,
             modules: {
                 Modules: {
@@ -77,17 +74,19 @@ describe("src_3_0_0/modules/layerTree/components/LayerTreeNode.vue", () => {
     });
 
     afterEach(() => {
-        if (wrapper) {
-            wrapper.destroy();
-        }
         sinon.restore();
     });
 
     it("renders a simple layer", () => {
-        wrapper = shallowMount(LayerTreeNode, {store, propsData: propsData, localVue});
+        wrapper = shallowMount(LayerTreeNode, {
+            global: {
+                plugins: [store]
+            },
+            propsData
+        });
 
         expect(wrapper.find(".no-list").exists()).to.be.true;
-        expect(wrapper.findAll("layertreenode-stub").length).to.be.equals(0);
+        expect(wrapper.findAll("layer-tree-node-stub").length).to.be.equals(0);
         expect(wrapper.findAll("layer-stub").length).to.be.equals(1);
         expect(wrapper.vm.isFolder).to.be.false;
         expect(wrapper.vm.isLayerArray).to.be.false;
@@ -98,10 +97,15 @@ describe("src_3_0_0/modules/layerTree/components/LayerTreeNode.vue", () => {
         propsData = {
             conf: {Layer: [layer_1, layer_2]}
         };
-        wrapper = shallowMount(LayerTreeNode, {store, propsData: propsData, localVue});
+        wrapper = shallowMount(LayerTreeNode, {
+            global: {
+                plugins: [store]
+            },
+            propsData
+        });
 
         expect(wrapper.find(".no-list").exists()).to.be.true;
-        expect(wrapper.findAll("layertreenode-stub").length).to.be.equals(0);
+        expect(wrapper.findAll("layer-tree-node-stub").length).to.be.equals(0);
         expect(wrapper.findAll("layer-stub").length).to.be.equals(2);
         expect(wrapper.vm.layers.length).to.be.equals(2);
         expect(wrapper.vm.isFolder).to.be.false;
@@ -113,11 +117,17 @@ describe("src_3_0_0/modules/layerTree/components/LayerTreeNode.vue", () => {
         propsData = {
             conf: layersWithFolder
         };
-        wrapper = shallowMount(LayerTreeNode, {store, propsData: propsData, localVue});
+        wrapper = shallowMount(LayerTreeNode, {
+            global: {
+                plugins: [store]
+            },
+            propsData
+        });
 
         expect(wrapper.find(".no-list").exists()).to.be.true;
-        expect(wrapper.findAll("layertreenode-stub").length).to.be.equals(1);
-        expect(wrapper.findAll("folder-stub").length).to.be.equals(1);
+        expect(wrapper.findAll("layer-stub").length).to.be.equals(3);
+        expect(wrapper.findAll("folder-stub").length).to.be.equals(3);
+        expect(wrapper.findAll("layer-tree-node-stub").length).to.be.equals(0);
         expect(wrapper.vm.layers.length).to.be.equals(3);
         expect(wrapper.vm.isFolder).to.be.true;
         expect(wrapper.vm.isLayerArray).to.be.false;
@@ -130,7 +140,12 @@ describe("src_3_0_0/modules/layerTree/components/LayerTreeNode.vue", () => {
         propsData = {
             conf: layersWithFolder
         };
-        wrapper = mount(LayerTreeNode, {store, propsData: propsData, localVue});
+        wrapper = mount(LayerTreeNode, {
+            global: {
+                plugins: [store]
+            },
+            propsData
+        });
         inputs = wrapper.findAll("input");
 
         expect(wrapper.find(".no-list").exists()).to.be.true;
