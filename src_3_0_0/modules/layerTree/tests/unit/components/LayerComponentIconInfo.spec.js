@@ -1,14 +1,11 @@
-import {config, shallowMount, createLocalVue} from "@vue/test-utils";
+import {createStore} from "vuex";
+import {config, shallowMount} from "@vue/test-utils";
 import {expect} from "chai";
 import sinon from "sinon";
-import Vuex from "vuex";
 
 import LayerComponentIconInfo from "../../../components/LayerComponentIconInfo.vue";
 
-const localVue = createLocalVue();
-
-localVue.use(Vuex);
-config.mocks.$t = key => key;
+config.global.mocks.$t = key => key;
 
 describe("src_3_0_0/modules/layerTree/components/LayerComponentIconInfo.vue", () => {
     let icon,
@@ -37,7 +34,7 @@ describe("src_3_0_0/modules/layerTree/components/LayerComponentIconInfo.vue", ()
         icon = "bi-test";
         startLayerInformationSpy = sinon.spy();
 
-        store = new Vuex.Store({
+        store = createStore({
             namespaces: true,
             modules: {
                 Modules: {
@@ -59,20 +56,27 @@ describe("src_3_0_0/modules/layerTree/components/LayerComponentIconInfo.vue", ()
     });
 
     afterEach(() => {
-        if (wrapper) {
-            wrapper.destroy();
-        }
         sinon.restore();
     });
 
     it("renders the info icon given as property to the component", () => {
-        wrapper = shallowMount(LayerComponentIconInfo, {store, propsData: propsData, localVue});
+        wrapper = shallowMount(LayerComponentIconInfo, {
+            global: {
+                plugins: [store]
+            },
+            propsData: propsData
+        });
 
         expect(wrapper.find("#layer-component-icon-info-" + propsData.layerConf.id).exists()).to.be.true;
     });
 
     it("renders layer with visibility false and checkbox", () => {
-        wrapper = shallowMount(LayerComponentIconInfo, {store, propsData: propsData, localVue});
+        wrapper = shallowMount(LayerComponentIconInfo, {
+            global: {
+                plugins: [store]
+            },
+            propsData: propsData
+        });
 
         expect(wrapper.find("#layer-component-icon-info-" + propsData.layerConf.id).exists()).to.be.true;
         expect(wrapper.findAll("button").length).to.be.equals(1);
@@ -82,7 +86,12 @@ describe("src_3_0_0/modules/layerTree/components/LayerComponentIconInfo.vue", ()
     it("click on button of info icon", async () => {
         let button = null;
 
-        wrapper = shallowMount(LayerComponentIconInfo, {store, propsData: propsData, localVue});
+        wrapper = shallowMount(LayerComponentIconInfo, {
+            global: {
+                plugins: [store]
+            },
+            propsData: propsData
+        });
 
         expect(wrapper.find("#layer-component-icon-info-" + propsData.layerConf.id).exists()).to.be.true;
         expect(wrapper.find("#layer-component-icon-info-button-" + propsData.layerConf.id).exists()).to.be.true;
@@ -109,7 +118,12 @@ describe("src_3_0_0/modules/layerTree/components/LayerComponentIconInfo.vue", ()
 
         let button = null;
 
-        wrapper = shallowMount(LayerComponentIconInfo, {store, propsData: propsData, localVue});
+        wrapper = shallowMount(LayerComponentIconInfo, {
+            global: {
+                plugins: [store]
+            },
+            propsData: propsData
+        });
 
         expect(wrapper.find("#layer-component-icon-info-" + propsData.layerConf.id).exists()).to.be.true;
         expect(wrapper.find("#layer-component-icon-info-button-" + propsData.layerConf.id).exists()).to.be.true;
