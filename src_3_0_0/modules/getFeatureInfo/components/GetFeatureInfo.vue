@@ -82,9 +82,12 @@ export default {
          * Whenever the map click coordinate changes updateClick action will call.
          * @returns {void}
          */
-        clickCoordinate () {
-            this.pagerIndex = 0;
-            this.updateClick();
+        clickCoordinate: {
+            handler () {
+                this.pagerIndex = 0;
+                this.updateClick();
+            },
+            deep: true
         },
         /**
          * Whenever feature changes, put it into the store
