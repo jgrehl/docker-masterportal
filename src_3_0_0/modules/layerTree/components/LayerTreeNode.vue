@@ -86,9 +86,9 @@ export default {
         >
             <div v-if="isLayerArray">
                 <Layer
-                    v-for="(layer2, i) in conf.Layer"
+                    v-for="(layer, i) in conf.Layer"
                     :key="'layer' + i"
-                    :conf="layer2"
+                    :conf="layer"
                 />
             </div>
             <Layer
@@ -102,16 +102,13 @@ export default {
 
 <style lang="scss" scoped>
 @import "~variables";
-    .bold {
-        font-weight: bold;
-    }
     .no-list{
         list-style: none;
         font-size: $font-size-base;
     }
     .folder{
         display: flex;
-        gap: 10px;
+        gap: 0.25rem;
         align-items: baseline;
     }
 
