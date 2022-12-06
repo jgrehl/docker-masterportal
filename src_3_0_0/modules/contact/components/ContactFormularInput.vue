@@ -51,7 +51,9 @@ export default {
         }
     },
     data: function () {
-        return {minMessageLength};
+        return {
+            minMessageLength
+        };
     },
     created () {
         if (this.focusOnCreation) {
@@ -60,6 +62,12 @@ export default {
                     this.$refs[`module-contact-${this.inputName}-input`].focus();
                 }
             });
+        }
+    },
+    methods: {
+        help (target) {
+            target.classList.add("is-invalid");
+            target.classList.remove("mb-5");
         }
     }
 };
@@ -82,10 +90,12 @@ export default {
                 :value="inputValue"
                 :autocomplete="autocomplete"
                 :type="htmlElement === 'input' ? inputType : ''"
-                :class="[(htmlElement === 'select' ? 'form-select' : 'form-control'), (validInput ? 'is-valid' : 'is-invalid')]"
+                class="mb-5"
+                :class="[(htmlElement === 'select' ? 'form-select' : 'form-control'), (validInput ? 'is-valid' : '')]"
                 :aria-describedby="`module-contact-${inputName}-help`"
                 :placeholder="$t(`common:modules.tools.contact.placeholder.${inputName}`)"
                 :style="htmlElement === 'textarea' ? 'height: 100px' : ''"
+                @focus="help($event.currentTarget)"
                 @keyup="changeFunction($event.currentTarget.value)"
             />
 
@@ -111,13 +121,8 @@ export default {
 <style lang="scss" scoped>
 @import "~variables";
 
-.lift-tick {
-    margin-top: -4px;
-}
-
-.help-block {
-    display: block;
-    color: $dark_grey;
+.invalid-feedback {
+    max-width: fit-content;
 }
 
 </style>
