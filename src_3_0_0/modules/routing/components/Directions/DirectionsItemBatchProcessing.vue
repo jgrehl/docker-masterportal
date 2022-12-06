@@ -196,13 +196,13 @@ export default {
                 endeLat = Number(lineParts[4]),
                 result = {
                     ID: id,
-                    [i18next.t("common:modules.tools.routing.directions.batchProcessing.downloadHeader.xStart")]: startLon,
-                    [i18next.t("common:modules.tools.routing.directions.batchProcessing.downloadHeader.yStart")]: startLat,
-                    [i18next.t("common:modules.tools.routing.directions.batchProcessing.downloadHeader.xEnd")]: endeLon,
-                    [i18next.t("common:modules.tools.routing.directions.batchProcessing.downloadHeader.yEnd")]: endeLat,
-                    [i18next.t("common:modules.tools.routing.directions.batchProcessing.downloadHeader.time")]: null,
-                    [i18next.t("common:modules.tools.routing.directions.batchProcessing.downloadHeader.distance")]: null,
-                    [i18next.t("common:modules.tools.routing.directions.batchProcessing.downloadHeader.profile")]: this.settings.speedProfile
+                    [this.$t("common:modules.tools.routing.directions.batchProcessing.downloadHeader.xStart")]: startLon,
+                    [this.$t("common:modules.tools.routing.directions.batchProcessing.downloadHeader.yStart")]: startLat,
+                    [this.$t("common:modules.tools.routing.directions.batchProcessing.downloadHeader.xEnd")]: endeLon,
+                    [this.$t("common:modules.tools.routing.directions.batchProcessing.downloadHeader.yEnd")]: endeLat,
+                    [this.$t("common:modules.tools.routing.directions.batchProcessing.downloadHeader.time")]: null,
+                    [this.$t("common:modules.tools.routing.directions.batchProcessing.downloadHeader.distance")]: null,
+                    [this.$t("common:modules.tools.routing.directions.batchProcessing.downloadHeader.profile")]: this.settings.speedProfile
                 };
 
             try {
@@ -214,8 +214,8 @@ export default {
                     instructions: false
                 });
 
-                result[i18next.t("common:modules.tools.routing.directions.batchProcessing.downloadHeader.distance")] = directionsResult.distance.toFixed(2);
-                result[i18next.t("common:modules.tools.routing.directions.batchProcessing.downloadHeader.time")] = (directionsResult.duration / 60).toFixed(2);
+                result[this.$t("common:modules.tools.routing.directions.batchProcessing.downloadHeader.distance")] = directionsResult.distance.toFixed(2);
+                result[this.$t("common:modules.tools.routing.directions.batchProcessing.downloadHeader.time")] = (directionsResult.duration / 60).toFixed(2);
             }
             catch (error) {
                 this.countFailed = this.countFailed + 1;
