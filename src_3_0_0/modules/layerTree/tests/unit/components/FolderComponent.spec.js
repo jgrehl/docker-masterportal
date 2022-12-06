@@ -101,7 +101,8 @@ describe("src_3_0_0/modules/layerTree/components/FolderComponent.vue", () => {
 
         expect(wrapper.find(".folder").exists()).to.be.true;
         expect(wrapper.find("input").exists()).to.be.false;
-        expect(wrapper.find("label").exists()).to.be.false;
+        expect(wrapper.find("label").exists()).to.be.true;
+        expect(wrapper.find("label").classes()).to.include("d-none");
     });
     it("renders a folder with 2 layers", () => {
         propsData.conf = {
