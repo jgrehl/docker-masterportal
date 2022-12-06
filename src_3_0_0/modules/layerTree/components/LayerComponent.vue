@@ -21,6 +21,10 @@ export default {
     computed: {
         ...mapGetters("Maps", ["mode"]),
 
+        /**
+         * Returns the value of layerConf's attribute visibility
+         * @returns {Boolean} the value of layerConf's attribute visibility
+         */
         isLayerVisible () {
             return typeof this.conf.visibility === "boolean" ? this.conf.visibility : false;
         }
@@ -64,12 +68,12 @@ export default {
 <template lang="html">
     <div
         v-if="showInLayerTree()"
-        :id="'layer-tree-layer-' + layerConf.id"
+        :id="'layer-tree-layer-' + conf.id"
         class="layer-tree-layer form-check d-flex justify-content-between"
     >
         <div class="layer-tree-layer-title pe-2">
             <input
-                :id="'layer-tree-layer-checkbox' + layerConf.id"
+                :id="'layer-tree-layer-checkbox-' + conf.id"
                 :checked="isLayerVisible"
                 type="checkbox"
                 class="layer-tree-layer-checkbox form-check-input"
@@ -78,18 +82,18 @@ export default {
             >
             <label
                 :class="['layer-tree-layer-label', 'mt-0 d-flex flex-column align-self-start', isLayerVisible ? 'bold' : '']"
-                :for="'layer-tree-layer-checkbox' + layerConf.id"
+                :for="'layer-tree-layer-checkbox-' + conf.id"
                 tabindex="0"
-                :aria-label="$t('layerConf.name')"
+                :aria-label="$t('conf.name')"
                 @keydown.enter="visibilityInLayerTreeChanged(!isLayerVisible)"
             >
                 <span>
-                    {{ layerConf.name }}
+                    {{ conf.name }}
                 </span>
             </label>
         </div>
         <LayerComponentIconInfo
-            :layer-conf="layerConf"
+            :layer-conf="conf"
         />
     </div>
 </template>

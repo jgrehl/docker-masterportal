@@ -193,9 +193,9 @@ describe("src_3_0_0/modules/layerTree/components/LayerTree.vue", () => {
 
         expect(wrapper.find("#layer-tree").exists()).to.be.true;
         // only 2 folder: one Ordner in config has only one layer and therefore no folder
-        expect(inputs.filter(input => input.attributes().id.startsWith("layertree-folder-checkbox-")).length).to.be.equals(2);
+        expect(inputs.filter(input => input.attributes().id.startsWith("layer-tree-folder-checkbox-")).length).to.be.equals(2);
         // 2 bg-layer and 3 other subjectData-layer
-        expect(inputs.filter(input => input.attributes().id.startsWith("layertree-layer-checkbox-")).length).to.be.equals(5);
+        expect(inputs.filter(input => input.attributes().id.startsWith("layer-tree-layer-checkbox-")).length).to.be.equals(5);
         expect(wrapper.find("#layer-tree-layer-" + layer2D_1.id).exists()).to.be.true;
         expect(wrapper.find("#layer-tree-layer-" + layer2D_2.id).exists()).to.be.true;
         expect(wrapper.find("#layer-tree-layer-" + layer2D_3.id).exists()).to.be.true;
