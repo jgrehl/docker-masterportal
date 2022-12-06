@@ -181,7 +181,7 @@ describe("src_3_0_0/modules/getFeatureInfo/components/GetFeatureInfo.vue", () =>
             }
         });
 
-        wrapper.vm.$options.watch.clickCoordinate.call(wrapper.vm, null);
+        wrapper.vm.$options.watch.clickCoordinate.handler.call(wrapper.vm, null);
         expect(wrapper.vm.pagerIndex).to.equal(0);
     });
 
