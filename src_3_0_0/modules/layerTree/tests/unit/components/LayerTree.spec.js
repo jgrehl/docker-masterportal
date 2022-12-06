@@ -29,37 +29,43 @@ describe("src_3_0_0/modules/layerTree/components/LayerTree.vue", () => {
             id: "1",
             name: "layer2D_1",
             typ: "WMS",
-            visibility: false
+            visibility: false,
+            showInLayerTree: true
         };
         layer2D_2 = {
             id: "2",
             name: "layer2D_2",
             typ: "WFS",
-            visibility: false
+            visibility: false,
+            showInLayerTree: true
         };
         layer2D_3 = {
             id: "2D_3",
             name: "layer2D_3",
             typ: "WFS",
-            visibility: false
+            visibility: false,
+            showInLayerTree: true
         };
         layer3D = {
             id: "3",
             name: "layer3D",
             typ: "Terrain3D",
-            visibility: false
+            visibility: false,
+            showInLayerTree: true
         };
         layerBG_1 = {
             id: "11",
             name: "layerBG_1",
             typ: "WMS",
-            visibility: true
+            visibility: true,
+            showInLayerTree: true
         };
         layerBG_2 = {
             id: "12",
             name: "layerBG_2",
             typ: "WFS",
-            visibility: false
+            visibility: false,
+            showInLayerTree: true
         };
         layers2D = [
             layer2D_1,
