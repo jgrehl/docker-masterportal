@@ -74,13 +74,14 @@ export default {
                 type="checkbox"
                 class="layer-tree-layer-checkbox form-check-input"
                 @click="visibilityInLayerTreeChanged(!isLayerVisible)"
-                @keydown="event => event.key === 'Enter' ? visibilityInLayerTreeChanged(!isLayerVisible) : null"
+                @keydown.enter="visibilityInLayerTreeChanged(!isLayerVisible)"
             >
             <label
                 :class="['layer-tree-layer-label', 'mt-0 d-flex flex-column align-self-start', isLayerVisible ? 'bold' : '']"
                 :for="'layer-tree-layer-checkbox' + layerConf.id"
                 tabindex="0"
                 :aria-label="$t('layerConf.name')"
+                @keydown.enter="visibilityInLayerTreeChanged(!isLayerVisible)"
             >
                 <span>
                     {{ layerConf.name }}
