@@ -49,7 +49,7 @@ export default {
         }
     },
     created () {
-        if (this.feature.getMimeType() === "text/html") {
+        if (this.feature?.getMimeType() === "text/html") {
             this.isContentHtml = true;
         }
         // @todo aktivieren und nach Vue3 portieren, wenn noetig. Unklar, wann das event "hidemarker" geworfen wird
