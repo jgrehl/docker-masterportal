@@ -169,7 +169,7 @@ export default {
      * @param {Object} menuItem.module The module type.
      * @returns {void}
      */
-    startItemInMenu ({dispatch}, menuItem) {
+    setMenuBack ({dispatch}, menuItem) {
         dispatch("resetMenu", menuItem);
         dispatch("activateMenuNavigation", menuItem);
     }
