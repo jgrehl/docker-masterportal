@@ -1,6 +1,5 @@
 import sinon from "sinon";
 import {expect} from "chai";
-<<<<<<<< HEAD:src_3_0_0/modules/menu/tests/unit/menu-store/gettersMenu.spec.js
 import gettersMenu from "../../../menu-store/gettersMenu";
 import stateMenu from "../../../menu-store/stateMenu";
 import idx from "../../../../../shared/js/utils/idx";
@@ -8,13 +7,6 @@ import idx from "../../../../../shared/js/utils/idx";
 describe("src_3_0_0/modules/menu/menu-store/gettersMenu.js", () => {
     const component = Symbol("Am component"),
         mainMenuSymbol = Symbol("mainMenu"),
-========
-import gettersMenu from "../../../store/gettersMenu";
-import idx from "../../../../../shared/js/utils/idx";
-
-describe("src_3_0_0/modules/menu/gettersMenu.js", () => {
-    const mainMenuSymbol = Symbol("mainMenu"),
->>>>>>>> 94d76c76d3 (update move files into new folder structure):src_3_0_0/modules/menu/tests/unit/store/gettersMenu.spec.js
         secondaryMenuSymbol = Symbol("secondaryMenu");
     let consoleErrorSpy,
         getters,
