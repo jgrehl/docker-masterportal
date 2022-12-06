@@ -66,8 +66,10 @@ export default {
     },
     methods: {
         help (target) {
-            target.classList.add("is-invalid");
-            target.classList.remove("mb-5");
+            if (!target.classList.contains("is-valid")) {
+                target.classList.add("is-invalid");
+                target.classList.remove("mb-5");
+            }
         }
     }
 };
