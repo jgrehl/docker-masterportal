@@ -59,14 +59,6 @@ export default {
                 this.setCurrentScale(value);
             }
         },
-        // documentTitle: {
-        //     get () {
-        //         return this.title;
-        //     },
-        //     set (value) {
-        //         this.setTitle(value);
-        //     }
-        // },
         dpiForPdf: {
             get () {
                 return this.$store.state.Modules.Print.dpiForPdf;
