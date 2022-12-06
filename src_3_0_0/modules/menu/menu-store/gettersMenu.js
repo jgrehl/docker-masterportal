@@ -1,12 +1,7 @@
 import menuState from "./stateMenu";
-<<<<<<<< HEAD:src_3_0_0/modules/menu/menu-store/gettersMenu.js
 import {badPathSymbol, idx} from "../../../shared/js/utils/idx";
 import {generateSimpleGetters} from "../../../shared/js/utils/generators";
 import upperFirst from "../../../shared/js/utils/upperFirst";
-========
-import {generateSimpleGetters} from "../../../shared/js/utils/generators";
-import {badPathSymbol, idx} from "../../../shared/js/utils/idx";
->>>>>>>> 94d76c76d3 (update move files into new folder structure):src_3_0_0/modules/menu/store/gettersMenu.js
 
 const menuGetters = {
     ...generateSimpleGetters(menuState),
