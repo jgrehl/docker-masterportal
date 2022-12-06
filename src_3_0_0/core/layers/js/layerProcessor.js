@@ -36,7 +36,7 @@ function watchMapMode () {
 function watchLayerConfig () {
     store.watch((state, getters) => getters.allLayerConfigs, layerConfig => {
         processLayerConfig(layerConfig, store.getters["Maps/mode"]);
-    });
+    }, {deep: true});
 }
 
 /**

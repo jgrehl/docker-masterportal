@@ -83,6 +83,7 @@ export default {
          * @returns {void}
          */
         clickCoordinate () {
+            this.pagerIndex = 0;
             this.updateClick();
         },
         /**
@@ -90,7 +91,7 @@ export default {
          * @param {?Object} newValue - the current feature
          * @returns {void}
          */
-        feature: function (newValue) {
+        feature (newValue) {
             this.setCurrentFeature(newValue);
         },
         /**
@@ -98,7 +99,7 @@ export default {
          * to force re-render detached component (key-changing).
          * @returns {void}
          */
-        mapSize: function () {
+        mapSize () {
             if (this.currentViewType === "GetFeatureInfoDetached") {
                 this.componentKey = !this.componentKey;
             }
@@ -108,12 +109,13 @@ export default {
          * @param {Object[]} gfiFeatures The gfi features.
          * @returns {void}
          */
-        gfiFeatures: function (gfiFeatures) {
-            this.pagerIndex = 0;
-
-            if (gfiFeatures?.length > 0) {
-                this.setActive(true);
-            }
+        gfiFeatures: {
+            handler (gfiFeatures) {
+                if (gfiFeatures?.length > 0) {
+                    this.setActive(true);
+                }
+            },
+            deep: true
         }
     },
     beforeUpdate () {
@@ -134,6 +136,7 @@ export default {
          * @returns {void}
          */
         reset: function () {
+            this.pagerIndex = 0;
             this.setGfiFeatures(null);
         },
 
