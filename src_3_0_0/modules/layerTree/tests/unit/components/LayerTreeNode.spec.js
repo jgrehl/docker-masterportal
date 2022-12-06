@@ -21,19 +21,22 @@ describe("src_3_0_0/modules/layerTree/components/LayerTreeNode.vue", () => {
             id: "1",
             name: "layer_1",
             typ: "WMS",
-            visibility: false
+            visibility: false,
+            showInLayerTree: true
         };
         layer_2 = {
             id: "2",
             name: "layer_2",
             typ: "WMS",
-            visibility: false
+            visibility: false,
+            showInLayerTree: true
         };
         layer_3 = {
             id: "3",
             name: "layer_3",
             typ: "WFS",
-            visibility: true
+            visibility: true,
+            showInLayerTree: true
         };
         propsData = {
             conf: layer_1
