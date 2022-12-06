@@ -81,9 +81,9 @@ export default {
          */
         translate (translationKey, options = null) {
             if (typeof options === "object" && options !== null) {
-                return i18next.t(translationKey, options);
+                return this.$t(translationKey, options);
             }
-            return this.translateKeyWithPlausibilityCheck(translationKey, v => i18next.t(v));
+            return this.translateKeyWithPlausibilityCheck(translationKey, v => this.$t(v));
         },
 
         /**
@@ -155,7 +155,7 @@ export default {
                 </span>
             </div>
         </template>
-        <template #body>
+        <div #body>
             <div class="body content container-fluid">
                 <div class="table-of-contents">
                     <a
@@ -202,7 +202,7 @@ export default {
                     </div>
                 </div>
             </div>
-        </template>
+        </div>
     </ToolWindow>
 </template>
 
