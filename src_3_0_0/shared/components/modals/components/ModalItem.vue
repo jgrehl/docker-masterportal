@@ -21,6 +21,8 @@ export default {
         }
     },
 
+    emits: ["modalHid", "clickedOnX", "clickedOutside"],
+
     data: function () {
         return {
             showing: false
