@@ -141,12 +141,12 @@ export default {
          */
         getPlaceholder () {
             if (this.waypoint.index === 0) {
-                return i18next.t("common:modules.tools.routing.startpoint");
+                return this.$t("common:modules.tools.routing.startpoint");
             }
             else if (this.waypoint.index === this.countWaypoints - 1) {
-                return i18next.t("common:modules.tools.routing.endpoint");
+                return this.$t("common:modules.tools.routing.endpoint");
             }
-            return i18next.t("common:modules.tools.routing.waypoint");
+            return this.$t("common:modules.tools.routing.waypoint");
         }
     }
 };

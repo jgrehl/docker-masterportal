@@ -21,7 +21,7 @@ export default {
          * @returns {String} The current button title.
          */
         buttonTitle () {
-            return i18next.t(this.mode === "2D" ? "common:modules.controls.3d.buttonTitle3d" : "common:modules.controls.3d.buttonTitle2d");
+            return this.$t(this.mode === "2D" ? "common:modules.controls.3d.buttonTitle3d" : "common:modules.controls.3d.buttonTitle2d");
         },
 
         /**
