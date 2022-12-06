@@ -123,7 +123,7 @@ describe("src_3_0_0/modules/layerTree/components/LayerComponent.vue", () => {
 
         wrapper.vm.showInLayerTree();
 
-        expect(wrapper.find("#layertree-layer-" + propsData.conf.id).exists()).to.be.false;
+        expect(wrapper.find("#layer-tree-layer-" + propsData.conf.id).exists()).to.be.false;
     });
     it("method showInLayerTree - show layer with showInLayerTree = true", () => {
         propsData.conf.showInLayerTree = false;
@@ -137,7 +137,7 @@ describe("src_3_0_0/modules/layerTree/components/LayerComponent.vue", () => {
 
         wrapper.vm.showInLayerTree();
 
-        expect(wrapper.find("#layertree-layer-" + propsData.conf.id).exists()).to.be.false;
+        expect(wrapper.find("#layer-tree-layer-" + propsData.conf.id).exists()).to.be.false;
     });
     it("method showInLayerTree - show 3D-Layer", () => {
         mapMode = "3D";
@@ -152,7 +152,7 @@ describe("src_3_0_0/modules/layerTree/components/LayerComponent.vue", () => {
 
         wrapper.vm.showInLayerTree();
 
-        expect(wrapper.find("#layertree-layer-" + propsData.conf.id).exists()).to.be.true;
+        expect(wrapper.find("#layer-tree-layer-" + propsData.conf.id).exists()).to.be.true;
     });
     it("computed property isLayerVisible with visibility=false ", () => {
         wrapper = shallowMount(LayerComponent, {

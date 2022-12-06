@@ -139,7 +139,7 @@ describe("src_3_0_0/modules/layerTree/components/FolderComponent.vue", () => {
         expect(wrapper.find(".folder > div").text()).to.be.equals("Titel Ebene 1");
         expect(wrapper.find(".folder > div").classes()).not.to.include("bold");
         expect(inputs.length).to.be.equals(1);
-        expect(inputs.at(0).attributes().id).to.be.equals("layertree-folder-checkbox-TitelEbene1X");
+        expect(inputs.at(0).attributes().id).to.be.equals("layer-tree-folder-checkbox-TitelEbene1X");
         expect(wrapper.find("label").text()).to.be.equals("common:tree.selectAll");
 
     });
@@ -160,7 +160,7 @@ describe("src_3_0_0/modules/layerTree/components/FolderComponent.vue", () => {
         expect(wrapper.find(".folder > div").text()).to.be.equals("Titel Ebene 1");
         expect(wrapper.find(".folder > div").classes()).to.include("bold");
         expect(inputs.length).to.be.equals(1);
-        expect(inputs.at(0).attributes().id).to.be.equals("layertree-folder-checkbox-TitelEbene1X");
+        expect(inputs.at(0).attributes().id).to.be.equals("layer-tree-folder-checkbox-TitelEbene1X");
         expect(wrapper.find("label").text()).to.be.equals("common:tree.selectAll");
 
     });
