@@ -1,20 +1,17 @@
-import Vuex from "vuex";
-import {config, mount, createLocalVue} from "@vue/test-utils";
+import {createStore} from "vuex";
+import {config, mount} from "@vue/test-utils";
 import {expect} from "chai";
 
 import WfsSearchField from "../../../components/WfsSearchField.vue";
 import WfsSearchModule from "../../../store/indexWfsSearch";
 
-const localVue = createLocalVue();
-
-localVue.use(Vuex);
-config.mocks.$t = key => key;
+config.global.mocks.$t = key => key;
 
 describe("src/modules/wfsSearch/components/WfsSearchField.vue", () => {
     let store;
 
     beforeEach(() => {
-        store = new Vuex.Store({
+        store = createStore({
             namespaces: true,
             modules: {
                 Modules: {
@@ -30,9 +27,10 @@ describe("src/modules/wfsSearch/components/WfsSearchField.vue", () => {
 
     it("renders an input element with fitting label", () => {
         const wrapper = mount(WfsSearchField, {
-            localVue,
-            store,
-            propsData: {
+            global: {
+                plugins: [store]
+            },
+            props: {
                 fieldId: "fieldId",
                 fieldName: "fieldName",
                 inputLabel: "inputLabel"
@@ -46,9 +44,10 @@ describe("src/modules/wfsSearch/components/WfsSearchField.vue", () => {
 
     it("renders a select element for the value when given options", () => {
         const wrapper = mount(WfsSearchField, {
-                localVue,
-                store,
-                propsData: {
+                global: {
+                    plugins: [store]
+                },
+                props: {
                     fieldId: "fieldId",
                     fieldName: "fieldName",
                     inputLabel: "inputLabel",
@@ -67,9 +66,10 @@ describe("src/modules/wfsSearch/components/WfsSearchField.vue", () => {
 
     it("renders a label with string that contains '*'", () => {
         const wrapper = mount(WfsSearchField, {
-            localVue,
-            store,
-            propsData: {
+            global: {
+                plugins: [store]
+            },
+            props: {
                 fieldId: "fieldId",
                 fieldName: "fieldName",
                 inputLabel: "common:modules.tools.wfsSearch.parcelNumber*"
