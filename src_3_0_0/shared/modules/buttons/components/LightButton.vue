@@ -37,6 +37,7 @@ export default {
         :aria-label="text"
         :class="customclass"
         @click="interaction"
+        @keydown.enter="interaction"
     >
         <i
             v-if="icon !== null"
@@ -59,6 +60,7 @@ export default {
         type="button"
         :class="customclass"
         @click="interaction"
+        @keydown.enter="interaction"
     >
         <i
             v-if="icon !== null"
