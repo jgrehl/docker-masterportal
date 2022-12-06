@@ -63,14 +63,13 @@ export default {
             module: {type: this.$parent.$options.name}
         };
 
-        this.resetMenu(menuItem);
-        this.activateMenuNavigation(menuItem);
+        this.setMenuBack(menuItem);
         this.setMarker();
     },
     methods: {
         ...mapMutations("Modules/GetFeatureInfo", ["setShowMarker"]),
         ...mapActions("Maps", ["setCenter"]),
-        ...mapActions("Menu", ["activateMenuNavigation", "resetMenu"]),
+        ...mapActions("Menu", ["setMenuBack"]),
 
         /**
          * Sets the center of the view on the clickCoord and place the MapMarker on it

@@ -23,8 +23,7 @@ const actions = {
         dispatch("setMetadataURL", layerConf.datasets[0].md_id);
         dispatch("additionalSingleLayerInfo");
 
-        dispatch("Menu/resetMenu", menuItem, {root: true});
-        dispatch("Menu/activateMenuNavigation", menuItem, {root: true});
+        dispatch("Menu/setMenuBack", menuItem, {root: true});
     },
 
     /**

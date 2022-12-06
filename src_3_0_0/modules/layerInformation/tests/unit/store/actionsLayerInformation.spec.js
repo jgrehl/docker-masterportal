@@ -29,8 +29,7 @@ describe("src_3_0_0/modules/layerInformation/store/actionsLayerInformation.js", 
                 {type: "setActive", payload: true},
                 {type: "setMetadataURL", payload: layerConf.datasets[0].md_id, dispatch: true},
                 {type: "additionalSingleLayerInfo", payload: undefined, dispatch: true},
-                {type: "Menu/resetMenu", payload: {side: "mainMenu", module: {type: "LayerInformation"}}, dispatch: true},
-                {type: "Menu/activateMenuNavigation", payload: {side: "mainMenu", module: {type: "LayerInformation"}}, dispatch: true}
+                {type: "Menu/setMenuBack", payload: {side: "mainMenu", module: {type: "LayerInformation"}}, dispatch: true}
             ], {}, done);
         });
 
