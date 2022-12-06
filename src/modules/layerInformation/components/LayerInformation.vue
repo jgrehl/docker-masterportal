@@ -1,9 +1,6 @@
 <script>
-import getters from "../store/gettersLayerInformation";
-import mutations from "../store/mutationsLayerInformation";
 import ToolWindow from "../../../share-components/ToolWindow.vue";
-import {isWebLink} from "../../../utils/urlHelper";
-import {mapActions, mapGetters, mapMutations} from "vuex";
+import {mapActions, mapGetters} from "vuex";
 
 /**
  * The Layer Information that gives the user information, links and the legend for a layer
