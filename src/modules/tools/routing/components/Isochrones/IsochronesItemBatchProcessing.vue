@@ -193,8 +193,8 @@ export default {
                 return isochronesResult.getAreas().map(
                     area => area.getGeojsonFeature({
                         ID: id,
-                        [i18next.t("common:modules.tools.routing.directions.batchProcessing.downloadHeader.xStart")]: startLon,
-                        [i18next.t("common:modules.tools.routing.directions.batchProcessing.downloadHeader.yStart")]: startLat
+                        [this.$t("common:modules.tools.routing.directions.batchProcessing.downloadHeader.xStart")]: startLon,
+                        [this.$t("common:modules.tools.routing.directions.batchProcessing.downloadHeader.yStart")]: startLat
                     })
                 );
             }
@@ -210,8 +210,8 @@ export default {
                     },
                     properties: {
                         ID: id,
-                        [i18next.t("common:modules.tools.routing.directions.batchProcessing.downloadHeader.xStart")]: startLon,
-                        [i18next.t("common:modules.tools.routing.directions.batchProcessing.downloadHeader.yStart")]: startLat,
+                        [this.$t("common:modules.tools.routing.directions.batchProcessing.downloadHeader.xStart")]: startLon,
+                        [this.$t("common:modules.tools.routing.directions.batchProcessing.downloadHeader.yStart")]: startLat,
                         error: true
                     }
                 }
