@@ -33,9 +33,11 @@ describe("src_3_0_0/modules/layerTree/components/LayerComponent.vue", () => {
             visibility: false,
             showInLayerTree: true
         };
+
         propsData = {
             conf: layer
         };
+
         replaceByIdInLayerConfigSpy = sinon.spy();
         sinon.stub(layerFactory, "getLayerTypes3d").returns(["TERRAIN3D"]);
         store = createStore({
@@ -73,7 +75,7 @@ describe("src_3_0_0/modules/layerTree/components/LayerComponent.vue", () => {
             propsData
         });
 
-        expect(wrapper.find("#layertree-layer-" + propsData.conf.id).exists()).to.be.true;
+        expect(wrapper.find("#layer-tree-layer-" + propsData.conf.id).exists()).to.be.true;
     });
 
     it("renders layer with visibility false and checkbox", () => {
@@ -84,10 +86,10 @@ describe("src_3_0_0/modules/layerTree/components/LayerComponent.vue", () => {
             propsData
         });
 
-        expect(wrapper.find("#layertree-layer-" + propsData.conf.id).exists()).to.be.true;
+        expect(wrapper.find("#layer-tree-layer-" + propsData.conf.id).exists()).to.be.true;
         expect(wrapper.findAll("input").length).to.be.equals(1);
         expect(wrapper.find("input").attributes("type")).to.be.equals("checkbox");
-        expect(wrapper.find("label").text()).to.equal(propsData.conf.name);
+        expect(wrapper.find("span").text()).to.equal(propsData.conf.name);
         expect(wrapper.find("label").attributes("class")).not.to.include("bold");
     });
 
@@ -101,10 +103,10 @@ describe("src_3_0_0/modules/layerTree/components/LayerComponent.vue", () => {
             propsData
         });
 
-        expect(wrapper.find("#layertree-layer-" + propsData.conf.id).exists()).to.be.true;
+        expect(wrapper.find("#layer-tree-layer-" + propsData.conf.id).exists()).to.be.true;
         expect(wrapper.findAll("input").length).to.be.equals(1);
         expect(wrapper.find("input").attributes("type")).to.be.equals("checkbox");
-        expect(wrapper.find("label").text()).to.equal(propsData.conf.name);
+        expect(wrapper.find("span").text()).to.equal(propsData.conf.name);
         expect(wrapper.find("label").attributes("class")).to.include("bold");
     });
 
@@ -207,7 +209,7 @@ describe("src_3_0_0/modules/layerTree/components/LayerComponent.vue", () => {
             propsData
         });
 
-        expect(wrapper.find("#layertree-layer-" + propsData.conf.id).exists()).to.be.true;
+        expect(wrapper.find("#layer-tree-layer-" + propsData.conf.id).exists()).to.be.true;
         expect(wrapper.findAll("input").length).to.be.equals(1);
 
         checkbox = wrapper.find("input");
@@ -238,7 +240,7 @@ describe("src_3_0_0/modules/layerTree/components/LayerComponent.vue", () => {
             propsData
         });
 
-        expect(wrapper.find("#layertree-layer-" + propsData.conf.id).exists()).to.be.true;
+        expect(wrapper.find("#layer-tree-layer-" + propsData.conf.id).exists()).to.be.true;
         expect(wrapper.findAll("input").length).to.be.equals(1);
 
         checkbox = wrapper.find("input");
