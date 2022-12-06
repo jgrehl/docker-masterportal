@@ -51,7 +51,7 @@ describe("src/modules/tools/wfsSearch/store/actionsWfsSearch.js", () => {
             service = {url};
         });
 
-        it.skip("should reset the module if the WFS is not given", () => {
+        it("should reset the module if the WFS is not given", () => {
             delete getters.currentInstance.requestConfig.restLayerId;
 
             actions.prepareModule({commit, dispatch, getters, rootGetters});
