@@ -61,7 +61,7 @@ export default {
             }
         ]"
         tabindex="-1"
-        :aria-label="titleBySide(side) ? titleBySide(side).text : false"
+        :aria-label="titleBySide(side) ? titleBySide(side).text : null"
     >
         <MenuContainerHeader
             :side="side"
