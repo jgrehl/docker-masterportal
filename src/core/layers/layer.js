@@ -28,7 +28,6 @@ export default function Layer (attrs, layer, initialize = true) {
         showSettings: true,
         styleable: false,
         supported: ["2D"],
-        transparency: 0,
         isOutOfRange: undefined,
         isSecured: false,
         domId: "layer-list-group-item-" + attrs.id,
