@@ -46,7 +46,7 @@ describe("src/modules/tools/wfsSearch/store/actionsWfsSearch.js", () => {
                 }
             };
             rootGetters = {
-                getRestServiceById: id => id === 456 ? {url, featureType: typeName} : {}
+                restServiceById: id => id === 456 ? {url, featureType: typeName} : {}
             };
             service = {url};
         });
