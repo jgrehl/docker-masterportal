@@ -102,10 +102,13 @@ export default {
          * to force re-render detached component (key-changing).
          * @returns {void}
          */
-        mapSize () {
-            if (this.currentViewType === "GetFeatureInfoDetached") {
-                this.componentKey = !this.componentKey;
-            }
+        mapSize: {
+            handler () {
+                if (this.currentViewType === "GetFeatureInfoDetached") {
+                    this.componentKey = !this.componentKey;
+                }
+            },
+            deep: true
         },
         /**
          * Whenever gfiFeatures changes, set pagerIndex to zero.
