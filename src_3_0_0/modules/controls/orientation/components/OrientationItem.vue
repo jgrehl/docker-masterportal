@@ -62,8 +62,11 @@ export default {
                 this.showPoiWindow();
             }
         },
-        visibleLayerConfigs () {
-            this.checkWFS();
+        visibleLayerConfigs: {
+            handler () {
+                this.checkWFS();
+            },
+            deep: true
         }
     },
     created () {
