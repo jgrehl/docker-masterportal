@@ -375,6 +375,17 @@ export default {
                 values = values.reverse();
             }
             this.copyCoordinates(values);
+        },
+        /**
+         * Returns true, if current projection is selected.
+         * @param {Object} projection the projection
+         * @returns {Boolean|null} true, if current projection is selected, else null
+         */
+        isCurrentProjectionSelected (projection) {
+            if (projection.id === this.currentProjection.id) {
+                return true;
+            }
+            return null;
         }
     }
 };
@@ -445,7 +456,7 @@ export default {
                         v-for="(projection, i) in projections"
                         :key="i"
                         :value="projection.id"
-                        :SELECTED="projection.id === currentProjection.id"
+                        :SELECTED="isCurrentProjectionSelected(projection)"
                     >
                         {{ projection.title ? projection.title : projection.name }}
                     </option>
