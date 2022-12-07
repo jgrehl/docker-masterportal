@@ -114,7 +114,8 @@
               }
             ]
           },
-          { "type": "wfsSearch",
+          { 
+            "type": "wfsSearch",
             "zoomLevel": 7,
             "instances": [
               {
@@ -223,7 +224,7 @@
           {
             "type": "scaleSwitcher",
             "showDescription": true,
-            "description": "Stelle den Maßstab um, ganz ohne zu scrollen."
+            "description": "Stelle den MaÃŸstab um, ganz ohne zu scrollen."
           },
           {
             "type": "shareView",
@@ -233,7 +234,7 @@
           {
             "type": "measure",
             "showDescription": true,
-            "description": "Miss eine Strecke oder Fläche."
+            "description": "Miss eine Strecke oder FlÃ¤che."
           }
         ]
       ]
@@ -331,13 +332,13 @@
         },
         {
           "id": "12883",
-          "name": "Gelände",
+          "name": "GelÃ¤nde",
           "typ": "Terrain3D",
           "visibility": true
         },
         {
           "id": "12884",
-          "name": "Gebäude LoD2",
+          "name": "GebÃ¤ude LoD2",
           "typ": "TileSet3D",
           "visibility": true
         }
@@ -347,7 +348,7 @@
       "elements": [
         {
           "id": "10220",
-          "name": "Dauerzählstellen (Rad) Hamburg",
+          "name": "DauerzÃ¤hlstellen (Rad) Hamburg",
           "typ": "WMS",
           "visibility": false
         },
@@ -403,7 +404,7 @@
         },
         {
           "id": "1711",
-          "name": "Krankenhäuser",
+          "name": "KrankenhÃ¤user",
           "typ": "WFS",
           "visibility": true,
           "mouseHoverField": [
@@ -413,7 +414,7 @@
         },
         {
           "id": "52",
-          "name": "Parkhäuser",
+          "name": "ParkhÃ¤user",
           "typ": "WFS",
           "visibility": false,
           "autoRefresh": 5000
@@ -491,14 +492,14 @@
         },
         {
           "id": "GeoJSON",
-          "name": "Beiträge",
+          "name": "BeitrÃ¤ge",
           "typ": "GeoJSON",
           "visibility": false,
           "url": "./resources/example_geojson.json"
         },
         {
           "id": "StaticImage",
-          "name": "Lärmberechnung",
+          "name": "LÃ¤rmberechnung",
           "typ": "StaticImage",
           "visibility": false,
           "url": "https://geodienste.hamburg.de/lgv-config/img/Laerm-Test_300dpi.png",
