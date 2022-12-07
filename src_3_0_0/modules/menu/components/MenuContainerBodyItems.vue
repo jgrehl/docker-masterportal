@@ -23,6 +23,12 @@ export default {
     computed: {
         ...mapGetters("Menu", ["section"])
     },
+    created () {
+        this.itemProps = [];
+        this.section(this.path).forEach(item => {
+            this.itemProps.push(this.chooseProperties(item));
+        });
+    },
     methods: {
         /**
          * Returns the properties from the state, if available.
@@ -40,7 +46,6 @@ export default {
                     properties = stateProperties;
                 }
             }
-
             return properties;
         }
     }
@@ -53,12 +58,16 @@ export default {
         class="nav flex-column ms-2"
     >
         <li
-            v-for="(item, key) in section(path)"
+            v-for="(props, key) in itemProps"
             :key="key"
         >
             <MenuContainerBodyElement
-                v-bind="chooseProperties(item)"
                 :id="'mp-menu-body-items-element-' + key + '-' + idAppendix"
+                :properties="props"
+                :name="props.name"
+                :icon="props.icon"
+                :description="props.description"
+                :show-description="props.showDescription"
                 :path="[...path, key]"
             />
         </li>
