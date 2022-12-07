@@ -3,7 +3,6 @@ import ModalItem from "../../../shared/components/modals/components/ModalItem.vu
 import ListItem from "../../../shared/components/list/components/ListItem.vue";
 import {mapActions, mapGetters, mapMutations} from "vuex";
 import WfsSearchLiteral from "./WfsSearchLiteral.vue";
-// import {createUserHelp} from "../js/literalFunctions";
 import {searchFeatures} from "../js/requests";
 import isObject from "../../../shared/js/utils/isObject";
 
