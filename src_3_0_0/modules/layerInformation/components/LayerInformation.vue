@@ -80,7 +80,7 @@ export default {
          * @returns {Boolean}  true if the given tab name is active
          */
         isActiveTab (tab) {
-            return this.activeTab === tab;
+            return this.activeTab === tab ? true : null;
         },
         /**
          * set the current tab id after clicking.
