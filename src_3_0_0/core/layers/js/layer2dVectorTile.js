@@ -17,7 +17,6 @@ export default function Layer2dVectorTile (attributes) {
     };
 
     this.attributes = Object.assign(defaultAttributes, attributes);
-    Layer2d.call(this, this.attributes);
 
     this.checkProjection();
     this.setConfiguredLayerStyle();
