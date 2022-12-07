@@ -27,7 +27,7 @@ const actions = {
         const {currentInstance} = getters,
             {requestConfig: {layerId, likeFilter, restLayerId, storedQueryId}, title} = currentInstance,
             wfs = restLayerId
-                ? rootGetters.getRestServiceById(restLayerId)
+                ? rootGetters.restServiceById(restLayerId)
                 : rawLayerList.getLayerWhere({id: layerId});
 
         if (wfs) {
