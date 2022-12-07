@@ -35,6 +35,11 @@
     "app-store": {
       "loadServicesJsonFailed": "<strong>Die Datei {{layerConf}} konnte nicht geladen werden!</strong>"
     },
+    "layerTree": {
+      "iconRemoveLayer": "Thema aus Karte entfernen",
+      "iconSubMenu": "Weitere Funktionen anzeigen",
+      "iconTransparency": "Transparenz"
+    },
     "mouseHover": {
         "infoText": "(weitere Objekte. Bitte zoomen.)"
     },
