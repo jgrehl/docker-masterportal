@@ -195,7 +195,8 @@
                     "id": "453",
                     "name": "Geobasiskarten (HamburgDE)",
                     "typ": "WMS",
-                    "visibility": true
+                    "visibility": true,
+                    "transparency": 80
                 },
                 {
                     "id": "452",
