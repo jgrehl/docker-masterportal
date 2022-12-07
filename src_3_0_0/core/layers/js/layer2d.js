@@ -12,6 +12,7 @@ import Layer from "./layer";
  */
 export default function Layer2d (attributes) {
     const defaultAttributes = {
+        transparency: 0
     };
 
     this.attributes = Object.assign(defaultAttributes, attributes);
