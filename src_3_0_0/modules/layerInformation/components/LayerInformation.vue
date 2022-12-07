@@ -247,7 +247,7 @@ export default {
                     v-if="(showAttachFile)"
                     class="col-lg-5 pt-5"
                 >
-                    <span class="download-note">{{ $t(("common:modules.layerInformation.attachFileMessage")) }}</span>
+                    <span class="bold">{{ $t(("common:modules.layerInformation.attachFileMessage")) }}</span>
                 </div>
             </div>
             <div
@@ -382,10 +382,6 @@ export default {
         a:hover {
             background-color: $accent_hover;
         }
-    }
-
-    .download-note {
-        font-weight: bold;
     }
 
     .pt-5 {
