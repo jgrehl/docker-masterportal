@@ -2,6 +2,8 @@
 import {mapGetters, mapMutations} from "vuex";
 import layerFactory from "../../../core/layers/js/layerFactory";
 import LayerComponentIconInfo from "./LayerComponentIconInfo.vue";
+import LayerComponentIconSubMenu from "./LayerComponentIconSubMenu.vue";
+import LayerComponentSubMenu from "./LayerComponentSubMenu.vue";
 
 /**
  * Representation of a layer in layerTree.
@@ -9,7 +11,9 @@ import LayerComponentIconInfo from "./LayerComponentIconInfo.vue";
 export default {
     name: "LayerComponent",
     components: {
-        LayerComponentIconInfo
+        LayerComponentIconInfo,
+        LayerComponentIconSubMenu,
+        LayerComponentSubMenu
     },
     /** current layer configuration */
     props: {
@@ -69,32 +73,38 @@ export default {
     <div
         v-if="showInLayerTree()"
         :id="'layer-tree-layer-' + conf.id"
-        class="layer-tree-layer form-check d-flex justify-content-between"
+        class="row layer-tree-layer form-check d-flex justify-content-between"
     >
-        <div class="layer-tree-layer-title pe-2">
-            <input
-                :id="'layer-tree-layer-checkbox-' + conf.id"
-                :checked="isLayerVisible"
-                type="checkbox"
-                class="layer-tree-layer-checkbox form-check-input"
-                @click="visibilityInLayerTreeChanged(!isLayerVisible)"
-                @keydown.enter="visibilityInLayerTreeChanged(!isLayerVisible)"
-            >
-            <label
-                :class="['layer-tree-layer-label', 'mt-0 d-flex flex-column align-self-start', isLayerVisible ? 'bold' : '']"
-                :for="'layer-tree-layer-checkbox-' + conf.id"
-                tabindex="0"
-                :aria-label="$t('conf.name')"
-                @keydown.enter="visibilityInLayerTreeChanged(!isLayerVisible)"
-            >
-                <span>
-                    {{ conf.name }}
-                </span>
-            </label>
+        <div class="d-flex justify-content-between">
+            <div class="layer-tree-layer-title pe-2">
+                <input
+                    :id="'layer-tree-layer-checkbox-' + conf.id"
+                    :checked="isLayerVisible"
+                    type="checkbox"
+                    class="layer-tree-layer-checkbox form-check-input"
+                    @click="visibilityInLayerTreeChanged(!isLayerVisible)"
+                    @keydown.enter="visibilityInLayerTreeChanged(!isLayerVisible)"
+                >
+                <label
+                    :class="['layer-tree-layer-label', 'mt-0 d-flex flex-column align-self-start', isLayerVisible ? 'bold' : '']"
+                    :for="'layer-tree-layer-checkbox-' + conf.id"
+                    tabindex="0"
+                    :aria-label="$t('conf.name')"
+                    @keydown.enter="visibilityInLayerTreeChanged(!isLayerVisible)"
+                >
+                    <span>
+                        {{ conf.name }}
+                    </span>
+                </label>
+            </div>
+            <div class="d-flex">
+                <LayerComponentIconSubMenu :layer-conf="conf" />
+                <LayerComponentIconInfo :layer-conf="conf" />
+            </div>
         </div>
-        <LayerComponentIconInfo
-            :layer-conf="conf"
-        />
+        <div>
+            <LayerComponentSubMenu :layer-conf="conf" />
+        </div>
     </div>
 </template>
 
