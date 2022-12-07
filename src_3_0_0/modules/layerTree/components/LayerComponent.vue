@@ -112,10 +112,6 @@ export default {
             &:focus {
                 @include primary_action_focus;
             }
-
-            .bold {
-                font-weight: bold;
-            }
         }
 
         .layer-tree-layer-label {
