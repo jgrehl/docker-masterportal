@@ -118,20 +118,44 @@
             "zoomLevel": 7,
             "instances": [
               {
-                "title": "Hamburger Kindertagesstättensuche",
+                "title": "translate#common:menu.tools.parcelSearch",
+                "userHelp": "hide",
                 "requestConfig": {
-                  "layerId": "753"
+                  "gazetteer": {
+                    "namespaces": [
+                      "http://www.adv-online.de/namespaces/adv/dog",
+                      "http://geodienste.hamburg.de/dog_gages/services/wfs_dog?SERVICE=WFS&VERSION=2.0.0&REQUEST=DescribeFeatureType&OUTPUTFORMAT=application/gml+xml;+version=3.2&TYPENAME=dog:Flurstueckskoordinaten&NAMESPACES=xmlns(dog,http://www.adv-online.de/namespaces/adv/dog)"
+                    ],
+                    "memberSuffix": "member"
+                  },
+                  "restLayerId": "6",
+                  "storedQueryId": "Flurstueck"
                 },
-                "resultList": {
-                  "Ort": "Ort",
-                  "Name": "Name"
-                },
+                "selectSource": "https://geodienste.hamburg.de/lgv-config/gemarkungen_hh.json",
                 "literals": [
                   {
-                    "field": {
-                      "queryType": "like",
-                      "inputLabel": "Name",
-                      "fieldName": "Name"
+                    "clause": {
+                      "type": "and",
+                      "literals": [
+                        {
+                          "field": {
+                            "queryType": "equal",
+                            "inputLabel": "common:modules.tools.wfsSearch.district",
+                            "fieldName": "gemarkung",
+                            "usesId": true,
+                            "options": "",
+                            "required": true
+                          }
+                        },
+                        {
+                          "field": {
+                            "queryType": "equal",
+                            "inputLabel": "common:modules.tools.wfsSearch.parcelNumber",
+                            "fieldName": "flurstuecksnummer",
+                            "required": true
+                          }
+                        }
+                      ]
                     }
                   }
                 ]
