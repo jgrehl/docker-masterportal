@@ -270,7 +270,7 @@ export default {
             >
                 <template v-if="htmlElement === 'select'">
                     <option
-                        value=""
+                        value="1"
                         :selected="valuesReset"
                     >
                         {{ $t("common:modules.tools.wfsSearch.optionsPlaceholder") }}
@@ -279,7 +279,6 @@ export default {
                         v-for="(option, index) of selectableOptions"
                         :key="index + isObject(option) ? option.fieldValue : option"
                         :value="JSON.stringify(isObject(option) ? {value: option.fieldValue, index} : {value: option, index})"
-                        :selected="defaultValue && !required ? defaultValue : ''"
                     >
                         {{ isObject(option) ? (option.displayName ? option.displayName : option.fieldValue) : option }}
                     </option>
