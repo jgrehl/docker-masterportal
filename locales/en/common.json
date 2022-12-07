@@ -35,6 +35,11 @@
     "app-store": {
       "loadServicesJsonFailed": "<strong>The file {{layerConf}} could not be loaded!</strong>"
     },
+    "layerTree": {
+      "iconRemoveLayer": "Remove Topic from Map",
+      "iconSubMenu": "Show more functions",
+      "iconTransparency": "Transparency"
+    },
     "mouseHover": {
         "infoText": "(more objects. Please zoom.)"
     },
