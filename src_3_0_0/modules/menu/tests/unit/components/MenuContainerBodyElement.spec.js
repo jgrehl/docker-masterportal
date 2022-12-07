@@ -40,7 +40,7 @@ describe("src_3_0_0/modules/menu/MenuContainerBodyElement.vue", () => {
             global: {
                 plugins: [store]
             },
-            propsData: {icon: "bi-file-plus", name: "awesomeName"}
+            propsData: {icon: "bi-file-plus", name: "awesomeName", properties:{}}
         });
 
         expect(wrapper.findComponent(LightButton).exists()).to.be.true;
