@@ -33,6 +33,11 @@ export default {
         path: {
             type: Array,
             default: () => []
+        },
+        /** All properties of the module to show in menu. */
+        properties: {
+            type: Object,
+            required: true
         }
     },
     computed: {
@@ -47,7 +52,7 @@ export default {
         }
     },
     mounted () {
-        if (this.$attrs?.active) {
+        if (this.properties?.active) {
             this.clickedMenuElement(this.path);
         }
     },
@@ -59,9 +64,9 @@ export default {
          * @returns {Boolean} The module is shown.
          */
         checkIsVisible () {
-            const supportedMapModes = this.$attrs.supportedMapModes,
-                supportedDevices = this.$attrs.supportedDevices,
-                supportedTreeTypes = this.$attrs.supportedTreeTypes;
+            const supportedMapModes = this.properties.supportedMapModes,
+                supportedDevices = this.properties.supportedDevices,
+                supportedTreeTypes = this.properties.supportedTreeTypes;
 
             return isModuleVisible(this.mode, this.deviceMode, this.portalConfig?.tree?.type, supportedMapModes, supportedDevices, supportedTreeTypes);
         }
@@ -73,7 +78,7 @@ export default {
 <template>
     <div>
         <LightButton
-            v-if="checkIsVisible() && !($attrs.isVisibleInMenu === false)"
+            v-if="checkIsVisible() && !(properties.isVisibleInMenu === false)"
             :interaction="() => clickedMenuElement(path)"
             :text="name"
             :icon="showIcon ? icon : null"
