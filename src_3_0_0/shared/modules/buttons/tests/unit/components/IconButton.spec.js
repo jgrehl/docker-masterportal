@@ -17,13 +17,13 @@ describe("src_3_0_0/shared/components/IconButton.vue", () => {
     it("should render a button with only an icon and trigger the given interaction on click", () => {
         const iconString = "bi-list",
             wrapper = mount(IconButton, {
-                propsData: {interaction: interactionSpy, icon: iconString}
+                propsData: {interaction: interactionSpy, icon: iconString, aria: "Bla bla"}
             }),
             button = wrapper.find("button"),
             icon = button.find("i");
 
         expect(button.exists()).to.be.true;
-        expect(button.classes()).to.eql(["btn", "btn-primary", "d-flex", "align-items-center", "my-auto"]);
+        expect(button.classes()).to.eql(["btn", "d-flex", "align-items-center", "justify-items-center", "mb-auto"]);
         expect(button.attributes("type")).to.equal("button");
         expect(icon.exists()).to.be.true;
         expect(icon.classes()).to.eql([iconString]);
