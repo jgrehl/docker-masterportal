@@ -16,7 +16,7 @@ export default {
 
 <template lang="html">
     <div
-        :id="'layer-component-icon-sub-menu' + layerConf.id"
+        :id="'layer-component-icon-sub-menu-' + layerConf.id"
         class="layer-component-icon-sub-menu"
     >
         <button
