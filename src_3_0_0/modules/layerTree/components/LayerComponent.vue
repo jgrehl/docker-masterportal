@@ -73,7 +73,7 @@ export default {
     <div
         v-if="showInLayerTree()"
         :id="'layer-tree-layer-' + conf.id"
-        class="row layer-tree-layer form-check d-flex justify-content-between"
+        class="layer-tree-layer form-check d-flex flex-column justify-content-between"
     >
         <div class="d-flex justify-content-between">
             <div class="layer-tree-layer-title pe-2">
