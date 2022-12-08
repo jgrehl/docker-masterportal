@@ -17,6 +17,7 @@ export default function Layer2dVectorTile (attributes) {
     };
 
     this.attributes = Object.assign(defaultAttributes, attributes);
+    Layer2d.call(this, this.attributes);
 
     this.checkProjection();
     this.setConfiguredLayerStyle();
@@ -53,7 +54,8 @@ Layer2dVectorTile.prototype.getRawLayerAttributes = function (attributes) {
  */
 Layer2dVectorTile.prototype.getLayerParams = function (attributes) {
     return {
-        gfiAttributes: attributes.gfiAttributes
+        gfiAttributes: attributes.gfiAttributes,
+        opacity: (100 - attributes.transparency) / 100
     };
 };
 
@@ -107,7 +109,7 @@ Layer2dVectorTile.prototype.setConfiguredLayerStyle = function () {
 
     if (stylingPromise) {
         stylingPromise
-            .then(() => this.layer.setVisible(this.get("visibility")))
+            .then(() => this.layer?.setVisible(this.get("visibility")))
             .catch(err => console.error(err));
     }
 };
@@ -171,7 +173,7 @@ Layer2dVectorTile.prototype.setStyleByDefinition = function ({id, url, resolutio
                     );
             }
             else {
-                vectorTile.setStyle(this.getLayer(), style, {resolutions: resolutions, getFonts: addMpFonts});
+                vectorTile?.setStyle(this.getLayer(), style, {resolutions: resolutions, getFonts: addMpFonts});
                 this.set("selectedStyleID", id);
             }
         });
