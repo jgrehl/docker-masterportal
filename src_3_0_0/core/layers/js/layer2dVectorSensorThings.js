@@ -120,7 +120,6 @@ Layer2dVectorSensorThings.prototype.getOptions = function (attributes) {
  * @returns {ol/Layer} layer that can be added to map
  */
 Layer2dVectorSensorThings.prototype.createVectorLayer = function (rawLayer = {}, {layerParams = {}, options = {}} = {}) {
-    console.log(layerParams);
     const source = new VectorSource(),
         layer = new VectorLayer(Object.assign({
             source: rawLayer.clusterDistance ? new Cluster({
