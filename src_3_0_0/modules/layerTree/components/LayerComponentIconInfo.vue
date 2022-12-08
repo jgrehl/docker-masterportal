@@ -1,17 +1,24 @@
 <script>
 import {mapActions, mapGetters} from "vuex";
+import IconButton from "../../../shared/modules/buttons/components/IconButton.vue";
 
 /**
  * Represents an info button for a layer in the layertree.
  */
 export default {
     name: "LayerComponentIconInfo",
+    components: {IconButton},
     /** current layer configuration */
     props: {
         layerConf: {
             type: Object,
             required: true
         }
+    },
+    data () {
+        return {
+            classInfo: "layer-component-icon-info-button, btn-light"
+        };
     },
     computed: {
         ...mapGetters("Modules/LayerInformation", ["icon"])
@@ -27,18 +34,14 @@ export default {
         :id="'layer-component-icon-info-' + layerConf.id"
         class="layer-component-icon-info"
     >
-        <button
+        <IconButton
             :id="'layer-component-icon-info-button-' + layerConf.id"
-            class="layer-component-icon-info-button btn"
-            tabindex="0"
+            :class-array="[classInfo]"
+            :aria="$t('common:tree.infosAndLegend')"
+            :icon="icon"
+            :interaction="() => startLayerInformation(layerConf)"
             :disabled="!layerConf?.datasets?.length > 0"
-            :title="$t('common:tree.infosAndLegend')"
-            :aria-label="$t('common:tree.infosAndLegend')"
-            @click="startLayerInformation(layerConf)"
-            @keydown.enter="startLayerInformation(layerConf)"
-        >
-            <i :class="icon" />
-        </button>
+        />
     </div>
 </template>
 
