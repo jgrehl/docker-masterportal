@@ -26,5 +26,29 @@ Layer2dRasterWmts.prototype = Object.create(Layer2dRaster.prototype);
  * @returns {void}
  */
 Layer2dRasterWmts.prototype.createLayer = function (attributes) {
-    this.setLayer(wmts.createLayer(attributes));
+    const rawLayerAttributes = this.getRawLayerAttributes(attributes),
+        layerParams = this.getLayerParams(attributes);
+
+    this.setLayer(wmts.createLayer(rawLayerAttributes, layerParams));
 };
+
+/**
+ * Gets raw layer attributes from attributes.
+ * @param {Object} attributes The attributes of the layer configuration.
+ * @returns {Object} The raw layer attributes.
+ */
+Layer2dRasterWmts.prototype.getRawLayerAttributes = function (attributes) {
+    return attributes;
+};
+
+/**
+ * Gets additional layer params.
+ * @param {Object} attributes The attributes of the layer configuration.
+ * @returns {Obeject} The layer params.
+ */
+Layer2dRasterWmts.prototype.getLayerParams = function (attributes) {
+    return {
+        opacity: (100 - attributes.transparency) / 100
+    };
+};
+
