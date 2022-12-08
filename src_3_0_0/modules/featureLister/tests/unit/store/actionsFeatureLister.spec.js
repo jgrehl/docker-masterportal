@@ -1,9 +1,9 @@
 import {expect} from "chai";
 import sinon from "sinon";
 import actions from "../../../store/actionsFeatureLister";
-import createLayerAddToTreeModule from "../../../../../../utils/createLayerAddToTree";
+import createLayerAddToTreeModule from "../../../../../shared/js/utils/createLayerAddToTree";
 
-describe("tools/featureLister/store/actionsFeatureLister", () => {
+describe("modules/featureLister/store/actionsFeatureLister", () => {
     let commit, dispatch, rootGetters;
 
     document.body.innerHTML =
