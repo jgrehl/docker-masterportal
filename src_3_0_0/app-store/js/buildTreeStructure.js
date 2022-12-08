@@ -1,4 +1,4 @@
-import {getLayerList} from "@masterportal/masterportalapi/src/rawLayerList";
+import rawLayerList from "@masterportal/masterportalapi/src/rawLayerList";
 import getNestedValues from "../../shared/js/utils/getNestedValues";
 import {sortObjects} from "../../shared/js/utils/sortObjects";
 
@@ -19,7 +19,7 @@ export function buildTreeStructure (layerConfig, category, shownLayerConfs = [])
     //
     // @todo dort wird an allen Objekten, die keine id haben, eine id gesetzt: id: this.createUniqId(groupname)
     // @todo brauchen wir das auch?
-    const layerList = getLayerList(),
+    const layerList = rawLayerList.getLayerList(),
         bgLayers = getNestedValues(layerConfig?.Hintergrundkarten, keyLayer).flat(Infinity),
         categoryKey = category?.key,
         groups = {},
