@@ -13,7 +13,7 @@ import remoteInterface from "./plugins/remoteInterface";
 // import {instantiateVuetify} from "./plugins/vuetify";
 import {initiateVueI18Next, initLanguage} from "./plugins/i18next";
 
-
+let app;
 const configPath = window.location.pathname.substring(0, window.location.pathname.lastIndexOf("/") + 1) + "config.js",
     loadConfigJs = new Promise((resolve, reject) => {
         const script = document.createElement("script");
@@ -23,15 +23,23 @@ const configPath = window.location.pathname.substring(0, window.location.pathnam
         script.onerror = reject;
         script.async = true;
         script.src = configPath;
-    });
+    }),
+    main = {
+
+        /**
+         * Returns the app.
+         * @returns {Object} the app
+         */
+        getApp: () => app
+    };
+
 
 // Wait until config.js is loaded
 loadConfigJs.then(() => {
     initLanguage(Config.portalLanguage);
+
+    app = createApp(App);
     loadAddons(Config.addons);
-
-
-    const app = createApp(App);
 
     // Load remoteInterface
     if (Object.prototype.hasOwnProperty.call(Config, "remoteInterface")) {
@@ -42,3 +50,5 @@ loadConfigJs.then(() => {
     app.use(store);
     app.mount("#masterportal-root");
 });
+
+export default main;

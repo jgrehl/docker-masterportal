@@ -1,4 +1,5 @@
 import store from "../app-store";
+import main from "../main";
 import Vue from "vue";
 
 /* eslint-disable no-undef */
@@ -10,9 +11,9 @@ const allAddons = VUE_ADDONS || {};
  * @returns {void}
  */
 export default async function (config) {
-    Vue.prototype.$toolAddons = []; // add .$toolAddons to store tools in
-    Vue.prototype.$gfiThemeAddons = []; // add .$gfiThemeAddons to store themes in
-    Vue.prototype.$controlAddons = []; // add .$controlAddons to store controls in
+    main.getApp().config.globalProperties.$toolAddons = [];
+    main.getApp().config.globalProperties.$gfiThemeAddons = [];
+    main.getApp().config.globalProperties.$controlAddons = [];
     if (config) {
         const addons = config.map(async addonKey => {
             try {
@@ -54,7 +55,7 @@ async function loadControl (addonKey) {
         store.registerModule(["controls", addon.component.name], addon.store);
     }
     store.commit("Controls/registerControl", {name: name, control: addon.component});
-    Vue.prototype.$controlAddons.push(name);
+    main.getApp().config.globalProperties.$controlAddons.push(name);
 }
 
 /**
@@ -67,7 +68,7 @@ async function loadGfiThemes (addonKey) {
 
     Vue.component(addon.component.name, addon.component);
     // Add the componentName to a global array on vue instance called $gfiThemeAddons
-    Vue.prototype.$gfiThemeAddons.push(addon.component.name);
+    main.getApp().config.globalProperties.$gfiThemeAddons.push(addon.component.name);
 }
 
 /**
@@ -80,7 +81,7 @@ async function loadToolAddons (addonKey) {
     const addon = await loadAddon(addonKey);
 
     // Add the addonKey to a global array on vue instance
-    Vue.prototype.$toolAddons.push(addon.component.name);
+    main.getApp().config.globalProperties.$toolAddons.push(addon.component.name);
 
     // register the vuex store module
     store.registerModule(["Tools", addon.component.name], addon.store);
