@@ -101,6 +101,16 @@ describe("src_3_0_0/modules/getFeatureInfo/components/GetFeatureInfo.vue", () =>
 
         store.state.Modules.GetFeatureInfo.active = true;
         wrapper = shallowMount(GfiComponent, {
+            components: {
+                GetFeatureInfoDetached: {
+                    name: "GetFeatureInfoDetached",
+                    template: "<span />"
+                },
+                IconButton: {
+                    name: "IconButton",
+                    template: "<button>Hier</button>"
+                }
+            },
             global: {
                 components: {
                     GetFeatureInfoDetached: {
@@ -122,6 +132,10 @@ describe("src_3_0_0/modules/getFeatureInfo/components/GetFeatureInfo.vue", () =>
                     GetFeatureInfoDetached: {
                         name: "GetFeatureInfoDetached",
                         template: "<span />"
+                    },
+                    IconButton: {
+                        name: "IconButton",
+                        template: "<button>Hier</button>"
                     }
                 },
                 global: {
@@ -142,6 +156,10 @@ describe("src_3_0_0/modules/getFeatureInfo/components/GetFeatureInfo.vue", () =>
                 GetFeatureInfoDetached: {
                     name: "GetFeatureInfoDetached",
                     template: "<span />"
+                },
+                IconButton: {
+                    name: "IconButton",
+                    template: "<button>Hier</button>"
                 }
             },
             global: {
@@ -169,6 +187,10 @@ describe("src_3_0_0/modules/getFeatureInfo/components/GetFeatureInfo.vue", () =>
                 GetFeatureInfoDetached: {
                     name: "GetFeatureInfoDetached",
                     template: "<span />"
+                },
+                IconButton: {
+                    name: "IconButton",
+                    template: "<button>Hier</button>"
                 }
             },
             data () {
@@ -203,6 +225,10 @@ describe("src_3_0_0/modules/getFeatureInfo/components/GetFeatureInfo.vue", () =>
                 GetFeatureInfoDetached: {
                     name: "GetFeatureInfoDetached",
                     template: "<span />"
+                },
+                IconButton: {
+                    name: "IconButton",
+                    template: "<button>Hier</button>"
                 }
             },
             data () {
@@ -245,86 +271,6 @@ describe("src_3_0_0/modules/getFeatureInfo/components/GetFeatureInfo.vue", () =>
 
         expect(wrapper.find(".pager-left").exists()).to.be.true;
         expect(wrapper.find(".pager-right").exists()).to.be.true;
-    });
-
-    it("should display the next feature if pager-right is clicked", async () => {
-        const gfiFeatures = [{
-                getTheme: () => "default",
-                getTitle: () => "Feature 1",
-                getMimeType: () => "text/html",
-                getGfiUrl: () => null,
-                getMappedProperties: () => null,
-                getAttributesToShow: () => sinon.stub(),
-                getProperties: () => {
-                    return {};
-                },
-                getlayerId: () => null,
-                getFeatures: () => []
-            },
-            {
-                getTheme: () => "default",
-                getTitle: () => "Feature 2",
-                getMimeType: () => "text/html",
-                getGfiUrl: () => null,
-                getAttributesToShow: () => sinon.stub(),
-                getProperties: () => {
-                    return {};
-                },
-                getlayerId: () => null,
-                getFeatures: () => []
-            }],
-            store = getGfiStore(true, undefined, gfiFeatures, []);
-        let wrapper = null;
-
-        store.state.Modules.GetFeatureInfo.active = true;
-        wrapper = mount(GfiComponent, {
-            global: {
-                plugins: [store]
-            }
-        });
-
-        await wrapper.find(".pager-right").trigger("click");
-        expect(wrapper.find(".gfi > div > div").text()).to.equal("Feature 2");
-    });
-
-    it("should display the previous feature if pager-left is clicked", async () => {
-        const gfiFeatures = [{
-                getTheme: () => "default",
-                getTitle: () => "Feature 1",
-                getGfiUrl: () => null,
-                getMimeType: () => "text/html",
-                getAttributesToShow: () => sinon.stub(),
-                getMappedProperties: () => null,
-                getProperties: () => {
-                    return {};
-                },
-                getFeatures: () => []
-            },
-            {
-                getTheme: () => "default",
-                getTitle: () => "Feature 2",
-                getGfiUrl: () => null,
-                getMimeType: () => "text/html",
-                getAttributesToShow: () => sinon.stub(),
-                getMappedProperties: () => null,
-                getProperties: () => {
-                    return {};
-                },
-                getFeatures: () => []
-            }],
-            store = getGfiStore(true, undefined, gfiFeatures, []);
-        let wrapper = null;
-
-        store.state.Modules.GetFeatureInfo.active = true;
-        wrapper = mount(GfiComponent, {
-            global: {
-                plugins: [store]
-            }
-        });
-
-        wrapper.setData({pagerIndex: 1});
-        await wrapper.find(".pager-left").trigger("click");
-        expect(wrapper.find(".gfi > div > div").text()).to.equal("Feature 1");
     });
 
     it("should disabled left pager if pagerIndex is zero", () => {
