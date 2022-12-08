@@ -216,8 +216,6 @@ export default {
 </script>
 
 <template>
-    <span>{{ showTheModal }}</span>
-    <span>{{ alerts.length }}</span>
     <div
         v-if="showTheModal && alerts.length>0"
         id="alertModal"
