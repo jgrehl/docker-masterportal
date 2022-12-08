@@ -22,6 +22,16 @@ export default {
             type: Array,
             default: null,
             required: false
+        },
+        id: {
+            type: String,
+            default: null,
+            required: false
+        },
+        disabled: {
+            type: String,
+            default: null,
+            required: false
         }
     }
 };
@@ -29,12 +39,14 @@ export default {
 
 <template>
     <button
+        :id="id"
         tabindex="0"
-        class="btn btn-primary d-flex align-items-center my-auto"
+        class="btn d-flex align-items-center justify-items-center mb-auto"
         type="button"
         :title="aria"
         :aria-label="aria"
         :class="classArray"
+        :disabled="disabled"
         @click="interaction"
         @keydown.enter="interaction"
     >
@@ -49,12 +61,23 @@ export default {
 @import "~variables";
 @import "~mixins";
 
-.btn {
-    width: fit-content;
-    border: solid $white 1px;
+ .btn {
+    position: sticky;
+    text-align: center;
+    top: auto;
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 1.5rem;
     border-radius: 50%;
+    border: solid $white 1px;
+    /* position icon in center of button */
     > i {
-        font-size: 1.125rem;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        // adjust line-height to use same height as ::before Element
+        line-height: 0;
     }
 }
 </style>
