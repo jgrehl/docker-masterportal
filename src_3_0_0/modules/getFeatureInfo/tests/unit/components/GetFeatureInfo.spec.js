@@ -101,13 +101,13 @@ describe("src_3_0_0/modules/getFeatureInfo/components/GetFeatureInfo.vue", () =>
 
         store.state.Modules.GetFeatureInfo.active = true;
         wrapper = shallowMount(GfiComponent, {
-            components: {
-                GetFeatureInfoDetached: {
-                    name: "GetFeatureInfoDetached",
-                    template: "<span />"
-                }
-            },
             global: {
+                components: {
+                    GetFeatureInfoDetached: {
+                        name: "GetFeatureInfoDetached",
+                        template: "<span />"
+                    }
+                },
                 plugins: [store]
             }
         });
