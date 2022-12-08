@@ -70,6 +70,7 @@ Layer2d.prototype.stopAutoRefresh = function () {
  * @returns {void}
  */
 Layer2d.prototype.updateLayerValues = function (attributes) {
+    this.getLayer()?.setOpacity((100 - attributes.transparency) / 100);
     this.getLayer()?.setVisible(attributes.visibility);
     this.controlAutoRefresh(attributes);
 };
