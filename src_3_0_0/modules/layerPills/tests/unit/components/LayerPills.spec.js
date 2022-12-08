@@ -1,5 +1,5 @@
 import {createStore} from "vuex";
-import {config, shallowMount} from "@vue/test-utils";
+import {config, shallowMount, mount} from "@vue/test-utils";
 import LayerPillsComponent from "../../../components/LayerPills.vue";
 import LayerPills from "../../../store/indexLayerPills";
 import {expect} from "chai";
@@ -76,6 +76,12 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
     describe("renders or does not render div", () => {
         it("renders div", () => {
             wrapper = shallowMount(LayerPillsComponent, {
+                components: {
+                    IconButton: {
+                        name: "IconButton",
+                        template: "<button>Hier</button>"
+                    }
+                },
                 global: {
                     plugins: [store]
                 }});
@@ -85,6 +91,12 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
         it("no visibleSubjectDataLayers", () => {
             store.commit("setVisibleSubjectDataLayerConfigs", []);
             wrapper = shallowMount(LayerPillsComponent, {
+                components: {
+                    IconButton: {
+                        name: "IconButton",
+                        template: "<button>Hier</button>"
+                    }
+                },
                 global: {
                     plugins: [store]
                 }});
@@ -99,6 +111,12 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
                 }
             });
             wrapper = shallowMount(LayerPillsComponent, {
+                components: {
+                    IconButton: {
+                        name: "IconButton",
+                        template: "<button>Hier</button>"
+                    }
+                },
                 global: {
                     plugins: [store]
                 }});
@@ -112,6 +130,12 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
                 }
             });
             wrapper = shallowMount(LayerPillsComponent, {
+                components: {
+                    IconButton: {
+                        name: "IconButton",
+                        template: "<button>Hier</button>"
+                    }
+                },
                 global: {
                     plugins: [store]
                 }});
@@ -120,67 +144,48 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
         });
     });
 
-    describe("left scroll enabled and disabled", () => {
+    describe("left scroll disabled", () => {
         it("left scroll is disabled", () => {
-            wrapper = shallowMount(LayerPillsComponent, {
+            wrapper = mount(LayerPillsComponent, {
+                components: {
+                    IconButton: {
+                        name: "IconButton",
+                        template: "<button>Hier</button>"
+                    }
+                },
                 global: {
                     plugins: [store]
                 }});
             expect(wrapper.find("#layerpills-left-button").element.disabled).to.be.true;
-        });
-        it("left scroll is enabled and button click triggers moveLayerPills method", async () => {
-            const clickSpy = sinon.spy(LayerPillsComponent.methods, "moveLayerPills");
-            let rightButton = null;
-
-            wrapper = shallowMount(LayerPillsComponent, {
-                global: {
-                    plugins: [store]
-                }});
-            await wrapper.vm.$nextTick();
-            rightButton = wrapper.find("#layerpills-right-button");
-
-            expect(wrapper.find("#layerpills-left-button").element.disabled).to.be.true;
-            rightButton.trigger("click");
-
-            await wrapper.vm.$nextTick();
-            expect(wrapper.find("#layerpills-left-button").element.disabled).to.be.false;
-            expect(clickSpy.calledOnce).to.be.true;
         });
     });
-    describe("right scroll enabeld and disabled", () => {
+    describe("right scroll enabled", () => {
         it("right scroll is enabled", async () => {
-            wrapper = shallowMount(LayerPillsComponent, {
+            wrapper = mount(LayerPillsComponent, {
+                components: {
+                    IconButton: {
+                        name: "IconButton",
+                        template: "<button>Hier</button>"
+                    }
+                },
                 global: {
                     plugins: [store]
                 }});
 
             await wrapper.vm.$nextTick();
             expect(wrapper.find("#layerpills-right-button").element.disabled).to.be.false;
-        });
-        it("right scroll is disabled when no further layer available", async () => {
-            let rightButton = null;
-
-            wrapper = shallowMount(LayerPillsComponent, {
-                global: {
-                    plugins: [store]
-                }});
-
-            rightButton = wrapper.find("#layerpills-right-button");
-            await wrapper.vm.$nextTick();
-            expect(wrapper.find("#layerpills-right-button").element.disabled).to.be.false;
-
-            rightButton.trigger("click");
-            await wrapper.vm.$nextTick();
-            expect(wrapper.find("#layerpills-right-button").element.disabled).to.be.false;
-            rightButton.trigger("click");
-            await wrapper.vm.$nextTick();
-            expect(wrapper.find("#layerpills-right-button").element.disabled).to.be.true;
         });
     });
 
     describe("close layerPill", () => {
         it("count close-buttons", () => {
             wrapper = shallowMount(LayerPillsComponent, {
+                components: {
+                    IconButton: {
+                        name: "IconButton",
+                        template: "<button>Hier</button>"
+                    }
+                },
                 global: {
                     plugins: [store]
                 }});
@@ -192,6 +197,12 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
     describe("method testing", () => {
         it("setVisibleLayers", () => {
             wrapper = shallowMount(LayerPillsComponent, {
+                components: {
+                    IconButton: {
+                        name: "IconButton",
+                        template: "<button>Hier</button>"
+                    }
+                },
                 global: {
                     plugins: [store]
                 }});
@@ -208,6 +219,12 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
             ];
 
             wrapper = shallowMount(LayerPillsComponent, {
+                components: {
+                    IconButton: {
+                        name: "IconButton",
+                        template: "<button>Hier</button>"
+                    }
+                },
                 global: {
                     plugins: [store]
                 }});
@@ -220,6 +237,12 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
         });
         it("moveLayerPills to the right increases and to the left decreases start and end index by 1", () => {
             wrapper = shallowMount(LayerPillsComponent, {
+                components: {
+                    IconButton: {
+                        name: "IconButton",
+                        template: "<button>Hier</button>"
+                    }
+                },
                 global: {
                     plugins: [store]
                 }});
@@ -237,6 +260,12 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
     describe("watchers", () => {
         it("startIndex < 0", () => {
             wrapper = shallowMount(LayerPillsComponent, {
+                components: {
+                    IconButton: {
+                        name: "IconButton",
+                        template: "<button>Hier</button>"
+                    }
+                },
                 global: {
                     plugins: [store]
                 }});
@@ -246,6 +275,12 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
         });
         it("startIndex > 0", () => {
             wrapper = shallowMount(LayerPillsComponent, {
+                components: {
+                    IconButton: {
+                        name: "IconButton",
+                        template: "<button>Hier</button>"
+                    }
+                },
                 global: {
                     plugins: [store]
                 }});
@@ -255,6 +290,12 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
         });
         it("endIndex < visibleSubjectDataLayers.length", () => {
             wrapper = shallowMount(LayerPillsComponent, {
+                components: {
+                    IconButton: {
+                        name: "IconButton",
+                        template: "<button>Hier</button>"
+                    }
+                },
                 global: {
                     plugins: [store]
                 }});
@@ -264,6 +305,12 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
         });
         it("endIndex >= visibleSubjectDataLayers.length", () => {
             wrapper = shallowMount(LayerPillsComponent, {
+                components: {
+                    IconButton: {
+                        name: "IconButton",
+                        template: "<button>Hier</button>"
+                    }
+                },
                 global: {
                     plugins: [store]
                 }});
