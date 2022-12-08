@@ -1,32 +1,24 @@
-import Vuex from "vuex";
+import {createStore} from "vuex";
 import {expect} from "chai";
 import sinon from "sinon";
-import {config, shallowMount, createLocalVue} from "@vue/test-utils";
+import {config, shallowMount} from "@vue/test-utils";
 import FeatureListerComponent from "../../../components/FeatureLister.vue";
 import FeatureLister from "../../../store/indexFeatureLister";
 
-const localVue = createLocalVue();
+config.global.mocks.$t = key => key;
 
-localVue.use(Vuex);
-config.mocks.$t = key => key;
-
-describe("src/modules/tools/featureLister/components/FeatureLister.vue", () => {
+describe("src/modules/featureLister/components/FeatureLister.vue", () => {
     const mockMapGetters = {
-            getVisibleLayerList: () => [{name: "ersterLayer", id: "123", features: [{getAttributesToShow: () => "TestAttributes"}], geometryType: "Point"}, {name: "zweiterLayer", id: "456", features: [{getAttributesToShow: () => "TestAttributes"}], geometryType: "Point"}, {name: "dritterLayer", id: "789", features: [{getAttributesToShow: () => "TestAttributes"}], geometryType: "Point"}]
+            getVisibleOlLayerList: () => [{name: "ersterLayer", id: "123", features: [{getAttributesToShow: () => "TestAttributes"}], geometryType: "Point"}, {name: "zweiterLayer", id: "456", features: [{getAttributesToShow: () => "TestAttributes"}], geometryType: "Point"}, {name: "dritterLayer", id: "789", features: [{getAttributesToShow: () => "TestAttributes"}], geometryType: "Point"}]
         },
         mockConfigJson = {
             Portalconfig: {
-                menu: {
-                    tools: {
-                        children: {
-                            featureLister:
-                            {
-                                "name": "translate#common:menu.tools.featureLister",
-                                "icon": "bi-list-task",
-                                "renderToWindow": true
-                            }
+                mainMenu: {
+                    sections: [
+                        {
+                            type: "featureLister"
                         }
-                    }
+                    ]
                 }
             }
         };
@@ -39,10 +31,11 @@ describe("src/modules/tools/featureLister/components/FeatureLister.vue", () => {
         FeatureLister.actions.addMouseEvents = sinon.spy(FeatureLister.actions.addMouseEvents);
         FeatureLister.getters.headers = () => [{key: "name", value: "Name"}];
 
-        store = new Vuex.Store({
-            namespaced: true,
+        store = createStore({
+            // namespaced: true,
             modules: {
-                Tools: {
+                // namespaced: true,
+                Modules: {
                     namespaced: true,
                     modules: {
                         FeatureLister
@@ -65,49 +58,47 @@ describe("src/modules/tools/featureLister/components/FeatureLister.vue", () => {
     afterEach(sinon.restore);
 
     it("renders list of visible vector layers", () => {
-        store.commit("Tools/FeatureLister/setLayerListView", true);
-        wrapper = shallowMount(FeatureListerComponent, {store, localVue});
-
+        store.commit("Modules/FeatureLister/setLayerListView", true);
+        wrapper = shallowMount(FeatureListerComponent, {global: {plugins: [store]}});
 
         expect(wrapper.find("#feature-lister-themes").exists()).to.be.true;
-        expect(wrapper.find("#tool-feature-lister").exists()).to.be.true;
-        expect(store.state.Tools.FeatureLister.featureDetailView).to.be.false;
-        expect(store.state.Tools.FeatureLister.featureListView).to.be.false;
-        expect(store.state.Tools.FeatureLister.layerListView).to.be.true;
+        expect(store.state.Modules.FeatureLister.featureDetailView).to.be.false;
+        expect(store.state.Modules.FeatureLister.featureListView).to.be.false;
+        expect(store.state.Modules.FeatureLister.layerListView).to.be.true;
     });
 
     it("renders list of layer features", () => {
         const layer = {name: "ersterLayer", id: "123", features: [{values_: {features: [1, 2]}}], geometryType: "Point"};
 
-        store.dispatch("Tools/FeatureLister/switchToList", {rootGetters}, layer);
-        wrapper = shallowMount(FeatureListerComponent, {store, localVue});
+        store.dispatch("Modules/FeatureLister/switchToList", {rootGetters}, layer);
+        wrapper = shallowMount(FeatureListerComponent, {global: {plugins: [store]}});
 
         expect(wrapper.find("#feature-lister-list").exists()).to.be.true;
-        expect(store.state.Tools.FeatureLister.featureDetailView).to.be.false;
-        expect(store.state.Tools.FeatureLister.featureListView).to.be.true;
-        expect(store.state.Tools.FeatureLister.layerListView).to.be.false;
+        expect(store.state.Modules.FeatureLister.featureDetailView).to.be.false;
+        expect(store.state.Modules.FeatureLister.featureListView).to.be.true;
+        expect(store.state.Modules.FeatureLister.layerListView).to.be.false;
     });
     it("renders details of selected feature", () => {
         const feature = {getAttributesToShow: () => [{key: "name", value: "Name"}], getProperties: () => [{key: "name", value: "Name"}]};
 
-        store.commit("Tools/FeatureLister/setSelectedFeature", feature);
-        store.dispatch("Tools/FeatureLister/switchToDetails");
-        wrapper = shallowMount(FeatureListerComponent, {store, localVue});
+        store.commit("Modules/FeatureLister/setSelectedFeature", feature);
+        store.dispatch("Modules/FeatureLister/switchToDetails");
+        wrapper = shallowMount(FeatureListerComponent, {global: {plugins: [store]}});
 
         expect(wrapper.find("#feature-lister-details").exists()).to.be.true;
-        expect(store.state.Tools.FeatureLister.featureDetailView).to.be.true;
-        expect(store.state.Tools.FeatureLister.featureListView).to.be.false;
-        expect(store.state.Tools.FeatureLister.layerListView).to.be.false;
+        expect(store.state.Modules.FeatureLister.featureDetailView).to.be.true;
+        expect(store.state.Modules.FeatureLister.featureListView).to.be.false;
+        expect(store.state.Modules.FeatureLister.layerListView).to.be.false;
     });
     describe("FeatureLister.vue methods", () => {
         it("close sets active to false", async () => {
-            wrapper = shallowMount(FeatureListerComponent, {store, localVue});
+            wrapper = shallowMount(FeatureListerComponent, {global: {plugins: [store]}});
 
             wrapper.vm.close();
             await wrapper.vm.$nextTick();
 
             expect(wrapper.find("#tool-feature-lister").exists()).to.be.false;
-            expect(store.state.Tools.FeatureLister.active).to.be.false;
+            expect(store.state.Modules.FeatureLister.active).to.be.false;
         });
     });
 });
