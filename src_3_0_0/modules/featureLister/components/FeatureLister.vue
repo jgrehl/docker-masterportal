@@ -9,7 +9,6 @@ import beautifyKey from "../../../shared/js/utils/beautifyKey";
 import {isWebLink} from "../../../shared/js/utils/urlHelper";
 import {isEmailAddress} from "../../../shared/js/utils/isEmailAddress";
 import toBold from "../../../shared/js/utils/toBold";
-import layerCollection from "../../../core/layers/js/layerCollection";
 
 export default {
     name: "FeatureLister",
@@ -23,7 +22,7 @@ export default {
     },
     computed: {
         ...mapGetters("Modules/FeatureLister", Object.keys(getters)),
-        // ...mapGetters("Maps", ["getVisibleLayerList"]),
+        ...mapGetters("Maps", ["getVisibleOlLayerList"]),
         themeTabClasses: function () {
             return this.layerListView ? this.activeTabClass : this.defaultTabClass;
         },
@@ -48,20 +47,10 @@ export default {
         }
     },
     mounted () {
-        const visibleLayerList = layerCollection.getLayers();
-        // console.log("visibleLayerList", visibleLayerList)
+        this.getVisibleOlLayerList.forEach(async layer => {
 
-        // this.getVisibleLayerList.forEach(async layer => {
-        visibleLayerList.forEach(async layer => {
-            // @todo olLayer oder einfach layer nennen????
-            const olLayer = layer.getLayer();
-
-            // console.log("layer", olLayer.get("typ") === "WFS")
-
-            if (olLayer instanceof VectorLayer && layer.get("typ") === "WFS") {
-                const layerSource = olLayer.getSource();
-
-                await this.areLayerFeaturesLoaded(layer.get("id"));
+            if (layer instanceof VectorLayer && layer.get("typ") === "WFS") {
+                const layerSource = layer.getSource();
 
                 this.visibleVectorLayers.push(
                     {
