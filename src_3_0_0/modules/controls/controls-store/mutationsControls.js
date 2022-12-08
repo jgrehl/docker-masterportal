@@ -9,16 +9,14 @@ export default {
      * Can be called e.g. by an addon, if Store is globally accessible.
      * @param {Object} state current state
      * @param {String} name name of control in config.json
-     * @param {Object} control Vue Component
      * @param {Boolean} [hiddenMobile=false] whether component is visible in mobile resolution
      * @param {Boolean} [expandableControls=false] whether component is to be shown in the extended expandable
      * @returns {void}
      */
+    /* eslint-disable no-sync */
+    /* eslint-disable no-unused-vars */
     registerControl (state, {name, control, hiddenMobile = false, expandableControls = false}) {
-        state.componentMap = {
-            ...state.componentMap,
-            [name]: control
-        };
+        // todo : das Registrieren an der ControlBar von addons-controls fehlt noch  (wenn das von außen geht?)
         if (hiddenMobile) {
             state.mobileHiddenControls = [
                 ...state.mobileHiddenControls,
@@ -40,11 +38,6 @@ export default {
      * @returns {void}
      */
     unregisterControl (state, name) {
-        const nextMap = {...state.componentMap};
-
-        delete nextMap[name];
-
-        state.componentMap = nextMap;
         state.hiddenMobile = state.mobileHiddenControls.filter(s => s !== name);
         state.expandableControls = state.expandableControls.filter(s => s !== name);
     }
