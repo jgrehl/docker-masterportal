@@ -56,7 +56,7 @@ Layer2dRasterWms.prototype.getRawLayerAttributes = function (attributes) {
         tilesize: attributes.tilesize,
         transparent: attributes.transparent?.toString(),
         url: attributes.url,
-        version: attributes.version,
+        version: attributes.version
     };
 
     if (attributes.styles !== undefined) {
@@ -80,6 +80,7 @@ Layer2dRasterWms.prototype.getLayerParams = function (attributes) {
         infoFormat: attributes.infoFormat,
         layers: attributes.layers,
         name: attributes.name,
+        opacity: (100 - attributes.transparency) / 100,
         typ: attributes.typ
     };
 };

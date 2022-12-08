@@ -1,6 +1,6 @@
 import api from "@masterportal/masterportalapi/src/maps/api";
-import {getLayerList} from "@masterportal/masterportalapi/src/rawLayerList";
-import {load3DScript} from "@masterportal/masterportalapi/src/lib/load3DScript";
+import {rawLayerList} from "@masterportal/masterportalapi/src";
+import load3DScript from "@masterportal/masterportalapi/src/lib/load3DScript";
 
 import {setResolutions, setValues} from "./setValuesToMapView";
 import store from "../../../app-store";
@@ -28,7 +28,7 @@ function create2DMap (mapViewSettings, configJs) {
     const map2d = api.map.createMap({
         ...configJs,
         ...mapViewSettings,
-        layerConf: getLayerList()
+        layerConf: rawLayerList.getLayerList()
     }, "2D", {});
 
     mapCollection.addMap(map2d, "2D");
@@ -55,7 +55,7 @@ function watchPortalConfig () {
  * @returns {void}
  */
 function load3DMap (configJs) {
-    load3DScript(store.getters.cesiumLibrary, () => {
+    load3DScript.load3DScript(store.getters.cesiumLibrary, () => {
         create3DMap(configJs);
         store.dispatch("Maps/registerCesiumListener");
 

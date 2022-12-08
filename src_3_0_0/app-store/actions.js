@@ -1,5 +1,5 @@
 import axios from "axios";
-import {initializeLayerList} from "@masterportal/masterportalapi/src/rawLayerList";
+import {rawLayerList} from "@masterportal/masterportalapi/src";
 import getNestedValues from "../shared/js/utils/getNestedValues";
 import {getAndMergeAllRawLayers, getAndMergeRawLayer} from "./js/getAndMergeRawLayer";
 import {buildTreeStructure} from "./js/buildTreeStructure";
@@ -96,7 +96,7 @@ export default {
      * @returns {void}
      */
     loadServicesJson ({state, commit, dispatch}) {
-        initializeLayerList(state.configJs?.layerConf, (_, error) => {
+        rawLayerList.initializeLayerList(state.configJs?.layerConf, (_, error) => {
             if (error) {
                 dispatch("Alerting/addSingleAlert", {
                     category: "error",
