@@ -22,12 +22,12 @@ export default {
         <button
             :id="'layer-component-icon-sub-menu-button-' + layerConf.id"
             class="layer-component-icon-sub-menu-button btn"
+            data-bs-toggle="collapse"
+            :data-bs-target="'#collapseSubMenu-' + layerConf.id"
             tabindex="0"
             :title="$t('common:layerTree.iconSubMenu')"
             :aria-label="$t('common:layerTree.iconSubMenu')"
         >
-            <!-- @click="startLayerInformation(layerConf)"
-            @keydown.enter="startLayerInformation(layerConf)" -->
             <i class="bi-sliders" />
         </button>
     </div>
