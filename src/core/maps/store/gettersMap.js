@@ -140,14 +140,6 @@ const getters = {
     projectionUnits: (state, getter) => getter.projection?.getUnits(),
 
     /**
-     * Gets all visible layers from map
-     * @returns {Object[]} all visible layers
-     */
-    getVisibleLayerList: () => {
-        return mapCollection.getMap("2D").getLayers().getArray().filter(layer => layer.getVisible());
-    },
-
-    /**
      * calculate the extent for the current view state and the passed size
      * @param {Object} state the state
      * @return {ol.extent} extent
