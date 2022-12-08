@@ -2,9 +2,11 @@
 import {mapGetters, mapMutations} from "vuex";
 import layerFactory from "../../../core/layers/js/layerFactory";
 import {Tooltip} from "bootstrap";
+import IconButton from "../../../shared/modules/buttons/components/IconButton.vue";
 
 export default {
     name: "LayerPills",
+    components: {IconButton},
     computed: {
         ...mapGetters(["isMobile", "visibleSubjectDataLayerConfigs", "portalConfig"]),
         ...mapGetters("LayerPills", ["visibleSubjectDataLayers", "startIndex", "endIndex", "layerPillsAmount", "leftScrollDisabled", "rightScrollDisabled"]),
@@ -116,16 +118,14 @@ export default {
             <li
                 class="nav-item"
             >
-                <button
-                    id="layerpills-left-button"
-                    type="button"
-                    class="btn btn-customized"
+                <IconButton
+                    :id="'layerpills-left-button'"
+                    :aria="$t('modules.layerPill.previous')"
+                    :class-array="['btn-light']"
+                    :icon="'bi-chevron-left'"
+                    :interaction="() => moveLayerPills('left')"
                     :disabled="leftScrollDisabled"
-                    aria-label="Scroll left button"
-                    @click="moveLayerPills('left')"
-                >
-                    <i class="bi bi-chevron-left icn-customized" />
-                </button>
+                />
             </li>
             <li
                 v-for="(layer, index) in visibleSubjectDataLayers.slice(startIndex, endIndex)"
@@ -141,28 +141,25 @@ export default {
                 >
                     {{ layer.name }}
                 </a>
-                <button
-                    type="button"
-                    class="btn btn-customized close-button"
-                    aria-label="Close button"
-                    @click="removeLayerFromVisibleLayers(layer)"
-                >
-                    <i class="bi bi-x-lg icn-customized" />
-                </button>
+                <IconButton
+                    :aria="$t('modules.layerPill.remove')"
+                    :class-array="['btn-light']"
+                    class="close-button"
+                    :icon="'bi-x-lg'"
+                    :interaction="() => removeLayerFromVisibleLayers(layer)"
+                />
             </li>
             <li
                 class="nav-item"
             >
-                <button
-                    id="layerpills-right-button"
-                    type="button"
-                    class="btn btn-customized"
+                <IconButton
+                    :id="'layerpills-right-button'"
+                    :aria="$t('modules.layerPill.next')"
+                    :class-array="['btn-light']"
+                    :icon="'bi-chevron-right'"
+                    :interaction="() => moveLayerPills('right')"
                     :disabled="rightScrollDisabled"
-                    aria-label="Scroll right button"
-                    @click="moveLayerPills('right')"
-                >
-                    <i class="bi bi-chevron-right icn-customized" />
-                </button>
+                />
             </li>
         </ul>
     </div>
@@ -199,23 +196,8 @@ export default {
         text-overflow: ellipsis;
     }
 
-    .btn-customized {
-        background-color: $white;
-        border-radius: 50px;
-        padding: 10px 15px 6.5px 15px;
-        border: 0;
-        box-shadow: none;
-    }
-
     .custom-tooltip {
         font-size: 20px;
-    }
-    .icn-customized {
-        color: $black;
-    }
-    .btn-customized:hover {
-        background-color: darken($primary, 10%);
-        border-color: $white;
     }
 
     .layerpills {

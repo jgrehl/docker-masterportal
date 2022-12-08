@@ -74,6 +74,7 @@ export default {
         v-if="showInLayerTree()"
         :id="'layer-tree-layer-' + conf.id"
         class="layer-tree-layer form-check d-flex flex-column justify-content-between"
+        class="layer-tree-layer form-check d-flex justify-content-between align-items-center"
     >
         <div class="d-flex justify-content-between">
             <div class="layer-tree-layer-title pe-2">
