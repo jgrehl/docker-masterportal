@@ -120,6 +120,7 @@ Layer2dVectorSensorThings.prototype.getOptions = function (attributes) {
  * @returns {ol/Layer} layer that can be added to map
  */
 Layer2dVectorSensorThings.prototype.createVectorLayer = function (rawLayer = {}, {layerParams = {}, options = {}} = {}) {
+    console.log(layerParams);
     const source = new VectorSource(),
         layer = new VectorLayer(Object.assign({
             source: rawLayer.clusterDistance ? new Cluster({
@@ -148,7 +149,8 @@ Layer2dVectorSensorThings.prototype.createVectorLayer = function (rawLayer = {},
 Layer2dVectorSensorThings.prototype.updateLayerValues = function (values) {
     const state = this.getStateOfSTALayer(values.visibility, this.get("isSubscribed"));
 
-    this.getLayer().setVisible(values.visibility);
+    this.getLayer()?.setOpacity((100 - values.transparency) / 100);
+    this.getLayer()?.setVisible(values.visibility);
 
     if (state === true) {
         this.startSubscription(this.getLayerSource().getFeatures());
