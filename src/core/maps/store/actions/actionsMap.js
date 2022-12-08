@@ -3,8 +3,6 @@ import actionsMapInteractions from "./actionsMapInteractions.js";
 import actionsMapInteractionsZoomTo from "./actionsMapInteractionsZoomTo.js";
 import actionsMapLayers from "./actionsMapLayers.js";
 import actionsMapMode from "./actionsMapMode.js";
-import * as highlightFeature from "./highlightFeature.js";
-import * as removeHighlightFeature from "./removeHighlighting.js";
 import findWhereJs from "../../../../utils/findWhereJs";
 import api from "@masterportal/masterportalapi/src/maps/api";
 import parseCesiumParameters from "../../../../utils/parseCesiumParameters";
@@ -55,7 +53,5 @@ export default {
     ...actionsMapInteractions,
     ...actionsMapInteractionsZoomTo,
     ...actionsMapLayers,
-    ...actionsMapMode,
-    ...highlightFeature,
-    ...removeHighlightFeature
+    ...actionsMapMode
 };
