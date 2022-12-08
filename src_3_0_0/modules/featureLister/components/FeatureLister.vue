@@ -129,12 +129,11 @@ export default {
 <template lang="html">
     <div>
         <div
-            v-if="active"
             id="feature-lister"
         >
             <ul class="nav nav-tabs">
                 <li
-                    id="tool-feature-lister-themeChooser"
+                    id="module-feature-lister-themeChooser"
                     role="presentation"
                     class="nav-item"
                 >
@@ -146,7 +145,7 @@ export default {
                     >{{ $t("modules.tools.featureLister.chooseTheme") }}</a>
                 </li>
                 <li
-                    id="tool-feature-lister-list"
+                    id="module-feature-lister-list"
                     role="presentation"
                     class="nav-item"
                 >
@@ -158,7 +157,7 @@ export default {
                     >{{ $t("modules.tools.featureLister.list") }}</a>
                 </li>
                 <li
-                    id="tool-feature-lister-details"
+                    id="module-feature-lister-details"
                     role="presentation"
                     class="nav-item"
                 >
@@ -184,7 +183,7 @@ export default {
                 <ul
                     v-for="layer in visibleVectorLayers"
                     id="feature-lister-themes-ul"
-                    :key="'tool-feature-lister-' + layer.id"
+                    :key="'module-feature-lister-' + layer.id"
                     class="nav flex-column"
                 >
                     <li
@@ -222,7 +221,7 @@ export default {
                                 <tr class="feature-lister-list-table-tr">
                                     <th
                                         v-for="(header, index) in headers"
-                                        :key="'tool-feature-lister-' + index"
+                                        :key="'module-feature-lister-' + index"
                                         class="feature-lister-list-table-th"
                                     >
                                         <span class="bi-sort-alpha-down" />
@@ -231,8 +230,8 @@ export default {
                                 </tr>
                                 <tr
                                     v-for="(feature, index) in featureProperties"
-                                    :id="'tool-feature-lister-feature-' + index"
-                                    :key="'tool-feature-lister-' + index"
+                                    :id="'module-feature-lister-feature-' + index"
+                                    :key="'module-feature-lister-' + index"
                                     class="feature-lister-list-table-tr"
                                     @click="clickOnFeature(index)"
                                     @mouseover="hoverOverFeature(index)"
@@ -241,7 +240,7 @@ export default {
                                     <template v-if="index < shownFeatures">
                                         <td
                                             v-for="(property, i) in feature"
-                                            :key="'tool-feature-lister-' + i"
+                                            :key="'module-feature-lister-' + i"
                                             class="feature-lister-list-table-td"
                                         >
                                             {{ property }}
@@ -286,7 +285,7 @@ export default {
                 >
                     <ul
                         v-for="(feature, key) in featureDetails"
-                        :key="'tool-feature-lister-' + key"
+                        :key="'module-feature-lister-' + key"
                         class="list-group feature-lister-details-ul"
                     >
                         <li class="list-group-item feature-lister-details-li">
