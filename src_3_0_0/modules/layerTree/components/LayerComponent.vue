@@ -89,7 +89,7 @@ export default {
                     :class="['layer-tree-layer-label', 'mt-0 d-flex flex-column align-self-start', isLayerVisible ? 'bold' : '']"
                     :for="'layer-tree-layer-checkbox-' + conf.id"
                     tabindex="0"
-                    :aria-label="$t('conf.name')"
+                    :aria-label="$t(conf.name)"
                     @keydown.enter="visibilityInLayerTreeChanged(!isLayerVisible)"
                 >
                     <span>

@@ -1,7 +1,8 @@
 import store from "../app-store";
+import main from "../main";
 
 export default {
-    install (Vue, options) {
+    install (options) {
         if (options === undefined || typeof options.postMessageUrl !== "string") {
             console.error("RemoteInterface could not been installed: Param \"postMessageUrl\" missing.");
             return;
@@ -28,7 +29,7 @@ export default {
             }
         });
 
-        Vue.prototype.$remoteInterface = {
+        main.getApp().config.globalProperties.$remoteInterface = {
             sendMessage: params => {
                 if (params instanceof Object === false) {
                     console.error("RemoteInterface sendMessage error: Given param is not an Object.");
