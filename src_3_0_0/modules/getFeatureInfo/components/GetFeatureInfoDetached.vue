@@ -99,11 +99,7 @@ export default {
          * @returns {String} the translation or the key itself
          */
         translate (key, options = null) {
-            if (i18next.exists(key)) {
-                return this.$t(key, options);
-            }
-
-            return key;
+            return this.$t(key, options);
         }
     }
 };
