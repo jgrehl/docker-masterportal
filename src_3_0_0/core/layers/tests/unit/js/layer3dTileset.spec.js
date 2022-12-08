@@ -27,8 +27,10 @@ describe("src_3_0_0/core/js/layers/layer3dTileset.js", () => {
 
         global.Cesium = {};
         global.Cesium.Cesium3DTileset = () => { /* no content*/ };
+        global.Cesium.Cesium3DTileStyle = () => { /* no content*/ };
 
         cesium3DTilesetSpy = sinon.spy(global.Cesium, "Cesium3DTileset");
+        sinon.spy(global.Cesium, "Cesium3DTileStyle");
     });
 
     afterEach(() => {

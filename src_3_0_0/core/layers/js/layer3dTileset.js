@@ -13,7 +13,8 @@ export default function Layer3dTileset (attributes) {
     const defaultAttributes = {
         cesium3DTilesetDefaults: {
             maximumScreenSpaceError: "6"
-        }
+        },
+        transparency: 0
     };
 
     this.attributes = Object.assign(defaultAttributes, attributes);
@@ -30,7 +31,17 @@ Layer3dTileset.prototype = Object.create(Layer3d.prototype);
  */
 Layer3dTileset.prototype.createLayer = function (attributes) {
     this.setLayer(new Tileset(attributes));
+    this.setOpacity(attributes.transparency);
     this.setVisible(attributes.visibility, mapCollection.getMap("3D"));
+};
+
+/**
+ * Calls masterportalAPI's layer to set this layer opacity.
+ * @param {Object} [transparency=0] The transparency.
+ * @returns {void}
+ */
+Layer3dTileset.prototype.setOpacity = function (transparency = 0) {
+    this.getLayer()?.setOpacity((100 - transparency) / 100);
 };
 
 /**
@@ -52,4 +63,5 @@ Layer3dTileset.prototype.updateLayerValues = function (attributes) {
     if (this.get("visibility") !== attributes.visibility) {
         this.setVisible(attributes.visibility, mapCollection.getMap("3D"));
     }
+    this.setOpacity(attributes.transparency);
 };
