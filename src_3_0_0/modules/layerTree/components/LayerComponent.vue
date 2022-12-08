@@ -102,7 +102,10 @@ export default {
                 <LayerComponentIconInfo :layer-conf="conf" />
             </div>
         </div>
-        <div>
+        <div
+            :id="'collapseSubMenu-' + conf.id"
+            class="collapse"
+        >
             <LayerComponentSubMenu :layer-conf="conf" />
         </div>
     </div>
