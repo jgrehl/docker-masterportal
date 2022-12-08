@@ -8,7 +8,8 @@ import ControlBar from "../../../components/ControlBar.vue";
 config.global.mocks.$t = key => key;
 
 describe("src_3_0_0/modules/controls/components/ControlBar.vue", () => {
-    let store;
+    let store,
+        components;
 
     beforeEach(() => {
         store = createStore({
@@ -17,14 +18,7 @@ describe("src_3_0_0/modules/controls/components/ControlBar.vue", () => {
                 Controls: {
                     namespaced: true,
                     getters: {
-                        activatedExpandable: sinon.stub(),
-                        componentMap: () => {
-                            return {
-                                backForward: sinon.stub(),
-                                button3d: sinon.stub(),
-                                fullScreen: sinon.stub()
-                            };
-                        }
+                        activatedExpandable: sinon.stub()
                     }
                 },
                 Maps: {
@@ -41,10 +35,25 @@ describe("src_3_0_0/modules/controls/components/ControlBar.vue", () => {
                 portalConfig: sinon.stub()
             }
         });
+        components = {
+            BackForward: {
+                name: "BackForward",
+                template: "<span />"
+            },
+            Button3d: {
+                name: "Button3d",
+                template: "<span />"
+            },
+            Zoom: {
+                name: "ZoomInAndOut",
+                template: "<span />"
+            }
+        };
     });
 
     it("renders the buttons group", () => {
         const wrapper = mount(ControlBar, {
+            components: components,
             global: {
                 plugins: [store]
             }});
@@ -55,6 +64,7 @@ describe("src_3_0_0/modules/controls/components/ControlBar.vue", () => {
     it("renders the button", async () => {
         const wrapper = mount(ControlBar, {
             global: {
+                components: components,
                 plugins: [store]
             }});
 
@@ -67,10 +77,11 @@ describe("src_3_0_0/modules/controls/components/ControlBar.vue", () => {
         it("should fill categorizedControls.initialVisible", async () => {
             const wrapper = mount(ControlBar, {
                 global: {
+                    components: components,
                     plugins: [store]
                 }});
 
-            await wrapper.vm.fillCategorizedControls("exampleControl");
+            await wrapper.vm.fillCategorizedControls("Zoom");
 
             expect(wrapper.vm.categorizedControls.initialVisible).to.be.an("array").that.is.not.empty;
             expect(wrapper.vm.categorizedControls.expandable).to.be.an("array").that.is.empty;
@@ -79,10 +90,11 @@ describe("src_3_0_0/modules/controls/components/ControlBar.vue", () => {
         it("should fill categorizedControls.expandable", async () => {
             const wrapper = mount(ControlBar, {
                 global: {
+                    components: components,
                     plugins: [store]
                 }});
 
-            await wrapper.vm.fillCategorizedControls("exampleControl", true);
+            await wrapper.vm.fillCategorizedControls("Zoom", true);
 
             expect(wrapper.vm.categorizedControls.initialVisible).to.be.an("array").that.is.empty;
             expect(wrapper.vm.categorizedControls.expandable).to.be.an("array").that.is.not.empty;
