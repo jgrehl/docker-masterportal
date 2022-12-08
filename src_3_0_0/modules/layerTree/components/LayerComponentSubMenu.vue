@@ -1,6 +1,7 @@
 <script>
 import {mapActions} from "vuex";
 import LightButton from "../../../shared/modules/buttons/components/LightButton.vue";
+import layerFactory from "../../../core/layers/js/layerFactory";
 
 export default {
     name: "LayerComponentSubMenu",
@@ -17,10 +18,21 @@ export default {
     computed: {
         /**
          * Returns the transparency of the layer config.
-         * @returns {Number} Transparency of the layer config
+         * @returns {Number} Transparency of the layer config.
          */
         transparency () {
             return this.layerConf?.transparency || 0;
+        },
+
+        /**
+         * Indicates if the layer type supports transparency settings.
+         * NOte: The type Tileset3D is supported.
+         * @returns {Boolean} Supports transparency.
+         */
+        supportedTransparency () {
+            const unSupportedLayerTypes = layerFactory.getLayerTypes3d().filter(layerType => layerType !== "TILESET3D");
+
+            return !unSupportedLayerTypes.includes(this.layerConf?.typ?.toUpperCase());
         }
     },
     methods: {
@@ -31,7 +43,7 @@ export default {
 
 <template lang="html">
     <div
-        :id="'layer-component-sub-menu' + layerConf.id"
+        :id="'layer-component-sub-menu-' + layerConf.id"
         class="d-flex flex-column layer-component-sub-menu"
     >
         <div class="remove-layer-container">
@@ -43,6 +55,7 @@ export default {
             />
         </div>
         <div
+            v-if="supportedTransparency"
             :id="'layer-component-icon-sub-menu-transparency-container-' + layerConf.id"
             class="d-flex align-items-center ms-3 transparency-container"
         >
