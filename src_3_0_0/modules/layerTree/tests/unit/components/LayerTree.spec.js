@@ -174,7 +174,7 @@ describe("src_3_0_0/modules/layerTree/components/LayerTree.vue", () => {
             }});
 
         expect(wrapper.find("#layer-tree").exists()).to.be.true;
-        expect(wrapper.findAll("input").length).to.be.equals(4);
+        expect(wrapper.findAll("input").length).to.be.equals(8);
         expect(wrapper.find("#layer-tree-layer-" + layer2D_1.id).exists()).to.be.true;
         expect(wrapper.find("#layer-tree-layer-" + layer2D_2.id).exists()).to.be.true;
         expect(wrapper.find("#layer-tree-layer-" + layerBG_1.id).exists()).to.be.true;
@@ -212,7 +212,7 @@ describe("src_3_0_0/modules/layerTree/components/LayerTree.vue", () => {
             }});
 
         expect(wrapper.find("#layer-tree").exists()).to.be.true;
-        expect(wrapper.findAll("input").length).to.be.equals(5);
+        expect(wrapper.findAll("input").length).to.be.equals(10);
         expect(wrapper.find("#layer-tree-layer-" + layer2D_1.id).exists()).to.be.true;
         expect(wrapper.find("#layer-tree-layer-" + layer2D_2.id).exists()).to.be.true;
         expect(wrapper.find("#layer-tree-layer-" + layer3D.id).exists()).to.be.true;

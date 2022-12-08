@@ -132,6 +132,7 @@ describe("src_3_0_0/core/js/layers/layer2dRasterWms.js", () => {
                 infoFormat: "text/xml",
                 layers: "test_layers",
                 name: "test_name",
+                transparency: 10,
                 typ: "wms"
             };
         });
@@ -147,6 +148,7 @@ describe("src_3_0_0/core/js/layers/layer2dRasterWms.js", () => {
                 infoFormat: "text/xml",
                 layers: "test_layers",
                 name: "test_name",
+                opacity: 0.9,
                 typ: "wms"
             });
         });
