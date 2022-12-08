@@ -195,14 +195,14 @@
                     "id": "453",
                     "name": "Geobasiskarten (HamburgDE)",
                     "typ": "WMS",
-                    "visibility": true,
-                    "transparency": 80
+                    "visibility": true
                 },
                 {
                     "id": "452",
                     "name": "Digitale Orthophotos (belaubt) Hamburg",
                     "typ": "WMS",
-                    "visibility": false
+                    "visibility": false,
+                    "transparency": 30
                 },
                 {
                     "id": [
@@ -224,6 +224,7 @@
                     "name": "ArcGIS VectorTile",
                     "typ": "VectorTile",
                     "visibility": false,
+                    "gfiAttributes": "showAll",
                     "url": "https://test.geoportal-hamburg.de/vt/esri/tile/{z}/{y}/{x}.pbf",
                     "epsg": "EPSG:25832",
                     "extent": [
@@ -272,6 +273,7 @@
                     "name": "EOC Basemap",
                     "typ": "WMTS",
                     "visibility": false,
+                    "transparency": 20,
                     "capabilitiesUrl": "https://tiles.geoservice.dlr.de/service/wmts?SERVICE=WMTS&REQUEST=GetCapabilities",
                     "layers": "eoc:basemap",
                     "optionsFromCapabilities": true
