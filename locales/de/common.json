@@ -347,6 +347,11 @@
             "scale": "Skalierung der Karte",
             "mouse": "Position der Maus"
         },
+        "layerPill": {
+            "next": "Nächsten Layer anzeigen",
+            "previous": "Vorherigen Layer anzeigen",
+            "remove": "Layer entfernen"
+        },
         "tools": {
             "info": {
                 "disclaimer": "Haftungsausschluss",
