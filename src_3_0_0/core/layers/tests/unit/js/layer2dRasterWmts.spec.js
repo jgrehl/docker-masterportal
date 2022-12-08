@@ -46,4 +46,44 @@ describe("src_3_0_0/core/js/layers/layer2dRasterWmts.js", () => {
             expect(wmtsLayer.getLayer()).not.to.be.undefined;
         });
     });
+
+    describe("getRawLayerAttributes", () => {
+        let localAttributes;
+
+        beforeEach(() => {
+            localAttributes = {
+                id: "123456789",
+                url: "test.url",
+                typ: "wmst"
+            };
+        });
+
+        it("should return the raw layer attributes", () => {
+            const wmsLayer = new Layer2dRasterWmts(localAttributes);
+
+            expect(wmsLayer.getRawLayerAttributes(localAttributes)).to.deep.equals({
+                id: "123456789",
+                url: "test.url",
+                typ: "wmst"
+            });
+        });
+    });
+
+    describe("getLayerParams", () => {
+        let localAttributes;
+
+        beforeEach(() => {
+            localAttributes = {
+                transparency: 10
+            };
+        });
+
+        it("should return the layer params", () => {
+            const wmsLayer = new Layer2dRasterWmts(localAttributes);
+
+            expect(wmsLayer.getLayerParams(localAttributes)).to.deep.equals({
+                opacity: 0.9
+            });
+        });
+    });
 });
