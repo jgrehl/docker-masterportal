@@ -34,17 +34,17 @@ export default {
         :id="'layer-component-sub-menu' + layerConf.id"
         class="d-flex flex-column layer-component-sub-menu"
     >
-        <div class="layer-component-sub-menu-remove-layer-container">
+        <div class="remove-layer-container">
             <LightButton
                 :interaction="() => removeLayer(layerConf)"
                 :text="$t('common:layerTree.iconRemoveLayer')"
                 icon="bi-trash3-fill"
-                customclass="layer-component-sub-menu-remove-layer-light-button"
+                customclass="light-button"
             />
         </div>
         <div
             :id="'layer-component-icon-sub-menu-transparency-container-' + layerConf.id"
-            class="d-flex align-items-center ms-3 layer-component-sub-menu-transparency-container"
+            class="d-flex align-items-center ms-3 transparency-container"
         >
             <i class="bi-droplet-half" />
             <label
@@ -54,7 +54,7 @@ export default {
             </label>
             <input
                 :id="'layer-component-sub-menu-transparency-input-' + layerConf.id"
-                class="mx-3 layer-component-sub-menu-transparency-input"
+                class="mx-3 transparency-input"
                 type="range"
                 :title="`${transparency}%`"
                 :value="transparency"
@@ -77,8 +77,8 @@ export default {
     .layer-component-sub-menu {
         font-size: $font-size-sm;
 
-        .layer-component-sub-menu-remove-layer-container {
-            .layer-component-sub-menu-remove-layer-light-button {
+        .remove-layer-container {
+            .light-button {
                 font-size: $font-size-sm;
 
                 i {
@@ -87,14 +87,14 @@ export default {
             }
         }
 
-        .layer-component-sub-menu-transparency-container {
+        .transparency-container {
             min-height: 2.5rem;
 
             i {
                 padding-right: .5rem;
             }
 
-            .layer-component-sub-menu-transparency-input {
+            .transparency-input {
                 accent-color: $secondary;
             }
         }
