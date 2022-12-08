@@ -5,28 +5,32 @@ const {registerControl, unregisterControl} = mutations;
 
 describe("src_3_0_0/modules/controls/controls-store/mutationsControls.js", () => {
     describe("registerControl", () => {
-        it("add new control to componentMap", () => {
+        it("add hiddenMobile control to componentMap", () => {
             const state = {
-                    componentMap: {
-                        backForward: {id: "backForward"},
-                        fullScreen: {id: "fullScreen"}
-                    }
+                    mobileHiddenControls: [
+                        "BackForward",
+                        "FullScreen"
+                    ],
+                    expandableControls:
+                [
+                    "BackForward"
+                ]
                 },
-                name = "name",
-                control = {id: "controlId"};
+                name = "name";
 
-            registerControl(state, {name, control});
+            registerControl(state, {name, control: null, hiddenMobile: true, expandableControls: true});
 
-            expect(Object.keys(state.componentMap).length).to.equals(3);
-            expect(state.componentMap).to.deep.equals({
-                backForward: {id: "backForward"},
-                fullScreen: {id: "fullScreen"},
-                name: {id: "controlId"}
-            });
+            expect(state.mobileHiddenControls.length).to.equals(3);
+            expect(state.mobileHiddenControls).to.deep.equals(["BackForward",
+                "FullScreen", "name"]);
+            expect(state.expandableControls.length).to.equals(2);
+            expect(state.expandableControls).to.deep.equals(["BackForward",
+                "name"]);
         });
     });
 
-    describe("unregisterControl", () => {
+    describe.skip("unregisterControl", () => {
+        // is not used - reactivate if 'unregisterControl' is used
         it("remove a control from componentMap", () => {
             const state = {
                     componentMap: {
