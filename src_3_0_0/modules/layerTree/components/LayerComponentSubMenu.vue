@@ -21,7 +21,7 @@ export default {
          * @returns {Number} Transparency of the layer config.
          */
         transparency () {
-            return this.layerConf?.transparency || 0;
+            return this.layerConf.transparency || 0;
         },
 
         /**
@@ -32,7 +32,7 @@ export default {
         supportedTransparency () {
             const unSupportedLayerTypes = layerFactory.getLayerTypes3d().filter(layerType => layerType !== "TILESET3D");
 
-            return !unSupportedLayerTypes.includes(this.layerConf?.typ?.toUpperCase());
+            return !unSupportedLayerTypes.includes(this.layerConf.typ?.toUpperCase());
         }
     },
     methods: {
@@ -49,7 +49,7 @@ export default {
         <div class="remove-layer-container">
             <LightButton
                 :interaction="() => removeLayer(layerConf)"
-                :text="$t('common:layerTree.iconRemoveLayer')"
+                :text="$t('common:tree.iconRemoveLayer')"
                 icon="bi-trash3-fill"
                 customclass="light-button"
             />
@@ -63,7 +63,7 @@ export default {
             <label
                 :for="'layer-component-sub-menu-transparency-input-' + layerConf.id"
             >
-                {{ $t("common:layerTree.iconTransparency") + ":" }}
+                {{ $t("common:tree.iconTransparency") + ":" }}
             </label>
             <input
                 :id="'layer-component-sub-menu-transparency-input-' + layerConf.id"
