@@ -8,6 +8,9 @@ import isModuleVisible from "../../../shared/js/utils/isModuleVisible";
  */
 export default {
     name: "ControlBar",
+    components: {
+        // is filled in method initializeControls
+    },
     data () {
         return {
             categorizedControls: {
@@ -42,11 +45,14 @@ export default {
         ...mapMutations("Controls", ["setActivatedExpandable"]),
 
         /**
-         * Initialize the controls.
+         * Initialize the controls. Registers all controls at this component.
          * @param {Object} controlsConfig Controls as configured in config.json.
          * @returns {void}
          */
         initializeControls (controlsConfig) {
+            Object.entries(this.componentMap).forEach(([key, component]) => {
+                this.$options.components[key] = component;
+            });
             if (!this.isSimpleStyle()) {
                 this.prepareControls(controlsConfig);
 
@@ -94,7 +100,7 @@ export default {
          */
         fillCategorizedControls (controlKey, expandable) {
             const control = {
-                component: this.componentMap[upperFirst(controlKey)],
+                componentKey: upperFirst(controlKey),
                 key: controlKey
             };
 
@@ -132,10 +138,8 @@ export default {
             :key="index"
         >
             <component
-                v-bind="control.props"
-                :is="control.component"
+                :is="control.componentKey"
                 v-if="checkIsVisible(control.key)"
-                :key="control.key"
             />
         </div>
         <div v-if="categorizedControls.expandable.length >= 1">
@@ -150,8 +154,7 @@ export default {
                         :key="index"
                     >
                         <component
-                            v-bind="control.props"
-                            :is="control.component"
+                            :is="control.componentKey"
                             v-if="checkIsVisible(control.key)"
                             :key="control.key"
                         />
