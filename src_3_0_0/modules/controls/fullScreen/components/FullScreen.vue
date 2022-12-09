@@ -75,17 +75,16 @@ function isFullScreen () {
  */
 export default {
     name: "FullScreen",
+    components: {
+        ControlIcon
+    },
     data: function () {
         return {
             active: isFullScreen()
         };
     },
     computed: {
-        ...mapGetters("Controls/FullScreen", ["iconArrow", "iconExit"]),
-
-        component () {
-            return ControlIcon;
-        }
+        ...mapGetters("Controls/FullScreen", ["iconArrow", "iconExit"])
     },
     mounted () {
         document.addEventListener("mozfullscreenchange", this.escapeHandler);
@@ -126,8 +125,7 @@ export default {
 
 <template>
     <div id="full-screen-button">
-        <component
-            :is="component"
+        <ControlIcon
             :title="$t(`common:modules.controls.fullScreen.${active ? 'disable' : 'enable'}`)"
             :icon-name="active ? iconExit : iconArrow"
             :on-click="toggleFullScreen"
