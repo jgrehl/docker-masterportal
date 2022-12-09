@@ -12,11 +12,7 @@ export default {
             "configuredModuleStates",
             "mainMenu",
             "secondaryMenu"
-        ]),
-
-        component () {
-            return ControlIcon;
-        }
+        ])
     },
     created () {
         this.setConfiguredModuleStates({menuModels: this.mainMenu, menuSide: "mainMenu"});
@@ -34,8 +30,7 @@ export default {
             v-for="configuredModule in configuredModuleStates"
             :key="'control-module-' + configuredModule.state.type"
         >
-            <component
-                :is="component"
+            <ControlIcon
                 :icon-name="configuredModule.state.icon"
                 class="control"
                 :title="$t(configuredModule.state.name)"
