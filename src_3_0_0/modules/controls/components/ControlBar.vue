@@ -1,33 +1,13 @@
 <script>
-import BackForward from "../backForward/components/BackForward.vue";
-import Button3d from "../button3d/components/Button3dItem.vue";
-import FreezeScreen from "../freeze/components/FreezeScreen.vue";
-import FullScreen from "../fullScreen/components/FullScreen.vue";
-import Orientation from "../orientation/components/OrientationItem.vue";
-import StartModule from "../startModule/components/StartModule.vue";
-import TotalView from "../totalView/components/TotalView.vue";
-import ZoomInAndOut from "../zoom/components/ZoomInAndOut.vue";
 import {mapActions, mapGetters, mapMutations} from "vuex";
 import upperFirst from "../../../shared/js/utils/upperFirst";
 import isModuleVisible from "../../../shared/js/utils/isModuleVisible";
-
-import {markRaw} from "Vue";
 
 /**
  * Control layout component that places controls on the map.
  */
 export default {
     name: "ControlBar",
-    components: {
-        BackForward,
-        Button3d,
-        FreezeScreen,
-        FullScreen,
-        Orientation,
-        StartModule,
-        TotalView,
-        Zoom: ZoomInAndOut
-    },
     data () {
         return {
             categorizedControls: {
@@ -38,7 +18,7 @@ export default {
     },
     computed: {
         ...mapGetters(["controlsConfig", "deviceMode", "uiStyle", "portalConfig"]),
-        ...mapGetters("Controls", ["activatedExpandable"]),
+        ...mapGetters("Controls", ["activatedExpandable", "componentMap"]),
         ...mapGetters("Maps", ["mode"])
     },
     watch: {
@@ -92,7 +72,7 @@ export default {
          */
         prepareControls (controlsConfig, expandable = false) {
             Object.keys(controlsConfig).forEach(controlKey => {
-                if (this.$options.components[upperFirst(controlKey)]) {
+                if (this.componentMap[upperFirst(controlKey)]) {
                     const controlValues = controlsConfig[controlKey];
 
                     if (controlValues === true) {
@@ -114,8 +94,7 @@ export default {
          */
         fillCategorizedControls (controlKey, expandable) {
             const control = {
-                // markRaw: component will not be observed as Proxy
-                component: markRaw(this.$options.components[upperFirst(controlKey)]),
+                component: this.componentMap[upperFirst(controlKey)],
                 key: controlKey
             };
 
