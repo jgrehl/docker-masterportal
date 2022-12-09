@@ -19,11 +19,7 @@ export default {
         };
     },
     computed: {
-        ...mapGetters("Controls/Freeze", ["icon"]),
-
-        component () {
-            return ControlIcon;
-        }
+        ...mapGetters("Controls/Freeze", ["icon"])
     },
     methods: {
         /**
@@ -47,8 +43,7 @@ export default {
 
 <template>
     <div id="freeze-screen-button">
-        <component
-            :is="component"
+        <ControlIcon
             :title="$t(`common:modules.controls.freeze.freeze`)"
             class="control"
             :icon-name="icon"
