@@ -3,56 +3,26 @@ import {badPathSymbol, idx} from "../../../shared/js/utils/idx";
 import {generateSimpleGetters} from "../../../shared/js/utils/generators";
 import upperFirst from "../../../shared/js/utils/upperFirst";
 
-import AddWMS from "../../addWMS/components/AddWMS.vue";
-import Contact from "../../contact/components/ContactFormular.vue";
-import CoordToolkit from "../../coordToolkit/components/CoordToolkit.vue";
-import Folder from "../../menu/components/MenuFolder.vue";
-import GetFeatureInfo from "../../getFeatureInfo/components/GetFeatureInfo.vue";
-import LayerInformation from "../../layerInformation/components/LayerInformation.vue";
-import Measure from "../../measure/components/MeasureInMap.vue";
-import OpenConfig from "../../openConfig/components/OpenConfig.vue";
-import PrintMap from "../../print/components/PrintMap.vue";
-import Routing from "../../routing/components/RoutingTemplate.vue";
-import ScaleSwitcher from "../../scaleSwitcher/components/ScaleSwitcher.vue";
-import ShareView from "../../shareView/components/ShareView.vue";
-
 const menuGetters = {
     ...generateSimpleGetters(menuState),
-
-    componentMap: () => {
-        return {
-            addWMS: AddWMS,
-            contact: Contact,
-            coordToolkit: CoordToolkit,
-            folder: Folder,
-            getFeatureInfo: GetFeatureInfo,
-            layerInformation: LayerInformation,
-            measure: Measure,
-            openConfig: OpenConfig,
-            print: PrintMap,
-            routing: Routing,
-            scaleSwitcher: ScaleSwitcher,
-            shareView: ShareView
-        };
-    },
 
     /**
      * Returns all modules with the attribute alwaysActivated: true.
      * @param {MenuState} _ Local vuex state (discarded).
-     * @param {MenuState} getters Local vuex getters.
+     * @param {Object} __ Local vuex getters (discarded).
      * @param {Object} rootState vuex rootState.
      * @param {Object} rootGetters vuex rootGetters.
      * @returns {Object[]} components always activated
      */
-    componentsAlwaysActivated: (_, getters, rootState) => {
+    componentsAlwaysActivated: (_, __, rootState, rootGetters) => {
         const componentAlwaysActivated = [];
 
-        Object.keys(getters.componentMap).forEach(moduleKey => {
+        Object.keys(rootGetters["Modules/componentMap"]).forEach(moduleKey => {
             const module = rootState.Modules[upperFirst(moduleKey)];
 
             if (module?.alwaysActivated) {
                 componentAlwaysActivated.push({
-                    module: getters.componentMap[moduleKey],
+                    module: rootGetters["Modules/componentMap"][moduleKey],
                     menuSide: module.menuSide || "secondaryMenu"
                 });
             }
@@ -64,11 +34,13 @@ const menuGetters = {
     /**
      * @param {MenuState} _ Local vuex state (discarded).
      * @param {Object} getters Local vuex getters.
+     * @param {Object} __ vuex rootState.
+     * @param {Object} rootGetters vuex rootGetters.
      * @returns {(function(side: String): Object)} Function returning component identified via componentMap.
      */
-    componentFromPath: (_, getters) => side => {
+    componentFromPath: (_, getters, __, rootGetters) => side => {
         if (["mainMenu", "secondaryMenu"].includes(side)) {
-            return getters.componentMap[getters.objectFromPath(side, "last").type];
+            return rootGetters["Modules/componentMap"][getters.objectFromPath(side, "last").type];
         }
         console.error(`Menu.componentMap: The given menu side ${side} is not allowed. Please use "mainMenu" or "secondaryMenu" instead.`);
         return null;
