@@ -25,8 +25,8 @@ export default {
             data-bs-toggle="collapse"
             :data-bs-target="'#collapseSubMenu-' + layerConf.id"
             tabindex="0"
-            :title="$t('common:layerTree.iconSubMenu')"
-            :aria-label="$t('common:layerTree.iconSubMenu')"
+            :title="$t('common:tree.iconSubMenu')"
+            :aria-label="$t('common:tree.iconSubMenu')"
         >
             <i class="bi-sliders" />
         </button>
