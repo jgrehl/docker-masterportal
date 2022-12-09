@@ -4,17 +4,12 @@ import ControlIcon from "../../components/ControlIcon.vue";
 
 export default {
     name: "Button3dItem",
+    components: {
+        ControlIcon
+    },
     computed: {
         ...mapGetters("Controls/Button3d", ["icon2d", "icon3d"]),
         ...mapGetters("Maps", ["mode"]),
-
-        /**
-         * Returns the control icon component.
-         * @returns {Component} The control icon component.
-         */
-        component () {
-            return ControlIcon;
-        },
 
         /**
          * Returns the button title depending on the current map mode.
@@ -50,8 +45,7 @@ export default {
 
 <template>
     <div id="button-3d-button">
-        <component
-            :is="component"
+        <ControlIcon
             :title="buttonTitle"
             :on-click="triggerChangeMapMode"
             :button-title="buttonTitle"

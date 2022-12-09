@@ -8,13 +8,12 @@ import ControlIcon from "../../components/ControlIcon.vue";
  */
 export default {
     name: "TotalView",
+    components: {
+        ControlIcon
+    },
     computed: {
         ...mapGetters("Controls/TotalView", ["icon"]),
         ...mapGetters("Maps", ["center", "initialCenter", "initialZoom", "zoom"]),
-
-        component () {
-            return ControlIcon;
-        },
 
         /**
          * Map was moved.
@@ -41,8 +40,7 @@ export default {
 
 <template>
     <div id="total-view-button">
-        <component
-            :is="component"
+        <ControlIcon
             id="start-totalview"
             class="total-view-button"
             :title="$t('common:modules.controls.totalView.titleButton')"
