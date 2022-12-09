@@ -2,6 +2,7 @@
 import {unByKey as unlistenByKey} from "ol/Observable.js";
 
 import actionsMapsInteractionsZoom from "./actionsMapsInteractionsZoom";
+import {toRaw} from "vue";
 
 /**
  * Interactions with the Map and MapView.
@@ -109,7 +110,7 @@ export default {
     addInteraction (_, interaction) {
         const map = mapCollection.getMap("2D");
 
-        map.addInteraction(interaction);
+        map.addInteraction(toRaw(interaction));
     },
 
     /**
