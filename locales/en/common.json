@@ -35,11 +35,6 @@
     "app-store": {
       "loadServicesJsonFailed": "<strong>The file {{layerConf}} could not be loaded!</strong>"
     },
-    "layerTree": {
-      "iconRemoveLayer": "Remove Topic from Map",
-      "iconSubMenu": "Show more functions",
-      "iconTransparency": "Transparency"
-    },
     "mouseHover": {
         "infoText": "(more objects. Please zoom.)"
     },
@@ -123,7 +118,10 @@
         "selectedFeatures": "Selection:",
         "filterIconText": "Open filter",
         "scaleText": "Displayed in the following scale range: ",
-        "selectAll": "select all"
+        "selectAll": "select all",
+        "iconRemoveLayer": "Remove Topic from Map",
+        "iconSubMenu": "Show more functions",
+        "iconTransparency": "Transparency"
     },
     "date": "Date",
     "time": "Time",
