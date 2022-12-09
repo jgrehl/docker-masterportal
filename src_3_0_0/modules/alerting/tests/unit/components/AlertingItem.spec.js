@@ -20,7 +20,7 @@ config.global.mocks.$i18n = {
     }
 };
 
-describe.skip("src/modules/alerting/components/AlertingItem.vue", function () {
+describe("src/modules/alerting/components/AlertingItem.vue", function () {
     let
         wrapper,
         store;
@@ -101,6 +101,7 @@ describe.skip("src/modules/alerting/components/AlertingItem.vue", function () {
             }
         });
         sinon.stub(axios, "get").resolves({status: 200, statusText: "OK", data: alertingData});
+        store.commit("Alerting/setShowTheModal", true);
     });
 
     afterEach(() => {
@@ -127,17 +128,20 @@ describe.skip("src/modules/alerting/components/AlertingItem.vue", function () {
 
         wrapper = shallowMount(AlertingItemComponent, mountingSettings);
         await wrapper.vm.$nextTick();
+        await wrapper.vm.$nextTick();
 
         categoryContainers = wrapper.findAll(".alertCategoryContainer");
         alertWrappers = wrapper.findAll(".singleAlertContainer");
 
-        expect(categoryContainers.exists()).to.be.true;
         expect(categoryContainers.length).to.equal(2);
+        expect(categoryContainers[0].exists()).to.be.true;
+        expect(categoryContainers[1].exists()).to.be.true;
 
         describe("Expecting initially shown 2 category groups with 2 alerts", function () {
             it("There are 2 category groups", function () {
-                expect(categoryContainers.exists()).to.be.true;
                 expect(categoryContainers.length).to.equal(2);
+                expect(categoryContainers[0].exists()).to.be.true;
+                expect(categoryContainers[1].exists()).to.be.true;
             });
 
             it("1st category group is named \"Test 1\"", function () {
@@ -177,7 +181,10 @@ describe.skip("src/modules/alerting/components/AlertingItem.vue", function () {
             });
 
             it("confirmation switch of second alert is checked", function () {
-                expect(alertWrappers[1].findAll(".form-check-input:checked").exists()).to.be.true;
+                const checkedInputs = alertWrappers[1].findAll(".form-check-input:checked");
+
+                expect(checkedInputs.length === 1).to.be.true;
+                expect(checkedInputs[0].exists()).to.be.true;
             });
         });
 

@@ -1,12 +1,19 @@
 import {config, shallowMount} from "@vue/test-utils";
 import moment from "moment";
 import {expect} from "chai";
+import sinon from "sinon";
+import Chart from "chart.js";
 import SensorThemeBartChart from "../../../components/SensorThemeBarChart.vue";
 
 config.global.mocks.$t = key => key;
+config.global.mocks.$i18next = {
+    language: "de"
+};
 
-describe.skip("src_3_0_0/modules/getFeatureInfo/themes/senor/components/SensorThemeBarChart.vue", () => {
+describe("src_3_0_0/modules/getFeatureInfo/themes/senor/components/SensorThemeBarChart.vue", () => {
     let wrapper;
+
+    moment.locale("de");
 
     beforeEach(() => {
         wrapper = shallowMount(SensorThemeBartChart, {
@@ -32,7 +39,16 @@ describe.skip("src_3_0_0/modules/getFeatureInfo/themes/senor/components/SensorTh
                 };
             }
         });
+        sinon.stub(SensorThemeBartChart.methods, "destroyChart").callsFake(() => {
+            const ctx = document.getElementsByTagName("canvas")[0];
+
+            Chart.getChart(ctx).destroy();
+        });
     });
+    afterEach(() => {
+        sinon.restore();
+    });
+
 
     it("should render a canvas if show is true", () => {
         expect(wrapper.find("canvas").exists()).to.be.true;
@@ -52,15 +68,15 @@ describe.skip("src_3_0_0/modules/getFeatureInfo/themes/senor/components/SensorTh
         });
 
         expect(wrapper1.find("canvas").exists()).to.be.false;
-        expect(wrapper1.findAll("button").wrappers.length).equals(0);
+        expect(wrapper1.findAll("button").length).equals(0);
     });
 
     it("should render a two buttons with two span for left and right side if show is true", () => {
-        expect(wrapper.findAll("button").wrappers.length).equals(2);
-        expect(wrapper.findAll("button").wrappers[0].classes()).includes("leftButton", "kat", "btn");
-        expect(wrapper.findAll("button > span > i").wrappers[0].classes().includes("bi-chevron-left"));
-        expect(wrapper.findAll("button").wrappers[1].classes()).includes("rightButton", "kat", "btn");
-        expect(wrapper.findAll("button > span > i").wrappers[1].classes().includes("bi-chevron-right"));
+        expect(wrapper.findAll("button").length).equals(2);
+        expect(wrapper.findAll("button")[0].classes()).includes("leftButton", "kat", "btn");
+        expect(wrapper.findAll("button > span > i")[0].classes().includes("bi-chevron-left"));
+        expect(wrapper.findAll("button")[1].classes()).includes("rightButton", "kat", "btn");
+        expect(wrapper.findAll("button > span > i")[1].classes().includes("bi-chevron-right"));
     });
 
     it("should returns an object with data for the charts ", () => {
@@ -157,15 +173,15 @@ describe.skip("src_3_0_0/modules/getFeatureInfo/themes/senor/components/SensorTh
     });
 
     it("should show the day before yesterday after two clicks on left button ", async () => {
-        await wrapper.findAll("button").wrappers[0].trigger("click");
-        await wrapper.findAll("button").wrappers[0].trigger("click");
+        await wrapper.findAll("button")[0].trigger("click");
+        await wrapper.findAll("button")[0].trigger("click");
 
         expect(wrapper.find("div > div > span").text()).equals(moment().subtract(2, "days").format("dddd"));
     });
 
     it("should show the day after tomorrow after two clicks on right button ", async () => {
-        await wrapper.findAll("button").wrappers[1].trigger("click");
-        await wrapper.findAll("button").wrappers[1].trigger("click");
+        await wrapper.findAll("button")[1].trigger("click");
+        await wrapper.findAll("button")[1].trigger("click");
 
         expect(wrapper.find("div > div > span").text()).equals(moment().add(2, "days").format("dddd"));
     });
