@@ -49,15 +49,13 @@ describe("src_3_0_0/modules/menu/menu-store/gettersMenu.js", () => {
 
     describe("componentsAlwaysActivated", () => {
         beforeEach(() => {
-            getters = {
-                componentMap: {
-                    component: component
-                }
+            rootGetters = {
+                "Modules/componentMap": {component: component}
             };
         });
 
         it("should return an array'", () => {
-            expect(gettersMenu.componentsAlwaysActivated(undefined, getters, rootState)).to.be.an("array");
+            expect(gettersMenu.componentsAlwaysActivated(undefined, undefined, rootState, rootGetters)).to.be.an("array");
         });
     });
 
@@ -68,10 +66,8 @@ describe("src_3_0_0/modules/menu/menu-store/gettersMenu.js", () => {
         beforeEach(() => {
             state = {};
             objectFromPathFake = sinon.fake.returns({type});
-            getters = {
-                componentMap: {
-                    component: component
-                }
+            rootGetters = {
+                "Modules/componentMap": {component: component}
             };
             getters.objectFromPath = objectFromPathFake;
         });
@@ -79,7 +75,7 @@ describe("src_3_0_0/modules/menu/menu-store/gettersMenu.js", () => {
         it("should return a component from the componentMap if the parameter side equals 'mainMenu'", () => {
             side = "mainMenu";
 
-            expect(gettersMenu.componentFromPath(state, getters)(side)).to.equal(component);
+            expect(gettersMenu.componentFromPath(state, getters, undefined, rootGetters)(side)).to.equal(component);
             expect(objectFromPathFake.calledOnce).to.be.true;
             expect(objectFromPathFake.firstCall.args.length).to.equal(2);
             expect(objectFromPathFake.firstCall.args[0]).to.equal(side);
@@ -88,7 +84,7 @@ describe("src_3_0_0/modules/menu/menu-store/gettersMenu.js", () => {
         it("should return a component from the componentMap if the parameter side equals 'secondaryMenu'", () => {
             side = "secondaryMenu";
 
-            expect(gettersMenu.componentFromPath(state, getters)(side)).to.equal(component);
+            expect(gettersMenu.componentFromPath(state, getters, undefined, rootGetters)(side)).to.equal(component);
             expect(objectFromPathFake.calledOnce).to.be.true;
             expect(objectFromPathFake.firstCall.args.length).to.equal(2);
             expect(objectFromPathFake.firstCall.args[0]).to.equal(side);

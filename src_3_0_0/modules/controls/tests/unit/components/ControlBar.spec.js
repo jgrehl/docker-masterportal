@@ -12,13 +12,28 @@ describe("src_3_0_0/modules/controls/components/ControlBar.vue", () => {
         components;
 
     beforeEach(() => {
+        components = {
+            BackForward: {
+                name: "BackForward",
+                template: "<span />"
+            },
+            Button3d: {
+                name: "Button3d",
+                template: "<span />"
+            },
+            Zoom: {
+                name: "ZoomInAndOut",
+                template: "<span />"
+            }
+        };
         store = createStore({
             namespaced: true,
             modules: {
                 Controls: {
                     namespaced: true,
                     getters: {
-                        activatedExpandable: sinon.stub()
+                        activatedExpandable: sinon.stub(),
+                        componentMap: () => components
                     }
                 },
                 Maps: {
@@ -35,25 +50,10 @@ describe("src_3_0_0/modules/controls/components/ControlBar.vue", () => {
                 portalConfig: sinon.stub()
             }
         });
-        components = {
-            BackForward: {
-                name: "BackForward",
-                template: "<span />"
-            },
-            Button3d: {
-                name: "Button3d",
-                template: "<span />"
-            },
-            Zoom: {
-                name: "ZoomInAndOut",
-                template: "<span />"
-            }
-        };
     });
 
     it("renders the buttons group", () => {
         const wrapper = mount(ControlBar, {
-            components: components,
             global: {
                 plugins: [store]
             }});
@@ -64,7 +64,6 @@ describe("src_3_0_0/modules/controls/components/ControlBar.vue", () => {
     it("renders the button", async () => {
         const wrapper = mount(ControlBar, {
             global: {
-                components: components,
                 plugins: [store]
             }});
 
@@ -77,7 +76,6 @@ describe("src_3_0_0/modules/controls/components/ControlBar.vue", () => {
         it("should fill categorizedControls.initialVisible", async () => {
             const wrapper = mount(ControlBar, {
                 global: {
-                    components: components,
                     plugins: [store]
                 }});
 
@@ -90,7 +88,6 @@ describe("src_3_0_0/modules/controls/components/ControlBar.vue", () => {
         it("should fill categorizedControls.expandable", async () => {
             const wrapper = mount(ControlBar, {
                 global: {
-                    components: components,
                     plugins: [store]
                 }});
 
