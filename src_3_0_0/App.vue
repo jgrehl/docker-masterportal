@@ -28,7 +28,7 @@ export default {
             "uiStyle",
             "visibleLayerConfigs"
         ]),
-        ...mapGetters("Menu", ["mainMenu", "secondaryMenu", "mainMenuExpanded", "secondaryMenuExpanded"])
+        ...mapGetters("Menu", ["mainMenu", "secondaryMenu", "mainExpanded", "secondaryExpanded"])
     },
     watch: {
         allConfigsLoaded (value) {
