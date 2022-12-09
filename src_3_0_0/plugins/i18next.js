@@ -118,4 +118,6 @@ export function initLanguage (portalLanguageConfig) {
             i18next.changeLanguage("de");
         }
     });
+    // @todo: remove if languages can be changed by language-tool, now you can use  i18next.changeLanguage("de"); on browser console
+    global.i18next = i18next;
 }
