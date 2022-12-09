@@ -39,7 +39,7 @@ export default {
     },
     data: () => {
         return {
-            momentLocale: moment().locale(i18next.language),
+            momentLocale: null,
             weekdayIndex: 0,
             chart: null,
             hoverBackgroundColor: "rgba(0, 0, 0, 0.8)",
@@ -65,6 +65,7 @@ export default {
         }
     },
     created () {
+        this.momentLocale = moment().locale(this.$i18next.language);
         this.hoverBackgroundColor = this.chartsParams?.hoverBackgroundColor || this.hoverBackgroundColor;
         this.barPercentage = this.chartsParams?.barPercentage || this.barPercentage;
         this.chartColor = this.chartValue?.color || this.chartColor;
@@ -82,7 +83,7 @@ export default {
          * @returns {void}
          */
         initialize: function () {
-            this.momentLocale.locale(i18next.language);
+            this.momentLocale.locale(this.$i18next.language);
             if (this.show) {
                 this.$nextTick(() => {
                     this.drawChart(this.calculateDataForOneWeekday());
@@ -108,6 +109,16 @@ export default {
         },
 
         /**
+         * Destroys the current chart if exists.
+         * @returns {void}
+         */
+        destroyChart: function () {
+            if (this.chart instanceof Chart) {
+                this.chart.destroy();
+            }
+        },
+
+        /**
          * Creates the bar chart with chartsJs.
          * If a chart is already drawn, it will be destroyed.
          * @param {Object} calculatedData The calculated data.
@@ -116,10 +127,6 @@ export default {
         drawChart: function (calculatedData) {
             const ctx = this.$el.getElementsByTagName("canvas")[0],
                 maxValue = 1;
-
-            if (this.chart instanceof Chart) {
-                this.chart.destroy();
-            }
 
             Chart.defaults.global.defaultFontFamily = "'MasterPortalFont', 'Arial Narrow', 'Arial', 'sans-serif'";
             Chart.defaults.global.defaultFontColor = "#333333";
