@@ -9,6 +9,22 @@ describe("src_3_0_0/core/js/layers/layer2dRasterStaticImage.js", () => {
     before(() => {
         warn = sinon.spy();
         sinon.stub(console, "warn").callsFake(warn);
+        mapCollection.clear();
+        const map = {
+            id: "ol",
+            mode: "2D",
+            getView: () => {
+                return {
+                    getProjection: () => {
+                        return {
+                            getCode: () => "EPSG:25832"
+                        };
+                    }
+                };
+            }
+        };
+
+        mapCollection.addMap(map, "2D");
     });
 
     beforeEach(() => {
@@ -46,7 +62,8 @@ describe("src_3_0_0/core/js/layers/layer2dRasterStaticImage.js", () => {
             localAttributes = {
                 extent: [],
                 name: "layer_name",
-                url: "test.url"
+                url: "test.url",
+                crs: "EPSG:25832"
             };
         });
 
@@ -56,7 +73,8 @@ describe("src_3_0_0/core/js/layers/layer2dRasterStaticImage.js", () => {
             expect(staticImageLayer.getRawLayerAttributes(localAttributes)).to.deep.equals({
                 imageExtent: [],
                 name: "layer_name",
-                url: "test.url"
+                url: "test.url",
+                crs: "EPSG:25832"
             });
         });
     });
