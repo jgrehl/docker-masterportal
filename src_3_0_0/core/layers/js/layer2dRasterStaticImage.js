@@ -41,7 +41,8 @@ Layer2dRasterStaticImage.prototype.getRawLayerAttributes = function (attributes)
     const rawLayerAttributes = {
         imageExtent: attributes.extent,
         name: attributes.name,
-        url: attributes.url
+        url: attributes.url,
+        crs: attributes.crs
     };
 
     return rawLayerAttributes;
@@ -55,7 +56,8 @@ Layer2dRasterStaticImage.prototype.getRawLayerAttributes = function (attributes)
 Layer2dRasterStaticImage.prototype.createStaticImageLayer = function (rawLayer = {}) {
     const source = new StaticImageSource({
             imageExtent: rawLayer.imageExtent,
-            url: rawLayer.url
+            url: rawLayer.url,
+            projection: rawLayer.crs
         }),
         layer = new ImageLayer({
             name: rawLayer.name,
