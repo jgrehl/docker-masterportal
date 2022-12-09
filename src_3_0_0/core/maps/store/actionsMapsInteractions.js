@@ -2,6 +2,7 @@
 import {unByKey as unlistenByKey} from "ol/Observable.js";
 
 import actionsMapsInteractionsZoom from "./actionsMapsInteractionsZoom";
+
 import {toRaw} from "vue";
 
 /**
@@ -125,13 +126,14 @@ export default {
         if (map.removeInteraction(interaction) === undefined) {
             const interactions = map.getInteractions().getArray(),
                 index = interactions.findIndex((anInteraction) => {
+                // console.log('interaction.ol_uid', interaction.ol_uid, anInteraction.ol_uid);
                     return anInteraction.ol_uid === interaction.ol_uid;
                 });
 
             if (index > -1) {
                 interactions.splice(index, 1);
             }
-            else {
+            else if (typeof interactions === Array) {
                 console.warn("interaction cannot be removed from map:", interaction);
             }
         }
