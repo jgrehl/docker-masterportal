@@ -83,7 +83,6 @@
 - Module contact: The attribute `serviceID` has been removed. Use `serviceId` instead.
 
 ### Fixed
-
 ---
 ## v2.31.0 - 2023-03-01
 ### __Breaking Changes__
