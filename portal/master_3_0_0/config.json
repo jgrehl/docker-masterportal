@@ -1,444 +1,452 @@
 {
-    "Portalconfig": {
-        "mapView": {
-            "backgroundImage": "https://geodienste.hamburg.de/lgv-config/img/backgroundCanvas.jpeg",
-            "startZoomLevel": 4,
-            "startCenter": [
-                565874,
-                5934140
-            ]
-        },
-        "controls": {
-            "zoom": true,
-            "startModule": {
-                "secondaryMenu": [
-                    {
-                        "type": "addWMS"
-                    }
-                ]
-            },
-            "totalView": true,
-            "button3d": true,
-            "expandable": {
-                "orientation": {
-                    "zoomMode": "once",
-                    "poiDistances": [
-                        500,
-                        1000,
-                        2000
-                    ]
-                },
-                "freeze": true,
-                "fullScreen": true
-            }
-        },
-        "tree": {
-            "layerPillsAmount": 2
-        },
-        "mainMenu": {
-            "expanded": true,
-            "title": {
-                "text": "Master",
-                "logo": "https://geodienste.hamburg.de/lgv-config/img/hh-logo.png",
-                "link": "https://geoinfo.hamburg.de",
-                "toolTip": "Landesbetrieb Geoinformation und Vermessung"
-            },
-            "sections": [
-                [
-                    {
-                        "type": "coordToolkit",
-                        "heightLayerId": "19173",
-                        "heightElementName": "value_0",
-                        "heightValueWater": "-20",
-                        "heightValueBuilding": "200",
-                        "zoomLevel": 5
-                    },
-                    {
-                        "type": "routing",
-                        "icon": "bi-signpost-2",
-                        "geosearch": {
-                            "type": "BKG",
-                            "serviceId": "5"
-                        },
-                        "geosearchReverse": {
-                            "type": "BKG",
-                            "serviceId": "5"
-                        },
-                        "directionsSettings": {
-                            "type": "ORS",
-                            "serviceId": "bkg_ors",
-                            "speedProfile": "CAR",
-                            "batchProcessing": {
-                                "enabled": false,
-                                "active": false
-                            }
-                        },
-                        "isochronesSettings": {
-                            "type": "ORS",
-                            "serviceId": "bkg_ors",
-                            "speedProfile": "CAR",
-                            "batchProcessing": {
-                                "enabled": false,
-                                "active": false
-                            }
-                        }
-                    },
-                    {
-                        "type": "openConfig"
-                    },
-                    {
-                        "type": "print",
-                        "printServiceId": "mapfish",
-                        "printAppId": "master",
-                        "filename": "Ausdruck",
-                        "title": "Mein Titel",
-                        "currentLayoutName": "A4 Hochformat"
-                    },
-                    {
-                        "type": "contact",
-                        "serviceId": "80001",
-                        "includeSystemInfo": true,
-                        "from": [
-                            {
-                                "email": "lgvgeoportal-hilfe@gv.hamburg.de",
-                                "name": "LGVGeoportalHilfe"
-                            }
-                        ],
-                        "to": [
-                            {
-                                "email": "lgvgeoportal-hilfe@gv.hamburg.de",
-                                "name": "LGVGeoportalHilfe"
-                            }
-                        ]
-                    },
-                    {
-                        "name": "folder1",
-                        "icon": "bi-folder-plus",
-                        "type": "folder",
-                        "elements": [
-                            {
-                                "name": "folder1_1",
-                                "icon": "bi-folder-plus",
-                                "type": "folder",
-                                "elements": [
-                                    {
-                                        "name": "folder1_1_1",
-                                        "icon": "bi-folder-plus",
-                                        "type": "folder",
-                                        "elements": []
-                                    },
-                                    {
-                                        "name": "folder1_1_2",
-                                        "icon": "bi-folder-plus",
-                                        "type": "folder",
-                                        "elements": []
-                                    }
-                                ]
-                            },
-                            {
-                                "name": "folder1_2",
-                                "icon": "bi-folder-plus",
-                                "type": "folder",
-                                "elements": []
-                            }
-                        ]
-                    },
-                    {
-                        "name": "folder2",
-                        "icon": "bi-folder-plus",
-                        "type": "folder",
-                        "elements": [
-                            {
-                                "name": "folder2_1",
-                                "icon": "bi-folder-plus",
-                                "type": "folder",
-                                "elements": []
-                            },
-                            {
-                                "name": "folder2_2",
-                                "icon": "bi-folder-plus",
-                                "type": "folder",
-                                "elements": []
-                            }
-                        ]
-                    }
-                ]
-            ]
-        },
-        "secondaryMenu": {
-            "expanded": false,
-            "sections": [
-                [
-                    {
-                        "type": "scaleSwitcher",
-                        "showDescription": true,
-                        "description": "Stelle den Maßstab um, ganz ohne zu scrollen."
-                    },
-                    {
-                        "type": "shareView",
-                        "showDescription": true,
-                        "description": "Teile einen Link zur Karte."
-                    },
-                    {
-                        "type": "measure",
-                        "showDescription": true,
-                        "description": "Miss eine Strecke oder Fläche."
-                    }
-                ]
-            ]
-        }
+  "Portalconfig": {
+    "mapView": {
+      "backgroundImage": "https://geodienste.hamburg.de/lgv-config/img/backgroundCanvas.jpeg",
+      "startZoomLevel": 4,
+      "startCenter": [
+        565874,
+        5934140
+      ]
     },
-    "Themenconfig": {
-        "Hintergrundkarten": {
-            "Layer": [
-                {
-                    "id": "453",
-                    "name": "Geobasiskarten (HamburgDE)",
-                    "typ": "WMS",
-                    "visibility": true
-                },
-                {
-                    "id": "452",
-                    "name": "Digitale Orthophotos (belaubt) Hamburg",
-                    "typ": "WMS",
-                    "visibility": false,
-                    "transparency": 30
-                },
-                {
-                    "id": [
-                        "4736",
-                        "12062",
-                        "4745",
-                        "4739",
-                        "12061",
-                        "4742",
-                        "12060",
-                        "12059"
-                    ],
-                    "name": "Geobasiskarten (schwarz-grau)",
-                    "typ": "WMS",
-                    "visibility": false
-                },
-                {
-                    "id": "VectorTile",
-                    "name": "ArcGIS VectorTile",
-                    "typ": "VectorTile",
-                    "visibility": false,
-                    "gfiAttributes": "showAll",
-                    "url": "https://test.geoportal-hamburg.de/vt/esri/tile/{z}/{y}/{x}.pbf",
-                    "epsg": "EPSG:25832",
-                    "extent": [
-                        441336.2209999999,
-                        5915995,
-                        594002,
-                        5986767.56699999981
-                    ],
-                    "origin": [
-                        -9497963.94293634221,
-                        9997963.94293634221
-                    ],
-                    "resolutions": [
-                        39054.5466520950868,
-                        19527.2733260475434,
-                        9763.63666302377169,
-                        4881.81833151188584,
-                        2440.90916575594292,
-                        1220.45458287797146,
-                        610.227291438985731,
-                        305.113645719492865,
-                        152.556822859746433,
-                        76.2784114298732163,
-                        38.1392057149366082,
-                        19.0696028574683041,
-                        9.534801428734152,
-                        4.767400714367076,
-                        2.383700357183538,
-                        1.191850178591769
-                    ],
-                    "tileSize": 512,
-                    "supported": [
-                        "2D"
-                    ],
-                    "vtStyles": [
-                        {
-                            "id": "VectorTile_STYLE",
-                            "name": "Test",
-                            "url": "https://test.geoportal-hamburg.de/vt/esri/resources/styles/root.json",
-                            "defaultStyle": true
-                        }
-                    ]
-                },
-                {
-                    "id": "WMTS",
-                    "name": "EOC Basemap",
-                    "typ": "WMTS",
-                    "visibility": false,
-                    "transparency": 20,
-                    "capabilitiesUrl": "https://tiles.geoservice.dlr.de/service/wmts?SERVICE=WMTS&REQUEST=GetCapabilities",
-                    "layers": "eoc:basemap",
-                    "optionsFromCapabilities": true
-                },
-                {
-                    "id": "12883",
-                    "name": "Gelände",
-                    "typ": "Terrain3D",
-                    "visibility": true
-                },
-                {
-                    "id": "12884",
-                    "name": "Gebäude LoD2",
-                    "typ": "TileSet3D",
-                    "visibility": true
-                }
-            ]
+    "controls": {
+      "zoom": true,
+      "startModule": {
+        "secondaryMenu": [
+          {
+            "type": "addWMS"
+          }
+        ]
+      },
+      "totalView": true,
+      "button3d": true,
+      "expandable": {
+        "orientation": {
+          "zoomMode": "once",
+          "poiDistances": [
+            500,
+            1000,
+            2000
+          ]
         },
-        "Fachdaten": {
-            "Layer": [
+        "freeze": true,
+        "fullScreen": true
+      }
+    },
+    "tree": {
+      "layerPillsAmount": 2
+    },
+    "mainMenu": {
+      "expanded": true,
+      "title": {
+        "text": "Master",
+        "logo": "https://geodienste.hamburg.de/lgv-config/img/hh-logo.png",
+        "link": "https://geoinfo.hamburg.de",
+        "toolTip": "Landesbetrieb Geoinformation und Vermessung"
+      },
+      "sections": [
+        [
+          {
+            "type": "coordToolkit",
+            "heightLayerId": "19173",
+            "heightElementName": "value_0",
+            "heightValueWater": "-20",
+            "heightValueBuilding": "200",
+            "zoomLevel": 5
+          },
+          {
+            "type": "routing",
+            "icon": "bi-signpost-2",
+            "geosearch": {
+              "type": "BKG",
+              "serviceId": "5"
+            },
+            "geosearchReverse": {
+              "type": "BKG",
+              "serviceId": "5"
+            },
+            "directionsSettings": {
+              "type": "ORS",
+              "serviceId": "bkg_ors",
+              "speedProfile": "CAR",
+              "batchProcessing": {
+                "enabled": false,
+                "active": false
+              }
+            },
+            "isochronesSettings": {
+              "type": "ORS",
+              "serviceId": "bkg_ors",
+              "speedProfile": "CAR",
+              "batchProcessing": {
+                "enabled": false,
+                "active": false
+              }
+            }
+          },
+          {
+            "type": "openConfig"
+          },
+          {
+            "type": "print",
+            "printServiceId": "mapfish",
+            "printAppId": "master",
+            "filename": "Ausdruck",
+            "title": "Mein Titel",
+            "currentLayoutName": "A4 Hochformat"
+          },
+          {
+            "type": "contact",
+            "serviceId": "80001",
+            "includeSystemInfo": true,
+            "from": [
               {
-                "id": "10220",
-                "name": "Dauerzählstellen (Rad) Hamburg",
-                "typ": "WMS",
-                "visibility": true
-              },
+                "email": "lgvgeoportal-hilfe@gv.hamburg.de",
+                "name": "LGVGeoportalHilfe"
+              }
+            ],
+            "to": [
               {
-                "id": "2426",
-                "name": "Bezirke",
-                "typ": "WMS",
-                "visibility": true
-              },
+                "email": "lgvgeoportal-hilfe@gv.hamburg.de",
+                "name": "LGVGeoportalHilfe"
+              }
+            ]
+          },
+          {
+            "name": "folder1",
+            "icon": "bi-folder-plus",
+            "type": "folder",
+            "elements": [
               {
-                "Titel": "Emissionen",
-                "Ordner": [
+                "name": "folder1_1",
+                "icon": "bi-folder-plus",
+                "type": "folder",
+                "elements": [
                   {
-                    "Titel": "Lärmschutzbereiche Flughafen Hamburg (FluLärmHmbV)",
-                    "Layer": [
-                      {
-                        "id": "2431",
-                        "visibility": false
-                      },
-                      {
-                        "id": "2430",
-                        "visibility": false
-                      },
-                      {
-                        "id": "2429"
-                      }
-                    ],
-                    "Ordner": [
-                      {
-                        "Titel": "Überschwemmungsgebiete",
-                        "Layer": [
-                          {
-                            "id": "1103",
-                            "visibility": false
-                          }
-                        ]
-                      }
-                    ]
+                    "name": "folder1_1_1",
+                    "icon": "bi-folder-plus",
+                    "type": "folder",
+                    "elements": []
+                  },
+                  {
+                    "name": "folder1_1_2",
+                    "icon": "bi-folder-plus",
+                    "type": "folder",
+                    "elements": []
                   }
                 ]
               },
               {
-                "id": "1933",
-                "typ": "WMS",
-                "visibility": false,
-                "styles": [
-                  "geofox_stations"
-                ],
-                "name": [
-                  "HVV Haltestellen"
-                ]
+                "name": "folder1_2",
+                "icon": "bi-folder-plus",
+                "type": "folder",
+                "elements": []
+              }
+            ]
+          },
+          {
+            "name": "folder2",
+            "icon": "bi-folder-plus",
+            "type": "folder",
+            "elements": [
+              {
+                "name": "folder2_1",
+                "icon": "bi-folder-plus",
+                "type": "folder",
+                "elements": []
               },
               {
-                "id": "1711",
-                "name": "Krankenhäuser",
-                "typ": "WFS",
-                "visibility": false
-              },
-              {
-                "id": "52",
-                "name": "Parkhäuser",
-                "typ": "WFS",
-                "visibility": false,
-                "autoRefresh": 5000
-              },
-              {
-                "id": "8712",
-                "name": "de.hh.up:staatliche schulen",
-                "typ": "WFS",
-                "visibility": false,
-                "clusterDistance": 60,
-                "showInLayerTree": false
-              },
-              {
-                "id": "19173"
-              },
-              {
-                "id": "18106",
-                "name": "Elektro Ladestandorte Hamburg",
-                "typ": "SensorThings",
-                "visibility": false,
-                "loadThingsOnlyInCurrentExtent": true
-              },
-              {
-                "id": "OAF",
-                "name": "Schulen",
-                "typ": "OAF",
-                "visibility": false,
-                "url": "https://api.hamburg.de/datasets/v1/schulen",
-                "collection": "staatliche_schulen",
-                "bbox": "",
-                "bboxCrs": "",
-                "datetime": "",
-                "crs": "EPSG:25832",
-                "params": {
-                  "anzahl_schueler": ">1000"
-                }
-              },
-              {
-                "id": "GeoJSON",
-                "name": "Beiträge",
-                "typ": "GeoJSON",
-                "visibility": false,
-                "url": "./resources/example_geojson.json"
-              },
-              {
-                "id": "StaticImage",
-                "name": "Lärmberechnung",
-                "typ": "StaticImage",
-                "visibility": false,
-                "url": "https://geodienste.hamburg.de/lgv-config/img/Laerm-Test_300dpi.png",
-                "extent": [
-                  568426.27,
-                  5931985.58,
-                  569614.86,
-                  5933174.11
-                ]
-              },
-              {
-                "id": "Entities3D",
-                "name": "3D-Entities Testlayer",
-                "typ": "Entities3D",
-                "visibility": true,
-                "entities": [
-                  {
-                    "url": "https://daten-hamburg.de/gdi3d/datasource-data/Simple_Building.glb",
-                    "attributes": {
-                      "name": "Einfaches Haus in Planten und Blomen"
-                    },
-                    "latitude": 53.5631,
-                    "longitude": 9.9800,
-                    "height": 12,
-                    "heading": 0,
-                    "pitch": 0,
-                    "roll": 0,
-                    "scale": 5,
-                    "allowPicking": true,
-                    "show": true
-                  }
-                ]
+                "name": "folder2_2",
+                "icon": "bi-folder-plus",
+                "type": "folder",
+                "elements": []
               }
             ]
           }
+        ]
+      ]
+    },
+    "secondaryMenu": {
+      "expanded": false,
+      "sections": [
+        [
+          {
+            "type": "scaleSwitcher",
+            "showDescription": true,
+            "description": "Stelle den Maßstab um, ganz ohne zu scrollen."
+          },
+          {
+            "type": "shareView",
+            "showDescription": true,
+            "description": "Teile einen Link zur Karte."
+          },
+          {
+            "type": "measure",
+            "showDescription": true,
+            "description": "Miss eine Strecke oder Fläche."
+          }
+        ]
+      ]
     }
+  },
+  "Themenconfig": {
+    "Hintergrundkarten": {
+      "Layer": [
+        {
+          "id": "453",
+          "name": "Geobasiskarten (HamburgDE)",
+          "typ": "WMS",
+          "visibility": true
+        },
+        {
+          "id": "452",
+          "name": "Digitale Orthophotos (belaubt) Hamburg",
+          "typ": "WMS",
+          "visibility": false,
+          "transparency": 30
+        },
+        {
+          "id": [
+            "4736",
+            "12062",
+            "4745",
+            "4739",
+            "12061",
+            "4742",
+            "12060",
+            "12059"
+          ],
+          "name": "Geobasiskarten (schwarz-grau)",
+          "typ": "WMS",
+          "visibility": false
+        },
+        {
+          "id": "VectorTile",
+          "name": "ArcGIS VectorTile",
+          "typ": "VectorTile",
+          "visibility": false,
+          "gfiAttributes": "showAll",
+          "url": "https://test.geoportal-hamburg.de/vt/esri/tile/{z}/{y}/{x}.pbf",
+          "epsg": "EPSG:25832",
+          "extent": [
+            441336.2209999999,
+            5915995,
+            594002,
+            5986767.56699999981
+          ],
+          "origin": [
+            -9497963.94293634221,
+            9997963.94293634221
+          ],
+          "resolutions": [
+            39054.5466520950868,
+            19527.2733260475434,
+            9763.63666302377169,
+            4881.81833151188584,
+            2440.90916575594292,
+            1220.45458287797146,
+            610.227291438985731,
+            305.113645719492865,
+            152.556822859746433,
+            76.2784114298732163,
+            38.1392057149366082,
+            19.0696028574683041,
+            9.534801428734152,
+            4.767400714367076,
+            2.383700357183538,
+            1.191850178591769
+          ],
+          "tileSize": 512,
+          "supported": [
+            "2D"
+          ],
+          "vtStyles": [
+            {
+              "id": "VectorTile_STYLE",
+              "name": "Test",
+              "url": "https://test.geoportal-hamburg.de/vt/esri/resources/styles/root.json",
+              "defaultStyle": true
+            }
+          ]
+        },
+        {
+          "id": "WMTS",
+          "name": "EOC Basemap",
+          "typ": "WMTS",
+          "visibility": false,
+          "transparency": 20,
+          "capabilitiesUrl": "https://tiles.geoservice.dlr.de/service/wmts?SERVICE=WMTS&REQUEST=GetCapabilities",
+          "layers": "eoc:basemap",
+          "optionsFromCapabilities": true
+        },
+        {
+          "id": "12883",
+          "name": "Gelände",
+          "typ": "Terrain3D",
+          "visibility": true
+        },
+        {
+          "id": "12884",
+          "name": "Gebäude LoD2",
+          "typ": "TileSet3D",
+          "visibility": true
+        }
+      ]
+    },
+    "Fachdaten": {
+      "Layer": [
+        {
+          "id": "10220",
+          "name": "Dauerzählstellen (Rad) Hamburg",
+          "typ": "WMS",
+          "visibility": false
+        },
+        {
+          "id": "2426",
+          "name": "Bezirke",
+          "typ": "WMS",
+          "visibility": true
+        },
+        {
+          "Titel": "Emissionen",
+          "Ordner": [
+            {
+              "Titel": "Lärmschutzbereiche Flughafen Hamburg (FluLärmHmbV)",
+              "Layer": [
+                {
+                  "id": "2431",
+                  "visibility": false
+                },
+                {
+                  "id": "2430",
+                  "visibility": false
+                },
+                {
+                  "id": "2429"
+                }
+              ],
+              "Ordner": [
+                {
+                  "Titel": "Überschwemmungsgebiete",
+                  "Layer": [
+                    {
+                      "id": "1103",
+                      "visibility": false
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "1933",
+          "typ": "WMS",
+          "visibility": false,
+          "styles": [
+            "geofox_stations"
+          ],
+          "name": [
+            "HVV Haltestellen"
+          ]
+        },
+        {
+          "id": "1711",
+          "name": "Krankenhäuser",
+          "typ": "WFS",
+          "visibility": true,
+          "mouseHoverField": [
+            "name",
+            "strasse"
+          ]
+        },
+        {
+          "id": "52",
+          "name": "Parkhäuser",
+          "typ": "WFS",
+          "visibility": false,
+          "autoRefresh": 5000
+        },
+        {
+          "id": "8712",
+          "name": "de.hh.up:staatliche schulen",
+          "typ": "WFS",
+          "visibility": false,
+          "clusterDistance": 60,
+          "showInLayerTree": false,
+          "mouseHoverField": [
+            "schulname",
+            "kapitelbezeichnung"
+          ]
+        },
+        {
+          "id": "19173"
+        },
+        {
+          "id": "18106",
+          "name": "Elektro Ladestandorte Hamburg",
+          "typ": "SensorThings",
+          "visibility": false,
+          "loadThingsOnlyInCurrentExtent": true
+        },
+        {
+          "id": "OAF",
+          "name": "Schulen",
+          "typ": "OAF",
+          "visibility": false,
+          "url": "https://api.hamburg.de/datasets/v1/schulen",
+          "collection": "staatliche_schulen",
+          "bbox": "",
+          "bboxCrs": "",
+          "datetime": "",
+          "crs": "EPSG:25832",
+          "params": {
+            "anzahl_schueler": ">1000"
+          }
+        },
+        {
+          "id": "GeoJSON",
+          "name": "Beiträge",
+          "typ": "GeoJSON",
+          "visibility": false,
+          "url": "./resources/example_geojson.json"
+        },
+        {
+          "id": "StaticImage",
+          "name": "Lärmberechnung",
+          "typ": "StaticImage",
+          "visibility": false,
+          "url": "https://geodienste.hamburg.de/lgv-config/img/Laerm-Test_300dpi.png",
+          "extent": [
+            568426.27,
+            5931985.58,
+            569614.86,
+            5933174.11
+          ]
+        },
+        {
+          "id": "Entities3D",
+          "name": "3D-Entities Testlayer",
+          "typ": "Entities3D",
+          "visibility": true,
+          "entities": [
+            {
+              "url": "https://daten-hamburg.de/gdi3d/datasource-data/Simple_Building.glb",
+              "attributes": {
+                "name": "Einfaches Haus in Planten und Blomen"
+              },
+              "latitude": 53.5631,
+              "longitude": 9.9800,
+              "height": 12,
+              "heading": 0,
+              "pitch": 0,
+              "roll": 0,
+              "scale": 5,
+              "allowPicking": true,
+              "show": true
+            }
+          ]
+        }
+      ]
+    }
+  }
 }
