@@ -7,6 +7,7 @@ import CoordToolkit from "../coordToolkit/components/CoordToolkit.vue";
 import Folder from "../menu/components/MenuFolder.vue";
 import GetFeatureInfo from "../getFeatureInfo/components/GetFeatureInfo.vue";
 import LayerInformation from "../layerInformation/components/LayerInformation.vue";
+import LayerPills from "../layerPills/components/LayerPills.vue";
 import Measure from "../measure/components/MeasureInMap.vue";
 import OpenConfig from "../openConfig/components/OpenConfig.vue";
 import PrintMap from "../print/components/PrintMap.vue";
@@ -26,6 +27,7 @@ const getters = {
             folder: Folder,
             getFeatureInfo: GetFeatureInfo,
             layerInformation: LayerInformation,
+            layerPills: LayerPills,
             measure: Measure,
             openConfig: OpenConfig,
             print: PrintMap,
