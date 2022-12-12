@@ -137,6 +137,7 @@ export default {
             >
                 <ControlBar class="controls" />
                 <component :is="componentMap.layerPills" />
+                <component :is="componentMap.mouseHover" />
             </div>
             <MenuToggleButton
                 v-if="allConfigsLoaded && secondaryMenu && uiStyle !== 'SIMPLE'"
