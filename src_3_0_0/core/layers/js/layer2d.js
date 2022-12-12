@@ -12,6 +12,7 @@ import Layer from "./layer";
  */
 export default function Layer2d (attributes) {
     const defaultAttributes = {
+        crs: mapCollection.getMapView("2D").getProjection().getCode(),
         transparency: 0
     };
 
