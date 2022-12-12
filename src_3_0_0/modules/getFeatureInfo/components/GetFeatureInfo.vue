@@ -218,7 +218,7 @@ export default {
                         :aria="$t('modules.tools.gfi.buttonBack')"
                         :class-array="[pagerIndex < 1 ? 'disabled' : '', 'pager-left', 'pager', 'btn-primary']"
                         :icon="leftIcon"
-                        :interaction="() => decreasePagerIndex"
+                        :interaction="decreasePagerIndex"
                     />
                     <span class="my-auto">
                         {{ pagerIndex+1 + "/" + gfiFeatures.length }}
@@ -227,7 +227,7 @@ export default {
                         :aria="$t('modules.tools.gfi.buttonForward')"
                         :class-array="[pagerIndex === gfiFeatures.length - 1 ? 'disabled' : '', 'pager-right', 'pager', 'btn-primary']"
                         :icon="rightIcon"
-                        :interaction="() => increasePagerIndex"
+                        :interaction="increasePagerIndex"
                     />
                 </div>
             </template>
