@@ -5,6 +5,15 @@ const getters = {
     ...generateSimpleGetters(stateMaps),
 
     /**
+    * Returns a layer by a given layer name.
+    * @param  {String} layerName Name of the Layer.
+    * @return {module:ol/layer/Base~BaseLayer} The layer found by name.
+    */
+    getLayerByName: () => (layerName) => {
+        return mapCollection.getMap("2D").getLayers().getArray().find(layer => layer.get("name") === layerName);
+    },
+
+    /**
      * Returns the corresponding resolution for the scale.
      * @param {Object} state the state
      * @param {String|Number} scale the scale
@@ -45,7 +54,15 @@ const getters = {
      */
     isMinZoomDisplayed: (state) => {
         return state.zoom <= state.minZoom;
-    }
+    },
+
+    /**
+     * Returns the maps projection code.
+     * @param {*} _ the state
+     * @param {*} getter the getter
+     * @returns {String} the projection code
+     */
+    projectionCode: (_, getter) => getter.projection?.getCode()
 };
 
 export default getters;
