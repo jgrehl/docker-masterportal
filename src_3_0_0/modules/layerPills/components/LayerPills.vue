@@ -9,7 +9,7 @@ export default {
     components: {IconButton},
     computed: {
         ...mapGetters(["isMobile", "visibleSubjectDataLayerConfigs", "portalConfig"]),
-        ...mapGetters("LayerPills", ["visibleSubjectDataLayers", "startIndex", "endIndex", "layerPillsAmount", "leftScrollDisabled", "rightScrollDisabled"]),
+        ...mapGetters("Modules/LayerPills", ["visibleSubjectDataLayers", "startIndex", "endIndex", "layerPillsAmount", "leftScrollDisabled", "rightScrollDisabled"]),
         ...mapGetters("Maps", ["mode"])
     },
     watch: {
@@ -54,7 +54,7 @@ export default {
         this.setLayerPillsAmount(this.endIndex);
     },
     methods: {
-        ...mapMutations("LayerPills", ["setVisibleSubjectDataLayers", "setStartIndex", "setEndIndex", "setLayerPillsAmount", "setRightScrollDisabled", "setLeftScrollDisabled"]),
+        ...mapMutations("Modules/LayerPills", ["setVisibleSubjectDataLayers", "setStartIndex", "setEndIndex", "setLayerPillsAmount", "setRightScrollDisabled", "setLeftScrollDisabled"]),
         ...mapMutations(["replaceByIdInLayerConfig", "setVisibleSubjectDataLayerConfigs"]),
 
         setVisibleLayers (visibleLayers, mapMode) {

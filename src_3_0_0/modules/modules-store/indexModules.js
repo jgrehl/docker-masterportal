@@ -7,6 +7,7 @@ import Contact from "../contact/store/indexContact";
 import CoordToolkit from "../coordToolkit/store/indexCoordToolkit";
 import GetFeatureInfo from "../getFeatureInfo/store/indexGetFeatureInfo";
 import LayerInformation from "../layerInformation/store/indexLayerInformation";
+import LayerPills from "../layerPills/store/indexLayerPills";
 import LayerTree from "../layerTree/store/indexLayerTree";
 import Measure from "../measure/store/indexMeasure";
 import OpenConfig from "../openConfig/store/indexOpenConfig";
@@ -27,6 +28,7 @@ export default {
         CoordToolkit: {...CoordToolkit},
         GetFeatureInfo: {...GetFeatureInfo},
         LayerInformation: {...LayerInformation},
+        LayerPills: {...LayerPills},
         LayerTree: {...LayerTree},
         Measure: {...Measure},
         OpenConfig: {...OpenConfig},
