@@ -73,7 +73,6 @@ export default {
 
 <style lang="scss" scoped>
 @import "~variables";
-@import "~mixins";
 
 .btn {
     display: flex;
@@ -84,7 +83,6 @@ export default {
     padding-left: 1rem;
 
     i {
-        font-size: 1.125rem;
         padding-right: .5rem;
     }
     .btn-texts {
