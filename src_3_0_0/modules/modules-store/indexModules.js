@@ -5,6 +5,7 @@ import state from "./stateModules";
 import AddWMS from "../addWMS/store/indexAddWMS";
 import Contact from "../contact/store/indexContact";
 import CoordToolkit from "../coordToolkit/store/indexCoordToolkit";
+import FileImport from "../fileImport/store/indexFileImport";
 import GetFeatureInfo from "../getFeatureInfo/store/indexGetFeatureInfo";
 import LayerInformation from "../layerInformation/store/indexLayerInformation";
 import LayerPills from "../layerPills/store/indexLayerPills";
@@ -27,6 +28,7 @@ export default {
         AddWMS: {...AddWMS},
         Contact: {...Contact},
         CoordToolkit: {...CoordToolkit},
+        FileImport: {...FileImport},
         GetFeatureInfo: {...GetFeatureInfo},
         LayerInformation: {...LayerInformation},
         LayerPills: {...LayerPills},
