@@ -85,7 +85,6 @@ export default {
 
 <style lang="scss" scoped>
     @import "~variables";
-    @import "~mixins";
 
     .layer-component-sub-menu {
         font-size: $font-size-sm;
@@ -95,7 +94,7 @@ export default {
                 font-size: $font-size-sm;
 
                 i {
-                    font-size: $font-size-sm;
+                    font-size: $font-size-sm !important;
                 }
             }
         }
