@@ -10,7 +10,6 @@ import Alerting from "../modules/alerting/store/indexAlerting";
 import Maps from "../core/maps/store/indexMaps";
 import Menu from "../modules/menu/menu-store/indexMenu";
 import Modules from "../modules/modules-store/indexModules";
-import LayerPills from "../modules/layerPills/store/indexLayerPills";
 
 const store = createStore({
     state,
@@ -22,8 +21,7 @@ const store = createStore({
         Alerting,
         Maps,
         Menu,
-        Modules,
-        LayerPills
+        Modules
     }
 });
 
