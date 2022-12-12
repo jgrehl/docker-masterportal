@@ -4,7 +4,6 @@ import Alerting from "./modules/alerting/components/AlertingItem.vue";
 import ControlBar from "./modules/controls/components/ControlBar.vue";
 import initializeLayers from "./core/layers/js/layerProcessor";
 import {initializeMaps} from "./core/maps/js/maps";
-import LayerPills from "./modules/layerPills/components/LayerPills.vue";
 import LoaderOverlay from "./app-store/js/loaderOverlay";
 import mapCollection from "./core/maps/js/mapCollection";
 import MenuContainer from "./modules/menu/components/MenuContainer.vue";
@@ -16,7 +15,6 @@ export default {
     components: {
         Alerting,
         ControlBar,
-        LayerPills,
         MenuContainer,
         MenuToggleButton
     },
@@ -28,7 +26,8 @@ export default {
             "uiStyle",
             "visibleLayerConfigs"
         ]),
-        ...mapGetters("Menu", ["mainMenu", "secondaryMenu", "mainExpanded", "secondaryExpanded"])
+        ...mapGetters("Menu", ["mainMenu", "secondaryMenu", "mainExpanded", "secondaryExpanded"]),
+        ...mapGetters("Modules", ["componentMap"])
     },
     watch: {
         allConfigsLoaded (value) {
@@ -137,7 +136,7 @@ export default {
                 class="elements-positioned-over-map"
             >
                 <ControlBar class="controls" />
-                <LayerPills />
+                <component :is="componentMap.layerPills" />
             </div>
             <MenuToggleButton
                 v-if="allConfigsLoaded && secondaryMenu && uiStyle !== 'SIMPLE'"

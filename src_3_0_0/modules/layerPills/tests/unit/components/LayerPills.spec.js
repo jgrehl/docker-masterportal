@@ -33,7 +33,12 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
         store = createStore({
             namespaced: true,
             modules: {
-                LayerPills,
+                Modules: {
+                    namespaced: true,
+                    modules: {
+                        LayerPills
+                    }
+                },
                 Maps: {
                     namespaced: true,
                     getters: {
@@ -65,8 +70,8 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
             }
         });
 
-        store.commit("LayerPills/setStartIndex", startIndex);
-        store.commit("LayerPills/setEndIndex", endIndex);
+        store.commit("Modules/LayerPills/setStartIndex", startIndex);
+        store.commit("Modules/LayerPills/setEndIndex", endIndex);
     });
 
     afterEach(() => {
@@ -208,7 +213,7 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
                 }});
             wrapper.vm.setVisibleLayers(visibleLayers, "2D");
 
-            expect(store.state.LayerPills.visibleSubjectDataLayers).to.deep.equal(visibleLayers);
+            expect(store.state.Modules.LayerPills.visibleSubjectDataLayers).to.deep.equal(visibleLayers);
         });
         it("setVisibleLayers only sets 2D layers if 2D mode is selected", () => {
             const visibleLayers3D2D = [
@@ -230,7 +235,7 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
                 }});
             wrapper.vm.setVisibleLayers(visibleLayers3D2D, "2D");
 
-            expect(store.state.LayerPills.visibleSubjectDataLayers).to.deep.equal([
+            expect(store.state.Modules.LayerPills.visibleSubjectDataLayers).to.deep.equal([
                 {id: 2, name: "layer3", typ: "WFS"},
                 {id: 3, name: "layer4", typ: "WFS"}]
             );
@@ -246,14 +251,14 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
                 global: {
                     plugins: [store]
                 }});
-            expect(store.state.LayerPills.startIndex).to.equal(0);
-            expect(store.state.LayerPills.endIndex).to.equal(2);
+            expect(store.state.Modules.LayerPills.startIndex).to.equal(0);
+            expect(store.state.Modules.LayerPills.endIndex).to.equal(2);
             wrapper.vm.moveLayerPills("right");
-            expect(store.state.LayerPills.startIndex).to.equal(1);
-            expect(store.state.LayerPills.endIndex).to.equal(3);
+            expect(store.state.Modules.LayerPills.startIndex).to.equal(1);
+            expect(store.state.Modules.LayerPills.endIndex).to.equal(3);
             wrapper.vm.moveLayerPills("left");
-            expect(store.state.LayerPills.startIndex).to.equal(0);
-            expect(store.state.LayerPills.endIndex).to.equal(2);
+            expect(store.state.Modules.LayerPills.startIndex).to.equal(0);
+            expect(store.state.Modules.LayerPills.endIndex).to.equal(2);
         });
     });
 
@@ -271,7 +276,7 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
                 }});
             wrapper.vm.$options.watch.startIndex.call(wrapper.vm, 0);
 
-            expect(store.state.LayerPills.leftScrollDisabled).to.equal(true);
+            expect(store.state.Modules.LayerPills.leftScrollDisabled).to.equal(true);
         });
         it("startIndex > 0", () => {
             wrapper = shallowMount(LayerPillsComponent, {
@@ -286,7 +291,7 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
                 }});
             wrapper.vm.$options.watch.startIndex.call(wrapper.vm, 2);
 
-            expect(store.state.LayerPills.leftScrollDisabled).to.equal(false);
+            expect(store.state.Modules.LayerPills.leftScrollDisabled).to.equal(false);
         });
         it("endIndex < visibleSubjectDataLayers.length", () => {
             wrapper = shallowMount(LayerPillsComponent, {
@@ -301,7 +306,7 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
                 }});
             wrapper.vm.$options.watch.endIndex.call(wrapper.vm, 0);
 
-            expect(store.state.LayerPills.rightScrollDisabled).to.equal(false);
+            expect(store.state.Modules.LayerPills.rightScrollDisabled).to.equal(false);
         });
         it("endIndex >= visibleSubjectDataLayers.length", () => {
             wrapper = shallowMount(LayerPillsComponent, {
@@ -316,7 +321,7 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
                 }});
             wrapper.vm.$options.watch.endIndex.call(wrapper.vm, 4);
 
-            expect(store.state.LayerPills.rightScrollDisabled).to.equal(true);
+            expect(store.state.Modules.LayerPills.rightScrollDisabled).to.equal(true);
         });
     });
 });
