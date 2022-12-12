@@ -35,7 +35,7 @@ describe("src_3_0_0/modules/openConfig/store/actionsOpenConfig.js", () => {
     });
 
     describe("processConfigJsonOnload", () => {
-        it("should clear layerCollection, set Portalconfig set Layerconfig to the state and start extendLayers", () => {
+        it("should clear layerCollection, set Portalconfig to the state and start extendLayers", () => {
             const event = {
                 target: {
                     result: "{\r\n  \"Portalconfig\": {},\r\n  \"Themenconfig\": {}\r\n}\r\n"
@@ -46,11 +46,86 @@ describe("src_3_0_0/modules/openConfig/store/actionsOpenConfig.js", () => {
 
             expect(clearSpy.calledOnce).to.be.true;
 
-            expect(commit.calledTwice).to.be.true;
+            expect(commit.calledOnce).to.be.true;
             expect(commit.firstCall.args[0]).to.equals("setPortalConfig");
             expect(commit.firstCall.args[1]).to.deep.equals({});
+
+            // expect(commit.secondCall.args[0]).to.equals("setLayerConfigByParentKey");
+            // expect(commit.secondCall.args[1]).to.deep.equals({});
+
+            expect(dispatch.calledOnce).to.be.true;
+            expect(dispatch.firstCall.args[0]).to.equals("extendLayers");
+            expect(dispatch.firstCall.args[1]).to.equals(null);
+        });
+
+        it("should clear layerCollection, set Portalconfig, set Layerconfig to the state and start extendLayers", () => {
+            const event = {
+                target: {
+                    result: "{\r\n  \"Portalconfig\": {\r\n    \"mainMenu\": {\r\n      \"sections\": [\r\n        [\r\n          {\r\n            \"type\": \"openConfig\"\r\n          }\r\n        ]\r\n      ]\r\n    },\r\n    \"secondaryMenu\": {\r\n      \"expanded\": false,\r\n      \"sections\": [\r\n        [\r\n          {\r\n            \"type\": \"shareView\"\r\n          }\r\n        ]\r\n      ]\r\n    }\r\n  },\r\n  \"Themenconfig\": {\r\n    \"Hintergrundkarten\": {\r\n      \"Layer\": [\r\n          {\r\n              \"id\": \"453\",\r\n              \"name\": \"Geobasiskarten (HamburgDE)\",\r\n              \"typ\": \"WMS\",\r\n              \"visibility\": true\r\n          }\r\n      ]\r\n    },\r\n    \"Fachdaten\": {\r\n      \"Layer\": [\r\n        {\r\n          \"id\": \"10220\",\r\n          \"name\": \"Dauerzählstellen (Rad) Hamburg\",\r\n          \"typ\": \"WMS\",\r\n          \"visibility\": true\r\n        },\r\n        {\r\n          \"id\": \"2426\",\r\n          \"name\": \"Bezirke\",\r\n          \"typ\": \"WMS\",\r\n          \"visibility\": true\r\n        }\r\n      ]\r\n    }\r\n  }\r\n}\r\n"
+                }
+            };
+
+            processConfigJsonOnload({commit, dispatch}, event);
+
+            expect(clearSpy.calledOnce).to.be.true;
+
+            expect(commit.calledThrice).to.be.true;
+            expect(commit.firstCall.args[0]).to.equals("setPortalConfig");
+            expect(commit.firstCall.args[1]).to.deep.equals({
+                "mainMenu": {
+                    "sections": [
+                        [
+                            {
+                                "type": "openConfig"
+                            }
+                        ]
+                    ]
+                },
+                "secondaryMenu": {
+                    "expanded": false,
+                    "sections": [
+                        [
+                            {
+                                "type": "shareView"
+                            }
+                        ]
+                    ]
+                }
+            });
             expect(commit.secondCall.args[0]).to.equals("setLayerConfigByParentKey");
-            expect(commit.secondCall.args[1]).to.deep.equals({});
+            expect(commit.secondCall.args[1]).to.deep.equals({
+                layerConfigs: {
+                    "Layer": [
+                        {
+                            "id": "453",
+                            "name": "Geobasiskarten (HamburgDE)",
+                            "typ": "WMS",
+                            "visibility": true
+                        }
+                    ]
+                },
+                parentKey: "Hintergrundkarten"
+            });
+            expect(commit.thirdCall.args[0]).to.equals("setLayerConfigByParentKey");
+            expect(commit.thirdCall.args[1]).to.deep.equals({
+                layerConfigs: {
+                    "Layer": [
+                        {
+                            "id": "10220",
+                            "name": "Dauerzählstellen (Rad) Hamburg",
+                            "typ": "WMS",
+                            "visibility": true
+                        },
+                        {
+                            "id": "2426",
+                            "name": "Bezirke",
+                            "typ": "WMS",
+                            "visibility": true
+                        }
+                    ]
+                },
+                parentKey: "Fachdaten"
+            });
 
             expect(dispatch.calledOnce).to.be.true;
             expect(dispatch.firstCall.args[0]).to.equals("extendLayers");
