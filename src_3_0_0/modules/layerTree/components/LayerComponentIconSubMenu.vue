@@ -1,9 +1,11 @@
 <script>
+import IconButton from "../../../shared/modules/buttons/components/IconButton.vue";
 /**
  * Represents an sub menu button for a layer in the layertree.
  */
 export default {
     name: "LayerComponentIconSubMenu",
+    components: {IconButton},
     /** current layer configuration */
     props: {
         layerConf: {
@@ -19,34 +21,21 @@ export default {
         :id="'layer-component-icon-sub-menu-' + layerConf.id"
         class="layer-component-icon-sub-menu"
     >
-        <button
+        <IconButton
             :id="'layer-component-icon-sub-menu-button-' + layerConf.id"
-            class="layer-component-icon-sub-menu-button btn"
+            :class-array="['layer-component-icon-sub-menu-button, btn-light']"
             data-bs-toggle="collapse"
             :data-bs-target="'#collapseSubMenu-' + layerConf.id"
-            tabindex="0"
-            :title="$t('common:tree.iconSubMenu')"
-            :aria-label="$t('common:tree.iconSubMenu')"
-        >
-            <i class="bi-sliders" />
-        </button>
+            :icon="'bi-sliders'"
+            :aria="$t('common:tree.iconSubMenu')"
+        />
     </div>
 </template>
 
 <style lang="scss" scoped>
     @import "~variables";
-    @import "~mixins";
 
     .layer-component-icon-sub-menu {
         font-size: $font-size-base;
-
-        .layer-component-icon-sub-menu-button {
-            &:hover {
-                @include primary_action_hover;
-            }
-            &:focus {
-                @include primary_action_focus;
-            }
-        }
     }
 </style>
