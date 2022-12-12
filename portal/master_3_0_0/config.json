@@ -84,6 +84,9 @@
             }
           },
           {
+            "type": "fileImport"
+          },
+          {
             "type": "openConfig"
           },
           {
