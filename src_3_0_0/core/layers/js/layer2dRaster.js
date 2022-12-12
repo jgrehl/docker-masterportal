@@ -10,8 +10,7 @@ import Layer2d from "./layer2d";
  */
 export default function Layer2dRaster (attributes) {
     const defaultAttributes = {
-        infoFormat: "text/xml",
-        crs: mapCollection.getMapView("2D").getProjection().getCode()
+        infoFormat: "text/xml"
     };
 
     this.attributes = Object.assign(defaultAttributes, attributes);

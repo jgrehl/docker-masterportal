@@ -23,7 +23,7 @@ describe("src_3_0_0/core/js/layers/layer2dVectorSensorThings.js", () => {
                 return {
                     getProjection: () => {
                         return {
-                            getCode: () => "EPSG:25832"
+                            getCode: () => "EPSG:4326"
                         };
                     }
                 };
@@ -579,14 +579,10 @@ describe("src_3_0_0/core/js/layers/layer2dVectorSensorThings.js", () => {
             sensorThingsLayer.updateFeatureLocation({});
             expect(feature.getGeometry().getCoordinates()).to.deep.equal(coordinates);
         });
+
         it("should update the coordinates", () => {
-            store.getters = {
-                "Maps/projection": {
-                    getCode: () => "EPSG:25832"
-                }
-            };
             sensorThingsLayer.updateFeatureLocation(feature, observation);
-            expect(feature.getGeometry().getCoordinates()).to.deep.equal([-400603.08723813354, -7845263.190976434]);
+            expect(feature.getGeometry().getCoordinates()).to.deep.equal([566625.84, 5928050.84]);
         });
     });
 
