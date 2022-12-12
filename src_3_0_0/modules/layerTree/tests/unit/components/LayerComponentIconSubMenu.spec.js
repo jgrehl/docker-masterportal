@@ -54,6 +54,5 @@ describe("src_3_0_0/modules/layerTree/components/LayerComponentIconSubMenu.vue",
 
         expect(wrapper.find("#layer-component-icon-sub-menu-" + propsData.layerConf.id).exists()).to.be.true;
         expect(wrapper.find("#layer-component-icon-sub-menu-button-" + propsData.layerConf.id).exists()).to.be.true;
-        expect(wrapper.findAll("button").length).to.be.equals(1);
     });
 });
