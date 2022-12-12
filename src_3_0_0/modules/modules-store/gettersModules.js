@@ -9,6 +9,7 @@ import GetFeatureInfo from "../getFeatureInfo/components/GetFeatureInfo.vue";
 import LayerInformation from "../layerInformation/components/LayerInformation.vue";
 import LayerPills from "../layerPills/components/LayerPills.vue";
 import Measure from "../measure/components/MeasureInMap.vue";
+import MouseHover from "../mouseHover/components/MouseHover.vue";
 import OpenConfig from "../openConfig/components/OpenConfig.vue";
 import PrintMap from "../print/components/PrintMap.vue";
 import Routing from "../routing/components/RoutingTemplate.vue";
@@ -29,6 +30,7 @@ const getters = {
             layerInformation: LayerInformation,
             layerPills: LayerPills,
             measure: Measure,
+            mouseHover: MouseHover,
             openConfig: OpenConfig,
             print: PrintMap,
             routing: Routing,
