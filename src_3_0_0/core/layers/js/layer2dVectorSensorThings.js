@@ -1,5 +1,6 @@
 import {buffer, containsExtent} from "ol/extent";
 import Cluster from "ol/source/Cluster";
+import crs from "@masterportal/masterportalapi/src/crs";
 import {GeoJSON} from "ol/format";
 import moment from "moment";
 import "moment-timezone";
@@ -211,6 +212,9 @@ Layer2dVectorSensorThings.prototype.createMqttConnectionToSensorThings = functio
             phenomenonTime = this.getLocalTimeFormat(observation.phenomenonTime, timezone);
 
         this.updateObservationForDatastreams(feature, datastreamId, observation);
+        if (this.get("observeLocation")) {
+            this.updateFeatureLocation(feature, observation);
+        }
         this.updateFeatureProperties(feature, datastreamId, observation.result, phenomenonTime, showNoDataValue, noDataValue);
     });
 };
@@ -1131,6 +1135,9 @@ Layer2dVectorSensorThings.prototype.unsubscribeFromSensorThings = function (data
     Object.entries(subscriptionTopics).forEach(([id, isTopicSubscribed]) => {
         if (isTopicSubscribed === true && !Object.prototype.hasOwnProperty.call(datastreamIdsAssoc, id)) {
             mqttClient.unsubscribe("v" + version + "/Datastreams(" + id + ")/Observations");
+            if (this.get("observeLocation")) {
+                mqttClient.unsubscribe("v" + version + "/Datastreams(" + id + ")/Thing/Locations");
+            }
             subscriptionTopics[id] = false;
         }
     });
@@ -1155,6 +1162,9 @@ Layer2dVectorSensorThings.prototype.subscribeToSensorThings = function (dataStre
     dataStreamIds.forEach(id => {
         if (id && !subscriptionTopics[id]) {
             mqttClient.subscribe("v" + version + "/Datastreams(" + id + ")/Observations", mqttSubscribeOptions);
+            if (this.get("observeLocation")) {
+                mqttClient.subscribe("v" + version + "/Datastreams(" + id + ")/Thing/Locations", mqttSubscribeOptions);
+            }
             subscriptionTopics[id] = true;
         }
     });
@@ -1179,6 +1189,23 @@ Layer2dVectorSensorThings.prototype.updateObservationForDatastreams = function (
             datastream.Observations = [observation];
         }
     });
+};
+
+/**
+* Updates the location of a feature.
+* @param {ol/Feature} feature feature to be updated
+* @param {Object} observation the observation to update the old coordinates with
+* @returns {void}
+*/
+Layer2dVectorSensorThings.prototype.updateFeatureLocation = function (feature, observation) {
+    if (typeof feature?.getGeometry !== "function" || !Array.isArray(observation?.location?.geometry?.coordinates) || !observation.location.geometry.coordinates.length) {
+        return;
+    }
+
+    const mapProjection = this.get("crs"),
+        coordinates = this.get("epsg") !== mapProjection ? crs.transform(this.get("epsg"), mapProjection, observation.location.geometry.coordinates) : observation.location.geometry.coordinates;
+
+    feature.getGeometry().setCoordinates(coordinates);
 };
 
 /**
