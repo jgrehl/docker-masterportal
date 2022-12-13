@@ -30,7 +30,7 @@ const mutations = {
         layerConfigs.forEach(config => {
             const replacement = config.layer,
                 id = config.id,
-                assigned = replaceInNestedValues(state.layerConfig, "Layer", replacement, {key: "id", value: id}, "Ordner");
+                assigned = replaceInNestedValues(state.layerConfig, "elements", replacement, {key: "id", value: id});
 
             if (assigned.length > 1) {
                 console.warn(`Replaced ${assigned.length} layers in state.layerConfig with id: ${id}. Layer was found ${assigned.length} times. You have to correct your config!`);
