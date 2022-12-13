@@ -24,32 +24,37 @@ describe("src_3_0_0/modules/layerTree/components/FolderComponent.vue", () => {
             id: "1",
             name: "layer_1",
             typ: "WMS",
+            type: "layer",
             visibility: false
         };
         layer_2 = {
             id: "2",
             name: "layer_2",
             typ: "WMS",
+            type: "layer",
             visibility: false
         };
         layer_3 = {
             id: "3",
             name: "layer_3",
             typ: "WFS",
+            type: "layer",
             visibility: false
         };
-        folder = {
-            Titel: "Titel Ebene 1",
-            Ordner: [
+        folder =
+        {
+            name: "Titel Ebene 1",
+            type: "folder",
+            elements: [
                 {
-                    Titel: "Titel Ebene 2",
-                    Layer: [layer_1, layer_2],
-                    Ordner: [
+                    name: "Titel Ebene 2",
+                    type: "folder",
+                    elements: [layer_1, layer_2,
                         {
-                            Titel: "Titel Ebene 3",
-                            Layer: [layer_3]
-                        }
-                    ]
+                            name: "Titel Ebene 3",
+                            type: "folder",
+                            elements: [layer_3]
+                        }]
                 }
             ]
         };
@@ -85,12 +90,9 @@ describe("src_3_0_0/modules/layerTree/components/FolderComponent.vue", () => {
 
     it("renders a folder with 1 layers without checkbox", () => {
         propsData.conf = {
-            Titel: "Titel",
-            Ordner: [
-                {
-                    Layer: [layer_1]
-                }
-            ]
+            name: "Titel",
+            type: "folder",
+            elements: [layer_1]
         };
         wrapper = shallowMount(FolderComponent, {
             global: {
@@ -106,12 +108,9 @@ describe("src_3_0_0/modules/layerTree/components/FolderComponent.vue", () => {
     });
     it("renders a folder with 2 layers", () => {
         propsData.conf = {
-            Titel: "Titel",
-            Ordner: [
-                {
-                    Layer: [layer_1, layer_2]
-                }
-            ]
+            name: "Titel",
+            type: "folder",
+            elements: [layer_1, layer_2]
         };
         wrapper = shallowMount(FolderComponent, {
             global: {
@@ -156,7 +155,6 @@ describe("src_3_0_0/modules/layerTree/components/FolderComponent.vue", () => {
         inputs = wrapper.findAll("input");
 
         expect(wrapper.find(".folder").exists()).to.be.true;
-        // console.log(wrapper.html());
         expect(wrapper.find(".folder > div").text()).to.be.equals("Titel Ebene 1");
         expect(wrapper.find(".folder > div").classes()).to.include("bold");
         expect(inputs.length).to.be.equals(1);
