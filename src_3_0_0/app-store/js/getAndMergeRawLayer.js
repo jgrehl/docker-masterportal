@@ -12,7 +12,7 @@ export function getAndMergeRawLayer (layerConf, treeType = "light") {
     const rawLayer = mergeRawLayer(layerConf, rawLayerList.getLayerWhere({id: layerConf?.id}));
 
     // use layerConf, if layer is not available in rawLayerList (services.json)
-    return addShowInLayerTree(rawLayer || layerConf, treeType);
+    return addAdditional(rawLayer || layerConf, treeType);
 }
 
 /**
@@ -26,8 +26,9 @@ export function getAndMergeRawLayer (layerConf, treeType = "light") {
  * @param {Object} [treeType="light"] the type for topic tree
  * @returns {Object} The raw layer
  */
-export function addShowInLayerTree (rawLayer, treeType) {
+export function addAdditional (rawLayer, treeType) {
     if (rawLayer) {
+        rawLayer.type = "layer";
         if (treeType === "light" || rawLayer.visibility) {
             rawLayer.showInLayerTree = true;
         }
@@ -170,7 +171,7 @@ export function getAndMergeAllRawLayers (treeConfig = {}) {
     let relatedWMSLayerIds = [];
 
     for (let i = 0; i < layerList.length; i++) {
-        const rawLayer = addShowInLayerTree(layerList[i], treeConfig.type),
+        const rawLayer = addAdditional(layerList[i], treeConfig.type),
             layerType = rawLayer.typ?.toUpperCase();
 
         if (!validLayerTypes.includes(layerType) ||
