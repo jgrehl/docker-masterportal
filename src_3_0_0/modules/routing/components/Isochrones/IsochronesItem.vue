@@ -166,11 +166,11 @@ export default {
         <RoutingSpeedProfileIcon
             v-for="option in constantsRouting.speedProfileOptions"
             :key="option"
+            :interaction="() => changeSpeedProfile(option)"
             :class="['pointer mr-4 ', isInputDisabled ? 'opacity-05' : '']"
             :speed-profile-id="option"
             :fill-color="option === settings.speedProfile ? '#0077ff' : '#000000'"
             :tooltip="$t('common:modules.tools.routing.speedprofiles.' + option)"
-            @click="changeSpeedProfile(option)"
         />
 
         <hr>
@@ -335,6 +335,10 @@ export default {
 .legend-container {
     width: 56px;
     text-align: center;
+}
+
+.pointer {
+  cursor: pointer;
 }
 
 .opacity-05 {
