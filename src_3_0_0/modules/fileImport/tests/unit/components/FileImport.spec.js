@@ -6,7 +6,7 @@ import sinon from "sinon";
 
 config.global.mocks.$t = key => key;
 
-describe("src_3_0_0/modules/fileImport/components/FileImport.vue", () => {
+describe.only("src_3_0_0/modules/fileImport/components/FileImport.vue", () => {
     const
         mockConfigJson = {
             Portalconfig: {
@@ -80,15 +80,6 @@ describe("src_3_0_0/modules/fileImport/components/FileImport.vue", () => {
             }});
 
         expect(wrapper.find("#file-import").exists()).to.be.true;
-    });
-
-    it("import method is initially set to \"auto\"", () => {
-        wrapper = shallowMount(FileImportComponent, {
-            global: {
-                plugins: [store]
-            }});
-
-        expect(wrapper.vm.selectedFiletype).to.equal("auto");
     });
     it("sets focus to first input control", async () => {
         const elem = document.createElement("div");
