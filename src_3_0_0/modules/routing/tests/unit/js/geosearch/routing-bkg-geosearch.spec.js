@@ -11,7 +11,7 @@ import {
 describe("src/modules/routing/js/geosearch/routing-bkg-geosearch.js", () => {
     beforeEach(() => {
         sinon.stub(i18next, "t").callsFake((...args) => args);
-        store.getters.getRestServiceById = () => ({url: "tmp"});
+        store.getters.restServiceById = () => ({url: "tmp"});
     });
 
     afterEach(() => {
