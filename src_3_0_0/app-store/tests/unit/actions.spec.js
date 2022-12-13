@@ -21,6 +21,7 @@ describe("src_3_0_0/app-store/actions.js", () => {
                 id: "453",
                 name: "name453",
                 typ: "WMS",
+                type: "layer",
                 datasets: [{
                     md_id: "B6A59A2B-2D40-4676-9094-0EB73039ED34",
                     md_name: "md_name_453"
@@ -31,6 +32,7 @@ describe("src_3_0_0/app-store/actions.js", () => {
                 id: "452",
                 name: "name452",
                 typ: "WMS",
+                type: "layer",
                 datasets: [{
                     md_id: "B6A59A2B-2D40-4676-9094-efg",
                     md_name: "md_name_452"
@@ -41,6 +43,7 @@ describe("src_3_0_0/app-store/actions.js", () => {
                 id: "1132",
                 name: "name1132",
                 typ: "SENSORTHINGS",
+                type: "layer",
                 datasets: [{
                     md_id: "B6A59A2B-2D40-4676-9094-abc",
                     md_name: "md_name_1132"
@@ -51,6 +54,7 @@ describe("src_3_0_0/app-store/actions.js", () => {
                 id: "10220",
                 name: "layer10220",
                 typ: "WFS",
+                type: "layer",
                 datasets: [{
                     md_id: "B6A59A2B-2D40-4676-9094-hghghg",
                     md_name: "md_name_10220"
@@ -60,13 +64,13 @@ describe("src_3_0_0/app-store/actions.js", () => {
             {
                 id: "451",
                 name: "name451",
-                typ: "WFS"
+                typ: "WFS",
+                type: "layer"
             },
             {
                 id: "1103",
                 name: "Überschwemmungsgebiete",
                 typ: "WMS",
-
                 transparent: true,
                 transparency: 0,
                 datasets: [{
@@ -103,10 +107,12 @@ describe("src_3_0_0/app-store/actions.js", () => {
                 elements: [
                     {
                         id: "453",
+                        type: "layer",
                         visibility: true
                     },
                     {
-                        id: "452"
+                        id: "452",
+                        type: "layer"
                     }
                 ]
             },
@@ -115,10 +121,12 @@ describe("src_3_0_0/app-store/actions.js", () => {
                     {
                         id: "1132",
                         name: "100 Jahre Stadtgruen POIs",
+                        type: "layer",
                         visibility: true
                     },
                     {
-                        id: "10220"
+                        id: "10220",
+                        type: "layer"
                     }
                 ]
             }
@@ -133,10 +141,12 @@ describe("src_3_0_0/app-store/actions.js", () => {
                             "719"
                         ],
                         visibility: true,
+                        type: "layer",
                         name: "Geobasiskarten (farbig)"
                     },
                     {
-                        id: "453"
+                        id: "453",
+                        type: "layer"
                     }
                 ]
             },
@@ -155,12 +165,14 @@ describe("src_3_0_0/app-store/actions.js", () => {
                                         type: "folder",
                                         elements: [
                                             {
-                                                id: "1103"
+                                                id: "1103",
+                                                type: "layer"
                                             }
                                         ]
                                     },
                                     {
-                                        id: "10220"
+                                        id: "10220",
+                                        type: "layer"
                                     }
                                 ]
                             },
@@ -168,7 +180,12 @@ describe("src_3_0_0/app-store/actions.js", () => {
                                 id: "10220"
                             },
                             {
-                                id: "451"
+                                id: "10220",
+                                type: "layer"
+                            },
+                            {
+                                id: "451",
+                                type: "layer"
                             }
                         ]
                     }
@@ -305,10 +322,12 @@ describe("src_3_0_0/app-store/actions.js", () => {
                         {
                             id: "1132",
                             name: "100 Jahre Stadtgruen POIs",
+                            type: "layer",
                             visibility: true
                         },
                         {
-                            id: "10220"
+                            id: "10220",
+                            type: "layer"
                         },
                         {
                             name: "Titel",
@@ -320,10 +339,12 @@ describe("src_3_0_0/app-store/actions.js", () => {
                                     elements: [
                                         {
                                             id: "717",
+                                            type: "layer",
                                             visibility: true
                                         },
                                         {
                                             id: "718",
+                                            type: "layer",
                                             visibility: true
                                         },
                                         {
@@ -335,7 +356,8 @@ describe("src_3_0_0/app-store/actions.js", () => {
                                             elements: [
                                                 {
                                                     id: "1103",
-                                                    visibility: true
+                                                    visibility: true,
+                                                    type: "layer"
                                                 }
                                             ]
                                         }
@@ -372,6 +394,7 @@ describe("src_3_0_0/app-store/actions.js", () => {
                 url: "https://geodienste.hamburg.de/trees",
                 version: "1.4.3",
                 visibility: true,
+                type: "layer",
                 showInLayerTree: true,
                 maxScale: 2000,
                 minScale: 12
