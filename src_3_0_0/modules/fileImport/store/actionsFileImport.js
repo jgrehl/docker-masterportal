@@ -148,15 +148,6 @@ function getParsedCustomAttributes (feature) {
 }
 
 export default {
-    /**
-     * Sets the selected file type
-     * @param {Object} param.commit the commit
-     * @param {String} newFiletype the file type
-     * @returns {void}
-     */
-    setSelectedFiletype: ({commit}, newFiletype) => {
-        commit("setSelectedFiletype", newFiletype);
-    },
 
     /**
      * Sets the featureExtents
