@@ -1,30 +1,21 @@
-import Vuex from "vuex";
-import {config, shallowMount, createLocalVue} from "@vue/test-utils";
+import {createStore} from "vuex";
+import {config, shallowMount} from "@vue/test-utils";
 import FileImportComponent from "../../../components/FileImport.vue";
-import FileImport from "../../../store/indexFileImport";
 import {expect} from "chai";
+import sinon from "sinon";
 
-const localVue = createLocalVue();
+config.global.mocks.$t = key => key;
 
-localVue.use(Vuex);
-
-config.mocks.$t = key => key;
-
-describe("src/modules/tools/fileImport/components/FileImport.vue", () => {
+describe("src_3_0_0/modules/fileImport/components/FileImport.vue", () => {
     const
         mockConfigJson = {
             Portalconfig: {
-                menu: {
-                    tools: {
-                        children: {
-                            fileImport:
-                            {
-                                "name": "translate#common:menu.tools.fileImport",
-                                "icon": "bi-arrows-angle-expand",
-                                "renderToWindow": true
-                            }
+                navigationSecondary: {
+                    sections: [
+                        {
+                            "type": "fileImport"
                         }
-                    }
+                    ]
                 }
             }
         };
@@ -32,13 +23,43 @@ describe("src/modules/tools/fileImport/components/FileImport.vue", () => {
     let store, wrapper;
 
     beforeEach(() => {
-        store = new Vuex.Store({
+        mapCollection.clear();
+
+        store = createStore({
             namespaces: true,
             modules: {
-                Tools: {
+                namespaced: true,
+                Modules: {
                     namespaced: true,
                     modules: {
-                        FileImport
+                        namespaced: true,
+                        FileImport: {
+                            namespaced: true,
+                            getters: {
+                                layer: () => {
+                                    return {
+                                        getSource: () => ({getFeatures: () => []})
+                                    };
+                                },
+                                active: () => true,
+                                importedFileNames: () => [],
+                                selectedFiletype: () => "auto",
+                                featureExtents: () => ({
+                                    "file1": [0, 1, 2, 3],
+                                    "file3": [0, 1, 2, 3]
+                                })
+                            },
+                            mutations: {
+                                setImportedFileNames: sinon.stub(),
+                                setFeatureExtents: sinon.stub()
+                            }
+                        }
+                    }
+                },
+                Alerting: {
+                    namespaced: true,
+                    actions: {
+                        addSingleAlert: sinon.stub()
                     }
                 }
             },
@@ -46,30 +67,26 @@ describe("src/modules/tools/fileImport/components/FileImport.vue", () => {
                 configJson: mockConfigJson
             }
         });
-        store.commit("Tools/FileImport/setActive", true);
     });
 
     afterEach(() => {
-        if (wrapper) {
-            wrapper.destroy();
-        }
+        sinon.restore();
     });
 
     it("renders the fileImport", () => {
-        wrapper = shallowMount(FileImportComponent, {store, localVue});
+        wrapper = shallowMount(FileImportComponent, {
+            global: {
+                plugins: [store]
+            }});
 
-        expect(wrapper.find("#tool-file-import").exists()).to.be.true;
-    });
-
-    it("do not render the fileImport tool if not active", () => {
-        store.commit("Tools/FileImport/setActive", false);
-        wrapper = shallowMount(FileImportComponent, {store, localVue});
-
-        expect(wrapper.find("#tool-file-import").exists()).to.be.false;
+        expect(wrapper.find("#file-import").exists()).to.be.true;
     });
 
     it("import method is initially set to \"auto\"", () => {
-        wrapper = shallowMount(FileImportComponent, {store, localVue});
+        wrapper = shallowMount(FileImportComponent, {
+            global: {
+                plugins: [store]
+            }});
 
         expect(wrapper.vm.selectedFiletype).to.equal("auto");
     });
@@ -80,33 +97,59 @@ describe("src/modules/tools/fileImport/components/FileImport.vue", () => {
             document.body.appendChild(elem);
         }
 
-        wrapper = shallowMount(FileImportComponent, {store, localVue, attachTo: elem});
+        wrapper = shallowMount(FileImportComponent, {
+            global: {
+                plugins: [store]
+            },
+            attachTo: elem});
         wrapper.vm.setFocusToFirstControl();
         await wrapper.vm.$nextTick();
-        expect(wrapper.find(".upload-button-wrapper").element).to.equal(document.activeElement);
+        expect(wrapper.find(".btn-secondary").element).to.equal(document.activeElement);
     });
     it("modifies the imported file names", () => {
         const fileNames = ["file1", "file3"];
 
-        store = new Vuex.Store({
+        store = createStore({
             namespaces: true,
             modules: {
-                Tools: {
+                namespaced: true,
+                Modules: {
                     namespaced: true,
                     modules: {
-                        FileImport
+                        namespaced: true,
+                        FileImport: {
+                            namespaced: true,
+                            getters: {
+                                layer: () => {
+                                    return {
+                                        getSource: () => ({getFeatures: () => []})
+                                    };
+                                },
+                                active: () => true,
+                                importedFileNames: () => []
+                            },
+                            mutations: {
+                                setImportedFileNames: sinon.stub()
+                            }
+                        }
+                    }
+                },
+                Alerting: {
+                    namespaced: true,
+                    actions: {
+                        addSingleAlert: sinon.stub()
                     }
                 }
             },
             state: {
-                configJson: mockConfigJson,
-                layer: {
-                    getSource: () => ({getFeatures: () => []})
-                }
+                configJson: mockConfigJson
             }
         });
 
-        wrapper = shallowMount(FileImportComponent, {store, localVue});
+        wrapper = shallowMount(FileImportComponent, {
+            global: {
+                plugins: [store]
+            }});
         wrapper.vm.modifyImportedFileNames(fileNames);
 
         expect(wrapper.vm.importedFileNames).to.deep.equal([]);
@@ -119,7 +162,10 @@ describe("src/modules/tools/fileImport/components/FileImport.vue", () => {
             },
             fileNames = ["file1", "file3"];
 
-        wrapper = shallowMount(FileImportComponent, {store, localVue});
+        wrapper = shallowMount(FileImportComponent, {
+            global: {
+                plugins: [store]
+            }});
         wrapper.vm.modifyImportedFileExtent(featureExtents, fileNames);
 
         expect(wrapper.vm.featureExtents).to.deep.equal({"file1": [0, 1, 2, 3], "file3": [0, 1, 2, 3]});
