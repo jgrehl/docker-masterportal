@@ -17,7 +17,7 @@ export default {
      * @returns {void}
      */
     extendLayers ({commit, getters, state}) {
-        const layerContainer = getNestedValues(state.layerConfig, "Layer", "Ordner").flat(Infinity);
+        const layerContainer = getNestedValues(state.layerConfig, "elements", true).flat(Infinity);
 
         if (state.portalConfig?.tree?.type === "auto") {
             let layersStructured = [];
@@ -117,11 +117,11 @@ export default {
      * @returns {Boolean} true or false
      */
     addLayerToLayerConfig ({state}, {layerConfig, parentKey}) {
-        const layerContainer = getNestedValues(state.layerConfig, "Layer", "Ordner").flat(Infinity),
+        const layerContainer = getNestedValues(state.layerConfig, "elements", true).flat(Infinity),
             matchingLayer = layerContainer.find(layer =>layer.id === layerConfig.id);
 
         if (matchingLayer === undefined) {
-            state.layerConfig[parentKey].Layer.push(layerConfig);
+            state.layerConfig[parentKey].elements.push(layerConfig);
             return true;
         }
         return false;

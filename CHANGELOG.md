@@ -198,6 +198,7 @@
   - 'metaIDsToIgnore' (moved from config.js) only for tree type 'auto'
   - 'layerIDsToStyle' (moved from config.js) only for tree type 'auto'
   - 'categories': only for tree type 'auto', contains categories in datasets of layers. Tree is structured by them.
+  - configuration of 'Fachdaten' changed
 - the attribute 'cache' on the layer is no longer taken into account with tree.type 'auto
 - controls: a control can only be configured in config.json as "expandable". "bottomControl" is not longer supported.
 - 'supportedTreeTypes': attribute was added like 'supportedDevices' and 'supportedMapModes' to make it configurable in which tree type the module should be displayed; default value is light.

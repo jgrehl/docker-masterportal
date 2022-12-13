@@ -21,6 +21,7 @@ describe("src_3_0_0/app-store/actions.js", () => {
                 id: "453",
                 name: "name453",
                 typ: "WMS",
+                type: "layer",
                 datasets: [{
                     md_id: "B6A59A2B-2D40-4676-9094-0EB73039ED34",
                     md_name: "md_name_453"
@@ -31,6 +32,7 @@ describe("src_3_0_0/app-store/actions.js", () => {
                 id: "452",
                 name: "name452",
                 typ: "WMS",
+                type: "layer",
                 datasets: [{
                     md_id: "B6A59A2B-2D40-4676-9094-efg",
                     md_name: "md_name_452"
@@ -41,6 +43,7 @@ describe("src_3_0_0/app-store/actions.js", () => {
                 id: "1132",
                 name: "name1132",
                 typ: "SENSORTHINGS",
+                type: "layer",
                 datasets: [{
                     md_id: "B6A59A2B-2D40-4676-9094-abc",
                     md_name: "md_name_1132"
@@ -51,6 +54,7 @@ describe("src_3_0_0/app-store/actions.js", () => {
                 id: "10220",
                 name: "layer10220",
                 typ: "WFS",
+                type: "layer",
                 datasets: [{
                     md_id: "B6A59A2B-2D40-4676-9094-hghghg",
                     md_name: "md_name_10220"
@@ -60,12 +64,14 @@ describe("src_3_0_0/app-store/actions.js", () => {
             {
                 id: "451",
                 name: "name451",
-                typ: "WFS"
+                typ: "WFS",
+                type: "layer"
             },
             {
                 id: "1103",
                 name: "Überschwemmungsgebiete",
                 typ: "WMS",
+                type: "layer",
                 transparent: true,
                 transparency: 0,
                 datasets: [{
@@ -78,7 +84,8 @@ describe("src_3_0_0/app-store/actions.js", () => {
                 layers: "layer717",
                 maxScale: "10000",
                 minScale: "10",
-                "typ": "WMS"
+                typ: "WMS",
+                type: "layer"
             },
             {
                 id: "718",
@@ -86,7 +93,8 @@ describe("src_3_0_0/app-store/actions.js", () => {
                 layers: "layer718",
                 maxScale: "30000",
                 minScale: "30",
-                "typ": "WMS"
+                type: "layer",
+                typ: "WMS"
             },
             {
                 id: "719",
@@ -94,37 +102,42 @@ describe("src_3_0_0/app-store/actions.js", () => {
                 layers: "layer719",
                 maxScale: "20000",
                 minScale: "20",
-                "typ": "WMS"
+                type: "layer",
+                typ: "WMS"
             }
         ];
         layerConfig = {
             Hintergrundkarten: {
-                Layer: [
+                elements: [
                     {
                         id: "453",
+                        type: "layer",
                         visibility: true
                     },
                     {
-                        id: "452"
+                        id: "452",
+                        type: "layer"
                     }
                 ]
             },
             Fachdaten: {
-                Layer: [
+                elements: [
                     {
                         id: "1132",
                         name: "100 Jahre Stadtgruen POIs",
+                        type: "layer",
                         visibility: true
                     },
                     {
-                        id: "10220"
+                        id: "10220",
+                        type: "layer"
                     }
                 ]
             }
         };
         layerConfigCustom = {
             Hintergrundkarten: {
-                Layer: [
+                elements: [
                     {
                         id: [
                             "717",
@@ -132,43 +145,48 @@ describe("src_3_0_0/app-store/actions.js", () => {
                             "719"
                         ],
                         visibility: true,
+                        type: "layer",
                         name: "Geobasiskarten (farbig)"
                     },
                     {
-                        id: "453"
+                        id: "453",
+                        type: "layer"
                     }
                 ]
             },
             Fachdaten: {
-                Ordner: [
+                elements: [
                     {
-                        Titel: "Lage und Gebietszugehörigkeit",
-                        Ordner: [
+                        name: "Lage und Gebietszugehörigkeit",
+                        type: "folder",
+                        elements: [
                             {
-                                Titel: "Überschwemmungsgebiete",
-                                Ordner: [
+                                name: "Überschwemmungsgebiete",
+                                type: "folder",
+                                elements: [
                                     {
-                                        Titel: "Überschwemmungsgebiete",
-                                        Layer: [
+                                        name: "Überschwemmungsgebiete",
+                                        type: "folder",
+                                        elements: [
                                             {
-                                                id: "1103"
+                                                id: "1103",
+                                                type: "layer"
                                             }
                                         ]
-                                    }
-                                ],
-                                Layer: [
+                                    },
                                     {
-                                        id: "10220"
+                                        id: "10220",
+                                        type: "layer"
                                     }
                                 ]
-                            }
-                        ],
-                        Layer: [
-                            {
-                                id: "10220"
                             },
                             {
-                                id: "451"
+                                id: "10220",
+                                type: "layer"
+                            },
+                            {
+                                id: "451",
+                                type: "layer"
                             }
                         ]
                     }
@@ -254,7 +272,8 @@ describe("src_3_0_0/app-store/actions.js", () => {
                 maxScale: 30000,
                 minScale: 10,
                 showInLayerTree: true,
-                typ: "WMS"
+                typ: "WMS",
+                type: "layer"
             };
 
             state.layerConfig = layerConfigCustom;
@@ -297,43 +316,50 @@ describe("src_3_0_0/app-store/actions.js", () => {
 
         });
 
-        it("extendLayers for special configuration with 'Ordner'", () => {
+        it("extendLayers for special configuration with folders", () => {
             layerConfig = {
                 Fachdaten: {
-                    Layer: [
+                    elements: [
                         {
                             id: "1132",
                             name: "100 Jahre Stadtgruen POIs",
+                            type: "layer",
                             visibility: true
                         },
                         {
-                            id: "10220"
+                            id: "10220",
+                            type: "layer"
                         },
                         {
-                            Titel: "Titel",
-                            Ordner: [
+                            name: "Titel",
+                            type: "folder",
+                            elements: [
                                 {
-                                    Titel: "3 Layer",
-                                    Layer: [
+                                    name: "3 Layer",
+                                    type: "folder",
+                                    elements: [
                                         {
                                             id: "717",
+                                            type: "layer",
                                             visibility: true
                                         },
                                         {
                                             id: "718",
+                                            type: "layer",
                                             visibility: true
                                         },
                                         {
-                                            id: "719"
-                                        }
-                                    ],
-                                    Ordner: [
+                                            id: "719",
+                                            type: "layer"
+                                        },
                                         {
-                                            Titel: "Überschwemmungsgebiete",
-                                            Layer: [
+                                            name: "Überschwemmungsgebiete",
+                                            type: "folder",
+                                            elements: [
                                                 {
                                                     id: "1103",
-                                                    visibility: true
+                                                    visibility: true,
+                                                    type: "layer"
                                                 }
                                             ]
                                         }
@@ -358,7 +384,7 @@ describe("src_3_0_0/app-store/actions.js", () => {
         it("addLayerToLayerConfig", () => {
             layerConfig = {
                 Fachdaten: {
-                    Layer: []
+                    elements: []
                 }
             };
             state.layerConfig = layerConfig;
@@ -370,6 +396,7 @@ describe("src_3_0_0/app-store/actions.js", () => {
                 url: "https://geodienste.hamburg.de/trees",
                 version: "1.4.3",
                 visibility: true,
+                type: "layer",
                 showInLayerTree: true,
                 maxScale: 2000,
                 minScale: 12
@@ -377,9 +404,8 @@ describe("src_3_0_0/app-store/actions.js", () => {
             };
 
             actions.addLayerToLayerConfig({state}, {layerConfig: layerToAdd, parentKey: "Fachdaten"});
-            expect(state.layerConfig?.Fachdaten?.Layer.length).to.equal(1);
-            expect(state.layerConfig?.Fachdaten?.Layer[0]).to.deep.equal(layerToAdd);
-
+            expect(state.layerConfig?.Fachdaten?.elements.length).to.equal(1);
+            expect(state.layerConfig?.Fachdaten?.elements[0]).to.deep.equal(layerToAdd);
         });
     });
 });
