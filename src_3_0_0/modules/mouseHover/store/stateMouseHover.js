@@ -4,7 +4,7 @@ import Overlay from "ol/Overlay.js";
  * @typedef {Object} MouseHoverStates
  * @property {Object} overlay =new Overlay({}) mouseHover overlay (tooltip) - paramaters get set during initialization.
  * @property {Number} numFeaturesToShow The number of features that will be shown in the popup.
- * @property {Number} infoText The text that will be shown in the popup.
+ * @property {String} infoText The text that will be shown in the popup.
  * @property {Array} layersFromConfig Array with layers from the config.
  * @property {Array} layersFromConfig Array with layers from the config.
  * @property {Array} mouseHoverLayers Array with layers from the config that have mouseHoverInfos.
