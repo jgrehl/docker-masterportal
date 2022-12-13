@@ -52,11 +52,6 @@ export default {
     },
     async created () {
         this.initDirections();
-        const speedProfiles = await document.getElementsByClassName("speedProfile");
-
-        for (let i = 0; i < speedProfiles.length; i++) {
-            speedProfiles[i].addEventListener("click", this.changeSpeedProfile(speedProfiles[i].getElementsByTagName("title")[0].innerHTML.toUpperCase()));
-        }
     },
     beforeUnmount () {
         this.closeDirections();
@@ -163,12 +158,11 @@ export default {
         <RoutingSpeedProfileIcon
             v-for="option in constantsRouting.speedProfileOptions"
             :key="option"
+            :interaction="() => changeSpeedProfile(option)"
             :class="['pointer mr-4 ', isInputDisabled ? 'opacity-05' : '']"
-            class="speedProfile"
             :speed-profile-id="option"
             :fill-color="option === settings.speedProfile ? '#0077ff' : '#000000'"
             :tooltip="$t('common:modules.tools.routing.speedprofiles.' + option)"
-            @click="changeSpeedProfile(option)"
         />
 
         <hr>
