@@ -11,7 +11,7 @@ describe("src_3_0_0/shared/js/utils/replaceInNestedValues.js", () => {
     beforeEach(() => {
         layerConfig = {
             Hintergrundkarten: {
-                Layer: [
+                elements: [
                     {
                         id: "453",
                         visibility: true
@@ -20,7 +20,7 @@ describe("src_3_0_0/shared/js/utils/replaceInNestedValues.js", () => {
                 ]
             },
             Fachdaten: {
-                Layer: [
+                elements: [
                     {
                         id: "1132",
                         name: "100 Jahre Stadtgruen POIs",
@@ -59,13 +59,13 @@ describe("src_3_0_0/shared/js/utils/replaceInNestedValues.js", () => {
                 name: "name",
                 list: [{a: 1, b: 2}, {c: 3}]
             },
-            result = replaceInNestedValues(layerConfig, "Layer", replacement, {key: "id", value: replacement.id});
+            result = replaceInNestedValues(layerConfig, "elements", replacement, {key: "id", value: replacement.id});
 
         expect(result).to.be.an("array");
         expect(result.length).to.be.equals(1);
         expect(result[0]).to.be.deep.equals(replacement);
-        expect(layerConfig.Hintergrundkarten.Layer[0]).to.be.deep.equals(replacement);
-        expect(layerConfig.Hintergrundkarten.Layer[1]).to.be.deep.equals(backGroundLayer);
+        expect(layerConfig.Hintergrundkarten.elements[0]).to.be.deep.equals(replacement);
+        expect(layerConfig.Hintergrundkarten.elements[1]).to.be.deep.equals(backGroundLayer);
     });
 
     it("should replace one element twice", () => {
@@ -80,16 +80,16 @@ describe("src_3_0_0/shared/js/utils/replaceInNestedValues.js", () => {
                 list: [{a: 1, b: 2}, {c: 3}]
             };
 
-        layerConfig.Hintergrundkarten.Layer.push(layer);
-        result = replaceInNestedValues(layerConfig, "Layer", replacement, {key: "id", value: replacement.id});
+        layerConfig.Hintergrundkarten.elements.push(layer);
+        result = replaceInNestedValues(layerConfig, "elements", replacement, {key: "id", value: replacement.id});
 
         expect(result).to.be.an("array");
         expect(result.length).to.be.equals(2);
         expect(result[0]).to.be.deep.equals(replacement);
         expect(result[1]).to.be.deep.equals(replacement);
-        expect(layerConfig.Hintergrundkarten.Layer[0]).to.be.deep.equals(replacement);
-        expect(layerConfig.Hintergrundkarten.Layer[2]).to.be.deep.equals(replacement);
-        expect(layerConfig.Hintergrundkarten.Layer[1]).to.be.deep.equals(backGroundLayer);
+        expect(layerConfig.Hintergrundkarten.elements[0]).to.be.deep.equals(replacement);
+        expect(layerConfig.Hintergrundkarten.elements[2]).to.be.deep.equals(replacement);
+        expect(layerConfig.Hintergrundkarten.elements[1]).to.be.deep.equals(backGroundLayer);
     });
 
     it("should replace no element, obj must be unchanged", () => {
@@ -100,7 +100,7 @@ describe("src_3_0_0/shared/js/utils/replaceInNestedValues.js", () => {
                 name: "name",
                 list: [{a: 1, b: 2}, {c: 3}]
             },
-            result = replaceInNestedValues(layerConfig, "Layer", replacement, {key: "id", value: "abc"});
+            result = replaceInNestedValues(layerConfig, "elements", replacement, {key: "id", value: "abc"});
 
         expect(result).to.be.an("array");
         expect(result.length).to.be.equals(0);
@@ -117,7 +117,7 @@ describe("src_3_0_0/shared/js/utils/replaceInNestedValues.js", () => {
 
         layerConfig = {
             Fachdaten: {
-                Layer: [
+                elements: [
                     {
                         id: "1132",
                         name: "100 Jahre Stadtgruen POIs",
@@ -127,27 +127,28 @@ describe("src_3_0_0/shared/js/utils/replaceInNestedValues.js", () => {
                         id: "10220"
                     },
                     {
-                        Titel: "Titel",
-                        Ordner: [
+                        name: "Emissionen",
+                        type: "folder",
+                        elements: [
                             {
-                                Titel: "3 Layer",
-                                Layer: [
+                                name: "Lärmschutzbereiche Flughafen Hamburg (FluLärmHmbV)",
+                                type: "folder",
+                                elements: [
                                     {
-                                        id: "717",
-                                        visibility: true
+                                        id: "2431",
+                                        visibility: false
                                     },
                                     {
-                                        id: "718",
-                                        visibility: true
+                                        id: "2430",
+                                        visibility: false
                                     },
                                     {
-                                        id: "719"
-                                    }
-                                ],
-                                Ordner: [
+                                        id: "2429"
+                                    },
                                     {
-                                        Titel: "Überschwemmungsgebiete",
-                                        Layer: [
+                                        name: "Überschwemmungsgebiete",
+                                        type: "folder",
+                                        elements: [
                                             {
                                                 id: "1103",
                                                 visibility: true
@@ -162,7 +163,7 @@ describe("src_3_0_0/shared/js/utils/replaceInNestedValues.js", () => {
             }
         };
 
-        result = replaceInNestedValues(layerConfig, "Layer", replacement, {key: "id", value: "1103"}, "Ordner");
+        result = replaceInNestedValues(layerConfig, "elements", replacement, {key: "id", value: "1103"}, "elements");
         expect(result).to.be.an("array");
         expect(result.length).to.be.equals(1);
         expect(result[0]).to.be.deep.equals(Object.assign(replacement, {visibility: true}));
@@ -173,7 +174,7 @@ describe("src_3_0_0/shared/js/utils/replaceInNestedValues.js", () => {
                 id: "10220",
                 visibility: true
             },
-            result = replaceInNestedValues(layerConfig, "Layer", replacement, {key: "id", value: replacement.id}),
+            result = replaceInNestedValues(layerConfig, "elements", replacement, {key: "id", value: replacement.id}),
             newResult = {
                 id: "10220",
                 name: "Dauerzählstellen (Rad) Hamburg",
@@ -194,7 +195,7 @@ describe("src_3_0_0/shared/js/utils/replaceInNestedValues.js", () => {
         expect(result).to.be.an("array");
         expect(result.length).to.be.equals(1);
         expect(result[0]).to.be.deep.equals(newResult);
-        expect(layerConfig.Fachdaten.Layer[1]).to.be.deep.equals(newResult);
+        expect(layerConfig.Fachdaten.elements[1]).to.be.deep.equals(newResult);
     });
 });
 

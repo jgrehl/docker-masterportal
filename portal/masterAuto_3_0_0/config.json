@@ -198,7 +198,7 @@
   "Themenconfig": {
     "Hintergrundkarten": {
       "name": "translate#common:tree.backgroundMaps",
-      "Layer": [
+      "elements": [
         {
           "id": "452",
           "name": "Luftbilder DOP 20 (DOP 40 mit Umland)",
@@ -225,7 +225,7 @@
       ]
     },
     "Fachdaten": {
-      "Layer": [
+      "elements": [
         {
           "id" : "2423",
           "name" : "Gemarkungen",

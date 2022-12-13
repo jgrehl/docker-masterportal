@@ -1,5 +1,5 @@
 import rawLayerList from "@masterportal/masterportalapi/src/rawLayerList";
-import {addShowInLayerTree, getAndMergeAllRawLayers, getAndMergeRawLayer} from "../../../js/getAndMergeRawLayer.js";
+import {addAdditional, getAndMergeAllRawLayers, getAndMergeRawLayer} from "../../../js/getAndMergeRawLayer.js";
 import {expect} from "chai";
 import sinon from "sinon";
 
@@ -37,10 +37,11 @@ describe("src_3_0_0/app-store/js/getAndMergeRawLayer.js", () => {
 
             layerConfig = {
                 Hintergrundkarten: {
-                    Layer: [
+                    elements: [
                         {
                             id: "453",
-                            visibility: true
+                            visibility: true,
+                            type: "layer"
                         }
                     ]
                 }
@@ -50,7 +51,7 @@ describe("src_3_0_0/app-store/js/getAndMergeRawLayer.js", () => {
             });
             sinon.stub(rawLayerList, "getLayerList").returns(simpleLayerList);
 
-            result = getAndMergeRawLayer(layerConfig.Hintergrundkarten.Layer[0]);
+            result = getAndMergeRawLayer(layerConfig.Hintergrundkarten.elements[0]);
 
             expect(result).not.to.be.null;
             expect(result.id).to.be.equals("453");
@@ -61,7 +62,7 @@ describe("src_3_0_0/app-store/js/getAndMergeRawLayer.js", () => {
         it("should return a merged raw layer, if ids are in an array", () => {
             layerConfig = {
                 Hintergrundkarten: {
-                    Layer: [
+                    elements: [
                         {
                             id: [
                                 "717",
@@ -69,7 +70,8 @@ describe("src_3_0_0/app-store/js/getAndMergeRawLayer.js", () => {
                                 "719"
                             ],
                             visibility: true,
-                            name: "Geobasiskarten (farbig)"
+                            name: "Geobasiskarten (farbig)",
+                            type: "layer"
                         }
                     ]
                 }
@@ -108,7 +110,7 @@ describe("src_3_0_0/app-store/js/getAndMergeRawLayer.js", () => {
             });
             sinon.stub(rawLayerList, "getLayerList").returns(simpleLayerList);
 
-            result = getAndMergeRawLayer(layerConfig.Hintergrundkarten.Layer[0]);
+            result = getAndMergeRawLayer(layerConfig.Hintergrundkarten.elements[0]);
 
             expect(result).not.to.be.null;
             expect(result.id).to.be.equals("717");
@@ -122,10 +124,11 @@ describe("src_3_0_0/app-store/js/getAndMergeRawLayer.js", () => {
         it("should return a merged raw layer, if layer is grouped", () => {
             layerConfig = {
                 Fachdaten: {
-                    Layer: [
+                    elements: [
                         {
-                            Titel: "Gruppenlayer",
-                            Layer: [
+                            name: "Gruppenlayer",
+                            type: "folder",
+                            elements: [
                                 {
                                     id: "xyz",
                                     children: [
@@ -161,7 +164,7 @@ describe("src_3_0_0/app-store/js/getAndMergeRawLayer.js", () => {
             });
             sinon.stub(rawLayerList, "getLayerList").returns(simpleLayerList);
 
-            result = getAndMergeRawLayer(layerConfig.Fachdaten.Layer[0].Layer[0]);
+            result = getAndMergeRawLayer(layerConfig.Fachdaten.elements[0].elements[0]);
 
             expect(result).not.to.be.null;
             expect(result.id).to.be.equals("xyz");
@@ -177,16 +180,17 @@ describe("src_3_0_0/app-store/js/getAndMergeRawLayer.js", () => {
         });
     });
 
-    describe("addShowInLayerTree", () => {
+    describe("addAdditional", () => {
         it("should set showInLayerTree to true, if treeType is 'light'", () => {
             const rawLayer = {
                     id: "1"
                 },
                 treeType = "light";
 
-            expect(addShowInLayerTree(rawLayer, treeType)).to.deep.equals({
+            expect(addAdditional(rawLayer, treeType)).to.deep.equals({
                 id: "1",
-                showInLayerTree: true
+                showInLayerTree: true,
+                type: "layer"
             });
         });
 
@@ -196,9 +200,10 @@ describe("src_3_0_0/app-store/js/getAndMergeRawLayer.js", () => {
                 },
                 treeType = "custom";
 
-            expect(addShowInLayerTree(rawLayer, treeType)).to.deep.equals({
+            expect(addAdditional(rawLayer, treeType)).to.deep.equals({
                 id: "2",
-                showInLayerTree: false
+                showInLayerTree: false,
+                type: "layer"
             });
         });
 
@@ -209,10 +214,11 @@ describe("src_3_0_0/app-store/js/getAndMergeRawLayer.js", () => {
                 },
                 treeType = "custom";
 
-            expect(addShowInLayerTree(rawLayer, treeType)).to.deep.equals({
+            expect(addAdditional(rawLayer, treeType)).to.deep.equals({
                 id: "3",
                 showInLayerTree: true,
-                visibility: true
+                visibility: true,
+                type: "layer"
             });
         });
 
@@ -223,10 +229,11 @@ describe("src_3_0_0/app-store/js/getAndMergeRawLayer.js", () => {
                 },
                 treeType = "auto";
 
-            expect(addShowInLayerTree(rawLayer, treeType)).to.deep.equals({
+            expect(addAdditional(rawLayer, treeType)).to.deep.equals({
                 id: "4",
                 showInLayerTree: true,
-                visibility: true
+                visibility: true,
+                type: "layer"
             });
         });
 
@@ -238,10 +245,11 @@ describe("src_3_0_0/app-store/js/getAndMergeRawLayer.js", () => {
                 },
                 treeType = "custom";
 
-            expect(addShowInLayerTree(rawLayer, treeType)).to.deep.equals({
+            expect(addAdditional(rawLayer, treeType)).to.deep.equals({
                 id: "5",
                 showInLayerTree: true,
-                visibility: false
+                visibility: false,
+                type: "layer"
             });
         });
 
@@ -253,10 +261,11 @@ describe("src_3_0_0/app-store/js/getAndMergeRawLayer.js", () => {
                 },
                 treeType = "custom";
 
-            expect(addShowInLayerTree(rawLayer, treeType)).to.deep.equals({
+            expect(addAdditional(rawLayer, treeType)).to.deep.equals({
                 id: "6",
                 showInLayerTree: true,
-                visibility: true
+                visibility: true,
+                type: "layer"
             });
         });
     });
