@@ -2,6 +2,13 @@
 export default {
     name: "RoutingSpeedProfileIcon",
     props: {
+        interaction: {
+            type: Function,
+            required: false,
+            default: () => {
+                return false;
+            }
+        },
         speedProfileId: {
             type: String,
             required: true
@@ -27,6 +34,8 @@ export default {
         width="24px"
         class="m-1"
         :fill="fillColor"
+        @click="interaction"
+        @keydown.enter="interaction"
     >
         <title>{{ tooltip }}</title>
 
