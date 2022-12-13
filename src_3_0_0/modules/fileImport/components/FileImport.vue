@@ -1,7 +1,5 @@
 <script>
 import {mapActions, mapGetters, mapMutations} from "vuex";
-import getters from "../store/gettersFileImport";
-import mutations from "../store/mutationsFileImport";
 import isObject from "../../../shared/js/utils/isObject";
 import store from "../../../app-store";
 import FlatButton from "../../../shared/modules/buttons/components/FlatButton.vue";
@@ -15,7 +13,7 @@ export default {
         };
     },
     computed: {
-        ...mapGetters("Modules/FileImport", Object.keys(getters)),
+        ...mapGetters("Modules/FileImport", ["importedFileNames", "enableZoomToExtend"]),
 
         dropZoneAdditionalClass: function () {
             return this.dzIsDropHovering ? "dzReady" : "";
@@ -44,7 +42,7 @@ export default {
             "setSelectedFiletype"
         ]),
         ...mapActions("Maps", ["addNewLayerIfNotExists", "zoomToExtent"]),
-        ...mapMutations("Modules/FileImport", Object.keys(mutations)),
+        ...mapMutations("Modules/FileImport", ["setFeatureExtents", "setLayer"]),
 
         /**
          * Sets the focus to the first control
