@@ -25,11 +25,13 @@ describe("src_3_0_0/app-store/getters.js", () => {
                     Fachdaten: {
                         elements: [
                             {
-                                id: 1
+                                id: 1,
+                                type: "layer"
                             },
                             {
                                 id: 2,
-                                visibility: true
+                                visibility: true,
+                                type: "layer"
                             }
                         ]
                     },
@@ -37,10 +39,12 @@ describe("src_3_0_0/app-store/getters.js", () => {
                         elements: [
                             {
                                 id: 100,
-                                visibility: true
+                                visibility: true,
+                                type: "layer"
                             },
                             {
-                                id: 200
+                                id: 200,
+                                type: "layer"
                             }
                         ]
                     }
@@ -50,18 +54,22 @@ describe("src_3_0_0/app-store/getters.js", () => {
             expect(getters.allLayerConfigs(stateAppStore)).to.be.an("array").that.is.empty;
             expect(getters.allLayerConfigs(state)).to.be.an("array").to.deep.equals([
                 {
-                    id: 1
+                    id: 1,
+                    type: "layer"
                 },
                 {
                     id: 2,
-                    visibility: true
+                    visibility: true,
+                    type: "layer"
                 },
                 {
                     id: 100,
-                    visibility: true
+                    visibility: true,
+                    type: "layer"
                 },
                 {
-                    id: 200
+                    id: 200,
+                    type: "layer"
                 }
             ]);
         });
@@ -72,17 +80,20 @@ describe("src_3_0_0/app-store/getters.js", () => {
             const greenLayer = {
                     id: "1132",
                     name: "100 Jahre Stadtgruen POIs",
-                    visibility: true
+                    visibility: true,
+                    type: "layer"
                 },
                 layerConfig = {
                     Hintergrundkarten: {
                         elements: [
                             {
                                 id: "453",
-                                visibility: true
+                                visibility: true,
+                                type: "layer"
                             },
                             {
-                                id: "452"
+                                id: "452",
+                                type: "layer"
                             }
                         ]
                     },
@@ -90,7 +101,8 @@ describe("src_3_0_0/app-store/getters.js", () => {
                         elements: [
                             greenLayer,
                             {
-                                id: "10220"
+                                id: "10220",
+                                type: "layer"
                             }
                         ]
                     }
@@ -121,15 +133,16 @@ describe("src_3_0_0/app-store/getters.js", () => {
                         "13716"
                     ],
                     visibility: true,
-                    name: "Geobasiskarten (farbig)"
-                    // type: "layer"
+                    name: "Geobasiskarten (farbig)",
+                    type: "layer"
                 },
                 layerConfig = {
                     Hintergrundkarten: {
                         elements: [
                             layer,
                             {
-                                id: "453"
+                                id: "453",
+                                type: "layer"
                             }
                         ]
                     }
@@ -154,10 +167,12 @@ describe("src_3_0_0/app-store/getters.js", () => {
                             id: "xyz",
                             children: [
                                 {
-                                    id: "682"
+                                    id: "682",
+                                    type: "layer"
                                 },
                                 {
-                                    id: "1731"
+                                    id: "1731",
+                                    type: "layer"
                                 }
                             ],
                             visibility: true,
