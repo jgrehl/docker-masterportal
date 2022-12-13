@@ -29,6 +29,7 @@ describe("src_3_0_0/modules/layerTree/components/LayerTree.vue", () => {
             id: "1",
             name: "layer2D_1",
             typ: "WMS",
+            type: "layer",
             visibility: false,
             showInLayerTree: true
         };
@@ -36,6 +37,7 @@ describe("src_3_0_0/modules/layerTree/components/LayerTree.vue", () => {
             id: "2",
             name: "layer2D_2",
             typ: "WFS",
+            type: "layer",
             visibility: false,
             showInLayerTree: true
         };
@@ -43,6 +45,7 @@ describe("src_3_0_0/modules/layerTree/components/LayerTree.vue", () => {
             id: "2D_3",
             name: "layer2D_3",
             typ: "WFS",
+            type: "layer",
             visibility: false,
             showInLayerTree: true
         };
@@ -50,6 +53,7 @@ describe("src_3_0_0/modules/layerTree/components/LayerTree.vue", () => {
             id: "3",
             name: "layer3D",
             typ: "Terrain3D",
+            type: "layer",
             visibility: false,
             showInLayerTree: true
         };
@@ -57,6 +61,7 @@ describe("src_3_0_0/modules/layerTree/components/LayerTree.vue", () => {
             id: "11",
             name: "layerBG_1",
             typ: "WMS",
+            type: "layer",
             visibility: true,
             showInLayerTree: true
         };
@@ -64,6 +69,7 @@ describe("src_3_0_0/modules/layerTree/components/LayerTree.vue", () => {
             id: "12",
             name: "layerBG_2",
             typ: "WFS",
+            type: "layer",
             visibility: false,
             showInLayerTree: true
         };
@@ -78,21 +84,23 @@ describe("src_3_0_0/modules/layerTree/components/LayerTree.vue", () => {
             layerBG_1,
             layerBG_2
         ];
-        layersWithFolder = [{
-            Titel: "Titel Ebene 1",
-            Ordner: [
-                {
-                    Titel: "Titel Ebene 2",
-                    Layer: [layer2D_1, layer2D_2],
-                    Ordner: [
-                        {
-                            Titel: "Titel Ebene 3",
-                            Layer: [layer2D_3]
-                        }
-                    ]
-                }
-            ]
-        }];
+        layersWithFolder = [
+            {
+                name: "Titel Ebene 1",
+                type: "folder",
+                elements: [
+                    {
+                        name: "Titel Ebene 2",
+                        type: "folder",
+                        elements: [layer2D_1, layer2D_2,
+                            {
+                                name: "Titel Ebene 3",
+                                type: "folder",
+                                elements: [layer2D_3]
+                            }]
+                    }
+                ]
+            }];
         subjectDataLayers = layers2D;
         store = createStore({
             namespaces: true,
@@ -119,10 +127,10 @@ describe("src_3_0_0/modules/layerTree/components/LayerTree.vue", () => {
                 layerConfig: () => {
                     return {
                         Fachdaten: {
-                            Layer: subjectDataLayers
+                            elements: subjectDataLayers
                         },
                         Hintergrundkarten: {
-                            Layer: layersBG
+                            elements: layersBG
                         }
                     };
                 }
