@@ -336,15 +336,12 @@ export default {
     width: 56px;
     text-align: center;
 }
-
 .pointer {
   cursor: pointer;
 }
-
 .opacity-05 {
     opacity: 0.5;
 }
-
 h6 {
     font-size: $font-size-base;
 }
