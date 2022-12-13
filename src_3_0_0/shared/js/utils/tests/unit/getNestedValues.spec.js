@@ -92,43 +92,43 @@ describe("src_3_0_0/shared/js/utils/getNestedValues.js", () => {
 
     it("should respect searchKeyForArrays", () => {
         const json = {
-                Fachdaten: {
-                    Layer: [
+                "Fachdaten": {
+                    "elements": [
                         {
-                            id: "1132",
-                            name: "100 Jahre Stadtgruen POIs",
-                            visibility: true
+                            "id": "1",
+                            "type": "layer"
                         },
                         {
-                            id: "10220"
+                            "id": "2"
                         },
                         {
-                            Titel: "Titel",
-                            Ordner: [
+                            "name": "Ordner 1",
+                            "type": "folder",
+                            "elements": [
                                 {
-                                    Titel: "3 Layer",
-                                    Layer: [
+                                    "id": "3"
+                                },
+                                {
+                                    "name": "Ordner 2",
+                                    "type": "folder",
+                                    "elements": [
                                         {
-                                            id: "717",
-                                            visibility: true
+                                            "id": "4"
                                         },
                                         {
-                                            id: "718",
-                                            visibility: true
-                                        },
-                                        {
-                                            id: "719"
+                                            "id": "5"
                                         }
-                                    ],
-                                    Ordner: [
+                                    ]
+                                },
+                                {
+                                    "name": "Gruppenlayer",
+                                    "type": "group",
+                                    "elements": [
                                         {
-                                            Titel: "Überschwemmungsgebiete",
-                                            Layer: [
-                                                {
-                                                    id: "1103",
-                                                    visibility: true
-                                                }
-                                            ]
+                                            "id": "6"
+                                        },
+                                        {
+                                            "id": "7"
                                         }
                                     ]
                                 }
@@ -137,15 +137,16 @@ describe("src_3_0_0/shared/js/utils/getNestedValues.js", () => {
                     ]
                 }
             },
-            result = getNestedValues(json, "Layer", "Ordner").flat(Infinity);
+            result = getNestedValues(json, "elements", true).flat(Infinity);
 
-        expect(result.length).to.equal(6);
-        expect(result[0].id).to.equal("1132");
-        expect(result[1].id).to.equal("10220");
-        expect(result[2].id).to.equal("717");
-        expect(result[3].id).to.equal("718");
-        expect(result[4].id).to.equal("719");
-        expect(result[5].id).to.equal("1103");
+        expect(result.length).to.equal(7);
+        expect(result[0].id).to.equal("1");
+        expect(result[1].id).to.equal("2");
+        expect(result[2].id).to.equal("3");
+        expect(result[3].id).to.equal("4");
+        expect(result[4].id).to.equal("5");
+        expect(result[5].id).to.equal("6");
+        expect(result[6].id).to.equal("7");
     });
 });
 

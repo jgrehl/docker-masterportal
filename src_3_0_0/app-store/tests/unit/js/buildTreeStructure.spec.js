@@ -5,7 +5,7 @@ import getNestedValues from "../../../../shared/js/utils/getNestedValues";
 import {expect} from "chai";
 import sinon from "sinon";
 
-describe("src_3_0_0/app-store/js/buildTreeStructure.js", () => {
+describe.skip("src_3_0_0/app-store/js/buildTreeStructure.js", () => {
     const categories = [
             {
                 "key": "kategorie_opendata",
