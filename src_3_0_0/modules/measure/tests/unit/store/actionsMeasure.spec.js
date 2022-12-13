@@ -6,7 +6,7 @@ import source from "../../../js/measureSource";
 
 const {deleteFeatures} = actions;
 
-describe("src/modules/tools/measure/store/actionsMeasure", function () {
+describe("src_3_0_0/modules/measure/store/actionsMeasure", function () {
     let state, commit, rootGetters, clear;
 
     beforeEach(() => {
