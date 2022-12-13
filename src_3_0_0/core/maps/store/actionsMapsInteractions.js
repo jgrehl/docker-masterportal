@@ -126,7 +126,6 @@ export default {
         if (map.removeInteraction(interaction) === undefined) {
             const interactions = map.getInteractions().getArray(),
                 index = interactions.findIndex((anInteraction) => {
-                // console.log('interaction.ol_uid', interaction.ol_uid, anInteraction.ol_uid);
                     return anInteraction.ol_uid === interaction.ol_uid;
                 });
 

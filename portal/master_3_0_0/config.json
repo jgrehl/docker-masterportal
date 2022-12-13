@@ -190,7 +190,7 @@
   },
   "Themenconfig": {
     "Hintergrundkarten": {
-      "Layer": [
+      "elements": [
         {
           "id": "453",
           "name": "Geobasiskarten (HamburgDE)",
@@ -293,7 +293,7 @@
       ]
     },
     "Fachdaten": {
-      "Layer": [
+      "elements": [
         {
           "id": "10220",
           "name": "Dauerzählstellen (Rad) Hamburg",
@@ -307,11 +307,13 @@
           "visibility": true
         },
         {
-          "Titel": "Emissionen",
-          "Ordner": [
+          "name": "Emissionen",
+          "type": "folder",
+          "elements": [
             {
-              "Titel": "Lärmschutzbereiche Flughafen Hamburg (FluLärmHmbV)",
-              "Layer": [
+              "name": "Lärmschutzbereiche Flughafen Hamburg (FluLärmHmbV)",
+              "type": "folder",
+              "elements": [
                 {
                   "id": "2431",
                   "visibility": false
@@ -322,12 +324,11 @@
                 },
                 {
                   "id": "2429"
-                }
-              ],
-              "Ordner": [
+                },
                 {
-                  "Titel": "Überschwemmungsgebiete",
-                  "Layer": [
+                  "name": "Überschwemmungsgebiete",
+                  "type": "folder",
+                  "elements": [
                     {
                       "id": "1103",
                       "visibility": false

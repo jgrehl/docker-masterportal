@@ -38,11 +38,11 @@ export default {
             return this.layers.find(layer => layer.visibility === true) !== undefined;
         },
         folderId () {
-            return uniqueId(this.conf.Titel.replace(/[^a-zA-Z0-9]/g, ""));
+            return uniqueId(this.conf.name.replace(/[^a-zA-Z0-9]/g, ""));
         }
     },
     created () {
-        this.layers = getNestedValues(this.conf, "Layer", "Ordner").flat(Infinity);
+        this.layers = getNestedValues(this.conf, "elements", true).flat(Infinity);
     },
     methods: {
         ...mapMutations(["replaceByIdInLayerConfig"]),
@@ -59,7 +59,7 @@ export default {
          * @returns {void}
          */
         visibilityInLayerTreeChanged (value) {
-            const layers = getNestedValues(this.conf, "Layer", "Ordner").flat(Infinity),
+            const layers = getNestedValues(this.conf, "elements", true).flat(Infinity),
                 layerConfigs = [];
 
             layers.forEach(layer => {
@@ -107,7 +107,7 @@ export default {
                 :class="['fs-4', isOpen ? 'bi bi-folder2-open' : 'bi bi-folder2']"
                 role="img"
             />
-            {{ conf.Titel }}
+            {{ conf.name }}
         </div>
     </div>
 </template>
