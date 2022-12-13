@@ -131,7 +131,7 @@ describe("src/modules/tools/contact/store/actionsContact.js", () => {
                 },
                 rootGetters: {
                     portalTitle: "Test",
-                    getRestConfigById: id => id === "007" ? {url: "example.com"} : {}
+                    restServiceById: id => id === "007" ? {url: "example.com"} : {}
                 }
             });
         });
