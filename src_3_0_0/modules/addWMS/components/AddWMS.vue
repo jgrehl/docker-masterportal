@@ -184,6 +184,7 @@ export default {
                     url: this.wmsUrl,
                     version: this.version,
                     visibility: true,
+                    type: "layer",
                     showInLayerTree: true,
                     maxScale: object?.MaxScaleDenominator?.toString(),
                     minScale: object?.MinScaleDenominator?.toString()
