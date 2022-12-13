@@ -70,7 +70,7 @@ const actions = {
         }
         // use default csw_url from rest-services.json if csw_url not stated in the specific service
         else if (Config.cswId !== null && typeof Config.cswId !== "undefined") {
-            const service = rootGetters.getRestServiceById(Config.cswId);
+            const service = rootGetters.restServiceById(Config.cswId);
             let metaURL = "";
 
             if (service === undefined) {
