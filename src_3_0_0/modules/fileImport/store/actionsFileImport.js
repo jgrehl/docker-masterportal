@@ -340,7 +340,7 @@ export default {
         else {
             alertingMessage = {
                 category: "success",
-                content: "Hier könnte Ihre Meldung stehen" + {filename: fileName}
+                content: i18next.t("common:modules.tools.fileImport.alertingMessages.success", {filename: fileName})
             };
         }
         dispatch("Alerting/addSingleAlert", {

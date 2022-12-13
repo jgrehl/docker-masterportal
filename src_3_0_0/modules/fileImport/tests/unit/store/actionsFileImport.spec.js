@@ -1,5 +1,5 @@
 /**/
-import testAction from "../../../../../../../test/unittests/VueTestUtils";
+import testAction from "../../../../../../test/unittests/VueTestUtils";
 import actions from "../../../store/actionsFileImport";
 import importedState from "../../../store/stateFileImport";
 import rawSources from "../../resources/rawSources.js";
@@ -26,7 +26,13 @@ before(() => {
     });
 });
 
-describe("src/modules/tools/fileImport/store/actionsFileImport.js", () => {
+describe("src_3_0_0/modules/fileImport/store/actionsFileImport.js", () => {
+    beforeEach(() => {
+        mapCollection.clear();
+    });
+
+    afterEach(sinon.restore);
+
     describe("file import - file should add some features to the current draw layer", () => {
         const
             source = new VectorSource(),
@@ -42,7 +48,7 @@ describe("src/modules/tools/fileImport/store/actionsFileImport.js", () => {
             testAction(importKML, payload, importedState, {}, [{
                 type: "Alerting/addSingleAlert",
                 payload: {
-                    category: i18next.t("common:modules.alerting.categories.info"),
+                    category: "success",
                     content: i18next.t("common:modules.tools.fileImport.alertingMessages.success", {filename: payload.filename})},
                 dispatch: true
             }], {}, done, {"Maps/projectionCode": "EPSG:25832"});
@@ -54,7 +60,7 @@ describe("src/modules/tools/fileImport/store/actionsFileImport.js", () => {
             testAction(importKML, payload, importedState, {}, [{
                 type: "Alerting/addSingleAlert",
                 payload: {
-                    category: i18next.t("common:modules.alerting.categories.error"),
+                    category: "error",
                     content: i18next.t("common:modules.tools.fileImport.alertingMessages.missingFormat")
                 },
                 dispatch: true
@@ -67,7 +73,7 @@ describe("src/modules/tools/fileImport/store/actionsFileImport.js", () => {
             testAction(importKML, payload, importedState, {}, [{
                 type: "Alerting/addSingleAlert",
                 payload: {
-                    category: i18next.t("common:modules.alerting.categories.error"),
+                    category: "error",
                     content: i18next.t("common:modules.tools.fileImport.alertingMessages.missingFileContent")
                 },
                 dispatch: true
@@ -80,7 +86,7 @@ describe("src/modules/tools/fileImport/store/actionsFileImport.js", () => {
             testAction(importKML, payload, importedState, {}, [{
                 type: "Alerting/addSingleAlert",
                 payload: {
-                    category: i18next.t("common:modules.alerting.categories.error"),
+                    category: "error",
                     content: i18next.t("common:modules.tools.fileImport.alertingMessages.missingFileContent")
                 },
                 dispatch: true
@@ -93,7 +99,7 @@ describe("src/modules/tools/fileImport/store/actionsFileImport.js", () => {
             testAction(importKML, payload, importedState, {}, [{
                 type: "Alerting/addSingleAlert",
                 payload: {
-                    category: i18next.t("common:modules.alerting.categories.info"),
+                    category: "success",
                     content: i18next.t("common:modules.tools.fileImport.alertingMessages.success", {filename: payload.filename})},
                 dispatch: true
             }], {}, done, {"Maps/projectionCode": "EPSG:25832"});
@@ -105,7 +111,7 @@ describe("src/modules/tools/fileImport/store/actionsFileImport.js", () => {
             testAction(importKML, payload, importedState, {}, [{
                 type: "Alerting/addSingleAlert",
                 payload: {
-                    category: i18next.t("common:modules.alerting.categories.info"),
+                    category: "success",
                     content: i18next.t("common:modules.tools.fileImport.alertingMessages.success", {filename: payload.filename})},
                 dispatch: true
             }], {}, done, {"Maps/projectionCode": "EPSG:25832"});
@@ -119,7 +125,7 @@ describe("src/modules/tools/fileImport/store/actionsFileImport.js", () => {
             testAction(importKML, payload, tmpState, {}, [{
                 type: "Alerting/addSingleAlert",
                 payload: {
-                    category: i18next.t("common:modules.alerting.categories.error"),
+                    category: "error",
                     content: i18next.t("common:modules.tools.fileImport.alertingMessages.missingFileContent")},
                 dispatch: true
             }], {}, done);
