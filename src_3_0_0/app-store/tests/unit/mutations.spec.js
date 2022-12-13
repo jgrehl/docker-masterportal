@@ -9,25 +9,29 @@ const {
     state = {
         layerConfig: {
             Hintergrundkarten: {
-                Layer: [
+                elements: [
                     {
                         id: id,
-                        visibility: true
+                        visibility: true,
+                        type: "layer"
                     },
                     {
-                        id: "452"
+                        id: "452",
+                        type: "layer"
                     }
                 ]
             },
             Fachdaten: {
-                Layer: [
+                elements: [
                     {
                         id: "1132",
                         name: "100 Jahre Stadtgruen POIs",
-                        visibility: true
+                        visibility: true,
+                        type: "layer"
                     },
                     {
-                        id: "10220"
+                        id: "10220",
+                        type: "layer"
                     }
                 ]
             }
@@ -72,7 +76,7 @@ describe("src_3_0_0/app-store/mutations.js", () => {
 
         it("replaceByIdInLayerConfig layer is contained in layerConfig", () => {
             const toReplace = {
-                id: id,
+                id: id, // 453
                 visibility: true,
                 att1: "bla",
                 att2: [{
@@ -83,22 +87,22 @@ describe("src_3_0_0/app-store/mutations.js", () => {
 
             replaceByIdInLayerConfig(state, {layerConfigs: [{layer: toReplace, id: id}]});
 
-            expect(state.layerConfig?.Hintergrundkarten?.Layer).to.be.an("array");
-            expect(state.layerConfig?.Hintergrundkarten?.Layer.length).to.be.equals(2);
-            expect(Object.keys(state.layerConfig?.Hintergrundkarten?.Layer[0]).length).to.be.equals(4);
-            expect(state.layerConfig?.Hintergrundkarten?.Layer[0].id).to.be.equals(id);
-            expect(state.layerConfig?.Hintergrundkarten?.Layer[0].visibility).to.be.true;
-            expect(state.layerConfig?.Hintergrundkarten?.Layer[0].att1).to.be.equals("bla");
-            expect(state.layerConfig?.Hintergrundkarten?.Layer[0].att2).to.be.deep.equals(toReplace.att2);
-            expect(state.layerConfig?.Hintergrundkarten?.Layer[1].id).to.be.equals("452");
-            expect(Object.keys(state.layerConfig?.Hintergrundkarten?.Layer[1]).length).to.be.equals(1);
+            expect(state.layerConfig?.Hintergrundkarten?.elements).to.be.an("array");
+            expect(state.layerConfig?.Hintergrundkarten?.elements.length).to.be.equals(2);
+            expect(Object.keys(state.layerConfig?.Hintergrundkarten?.elements[0]).length).to.be.equals(5);
+            expect(state.layerConfig?.Hintergrundkarten?.elements[0].id).to.be.equals(id);
+            expect(state.layerConfig?.Hintergrundkarten?.elements[0].visibility).to.be.true;
+            expect(state.layerConfig?.Hintergrundkarten?.elements[0].att1).to.be.equals("bla");
+            expect(state.layerConfig?.Hintergrundkarten?.elements[0].att2).to.be.deep.equals(toReplace.att2);
+            expect(state.layerConfig?.Hintergrundkarten?.elements[1].id).to.be.equals("452");
+            expect(Object.keys(state.layerConfig?.Hintergrundkarten?.elements[1]).length).to.be.equals(2);
 
-            expect(state.layerConfig?.Fachdaten?.Layer).to.be.an("array");
-            expect(state.layerConfig?.Fachdaten?.Layer.length).to.be.equals(2);
-            expect(state.layerConfig?.Fachdaten?.Layer[0].id).to.be.equals("1132");
-            expect(Object.keys(state.layerConfig?.Fachdaten?.Layer[0]).length).to.be.equals(3);
-            expect(state.layerConfig?.Fachdaten?.Layer[1].id).to.be.equals("10220");
-            expect(Object.keys(state.layerConfig?.Fachdaten?.Layer[1]).length).to.be.equals(1);
+            expect(state.layerConfig?.Fachdaten?.elements).to.be.an("array");
+            expect(state.layerConfig?.Fachdaten?.elements.length).to.be.equals(2);
+            expect(state.layerConfig?.Fachdaten?.elements[0].id).to.be.equals("1132");
+            expect(Object.keys(state.layerConfig?.Fachdaten?.elements[0]).length).to.be.equals(4);
+            expect(state.layerConfig?.Fachdaten?.elements[1].id).to.be.equals("10220");
+            expect(Object.keys(state.layerConfig?.Fachdaten?.elements[1]).length).to.be.equals(2);
         });
 
         it("replaceByIdInLayerConfig layer is not contained in layerConfig", () => {
