@@ -13,7 +13,7 @@ export default {
         };
     },
     computed: {
-        ...mapGetters("Modules/FileImport", ["importedFileNames", "enableZoomToExtend"]),
+        ...mapGetters("Modules/FileImport", ["importedFileNames", "enableZoomToExtend", "featureExtents"]),
 
         dropZoneAdditionalClass: function () {
             return this.dzIsDropHovering ? "dzReady" : "";
@@ -38,8 +38,7 @@ export default {
     methods: {
         ...mapActions("Modules/FileImport", [
             "importKML",
-            "importGeoJSON",
-            "setSelectedFiletype"
+            "importGeoJSON"
         ]),
         ...mapActions("Maps", ["addNewLayerIfNotExists", "zoomToExtent"]),
         ...mapMutations("Modules/FileImport", ["setFeatureExtents", "setLayer"]),
