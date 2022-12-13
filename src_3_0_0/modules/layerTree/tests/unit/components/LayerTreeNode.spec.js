@@ -21,6 +21,7 @@ describe("src_3_0_0/modules/layerTree/components/LayerTreeNode.vue", () => {
             id: "1",
             name: "layer_1",
             typ: "WMS",
+            type: "layer",
             visibility: false,
             showInLayerTree: true
         };
@@ -28,6 +29,7 @@ describe("src_3_0_0/modules/layerTree/components/LayerTreeNode.vue", () => {
             id: "2",
             name: "layer_2",
             typ: "WMS",
+            type: "layer",
             visibility: false,
             showInLayerTree: true
         };
@@ -35,27 +37,30 @@ describe("src_3_0_0/modules/layerTree/components/LayerTreeNode.vue", () => {
             id: "3",
             name: "layer_3",
             typ: "WFS",
+            type: "layer",
             visibility: true,
             showInLayerTree: true
         };
         propsData = {
             conf: layer_1
         };
-        layersWithFolder = {
-            Titel: "Titel Ebene 1",
-            Ordner: [
-                {
-                    Titel: "Titel Ebene 2",
-                    Layer: [layer_1, layer_2],
-                    Ordner: [
-                        {
-                            Titel: "Titel Ebene 3",
-                            Layer: [layer_3]
-                        }
-                    ]
-                }
-            ]
-        };
+        layersWithFolder =
+            {
+                name: "Titel Ebene 1",
+                type: "folder",
+                elements: [
+                    {
+                        name: "Titel Ebene 2",
+                        type: "folder",
+                        elements: [layer_1, layer_2,
+                            {
+                                name: "Titel Ebene 3",
+                                type: "folder",
+                                elements: [layer_3]
+                            }]
+                    }
+                ]
+            };
         store = createStore({
             namespaces: true,
             modules: {
@@ -98,13 +103,13 @@ describe("src_3_0_0/modules/layerTree/components/LayerTreeNode.vue", () => {
         expect(wrapper.findAll("layer-tree-node-stub").length).to.be.equals(0);
         expect(wrapper.findAll("layer-stub").length).to.be.equals(1);
         expect(wrapper.vm.isFolder).to.be.false;
-        expect(wrapper.vm.isLayerArray).to.be.false;
+        expect(wrapper.vm.getLayerArray).to.be.deep.equals([]);
         expect(wrapper.vm.isLayer).to.be.true;
         expect(wrapper.vm.isLayerInFolderVisible).to.be.false;
     });
     it("renders a list of layers, but no folder", () => {
         propsData = {
-            conf: {Layer: [layer_1, layer_2]}
+            conf: {elements: [layer_1, layer_2]}
         };
         wrapper = shallowMount(LayerTreeNode, {
             global: {
@@ -118,7 +123,7 @@ describe("src_3_0_0/modules/layerTree/components/LayerTreeNode.vue", () => {
         expect(wrapper.findAll("layer-stub").length).to.be.equals(2);
         expect(wrapper.vm.layers.length).to.be.equals(2);
         expect(wrapper.vm.isFolder).to.be.false;
-        expect(wrapper.vm.isLayerArray).to.be.true;
+        expect(wrapper.vm.getLayerArray).to.be.deep.equals(propsData.conf.elements);
         expect(wrapper.vm.isLayer).to.be.false;
         expect(wrapper.vm.isLayerInFolderVisible).to.be.false;
     });
@@ -139,7 +144,7 @@ describe("src_3_0_0/modules/layerTree/components/LayerTreeNode.vue", () => {
         expect(wrapper.findAll("layer-tree-node-stub").length).to.be.equals(0);
         expect(wrapper.vm.layers.length).to.be.equals(3);
         expect(wrapper.vm.isFolder).to.be.true;
-        expect(wrapper.vm.isLayerArray).to.be.false;
+        expect(wrapper.vm.getLayerArray).to.be.deep.equals([]);
         expect(wrapper.vm.isLayer).to.be.false;
         expect(wrapper.vm.isLayerInFolderVisible).to.be.true;
     });

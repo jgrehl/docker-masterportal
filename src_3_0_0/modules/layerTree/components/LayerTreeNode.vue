@@ -24,20 +24,20 @@ export default {
     },
     computed: {
         isFolder () {
-            return Array.isArray(this.conf.Ordner) || Object.prototype.hasOwnProperty.call(this.conf, "Titel");
-        },
-        isLayerArray () {
-            return Array.isArray(this.conf.Layer);
+            return this.conf.type === "folder";
         },
         isLayer () {
-            return typeof this.conf === "object" && Object.prototype.hasOwnProperty.call(this.conf, "id");
+            return this.conf.type === "layer";
+        },
+        getLayerArray () {
+            return this.conf.elements ? this.conf.elements.filter(el => el.type === "layer") : [];
         },
         isLayerInFolderVisible () {
             return this.layers.find(layer => layer.visibility === true) !== undefined;
         }
     },
     created () {
-        this.layers = getNestedValues(this.conf, "Layer", "Ordner").flat(Infinity);
+        this.layers = getNestedValues(this.conf, "elements", true).flat(Infinity);
     },
     methods: {
         /**
@@ -61,21 +61,9 @@ export default {
                 :is-open="isOpen"
                 @is-open="toggleFolder()"
             />
-
             <ul v-show="isOpen">
-                <div v-if="isLayerArray">
-                    <Layer
-                        v-for="(layer, i) in conf.Layer"
-                        :key="'layer' + i"
-                        :conf="layer"
-                    />
-                </div>
-                <Layer
-                    v-if="isLayer"
-                    :conf="conf"
-                />
                 <LayerTreeNode
-                    v-for="(node, i) in conf.Ordner"
+                    v-for="(node, i) in conf.elements"
                     :key="'folder'+i"
                     :conf="node"
                 />
@@ -84,16 +72,14 @@ export default {
         <template
             v-else
         >
-            <div v-if="isLayerArray">
-                <Layer
-                    v-for="(layer, i) in conf.Layer"
-                    :key="'layer' + i"
-                    :conf="layer"
-                />
-            </div>
             <Layer
                 v-if="isLayer"
                 :conf="conf"
+            />
+            <Layer
+                v-for="(layer, i) in getLayerArray"
+                :key="'layer' + i"
+                :conf="layer"
             />
         </template>
     </div>

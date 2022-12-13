@@ -38,7 +38,7 @@ const getters = {
      * @returns {Object[]} The layers.
      */
     allLayerConfigs: state => {
-        return getNestedValues(state.layerConfig, "Layer", "Ordner").flat(Infinity);
+        return getNestedValues(state.layerConfig, "elements", true).flat(Infinity);
     },
 
     /**
@@ -47,7 +47,7 @@ const getters = {
      * @returns {Object[]} The layers.
      */
     allSubjectDataLayerConfigs: state => {
-        return getNestedValues(state.layerConfig.Fachdaten, "Layer", "Ordner").flat(Infinity);
+        return getNestedValues(state.layerConfig.Fachdaten, "elements", true).flat(Infinity);
     },
 
     /**
