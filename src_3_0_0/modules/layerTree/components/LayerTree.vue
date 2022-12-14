@@ -1,6 +1,7 @@
 <script>
 import {mapGetters} from "vuex";
 import LayerTreeNode from "./LayerTreeNode.vue";
+import {sortObjects} from "../../../shared/js/utils/sortObjects";
 
 /**
  * Module to display the layers in menu.
@@ -24,7 +25,9 @@ export default {
                     }
                 });
             });
-            return configs;
+
+            sortObjects(configs, "zIndex");
+            return configs.reverse();
         }
     }
 };

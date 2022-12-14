@@ -1,5 +1,8 @@
 import {rawLayerList} from "@masterportal/masterportalapi/src";
 import omit from "../../shared/js/utils/omit";
+
+let zIndex = 0;
+
 /**
  * Returns the extended raw layer to the id contained in the layer configuration.
  * If id contains an array of ids, the rawlayer is merged.
@@ -31,6 +34,7 @@ export function addAdditional (rawLayer, treeType) {
         rawLayer.type = "layer";
         if (treeType === "light" || rawLayer.visibility) {
             rawLayer.showInLayerTree = true;
+            rawLayer.zIndex = zIndex++;
         }
         else if (!Object.hasOwn(rawLayer, "showInLayerTree")) {
             rawLayer.showInLayerTree = false;

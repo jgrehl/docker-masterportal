@@ -387,7 +387,7 @@
         },
         {
           "id": "18104",
-          "name" : "Anzahl frei verfügbarer E-Lastenräder je StadtRad-Station",
+          "name": "Anzahl frei verfügbarer E-Lastenräder je StadtRad-Station",
           "typ": "SensorThings",
           "visibility": false
         },
