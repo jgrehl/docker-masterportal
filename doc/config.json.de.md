@@ -29,6 +29,7 @@ Im Abschnitt *Portalconfig* können folgende Eigenschaften konfiguriert werden:
 5. Menüeinträge sowie Vorhandenheit jeweiliger Tools und deren Reihenfolge (*menu*)
 6. Typ und Eigenschaften des genutzten Suchdienstes (*searchBar*)
 7. Löschbarkeit von Themen (*layersRemovable*)
+8. Anzeige eines Tooltips von Features (*mouseHover*)
 
 Es existieren die im Folgenden aufgelisteten Konfigurationen:
 
@@ -45,6 +46,7 @@ Es existieren die im Folgenden aufgelisteten Konfigurationen:
 |quickHelp|nein|**[quickHelp](#markdown-header-portalconfigquickHelp)**||Konfiguration neuer und Manipulation bestehender QuickHelp-Fenster.|false|
 |tree|nein|**[tree](#markdown-header-portalconfigtree)**||Konfiguration des Menü-Baums.|false|
 |layerInformation|nein|**[layerInformation](#markdown-header-portalconfiglayerInformation)**||Legt fest, ob individuelle Attribute in Metadaten von layerinformation angezeigt werden soll.|false|
+|mouseHover|nein|**[mouseHover](#markdown-header-portalconfigmousehover)**||Aktiviert die MouseHover-Funktion für Vektorebenen, sowohl WFS als auch GeoJSON. Für die Konfiguration pro Ebene siehe **[Vector](#markdown-header-themenconfiglayervector)**.|false|
 
 ***
 
@@ -647,6 +649,14 @@ Konfiguration der layerInformation.
     "showMetaDataRevision": true
 },
 ```
+***
+
+## Portalconfig.mouseHover
+
+|Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
+|----|-------------|---|-------|------------|------|
+|numFeaturesToShow|nein|Integer|2|Maximale Menge an Elementinformationen pro Tooltip; bei Überschreitung informiert ein Informationstext den Benutzer über den abgeschnittenen Inhalt.|false|
+
 ***
 
 ### Portalconfig.controls
