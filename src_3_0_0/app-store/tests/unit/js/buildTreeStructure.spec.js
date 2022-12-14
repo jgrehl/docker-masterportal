@@ -99,10 +99,10 @@ describe("src_3_0_0/app-store/js/buildTreeStructure.js", () => {
             });
             filteredResult = getNestedValues(result, "id").flat(Infinity);
 
-            firstFolders = result.elements[0].elements.filter( el => el.type === "folder"),
-            secondFolders = result.elements[1].elements.filter( el => el.type === "folder"),
-            layersInFirstFolders = result.elements[0].elements.filter( el => el.type === "layer"),
-            layersInSecondFolders = result.elements[1].elements.filter( el => el.type === "layer");
+            firstFolders = result.elements[0].elements.filter(el => el.type === "folder");
+            secondFolders = result.elements[1].elements.filter(el => el.type === "folder");
+            layersInFirstFolders = result.elements[0].elements.filter(el => el.type === "layer");
+            layersInSecondFolders = result.elements[1].elements.filter(el => el.type === "layer");
 
             expect(result).to.be.an("object");
             expect(filteredResult.indexOf("452")).to.be.equals(-1);
@@ -110,7 +110,7 @@ describe("src_3_0_0/app-store/js/buildTreeStructure.js", () => {
 
             expect(result.elements).to.be.an("array").to.have.lengthOf(2);
             expect(result.elements[0].name).to.be.equals(result.elements[0].elements[0].datasets[0].kategorie_opendata[0]);
-            expect(result.elements[1].name).to.be.equals(result.elements[1].elements[0].datasets[0].kategorie_opendata[0]);     
+            expect(result.elements[1].name).to.be.equals(result.elements[1].elements[0].datasets[0].kategorie_opendata[0]);
 
             expect(firstFolders).to.be.an("array").to.have.lengthOf(1);
             expect(firstFolders[0].elements).to.be.an("array").to.have.lengthOf(2);
@@ -193,22 +193,24 @@ describe("src_3_0_0/app-store/js/buildTreeStructure.js", () => {
                 filteredResult = null,
                 folders = null,
                 firstFolders = null,
+                thirdFolders = null,
                 secondFolders = null,
                 layersInFirstFolders = null,
-                layersInSecondFolders = null;
+                layersInSecondFolders = null,
+                layersInThirdFolders = null;
 
             sinon.stub(rawLayerList, "getLayerList").returns(layerList);
 
             getAndMergeAllRawLayers();
             result = buildTreeStructure(layerConfig, categories[1]);
             filteredResult = getNestedValues(result, "id").flat(Infinity);
-            folders = result.elements.filter( el => el.type === "folder"),
-            firstFolders = result.elements[0].elements.filter( el => el.type === "folder"),
-            secondFolders = result.elements[1].elements.filter( el => el.type === "folder"),
-            thirdFolders = result.elements[2].elements.filter( el => el.type === "folder"),
-            layersInFirstFolders = result.elements[0].elements.filter( el => el.type === "layer"),
-            layersInSecondFolders = result.elements[1].elements.filter( el => el.type === "layer"),
-            layersInThirdFolders = result.elements[2].elements.filter( el => el.type === "layer");
+            folders = result.elements.filter(el => el.type === "folder");
+            firstFolders = result.elements[0].elements.filter(el => el.type === "folder");
+            secondFolders = result.elements[1].elements.filter(el => el.type === "folder");
+            thirdFolders = result.elements[2].elements.filter(el => el.type === "folder");
+            layersInFirstFolders = result.elements[0].elements.filter(el => el.type === "layer");
+            layersInSecondFolders = result.elements[1].elements.filter(el => el.type === "layer");
+            layersInThirdFolders = result.elements[2].elements.filter(el => el.type === "layer");
 
             expect(result).to.be.an("object");
             expect(filteredResult.indexOf("452")).to.be.equals(-1);
@@ -261,23 +263,27 @@ describe("src_3_0_0/app-store/js/buildTreeStructure.js", () => {
                 folders = null,
                 firstFolders = null,
                 secondFolders = null,
+                thirdFolders = null,
+                fourthFolders = null,
                 layersInFirstFolders = null,
-                layersInSecondFolders = null;
+                layersInSecondFolders = null,
+                layersInThirdFolders = null,
+                layersInFourthFolders = null;
 
             sinon.stub(rawLayerList, "getLayerList").returns(layerList);
 
             getAndMergeAllRawLayers();
             result = buildTreeStructure(layerConfig, categories[2]);
             filteredResult = getNestedValues(result, "id").flat(Infinity);
-            folders = result.elements.filter( el => el.type === "folder"),
-            firstFolders = result.elements[0].elements.filter( el => el.type === "folder"),
-            secondFolders = result.elements[1].elements.filter( el => el.type === "folder"),
-            thirdFolders = result.elements[2].elements.filter( el => el.type === "folder"),
-            fourthFolders = result.elements[3].elements.filter( el => el.type === "folder"),
-            layersInFirstFolders = result.elements[0].elements.filter( el => el.type === "layer"),
-            layersInSecondFolders = result.elements[1].elements.filter( el => el.type === "layer"),
-            layersInThirdFolders = result.elements[2].elements.filter( el => el.type === "layer");
-            layersInFourthFolders = result.elements[3].elements[0].elements.filter( el => el.type === "layer");
+            folders = result.elements.filter(el => el.type === "folder");
+            firstFolders = result.elements[0].elements.filter(el => el.type === "folder");
+            secondFolders = result.elements[1].elements.filter(el => el.type === "folder");
+            thirdFolders = result.elements[2].elements.filter(el => el.type === "folder");
+            fourthFolders = result.elements[3].elements.filter(el => el.type === "folder");
+            layersInFirstFolders = result.elements[0].elements.filter(el => el.type === "layer");
+            layersInSecondFolders = result.elements[1].elements.filter(el => el.type === "layer");
+            layersInThirdFolders = result.elements[2].elements.filter(el => el.type === "layer");
+            layersInFourthFolders = result.elements[3].elements[0].elements.filter(el => el.type === "layer");
 
             expect(result).to.be.an("object");
             expect(filteredResult.indexOf("452")).to.be.equals(-1);
@@ -319,7 +325,7 @@ describe("src_3_0_0/app-store/js/buildTreeStructure.js", () => {
             expect(layersInThirdFolders[0].name).to.be.equals(layersInThirdFolders[0].datasets[0].md_name);
 
             expect(fourthFolders).to.be.an("array").to.have.lengthOf(1);
-            expect(result.elements[3].elements.filter( el => el.type === "layer")).to.be.an("array").to.have.lengthOf(0);
+            expect(result.elements[3].elements.filter(el => el.type === "layer")).to.be.an("array").to.have.lengthOf(0);
             expect(layersInFourthFolders).to.be.an("array").to.have.lengthOf(2);
             expect(layersInFourthFolders[0].id).to.be.equals("21999");
             expect(layersInFourthFolders[0].name).not.to.be.equals(layersInFourthFolders[0].datasets[0].md_name);
