@@ -1,6 +1,7 @@
 <script>
 import {mapGetters, mapMutations} from "vuex";
 import layerFactory from "../../../core/layers/js/layerFactory";
+import LayerComponentIconDrag from "./LayerComponentIconDrag.vue";
 import LayerComponentIconInfo from "./LayerComponentIconInfo.vue";
 import LayerComponentIconSubMenu from "./LayerComponentIconSubMenu.vue";
 import LayerComponentSubMenu from "./LayerComponentSubMenu.vue";
@@ -11,6 +12,7 @@ import LayerComponentSubMenu from "./LayerComponentSubMenu.vue";
 export default {
     name: "LayerComponent",
     components: {
+        LayerComponentIconDrag,
         LayerComponentIconInfo,
         LayerComponentIconSubMenu,
         LayerComponentSubMenu
@@ -106,6 +108,7 @@ export default {
             <div class="d-flex">
                 <LayerComponentIconSubMenu :layer-conf="conf" />
                 <LayerComponentIconInfo :layer-conf="conf" />
+                <LayerComponentIconDrag :layer-conf="conf" />
             </div>
         </div>
         <div
