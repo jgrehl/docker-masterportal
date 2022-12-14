@@ -106,6 +106,7 @@
         "subjectDataTime": "Zeitreihen",
         "selectedTopics": "Ausgewählte Themen",
         "removeSelection": "Auswahl entfernen",
+        "drag": "Verschieben",
         "infosAndLegend": "Informationen zum Datensatz anzeigen",
         "removeTopic": "Thema entfernen",
         "showTopic": "Thema darstellen",
