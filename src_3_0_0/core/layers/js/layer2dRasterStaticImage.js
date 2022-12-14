@@ -39,10 +39,11 @@ Layer2dRasterStaticImage.prototype.createLayer = function (attributes) {
  */
 Layer2dRasterStaticImage.prototype.getRawLayerAttributes = function (attributes) {
     const rawLayerAttributes = {
+        crs: attributes.crs,
         imageExtent: attributes.extent,
         name: attributes.name,
         url: attributes.url,
-        crs: attributes.crs
+        zIndex: attributes.zIndex
     };
 
     return rawLayerAttributes;
@@ -62,7 +63,8 @@ Layer2dRasterStaticImage.prototype.createStaticImageLayer = function (rawLayer =
         layer = new ImageLayer({
             name: rawLayer.name,
             source: source,
-            typ: "StaticImage"
+            typ: "StaticImage",
+            zIndex: rawLayer.zIndex
         });
 
     return layer;
