@@ -24,7 +24,7 @@ export function buildTreeStructure (layerConfig, category, shownLayerConfs = [])
     if (!category) {
         return layerList;
     }
-    folder["elements"] = [];
+    folder.elements = [];
 
     for (let i = 0; i < layerList.length; i++) {
         let rawLayer = layerList[i],
@@ -46,7 +46,7 @@ export function buildTreeStructure (layerConfig, category, shownLayerConfs = [])
             if (!Object.keys(groups).find((key) => key === groupName)) {
                 addGroup(folder, groups, groupName);
             }
-            subFolder = folder["elements"].find((obj) => obj["name"] === groupName);
+            subFolder = folder.elements.find((obj) => obj.name === groupName);
 
             if (!Object.keys(groups[groupName]).find((key) => key === mdName)) {
                 groups[groupName][mdName] = [];
@@ -84,12 +84,12 @@ function moveFirstLayerToFolder (subFolder, groups, layersByMdName, groupName, m
         subToAdd = {};
 
     groups[groupName][mdName] = [];
-    removeLayerById(subFolder["elements"], firstLayer.id);
-    subToAdd["elements"] = groups[groupName][mdName];
-    subToAdd["name"] = mdName;
-    subToAdd["type"] = "folder";
-    subFolder["elements"].push(subToAdd);
-    sortObjects(subFolder["elements"], "name");
+    removeLayerById(subFolder.elements, firstLayer.id);
+    subToAdd.elements = groups[groupName][mdName];
+    subToAdd.name = mdName;
+    subToAdd.type = "folder";
+    subFolder.elements.push(subToAdd);
+    sortObjects(subFolder.elements, "name");
     groups[groupName][mdName].push(firstLayer);
 }
 
@@ -101,11 +101,11 @@ function moveFirstLayerToFolder (subFolder, groups, layersByMdName, groupName, m
  * @returns {void}
  */
 function addSingleLayer (subFolder, layer, mdName) {
-    if (!Array.isArray(subFolder["elements"])) {
-        subFolder["elements"] = [];
+    if (!Array.isArray(subFolder.elements)) {
+        subFolder.elements = [];
     }
-    subFolder["elements"].push(Object.assign({}, layer, {name: mdName}));
-    sortObjects(subFolder["elements"], "name");
+    subFolder.elements.push(Object.assign({}, layer, {name: mdName}));
+    sortObjects(subFolder.elements, "name");
 }
 
 /**
@@ -119,11 +119,11 @@ function addSingleLayer (subFolder, layer, mdName) {
 function addSubGroup (subFolder, groups, groupName, mdName) {
     const subToAdd = {};
 
-    subToAdd["elements"] = groups[groupName][mdName];
-    subToAdd["name"] = mdName;
-    subToAdd["type"] = "folder";
-    subFolder["elements"].push(subToAdd);
-    sortObjects(subFolder["elements"], "name");
+    subToAdd.elements = groups[groupName][mdName];
+    subToAdd.name = mdName;
+    subToAdd.type = "folder";
+    subFolder.elements.push(subToAdd);
+    sortObjects(subFolder.elements, "name");
 }
 
 /**
@@ -136,11 +136,11 @@ function addSubGroup (subFolder, groups, groupName, mdName) {
 function addGroup (folder, groups, groupName) {
     const toAdd = {};
 
-    toAdd["elements"] = [];
-    toAdd["name"] = groupName;
-    toAdd["type"] = "folder";
-    folder["elements"].push(toAdd);
-    sortObjects(folder["elements"], "name");
+    toAdd.elements = [];
+    toAdd.name = groupName;
+    toAdd.type = "folder";
+    folder.elements.push(toAdd);
+    sortObjects(folder.elements, "name");
     groups[groupName] = {};
 }
 
