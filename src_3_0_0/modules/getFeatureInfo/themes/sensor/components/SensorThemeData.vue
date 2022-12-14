@@ -69,7 +69,10 @@ export default {
 </script>
 
 <template>
-    <div v-if="show">
+    <div
+        v-if="show"
+        class="px-3"
+    >
         <table class="table">
             <thead>
                 <tr class="row">
