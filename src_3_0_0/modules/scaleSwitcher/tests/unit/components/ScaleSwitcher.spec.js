@@ -55,6 +55,9 @@ describe("src_3_0_0/modules/scaleSwitcher/components/ScaleSwitcher.vue", () => {
                     namespaced: true,
                     getters: mockMapGetters,
                     mutations: mockMapMutations,
+                    state: {
+                        scale : scales[0]
+                    },
                     actions: {}
                 }
             },
