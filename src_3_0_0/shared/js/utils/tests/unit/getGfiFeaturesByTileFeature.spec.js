@@ -188,7 +188,7 @@ describe("src_3_0_0/shared/js/utils/getGfiFeaturesByTileFeature.js", () => {
                     key2: "value2"
                 },
                 tileFeature = {
-                    getPropertyNames: () => {
+                    getPropertyIds: () => {
                         return Object.keys(props);
                     },
                     getProperty: (key) => {
@@ -203,7 +203,7 @@ describe("src_3_0_0/shared/js/utils/getGfiFeaturesByTileFeature.js", () => {
         });
         it("should pass through attributes", () => {
             const tileFeature = {
-                getPropertyNames: () => {
+                getPropertyIds: () => {
                     return [];
                 },
                 getProperty: () => {
@@ -222,7 +222,7 @@ describe("src_3_0_0/shared/js/utils/getGfiFeaturesByTileFeature.js", () => {
                     attributes: {}
                 },
                 tileFeature = {
-                    getPropertyNames: () => {
+                    getPropertyIds: () => {
                         return Object.keys(props);
                     },
                     getProperty: (key) => {

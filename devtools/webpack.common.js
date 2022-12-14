@@ -123,10 +123,9 @@ module.exports = function () {
                     }
                 },
                 {
-                    test: /\.[t]sx?$/,
-                    use: {
-                        loader: "esbuild-loader"
-                    }
+                    test: /\.mjs$/,
+                    include: /node_modules/,
+                    type: "javascript/auto"
                 },
                 {
                     test: /\.scss$/,
