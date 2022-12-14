@@ -1,6 +1,7 @@
 <script>
-import Chart from "chart.js";
+import Chart from "chart.js/auto";
 import moment from "moment";
+import {shallowRef} from "vue";
 
 import {calculateWorkloadForOneWeekday} from "../js/calculateWorkloadForOneWeekday";
 import {calculateArithmeticMean} from "../js/mathematicalOperations";
@@ -46,7 +47,8 @@ export default {
             chartColor: "rgba(0, 0, 0, 1)",
             barPercentage: 1.0,
             titleText: "",
-            noticeText: ""
+            noticeText: "",
+            maxValue: 1
         };
     },
     computed: {
@@ -60,8 +62,10 @@ export default {
         }
     },
     watch: {
-        processedHistoricalDataByWeekday () {
-            this.initialize();
+        show (show) {
+            if (!show) {
+                this.destroyChart();
+            }
         }
     },
     created () {
@@ -72,7 +76,7 @@ export default {
         this.noticeText = this.chartValue?.noticeText || this.noticeText;
     },
     mounted () {
-        this.initialize();
+        this.momentLocale.locale(this.$i18next.language);
     },
     updated () {
         this.initialize();
@@ -82,11 +86,13 @@ export default {
          * Starts the calculation of the historical data and the drawing of the chart.
          * @returns {void}
          */
-        initialize: function () {
-            this.momentLocale.locale(this.$i18next.language);
+        initialize () {
             if (this.show) {
                 this.$nextTick(() => {
-                    this.drawChart(this.calculateDataForOneWeekday());
+                    if (this.chart === null) {
+                        this.createChart();
+                    }
+                    this.drawChart(this.calculateDataForOneWeekday(), this.maxValue);
                 });
             }
         },
@@ -95,7 +101,7 @@ export default {
          * Calculates the data for one weekday and the arithmetic mean of this.
          * @returns {Object} The calculated data for one weekday.
          */
-        calculateDataForOneWeekday: function () {
+        calculateDataForOneWeekday () {
             const processedData = calculateWorkloadForOneWeekday(this.targetValue, this.processedHistoricalDataByWeekday[this.weekdayIndex]);
 
             this.titleText = [
@@ -112,37 +118,51 @@ export default {
          * Destroys the current chart if exists.
          * @returns {void}
          */
-        destroyChart: function () {
+        destroyChart () {
             if (this.chart instanceof Chart) {
                 this.chart.destroy();
+                this.chart = null;
             }
+        },
+
+        /**
+         * Creates the bar chart with chartsJs.
+         * @returns {void}
+         */
+        createChart () {
+            const ctx = this.$refs[`sensorChart_${this.targetValue}`];
+
+            Chart.defaults.font.family = "'MasterPortalFont', 'Arial Narrow', 'Arial', 'sans-serif'";
+            Chart.defaults.color = "#000000";
+
+            this.chart = shallowRef(
+                new Chart(ctx, {
+                    type: "bar"
+                })
+            );
         },
 
         /**
          * Creates the bar chart with chartsJs.
          * If a chart is already drawn, it will be destroyed.
          * @param {Object} calculatedData The calculated data.
+         * @param {Number} maxValue The max value.
          * @returns {void}
          */
-        drawChart: function (calculatedData) {
-            const ctx = this.$el.getElementsByTagName("canvas")[0],
-                maxValue = 1;
-
-            Chart.defaults.global.defaultFontFamily = "'MasterPortalFont', 'Arial Narrow', 'Arial', 'sans-serif'";
-            Chart.defaults.global.defaultFontColor = "#333333";
-
-            this.chart = new Chart(ctx, {
-                type: "bar",
-                data: this.createChartData(calculatedData),
-                options: {
+        drawChart (calculatedData, maxValue) {
+            this.chart.data = this.createChartData(calculatedData);
+            this.chart.options = {
+                layout: this.createChartLayout(),
+                plugins: {
                     title: this.createChartTitle(),
-                    responsive: true,
                     legend: this.createChartLegend(),
-                    tooltips: this.createChartTooltip(maxValue),
-                    scales: this.createChartScales(maxValue),
-                    layout: this.createChartLayout()
-                }
-            });
+                    tooltip: this.createChartTooltip(maxValue)
+                },
+                responsive: true,
+                scales: this.createChartScales(maxValue)
+            };
+
+            this.chart.update();
         },
 
         /**
@@ -150,7 +170,7 @@ export default {
          * @param {Object} calculatedData The calculated data.
          * @returns {Object} The chart data.
          */
-        createChartData: function (calculatedData) {
+        createChartData (calculatedData) {
             return {
                 labels: calculatedData.map(data => data.hour),
                 datasets: [{
@@ -166,7 +186,7 @@ export default {
          * Creates the title for the chart.
          * @returns {Object} The chart title.
          */
-        createChartTitle: function () {
+        createChartTitle () {
             return {
                 display: true,
                 position: "bottom",
@@ -178,7 +198,7 @@ export default {
          * Creates the legend for the chart.
          * @returns {Object} The chart legend.
          */
-        createChartLegend: function () {
+        createChartLegend () {
             return {
                 display: false
             };
@@ -189,10 +209,10 @@ export default {
          * @param {Number} maxValue The max value for the y-axis.
          * @returns {Object} The chart tooltip.
          */
-        createChartTooltip: function (maxValue) {
+        createChartTooltip (maxValue) {
             return {
                 callbacks: {
-                    label: (tooltipItem) => (tooltipItem.value / maxValue * 100).toFixed(0) + "%",
+                    label: tooltipItem => (tooltipItem.raw / maxValue * 100).toFixed(0) + "%",
                     title: () => false
                 }
             };
@@ -203,25 +223,29 @@ export default {
          * @param {Number} maxValue The max value for the y-axis.
          * @returns {Object} The chart scales.
          */
-        createChartScales: function (maxValue) {
+        createChartScales (maxValue) {
             return {
-                xAxes: [{
+                x: {
+                    min: 0,
+                    max: 23,
                     ticks: {
-                        min: 0,
-                        max: 23,
-                        callback: value => value % 2 ? "" : this.$t(
-                            "common:modules.tools.gfi.themes.sensor.sensorBarChart.clock", {value}
-                        )
+                        callback: value => {
+                            return value % 2 ? "" : this.$t(
+                                "common:modules.tools.gfi.themes.sensor.sensorBarChart.clock", {value}
+                            );
+                        }
                     }
-                }],
-                yAxes: [{
+                },
+                y: {
+                    min: 0,
+                    max: maxValue,
                     ticks: {
-                        min: 0,
-                        max: maxValue,
-                        callback: value => (value / maxValue * 100).toFixed(0) + "%"
+                        callback: value => {
+                            return (value / maxValue * 100).toFixed(0) + "%";
+                        }
                     }
 
-                }]
+                }
             };
         },
 
@@ -229,7 +253,7 @@ export default {
          * Creates the layout for the chart.
          * @returns {Object} The chart layout.
          */
-        createChartLayout: function () {
+        createChartLayout () {
             return {
                 padding: {
                     left: 10,
@@ -244,7 +268,7 @@ export default {
          * Decrements the weekday index.
          * @returns {void}
          */
-        showPreviousWeekDay: function () {
+        showPreviousWeekDay () {
             this.weekdayIndex -= 1;
 
             if (this.weekdayIndex < 0) {
@@ -256,7 +280,7 @@ export default {
          * Increments the weekday index.
          * @returns {void}
          */
-        showNextWeekDay: function () {
+        showNextWeekDay () {
             this.weekdayIndex += 1;
 
             if (this.weekdayIndex > 6) {
@@ -295,7 +319,10 @@ export default {
             </button>
         </div>
         <div class="sensor-chart-container">
-            <canvas />
+            <canvas
+                :id="`sensorChart_${targetValue}`"
+                :ref="`sensorChart_${targetValue}`"
+            />
         </div>
     </div>
 </template>
@@ -323,9 +350,5 @@ export default {
             padding-top: 8px;
             font-weight: bold;
         }
-    }
-    .sensor-chart-container {
-        position: relative;
-        height: 30vh;
     }
 </style>

@@ -383,11 +383,25 @@
           "id": "19173"
         },
         {
+          "id": "18104",
+          "name" : "Anzahl frei verfügbarer E-Lastenräder je StadtRad-Station",
+          "typ": "SensorThings",
+          "visibility": false
+        },
+        {
           "id": "18106",
           "name": "Elektro Ladestandorte Hamburg",
           "typ": "SensorThings",
           "visibility": false,
-          "loadThingsOnlyInCurrentExtent": true
+          "loadThingsOnlyInCurrentExtent": true,
+          "gfiTheme": {
+            "name": "sensor",
+            "params": {
+              "historicalData": {
+                "periodLength": 12
+              }
+            }
+          }
         },
         {
           "id": "OAF",
