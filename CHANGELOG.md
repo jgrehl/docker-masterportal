@@ -207,6 +207,7 @@
     - The menu side can be accessed under Portalconfig.getFeatureInfo.menuSide.
 - The `startTool` control has been renamed to `startModule`. Modules are now completely configured within the control.
 - Update from vue 2 to vue 3
+- The configuration for `mouseHover` is moved from config.js to config.json. Also, the configuration is now optional.
 
 ### Added
 - GFI: nested object values can now be addressed from "gfiAttributes" by dot notation. See [services.json](https://bitbucket.org/geowerkstatt-hamburg/masterportal/src/dev/doc/services.json.md#markdown-header-gfi_attributes) .
@@ -306,10 +307,10 @@
   - The FeatureLister now works for layer-typ "WFS" and "GeoJSON".
 - The following NPM package was added:
     - dependencies:
+    - devDependencies:
+        - @vue/devtools-api
         - @vue/compiler-sfc
         - i18next-vue
-    - devDependencies:
-        - @vue/devtools-api        - 
 - A new module `OpenConfig` has been implemented, which can be used to load a new configuration file (config.json) at runtime.
 - Modules can now have an attribute `hasMouseMapInteractions`. Only one module that has this attribute set to `true` can be open at the same time.
 
@@ -358,7 +359,7 @@
         - i18next-browser-languagedetector: 6.1.4 to 6.1.8
         - i18next-http-backend: 1.4.1 to 1.4.5
         - moment-timezone: 0.5.34 to 0.5.37
-        - vue: 2.7.8 to 3.1.0 
+        - vue: 2.7.8 to 3.1.0
         - vuex: 3.6.2 to 4.0.2
     - devDependencies
         - @masterportal/mpconfigparser: 1.3.0 to 1.3.1
