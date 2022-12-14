@@ -149,16 +149,16 @@ export function getGfiFeatureByCesium3DTileFeature (tileFeature, attributes, get
     if (
         tileFeature === null
         || typeof tileFeature !== "object"
-        || typeof tileFeature.getPropertyNames !== "function"
+        || typeof tileFeature.getPropertyIds !== "function"
         || typeof tileFeature.getProperty !== "function"
-        || !Array.isArray(tileFeature.getPropertyNames())
+        || !Array.isArray(tileFeature.getPropertyIds())
     ) {
         return undefined;
     }
 
     const properties = {};
 
-    tileFeature.getPropertyNames().forEach(propertyName => {
+    tileFeature.getPropertyIds().forEach(propertyName => {
         properties[propertyName] = tileFeature.getProperty(propertyName);
     });
     if (properties.attributes && properties.id) {

@@ -115,9 +115,7 @@ describe("src_3_0_0/modules/getFeatureInfo/themes/senor/components/SensorThemeBa
             {
                 display: true,
                 position: "bottom",
-                text: ["Ein schoener Titel",
-                    "common:modules.tools.gfi.themes.sensor.sensorBarChart.chartTitleAverage common:modules.tools.gfi.themes.sensor.sensorBarChart.month",
-                    ""]
+                text: ["Ein schoener Titel"]
             }
         );
     });
@@ -135,7 +133,7 @@ describe("src_3_0_0/modules/getFeatureInfo/themes/senor/components/SensorThemeBa
             result = wrapper.vm.createChartTooltip(maxValue);
 
         expect(result.callbacks.label).to.be.a("function");
-        expect(result.callbacks.label({value: 1})).equals("100%");
+        expect(result.callbacks.label({raw: 1})).equals("100%");
         expect(result.callbacks.title).to.be.a("function");
         expect(result.callbacks.title()).to.be.false;
     });
@@ -144,15 +142,15 @@ describe("src_3_0_0/modules/getFeatureInfo/themes/senor/components/SensorThemeBa
         const maxValue = 1,
             result = wrapper.vm.createChartScales(maxValue);
 
-        expect(result.xAxes[0].ticks.min).equals(0);
-        expect(result.xAxes[0].ticks.max).equals(23);
-        expect(result.xAxes[0].ticks.callback).to.be.a("function");
-        expect(result.xAxes[0].ticks.callback()).equals("common:modules.tools.gfi.themes.sensor.sensorBarChart.clock");
+        expect(result.x.min).equals(0);
+        expect(result.x.max).equals(23);
+        expect(result.x.ticks.callback).to.be.a("function");
+        expect(result.x.ticks.callback()).equals("common:modules.tools.gfi.themes.sensor.sensorBarChart.clock");
 
-        expect(result.yAxes[0].ticks.min).equals(0);
-        expect(result.yAxes[0].ticks.max).equals(maxValue);
-        expect(result.yAxes[0].ticks.callback).to.be.a("function");
-        expect(result.yAxes[0].ticks.callback(2)).equals("200%");
+        expect(result.y.min).equals(0);
+        expect(result.y.max).equals(maxValue);
+        expect(result.y.ticks.callback).to.be.a("function");
+        expect(result.y.ticks.callback(2)).equals("200%");
     });
 
     it("should returns an object with layout for the charts ", () => {
@@ -173,8 +171,8 @@ describe("src_3_0_0/modules/getFeatureInfo/themes/senor/components/SensorThemeBa
     });
 
     it("should show the day before yesterday after two clicks on left button ", async () => {
-        await wrapper.findAll("button")[0].trigger("click");
-        await wrapper.findAll("button")[0].trigger("click");
+        await wrapper.findAll("button").at(0).trigger("click");
+        await wrapper.findAll("button").at(0).trigger("click");
 
         expect(wrapper.find("div > div > span").text()).equals(moment().subtract(2, "days").format("dddd"));
     });
