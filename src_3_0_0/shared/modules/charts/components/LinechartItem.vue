@@ -1,5 +1,5 @@
 <script>
-import ChartJs from "chart.js";
+import Chart from "chart.js/auto";
 import deepAssign from "../../../js/utils/deepAssign.js";
 import thousandsSeparator from "../../../js/utils/thousandsSeparator.js";
 
@@ -28,11 +28,13 @@ export default {
         return {
             defaultOptions: {
                 responsive: true,
-                legend: {
-                    align: "start"
+                plugins: {
+                    legend: {
+                        display: false
+                    }
                 },
                 scales: {
-                    yAxes: [{
+                    y: {
                         ticks: {
                             precision: 0,
                             beginAtZero: true,
@@ -40,7 +42,7 @@ export default {
                                 return thousandsSeparator(value);
                             }
                         }
-                    }]
+                    }
                 },
                 tooltips: {
                     callbacks: {
@@ -61,14 +63,6 @@ export default {
     },
     mounted () {
         this.$nextTick(() => {
-            /**
-             * @see afterFit https://www.chartjs.org/docs/latest/axes/?h=afterfit
-             * @returns {Void}  -
-             */
-            ChartJs.Legend.prototype.afterFit = function () {
-                this.height += 10;
-            };
-
             this.resetChart(this.data);
         });
     },
@@ -88,12 +82,13 @@ export default {
                     options: this.getChartJsOptions(this.defaultOptions, this.givenOptions)
                 };
 
-            if (this.chart instanceof ChartJs) {
-                this.chart.destroy();
+            if (this.chart instanceof Chart) {
+                this.destroyChart();
             }
 
-            this.chart = new ChartJs(ctx, config);
+            this.chart = new Chart(ctx, config);
         },
+
         /**
          * replace default options with given options on hand deepAssign method and returns the options for chart js
          * @param {Object} defaultOptions an object with the default options following chartJS options (see https://www.chartjs.org/docs/latest/general/options.html)
@@ -105,6 +100,17 @@ export default {
                 return typeof givenOptions === "object" && givenOptions !== null ? givenOptions : {};
             }
             return deepAssign(defaultOptions, givenOptions);
+        },
+
+        /**
+         * Destroys the current chart if exists.
+         * @returns {void}
+         */
+        destroyChart () {
+            if (this.chart instanceof Chart) {
+                this.chart.destroy();
+                this.chart = null;
+            }
         }
     }
 };
