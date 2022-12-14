@@ -36,7 +36,6 @@ In the following, all configuration options are described. For all configuration
 |mapMarker|no|**[mapMarker](#markdown-header-mapmarker)**||Overrides the map marker module's default values. Useful for 3D markers since OpenLayers's overlays can not be displayed in 3D mode. For this, the map marker has to be defined as vector layer.||
 |metaDataCatalogueId|no|String|`"2"`|URL to the metadata catalog linked to in the layer information window. The ID is resolved to a service of the **[rest-services.json](rest-services.json.md)** file. Note: This attribute is only necessary, when no "show_doc_url" is configured in the metadata dataset in the **[services.json](services.json.md)**. The url can either be set globally (**[config.js](config.js.md)**) or layer-specific(**[services.json](services.json.md)**).|`"MetaDataCatalogueUrl"`|
 |metadata|no|**[metadata](#markdown-header-metadata)**||Allows configuration of which metadata URLs are to be resolved via proxy.||
-|mouseHover|no|**[mouseHover](#markdown-header-mousehover)**||Activates the MouseHover feature for vector layers, both WFS and GeoJSON. For per-layer configuration, see the **[config.json](config.json.md)**'s section *Themenconfig.Fachdaten.Layer*.|`true`|
 |obliqueMap|no|Boolean|`false`|If set to `true`, an oblique map layer is created. An additional oblique layer must be defined.||
 |portalConf|no|String|`"config.json"`|Path to the portal's `config.json` file. You may also enter a node; in that case the taken path is controlled by the urlParameter `config`.|Direct path: "../masterTree/config.json"; Node: "../../portal/master/". In the node scenario, a query parameter like `config=config.json` must exist in the URL.|
 |postMessageUrl|no|String|`"http://localhost:8080"`|URL the portal is supposed to post messages to and receive messages from with the `postMessage` feature.|"http://localhost:8080"|
@@ -358,127 +357,6 @@ In the section `OpenID Connect Compatibility Modes` activate `Use Refresh Tokens
         "polygonStyleId": "customMapMarkerPolygon"
     }
 }
-```
-
-***
-
-## mouseHover
-
-|Name|Required|Type|Default|Description|
-|----|--------|----|-------|-----------|
-|minShift|no|Integer|`5`|Minimum mouse position movement required to render a new tooltip; in pixels.|
-|numFeaturesToShow|no|Integer|`2`|Maximum amount of element information per tooltip; when exceeded, an information text informs the user of cut content.|
-|infoText|no|String|`"(Further objects. Please zoom.)"`|Information text shown when `numFeaturesToShow` is exceeded.|
-|highlightOnHover|no|Boolean|false|If hovered features should be highlighted|
-|highlightVectorRulesPolygon|no|Object||Specify the fill color and outline color and stroke width for highlighting the polygon features as well as a zoom parameter.|
-|highlightVectorRulesPointLine|no|Object||Specify outline color and stroke width for highlighting lines and fill color and scale factor for highlighting points as well as a zoom parameter.|
-
-**Example:**
-
-```json
-{
-    "mouseHover": {
-        "numFeaturesToShow": 2,
-        "infoText": "The Info Text",
-        "highlightOnHover": true,
-        "highlightVectorRulesPolygon": {
-            "fill": {
-                "color": [255, 255, 255, 0.5]
-            },
-            "stroke": {
-                "width": 4,
-                "color": [255, 0, 0, 0.9]
-            }
-        },
-        "highlightVectorRulesPointLine": {
-            "stroke": {
-                "width": 8,
-                "color": [255, 0, 255, 0.9]
-            },
-            "image": {
-                "scale": 2
-            }
-        }
-    },
-}
-```
-
-### mouseHover.highlightVectorRulesPolygon
-
-Specify the fill color and outline color and stroke width for highlighting the polygon features as well as a zoom level.
-
-|Name|Required|Type|Default|Description|Expert|
-|----|--------|----|-------|-----------|------|
-|fill|no|**[fill](#markdown-header-mousehoverhighlightvectorrulespolygonfill)**||Possible setting: color|false|
-|stroke|no|**[stroke](#markdown-header-mousehoverhighlightvectorrulespolygonstroke)**||Possible setting: width|false|
-
-***
-
-### mouseHover.highlightVectorRulesPolygon.fill
-|Name|Required|Type|Default|Description|Expert|
-|----|--------|----|-------|-----------|------|
-|color|no|Float[]|[255, 255, 255, 0.5]|Possible setting: color (RGBA)|false|
-
-```json
-"fill": { "color": [215, 102, 41, 0.9] }
-```
-
-***
-
-### mouseHover.highlightVectorRulesPolygon.stroke
-|Name|Required|Type|Default|Description|Expert|
-|----|--------|----|-------|-----------|------|
-|width|no|Integer|1|Possible setting: width|false|
-|color|no|Float[]|[255, 0, 0, 0.9]|Possible setting: color (RGBA)|false|
-
-```json
-"stroke": { "width": 4 , "color": [255, 0, 255, 0.9]}
-```
-
-***
-
-
-### mouseHover.highlightVectorRulesPointLine
-
-Specify outline color and stroke width for highlighting lines and fill color and scale factor for highlighting points. Also a zoom level.
-
-|Name|Required|Type|Default|Description|Expert|
-|----|--------|----|-------|-----------|------|
-|fill|no|**[fill](#markdown-header-mousehoverhighlightvectorrulespointlinefill)**||Possible setting: color|false|
-|stroke|no|**[stroke](#markdown-header-mousehoverhighlightvectorrulespointlinestroke)**||Possible setting: width|false|
-|image|no|**[image](#markdown-header-mousehoverhighlightvectorrulespointlineimage)**||Possible setting: scale|false|
-
-***
-### mouseHover.highlightVectorRulesPointLine.fill
-|Name|Required|Type|Default|Description|Expert|
-|----|--------|----|-------|-----------|------|
-|color|no|Float[]|[255, 255, 255, 0.5]|Possible setting: color (RGBA)|false|
-
-```json
-"fill": { "color": [215, 102, 41, 0.9] }
-```
-
-***
-
-### mouseHover.highlightVectorRulesPointLine.stroke
-|Name|Required|Type|Default|Description|Expert|
-|----|-------------|---|-------|------------|------|
-|width|no|Integer|1|Possible setting: width|false|
-|color|no|Float[]|[255, 255, 255, 0.5]|Possible setting: color (RGBA)|false|
-
-```json
-"stroke": { "width": 4 , "color": [255, 0, 255, 0.9]}
-```
-
-***
-
-### mouseHover.highlightVectorRulesPointLine.image
-|Name|Required|Type|Default|Description|Expert|
-|----|--------|----|-------|-----------|------|
-|scale|no|Integer|1.5|Possible setting: scale|false|
-
-```json
-"image": { "scale": 2}
 ```
 
 ***

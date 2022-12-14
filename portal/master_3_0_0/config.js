@@ -31,10 +31,6 @@ const Config = {
             tileCacheSize: 20
         }
     },
-    mouseHover: {
-        numFeaturesToShow: 2,
-        infoText: "common:mouseHover.infoText"
-    },
     portalLanguage: {
         enabled: true,
         debug: false,

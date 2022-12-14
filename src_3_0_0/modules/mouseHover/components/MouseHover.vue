@@ -10,11 +10,7 @@ export default {
         })
     },
     mounted () {
-        if (Config.mouseHover) {
-            this.$nextTick(() => {
-                this.initialize();
-            });
-        }
+        this.initialize();
     },
     methods: {
         ...mapActions("Modules/MouseHover", ["initialize"])
