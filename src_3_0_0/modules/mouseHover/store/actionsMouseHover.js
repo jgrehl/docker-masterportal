@@ -7,7 +7,7 @@ export default {
      * @returns {void}
      */
     initialize ({state, commit, dispatch}) {
-        const {numFeaturesToShow, infoText} = Config.mouseHover,
+        const {numFeaturesToShow, infoText} = state,
             map = mapCollection.getMap("2D");
         let featuresAtPixel = [];
 
