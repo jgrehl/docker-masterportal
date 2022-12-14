@@ -64,7 +64,8 @@ Layer2dVector.prototype.getLayerParams = function (attributes) {
         gfiTheme: attributes.gfiTheme,
         name: attributes.name,
         opacity: (100 - attributes.transparency) / 100,
-        typ: attributes.typ
+        typ: attributes.typ,
+        zIndex: attributes.zIndex
     };
 };
 
