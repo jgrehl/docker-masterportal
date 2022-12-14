@@ -2,6 +2,7 @@ import upperFirst from "../../shared/js/utils/upperFirst";
 
 const moduleKeys = [
     "getFeatureInfo",
+    "mouseHover",
     "mainMenu.sections",
     "secondaryMenu.sections"
 ];
