@@ -102,6 +102,7 @@
         "subjectDataTime": "Time Series",
         "selectedTopics": "Selected topics",
         "removeSelection": "Remove selection",
+        "drag": "Move",
         "infosAndLegend": "Show information about the data set",
         "removeTopic": "Remove topic",
         "showTopic": "Present topic",
