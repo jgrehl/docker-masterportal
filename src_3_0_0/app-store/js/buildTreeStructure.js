@@ -2,9 +2,6 @@ import rawLayerList from "@masterportal/masterportalapi/src/rawLayerList";
 import getNestedValues from "../../shared/js/utils/getNestedValues";
 import {sortObjects} from "../../shared/js/utils/sortObjects";
 
-const keyFolder = "Ordner",
-    keyTitle = "Titel",
-    keyLayer = "Layer";
 
 /**
  * Returns all layer from services.json to add to states layerConfig for treetype 'auto', besides background-layers.
@@ -16,9 +13,6 @@ const keyFolder = "Ordner",
  */
 export function buildTreeStructure (layerConfig, category, shownLayerConfs = []) {
     // @todo refactored from parserDefaultTree.js
-    //
-    // @todo dort wird an allen Objekten, die keine id haben, eine id gesetzt: id: this.createUniqId(groupname)
-    // @todo brauchen wir das auch?
     const layerList = rawLayerList.getLayerList(),
         bgLayers = getNestedValues(layerConfig?.Hintergrundkarten, "elements", true).flat(Infinity),
         categoryKey = category?.key,
@@ -30,7 +24,7 @@ export function buildTreeStructure (layerConfig, category, shownLayerConfs = [])
     if (!category) {
         return layerList;
     }
-    folder[keyFolder] = [];
+    folder["elements"] = [];
 
     for (let i = 0; i < layerList.length; i++) {
         let rawLayer = layerList[i],
@@ -52,7 +46,7 @@ export function buildTreeStructure (layerConfig, category, shownLayerConfs = [])
             if (!Object.keys(groups).find((key) => key === groupName)) {
                 addGroup(folder, groups, groupName);
             }
-            subFolder = folder[keyFolder].find((obj) => obj[keyTitle] === groupName);
+            subFolder = folder["elements"].find((obj) => obj["name"] === groupName);
 
             if (!Object.keys(groups[groupName]).find((key) => key === mdName)) {
                 groups[groupName][mdName] = [];
@@ -90,11 +84,12 @@ function moveFirstLayerToFolder (subFolder, groups, layersByMdName, groupName, m
         subToAdd = {};
 
     groups[groupName][mdName] = [];
-    removeLayerById(subFolder[keyLayer], firstLayer.id);
-    subToAdd[keyLayer] = groups[groupName][mdName];
-    subToAdd[keyTitle] = mdName;
-    subFolder[keyFolder].push(subToAdd);
-    sortObjects(subFolder[keyFolder], keyTitle);
+    removeLayerById(subFolder["elements"], firstLayer.id);
+    subToAdd["elements"] = groups[groupName][mdName];
+    subToAdd["name"] = mdName;
+    subToAdd["type"] = "folder";
+    subFolder["elements"].push(subToAdd);
+    sortObjects(subFolder["elements"], "name");
     groups[groupName][mdName].push(firstLayer);
 }
 
@@ -106,11 +101,11 @@ function moveFirstLayerToFolder (subFolder, groups, layersByMdName, groupName, m
  * @returns {void}
  */
 function addSingleLayer (subFolder, layer, mdName) {
-    if (!Array.isArray(subFolder[keyLayer])) {
-        subFolder[keyLayer] = [];
+    if (!Array.isArray(subFolder["elements"])) {
+        subFolder["elements"] = [];
     }
-    subFolder[keyLayer].push(Object.assign({}, layer, {name: mdName}));
-    sortObjects(subFolder[keyLayer], "name");
+    subFolder["elements"].push(Object.assign({}, layer, {name: mdName}));
+    sortObjects(subFolder["elements"], "name");
 }
 
 /**
@@ -124,10 +119,11 @@ function addSingleLayer (subFolder, layer, mdName) {
 function addSubGroup (subFolder, groups, groupName, mdName) {
     const subToAdd = {};
 
-    subToAdd[keyLayer] = groups[groupName][mdName];
-    subToAdd[keyTitle] = mdName;
-    subFolder[keyFolder].push(subToAdd);
-    sortObjects(subFolder[keyFolder], keyTitle);
+    subToAdd["elements"] = groups[groupName][mdName];
+    subToAdd["name"] = mdName;
+    subToAdd["type"] = "folder";
+    subFolder["elements"].push(subToAdd);
+    sortObjects(subFolder["elements"], "name");
 }
 
 /**
@@ -140,10 +136,11 @@ function addSubGroup (subFolder, groups, groupName, mdName) {
 function addGroup (folder, groups, groupName) {
     const toAdd = {};
 
-    toAdd[keyFolder] = [];
-    toAdd[keyTitle] = groupName;
-    folder[keyFolder].push(toAdd);
-    sortObjects(folder[keyFolder], keyTitle);
+    toAdd["elements"] = [];
+    toAdd["name"] = groupName;
+    toAdd["type"] = "folder";
+    folder["elements"].push(toAdd);
+    sortObjects(folder["elements"], "name");
     groups[groupName] = {};
 }
 
