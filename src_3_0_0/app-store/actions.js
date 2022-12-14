@@ -4,6 +4,8 @@ import getNestedValues from "../shared/js/utils/getNestedValues";
 import {getAndMergeAllRawLayers, getAndMergeRawLayer} from "./js/getAndMergeRawLayer";
 import {buildTreeStructure} from "./js/buildTreeStructure";
 
+const order = ["Hintergrundkarten", "Fachdaten"];
+
 export default {
     /**
      * Extends all layers of config.json with the attributes of the layer in services.json.
@@ -17,23 +19,31 @@ export default {
      * @returns {void}
      */
     extendLayers ({commit, getters, state}) {
-        const layerContainer = getNestedValues(state.layerConfig, "elements", true).flat(Infinity);
+        const orderedLayerConfigKeys = Object.keys(state.layerConfig).sort((a, b) => order.indexOf(a) - order.indexOf(b));
 
-        if (state.portalConfig?.tree?.type === "auto") {
-            let layersStructured = [];
+        state.layerConfig?.Hintergrundkarten?.elements?.map(attributes => Object.assign(attributes, {backgroundLayer: true}));
+        orderedLayerConfigKeys.forEach(layerConfigKey => {
+            state.layerConfig[layerConfigKey]?.elements.reverse();
 
-            getAndMergeAllRawLayers(state.portalConfig?.tree);
-            layersStructured = buildTreeStructure(state.layerConfig, getters.activeOrFirstCategory, layerContainer);
+            const layerContainer = getNestedValues(state.layerConfig[layerConfigKey], "elements", true).flat(Infinity);
 
-            commit("setLayerConfigByParentKey", {layerConfigs: layersStructured, parentKey: "Fachdaten"});
-        }
-        layerContainer.forEach(layerConf => {
-            const rawLayer = getAndMergeRawLayer(layerConf, state.portalConfig?.tree?.type);
+            if (state.portalConfig?.tree?.type === "auto") {
+                let layersStructured = [];
 
-            if (rawLayer) {
-                commit("replaceByIdInLayerConfig", {layerConfigs: [{layer: rawLayer, id: layerConf.id}]});
+                getAndMergeAllRawLayers(state.portalConfig?.tree);
+                layersStructured = buildTreeStructure(state.layerConfig, getters.activeOrFirstCategory, layerContainer);
+
+                commit("setLayerConfigByParentKey", {layerConfigs: layersStructured, parentKey: "Fachdaten"});
             }
+            layerContainer.forEach(layerConf => {
+                const rawLayer = getAndMergeRawLayer(layerConf, state.portalConfig?.tree?.type);
+
+                if (rawLayer) {
+                    commit("replaceByIdInLayerConfig", {layerConfigs: [{layer: rawLayer, id: layerConf.id}]});
+                }
+            });
         });
+
     },
 
     /**
