@@ -123,6 +123,11 @@ module.exports = function () {
                     }
                 },
                 {
+                    test: /\.mjs$/,
+                    include: /node_modules/,
+                    type: "javascript/auto"
+                },
+                {
                     test: /\.scss$/,
                     use: [
                         {
