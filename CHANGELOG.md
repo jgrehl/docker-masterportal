@@ -22,12 +22,13 @@
     - The menu side can be accessed under Portalconfig.getFeatureInfo.menuSide.
 - The `startTool` control has been renamed to `startModule`. Modules are now completely configured within the control.
 - Update from vue 2 to vue 3
+- The configuration for `mouseHover` is moved from config.js to config.json. Also, the configuration is now optional.
 
 ### Added
 - The following NPM package was added:
     - devDependencies:
         - @babel/plugin-transform-modules-commonjs
-        - @vue/devtools-api        - 
+        - @vue/devtools-api        -
         - @vue/compiler-sfc
         - i18next-vue
 - A new module `OpenConfig` has been implemented, which can be used to load a new configuration file (config.json) at runtime.
@@ -49,7 +50,7 @@
         - i18next-browser-languagedetector: 6.1.4 to 6.1.8
         - i18next-http-backend: 1.4.1 to 1.4.5
         - moment-timezone: 0.5.34 to 0.5.37
-        - vue: 2.7.8 to 3.1.0 
+        - vue: 2.7.8 to 3.1.0
         - vuex: 3.6.2 to 4.0.2
     - devDependencies
         - @masterportal/mpconfigparser: 1.3.0 to 1.3.1
