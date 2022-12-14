@@ -28,7 +28,7 @@
 - The following NPM package was added:
     - devDependencies:
         - @babel/plugin-transform-modules-commonjs
-        - @vue/devtools-api        -
+        - @vue/devtools-api
         - @vue/compiler-sfc
         - i18next-vue
 - A new module `OpenConfig` has been implemented, which can be used to load a new configuration file (config.json) at runtime.
