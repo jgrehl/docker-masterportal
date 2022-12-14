@@ -56,7 +56,7 @@ const getters = {
      * @returns {String} The cesium library path.
      */
     cesiumLibrary: state => {
-        return state.configJs?.cesiumLibrary || "https://cesium.com/downloads/cesiumjs/releases/1.95/Build/Cesium/Cesium.js";
+        return state.configJs?.cesiumLibrary || "https://cesium.com/downloads/cesiumjs/releases/1.100/Build/Cesium/Cesium.js";
     },
 
     /**
