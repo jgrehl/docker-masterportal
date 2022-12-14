@@ -321,9 +321,6 @@ export default {
         text-align: center;
     }
     .gfi-theme-sensor {
-        width: 65vh;
-        height: 47vh;
         overflow: auto;
-        padding: 15px;
     }
 </style>
