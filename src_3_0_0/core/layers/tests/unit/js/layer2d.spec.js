@@ -7,6 +7,25 @@ import Layer2d from "../../../js/layer2d";
 describe("src_3_0_0/core/js/layers/layer2d.js", () => {
     let warn;
 
+    before(() => {
+        mapCollection.clear();
+        const map = {
+            id: "ol",
+            mode: "2D",
+            getView: () => {
+                return {
+                    getProjection: () => {
+                        return {
+                            getCode: () => "EPSG:25832"
+                        };
+                    }
+                };
+            }
+        };
+
+        mapCollection.addMap(map, "2D");
+    });
+
     beforeEach(() => {
         warn = sinon.spy();
         sinon.stub(console, "warn").callsFake(warn);
