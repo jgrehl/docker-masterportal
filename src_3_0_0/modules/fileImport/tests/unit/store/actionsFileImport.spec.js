@@ -1,4 +1,3 @@
-/**/
 import testAction from "../../../../../../test/unittests/VueTestUtils";
 import actions from "../../../store/actionsFileImport";
 import importedState from "../../../store/stateFileImport";
