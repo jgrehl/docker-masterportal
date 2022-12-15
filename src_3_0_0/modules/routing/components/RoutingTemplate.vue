@@ -16,7 +16,7 @@ export default {
         };
     },
     computed: {
-        ...mapGetters("Modules/Routing", ["active", "activeRoutingToolOption", "routingToolOptions", "taskHandler", "filteredRoutingToolOptions"]),
+        ...mapGetters("Modules/Routing", ["active", "activeRoutingToolOption", "routingToolOptions", "taskHandler", "filteredRoutingToolOptions", "geosearchReverse"]),
         ...mapGetters("Modules/Routing/Directions", ["isLoadingDirections"]),
         ...mapGetters("Modules/Routing/Isochrones", ["isLoadingIsochrones"]),
         /**
