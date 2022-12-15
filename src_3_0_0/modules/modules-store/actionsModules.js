@@ -1,4 +1,5 @@
 import upperFirst from "../../shared/js/utils/upperFirst";
+import {toRaw} from "vue";
 
 const moduleKeys = [
     "getFeatureInfo",
@@ -25,7 +26,7 @@ export default {
             }
             else if (keys.length > 1 && portalConfig[keys[0]] && portalConfig[keys[0]][keys[1]]) {
                 portalConfig[keys[0]][keys[1]].forEach(sections => {
-                    dispatch("addAttributesToModuleState", sections);
+                    dispatch("addAttributesToModuleState", {items: sections});
                 });
             }
         });
@@ -47,20 +48,55 @@ export default {
     /**
      * Commit the attributes to a module state.
      * Note: Folders are run through recursively.
+     * @param {Object} _ vuex object
+     * @param {Object} obj object to search within
+     * @param {String} path searchpath for the attribute
+     * @param {String|Number|Boolean} value replaceValue
+     * @returns {void}
+     */
+    setDeepMerge (_, {obj, path, value}) {
+        const props = typeof path === "string" ? path.split(".") : path;
+        let i,
+            n,
+            updateObj = obj;
+
+        for (i = 0, n = props.length - 1; i < n; ++i) {
+            updateObj = updateObj[props[i]] = updateObj[props[i]] || {};
+        }
+
+        updateObj[props[i]] = value;
+        return updateObj;
+    },
+
+    /**
+     * Commit the attributes to a module state.
+     * Note: Folders are run through recursively.
      * @param {Object} param store context
      * @param {Object} param.commit the commit
      * @param {Object} param.dispatch the dispatch
-     * @param {Object[]} items The items.
+     * @param {Object[]} payload.items the items
+     * @param {String} payload.itemType type of item = module name
+     * @param {String} payload.replaceString path to deep nested attribute
      * @returns {void}
      */
-    addAttributesToModuleState ({commit, dispatch}, items) {
+    addAttributesToModuleState ({commit, dispatch, rootState}, {items, itemType, replaceString}) {
         items.forEach(item => {
             if (item?.type === "folder") {
-                dispatch("addAttributesToModuleState", item.elements);
+                dispatch("addAttributesToModuleState", {items: item.elements});
             }
             else {
-                for (const [key, value] of Object.entries(item)) {
-                    commit(`${upperFirst(item?.type)}/set${upperFirst(key)}`, value);
+                const replaceStringInit = replaceString && itemType ? replaceString : `${upperFirst(item.type)}`;
+
+                for (const [key, value] of Object.entries(toRaw(item))) {
+                    if (typeof value === "object") {
+                        dispatch("addAttributesToModuleState", {items: [value], itemType: item?.type, replaceString: replaceStringInit + `.${key}`});
+                    }
+                    else if (!itemType) {
+                        commit(`${upperFirst(item?.type)}/set${upperFirst(key)}`, value);
+                    }
+                    else {
+                        dispatch("setDeepMerge", {obj: rootState.Modules, path: replaceStringInit + `.${key}`, value: value});
+                    }
                 }
             }
         });
