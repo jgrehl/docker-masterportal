@@ -17,9 +17,7 @@ export default {
 
         dropZoneAdditionalClass: function () {
             return this.dzIsDropHovering ? "dzReady" : "";
-        },
-
-        console: () => console
+        }
     },
     watch: {
         /**
@@ -106,9 +104,6 @@ export default {
             if (event.which === 32 || event.which === 13) {
                 this.$refs["upload-input-file"].click();
             }
-        },
-        close () {
-            this.setActive(false);
         },
         /**
          * Zoom to the feature of imported file
