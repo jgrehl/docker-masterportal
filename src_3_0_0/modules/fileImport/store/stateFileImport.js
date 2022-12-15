@@ -6,7 +6,6 @@
  * @property {Boolean}  enableZoomToExtend - If true, it is enable to zoom to features of the imported file.
  * @property {Object}   featureExtents - the Feature Extents.
  * @property {String}   icon - icon next to title
- * @property {String}   id - internal id of component
  * @property {String[]} importedFileNames - list of names of successfully imported files
  * @property {Object}   layer - the layer
  * @property {String}   name - Displayed as title (config-param)
@@ -23,7 +22,6 @@ export default {
     enableZoomToExtend: false,
     featureExtents: {},
     icon: "bi-box-arrow-in-down",
-    id: "fileImport",
     importedFileNames: [],
     layer: undefined,
     name: "common:menu.tools.fileImport",
