@@ -46,8 +46,7 @@ export default {
     },
 
     /**
-     * Commit the attributes to a module state.
-     * Note: Folders are run through recursively.
+     * Updates attributes of nested state objects
      * @param {Object} _ vuex object
      * @param {Object} obj object to search within
      * @param {String} path searchpath for the attribute
@@ -74,6 +73,7 @@ export default {
      * @param {Object} param store context
      * @param {Object} param.commit the commit
      * @param {Object} param.dispatch the dispatch
+     * @param {Object} payload action payload
      * @param {Object[]} payload.items the items
      * @param {String} payload.itemType type of item = module name
      * @param {String} payload.replaceString path to deep nested attribute
