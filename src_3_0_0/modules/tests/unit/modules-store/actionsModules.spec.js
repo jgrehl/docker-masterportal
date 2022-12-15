@@ -68,7 +68,7 @@ describe("src_3_0_0/modules/modules-store/actions.js", () => {
 
             expect(dispatch.calledOnce).to.be.true;
             expect(dispatch.firstCall.args[0]).to.equals("addAttributesToModuleState");
-            expect(dispatch.firstCall.args[1]).to.deep.equals([
+            expect(dispatch.firstCall.args[1]).to.deep.equals({items: [
                 {
                     "title": "common:menu.tools.scaleSwitcher",
                     "icon": "bi-1-square-fill",
@@ -100,17 +100,17 @@ describe("src_3_0_0/modules/modules-store/actions.js", () => {
                         }
                     ]
                 }
-            ]);
+            ]});
         });
     });
 
     describe("addAttributesToModuleState", () => {
         it("should commit attributes to state", () => {
-            addAttributesToModuleState({commit, dispatch}, portalConfig.mainMenu.sections[0]);
+            addAttributesToModuleState({commit, dispatch}, {items: portalConfig.mainMenu.sections[0]});
 
             expect(dispatch.calledOnce).to.be.true;
             expect(dispatch.firstCall.args[0]).to.equals("addAttributesToModuleState");
-            expect(dispatch.firstCall.args[1]).to.deep.equals([
+            expect(dispatch.firstCall.args[1]).to.deep.equals({items: [
                 {
                     "type": "folder",
                     "title": "folder1_1",
@@ -130,7 +130,7 @@ describe("src_3_0_0/modules/modules-store/actions.js", () => {
                         }
                     ]
                 }
-            ]);
+            ]});
 
             expect(commit.calledThrice).to.be.true;
             expect(commit.firstCall.args[0]).to.equals("ScaleSwitcher/setTitle");
