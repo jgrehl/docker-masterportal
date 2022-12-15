@@ -6,7 +6,7 @@ import sinon from "sinon";
 
 config.global.mocks.$t = key => key;
 
-describe.only("src_3_0_0/modules/fileImport/components/FileImport.vue", () => {
+describe("src_3_0_0/modules/fileImport/components/FileImport.vue", () => {
     const
         mockConfigJson = {
             Portalconfig: {
