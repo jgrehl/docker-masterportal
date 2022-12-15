@@ -88,10 +88,10 @@ export default {
                 const replaceStringInit = replaceString && itemType ? replaceString : `${upperFirst(item.type)}`;
 
                 for (const [key, value] of Object.entries(toRaw(item))) {
-                    if (typeof value === "object") {
+                    if (typeof value === "object" && !Array.isArray(value)) {
                         dispatch("addAttributesToModuleState", {items: [value], itemType: item?.type, replaceString: replaceStringInit + `.${key}`});
                     }
-                    else if (!itemType) {
+                    else if (!itemType && !Array.isArray(value)) {
                         commit(`${upperFirst(item?.type)}/set${upperFirst(key)}`, value);
                     }
                     else {
