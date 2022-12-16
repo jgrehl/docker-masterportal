@@ -58,11 +58,11 @@ const getters = {
 
     /**
      * Returns the maps projection code.
-     * @param {*} _ the state
+     * @param {*} state the state
      * @param {*} getter the getter
      * @returns {String} the projection code
      */
-    projectionCode: (_, getter) => getter.projection?.getCode()
+    projectionCode: (state, getter) => getter.projection?.getCode()
 };
 
 export default getters;
