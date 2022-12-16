@@ -309,3 +309,11 @@ function mergeByMetaIds (toMergeByMdId, layerList) {
         layerList.push(mergedLayer);
     });
 }
+
+/**
+ * Resets the zIndex to 0.
+ * @returns {void}
+ */
+export function resetZIndex () {
+    zIndex = 0;
+}

@@ -122,7 +122,8 @@ describe("src_3_0_0/core/js/layers/layer2dVectorTile.js", () => {
         beforeEach(() => {
             localAttributes = {
                 gfiAttributes: "The attributes",
-                transparency: 50
+                transparency: 50,
+                zIndex: 10
             };
         });
 
@@ -131,7 +132,8 @@ describe("src_3_0_0/core/js/layers/layer2dVectorTile.js", () => {
 
             expect(vectorTileLayer.getLayerParams(localAttributes)).to.deep.equals({
                 gfiAttributes: "The attributes",
-                opacity: 0.5
+                opacity: 0.5,
+                zIndex: 10
             });
         });
     });

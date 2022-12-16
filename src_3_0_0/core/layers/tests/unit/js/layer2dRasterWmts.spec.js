@@ -22,8 +22,26 @@ describe("src_3_0_0/core/js/layers/layer2dRasterWmts.js", () => {
             layers: "layer1,layer2",
             name: "wmtsTestLayer",
             optionsFromCapabilities: false,
-            typ: "WMTS"
+            typ: "WMTS",
+            zIndex: 1
         };
+
+        mapCollection.clear();
+        const map = {
+            id: "ol",
+            mode: "2D",
+            getView: () => {
+                return {
+                    getProjection: () => {
+                        return {
+                            getCode: () => "EPSG:25832"
+                        };
+                    }
+                };
+            }
+        };
+
+        mapCollection.addMap(map, "2D");
     });
 
     after(() => {
@@ -74,7 +92,8 @@ describe("src_3_0_0/core/js/layers/layer2dRasterWmts.js", () => {
 
         beforeEach(() => {
             localAttributes = {
-                transparency: 10
+                transparency: 10,
+                zIndex: 1
             };
         });
 
@@ -82,7 +101,8 @@ describe("src_3_0_0/core/js/layers/layer2dRasterWmts.js", () => {
             const wmsLayer = new Layer2dRasterWmts(localAttributes);
 
             expect(wmsLayer.getLayerParams(localAttributes)).to.deep.equals({
-                opacity: 0.9
+                opacity: 0.9,
+                zIndex: 1
             });
         });
     });
