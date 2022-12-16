@@ -8,6 +8,23 @@ describe("src_3_0_0/core/js/layers/layer2dRaster.js", () => {
     before(() => {
         warn = sinon.spy();
         sinon.stub(console, "warn").callsFake(warn);
+
+        mapCollection.clear();
+        const map = {
+            id: "ol",
+            mode: "2D",
+            getView: () => {
+                return {
+                    getProjection: () => {
+                        return {
+                            getCode: () => "EPSG:25832"
+                        };
+                    }
+                };
+            }
+        };
+
+        mapCollection.addMap(map, "2D");
     });
 
     after(() => {
