@@ -63,7 +63,8 @@ describe("src_3_0_0/core/js/layers/layer2dRasterStaticImage.js", () => {
                 extent: [],
                 name: "layer_name",
                 url: "test.url",
-                crs: "EPSG:25832"
+                crs: "EPSG:25832",
+                zIndex: 1
             };
         });
 
@@ -74,7 +75,8 @@ describe("src_3_0_0/core/js/layers/layer2dRasterStaticImage.js", () => {
                 imageExtent: [],
                 name: "layer_name",
                 url: "test.url",
-                crs: "EPSG:25832"
+                crs: "EPSG:25832",
+                zIndex: 1
             });
         });
     });
