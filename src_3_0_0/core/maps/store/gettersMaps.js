@@ -62,7 +62,7 @@ const getters = {
      * @param {*} getter the getter
      * @returns {String} the projection code
      */
-    projectionCode: (state, getter) => getter.projection?.getCode()
+    projectionCode: state => state.projection?.getCode()
 };
 
 export default getters;
