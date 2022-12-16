@@ -126,7 +126,8 @@ describe("src_3_0_0/core/js/layers/layer2dVector.js", () => {
                 gfiTheme: "default",
                 name: "The name",
                 transparency: 0,
-                typ: "Layer2d"
+                typ: "Layer2d",
+                zIndex: 1
             };
         });
 
@@ -139,7 +140,8 @@ describe("src_3_0_0/core/js/layers/layer2dVector.js", () => {
                 gfiTheme: "default",
                 name: "The name",
                 opacity: 1,
-                typ: "Layer2d"
+                typ: "Layer2d",
+                zIndex: 1
             });
         });
     });
