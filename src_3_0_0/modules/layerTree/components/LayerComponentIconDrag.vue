@@ -1,5 +1,4 @@
 <script>
-import {mapActions, mapGetters} from "vuex";
 import IconButton from "../../../shared/modules/buttons/components/IconButton.vue";
 
 /**
@@ -23,9 +22,10 @@ export default {
         };
     },
     methods: {
-        abc (evt, layerConf) {
-            console.log(layerConf);
-            console.log(evt);
+        abc () {
+            // todo
+            // console.log(layerConf);
+            // console.log(evt);
         }
     }
 };
