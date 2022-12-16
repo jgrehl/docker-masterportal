@@ -1,50 +1,10 @@
 import axios from "axios";
 import {rawLayerList} from "@masterportal/masterportalapi/src";
-import getNestedValues from "../shared/js/utils/getNestedValues";
-import {getAndMergeAllRawLayers, getAndMergeRawLayer} from "./js/getAndMergeRawLayer";
-import {buildTreeStructure} from "./js/buildTreeStructure";
 
-const order = ["Hintergrundkarten", "Fachdaten"];
+import actionsLayerConfig from "./actionsLayerConfig";
 
 export default {
-    /**
-     * Extends all layers of config.json with the attributes of the layer in services.json.
-     * If portalConfig.tree contains parameter 'layerIDsToIgnore', 'metaIDsToIgnore', 'metaIDsToMerge' or 'layerIDsToStyle' the raw layerlist is filtered and merged.
-     * Config entry portalConfig.tree.validLayerTypesAutoTree is respected.
-     * If tree type is 'auto' , folder structure is build from layer's metadata contents for the active or first category configured in config.json unter 'tree'.
-     * Replaces the extended layer in state.layerConf.
-     * @param {Object} param.commit the commit
-     * @param {Object} param.getters the getters
-     * @param {Object} param.state the state
-     * @returns {void}
-     */
-    extendLayers ({commit, getters, state}) {
-        const orderedLayerConfigKeys = Object.keys(state.layerConfig).sort((a, b) => order.indexOf(a) - order.indexOf(b));
-
-        state.layerConfig?.Hintergrundkarten?.elements?.map(attributes => Object.assign(attributes, {backgroundLayer: true}));
-        orderedLayerConfigKeys.forEach(layerConfigKey => {
-            state.layerConfig[layerConfigKey]?.elements.reverse();
-
-            const layerContainer = getNestedValues(state.layerConfig[layerConfigKey], "elements", true).flat(Infinity);
-
-            if (state.portalConfig?.tree?.type === "auto") {
-                let layersStructured = [];
-
-                getAndMergeAllRawLayers(state.portalConfig?.tree);
-                layersStructured = buildTreeStructure(state.layerConfig, getters.activeOrFirstCategory, layerContainer);
-
-                commit("setLayerConfigByParentKey", {layerConfigs: layersStructured, parentKey: "Fachdaten"});
-            }
-            layerContainer.forEach(layerConf => {
-                const rawLayer = getAndMergeRawLayer(layerConf, state.portalConfig?.tree?.type);
-
-                if (rawLayer) {
-                    commit("replaceByIdInLayerConfig", {layerConfigs: [{layer: rawLayer, id: layerConf.id}]});
-                }
-            });
-        });
-
-    },
+    ...actionsLayerConfig,
 
     /**
      * Commit the loaded config.js to the state.
@@ -117,23 +77,5 @@ export default {
                 commit("setLoadedConfigs", "servicesJson");
             }
         });
-    },
-    /**
-     * Adds one layer to states layerConfig under the given parentKey.
-     * @param {Object} state store state
-     * @param {Object} payload the payload
-     * @param {Object[]} payload.layerConfig layer to add to the layerConfigs
-     * @param {String} payload.parentKey the key of the parent object
-     * @returns {Boolean} true or false
-     */
-    addLayerToLayerConfig ({state}, {layerConfig, parentKey}) {
-        const layerContainer = getNestedValues(state.layerConfig, "elements", true).flat(Infinity),
-            matchingLayer = layerContainer.find(layer =>layer.id === layerConfig.id);
-
-        if (matchingLayer === undefined) {
-            state.layerConfig[parentKey].elements.push(layerConfig);
-            return true;
-        }
-        return false;
     }
 };
