@@ -1,10 +1,14 @@
 import rawLayerList from "@masterportal/masterportalapi/src/rawLayerList";
-import {addAdditional, getAndMergeAllRawLayers, getAndMergeRawLayer} from "../../../js/getAndMergeRawLayer.js";
+import {addAdditional, getAndMergeAllRawLayers, getAndMergeRawLayer, resetZIndex} from "../../../js/getAndMergeRawLayer.js";
 import {expect} from "chai";
 import sinon from "sinon";
 
 describe("src_3_0_0/app-store/js/getAndMergeRawLayer.js", () => {
     let layerConfig;
+
+    before(() => {
+        resetZIndex();
+    });
 
     afterEach(() => {
         sinon.restore();
@@ -190,7 +194,8 @@ describe("src_3_0_0/app-store/js/getAndMergeRawLayer.js", () => {
             expect(addAdditional(rawLayer, treeType)).to.deep.equals({
                 id: "1",
                 showInLayerTree: true,
-                type: "layer"
+                type: "layer",
+                zIndex: 3
             });
         });
 
@@ -218,7 +223,8 @@ describe("src_3_0_0/app-store/js/getAndMergeRawLayer.js", () => {
                 id: "3",
                 showInLayerTree: true,
                 visibility: true,
-                type: "layer"
+                type: "layer",
+                zIndex: 4
             });
         });
 
@@ -233,7 +239,8 @@ describe("src_3_0_0/app-store/js/getAndMergeRawLayer.js", () => {
                 id: "4",
                 showInLayerTree: true,
                 visibility: true,
-                type: "layer"
+                type: "layer",
+                zIndex: 5
             });
         });
 
@@ -265,7 +272,8 @@ describe("src_3_0_0/app-store/js/getAndMergeRawLayer.js", () => {
                 id: "6",
                 showInLayerTree: true,
                 visibility: true,
-                type: "layer"
+                type: "layer",
+                zIndex: 6
             });
         });
     });
