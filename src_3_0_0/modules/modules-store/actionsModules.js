@@ -1,5 +1,4 @@
 import upperFirst from "../../shared/js/utils/upperFirst";
-import {toRaw} from "vue";
 
 const moduleKeys = [
     "getFeatureInfo",
@@ -76,26 +75,26 @@ export default {
      * @param {Object} payload action payload
      * @param {Object[]} payload.items the items
      * @param {String} payload.itemType type of item = module name
-     * @param {String} payload.replaceString path to deep nested attribute
+     * @param {String} payload.modulePath path to deep nested attribute
      * @returns {void}
      */
-    addAttributesToModuleState ({commit, dispatch, rootState}, {items, itemType, replaceString}) {
+    addAttributesToModuleState ({commit, dispatch, rootState}, {items, itemType, modulePath}) {
         items.forEach(item => {
             if (item?.type === "folder") {
                 dispatch("addAttributesToModuleState", {items: item.elements});
             }
             else {
-                const replaceStringInit = replaceString && itemType ? replaceString : `${upperFirst(item.type)}`;
+                const modulePathInit = modulePath && itemType ? modulePath : `${upperFirst(item.type)}`;
 
-                for (const [key, value] of Object.entries(toRaw(item))) {
+                for (const [key, value] of Object.entries(item)) {
                     if (typeof value === "object" && !Array.isArray(value)) {
-                        dispatch("addAttributesToModuleState", {items: [value], itemType: item?.type, replaceString: replaceStringInit + `.${key}`});
+                        dispatch("addAttributesToModuleState", {items: [value], itemType: item?.type, modulePath: modulePathInit + `.${key}`});
                     }
                     else if (!itemType && !Array.isArray(value)) {
                         commit(`${upperFirst(item?.type)}/set${upperFirst(key)}`, value);
                     }
                     else {
-                        dispatch("setDeepMerge", {obj: rootState.Modules, path: replaceStringInit + `.${key}`, value: value});
+                        dispatch("setDeepMerge", {obj: rootState.Modules, path: modulePathInit + `.${key}`, value: value});
                     }
                 }
             }
