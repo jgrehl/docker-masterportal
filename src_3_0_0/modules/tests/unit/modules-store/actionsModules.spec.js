@@ -5,7 +5,8 @@ import actionsModules from "../../../modules-store/actionsModules";
 
 const {
     mergeModulesState,
-    addAttributesToModuleState
+    addAttributesToModuleState,
+    setDeepMerge
 } = actionsModules;
 
 describe("src_3_0_0/modules/modules-store/actions.js", () => {
@@ -139,6 +140,47 @@ describe("src_3_0_0/modules/modules-store/actions.js", () => {
             expect(commit.secondCall.args[1]).to.equals("bi-1-square-fill");
             expect(commit.thirdCall.args[0]).to.equals("ScaleSwitcher/setType");
             expect(commit.thirdCall.args[1]).to.equals("scaleSwitcher");
+        });
+    });
+
+    describe("addAttributesToModuleState", () => {
+        it("should commit simple attributes to state directly and update nested attributes by setDeepMerge", () => {
+            const dataObject = [{
+                    "title": "dataObject",
+                    "type": "TestModule",
+                    "nestedArray": [{
+                        "nestedValue": true
+                    }]
+                }],
+                rootState = {
+                    "Modules": "modul"
+                };
+
+            addAttributesToModuleState({commit, dispatch, rootState}, {items: dataObject});
+
+            expect(dispatch.calledOnce).to.be.true;
+            expect(dispatch.firstCall.args[0]).to.equals("setDeepMerge");
+            expect(dispatch.firstCall.args[1]).to.deep.equals({obj: "modul", path: "TestModule.nestedArray", value: [{nestedValue: true}]});
+            expect(commit.calledTwice).to.be.true;
+            expect(commit.firstCall.args[0]).to.equals("TestModule/setTitle");
+            expect(commit.firstCall.args[1]).to.equals("dataObject");
+        });
+    });
+
+    describe("setDeepMerge", () => {
+        it("should return object according path value parameter", () => {
+            const dataObject = {
+                    "title": "dataObject",
+                    "nested1": {
+                        "nested2": {
+                            "nested2Value": true
+                        }
+                    }
+                },
+
+                testValue = setDeepMerge({dispatch}, {obj: dataObject, path: "dataObject.nested1.nested2.nested2Value", value: false});
+
+            expect(testValue).to.deep.equals({"nested2Value": false});
         });
     });
 });
