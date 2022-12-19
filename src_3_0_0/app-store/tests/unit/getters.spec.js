@@ -179,4 +179,56 @@ describe("src_3_0_0/app-store/getters.js", () => {
             expect(getters.visibleLayerConfigs(state)[0].name).to.be.equals("Kita und Krankenhäuser");
         });
     });
+    describe.only("getLayerConfigsByArributes", () => {
+        it("should return ", () => {
+            const greenLayer = {
+                    id: "1132",
+                    name: "100 Jahre Stadtgruen POIs",
+                    visibility: true
+                },
+                bgLayer = {
+                    id: "453",
+                    gfiAttributes: {
+                        "standort": "Standort",
+                        "adresse": "Adresse"
+                    },
+                    visibility: true
+                },
+                layerConfig = {
+                    Hintergrundkarten: {
+                        elements: [
+                            bgLayer,
+                            {
+                                id: "452"
+                            }
+                        ]
+                    },
+                    Fachdaten: {
+                        elements: [
+                            greenLayer,
+                            {
+                                id: "10220"
+                            }
+                        ]
+                    }
+                },
+                state = {
+                    layerConfig: layerConfig
+                };
+
+            expect(getters.getLayerConfigsByArributes(state)(undefined)).to.be.an("array");
+            expect(getters.getLayerConfigsByArributes(state)({id: "1132"})).to.be.an("array");
+            expect(getters.getLayerConfigsByArributes(state)({id: "1132"}).length).to.be.equals(1);
+            expect(getters.getLayerConfigsByArributes(state)({id: "1132"})[0]).to.be.deep.equals(greenLayer);
+            expect(getters.getLayerConfigsByArributes(state)({visibility: true}).length).to.be.equals(2);
+            expect(getters.getLayerConfigsByArributes(state)({visibility: true})).to.be.deep.equals([bgLayer, greenLayer]);
+            expect(getters.getLayerConfigsByArributes(state)({visibility: true, id: "1132"}).length).to.be.equals(1);
+            expect(getters.getLayerConfigsByArributes(state)({visibility: true, id: "453"}).length).to.be.equals(1);
+            // @todo testen
+            // expect(getters.getLayerConfigsByArributes(state)({ gfiAttributes : {
+            //     "standort" : "Standort",
+            //     "adresse" : "Adresse"
+            // },}).length).to.be.equals(1);
+        });
+    });
 });
