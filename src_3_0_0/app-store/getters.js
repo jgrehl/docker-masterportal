@@ -49,6 +49,9 @@ const getters = {
     allSubjectDataLayerConfigs: state => {
         return getNestedValues(state.layerConfig.Fachdaten, "elements", true).flat(Infinity);
     },
+    allBackgroundLayerConfigs: state => {
+        return getNestedValues(state.layerConfig.Hintergrundkarten, "elements", true).flat(Infinity);
+    },
 
     /**
      * Returns path to the cesium library.
@@ -151,6 +154,51 @@ const getters = {
         const layerContainer = getters.allSubjectDataLayerConfigs(state);
 
         return layerContainer.filter(layerConf => layerConf.visibility === true);
+    },
+
+    allLayerConfigsStructured: (state) => {
+        const configs = [];
+
+        Object.keys(state.layerConfig).forEach(layerConfigKey => {
+            Object.keys(state.layerConfig[layerConfigKey]).forEach(subKey => {
+                if (Array.isArray(state.layerConfig[layerConfigKey][subKey])) {
+                    state.layerConfig[layerConfigKey][subKey].forEach(conf => {
+                        configs.push(conf);
+                    });
+                }
+            });
+        });
+        return configs;
+    },
+
+    subjectDataLayerConfigsStructured: (state) => {
+        const configs = [];
+
+        Object.keys(state.layerConfig.Fachdaten).forEach(subKey => {
+            if (Array.isArray(state.layerConfig.Fachdaten[subKey])) {
+                state.layerConfig.Fachdaten[subKey].forEach(conf => {
+                    configs.push(conf);
+                });
+            }
+        });
+        return configs;
+    },
+
+    layerConfigsByArributes: (state) => (attributes = {}) =>{
+        const layerContainer = getters.allLayerConfigs(state);
+
+        return layerContainer.filter(layerConf => {
+            return Object.entries(attributes).every(([key, value]) => {
+                // @todo implementieren
+                if (typeof value === "object") {
+                    throw Error("Not implemented for objects values", value);
+                }
+                else if (Array.isArray(value)) {
+                    throw Error("Not implemented for array values", value);
+                }
+                return layerConf[key] === value;
+            });
+        });
     },
 
     /**
