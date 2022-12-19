@@ -2,12 +2,22 @@
  * Sorts objects by the passed nested attribute.
  * @param {Object[]} objects The objects to be sorted.
  * @param {String} nestedAttribute The nested attribute.
+ * @param {String} [order="asc"] The order: asc (ascending) or desc (descending).
  * @returns {void}
  */
-export function sortObjects (objects, nestedAttribute) {
+export function sortObjects (objects, nestedAttribute, order = "asc") {
     objects.sort((a, b) => {
-        const firstElement = getNestedElement(a, nestedAttribute),
+        let firstElement,
+            secondElement;
+
+        if (order === "asc") {
+            firstElement = getNestedElement(a, nestedAttribute);
             secondElement = getNestedElement(b, nestedAttribute);
+        }
+        else if (order === "desc") {
+            firstElement = getNestedElement(b, nestedAttribute);
+            secondElement = getNestedElement(a, nestedAttribute);
+        }
 
         if (firstElement < secondElement) {
             return -1;
