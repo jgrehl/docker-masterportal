@@ -52,6 +52,7 @@ export default {
         }
     },
     mounted () {
+        console.log("MenuContainerBodyElement path", this.path);
         if (this.properties?.active) {
             this.clickedMenuElement(this.path);
         }
