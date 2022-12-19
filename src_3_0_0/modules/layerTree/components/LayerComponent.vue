@@ -1,7 +1,8 @@
 <script>
-import {mapGetters, mapMutations} from "vuex";
+import {mapGetters} from "vuex";
 import layerFactory from "../../../core/layers/js/layerFactory";
 import LayerComponentIconDrag from "./LayerComponentIconDrag.vue";
+import LayerCheckBox from "./LayerCheckBox.vue";
 import LayerComponentIconInfo from "./LayerComponentIconInfo.vue";
 import LayerComponentIconSubMenu from "./LayerComponentIconSubMenu.vue";
 import LayerComponentSubMenu from "./LayerComponentSubMenu.vue";
@@ -13,6 +14,7 @@ export default {
     name: "LayerComponent",
     components: {
         LayerComponentIconDrag,
+        LayerCheckBox,
         LayerComponentIconInfo,
         LayerComponentIconSubMenu,
         LayerComponentSubMenu
@@ -25,47 +27,28 @@ export default {
         }
     },
     computed: {
-        ...mapGetters("Maps", ["mode"]),
-
-        /**
-         * Returns the value of layerConf's attribute visibility
-         * @returns {Boolean} the value of layerConf's attribute visibility
-         */
-        isLayerVisible () {
-            return typeof this.conf.visibility === "boolean" ? this.conf.visibility : false;
-        }
+        ...mapGetters("Maps", ["mode"])
     },
     methods: {
-        ...mapMutations(["replaceByIdInLayerConfig"]),
-
-        /**
-         * Replaces the value of current conf's visibility in state's layerConfig
-         * @param {Boolean} value visible or not
-         * @returns {void}
-         */
-        visibilityInLayerTreeChanged (value) {
-            this.replaceByIdInLayerConfig(
-                {
-                    layerConfigs: [{
-                        id: this.conf.id,
-                        layer: {
-                            id: this.conf.id,
-                            visibility: value
-                        }
-                    }]
-                }
-            );
-        },
-
         /**
          * Returns true, if layer configuration shall be shown in tree in current map mode.
          * Filteres by attribute 'showInLayerTree'.
          * @returns {boolean} true, if layer configuration shall be shown in tree
          */
-        showInLayerTree () {
-            const layerTypes3d = layerFactory.getLayerTypes3d();
+        show () {
+            const showLayerTyp = this.mode === "2D" ? !layerFactory.getLayerTypes3d().includes(this.conf.typ?.toUpperCase()) : true;
 
-            return this.conf.showInLayerTree === true && (this.mode === "2D" ? !layerTypes3d.includes(this.conf.typ?.toUpperCase()) : true);
+            if (this.isLayerTree()) {
+                return this.conf.showInLayerTree === true && showLayerTyp;
+            }
+            return showLayerTyp;
+        },
+        /**
+         * Returns true, if this parent is a 'LayerTreeNode' in layer-tree and false if parent is 'LayerSelectionTreeNode' in layer-selection.
+         * @returns {Boolean} true, if this parent is a 'LayerTreeNode' in layer-tree
+         */
+        isLayerTree () {
+            return this.$parent.$options.name === "LayerTreeNode";
         }
     }
 };
@@ -73,48 +56,34 @@ export default {
 
 <template lang="html">
     <div
-        v-if="showInLayerTree()"
+        v-if="show()"
         :id="'layer-tree-layer-' + conf.id"
         class="layer-tree-layer d-flex flex-column justify-content-between"
     >
         <div class="d-flex justify-content-between align-items-center">
-            <div
-                class="layer-tree-layer-title pe-2 py-1 ps-1"
-                @click="visibilityInLayerTreeChanged(!isLayerVisible)"
-                @keydown.enter="visibilityInLayerTreeChanged(!isLayerVisible)"
-            >
-                <span
-                    :id="'layer-tree-layer-checkbox-' + conf.id"
-                    :class="[
-                        'layer-tree-layer-checkbox pe-2',
-                        {
-                            'bi-check2-square': isLayerVisible,
-                            'bi-square': !isLayerVisible
-                        }
-                    ]"
+            <div class="layer-tree-layer-title pe-2">
+                <LayerCheckBox 
+                    :conf="conf"
+                    :is-layer-tree="isLayerTree()"
                 />
-                <label
-                    :class="['layer-tree-layer-label', 'mt-0 d-flex flex-column align-self-start', isLayerVisible ? 'bold' : '']"
-                    :for="'layer-tree-layer-checkbox-' + conf.id"
-                    tabindex="0"
-                    :aria-label="$t(conf.name)"
-                >
-                    <span>
-                        {{ conf.name }}
-                    </span>
-                </label>
             </div>
-            <div class="d-flex">
+            <div
+                v-if="isLayerTree()"
+                class="d-flex"
+            >
                 <LayerComponentIconSubMenu :layer-conf="conf" />
                 <LayerComponentIconInfo :layer-conf="conf" />
                 <LayerComponentIconDrag :layer-conf="conf" />
             </div>
         </div>
         <div
-            :id="'collapse-sub-menu-' + conf.id"
+            v-if="isLayerTree()"
+            :id="'collapseSubMenu-' + conf.id"
             class="collapse"
         >
-            <LayerComponentSubMenu :layer-conf="conf" />
+            <LayerComponentSubMenu
+                :layer-conf="conf"
+            />
         </div>
     </div>
 </template>
