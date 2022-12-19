@@ -157,6 +157,7 @@ Layer2dVectorSensorThings.prototype.updateLayerValues = function (values) {
 
     this.getLayer()?.setOpacity((100 - values.transparency) / 100);
     this.getLayer()?.setVisible(values.visibility);
+    this.getLayer()?.setZIndex(values.zIndex);
 
     if (state === true) {
         this.startSubscription(this.getLayerSource().getFeatures());
