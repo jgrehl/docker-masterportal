@@ -123,7 +123,10 @@
         "selectAll": "select all",
         "iconRemoveLayer": "Remove Topic from Map",
         "iconSubMenu": "Show more functions",
-        "iconTransparency": "Transparency"
+        "iconTransparency": "Transparency",
+        "addLayer": "Add layer",
+        "addSubject": "Add subject",
+        "backgrounds": "Backgrounds"
     },
     "date": "Date",
     "time": "Time",
