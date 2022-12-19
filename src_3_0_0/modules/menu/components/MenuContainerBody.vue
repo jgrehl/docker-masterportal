@@ -89,6 +89,7 @@ export default {
         class="mp-menu-body"
     >
         <MenuNavigation :side="side" />
+
         <template v-for="component in componentsAlwaysActivated">
             <component
                 :is="component.module"
