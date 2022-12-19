@@ -1,7 +1,5 @@
 <script>
-import {mapGetters} from "vuex";
 import LayerTreeNode from "./LayerTreeNode.vue";
-import {sortObjects} from "../../../shared/js/utils/sortObjects";
 
 /**
  * Module to display the layers in menu.
@@ -10,25 +8,6 @@ export default {
     name: "LayerTree",
     components: {
         LayerTreeNode
-    },
-    computed: {
-        ...mapGetters(["layerConfig"]),
-        confs () {
-            const configs = [];
-
-            Object.keys(this.layerConfig).forEach(layerConfigKey => {
-                Object.keys(this.layerConfig[layerConfigKey]).forEach(subKey => {
-                    if (Array.isArray(this.layerConfig[layerConfigKey][subKey])) {
-                        this.layerConfig[layerConfigKey][subKey].forEach(conf => {
-                            configs.push(conf);
-                        });
-                    }
-                });
-            });
-
-            sortObjects(configs, "zIndex");
-            return configs.reverse();
-        }
     }
 };
 </script>
@@ -39,16 +18,7 @@ export default {
         id="layer-tree"
         class="layer-tree"
     >
-        <template
-            v-for="(conf, index) in confs"
-            :key="index"
-        >
-            <LayerTreeNode
-                v-if="typeof conf !== 'string'"
-                :id="conf.id"
-                :conf="conf"
-            />
-        </template>
+        <LayerTreeNode />
     </div>
     <hr>
 </template>
@@ -67,5 +37,4 @@ export default {
             max-width: 400px;
         }
     }
-
 </style>
