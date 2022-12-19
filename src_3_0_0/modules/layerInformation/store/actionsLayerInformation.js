@@ -22,11 +22,7 @@ const actions = {
         dispatch("additionalSingleLayerInfo");
         dispatch("Menu/resetMenu", menuItem, {root: true});
 
-        if (!state.active) {
-            dispatch("Menu/activateMenuNavigation", menuItem, {root: true});
-        }
-
-        commit("setActive", !state.active);
+        dispatch("Menu/setMenuBackAndActivateItem", menuItem, {root: true});
     },
 
     /**
