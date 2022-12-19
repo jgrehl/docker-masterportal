@@ -58,6 +58,7 @@ export default {
      */
     clickedMenuElement ({commit, dispatch, getters}, path) {
         const {type} = getters.section(path);
+        console.log("clickedMenuElement type:", type, "path:", path);
 
         if (type) {
             commit("Menu/Navigation/addEntry", path, {root: true});
@@ -96,13 +97,13 @@ export default {
     },
 
     /**
-     * Resets one side of menu and deactivate modules.
+     * Resets one side of menu and deactivate modules except the given module.
      * @param {Object} param store context
      * @param {Object} param.commit the commit
      * @param {Object} param.dispatch the dispatch
      * @param {Object} payload The payload.
      * @param {String} payload.side The menu side to reset.
-     * @param {Object} payload.module The module type.
+     * @param {Object} payload.module The module not to deactivate.
      * @returns {void}
      */
     resetMenu ({commit, dispatch}, {side, module}) {
@@ -169,7 +170,7 @@ export default {
      * @param {Object} menuItem.module The module type.
      * @returns {void}
      */
-    setMenuBack ({dispatch}, menuItem) {
+    setMenuBackAndActivateItem ({dispatch}, menuItem) {
         dispatch("resetMenu", menuItem);
         dispatch("activateMenuNavigation", menuItem);
     }
