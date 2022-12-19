@@ -127,7 +127,10 @@
         "selectAll": "alle auswählen",
         "iconRemoveLayer": "Thema aus Karte entfernen",
         "iconSubMenu": "Weitere Funktionen anzeigen",
-        "iconTransparency": "Transparenz"
+        "iconTransparency": "Transparenz",
+        "addLayer": "hinzufügen",
+        "addSubject": "Thema hinzufügen",
+        "backgrounds": "Hintergründe"
     },
     "date": "Datum",
     "time": "Zeit",
