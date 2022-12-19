@@ -310,39 +310,6 @@
           "visibility": true
         },
         {
-          "name": "Emissionen",
-          "type": "folder",
-          "elements": [
-            {
-              "name": "Lärmschutzbereiche Flughafen Hamburg (FluLärmHmbV)",
-              "type": "folder",
-              "elements": [
-                {
-                  "id": "2431",
-                  "visibility": false
-                },
-                {
-                  "id": "2430",
-                  "visibility": false
-                },
-                {
-                  "id": "2429"
-                },
-                {
-                  "name": "Überschwemmungsgebiete",
-                  "type": "folder",
-                  "elements": [
-                    {
-                      "id": "1103",
-                      "visibility": false
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
           "id": "1933",
           "typ": "WMS",
           "visibility": false,
