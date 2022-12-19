@@ -18,15 +18,8 @@ export default {
     },
     data () {
         return {
-            classInfo: "layer-component-icon-drag-button, btn-light"
+            classInfo: "layer-component-icon-drag-button, btn-light, handle-layer-component-drag"
         };
-    },
-    methods: {
-        abc () {
-            // todo
-            // console.log(layerConf);
-            // console.log(evt);
-        }
     }
 };
 </script>
@@ -41,7 +34,6 @@ export default {
             :class-array="[classInfo]"
             :aria="$t('common:tree.drag')"
             :icon="'bi-grip-vertical'"
-            :interaction="(evt) => abc(evt, layerConf)"
         />
     </div>
 </template>
