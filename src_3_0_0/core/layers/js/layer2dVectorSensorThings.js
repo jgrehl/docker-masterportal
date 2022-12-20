@@ -590,6 +590,7 @@ Layer2dVectorSensorThings.prototype.createPropertiesOfDatastreamsHelper = functi
         const dataStreamId = String(dataStream["@iot.id"]),
             dataStreamName = dataStream.name,
             dataStreamValue = Array.isArray(dataStream.Observations) ? dataStream.Observations[0]?.result : "",
+            dataStreamUnit = dataStream.unitOfMeasurement?.name,
             key = "dataStream_" + dataStreamId + "_" + dataStreamName;
         let phenomenonTime = Array.isArray(dataStream.Observations) ? dataStream.Observations[0]?.phenomenonTime : "";
 
@@ -609,6 +610,12 @@ Layer2dVectorSensorThings.prototype.createPropertiesOfDatastreamsHelper = functi
             properties[key] = noDataValue;
             properties[key + "_phenomenonTime"] = noDataValue;
             properties.dataStreamValue.push(noDataValue);
+        }
+        if (typeof dataStreamUnit !== "undefined" && typeof this.get("rotationUnit") !== "undefined" && dataStreamUnit === this.get("rotationUnit")) {
+            properties.rotation = {
+                isDegree: true,
+                value: typeof dataStreamValue !== "undefined" ? dataStreamValue : 0
+            };
         }
     });
 
@@ -1236,6 +1243,13 @@ Layer2dVectorSensorThings.prototype.updateFeatureProperties = function (feature,
     feature.set("dataStream_" + dataStreamId + "_" + dataStreamName + "_phenomenonTime", phenomenonTime, true);
     feature.set("dataStreamValue", this.replaceValueInPipedProperty(feature, "dataStreamValue", dataStreamId, preparedResult));
     feature.set("dataStreamPhenomenonTime", this.replaceValueInPipedProperty(feature, "dataStreamPhenomenonTime", dataStreamId, phenomenonTime));
+
+    if (typeof feature.get("rotation") !== "undefined" && typeof preparedResult !== "undefined") {
+        feature.set("rotation", {
+            isDegree: true,
+            value: preparedResult
+        });
+    }
 
     return true;
 };
