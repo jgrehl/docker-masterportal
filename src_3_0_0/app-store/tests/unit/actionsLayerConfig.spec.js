@@ -22,8 +22,8 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
                 datasets: [{
                     md_id: "B6A59A2B-2D40-4676-9094-0EB73039ED34",
                     md_name: "md_name_453"
-                }
-                ]
+                }],
+                zIndex: 0
             },
             {
                 id: "452",
@@ -32,8 +32,8 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
                 datasets: [{
                     md_id: "B6A59A2B-2D40-4676-9094-efg",
                     md_name: "md_name_452"
-                }
-                ]
+                }],
+                zIndex: 1
             },
             {
                 id: "1132",
@@ -42,8 +42,8 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
                 datasets: [{
                     md_id: "B6A59A2B-2D40-4676-9094-abc",
                     md_name: "md_name_1132"
-                }
-                ]
+                }],
+                zIndex: 2
             },
             {
                 id: "10220",
@@ -52,24 +52,25 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
                 datasets: [{
                     md_id: "B6A59A2B-2D40-4676-9094-hghghg",
                     md_name: "md_name_10220"
-                }
-                ]
+                }],
+                zIndex: 3
             },
             {
                 id: "451",
                 name: "name451",
-                typ: "WFS"
+                typ: "WFS",
+                zIndex: 4
             },
             {
                 id: "1103",
                 name: "Überschwemmungsgebiete",
                 typ: "WMS",
-
                 transparent: true,
                 transparency: 0,
                 datasets: [{
                     md_id: "0879B86F-4F44-45AA-BA5B-021D9D30AAEF"
-                }]
+                }],
+                zIndex: 5
             },
             {
                 id: "717",
@@ -77,7 +78,8 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
                 layers: "layer717",
                 maxScale: "10000",
                 minScale: "10",
-                typ: "WMS"
+                typ: "WMS",
+                zIndex: 6
             },
             {
                 id: "718",
@@ -85,7 +87,8 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
                 layers: "layer718",
                 maxScale: "30000",
                 minScale: "30",
-                typ: "WMS"
+                typ: "WMS",
+                zIndex: 7
             },
             {
                 id: "719",
@@ -93,7 +96,8 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
                 layers: "layer719",
                 maxScale: "20000",
                 minScale: "20",
-                typ: "WMS"
+                typ: "WMS",
+                zIndex: 8
             }
         ];
         layerConfig = {
@@ -223,9 +227,31 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
 
             };
 
-            actions.addLayerToLayerConfig({state}, {layerConfig: layerToAdd, parentKey: "Fachdaten"});
+            actions.addLayerToLayerConfig({dispatch, state}, {layerConfig: layerToAdd, parentKey: "Fachdaten"});
+            expect(dispatch.callCount).to.equals(2);
+            expect(dispatch.firstCall.args[0]).to.equals("updateLayerConfigZIndex");
+            expect(dispatch.firstCall.args[1]).to.deep.equals({
+                layerContainer: [],
+                maxZIndex: -Infinity
+            });
+            expect(dispatch.secondCall.args[0]).to.equals("addBackgroundLayerAttribute");
+            expect(dispatch.secondCall.args[1]).to.be.undefined;
             expect(state.layerConfig?.Fachdaten?.elements.length).to.equal(1);
             expect(state.layerConfig?.Fachdaten?.elements[0]).to.deep.equal(layerToAdd);
+        });
+    });
+
+    describe("updateLayerConfigZIndex", () => {
+        it("Should set new zindex for layer with zIndex greater than maxZIndex", () => {
+            const layerContainer = layerList.slice(0, 5),
+                maxZIndex = 2,
+                resultZIndex = [0, 1, 2, 4, 5];
+
+            actions.updateLayerConfigZIndex({}, {layerContainer, maxZIndex});
+
+            layerContainer.forEach((layerContainerConf, index) => {
+                expect(layerContainerConf.zIndex).to.equals(resultZIndex[index]);
+            });
         });
     });
 
