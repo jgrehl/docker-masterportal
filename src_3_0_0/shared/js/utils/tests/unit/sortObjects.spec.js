@@ -44,7 +44,7 @@ describe("src_3_0_0/shared/js/utils/sortObjects.js", () => {
     ];
 
     describe("sortObjects", () => {
-        it("should return an sorted array with objects sorted by house number extensions", () => {
+        it("should return an sorted array with objects sorted by house number extensions - ascending", () => {
             const cloneObjects = [...objects],
                 nestedAttribute = "properties.hausnumberextension._";
 
@@ -86,6 +86,54 @@ describe("src_3_0_0/shared/js/utils/sortObjects.js", () => {
                         },
                         hausnumberextension: {
                             _: "b"
+                        }
+                    }
+                }
+            ]);
+        });
+
+        it("should return an sorted array with objects sorted by house number extensions - descending", () => {
+            const cloneObjects = [...objects],
+                nestedAttribute = "properties.hausnumberextension._";
+
+            sortObjects(cloneObjects, nestedAttribute, "desc");
+            expect(cloneObjects).to.be.an("array");
+            expect(cloneObjects, nestedAttribute).to.have.deep.members([
+                {
+                    name: "1b",
+                    properties: {
+                        housenumber: {
+                            _: 1
+                        },
+                        hausnumberextension: {
+                            _: "b"
+                        }
+                    }
+                },
+                {
+                    name: "1a",
+                    properties: {
+                        housenumber: {
+                            _: 1
+                        },
+                        hausnumberextension: {
+                            _: "a"
+                        }
+                    }
+                },
+                {
+                    name: "2",
+                    properties: {
+                        housenumber: {
+                            _: 2
+                        }
+                    }
+                },
+                {
+                    name: "1",
+                    properties: {
+                        housenumber: {
+                            _: 1
                         }
                     }
                 }
