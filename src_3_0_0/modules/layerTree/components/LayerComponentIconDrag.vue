@@ -18,7 +18,7 @@ export default {
     },
     data () {
         return {
-            classInfo: "layer-component-icon-drag-button, btn-light, handle-layer-component-drag"
+            classInfo: ["layer-component-icon-drag-button", "btn-light", "handle-layer-component-drag"]
         };
     }
 };
@@ -31,7 +31,7 @@ export default {
     >
         <IconButton
             :id="'layer-component-icon-drag-button-' + layerConf.id"
-            :class-array="[classInfo]"
+            :class-array="classInfo"
             :aria="$t('common:tree.drag')"
             :icon="'bi-grip-vertical'"
         />
