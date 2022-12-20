@@ -9,7 +9,6 @@ config.global.mocks.$t = key => key;
 describe("src_3_0_0/modules/layerTree/components/LayerComponentIconSubMenu.vue", () => {
     let layer,
         propsData,
-        store,
         wrapper;
 
     beforeEach(() => {
@@ -35,9 +34,6 @@ describe("src_3_0_0/modules/layerTree/components/LayerComponentIconSubMenu.vue",
 
     it("renders the sub menu icon given as property to the component", () => {
         wrapper = shallowMount(LayerComponentIconSubMenu, {
-            global: {
-                plugins: [store]
-            },
             propsData: propsData
         });
 
@@ -46,9 +42,6 @@ describe("src_3_0_0/modules/layerTree/components/LayerComponentIconSubMenu.vue",
 
     it("render button of sub menu icon", async () => {
         wrapper = shallowMount(LayerComponentIconSubMenu, {
-            global: {
-                plugins: [store]
-            },
             propsData: propsData
         });
 
