@@ -429,7 +429,7 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
                 expect(commit.firstCall.args[0]).to.equals("setLayerConfigByParentKey");
                 expect(commit.firstCall.args[1]).to.deep.equals({
                     layerConfigs: {
-                        Ordner: []
+                        elements: []
                     },
                     parentKey: "Fachdaten"
                 });
