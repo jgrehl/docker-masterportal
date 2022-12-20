@@ -2,14 +2,14 @@
 import draggable from "vuedraggable";
 import {mapActions, mapGetters} from "vuex";
 
-import Folder from "./FolderComponent.vue";
 import Layer from "./LayerComponent.vue";
+import getNestedValues from "../../../shared/js/utils/getNestedValues";
 import {sortObjects} from "../../../shared/js/utils/sortObjects";
 
 /**
+ * Should be removed again after removing the compat mode
  * @see {@link https://www.npmjs.com/package/vuedraggable/v/4.1.0?activeTab=versions}
  * @see {@link https://github.com/SortableJS/vue.draggable.next/issues/122}
- * Should be removed again after removing the compat mode
  */
 draggable.compatConfig = {MODE: 3};
 
@@ -20,7 +20,6 @@ export default {
     name: "LayerTreeNode",
     components: {
         Draggable: draggable,
-        Folder,
         Layer
     },
     data () {
@@ -31,19 +30,26 @@ export default {
     computed: {
         ...mapGetters(["layerConfig"]),
 
+        /**
+         * v-model for sorted layerConfig.
+         */
         sortedLayerConfig: {
+            /**
+             * Gets the layerconfigs sorted by zIndex.
+             * @returns {void}
+             */
             get () {
-                let sortedLayerConfig = [];
-
-                Object.values(this.layerConfig).reverse().forEach(layerConfigValues => {
-                    if (layerConfigValues.elements?.length > 0) {
-                        sortedLayerConfig = sortedLayerConfig.concat(layerConfigValues.elements);
-                    }
-                });
+                const sortedLayerConfig = getNestedValues(this.layerConfig, "elements", true).flat(Infinity);
 
                 sortObjects(sortedLayerConfig, "zIndex", "desc");
+
                 return sortedLayerConfig;
             },
+            /**
+             * Sets the changed layer Configs order.
+             * @param {Object[]} changedLayerConfig The layer configs with changed order
+             * @returns {void}
+             */
             set (changedLayerConfig) {
                 let configLength = changedLayerConfig.length;
 
@@ -56,27 +62,23 @@ export default {
     },
     methods: {
         ...mapActions("Modules/LayerTree", ["replaceByIdInLayerConfig"]),
-        isFolder (conf) {
-            return conf?.type === "folder";
-        },
 
+        /**
+         * Indicates if a conf is a layer and showInlayerTree has true.
+         * @param {Object} conf The current layer configuration.
+         * @returns {void}
+         */
         isLayerShowInLayerTree (conf) {
             return conf?.type === "layer" && conf?.showInLayerTree === true;
         },
 
-        getLayerArray (conf) {
-            return conf?.elements ? conf.elements.filter(el => el.type === "layer") : [];
-        },
-
         /**
-         * Toggles a folder, changes data-property isOpen.
+         * Returns a layer array element.
          * @param {Object} conf The current layer configuration.
          * @returns {void}
          */
-        toggleFolder (conf) {
-            if (this.isFolder(conf)) {
-                this.isOpen = !this.isOpen;
-            }
+        getLayerArray (conf) {
+            return conf?.elements ? conf.elements.filter(el => el.type === "layer" && el.showInLayerTree === true) : [];
         }
     }
 };
@@ -94,14 +96,8 @@ export default {
     >
         <template #item="{ element }">
             <li>
-                <Folder
-                    v-if="isFolder(element)"
-                    :conf="element"
-                    :is-open="isOpen"
-                    @is-open="toggleFolder(element)"
-                />
                 <Layer
-                    v-else-if="isLayerShowInLayerTree(element)"
+                    v-if="isLayerShowInLayerTree(element)"
                     :conf="element"
                 />
                 <Layer
@@ -110,11 +106,6 @@ export default {
                     :key="'layer' + i"
                     :conf="layer"
                 />
-                <!-- <LayerTreeNode
-                    v-if="element.elements"
-                    v-show="isOpen"
-                    :layer-config="element.elements"
-                /> -->
             </li>
         </template>
     </Draggable>
@@ -128,15 +119,8 @@ export default {
         font-size: $font-size-base;
     }
 
-    .folder{
-        display: flex;
-        gap: 0.25rem;
-        align-items: baseline;
-    }
-
     .chosen {
         color: $light_grey_contrast;
         background-color: lighten($accent_hover, 10%);
     }
-
 </style>
