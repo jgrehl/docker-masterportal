@@ -36,7 +36,9 @@ module.exports = {
             vue: "vue/dist/vue.esm-bundler.js"
         }},
     externals: [
-        /^(bootstrap-slider|\$)$/i
+        /^(bootstrap-slider|\$)$/i,
+        "utf-8-validate",
+        "bufferutil"
     ],
     module: {
         rules: [
@@ -57,7 +59,7 @@ module.exports = {
             },
             {
                 test: /\.js$/,
-                exclude: /\bvideo.js\b|\bsinon\b|\bturf\b|\bjsts\b/,
+                exclude: /\bsinon\b|\bturf\b|\bjsts\b/,
                 use: {
                     loader: "esbuild-loader",
                     options: {
