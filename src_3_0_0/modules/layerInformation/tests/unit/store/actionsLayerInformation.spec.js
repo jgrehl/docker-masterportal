@@ -9,7 +9,8 @@ describe("src_3_0_0/modules/layerInformation/store/actionsLayerInformation.js", 
             const state = {
                     layerConf: {},
                     menuSide: "mainMenu",
-                    type: "layerInformation"
+                    type: "layerInformation",
+                    active: false
                 },
                 layerConf = {
                     id: "123",
@@ -26,10 +27,40 @@ describe("src_3_0_0/modules/layerInformation/store/actionsLayerInformation.js", 
 
             testAction(startLayerInformation, layerConf, state, {}, [
                 {type: "setLayerInfo", payload: layerConf},
-                {type: "setActive", payload: true},
                 {type: "setMetadataURL", payload: layerConf.datasets[0].md_id, dispatch: true},
                 {type: "additionalSingleLayerInfo", payload: undefined, dispatch: true},
-                {type: "Menu/setMenuBack", payload: {side: "mainMenu", module: {type: "LayerInformation"}}, dispatch: true}
+                {type: "Menu/resetMenu", payload: {side: "mainMenu", module: {type: "LayerInformation"}}, dispatch: true},
+                {type: "Menu/activateMenuNavigation", payload: {side: "mainMenu", module: {type: "LayerInformation"}}, dispatch: true},
+                {type: "setActive", payload: true}
+            ], {}, done);
+        });
+
+        it("should hide the LayerInformation in menu", done => {
+            const state = {
+                    layerConf: {},
+                    menuSide: "mainMenu",
+                    type: "layerInformation",
+                    active: true
+                },
+                layerConf = {
+                    id: "123",
+                    metaID: "layerMetaId",
+                    layername: "name",
+                    url: "google.de",
+                    urlIsVisible: true,
+                    datasets: [
+                        {
+                            md_id: "123"
+                        }
+                    ]
+                };
+
+            testAction(startLayerInformation, layerConf, state, {}, [
+                {type: "setLayerInfo", payload: layerConf},
+                {type: "setMetadataURL", payload: layerConf.datasets[0].md_id, dispatch: true},
+                {type: "additionalSingleLayerInfo", payload: undefined, dispatch: true},
+                {type: "Menu/resetMenu", payload: {side: "mainMenu", module: {type: "LayerInformation"}}, dispatch: true},
+                {type: "setActive", payload: false}
             ], {}, done);
         });
 
