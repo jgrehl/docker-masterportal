@@ -5,20 +5,20 @@ import deepAssign, {deepAssignIgnoreCase} from "../../deepAssign.js";
 describe("src_3_0_0/shared/js/utils/deepAssign.js", () => {
     let error;
 
-    before(() => {
+    beforeEach(() => {
         error = sinon.spy();
         sinon.stub(console, "error").callsFake(error);
     });
 
-    after(() => {
+    afterEach(() => {
         sinon.restore();
     });
 
     describe("deepAssignIgnoreCase", () => {
         it("should alter the given target ignoring case and return it", () => {
-            const target = {urlParams: {}, Tools: {Measure: {active: false}}},
-                source = {Tools: {measure: {active: true}}},
-                expected = {urlParams: {}, Tools: {Measure: {active: true}}},
+            const target = {urlParams: {}, Modules: {Measure: {active: false}}},
+                source = {Modules: {measure: {active: true}}},
+                expected = {urlParams: {}, Modules: {Measure: {active: true}}},
                 result = deepAssignIgnoreCase(target, source);
 
             expect(result).to.deep.equal(expected);
@@ -38,8 +38,8 @@ describe("src_3_0_0/shared/js/utils/deepAssign.js", () => {
             expect(result).to.deep.equal(expected);
         });
         it("should return null, if source not available in target", () => {
-            const target = {urlParams: {}, Tools: { }},
-                source = {Tools: {Print: {active: true}}},
+            const target = {urlParams: {}, Modules: { }},
+                source = {Modules: {Print: {active: true}}},
                 result = deepAssignIgnoreCase(target, source);
 
             expect(result).to.be.null;
