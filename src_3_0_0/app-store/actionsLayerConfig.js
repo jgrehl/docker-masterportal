@@ -1,27 +1,55 @@
 import {buildTreeStructure} from "./js/buildTreeStructure";
 import getNestedValues from "../shared/js/utils/getNestedValues";
 import {getAndMergeAllRawLayers, getAndMergeRawLayer} from "./js/getAndMergeRawLayer";
+import {sortObjects} from "../shared/js/utils/sortObjects";
 
 const orderThemenconfig = ["Hintergrundkarten", "Fachdaten"];
 
 export default {
     /**
      * Adds one layer to states layerConfig under the given parentKey.
+     * @param {Object} dispatch store dispatch
      * @param {Object} state store state
      * @param {Object} payload the payload
      * @param {Object[]} payload.layerConfig layer to add to the layerConfigs
      * @param {String} payload.parentKey the key of the parent object
      * @returns {Boolean} true or false
      */
-    addLayerToLayerConfig ({state}, {layerConfig, parentKey}) {
+    addLayerToLayerConfig ({dispatch, state}, {layerConfig, parentKey}) {
         const layerContainer = getNestedValues(state.layerConfig, "elements", true).flat(Infinity),
-            matchingLayer = layerContainer.find(layer =>layer.id === layerConfig.id);
+            matchingLayer = layerContainer.find(layer =>layer.id === layerConfig.id),
+            maxZIndex = Math.max(...getNestedValues(state.layerConfig[parentKey], "elements", true).flat(Infinity).map(layerConf => layerConf.zIndex));
+
+        dispatch("updateLayerConfigZIndex", {layerContainer, maxZIndex});
 
         if (matchingLayer === undefined) {
+            layerConfig.zIndex = maxZIndex + 1;
             state.layerConfig[parentKey].elements.push(layerConfig);
+            dispatch("addBackgroundLayerAttribute");
+
             return true;
         }
+
         return false;
+    },
+
+    /**
+     * Updates the zindex of the layer configs by increasing the zindex of the layer configs
+     * that have a zindex greater than the max zindex by 1.
+     * @param {Object} context store context
+     * @param {Object} payload the payload
+     * @param {Object} payload.layerContainer The layer container of layer configs.
+     * @param {Object} payload.maxZIndex The max zIndex of the layer configs.
+     * @returns {void}
+     */
+    updateLayerConfigZIndex (context, {layerContainer, maxZIndex}) {
+        sortObjects(layerContainer, "zIndex");
+
+        layerContainer.forEach(layerConf => {
+            if (layerConf.zIndex > maxZIndex) {
+                layerConf.zIndex = layerConf.zIndex + 1;
+            }
+        });
     },
 
     /**
