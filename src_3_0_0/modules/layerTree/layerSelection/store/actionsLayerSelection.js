@@ -5,7 +5,7 @@ const actions = {
      * @param {Object} param.dispatch the dispatch
      * @returns {void}
      */
-    updateLayerTree ({commit, getters}) {
+    updateLayerTree ({commit, dispatch, getters}) {
         const layerConfigs = [];
 
         getters.layersToAdd.forEach(layerId => {
@@ -20,20 +20,15 @@ const actions = {
                 }
             );
         });
-        getters.layersToRemove.forEach(layerId => {
-            layerConfigs.push(
-                {
-                    id: layerId,
-                    layer: {
-                        id: layerId,
-                        visibility: false,
-                        showInLayerTree: false
-                    }
-                }
-            );
-        });
         commit("replaceByIdInLayerConfig", {layerConfigs: layerConfigs}, {root: true});
         commit("clearSelectedLayer");
+        dispatch("navigateBackToMainMenu");
+    },
+
+    // @ todo remove/change if menu is new refactored
+    navigateBackToMainMenu ({commit}) {
+        commit("setActive", false);
+        commit("Menu/Navigation/setEntry", "mainMenu", {root: true});
     }
 };
 
