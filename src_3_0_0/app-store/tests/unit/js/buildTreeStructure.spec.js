@@ -95,7 +95,7 @@ describe("src_3_0_0/app-store/js/buildTreeStructure.js", () => {
             getAndMergeAllRawLayers();
             result = buildTreeStructure(layerConfig, categories[0], layerConfig.Fachdaten.elements);
             layerConfig.Fachdaten.elements.forEach(layerConf => {
-                getAndMergeRawLayer(layerConf, "auto");
+                getAndMergeRawLayer(layerConf, true);
             });
             filteredResult = getNestedValues(result, "id").flat(Infinity);
 
