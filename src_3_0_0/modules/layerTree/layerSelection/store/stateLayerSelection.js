@@ -13,6 +13,5 @@ export default {
     menuSide: "mainMenu",
 
     subjectDataLayerConfs: [],
-    layersToAdd: [],
-    layersToRemove: []
+    layersToAdd: []
 };
