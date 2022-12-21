@@ -6,10 +6,5 @@
 export default {
     active: true,
     type: "layerTree",
-    icon: "bi-question-circle",
-    name: "LayerTree",
-    alwaysActivated: true,
-    isVisibleInMenu: false,
-    menuSide: "mainMenu",
-    showLayerSelection: false
+    menuSide: "mainMenu"
 };
