@@ -34,7 +34,8 @@
       }
     },
     "tree": {
-      "layerPillsAmount": 2
+      "layerPillsAmount": 2,
+      "addLayerButton": true
     },
     "mainMenu": {
       "expanded": true,
@@ -490,6 +491,7 @@
           "id": "1933",
           "typ": "WMS",
           "visibility": false,
+          "showInLayerTree": true,
           "styles": [
             "geofox_stations"
           ],
@@ -543,6 +545,7 @@
           "name": "Elektro Ladestandorte Hamburg",
           "typ": "SensorThings",
           "visibility": false,
+          "showInLayerTree": true,
           "loadThingsOnlyInCurrentExtent": true,
           "gfiTheme": {
             "name": "sensor",
