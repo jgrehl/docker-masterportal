@@ -9,6 +9,7 @@ import VectorSource from "ol/source/Vector";
 import Layer2dVector from "./layer2dVector";
 
 import changeTimeZone from "../../../shared/js/utils/changeTimeZone";
+import {uniqueId} from "../../../shared/js/utils/uniqueId.js";
 import isObject from "../../../shared/js/utils/isObject";
 import {SensorThingsHttp} from "../../../shared/js/api/sensorThingsHttp";
 import {SensorThingsMqtt} from "../../../shared/js/api/sensorThingsMqtt";
@@ -210,10 +211,21 @@ Layer2dVectorSensorThings.prototype.createMqttConnectionToSensorThings = functio
             features = typeof layerSource.getFeatures === "function" && Array.isArray(layerSource.getFeatures()) ? layerSource.getFeatures() : [],
             feature = this.getFeatureByDatastreamId(features, datastreamId),
             phenomenonTime = this.getLocalTimeFormat(observation.phenomenonTime, timezone);
+        let removedFeature = null,
+            clonedFeature = null;
 
         this.updateObservationForDatastreams(feature, datastreamId, observation);
-        if (this.get("observeLocation")) {
+        if (this.get("observeLocation") && isObject(feature)) {
+            clonedFeature = feature.clone();
             this.updateFeatureLocation(feature, observation);
+            if (typeof feature?.get === "function" && Array.isArray(feature.get("historicalFeatureIds")) && feature.get("historicalFeatureIds").length && isObject(observation?.location)) {
+                removedFeature = feature.get("historicalFeatureIds").pop();
+                layerSource.removeFeature(layerSource.getFeatureById(removedFeature));
+                clonedFeature.set("dataStreamId", undefined);
+                clonedFeature.setId(uniqueId("historicalFeature-"));
+                feature.get("historicalFeatureIds").unshift(clonedFeature.getId());
+                layerSource.addFeature(clonedFeature);
+            }
         }
         this.updateFeatureProperties(feature, datastreamId, observation.result, phenomenonTime, showNoDataValue, noDataValue);
     });
@@ -317,11 +329,22 @@ Layer2dVectorSensorThings.prototype.initializeConnection = function (onsuccess) 
             layerSource.addFeatures(features);
         }
 
+        features.forEach(feature => {
+            if (typeof feature?.get === "function" && Array.isArray(feature.get("historicalFeatureIds"))) {
+                feature.unset("historicalFeatureIds");
+            }
+        });
+
         if (typeof onsuccess === "function") {
             onsuccess();
         }
+
+        if (typeof this.get("historicalLocations") === "number") {
+            this.getHistoricalLocationsOfFeatures();
+        }
     }, error => {
-        if (typeof this.options.onLoadingError === "function") {
+        console.warn(error);
+        if (typeof this.options?.onLoadingError === "function") {
             this.options.onLoadingError(error);
         }
     });
@@ -1020,6 +1043,9 @@ Layer2dVectorSensorThings.prototype.updateSubscription = function () {
     if (!this.get("loadThingsOnlyInCurrentExtent")) {
         this.unsubscribeFromSensorThings(datastreamIds, subscriptionTopics, version, mqttClient);
         this.subscribeToSensorThings(datastreamIds, subscriptionTopics, version, mqttClient, {rh, qos});
+        if (typeof this.get("historicalLocations") === "number") {
+            this.getHistoricalLocationsOfFeatures();
+        }
     }
     else {
         this.unsubscribeFromSensorThings(datastreamIds, subscriptionTopics, version, mqttClient);
@@ -1031,6 +1057,9 @@ Layer2dVectorSensorThings.prototype.updateSubscription = function () {
                 mqttClient,
                 {rh, qos}
             );
+            if (typeof this.get("historicalLocations") === "number") {
+                this.getHistoricalLocationsOfFeatures();
+            }
         });
     }
 };
@@ -1144,6 +1173,9 @@ Layer2dVectorSensorThings.prototype.unsubscribeFromSensorThings = function (data
             mqttClient.unsubscribe("v" + version + "/Datastreams(" + id + ")/Observations");
             if (this.get("observeLocation")) {
                 mqttClient.unsubscribe("v" + version + "/Datastreams(" + id + ")/Thing/Locations");
+                if (typeof this.get("historicalLocations") === "number") {
+                    this.resetHistoricalLocations(id);
+                }
             }
             subscriptionTopics[id] = false;
         }
@@ -1301,4 +1333,109 @@ Layer2dVectorSensorThings.prototype.replaceValueInArrayByReference = function (r
         }
     }
     return true;
+};
+
+/**
+ * Fetches historical locations and return it to callback function.
+ * Only for the current extent to minimize the traffic.
+ * @param {String} url The base url.
+ * @param {Object} urlParams The url parameter.
+ * @param {String} version The version.
+ * @param {Function} onsuccess The callback function to return the data.
+ * @returns {void}
+ */
+Layer2dVectorSensorThings.prototype.fetchHistoricalLocations = function (url, urlParams, version, onsuccess) {
+    if (typeof url !== "string" || typeof version !== "string" || !isObject(urlParams)) {
+        return;
+    }
+
+    const requestUrl = this.buildSensorThingsUrl(url, version, urlParams),
+        http = new SensorThingsHttp({
+            rootNode: urlParams?.root
+        });
+
+    http.getInExtent(requestUrl, {
+        extent: store.getters["Maps/getCurrentExtent"],
+        sourceProjection: store.getters["Maps/projection"].getCode(),
+        targetProjection: this.get("epsg")
+    }, true, result => {
+        if (typeof onsuccess === "function") {
+            onsuccess(result);
+        }
+    }, null, null, error => {
+        console.warn(error);
+    });
+};
+
+/**
+ * Calls the sta api to get historical locations.
+ * @returns {void}
+ */
+Layer2dVectorSensorThings.prototype.getHistoricalLocationsOfFeatures = function () {
+    const allFeatures = (this.getLayerSource() instanceof Cluster ? this.getLayerSource().getSource() : this.getLayerSource()).getFeatures(),
+        datastreamIds = this.getDatastreamIdsInCurrentExtent(allFeatures, store.getters["Maps/getCurrentExtent"]),
+        url = this.get("url"),
+        urlParam = {
+            orderby: "time+desc",
+            expand: "Locations"
+        },
+        version = this.get("version"),
+        amount = parseInt(this.get("historicalLocations"), 10);
+
+    datastreamIds.forEach(datastreamId => {
+        if (!isNaN(amount)) {
+            urlParam.root = `Datastreams(${datastreamId})/Thing/HistoricalLocations`;
+            urlParam.top = amount + 1;
+        }
+        this.fetchHistoricalLocations(url, urlParam, version, historicalSensorData => {
+            this.resetHistoricalLocations(datastreamId);
+            this.parseSensorDataToFeature(this.getFeatureByDatastreamId(allFeatures, datastreamId), historicalSensorData, urlParam, url, version);
+        });
+    });
+};
+
+/**
+ * Parses the given sensor data to features and adds their ids to the given feature.
+ * @param {ol/Feature} feature The feature.
+ * @param {Object[]} sensorData The sensor data to create features for.
+ * @param {Object} urlParam The url param object.
+ * @param {String} url The base url.
+ * @param {String} version The version.
+ * @returns {void}
+ */
+Layer2dVectorSensorThings.prototype.parseSensorDataToFeature = function (feature, sensorData, urlParam, url, version) {
+    if (typeof feature?.get !== "function" || Array.isArray(feature.get("historicalFeatureIds"))) {
+        return;
+    }
+
+    const layerSource = this.getLayerSource() instanceof Cluster ? this.getLayerSource().getSource() : this.getLayerSource(),
+        mapProjection = store.getters["Maps/projection"].getCode(),
+        epsg = this.get("epsg"),
+        gfiTheme = this.get("gfiTheme"),
+        utc = this.get("utc"),
+        things = this.getAllThings(sensorData, urlParam, url, version),
+        historicalFeatures = this.createFeaturesFromSensorData(things, mapProjection, epsg, gfiTheme, utc),
+        historicalFeatureIds = [];
+
+    historicalFeatures.shift();
+    historicalFeatures.forEach(hFeature => {
+        historicalFeatureIds.push(hFeature.getId());
+    });
+    layerSource.addFeatures(historicalFeatures);
+    feature.set("historicalFeatureIds", historicalFeatureIds);
+};
+
+/**
+ * Resets the historical locations of the feature which is found by the given datastream id.
+ * @param {Number} datastreamId The datastream id to get the feature for.
+ * @returns {void}
+ */
+Layer2dVectorSensorThings.prototype.resetHistoricalLocations = function (datastreamId) {
+    const layerSource = this.getLayerSource() instanceof Cluster ? this.getLayerSource().getSource() : this.getLayerSource(),
+        feature = layerSource.getFeatures().filter(layerFeature => typeof layerFeature?.get === "function" && layerFeature.get("dataStreamId") === datastreamId)[0];
+
+    if (typeof feature?.get === "function" && Array.isArray(feature.get("historicalFeatureIds"))) {
+        feature.get("historicalFeatureIds").forEach(featureId => layerSource.removeFeature(layerSource.getFeatureById(featureId)));
+        feature.unset("historicalFeatureIds");
+    }
 };

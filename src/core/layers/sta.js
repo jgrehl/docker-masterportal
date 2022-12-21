@@ -443,7 +443,7 @@ STALayer.prototype.initializeConnection = function (onsuccess, updateOnly = fals
             this.get("layer").setStyle(this.get("style"));
         }
 
-        features.forEach(feature => {
+        // features.forEach(feature => {
             bridge.changeFeatureGFI(feature);
         });
 
@@ -453,6 +453,9 @@ STALayer.prototype.initializeConnection = function (onsuccess, updateOnly = fals
         if (typeof this.options.afterLoading === "function") {
             this.options.afterLoading(features);
         }
+        // if (typeof this.get("historicalLocations") === "number") {
+        //     this.getHistoricalLocationsOfFeatures();
+        // }
     // }, error => {
     //     if (typeof this.options.onLoadingError === "function") {
     //         this.options.onLoadingError(error);
