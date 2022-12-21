@@ -11,7 +11,6 @@ const mutations = {
     ...generateSimpleMutations(stateLayerSelection),
     clearSelectedLayer (state) {
         state.layersToAdd = [];
-        state.layersToRemove = [];
     },
     addSelectedLayer (state, {layerId}) {
         state.layersToAdd.push(layerId);
@@ -22,10 +21,6 @@ const mutations = {
         if (index > -1) {
             state.layersToAdd.splice(state.layersToAdd.indexOf(layerId), 1);
         }
-        else {
-            state.layersToRemove.push(layerId);
-        }
-
     }
 };
 

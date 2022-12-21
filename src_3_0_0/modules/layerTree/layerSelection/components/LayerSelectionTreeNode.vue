@@ -70,7 +70,7 @@ export default {
                     class="d-flex flex-column align-items-start"
                 >
                     <span class="name">{{ conf.name }}</span>
-                    <span class="btn-description text-wrap pt-2">desription desription desription</span>
+                    <span class="btn-description text-wrap pt-2">{{ $t(conf.description) }}</span>
                 </div>
                 <i
                     class="fs-4 chevron bi-chevron-right"

@@ -21,7 +21,7 @@ export default {
     },
     computed: {
         ...mapGetters(["layerConfig", "portalConfig", "allBackgroundLayerConfigs", "subjectDataLayerConfigsStructured"]),
-        ...mapGetters("Modules/LayerSelection", ["active", "subjectDataLayerConfs", "layersToAdd", "layersToRemove"])
+        ...mapGetters("Modules/LayerSelection", ["active", "subjectDataLayerConfs", "layersToAdd"])
 
     },
     created () {
@@ -38,6 +38,10 @@ export default {
             this.lastConf = this.conf;
             this.setSubjectDataLayerConfs(sorted);
             this.showBGLayers = false;
+        },
+        updateLayerTreeClicked () {
+            this.updateLayerTree();
+
         }
     }
 };
@@ -51,7 +55,9 @@ export default {
         aria-label=""
     >
         <h2>{{ $t("common:tree.addSubject") }}</h2>
-        <h6>{{ $t("common:tree.backgrounds") }}</h6>
+        <h6 v-if="showBGLayers">
+            {{ $t("common:tree.backgrounds") }}
+        </h6>
         <div class="row align-items-center justify-content-center">
             <template v-if="showBGLayers">
                 <template
@@ -83,8 +89,8 @@ export default {
                 id="copy-btn"
                 class="mt-2  w-100"
                 aria-label="$t('tree.addSelectedSubjectsToMap')"
-                :disabled="layersToAdd.length === 0 && layersToRemove.length === 0"
-                :interaction="updateLayerTree"
+                :disabled="layersToAdd.length === 0"
+                :interaction="updateLayerTreeClicked"
                 :text="$t('tree.addSelectedSubjectsToMap')"
                 :icon="'bi-plus-circle'"
             />
