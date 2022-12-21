@@ -54,31 +54,41 @@ export default {
                 }
             );
         },
-        clicked () {
-            const value = !this.isLayerVisible;
+        clicked (checked) {
+            if (!this.isLayerVisible || this.isLayerTree) {
+                const value = typeof checked === "boolean" ? checked : !this.isLayerVisible;
 
-            if (this.isLayerTree) {
-                this.visibilityInLayerTreeChanged(value);
+                if (this.isLayerTree) {
+                    this.visibilityInLayerTreeChanged(value);
+                }
+                else if (value) {
+                    this.addSelectedLayer({layerId: this.conf.id});
+                }
+                else {
+                    this.removeSelectedLayer({layerId: this.conf.id});
+                }
             }
-            else if (value) {
-                this.addSelectedLayer({layerId: this.conf.id});
-            }
-            else {
-                this.removeSelectedLayer({layerId: this.conf.id});
-            }
+
+        },
+        disabled () {
+            return this.isLayerVisible && !this.isLayerTree;
         }
     }
 };
 </script>
 
 <template lang="html">
-    <div>
+    <div
+        data-bs-toggle="tooltip"
+        :title="disabled() ? $t('tree.isAlreadyAdded') :null"
+    >
         <input
             :id="'layer-tree-layer-checkbox-' + conf.id"
             :checked="isLayerVisible"
+            :disabled="disabled()"
             type="checkbox"
             class="layer-tree-layer-checkbox form-check-input"
-            @input="clicked()"
+            @input="clicked($event.target.checked)"
             @keydown.enter="clicked()"
         >
         <label
@@ -120,6 +130,12 @@ export default {
         }
         .shortname {
         font-size: $font-size-sm;
+    }
+    input:disabled+label {
+        color: #ccc;
+        font-weight: normal;
+        font-style: italic;
+        cursor: not-allowed;
     }
 
 </style>
