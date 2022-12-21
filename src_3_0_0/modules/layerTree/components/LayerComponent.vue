@@ -62,7 +62,7 @@ export default {
     >
         <div class="d-flex justify-content-between align-items-center">
             <div class="layer-tree-layer-title pe-2">
-                <LayerCheckBox 
+                <LayerCheckBox
                     :conf="conf"
                     :is-layer-tree="isLayerTree()"
                 />

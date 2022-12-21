@@ -1,5 +1,5 @@
 import {generateSimpleMutations} from "../../../../shared/js/utils/generators";
-import state from "./stateLayerSelection";
+import stateLayerSelection from "./stateLayerSelection";
 
 const mutations = {
     /**
@@ -8,7 +8,25 @@ const mutations = {
      * {setKey:   (state, payload) => *   state[key] = payload * }
      * will be returned.
      */
-    ...generateSimpleMutations(state)
+    ...generateSimpleMutations(stateLayerSelection),
+    clearSelectedLayer (state) {
+        state.layersToAdd = [];
+        state.layersToRemove = [];
+    },
+    addSelectedLayer (state, {layerId}) {
+        state.layersToAdd.push(layerId);
+    },
+    removeSelectedLayer (state, {layerId}) {
+        const index = state.layersToAdd.indexOf(layerId);
+
+        if (index > -1) {
+            state.layersToAdd.splice(state.layersToAdd.indexOf(layerId), 1);
+        }
+        else {
+            state.layersToRemove.push(layerId);
+        }
+
+    }
 };
 
 export default mutations;
