@@ -8,14 +8,14 @@ let zIndex = 0;
  * If id contains an array of ids, the rawlayer is merged.
  * Grouped layers children are filled with the rawlayers.
  * @param {Object} layerConf configuration of layer like in the config.json
- * @param {Object} [treeType="light"] the type for topic tree
+ * @param {Object} [showAllLayerInTree="false"] if true, all layers get the attribute showInLayerTree=true
  * @returns {Object} the extended and merged raw layer
  */
-export function getAndMergeRawLayer (layerConf, treeType = "light") {
+export function getAndMergeRawLayer (layerConf, showAllLayerInTree = false) {
     const rawLayer = mergeRawLayer(layerConf, rawLayerList.getLayerWhere({id: layerConf?.id}));
 
     // use layerConf, if layer is not available in rawLayerList (services.json)
-    return addAdditional(rawLayer || layerConf, treeType);
+    return addAdditional(rawLayer || layerConf, showAllLayerInTree);
 }
 
 /**
@@ -26,13 +26,13 @@ export function getAndMergeRawLayer (layerConf, treeType = "light") {
  * because visibility = true always results in showInLayerTree = true no matter what the config.json says.
  * If both are not true, then showInLayerTree = false (for all other treeTypes e.g. "auto") if the attribute is not already set explicitly on the layer (i.e. in config.json).
  * @param {Object} rawLayer The raw layer.
- * @param {Object} [treeType="light"] the type for topic tree
+ * @param {Object} [showAllLayerInTree="false"] if true, all layers get the attribute showInLayerTree=true
  * @returns {Object} The raw layer
  */
-export function addAdditional (rawLayer, treeType) {
+export function addAdditional (rawLayer, showAllLayerInTree = false) {
     if (rawLayer) {
         rawLayer.type = "layer";
-        if (treeType === "light" || rawLayer.visibility) {
+        if (showAllLayerInTree || rawLayer.visibility) {
             rawLayer.showInLayerTree = true;
             rawLayer.zIndex = zIndex++;
         }
@@ -175,7 +175,7 @@ export function getAndMergeAllRawLayers (treeConfig = {}) {
     let relatedWMSLayerIds = [];
 
     for (let i = 0; i < layerList.length; i++) {
-        const rawLayer = addAdditional(layerList[i], treeConfig.type),
+        const rawLayer = addAdditional(layerList[i], !treeConfig.addLayerButton),
             layerType = rawLayer.typ?.toUpperCase();
 
         if (!validLayerTypes.includes(layerType) ||
