@@ -1,7 +1,6 @@
 <script>
 import {mapGetters, mapMutations} from "vuex";
 import layerFactory from "../../../core/layers/js/layerFactory";
-import {Tooltip} from "bootstrap";
 import IconButton from "../../../shared/modules/buttons/components/IconButton.vue";
 
 export default {
@@ -46,9 +45,6 @@ export default {
         }
     },
     created () {
-        new Tooltip(document.body, {
-            selector: "[data-bs-toggle='tooltip']"
-        });
         this.setVisibleLayers(this.visibleSubjectDataLayerConfigs, this.mode);
         this.setEndIndex(this.portalConfig?.tree?.layerPillsAmount ? this.portalConfig?.tree?.layerPillsAmount : 0);
         this.setLayerPillsAmount(this.endIndex);
