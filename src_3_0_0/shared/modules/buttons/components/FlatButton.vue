@@ -35,7 +35,9 @@ export default {
             :class="icon"
             role="img"
         />
-        {{ $t(text) }}
+        <span class="btn-texts">
+            {{ $t(text) }}
+        </span>
     </button>
 </template>
 
@@ -57,7 +59,7 @@ export default {
         padding-right: .5rem;
     }
     .btn-texts {
-        text-align: left;
+        white-space: normal;
     }
 }
 </style>
