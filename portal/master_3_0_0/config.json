@@ -235,6 +235,11 @@
             "type": "measure",
             "showDescription": true,
             "description": "Miss eine Strecke oder Fläche."
+          },
+          {
+            "type": "styleVT",
+            "showDescription": true,
+            "description": "Wechsel das aussehen eines Layers vom Typ VectorTile."
           }
         ]
       ]
@@ -317,6 +322,63 @@
               "name": "Test",
               "url": "https://test.geoportal-hamburg.de/vt/esri/resources/styles/root.json",
               "defaultStyle": true
+            }
+          ]
+        },
+        {
+          "id": "VectorTile_ADV",
+          "name": "ADV-Smart",
+          "typ": "VectorTile",
+          "visibility": false,
+          "gfiAttributes": "shwoAll",
+          "url": "https://dev.adv-smart.de/tiles/smarttiles_de_UTM32_dev/{z}/{x}/{y}.pbf",
+          "epsg": "EPSG:25832",
+          "extent": [
+            -46133.17,
+            5048875.26857567,
+            1206211.10142433,
+            6301219.54000000
+          ],
+          "resolutions": [
+            4891.96981025128,
+            2445.98490512564,
+            1222.99245256282,
+            611.496226281410,
+            305.748113140705,
+            152.874056570353,
+            76.4370282851763,
+            38.2185141425881,
+            19.1092570712941,
+            9.55462853564703,
+            4.77731426782352,
+            2.38865713391176
+          ],
+          "tileSize": 256,
+          "zDirection": -1,
+          "supported": [
+            "2D"
+          ],
+          "vtStyles": [
+            {
+              "id": "masterportal_test1",
+              "name": "Masterportal_test1",
+              "url": "https://dev.adv-smart.de/styles/playground/masterportal_test1.json",
+              "defaultStyle": true
+            },
+            {
+              "id": "farbe",
+              "name": "Farbe",
+              "url": "https://dev.adv-smart.de/styles/playground/de_style_colour_light_UTM32_m4.3_public.json"
+            },
+            {
+              "id": "nacht",
+              "name": "Nacht",
+              "url": "https://adv-smart.de/styles/public/de_style_night.json"
+            },
+            {
+              "id": "druck",
+              "name": "Druck",
+              "url": "https://adv-smart.de/styles/public/de_style_print.json"
             }
           ]
         },
