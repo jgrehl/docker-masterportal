@@ -32,7 +32,7 @@ const getters = {
             return sectionModule.type === moduleType;
         });
 
-        if(state.entries[side][0][state.entries[side][0].length - 1] === moduleIndex){
+        if (state.entries[side][0][state.entries[side][0].length - 1] === moduleIndex) {
             return state.entries[side][0];
         }
         return null;
