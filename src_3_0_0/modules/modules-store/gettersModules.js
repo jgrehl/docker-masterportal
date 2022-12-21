@@ -16,6 +16,7 @@ import PrintMap from "../print/components/PrintMap.vue";
 import Routing from "../routing/components/RoutingTemplate.vue";
 import ScaleSwitcher from "../scaleSwitcher/components/ScaleSwitcher.vue";
 import ShareView from "../shareView/components/ShareView.vue";
+import StyleVT from "../styleVT/components/StyleVT.vue";
 import WfsSearch from "../wfsSearch/components/WfsSearch.vue";
 
 
@@ -39,6 +40,7 @@ const getters = {
             routing: Routing,
             scaleSwitcher: ScaleSwitcher,
             shareView: ShareView,
+            styleVT: StyleVT,
             wfsSearch: WfsSearch
         };
     }
