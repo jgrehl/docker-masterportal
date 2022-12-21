@@ -3,6 +3,7 @@ import {expect} from "chai";
 import Feature from "ol/Feature.js";
 import Point from "ol/geom/Point.js";
 import sinon from "sinon";
+import store from "../../../../../app-store";
 import VectorLayer from "ol/layer/Vector.js";
 import VectorSource from "ol/source/Vector.js";
 
@@ -1870,6 +1871,127 @@ describe("src_3_0_0/core/js/layers/layer2dVectorSensorThings.js", () => {
             const data = [{location: [10, 10]}];
 
             expect(sensorThingsLayer.createFeaturesFromSensorData(data, "mapProjection", undefined, "gfiTheme", "utc")).to.be.an("array").that.is.empty;
+        });
+    });
+    describe("fetchHistoricalLocations", () => {
+        it("should do nothing if first parameter is not a string", () => {
+            const buildSensorThingsUrlStub = sinon.stub(sensorThingsLayer, "buildSensorThingsUrl");
+
+            sensorThingsLayer.fetchHistoricalLocations();
+            expect(buildSensorThingsUrlStub.called).to.be.false;
+        });
+        it("should do nothing if second parameter is not an object", () => {
+            const buildSensorThingsUrlStub = sinon.stub(sensorThingsLayer, "buildSensorThingsUrl");
+
+            sensorThingsLayer.fetchHistoricalLocations("", undefined, "");
+            sensorThingsLayer.fetchHistoricalLocations("", null, "");
+            sensorThingsLayer.fetchHistoricalLocations("", true, "");
+            sensorThingsLayer.fetchHistoricalLocations("", false, "");
+            sensorThingsLayer.fetchHistoricalLocations("", "string", "");
+            sensorThingsLayer.fetchHistoricalLocations("", 1234, "");
+            sensorThingsLayer.fetchHistoricalLocations("", [], "");
+            expect(buildSensorThingsUrlStub.called).to.be.false;
+        });
+        it("should do nothing if third parameter is not a string", () => {
+            const buildSensorThingsUrlStub = sinon.stub(sensorThingsLayer, "buildSensorThingsUrl");
+
+            sensorThingsLayer.fetchHistoricalLocations("", {}, {});
+            sensorThingsLayer.fetchHistoricalLocations("", {}, undefined);
+            sensorThingsLayer.fetchHistoricalLocations("", {}, true);
+            sensorThingsLayer.fetchHistoricalLocations("", {}, false);
+            sensorThingsLayer.fetchHistoricalLocations("", {}, 1234);
+            sensorThingsLayer.fetchHistoricalLocations("", {}, null);
+
+            expect(buildSensorThingsUrlStub.called).to.be.false;
+        });
+    });
+
+    describe("getHistoricalLocationsOfFeatures", () => {
+        it("should do nothing", () => {
+            const fetchHistoricalLocationsStub = sinon.stub(sensorThingsLayer, "fetchHistoricalLocations");
+
+            sinon.stub(sensorThingsLayer, "getDatastreamIdsInCurrentExtent").returns([]);
+            sensorThingsLayer.getHistoricalLocationsOfFeatures();
+            expect(fetchHistoricalLocationsStub.called).to.be.false;
+        });
+        it("should call fetchHistoricalLocations if datastream id's are found in current extent", () => {
+            const fetchHistoricalLocationsStub = sinon.stub(sensorThingsLayer, "fetchHistoricalLocations");
+
+            sinon.stub(sensorThingsLayer, "getDatastreamIdsInCurrentExtent").returns([0]);
+            sensorThingsLayer.getHistoricalLocationsOfFeatures();
+            expect(fetchHistoricalLocationsStub.called).to.be.true;
+        });
+    });
+
+    describe("parseSensorDataToFeature", () => {
+        it("should not set historicalFeatures if given feature has no get function", () => {
+            const addFeatureStub = sinon.stub(sensorThingsLayer.getLayerSource(), "addFeatures"),
+                feature = {
+                    getId: () => 0
+                };
+
+            sinon.stub(sensorThingsLayer, "getAllThings").returns([]);
+            sinon.stub(sensorThingsLayer, "createFeaturesFromSensorData").returns([feature]);
+
+            sensorThingsLayer.parseSensorDataToFeature(feature, [], {}, "url", "1.1");
+
+            expect(addFeatureStub.called).to.be.false;
+        });
+        it("should not set historicalFeatures if given feature has already historicalFeatures", () => {
+            const addFeatureStub = sinon.stub(sensorThingsLayer.getLayerSource(), "addFeatures"),
+                feature = {
+                    getId: () => 0,
+                    get: () => []
+                };
+
+            sinon.stub(sensorThingsLayer, "getAllThings").returns([]);
+            sinon.stub(sensorThingsLayer, "createFeaturesFromSensorData").returns([feature]);
+
+            sensorThingsLayer.parseSensorDataToFeature(feature, [], {}, "url", "1.1");
+
+            expect(addFeatureStub.called).to.be.false;
+        });
+        it("should set historicalFeatures if given feature has no historicalFeatures and has a get function", () => {
+            const addFeatureStub = sinon.stub(sensorThingsLayer.getLayerSource(), "addFeatures"),
+                feature = {
+                    getId: () => 0,
+                    get: () => undefined,
+                    set: (val) => {
+                        feature.historicalFeatures = val;
+                    },
+                    historicalFeatures: undefined
+                };
+
+            sinon.stub(sensorThingsLayer, "getAllThings").returns([]);
+            sinon.stub(sensorThingsLayer, "createFeaturesFromSensorData").returns([feature]);
+            store.getters = {
+                "Maps/projection": {
+                    getCode: () => "EPSG:25832"
+                }
+            };
+
+            sensorThingsLayer.parseSensorDataToFeature(feature, [], {}, "url", "1.1");
+
+            expect(addFeatureStub.called).to.be.true;
+        });
+    });
+
+    describe("resetHistoricalLocations", () => {
+        it("should reset historicalLocations attribut", () => {
+            const layerSource = sensorThingsLayer.getLayerSource(),
+                removeFeatureStub = sinon.stub(layerSource, "removeFeature");
+
+            sinon.stub(layerSource, "getFeatures").returns([{
+                get: (fnName) => {
+                    if (fnName === "historicalFeatureIds") {
+                        return [0];
+                    }
+                    return 0;
+                },
+                unset: sinon.stub()
+            }]);
+            sensorThingsLayer.resetHistoricalLocations(0);
+            expect(removeFeatureStub.called).to.be.true;
         });
     });
 });
