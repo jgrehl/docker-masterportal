@@ -126,7 +126,9 @@
         "iconTransparency": "Transparency",
         "addLayer": "Add layer",
         "addSubject": "Add subject",
-        "backgrounds": "Backgrounds"
+        "backgrounds": "Backgrounds",
+        "selectedSubjectsCount": "You have selected {{count}} additional topics",
+        "addSelectedSubjectsToMap": "Add selected topics to the map"
     },
     "date": "Date",
     "time": "Time",

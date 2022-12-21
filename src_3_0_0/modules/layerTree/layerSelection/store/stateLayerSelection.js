@@ -5,12 +5,14 @@
  */
 export default {
     active: false,
-    type: "LayerSelection",
+    type: "layerSelection",
     icon: "bi-question-circle",
     name: "LayerSelection",
     alwaysActivated: true,
     isVisibleInMenu: false,
     menuSide: "mainMenu",
 
-    subjectDataLayerConfs: []
+    subjectDataLayerConfs: [],
+    layersToAdd: [],
+    layersToRemove: []
 };
