@@ -133,7 +133,8 @@
         "backgrounds": "Hintergründe",
         "selectedSubjectsCount_one": "Sie haben {{count}} zusätzliches Thema ausgewählt",
         "selectedSubjectsCount_other": "Sie haben {{count}} zusätzliche Themen ausgewählt",
-        "addSelectedSubjectsToMap": "Ausgewählte Themen der Karte hinzufügen"
+        "addSelectedSubjectsToMap": "Ausgewählte Themen der Karte hinzufügen",
+        "isAlreadyAdded": "wurde bereits hinzugefügt"
     },
     "date": "Datum",
     "time": "Zeit",
