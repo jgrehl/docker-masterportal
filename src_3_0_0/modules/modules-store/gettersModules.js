@@ -9,8 +9,8 @@ import Folder from "../menu/components/MenuFolder.vue";
 import GetFeatureInfo from "../getFeatureInfo/components/GetFeatureInfo.vue";
 import Language from "../language/components/LanguageItem.vue";
 import LayerInformation from "../layerInformation/components/LayerInformation.vue";
-import LayerTree from "../layerTree/components/LayerTree.vue";
 import LayerSelection from "../layerTree/layerSelection/components/LayerSelection.vue";
+import LayerTree from "../layerTree/components/LayerTree.vue";
 import LayerPills from "../layerPills/components/LayerPills.vue";
 import LayerSlider from "../layerSlider/components/LayerSlider.vue";
 import Measure from "../measure/components/MeasureInMap.vue";
@@ -28,8 +28,8 @@ import WfsSearch from "../wfsSearch/components/WfsSearch.vue";
 const getters = {
     ...generateSimpleGetters(stateModules),
 
-    componentMap: (_, __, ___, rootGetters) => {
-        const components = {
+    componentMap: () => {
+        return {
             addWMS: AddWMS,
             contact: Contact,
             coordToolkit: CoordToolkit,
@@ -39,6 +39,7 @@ const getters = {
             language: Language,
             layerInformation: LayerInformation,
             layerTree: LayerTree,
+            layerSelection: LayerSelection,
             layerPills: LayerPills,
             layerSlider: LayerSlider,
             measure: Measure,
@@ -52,11 +53,6 @@ const getters = {
             styleVT: StyleVT,
             wfsSearch: WfsSearch
         };
-
-        if (rootGetters.portalConfig?.tree?.type === "auto") {
-            components.layerSelection = LayerSelection;
-        }
-        return components;
     }
 };
 
