@@ -21,6 +21,7 @@
     },
     "tree": {
       "type": "auto",
+      "addLayerButton": true,
       "layerPillsAmount": 5,
       "validLayerTypesAutoTree": [
         "WMS",
