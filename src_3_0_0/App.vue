@@ -1,5 +1,6 @@
 <script>
 import {mapGetters, mapActions} from "vuex";
+import {Tooltip} from "bootstrap";
 import Alerting from "./modules/alerting/components/AlertingItem.vue";
 import ControlBar from "./modules/controls/components/ControlBar.vue";
 import initializeLayers from "./core/layers/js/layerProcessor";
@@ -46,6 +47,9 @@ export default {
         this.setGlobalVariables();
         this.loadConfigsToTheVuexState();
         this.checkVueObservation();
+        new Tooltip(document.body, {
+            selector: "[data-bs-toggle='tooltip']"
+        });
     },
     methods: {
         ...mapActions([
