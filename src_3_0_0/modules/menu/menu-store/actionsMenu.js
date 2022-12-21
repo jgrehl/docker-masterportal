@@ -58,7 +58,6 @@ export default {
      */
     clickedMenuElement ({commit, dispatch, getters}, path) {
         const {type} = getters.section(path);
-        console.log("clickedMenuElement type:", type, "path:", path);
 
         if (type) {
             commit("Menu/Navigation/addEntry", path, {root: true});
@@ -173,5 +172,9 @@ export default {
     setMenuBackAndActivateItem ({dispatch}, menuItem) {
         dispatch("resetMenu", menuItem);
         dispatch("activateMenuNavigation", menuItem);
+        dispatch("setElementActive", {
+            moduleNamespace: upperFirst(menuItem.module?.type),
+            isActive: true
+        });
     }
 };
