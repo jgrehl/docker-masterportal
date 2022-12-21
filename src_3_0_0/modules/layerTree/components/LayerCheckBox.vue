@@ -14,6 +14,11 @@ export default {
         conf: {
             type: Object,
             required: true
+        },
+        /** true, if parent is layer tree and false if parent is layer selection */
+        isLayerTree: {
+            type: Boolean,
+            required: true
         }
     },
     computed: {
@@ -29,6 +34,7 @@ export default {
     },
     methods: {
         ...mapMutations(["replaceByIdInLayerConfig"]),
+        ...mapMutations("Modules/LayerSelection", ["addSelectedLayer", "removeSelectedLayer"]),
 
         /**
          * Replaces the value of current conf's visibility in state's layerConfig
@@ -47,6 +53,19 @@ export default {
                     }]
                 }
             );
+        },
+        clicked () {
+            const value = !this.isLayerVisible;
+
+            if (this.isLayerTree) {
+                this.visibilityInLayerTreeChanged(value);
+            }
+            else if (value) {
+                this.addSelectedLayer({layerId: this.conf.id});
+            }
+            else {
+                this.removeSelectedLayer({layerId: this.conf.id});
+            }
         }
     }
 };
@@ -59,15 +78,15 @@ export default {
             :checked="isLayerVisible"
             type="checkbox"
             class="layer-tree-layer-checkbox form-check-input"
-            @click="visibilityInLayerTreeChanged(!isLayerVisible)"
-            @keydown.enter="visibilityInLayerTreeChanged(!isLayerVisible)"
+            @input="clicked()"
+            @keydown.enter="clicked()"
         >
         <label
             :class="['layer-tree-layer-label', 'mt-0 d-flex flex-column align-self-start', isLayerVisible ? 'bold' : '']"
             :for="'layer-tree-layer-checkbox-' + conf.id"
             tabindex="0"
             :aria-label="$t(conf.name)"
-            @keydown.enter="visibilityInLayerTreeChanged(!isLayerVisible)"
+            @keydown.enter="clicked()"
         >
             <span
                 v-if="conf.shortname"
