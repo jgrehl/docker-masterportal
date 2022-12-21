@@ -17,6 +17,7 @@ import Print from "../print/store/indexPrint";
 import Routing from "../routing/store/indexRouting";
 import ScaleSwitcher from "../scaleSwitcher/store/indexScaleSwitcher";
 import ShareView from "../shareView/store/indexShareView";
+import StyleVT from "../styleVT/store/indexStyleVT";
 import WfsSearch from "../wfsSearch/store/indexWfsSearch";
 
 export default {
@@ -41,6 +42,7 @@ export default {
         Print: {...Print},
         ScaleSwitcher: {...ScaleSwitcher},
         ShareView: {...ShareView},
+        StyleVT: {...StyleVT},
         WfsSearch: {...WfsSearch}
     }
 };
