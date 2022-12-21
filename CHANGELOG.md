@@ -193,6 +193,7 @@
 - the `wfsSearch` modules config.json parameter 'field'-property `type` was renamed to `queryType`
 - new config.json parameter 'tree' added. Containes:
   - 'type' (was 'treeType' at root before), the following params are possible: "auto" ( = old "default") or "light"
+  - 'addLayerButton': if true, a button to add layers is shown. On first menu side only Layers configured in config.json with attribute 'showInLayerTree':true or "visibility": true are shown.
   - 'validLayerTypesAutoTree' (new parameter) only for tree type 'auto'
   - 'layerIDsToIgnore' (moved from config.js) only for tree type 'auto'
   - 'metaIDsToMerge' (moved from config.js) only for tree type 'auto'

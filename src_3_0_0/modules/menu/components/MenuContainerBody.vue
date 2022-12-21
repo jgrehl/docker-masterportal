@@ -2,6 +2,7 @@
 import LayerTree from "../../layerTree/components/LayerTree.vue";
 import MenuContainerBodyItems from "./MenuContainerBodyItems.vue";
 import MenuNavigation from "../navigation/components/MenuNavigation.vue";
+import LayerTree from "../../layerTree/components/LayerTree.vue";
 import {mapGetters, mapMutations} from "vuex";
 
 export default {
@@ -9,7 +10,8 @@ export default {
     components: {
         LayerTree,
         MenuContainerBodyItems,
-        MenuNavigation
+        MenuNavigation,
+        LayerTree
     },
     props: {
         /** Defines in which menu the component is being rendered */
@@ -66,18 +68,22 @@ export default {
 
         updateModuleInMenuSection (components) {
             components.forEach(component => {
-                const name = component.module.name,
+                const typeName = component.module.name.charAt(0).toLowerCase() + component.module.name.substring(1),
                     side = component.menuSide;
 
-                if (this[side].sections[0]?.find(module => module.type === name) === undefined) {
+                if (this[side].sections[0]?.find(module => module.type === typeName) === undefined) {
                     this.addModuleToMenuSection({
                         module: {
-                            type: name
+                            type: typeName
                         },
                         side: side
                     });
                 }
             });
+        },
+        // @ todo remove if menu is new refactored
+        doNotCreate (name = "") {
+            return !["LayerSelection"].includes(name);
         }
     }
 };
@@ -93,10 +99,11 @@ export default {
         <template v-for="component in componentsAlwaysActivated">
             <component
                 :is="component.module"
-                v-if="side === component.menuSide && !deactivateModule(component.module.name)"
+                v-if="side === component.menuSide && !deactivateModule(component.module.name) && doNotCreate(component.module.name)"
                 :key="'module-' + component.module.name"
             />
         </template>
+        <LayerTree v-if="side === 'mainMenu'" />
         <component
             :is="componentFromPath(side)"
             v-bind="{idAppendix: side, ...objectFromPath(side, 'last')}"

@@ -1,12 +1,12 @@
-import actions from "./actionsLayerTree";
 import state from "./stateLayerTree";
-import mutations from "./mutationsLayerTree";
+import actions from "./actionsLayerTree";
 import getters from "./gettersLayerTree";
+import mutations from "./mutationsLayerTree";
 
 export default {
     namespaced: true,
     state,
-    mutations,
+    actions,
     getters,
-    actions
+    mutations
 };
