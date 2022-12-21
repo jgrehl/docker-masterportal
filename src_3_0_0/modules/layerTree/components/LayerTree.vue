@@ -1,5 +1,5 @@
 <script>
-import {mapActions, mapGetters, mapMutations} from "vuex";
+import {mapActions, mapGetters} from "vuex";
 import LayerTreeNode from "./LayerTreeNode.vue";
 import ElevatedButton from "../../../shared/modules/buttons/components/ElevatedButton.vue";
 
@@ -25,17 +25,21 @@ export default {
         treeType () {
             return this.portalConfig?.tree?.type ? this.portalConfig?.tree?.type : "light";
         },
+        addLayerButton () {
+            return this.portalConfig?.tree?.addLayerButton ? this.portalConfig?.tree?.addLayerButton : this.treeType === "auto";
+        },
         confs () {
-            if (this.treeType === "auto") {
+            if (this.addLayerButton) {
                 return this.layerConfigsByArributes({showInLayerTree: true});
             }
             return this.allLayerConfigsStructured;
         }
     },
     watch: {
+        // @ todo remove if menu is new refactored
         entries: {
             handler () {
-                if (this.isModuleActiveInMenu(this.menuSide, "LayerSelection")) {
+                if (this.isModuleActiveInMenu(this.menuSide, "layerSelection")) {
                     this.layerSelectionVisible = true;
                 }
                 else if (this.layerSelectionVisible) {
@@ -46,19 +50,18 @@ export default {
         }
     },
     methods: {
-        ...mapMutations("Modules/LayerSelection", {setLayerSelectionActive: "setActive"}),
         ...mapActions("Menu", ["setMenuBackAndActivateItem"]),
         /**
          * Toggles a folder, changes data-property isOpen.
          * @returns {void}
          */
-        addLayerToLayerTree () {
+        showLayerSelection () {
+            // @ todo remove if menu is new refactored
             const menuItem = {
                 side: this.menuSide,
-                module: {type: "LayerSelection"}
+                module: {type: "layerSelection"}
             };
 
-            this.setLayerSelectionActive(true);
             this.setMenuBackAndActivateItem(menuItem);
         }
     }
@@ -81,11 +84,14 @@ export default {
                 :conf="conf"
             />
         </template>
-        <div class="mt-4 d-flex justify-content-center">
+        <div
+            v-if="addLayerButton"
+            class="mt-4 d-flex justify-content-center"
+        >
             <ElevatedButton
                 id="add-layer-btn"
                 aria-label="$t('common:tree.addLayer')"
-                :interaction="addLayerToLayerTree"
+                :interaction="showLayerSelection"
                 :text="$t('common:tree.addLayer')"
                 :icon="'bi-plus-circle'"
             />

@@ -130,7 +130,10 @@
         "iconTransparency": "Transparenz",
         "addLayer": "hinzufügen",
         "addSubject": "Thema hinzufügen",
-        "backgrounds": "Hintergründe"
+        "backgrounds": "Hintergründe",
+        "selectedSubjectsCount_one": "Sie haben {{count}} zusätzliches Thema ausgewählt",
+        "selectedSubjectsCount_other": "Sie haben {{count}} zusätzliche Themen ausgewählt",
+        "addSelectedSubjectsToMap": "Ausgewählte Themen der Karte hinzufügen"
     },
     "date": "Datum",
     "time": "Zeit",

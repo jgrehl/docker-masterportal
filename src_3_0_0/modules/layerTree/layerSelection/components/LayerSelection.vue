@@ -1,6 +1,7 @@
 <script>
 import {mapGetters, mapActions, mapMutations} from "vuex";
 import sortBy from "../../../../shared/js/utils/sortBy";
+import FlatButton from "../../../../shared/modules/buttons/components/FlatButton.vue";
 import LayerCheckBox from "../../components/LayerCheckBox.vue";
 import LayerSelectionTreeNode from "./LayerSelectionTreeNode.vue";
 
@@ -8,6 +9,7 @@ import LayerSelectionTreeNode from "./LayerSelectionTreeNode.vue";
 export default {
     name: "LayerSelection",
     components: {
+        FlatButton,
         LayerCheckBox,
         LayerSelectionTreeNode
     },
@@ -19,11 +21,7 @@ export default {
     },
     computed: {
         ...mapGetters(["layerConfig", "portalConfig", "allBackgroundLayerConfigs", "subjectDataLayerConfigsStructured"]),
-        ...mapGetters("Modules/LayerSelection", ["active", "subjectDataLayerConfs"]),
-        // ...mapGetters("Menu/Navigation", ["getPath"]),
-
-    },
-    watch: {
+        ...mapGetters("Modules/LayerSelection", ["active", "subjectDataLayerConfs", "layersToAdd", "layersToRemove"])
 
     },
     created () {
@@ -31,24 +29,15 @@ export default {
     },
     methods: {
         ...mapActions("Menu", ["mergeMenuState"]),
+        ...mapActions("Modules/LayerSelection", ["updateLayerTree"]),
         ...mapMutations("Modules/LayerSelection", ["setSubjectDataLayerConfs"]),
         ...mapMutations("Menu", ["addModuleToMenuSection"]),
         setConf (newConf) {
-            // const path = this.getPath("mainMenu", "LayerSelection");
-            // console.log(path);
-            // path.push(0);
-            // this.addModuleToMenuSection({
-            //             module: {
-            //                 type: "LayerSelection"
-            //             },
-            //             side: "mainMenu"
-            //         });
             const sorted = sortBy(newConf, (conf) => conf.type !== "folder");
 
             this.lastConf = this.conf;
             this.setSubjectDataLayerConfs(sorted);
             this.showBGLayers = false;
-            // this.$store.commit("Menu/Navigation/addEntry", path, {root: true});
         }
     }
 };
@@ -72,6 +61,7 @@ export default {
                     <div class="col">
                         <LayerCheckBox
                             :conf="bgConf"
+                            :is-layer-tree="false"
                         />
                     </div>
                 </template>
@@ -86,6 +76,18 @@ export default {
                     @show-node="setConf"
                 />
             </template>
+        </div>
+        <div class="mt-3">
+            <span>{{ $t("tree.selectedSubjectsCount", {count: layersToAdd.length}) }}</span>
+            <FlatButton
+                id="copy-btn"
+                class="mt-2  w-100"
+                aria-label="$t('tree.addSelectedSubjectsToMap')"
+                :disabled="layersToAdd.length === 0 && layersToRemove.length === 0"
+                :interaction="updateLayerTree"
+                :text="$t('tree.addSelectedSubjectsToMap')"
+                :icon="'bi-plus-circle'"
+            />
         </div>
     </div>
 </template>
