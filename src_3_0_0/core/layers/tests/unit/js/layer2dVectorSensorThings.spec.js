@@ -2,6 +2,7 @@ import Cluster from "ol/source/Cluster.js";
 import {expect} from "chai";
 import Feature from "ol/Feature.js";
 import Point from "ol/geom/Point.js";
+import {Circle} from "ol/style.js";
 import sinon from "sinon";
 import store from "../../../../../app-store";
 import VectorLayer from "ol/layer/Vector.js";
@@ -1992,6 +1993,54 @@ describe("src_3_0_0/core/js/layers/layer2dVectorSensorThings.js", () => {
             }]);
             sensorThingsLayer.resetHistoricalLocations(0);
             expect(removeFeatureStub.called).to.be.true;
+        });
+    });
+    describe("getScale", () => {
+        it("returns the scale", () => {
+            const staLayer = new Layer2dVectorSensorThings(attributes);
+
+            expect(staLayer.getScale(0, 4)).to.be.equal(0.8);
+            expect(staLayer.getScale(1, 4)).to.be.equal(0.65);
+            expect(staLayer.getScale(2, 4)).to.be.equal(0.5);
+            expect(staLayer.getScale(3, 4).toFixed(2)).to.be.equal("0.35");
+            expect(staLayer.getScale(4, 4).toFixed(1)).to.be.equal("0.2");
+
+        });
+    });
+
+    describe("getStyleOfHistoricalFeature", () => {
+        it("get style from type regularShape", () => {
+            const staLayer = new Layer2dVectorSensorThings(attributes),
+                originStyle = {
+                    type: "regularShape",
+                    rsRadius: 10,
+                    rsFillColor: [0, 72, 153, 0.7],
+                    rsStrokeColor: [0, 72, 153, 1],
+                    rsStrokeWidth: 2
+                },
+                scale = 0.8,
+                style = staLayer.getStyleOfHistoricalFeature(originStyle, scale);
+
+            expect(style.getImage()).to.be.an.instanceof(Circle);
+            expect(style.getImage().getRadius()).to.equal(10);
+            expect(style.getImage().getScale()).to.equal(0.8);
+        });
+
+        it("get style from type circle", () => {
+            const staLayer = new Layer2dVectorSensorThings(attributes),
+                originStyle = {
+                    type: "circle",
+                    circleRadius: 10,
+                    circleFillColor: [0, 72, 153, 0.7],
+                    circleStrokeColor: [0, 72, 153, 1],
+                    circleStrokeWidth: 2
+                },
+                scale = 0.8,
+                style = staLayer.getStyleOfHistoricalFeature(originStyle, scale);
+
+            expect(style.getImage()).to.be.an.instanceof(Circle);
+            expect(style.getImage().getRadius()).to.equal(10);
+            expect(style.getImage().getScale()).to.equal(0.8);
         });
     });
 });
