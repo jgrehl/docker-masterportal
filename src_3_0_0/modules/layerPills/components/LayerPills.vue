@@ -179,7 +179,7 @@ export default {
         margin: 2px 5px;
         display: flex;
         align-items: center;
-        height: 30px;
+        height: 32px;
     }
 
     .nav-link {
