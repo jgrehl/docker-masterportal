@@ -116,7 +116,7 @@ export default {
             class="nav nav-pills layerpills"
         >
             <li
-                class="nav-item"
+                class="nav-item shadow"
             >
                 <IconButton
                     :id="'layerpills-left-button'"
@@ -130,7 +130,7 @@ export default {
             <li
                 v-for="(layer, index) in visibleSubjectDataLayers.slice(startIndex, endIndex)"
                 :key="index"
-                class="nav-item"
+                class="nav-item shadow"
             >
                 <a
                     class="nav-link"
@@ -150,7 +150,7 @@ export default {
                 />
             </li>
             <li
-                class="nav-item"
+                class="nav-item shadow"
             >
                 <IconButton
                     :id="'layerpills-right-button'"
@@ -182,7 +182,7 @@ export default {
         margin: 2px 5px;
         display: flex;
         align-items: center;
-        height: 30px;
+        height: 32px;
     }
 
     .nav-link {
