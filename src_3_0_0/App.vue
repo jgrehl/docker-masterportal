@@ -119,35 +119,35 @@ export default {
             v-if="allConfigsLoaded && mainMenu && uiStyle !== 'SIMPLE'"
             side="mainMenu"
         />
+        <MenuToggleButton
+            v-if="allConfigsLoaded && mainMenu && uiStyle !== 'SIMPLE'"
+            side="mainMenu"
+        />
         <div
-            id="map-wrapper"
-            class="mp-map"
+            v-if="allConfigsLoaded"
+            class="elements-positioned-over-map"
         >
             <Alerting />
-            <MenuToggleButton
-                v-if="allConfigsLoaded && mainMenu && uiStyle !== 'SIMPLE'"
-                side="mainMenu"
-            />
-            <div
-                id="map"
-            />
-            <div
-                v-if="allConfigsLoaded"
-                class="elements-positioned-over-map"
-            >
-                <ControlBar class="controls" />
-                <component :is="componentMap.layerPills" />
-                <component :is="componentMap.mouseHover" />
-            </div>
-            <MenuToggleButton
-                v-if="allConfigsLoaded && secondaryMenu && uiStyle !== 'SIMPLE'"
-                side="secondaryMenu"
-            />
+            <component :is="componentMap.mouseHover" />
+            <ControlBar class="controls" />
+            <component :is="componentMap.layerPills" />
         </div>
+        <MenuToggleButton
+            v-if="allConfigsLoaded && secondaryMenu && uiStyle !== 'SIMPLE'"
+            side="secondaryMenu"
+        />
         <MenuContainer
             v-if="allConfigsLoaded && secondaryMenu && uiStyle !== 'SIMPLE'"
             side="secondaryMenu"
         />
+        <div
+            id="map-wrapper"
+            class="mp-map"
+        >
+            <div
+                id="map"
+            />
+        </div>
     </div>
 </template>
 
@@ -167,12 +167,10 @@ export default {
         height: 100%;
         width: 100%;
         overflow: hidden;
-        position: relative;
-        display: flex;
-        flex-direction: row;
+        position: absolute;
 
         #map {
-            position: fixed;
+            position: relative;
             height: 100%;
             width: 100%;
         }
@@ -185,7 +183,6 @@ export default {
     align-items: flex-end;
     z-index: 1;
     pointer-events: none;
-    position: fixed;
     width: 100%;
     height: 100%;
 
@@ -194,12 +191,5 @@ export default {
     }
 }
 
-@include media-breakpoint-up(sm) {
-    #map {
-        position: relative;
-    }
-    .elements-positioned-over-map {
-        position: relative;
-    }
-}
+
 </style>
