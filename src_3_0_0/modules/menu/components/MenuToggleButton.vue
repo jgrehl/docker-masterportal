@@ -37,7 +37,7 @@ export default {
 <template>
     <button
         :id="side + '-toggle-button'"
-        class="btn btn-light bootstrap-icon shadow menu-toggle-button"
+        class="btn btn-primary bootstrap-icon shadow menu-toggle-button"
         :class="[
             'toggle-button-' + side,
             {'expanded': mainExpanded && side === 'mainMenu' || secondaryExpanded && side === 'secondaryMenu'}
