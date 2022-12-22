@@ -50,7 +50,7 @@ export default {
 <template>
     <div
         :id="'mp-menu-' + side"
-        class="mp-menu collapse"
+        class="mp-menu shadow collapse"
         :class="[
             'mp-' + side,
             {
