@@ -38,7 +38,7 @@ export default {
         @click="navigateBack(side)"
         @keypress="navigateBack(side)"
     >
-        <h5>&#60; {{ entry }}</h5>
+        <h5 class="mp-menu-navigation-link"><p class="bi-chevron-left" />{{ entry }}</h5>
     </a>
 </template>
 
@@ -47,6 +47,15 @@ export default {
 
 .mp-menu-navigation{
     color: $black;
+    margin-bottom: 25px;
+    display: flex;
+}
+
+.mp-menu-navigation-link{
+    display: flex;
+    >.bi-chevron-left {
+        font-size: 21px;
+    }
 }
 
 </style>
