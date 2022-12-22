@@ -108,18 +108,17 @@ export default {
     .mp-menu {
         top: 0px;
         min-width: 20%;
-        position: relative;
         flex-grow: 0;
         flex-shrink: 0;
+        position: relative;
     }
 
     .mp-mainMenu {
-        left: 0px;
+        left: 0;
     }
 
     .mp-secondaryMenu {
-       right:0em;
-       position: relative;
+       right:0;
     }
 
     .mp-menu-container-handle {
