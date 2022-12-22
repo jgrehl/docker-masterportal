@@ -17,7 +17,7 @@ export default {
     },
     data () {
         return {
-            classInfo: "layer-component-icon-info-button, btn-light"
+            classInfo: "btn-light, layer-component-icon-info-button"
         };
     },
     computed: {
@@ -50,9 +50,11 @@ export default {
     @import "~mixins";
 
     .layer-component-icon-info {
-        font-size: $font-size-base;
-
         .layer-component-icon-info-button {
+            width: 2rem;
+            height: 2rem;
+            font-size: 1.2rem;
+
             &:hover {
                 @include primary_action_hover;
             }
