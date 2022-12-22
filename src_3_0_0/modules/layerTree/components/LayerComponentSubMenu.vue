@@ -87,15 +87,11 @@ export default {
     @import "~variables";
 
     .layer-component-sub-menu {
-        font-size: $font-size-sm;
+        font-size: $font-size-base;
 
         .remove-layer-container {
             .light-button {
-                font-size: $font-size-sm;
-
-                i {
-                    font-size: $font-size-sm !important;
-                }
+                font-size: $font-size-base;
             }
         }
 
