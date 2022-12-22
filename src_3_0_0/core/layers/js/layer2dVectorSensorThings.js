@@ -1,5 +1,6 @@
 import {buffer, containsExtent} from "ol/extent";
 import Cluster from "ol/source/Cluster";
+import {Circle as CircleStyle, Fill, Stroke, Style} from "ol/style.js";
 import crs from "@masterportal/masterportalapi/src/crs";
 import {GeoJSON} from "ol/format";
 import moment from "moment";
@@ -63,6 +64,7 @@ export default function Layer2dVectorSensorThings (attributes) {
     };
 
     this.attributes = Object.assign(defaultAttributes, attributes);
+    this.styleRules = [];
     Layer2dVector.call(this, this.attributes);
     moment.locale("de");
     this.initializeSensorThings();
@@ -225,6 +227,11 @@ Layer2dVectorSensorThings.prototype.createMqttConnectionToSensorThings = functio
                 clonedFeature.setId(uniqueId("historicalFeature-"));
                 feature.get("historicalFeatureIds").unshift(clonedFeature.getId());
                 layerSource.addFeature(clonedFeature);
+                feature.get("historicalFeatureIds").forEach((id, index) => {
+                    const scale = this.getScale(index, feature.get("historicalFeatureIds").length);
+
+                    this.setStyleOfHistoricalFeature(layerSource.getFeatureById(id), scale, this.styleRule);
+                });
             }
         }
         this.updateFeatureProperties(feature, datastreamId, observation.result, phenomenonTime, showNoDataValue, noDataValue);
@@ -857,9 +864,10 @@ Layer2dVectorSensorThings.prototype.aggregatePropertiesOfOneThing = function (th
  * @param {String} epsg the epsg of sensortype
  * @param {String|Object} gfiTheme The name of the gfiTheme or an object of gfiTheme
  * @param {String} utc="+1" UTC-Timezone to calculate correct time.
+ * @param {Boolean} isHistorical if it is historical data
  * @returns {ol/Feature[]} feature to draw
  */
-Layer2dVectorSensorThings.prototype.createFeaturesFromSensorData = function (sensorData, mapProjection, epsg, gfiTheme, utc) {
+Layer2dVectorSensorThings.prototype.createFeaturesFromSensorData = function (sensorData, mapProjection, epsg, gfiTheme, utc, isHistorical = false) {
     if (!Array.isArray(sensorData) || typeof epsg === "undefined") {
         return [];
     }
@@ -885,6 +893,9 @@ Layer2dVectorSensorThings.prototype.createFeaturesFromSensorData = function (sen
             feature.set("gfiParams", gfiTheme?.params, true);
         }
         feature.set("utc", utc, true);
+        if (isHistorical) {
+            feature.set("scale", this.getScale(index - 1, sensorData.length - 1));
+        }
         feature = this.aggregateDataStreamValue(feature);
         feature = this.aggregateDataStreamPhenomenonTime(feature);
         features.push(feature);
@@ -1414,12 +1425,13 @@ Layer2dVectorSensorThings.prototype.parseSensorDataToFeature = function (feature
         gfiTheme = this.get("gfiTheme"),
         utc = this.get("utc"),
         things = this.getAllThings(sensorData, urlParam, url, version),
-        historicalFeatures = this.createFeaturesFromSensorData(things, mapProjection, epsg, gfiTheme, utc),
+        historicalFeatures = this.createFeaturesFromSensorData(things, mapProjection, epsg, gfiTheme, utc, true),
         historicalFeatureIds = [];
 
     historicalFeatures.shift();
     historicalFeatures.forEach(hFeature => {
         historicalFeatureIds.push(hFeature.getId());
+        this.setStyleOfHistoricalFeature(hFeature, hFeature.get("scale"), this.styleRule);
     });
     layerSource.addFeatures(historicalFeatures);
     feature.set("historicalFeatureIds", historicalFeatureIds);
@@ -1438,4 +1450,79 @@ Layer2dVectorSensorThings.prototype.resetHistoricalLocations = function (datastr
         feature.get("historicalFeatureIds").forEach(featureId => layerSource.removeFeature(layerSource.getFeatureById(featureId)));
         feature.unset("historicalFeatureIds");
     }
+};
+
+/**
+ * Gets the individual scale of the feature according to the index of historical feature and amount of historical features.
+ * The first historical fature has a scale 0.8 and the last one has a scale 0.2.
+ * @param {Number} index The index of the historical feature
+ * @param {Number} amount The amount of the historical features
+ * @returns {Number} scale
+ */
+Layer2dVectorSensorThings.prototype.getScale = function (index, amount) {
+    return 0.8 - 0.6 * index / amount;
+};
+/**
+ * Sets the style of historical feature
+ * @param {ol/Feature} feature The feature.
+ * @param {Number} scale the icon scale in style
+ * @param {Object[]} styleRule the style rule of the sta features
+ * @returns {void}
+ */
+Layer2dVectorSensorThings.prototype.setStyleOfHistoricalFeature = function (feature, scale, styleRule) {
+    if (!Array.isArray(styleRule) || !styleRule.length || !styleRule[0].style) {
+        console.error("The style rule is not right");
+        return;
+    }
+
+    const style = this.getStyleOfHistoricalFeature(styleRule[0].style, scale);
+
+    if (!style) {
+        console.error("There are not right style format for historical feature");
+        return;
+    }
+    feature.setStyle(style);
+};
+
+/**
+ * Parses and gets the style of historical feature.
+ * @param {Object} style The style object of current feature.
+ * @param {Number} scale the icon scale in style
+ * @returns {void}
+ */
+Layer2dVectorSensorThings.prototype.getStyleOfHistoricalFeature = function (style, scale) {
+    let circleRadius,
+        circleFillColor,
+        circleStrokeColor,
+        circleStrokeWidth;
+
+    if (style.type === "regularShape") {
+        circleRadius = style.rsRadius;
+        circleFillColor = style.rsFillColor;
+        circleStrokeColor = style.rsStrokeColor;
+        circleStrokeWidth = style.rsStrokeWidth;
+    }
+    else if (style.type === "circle") {
+        circleRadius = style.circleRadius;
+        circleFillColor = style.circleFillColor;
+        circleStrokeColor = style.circleStrokeColor;
+        circleStrokeWidth = style.circleStrokeWidth;
+    }
+    else {
+        return false;
+    }
+
+    return new Style({
+        image: new CircleStyle({
+            radius: circleRadius,
+            fill: new Fill({
+                color: circleFillColor
+            }),
+            stroke: new Stroke({
+                color: circleStrokeColor,
+                width: circleStrokeWidth
+            }),
+            scale: scale
+        })
+    });
 };
