@@ -31,6 +31,7 @@ export default {
 </script>
 
 <template lang="html">
+    <hr>
     <div
         id="layer-tree"
         class="layer-tree me-3"
@@ -46,6 +47,7 @@ export default {
             />
         </template>
     </div>
+    <hr>
 </template>
 
 <style lang="scss" scoped>
