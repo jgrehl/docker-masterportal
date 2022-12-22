@@ -1,4 +1,5 @@
 <script>
+import LayerTree from "../../layerTree/components/LayerTree.vue";
 import MenuContainerBodyItems from "./MenuContainerBodyItems.vue";
 import MenuNavigation from "../navigation/components/MenuNavigation.vue";
 import {mapGetters, mapMutations} from "vuex";
@@ -6,6 +7,7 @@ import {mapGetters, mapMutations} from "vuex";
 export default {
     name: "MenuContainerBody",
     components: {
+        LayerTree,
         MenuContainerBodyItems,
         MenuNavigation
     },
@@ -100,15 +102,18 @@ export default {
             v-if="lastEntry(side)"
             :path="lastEntry(side)"
         />
-        <template
-            v-for="(_, key) in menu.sections"
-            v-else
-            :key="key"
-        >
-            <MenuContainerBodyItems
-                :id-appendix="side"
-                :path="path(key)"
-            />
+        <template v-else>
+            <LayerTree v-if="side === 'mainMenu'" />
+            <template
+                v-for="(_, key) in menu.sections"
+                :key="key"
+            >
+                <MenuContainerBodyItems
+                    :id-appendix="side"
+                    :path="path(key)"
+                />
+            </template>
+            <hr>
         </template>
     </div>
 </template>
