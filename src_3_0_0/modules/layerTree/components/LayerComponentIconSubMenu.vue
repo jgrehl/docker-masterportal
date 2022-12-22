@@ -23,7 +23,7 @@ export default {
     >
         <IconButton
             :id="'layer-component-icon-sub-menu-button-' + layerConf.id"
-            :class-array="['layer-component-icon-sub-menu-button, btn-light']"
+            :class-array="['btn-light, layer-component-icon-sub-menu-button']"
             data-bs-toggle="collapse"
             :data-bs-target="'#collapseSubMenu-' + layerConf.id"
             :icon="'bi-sliders'"
@@ -34,8 +34,18 @@ export default {
 
 <style lang="scss" scoped>
     @import "~variables";
+    @import "~mixins";
 
-    .layer-component-icon-sub-menu {
-        font-size: $font-size-base;
+    .layer-component-icon-sub-menu-button {
+        width: 2rem;
+        height: 2rem;
+        font-size: 1.2rem;
+
+        &:hover {
+                @include primary_action_hover;
+        }
+        &:focus {
+            @include primary_action_focus;
+        }
     }
 </style>
