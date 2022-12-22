@@ -86,7 +86,7 @@ export default {
         font-size: $font_size_huge;
         height: $icon_length;
         width: $icon_length;
-        position: absolute;
+        position: relative;
         border-width: 1px;
         border-color: $light-grey;
 
