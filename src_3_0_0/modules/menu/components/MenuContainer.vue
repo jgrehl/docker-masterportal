@@ -92,6 +92,7 @@ export default {
     position: fixed;
     background-color: $menu-background-color;
     z-index: 2;
+    overflow-y: auto;
 }
 
 .mp-mainMenu {
