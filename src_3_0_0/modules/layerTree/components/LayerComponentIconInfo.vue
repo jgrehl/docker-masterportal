@@ -17,7 +17,7 @@ export default {
     },
     data () {
         return {
-            classInfo: ["btn-light", "layer-component-icon-info-button"]
+            classInfo: "btn-light, layer-component-icon-info-button"
         };
     },
     computed: {
@@ -43,3 +43,23 @@ export default {
         />
     </div>
 </template>
+
+<style lang="scss" scoped>
+    @import "~variables";
+    @import "~mixins";
+
+    .layer-component-icon-info {
+        .layer-component-icon-info-button {
+            width: 2rem;
+            height: 2rem;
+            font-size: 1.2rem;
+
+            &:hover {
+                @include primary_action_hover;
+            }
+            &:focus {
+                @include primary_action_focus;
+            }
+        }
+    }
+</style>
