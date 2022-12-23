@@ -40,7 +40,7 @@ describe("src_3_0_0/modules/menu/MenuToggleButton.vue", () => {
             icon = button.find("i");
 
         expect(button.exists()).to.be.true;
-        expect(button.classes()).to.eql(["btn", "btn-primary", "bootstrap-icon", "menu-toggle-button", "toggle-button-mainMenu"]);
+        expect(button.classes()).to.eql(["btn", "btn-light", "bootstrap-icon", "menu-toggle-button", "toggle-button-mainMenu"]);
         expect(button.attributes("type")).to.equal("button");
         expect(button.attributes("aria-label")).to.equal("common:menu.ariaLabelOpen");
         expect(icon.exists()).to.be.true;
@@ -58,7 +58,7 @@ describe("src_3_0_0/modules/menu/MenuToggleButton.vue", () => {
             icon = button.find("i");
 
         expect(button.exists()).to.be.true;
-        expect(button.classes()).to.eql(["btn", "btn-primary", "bootstrap-icon", "menu-toggle-button", "toggle-button-secondaryMenu"]);
+        expect(button.classes()).to.eql(["btn", "btn-light", "bootstrap-icon", "menu-toggle-button", "toggle-button-secondaryMenu"]);
         expect(button.attributes("type")).to.equal("button");
         expect(button.attributes("aria-label")).to.equal("common:menu.ariaLabelOpen");
         expect(icon.exists()).to.be.true;
