@@ -182,7 +182,7 @@ describe("src_3_0_0/modules/layerTree/components/LayerTree.vue", () => {
             }});
 
         expect(wrapper.find("#layer-tree").exists()).to.be.true;
-        expect(wrapper.findAll("input").length).to.be.equals(8);
+        expect(wrapper.findAll("span").length).to.be.equals(8);
         expect(wrapper.find("#layer-tree-layer-" + layer2D_1.id).exists()).to.be.true;
         expect(wrapper.find("#layer-tree-layer-" + layer2D_2.id).exists()).to.be.true;
         expect(wrapper.find("#layer-tree-layer-" + layerBG_1.id).exists()).to.be.true;
@@ -197,7 +197,7 @@ describe("src_3_0_0/modules/layerTree/components/LayerTree.vue", () => {
             global: {
                 plugins: [store]
             }});
-        inputs = wrapper.findAll("input");
+        inputs = wrapper.findAll("span");
 
         expect(wrapper.find("#layer-tree").exists()).to.be.true;
         // only 2 folder: one Ordner in config has only one layer and therefore no folder
@@ -220,7 +220,7 @@ describe("src_3_0_0/modules/layerTree/components/LayerTree.vue", () => {
             }});
 
         expect(wrapper.find("#layer-tree").exists()).to.be.true;
-        expect(wrapper.findAll("input").length).to.be.equals(9);
+        expect(wrapper.findAll("span").length).to.be.equals(9);
         expect(wrapper.find("#layer-tree-layer-" + layer2D_1.id).exists()).to.be.true;
         expect(wrapper.find("#layer-tree-layer-" + layer2D_2.id).exists()).to.be.true;
         expect(wrapper.find("#layer-tree-layer-" + layer3D.id).exists()).to.be.true;
