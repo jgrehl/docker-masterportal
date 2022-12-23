@@ -34,7 +34,7 @@ export default {
     <hr>
     <div
         id="layer-tree"
-        class="layer-tree me-3"
+        class="layer-tree"
     >
         <template
             v-for="(conf, index) in confs"
@@ -56,7 +56,13 @@ export default {
         padding: $padding;
         font-size: $font-size-base;
         overflow-y: auto;
-        max-height: 500px;
+        max-height: 350px;
+    }
+
+    @include media-breakpoint-up(sm)  {
+        .layer-tree{
+            max-width: 400px;
+        }
     }
 
 </style>
