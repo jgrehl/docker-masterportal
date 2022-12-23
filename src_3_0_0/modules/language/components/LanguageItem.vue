@@ -53,8 +53,7 @@ export default {
     </div>
 </template>
 
-<style lang="scss">
-    @import "~variables";
+<style lang="scss" scoped>
     .form-check {
             margin-bottom: 1rem;
         }
