@@ -1,5 +1,5 @@
 <script>
-import {mapGetters, mapActions} from "vuex";
+import {mapGetters, mapActions, mapMutations} from "vuex";
 import MenuContainerBody from "./MenuContainerBody.vue";
 import MenuContainerHeader from "./MenuContainerHeader.vue";
 import ResizeHandle from "../../../shared/modules/resize/components/ResizeHandle.vue";
@@ -21,7 +21,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(["uiStyle", "mainMenuFromConfig", "secondaryMenuFromConfig"]),
+        ...mapGetters(["uiStyle", "mainMenuFromConfig", "secondaryMenuFromConfig", "isMobile"]),
         ...mapGetters("Menu", ["mainExpanded", "secondaryExpanded", "titleBySide"]),
         /**
          * @returns {string} Defines whether the ResizeHandle should be displayed on the right or left side depending on the menu this component is rendered in.
@@ -40,9 +40,13 @@ export default {
     },
     created () {
         this.mergeMenuState({mainMenu: this.mainMenuFromConfig, secondaryMenu: this.secondaryMenuFromConfig});
+        if (this.isMobile) {
+            this.collapseMenues();
+        }
     },
     methods: {
-        ...mapActions("Menu", ["mergeMenuState"])
+        ...mapActions("Menu", ["mergeMenuState"]),
+        ...mapMutations("Menu", ["collapseMenues"])
     }
 };
 </script>
@@ -71,8 +75,8 @@ export default {
             :id="'mp-resize-handle-' + side"
             class="mp-menu-container-handle"
             :handle-position="handlePosition"
-            :min-width="0.1"
-            :max-width="0.5"
+            :minWidth="0.1"
+            :maxWidth="0.5"
         >
             &#8942;
         </ResizeHandle>
