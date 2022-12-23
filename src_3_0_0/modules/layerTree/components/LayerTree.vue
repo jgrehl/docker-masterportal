@@ -104,4 +104,10 @@ export default {
         bottom:0;
     }
 
+
+    @include media-breakpoint-up(sm)  {
+        .layer-tree{
+            max-width: 400px;
+        }
+    }
 </style>
