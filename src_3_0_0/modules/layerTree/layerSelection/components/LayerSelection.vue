@@ -15,33 +15,36 @@ export default {
     },
     data: () => {
         return {
-            showBGLayers: true,
-            lastConf: null
+            showBGLayers: true
         };
     },
     computed: {
-        ...mapGetters(["layerConfig", "portalConfig", "allBackgroundLayerConfigs", "subjectDataLayerConfigsStructured"]),
+        ...mapGetters(["allLayerConfigsStructured"]),
         ...mapGetters("Modules/LayerSelection", ["active", "subjectDataLayerConfs", "layersToAdd"])
 
     },
     created () {
-        this.setSubjectDataLayerConfs(this.subjectDataLayerConfigsStructured);
+        this.setSubjectDataLayerConfs(this.sort(this.allLayerConfigsStructured("Fachdaten")));
     },
     methods: {
-        ...mapActions("Menu", ["mergeMenuState"]),
         ...mapActions("Modules/LayerSelection", ["updateLayerTree"]),
         ...mapMutations("Modules/LayerSelection", ["setSubjectDataLayerConfs"]),
-        ...mapMutations("Menu", ["addModuleToMenuSection"]),
-        setConf (newConf) {
-            const sorted = sortBy(newConf, (conf) => conf.type !== "folder");
-
-            this.lastConf = this.conf;
-            this.setSubjectDataLayerConfs(sorted);
-            this.showBGLayers = false;
+        /**
+         * Sorts the configs by type: first folder, then layer.
+         * @param {Array} configs list of layer and folder configs
+         * @returns {Array} the sorted configs
+         */
+        sort (configs) {
+            return sortBy(configs, (conf) => conf.type !== "folder");
         },
-        updateLayerTreeClicked () {
-            this.updateLayerTree();
-
+        /**
+         * Sets new subject data configs and sets showBGLayers to false.
+         * @param {Array} newConf configs to show
+         * @returns {void}
+         */
+        setConf (newConf) {
+            this.setSubjectDataLayerConfs(this.sort(newConf));
+            this.showBGLayers = false;
         }
     }
 };
@@ -61,7 +64,7 @@ export default {
         <div class="row align-items-center justify-content-center">
             <template v-if="showBGLayers">
                 <template
-                    v-for="(bgConf, index) in allBackgroundLayerConfigs"
+                    v-for="(bgConf, index) in allLayerConfigsStructured('Hintergrundkarten')"
                     :key="index"
                 >
                     <div class="col">
@@ -86,11 +89,11 @@ export default {
         <div class="mt-3">
             <span>{{ $t("tree.selectedSubjectsCount", {count: layersToAdd.length}) }}</span>
             <FlatButton
-                id="copy-btn"
+                id="layer-selection-add-layer-btn"
                 class="mt-2  w-100"
                 aria-label="$t('tree.addSelectedSubjectsToMap')"
                 :disabled="layersToAdd.length === 0"
-                :interaction="updateLayerTreeClicked"
+                :interaction="updateLayerTree"
                 :text="$t('tree.addSelectedSubjectsToMap')"
                 :icon="'bi-plus-circle'"
             />
