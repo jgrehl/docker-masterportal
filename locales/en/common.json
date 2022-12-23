@@ -82,7 +82,8 @@
             "parcelSearch": "Parcel search",
             "wfsSearch": "WFS search",
             "layerClusterToggler": "Open Layer Cluster",
-            "openConfig": "Open Map"
+            "openConfig": "Open map",
+            "language": "Change language"
         },
         "contact": "Mail",
         "info": "Information"
