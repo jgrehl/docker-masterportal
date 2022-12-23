@@ -34,5 +34,15 @@ export default {
             }
             currentState.secondaryMenu.expanded = !currentState.secondaryMenu.expanded;
         }
+    },
+
+    /**
+     * Collapses Menucontainers
+     * @param {Object} currentState current state
+     * @returns {void}
+     */
+    collapseMenues (currentState) {
+        currentState.mainMenu.expanded = false;
+        currentState.secondaryMenu.expanded = false;
     }
 };
