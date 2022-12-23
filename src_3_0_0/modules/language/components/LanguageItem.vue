@@ -1,0 +1,61 @@
+<script>
+import {mapGetters, mapMutations} from "vuex";
+import getters from "../store/gettersLanguage";
+
+export default {
+    name: "LanguageItem",
+    data () {
+        return {
+            showWindow: false
+        };
+    },
+    computed: {
+        ...mapGetters("Modules/Language", Object.keys(getters))
+    },
+    created: function () {
+        this.setCurrentLocale(i18next.language);
+    },
+    methods: {
+        ...mapMutations("Modules/Language", ["setCurrentLocale"]),
+        /**
+         * changes the language according user selection and sets current language in state
+         * @param {String} language language code e. g. "en"
+         * @returns {void}
+         */
+        translate (language) {
+            i18next.changeLanguage(language, () => {
+                this.setCurrentLocale(language);
+            });
+        }
+    }
+};
+</script>
+
+<template lang="html">
+    <div
+        v-for="(language, key) of $i18next.options.getLanguages()"
+        :key="key"
+        class="form-check"
+    >
+        <input
+            :id="'languageRadio-'+key"
+            type="radio"
+            name="mode"
+            class="form-check-input"
+            :checked="$i18next.language === key? true : false"
+            @click="translate(key)"
+        >
+        <label
+            :for="'languageRadio-'+key"
+            @click="translate(key)"
+            @keydown.enter="translate(key)"
+        > {{ language }}</label>
+    </div>
+</template>
+
+<style lang="scss">
+    @import "~variables";
+    .form-check {
+            margin-bottom: 1rem;
+        }
+</style>
