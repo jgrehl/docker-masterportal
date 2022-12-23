@@ -83,7 +83,8 @@
             "wfsSearch": "WFS Suche",
             "routing": "Routing",
             "layerClusterToggler": "Layer-Gruppe öffnen",
-            "openConfig": "Karte öffnen"
+            "openConfig": "Karte öffnen",
+            "language": "Sprache ändern"
         },
         "contact": "Kontakt",
         "info": "Informationen"
