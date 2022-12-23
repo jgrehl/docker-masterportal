@@ -18,8 +18,7 @@ export default {
         };
     },
     computed: {
-        ...mapGetters(["layerConfig", "portalConfig", "allLayerConfigsStructured", "layerConfigsByArributes"]),
-        ...mapGetters("Menu", ["moduleIndex"]),
+        ...mapGetters(["portalConfig", "allLayerConfigsStructured", "layerConfigsByArributes"]),
         ...mapGetters("Menu/Navigation", ["entries", "isModuleActiveInMenu"]),
         ...mapGetters("Modules/LayerTree", ["active", "menuSide", "type"]),
         treeType () {

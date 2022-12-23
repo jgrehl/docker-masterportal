@@ -49,9 +49,6 @@ const getters = {
     allSubjectDataLayerConfigs: state => {
         return getNestedValues(state.layerConfig.Fachdaten, "elements", true).flat(Infinity);
     },
-    allBackgroundLayerConfigs: state => {
-        return getNestedValues(state.layerConfig.Hintergrundkarten, "elements", true).flat(Infinity);
-    },
 
     /**
      * Returns path to the cesium library.
@@ -156,34 +153,35 @@ const getters = {
         return layerContainer.filter(layerConf => layerConf.visibility === true);
     },
 
-    allLayerConfigsStructured: (state) => {
+    /**
+     * Returns all layer-configs structured with children. If key of first level is given, only the layer-configs under this key are returned.
+     * @param {Object} state state of the app-store.
+     * @param {String|null} key of first level to get the configs for. If null all configs are returned.
+     * @returns {Array} layer-configs structured with children
+     */
+    allLayerConfigsStructured: (state) => (key = null) =>{
         const configs = [];
 
         Object.keys(state.layerConfig).forEach(layerConfigKey => {
-            Object.keys(state.layerConfig[layerConfigKey]).forEach(subKey => {
-                if (Array.isArray(state.layerConfig[layerConfigKey][subKey])) {
-                    state.layerConfig[layerConfigKey][subKey].forEach(conf => {
-                        configs.push(conf);
-                    });
-                }
-            });
-        });
-        return configs;
-    },
-
-    subjectDataLayerConfigsStructured: (state) => {
-        const configs = [];
-
-        Object.keys(state.layerConfig.Fachdaten).forEach(subKey => {
-            if (Array.isArray(state.layerConfig.Fachdaten[subKey])) {
-                state.layerConfig.Fachdaten[subKey].forEach(conf => {
-                    configs.push(conf);
+            if (!key || layerConfigKey === key) {
+                Object.keys(state.layerConfig[layerConfigKey]).forEach(subKey => {
+                    if (Array.isArray(state.layerConfig[layerConfigKey][subKey])) {
+                        state.layerConfig[layerConfigKey][subKey].forEach(conf => {
+                            configs.push(conf);
+                        });
+                    }
                 });
             }
         });
         return configs;
     },
 
+    /**
+     * Filters the layer configs by the given attributes.
+     * @param {Object} state state of the app-store.
+     * @param {Object} attributes to filter the layer configs by
+     * @returns {Array} filtered layer configs by the given attributes
+     */
     layerConfigsByArributes: (state) => (attributes = {}) =>{
         const layerContainer = getters.allLayerConfigs(state);
 
