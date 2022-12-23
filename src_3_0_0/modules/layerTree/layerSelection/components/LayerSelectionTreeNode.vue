@@ -1,6 +1,5 @@
 <script>
 import Layer from "../../components/LayerComponent.vue";
-import getNestedValues from "../../../../shared/js/utils/getNestedValues";
 
 /**
  * Representation of a node in layertree containing folders or layers.
@@ -16,28 +15,13 @@ export default {
         }
     },
     emits: ["showNode"],
-    data () {
-        return {
-            layers: [],
-            showSubLayer: false
-        };
-    },
     computed: {
         isFolder () {
             return this.conf.type === "folder";
         },
         isLayer () {
             return this.conf.type === "layer";
-        },
-        getLayerArray () {
-            return this.conf.elements ? this.conf.elements.filter(el => el.type === "layer") : [];
-        },
-        isLayerInFolderVisible () {
-            return this.layers.find(layer => layer.visibility === true) !== undefined;
         }
-    },
-    created () {
-        this.layers = getNestedValues(this.conf, "elements", true).flat(Infinity);
     },
     methods: {
         /**
@@ -69,7 +53,7 @@ export default {
                 <div
                     class="d-flex flex-column align-items-start"
                 >
-                    <span class="name">{{ conf.name }}</span>
+                    <span class="name">{{ $t(conf.name) }}</span>
                     <span class="btn-description text-wrap pt-2">{{ $t(conf.description) }}</span>
                 </div>
                 <i
