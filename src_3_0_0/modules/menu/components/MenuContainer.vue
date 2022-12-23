@@ -75,9 +75,8 @@ export default {
             :id="'mp-resize-handle-' + side"
             class="mp-menu-container-handle"
             :handle-position="handlePosition"
-            :min-width="0.1"
-            :max-width="0.6"
-            :min-height="1"
+            :minWidth="0.1"
+            :maxWidth="0.5"
         >
             &#8942;
         </ResizeHandle>
