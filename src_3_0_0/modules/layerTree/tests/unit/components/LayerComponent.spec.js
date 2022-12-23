@@ -87,8 +87,8 @@ describe("src_3_0_0/modules/layerTree/components/LayerComponent.vue", () => {
         });
 
         expect(wrapper.find("#layer-tree-layer-" + propsData.conf.id).exists()).to.be.true;
-        expect(wrapper.findAll("input").length).to.be.equals(1);
-        expect(wrapper.find("input").attributes("type")).to.be.equals("checkbox");
+        expect(wrapper.findAll("span").length).to.be.equals(1);
+        expect(wrapper.find("span").attributes("class")).to.include("bi-square");
         expect(wrapper.find("span").text()).to.equal(propsData.conf.name);
         expect(wrapper.find("label").attributes("class")).not.to.include("bold");
     });
@@ -104,8 +104,8 @@ describe("src_3_0_0/modules/layerTree/components/LayerComponent.vue", () => {
         });
 
         expect(wrapper.find("#layer-tree-layer-" + propsData.conf.id).exists()).to.be.true;
-        expect(wrapper.findAll("input").length).to.be.equals(1);
-        expect(wrapper.find("input").attributes("type")).to.be.equals("checkbox");
+        expect(wrapper.findAll("span").length).to.be.equals(1);
+        expect(wrapper.find("span").attributes("class")).to.include("bi-check2-square");
         expect(wrapper.find("span").text()).to.equal(propsData.conf.name);
         expect(wrapper.find("label").attributes("class")).to.include("bold");
     });
@@ -210,9 +210,9 @@ describe("src_3_0_0/modules/layerTree/components/LayerComponent.vue", () => {
         });
 
         expect(wrapper.find("#layer-tree-layer-" + propsData.conf.id).exists()).to.be.true;
-        expect(wrapper.findAll("input").length).to.be.equals(1);
+        expect(wrapper.findAll("span").length).to.be.equals(1);
 
-        checkbox = wrapper.find("input");
+        checkbox = wrapper.find("span");
         checkbox.trigger("click");
         await wrapper.vm.$nextTick();
 
@@ -241,9 +241,9 @@ describe("src_3_0_0/modules/layerTree/components/LayerComponent.vue", () => {
         });
 
         expect(wrapper.find("#layer-tree-layer-" + propsData.conf.id).exists()).to.be.true;
-        expect(wrapper.findAll("input").length).to.be.equals(1);
+        expect(wrapper.findAll("span").length).to.be.equals(1);
 
-        checkbox = wrapper.find("input");
+        checkbox = wrapper.find("span");
         checkbox.trigger("click");
         await wrapper.vm.$nextTick();
 
