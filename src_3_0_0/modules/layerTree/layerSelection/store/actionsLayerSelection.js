@@ -1,8 +1,12 @@
 const actions = {
+
     /**
-     * Sets showInLayerTree and visibility of the given layer to false.
-     * @param {Object} layerConf The layer config.
+     * Updates the layerTree with all configs added to state.layersToAdd.
+     * Sets 'visibility' and 'showInLayerTree' to true at each layer.
+     * Clears state.layersToAdd and redirects to main menu.
+     * @param {Object} param.commit the commit
      * @param {Object} param.dispatch the dispatch
+     * @param {Object} param.getters the getters
      * @returns {void}
      */
     updateLayerTree ({commit, dispatch, getters}) {
@@ -25,7 +29,11 @@ const actions = {
         dispatch("navigateBackToMainMenu");
     },
 
-    // @ todo remove/change if menu is new refactored
+    /**
+     * todo remove/change if menu is new refactored
+     * @param {Object} param.commit the commit
+     * @returns {void}
+     */
     navigateBackToMainMenu ({commit}) {
         commit("setActive", false);
         commit("Menu/Navigation/setEntry", "mainMenu", {root: true});
