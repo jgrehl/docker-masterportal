@@ -79,7 +79,7 @@ export default {
          */
         targetSelector: {
             type: String,
-            default: "offsetParent"
+            default: "parentNode"
         }
     },
     emits: ["endResizing", "leftScreen", "resizing", "startResizing"],
@@ -138,8 +138,8 @@ export default {
             if (this.targetElement !== "") {
                 return document.querySelector(this.targetElement);
             }
-            if (this.targetSelector === "offsetParent") {
-                return this.$el.offsetParent;
+            if (this.targetSelector === "parentNode") {
+                return this.$el.parentNode;
             }
             const element = this.$el.closest(this.targetSelector);
 
@@ -179,7 +179,7 @@ export default {
         }
     },
     mounted () {
-        if (this.$el.offsetParent !== null) {
+        if (this.$el.parentNode !== null) {
             this.saveInitialDimensions();
             this.setNewSize();
         }
@@ -272,8 +272,8 @@ export default {
          * @returns {void}
          */
         saveInitialDimensions () {
-            this.initialDimensions.width = this.handleElement.offsetWidth;
-            this.initialDimensions.height = this.handleElement.offsetHeight;
+            this.initialDimensions.width = this.handleElement.offsetWidth < this.minWidth ? this.minWidth : this.handleElement.offsetWidth;
+            this.initialDimensions.height = this.handleElement.offsetHeight < this.minHeight ? this.minHeight : this.handleElement.offsetHeight;
             this.handleElement.style.width = this.initialDimensions.width;
             this.handleElement.style.height = this.initialDimensions.height;
         },
