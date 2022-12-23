@@ -7,6 +7,7 @@ import CoordToolkit from "../coordToolkit/components/CoordToolkit.vue";
 import FileImport from "../fileImport/components/FileImport.vue";
 import Folder from "../menu/components/MenuFolder.vue";
 import GetFeatureInfo from "../getFeatureInfo/components/GetFeatureInfo.vue";
+import Language from "../language/components/LanguageItem.vue";
 import LayerInformation from "../layerInformation/components/LayerInformation.vue";
 import LayerPills from "../layerPills/components/LayerPills.vue";
 import Measure from "../measure/components/MeasureInMap.vue";
@@ -31,6 +32,7 @@ const getters = {
             fileImport: FileImport,
             folder: Folder,
             getFeatureInfo: GetFeatureInfo,
+            language: Language,
             layerInformation: LayerInformation,
             layerPills: LayerPills,
             measure: Measure,
