@@ -160,7 +160,7 @@ describe("src_3_0_0/modules/layerTree/components/LayerTreeNode.vue", () => {
             },
             propsData
         });
-        inputs = wrapper.findAll("input");
+        inputs = wrapper.findAll("span");
 
         expect(wrapper.find(".no-list").exists()).to.be.true;
         // only 2 folder: one Ordner in config has only one layer and therefore no checkbox
