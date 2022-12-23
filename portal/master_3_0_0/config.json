@@ -285,12 +285,14 @@
         {
           "id": "453",
           "name": "Geobasiskarten (HamburgDE)",
+          "shortname": "Geobasiskarten",
           "typ": "WMS",
           "visibility": true
         },
         {
           "id": "452",
           "name": "Digitale Orthophotos (belaubt) Hamburg",
+          "shortname": "Orthophotos",
           "typ": "WMS",
           "visibility": false,
           "transparency": 30
@@ -307,12 +309,14 @@
             "12059"
           ],
           "name": "Geobasiskarten (schwarz-grau)",
+          "shortname": "Karte schwarz-grau",
           "typ": "WMS",
           "visibility": false
         },
         {
           "id": "VectorTile",
           "name": "ArcGIS VectorTile",
+          "shortname": "VectorTile",
           "typ": "VectorTile",
           "visibility": false,
           "gfiAttributes": "showAll",
@@ -425,18 +429,6 @@
           "capabilitiesUrl": "https://tiles.geoservice.dlr.de/service/wmts?SERVICE=WMTS&REQUEST=GetCapabilities",
           "layers": "eoc:basemap",
           "optionsFromCapabilities": true
-        },
-        {
-          "id": "12883",
-          "name": "Gelände",
-          "typ": "Terrain3D",
-          "visibility": true
-        },
-        {
-          "id": "12884",
-          "name": "Gebäude LoD2",
-          "typ": "TileSet3D",
-          "visibility": true
         }
       ]
     },
@@ -633,6 +625,18 @@
               "show": true
             }
           ]
+        },
+        {
+          "id": "12883",
+          "name": "Gelände",
+          "typ": "Terrain3D",
+          "visibility": true
+        },
+        {
+          "id": "12884",
+          "name": "Gebäude LoD2",
+          "typ": "TileSet3D",
+          "visibility": true
         }
       ]
     }

@@ -9,17 +9,34 @@ const mutations = {
      * will be returned.
      */
     ...generateSimpleMutations(stateLayerSelection),
+    /**
+     * Clears state.layersToAdd.
+     * @param {object} state vuex state
+     * @returns {void}
+     */
     clearSelectedLayer (state) {
         state.layersToAdd = [];
     },
+    /**
+     * Adds the layer id to state.layersToAdd.
+     * @param {object} state vuex state
+     * @param {String} layerId the id of the layer
+     * @returns {void}
+     */
     addSelectedLayer (state, {layerId}) {
         state.layersToAdd.push(layerId);
     },
+    /**
+     * Removes the layer id from state.layersToAdd.
+     * @param {object} state vuex state
+     * @param {String} layerId the id of the layer
+     * @returns {void}
+     */
     removeSelectedLayer (state, {layerId}) {
         const index = state.layersToAdd.indexOf(layerId);
 
         if (index > -1) {
-            state.layersToAdd.splice(state.layersToAdd.indexOf(layerId), 1);
+            state.layersToAdd.splice(index, 1);
         }
     }
 };
