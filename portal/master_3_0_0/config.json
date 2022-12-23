@@ -87,6 +87,9 @@
             "type": "fileImport"
           },
           {
+            "type": "language"
+          },
+          {
             "type": "openConfig"
           },
           {
