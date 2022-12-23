@@ -220,7 +220,7 @@ describe("src_3_0_0/modules/layerTree/components/LayerTree.vue", () => {
             }});
 
         expect(wrapper.find("#layer-tree").exists()).to.be.true;
-        expect(wrapper.findAll("span").length).to.be.equals(9);
+        expect(wrapper.findAll(".layer-tree-layer-checkbox").length).to.be.equals(9);
         expect(wrapper.find("#layer-tree-layer-" + layer2D_1.id).exists()).to.be.true;
         expect(wrapper.find("#layer-tree-layer-" + layer2D_2.id).exists()).to.be.true;
         expect(wrapper.find("#layer-tree-layer-" + layer3D.id).exists()).to.be.true;
