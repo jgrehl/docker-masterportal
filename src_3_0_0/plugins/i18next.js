@@ -117,4 +117,5 @@ export function initLanguage (portalLanguageConfig) {
             i18next.changeLanguage("de");
         }
     });
+    global.i18next = i18nextModule.i18next;
 }
