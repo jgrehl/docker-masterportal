@@ -164,7 +164,7 @@ describe("src_3_0_0/modules/layerTree/components/LayerTreeNode.vue", () => {
                 plugins: [store]
             }
         });
-        inputs = wrapper.findAll("span");
+        inputs = wrapper.findAll(".layer-tree-layer-checkbox");
 
         expect(wrapper.find(".no-list").exists()).to.be.true;
         expect(wrapper.findAll("layer-tree-node-stub").length).to.be.equals(0);
