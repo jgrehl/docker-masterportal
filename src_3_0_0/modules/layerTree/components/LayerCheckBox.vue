@@ -105,13 +105,13 @@ export default {
                 data-bs-toggle="tooltip"
                 :title="conf.name"
             >
-                {{ conf.shortname }}
+                {{ $t(conf.shortname) }}
             </span>
             <span
                 v-else
                 :class="isLayerTree ? '' : 'small-text'"
             >
-                {{ conf.name }}
+                {{ $t(conf.name) }}
             </span>
         </label>
     </div>
