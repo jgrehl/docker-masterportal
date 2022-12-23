@@ -1,0 +1,239 @@
+import {createStore} from "vuex";
+import {config, shallowMount, mount} from "@vue/test-utils";
+import {expect} from "chai";
+import sinon from "sinon";
+
+import LayerSelectionComponent from "../../../components/LayerSelection.vue";
+import LayerSelection from "../../../store/indexLayerSelection";
+
+config.global.mocks.$t = key => key;
+
+describe("src_3_0_0/modules/layerTree/layerSelection/components/LayerSelection.vue", () => {
+    let store,
+        wrapper,
+        layerBG_1,
+        layerBG_2,
+        layer2D_1,
+        layer2D_2,
+        layer2D_3,
+        subjectDataLayers,
+        layersWithFolder,
+        layersBG,
+        layersToAdd,
+        updateLayerTreeCalled = false;
+
+    beforeEach(() => {
+        layersToAdd = [];
+        layer2D_1 = {
+            id: "1",
+            name: "layer2D_1",
+            typ: "WMS",
+            type: "layer",
+            visibility: true,
+            showInLayerTree: true
+        };
+        layer2D_2 = {
+            id: "2",
+            name: "layer2D_2",
+            typ: "WFS",
+            type: "layer",
+            visibility: false
+        };
+        layer2D_3 = {
+            id: "2D_3",
+            name: "layer2D_3",
+            typ: "WFS",
+            type: "layer",
+            visibility: false
+        };
+        layerBG_1 = {
+            id: "11",
+            name: "layerBG_1",
+            typ: "WMS",
+            type: "layer",
+            visibility: true
+        };
+        layerBG_2 = {
+            id: "12",
+            name: "layerBG_2",
+            typ: "WFS",
+            type: "layer",
+            visibility: false
+        };
+        layersBG = [
+            layerBG_1,
+            layerBG_2
+        ];
+        layersWithFolder = [
+            {
+                name: "Titel Ebene 1",
+                type: "folder",
+                elements: [
+                    {
+                        name: "Titel Ebene 2",
+                        type: "folder",
+                        elements: [layer2D_1, layer2D_2,
+                            {
+                                name: "Titel Ebene 3",
+                                type: "folder",
+                                elements: [layer2D_3]
+                            }]
+                    }
+                ]
+            }];
+        subjectDataLayers = layersWithFolder;
+        store = createStore({
+            namespaces: true,
+            modules: {
+                Menu: {
+                    namespaced: true,
+                    actions: {
+                        setMenuBackAndActivateItem: sinon.stub()
+                    },
+                    modules: {
+                        Navigation: {
+                            namespaced: true,
+                            getters: {
+                                entries: sinon.stub(),
+                                isModuleActiveInMenu: sinon.stub()
+                            }
+                        }
+                    }
+                },
+                Modules: {
+                    namespaced: true,
+                    modules: {
+                        namespaced: true,
+                        LayerSelection
+                    }
+
+                }
+            },
+            getters: {
+                allLayerConfigsStructured: () => (key) =>{
+                    if (key === "Hintergrundkarten") {
+                        return layersBG;
+                    }
+                    return subjectDataLayers;
+                }
+            }
+        });
+        LayerSelection.actions.updateLayerTree = () => {
+            updateLayerTreeCalled = true;
+        };
+        LayerSelection.getters.layersToAdd = () => layersToAdd;
+        LayerSelection.state.active = true;
+    });
+
+    afterEach(() => {
+        sinon.restore();
+    });
+
+    it("do not render the LayerSelection if active is false", () => {
+        LayerSelection.state.active = false;
+        wrapper = shallowMount(LayerSelectionComponent, {
+            global: {
+                plugins: [store]
+            }});
+
+        expect(wrapper.find("#layer-selection").exists()).to.be.false;
+    });
+    it("renders the LayerSelection without layers", () => {
+        subjectDataLayers = [];
+        layersBG = [];
+        wrapper = shallowMount(LayerSelectionComponent, {
+            global: {
+                plugins: [store]
+            }});
+
+        expect(wrapper.find("#layer-selection").exists()).to.be.true;
+        expect(wrapper.findAll("layer-selection-tree-node-stub").length).to.be.equals(0);
+        expect(wrapper.findAll("layer-check-box-stub").length).to.be.equals(0);
+        expect(wrapper.find("flat-button-stub").exists()).to.be.true;
+    });
+
+    it("renders the LayerSelection with folder-buttons and checkboxes for background-layers", () => {
+        wrapper = shallowMount(LayerSelectionComponent, {
+            global: {
+                plugins: [store]
+            }});
+
+        expect(wrapper.find("#layer-selection").exists()).to.be.true;
+        expect(wrapper.findAll("layer-check-box-stub").length).to.be.equals(2);
+        expect(wrapper.findAll("layer-selection-tree-node-stub").length).to.be.equals(1);
+        expect(wrapper.find("flat-button-stub").exists()).to.be.true;
+    });
+
+    it("renders the LayerSelection with all levels of folder-buttons without bg-layers ", async () => {
+        wrapper = shallowMount(LayerSelectionComponent, {
+            global: {
+                plugins: [store]
+            }});
+
+        expect(wrapper.find("#layer-selection").exists()).to.be.true;
+
+        wrapper.vm.setConf(subjectDataLayers[0].elements);
+        await wrapper.vm.$nextTick();
+
+        expect(wrapper.findAll("layer-selection-tree-node-stub").length).to.be.equals(1);
+        expect(wrapper.findAll("layer-check-box-stub").length).to.be.equals(0);
+
+        wrapper.vm.setConf(subjectDataLayers[0].elements[0].elements);
+        await wrapper.vm.$nextTick();
+
+        expect(wrapper.findAll("layer-selection-tree-node-stub").length).to.be.equals(3);
+        expect(wrapper.findAll("layer-check-box-stub").length).to.be.equals(0);
+
+        wrapper.vm.setConf(subjectDataLayers[0].elements[0].elements[2].elements);
+        await wrapper.vm.$nextTick();
+
+        expect(wrapper.findAll("layer-selection-tree-node-stub").length).to.be.equals(1);
+        expect(wrapper.findAll("layer-check-box-stub").length).to.be.equals(0);
+    });
+
+    it("click on button to add layers shall be disabled", () => {
+        wrapper = shallowMount(LayerSelectionComponent, {
+            global: {
+                plugins: [store]
+            }});
+
+        expect(wrapper.find("#layer-selection-add-layer-btn").exists()).to.be.true;
+        expect(wrapper.find("#layer-selection-add-layer-btn").attributes().disabled).to.be.equals("true");
+    });
+
+    it("click on button to add layers shall call updateLayerTree", async () => {
+        let btn = null;
+
+        layersToAdd = ["1", "2"];
+        wrapper = mount(LayerSelectionComponent, {
+            global: {
+                plugins: [store]
+            }});
+
+        btn = wrapper.find("#layer-selection-add-layer-btn");
+        expect(btn.exists()).to.be.true;
+        expect(wrapper.find("#layer-selection-add-layer-btn").element.disabled).to.be.equals(false);
+
+        btn.trigger("click");
+        await wrapper.vm.$nextTick();
+        expect(updateLayerTreeCalled).to.be.true;
+    });
+
+    it("test method sort", () => {
+        let sorted = [];
+        const toSort = subjectDataLayers[0].elements[0].elements;
+
+        wrapper = shallowMount(LayerSelectionComponent, {
+            global: {
+                plugins: [store]
+            }});
+
+        expect(toSort[0].type).not.to.be.equals("folder");
+        sorted = wrapper.vm.sort(toSort);
+
+        expect(sorted.length).to.be.equals(toSort.length);
+        expect(sorted[0].type).to.be.equals("folder");
+        expect(sorted[1].type).to.be.equals("layer");
+        expect(sorted[2].type).to.be.equals("layer");
+    });
+});
