@@ -83,7 +83,7 @@ export default {
 @include media-breakpoint-up(sm) {
     .menu-toggle-button {
         top: 15px;
-        font-size: $font_size_huge;
+        font-size: $icon_length_small;
         height: $icon_length;
         width: $icon_length;
         position: relative;
