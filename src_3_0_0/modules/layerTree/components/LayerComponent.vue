@@ -73,24 +73,30 @@ export default {
     <div
         v-if="showInLayerTree()"
         :id="'layer-tree-layer-' + conf.id"
-        class="layer-tree-layer form-check d-flex flex-column justify-content-between"
+        class="layer-tree-layer d-flex flex-column justify-content-between"
     >
         <div class="d-flex justify-content-between align-items-center">
-            <div class="layer-tree-layer-title pe-2">
-                <input
+            <div
+                class="layer-tree-layer-title pe-2 p-1"
+                @click="visibilityInLayerTreeChanged(!isLayerVisible)"
+                @keydown.enter="visibilityInLayerTreeChanged(!isLayerVisible)"
+            >
+                <span
                     :id="'layer-tree-layer-checkbox-' + conf.id"
-                    :checked="isLayerVisible"
-                    type="checkbox"
-                    class="layer-tree-layer-checkbox form-check-input"
-                    @click="visibilityInLayerTreeChanged(!isLayerVisible)"
-                    @keydown.enter="visibilityInLayerTreeChanged(!isLayerVisible)"
-                >
+                    title="<%=removeTopicText%>"
+                    :class="[
+                        'layer-tree-layer-checkbox pe-2',
+                        {
+                            'bi-check2-square': isLayerVisible,
+                            'bi-square': !isLayerVisible
+                        }
+                    ]"
+                />
                 <label
                     :class="['layer-tree-layer-label', 'mt-0 d-flex flex-column align-self-start', isLayerVisible ? 'bold' : '']"
                     :for="'layer-tree-layer-checkbox-' + conf.id"
                     tabindex="0"
                     :aria-label="$t(conf.name)"
-                    @keydown.enter="visibilityInLayerTreeChanged(!isLayerVisible)"
                 >
                     <span>
                         {{ conf.name }}
@@ -117,6 +123,13 @@ export default {
 
     .layer-tree-layer {
         font-size: $font-size-base;
+
+        .layer-tree-layer-title {
+            display: flex;
+            width: 100%;
+            border-radius: 10px;
+        }
+
 
         .layer-tree-layer-title, .layer-tree-layer-checkbox {
             &:hover {
