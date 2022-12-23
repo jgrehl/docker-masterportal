@@ -149,7 +149,8 @@ describe("src_3_0_0/modules/layerTree/components/LayerTreeNode.vue", () => {
         expect(wrapper.vm.isLayerInFolderVisible).to.be.true;
     });
     it("renders folder and layers with child components", () => {
-        let inputs = null;
+        let inputs = null,
+            folderinputs = null;
 
         propsData = {
             conf: layersWithFolder
@@ -160,13 +161,15 @@ describe("src_3_0_0/modules/layerTree/components/LayerTreeNode.vue", () => {
             },
             propsData
         });
+
+        folderinputs = wrapper.findAll("input");
         inputs = wrapper.findAll(".layer-tree-layer-checkbox");
 
         expect(wrapper.find(".no-list").exists()).to.be.true;
         // only 2 folder: one Ordner in config has only one layer and therefore no checkbox
-        expect(inputs.filter(input => input.attributes().id.startsWith("layer-tree-folder-checkbox-")).length).to.be.equals(2);
+        expect(folderinputs.filter(folderinput => folderinput.attributes().id.startsWith("layer-tree-folder-checkbox-")).length).to.be.equals(2);
         // 3 layer
-        expect(inputs.filter(input => input.attributes().id.startsWith("layer-tree-layer-checkbox-")).length).to.be.equals(3);
+        expect(inputs.length).to.equal(3);
         expect(wrapper.find("#layer-tree-layer-" + layer_1.id).exists()).to.be.true;
         expect(wrapper.find("#layer-tree-layer-" + layer_2.id).exists()).to.be.true;
         expect(wrapper.find("#layer-tree-layer-" + layer_3.id).exists()).to.be.true;
