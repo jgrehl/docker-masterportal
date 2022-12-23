@@ -7,6 +7,7 @@ import Contact from "../contact/store/indexContact";
 import CoordToolkit from "../coordToolkit/store/indexCoordToolkit";
 import FileImport from "../fileImport/store/indexFileImport";
 import GetFeatureInfo from "../getFeatureInfo/store/indexGetFeatureInfo";
+import Language from "../language/store/indexLanguage";
 import LayerInformation from "../layerInformation/store/indexLayerInformation";
 import LayerPills from "../layerPills/store/indexLayerPills";
 import LayerTree from "../layerTree/store/indexLayerTree";
@@ -32,6 +33,7 @@ export default {
         CoordToolkit: {...CoordToolkit},
         FileImport: {...FileImport},
         GetFeatureInfo: {...GetFeatureInfo},
+        Language: {...Language},
         LayerInformation: {...LayerInformation},
         LayerPills: {...LayerPills},
         LayerTree: {...LayerTree},
