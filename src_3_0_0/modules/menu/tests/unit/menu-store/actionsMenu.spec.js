@@ -326,7 +326,7 @@ describe("src_3_0_0/modules/menu/menu-store/actionsMenu.js", () => {
         });
     });
 
-    describe("setMenuBack", () => {
+    describe("setMenuBackAndActivateItem", () => {
         it("should reset menu, start menu navigation and deactivate menu elements", () => {
             const menuItem = {
                 side: "secondaryMenu",
@@ -335,13 +335,18 @@ describe("src_3_0_0/modules/menu/menu-store/actionsMenu.js", () => {
                 }
             };
 
-            actions.setMenuBack({dispatch}, menuItem);
+            actions.setMenuBackAndActivateItem({dispatch}, menuItem);
 
-            expect(dispatch.calledTwice).to.be.true;
+            expect(dispatch.calledThrice).to.be.true;
             expect(dispatch.firstCall.args[0]).to.equals("resetMenu");
             expect(dispatch.firstCall.args[1]).to.deep.equals(menuItem);
             expect(dispatch.secondCall.args[0]).to.equals("activateMenuNavigation");
             expect(dispatch.secondCall.args[1]).to.deep.equals(menuItem);
+            expect(dispatch.thirdCall.args[0]).to.equals("setElementActive");
+            expect(dispatch.thirdCall.args[1]).to.deep.equals({
+                moduleNamespace: "ExampleModule",
+                isActive: true
+            });
         });
     });
 });

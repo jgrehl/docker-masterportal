@@ -185,13 +185,13 @@ describe("src_3_0_0/app-store/js/getAndMergeRawLayer.js", () => {
     });
 
     describe("addAdditional", () => {
-        it("should set showInLayerTree to true, if treeType is 'light'", () => {
+        it("should set showInLayerTree to true, if showAllLayerInTree is true", () => {
             const rawLayer = {
                     id: "1"
                 },
-                treeType = "light";
+                showAllLayerInTree = true;
 
-            expect(addAdditional(rawLayer, treeType)).to.deep.equals({
+            expect(addAdditional(rawLayer, showAllLayerInTree)).to.deep.equals({
                 id: "1",
                 showInLayerTree: true,
                 type: "layer",
@@ -199,27 +199,27 @@ describe("src_3_0_0/app-store/js/getAndMergeRawLayer.js", () => {
             });
         });
 
-        it("should set showInLayerTree to false, if treeType is 'custom'", () => {
+        it("should set showInLayerTree to false, if showAllLayerInTree is false", () => {
             const rawLayer = {
                     id: "2"
                 },
-                treeType = "custom";
+                showAllLayerInTree = false;
 
-            expect(addAdditional(rawLayer, treeType)).to.deep.equals({
+            expect(addAdditional(rawLayer, showAllLayerInTree)).to.deep.equals({
                 id: "2",
                 showInLayerTree: false,
                 type: "layer"
             });
         });
 
-        it("should set showInLayerTree to true, if treeType is 'custom' and visibility is true", () => {
+        it("should set showInLayerTree to true, if showAllLayerInTree is false and visibility is true", () => {
             const rawLayer = {
                     id: "3",
                     visibility: true
                 },
-                treeType = "custom";
+                showAllLayerInTree = false;
 
-            expect(addAdditional(rawLayer, treeType)).to.deep.equals({
+            expect(addAdditional(rawLayer, showAllLayerInTree)).to.deep.equals({
                 id: "3",
                 showInLayerTree: true,
                 visibility: true,
@@ -228,14 +228,14 @@ describe("src_3_0_0/app-store/js/getAndMergeRawLayer.js", () => {
             });
         });
 
-        it("should set showInLayerTree to true, if treeType is 'auto' and visibility is true", () => {
+        it("should set showInLayerTree to true, if showAllLayerInTree is false and visibility is true", () => {
             const rawLayer = {
                     id: "4",
                     visibility: true
                 },
-                treeType = "auto";
+                showAllLayerInTree = false;
 
-            expect(addAdditional(rawLayer, treeType)).to.deep.equals({
+            expect(addAdditional(rawLayer, showAllLayerInTree)).to.deep.equals({
                 id: "4",
                 showInLayerTree: true,
                 visibility: true,
@@ -244,15 +244,16 @@ describe("src_3_0_0/app-store/js/getAndMergeRawLayer.js", () => {
             });
         });
 
-        it("should set showInLayerTree to true, if treeType is 'custom' and visibility is false and showInLayerTree is true", () => {
+        it("should set showInLayerTree to true, if showAllLayerInTree is false and visibility is false and showInLayerTree is true", () => {
             const rawLayer = {
                     id: "5",
                     showInLayerTree: true,
                     visibility: false
                 },
-                treeType = "custom";
+                showAllLayerInTree = false;
 
-            expect(addAdditional(rawLayer, treeType)).to.deep.equals({
+
+            expect(addAdditional(rawLayer, showAllLayerInTree)).to.deep.equals({
                 id: "5",
                 showInLayerTree: true,
                 visibility: false,
@@ -260,15 +261,16 @@ describe("src_3_0_0/app-store/js/getAndMergeRawLayer.js", () => {
             });
         });
 
-        it("should set showInLayerTree to true, if treeType is 'custom' and visibility is true and showInLayerTree is false", () => {
+        it("should set showInLayerTree to true, if showAllLayerInTree is false and visibility is true and showInLayerTree is false", () => {
             const rawLayer = {
                     id: "6",
                     showInLayerTree: false,
                     visibility: true
                 },
-                treeType = "custom";
+                showAllLayerInTree = false;
 
-            expect(addAdditional(rawLayer, treeType)).to.deep.equals({
+
+            expect(addAdditional(rawLayer, showAllLayerInTree)).to.deep.equals({
                 id: "6",
                 showInLayerTree: true,
                 visibility: true,
