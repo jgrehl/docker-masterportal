@@ -15,10 +15,12 @@ describe("src_3_0_0/modules/layerTree/components/LayerComponent.vue", () => {
         propsData,
         mapMode,
         replaceByIdInLayerConfigSpy,
-        layer3D;
+        layer3D,
+        isLayerTree;
 
     beforeEach(() => {
         mapMode = "2D";
+        isLayerTree = true;
         layer = {
             id: "1",
             name: "layer",
@@ -61,13 +63,16 @@ describe("src_3_0_0/modules/layerTree/components/LayerComponent.vue", () => {
                 replaceByIdInLayerConfig: replaceByIdInLayerConfigSpy
             }
         });
+        sinon.stub(LayerComponent.methods, "isLayerTree").callsFake(() => {
+            return isLayerTree;
+        });
     });
 
     afterEach(() => {
         sinon.restore();
     });
 
-    it("renders the layer given as property to the component", () => {
+    it("renders the layer given as property to the component,  isLayerTree = true", () => {
         wrapper = shallowMount(LayerComponent, {
             global: {
                 plugins: [store]
@@ -78,7 +83,8 @@ describe("src_3_0_0/modules/layerTree/components/LayerComponent.vue", () => {
         expect(wrapper.find("#layer-tree-layer-" + propsData.conf.id).exists()).to.be.true;
     });
 
-    it("renders layer with visibility false and checkbox", () => {
+    it("renders the layer given as property to the component,  isLayerTree = false", () => {
+        isLayerTree = false;
         wrapper = shallowMount(LayerComponent, {
             global: {
                 plugins: [store]
@@ -93,7 +99,37 @@ describe("src_3_0_0/modules/layerTree/components/LayerComponent.vue", () => {
         expect(wrapper.find("label").attributes("class")).not.to.include("bold");
     });
 
-    it("renders layer with visibility true and checkbox, name is bold", () => {
+    it("renders layer with visibility false and checkbox, icon and submenu for layerTree", () => {
+        wrapper = shallowMount(LayerComponent, {
+            global: {
+                plugins: [store]
+            },
+            propsData
+        });
+
+        expect(wrapper.find("#layer-tree-layer-" + propsData.conf.id).exists()).to.be.true;
+        expect(wrapper.findAll("layer-check-box-stub").length).to.be.equals(1);
+        expect(wrapper.findAll("layer-component-icon-sub-menu-stub").length).to.be.equals(1);
+        expect(wrapper.findAll("layer-component-icon-info-stub").length).to.be.equals(1);
+        expect(wrapper.findAll("layer-component-sub-menu-stub").length).to.be.equals(1);
+    });
+    it("renders layer with checkbox and no icon and no submenu for layerSelection", () => {
+        isLayerTree = false;
+        wrapper = shallowMount(LayerComponent, {
+            global: {
+                plugins: [store]
+            },
+            propsData
+        });
+
+        expect(wrapper.find("#layer-tree-layer-" + propsData.conf.id).exists()).to.be.true;
+        expect(wrapper.findAll("layer-check-box-stub").length).to.be.equals(1);
+        expect(wrapper.findAll("layer-component-icon-sub-menu-stub").length).to.be.equals(0);
+        expect(wrapper.findAll("layer-component-icon-info-stub").length).to.be.equals(0);
+        expect(wrapper.findAll("layer-component-sub-menu-stub").length).to.be.equals(0);
+    });
+
+    it("renders layer with visibility true and checkbox", () => {
         propsData.conf.visibility = true;
 
         wrapper = shallowMount(LayerComponent, {
@@ -110,7 +146,7 @@ describe("src_3_0_0/modules/layerTree/components/LayerComponent.vue", () => {
         expect(wrapper.find("label").attributes("class")).to.include("bold");
     });
 
-    it("method showInLayerTree - do not show layer with showInLayerTree = false", () => {
+    it("do not show layer with showInLayerTree = false", () => {
         propsData.conf.visibility = true;
         propsData.conf.showInLayerTree = false;
 
@@ -121,12 +157,10 @@ describe("src_3_0_0/modules/layerTree/components/LayerComponent.vue", () => {
             propsData
         });
 
-        wrapper.vm.showInLayerTree();
-
         expect(wrapper.find("#layer-tree-layer-" + propsData.conf.id).exists()).to.be.false;
     });
-    it("method showInLayerTree - show layer with showInLayerTree = true", () => {
-        propsData.conf.showInLayerTree = false;
+    it("show layer with showInLayerTree = true", () => {
+        propsData.conf.showInLayerTree = true;
 
         wrapper = shallowMount(LayerComponent, {
             global: {
@@ -135,11 +169,9 @@ describe("src_3_0_0/modules/layerTree/components/LayerComponent.vue", () => {
             propsData
         });
 
-        wrapper.vm.showInLayerTree();
-
-        expect(wrapper.find("#layer-tree-layer-" + propsData.conf.id).exists()).to.be.false;
+        expect(wrapper.find("#layer-tree-layer-" + propsData.conf.id).exists()).to.be.true;
     });
-    it("method showInLayerTree - show 3D-Layer", () => {
+    it("show 3D-Layer", () => {
         mapMode = "3D";
         propsData.conf = layer3D;
 
@@ -149,8 +181,6 @@ describe("src_3_0_0/modules/layerTree/components/LayerComponent.vue", () => {
             },
             propsData
         });
-
-        wrapper.vm.showInLayerTree();
 
         expect(wrapper.find("#layer-tree-layer-" + propsData.conf.id).exists()).to.be.true;
     });

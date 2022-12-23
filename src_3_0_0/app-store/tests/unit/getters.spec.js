@@ -179,8 +179,93 @@ describe("src_3_0_0/app-store/getters.js", () => {
             expect(getters.visibleLayerConfigs(state)[0].name).to.be.equals("Kita und Krankenhäuser");
         });
     });
-    describe.only("getLayerConfigsByArributes", () => {
-        it("should return ", () => {
+
+    describe("allLayerConfigsStructured", () => {
+        let state,
+            layerConfig,
+            layersWithFolder;
+
+        beforeEach(() => {
+            layersWithFolder = [
+                {
+                    name: "Titel Ebene 1",
+                    type: "folder",
+                    elements: [
+                        {
+                            name: "Titel Ebene 2",
+                            type: "folder",
+                            elements: [{
+                                "id": "1"
+                            },
+                            {
+                                id: "2"
+                            },
+                            {
+                                name: "Titel Ebene 3",
+                                type: "folder",
+                                elements: [{
+                                    id: "3"
+                                }]
+                            }]
+                        }
+                    ]
+                }];
+            layerConfig = {
+                Hintergrundkarten: {
+                    elements: [
+                        {
+                            id: "453",
+                            visibility: true
+                        },
+                        {
+                            id: "452"
+                        }
+                    ]
+                },
+                Fachdaten: {
+                    elements: layersWithFolder
+                }
+            };
+            state = {
+                layerConfig: layerConfig
+            };
+        });
+        it("should return all layerConfigs of first level", () => {
+            const configs = getters.allLayerConfigsStructured(state)();
+
+            expect(configs).to.be.an("array");
+            expect(configs.length).to.be.equals(3);
+            expect(configs[0].id).to.be.equals("453");
+            expect(configs[1].id).to.be.equals("452");
+            expect(configs[2].type).to.be.equals("folder");
+            expect(configs[2].name).to.be.equals("Titel Ebene 1");
+            expect(configs[2].elements.length).to.be.equals(1);
+            expect(configs[2].elements).to.be.deep.equals(layersWithFolder[0].elements);
+        });
+
+        it("should return all layerConfigs of first level by key 'Fachdaten'", () => {
+            const configs = getters.allLayerConfigsStructured(state)("Fachdaten");
+
+            expect(configs).to.be.an("array");
+            expect(configs.length).to.be.equals(1);
+            expect(configs[0].type).to.be.equals("folder");
+            expect(configs[0].name).to.be.equals("Titel Ebene 1");
+            expect(configs[0].elements.length).to.be.equals(1);
+            expect(configs[0].elements).to.be.deep.equals(layersWithFolder[0].elements);
+        });
+        it("should return all layerConfigs of first level by key 'Hintergrundkarten'", () => {
+            const configs = getters.allLayerConfigsStructured(state)("Hintergrundkarten");
+
+            expect(configs).to.be.an("array");
+            expect(configs.length).to.be.equals(2);
+            expect(configs[0].id).to.be.equals("453");
+            expect(configs[1].id).to.be.equals("452");
+        });
+    });
+
+    describe("layerConfigsByArributes", () => {
+
+        it("should return the layers for requested attributes", () => {
             const greenLayer = {
                     id: "1132",
                     name: "100 Jahre Stadtgruen POIs",
@@ -216,16 +301,16 @@ describe("src_3_0_0/app-store/getters.js", () => {
                     layerConfig: layerConfig
                 };
 
-            expect(getters.getLayerConfigsByArributes(state)(undefined)).to.be.an("array");
-            expect(getters.getLayerConfigsByArributes(state)({id: "1132"})).to.be.an("array");
-            expect(getters.getLayerConfigsByArributes(state)({id: "1132"}).length).to.be.equals(1);
-            expect(getters.getLayerConfigsByArributes(state)({id: "1132"})[0]).to.be.deep.equals(greenLayer);
-            expect(getters.getLayerConfigsByArributes(state)({visibility: true}).length).to.be.equals(2);
-            expect(getters.getLayerConfigsByArributes(state)({visibility: true})).to.be.deep.equals([bgLayer, greenLayer]);
-            expect(getters.getLayerConfigsByArributes(state)({visibility: true, id: "1132"}).length).to.be.equals(1);
-            expect(getters.getLayerConfigsByArributes(state)({visibility: true, id: "453"}).length).to.be.equals(1);
+            expect(getters.layerConfigsByArributes(state)(undefined)).to.be.an("array");
+            expect(getters.layerConfigsByArributes(state)({id: "1132"})).to.be.an("array");
+            expect(getters.layerConfigsByArributes(state)({id: "1132"}).length).to.be.equals(1);
+            expect(getters.layerConfigsByArributes(state)({id: "1132"})[0]).to.be.deep.equals(greenLayer);
+            expect(getters.layerConfigsByArributes(state)({visibility: true}).length).to.be.equals(2);
+            expect(getters.layerConfigsByArributes(state)({visibility: true})).to.be.deep.equals([bgLayer, greenLayer]);
+            expect(getters.layerConfigsByArributes(state)({visibility: true, id: "1132"}).length).to.be.equals(1);
+            expect(getters.layerConfigsByArributes(state)({visibility: true, id: "453"}).length).to.be.equals(1);
             // @todo testen
-            // expect(getters.getLayerConfigsByArributes(state)({ gfiAttributes : {
+            // expect(getters.layerConfigsByArributes(state)({ gfiAttributes : {
             //     "standort" : "Standort",
             //     "adresse" : "Adresse"
             // },}).length).to.be.equals(1);
