@@ -79,6 +79,7 @@ export default {
 
 <template lang="html">
     <div
+        :id="'layer-checkbox-' + conf.id"
         data-bs-toggle="tooltip"
         :title="disabled() ? $t('tree.isAlreadyAdded') :null"
     >
@@ -100,11 +101,16 @@ export default {
         >
             <span
                 v-if="conf.shortname"
-                class="shortname"
+                :class="isLayerTree ? '' : 'small-text'"
+                data-bs-toggle="tooltip"
+                :title="conf.name"
             >
                 {{ conf.shortname }}
             </span>
-            <span v-else>
+            <span
+                v-else
+                :class="isLayerTree ? '' : 'small-text'"
+            >
                 {{ conf.name }}
             </span>
         </label>
@@ -115,21 +121,19 @@ export default {
     @import "~variables";
     @import "~mixins";
 
-
-        .layer-tree-layer-title, .layer-tree-layer-checkbox {
-            &:hover {
-                @include primary_action_hover;
-            }
-            &:focus {
-                @include primary_action_focus;
-            }
+    .layer-tree-layer-title, .layer-tree-layer-checkbox {
+        &:hover {
+            @include primary_action_hover;
         }
-
-        .layer-tree-layer-label {
-            cursor: pointer;
+        &:focus {
+            @include primary_action_focus;
         }
-        .shortname {
-        font-size: $font-size-sm;
+    }
+    .layer-tree-layer-label {
+        cursor: pointer;
+    }
+    .small-text {
+    font-size: $font-size-sm;
     }
     input:disabled+label {
         color: #ccc;
