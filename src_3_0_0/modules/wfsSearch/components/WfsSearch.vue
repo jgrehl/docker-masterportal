@@ -3,6 +3,7 @@ import ModalItem from "../../../shared/components/modals/components/ModalItem.vu
 import ListItem from "../../../shared/components/list/components/ListItem.vue";
 import {mapActions, mapGetters, mapMutations} from "vuex";
 import WfsSearchLiteral from "./WfsSearchLiteral.vue";
+import {createUserHelp} from "../js/literalFunctions";
 import {searchFeatures} from "../js/requests";
 import isObject from "../../../shared/js/utils/isObject";
 
@@ -17,7 +18,6 @@ export default {
         ...mapGetters("Modules/WfsSearch", [
             "active",
             "name",
-            "initialWidth",
             "instances",
             "userHelp",
             "results",
@@ -31,7 +31,7 @@ export default {
             "requiredFields"
         ]),
         // @todo ?
-        // ...mapGetters("Language", ["currentLocale"]),
+        ...mapGetters("Language", ["currentLocale"]),
         headers () {
             if (this.results.length === 0) {
                 return null;
@@ -63,11 +63,11 @@ export default {
     },
     watch: {
         // @todo if neccessary?
-        // currentLocale () {
-        //     if (this.active && this.userHelp !== "hide") {
-        //         createUserHelp(this.currentInstance.literals);
-        //     }
-        // }
+        currentLocale () {
+            if (this.active && this.userHelp !== "hide") {
+                createUserHelp(this.currentInstance.literals);
+            }
+        }
     },
     created () {
         this.prepareModule();
@@ -93,9 +93,11 @@ export default {
         ...mapActions("MapMarker", ["placingPointMarker"]),
         ...mapActions("Maps", ["setCenter", "setZoom"]),
         searchFeatures,
-
+        /**
+         * Resets the selection and inputs fields and the results.
+         * @returns {void}
+         */
         resetUI () {
-            // Reset input fields
             const inputFields = document.getElementsByClassName("module-wfsSearch-field-input");
 
             for (const input of inputFields) {
@@ -105,15 +107,11 @@ export default {
         },
         /**
          * Searches the configured service and shows adds the results to the List in the Modal.
-         *
          * @returns {Promise<void>} The returned promise isn't used any further as it resolves to nothing.
          */
         async search () {
             this.setSearched(true);
-            // LoaderOverlay.show();
             const features = await searchFeatures(this.$store, this.currentInstance, this.service);
-
-            // LoaderOverlay.hide();
 
             this.setResults([]);
             features.forEach(feature => {
@@ -128,7 +126,7 @@ export default {
             // @todo placing Point Marker
                 this.placingPointMarker(features[0].getGeometry().getCoordinates());
                 this.setCenter(features[0].getGeometry().getCoordinates());
-                this.setZoomLevel(this.zoomLevel);
+                this.setZoom(this.zoomLevel);
                 this.setShowResultList(false);
             }
             else {
