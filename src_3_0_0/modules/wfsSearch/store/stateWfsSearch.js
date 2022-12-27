@@ -6,11 +6,7 @@
  * @property {boolean} type the type of the module.
  * @property {string} name Displayed as the title. (config-param)
  * @property {string} icon Icon next to the title. (config-param)
- * @property {boolean} renderToWindow If true, tool is rendered in a window, else in the sidebar. (config-param)
- * @property {boolean} resizableWindow If true, window is resizable. (config-param)
  * @property {boolean} isVisibleInMenu If true, tool is selectable in menu. (config-param)
- * @property {boolean} deactivateGFI Flag if tool should deactivate GFI. (config-param)
- * @property {number} initialWidth Initial width of the tool window. (config-param)
  * @property {Object[]} instances Array of search configurations. Each object contains the parameters literals, requestConfig and title and may also contain the parameters selectSource and userHelp. More information in the documentation.
  * @property {number} currentInstanceIndex Position of the current search instance in the instances array.
  * @property {?JSON} parsedSource The requested and parsed selectSource.
@@ -34,11 +30,7 @@ const state = {
     // defaults for config.json tool parameters
     name: "common:menu.tools.wfsSearch",
     icon: "bi-search",
-    renderToWindow: false,
-    resizableWindow: true,
     isVisibleInMenu: true,
-    deactivateGFI: true,
-    initialWidth: 400,
     instances: [],
     // state parameters
     currentInstanceIndex: 0,
