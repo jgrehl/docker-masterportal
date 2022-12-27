@@ -67,7 +67,12 @@ export default {
             }
         }
     },
-    data: () => ({parameterIndex: 0, showLoader: false, suggestions: [], value: ""}),
+    data: () => ({
+        parameterIndex: 0,
+        showLoader: false,
+        suggestions: [],
+        value: ""
+    }),
     computed: {
         ...mapGetters("Modules/WfsSearch", [
             "parsedSource",
@@ -205,7 +210,6 @@ export default {
                 this.setSelectedOptions({options: this.selectableParameters.options, value, index});
             }
             else if (this.showSuggestions) {
-                // NOTE: Functionality like lodash.throttle would be nice to have here
                 this.showLoader = true;
                 const fieldName = Array.isArray(this.fieldName) ? this.fieldName[this.parameterIndex] : this.fieldName,
                     xmlFilter = buildXmlFilter({fieldName, queryType: "like", value}),
