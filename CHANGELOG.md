@@ -5,6 +5,7 @@
 
 ## Unreleased - in development
 ### __Breaking Changes__
+- the `wfsSearch` modules config.json parameter 'field'-property `type` was renamed to `queryType`
 - new config.json parameter 'tree' added. Containes:
   - 'type' (was 'treeType' at root before), the following params are possible: "auto" ( = old "default") or "light"
   - 'validLayerTypesAutoTree' (new parameter) only for tree type 'auto'
@@ -57,8 +58,6 @@
         - @vue/test-utils: 1.3.0 to 2.2.3
         - mocha: 10.0.0 to 10.1.0
         - vue-loader: 15.9.8 to 17.0.0
-
-- in wfsSearch the 'field'-property type was renamed to queryType
 
 ### Deprecated
 
