@@ -29,7 +29,6 @@ export default {
         :suggestions-config="suggestions"
         v-bind="literal.field"
     />
-    <!-- NOTE: This div can be styled for visual highlighting -->
     <div v-else-if="literal.clause">
         <div
             v-for="(lit, i) of literal.clause.literals"
