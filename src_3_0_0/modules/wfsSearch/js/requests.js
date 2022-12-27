@@ -14,7 +14,6 @@ import {buildFilter, buildStoredFilter} from "./buildFilter";
  */
 function adjustFilter (filter) {
     if (Array.isArray(filter)) {
-        // If the user didn't insert a value, the array will be empty
         if (filter.length === 0) {
             return "";
         }
