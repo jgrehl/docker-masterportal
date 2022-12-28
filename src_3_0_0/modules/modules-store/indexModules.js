@@ -5,6 +5,7 @@ import state from "./stateModules";
 import AddWMS from "../addWMS/store/indexAddWMS";
 import Contact from "../contact/store/indexContact";
 import CoordToolkit from "../coordToolkit/store/indexCoordToolkit";
+import FeatureLister from "../featureLister/store/indexFeatureLister";
 import FileImport from "../fileImport/store/indexFileImport";
 import GetFeatureInfo from "../getFeatureInfo/store/indexGetFeatureInfo";
 import Language from "../language/store/indexLanguage";
@@ -34,6 +35,7 @@ export default {
         AddWMS: {...AddWMS},
         Contact: {...Contact},
         CoordToolkit: {...CoordToolkit},
+        FeatureLister: {...FeatureLister},
         FileImport: {...FileImport},
         GetFeatureInfo: {...GetFeatureInfo},
         Language: {...Language},
