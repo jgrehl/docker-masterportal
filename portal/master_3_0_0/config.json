@@ -49,7 +49,6 @@
         [
           {
             "type": "featureLister", 
-            "name": "translate#common:menu.tools.featureLister",
             "maxFeatures": 10,
             "icon": "bi-list",
             "highlightVectorRulesPolygon": {
