@@ -5,10 +5,7 @@
  * @property {String} id id of the FeatureLister component
  * @property {String} name displayed as title (config-param)
  * @property {String} icon icon next to title (config-param)
- * @property {Boolean} renderToWindow if true, tool is rendered in a window, else in sidebar (config-param)
- * @property {Boolean} resizableWindow if true, window is resizable (config-param)
  * @property {Boolean} isVisibleInMenu if true, tool is selectable in menu (config-param)
- * @property {Boolean} deactivateGFI flag if tool should deactivate gfi (config-param)
  * @property {Number} maxFeatures default value for maxFeatures that can be overwritten in config
  * @property {Array} layerlist array of layers in the format {id, name, features}
  * @property {String} layerid id of visibleLayer to be displayed
@@ -32,10 +29,7 @@ const state = {
     type: "featureLister",
     name: "common:menu.tools.featureLister",
     icon: "bi-list",
-    renderToWindow: true,
-    resizableWindow: true,
     isVisibleInMenu: true,
-    deactivateGFI: false,
     maxFeatures: 20,
     // featureLister state
     active: false,
