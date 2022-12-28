@@ -4,6 +4,7 @@ import stateModules from "./stateModules";
 import AddWMS from "../addWMS/components/AddWMS.vue";
 import Contact from "../contact/components/ContactFormular.vue";
 import CoordToolkit from "../coordToolkit/components/CoordToolkit.vue";
+import FeatureLister from "../featureLister/components/FeatureLister.vue";
 import FileImport from "../fileImport/components/FileImport.vue";
 import Folder from "../menu/components/MenuFolder.vue";
 import GetFeatureInfo from "../getFeatureInfo/components/GetFeatureInfo.vue";
@@ -33,6 +34,7 @@ const getters = {
             addWMS: AddWMS,
             contact: Contact,
             coordToolkit: CoordToolkit,
+            featureLister: FeatureLister,
             fileImport: FileImport,
             folder: Folder,
             getFeatureInfo: GetFeatureInfo,
