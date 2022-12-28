@@ -48,6 +48,45 @@
       "sections": [
         [
           {
+            "type": "featureLister", 
+            "name": "translate#common:menu.tools.featureLister",
+            "maxFeatures": 10,
+            "icon": "bi-list",
+            "highlightVectorRulesPolygon": {
+              "fill": {
+                "color": [
+                  255,
+                  255,
+                  255,
+                  0.9
+                ]
+              },
+              "stroke": {
+                "width": 4,
+                "color": [
+                  0,
+                  0,
+                  204,
+                  0.9
+                ]
+              }
+            },
+            "highlightVectorRulesPointLine": {
+              "stroke": {
+                "width": 8,
+                "color": [
+                  255,
+                  0,
+                  255,
+                  0.9
+                ]
+              },
+              "image": {
+                "scale": 1.5
+              }
+            }
+          },
+          {
             "type": "coordToolkit",
             "heightLayerId": "19173",
             "heightElementName": "value_0",
