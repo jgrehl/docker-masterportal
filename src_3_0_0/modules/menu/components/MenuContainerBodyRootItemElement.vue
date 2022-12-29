@@ -4,7 +4,7 @@ import isModuleVisible from "../../../shared/js/utils/isModuleVisible";
 import LightButton from "../../../shared/modules/buttons/components/LightButton.vue";
 
 export default {
-    name: "MenuContainerBodyElement",
+    name: "MenuContainerBodyRootItemElement",
     components: {LightButton},
     props: {
         /** Text displayed inside the element. */
@@ -49,12 +49,22 @@ export default {
          */
         showIcon () {
             return typeof this.icon === "string" && this.icon.length > 0;
+        },
+        side () {
+            return this.path[0];
+        },
+        type () {
+            return this.properties.type;
         }
     },
     mounted () {
-        if (this.properties?.active) {
-            this.clickedMenuElement(this.path);
-        }
+        // if (this.properties?.active) {
+        //     debugger;
+        //     const side = this.side,
+        //         type = this.type;
+
+        //     this.clickedMenuElement({side, type});
+        // }
     },
     methods: {
         ...mapActions("Menu", ["clickedMenuElement"]),
@@ -79,7 +89,7 @@ export default {
     <div>
         <LightButton
             v-if="checkIsVisible() && !(properties.isVisibleInMenu === false)"
-            :interaction="() => clickedMenuElement(path)"
+            :interaction="() => clickedMenuElement({side, type})"
             :text="name"
             :icon="showIcon ? icon : null"
             :description="showDescription ? description : null"
@@ -89,3 +99,4 @@ export default {
         <!-- TODO(roehlipa): Buttons should look differently when mobile -->
     </div>
 </template>
+
