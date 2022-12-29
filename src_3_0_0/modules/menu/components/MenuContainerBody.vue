@@ -1,7 +1,7 @@
 <script>
 import LayerTree from "../../layerTree/components/LayerTree.vue";
 import MenuContainerBodyRoot from "./MenuContainerBodyRoot.vue";
-import MenuNavigation from "../navigation/components/MenuNavigation.vue";
+import MenuNavigation from "./MenuNavigation.vue";
 import {mapGetters, mapMutations} from "vuex";
 
 export default {
@@ -29,12 +29,27 @@ export default {
             "secondaryMenu"
         ]),
         ...mapGetters("Menu/Navigation", ["lastEntry"]),
+        ...mapGetters("Modules", ["componentMap"]),
 
         /**
          * @returns {object} Menu configuration for the given menu.
          */
         menu () {
             return this.side === "mainMenu" ? this.mainMenu : this.secondaryMenu;
+        },
+
+        /**
+         * @returns {object} Returns the currently visible Component.
+         */
+        currentComponent () {
+            let current = this.menu.navigation.currentComponent;
+
+            if (current !== "root") {
+                current = this.componentMap[current];
+
+            }
+
+            return current;
         }
     },
     watch: {
@@ -61,7 +76,6 @@ export default {
          * @returns {Array} Returns the path for a section inside the menu this component is rendered in.
          */
         path (sectionIndex) {
-            console.log([this.side, "sections", sectionIndex]);
             return [this.side, "sections", sectionIndex];
         },
 
@@ -94,22 +108,14 @@ export default {
         class="mp-menu-body"
     >
         <MenuNavigation :side="side" />
-
-        <template v-for="component in componentsAlwaysActivated">
-            <component
-                :is="component.module"
-                v-if="side === component.menuSide && !deactivateModule(component.module.name) && doNotCreate(component.module.name)"
-                :key="'module-' + component.module.name"
-            />
-        </template>
         <component
-            :is="componentFromPath(side)"
-            v-bind="{idAppendix: side, ...objectFromPath(side, 'last')}"
-            v-if="lastEntry(side)"
-            :path="lastEntry(side)"
+            :is="currentComponent"
+            v-if="currentComponent !== 'root'"
         />
+
         <MenuContainerBodyRoot
             v-else
+            :side="side"
         />
     </div>
 </template>
