@@ -1,10 +1,10 @@
 <script>
-import MenuContainerBodyItems from "./MenuContainerBodyItems.vue";
+import MenuContainerBodyRootItems from "./MenuContainerBodyRootItems.vue";
 
 export default {
     name: "MenuFolder",
     components: {
-        MenuContainerBodyItems
+        MenuContainerBodyRootItems
     },
     props: {
         /** Appendix set on the id to make it unique. Needed, as the menu can be rendered multiple times. */
@@ -39,7 +39,7 @@ export default {
 <template>
     <div>
         <h4>{{ $t(name) }}</h4>
-        <MenuContainerBodyItems
+        <MenuContainerBodyRootItems
             :id-appendix="idAppendix"
             :path="[...path, 'elements']"
         />
