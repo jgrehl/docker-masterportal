@@ -1,13 +1,13 @@
 <script>
 import LayerTree from "../../layerTree/components/LayerTree.vue";
-import MenuContainerBodyItems from "./MenuContainerBodyItems.vue";
+import MenuContainerBodyRootItems from "./MenuContainerBodyRootItems.vue";
 import {mapGetters} from "vuex";
 
 export default {
     name: "MenuContainerBodyRoot",
     components: {
         LayerTree,
-        MenuContainerBodyItems
+        MenuContainerBodyRootItems
     },
     props: {
         /** Defines in which menu the component is being rendered */
@@ -36,7 +36,6 @@ export default {
          * @returns {Array} Returns the path for a section inside the menu this component is rendered in.
          */
         path (sectionIndex) {
-            console.log([this.side, "sections", sectionIndex]);
             return [this.side, "sections", sectionIndex];
         }
     }
@@ -50,7 +49,7 @@ export default {
             v-for="(_, key) in menu.sections"
             :key="key"
         >
-            <MenuContainerBodyItems
+            <MenuContainerBodyRootItems
                 :id-appendix="side"
                 :path="path(key)"
             />
