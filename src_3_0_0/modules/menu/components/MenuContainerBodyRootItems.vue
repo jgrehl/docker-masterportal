@@ -1,10 +1,10 @@
 <script>
 import {mapGetters} from "vuex";
-import MenuContainerBodyElement from "./MenuContainerBodyElement.vue";
+import MenuContainerBodyElement from "./MenuContainerBodyRootItemElement.vue";
 import upperFirst from "../../../shared/js/utils/upperFirst";
 
 export default {
-    name: "MenuContainerBodyItems",
+    name: "MenuContainerBodyRootItems",
     components: {
         MenuContainerBodyElement
     },
