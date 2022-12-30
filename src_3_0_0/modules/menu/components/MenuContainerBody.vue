@@ -1,13 +1,11 @@
 <script>
-import LayerTree from "../../layerTree/components/LayerTree.vue";
 import MenuContainerBodyRoot from "./MenuContainerBodyRoot.vue";
 import MenuNavigation from "./MenuNavigation.vue";
-import {mapGetters, mapMutations} from "vuex";
+import {mapGetters} from "vuex";
 
 export default {
     name: "MenuContainerBody",
     components: {
-        LayerTree,
         MenuContainerBodyRoot,
         MenuNavigation
     },
@@ -22,13 +20,9 @@ export default {
     computed: {
         ...mapGetters("Menu", [
             "componentsAlwaysActivated",
-            "componentFromPath",
-            "deactivateModule",
             "mainMenu",
-            "objectFromPath",
             "secondaryMenu"
         ]),
-        ...mapGetters("Menu/Navigation", ["lastEntry"]),
         ...mapGetters("Modules", ["componentMap"]),
 
         /**
@@ -48,55 +42,16 @@ export default {
                 current = this.componentMap[current];
 
             }
-
             return current;
         }
     },
-    watch: {
-        /**
-         * Watch on componentsAlwaysActivated and adds this components to menu section.
-         * @param {Object[]} components The always active actions.
-         * @returns {void}
-         */
-        componentsAlwaysActivated: {
-            handler (components) {
-                this.updateModuleInMenuSection(components);
-            },
-            deep: true
-        }
-    },
-    mounted () {
-        this.updateModuleInMenuSection(this.componentsAlwaysActivated);
-    },
     methods: {
-        ...mapMutations("Menu", ["addModuleToMenuSection"]),
-
         /**
          * @param {Number} sectionIndex Index inside of a section of a menu.
          * @returns {Array} Returns the path for a section inside the menu this component is rendered in.
          */
         path (sectionIndex) {
             return [this.side, "sections", sectionIndex];
-        },
-
-        updateModuleInMenuSection (components) {
-            components.forEach(component => {
-                const typeName = component.module.name.charAt(0).toLowerCase() + component.module.name.substring(1),
-                    side = component.menuSide;
-
-                if (this[side].sections[0]?.find(module => module.type === typeName) === undefined) {
-                    this.addModuleToMenuSection({
-                        module: {
-                            type: typeName
-                        },
-                        side: side
-                    });
-                }
-            });
-        },
-        // @ todo remove if menu is new refactored
-        doNotCreate (name = "") {
-            return !["LayerSelection"].includes(name);
         }
     }
 };
@@ -108,6 +63,16 @@ export default {
         class="mp-menu-body"
     >
         <MenuNavigation :side="side" />
+
+        <!-- mount components which need to be always active in background because of eventlisteners etc. -->
+        <template v-for="component in componentsAlwaysActivated">
+            <component
+                :is="component.module"
+                v-if="side === component.menuSide"
+                :key="'module-' + component.module.name"
+            />
+        </template>
+
         <component
             :is="currentComponent"
             v-if="currentComponent !== 'root'"
