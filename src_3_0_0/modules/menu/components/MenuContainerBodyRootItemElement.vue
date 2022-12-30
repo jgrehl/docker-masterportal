@@ -57,15 +57,6 @@ export default {
             return this.properties.type;
         }
     },
-    mounted () {
-        // if (this.properties?.active) {
-        //     debugger;
-        //     const side = this.side,
-        //         type = this.type;
-
-        //     this.clickedMenuElement({side, type});
-        // }
-    },
     methods: {
         ...mapActions("Menu", ["clickedMenuElement"]),
 
@@ -89,7 +80,7 @@ export default {
     <div>
         <LightButton
             v-if="checkIsVisible() && !(properties.isVisibleInMenu === false)"
-            :interaction="() => clickedMenuElement({side, type})"
+            :interaction="() => clickedMenuElement({properties, side, type})"
             :text="name"
             :icon="showIcon ? icon : null"
             :description="showDescription ? description : null"
