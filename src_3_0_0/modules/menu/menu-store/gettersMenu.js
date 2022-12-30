@@ -32,21 +32,6 @@ const menuGetters = {
     },
 
     /**
-     * @param {MenuState} _ Local vuex state (discarded).
-     * @param {Object} getters Local vuex getters.
-     * @param {Object} __ vuex rootState.
-     * @param {Object} rootGetters vuex rootGetters.
-     * @returns {(function(side: String): Object)} Function returning component identified via componentMap.
-     */
-    componentFromPath: (_, getters, __, rootGetters) => side => {
-        if (["mainMenu", "secondaryMenu"].includes(side)) {
-            return rootGetters["Modules/componentMap"][getters.objectFromPath(side, "last").type];
-        }
-        console.error(`Menu.componentMap: The given menu side ${side} is not allowed. Please use "mainMenu" or "secondaryMenu" instead.`);
-        return null;
-    },
-
-    /**
      * Returns, if a module with attribute hasMouseMapInteractions will be deactivated.
      * @param {MenuState} state Local vuex state.
      * @param {Object} _ Local vuex getters (discarded).
@@ -163,6 +148,27 @@ const menuGetters = {
             return {...getters.secondaryTitle, idAppendix: side};
         }
         return null;
+    },
+    /**
+     * @param {MenuNavigationState} state Local vuex state.
+     * @returns {(function(side: String): any|false)} Last entry for the given menu.
+     */
+    previuosNavigationEntry: state => side => {
+        const previousEntry = state[side].navigation.history.slice(-1).toString();
+
+        if (previousEntry !== "") {
+            return previousEntry;
+        }
+        return false;
+    },
+
+    /**
+     * @param {MenuNavigationState} state Local vuex state.
+     * @param {string} side Menu Side
+     * @returns {object} Returns the currently visible Component.
+     */
+    currentComponent: state => side => {
+        return state[side].navigation.currentComponent;
     }
 };
 
