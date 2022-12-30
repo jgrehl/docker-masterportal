@@ -13,15 +13,29 @@ export default {
     },
     computed: {
         ...mapGetters("Menu", ["objectFromPath"]),
-        ...mapGetters("Menu", ["lastEntry", "previousEntry"]),
+        ...mapGetters("Menu", ["previuosNavigationEntry", "currentComponent"]),
+
+        currentModuleTitle () {
+
+            const pascalCaseModuleName = this.currentComponent(this.side).charAt(0).toUpperCase() + this.currentComponent(this.side).slice(1),
+                moduleNamePath = "Modules/" + pascalCaseModuleName + "/name",
+                currentComponentName = this.$store.getters[moduleNamePath] ? this.$store.getters[moduleNamePath] : this.currentComponent(this.side);
+
+            return this.currentComponent(this.side) === "root" ? this.$t("common:menu.name") : this.$t(currentComponentName);
+        },
+
         /**
          * If no previousEntry besides the menu is present, show the menu String.
          * Otherwise, show the name of the folder.
+         * TODO: Folder!!!
          * @returns {String} Value to be displayed.
          */
-        entry () {
-            // return !this.previousEntry(this.side) ? this.$t("common:menu.name") : this.objectFromPath(this.side, "previous").name;
-            return "Menu";
+        previousEntry () {
+            const pascalCaseModuleName = this.previuosNavigationEntry(this.side).charAt(0).toUpperCase() + this.previuosNavigationEntry(this.side).slice(1),
+                moduleNamePath = "Modules/" + pascalCaseModuleName + "/name",
+                lastComponentName = this.$store.getters[moduleNamePath] ? this.$store.getters[moduleNamePath] : this.previuosNavigationEntry(this.side);
+
+            return this.previuosNavigationEntry(this.side) === "root" ? this.$t("common:menu.name") : this.$t(lastComponentName);
         }
     },
     methods: {
@@ -32,14 +46,21 @@ export default {
 
 <template>
     <a
+        v-if="previuosNavigationEntry(side)"
         :id="'mp-navigation-' + side"
         class="p-2 mp-menu-navigation"
         href="#"
         @click="navigateBack(side)"
         @keypress="navigateBack(side)"
     >
-        <h5 class="mp-menu-navigation-link"><p class="bi-chevron-left" />{{ lastEntry(side) }}</h5>
+        <h6 class="mp-menu-navigation-link mb-4"><p class="bi-chevron-left" />{{ previousEntry }}</h6>
     </a>
+    <h5
+        v-if="previuosNavigationEntry(side)"
+        class="mp-menu-navigation-moduletitle mb-4"
+    >
+        {{ currentModuleTitle }}
+    </h5>
 </template>
 
 <style lang="scss" scoped>
@@ -47,15 +68,15 @@ export default {
 
 .mp-menu-navigation{
     color: $black;
-    margin-bottom: 25px;
     display: flex;
 }
 
 .mp-menu-navigation-link{
     display: flex;
-    >.bi-chevron-left {
-        font-size: 21px;
-    }
+}
+
+.mp-menu-navigation-moduletitle{
+    display: flex;
 }
 
 </style>
