@@ -53,7 +53,7 @@ export default {
         @click="navigateBack(side)"
         @keypress="navigateBack(side)"
     >
-        <h6 class="mp-menu-navigation-link mb-4"><p class="bi-chevron-left" />{{ previousEntry }}</h6>
+        <h6 class="mp-menu-navigation-link mb-3"><p class="bi-chevron-left" />{{ previousEntry }}</h6>
     </a>
     <h5
         v-if="previuosNavigationEntry(side)"
