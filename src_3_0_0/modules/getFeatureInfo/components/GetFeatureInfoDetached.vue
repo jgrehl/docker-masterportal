@@ -58,19 +58,11 @@ export default {
         // });
     },
     mounted () {
-        const type = this.$parent.$options.name.charAt(0).toLowerCase() + this.$parent.$options.name.substring(1),
-            menuItem = {
-                side: this.menuSide,
-                module: {type: type}
-            };
-
-        this.setMenuBackAndActivateItem(menuItem);
         this.setMarker();
     },
     methods: {
         ...mapMutations("Modules/GetFeatureInfo", ["setShowMarker"]),
         ...mapActions("Maps", ["setCenter"]),
-        ...mapActions("Menu", ["setMenuBackAndActivateItem"]),
 
         /**
          * Sets the center of the view on the clickCoord and place the MapMarker on it
