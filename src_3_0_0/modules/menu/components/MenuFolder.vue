@@ -41,7 +41,7 @@ export default {
         <h4>{{ $t(name) }}</h4>
         <MenuContainerBodyRootItems
             :id-appendix="idAppendix"
-            :path="[...path, 'elements']"
+            :path="path"
         />
     </div>
 </template>
