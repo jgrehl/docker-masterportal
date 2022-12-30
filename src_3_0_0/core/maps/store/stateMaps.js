@@ -6,6 +6,8 @@
  * @property {Number[]} clickCoordinate Current coordinates where the mouse click event was triggered.
  * @property {Number[]} clickPixel Current pixel values where the mouse click event was triggered.
  * @property {Number[]} extent Current extent values of the map.
+ * @property {String[]} highlightedFeatures list of highlighted features, indices correspond to "highlightedFeaturesStyles"
+ * @property {String[]} highlightedFeatureStyles list of original styles for highlighted features, indices correspond to "highlightedFeatures"
  * @property {Number[]} initialCenter Initial center values of the map.
  * @property {Number} initialRotation Initial rotation of the map view.
  * @property {Number} initialZoom Initial zoom level of the map.
@@ -29,6 +31,8 @@ const state = {
     clickCoordinate: null,
     clickPixel: null,
     extent: null,
+    highlightedFeatures: [],
+    highlightedFeatureStyles: [],
     initialCenter: null,
     initialRotation: null,
     initialZoom: null,
