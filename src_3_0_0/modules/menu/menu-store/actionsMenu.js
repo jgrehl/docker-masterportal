@@ -3,77 +3,30 @@ import upperFirst from "../../../shared/js/utils/upperFirst";
 
 export default {
     /**
-     * Activates menu navigation for an external module.
-     * @param {Object} param store context
-     * @param {Object} param.commit the commit
-     * @param {Object} param.dispatch the dispatch
-     * @param {Object} param.getters the getters
-     * @param {Object} payload The payload.
-     * @param {String} payload.side The menu side to reset.
-     * @param {Object} payload.module The module type.
-     * @returns {void}
-     */
-    activateMenuNavigation ({commit, dispatch, getters}, {side, module}) {
-        if (module.type) {
-            const moduleIndex = getters[side].sections[0].findIndex(sectionModule => {
-                return sectionModule.type === module.type;
-            });
-
-            commit("Menu/Navigation/addEntry", [side, "sections", 0, moduleIndex], {root: true});
-            dispatch("setActiveModuleMouseMapInteractions", {type: module.type, isActive: true});
-        }
-    },
-
-    /**
-     * Deactivates menu elements except the given module.
-     * @param {Object} param store context
-     * @param {Object} param.dispatch the dispatch
-     * @param {Object} param.getters the getters
-     * @param {Object} payload The payload.
-     * @param {String} payload.side The menu side to reset.
-     * @param {Object} payload.module The module type.
-     * @returns {void}
-     */
-    deactivateMenuElements ({dispatch, getters}, {side, module}) {
-        getters[side].sections.forEach(section => {
-            section.forEach(sectionModule => {
-                if (sectionModule.type !== module.type && sectionModule.type !== "folder") {
-                    dispatch("setElementActive", {
-                        moduleNamespace: upperFirst(sectionModule.type),
-                        isActive: false
-                    });
-                }
-            });
-        });
-    },
-
-    /**
      * Action triggered when a menu element has been clicked.
      * Add an entry to the navigation and, when the element
      * was a Folder, focus the first child-element, otherwise,
      * call the setActive action / mutation of the element.
      * @param {Object} context Vuex context object.
-     * @param {Array} path Path leading up to the clicked menu element.
+     * @param {Array} side Path leading up to the clicked menu element.
+     * @param {Object} type Properties of the element.
      * @returns {void}
      */
-    clickedMenuElement ({commit, dispatch, getters}, path) {
-        const {type} = getters.section(path);
+    clickedMenuElement ({commit, dispatch}, {properties, side, type}) {
 
         if (type) {
-            commit("Menu/Navigation/addEntry", path, {root: true});
             if (type === "folder") {
                 nextTick(() => {
-                    document.getElementById(`menu-offcanvas-body-items-element-0-${path[0]}`)?.focus();
+                    document.getElementById(`mp-menu-body-items-element-7-mainMenu`)?.focus();
                 });
-                return;
+            }
+            else {
+                commit("Menu/setCurrentComponent", {component: type, side: side}, {root: true});
             }
             nextTick(() => {
-                dispatch("setElementActive", {moduleNamespace: upperFirst(type), isActive: true});
+                dispatch("setElementActive", {moduleNamespace: type, isActive: true, side: side});
             });
-            return;
         }
-
-        console.error("Menu: A menu entry is missing the required value \"type\".");
     },
 
     /**
@@ -89,25 +42,19 @@ export default {
     mergeMenuState ({commit, state}, {mainMenu, secondaryMenu}) {
         commit("setMainMenu", Object.assign(state.mainMenu, mainMenu));
         commit("setSecondaryMenu", Object.assign(state.secondaryMenu, secondaryMenu));
-        commit("Navigation/setEntries", {
-            mainMenu: [],
-            secondaryMenu: []
-        });
-    },
-
-    /**
-     * Resets one side of menu and deactivate modules except the given module.
-     * @param {Object} param store context
-     * @param {Object} param.commit the commit
-     * @param {Object} param.dispatch the dispatch
-     * @param {Object} payload The payload.
-     * @param {String} payload.side The menu side to reset.
-     * @param {Object} payload.module The module not to deactivate.
-     * @returns {void}
-     */
-    resetMenu ({commit, dispatch}, {side, module}) {
-        commit("Navigation/setEntry", side);
-        dispatch("deactivateMenuElements", {side, module});
+        //why that?
+        // commit("setEntries", {
+        //     mainMenu: {
+        //         component: "root",
+        //         last: "notne",
+        //         history: []
+        //     },
+        //     secondaryMenu: {
+        //         component: "root",
+        //         last: "none",
+        //         history: []
+        //     }
+        // });
     },
 
     /**
@@ -122,8 +69,11 @@ export default {
      * @param {Boolean} payload.isActive Whether the module should be activated or deactivated.
      * @returns {void}
      */
-    setElementActive ({commit, dispatch}, {moduleNamespace, isActive}) {
-        const setActiveName = `Modules/${moduleNamespace}/setActive`;
+    setElementActive ({commit, dispatch}, {moduleNamespace, isActive, side}) {
+        const upperName = moduleNamespace.charAt(0).toUpperCase() + moduleNamespace.slice(1),
+            setActiveName = `Modules/${upperName}/setActive`;
+
+        commit("setCurrentComponent", {side: side, component: moduleNamespace});
 
         dispatch("setActiveModuleMouseMapInteractions", {type: moduleNamespace, isActive: isActive});
 
@@ -149,8 +99,6 @@ export default {
     setActiveModuleMouseMapInteractions ({commit, state, rootGetters}, {type, isActive}) {
         if (rootGetters[`Modules/${upperFirst(type)}/hasMouseMapInteractions`]) {
             if (isActive && upperFirst(type) !== state.activeModuleMouseMapInteractions) {
-                commit("Navigation/setEntry", "mainMenu");
-                commit("Navigation/setEntry", "secondaryMenu");
                 commit(`Modules/${state.activeModuleMouseMapInteractions}/setActive`, false, {root: true});
                 commit("setActiveModuleMouseMapInteractions", upperFirst(type));
             }
@@ -161,20 +109,18 @@ export default {
     },
 
     /**
-     * Resets menu and activate menu navigation.
-     * @param {Object} param store context
-     * @param {Object} param.dispatch the dispatch
-     * @param {Object} menuItem The menu item.
-     * @param {String} menuItem.side The menu side to reset.
-     * @param {Object} menuItem.module The module type.
+     * Properly deactivates an element if it is not a folder
+     * and removes its entry from the navigation.
+     * @param {Object} context Vuex context object.
+     * @param {String} side Side on which the navigation action occurred.
      * @returns {void}
      */
-    setMenuBackAndActivateItem ({dispatch}, menuItem) {
-        dispatch("resetMenu", menuItem);
-        dispatch("activateMenuNavigation", menuItem);
-        dispatch("setElementActive", {
-            moduleNamespace: upperFirst(menuItem.module?.type),
-            isActive: true
+    navigateBack ({commit, dispatch, getters}, side) {
+        const recent = getters[side].navigation.currentComponent;
+
+        dispatch("setElementActive", {moduleNamespace: recent, isActive: false, side: side});
+        nextTick(() => {
+            commit("switchToPreviousComponent", side);
         });
     }
 };
