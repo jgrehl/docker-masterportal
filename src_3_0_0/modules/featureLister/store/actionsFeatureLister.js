@@ -32,6 +32,8 @@ export default {
      * @returns {void}
      */
     clickOnFeature ({state, commit, dispatch, rootGetters}, featureIndex) {
+        console.log("clickOnFeature", rootGetters);
+        console.log("clickOnFeature", rootGetters.treeHighlightedFeatures);
         if (featureIndex !== "" && featureIndex >= 0 && featureIndex <= state.shownFeatures) {
             const feature = state.gfiFeaturesOfLayer[featureIndex],
                 featureGeometry = state.rawFeaturesOfLayer[featureIndex].getGeometry(),
