@@ -1,5 +1,5 @@
-import {getStyleModelById} from "../../../../../src/core/layers/RadioBridge.js";
-
+// import {getStyleModelById} from "../../../../../src/core/layers/RadioBridge.js";
+import {Style, Circle as CircleStyle, Stroke} from 'ol/style.js';
 /**
  * check how to highlight
  * @param {Object} param store context
@@ -181,15 +181,33 @@ function increaseFeature (commit, getters, highlightObject) {
  * @returns {ol/style} ol style
  */
 function styleObject (highlightObject, feature) {
-    const stylelistmodel = highlightObject.styleId ? getStyleModelById(highlightObject.styleId) : getStyleModelById(highlightObject.layer.id);
-    let style;
+    // @todo: use when getStyleModelById has moved
+    // const stylelistmodel = highlightObject.styleId ? getStyleModelById(highlightObject.styleId) : getStyleModelById(highlightObject.layer.id);
+    // let style;
 
-    if (stylelistmodel !== undefined) {
-        style = stylelistmodel.createStyle(feature, false);
-        if (Array.isArray(style) && style.length > 0) {
-            style = style[0];
-        }
-    }
+    // if (stylelistmodel !== undefined) {
+    //     style = stylelistmodel.createStyle(feature, false);
+    //     if (Array.isArray(style) && style.length > 0) {
+    //         style = style[0];
+    //     }
+    // }
+
+    // return style;
+
+
+    // Vilma inserted to test highlighting point features
+    const stroke = new Stroke({
+            color: "rgba(25,255,0,0.9)",
+            width: 2
+        }),
+        style = new Style({
+            stroke: stroke,
+            image: new CircleStyle({
+                radius: 4,
+                stroke: stroke
+            })
+        });
+
     return style;
 }
 
