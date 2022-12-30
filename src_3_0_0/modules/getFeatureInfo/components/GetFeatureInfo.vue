@@ -77,6 +77,9 @@ export default {
             if (!value) {
                 this.reset();
             }
+            else {
+                this.setCurrentComponent({component: "GetFeatureInfo", side: "secondaryMenu"});
+            }
         },
         /**
          * Whenever the map click coordinate changes updateClick action will call.
@@ -130,6 +133,7 @@ export default {
     methods: {
         ...mapActions("Modules/GetFeatureInfo", ["updateClick"]),
         ...mapActions("Maps", ["registerListener", "unregisterListener"]),
+        ...mapMutations("Menu", ["setCurrentComponent"]),
         ...mapMutations("Modules/GetFeatureInfo", [
             "setActive",
             "setGfiFeatures",
