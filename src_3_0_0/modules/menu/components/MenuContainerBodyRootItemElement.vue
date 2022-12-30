@@ -84,10 +84,19 @@ export default {
             :text="name"
             :icon="showIcon ? icon : null"
             :description="showDescription ? description : null"
-            customclass="w-100 justify-content-start"
+            customclass="w-100 justify-content-start mp-menu-root-element"
         />
         <!-- TODO(roehlipa): Properly add description -->
         <!-- TODO(roehlipa): Buttons should look differently when mobile -->
     </div>
 </template>
 
+<style lang="scss" scoped>
+@import "~variables";
+
+.mp-menu-root-element {
+    font-size: 0.9375rem;
+    min-height: 2.3rem;
+}
+
+</style>
