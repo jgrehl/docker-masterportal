@@ -1,13 +1,15 @@
 <script>
 import LayerTree from "../../layerTree/components/LayerTree.vue";
 import MenuContainerBodyRootItems from "./MenuContainerBodyRootItems.vue";
+import MenuContainerHeaderTitle from "./MenuContainerHeaderTitle.vue";
 import {mapGetters} from "vuex";
 
 export default {
     name: "MenuContainerBodyRoot",
     components: {
         LayerTree,
-        MenuContainerBodyRootItems
+        MenuContainerBodyRootItems,
+        MenuContainerHeaderTitle
     },
     props: {
         /** Defines in which menu the component is being rendered */
@@ -20,7 +22,8 @@ export default {
     computed: {
         ...mapGetters("Menu", [
             "mainMenu",
-            "secondaryMenu"
+            "secondaryMenu",
+            "titleBySide"
         ]),
         /**
          * @returns {object} Menu configuration for the given menu.
@@ -44,7 +47,19 @@ export default {
 
 <template>
     <div>
-        <LayerTree v-if="side === 'mainMenu'" />
+        <MenuContainerHeaderTitle
+            v-if="titleBySide(side)"
+            v-bind="titleBySide(side)"
+        />
+        <input
+            v-if="side === 'mainMenu'"
+            class="form-control mr-sm-2"
+            type="search"
+            placeholder="Search"
+            aria-label="Search">
+        <keep-alive>
+            <LayerTree v-if="side === 'mainMenu'" />
+        </keep-alive>
         <template
             v-for="(_, key) in menu.sections"
             :key="key"
