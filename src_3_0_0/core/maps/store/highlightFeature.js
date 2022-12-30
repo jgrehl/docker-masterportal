@@ -1,5 +1,5 @@
 // import {getStyleModelById} from "../../../../../src/core/layers/RadioBridge.js";
-import {Style, Circle as CircleStyle, Stroke} from 'ol/style.js';
+import {Style, Circle as CircleStyle, Stroke} from "ol/style.js";
 /**
  * check how to highlight
  * @param {Object} param store context
@@ -180,7 +180,8 @@ function increaseFeature (commit, getters, highlightObject) {
  * @fires VectorStyle#RadioRequestStyleListReturnModelById
  * @returns {ol/style} ol style
  */
-function styleObject (highlightObject, feature) {
+function styleObject () {
+// function styleObject (highlightObject, feature) {
     // @todo: use when getStyleModelById has moved
     // const stylelistmodel = highlightObject.styleId ? getStyleModelById(highlightObject.styleId) : getStyleModelById(highlightObject.layer.id);
     // let style;
