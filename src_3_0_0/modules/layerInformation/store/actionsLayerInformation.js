@@ -10,18 +10,13 @@ const actions = {
      * @param {Object} layerConf the layer configuration
      * @returns {void}
      */
-    startLayerInformation ({commit, dispatch, state}, layerConf) {
-        const menuItem = {
-            side: state.menuSide,
-            module: {type: state.type}
-        };
-
+    startLayerInformation ({commit, dispatch}, layerConf) {
         commit("setLayerInfo", layerConf);
         dispatch("setMetadataURL", layerConf.datasets[0].md_id);
         dispatch("additionalSingleLayerInfo");
         dispatch("Menu/resetMenu", menuItem, {root: true});
 
-        dispatch("Menu/setMenuBackAndActivateItem", menuItem, {root: true});
+        commit("Menu/setCurrentComponent", {component: "LayerInformation", side: "mainMenu"}, {root: true});
     },
 
     /**
