@@ -5,7 +5,9 @@ const initialState = Object.assign({}, stateStyleVT),
         /**
          * Updates the list of vector tile layers to only include the currently visible layers.
          * Also clears the current set layer of the layerModel if it is not inside the updated list; the layer is no longer visible.
-         *
+         * @param {Object} param.state the state
+         * @param {Object} param.commit the commit
+         * @param {Object} param.rootGetters the rootGetters
          * @returns {void}
          */
         refreshVectorTileLayerList ({state, commit, rootGetters}) {
@@ -39,7 +41,7 @@ const initialState = Object.assign({}, stateStyleVT),
 
         /**
          * Resets the state to its initial configuration.
-         *
+         * @param {Object} param.commit the commit
          * @returns {void}
          */
         resetModule ({commit}) {
@@ -50,8 +52,8 @@ const initialState = Object.assign({}, stateStyleVT),
         /**
          * If the module is activated, a layerModel to be set is given and committed to the state.
          * Else, the module is reset.
-         *
-         * @param {Object} payload payload object.
+         * @param {Object} param.commit the commit
+         * @param {Object} param.dispatch the dispatch
          * @param {Boolean} payload.active Whether to activate or deactivate the module.
          * @param {?VTLayer} payload.layerModel The layer selected to be initially selected.
          * @returns {void}
@@ -68,8 +70,7 @@ const initialState = Object.assign({}, stateStyleVT),
 
         /**
          * Changes the style of the selected layer to the one of the one with the selected styleId.
-         *
-         * @param {Object} state State object of the module.
+         * @param {Object} param.state the state
          * @param {String} styleId Id of the style to be set on the layer.
          * @returns {void}
          */
