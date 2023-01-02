@@ -597,6 +597,87 @@ describe("src_3_0_0/core/js/layers/layer2dVectorSensorThings.js", () => {
         });
     });
 
+    describe("enlargeExtentForMovableFeatures", () => {
+        it("should return false if the given parameter is null", () => {
+            expect(sensorThingsLayer.enlargeExtentForMovableFeatures(null)).to.be.false;
+        });
+
+        it("should return false if the given parameter is undefined", () => {
+            expect(sensorThingsLayer.enlargeExtentForMovableFeatures(undefined)).to.be.false;
+        });
+
+        it("should return false if the given parameter is null", () => {
+            expect(sensorThingsLayer.enlargeExtentForMovableFeatures(666)).to.be.false;
+        });
+
+        it("should return false if the given parameter is a string", () => {
+            expect(sensorThingsLayer.enlargeExtentForMovableFeatures("666")).to.be.false;
+        });
+
+        it("should return false if the given parameter is an object", () => {
+            expect(sensorThingsLayer.enlargeExtentForMovableFeatures({})).to.be.false;
+        });
+
+        it("should return false if the given parameter is a boolean", () => {
+            expect(sensorThingsLayer.enlargeExtentForMovableFeatures(false)).to.be.false;
+        });
+
+        it("should return false if the given parameter is an empty array", () => {
+            expect(sensorThingsLayer.enlargeExtentForMovableFeatures([])).to.be.false;
+        });
+
+        it("should call an error if the given parameter is not an array", () => {
+            sensorThingsLayer.enlargeExtentForMovableFeatures(true);
+            expect(console.error.calledOnce).to.be.true;
+        });
+
+        it("should return false if the second passed parameter is null", () => {
+            expect(sensorThingsLayer.enlargeExtentForMovableFeatures([400, 400, 900, 900], null)).to.be.false;
+        });
+
+        it("should return false if the second passed parameter is undefined", () => {
+            expect(sensorThingsLayer.enlargeExtentForMovableFeatures([400, 400, 900, 900], undefined)).to.be.false;
+        });
+
+        it("should return false if the second passed parameter is a string", () => {
+            expect(sensorThingsLayer.enlargeExtentForMovableFeatures([400, 400, 900, 900], "666")).to.be.false;
+        });
+
+        it("should return false if the second passed parameter is an object", () => {
+            expect(sensorThingsLayer.enlargeExtentForMovableFeatures([400, 400, 900, 900], {})).to.be.false;
+        });
+
+        it("should return false if the second passed parameter is a boolean", () => {
+            expect(sensorThingsLayer.enlargeExtentForMovableFeatures([400, 400, 900, 900], false)).to.be.false;
+        });
+
+        it("should return false if the second passed parameter is an empty array", () => {
+            expect(sensorThingsLayer.enlargeExtentForMovableFeatures([400, 400, 900, 900], [])).to.be.false;
+        });
+
+        it("should call an error if the second parameter is not a number", () => {
+            sensorThingsLayer.enlargeExtentForMovableFeatures([400, 400, 900, 900], null);
+            expect(console.error.calledOnce).to.be.true;
+        });
+
+        it("should call an error if the third parameter is not a number", () => {
+            sensorThingsLayer.enlargeExtentForMovableFeatures([400, 400, 900, 900], 36, null);
+            expect(console.error.calledOnce).to.be.true;
+        });
+
+        it("should return correctly enlarged extent if third parameter is not a number", () => {
+            expect(sensorThingsLayer.enlargeExtentForMovableFeatures([400, 400, 900, 900], 36, undefined)).to.be.an("array").to.deep.equal([300, 300, 1000, 1000]);
+        });
+
+        it("should return correctly enlarged extent if no third parameter is given", () => {
+            expect(sensorThingsLayer.enlargeExtentForMovableFeatures([400, 400, 900, 900], 36)).to.be.an("array").to.deep.equal([300, 300, 1000, 1000]);
+        });
+
+        it("should return correctly enlarged extent if all parameter are given", () => {
+            expect(sensorThingsLayer.enlargeExtentForMovableFeatures([400, 400, 900, 900], 36, 20)).to.be.an("array").to.deep.equal([200, 200, 1100, 1100]);
+        });
+    });
+
     describe("getFeaturesInExtent", () => {
         it("should return no feature within extent", () => {
             const features = [],
@@ -643,6 +724,46 @@ describe("src_3_0_0/core/js/layers/layer2dVectorSensorThings.js", () => {
             features.push(feature3);
 
             expect(sensorThingsLayer.getFeaturesInExtent(features, currentExtent)).to.be.an("array").to.have.lengthOf(2);
+        });
+
+        it("should return all feature inside enlarged extent by 'maxSpeedKmh'", () => {
+            attributes.maxSpeedKmh = 36;
+            const staLayer = new Layer2dVectorSensorThings(attributes),
+                features = [],
+                feature1 = new Feature({
+                    geometry: new Point([50, 50])
+                }),
+                feature2 = new Feature({
+                    geometry: new Point([150, 150])
+                }),
+                feature3 = new Feature({
+                    geometry: new Point([201, 201])
+                }),
+                currentExtent = [100, 100, 200, 200];
+
+            features.push(feature1);
+            features.push(feature2);
+            features.push(feature3);
+
+            expect(staLayer.getFeaturesInExtent(features, currentExtent)).to.be.an("array").to.have.lengthOf(2);
+        });
+
+        it("should only return one feature inside enlarged extent by 'maxSpeedKmh'", () => {
+            attributes.maxSpeedKmh = 36;
+            const staLayer = new Layer2dVectorSensorThings(attributes),
+                features = [],
+                feature1 = new Feature({
+                    geometry: new Point([50, 50])
+                }),
+                feature3 = new Feature({
+                    geometry: new Point([501, 501])
+                }),
+                currentExtent = [100, 100, 200, 200];
+
+            features.push(feature1);
+            features.push(feature3);
+
+            expect(staLayer.getFeaturesInExtent(features, currentExtent)).to.be.an("array").to.have.lengthOf(0);
         });
     });
 
@@ -1911,10 +2032,18 @@ describe("src_3_0_0/core/js/layers/layer2dVectorSensorThings.js", () => {
         it("should do nothing", () => {
             const fetchHistoricalLocationsStub = sinon.stub(sensorThingsLayer, "fetchHistoricalLocations");
 
+            store.getters = {
+                "Maps/extent": () => {
+                    return [100, 200, 200, 400];
+                }
+            };
+
             sinon.stub(sensorThingsLayer, "getDatastreamIdsInCurrentExtent").returns([]);
+
             sensorThingsLayer.getHistoricalLocationsOfFeatures();
             expect(fetchHistoricalLocationsStub.called).to.be.false;
         });
+
         it("should call fetchHistoricalLocations if datastream id's are found in current extent", () => {
             const fetchHistoricalLocationsStub = sinon.stub(sensorThingsLayer, "fetchHistoricalLocations");
 
@@ -2041,6 +2170,18 @@ describe("src_3_0_0/core/js/layers/layer2dVectorSensorThings.js", () => {
             expect(style.getImage()).to.be.an.instanceof(Circle);
             expect(style.getImage().getRadius()).to.equal(10);
             expect(style.getImage().getScale()).to.equal(0.8);
+        });
+    });
+
+    describe("startIntervalUpdate", () => {
+        it("should do not set timeout", () => {
+            sensorThingsLayer.startIntervalUpdate(1);
+            expect(sensorThingsLayer.intervallRequest).to.be.null;
+        });
+        it("should do not set the timeout if no timeout is passed", () => {
+            sensorThingsLayer.keepUpdating = true;
+            sensorThingsLayer.startIntervalUpdate();
+            expect(sensorThingsLayer.intervallRequest).to.be.null;
         });
     });
 });
