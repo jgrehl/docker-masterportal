@@ -4,6 +4,8 @@ const actions = {
 
     /**
      * Processes the config.json on file load.
+     * @param {Object} param.commit the commit
+     * @param {Object} param.dispatch the dispatch
      * @param {Progressevent} event Event contains the loaded file.
      * @returns {void}
      */
