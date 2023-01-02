@@ -68,6 +68,9 @@ export default function Layer2dVectorSensorThings (attributes) {
     Layer2dVector.call(this, this.attributes);
     moment.locale("de");
     this.initializeSensorThings();
+
+    this.intervallRequest = null;
+    this.keepUpdating = false;
 }
 
 Layer2dVectorSensorThings.prototype = Object.create(Layer2dVector.prototype);
@@ -309,9 +312,10 @@ Layer2dVectorSensorThings.prototype.getFeatureByDatastreamId = function (feature
 /**
  * Initial loading of sensor data
  * @param {Function} onsuccess a function to call on success
+ * @param {Boolean} updateOnly set to true to avoid clearing the source
  * @returns {void}
  */
-Layer2dVectorSensorThings.prototype.initializeConnection = function (onsuccess) {
+Layer2dVectorSensorThings.prototype.initializeConnection = function (onsuccess, updateOnly = false) {
     const url = this.get("url"),
         version = this.get("version"),
         urlParams = this.get("urlParameter"),
@@ -324,13 +328,17 @@ Layer2dVectorSensorThings.prototype.initializeConnection = function (onsuccess) 
         mapProjection = mapCollection.getMapView("2D").getProjection(),
         epsg = this.get("epsg"),
         gfiTheme = this.get("gfiTheme"),
-        utc = this.get("utc");
+        utc = this.get("utc"),
+        datastreamIds = this.getDatastreamIdsInCurrentExtent(this.getLayerSource().getFeatures(), store.getters["Maps/extent"]);
 
     this.callSensorThingsAPI(url, version, urlParams, currentExtent, intersect, sensorData => {
-        const features = this.createFeaturesFromSensorData(sensorData, mapProjection, epsg, gfiTheme, utc),
+        const filteredSensorData = !updateOnly ? sensorData : sensorData.filter(data => !datastreamIds.includes(data?.properties?.dataStreamId)),
+            features = this.createFeaturesFromSensorData(filteredSensorData, mapProjection, epsg, gfiTheme, utc),
             layerSource = this.getLayerSource() instanceof Cluster ? this.getLayerSource().getSource() : this.getLayerSource();
 
-        layerSource.clear();
+        if (!updateOnly) {
+            layerSource.clear();
+        }
 
         if (Array.isArray(features) && features.length) {
             layerSource.addFeatures(features);
@@ -343,7 +351,7 @@ Layer2dVectorSensorThings.prototype.initializeConnection = function (onsuccess) 
         });
 
         if (typeof onsuccess === "function") {
-            onsuccess();
+            onsuccess(features);
         }
 
         if (typeof this.get("historicalLocations") === "number") {
@@ -1031,12 +1039,55 @@ Layer2dVectorSensorThings.prototype.startSubscription = function (features) {
         this.initializeConnection(function () {
             this.updateSubscription();
             store.dispatch("Maps/registerListener", {type: "moveend", listener: this.updateSubscription.bind(this)});
+            this.keepUpdating = true;
+            if (this.get("enableContinuousRequest")) {
+                this.startIntervalUpdate(typeof this.get("factor") === "number" ? this.get("factor") * 1000 : undefined);
+            }
         }.bind(this));
     }
     else {
         this.updateSubscription();
         store.dispatch("Maps/registerListener", {type: "moveend", listener: this.updateSubscription.bind(this)});
+        this.keepUpdating = true;
+        if (this.get("enableContinuousRequest")) {
+            this.startIntervalUpdate(typeof this.get("factor") === "number" ? this.get("factor") * 1000 : undefined);
+        }
     }
+};
+
+/**
+ * Starts the interval for continous updating the features in the current extent.
+ * @param {Number} timeout The timeout in milliseconds.
+ * @returns {void}
+ */
+Layer2dVectorSensorThings.prototype.startIntervalUpdate = function (timeout) {
+    if (!this.keepUpdating || typeof timeout !== "number") {
+        return;
+    }
+    if (this.intervallRequest !== null) {
+        clearInterval(this.intervallRequest);
+    }
+    this.intervallRequest = setTimeout(() => {
+        const datastreamIds = this.getDatastreamIdsInCurrentExtent(this.getLayerSource().getFeatures(), store.getters["Maps/extent"]),
+            subscriptionTopics = this.get("subscriptionTopics"),
+            version = this.get("version"),
+            isVisibleInMap = this.get("isVisibleInMap"),
+            mqttClient = this.mqttClient,
+            rh = this.get("mqttRh"),
+            qos = this.get("mqttQos");
+
+        this.unsubscribeFromSensorThings(datastreamIds, subscriptionTopics, version, isVisibleInMap, mqttClient);
+        this.initializeConnection(features => {
+            this.subscribeToSensorThings(
+                this.getDatastreamIdsInCurrentExtent(features, store.getters["Maps/extent"]),
+                subscriptionTopics,
+                version,
+                mqttClient,
+                {rh, qos}
+            );
+        }, true);
+        this.startIntervalUpdate(timeout);
+    }, timeout);
 };
 
 /**
@@ -1068,9 +1119,6 @@ Layer2dVectorSensorThings.prototype.updateSubscription = function () {
                 mqttClient,
                 {rh, qos}
             );
-            if (typeof this.get("historicalLocations") === "number") {
-                this.getHistoricalLocationsOfFeatures();
-            }
         });
     }
 };
@@ -1114,6 +1162,34 @@ Layer2dVectorSensorThings.prototype.getFeaturesInExtent = function (features, cu
  */
 Layer2dVectorSensorThings.prototype.enlargeExtent = function (extent, factor) {
     const bufferAmount = (extent[2] - extent[0]) * factor;
+
+    return buffer(extent, bufferAmount);
+};
+
+/**
+ * Enlarges the given extent depending on the max. speed of the features and an additional factor.
+ * @param {ol/extent} extent - The current map extent.
+ * @param {Number} maxSpeed - The max. speed of the features in km/h.
+ * @param {Number} [factor=10] - An optional factor to enlarge the extent.
+ * @returns {ol/extent|Boolean} The enlarged extent or false if something failed.
+ */
+Layer2dVectorSensorThings.prototype.enlargeExtentForMovableFeatures = function (extent, maxSpeed, factor = 10) {
+    let defaultFactor = factor;
+
+    if (!Array.isArray(extent) || extent.length !== 4) {
+        console.error("sta.enlargeExtentForMovableFeatures: The first parameter must be an array with the length of 4, but got " + typeof extent);
+        return false;
+    }
+    if (typeof maxSpeed !== "number") {
+        console.error("sta.enlargeExtentForMovableFeatures: The second parameter must be a number, but got " + typeof maxSpeed);
+        return false;
+    }
+    if (typeof factor !== "number") {
+        console.error("sta.enlargeExtentForMovableFeatures: The third parameter must be a number, but got " + typeof factor + ". Use the default 10 instead.");
+        defaultFactor = 10;
+    }
+    const minPerSec = maxSpeed / 3600 * 1000,
+        bufferAmount = minPerSec * defaultFactor;
 
     return buffer(extent, bufferAmount);
 };
@@ -1384,7 +1460,8 @@ Layer2dVectorSensorThings.prototype.fetchHistoricalLocations = function (url, ur
  */
 Layer2dVectorSensorThings.prototype.getHistoricalLocationsOfFeatures = function () {
     const allFeatures = (this.getLayerSource() instanceof Cluster ? this.getLayerSource().getSource() : this.getLayerSource()).getFeatures(),
-        datastreamIds = this.getDatastreamIdsInCurrentExtent(allFeatures, store.getters["Maps/getCurrentExtent"]),
+        featuresWithoutHistoricalIds = allFeatures.filter(feature => typeof feature.get("dataStreamId") !== "undefined" && !Array.isArray(feature.get("historicalFeatureIds"))),
+        datastreamIds = this.getDatastreamIdsInCurrentExtent(featuresWithoutHistoricalIds, store.getters["Maps/extent"]),
         url = this.get("url"),
         urlParam = {
             orderby: "time+desc",
