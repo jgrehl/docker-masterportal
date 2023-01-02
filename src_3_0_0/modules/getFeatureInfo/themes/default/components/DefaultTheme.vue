@@ -6,7 +6,7 @@ import {isPhoneNumber, getPhoneNumberAsWebLink} from "../../../../../shared/js/u
 import {isEmailAddress} from "../../../../../shared/js/utils/isEmailAddress.js";
 import DefaultThemeSensorChart from "./DefaultThemeSensorChart.vue";
 import {getPropertiesWithFullKeys} from "../js/getPropertiesWithFullKeys.js";
-import {markRaw} from "Vue";
+import {markRaw} from "vue";
 
 export default {
     name: "DefaultTheme",
