@@ -1,5 +1,5 @@
 import {createStore} from "vuex";
-import {config, mount, shallowMount} from "@vue/test-utils";
+import {config, shallowMount} from "@vue/test-utils";
 import {expect} from "chai";
 import sinon from "sinon";
 
@@ -15,7 +15,6 @@ describe("src_3_0_0/modules/layerTree/components/LayerComponent.vue", () => {
         propsData,
         mapMode,
         replaceByIdInLayerConfigSpy,
-        layer3D,
         isLayerTree;
 
     beforeEach(() => {
@@ -25,13 +24,6 @@ describe("src_3_0_0/modules/layerTree/components/LayerComponent.vue", () => {
             id: "1",
             name: "layer",
             typ: "WMS",
-            visibility: false,
-            showInLayerTree: true
-        };
-        layer3D = {
-            id: "3",
-            name: "layer3D",
-            typ: "Terrain3D",
             visibility: false,
             showInLayerTree: true
         };
