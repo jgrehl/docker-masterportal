@@ -144,7 +144,67 @@ describe("src_3_0_0/modules/layerTree/components/LayerTreeNode.vue", () => {
         sinon.restore();
     });
 
-    it("renders the LayerTree with 2D layers", () => {
+    it("renders a simple layer", () => {
+        wrapper = shallowMount(LayerTreeNode, {
+            global: {
+                plugins: [store]
+            },
+            propsData
+        });
+
+        expect(wrapper.find(".no-list").exists()).to.be.true;
+        expect(wrapper.findAll("layer-tree-node-stub").length).to.be.equals(0);
+        expect(wrapper.findAll("layer-stub").length).to.be.equals(1);
+        expect(wrapper.vm.isFolder).to.be.false;
+        expect(wrapper.vm.getLayerArray).to.be.deep.equals([]);
+        expect(wrapper.vm.isLayer).to.be.true;
+        expect(wrapper.vm.isLayerInFolderVisible).to.be.false;
+    });
+    it("renders a list of layers, but no folder", () => {
+        propsData = {
+            conf: {elements: [layer_1, layer_2]}
+        };
+        wrapper = shallowMount(LayerTreeNode, {
+            global: {
+                plugins: [store]
+            },
+            propsData
+        });
+
+        expect(wrapper.find(".no-list").exists()).to.be.true;
+        expect(wrapper.findAll("layer-tree-node-stub").length).to.be.equals(0);
+        expect(wrapper.findAll("layer-stub").length).to.be.equals(2);
+        expect(wrapper.vm.layers.length).to.be.equals(2);
+        expect(wrapper.vm.isFolder).to.be.false;
+        expect(wrapper.vm.getLayerArray).to.be.deep.equals(propsData.conf.elements);
+        expect(wrapper.vm.isLayer).to.be.false;
+        expect(wrapper.vm.isLayerInFolderVisible).to.be.false;
+    });
+    it("renders folder and layers, no child components", () => {
+        propsData = {
+            conf: layersWithFolder
+        };
+        wrapper = shallowMount(LayerTreeNode, {
+            global: {
+                plugins: [store]
+            },
+            propsData
+        });
+
+        expect(wrapper.find(".no-list").exists()).to.be.true;
+        expect(wrapper.findAll("layer-stub").length).to.be.equals(3);
+        expect(wrapper.findAll("folder-stub").length).to.be.equals(3);
+        expect(wrapper.findAll("layer-tree-node-stub").length).to.be.equals(0);
+        expect(wrapper.vm.layers.length).to.be.equals(3);
+        expect(wrapper.vm.isFolder).to.be.true;
+        expect(wrapper.vm.getLayerArray).to.be.deep.equals([]);
+        expect(wrapper.vm.isLayer).to.be.false;
+        expect(wrapper.vm.isLayerInFolderVisible).to.be.true;
+    });
+    it("renders folder and layers with child components", () => {
+        propsData = {
+            conf: layersWithFolder
+        };
         wrapper = mount(LayerTreeNode, {
             global: {
                 plugins: [store]
@@ -160,6 +220,10 @@ describe("src_3_0_0/modules/layerTree/components/LayerTreeNode.vue", () => {
         expect(wrapper.vm.getLayerArray(layer2D_2)).to.be.deep.equals([]);
         expect(wrapper.vm.getLayerArray(layerBG_1)).to.be.deep.equals([]);
         expect(wrapper.vm.getLayerArray(layerBG_2)).to.be.deep.equals([]);
+        // only 2 folder: one Ordner in config has only one layer and therefore no checkbox
+        expect(wrapper.findAll(".layer-tree-folder-checkbox").length).to.be.equals(2);
+        // 3 layer
+        expect(wrapper.findAll(".layer-tree-layer-checkbox").length).to.be.equals(3);
         expect(wrapper.find("#layer-tree-layer-" + layer2D_1.id).exists()).to.be.true;
         expect(wrapper.find("#layer-tree-layer-" + layer2D_2.id).exists()).to.be.true;
         expect(wrapper.find("#layer-tree-layer-" + layerBG_1.id).exists()).to.be.true;
