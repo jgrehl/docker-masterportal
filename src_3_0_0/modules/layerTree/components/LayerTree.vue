@@ -31,7 +31,7 @@ export default {
             if (this.addLayerButton) {
                 return this.layerConfigsByArributes({showInLayerTree: true});
             }
-            return this.allLayerConfigsStructured;
+            return this.allLayerConfigsStructured();
         }
     },
     watch: {
@@ -85,7 +85,7 @@ export default {
         </template>
         <div
             v-if="addLayerButton"
-            class="mt-4 d-flex justify-content-center"
+            class="mt-4 d-flex justify-content-center sticky"
         >
             <ElevatedButton
                 id="add-layer-btn"
@@ -113,4 +113,9 @@ export default {
             max-width: 400px;
         }
     }
+    .sticky{
+        position : sticky;
+        bottom:0;
+    }
+
 </style>
