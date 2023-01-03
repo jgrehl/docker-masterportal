@@ -32,7 +32,6 @@ export default {
 <template lang="html">
     <div
         :id="'layer-component-icon-info-' + layerConf.id"
-        class="layer-component-icon-info"
     >
         <IconButton
             :id="'layer-component-icon-info-button-' + layerConf.id"
