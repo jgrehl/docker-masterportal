@@ -23,6 +23,7 @@ export default {
     },
     computed: {
         ...mapGetters("Maps", ["mode"]),
+        ...mapGetters("Modules/LayerSelection", ["layersToAdd"]),
 
         /**
          * Returns the value of layerConf's attribute visibility
@@ -54,9 +55,9 @@ export default {
                 }
             );
         },
-        clicked (checked) {
+        clicked () {
             if (!this.isLayerVisible || this.isLayerTree) {
-                const value = typeof checked === "boolean" ? checked : !this.isLayerVisible;
+                const value = !this.isChecked();
 
                 if (this.isLayerTree) {
                     this.visibilityInLayerTreeChanged(value);
@@ -70,8 +71,14 @@ export default {
             }
 
         },
+        isChecked () {
+            if (this.isLayerTree) {
+                return this.isLayerVisible;
+            }
+            return this.isLayerVisible || this.layersToAdd.indexOf(this.conf.id) > -1;
+        },
         disabled () {
-            return this.isLayerVisible && !this.isLayerTree;
+            return !this.isLayerTree && (this.isLayerVisible || this.layersToAdd.indexOf(this.conf.id) > -1) || null;
         }
     }
 };
@@ -80,30 +87,32 @@ export default {
 <template lang="html">
     <div
         :id="'layer-checkbox-' + conf.id"
+        class="layer-tree-layer-title pe-2 p-1"
         data-bs-toggle="tooltip"
         :title="disabled() ? $t('tree.isAlreadyAdded') :null"
+        @click="clicked()"
+        @keydown.enter="clicked()"
     >
-        <input
+        <span
             :id="'layer-tree-layer-checkbox-' + conf.id"
-            :checked="isLayerVisible"
-            :disabled="disabled()"
-            type="checkbox"
-            class="layer-tree-layer-checkbox form-check-input"
-            @input="clicked($event.target.checked)"
-            @keydown.enter="clicked()"
-        >
+            :class="[
+                'layer-tree-layer-checkbox pe-2',
+                {
+                    'bi-check2-square': isChecked(),
+                    'bi-square': !isChecked(),
+                    'disabled': disabled()
+                }
+            ]"
+        />
         <label
             :class="['layer-tree-layer-label', 'mt-0 d-flex flex-column align-self-start', isLayerVisible ? 'bold' : '']"
             :for="'layer-tree-layer-checkbox-' + conf.id"
             tabindex="0"
             :aria-label="$t(conf.name)"
-            @keydown.enter="clicked()"
         >
             <span
                 v-if="conf.shortname"
                 :class="isLayerTree ? '' : 'small-text'"
-                data-bs-toggle="tooltip"
-                :title="conf.name"
             >
                 {{ $t(conf.shortname) }}
             </span>
