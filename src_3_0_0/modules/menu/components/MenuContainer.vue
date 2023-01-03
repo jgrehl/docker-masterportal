@@ -1,7 +1,6 @@
 <script>
 import {mapGetters, mapActions, mapMutations} from "vuex";
 import MenuContainerBody from "./MenuContainerBody.vue";
-import MenuContainerHeader from "./MenuContainerHeader.vue";
 import ResizeHandle from "../../../shared/modules/resize/components/ResizeHandle.vue";
 
 
@@ -9,7 +8,6 @@ export default {
     name: "MenuContainer",
     components: {
         MenuContainerBody,
-        MenuContainerHeader,
         ResizeHandle
     },
     props: {
@@ -22,7 +20,7 @@ export default {
     },
     computed: {
         ...mapGetters(["uiStyle", "mainMenuFromConfig", "secondaryMenuFromConfig", "isMobile"]),
-        ...mapGetters("Menu", ["mainExpanded", "secondaryExpanded", "titleBySide"]),
+        ...mapGetters("Menu", ["mainExpanded", "secondaryExpanded", "titleBySide", "toggleMenu"]),
         /**
          * @returns {string} Defines whether the ResizeHandle should be displayed on the right or left side depending on the menu this component is rendered in.
          */
@@ -65,9 +63,19 @@ export default {
         tabindex="-1"
         :aria-label="titleBySide(side) ? titleBySide(side).text : null"
     >
-        <MenuContainerHeader
-            :side="side"
-        />
+        <div
+            :id="'mp-header-' + side"
+            class="mp-menu-header"
+        >
+            <button
+                :id="'mp-menu-header-close-button-' + side"
+                type="button"
+                class="btn-close p-2 mp-menu-header-close-button"
+                :aria-label="$t('common:menu.ariaLabelClose')"
+                @click="toggleMenu(side)"
+            />
+        </div>
+
         <MenuContainerBody
             :side="side"
         />
@@ -108,6 +116,16 @@ export default {
     display: none;
 }
 
+.mp-menu-header{
+    display: flex;
+}
+.mp-menu-header-close-button {
+    display: block;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
 
 @include media-breakpoint-up(sm)  {
     .mp-menu {
@@ -133,6 +151,9 @@ export default {
         justify-content: center;
         top: 0rem;
         font-size: 2rem;
+    }
+    .mp-menu-header-close-button {
+        display: none;
     }
  }
 
