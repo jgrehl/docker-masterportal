@@ -49,6 +49,9 @@ export default {
     color: $black;
     margin-bottom: 25px;
     display: flex;
+    position: sticky;
+    top: 0;
+    background-color: $menu-background-color;
 }
 
 .mp-menu-navigation-link{

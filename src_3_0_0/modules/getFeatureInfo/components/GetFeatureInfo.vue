@@ -243,4 +243,9 @@ export default {
         color: $dark_blue;
     }
 
+    .gfi-footer {
+        position: sticky;
+        bottom: 0;
+        background-color: $menu-background-color;
+    }
 </style>
