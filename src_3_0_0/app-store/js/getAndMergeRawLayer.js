@@ -36,7 +36,7 @@ export function addAdditional (rawLayer, showAllLayerInTree = false) {
             rawLayer.showInLayerTree = true;
             rawLayer.zIndex = zIndex++;
         }
-        else if (!Object.hasOwn(rawLayer, "showInLayerTree")) {
+        else if (!Object.prototype.hasOwnProperty.call(rawLayer, "showInLayerTree")) {
             rawLayer.showInLayerTree = false;
         }
     }
