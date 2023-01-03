@@ -17,11 +17,13 @@ describe("src_3_0_0/modules/layerTree/components/LayerCheckBox.vue", () => {
         replaceByIdInLayerConfigSpy,
         addSelectedLayerSpy,
         removeSelectedLayerSpy,
-        isLayerTree;
+        isLayerTree,
+        layersToAdd;
 
     beforeEach(() => {
         isLayerTree = true;
         mapMode = "2D";
+        layersToAdd = [];
         layer = {
             id: "1",
             name: "layer",
@@ -51,6 +53,9 @@ describe("src_3_0_0/modules/layerTree/components/LayerCheckBox.vue", () => {
                             mutations: {
                                 addSelectedLayer: addSelectedLayerSpy,
                                 removeSelectedLayer: removeSelectedLayerSpy
+                            },
+                            getters: {
+                                layersToAdd: () => layersToAdd
                             }
                         }
                     }
@@ -92,10 +97,9 @@ describe("src_3_0_0/modules/layerTree/components/LayerCheckBox.vue", () => {
         });
 
         expect(wrapper.find("#layer-checkbox-" + propsData.conf.id).exists()).to.be.true;
-        expect(wrapper.findAll("input").length).to.be.equals(1);
-        expect(wrapper.find("input").attributes("type")).to.be.equals("checkbox");
-        expect(wrapper.find("input").element.checked).to.be.false;
-        expect(wrapper.find("span").text()).to.equal(propsData.conf.name);
+        expect(wrapper.findAll(".layer-tree-layer-checkbox").length).to.be.equals(1);
+        expect(wrapper.find(".layer-tree-layer-checkbox pe-2 bi-check2-square").exists()).to.be.false;
+        expect(wrapper.find(".layer-tree-layer-label").text()).to.equal(propsData.conf.name);
         expect(wrapper.find("label").attributes("class")).not.to.include("bold");
     });
 
@@ -109,10 +113,9 @@ describe("src_3_0_0/modules/layerTree/components/LayerCheckBox.vue", () => {
         });
 
         expect(wrapper.find("#layer-checkbox-" + propsData.conf.id).exists()).to.be.true;
-        expect(wrapper.findAll("input").length).to.be.equals(1);
-        expect(wrapper.find("input").attributes("type")).to.be.equals("checkbox");
-        expect(wrapper.find("input").element.checked).to.be.false;
-        expect(wrapper.find("span").text()).to.equal(propsData.conf.shortname);
+        expect(wrapper.findAll(".layer-tree-layer-checkbox").length).to.be.equals(1);
+        expect(wrapper.find(".bi-check2-square").exists()).to.be.false;
+        expect(wrapper.find(".layer-tree-layer-label").text()).to.equal(propsData.conf.shortname);
         expect(wrapper.find("label").attributes("class")).not.to.include("bold");
     });
 
@@ -128,11 +131,10 @@ describe("src_3_0_0/modules/layerTree/components/LayerCheckBox.vue", () => {
 
         expect(wrapper.find("#layer-checkbox-" + propsData.conf.id).exists()).to.be.true;
         expect(wrapper.find("#layer-checkbox-" + propsData.conf.id).attributes("title")).to.be.undefined;
-        expect(wrapper.findAll("input").length).to.be.equals(1);
-        expect(wrapper.find("input").attributes("type")).to.be.equals("checkbox");
-        expect(wrapper.find("input").element.checked).to.be.true;
-        expect(wrapper.find("input").element.disabled).to.be.false;
-        expect(wrapper.find("span").text()).to.equal(propsData.conf.name);
+        expect(wrapper.findAll(".layer-tree-layer-checkbox").length).to.be.equals(1);
+        expect(wrapper.find(".bi-check2-square").exists()).to.be.true;
+        expect(wrapper.find(".disabled").exists()).to.be.false;
+        expect(wrapper.find(".layer-tree-layer-label").text()).to.equal(propsData.conf.name);
         expect(wrapper.find("label").attributes("class")).to.include("bold");
     });
 
@@ -149,11 +151,10 @@ describe("src_3_0_0/modules/layerTree/components/LayerCheckBox.vue", () => {
 
         expect(wrapper.find("#layer-checkbox-" + propsData.conf.id).exists()).to.be.true;
         expect(wrapper.find("#layer-checkbox-" + propsData.conf.id).attributes("title")).to.be.equals("tree.isAlreadyAdded");
-        expect(wrapper.findAll("input").length).to.be.equals(1);
-        expect(wrapper.find("input").attributes("type")).to.be.equals("checkbox");
-        expect(wrapper.find("input").element.checked).to.be.true;
-        expect(wrapper.find("input").element.disabled).to.be.true;
-        expect(wrapper.find("span").text()).to.equal(propsData.conf.name);
+        expect(wrapper.findAll(".layer-tree-layer-checkbox").length).to.be.equals(1);
+        expect(wrapper.find(".bi-check2-square").exists()).to.be.true;
+        expect(wrapper.find(".disabled").exists()).to.be.true;
+        expect(wrapper.find(".layer-tree-layer-label").text()).to.equal(propsData.conf.name);
         expect(wrapper.find("label").attributes("class")).to.include("bold");
     });
 
@@ -211,9 +212,9 @@ describe("src_3_0_0/modules/layerTree/components/LayerCheckBox.vue", () => {
         });
 
         expect(wrapper.find("#layer-checkbox-" + propsData.conf.id).exists()).to.be.true;
-        expect(wrapper.findAll("input").length).to.be.equals(1);
+        expect(wrapper.findAll(".layer-tree-layer-checkbox").length).to.be.equals(1);
 
-        checkbox = wrapper.find("input");
+        checkbox = wrapper.find(".layer-tree-layer-checkbox");
         checkbox.trigger("click");
         await wrapper.vm.$nextTick();
 
@@ -242,9 +243,9 @@ describe("src_3_0_0/modules/layerTree/components/LayerCheckBox.vue", () => {
         });
 
         expect(wrapper.find("#layer-checkbox-" + propsData.conf.id).exists()).to.be.true;
-        expect(wrapper.findAll("input").length).to.be.equals(1);
+        expect(wrapper.findAll(".layer-tree-layer-checkbox").length).to.be.equals(1);
 
-        checkbox = wrapper.find("input");
+        checkbox = wrapper.find(".layer-tree-layer-checkbox");
         checkbox.trigger("click");
         await wrapper.vm.$nextTick();
 
@@ -258,6 +259,7 @@ describe("src_3_0_0/modules/layerTree/components/LayerCheckBox.vue", () => {
         };
         let checkbox = null;
 
+        layersToAdd = [layer.id];
         propsData.isLayerTree = false;
         propsData.conf.visibility = false;
         wrapper = shallowMount(LayerCheckBox, {
@@ -268,10 +270,9 @@ describe("src_3_0_0/modules/layerTree/components/LayerCheckBox.vue", () => {
         });
 
         expect(wrapper.find("#layer-checkbox-" + propsData.conf.id).exists()).to.be.true;
-        expect(wrapper.findAll("input").length).to.be.equals(1);
+        expect(wrapper.findAll(".layer-tree-layer-checkbox").length).to.be.equals(1);
 
-        checkbox = wrapper.find("input");
-        checkbox.setChecked();
+        checkbox = wrapper.find(".layer-tree-layer-checkbox");
         checkbox.trigger("click");
         await wrapper.vm.$nextTick();
 
