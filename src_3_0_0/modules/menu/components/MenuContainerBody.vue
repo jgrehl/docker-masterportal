@@ -126,5 +126,7 @@ export default {
         align-items: stretch;
         padding: $padding;
         font-size: $font-size-base;
+        overflow-y: auto;
+        max-height: 100%;
     }
 </style>
