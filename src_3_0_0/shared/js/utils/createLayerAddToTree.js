@@ -1,17 +1,17 @@
 import rawLayerList from "@masterportal/masterportalapi/src/rawLayerList";
-
+import store from "../../../app-store";
+import layerCollection from "../../../core/layers/js/layerCollection";
 
 /**
  * Creates a layer containing the given features and shows it in menu tree.
  *
- * @param {Object} context - The store's context
  * @param {String} layerId contains the id of the layer, the features are got from
  * @param {Array} features contains the features to add to new layer
  * @param {String} treeType the treeType
  * @param {Object} thfConfig content of config.json's property 'treeHighlightedFeatures'
  * @returns {void}
  */
-function createLayerAddToTree (context, layerId, features, treeType, thfConfig = {}) {
+function createLayerAddToTree (layerId, features, treeType, thfConfig = {}) {
     if (layerId) {
         const layerNameKey = thfConfig.layerName ? thfConfig.layerName : "common:tree.selectedFeatures",
             originalLayer = getLayer(layerId);
@@ -21,20 +21,17 @@ function createLayerAddToTree (context, layerId, features, treeType, thfConfig =
                 layerName = i18next.t(layerNameKey) + " " + originalLayerName,
                 id = layerId.indexOf(originalLayerName) === -1 ? layerId + "_" + originalLayerName : layerId,
                 attributes = setAttributes(originalLayer, id, layerName, layerNameKey, treeType);
-            // @todo Vilma kommt id rein oder layerId?
-            // let highlightLayer = Radio.request("ModelList", "getModelByAttributes", {"id": id}),
-            let highlightLayer = context.getters.getLayerById({id}),
+            let highlightLayer = layerCollection.getLayerById(id),
                 layerSource = null;
 
             if (!highlightLayer) {
-                highlightLayer = addLayerModel(attributes, id);
+                highlightLayer = addLayerModel(attributes, layerId);
             }
             setStyle(highlightLayer, attributes.styleId);
-            layerSource = highlightLayer.get("layer").getSource();
+            layerSource = highlightLayer.getLayerSource();
             layerSource.getFeatures().forEach(feature => layerSource.removeFeature(feature));
             layerSource.addFeatures(features);
-            highlightLayer.setIsSelected(true);
-            refreshTree(treeType);
+            // highlightLayer.setIsSelected(true);
         }
         else {
             console.warn("Layer with id ", layerId, " not found, layer with features was not created!");
@@ -44,14 +41,11 @@ function createLayerAddToTree (context, layerId, features, treeType, thfConfig =
 
 /**
  * Returns the layer with the given id.
- * @param {Object} context - The store's context
  * @param {String} id of the layer
  * @returns {Object} the layer with the given id
  */
-function getLayer (context, id) {
-    // @todo Vilma
-    // let layer = Radio.request("ModelList", "getModelByAttributes", {id: id});
-    let layer = context.getters.getLayerById({id});
+function getLayer (id) {
+    let layer = layerCollection.getLayerById(id);
 
     if (!layer) {
         const rawLayer = rawLayerList.getLayerWhere({id: id});
@@ -63,27 +57,13 @@ function getLayer (context, id) {
 
 /**
  * Adds the layer-model to list of layers.
- * @param {Object} context - The store's context
  * @param {Object} attributes  of the layer
  * @param {String} id of the layer
  * @returns {Object} the created layer
  */
-function addLayerModel (context, attributes, id) {
-    Radio.trigger("Parser", "addItem", attributes);
-    Radio.trigger("ModelList", "addModelsByAttributes", {id: id});
-    // return Radio.request("ModelList", "getModelByAttributes", {id: id});
-    return context.getters.getLayerById({id});
-}
-
-/**
- * Refreshes the menu tree.
- * @param {String} treeType the treeType
- * @returns {void}
- */
-function refreshTree (treeType) {
-    if (treeType === "light") {
-        Radio.trigger("ModelList", "refreshLightTree");
-    }
+function addLayerModel (attributes, id) {
+    store.dispatch("addLayerToLayerConfig", {layerConfig: attributes, parentKey: "Fachdaten"}, {root: true});
+    return layerCollection.getLayerById(id);
 }
 
 /**
@@ -98,9 +78,7 @@ function refreshTree (treeType) {
 function setAttributes (layer, id, layerName, layerNameKey, treeType) {
     const attributes = {...layer.attributes};
 
-    // initial set selected and visibility to false, else source is updated before features are added
-    attributes.isSelected = false;
-    attributes.visibility = false;
+    attributes.visibility = true;
     attributes.id = id;
     attributes.typ = "VectorBase";
     attributes.alwaysOnTop = true;
@@ -122,17 +100,18 @@ function setAttributes (layer, id, layerName, layerNameKey, treeType) {
  * @param {String} styleId styleId of the style-model
  * @returns {void}
  */
+// eslint-disable-next-line
 function setStyle (layer, styleId) {
-    const styleModel = Radio.request("StyleList", "returnModelById", styleId);
+    // @todo when styleModel has moved
+    // const styleModel = Radio.request("StyleList", "returnModelById", styleId);
 
-    if (styleModel !== undefined) {
-        layer.get("layer").setStyle((feature) => {
-            return styleModel.createStyle(feature, false);
-        });
-    }
+    // if (styleModel !== undefined) {
+    // layer.get("layer").setStyle((feature) => {
+    //      return styleModel.createStyle(feature, false);
+    //  });
+    // }
 }
 
 export default {
     createLayerAddToTree
 };
-
