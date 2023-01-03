@@ -58,9 +58,10 @@ export default {
         // });
     },
     mounted () {
-        const menuItem = {
+        const type = this.$parent.$options.name.charAt(0).toLowerCase() + this.$parent.$options.name.substring(1),
+        menuItem = {
             side: this.menuSide,
-            module: {type: this.$parent.$options.name}
+            module: {type: type}
         };
 
         this.setMenuBackAndActivateItem(menuItem);
