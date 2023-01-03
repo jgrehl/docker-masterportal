@@ -5,6 +5,7 @@ import {treeBackgroundsKey, treeSubjectsKey} from "../shared/js/utils/constants"
 
 const getters = {
     ...generateSimpleGetters(stateAppStore),
+    treeHighlightedFeatures: state => state?.portalConfig?.tree?.highlightedFeatures || false,
 
     /**
      * Returns whether all configs were loaded.
