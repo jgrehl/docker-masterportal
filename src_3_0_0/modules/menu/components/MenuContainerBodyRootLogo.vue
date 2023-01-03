@@ -1,6 +1,6 @@
 <script>
 export default {
-    name: "MenuContainerHeaderTitle",
+    name: "MenuContainerBodyRootLogo",
     props: {
         /** Appendix set on the id to make it unique. Needed, as the menu can be rendered multiple times. */
         idAppendix: {
@@ -33,11 +33,11 @@ export default {
 
 <template>
     <a
-        :id="'mp-menu-header-title-' + idAppendix"
+        :id="'mp-menu-logo-' + idAppendix"
         :href="link ? link : '#'"
         :target="link ? '_blank' : '_self'"
         :title="toolTip"
-        class="mp-menu-header-title"
+        class="mp-menu-logo"
     >
 
         <img
@@ -52,7 +52,7 @@ export default {
 <style lang="scss" scoped>
 @import "~variables";
 
-.mp-menu-header-title {
+.mp-menu-logo {
         padding: $padding;
         width: 100%;
         display: flex;
@@ -74,7 +74,7 @@ export default {
     }
 
 @include media-breakpoint-up(sm)  {
-    .mp-menu-header-title {
+    .mp-menu-logo {
 
         img {
             max-height: 40px;
