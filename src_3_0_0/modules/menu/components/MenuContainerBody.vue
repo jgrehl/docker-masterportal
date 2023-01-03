@@ -2,7 +2,6 @@
 import LayerTree from "../../layerTree/components/LayerTree.vue";
 import MenuContainerBodyItems from "./MenuContainerBodyItems.vue";
 import MenuNavigation from "../navigation/components/MenuNavigation.vue";
-import LayerTree from "../../layerTree/components/LayerTree.vue";
 import {mapGetters, mapMutations} from "vuex";
 
 export default {
@@ -10,8 +9,7 @@ export default {
     components: {
         LayerTree,
         MenuContainerBodyItems,
-        MenuNavigation,
-        LayerTree
+        MenuNavigation
     },
     props: {
         /** Defines in which menu the component is being rendered */
@@ -103,7 +101,6 @@ export default {
                 :key="'module-' + component.module.name"
             />
         </template>
-        <LayerTree v-if="side === 'mainMenu'" />
         <component
             :is="componentFromPath(side)"
             v-bind="{idAppendix: side, ...objectFromPath(side, 'last')}"
