@@ -9,6 +9,7 @@ import Icon from "ol/style/Icon";
 import isObject from "../../../shared/js/utils/isObject";
 import {createEmpty as createEmptyExtent, extend} from "ol/extent";
 import {uniqueId} from "../../../shared/js/utils/uniqueId.js";
+import layerCollection from "../../../core/layers/js/layerCollection";
 
 const supportedFormats = {
     kml: new KML({extractStyles: true, iconUrlFunction: (url) => url}),
@@ -157,7 +158,7 @@ export default {
      * @param {String} payload.fileName the file name
      * @returns {void}
      */
-    setFeatureExtents: ({state, commit}, {features, fileName}) => {
+    setFeatureExtents ({state, commit}, {features, fileName}) {
         const extents = state.featureExtents,
             extent = createEmptyExtent();
 
@@ -177,9 +178,8 @@ export default {
      * @param {Object} datasrc data source to import, with properties filename, layer and raw.
      * @returns {void}
      */
-    importKML: ({state, dispatch, rootGetters}, datasrc) => {
+    async importKML ({state, dispatch, rootGetters}, datasrc) {
         const
-            vectorLayer = datasrc.layer,
             fileName = datasrc.filename,
             format = getFormat(fileName, state.selectedFiletype, state.supportedFiletypes, supportedFormats),
             crsPropName = getCrsPropertyName(datasrc.raw),
@@ -188,7 +188,8 @@ export default {
         let
             featureError = false,
             alertingMessage,
-            features;
+            features,
+            layerId = "";
 
         if (format instanceof KML) {
             datasrc.raw = removeBadTags(datasrc.raw);
@@ -319,8 +320,12 @@ export default {
 
         features = checkIsVisibleSetting(features);
 
-        vectorLayer.getSource().addFeatures(features);
-        vectorLayer.set("gfiAttributes", customAttributes);
+        layerId = await dispatch("addLayerConfig", {
+            gfiAttributes: customAttributes,
+            name: fileName.split(".")[0]
+        });
+
+        layerCollection.getLayerById(layerId)?.getLayerSource().addFeatures(features);
 
         if (featureError) {
             alertingMessage = {
@@ -349,20 +354,22 @@ export default {
     /**
      * Imports the given GeoJSON file from datasrc.raw, creating the features into datasrc.layer.
      * @param {Object} param.state the state
+     * @param {Object} param.commit the commit
      * @param {Object} param.dispatch the dispatch
      * @param {Object} param.rootGetters the root getters
      * @param {Object} datasrc data source to import, with properties filename, layer and raw.
      * @returns {void}
      */
-    importGeoJSON: ({state, dispatch, rootGetters}, datasrc) => {
-        const vectorLayer = datasrc.layer,
-            fileName = datasrc.filename,
+    async importGeoJSON ({state, commit, dispatch, rootGetters}, datasrc) {
+        const fileName = datasrc.filename,
             format = getFormat(fileName, state.selectedFiletype, state.supportedFiletypes, supportedFormats),
             gfiAttributes = {};
 
         let
             alertingMessage,
-            features;
+            features,
+            layerId = "",
+            vectorLayer = null;
 
         if (format === false) {
             const fileNameSplit = fileName.split("."),
@@ -404,7 +411,13 @@ export default {
             return;
         }
 
-        vectorLayer.setStyle((feature) => {
+        layerId = await dispatch("addLayerConfig", {
+            name: fileName.split(".")[0]
+        });
+
+        vectorLayer = layerCollection.getLayerById(layerId);
+
+        vectorLayer.getLayer().setStyle((feature) => {
             const drawState = feature.getProperties().drawState;
             let style;
 
@@ -469,9 +482,12 @@ export default {
                         })
                     });
                 }
-                // else {
-                //     style = createDrawStyle(drawState.color, drawState.color, drawState.drawType.geometry, drawState.pointSize, 1, drawState.zIndex);
-                // }
+                else {
+                    //     style = createDrawStyle(drawState.color, drawState.color, drawState.drawType.geometry, drawState.pointSize, 1, drawState.zIndex);
+
+                    // can be removed if the createDrawStyle function works
+                    style = new Style();
+                }
             }
             else if (drawState.drawType.geometry === "LineString" || drawState.drawType.geometry === "MultiLineString") {
                 style = new Style({
@@ -524,8 +540,8 @@ export default {
                 });
             }
 
-            if (vectorLayer.getStyleFunction()(feature) !== undefined) {
-                feature.setStyle(vectorLayer.getStyleFunction()(feature));
+            if (vectorLayer.getLayer().getStyleFunction()(feature) !== undefined) {
+                feature.setStyle(vectorLayer.getLayer().getStyleFunction()(feature));
             }
 
             if (feature.get("isGeoCircle")) {
@@ -536,11 +552,16 @@ export default {
             }
 
             feature.set("source", fileName);
-            vectorLayer.getSource().addFeature(feature);
+            vectorLayer.getLayerSource().addFeature(feature);
         });
 
-        if (!vectorLayer.get("gfiAttributes")) {
-            vectorLayer.set("gfiAttributes", gfiAttributes);
+        if (!vectorLayer.getLayer().get("gfiAttributes")) {
+            commit("replaceByIdInLayerConfig", {
+                layerConfigs: [{
+                    id: layerId,
+                    layer: {gfiAttributes}
+                }]
+            }, {root: true});
         }
 
         alertingMessage = {
@@ -555,15 +576,44 @@ export default {
             dispatch("setFeatureExtents", {features: features, fileName: fileName});
         }
     },
+
     /**
      * Adds the name of a successfully imported file to list of imported filenames
+     * @param {Object} param.state the state
+     * @param {Object} param.commit the commit
      * @param {String} fileName name of the file
      * @returns {void}
      */
-    addImportedFilename: ({state, commit}, fileName) => {
+    addImportedFilename ({state, commit}, fileName) {
         const fileNames = [... state.importedFileNames];
 
         fileNames.push(fileName);
         commit("setImportedFileNames", fileNames);
+    },
+
+    /**
+     * Adds a layer Config to app-store layerConfigs
+     * @param {Object} param.dispatch the dispatch
+     * @param {Object} attributes The layer attributes.
+     * @returns {String} The layer id of the new layer
+     */
+    async addLayerConfig ({dispatch}, attributes) {
+        const layerAttributes = {
+            id: uniqueId("importDrawLayer"),
+            name: "importDrawLayer",
+            showInLayerTree: true,
+            typ: "VECTORBASE",
+            type: "layer",
+            visibility: true
+        };
+
+        Object.assign(layerAttributes, attributes);
+
+        await dispatch("addLayerToLayerConfig", {
+            layerConfig: layerAttributes,
+            parentKey: "Fachdaten"
+        }, {root: true});
+
+        return layerAttributes.id;
     }
 };
