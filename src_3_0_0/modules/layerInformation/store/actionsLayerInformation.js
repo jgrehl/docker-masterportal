@@ -1,6 +1,5 @@
 import {getRecordById} from "../../../shared/js/api/getCswRecordById";
 import sortBy from "../../../shared/js/utils/sortBy";
-import upperFirst from "../../../shared/js/utils/upperFirst";
 
 const actions = {
     /**
@@ -14,7 +13,7 @@ const actions = {
     startLayerInformation ({commit, dispatch, state}, layerConf) {
         const menuItem = {
             side: state.menuSide,
-            module: {type: upperFirst(state.type)}
+            module: {type: state.type}
         };
 
         commit("setLayerInfo", layerConf);
