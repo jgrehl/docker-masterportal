@@ -1,7 +1,6 @@
 <script>
 import {mapActions, mapGetters, mapMutations} from "vuex";
 import isObject from "../../../shared/js/utils/isObject";
-import store from "../../../app-store";
 import FlatButton from "../../../shared/modules/buttons/components/FlatButton.vue";
 
 export default {
@@ -34,12 +33,13 @@ export default {
         }
     },
     methods: {
+        ...mapActions(["addLayerToLayerConfig"]),
         ...mapActions("Modules/FileImport", [
             "importKML",
             "importGeoJSON"
         ]),
-        ...mapActions("Maps", ["addNewLayerIfNotExists", "zoomToExtent"]),
-        ...mapMutations("Modules/FileImport", ["setFeatureExtents", "setLayer"]),
+        ...mapActions("Maps", ["zoomToExtent"]),
+        ...mapMutations("Modules/FileImport", ["setFeatureExtents"]),
 
         /**
          * Sets the focus to the first control
@@ -83,18 +83,15 @@ export default {
                 const reader = new FileReader();
 
                 reader.onload = async f => {
-                    const vectorLayer = await store.dispatch("Maps/addNewLayerIfNotExists", {layerName: "importDrawLayer"}, {root: true}),
-                        fileNameSplit = file.name.split("."),
+                    const fileNameSplit = file.name.split("."),
                         fileExtension = fileNameSplit.length > 0 ? fileNameSplit[fileNameSplit.length - 1].toLowerCase() : "";
 
                     if (fileExtension === "geojson" || fileExtension === "json") {
-                        this.importGeoJSON({raw: f.target.result, layer: vectorLayer, filename: file.name});
+                        this.importGeoJSON({raw: f.target.result, filename: file.name});
                     }
                     else {
-                        this.importKML({raw: f.target.result, layer: vectorLayer, filename: file.name});
+                        this.importKML({raw: f.target.result, filename: file.name});
                     }
-
-                    this.setLayer(vectorLayer);
                 };
 
                 reader.readAsText(file);
