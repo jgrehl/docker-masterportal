@@ -79,7 +79,7 @@ export default {
         />
 
         <MenuContainerBodyRoot
-            v-else
+            v-show="currentComponent === 'root'"
             :side="side"
         />
     </div>
