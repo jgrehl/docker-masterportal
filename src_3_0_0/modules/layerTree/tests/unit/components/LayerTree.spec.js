@@ -145,7 +145,7 @@ describe("src_3_0_0/modules/layerTree/components/LayerTree.vue", () => {
                 }
             },
             getters: {
-                allLayerConfigsStructured: () => {
+                allLayerConfigsStructured: () => () =>{
                     return layersBG.concat(subjectDataLayers);
                 },
                 portalConfig: () => {
@@ -268,23 +268,18 @@ describe("src_3_0_0/modules/layerTree/components/LayerTree.vue", () => {
         expect(wrapper.find("#layer-tree-layer-" + layerBG_2.id).exists()).to.be.true;
     });
 
-    it("renders the LayerTree with 2D layers in folder structure - check layers", () => {
-        let inputs = null,
-            folderinputs = null;
-
+    it("no layer button - renders the LayerTree with 2D layers in folder structure - check layers", () => {
         subjectDataLayers = layersWithFolder;
         wrapper = mount(LayerTreeComponent, {
             global: {
                 plugins: [store]
             }});
-        folderinputs = wrapper.findAll("input");
-        inputs = wrapper.findAll(".layer-tree-layer-checkbox");
 
         expect(wrapper.find("#layer-tree").exists()).to.be.true;
         // only 2 folder: one Ordner in config has only one layer and therefore no folder
-        expect(folderinputs.filter(folderinput => folderinput.attributes().id.startsWith("layer-tree-folder-checkbox-")).length).to.be.equals(2);
+        expect(wrapper.findAll(".layer-tree-folder-checkbox").length).to.be.equals(2);
         // 2 bg-layer and 3 other subjectData-layer
-        expect(inputs.length).to.equal(5);
+        expect(wrapper.findAll(".layer-tree-layer-checkbox").length).to.be.equals(5);
         expect(wrapper.find("#layer-tree-layer-" + layer2D_1.id).exists()).to.be.true;
         expect(wrapper.find("#layer-tree-layer-" + layer2D_2.id).exists()).to.be.true;
         expect(wrapper.find("#layer-tree-layer-" + layer2D_3.id).exists()).to.be.true;
