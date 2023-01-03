@@ -3,6 +3,7 @@
  * @typedef {Object} RoutingState
  * @property {Boolean} active If true, routing will rendered.
  * @property {String} type The type of the module.
+ * @property {Boolean} hasMouseMapInteractions If this attribute is true, then all other modules will be deactivated when this attribute is also true. Only one module with this attribute true may be open at the same time, since conflicts can arise in the card interactions.
  * @property {String} icon Icon next to title (config-param).
  * @property {String[]} supportedDevices Devices on which the module is displayed.
  * @property {String[]} supportedMapModes Map mode in which this module can be used.
@@ -22,6 +23,7 @@ const state = {
     active: false,
     type: "routing",
     // mandatory defaults for config.json parameters
+    hasMouseMapInteractions: true,
     name: "common:menu.tools.routing",
     icon: "bi-signpost-2-fill",
     supportedDevices: ["Desktop", "Mobile", "Table"],
