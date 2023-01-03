@@ -61,12 +61,10 @@ export default {
         class="layer-tree-layer d-flex flex-column justify-content-between"
     >
         <div class="d-flex justify-content-between align-items-center">
-            <div class="layer-tree-layer-title pe-2">
-                <LayerCheckBox
-                    :conf="conf"
-                    :is-layer-tree="isLayerTree()"
-                />
-            </div>
+            <LayerCheckBox
+                :conf="conf"
+                :is-layer-tree="isLayerTree()"
+            />
             <div
                 v-if="isLayerTree()"
                 class="d-flex"
@@ -101,7 +99,7 @@ export default {
             border-radius: 10px;
         }
 
-        .layer-tree-layer-title {
+        .layer-tree-layer-title, .layer-tree-layer-checkbox {
             &:hover {
                 @include primary_action_hover;
             }
