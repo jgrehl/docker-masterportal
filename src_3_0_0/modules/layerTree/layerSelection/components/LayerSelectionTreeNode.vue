@@ -1,12 +1,13 @@
 <script>
 import Layer from "../../components/LayerComponent.vue";
+import LightButton from "../../../../shared/modules/buttons/components/LightButton.vue";
 
 /**
  * Representation of a node in layertree containing folders or layers.
  */
 export default {
     name: "LayerSelectionTreeNode",
-    components: {Layer},
+    components: {Layer, LightButton},
     /** current configuration */
     props: {
         conf: {
@@ -40,27 +41,13 @@ export default {
 <template>
     <div class="no-list">
         <div v-if="isFolder">
-            <button
-                class="btn btn-light d-flex align-items-center w-100"
-                type="button"
-                @click="folderClicked"
-                @keydown="folderClicked"
-            >
-                <i
-                    :class="['fs-4', 'me-4', 'bi-question-circle']"
-                    role="img"
-                />
-                <div
-                    class="d-flex flex-column align-items-start"
-                >
-                    <span class="name">{{ $t(conf.name) }}</span>
-                    <span class="btn-description text-wrap pt-2">{{ $t(conf.description) }}</span>
-                </div>
-                <i
-                    class="fs-4 chevron bi-chevron-right"
-                    role="img"
-                />
-            </button>
+            <LightButton
+                :interaction="folderClicked"
+                :text="$t(conf.name)"
+                icon="bi-question-circle"
+                icon-end="bi-chevron-right"
+                customclass="w-100 justify-content-start"
+            />
         </div>
         <template
             v-else
@@ -81,17 +68,6 @@ export default {
         display: flex;
         gap: 0.25rem;
         align-items: baseline;
-    }
-    .chevron{
-        position: absolute;
-        right: 2rem;
-    }
-    .btn-description {
-        border-radius: 25px;
-        font-size: $font-size-sm;
-    }
-    .name{
-        white-space: nowrap;
     }
 
 </style>
