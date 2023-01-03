@@ -2,13 +2,11 @@ import testAction from "../../../../../../test/unittests/VueTestUtils";
 import actions from "../../../store/actionsFileImport";
 import importedState from "../../../store/stateFileImport";
 import rawSources from "../../resources/rawSources.js";
-import VectorLayer from "ol/layer/Vector.js";
-import VectorSource from "ol/source/Vector.js";
 import crs from "@masterportal/masterportalapi/src/crs";
 import sinon from "sinon/pkg/sinon-esm";
 
 const
-    {importKML, setFeatureExtents} = actions,
+    {addLayerConfig, importKML, setFeatureExtents} = actions,
     namedProjections = [
         ["EPSG:31467", "+title=Bessel/Gauß-Krüger 3 +proj=tmerc +lat_0=0 +lon_0=9 +k=1 +x_0=3500000 +y_0=0 +ellps=bessel +datum=potsdam +units=m +no_defs"],
         ["EPSG:25832", "+title=ETRS89/UTM 32N +proj=utm +zone=32 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs"],
@@ -33,28 +31,30 @@ describe("src_3_0_0/modules/fileImport/store/actionsFileImport.js", () => {
     afterEach(sinon.restore);
 
     describe("file import - file should add some features to the current draw layer", () => {
-        const
-            source = new VectorSource(),
-            layer = new VectorLayer({
-                name: name,
-                source: source,
-                alwaysOnTop: true
-            });
-
         it("preset \"auto\", correct kml file, correct filename", done => {
-            const payload = {layer: layer, raw: rawSources[0], filename: "TestFile1.kml"};
+            const payload = {raw: rawSources[0], filename: "TestFile1.kml"};
 
-            testAction(importKML, payload, importedState, {}, [{
-                type: "Alerting/addSingleAlert",
-                payload: {
-                    category: "success",
-                    content: i18next.t("common:modules.tools.fileImport.alertingMessages.success", {filename: payload.filename})},
-                dispatch: true
-            }], {}, done, {"Maps/projectionCode": "EPSG:25832"});
+            testAction(importKML, payload, importedState, {}, [
+                {
+                    type: "addLayerConfig",
+                    payload: {
+                        gfiAttributes: {},
+                        name: "TestFile1"
+                    },
+                    dispatch: true
+                },
+                {
+                    type: "Alerting/addSingleAlert",
+                    payload: {
+                        category: "success",
+                        content: i18next.t("common:modules.tools.fileImport.alertingMessages.success", {filename: payload.filename})},
+                    dispatch: true
+                }
+            ], {}, done, {"Maps/projectionCode": "EPSG:25832"});
         });
 
         it("preset \"auto\", correct kml file, wrong filename", done => {
-            const payload = {layer: layer, raw: rawSources[0], filename: "bogus_file.bog"};
+            const payload = {raw: rawSources[0], filename: "bogus_file.bog"};
 
             testAction(importKML, payload, importedState, {}, [{
                 type: "Alerting/addSingleAlert",
@@ -67,7 +67,7 @@ describe("src_3_0_0/modules/fileImport/store/actionsFileImport.js", () => {
         });
 
         it("preset \"auto\", broken kml file, correct filename", done => {
-            const payload = {layer: layer, raw: rawSources[1], filename: "TestFile1.kml"};
+            const payload = {raw: rawSources[1], filename: "TestFile1.kml"};
 
             testAction(importKML, payload, importedState, {}, [{
                 type: "Alerting/addSingleAlert",
@@ -80,7 +80,7 @@ describe("src_3_0_0/modules/fileImport/store/actionsFileImport.js", () => {
         });
 
         it("preset \"auto\", empty kml file, correct filename", done => {
-            const payload = {layer: layer, raw: "", filename: "TestFile1.kml"};
+            const payload = {raw: "", filename: "TestFile1.kml"};
 
             testAction(importKML, payload, importedState, {}, [{
                 type: "Alerting/addSingleAlert",
@@ -93,32 +93,52 @@ describe("src_3_0_0/modules/fileImport/store/actionsFileImport.js", () => {
         });
 
         it("preset \"auto\", correct gpx file, correct filename", done => {
-            const payload = {layer: layer, raw: rawSources[2], filename: "TestFile1.gpx"};
+            const payload = {raw: rawSources[2], filename: "TestFile1.gpx"};
 
-            testAction(importKML, payload, importedState, {}, [{
-                type: "Alerting/addSingleAlert",
-                payload: {
-                    category: "success",
-                    content: i18next.t("common:modules.tools.fileImport.alertingMessages.success", {filename: payload.filename})},
-                dispatch: true
-            }], {}, done, {"Maps/projectionCode": "EPSG:25832"});
+            testAction(importKML, payload, importedState, {}, [
+                {
+                    type: "addLayerConfig",
+                    payload: {
+                        gfiAttributes: {},
+                        name: "TestFile1"
+                    },
+                    dispatch: true
+                },
+                {
+                    type: "Alerting/addSingleAlert",
+                    payload: {
+                        category: "success",
+                        content: i18next.t("common:modules.tools.fileImport.alertingMessages.success", {filename: payload.filename})},
+                    dispatch: true
+                }
+            ], {}, done, {"Maps/projectionCode": "EPSG:25832"});
         });
 
         it("preset \"auto\", correct geojson file, correct filename", done => {
-            const payload = {layer: layer, raw: rawSources[3], filename: "TestFile1.json"};
+            const payload = {raw: rawSources[3], filename: "TestFile1.json"};
 
-            testAction(importKML, payload, importedState, {}, [{
-                type: "Alerting/addSingleAlert",
-                payload: {
-                    category: "success",
-                    content: i18next.t("common:modules.tools.fileImport.alertingMessages.success", {filename: payload.filename})},
-                dispatch: true
-            }], {}, done, {"Maps/projectionCode": "EPSG:25832"});
+            testAction(importKML, payload, importedState, {}, [
+                {
+                    type: "addLayerConfig",
+                    payload: {
+                        gfiAttributes: {},
+                        name: "TestFile1"
+                    },
+                    dispatch: true
+                },
+                {
+                    type: "Alerting/addSingleAlert",
+                    payload: {
+                        category: "success",
+                        content: i18next.t("common:modules.tools.fileImport.alertingMessages.success", {filename: payload.filename})},
+                    dispatch: true
+                }
+            ], {}, done, {"Maps/projectionCode": "EPSG:25832"});
         });
 
         it("preset \"gpx\", correct kml file, correct filename", done => {
             const
-                payload = {layer: layer, raw: rawSources[3], filename: "TestFile1.json"},
+                payload = {raw: rawSources[3], filename: "TestFile1.json"},
                 tmpState = {...importedState, ...{selectedFiletype: "gpx"}};
 
             testAction(importKML, payload, tmpState, {}, [{
@@ -152,6 +172,38 @@ describe("src_3_0_0/modules/fileImport/store/actionsFileImport.js", () => {
                 type: "setFeatureExtents",
                 payload: {"file1": [100, 100, 100, 100], "file2": [10, 10, 10, 10]}
             }], {}, done);
+        });
+    });
+
+    describe("addLayerConfig", () => {
+        it("add layer config", done => {
+            const payload = {
+                gfiAttributes: {
+                    test: "123"
+                },
+                name: "TestLayer"
+            };
+
+            testAction(addLayerConfig, payload, null, {}, [
+                {
+                    type: "addLayerToLayerConfig",
+                    payload: {
+                        layerConfig: {
+                            id: "importDrawLayer51",
+                            gfiAttributes: {
+                                test: "123"
+                            },
+                            name: "TestLayer",
+                            showInLayerTree: true,
+                            typ: "VECTORBASE",
+                            type: "layer",
+                            visibility: true
+                        },
+                        parentKey: "Fachdaten"
+                    },
+                    dispatch: true
+                }
+            ], {}, done);
         });
     });
 });
