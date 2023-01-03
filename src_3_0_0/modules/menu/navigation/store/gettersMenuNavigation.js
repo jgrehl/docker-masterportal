@@ -21,21 +21,24 @@ const getters = {
     },
 
     /**
-     * Returns the entry for the given moduleType in the menu
+     * Returns true, if the entry for the given moduleType in the menu exists.
      * @param {MenuNavigationState} state Local vuex state.
      * @param {Object} _  not used
      * @param {Object} __ not used
      * @param {Object} rootGetters the root getters
      * @param {String} side menu side
      * @param {String} moduleType type of the module
-     * @returns {(function(side: String, moduleType: String): any|null)} The entry for the given moduleType in the menu.
+     * @returns {(function(side: String, moduleType: String): Boolean)} true, if the entry for the given moduleType in the menu exists.
      */
     isModuleActiveInMenu: (state, _, __, rootGetters) => (side, moduleType) => {
         const moduleIndex = rootGetters[`Menu/${side}`]?.sections[0].findIndex(sectionModule => {
             return sectionModule.type === moduleType;
         });
 
-        return state.entries[side][0] && state.entries[side][0][state.entries[side][0].length - 1] === moduleIndex;
+        if (moduleIndex !== undefined) {
+            return state.entries[side][0] && state.entries[side][0][state.entries[side][0].length - 1] === moduleIndex;
+        }
+        return false;
     }
 };
 
