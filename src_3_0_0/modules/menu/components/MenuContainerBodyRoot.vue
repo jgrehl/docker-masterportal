@@ -1,7 +1,7 @@
 <script>
 import LayerTree from "../../layerTree/components/LayerTree.vue";
 import MenuContainerBodyRootItems from "./MenuContainerBodyRootItems.vue";
-import MenuContainerHeaderTitle from "./MenuContainerHeaderTitle.vue";
+import MenuContainerBodyRootLogo from "./MenuContainerBodyRootLogo.vue";
 import {mapGetters} from "vuex";
 
 export default {
@@ -9,7 +9,7 @@ export default {
     components: {
         LayerTree,
         MenuContainerBodyRootItems,
-        MenuContainerHeaderTitle
+        MenuContainerBodyRootLogo
     },
     props: {
         /** Defines in which menu the component is being rendered */
@@ -47,7 +47,7 @@ export default {
 
 <template>
     <div>
-        <MenuContainerHeaderTitle
+        <MenuContainerBodyRootLogo
             v-if="titleBySide(side)"
             v-bind="titleBySide(side)"
         />
@@ -56,10 +56,10 @@ export default {
             class="form-control mr-sm-2"
             type="search"
             placeholder="Search"
-            aria-label="Search">
-        <keep-alive>
-            <LayerTree v-if="side === 'mainMenu'" />
-        </keep-alive>
+            aria-label="Search"
+        >
+
+        <LayerTree v-if="side === 'mainMenu'" />
         <template
             v-for="(_, key) in menu.sections"
             :key="key"
