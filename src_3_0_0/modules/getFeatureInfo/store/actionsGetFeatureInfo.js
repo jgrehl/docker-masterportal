@@ -59,6 +59,19 @@ export default {
                     mode = rootGetters["Maps/mode"],
                     allGfiFeatures = gfiFeaturesAtPixel(clickPixel, clickCartesianCoordinate, mode).concat(...gfiFeatures);
 
+                allGfiFeatures.sort((a, b) => {
+                    const zIndexA = rootGetters.layerConfigById(a.getLayerId())?.zIndex || 0,
+                        zIndexB = rootGetters.layerConfigById(b.getLayerId())?.zIndex || 0;
+
+                    if (zIndexA < zIndexB) {
+                        return -1;
+                    }
+                    else if (zIndexA > zIndexB) {
+                        return 1;
+                    }
+                    return 0;
+                });
+
                 // only commit if features found
                 if (allGfiFeatures.length > 0) {
                     commit("setGfiFeatures", allGfiFeatures);
