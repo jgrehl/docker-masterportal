@@ -121,7 +121,7 @@ export default {
                 <IconButton
                     :id="'layerpills-left-button'"
                     :aria="$t('modules.layerPill.previous')"
-                    :class-array="['btn-light, layerPillsButton']"
+                    :class-array="['btn-light']"
                     :icon="'bi-chevron-left'"
                     :interaction="() => moveLayerPills('left')"
                     :disabled="leftScrollDisabled"
@@ -143,7 +143,7 @@ export default {
                 </a>
                 <IconButton
                     :aria="$t('modules.layerPill.remove')"
-                    :class-array="['btn-light, layerpills-button']"
+                    :class-array="['btn-light']"
                     class="close-button"
                     :icon="'bi-x-lg'"
                     :interaction="() => removeLayerFromVisibleLayers(layer)"
@@ -155,7 +155,7 @@ export default {
                 <IconButton
                     :id="'layerpills-right-button'"
                     :aria="$t('modules.layerPill.next')"
-                    :class-array="['btn-light, layerpills-button']"
+                    :class-array="['btn-light']"
                     :icon="'bi-chevron-right'"
                     :interaction="() => moveLayerPills('right')"
                     :disabled="rightScrollDisabled"
@@ -182,7 +182,7 @@ export default {
         margin: 2px 5px;
         display: flex;
         align-items: center;
-        height: 32px;
+        height: 35px;
     }
 
     .nav-link {
@@ -202,12 +202,6 @@ export default {
 
     .layerpills {
         pointer-events: all;
-    }
-
-    .layerpills-button {
-        width: 2rem;
-        height: 2rem;
-        font-size: 1.2rem;
     }
 
 </style>
