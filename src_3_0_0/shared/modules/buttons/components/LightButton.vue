@@ -15,6 +15,11 @@ export default {
             default: null,
             required: false
         },
+        iconEnd: {
+            type: String,
+            default: null,
+            required: false
+        },
         customclass: {
             type: String,
             default: null,
@@ -46,13 +51,19 @@ export default {
             class="col"
         />
         <span class="col-10 lh-1 btn-texts row">
-            <span>
+            <span class="btn-title">
                 {{ $t(text) }}
             </span>
             <span class="btn-description text-wrap col-12 pt-2">
                 {{ $t(description) }}
             </span>
         </span>
+        <i
+            v-if="iconEnd !== null"
+            :class="iconEnd"
+            class="align-self-end flex-direction"
+            role="img"
+        />
     </button>
     <button
         v-else
@@ -67,7 +78,15 @@ export default {
             :class="icon"
             role="img"
         />
-        {{ $t(text) }}
+        <span class="btn-title">
+            {{ $t(text) }}
+        </span>
+        <i
+            v-if="iconEnd !== null"
+            :class="iconEnd"
+            class="ms-auto"
+            role="img"
+        />
     </button>
 </template>
 
@@ -79,17 +98,27 @@ export default {
     justify-content: center;
     white-space: nowrap;
     min-height: 2.5rem;
-    padding-right: 1.5rem;
+    padding-right: 1rem;
     padding-left: 1rem;
+    max-width: 100%;
 
     i {
         padding-right: .5rem;
+    }
+    i:last-child {
+        padding-left: .5rem;
+        padding-right: 0;
     }
     .btn-texts {
         text-align: left;
         .btn-description {
             font-size: $font-size-sm;
         }
+    }
+    .btn-title {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 }
 .btn-description {
