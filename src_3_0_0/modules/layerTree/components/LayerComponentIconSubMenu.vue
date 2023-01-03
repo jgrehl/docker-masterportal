@@ -36,16 +36,4 @@ export default {
     @import "~variables";
     @import "~mixins";
 
-    .layer-component-icon-sub-menu-button {
-        width: 2rem;
-        height: 2rem;
-        font-size: 1.2rem;
-
-        &:hover {
-                @include primary_action_hover;
-        }
-        &:focus {
-            @include primary_action_focus;
-        }
-    }
 </style>
