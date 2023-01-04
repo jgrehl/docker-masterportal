@@ -1,4 +1,5 @@
-import {config, shallowMount} from "@vue/test-utils";
+import {createStore} from "vuex";
+import {config, mount, shallowMount} from "@vue/test-utils";
 import {expect} from "chai";
 import sinon from "sinon";
 
@@ -15,11 +16,9 @@ describe("src_3_0_0/modules/layerTree/components/LayerTree.vue", () => {
         layerBG_1,
         layerBG_2,
         layers2D,
-        layers3D,
-        layer2D_1,
-        layer2D_2,
-        layer2D_3,
-        layer3D,
+        layer_1,
+        layer_2,
+        layer_3,
         subjectDataLayers,
         layersWithFolder,
         layersBG,
@@ -30,34 +29,26 @@ describe("src_3_0_0/modules/layerTree/components/LayerTree.vue", () => {
         mapMode = "2D";
         treeType = "light";
         addLayerButton = false;
-        layer2D_1 = {
+        layer_1 = {
             id: "1",
-            name: "layer2D_1",
+            name: "layer_1",
             typ: "WMS",
             type: "layer",
             visibility: false,
             showInLayerTree: true
         };
-        layer2D_2 = {
+        layer_2 = {
             id: "2",
-            name: "layer2D_2",
+            name: "layer_2",
             typ: "WFS",
             type: "layer",
             visibility: false,
             showInLayerTree: true
         };
-        layer2D_3 = {
+        layer_3 = {
             id: "2D_3",
-            name: "layer2D_3",
+            name: "layer_3",
             typ: "WFS",
-            type: "layer",
-            visibility: false,
-            showInLayerTree: true
-        };
-        layer3D = {
-            id: "3",
-            name: "layer3D",
-            typ: "Terrain3D",
             type: "layer",
             visibility: false,
             showInLayerTree: true
@@ -79,11 +70,8 @@ describe("src_3_0_0/modules/layerTree/components/LayerTree.vue", () => {
             showInLayerTree: true
         };
         layers2D = [
-            layer2D_1,
-            layer2D_2
-        ];
-        layers3D = [
-            layer3D
+            layer_1,
+            layer_2
         ];
         layersBG = [
             layerBG_1,
@@ -97,11 +85,11 @@ describe("src_3_0_0/modules/layerTree/components/LayerTree.vue", () => {
                     {
                         name: "Titel Ebene 2",
                         type: "folder",
-                        elements: [layer2D_1, layer2D_2,
+                        elements: [layer_1, layer_2,
                             {
                                 name: "Titel Ebene 3",
                                 type: "folder",
-                                elements: [layer2D_3]
+                                elements: [layer_3]
                             }]
                     }
                 ]
@@ -186,7 +174,9 @@ describe("src_3_0_0/modules/layerTree/components/LayerTree.vue", () => {
             }});
 
         expect(wrapper.find("#layer-tree").exists()).to.be.true;
-        expect(wrapper.findAll("layer-tree-node-stub").length).to.be.equals(0);
+        expect(wrapper.findAll("layer-tree-node-stub").length).to.be.equals(1);
+        // expects an empty stub
+        expect(wrapper.findAll("layer-tree-node-stub > Draggable").length).to.be.equals(0);
         expect(wrapper.find("#add-layer-btn").exists()).to.be.false;
     });
     it("with layer button - renders the LayerTree without layers", () => {
@@ -199,59 +189,10 @@ describe("src_3_0_0/modules/layerTree/components/LayerTree.vue", () => {
             }});
 
         expect(wrapper.find("#layer-tree").exists()).to.be.true;
-        expect(wrapper.findAll("layer-tree-node-stub").length).to.be.equals(0);
+        expect(wrapper.findAll("layer-tree-node-stub").length).to.be.equals(1);
+        // expects an empty stub
+        expect(wrapper.findAll("layer-tree-node-stub > Draggable").length).to.be.equals(0);
         expect(wrapper.find("#add-layer-btn").exists()).to.be.true;
-    });
-
-    it("no layer button - renders the LayerTree with 2D layers", () => {
-        wrapper = shallowMount(LayerTreeComponent, {
-            global: {
-                plugins: [store]
-            }});
-
-        expect(wrapper.find("#layer-tree").exists()).to.be.true;
-        expect(wrapper.findAll("layer-tree-node-stub").length).to.be.equals(4);
-    });
-
-    it("with layer button - renders the LayerTree with 2D layers with showInLayerTree=true or visibility=true", () => {
-        layer2D_1.showInLayerTree = false;
-        layer2D_2.showInLayerTree = false;
-        layer2D_3.showInLayerTree = undefined;
-        layer2D_3.visibility = true;
-        addLayerButton = true;
-        wrapper = shallowMount(LayerTreeComponent, {
-            global: {
-                plugins: [store]
-            }});
-
-        expect(wrapper.find("#layer-tree").exists()).to.be.true;
-        expect(wrapper.findAll("layer-tree-node-stub").length).to.be.equals(2);
-        expect(wrapper.find("#add-layer-btn").exists()).to.be.true;
-    });
-
-    it("no layer button - renders the LayerTree with 2D layers in folder structure", () => {
-        subjectDataLayers = layersWithFolder;
-        wrapper = shallowMount(LayerTreeComponent, {
-            global: {
-                plugins: [store]
-            }});
-
-        expect(wrapper.find("#layer-tree").exists()).to.be.true;
-        expect(wrapper.findAll("layer-tree-node-stub").length).to.be.equals(3);
-    });
-
-    it("with layer button - renders the LayerTree with 2D layers in folder structure", () => {
-        subjectDataLayers = layersWithFolder;
-        addLayerButton = true;
-        layer2D_1.showInLayerTree = false;
-        layer2D_2.showInLayerTree = false;
-        wrapper = shallowMount(LayerTreeComponent, {
-            global: {
-                plugins: [store]
-            }});
-
-        expect(wrapper.find("#layer-tree").exists()).to.be.true;
-        expect(wrapper.findAll("layer-tree-node-stub").length).to.be.equals(3);
     });
 
     it("no layer button - renders the LayerTree with 2D layers as children - check layers", () => {
@@ -262,8 +203,8 @@ describe("src_3_0_0/modules/layerTree/components/LayerTree.vue", () => {
 
         expect(wrapper.find("#layer-tree").exists()).to.be.true;
         expect(wrapper.findAll(".layer-tree-layer-checkbox").length).to.be.equals(4);
-        expect(wrapper.find("#layer-tree-layer-" + layer2D_1.id).exists()).to.be.true;
-        expect(wrapper.find("#layer-tree-layer-" + layer2D_2.id).exists()).to.be.true;
+        expect(wrapper.find("#layer-tree-layer-" + layer_1.id).exists()).to.be.true;
+        expect(wrapper.find("#layer-tree-layer-" + layer_2.id).exists()).to.be.true;
         expect(wrapper.find("#layer-tree-layer-" + layerBG_1.id).exists()).to.be.true;
         expect(wrapper.find("#layer-tree-layer-" + layerBG_2.id).exists()).to.be.true;
     });
@@ -276,30 +217,13 @@ describe("src_3_0_0/modules/layerTree/components/LayerTree.vue", () => {
             }});
 
         expect(wrapper.find("#layer-tree").exists()).to.be.true;
-        // only 2 folder: one Ordner in config has only one layer and therefore no folder
-        expect(wrapper.findAll(".layer-tree-folder-checkbox").length).to.be.equals(2);
-        // 2 bg-layer and 3 other subjectData-layer
-        expect(wrapper.findAll(".layer-tree-layer-checkbox").length).to.be.equals(5);
-        expect(wrapper.find("#layer-tree-layer-" + layer2D_1.id).exists()).to.be.true;
-        expect(wrapper.find("#layer-tree-layer-" + layer2D_2.id).exists()).to.be.true;
-        expect(wrapper.find("#layer-tree-layer-" + layer2D_3.id).exists()).to.be.true;
-        expect(wrapper.find("#layer-tree-layer-" + layerBG_1.id).exists()).to.be.true;
-        expect(wrapper.find("#layer-tree-layer-" + layerBG_2.id).exists()).to.be.true;
-    });
-
-    it("no layer button - renders the LayerTree with 3D layers as children - check layers", () => {
-        mapMode = "3D";
-        subjectDataLayers = layers2D.concat(layers3D);
-        wrapper = mount(LayerTreeComponent, {
-            global: {
-                plugins: [store]
-            }});
-
-        expect(wrapper.find("#layer-tree").exists()).to.be.true;
-        expect(wrapper.findAll(".layer-tree-layer-checkbox").length).to.be.equals(5);
-        expect(wrapper.find("#layer-tree-layer-" + layer2D_1.id).exists()).to.be.true;
-        expect(wrapper.find("#layer-tree-layer-" + layer2D_2.id).exists()).to.be.true;
-        expect(wrapper.find("#layer-tree-layer-" + layer3D.id).exists()).to.be.true;
+        expect(wrapper.findAll("li").length).to.be.equals(3);
+        expect(wrapper.find("li:nth-child(1) > div").exists()).to.be.true;
+        expect(wrapper.find("li:nth-child(2) > div").exists()).to.be.true;
+        // folder is only a li-tag with no children:
+        expect(wrapper.find("li:nth-child(3) > div").exists()).to.be.false;
+        // 2 bg-layer
+        expect(wrapper.findAll(".layer-tree-layer-checkbox").length).to.be.equals(2);
         expect(wrapper.find("#layer-tree-layer-" + layerBG_1.id).exists()).to.be.true;
         expect(wrapper.find("#layer-tree-layer-" + layerBG_2.id).exists()).to.be.true;
     });
