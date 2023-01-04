@@ -12,6 +12,15 @@ const getters = {
     getLayerByName: () => (layerName) => {
         return mapCollection.getMap("2D").getLayers().getArray().find(layer => layer.get("name") === layerName);
     },
+    /**
+    * Returns a layer by a given layer id.
+    * @param  {String} layerId Id of the Layer.
+    * @return {module:ol/layer/Base~BaseLayer} The layer found by name.
+    */
+    getLayerById: () => (layerId) => {
+        return mapCollection.getMap("2D").getLayers().getArray().find(layer => layer.get("name") === layerId);
+    },
+
 
     /**
      * Returns the corresponding resolution for the scale.
