@@ -370,7 +370,7 @@ export default {
                 <select
                     id="printLayout"
                     class="form-select"
-                    aria-label="$t('modules.tools.print.layoutLabel')"
+                    :aria-label="$t('modules.tools.print.layoutLabel')"
                     @change="layoutChanged($event.target.value)"
                 >
                     <option
@@ -515,7 +515,7 @@ export default {
                 <div class="col-md-12 d-flex justify-content-center">
                     <FlatButton
                         id="printBtn"
-                        aria-label="$t('modules.tools.print.printLabel')"
+                        :aria-label="$t('modules.tools.print.printLabel')"
                         :interaction="print"
                         :text="$t('modules.tools.print.printLabel')"
                         :icon="printIcon"
@@ -559,7 +559,7 @@ export default {
                 <div class="col-md-7 d-grid gap-2 modules-print-download-button-container">
                     <FlatButton
                         v-if="file.finishState"
-                        aria-label="$t('modules.tools.print.downloadFile')"
+                        :aria-label="$t('modules.tools.print.downloadFile')"
                         :interaction="($event) => download($event.target, file.downloadUrl, file.filename)"
                         :text="$t('modules.tools.print.downloadFile')"
                         :icon="downloadIcon"
