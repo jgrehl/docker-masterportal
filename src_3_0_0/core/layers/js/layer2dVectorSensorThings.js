@@ -40,6 +40,7 @@ export default function Layer2dVectorSensorThings (attributes) {
         mqttRh: 2,
         mqttQos: 2,
         mqttOptions: {},
+        moveLayerRevisible: false,
         datastreamAttributes: [
             "@iot.id",
             "@iot.selfLink",
@@ -997,6 +998,9 @@ Layer2dVectorSensorThings.prototype.aggregateDataStreamPhenomenonTime = function
  */
 Layer2dVectorSensorThings.prototype.toggleSubscriptionsOnMapChanges = function () {
     this.startSubscription(this.getLayer().getSource().getFeatures());
+    if (this.get("observeLocation") && this.get("moveLayerRevisible") === false) {
+        this.set("moveLayerRevisible", true);
+    }
 };
 
 /**
@@ -1103,7 +1107,7 @@ Layer2dVectorSensorThings.prototype.updateSubscription = function () {
         rh = this.get("mqttRh"),
         qos = this.get("mqttQos");
 
-    if (!this.get("loadThingsOnlyInCurrentExtent")) {
+    if (!this.get("loadThingsOnlyInCurrentExtent") && this.get("moveLayerRevisible") === false) {
         this.unsubscribeFromSensorThings(datastreamIds, subscriptionTopics, version, mqttClient);
         this.subscribeToSensorThings(datastreamIds, subscriptionTopics, version, mqttClient, {rh, qos});
         if (typeof this.get("historicalLocations") === "number") {
@@ -1122,6 +1126,7 @@ Layer2dVectorSensorThings.prototype.updateSubscription = function () {
             );
         });
     }
+    this.set("moveLayerRevisible", false);
 };
 
 /**
