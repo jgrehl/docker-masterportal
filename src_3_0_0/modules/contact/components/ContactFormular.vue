@@ -116,14 +116,16 @@ export default {
                 </label>
                 <p v-html="$t('common:modules.tools.contact.privacyPolicy.info', {privacyPolicyLink})" />
             </div>
-            <FlatButton
-                id="module-contact-send-message"
-                aria-label="$t('modules.tools.contact.sendButton')"
-                type="submit"
-                :text="$t('modules.tools.contact.sendButton')"
-                :icon="sendIcon"
-                :disabled="!validForm"
-            />
+            <div class="d-flex justify-content-center">
+                <FlatButton
+                    id="module-contact-send-message"
+                    aria-label="$t('modules.tools.contact.sendButton')"
+                    type="submit"
+                    :text="$t('modules.tools.contact.sendButton')"
+                    :icon="sendIcon"
+                    :disabled="!validForm"
+                />
+            </div>
         </form>
     </div>
 </template>
