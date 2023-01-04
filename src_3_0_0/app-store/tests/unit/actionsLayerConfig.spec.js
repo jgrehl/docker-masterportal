@@ -260,7 +260,7 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
             state.layerConfig = layerConfig;
             actions.extendLayers({dispatch, state});
 
-            expect(dispatch.callCount).to.equals(3);
+            expect(dispatch.callCount).to.equals(2);
             expect(dispatch.firstCall.args[0]).to.equals("addBackgroundLayerAttribute");
             expect(dispatch.firstCall.args[1]).to.be.undefined;
             expect(dispatch.secondCall.args[0]).to.equals("updateLayerConfigs");
@@ -271,10 +271,7 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
                 {
                     id: "453",
                     visibility: true
-                }
-            ]);
-            expect(dispatch.thirdCall.args[0]).to.equals("updateLayerConfigs");
-            expect(dispatch.thirdCall.args[1]).to.deep.equals([
+                },
                 {
                     id: "10220"
                 },
@@ -290,7 +287,7 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
             state.layerConfig = layerConfigCustom;
             actions.extendLayers({dispatch, state});
 
-            expect(dispatch.callCount).to.be.equals(3);
+            expect(dispatch.callCount).to.be.equals(2);
             expect(dispatch.firstCall.args[0]).to.equals("addBackgroundLayerAttribute");
             expect(dispatch.firstCall.args[1]).to.be.undefined;
             expect(dispatch.secondCall.args[0]).to.equals("updateLayerConfigs");
@@ -302,10 +299,7 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
                     id: ["717", "718", "719"],
                     visibility: true,
                     name: "Geobasiskarten (farbig)"
-                }
-            ]);
-            expect(dispatch.thirdCall.args[0]).to.equals("updateLayerConfigs");
-            expect(dispatch.thirdCall.args[1]).to.deep.equals([
+                },
                 {
                     id: "1103"
                 },
