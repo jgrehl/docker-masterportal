@@ -17,7 +17,7 @@ export default {
     },
     data () {
         return {
-            classInfo: "btn-light, layer-component-icon-info-button"
+            classInfo: ["btn-light", "layer-component-icon-info-button"]
         };
     },
     computed: {
@@ -35,7 +35,7 @@ export default {
     >
         <IconButton
             :id="'layer-component-icon-info-button-' + layerConf.id"
-            :class-array="[classInfo]"
+            :class-array="classInfo"
             :aria="$t('common:tree.infosAndLegend')"
             :icon="icon"
             :interaction="() => startLayerInformation(layerConf)"
