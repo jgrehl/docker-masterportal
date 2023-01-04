@@ -3,7 +3,6 @@ import draggable from "vuedraggable";
 import {mapActions, mapGetters} from "vuex";
 
 import Layer from "./LayerComponent.vue";
-import getNestedValues from "../../../shared/js/utils/getNestedValues";
 import {sortObjects} from "../../../shared/js/utils/sortObjects";
 
 /**
@@ -28,7 +27,7 @@ export default {
         };
     },
     computed: {
-        ...mapGetters(["layerConfig"]),
+        ...mapGetters(["portalConfig", "allLayerConfigsStructured", "layerConfigsByArributes"]),
 
         /**
          * v-model for sorted layerConfig.
@@ -39,8 +38,14 @@ export default {
              * @returns {void}
              */
             get () {
-                const sortedLayerConfig = getNestedValues(this.layerConfig, "elements", true).flat(Infinity);
+                let sortedLayerConfig;
 
+                if (this.addLayerButton) {
+                    sortedLayerConfig = this.layerConfigsByArributes({showInLayerTree: true});
+                }
+                else {
+                    sortedLayerConfig = this.allLayerConfigsStructured();
+                }
                 sortObjects(sortedLayerConfig, "zIndex", "desc");
 
                 return sortedLayerConfig;
@@ -58,6 +63,12 @@ export default {
                     this.replaceByIdInLayerConfig(conf);
                 });
             }
+        },
+        treeType () {
+            return this.portalConfig?.tree?.type ? this.portalConfig?.tree?.type : "light";
+        },
+        addLayerButton () {
+            return this.portalConfig?.tree?.addLayerButton ? this.portalConfig?.tree?.addLayerButton : this.treeType === "auto";
         }
     },
     methods: {
