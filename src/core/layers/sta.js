@@ -84,6 +84,7 @@ export default function STALayer (attrs) {
 
     // this.intervallRequest = null;
     // this.keepUpdating = false;
+    // this.moveLayerRevisible = "";
 
     moment.locale("de");
     this.registerInteractionMapScaleListeners();
@@ -430,6 +431,9 @@ STALayer.prototype.toggleSubscriptionsOnMapChanges = function () {
     if (state === true) {
         this.createLegend();
         // this.startSubscription(this.get("layer").getSource().getFeatures());
+        // if (this.get("observeLocation") && this.moveLayerRevisible === false) {
+        //     this.moveLayerRevisible = state;
+        // }
     }
     else if (state === false) {
         this.stopSubscription();
@@ -451,7 +455,7 @@ STALayer.prototype.updateSubscription = function () {
         //     rh = this.get("mqttRh"),
         //     qos = this.get("mqttQos");
 
-        // if (!this.get("loadThingsOnlyInCurrentExtent")) {
+        // if (!this.get("loadThingsOnlyInCurrentExtent") && !this.moveLayerRevisible) {
         //     this.unsubscribeFromSensorThings(datastreamIds, subscriptionTopics, version, isVisibleInMap, mqttClient);
         //     this.subscribeToSensorThings(datastreamIds, subscriptionTopics, version, mqttClient, {rh, qos});
         //     if (typeof this.get("historicalLocations") === "number") {
@@ -470,6 +474,7 @@ STALayer.prototype.updateSubscription = function () {
         //         );
         //     });
         // }
+        // this.moveLayerRevisible = false;
     }, 2000);
 };
 
