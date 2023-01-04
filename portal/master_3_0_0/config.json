@@ -132,6 +132,9 @@
             "type": "openConfig"
           },
           {
+            "type": "bufferAnalysis"
+          },
+          {
             "type": "print",
             "printServiceId": "mapfish",
             "printAppId": "master",

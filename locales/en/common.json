@@ -986,16 +986,16 @@
                 "headline": "News"
             },
             "bufferAnalysis": {
-                "sourceSelectLabel": "source layer",
-                "targetSelectLabel": "target layer",
-                "resultTypeLabel": "result type",
-                "overlapping": "inside radius",
-                "notOverlapping": "outside radius",
-                "rangeLabel": "radius (m)",
-                "clearButton": "Reset",
-                "saveButton": "Save",
-                "sourceLayerNotFound": "Der gespeicherte Quell-Layer mit der ID {{layerId}} wurde nicht gefunden.",
-                "targetLayerNotFound": "Der gespeicherte Ziel-Layer mit der ID {{layerId}} wurde nicht gefunden."
+              "sourceSelectLabel": "source layer",
+              "targetSelectLabel": "target layer",
+              "resultTypeLabel": "result type",
+              "overlapping": "inside radius",
+              "notOverlapping": "outside radius",
+              "rangeLabel": "radius (m)",
+              "clearButton": "Reset",
+              "saveButton": "Copy link",
+              "sourceLayerNotFound": "Der gespeicherte Quell-Layer mit der ID {{layerId}} wurde nicht gefunden.",
+              "targetLayerNotFound": "Der gespeicherte Ziel-Layer mit der ID {{layerId}} wurde nicht gefunden."
             },
             "wfsSearch": {
                 "wrongConfig": "The layer with the id \"{{id}}\" for the search instance \"{{title}}\" is not defined.",
