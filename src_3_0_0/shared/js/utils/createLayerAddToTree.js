@@ -1,7 +1,6 @@
 import rawLayerList from "@masterportal/masterportalapi/src/rawLayerList";
 import store from "../../../app-store";
 import layerCollection from "../../../core/layers/js/layerCollection";
-import {nextTick} from "vue";
 
 /**
  * Creates a layer containing the given features and shows it in menu tree.
@@ -64,10 +63,7 @@ function getLayer (id) {
  */
 async function addLayerModel (attributes, id) {
     await store.dispatch("addLayerToLayerConfig", {layerConfig: attributes, parentKey: "Fachdaten"}, {root: true});
-    //nextTick(() => {
-        console.log("layerCollection.getLayerById(id)", layerCollection.getLayerById(id));
-        return layerCollection.getLayerById(id);
-    //});
+    return layerCollection.getLayerById(id);
 }
 
 /**
