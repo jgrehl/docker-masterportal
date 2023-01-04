@@ -79,13 +79,12 @@ export default {
     >
         <div class="d-flex justify-content-between align-items-center">
             <div
-                class="layer-tree-layer-title pe-2 py-1"
+                class="layer-tree-layer-title pe-2 py-1 ps-1"
                 @click="visibilityInLayerTreeChanged(!isLayerVisible)"
                 @keydown.enter="visibilityInLayerTreeChanged(!isLayerVisible)"
             >
                 <span
                     :id="'layer-tree-layer-checkbox-' + conf.id"
-                    title="<%=removeTopicText%>"
                     :class="[
                         'layer-tree-layer-checkbox pe-2',
                         {
@@ -133,7 +132,7 @@ export default {
             border-radius: 10px;
         }
 
-        .layer-tree-layer-title, .layer-tree-layer-checkbox {
+        .layer-tree-layer-title {
             &:hover {
                 @include primary_action_hover;
             }
