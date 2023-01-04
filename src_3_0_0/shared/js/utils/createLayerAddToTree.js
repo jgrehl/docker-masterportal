@@ -1,6 +1,7 @@
 import rawLayerList from "@masterportal/masterportalapi/src/rawLayerList";
 import store from "../../../app-store";
 import layerCollection from "../../../core/layers/js/layerCollection";
+import {nextTick} from "vue";
 
 /**
  * Creates a layer containing the given features and shows it in menu tree.
@@ -11,7 +12,7 @@ import layerCollection from "../../../core/layers/js/layerCollection";
  * @param {Object} thfConfig content of config.json's property 'treeHighlightedFeatures'
  * @returns {void}
  */
-function createLayerAddToTree (layerId, features, treeType, thfConfig = {}) {
+async function createLayerAddToTree (layerId, features, treeType, thfConfig = {}) {
     if (layerId) {
         const layerNameKey = thfConfig.layerName ? thfConfig.layerName : "common:tree.selectedFeatures",
             originalLayer = getLayer(layerId);
@@ -25,7 +26,7 @@ function createLayerAddToTree (layerId, features, treeType, thfConfig = {}) {
                 layerSource = null;
 
             if (!highlightLayer) {
-                highlightLayer = addLayerModel(attributes, layerId);
+                highlightLayer = await addLayerModel(attributes, id);
             }
             setStyle(highlightLayer, attributes.styleId);
             layerSource = highlightLayer.getLayerSource();
@@ -61,9 +62,12 @@ function getLayer (id) {
  * @param {String} id of the layer
  * @returns {Object} the created layer
  */
-function addLayerModel (attributes, id) {
-    store.dispatch("addLayerToLayerConfig", {layerConfig: attributes, parentKey: "Fachdaten"}, {root: true});
-    return layerCollection.getLayerById(id);
+async function addLayerModel (attributes, id) {
+    await store.dispatch("addLayerToLayerConfig", {layerConfig: attributes, parentKey: "Fachdaten"}, {root: true});
+    //nextTick(() => {
+        console.log("layerCollection.getLayerById(id)", layerCollection.getLayerById(id));
+        return layerCollection.getLayerById(id);
+    //});
 }
 
 /**
