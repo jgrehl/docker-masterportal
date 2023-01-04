@@ -3,7 +3,7 @@ import ModalItem from "../../../shared/components/modals/components/ModalItem.vu
 import ListItem from "../../../shared/components/list/components/ListItem.vue";
 import {mapActions, mapGetters, mapMutations} from "vuex";
 import WfsSearchLiteral from "./WfsSearchLiteral.vue";
-import {createUserHelp} from "../js/literalFunctions";
+// import {createUserHelp} from "../js/literalFunctions";
 import {searchFeatures} from "../js/requests";
 import isObject from "../../../shared/js/utils/isObject";
 
@@ -30,8 +30,8 @@ export default {
             "currentInstance",
             "requiredFields"
         ]),
-        // @todo ?
-        ...mapGetters("Language", ["currentLocale"]),
+        // @todo
+        // ...mapGetters("Language", ["currentLocale"]),
         headers () {
             if (this.results.length === 0) {
                 return null;
@@ -62,12 +62,12 @@ export default {
         }
     },
     watch: {
-        // @todo if neccessary?
-        currentLocale () {
-            if (this.active && this.userHelp !== "hide") {
-                createUserHelp(this.currentInstance.literals);
-            }
-        }
+        // @todo
+        // currentLocale () {
+        //     if (this.active && this.userHelp !== "hide") {
+        //         createUserHelp(this.currentInstance.literals);
+        //     }
+        // }
     },
     created () {
         this.prepareModule();
