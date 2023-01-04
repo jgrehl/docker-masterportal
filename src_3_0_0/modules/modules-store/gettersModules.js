@@ -2,6 +2,7 @@ import {generateSimpleGetters} from "../../shared/js/utils/generators";
 import stateModules from "./stateModules";
 
 import AddWMS from "../addWMS/components/AddWMS.vue";
+import BufferAnalysis from "../bufferAnalysis/components/BufferAnalysis.vue";
 import Contact from "../contact/components/ContactFormular.vue";
 import CoordToolkit from "../coordToolkit/components/CoordToolkit.vue";
 import FeatureLister from "../featureLister/components/FeatureLister.vue";
@@ -34,6 +35,7 @@ const getters = {
     componentMap: () => {
         return {
             addWMS: AddWMS,
+            bufferAnalysis: BufferAnalysis,
             contact: Contact,
             coordToolkit: CoordToolkit,
             featureLister: FeatureLister,
