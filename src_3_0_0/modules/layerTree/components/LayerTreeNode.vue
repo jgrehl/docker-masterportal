@@ -87,9 +87,8 @@ export default {
 <template>
     <Draggable
         v-model="sortedLayerConfig"
-        class="dragArea no-list"
+        class="dragArea no-list ps-0 ms-2"
         tag="ul"
-        :group="{ name: 'g1' }"
         item-key="name"
         handle=".handle-layer-component-drag"
         chosen-class="chosen"
@@ -116,11 +115,12 @@ export default {
 @import "~variables";
     .no-list{
         list-style: none;
-        font-size: $font-size-base;
     }
 
     .chosen {
         color: $light_grey_contrast;
         background-color: lighten($accent_hover, 10%);
+        padding: 0;
+        border-radius: 10px;
     }
 </style>
