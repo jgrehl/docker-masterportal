@@ -79,7 +79,7 @@ export default {
     >
         <div class="d-flex justify-content-between align-items-center">
             <div
-                class="layer-tree-layer-title pe-2 p-1"
+                class="layer-tree-layer-title pe-2 py-1"
                 @click="visibilityInLayerTreeChanged(!isLayerVisible)"
                 @keydown.enter="visibilityInLayerTreeChanged(!isLayerVisible)"
             >
@@ -132,7 +132,6 @@ export default {
             width: 100%;
             border-radius: 10px;
         }
-
 
         .layer-tree-layer-title, .layer-tree-layer-checkbox {
             &:hover {
