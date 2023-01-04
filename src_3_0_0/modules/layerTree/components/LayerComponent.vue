@@ -65,13 +65,17 @@ export default {
                 :conf="conf"
                 :is-layer-tree="isLayerTree()"
             />
-            <div class="d-flex">
+            <div
+                v-if="isLayerTree()"
+                class="d-flex"
+            >
                 <LayerComponentIconSubMenu :layer-conf="conf" />
                 <LayerComponentIconInfo :layer-conf="conf" />
                 <LayerComponentIconDrag :layer-conf="conf" />
             </div>
         </div>
         <div
+            v-if="isLayerTree()"
             :id="'collapse-sub-menu-' + conf.id"
             class="collapse"
         >
