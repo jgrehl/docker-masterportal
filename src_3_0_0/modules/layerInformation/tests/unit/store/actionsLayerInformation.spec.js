@@ -30,8 +30,7 @@ describe("src_3_0_0/modules/layerInformation/store/actionsLayerInformation.js", 
                 {type: "setMetadataURL", payload: layerConf.datasets[0].md_id, dispatch: true},
                 {type: "additionalSingleLayerInfo", payload: undefined, dispatch: true},
                 {type: "Menu/resetMenu", payload: {side: "mainMenu", module: {type: "layerInformation"}}, dispatch: true},
-                {type: "Menu/activateMenuNavigation", payload: {side: "mainMenu", module: {type: "layerInformation"}}, dispatch: true},
-                {type: "setActive", payload: true}
+                {type: "Menu/setMenuBackAndActivateItem", payload: {side: "mainMenu", module: {type: "layerInformation"}}, dispatch: true}
             ], {}, done);
         });
 
@@ -59,8 +58,8 @@ describe("src_3_0_0/modules/layerInformation/store/actionsLayerInformation.js", 
                 {type: "setLayerInfo", payload: layerConf},
                 {type: "setMetadataURL", payload: layerConf.datasets[0].md_id, dispatch: true},
                 {type: "additionalSingleLayerInfo", payload: undefined, dispatch: true},
-                {type: "Menu/resetMenu", payload: {side: "mainMenu", module: {type: "layerInformation"}}, dispatch: true},
-                {type: "setActive", payload: false}
+                {type: "Menu/resetMenu", payload: {side: "mainMenu", module: {type: "layerInformation"}}, dispatch: true}
+                // {type: "setActive", payload: false}
             ], {}, done);
         });
 
