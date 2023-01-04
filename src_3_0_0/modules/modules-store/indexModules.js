@@ -3,6 +3,7 @@ import getters from "./gettersModules";
 import state from "./stateModules";
 
 import AddWMS from "../addWMS/store/indexAddWMS";
+import BufferAnalysis from "../bufferAnalysis/store/indexBufferAnalysis";
 import Contact from "../contact/store/indexContact";
 import CoordToolkit from "../coordToolkit/store/indexCoordToolkit";
 import FeatureLister from "../featureLister/store/indexFeatureLister";
@@ -35,6 +36,7 @@ export default {
     modules: {
         // modules must be copied, else tests fail in watch mode
         AddWMS: {...AddWMS},
+        BufferAnalysis: {...BufferAnalysis},
         Contact: {...Contact},
         CoordToolkit: {...CoordToolkit},
         FeatureLister: {...FeatureLister},
