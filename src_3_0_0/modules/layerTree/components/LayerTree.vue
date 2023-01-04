@@ -18,7 +18,7 @@ export default {
         };
     },
     computed: {
-        ...mapGetters(["portalConfig", "allLayerConfigsStructured", "layerConfigsByArributes"]),
+        ...mapGetters(["portalConfig"]),
         ...mapGetters("Menu/Navigation", ["entries", "isModuleActiveInMenu"]),
         ...mapGetters("Modules/LayerTree", ["active", "menuSide", "type"]),
         treeType () {
@@ -26,12 +26,6 @@ export default {
         },
         addLayerButton () {
             return this.portalConfig?.tree?.addLayerButton ? this.portalConfig?.tree?.addLayerButton : this.treeType === "auto";
-        },
-        confs () {
-            if (this.addLayerButton) {
-                return this.layerConfigsByArributes({showInLayerTree: true});
-            }
-            return this.allLayerConfigsStructured();
         }
     },
     watch: {
@@ -74,15 +68,7 @@ export default {
         id="layer-tree"
         class="layer-tree"
     >
-        <template
-            v-for="(conf, index) in confs"
-            :key="index"
-        >
-            <LayerTreeNode
-                :id="conf.id"
-                :conf="conf"
-            />
-        </template>
+        <LayerTreeNode />
         <div
             v-if="addLayerButton"
             class="mt-4 d-flex justify-content-center sticky"
