@@ -97,7 +97,6 @@
     "child-process-promise": "^2.2.1",
     "cross-env": "^7.0.3",
     "css-loader": "1.0.1",
-    "dotenv": "^16.0.3",
     "esbuild-loader": "^3.0.1",
     "eslint": "^8.36.0",
     "eslint-plugin-chai-friendly": "^0.7.2",
