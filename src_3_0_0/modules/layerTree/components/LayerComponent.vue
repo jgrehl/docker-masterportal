@@ -48,7 +48,7 @@ export default {
          * @returns {Boolean} true, if this parent is a 'LayerTreeNode' in layer-tree
          */
         isLayerTree () {
-            return this.$parent.$options.name === "LayerTreeNode";
+            return this.$parent.$options.name !== "LayerSelectionTreeNode";
         }
     }
 };
@@ -65,23 +65,17 @@ export default {
                 :conf="conf"
                 :is-layer-tree="isLayerTree()"
             />
-            <div
-                v-if="isLayerTree()"
-                class="d-flex"
-            >
+            <div class="d-flex">
                 <LayerComponentIconSubMenu :layer-conf="conf" />
                 <LayerComponentIconInfo :layer-conf="conf" />
                 <LayerComponentIconDrag :layer-conf="conf" />
             </div>
         </div>
         <div
-            v-if="isLayerTree()"
-            :id="'collapseSubMenu-' + conf.id"
+            :id="'collapse-sub-menu-' + conf.id"
             class="collapse"
         >
-            <LayerComponentSubMenu
-                :layer-conf="conf"
-            />
+            <LayerComponentSubMenu :layer-conf="conf" />
         </div>
     </div>
 </template>
@@ -99,7 +93,7 @@ export default {
             border-radius: 10px;
         }
 
-        .layer-tree-layer-title, .layer-tree-layer-checkbox {
+        .layer-tree-layer-title {
             &:hover {
                 @include primary_action_hover;
             }

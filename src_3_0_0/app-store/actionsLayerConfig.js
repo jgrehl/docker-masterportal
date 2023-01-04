@@ -63,21 +63,20 @@ export default {
      * @returns {void}
      */
     extendLayers ({dispatch, state}) {
+        let layerContainer = [];
         const orderedLayerConfigKeys = Object.keys(state.layerConfig).sort((a, b) => orderThemenconfig.indexOf(a) - orderThemenconfig.indexOf(b));
 
         dispatch("addBackgroundLayerAttribute");
 
         orderedLayerConfigKeys.forEach(layerConfigKey => {
             state.layerConfig[layerConfigKey]?.elements?.reverse();
-
-            const layerContainer = getNestedValues(state.layerConfig[layerConfigKey], "elements", true).flat(Infinity);
-
-            if (state.portalConfig?.tree?.type === "auto") {
-                dispatch("processTreeTypeAuto", layerContainer);
-            }
-
-            dispatch("updateLayerConfigs", layerContainer);
         });
+
+        layerContainer = getNestedValues(state.layerConfig, "elements", true).flat(Infinity);
+        if (state.portalConfig?.tree?.type === "auto") {
+            dispatch("processTreeTypeAuto", layerContainer);
+        }
+        dispatch("updateLayerConfigs", layerContainer);
     },
 
     /**
@@ -117,7 +116,7 @@ export default {
      */
     updateLayerConfigs ({commit, state}, layerContainer) {
         layerContainer.forEach(layerConf => {
-            const rawLayer = getAndMergeRawLayer(layerConf, state.portalConfig?.tree?.type);
+            const rawLayer = getAndMergeRawLayer(layerConf, !state.portalConfig?.tree?.addLayerButton);
 
             if (rawLayer) {
                 commit("replaceByIdInLayerConfig", {layerConfigs: [{layer: rawLayer, id: layerConf.id}]});
