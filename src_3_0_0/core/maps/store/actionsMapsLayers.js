@@ -23,6 +23,36 @@ export default {
     },
 
     /**
+     * Verifies if all features of a given layerId are loaded
+     * and waits if the layer has not been loaded previously
+     *
+     * @param {String} layerId - the layer ID to check loaded status
+     *
+     * @return {Promise} Resolves if the given Layer is fully loaded
+     */
+    async areLayerFeaturesLoaded (layerId) {
+        const map2D = mapCollection.getMap("2D");
+
+        await new Promise(resolve => {
+            map2D.getLayers().getArray().forEach(layer => {
+                if (layer.id === layerId) {
+                    resolve();
+                }
+            });
+
+            // To Do: was muss hier her??
+            // const channel = Radio.channel("VectorLayer");
+
+            // channel.on({"featuresLoaded": id => {
+            //     commit("addLoadedLayerId", id);
+            //     if (id === layerId) {
+            //         resolve();
+            //     }
+            // }});
+        });
+    },
+
+    /**
      * Checks if a layer is in the map collections
      * @param {Object} _ context object.
      * @param {module:ol/layer/Base~BaseLayer} layer The layer to check.
