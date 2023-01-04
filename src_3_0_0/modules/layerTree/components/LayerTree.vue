@@ -26,7 +26,7 @@ export default {
 <style lang="scss" scoped>
 @import "~variables";
     .layer-tree{
-        padding: $padding;
+        padding-left: $padding;
         font-size: $font-size-base;
         overflow-y: auto;
         max-height: 350px;
