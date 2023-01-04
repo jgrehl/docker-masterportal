@@ -1,4 +1,3 @@
-import * as i18nextModule from "i18next";
 import I18NextVue from "i18next-vue";
 import LanguageDetector from "i18next-browser-languagedetector";
 import Backend from "i18next-http-backend";
@@ -115,10 +114,7 @@ export function initLanguage (portalLanguageConfig) {
         });
     i18next.on("initialized", () => {
         if (!portalLanguage.enabled) {
-            i18next.changeLanguage("en");
+            i18next.changeLanguage("de");
         }
     });
-    // @todo: remove if languages can be changed by language-tool, now you can use  i18next.changeLanguage("de"); on browser console
-    global.i18next = i18next;
-    global.i18next = i18nextModule.i18next;
 }
