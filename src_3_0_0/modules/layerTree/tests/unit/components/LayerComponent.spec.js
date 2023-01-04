@@ -102,4 +102,20 @@ describe("src_3_0_0/modules/layerTree/components/LayerComponent.vue", () => {
         expect(wrapper.findAll("layer-component-icon-info-stub").length).to.be.equals(1);
         expect(wrapper.findAll("layer-component-sub-menu-stub").length).to.be.equals(1);
     });
+
+    it("renders layer only with checkbox - no submenu", () => {
+        isLayerTree = false;
+        wrapper = shallowMount(LayerComponent, {
+            global: {
+                plugins: [store]
+            },
+            propsData
+        });
+
+        expect(wrapper.find("#layer-tree-layer-" + propsData.conf.id).exists()).to.be.true;
+        expect(wrapper.findAll("layer-check-box-stub").length).to.be.equals(1);
+        expect(wrapper.findAll("layer-component-icon-sub-menu-stub").length).to.be.equals(0);
+        expect(wrapper.findAll("layer-component-icon-info-stub").length).to.be.equals(0);
+        expect(wrapper.findAll("layer-component-sub-menu-stub").length).to.be.equals(0);
+    });
 });
