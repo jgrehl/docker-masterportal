@@ -72,6 +72,9 @@ export default {
             }
         });
     },
+    unmounted () {
+        this.resetToThemeChooser();
+    },
     methods: {
         ...mapActions("Modules/FeatureLister", [
             "switchToList",
@@ -93,14 +96,6 @@ export default {
         toBold,
         removeVerticalBar (value) {
             return value.replaceAll("|", "<br>");
-        },
-        /**
-         * Closes this tool window by setting active to false
-         * @returns {void}
-         */
-        close () {
-            this.$store.dispatch("Maps/removeHighlightFeature", "decrease", {root: true});
-            this.resetToThemeChooser();
         },
         /**
          * Sorts the table items according to the clicked table header.
