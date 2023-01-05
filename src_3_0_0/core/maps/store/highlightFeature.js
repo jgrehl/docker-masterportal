@@ -1,5 +1,5 @@
 // import {getStyleModelById} from "../../../../../src/core/layers/RadioBridge.js";
-import {Style, Circle as CircleStyle, Stroke} from "ol/style.js";
+
 /**
  * check how to highlight
  * @param {Object} param store context
@@ -180,8 +180,8 @@ function increaseFeature (commit, getters, highlightObject) {
  * @fires VectorStyle#RadioRequestStyleListReturnModelById
  * @returns {ol/style} ol style
  */
-function styleObject () {
-// function styleObject (highlightObject, feature) {
+// eslint-disable-next-line
+function styleObject (highlightObject, feature) {
     // @todo: use when getStyleModelById has moved
     // const stylelistmodel = highlightObject.styleId ? getStyleModelById(highlightObject.styleId) : getStyleModelById(highlightObject.layer.id);
     // let style;
@@ -194,22 +194,6 @@ function styleObject () {
     // }
 
     // return style;
-
-
-    // Vilma inserted to test highlighting point features
-    const stroke = new Stroke({
-            color: "rgba(25,255,0,0.9)",
-            width: 2
-        }),
-        style = new Style({
-            stroke: stroke,
-            image: new CircleStyle({
-                radius: 4,
-                stroke: stroke
-            })
-        });
-
-    return style;
 }
 
 export {highlightFeature};
