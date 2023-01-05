@@ -459,7 +459,7 @@
             },
             "layerSlider": {
                 "displayLayers": "Display of various layers.",
-                "title": "Simulation of example WMS",
+                "title": "Simulation of example services",
                 "titleNotConfigured": "Title not configured",
                 "serviceOne": "Service 1",
                 "serviceTwo": "Service 2",

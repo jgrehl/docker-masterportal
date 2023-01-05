@@ -10,6 +10,7 @@ import GetFeatureInfo from "../getFeatureInfo/store/indexGetFeatureInfo";
 import Language from "../language/store/indexLanguage";
 import LayerInformation from "../layerInformation/store/indexLayerInformation";
 import LayerPills from "../layerPills/store/indexLayerPills";
+import LayerSlider from "../layerSlider/store/indexLayerSlider";
 import LayerTree from "../layerTree/store/indexLayerTree";
 import Measure from "../measure/store/indexMeasure";
 import MouseHover from "../mouseHover/store/indexMouseHover";
@@ -36,6 +37,7 @@ export default {
         Language: {...Language},
         LayerInformation: {...LayerInformation},
         LayerPills: {...LayerPills},
+        LayerSlider: {...LayerSlider},
         LayerTree: {...LayerTree},
         Measure: {...Measure},
         MouseHover: {...MouseHover},
