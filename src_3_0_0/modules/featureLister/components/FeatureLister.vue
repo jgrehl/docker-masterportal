@@ -1,5 +1,6 @@
 <script>
-import {mapGetters, mapActions} from "vuex";
+import {mapGetters, mapActions, mapMutations} from "vuex";
+import mutations from "../store/mutationsFeatureLister";
 import VectorLayer from "ol/layer/Vector.js";
 import {isPhoneNumber, getPhoneNumberAsWebLink} from "../../../shared/js/utils/isPhoneNumber.js";
 import beautifyKey from "../../../shared/js/utils/beautifyKey";
@@ -82,6 +83,9 @@ export default {
             "showMore"
         ]),
         ...mapActions("Maps", ["areLayerFeaturesLoaded"]),
+        ...mapMutations("Modules/FeatureLister", [
+            "resetToThemeChooser"
+        ]),
         beautifyKey,
         isWebLink,
         isPhoneNumber,
