@@ -353,7 +353,8 @@ export default {
 /***** Desktop *****/
 /***** Mobil *****/
 #featureLister {
-    width: 426px;
+    width: fit-content;
+    max-width: 90%;
 }
 .feature-lister-list-table-th {
     cursor: pointer;
