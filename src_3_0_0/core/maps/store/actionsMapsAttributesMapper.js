@@ -220,30 +220,5 @@ export default {
         commit("setResolution", mapView.getResolution());
         commit("setScale", options?.scale);
         commit("setZoom", mapView.getZoom());
-    },
-
-    /**
-     *  Updates the mouse coordinates
-     * @param {Object} param store context
-     * @param {Object} param.commit the commit
-     * @param {Object} param.getters the getters
-     * @param {Object} event update event
-     * @returns {Function} update function for mouse coordinate
-     */
-    updateAttributesByPointer ({commit, getters}, event) {
-        if (event.dragging) {
-            return;
-        }
-        if (getters.mode === "2D") {
-            commit("setMouseCoordinate", event.coordinate);
-        }
-        else if (getters.mode === "3D" && event.pickedPosition) {
-            try {
-                commit("setMouseCoordinate", event.pickedPosition);
-            }
-            catch (e) {
-                // An error is thrown if the scene is not rendered yet.
-            }
-        }
     }
 };
