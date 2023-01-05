@@ -10,6 +10,7 @@ import GetFeatureInfo from "../getFeatureInfo/components/GetFeatureInfo.vue";
 import Language from "../language/components/LanguageItem.vue";
 import LayerInformation from "../layerInformation/components/LayerInformation.vue";
 import LayerPills from "../layerPills/components/LayerPills.vue";
+import LayerSlider from "../layerSlider/components/LayerSlider.vue";
 import Measure from "../measure/components/MeasureInMap.vue";
 import MouseHover from "../mouseHover/components/MouseHover.vue";
 import OpenConfig from "../openConfig/components/OpenConfig.vue";
@@ -35,6 +36,7 @@ const getters = {
             language: Language,
             layerInformation: LayerInformation,
             layerPills: LayerPills,
+            layerSlider: LayerSlider,
             measure: Measure,
             mouseHover: MouseHover,
             openConfig: OpenConfig,
