@@ -1,8 +1,5 @@
 <script>
-import {mapGetters, mapActions, mapMutations} from "vuex";
-import getters from "../store/gettersFeatureLister";
-import actions from "../store/actionsFeatureLister";
-import mutations from "../store/mutationsFeatureLister";
+import {mapGetters, mapActions} from "vuex";
 import VectorLayer from "ol/layer/Vector.js";
 import {isPhoneNumber, getPhoneNumberAsWebLink} from "../../../shared/js/utils/isPhoneNumber.js";
 import beautifyKey from "../../../shared/js/utils/beautifyKey";
@@ -21,7 +18,19 @@ export default {
         };
     },
     computed: {
-        ...mapGetters("Modules/FeatureLister", Object.keys(getters)),
+        ...mapGetters("Modules/FeatureLister", [
+            "maxFeatures",
+            "layer",
+            "layerListView",
+            "featureCount",
+            "shownFeatures",
+            "featureListView",
+            "featureDetailView",
+            "selectedFeature",
+            "featureProperties",
+            "featureDetails",
+            "headers"
+        ]),
         ...mapGetters("Maps", ["getVisibleOlLayerList"]),
         themeTabClasses: function () {
             return this.layerListView ? this.activeTabClass : this.defaultTabClass;
@@ -64,9 +73,15 @@ export default {
         });
     },
     methods: {
-        ...mapActions("Modules/FeatureLister", Object.keys(actions)),
+        ...mapActions("Modules/FeatureLister", [
+            "switchToList",
+            "clickOnFeature",
+            "hoverOverFeature",
+            "switchToThemes",
+            "switchToDetails",
+            "showMore"
+        ]),
         ...mapActions("Maps", ["areLayerFeaturesLoaded"]),
-        ...mapMutations("Modules/FeatureLister", Object.keys(mutations)),
         beautifyKey,
         isWebLink,
         isPhoneNumber,
@@ -85,7 +100,7 @@ export default {
             this.resetToThemeChooser();
         },
         /**
-         * Sorts the table items accoring to the clicked table header.
+         * Sorts the table items according to the clicked table header.
          * @returns {void}
          */
         async sortItems () {
