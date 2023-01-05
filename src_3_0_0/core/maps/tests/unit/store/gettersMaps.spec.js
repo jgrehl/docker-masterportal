@@ -1,8 +1,75 @@
 import {expect} from "chai";
+import Map from "ol/Map";
+import View from "ol/View";
+import VectorLayer from "ol/layer/Vector";
+import VectorSource from "ol/source/Vector";
 import gettersMap from "../../../store/gettersMaps";
 import stateMap from "../../../store/stateMaps";
+import actions from "../../../store/actionsMapsLayers";
+
+const {
+    addLayer,
+    checkLayer
+} = actions;
 
 describe("src_3_0_0/core/maps/store/gettersMap.js", () => {
+    let layer1,
+        layer2,
+        layer3,
+        olMap;
+
+    before(() => {
+        layer1 = new VectorLayer({
+            id: "1",
+            name: "layer1",
+            visible: true,
+            source: new VectorSource()
+        });
+        layer2 = new VectorLayer({
+            id: "2",
+            name: "layer2",
+            visible: true,
+            source: new VectorSource()
+        });
+        layer3 = new VectorLayer({
+            id: "3",
+            name: "layer3",
+            visible: false,
+            source: new VectorSource()
+        });
+    });
+
+    beforeEach(() => {
+        olMap = new Map({
+            id: "ol",
+            mode: "2D",
+            view: new View()
+        });
+        mapCollection.clear();
+        mapCollection.addMap(olMap, "2D");
+        addLayer({}, layer1);
+        addLayer({}, layer2);
+        addLayer({}, layer3);
+    });
+
+    after(() => {
+        //
+    });
+
+    describe("getLayerByName", () => {
+        it("returns layer by name", () => {
+            expect(gettersMap.getLayerByName()("layer2")).to.deep.equal(layer2);
+
+        });
+    });
+
+    describe("getLayerById", () => {
+        it("returns layer by id", () => {
+            expect(gettersMap.getLayerById()("1")).to.deep.equal(layer1);
+
+        });
+    });
+
     describe("isMaxZoomDisplayed", async () => {
         it("returns false for isMaxZoomDisplayed from stateMaps and true for local state", () => {
             const state = {
@@ -26,5 +93,11 @@ describe("src_3_0_0/core/maps/store/gettersMap.js", () => {
             expect(gettersMap.isMinZoomDisplayed(state)).to.be.false;
         });
 
+    });
+
+    describe("getVisibleOlLayerList", () => {
+        it("gets all visible ol layers", () => {
+            expect(gettersMap.getVisibleOlLayerList().length).to.equal(2);
+        });
     });
 });
