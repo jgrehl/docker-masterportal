@@ -52,7 +52,7 @@ export default {
                         return acc;
                     }, {});
             }
-            return console.error("WfsSearch: Missing configuration for parameter resultList.");
+            return null;
         },
         geometryName () {
             return this.results[0].getGeometryName();
@@ -118,7 +118,7 @@ export default {
                 this.results.push(feature);
             });
 
-            if (this.instances[0]?.resultList !== undefined) {
+            if (this.currentInstance?.resultList !== undefined) {
                 document.getElementById("module-wfsSearch-button-showResults").focus();
                 this.setShowResultList(true);
             }
@@ -167,13 +167,19 @@ export default {
                                     :key="title + i"
                                     :value="i"
                                 >
-                                    {{ title }}
+                                    {{ $t(title) }}
                                 </option>
                             </select>
                         </div>
                     </div>
                     <hr>
                 </template>
+                <div
+                    v-else
+                    class="title d-flex justify-content-center mb-3"
+                >
+                    {{ $t(currentInstance.title) }}
+                </div>
                 <div
                     v-if="userHelp !== 'hide'"
                     id="module-wfsSearch-userHelp"
@@ -278,5 +284,8 @@ export default {
 }
 .form-group > span {
     display: inline-block;
+}
+.title {
+        font-size: $font-size-base;
 }
 </style>
