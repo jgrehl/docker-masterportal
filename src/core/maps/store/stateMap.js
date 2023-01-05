@@ -3,8 +3,6 @@
 * @property {Number} changeZoomLevel Last zoom level before switching to another map mode.
 * @property {Number} initialResolution Initial resolution value of the map.
 * @property {String[]} layerIds Current layers of the map by Id.
-* @property {String[]} highlightedFeatures list of highlighted features, indices correspond to "highlightedFeaturesStyles"
-* @property {String[]} highlightedFeatureStyles list of original styles for highlighted features, indices correspond to "highlightedFeatures"
 * @property {String[]} loadedLayers list of ready loaded layers IDs
 * @property {Number[]} mouseCoordinate Current mouse coordinate values of the map.
 * @property {String[]} overlayIds Current overlays of the map by Id.
@@ -29,8 +27,8 @@ const state = {
     initialResolution: null,
     // initialZoomLevel: null,
     layerIds: [],
-    highlightedFeatures: [],
-    highlightedFeatureStyles: [],
+    // highlightedFeatures: [],
+    // highlightedFeatureStyles: [],
     loadedLayers: [],
     // maxZoomLevel: null,
     // minZoomLevel: null,
