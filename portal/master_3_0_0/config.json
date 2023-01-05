@@ -119,7 +119,7 @@
             "zoomLevel": 7,
             "instances": [
               {
-                "title": "translate#common:menu.tools.parcelSearch",
+                "title": "common:menu.tools.parcelSearch",
                 "userHelp": "hide",
                 "requestConfig": {
                   "gazetteer": {
