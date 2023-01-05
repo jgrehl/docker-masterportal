@@ -36,7 +36,6 @@ module.exports = {
             vue: "vue/dist/vue.esm-bundler.js"
         }},
     externals: [
-        /^(bootstrap-slider|\$)$/i,
         "utf-8-validate",
         "bufferutil"
     ],
