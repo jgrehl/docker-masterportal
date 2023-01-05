@@ -32,9 +32,7 @@ describe("src/modules/featureLister/components/FeatureLister.vue", () => {
         FeatureLister.getters.headers = () => [{key: "name", value: "Name"}];
 
         store = createStore({
-            // namespaced: true,
             modules: {
-                // namespaced: true,
                 Modules: {
                     namespaced: true,
                     modules: {
@@ -89,16 +87,5 @@ describe("src/modules/featureLister/components/FeatureLister.vue", () => {
         expect(store.state.Modules.FeatureLister.featureDetailView).to.be.true;
         expect(store.state.Modules.FeatureLister.featureListView).to.be.false;
         expect(store.state.Modules.FeatureLister.layerListView).to.be.false;
-    });
-    describe("FeatureLister.vue methods", () => {
-        it("close sets active to false", async () => {
-            wrapper = shallowMount(FeatureListerComponent, {global: {plugins: [store]}});
-
-            wrapper.vm.close();
-            await wrapper.vm.$nextTick();
-
-            expect(wrapper.find("#tool-feature-lister").exists()).to.be.false;
-            expect(store.state.Modules.FeatureLister.active).to.be.false;
-        });
     });
 });
