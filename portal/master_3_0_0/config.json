@@ -117,7 +117,7 @@
               }
             ]
           },
-          { 
+          {
             "type": "wfsSearch",
             "zoomLevel": 7,
             "instances": [
@@ -242,7 +242,31 @@
           {
             "type": "styleVT",
             "showDescription": true,
-            "description": "Wechsel das aussehen eines Layers vom Typ VectorTile."
+            "description": "Wechsel das Aussehen eines Layers vom Typ VectorTile."
+          },
+          {
+            "type": "layerSlider",
+            "showDescription": true,
+            "description": "Starte eine Slideshow",
+            "sliderType": "handle",
+            "layerIds": [
+              {
+                "title": "common:modules.tools.layerSlider.serviceOne",
+                "layerId": "19173"
+              },
+              {
+                "title": "common:modules.tools.layerSlider.serviceTwo",
+                "layerId": "2426"
+              },
+              {
+                "title": "common:modules.tools.layerSlider.serviceThree",
+                "layerId": "8712"
+              },
+              {
+                "title": "common:modules.tools.layerSlider.serviceFour",
+                "layerId": "1711"
+              }
+            ]
           }
         ]
       ]
@@ -497,7 +521,10 @@
           ]
         },
         {
-          "id": "19173"
+          "id": "19173",
+          "name": "Digitales Höhenmodell Hamburg (DGM1)",
+          "typ": "WMS",
+          "visibility": false
         },
         {
           "id": "18104",
