@@ -133,7 +133,7 @@ describe("modules/featureLister/store/actionsFeatureLister", () => {
             }
         };
 
-        rootGetters = {"Maps/getVisibleLayerList": [
+        rootGetters = {"Maps/getVisibleOlLayerList": [
             {name: "ersterLayer", values_: {id: "123"}, getSource: () => state.source, features: [{getAttributesToShow: () => "TestAttributes"}], geometryType: "Point"},
             {name: "zweiterLayer", values_: {id: "456"}, features: [{getAttributesToShow: () => "TestAttributes"}], geometryType: "Point"},
             {name: "dritterLayer", values_: {id: "789"}, features: [{getAttributesToShow: () => "TestAttributes"}], geometryType: "Point"}]
@@ -142,7 +142,7 @@ describe("modules/featureLister/store/actionsFeatureLister", () => {
         it("highlights a feature depending on its geometryType", () => {
             const featureId = "123";
 
-            rootGetters = {"Maps/getVisibleLayerList": [
+            rootGetters = {"Maps/getVisibleOlLayerList": [
                 {name: "ersterLayer", values_: {id: "123"}, getSource: () => state.source, features: [{getAttributesToShow: () => "TestAttributes"}], geometryType: "Point"},
                 {name: "zweiterLayer", values_: {id: "456"}, features: [{getAttributesToShow: () => "TestAttributes"}], geometryType: "Point"},
                 {name: "dritterLayer", values_: {id: "789"}, features: [{getAttributesToShow: () => "TestAttributes"}], geometryType: "Point"}]
@@ -156,7 +156,7 @@ describe("modules/featureLister/store/actionsFeatureLister", () => {
         it("highlights a nested feature depending on its geometryType", () => {
             const featureId = "123";
 
-            rootGetters = {"Maps/getVisibleLayerList": [
+            rootGetters = {"Maps/getVisibleOlLayerList": [
                 {name: "ersterLayer", values_: {id: "123"}, getSource: () => state.source, features: [{getAttributesToShow: () => "TestAttributes"}], geometryType: "Point"},
                 {name: "zweiterLayer", values_: {id: "456"}, features: [{getAttributesToShow: () => "TestAttributes"}], geometryType: "Point"},
                 {name: "dritterLayer", values_: {id: "789"}, features: [{getAttributesToShow: () => "TestAttributes"}], geometryType: "Point"}]
