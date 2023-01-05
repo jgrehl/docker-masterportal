@@ -8,8 +8,7 @@ import stateMap from "../../../store/stateMaps";
 import actions from "../../../store/actionsMapsLayers";
 
 const {
-    addLayer,
-    checkLayer
+    addLayer
 } = actions;
 
 describe("src_3_0_0/core/maps/store/gettersMap.js", () => {
@@ -50,10 +49,6 @@ describe("src_3_0_0/core/maps/store/gettersMap.js", () => {
         addLayer({}, layer1);
         addLayer({}, layer2);
         addLayer({}, layer3);
-    });
-
-    after(() => {
-        //
     });
 
     describe("getLayerByName", () => {
