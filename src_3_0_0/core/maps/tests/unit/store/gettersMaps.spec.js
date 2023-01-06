@@ -89,4 +89,10 @@ describe("src_3_0_0/core/maps/store/gettersMap.js", () => {
         });
 
     });
+
+    describe("getVisibleOlLayerList", () => {
+        it("gets all visible ol layers", () => {
+            expect(gettersMap.getVisibleOlLayerList().length).to.equal(2);
+        });
+    });
 });
