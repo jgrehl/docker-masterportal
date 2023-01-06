@@ -13,7 +13,7 @@ const actions = {
     updateLayerTree ({commit, dispatch, getters, rootGetters}) {
         const layerConfigs = [];
 
-        getters.layersToAdd().forEach(layerId => {
+        getters.layersToAdd.forEach(layerId => {
             layerConfigs.push(
                 {
                     id: layerId,
