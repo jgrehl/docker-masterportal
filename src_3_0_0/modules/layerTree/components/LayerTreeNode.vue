@@ -65,7 +65,7 @@ export default {
             }
         },
         treeType () {
-            return this.portalConfig?.tree?.type ? this.portalConfig?.tree?.type : "light";
+            return this.portalConfig?.tree?.type;
         },
         addLayerButton () {
             return this.portalConfig?.tree?.addLayerButton ? this.portalConfig?.tree?.addLayerButton : this.treeType === "auto";
