@@ -10,6 +10,7 @@ import isObject from "../../../shared/js/utils/isObject";
 import {createEmpty as createEmptyExtent, extend} from "ol/extent";
 import {uniqueId} from "../../../shared/js/utils/uniqueId.js";
 import layerCollection from "../../../core/layers/js/layerCollection";
+import {treeSubjectsKey} from "../../../shared/js/utils/constants";
 
 const supportedFormats = {
     kml: new KML({extractStyles: true, iconUrlFunction: (url) => url}),
@@ -354,13 +355,12 @@ export default {
     /**
      * Imports the given GeoJSON file from datasrc.raw, creating the features into datasrc.layer.
      * @param {Object} param.state the state
-     * @param {Object} param.commit the commit
      * @param {Object} param.dispatch the dispatch
      * @param {Object} param.rootGetters the root getters
      * @param {Object} datasrc data source to import, with properties filename, layer and raw.
      * @returns {void}
      */
-    async importGeoJSON ({state, commit, dispatch, rootGetters}, datasrc) {
+    async importGeoJSON ({state, dispatch, rootGetters}, datasrc) {
         const fileName = datasrc.filename,
             format = getFormat(fileName, state.selectedFiletype, state.supportedFiletypes, supportedFormats),
             gfiAttributes = {};
@@ -556,7 +556,7 @@ export default {
         });
 
         if (!vectorLayer.getLayer().get("gfiAttributes")) {
-            commit("replaceByIdInLayerConfig", {
+            dispatch("replaceByIdInLayerConfig", {
                 layerConfigs: [{
                     id: layerId,
                     layer: {gfiAttributes}
@@ -611,7 +611,7 @@ export default {
 
         await dispatch("addLayerToLayerConfig", {
             layerConfig: layerAttributes,
-            parentKey: "Fachdaten"
+            parentKey: treeSubjectsKey
         }, {root: true});
 
         return layerAttributes.id;
