@@ -130,9 +130,7 @@ describe("src_3_0_0/modules/layerTree/components/LayerTreeNode.vue", () => {
                 }
             },
             getters: {
-                allLayerConfigsStructured: () => () =>{
-                    return layersBG.concat(subjectDataLayers);
-                },
+                allLayerConfigs: () => layersBG.concat(subjectDataLayers),
                 layerConfig: () => {
                     return {
                         Fachdaten: {
