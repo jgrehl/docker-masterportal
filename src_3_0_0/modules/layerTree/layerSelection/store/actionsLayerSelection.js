@@ -7,24 +7,27 @@ const actions = {
      * @param {Object} param.commit the commit
      * @param {Object} param.dispatch the dispatch
      * @param {Object} param.getters the getters
+     * @param {Object} param.rootGetters the rootGetters
      * @returns {void}
      */
-    updateLayerTree ({commit, dispatch, getters}) {
+    updateLayerTree ({commit, dispatch, getters, rootGetters}) {
         const layerConfigs = [];
 
-        getters.layersToAdd.forEach(layerId => {
+        getters.layersToAdd().forEach(layerId => {
             layerConfigs.push(
                 {
                     id: layerId,
                     layer: {
                         id: layerId,
                         visibility: true,
-                        showInLayerTree: true
+                        showInLayerTree: true,
+                        zIndex: rootGetters.determineZIndex(layerId)
                     }
                 }
             );
         });
-        commit("replaceByIdInLayerConfig", {layerConfigs: layerConfigs}, {root: true});
+        dispatch("replaceByIdInLayerConfig", {layerConfigs: layerConfigs}, {root: true});
+        dispatch("updateAllZIndexes", null, {root: true});
         commit("clearSelectedLayer");
         dispatch("navigateBackToMainMenu");
     },
