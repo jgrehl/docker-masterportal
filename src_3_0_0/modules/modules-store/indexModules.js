@@ -21,6 +21,7 @@ import ScaleSwitcher from "../scaleSwitcher/store/indexScaleSwitcher";
 import ShareView from "../shareView/store/indexShareView";
 import StyleVT from "../styleVT/store/indexStyleVT";
 import WfsSearch from "../wfsSearch/store/indexWfsSearch";
+import Shadow from "../shadow/store/indexShadow";
 
 export default {
     namespaced: true,
@@ -45,6 +46,7 @@ export default {
         Routing: {...Routing},
         Print: {...Print},
         ScaleSwitcher: {...ScaleSwitcher},
+        Shadow: {...Shadow},
         ShareView: {...ShareView},
         StyleVT: {...StyleVT},
         WfsSearch: {...WfsSearch}
