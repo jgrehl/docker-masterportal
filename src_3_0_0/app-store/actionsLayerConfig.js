@@ -1,9 +1,9 @@
 import {buildTreeStructure} from "./js/buildTreeStructure";
 import getNestedValues from "../shared/js/utils/getNestedValues";
+import replaceInNestedValues from "../shared/js/utils/replaceInNestedValues";
 import {getAndMergeAllRawLayers, getAndMergeRawLayer} from "./js/getAndMergeRawLayer";
 import {sortObjects} from "../shared/js/utils/sortObjects";
-
-const orderThemenconfig = ["Hintergrundkarten", "Fachdaten"];
+import {treeOrder, treeBackgroundsKey, treeSubjectsKey} from "../shared/js/utils/constants";
 
 export default {
     /**
@@ -15,10 +15,11 @@ export default {
      * @param {String} payload.parentKey the key of the parent object
      * @returns {Boolean} true or false
      */
-    addLayerToLayerConfig ({dispatch, state}, {layerConfig, parentKey}) {
-        const layerContainer = getNestedValues(state.layerConfig, "elements", true).flat(Infinity),
+    addLayerToLayerConfig ({dispatch, getters, state}, {layerConfig, parentKey}) {
+        const layerContainer = getters.allLayerConfigs().filter(config => Object.prototype.hasOwnProperty.call(config, "zIndex") && typeof config.zIndex === "number"),
             matchingLayer = layerContainer.find(layer =>layer.id === layerConfig.id),
-            maxZIndex = Math.max(...getNestedValues(state.layerConfig[parentKey], "elements", true).flat(Infinity).map(layerConf => layerConf.zIndex));
+            configsByParentKey = getters.allLayerConfigsByParentKey(parentKey).filter(config => Object.prototype.hasOwnProperty.call(config, "zIndex") && typeof config.zIndex === "number"),
+            maxZIndex = Math.max(...configsByParentKey.map(layerConf => layerConf.zIndex));
 
         dispatch("updateLayerConfigZIndex", {layerContainer, maxZIndex});
 
@@ -31,6 +32,33 @@ export default {
         }
 
         return false;
+    },
+
+    /**
+     * Replaces the layer with the id of the layer toReplace in state's layerConfig.
+     * @param {Object} state store state
+     * @param {Object} [payload={}] the payload
+     * @param {Object[]} [payload.layerConfigs=[]] Array of configs of layers to replace, and the id to match in state.layerConfigs
+     * @param {Object} payload.layerConfigs.layer layerConfig
+     * @param {String} payload.layerConfigs.id the id to match in state.layerConfigs
+     * @param {Boolean} [payload.trigger=true] if true then getters are triggered
+     * @returns {void}
+     */
+    replaceByIdInLayerConfig ({state}, {layerConfigs = [], trigger = true} = {}) {
+        layerConfigs.forEach(config => {
+            const replacement = config.layer,
+                id = config.id,
+                assigned = replaceInNestedValues(state.layerConfig, "elements", replacement, {key: "id", value: id});
+
+            if (assigned.length > 1) {
+                console.warn(`Replaced ${assigned.length} layers in state.layerConfig with id: ${id}. Layer was found ${assigned.length} times. You have to correct your config!`);
+            }
+
+            // necessary to trigger the getters
+            if (trigger) {
+                state.layerConfig = {...state.layerConfig};
+            }
+        });
     },
 
     /**
@@ -53,6 +81,25 @@ export default {
     },
 
     /**
+     * Updates the zIndexes of all layerConfigs shown in tree, starts with 0.
+     * @param {Object} param.dispatch the dispatch
+     * @param {Object} param.getters the getters
+     * @returns {void}
+     */
+    updateAllZIndexes ({getters}) {
+        let startZIndex = 0;
+
+        treeOrder.forEach(parentKey => {
+            const configsByParentKey = getters.allLayerConfigsByParentKey(parentKey).filter(config => Object.prototype.hasOwnProperty.call(config, "zIndex") && typeof config.zIndex === "number");
+
+            sortObjects(configsByParentKey, "zIndex");
+            configsByParentKey.forEach(layerConf => {
+                layerConf.zIndex = startZIndex++;
+            });
+        });
+    },
+
+    /**
      * Extends all layers of config.json with the attributes of the layer in services.json.
      * If portalConfig.tree contains parameter 'layerIDsToIgnore', 'metaIDsToIgnore', 'metaIDsToMerge' or 'layerIDsToStyle' the raw layerlist is filtered and merged.
      * Config entry portalConfig.tree.validLayerTypesAutoTree is respected.
@@ -64,7 +111,7 @@ export default {
      */
     extendLayers ({dispatch, state}) {
         let layerContainer = [];
-        const orderedLayerConfigKeys = Object.keys(state.layerConfig).sort((a, b) => orderThemenconfig.indexOf(a) - orderThemenconfig.indexOf(b));
+        const orderedLayerConfigKeys = Object.keys(state.layerConfig).sort((a, b) => treeOrder.indexOf(a) - treeOrder.indexOf(b));
 
         dispatch("addBackgroundLayerAttribute");
 
@@ -84,8 +131,8 @@ export default {
      * @param {Object} param.state the state
      * @returns {void}
      */
-    addBackgroundLayerAttribute ({state}) {
-        state.layerConfig?.Hintergrundkarten?.elements?.map(attributes => {
+    addBackgroundLayerAttribute ({getters}) {
+        getters.allLayerConfigsByParentKey(treeBackgroundsKey).map(attributes => {
             return Object.assign(attributes, {backgroundLayer: true});
         });
     },
@@ -104,7 +151,7 @@ export default {
         getAndMergeAllRawLayers(state.portalConfig?.tree);
         layersStructured = buildTreeStructure(state.layerConfig, getters.activeOrFirstCategory, layerContainer);
 
-        commit("setLayerConfigByParentKey", {layerConfigs: layersStructured, parentKey: "Fachdaten"});
+        commit("setLayerConfigByParentKey", {layerConfigs: layersStructured, parentKey: treeSubjectsKey});
     },
 
     /**
@@ -114,12 +161,12 @@ export default {
      * @param {Object[]} layerContainer The layer configs.
      * @returns {void}
      */
-    updateLayerConfigs ({commit, state}, layerContainer) {
+    updateLayerConfigs ({dispatch, state}, layerContainer) {
         layerContainer.forEach(layerConf => {
             const rawLayer = getAndMergeRawLayer(layerConf, !state.portalConfig?.tree?.addLayerButton);
 
             if (rawLayer) {
-                commit("replaceByIdInLayerConfig", {layerConfigs: [{layer: rawLayer, id: layerConf.id}]});
+                dispatch("replaceByIdInLayerConfig", {layerConfigs: [{layer: rawLayer, id: layerConf.id}]});
             }
         });
     }
