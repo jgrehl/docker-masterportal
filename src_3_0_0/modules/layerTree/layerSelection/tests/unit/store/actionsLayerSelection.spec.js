@@ -12,7 +12,7 @@ describe("src_3_0_0/modules/layerTree/layerSelection/store/actionsLayerSelection
         commit = sinon.spy();
         dispatch = sinon.spy();
         getters = {
-            layersToAdd: () => ["1", "2"]
+            layersToAdd: ["1", "2"]
         };
         rootGetters = {
             determineZIndex: () => 0
