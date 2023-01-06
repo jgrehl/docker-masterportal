@@ -67,7 +67,7 @@ function getGfiStore (mobile, uiStyle, gfiFeatures, mapSize) {
             Menu: {
                 namespaced: true,
                 actions: {
-                    setMenuBack: sinon.stub()
+                    setMenuBackAndActivateItem: sinon.stub()
                 }
             }
         },

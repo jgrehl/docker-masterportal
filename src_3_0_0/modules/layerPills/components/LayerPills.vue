@@ -1,5 +1,5 @@
 <script>
-import {mapGetters, mapMutations} from "vuex";
+import {mapActions, mapGetters, mapMutations} from "vuex";
 import layerFactory from "../../../core/layers/js/layerFactory";
 import IconButton from "../../../shared/modules/buttons/components/IconButton.vue";
 
@@ -51,7 +51,8 @@ export default {
     },
     methods: {
         ...mapMutations("Modules/LayerPills", ["setVisibleSubjectDataLayers", "setStartIndex", "setEndIndex", "setLayerPillsAmount", "setRightScrollDisabled", "setLeftScrollDisabled"]),
-        ...mapMutations(["replaceByIdInLayerConfig", "setVisibleSubjectDataLayerConfigs"]),
+        ...mapMutations(["setVisibleSubjectDataLayerConfigs"]),
+        ...mapActions(["replaceByIdInLayerConfig"]),
 
         setVisibleLayers (visibleLayers, mapMode) {
             if (visibleLayers) {
