@@ -6,10 +6,9 @@ import actions from "../../../store/actionsLayerTree";
 const {removeLayer, updateTransparency, replaceByIdInLayerConfig} = actions;
 
 describe("src_3_0_0/modules/layerTree/store/actionsLayerTree", function () {
-    let commit, dispatch;
+    let dispatch;
 
     beforeEach(() => {
-        commit = sinon.spy();
         dispatch = sinon.spy();
     });
 
@@ -29,14 +28,16 @@ describe("src_3_0_0/modules/layerTree/store/actionsLayerTree", function () {
                         id: "1",
                         visibility: false,
                         showInLayerTree: false,
-                        attribute: "test"
+                        attribute: "test",
+                        zIndex: null
                     };
 
             removeLayer({dispatch}, layerConfig);
 
-            expect(dispatch.calledOnce).to.be.true;
+            expect(dispatch.calledTwice).to.be.true;
             expect(dispatch.firstCall.args[0]).to.be.equals("replaceByIdInLayerConfig");
             expect(dispatch.firstCall.args[1]).to.be.deep.equals(expectedArg);
+            expect(dispatch.secondCall.args[0]).to.be.equals("updateAllZIndexes");
         });
     });
 
@@ -84,12 +85,12 @@ describe("src_3_0_0/modules/layerTree/store/actionsLayerTree", function () {
                         }
                     ]};
 
-            replaceByIdInLayerConfig({commit}, layerConf);
+            replaceByIdInLayerConfig({dispatch}, layerConf);
 
-            expect(commit.calledOnce).to.be.true;
-            expect(commit.firstCall.args[0]).to.be.equals("replaceByIdInLayerConfig");
-            expect(commit.firstCall.args[1]).to.be.deep.equals(expectedArg);
-            expect(commit.firstCall.args[2]).to.be.deep.equals({root: true});
+            expect(dispatch.calledOnce).to.be.true;
+            expect(dispatch.firstCall.args[0]).to.be.equals("replaceByIdInLayerConfig");
+            expect(dispatch.firstCall.args[1]).to.be.deep.equals(expectedArg);
+            expect(dispatch.firstCall.args[2]).to.be.deep.equals({root: true});
         });
     });
 });
