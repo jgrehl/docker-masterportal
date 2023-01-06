@@ -80,7 +80,6 @@ function setAttributes (layer, id, layerName) {
     attributes.typ = "VectorBase";
     attributes.alwaysOnTop = true;
     attributes.name = layerName;
-
     return attributes;
 }
 
