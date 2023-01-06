@@ -21,6 +21,7 @@ import OpenConfig from "../openConfig/components/OpenConfig.vue";
 import PrintMap from "../print/components/PrintMap.vue";
 import Routing from "../routing/components/RoutingTemplate.vue";
 import ScaleSwitcher from "../scaleSwitcher/components/ScaleSwitcher.vue";
+import SelectFeatures from "../selectFeatures/components/SelectFeatures.vue";
 import Shadow from "../shadow/components/ShadowTool.vue";
 import ShareView from "../shareView/components/ShareView.vue";
 import StyleVT from "../styleVT/components/StyleVT.vue";
@@ -52,6 +53,7 @@ const getters = {
             print: PrintMap,
             routing: Routing,
             scaleSwitcher: ScaleSwitcher,
+            selectFeatures: SelectFeatures,
             shadow: Shadow,
             shareView: ShareView,
             styleVT: StyleVT,
