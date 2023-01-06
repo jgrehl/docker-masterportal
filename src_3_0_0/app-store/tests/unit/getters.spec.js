@@ -180,7 +180,7 @@ describe("src_3_0_0/app-store/getters.js", () => {
         });
     });
 
-    describe("allLayerConfigsStructured", () => {
+    describe("allLayerConfigsStructured and allLayerConfigsByParentKey", () => {
         let state,
             layerConfig,
             layersWithFolder;
@@ -261,10 +261,28 @@ describe("src_3_0_0/app-store/getters.js", () => {
             expect(configs[0].id).to.be.equals("453");
             expect(configs[1].id).to.be.equals("452");
         });
+
+        it("allLayerConfigsByParentKey should return all layerConfigs key 'Hintergrundkarten'", () => {
+            const configs = getters.allLayerConfigsByParentKey(state)("Hintergrundkarten");
+
+            expect(configs).to.be.an("array");
+            expect(configs.length).to.be.equals(2);
+            expect(configs[0].id).to.be.equals("453");
+            expect(configs[1].id).to.be.equals("452");
+        });
+
+        it("allLayerConfigsByParentKey should return all layerConfigs key 'Fachdaten'", () => {
+            const configs = getters.allLayerConfigsByParentKey(state)("Fachdaten");
+
+            expect(configs).to.be.an("array");
+            expect(configs.length).to.be.equals(3);
+            expect(configs[0].id).to.be.equals("1");
+            expect(configs[1].id).to.be.equals("2");
+            expect(configs[2].id).to.be.equals("3");
+        });
     });
 
     describe("layerConfigsByArributes", () => {
-
         it("should return the layers for requested attributes", () => {
             const greenLayer = {
                     id: "1132",
@@ -314,6 +332,65 @@ describe("src_3_0_0/app-store/getters.js", () => {
             //     "standort" : "Standort",
             //     "adresse" : "Adresse"
             // },}).length).to.be.equals(1);
+        });
+    });
+
+    describe("determineZIndex", () => {
+        let layerConfig, state;
+
+        beforeEach(() => {
+            layerConfig = {
+                Hintergrundkarten: {
+                    elements: [
+                        {
+                            id: "453",
+                            backgroundLayer: true,
+                            zIndex: 0
+                        },
+                        {
+                            id: "452",
+                            backgroundLayer: true
+                        },
+                        {
+                            id: "451",
+                            backgroundLayer: true
+                        }
+                    ]
+                },
+                Fachdaten: {
+                    elements: [
+                        {
+                            id: "1132",
+                            name: "100 Jahre Stadtgruen POIs",
+                            visibility: true
+                        },
+                        {
+                            id: "10220",
+                            backgroundLayer: false
+                        }
+                    ]
+                }
+            };
+            state = {
+                layerConfig: layerConfig
+            };
+        });
+        it("determineZIndex for unknown layer", () => {
+            expect(getters.determineZIndex(state)("unknown")).to.be.null;
+        });
+        it("determineZIndex for first layer with zIndex under parentKey", () => {
+            expect(getters.determineZIndex(state)("10220")).to.be.equals(0);
+        });
+        it("determineZIndex for second layer with zIndex under parentKey", () => {
+            expect(getters.determineZIndex(state)("452")).to.be.equals(1);
+        });
+        it("determineZIndex for third layer with zIndex under parentKey", () => {
+            layerConfig.Hintergrundkarten.elements[1].zIndex = 1;
+            expect(getters.determineZIndex(state)("451")).to.be.equals(2);
+        });
+        it("determineZIndex for layer with existing zIndex", () => {
+            layerConfig.Hintergrundkarten.elements[0].zIndex = 100;
+            expect(getters.determineZIndex(state)("453")).to.be.equals(100);
         });
     });
 });
