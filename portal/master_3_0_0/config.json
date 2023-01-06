@@ -266,6 +266,12 @@
                 "layerId": "1711"
               }
             ]
+          },
+          {
+            "type": "shadow",
+            "isShadowEnabled": true,
+            "showDescription": true,
+            "description": "Zeige den Schattenwurf zu verschiedenen Zeitpunkten in der Karte an."
           }
         ]
       ]
