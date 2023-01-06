@@ -1,6 +1,7 @@
 import rawLayerList from "@masterportal/masterportalapi/src/rawLayerList";
 import getNestedValues from "../../shared/js/utils/getNestedValues";
 import {sortObjects} from "../../shared/js/utils/sortObjects";
+import {treeBackgroundsKey} from "../../shared/js/utils/constants";
 
 
 /**
@@ -14,15 +15,19 @@ import {sortObjects} from "../../shared/js/utils/sortObjects";
 export function buildTreeStructure (layerConfig, category, shownLayerConfs = []) {
     // @todo refactored from parserDefaultTree.js
     const layerList = rawLayerList.getLayerList(),
-        bgLayers = getNestedValues(layerConfig?.Hintergrundkarten, "elements", true).flat(Infinity),
         categoryKey = category?.key,
         groups = {},
         folder = {},
-        layersByMdName = {},
-        bgLayerIds = getIdsOfLayers(bgLayers);
+        layersByMdName = {};
+    let bgLayers = [],
+        bgLayerIds = [];
 
     if (!category) {
         return layerList;
+    }
+    if (layerConfig) {
+        bgLayers = getNestedValues(layerConfig[treeBackgroundsKey], "elements", true).flat(Infinity);
+        bgLayerIds = getIdsOfLayers(bgLayers);
     }
     folder.elements = [];
 
