@@ -380,22 +380,12 @@ export default {
                 </p>
                 <a
                     :id="index + '-selectFeatures-feature'"
-
                     href="#"
                     class="select-features-zoom-link"
                     @click="featureZoom"
                 >
                     {{ translate("common:modules.tools.selectFeatures.zoomToFeature") }}
                 </a>
-                <!-- <a
-                    :id="index + '-selectFeatures-feature'"
-                    :key="'a' + index"
-                    href="#"
-                    class="select-features-zoom-link"
-                    @click="featureZoom"
-                >
-                    {{ translate("common:modules.tools.selectFeatures.zoomToFeature") }}
-                </a> -->
                 <hr
                     v-if="index !== selectedFeaturesWithRenderInformation.length - 1"
                     :key="'h' + index"
