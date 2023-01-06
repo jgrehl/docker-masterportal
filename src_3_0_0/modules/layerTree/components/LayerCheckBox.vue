@@ -1,5 +1,5 @@
 <script>
-import {mapGetters, mapMutations} from "vuex";
+import {mapActions, mapGetters, mapMutations} from "vuex";
 
 /**
  * Representation of a layer in layerTree.
@@ -34,7 +34,7 @@ export default {
         }
     },
     methods: {
-        ...mapMutations(["replaceByIdInLayerConfig"]),
+        ...mapActions(["replaceByIdInLayerConfig"]),
         ...mapMutations("Modules/LayerSelection", ["addSelectedLayer", "removeSelectedLayer"]),
 
         /**

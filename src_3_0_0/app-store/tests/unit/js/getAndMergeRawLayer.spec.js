@@ -257,7 +257,8 @@ describe("src_3_0_0/app-store/js/getAndMergeRawLayer.js", () => {
                 id: "5",
                 showInLayerTree: true,
                 visibility: false,
-                type: "layer"
+                type: "layer",
+                zIndex: 5
             });
         });
 
@@ -275,7 +276,7 @@ describe("src_3_0_0/app-store/js/getAndMergeRawLayer.js", () => {
                 showInLayerTree: true,
                 visibility: true,
                 type: "layer",
-                zIndex: 5
+                zIndex: 6
             });
         });
     });

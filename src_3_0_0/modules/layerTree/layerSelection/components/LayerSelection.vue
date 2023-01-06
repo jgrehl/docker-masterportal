@@ -2,6 +2,7 @@
 import {mapGetters, mapActions, mapMutations} from "vuex";
 import sortBy from "../../../../shared/js/utils/sortBy";
 import FlatButton from "../../../../shared/modules/buttons/components/FlatButton.vue";
+import {treeBackgroundsKey, treeSubjectsKey} from "../../../../shared/js/utils/constants";
 import LayerCheckBox from "../../components/LayerCheckBox.vue";
 import LayerSelectionTreeNode from "./LayerSelectionTreeNode.vue";
 
@@ -20,11 +21,14 @@ export default {
     },
     computed: {
         ...mapGetters(["allLayerConfigsStructured"]),
-        ...mapGetters("Modules/LayerSelection", ["active", "subjectDataLayerConfs", "layersToAdd"])
+        ...mapGetters("Modules/LayerSelection", ["active", "subjectDataLayerConfs", "layersToAdd"]),
+        allBackgroundLayers () {
+            return this.allLayerConfigsStructured(treeBackgroundsKey);
+        }
 
     },
     created () {
-        this.setSubjectDataLayerConfs(this.sort(this.allLayerConfigsStructured("Fachdaten")));
+        this.setSubjectDataLayerConfs(this.sort(this.allLayerConfigsStructured(treeSubjectsKey)));
     },
     methods: {
         ...mapActions("Modules/LayerSelection", ["updateLayerTree"]),
@@ -64,7 +68,7 @@ export default {
         <div class="row align-items-center justify-content-center">
             <template v-if="showBGLayers">
                 <template
-                    v-for="(bgConf, index) in allLayerConfigsStructured('Hintergrundkarten')"
+                    v-for="(bgConf, index) in allBackgroundLayers"
                     :key="index"
                 >
                     <div class="col">

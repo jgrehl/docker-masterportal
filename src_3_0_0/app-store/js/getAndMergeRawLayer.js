@@ -34,10 +34,12 @@ export function addAdditional (rawLayer, showAllLayerInTree = false) {
         rawLayer.type = "layer";
         if (showAllLayerInTree || rawLayer.visibility) {
             rawLayer.showInLayerTree = true;
-            rawLayer.zIndex = zIndex++;
         }
         else if (!Object.prototype.hasOwnProperty.call(rawLayer, "showInLayerTree")) {
             rawLayer.showInLayerTree = false;
+        }
+        if (rawLayer.showInLayerTree === true) {
+            rawLayer.zIndex = zIndex++;
         }
     }
 
