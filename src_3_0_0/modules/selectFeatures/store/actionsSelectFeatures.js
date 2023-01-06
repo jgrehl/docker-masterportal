@@ -14,7 +14,7 @@ export default {
      */
     highlightFeature ({state, rootGetters, dispatch}, {feature, layerId}) {
         dispatch("Maps/removeHighlightFeature", "decrease", {root: true});
-        const layer = rootGetters["Maps/getVisibleLayerList"].find((l) => l.values_.id === layerId),
+        const layer = rootGetters["Maps/getVisibleOlLayerList"].find((l) => l.values_.id === layerId),
             featureGeometryType = feature.getGeometry().getType(),
             featureId = feature.getId(),
             styleObj = featureGeometryType.toLowerCase().indexOf("polygon") > -1 ? state.highlightVectorRulesPolygon : state.highlightVectorRulesPointLine,
@@ -53,7 +53,7 @@ export default {
             else {
                 dispatch("Maps/setCenter", getCenter(feature.getGeometry().getExtent()), {root: true});
             }
-            dispatch("Maps/setZoomLevel", styleObj.zoomLevel, {root: true});
+            dispatch("Maps/setZoom", styleObj.zoomLevel, {root: true});
         }
         if (rootGetters.treeHighlightedFeatures?.active) {
             createLayerAddToTreeModule.createLayerAddToTree(layerId, [feature], rootGetters.treeType, rootGetters.treeHighlightedFeatures);
