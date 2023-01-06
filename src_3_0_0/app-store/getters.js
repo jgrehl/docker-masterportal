@@ -1,6 +1,7 @@
 import {generateSimpleGetters} from "../shared/js/utils/generators";
 import getNestedValues from "../shared/js/utils/getNestedValues";
 import stateAppStore from "./state";
+import {treeBackgroundsKey, treeSubjectsKey} from "../shared/js/utils/constants";
 
 const getters = {
     ...generateSimpleGetters(stateAppStore),
@@ -42,12 +43,22 @@ const getters = {
     },
 
     /**
+     * Returns all layers configs under the given parent-key.
+     * @param {Object} state state of the app-store.
+     * @param {String} parentKey the parentKey
+     * @returns {Object[]} all layers configs under the given parent-key.
+     */
+    allLayerConfigsByParentKey: state => (parentKey) => {
+        return getNestedValues(state.layerConfig[parentKey], "elements", true).flat(Infinity);
+    },
+
+    /**
      * Returns all subject data layers of layerConfig.
      * @param {Object} state state of the app-store.
      * @returns {Object[]} The layers.
      */
     allSubjectDataLayerConfigs: state => {
-        return getNestedValues(state.layerConfig.Fachdaten, "elements", true).flat(Infinity);
+        return getters.allLayerConfigsByParentKey(state)(treeSubjectsKey);
     },
 
     /**
@@ -202,13 +213,51 @@ const getters = {
     /**
      * Returns the layer configuration with the given id.
      * @param {Object} state state of the app-store.
-     * @param {String} ide id of the layer
+     * @param {String} id id of the layer
      * @returns {Object|null}} the layer configuration with the given id
      */
     layerConfigById: (state) => (id) => {
         const layerContainer = getters.allLayerConfigs(state);
 
         return layerContainer.find(layerConf => layerConf.id === id);
+    },
+
+    /**
+     * Returns the restConfig whitch matches the id.
+     * @param {Object} state state of the app-store.
+     * @returns {Object} the restConfig layer that matches the given id.
+     */
+    getRestConfigById: (state) => (id) => {
+        const matchingLayer = state.restConfig.filter(layer => layer.id === id);
+
+        return matchingLayer[0];
+    },
+
+    /**
+     * Returns the zIndex for the given layerConfig. If zIndex already exists at layerConfig, it is returned.
+     * @param {Object} state state of the app-store.
+     * @param {String} id id of the layer
+     * @returns {Number|null} the zIndex for the given layerConfig or null if layerConfig is not available
+     */
+    determineZIndex: (state) => (id) => {
+        const layerConf = getters.layerConfigById(state)(id);
+
+        if (layerConf) {
+            if (Object.prototype.hasOwnProperty.call(layerConf, "zIndex") && typeof layerConf.zIndex === "number") {
+                console.warn("Cannot determine zIndex for layer with id ", layerConf.id, ". Zindex already exists:", layerConf.zIndex);
+                return layerConf.zIndex;
+            }
+            let maxZIndex = -1;
+            const parentKey = Object.prototype.hasOwnProperty.call(layerConf, "backgroundLayer") && layerConf.backgroundLayer ? treeBackgroundsKey : treeSubjectsKey,
+                configsByParentKey = getters.allLayerConfigsByParentKey(state)(parentKey).filter(config => Object.prototype.hasOwnProperty.call(config, "zIndex") && typeof config.zIndex === "number");
+
+            if (configsByParentKey.length > 0) {
+                maxZIndex = Math.max(...configsByParentKey.map(conf => conf.zIndex));
+            }
+
+            return maxZIndex + 1;
+        }
+        return null;
     }
 };
 
