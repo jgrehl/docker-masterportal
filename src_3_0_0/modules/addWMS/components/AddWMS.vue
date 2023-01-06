@@ -4,6 +4,7 @@ import {WMSCapabilities} from "ol/format.js";
 import {intersects} from "ol/extent";
 import crs from "@masterportal/masterportalapi/src/crs";
 import axios from "axios";
+import {treeSubjectsKey} from "../../../shared/js/utils/constants";
 
 export default {
     name: "AddWMS",
@@ -190,7 +191,7 @@ export default {
                     minScale: object?.MinScaleDenominator?.toString()
                 };
 
-                this.addLayerToLayerConfig({layerConfig: layerObject, parentKey: "Fachdaten"}).then((addedLayer) => {
+                this.addLayerToLayerConfig({layerConfig: layerObject, parentKey: treeSubjectsKey}).then((addedLayer) => {
                     if (addedLayer) {
                         this.addSingleAlert({
                             content: this.$t("common:modules.tools.addWMS.completeMessage"),

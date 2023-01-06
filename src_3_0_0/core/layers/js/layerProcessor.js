@@ -91,11 +91,11 @@ function processLayer (layer) {
  * @returns {void}
  */
 function updateLayerConfig (layer) {
-    store.commit("replaceByIdInLayerConfig", {
+    store.dispatch("replaceByIdInLayerConfig", {
         layerConfigs: [{
             id: layer.get("id"),
             layer: layer.attributes
         }],
         trigger: false
-    });
+    }, {root: true});
 }
