@@ -27,7 +27,7 @@ export default {
         };
     },
     computed: {
-        ...mapGetters(["portalConfig", "allLayerConfigsStructured", "layerConfigsByArributes"]),
+        ...mapGetters(["portalConfig", "allLayerConfigs", "layerConfigsByArributes"]),
 
         /**
          * v-model for sorted layerConfig.
@@ -44,7 +44,7 @@ export default {
                     sortedLayerConfig = this.layerConfigsByArributes({showInLayerTree: true});
                 }
                 else {
-                    sortedLayerConfig = this.allLayerConfigsStructured();
+                    sortedLayerConfig = this.allLayerConfigs;
                 }
                 sortObjects(sortedLayerConfig, "zIndex", "desc");
 
