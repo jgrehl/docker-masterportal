@@ -136,6 +136,9 @@ describe("src_3_0_0/modules/layerTree/components/LayerTree.vue", () => {
                 allLayerConfigsStructured: () => () =>{
                     return layersBG.concat(subjectDataLayers);
                 },
+                allLayerConfigs: () =>{
+                    return layersBG.concat(subjectDataLayers);
+                },
                 portalConfig: () => {
                     return {
                         tree: {
