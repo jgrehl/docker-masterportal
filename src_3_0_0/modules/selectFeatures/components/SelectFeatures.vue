@@ -3,20 +3,16 @@ import {DragBox, Select} from "ol/interaction";
 import {never, platformModifierKeyOnly} from "ol/events/condition";
 import VectorSource from "ol/source/Vector.js";
 
-import ToolTemplate from "../../../../modules/tools/ToolTemplate.vue";
 import {mapActions, mapGetters, mapMutations} from "vuex";
 import getters from "../store/gettersSelectFeatures";
 import mutations from "../store/mutationsSelectFeatures";
 
-import {isUrl} from "../../../../utils/urlHelper";
-import {isEmailAddress} from "../../../../utils/isEmailAddress.js";
-import {isPhoneNumber, getPhoneNumberAsWebLink} from "../../../../utils/isPhoneNumber.js";
+import {isUrl} from "../../../shared/js/utils/urlHelper";
+import {isEmailAddress} from "../../../shared/js/utils/isEmailAddress.js";
+import {isPhoneNumber, getPhoneNumberAsWebLink} from "../../../shared/js/utils/isPhoneNumber.js";
 
 export default {
     name: "SelectFeatures",
-    components: {
-        ToolTemplate
-    },
     computed: {
         ...mapGetters(["ignoredKeys"]),
         ...mapGetters("Modules/SelectFeatures", Object.keys(getters))
@@ -32,9 +28,6 @@ export default {
             }
 
         }
-    },
-    created () {
-        this.$on("close", this.close);
     },
     methods: {
         ...mapMutations("Modules/SelectFeatures", Object.keys(mutations)),
@@ -321,96 +314,95 @@ export default {
 </script>
 
 <template lang="html">
-    <ToolTemplate
-        :title="translate('common:menu.tools.selectFeatures')"
-        :icon="icon"
-        :active="active"
-        :render-to-window="renderToWindow"
-        :resizable-window="resizableWindow"
-        :deactivate-gfi="deactivateGFI"
-        :focus-to-close-icon="true"
-        class="selectFeatures"
+    <div
+        v-if="active"
+        id="selectFeatures"
     >
-        <template #toolBody>
-            <div
-                v-if="active"
-                id="selectFeatures"
+        <div
+            v-if="selectedFeaturesWithRenderInformation.length === 0"
+            class="selectFeaturesDefaultMessage"
+        >
+            {{ translate("common:modules.tools.selectFeatures.noFeatureChosen") }}
+        </div>
+        <div
+            v-else
+            ref="select-features-tables"
+            class="select-features-tables"
+        >
+            <template
+                v-for="(selectedFeature, index) in selectedFeaturesWithRenderInformation"
+                :key="index"
             >
-                <div
-                    v-if="selectedFeaturesWithRenderInformation.length === 0"
-                    class="selectFeaturesDefaultMessage"
+                <table
+                    v-if="selectedFeature.properties.length > 0"
+                    :key="index"
+                    class="table table-striped table-bordered"
                 >
-                    {{ translate("common:modules.tools.selectFeatures.noFeatureChosen") }}
-                </div>
-                <div
+                    <tbody>
+                        <tr
+                            v-for="(property, propIndex) in selectedFeature.properties"
+                            :key="propIndex"
+                        >
+                            <td class="featureName">
+                                {{ property[0] }}
+                            </td>
+                            <td
+                                v-if="isEmailAddress(property[1])"
+                                class="featureValue"
+                            >
+                                <a :href="`mailto:${property[1]}`">{{ property[1] }}</a>
+                            </td>
+                            <td
+                                v-else-if="isPhoneNumber(property[1])"
+                                class="featureValue"
+                            >
+                                <a :href="getPhoneNumberAsWebLink(property[1])">{{ property[1] }}</a>
+                            </td>
+                            <td
+                                v-else-if="property[1] && (property[1].includes('<br') || property[1].includes('<a'))"
+                                class="featureValue"
+                                v-html="property[1]"
+                            />
+                            <td
+                                v-else
+                                class="featureValue"
+                            >
+                                {{ property[1] }}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p
                     v-else
-                    ref="select-features-tables"
-                    class="select-features-tables"
+                    :key="index + 'z'"
                 >
-                    <template v-for="(selectedFeature, index) in selectedFeaturesWithRenderInformation">
-                        <table
-                            v-if="selectedFeature.properties.length > 0"
-                            :key="index"
-                            class="table table-striped table-bordered"
-                        >
-                            <tbody>
-                                <tr
-                                    v-for="(property, propIndex) in selectedFeature.properties"
-                                    :key="propIndex"
-                                >
-                                    <td class="featureName">
-                                        {{ property[0] }}
-                                    </td>
-                                    <td
-                                        v-if="isEmailAddress(property[1])"
-                                        class="featureValue"
-                                    >
-                                        <a :href="`mailto:${property[1]}`">{{ property[1] }}</a>
-                                    </td>
-                                    <td
-                                        v-else-if="isPhoneNumber(property[1])"
-                                        class="featureValue"
-                                    >
-                                        <a :href="getPhoneNumberAsWebLink(property[1])">{{ property[1] }}</a>
-                                    </td>
-                                    <td
-                                        v-else-if="property[1] && (property[1].includes('<br') || property[1].includes('<a'))"
-                                        class="featureValue"
-                                        v-html="property[1]"
-                                    />
-                                    <td
-                                        v-else
-                                        class="featureValue"
-                                    >
-                                        {{ property[1] }}
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <p
-                            v-else
-                            :key="index + 'z'"
-                        >
-                            {{ translate("common:modules.tools.selectFeatures.propertylessFeature") }}
-                        </p>
-                        <a
-                            :id="index + '-selectFeatures-feature'"
-                            :key="'a' + index"
-                            href="#"
-                            class="select-features-zoom-link"
-                            @click="featureZoom"
-                        >
-                            {{ translate("common:modules.tools.selectFeatures.zoomToFeature") }}
-                        </a>
-                        <hr
-                            v-if="index !== selectedFeaturesWithRenderInformation.length - 1"
-                            :key="'h' + index"
-                        >
-                    </template>
-                </div>
-            </div>
-        </template>
-    </ToolTemplate>
+                    {{ translate("common:modules.tools.selectFeatures.propertylessFeature") }}
+                </p>
+                <a
+                    :id="index + '-selectFeatures-feature'"
+
+                    href="#"
+                    class="select-features-zoom-link"
+                    @click="featureZoom"
+                >
+                    {{ translate("common:modules.tools.selectFeatures.zoomToFeature") }}
+                </a>
+                <!-- <a
+                    :id="index + '-selectFeatures-feature'"
+                    :key="'a' + index"
+                    href="#"
+                    class="select-features-zoom-link"
+                    @click="featureZoom"
+                >
+                    {{ translate("common:modules.tools.selectFeatures.zoomToFeature") }}
+                </a> -->
+                <hr
+                    v-if="index !== selectedFeaturesWithRenderInformation.length - 1"
+                    :key="'h' + index"
+                >
+            </template>
+        </div>
+    </div>
 </template>
 
 <style type="scss" scoped>
