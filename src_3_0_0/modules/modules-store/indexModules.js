@@ -21,6 +21,7 @@ import OpenConfig from "../openConfig/store/indexOpenConfig";
 import Print from "../print/store/indexPrint";
 import Routing from "../routing/store/indexRouting";
 import ScaleSwitcher from "../scaleSwitcher/store/indexScaleSwitcher";
+import SelectFeatures from "../selectFeatures/store/indexSelectFeatures";
 import Shadow from "../shadow/store/indexShadow";
 import ShareView from "../shareView/store/indexShareView";
 import StyleVT from "../styleVT/store/indexStyleVT";
@@ -52,6 +53,7 @@ export default {
         Routing: {...Routing},
         Print: {...Print},
         ScaleSwitcher: {...ScaleSwitcher},
+        SelectFeatures: {...SelectFeatures},
         Shadow: {...Shadow},
         ShareView: {...ShareView},
         StyleVT: {...StyleVT},
