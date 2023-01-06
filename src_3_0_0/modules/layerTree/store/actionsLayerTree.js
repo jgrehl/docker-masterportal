@@ -8,10 +8,12 @@ const actions = {
     removeLayer ({dispatch}, layerConf) {
         const layerConfCopy = {...layerConf, ...{
             showInLayerTree: false,
-            visibility: false
+            visibility: false,
+            zIndex: null
         }};
 
         dispatch("replaceByIdInLayerConfig", layerConfCopy);
+        dispatch("updateAllZIndexes", null, {root: true});
     },
 
     /**
@@ -34,8 +36,8 @@ const actions = {
      * @param {Object} param.commit the commit
      * @returns {void}
      */
-    replaceByIdInLayerConfig ({commit}, layerConf) {
-        commit("replaceByIdInLayerConfig", {
+    replaceByIdInLayerConfig ({dispatch}, layerConf) {
+        dispatch("replaceByIdInLayerConfig", {
             layerConfigs: [
                 {
                     layer: layerConf,
