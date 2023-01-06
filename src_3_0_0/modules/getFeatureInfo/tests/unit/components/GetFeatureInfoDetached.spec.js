@@ -83,7 +83,7 @@ describe("src_3_0_0/modules/getFeatureInfo/components/GetFeatureInfoDetached.vue
                 Menu: {
                     namespaced: true,
                     actions: {
-                        setMenuBack: sinon.stub()
+                        setMenuBackAndActivateItem: sinon.stub()
                     }
                 }
             }
