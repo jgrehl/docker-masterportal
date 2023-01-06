@@ -1,6 +1,6 @@
 <script>
 import {DragBox, Select} from "ol/interaction";
-import {never, platformModifierKeyOnly} from "ol/events/condition";
+import {never, platformModifierKeyOnly, touchOnly} from "ol/events/condition";
 import VectorSource from "ol/source/Vector.js";
 
 import {mapActions, mapGetters, mapMutations} from "vuex";
@@ -14,7 +14,7 @@ import {isPhoneNumber, getPhoneNumberAsWebLink} from "../../../shared/js/utils/i
 export default {
     name: "SelectFeatures",
     computed: {
-        ...mapGetters(["ignoredKeys"]),
+        ...mapGetters(["ignoredKeys", "mobile"]),
         ...mapGetters("Modules/SelectFeatures", Object.keys(getters))
     },
     watch: {
@@ -52,7 +52,7 @@ export default {
                     toggleCondition: never,
                     condition: never
                 }),
-                dragBox = new DragBox({condition: platformModifierKeyOnly});
+                dragBox = new DragBox(this.mobile ? {condition: touchOnly} : {condition: platformModifierKeyOnly});
 
             dragBox.on("boxstart", this.clearFeatures.bind(this));
             dragBox.on("boxend", this.setFeaturesFromDrag.bind(this));
@@ -380,22 +380,12 @@ export default {
                 </p>
                 <a
                     :id="index + '-selectFeatures-feature'"
-
                     href="#"
                     class="select-features-zoom-link"
                     @click="featureZoom"
                 >
                     {{ translate("common:modules.tools.selectFeatures.zoomToFeature") }}
                 </a>
-                <!-- <a
-                    :id="index + '-selectFeatures-feature'"
-                    :key="'a' + index"
-                    href="#"
-                    class="select-features-zoom-link"
-                    @click="featureZoom"
-                >
-                    {{ translate("common:modules.tools.selectFeatures.zoomToFeature") }}
-                </a> -->
                 <hr
                     v-if="index !== selectedFeaturesWithRenderInformation.length - 1"
                     :key="'h' + index"
