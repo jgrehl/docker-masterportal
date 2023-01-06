@@ -1,9 +1,9 @@
 
-import {generateSimpleGetters} from "../../../../app-store/utils/generators";
-import state from "./stateSelectFeatures";
+// import {generateSimpleGetters} from "../../../../app-store/utils/generators";
+// import state from "./stateSelectFeatures";
 
-const getters = {
-    ...generateSimpleGetters(state)
-};
+// const getters = {
+//     ...generateSimpleGetters(state)
+// };
 
-export default getters;
+// export default getters;
