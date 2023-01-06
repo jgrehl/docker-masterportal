@@ -214,20 +214,24 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
             };
             state.layerConfig = layerConfig;
             const layerToAdd = {
-                id: "I_m_the_id",
-                name: "Trees in Hamburg",
-                typ: "WMS",
-                layers: "trees",
-                url: "https://geodienste.hamburg.de/trees",
-                version: "1.4.3",
-                visibility: true,
-                showInLayerTree: true,
-                maxScale: 2000,
-                minScale: 12
+                    id: "I_m_the_id",
+                    name: "Trees in Hamburg",
+                    typ: "WMS",
+                    layers: "trees",
+                    url: "https://geodienste.hamburg.de/trees",
+                    version: "1.4.3",
+                    visibility: true,
+                    showInLayerTree: true,
+                    maxScale: 2000,
+                    minScale: 12
 
-            };
+                },
+                getters = {
+                    allLayerConfigs: () => [],
+                    allLayerConfigsByParentKey: () => []
+                };
 
-            actions.addLayerToLayerConfig({dispatch, state}, {layerConfig: layerToAdd, parentKey: "Fachdaten"});
+            actions.addLayerToLayerConfig({dispatch, getters, state}, {layerConfig: layerToAdd, parentKey: "Fachdaten"});
             expect(dispatch.callCount).to.equals(2);
             expect(dispatch.firstCall.args[0]).to.equals("updateLayerConfigZIndex");
             expect(dispatch.firstCall.args[1]).to.deep.equals({
@@ -400,11 +404,13 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
 
         describe("addBackgroundLayerAttribute", () => {
             it("add the attribute background to Hintergrundkarten", () => {
-                state.layerConfig = layerConfig;
+                const getters = {
+                    allLayerConfigsByParentKey: () => layerConfig.Hintergrundkarten.elements
+                };
 
-                actions.addBackgroundLayerAttribute({state});
+                actions.addBackgroundLayerAttribute({getters});
 
-                expect(state.layerConfig.Hintergrundkarten.elements).to.deep.equals([
+                expect(layerConfig.Hintergrundkarten.elements).to.deep.equals([
                     {
                         id: "453",
                         visibility: true,
@@ -456,16 +462,129 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
             });
         });
 
-        describe("updateLayerConfigs", () => {
-            it("update layer configs", () => {
-                actions.updateLayerConfigs({commit, state}, layerList);
+        describe("replaceByIdInLayerConfig", () => {
+            it("replaceByIdInLayerConfig layer is contained in layerConfig", () => {
+                const toReplace = {
+                    id: "453",
+                    visibility: true,
+                    att1: "bla",
+                    att2: [{
+                        foo: "foo",
+                        bar: "bar"
+                    }]
+                };
 
-                expect(commit.callCount).to.be.equals(9);
-                expect(commit.alwaysCalledWith("replaceByIdInLayerConfig"));
-                expect(commit.firstCall.args[1].layerConfigs[0].layer).to.deep.equals(layerList[0]);
-                expect(commit.secondCall.args[1].layerConfigs[0].layer).to.deep.equals(layerList[1]);
-                expect(commit.thirdCall.args[1].layerConfigs[0].layer).to.deep.equals(layerList[2]);
-                expect(commit.lastCall.args[1].layerConfigs[0].layer).to.deep.equals(layerList[8]);
+                state.layerConfig = layerConfig;
+
+                actions.replaceByIdInLayerConfig({state}, {layerConfigs: [{layer: toReplace, id: "453"}]});
+
+                expect(state.layerConfig?.Hintergrundkarten?.elements).to.be.an("array");
+                expect(state.layerConfig?.Hintergrundkarten?.elements.length).to.be.equals(2);
+                expect(Object.keys(state.layerConfig?.Hintergrundkarten?.elements[0]).length).to.be.equals(4);
+                expect(state.layerConfig?.Hintergrundkarten?.elements[0].id).to.be.equals("453");
+                expect(state.layerConfig?.Hintergrundkarten?.elements[0].visibility).to.be.true;
+                expect(state.layerConfig?.Hintergrundkarten?.elements[0].att1).to.be.equals("bla");
+                expect(state.layerConfig?.Hintergrundkarten?.elements[0].att2).to.be.deep.equals(toReplace.att2);
+                expect(state.layerConfig?.Hintergrundkarten?.elements[1].id).to.be.equals("452");
+                expect(Object.keys(state.layerConfig?.Hintergrundkarten?.elements[1]).length).to.be.equals(1);
+
+                expect(state.layerConfig?.Fachdaten?.elements).to.be.an("array");
+                expect(state.layerConfig?.Fachdaten?.elements.length).to.be.equals(2);
+                expect(state.layerConfig?.Fachdaten?.elements[0].id).to.be.equals("1132");
+                expect(Object.keys(state.layerConfig?.Fachdaten?.elements[0]).length).to.be.equals(3);
+                expect(state.layerConfig?.Fachdaten?.elements[1].id).to.be.equals("10220");
+                expect(Object.keys(state.layerConfig?.Fachdaten?.elements[1]).length).to.be.equals(1);
+            });
+
+            it("replaceByIdInLayerConfig layer is not contained in layerConfig", () => {
+                const toReplace = {
+                    id: "unknown",
+                    visibility: true,
+                    att1: "bla",
+                    att2: [{
+                        foo: "foo",
+                        bar: "bar"
+                    }]
+                };
+                let stateCopy = null;
+
+                state.layerConfig = layerConfig;
+                stateCopy = {...state};
+
+                actions.replaceByIdInLayerConfig({state}, {layerConfigs: [{layer: toReplace, id: "unknown"}]});
+                expect(state).to.be.deep.equals(stateCopy);
+            });
+
+            it("replaceByIdInLayerConfig toReplace-layer is undefined", () => {
+                let stateCopy = null;
+
+                state.layerConfig = layerConfig;
+                stateCopy = {...state};
+
+                actions.replaceByIdInLayerConfig({state}, undefined);
+                expect(state).to.be.deep.equals(stateCopy);
+            });
+        });
+
+        describe("updateAllZIndexes", () => {
+            it("updateAllZIndexes does not set zIndexes, if no zIndexes are set before", () => {
+                const getters = {
+                    allLayerConfigsByParentKey: (key) => {
+                        if (key === "Hintergrundkarten") {
+                            return layerConfig.Hintergrundkarten.elements;
+                        }
+                        return layerConfig.Fachdaten.elements;
+                    }
+                };
+
+                actions.updateAllZIndexes({dispatch, getters});
+                expect(layerConfig.Hintergrundkarten.elements[0].zIndex).to.be.undefined;
+                expect(layerConfig.Hintergrundkarten.elements[1].zIndex).to.be.undefined;
+                expect(layerConfig.Fachdaten.elements[0].zIndex).to.be.undefined;
+                expect(layerConfig.Fachdaten.elements[1].zIndex).to.be.undefined;
+            });
+
+            it("updateAllZIndexes with all zIndexes are set before", () => {
+                const getters = {
+                    allLayerConfigsByParentKey: (key) => {
+                        if (key === "Hintergrundkarten") {
+                            return layerConfig.Hintergrundkarten.elements;
+                        }
+                        return layerConfig.Fachdaten.elements;
+                    }
+                };
+
+                layerConfig.Hintergrundkarten.elements[0].zIndex = 0;
+                layerConfig.Hintergrundkarten.elements[1].zIndex = 1;
+                layerConfig.Fachdaten.elements[0].zIndex = 5;
+                layerConfig.Fachdaten.elements[1].zIndex = 6;
+                actions.updateAllZIndexes({getters});
+
+                expect(layerConfig.Hintergrundkarten.elements[0].zIndex).to.be.equals(0);
+                expect(layerConfig.Hintergrundkarten.elements[1].zIndex).to.be.equals(1);
+                expect(layerConfig.Fachdaten.elements[0].zIndex).to.be.equals(2);
+                expect(layerConfig.Fachdaten.elements[1].zIndex).to.be.equals(3);
+            });
+
+            it("updateAllZIndexes with some zIndexes are set before", () => {
+                const getters = {
+                    allLayerConfigsByParentKey: (key) => {
+                        if (key === "Hintergrundkarten") {
+                            return layerConfig.Hintergrundkarten.elements;
+                        }
+                        return layerConfig.Fachdaten.elements;
+                    }
+                };
+
+                layerConfig.Hintergrundkarten.elements[0].zIndex = 0;
+                layerConfig.Fachdaten.elements[0].zIndex = 5;
+                layerConfig.Fachdaten.elements[1].zIndex = 6;
+                actions.updateAllZIndexes({getters});
+
+                expect(layerConfig.Hintergrundkarten.elements[0].zIndex).to.be.equals(0);
+                expect(layerConfig.Hintergrundkarten.elements[1].zIndex).to.be.equals(undefined);
+                expect(layerConfig.Fachdaten.elements[0].zIndex).to.be.equals(1);
+                expect(layerConfig.Fachdaten.elements[1].zIndex).to.be.equals(2);
             });
         });
     });
