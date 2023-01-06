@@ -1,4 +1,4 @@
-<script>
+<!-- <script>
 import {DragBox, Select} from "ol/interaction";
 import {never, platformModifierKeyOnly, touchOnly} from "ol/events/condition";
 import VectorSource from "ol/source/Vector.js";
@@ -439,4 +439,4 @@ td.featureName {
 td.featureValue {
     width: 70%;
 }
-</style>
+</style> -->

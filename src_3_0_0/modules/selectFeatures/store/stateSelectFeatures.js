@@ -19,6 +19,7 @@
 const state = {
     active: false,
     id: "selectFeatures",
+    type: "selectFeatures",
     // defaults for config.json parameters
     name: "common:menu.tools.selectFeatures",
     icon: "bi-card-list",
