@@ -75,10 +75,10 @@ export default {
             if (this.isLayerTree) {
                 return this.isLayerVisible;
             }
-            return this.isLayerVisible || this.layersToAdd.indexOf(this.conf.id) > -1;
+            return this.isLayerVisible || this.layersToAdd.indexOf(this.conf.id) > -1 || this.conf.showInLayerTree;
         },
         disabled () {
-            return !this.isLayerTree && (this.isLayerVisible || this.layersToAdd.indexOf(this.conf.id) > -1) || null;
+            return !this.isLayerTree && (this.isLayerVisible || this.layersToAdd.indexOf(this.conf.id) > -1 || this.conf.showInLayerTree) || null;
         }
     }
 };
