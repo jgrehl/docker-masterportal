@@ -67,7 +67,7 @@ describe("src_3_0_0/modules/layerTree/components/LayerCheckBox.vue", () => {
                     }
                 }
             },
-            mutations: {
+            actions: {
                 replaceByIdInLayerConfig: replaceByIdInLayerConfigSpy
             }
         });
