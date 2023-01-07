@@ -78,7 +78,7 @@ export default {
                 this.reset();
             }
             else {
-                this.setCurrentComponent({component: "GetFeatureInfo", side: "secondaryMenu"});
+                this.setCurrentComponent({type: "GetFeatureInfo", side: "secondaryMenu"});
             }
         },
         /**
