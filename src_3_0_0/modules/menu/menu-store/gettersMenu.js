@@ -46,7 +46,7 @@ const menuGetters = {
      * @returns {object} Returns the currently visible Component.
      */
     currentFolderName: state => side => {
-        return state[side].navigation.currentComponent.props[0].name;
+        return state[side].navigation.currentComponent.props.name;
     },
 
     /**
@@ -55,7 +55,7 @@ const menuGetters = {
      * @returns {object} Returns the currently visible Component.
      */
     currentFolderPath: state => side => {
-        return state[side].navigation.currentComponent.props[0].path;
+        return state[side].navigation.currentComponent.props.path;
     },
 
     /**
@@ -116,7 +116,7 @@ const menuGetters = {
                     break;
                 }
                 case "folder": {
-                    previousEntryText = state[side].navigation.history.slice(-1)[0].props[0].name;
+                    previousEntryText = state[side].navigation.history.slice(-1)[0].props.name;
                     break;
                 }
                 default: {
