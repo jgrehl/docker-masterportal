@@ -25,11 +25,9 @@ export default {
      * @returns {void}
      */
     setCurrentComponent (state, {type, side, props}) {
-        if (state[side].navigation.currentComponent.type !== type) {
-            state[side].navigation.history.push(state[side].navigation.currentComponent);
-            state[side].navigation.currentComponent = {type: type, props: props};
-        }
-        else if (state[side].navigation.currentComponent.type === "folder" && type === "folder") {
+        const currentType = state[side].navigation.currentComponent.type;
+
+        if (currentType !== type || currentType === "folder" && type === "folder") {
             state[side].navigation.history.push(state[side].navigation.currentComponent);
             state[side].navigation.currentComponent = {type: type, props: props};
         }
