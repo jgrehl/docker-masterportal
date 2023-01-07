@@ -1,12 +1,12 @@
 <script>
 import {mapGetters} from "vuex";
-import MenuContainerBodyElement from "./MenuContainerBodyRootItemElement.vue";
+import MenuContainerBodyRootItemElement from "./MenuContainerBodyRootItemElement.vue";
 import upperFirst from "../../../shared/js/utils/upperFirst";
 
 export default {
     name: "MenuContainerBodyRootItems",
     components: {
-        MenuContainerBodyElement
+        MenuContainerBodyRootItemElement
     },
     props: {
         /** Appendix set on the id to make it unique. Needed, as the menu can be rendered multiple times. */
@@ -24,10 +24,7 @@ export default {
         ...mapGetters("Menu", ["section"])
     },
     created () {
-        this.itemProps = [];
-        this.section(this.path).forEach(item => {
-            this.itemProps.push(this.chooseProperties(item));
-        });
+        this.prepareItemProps();
     },
     methods: {
         /**
@@ -47,6 +44,24 @@ export default {
                 }
             }
             return properties;
+        },
+
+        prepareItemProps () {
+            this.itemProps = [];
+            const items = this.section(this.path);
+
+            if (items) {
+                if (Array.isArray(items)) {
+                    this.section(this.path).forEach(item => {
+                        this.itemProps.push(this.chooseProperties(item));
+                    });
+                }
+                else {
+                    items.elements.forEach(element => {
+                        this.itemProps.push(this.chooseProperties(element));
+                    });
+                }
+            }
         }
     }
 };
@@ -61,7 +76,7 @@ export default {
             v-for="(props, key) in itemProps"
             :key="key"
         >
-            <MenuContainerBodyElement
+            <MenuContainerBodyRootItemElement
                 :id="'mp-menu-body-items-element-' + key + '-' + idAppendix"
                 :properties="props"
                 :name="props.name"
