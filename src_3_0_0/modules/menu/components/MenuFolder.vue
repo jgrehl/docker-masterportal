@@ -1,4 +1,5 @@
 <script>
+import {mapGetters} from "vuex";
 import MenuContainerBodyRootItems from "./MenuContainerBodyRootItems.vue";
 
 export default {
@@ -7,41 +8,39 @@ export default {
         MenuContainerBodyRootItems
     },
     props: {
-        /** Appendix set on the id to make it unique. Needed, as the menu can be rendered multiple times. */
-        idAppendix: {
+        /** Defines in which menu the component is being rendered */
+        side: {
             type: String,
-            required: true
-        },
-        /** icon of the folder */
-        icon: {
-            type: String,
-            default: ""
-        },
-        /** path of the actual element */
-        path: {
-            type: Array,
-            default: () => []
-        },
-        /** name of the folder */
-        name: {
-            type: String,
-            required: true
+            default: "mainMenu",
+            validator: value => value === "mainMenu" || value === "secondaryMenu"
         }
     },
     data () {
         return {
             isActive: false
         };
+    },
+    computed: {
+        ...mapGetters("Menu", ["currentFolderName", "currentFolderPath"]),
+
+        currentPath () {
+            return this.currentFolderPath(this.side);
+        }
     }
 };
 </script>
 
 <template>
     <div>
-        <h4>{{ $t(name) }}</h4>
-        <MenuContainerBodyRootItems
+        <!-- <MenuContainerBodyRootItems
             :id-appendix="idAppendix"
             :path="path"
+        /> -->
+        {{ currentFolderName(side) }}
+        <MenuContainerBodyRootItems
+            :key="currentFolderName(side)"
+            :id-appendix="side"
+            :path="currentPath"
         />
     </div>
 </template>
