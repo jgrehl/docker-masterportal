@@ -100,9 +100,13 @@ const menuGetters = {
         return state.mainMenu.toggleButtonIcon;
     },
 
-        /**
-     * @param {MenuNavigationState} state Local vuex state.
-     * @returns {(function(side: String): any|false)} Last entry for the given menu.
+    /**
+     * Returns the Text to be chosen for backward menu navigation.
+     * @param {MenuState} state Local vuex state.
+     * @param {Object} _ Local vuex getters (discarded).
+     * @param {Object} __ vuex rootState (discarded).
+     * @param {Object} rootGetters vuex rootGetters.
+     * @returns {(function(type: String): Boolean)} Function returning false or the Text.
      */
     previuosNavigationEntryText: (state, _, __, rootGetters) => side => {
         const previousEntry = state[side].navigation.history.length !== 0 ? state[side].navigation.history.slice(-1)[0].type : "";
