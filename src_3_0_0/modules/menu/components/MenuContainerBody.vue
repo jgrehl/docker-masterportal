@@ -64,7 +64,7 @@ export default {
     >
         <MenuNavigation :side="side" />
 
-        <!-- mount components which need to be always active in background because of eventlisteners etc. -->
+
         <template v-for="component in componentsAlwaysActivated">
             <component
                 :is="component.module"
@@ -75,7 +75,7 @@ export default {
 
         <component
             :is="currentComponent"
-            v-if="currentComponent !== 'root'"
+            v-if="currentComponent !== 'root'||'getFeatureInfo'"
         />
 
         <MenuContainerBodyRoot
