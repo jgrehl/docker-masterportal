@@ -32,10 +32,6 @@ export default {
 
 <template>
     <div>
-        <!-- <MenuContainerBodyRootItems
-            :id-appendix="idAppendix"
-            :path="path"
-        /> -->
         {{ currentFolderName(side) }}
         <MenuContainerBodyRootItems
             :key="currentFolderName(side)"

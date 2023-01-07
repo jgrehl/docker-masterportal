@@ -12,16 +12,16 @@ export default {
      * @param {Object} type Properties of the element.
      * @returns {void}
      */
-    clickedMenuElement ({commit, dispatch}, {properties, name, path, side, type}) {
+    clickedMenuElement ({commit, dispatch}, {name, path, side, type}) {
 
         if (type) {
             if (type === "folder") {
                 nextTick(() => {
-                    commit("Menu/setCurrentComponent", {component: type, side: side, path: path, name: name}, {root: true});
+                    commit("setCurrentComponent", {type: type, side: side, props: {path: path, name: name}});
                 });
             }
             else {
-                commit("Menu/setCurrentComponent", {component: type, side: side}, {root: true});
+                commit("setCurrentComponent", {type: type, side: side, props: {}});
                 nextTick(() => {
                     dispatch("setElementActive", {moduleNamespace: type, isActive: true, side: side});
                 });
