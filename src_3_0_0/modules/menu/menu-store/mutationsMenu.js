@@ -5,26 +5,6 @@ import {generateSimpleMutations} from "../../../shared/js/utils/generators";
 export default {
     ...generateSimpleMutations(menuState),
 
-    /**
-     * Toggles Menucontainers
-     * @param {Object} currentState current state
-     * @param {String} side secondary or main Menu
-     * @returns {void}
-     */
-    toggleMenu (currentState, side = {}) {
-        if (side === "mainMenu") {
-            if (store.getters.isMobile && currentState.secondaryMenu.expanded) {
-                currentState.secondaryMenu.expanded = false;
-            }
-            currentState.mainMenu.expanded = !currentState.mainMenu.expanded;
-        }
-        else if (side === "secondaryMenu") {
-            if (store.getters.isMobile && currentState.mainMenu.expanded) {
-                currentState.mainMenu.expanded = false;
-            }
-            currentState.secondaryMenu.expanded = !currentState.secondaryMenu.expanded;
-        }
-    },
 
     /**
      * Collapses Menucontainers
@@ -44,12 +24,17 @@ export default {
      * @param {String} component Type of Component
      * @returns {void}
      */
-    setCurrentComponent (state, {component, side}) {
-        if (state[side].navigation.currentComponent !== component) {
+    setCurrentComponent (state, {component, side, path, name}) {
+        if (state[side].navigation.currentComponent.type !== component) {
             state[side].navigation.history.push(state[side].navigation.currentComponent);
-            state[side].navigation.currentComponent = component;
+            state[side].navigation.currentComponent = {type: component, props: [{name: name, path: path}]};
+        }
+        else if (state[side].navigation.currentComponent.type === "folder" && component === "folder") {
+            state[side].navigation.history.push(state[side].navigation.currentComponent);
+            state[side].navigation.currentComponent = {type: component, props: [{name: name, path: path}]};
         }
     },
+
     /**
      * Removes the last path of an entry from the given side.
      * @param {Object} state Local vuex state.
@@ -57,7 +42,28 @@ export default {
      * @returns {void}
      */
     switchToPreviousComponent (state, side) {
-        state[side].navigation.currentComponent = state[side].navigation.history.slice(-1).toString();
+        state[side].navigation.currentComponent = {type: state[side].navigation.history.slice(-1)[0].type, props: state[side].navigation.history.slice(-1)[0].props};
         state[side].navigation.history.pop();
+    },
+
+    /**
+     * Toggles Menucontainers
+     * @param {Object} currentState current state
+     * @param {String} side secondary or main Menu
+     * @returns {void}
+     */
+    toggleMenu (currentState, side = {}) {
+        if (side === "mainMenu") {
+            if (store.getters.isMobile && currentState.secondaryMenu.expanded) {
+                currentState.secondaryMenu.expanded = false;
+            }
+            currentState.mainMenu.expanded = !currentState.mainMenu.expanded;
+        }
+        else if (side === "secondaryMenu") {
+            if (store.getters.isMobile && currentState.mainMenu.expanded) {
+                currentState.mainMenu.expanded = false;
+            }
+            currentState.secondaryMenu.expanded = !currentState.secondaryMenu.expanded;
+        }
     }
 };
