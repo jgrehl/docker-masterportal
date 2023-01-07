@@ -12,8 +12,11 @@ export default {
         }
     },
     computed: {
-        ...mapGetters("Menu", ["objectFromPath"]),
-        ...mapGetters("Menu", ["previuosNavigationEntry", "currentComponent"]),
+        ...mapGetters("Menu", ["previuosNavigationEntryText", "currentComponent"]),
+
+        previuosNavigation () {
+            return this.previuosNavigationEntryText(this.side);
+        },
 
         currentModuleTitle () {
 
@@ -22,20 +25,6 @@ export default {
                 currentComponentName = this.$store.getters[moduleNamePath] ? this.$store.getters[moduleNamePath] : this.currentComponent(this.side);
 
             return this.currentComponent(this.side) === "root" ? this.$t("common:menu.name") : this.$t(currentComponentName);
-        },
-
-        /**
-         * If no previousEntry besides the menu is present, show the menu String.
-         * Otherwise, show the name of the folder.
-         * TODO: Folder!!!
-         * @returns {String} Value to be displayed.
-         */
-        previousEntry () {
-            const pascalCaseModuleName = this.previuosNavigationEntry(this.side).charAt(0).toUpperCase() + this.previuosNavigationEntry(this.side).slice(1),
-                moduleNamePath = "Modules/" + pascalCaseModuleName + "/name",
-                lastComponentName = this.$store.getters[moduleNamePath] ? this.$store.getters[moduleNamePath] : this.previuosNavigationEntry(this.side);
-
-            return this.previuosNavigationEntry(this.side) === "root" ? this.$t("common:menu.name") : this.$t(lastComponentName);
         }
     },
     methods: {
@@ -46,17 +35,17 @@ export default {
 
 <template>
     <a
-        v-if="previuosNavigationEntry(side)"
+        v-if="previuosNavigation"
         :id="'mp-navigation-' + side"
         class="p-2 mp-menu-navigation"
         href="#"
         @click="navigateBack(side)"
         @keypress="navigateBack(side)"
     >
-        <h6 class="mp-menu-navigation-link mb-3"><p class="bi-chevron-left" />{{ previousEntry }}</h6>
+        <h6 class="mp-menu-navigation-link mb-3"><p class="bi-chevron-left" />{{ previuosNavigation }}</h6>
     </a>
     <h5
-        v-if="previuosNavigationEntry(side)"
+        v-if="previuosNavigation"
         class="mp-menu-navigation-moduletitle mb-4"
     >
         {{ currentModuleTitle }}
