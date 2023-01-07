@@ -69,7 +69,7 @@ export default {
      * @param {Boolean} payload.isActive Whether the module should be activated or deactivated.
      * @returns {void}
      */
-    setElementActive ({commit, dispatch}, {moduleNamespace, isActive, side}) {
+    setElementActive ({commit, dispatch}, {moduleNamespace, isActive}) {
         const upperName = moduleNamespace.charAt(0).toUpperCase() + moduleNamespace.slice(1),
             setActiveName = `Modules/${upperName}/setActive`;
 
