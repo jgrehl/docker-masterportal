@@ -24,14 +24,14 @@ export default {
      * @param {String} component Type of Component
      * @returns {void}
      */
-    setCurrentComponent (state, {component, side, path, name}) {
-        if (state[side].navigation.currentComponent.type !== component) {
+    setCurrentComponent (state, {type, side, props}) {
+        if (state[side].navigation.currentComponent.type !== type) {
             state[side].navigation.history.push(state[side].navigation.currentComponent);
-            state[side].navigation.currentComponent = {type: component, props: [{name: name, path: path}]};
+            state[side].navigation.currentComponent = {type: type, props: props};
         }
-        else if (state[side].navigation.currentComponent.type === "folder" && component === "folder") {
+        else if (state[side].navigation.currentComponent.type === "folder" && type === "folder") {
             state[side].navigation.history.push(state[side].navigation.currentComponent);
-            state[side].navigation.currentComponent = {type: component, props: [{name: name, path: path}]};
+            state[side].navigation.currentComponent = {type: type, props: props};
         }
     },
 
