@@ -23,7 +23,10 @@ export default {
         toggleButtonIcon: "bi-list",
         sections: [[]],
         navigation: {
-            currentComponent: "root",
+            currentComponent: {
+                type: "root",
+                props: []
+            },
             history: []
         }
     },
@@ -33,7 +36,10 @@ export default {
         title: null,
         toggleButtonIcon: "bi-tools",
         navigation: {
-            currentComponent: "root",
+            currentComponent: {
+                type: "root",
+                props: []
+            },
             history: []
         }
     }
