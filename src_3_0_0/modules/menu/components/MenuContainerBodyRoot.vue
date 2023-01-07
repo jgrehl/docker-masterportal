@@ -68,8 +68,8 @@ export default {
                 :id-appendix="side"
                 :path="path(key)"
             />
+            <hr>
         </template>
-        <hr>
     </div>
 </template>
 
