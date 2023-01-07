@@ -12,20 +12,20 @@ export default {
      * @param {Object} type Properties of the element.
      * @returns {void}
      */
-    clickedMenuElement ({commit, dispatch}, {properties, side, type}) {
+    clickedMenuElement ({commit, dispatch}, {properties, name, path, side, type}) {
 
         if (type) {
             if (type === "folder") {
                 nextTick(() => {
-                    document.getElementById(`mp-menu-body-items-element-7-mainMenu`)?.focus();
+                    commit("Menu/setCurrentComponent", {component: type, side: side, path: path, name: name}, {root: true});
                 });
             }
             else {
                 commit("Menu/setCurrentComponent", {component: type, side: side}, {root: true});
+                nextTick(() => {
+                    dispatch("setElementActive", {moduleNamespace: type, isActive: true, side: side});
+                });
             }
-            nextTick(() => {
-                dispatch("setElementActive", {moduleNamespace: type, isActive: true, side: side});
-            });
         }
     },
 
@@ -73,7 +73,6 @@ export default {
         const upperName = moduleNamespace.charAt(0).toUpperCase() + moduleNamespace.slice(1),
             setActiveName = `Modules/${upperName}/setActive`;
 
-        commit("setCurrentComponent", {side: side, component: moduleNamespace});
 
         dispatch("setActiveModuleMouseMapInteractions", {type: moduleNamespace, isActive: isActive});
 
@@ -116,9 +115,11 @@ export default {
      * @returns {void}
      */
     navigateBack ({commit, dispatch, getters}, side) {
-        const recent = getters[side].navigation.currentComponent;
+        const current = getters[side].navigation.currentComponent.type;
 
-        dispatch("setElementActive", {moduleNamespace: recent, isActive: false, side: side});
+        if (current !== "folder") {
+            dispatch("setElementActive", {moduleNamespace: current, isActive: false, side: side});
+        }
         nextTick(() => {
             commit("switchToPreviousComponent", side);
         });

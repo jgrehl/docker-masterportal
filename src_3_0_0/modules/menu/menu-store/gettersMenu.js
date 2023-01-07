@@ -32,6 +32,33 @@ const menuGetters = {
     },
 
     /**
+     * @param {MenuNavigationState} state Local vuex state.
+     * @param {string} side Menu Side
+     * @returns {object} Returns the currently visible Component.
+     */
+    currentComponent: state => side => {
+        return state[side].navigation.currentComponent.type;
+    },
+
+    /**
+     * @param {MenuNavigationState} state Local vuex state.
+     * @param {string} side Menu Side
+     * @returns {object} Returns the currently visible Component.
+     */
+    currentFolderName: state => side => {
+        return state[side].navigation.currentComponent.props[0].name;
+    },
+
+    /**
+     * @param {MenuNavigationState} state Local vuex state.
+     * @param {string} side Menu Side
+     * @returns {object} Returns the currently visible Component.
+     */
+    currentFolderPath: state => side => {
+        return state[side].navigation.currentComponent.props[0].path;
+    },
+
+    /**
      * Returns, if a module with attribute hasMouseMapInteractions will be deactivated.
      * @param {MenuState} state Local vuex state.
      * @param {Object} _ Local vuex getters (discarded).
@@ -73,22 +100,37 @@ const menuGetters = {
         return state.mainMenu.toggleButtonIcon;
     },
 
-    /**
-     * @param {MenuState} _ Local vuex state (discarded).
-     * @param {Object} getters Local vuex getters.
-     * @param {Object} __ Root state (discarded).
-     * @param {Object} rootGetters Root getters.
-     * @returns {(function(side: String, entry: String): Object)} Function returning previous added menu navigation entry or null.
+        /**
+     * @param {MenuNavigationState} state Local vuex state.
+     * @returns {(function(side: String): any|false)} Last entry for the given menu.
      */
-    objectFromPath: (_, getters, __, rootGetters) => (side, entry) => {
-        if (["mainMenu", "secondaryMenu"].includes(side) && ["last", "previous"].includes(entry)) {
-            // eslint-disable-next-line new-cap
-            return getters.section(rootGetters[`Menu/Navigation/${entry}Entry`](side));
+    previuosNavigationEntryText: (state, _, __, rootGetters) => side => {
+        const previousEntry = state[side].navigation.history.length !== 0 ? state[side].navigation.history.slice(-1)[0].type : "";
+        let previousEntryText = false;
+
+
+        if (previousEntry !== "") {
+            switch (previousEntry) {
+                case "root": {
+                    previousEntryText = i18next.t("common:menu.name");
+                    break;
+                }
+                case "folder": {
+                    previousEntryText = state[side].navigation.history.slice(-1)[0].props[0].name;
+                    break;
+                }
+                default: {
+                    const pascalCaseModuleName = previousEntry.charAt(0).toUpperCase() + previousEntry.slice(1),
+                        moduleNamePath = "Modules/" + pascalCaseModuleName + "/name",
+                        lastComponentName = rootGetters[moduleNamePath] ? rootGetters[moduleNamePath] : previousEntry;
+
+                    previousEntryText = previousEntry === "root" ? i18next.t("common:menu.name") : i18next.t(lastComponentName);
+                    break;
+                }
+
+            }
         }
-        console.error("Menu.objectFromPath: One of the following errors occurred:");
-        console.error(`Menu.objectFromPath: a) The given menu side ${side} is not allowed. Please use "mainMenu" or "secondaryMenu" instead.`);
-        console.error(`Menu.objectFromPath: b) The given entry in the navigation ${entry} is not allowed. Please use "last" or "previous" instead.`);
-        return null;
+        return previousEntryText;
     },
 
     /**
@@ -128,6 +170,7 @@ const menuGetters = {
                 console.error(`Menu.getters.section: ${badPathSymbol.description} ${path}.`);
                 return null;
             }
+
             return section;
         }
 
@@ -148,27 +191,6 @@ const menuGetters = {
             return {...getters.secondaryTitle, idAppendix: side};
         }
         return null;
-    },
-    /**
-     * @param {MenuNavigationState} state Local vuex state.
-     * @returns {(function(side: String): any|false)} Last entry for the given menu.
-     */
-    previuosNavigationEntry: state => side => {
-        const previousEntry = state[side].navigation.history.slice(-1).toString();
-
-        if (previousEntry !== "") {
-            return previousEntry;
-        }
-        return false;
-    },
-
-    /**
-     * @param {MenuNavigationState} state Local vuex state.
-     * @param {string} side Menu Side
-     * @returns {object} Returns the currently visible Component.
-     */
-    currentComponent: state => side => {
-        return state[side].navigation.currentComponent;
     }
 };
 
