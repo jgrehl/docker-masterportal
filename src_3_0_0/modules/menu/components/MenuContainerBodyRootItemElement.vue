@@ -80,7 +80,7 @@ export default {
     <div>
         <LightButton
             v-if="checkIsVisible() && !(properties.isVisibleInMenu === false)"
-            :interaction="() => clickedMenuElement({properties, name, path, side, type})"
+            :interaction="() => clickedMenuElement({name, path, side, type})"
             :text="name"
             :icon="showIcon ? icon : null"
             :description="showDescription ? description : null"
