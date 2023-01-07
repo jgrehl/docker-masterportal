@@ -36,7 +36,7 @@ export default {
          * @returns {object} Returns the currently visible Component.
          */
         currentComponent () {
-            let current = this.menu.navigation.currentComponent;
+            let current = this.menu.navigation.currentComponent.type;
 
             if (current !== "root") {
                 current = this.componentMap[current];
