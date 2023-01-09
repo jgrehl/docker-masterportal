@@ -53,7 +53,6 @@
           {
             "type": "featureLister", 
             "maxFeatures": 10,
-            "icon": "bi-list",
             "highlightVectorRulesPolygon": {
               "fill": {
                 "color": [
@@ -541,6 +540,11 @@
             "name",
             "adresse"
           ]
+        },
+        {
+          "id":"12260",
+          "typ": "WFS",
+          "visibility": false
         },
         {
           "id": "52",
