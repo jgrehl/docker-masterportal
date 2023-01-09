@@ -1,6 +1,6 @@
 <script>
-import ModalItem from "../../../shared/components/modals/components/ModalItem.vue";
-import ListItem from "../../../shared/components/list/components/ListItem.vue";
+import ModalItem from "../../../shared/modules/modals/components/ModalItem.vue";
+import ListItem from "../../../shared/modules/list/components/ListItem.vue";
 import {mapActions, mapGetters, mapMutations} from "vuex";
 import WfsSearchLiteral from "./WfsSearchLiteral.vue";
 // import {createUserHelp} from "../js/literalFunctions";
