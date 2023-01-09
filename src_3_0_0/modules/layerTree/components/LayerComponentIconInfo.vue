@@ -17,7 +17,7 @@ export default {
     },
     data () {
         return {
-            classInfo: "btn-light, layer-component-icon-info-button"
+            classInfo: ["btn-light, layer-component-icon-info-button"]
         };
     },
     computed: {
