@@ -1,4 +1,3 @@
-import * as i18nextModule from "i18next";
 import I18NextVue from "i18next-vue";
 import LanguageDetector from "i18next-browser-languagedetector";
 import Backend from "i18next-http-backend";
@@ -48,6 +47,7 @@ export function initLanguage (portalLanguageConfig) {
     i18next
         .use(Backend)
         .init({
+            globalInjection: true,
             debug: portalLanguage.debug,
 
             // lng overrides language detection - so shall not be set (!)
@@ -112,5 +112,4 @@ export function initLanguage (portalLanguageConfig) {
             i18next.changeLanguage("de");
         }
     });
-    global.i18next = i18nextModule.i18next;
 }
