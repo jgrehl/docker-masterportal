@@ -78,7 +78,7 @@ export default {
         },
 
         /**
-         * Resets the tool.
+         * Resets the module.
          * @returns {void}
          */
         reset: function () {
@@ -90,7 +90,7 @@ export default {
 </script>
 
 <template lang="html">
-    <div id="tool-layer-slider-player">
+    <div id="module-layer-slider-player">
         <div class="progress mb-3">
             <div
                 class="progress-bar"
@@ -188,9 +188,9 @@ export default {
     @import "~mixins";
     @import "~variables";
 
-    #tool-layer-slider-player {
+    #module-layer-slider-player {
         .progress-bar {
-            background-color: $dark_blue;
+            background-color: $secondary;
             transition: all .6s;
         }
         .progress {

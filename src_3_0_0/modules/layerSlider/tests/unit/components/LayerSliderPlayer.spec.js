@@ -42,9 +42,9 @@ describe("src_3_0_0/modules/layerSlider/components/LayerSliderPlayer.vue", () =>
             }
         });
 
-        expect(wrapper.find("#tool-layer-slider-player").exists()).to.be.true;
-        expect(wrapper.find("#tool-layer-slider-player > div.progress").exists()).to.be.true;
-        expect(wrapper.find("#tool-layer-slider-player > div.input-group").exists()).to.be.true;
+        expect(wrapper.find("#module-layer-slider-player").exists()).to.be.true;
+        expect(wrapper.find("#module-layer-slider-player > div.progress").exists()).to.be.true;
+        expect(wrapper.find("#module-layer-slider-player > div.input-group").exists()).to.be.true;
     });
 
     it("renders the progress-bar", () => {
@@ -54,10 +54,10 @@ describe("src_3_0_0/modules/layerSlider/components/LayerSliderPlayer.vue", () =>
             }
         });
 
-        expect(wrapper.find("#tool-layer-slider-player > div.progress").exists()).to.be.true;
-        expect(wrapper.find("#tool-layer-slider-player > div.progress > div.progress-bar").exists()).to.be.true;
-        expect(wrapper.find("#tool-layer-slider-player > div.progress > div.progress-bar > span.visually-hidden").exists()).to.be.true;
-        expect(wrapper.find("#tool-layer-slider-player > div.progress > div.progress-bar > span.visually-hidden").text()).equals("modules.tools.layerSlider.displayLayers");
+        expect(wrapper.find("#module-layer-slider-player > div.progress").exists()).to.be.true;
+        expect(wrapper.find("#module-layer-slider-player > div.progress > div.progress-bar").exists()).to.be.true;
+        expect(wrapper.find("#module-layer-slider-player > div.progress > div.progress-bar > span.visually-hidden").exists()).to.be.true;
+        expect(wrapper.find("#module-layer-slider-player > div.progress > div.progress-bar > span.visually-hidden").text()).equals("modules.tools.layerSlider.displayLayers");
     });
 
     it("renders the input-group with buttons", () => {
@@ -69,15 +69,15 @@ describe("src_3_0_0/modules/layerSlider/components/LayerSliderPlayer.vue", () =>
             }
         });
 
-        expect(wrapper.find("#tool-layer-slider-player > div.input-group").exists()).to.be.true;
-        expect(wrapper.findAll("#tool-layer-slider-player > div.input-group > button").length).equals(4);
+        expect(wrapper.find("#module-layer-slider-player > div.input-group").exists()).to.be.true;
+        expect(wrapper.findAll("#module-layer-slider-player > div.input-group > button").length).equals(4);
 
-        wrapper.findAll("#tool-layer-slider-player > div.input-group > button").forEach((button, index) => {
+        wrapper.findAll("#module-layer-slider-player > div.input-group > button").forEach((button, index) => {
             expect(button.attributes("id")).equals(buttonIds[index]);
         });
 
-        expect(wrapper.find("#tool-layer-slider-player > div.input-group > label").exists()).to.be.true;
-        expect(wrapper.find("#tool-layer-slider-player > div.input-group > input#title").exists()).to.be.true;
+        expect(wrapper.find("#module-layer-slider-player > div.input-group > label").exists()).to.be.true;
+        expect(wrapper.find("#module-layer-slider-player > div.input-group > input#title").exists()).to.be.true;
     });
 
     it("renders the input-group button pause if play is clicked", async () => {
@@ -98,10 +98,10 @@ describe("src_3_0_0/modules/layerSlider/components/LayerSliderPlayer.vue", () =>
             }
         });
 
-        await wrapper.find("#tool-layer-slider-player > div.input-group > button#play").trigger("click");
+        await wrapper.find("#module-layer-slider-player > div.input-group > button#play").trigger("click");
 
-        expect(wrapper.find("#tool-layer-slider-player > div.input-group > button#play").exists()).to.be.false;
-        expect(wrapper.find("#tool-layer-slider-player > div.input-group > button#pause").exists()).to.be.true;
+        expect(wrapper.find("#module-layer-slider-player > div.input-group > button#play").exists()).to.be.false;
+        expect(wrapper.find("#module-layer-slider-player > div.input-group > button#pause").exists()).to.be.true;
     });
 
     it("skip to next layer with forward button", async () => {
@@ -127,13 +127,13 @@ describe("src_3_0_0/modules/layerSlider/components/LayerSliderPlayer.vue", () =>
 
         expect(store.getters["Modules/LayerSlider/activeLayer"].index).equals(0);
 
-        await wrapper.find("#tool-layer-slider-player > div.input-group > button#forward").trigger("click");
+        await wrapper.find("#module-layer-slider-player > div.input-group > button#forward").trigger("click");
         expect(store.getters["Modules/LayerSlider/activeLayer"].index).equals(1);
 
-        await wrapper.find("#tool-layer-slider-player > div.input-group > button#forward").trigger("click");
+        await wrapper.find("#module-layer-slider-player > div.input-group > button#forward").trigger("click");
         expect(store.getters["Modules/LayerSlider/activeLayer"].index).equals(2);
 
-        await wrapper.find("#tool-layer-slider-player > div.input-group > button#forward").trigger("click");
+        await wrapper.find("#module-layer-slider-player > div.input-group > button#forward").trigger("click");
         expect(store.getters["Modules/LayerSlider/activeLayer"].index).equals(0);
     });
 
@@ -160,13 +160,13 @@ describe("src_3_0_0/modules/layerSlider/components/LayerSliderPlayer.vue", () =>
 
         expect(store.getters["Modules/LayerSlider/activeLayer"].index).equals(0);
 
-        await wrapper.find("#tool-layer-slider-player > div.input-group > button#backward").trigger("click");
+        await wrapper.find("#module-layer-slider-player > div.input-group > button#backward").trigger("click");
         expect(store.getters["Modules/LayerSlider/activeLayer"].index).equals(2);
 
-        await wrapper.find("#tool-layer-slider-player > div.input-group > button#backward").trigger("click");
+        await wrapper.find("#module-layer-slider-player > div.input-group > button#backward").trigger("click");
         expect(store.getters["Modules/LayerSlider/activeLayer"].index).equals(1);
 
-        await wrapper.find("#tool-layer-slider-player > div.input-group > button#backward").trigger("click");
+        await wrapper.find("#module-layer-slider-player > div.input-group > button#backward").trigger("click");
         expect(store.getters["Modules/LayerSlider/activeLayer"].index).equals(0);
     });
 });
