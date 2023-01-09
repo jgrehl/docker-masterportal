@@ -32,24 +32,27 @@ export default {
 </script>
 
 <template lang="html">
-    <div
-        v-for="(language, key) of $i18next.options.getLanguages()"
-        :key="key"
-        class="form-check"
-    >
-        <input
-            :id="'languageRadio-'+key"
-            type="radio"
-            name="mode"
-            class="form-check-input"
-            :checked="$i18next.language === key? true : false"
-            @click="translate(key)"
+    <div>
+        <div
+            v-for="(language, key) of $i18next.options.getLanguages()"
+            :key="key"
+            class="form-check"
         >
-        <label
-            :for="'languageRadio-'+key"
-            @click="translate(key)"
-            @keydown.enter="translate(key)"
-        > {{ language }}</label>
+            <input
+                :id="'languageRadio-'+key"
+                type="radio"
+                name="mode"
+                class="form-check-input"
+                :checked="$i18next.language === key? true : false"
+                @click="translate(key)"
+            >
+            <label
+                :for="'languageRadio-'+key"
+                @click="translate(key)"
+                @keydown.enter="translate(key)"
+            > {{ language }}
+            </label>
+        </div>
     </div>
 </template>
 
