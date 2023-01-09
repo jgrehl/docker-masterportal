@@ -1,6 +1,6 @@
 import sinon from "sinon";
 import {expect} from "chai";
-import createLayerAddToTreeModule from "../../../../../../utils/createLayerAddToTree";
+import createLayerAddToTreeModule from "../../../../../shared/js/utils/createLayerAddToTree";
 import actions from "../../../store/actionsSelectFeatures";
 import stateSelectFeatures from "../../../store/stateSelectFeatures";
 
@@ -13,7 +13,7 @@ describe("src/modules/tools/selectFeatures/store/gettersSelectFeatures.js", () =
         dispatch = sinon.spy();
         createLayerAddToTreeStub = sinon.spy(createLayerAddToTreeModule, "createLayerAddToTree");
         rootGetters = {
-            "Maps/getVisibleLayerList": visibleLayerList,
+            "Maps/getVisibleOlLayerList": visibleLayerList,
             "treeHighlightedFeatures": {active: true},
             "treeType": "custom"
         };
@@ -59,7 +59,7 @@ describe("src/modules/tools/selectFeatures/store/gettersSelectFeatures.js", () =
             expect(dispatch.secondCall.args[1].highlightStyle.fill).to.deep.equal(state.highlightVectorRulesPointLine.fill);
             expect(dispatch.thirdCall.args[0]).to.equal("Maps/setCenter");
             expect(dispatch.thirdCall.args[1]).to.deep.equal([100, 100]);
-            expect(dispatch.getCall(3).args[0]).to.equal("Maps/setZoomLevel");
+            expect(dispatch.getCall(3).args[0]).to.equal("Maps/setZoom");
             expect(dispatch.getCall(3).args[1]).to.deep.equal(state.highlightVectorRulesPointLine.zoomLevel);
             expect(createLayerAddToTreeStub.calledOnce).to.be.true;
             expect(createLayerAddToTreeStub.firstCall.args[0]).to.be.deep.equals(layerId);
@@ -83,7 +83,7 @@ describe("src/modules/tools/selectFeatures/store/gettersSelectFeatures.js", () =
             expect(dispatch.secondCall.args[1].highlightStyle.fill).to.deep.equal(state.highlightVectorRulesPointLine.fill);
             expect(dispatch.thirdCall.args[0]).to.equal("Maps/setCenter");
             expect(dispatch.thirdCall.args[1]).to.deep.equal([100, 100]);
-            expect(dispatch.getCall(3).args[0]).to.equal("Maps/setZoomLevel");
+            expect(dispatch.getCall(3).args[0]).to.equal("Maps/setZoom");
             expect(dispatch.getCall(3).args[1]).to.deep.equal(state.highlightVectorRulesPointLine.zoomLevel);
             expect(createLayerAddToTreeStub.notCalled).to.be.true;
         });
