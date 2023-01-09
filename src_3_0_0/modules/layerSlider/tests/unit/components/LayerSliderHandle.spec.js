@@ -84,9 +84,9 @@ describe("src_3_0_0/modules/layerSlider/components/LayerSliderHandle.vue", () =>
             }
         });
 
-        expect(wrapper.find("#tool-layer-slider-handle").exists()).to.be.true;
-        expect(wrapper.find("#tool-layer-slider-handle > label#label-slider").exists()).to.be.true;
-        expect(wrapper.find("#tool-layer-slider-handle > input#slider").exists()).to.be.true;
+        expect(wrapper.find("#module-layer-slider-handle").exists()).to.be.true;
+        expect(wrapper.find("#module-layer-slider-handle > label#label-slider").exists()).to.be.true;
+        expect(wrapper.find("#module-layer-slider-handle > input#slider").exists()).to.be.true;
     });
 
     it("prepareSliderTicks - returns the slider ticks", () => {
