@@ -20,6 +20,7 @@
       "totalView": true,
       "button3d": true,
       "expandable": {
+        "backForward": true,
         "orientation": {
           "zoomMode": "once",
           "poiDistances": [
