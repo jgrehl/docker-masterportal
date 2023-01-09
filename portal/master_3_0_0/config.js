@@ -36,7 +36,14 @@ const Config = {
         debug: false,
         languages: {
             de: "Deutsch",
-            en: "English"
+            en: "English",
+            es: "EspaÃ±ol",
+            it: "Italiano",
+            platt: "Platt",
+            pt: "PortuguÃªs",
+            ru: "Ð ÑƒÑÑÐºÐ¸Ð¹",
+            tr: "TÃ¼rkÃ§e",
+            ua: "Ð£ÐºÑ€Ð°Ñ—Ð½ÑÑŒÐºÐ°"
         },
         fallbackLanguage: "de",
         changeLanguageOnStartWhen: ["querystring", "localStorage", "htmlTag"]
