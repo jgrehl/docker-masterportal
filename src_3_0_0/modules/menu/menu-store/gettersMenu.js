@@ -7,31 +7,6 @@ const menuGetters = {
     ...generateSimpleGetters(menuState),
 
     /**
-     * Returns all modules with the attribute alwaysActivated: true.
-     * @param {MenuState} _ Local vuex state (discarded).
-     * @param {Object} __ Local vuex getters (discarded).
-     * @param {Object} rootState vuex rootState.
-     * @param {Object} rootGetters vuex rootGetters.
-     * @returns {Object[]} components always activated
-     */
-    componentsAlwaysActivated: (_, __, rootState, rootGetters) => {
-        const componentAlwaysActivated = [];
-
-        Object.keys(rootGetters["Modules/componentMap"]).forEach(moduleKey => {
-            const module = rootState.Modules[upperFirst(moduleKey)];
-
-            if (module?.alwaysActivated) {
-                componentAlwaysActivated.push({
-                    module: rootGetters["Modules/componentMap"][moduleKey],
-                    menuSide: module.menuSide || "secondaryMenu"
-                });
-            }
-        });
-
-        return componentAlwaysActivated;
-    },
-
-    /**
      * @param {MenuNavigationState} state Local vuex state.
      * @param {string} side Menu Side
      * @returns {object} Returns the Name of the currently visible Component.
@@ -119,7 +94,7 @@ const menuGetters = {
                     break;
                 }
                 default: {
-                    previousEntryText = previousEntry.props !== undefined && previousEntry.props.name ? previousEntry.props.name : previousEntry.type;
+                    previousEntryText = previousEntry.props !== undefined && previousEntry.props.name ? i18next.t(previousEntry.props.name) : previousEntry.type;
                     break;
                 }
             }
