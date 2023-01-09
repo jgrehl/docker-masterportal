@@ -21,7 +21,7 @@ export default {
         };
     },
     computed: {
-        ...mapGetters("Menu", ["currentFolderName", "currentFolderPath"]),
+        ...mapGetters("Menu", ["currentComponentName", "currentFolderPath"]),
 
         currentPath () {
             return this.currentFolderPath(this.side);
@@ -32,9 +32,8 @@ export default {
 
 <template>
     <div>
-        {{ currentFolderName(side) }}
         <MenuContainerBodyRootItems
-            :key="currentFolderName(side)"
+            :key="currentComponentName(side)"
             :id-appendix="side"
             :path="currentPath"
         />
