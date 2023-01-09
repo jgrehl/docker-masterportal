@@ -1,28 +1,22 @@
-import Vuex from "vuex";
+import {createStore} from "vuex";
 import VectorLayer from "ol/layer/Vector.js";
-import {config, shallowMount, createLocalVue} from "@vue/test-utils";
+import {config, shallowMount} from "@vue/test-utils";
 import SelectFeaturesComponent from "../../../components/SelectFeatures.vue";
 import SelectFeaturesModule from "../../../store/indexSelectFeatures";
 import {expect} from "chai";
 import sinon from "sinon";
 
-const localVue = createLocalVue();
+config.global.mocks.$t = key => key;
 
-localVue.use(Vuex);
-config.mocks.$t = key => key;
-
-describe("src/modules/tools/selectFeatures/components/SelectFeatures.vue", () => {
+describe("src/modules/selectFeatures/components/SelectFeatures.vue", () => {
     const mockConfigJson = {
             Portalconfig: {
-                menu: {
-                    tools: {
-                        children: {
-                            "selectFeatures":
-                            {
-                                "name": "translate#common:menu.tools.selectFeatures"
-                            }
+                secondaryMenu: {
+                    sections: [
+                        {
+                            "type": "selectFeatures"
                         }
-                    }
+                    ]
                 }
             }
         },
@@ -56,16 +50,17 @@ describe("src/modules/tools/selectFeatures/components/SelectFeatures.vue", () =>
                 };
             }
         };
-        store = new Vuex.Store({
+        store = createStore({
             namespaces: true,
             modules: {
                 Maps: {
                     namespaced: true,
                     actions: mockMapActions
                 },
-                Tools: {
+                Modules: {
                     namespaced: true,
                     modules: {
+                        namespaced: true,
                         SelectFeatures: SelectFeaturesModule
                     }
                 }
@@ -80,7 +75,7 @@ describe("src/modules/tools/selectFeatures/components/SelectFeatures.vue", () =>
         });
         mapCollection.clear();
         mapCollection.addMap(map, "2D");
-        store.commit("Tools/SelectFeatures/setActive", true);
+        store.commit("Modules/SelectFeatures/setActive", true);
     });
 
     afterEach(() => {
@@ -88,17 +83,21 @@ describe("src/modules/tools/selectFeatures/components/SelectFeatures.vue", () =>
     });
 
     it("renders the SelectFeatures tool if active", () => {
-        const wrapper = shallowMount(SelectFeaturesComponent, {store, localVue});
+        const wrapper = shallowMount(SelectFeaturesComponent, {global: {
+            plugins: [store]
+        }});
 
         expect(wrapper.find("#selectFeatures").exists()).to.be.true;
         expect(wrapper.find(".selectFeaturesDefaultMessage").exists()).to.be.true;
     });
 
     it("do not render the SelectFeatures tool if not active", async () => {
-        const wrapper = shallowMount(SelectFeaturesComponent, {store, localVue}),
+        const wrapper = shallowMount(SelectFeaturesComponent, {global: {
+                plugins: [store]
+            }}),
             spyRemoveInteractions = sinon.spy(wrapper.vm, "removeInteractions");
 
-        await store.commit("Tools/SelectFeatures/setActive", false);
+        await store.commit("Modules/SelectFeatures/setActive", false);
         expect(spyRemoveInteractions.calledOnce).to.be.true;
 
         expect(wrapper.find("#selectFeatures").exists()).to.be.false;
@@ -107,8 +106,10 @@ describe("src/modules/tools/selectFeatures/components/SelectFeatures.vue", () =>
     });
 
     it("renders the SelectFeatures-Table if it has data", async () => {
-        await store.commit("Tools/SelectFeatures/setSelectedFeaturesWithRenderInformation", mockSelectedFeaturesWithRenderInformation);
-        const wrapper = shallowMount(SelectFeaturesComponent, {store, localVue});
+        await store.commit("Modules/SelectFeatures/setSelectedFeaturesWithRenderInformation", mockSelectedFeaturesWithRenderInformation);
+        const wrapper = shallowMount(SelectFeaturesComponent, {global: {
+            plugins: [store]
+        }});
 
         expect(wrapper.find(".select-features-tables").exists()).to.be.true;
         expect(wrapper.find(".featureName").exists()).to.be.true;
@@ -117,7 +118,9 @@ describe("src/modules/tools/selectFeatures/components/SelectFeatures.vue", () =>
     });
 
     it("selectFeatures functions return correct results", async () => {
-        const wrapper = shallowMount(SelectFeaturesComponent, {store, localVue});
+        const wrapper = shallowMount(SelectFeaturesComponent, {global: {
+            plugins: [store]
+        }});
 
         expect(wrapper.vm.beautifyKey("very_important_field")).to.equal("Very Important Field");
         expect(wrapper.vm.beautifyValue("very|important|field")).to.equal("very<br/>important<br/>field");
