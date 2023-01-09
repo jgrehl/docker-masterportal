@@ -12,19 +12,14 @@ export default {
         }
     },
     computed: {
-        ...mapGetters("Menu", ["previuosNavigationEntryText", "currentComponent"]),
+        ...mapGetters("Menu", ["previuosNavigationEntryText", "currentComponentName"]),
 
         previuosNavigation () {
             return this.previuosNavigationEntryText(this.side);
         },
 
-        currentModuleTitle () {
-
-            const pascalCaseModuleName = this.currentComponent(this.side).charAt(0).toUpperCase() + this.currentComponent(this.side).slice(1),
-                moduleNamePath = "Modules/" + pascalCaseModuleName + "/name",
-                currentComponentName = this.$store.getters[moduleNamePath] ? this.$store.getters[moduleNamePath] : this.currentComponent(this.side);
-
-            return this.currentComponent(this.side) === "root" ? this.$t("common:menu.name") : this.$t(currentComponentName);
+        currentTitle () {
+            return this.currentComponentName(this.side);
         }
     },
     methods: {
@@ -48,7 +43,7 @@ export default {
         v-if="previuosNavigation"
         class="mp-menu-navigation-moduletitle mb-4"
     >
-        {{ currentModuleTitle }}
+        {{ currentTitle }}
     </h5>
 </template>
 
