@@ -32,7 +32,9 @@ export default {
 </script>
 
 <template lang="html">
-    <div>
+    <div
+        v-if="active"
+    >
         <div
             v-for="(language, key) of $i18next.options.getLanguages()"
             :key="key"
