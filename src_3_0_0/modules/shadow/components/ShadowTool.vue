@@ -224,7 +224,7 @@ export default {
         v-if="active"
         id="modules-shadow-tool"
     >
-        <div class="d-flex flex-row justify-content-between form-switch ps-0 mb-3">
+        <div class="d-flex flex-row justify-content-between form-switch ps-0 mb-5">
             <label
                 class="d-flex flex-column justify-content-center form-check-label"
                 for="module-shadow-checkbox"
@@ -246,7 +246,7 @@ export default {
             id="control"
             class="d-block"
         >
-            <div class="d-flex justify-content-between mb-3">
+            <div class="d-flex justify-content-between">
                 <label
                     class="d-flex flex-column justify-content-center form-label mb-0"
                     for="datePicker"
@@ -273,6 +273,7 @@ export default {
             </div>
             <ShadowToolSliderInput
                 id="dateSlider"
+                class="mb-5"
                 :valuelabel="showDate"
                 :value="dateSliderValue"
                 :min="0"
@@ -281,7 +282,6 @@ export default {
                 :max="366"
                 @input="syncDatePicker($event)"
             />
-            <br>
             <ShadowToolSliderInput
                 id="timeSlider"
                 :label="$t('common:modules.tools.shadow.slideHour')"
