@@ -6,9 +6,13 @@ import beautifyKey from "../../../shared/js/utils/beautifyKey";
 import {isWebLink} from "../../../shared/js/utils/urlHelper";
 import {isEmailAddress} from "../../../shared/js/utils/isEmailAddress";
 import toBold from "../../../shared/js/utils/toBold";
+import FlatButton from "../../../shared/modules/buttons/components/FlatButton.vue";
 
 export default {
     name: "FeatureLister",
+    components: {
+        FlatButton
+    },
     data: function () {
         return {
             defaultTabClass: "",
@@ -266,17 +270,15 @@ export default {
                     <div
                         class="panel-footer feature-lister-list-footer"
                     >
-                        <button
+                        <FlatButton
+                            id="module-feature-lister-show-more"
+                            aria-label="$t('modules.tools.featureLister.more')"
                             type="button"
-                            class="btn btn-primary navbar-btn feature-lister-list-button"
+                            :text="$t('modules.tools.featureLister.more')"
+                            :icon="'bi-plus'"
                             :disabled="featureCount <= maxFeatures || shownFeatures === featureCount"
-                            @click="showMore()"
-                        >
-                            <span
-                                class="bi-box-arrow-in-up"
-                                aria-hidden="true"
-                            /> {{ $t("modules.tools.featureLister.more") }}
-                        </button>
+                            :interaction="() => showMore()"
+                        />
                         <p
                             class="navbar-text feature-lister-list-message"
                         >
