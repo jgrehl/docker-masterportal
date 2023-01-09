@@ -120,7 +120,7 @@ export default {
 
 <template lang="html">
     <div
-        id="tool-layer-slider-handle"
+        id="module-layer-slider-handle"
         class="d-flex flex-column px-3"
     >
         <label
@@ -129,7 +129,7 @@ export default {
         />
         <input
             id="slider"
-            class="slider"
+            class="slider my-2"
             value="0"
             type="range"
             :min="sliderMin"
@@ -139,13 +139,13 @@ export default {
         >
         <datalist
             id="ticks"
-            class="d-flex"
+            class="d-flex flex-column justify-content-between"
         >
             <option
                 v-for="(tick, index) in sliderTicks"
                 :key="index"
                 :value="tick"
-                class="flex-fill"
+                class="p-0"
                 :label="$t(layerIds[index]?.title)"
             />
         </datalist>
@@ -155,7 +155,11 @@ export default {
 <style lang="scss" scoped>
     @import "~variables";
 
-    #tool-layer-slider-handle {
+    #module-layer-slider-handle {
         accent-color: $secondary;
+
+        datalist {
+            writing-mode: vertical-lr;
+        }
     }
 </style>
