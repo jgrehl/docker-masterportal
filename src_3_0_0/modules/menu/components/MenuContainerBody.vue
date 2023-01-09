@@ -2,10 +2,12 @@
 import MenuContainerBodyRoot from "./MenuContainerBodyRoot.vue";
 import MenuNavigation from "./MenuNavigation.vue";
 import {mapGetters} from "vuex";
+import GetFeatureInfo from "../../getFeatureInfo/components/GetFeatureInfo.vue";
 
 export default {
     name: "MenuContainerBody",
     components: {
+        GetFeatureInfo,
         MenuContainerBodyRoot,
         MenuNavigation
     },
@@ -19,7 +21,6 @@ export default {
     },
     computed: {
         ...mapGetters("Menu", [
-            "componentsAlwaysActivated",
             "mainMenu",
             "secondaryMenu"
         ]),
@@ -38,10 +39,10 @@ export default {
         currentComponent () {
             let current = this.menu.navigation.currentComponent.type;
 
-            if (current !== "root") {
+            if (current !== "root" && current !== "GetFeatureInfo") {
                 current = this.componentMap[current];
-
             }
+
             return current;
         }
     },
@@ -63,19 +64,14 @@ export default {
         class="mp-menu-body"
     >
         <MenuNavigation :side="side" />
-
-
-        <template v-for="component in componentsAlwaysActivated">
-            <component
-                :is="component.module"
-                v-if="side === component.menuSide"
-                :key="'module-' + component.module.name"
-            />
-        </template>
+        <GetFeatureInfo
+            v-if="side === 'secondaryMenu'"
+            v-show="currentComponent === 'GetFeatureInfo'"
+        />
 
         <component
             :is="currentComponent"
-            v-if="currentComponent !== 'root'||'getFeatureInfo'"
+            v-if="currentComponent !== 'root' && currentComponent !== 'GetFeatureInfo'"
         />
 
         <MenuContainerBodyRoot
