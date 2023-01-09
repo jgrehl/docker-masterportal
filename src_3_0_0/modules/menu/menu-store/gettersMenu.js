@@ -34,19 +34,22 @@ const menuGetters = {
     /**
      * @param {MenuNavigationState} state Local vuex state.
      * @param {string} side Menu Side
-     * @returns {object} Returns the currently visible Component.
+     * @returns {object} Returns the Name of the currently visible Component.
      */
-    currentComponent: state => side => {
-        return state[side].navigation.currentComponent.type;
-    },
+    currentComponentName: state => side => {
+        const currentComponent = state[side].navigation.currentComponent;
+        let name = {};
 
-    /**
-     * @param {MenuNavigationState} state Local vuex state.
-     * @param {string} side Menu Side
-     * @returns {object} Returns the currently visible Component.
-     */
-    currentFolderName: state => side => {
-        return state[side].navigation.currentComponent.props.name;
+        switch (currentComponent.type) {
+            case "root":
+                name = i18next.t("common:menu.name");
+                break;
+            default:
+                name = currentComponent.props !== undefined && currentComponent.props.name ? i18next.t(currentComponent.props.name) : currentComponent.type;
+                break;
+        }
+
+        return name;
     },
 
     /**
@@ -103,37 +106,25 @@ const menuGetters = {
     /**
      * Returns the Text to be chosen for backward menu navigation.
      * @param {MenuState} state Local vuex state.
-     * @param {Object} _ Local vuex getters (discarded).
-     * @param {Object} __ vuex rootState (discarded).
-     * @param {Object} rootGetters vuex rootGetters.
      * @returns {(function(type: String): Boolean)} Function returning false or the Text.
      */
-    previuosNavigationEntryText: (state, _, __, rootGetters) => side => {
-        const previousEntry = state[side].navigation.history.length !== 0 ? state[side].navigation.history.slice(-1)[0].type : "";
+    previuosNavigationEntryText: (state) => side => {
+        const previousEntry = state[side].navigation.history.length !== 0 ? state[side].navigation.history.slice(-1)[0] : "";
         let previousEntryText = false;
 
-
         if (previousEntry !== "") {
-            switch (previousEntry) {
+            switch (previousEntry.type) {
                 case "root": {
                     previousEntryText = i18next.t("common:menu.name");
                     break;
                 }
-                case "folder": {
-                    previousEntryText = state[side].navigation.history.slice(-1)[0].props.name;
-                    break;
-                }
                 default: {
-                    const pascalCaseModuleName = previousEntry.charAt(0).toUpperCase() + previousEntry.slice(1),
-                        moduleNamePath = "Modules/" + pascalCaseModuleName + "/name",
-                        lastComponentName = rootGetters[moduleNamePath] ? rootGetters[moduleNamePath] : previousEntry;
-
-                    previousEntryText = previousEntry === "root" ? i18next.t("common:menu.name") : i18next.t(lastComponentName);
+                    previousEntryText = previousEntry.props !== undefined && previousEntry.props.name ? previousEntry.props.name : previousEntry.type;
                     break;
                 }
-
             }
         }
+
         return previousEntryText;
     },
 
