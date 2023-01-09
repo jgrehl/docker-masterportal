@@ -75,7 +75,7 @@ async function addLayerModel (attributes, id) {
  * @param {String} treeType the treeType
  * @returns {Object} the adapted attributes
  */
-function setAttributes (layer, id, layerName, layerNameKey, treeType) {
+function setAttributes (layer, id, layerName) {
     const attributes = {...layer.attributes};
 
     attributes.visibility = true;
@@ -83,13 +83,7 @@ function setAttributes (layer, id, layerName, layerNameKey, treeType) {
     attributes.typ = "VectorBase";
     attributes.alwaysOnTop = true;
     attributes.name = layerName;
-    attributes.selectionIDX = 1000;
-    attributes.parentId = treeType === "custom" || treeType === "default" ? "SelectedLayer" : "tree";
-    attributes.i18nextTranslate = (setter) => {
-        if (typeof setter === "function" && i18next.exists(layerNameKey)) {
-            setter("name", i18next.t(layerNameKey) + " " + attributes.name);
-        }
-    };
+
     return attributes;
 }
 
