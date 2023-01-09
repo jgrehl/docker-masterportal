@@ -32,6 +32,7 @@ export default {
             "active",
             "currentFeature",
             "highlightVectorRules",
+            "name",
             "showMarker"
         ]),
         ...mapGetters("Modules/GetFeatureInfo", {
@@ -78,7 +79,7 @@ export default {
                 this.reset();
             }
             else {
-                this.setCurrentComponent({type: "GetFeatureInfo", side: "secondaryMenu"});
+                this.setCurrentComponent({type: "GetFeatureInfo", side: "secondaryMenu", props: {name: this.name}});
             }
         },
         /**
