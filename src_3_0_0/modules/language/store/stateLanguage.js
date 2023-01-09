@@ -6,6 +6,8 @@
  * @property {Boolean} active if true, language module will rendered
  * @property {String} description The description that should be shown
  * @property {Boolean} showDescription If true, description will be shown.
+ * @property {String[]} supportedDevices Devices on which the module is displayed.
+ * @property {String[]} supportedMapModes Map mode in which this module can be used.
  * @property {String} icon icon of the module
  * @property {String} name name of the module
  *
@@ -16,6 +18,8 @@ const state = {
     active: false,
     description: "",
     showDescription: false,
+    supportedDevices: ["Desktop", "Mobile", "Table"],
+    supportedMapModes: ["2D", "3D"],
     icon: "bi-flag",
     name: "common:menu.tools.language"
 };
