@@ -1,13 +1,8 @@
+import * as i18nextModule from "i18next";
 import I18NextVue from "i18next-vue";
 import LanguageDetector from "i18next-browser-languagedetector";
 import Backend from "i18next-http-backend";
 
-
-// const exportContainer = {
-//     instance: null
-// };
-
-// export default exportContainer;
 
 /**
  * Initialization. Wrapped in a function to avoid calling it initially
