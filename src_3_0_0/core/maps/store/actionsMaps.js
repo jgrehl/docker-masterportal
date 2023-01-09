@@ -2,8 +2,8 @@ import actionsMapsAttributesMapper from "./actionsMapsAttributesMapper.js";
 import actionsMapsInteractions from "./actionsMapsInteractions.js";
 import actionsMapsLayers from "./actionsMapsLayers.js";
 import actionsMapsMapMode from "./actionsMapsMapMode.js";
-import * as highlightFeature from "./highlightFeature.js";
-import * as removeHighlightFeature from "./removeHighlighting.js";
+import * as highlightFeature from "../js/highlightFeature.js";
+import * as removeHighlightFeature from "../js/removeHighlighting.js";
 
 /**
  * Actions with the Map and MapView.
