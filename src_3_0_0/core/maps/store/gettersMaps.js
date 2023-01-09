@@ -15,7 +15,7 @@ const getters = {
     /**
     * Returns a layer by a given layer id.
     * @param  {String} layerId Id of the Layer.
-    * @return {module:ol/layer/Base~BaseLayer} The layer found by name.
+    * @return {module:ol/layer/Base~BaseLayer} The layer found by id.
     */
     getLayerById: () => (layerId) => {
         return mapCollection.getMap("2D").getLayers().getArray().find(layer => layer.get("id") === layerId);

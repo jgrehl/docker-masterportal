@@ -347,11 +347,8 @@ export default {
 
 
 <style lang="scss" scoped>
-    // @import "~/css/mixins.scss";
     @import "~variables";
 
-/***** Desktop *****/
-/***** Mobil *****/
 #featureLister {
     width: fit-content;
     max-width: 90%;

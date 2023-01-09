@@ -28,7 +28,6 @@ function highlightFeature ({commit, dispatch, getters}, highlightObject) {
  * @param {Function} commit commit function
  * @param {Function} dispatch dispatch function
  * @param {Object} highlightObject contains several parameters for feature highlighting
- * @fires VectorStyle#RadioRequestStyleListReturnModelById
  * @returns {void}
  */
 function highlightPolygon (commit, dispatch, highlightObject) {
@@ -65,7 +64,6 @@ function highlightPolygon (commit, dispatch, highlightObject) {
  * @param {Function} commit commit function
  * @param {Function} dispatch dispatch function
  * @param {Object} highlightObject contains several parameters for feature highlighting
- * @fires VectorStyle#RadioRequestStyleListReturnModelById
  * @returns {void}
  */
 function highlightLine (commit, dispatch, highlightObject) {
@@ -99,7 +97,6 @@ function highlightLine (commit, dispatch, highlightObject) {
  * @param {Object} dispatch the dispatch
  * @param {Object} getters the getters
  * @param {String} layerIdAndFeatureId contains layerid and featureid
- * @fires ModelList#RadioRequestModelListGetModelByAttributes
  * @returns {void}
  */
 function highlightViaParametricUrl (dispatch, getters, layerIdAndFeatureId) {
@@ -120,7 +117,6 @@ function highlightViaParametricUrl (dispatch, getters, layerIdAndFeatureId) {
  * @param {String} layerId Id of the layer, containing the feature to hightlight
  * @param {String} featureId Id of feature which shall be hightlighted
  * @param {Object} getters the getters
- * @fires ModelList#RadioRequestModelListGetModelByAttributes
  * @returns {ol/feature} feature to highlight
  */
 function getHighlightFeature (layerId, featureId, getters) {
@@ -138,7 +134,6 @@ function getHighlightFeature (layerId, featureId, getters) {
  * @param {Function} commit commit function
  * @param {Function} getters map getters
  * @param {Object} highlightObject contains several parameters for feature highlighting
- * @fires VectorStyle#RadioRequestStyleListReturnModelById
  * @returns {void}
  */
 function increaseFeature (commit, getters, highlightObject) {
@@ -177,7 +172,6 @@ function increaseFeature (commit, getters, highlightObject) {
  * Get style via styleList
  * @param {Object} highlightObject contains several parameters for feature highlighting
  * @param {ol/feature} feature openlayers feature to highlight
- * @fires VectorStyle#RadioRequestStyleListReturnModelById
  * @returns {ol/style} ol style
  */
 // eslint-disable-next-line
