@@ -21,7 +21,7 @@ export default {
                 });
             }
             else {
-                commit("setCurrentComponent", {type: type, side: side, props: {}});
+                commit("setCurrentComponent", {type: type, side: side, props: {name: name}});
                 nextTick(() => {
                     dispatch("setElementActive", {moduleNamespace: type, isActive: true, side: side});
                 });
