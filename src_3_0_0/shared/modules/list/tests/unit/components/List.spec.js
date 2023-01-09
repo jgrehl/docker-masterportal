@@ -10,7 +10,7 @@ import ListItem from "../../../components/ListItem.vue";
 
 config.global.mocks.$t = key => key;
 
-describe("src/share-components/list/components/ListItem.vue", () => {
+describe("src_3_0_0/shared/modules/list/components/ListItem.vue", () => {
     const olFeature = new Feature(),
         props = {
             identifier: "Spongebob",
