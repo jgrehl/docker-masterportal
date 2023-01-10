@@ -29,17 +29,7 @@ const actions = {
         dispatch("replaceByIdInLayerConfig", {layerConfigs: layerConfigs}, {root: true});
         dispatch("updateAllZIndexes", null, {root: true});
         commit("clearSelectedLayer");
-        dispatch("navigateBackToMainMenu");
-    },
-
-    /**
-     * todo remove/change if menu is new refactored
-     * @param {Object} param.commit the commit
-     * @returns {void}
-     */
-    navigateBackToMainMenu ({commit}) {
-        commit("setActive", false);
-        commit("Menu/Navigation/setEntry", "mainMenu", {root: true});
+        dispatch("Menu/navigateBack", getters.menuSide, {root: true});
     }
 };
 
