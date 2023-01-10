@@ -1,6 +1,8 @@
 <script>
-import {mapActions, mapGetters} from "vuex";
+import {mapMutations, mapGetters} from "vuex";
 import LayerTreeNode from "./LayerTreeNode.vue";
+import {treeSubjectsKey} from "../../../shared/js/utils/constants";
+import sortBy from "../../../shared/js/utils/sortBy";
 import ElevatedButton from "../../../shared/modules/buttons/components/ElevatedButton.vue";
 
 /**
@@ -12,15 +14,10 @@ export default {
         ElevatedButton,
         LayerTreeNode
     },
-    data: () => {
-        return {
-            layerSelectionVisible: false
-        };
-    },
     computed: {
-        ...mapGetters(["portalConfig"]),
-        ...mapGetters("Menu/Navigation", ["entries", "isModuleActiveInMenu"]),
-        ...mapGetters("Modules/LayerTree", ["active", "menuSide", "type"]),
+        ...mapGetters(["portalConfig", "allLayerConfigsStructured"]),
+        ...mapGetters("Modules/LayerTree", ["menuSide"]),
+        ...mapGetters("Modules/LayerSelection", {layerSelectionType: "type", layerSelectionName: "name"}),
         treeType () {
             return this.portalConfig?.tree?.type ? this.portalConfig?.tree?.type : "light";
         },
@@ -28,34 +25,27 @@ export default {
             return this.portalConfig?.tree?.addLayerButton ? this.portalConfig?.tree?.addLayerButton : this.treeType === "auto";
         }
     },
-    watch: {
-        // @ todo remove if menu is new refactored
-        entries: {
-            handler () {
-                if (this.isModuleActiveInMenu(this.menuSide, "layerSelection")) {
-                    this.layerSelectionVisible = true;
-                }
-                else if (this.layerSelectionVisible) {
-                    this.layerSelectionVisible = false;
-                }
-            },
-            deep: true
-        }
-    },
     methods: {
-        ...mapActions("Menu", ["setMenuBackAndActivateItem"]),
+        ...mapMutations("Menu", ["setCurrentComponent"]),
+        ...mapMutations("Modules/LayerSelection", {setLayerSelectionActive: "setActive", setSubjectDataLayerConfs: "setSubjectDataLayerConfs"}),
         /**
-         * Toggles a folder, changes data-property isOpen.
+         * Sorts the configs by type: first folder, then layer.
+         * @param {Array} configs list of layer and folder configs
+         * @returns {Array} the sorted configs
+         */
+        sort (configs) {
+            return sortBy(configs, (conf) => conf.type !== "folder");
+        },
+        /**
+         * Shows the component LayerSelection and sets it active.
          * @returns {void}
          */
         showLayerSelection () {
-            // @ todo remove if menu is new refactored
-            const menuItem = {
-                side: this.menuSide,
-                module: {type: "layerSelection"}
-            };
+            const confs = this.sort(this.allLayerConfigsStructured(treeSubjectsKey));
 
-            this.setMenuBackAndActivateItem(menuItem);
+            this.setCurrentComponent({type: this.layerSelectionType, side: this.menuSide, props: {name: this.layerSelectionName}});
+            this.setSubjectDataLayerConfs(confs);
+            this.setLayerSelectionActive(true);
         }
     }
 };
@@ -64,7 +54,6 @@ export default {
 <template lang="html">
     <hr>
     <div
-        v-if="!layerSelectionVisible"
         id="layer-tree"
         class="layer-tree"
     >
