@@ -19,6 +19,7 @@ const actions = {
      * @return {void}
      */
     checkIntersection ({dispatch, getters: {selectedTargetLayer, bufferLayer}}) {
+        // TODO
         dispatch("Maps/areLayerFeaturesLoaded", selectedTargetLayer.id, {root: true}).then(() => {
             const bufferFeatures = bufferLayer.getSource().getFeatures();
 
@@ -111,7 +112,7 @@ const actions = {
      */
     checkIntersectionWithBuffers ({commit, dispatch, getters: {selectedTargetLayer, jstsParser, resultType}}, bufferFeatures) {
         const targetFeatures = selectedTargetLayer.layerSource.getFeatures();
-
+debugger;
         targetFeatures.forEach(targetFeature => {
             const targetGeometry = targetFeature.getGeometry(),
                 foundIntersection = bufferFeatures.some(bufferFeature => {
