@@ -7,10 +7,10 @@ export default {
     active: false,
     type: "layerSelection",
     icon: "bi-question-circle",
-    name: "LayerSelection",
     alwaysActivated: true,
     isVisibleInMenu: false,
     menuSide: "mainMenu",
+    name: "common:tree.addSubject",
 
     subjectDataLayerConfs: [],
     layersToAdd: []
