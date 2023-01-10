@@ -6,14 +6,6 @@ export default {
     name: "ShadowTool",
     components: {
         ToggleCheckbox,
-    },
-    computed: {
-        ...mapGetters("Language", ["layerIds", "currentLocale"])
-    },
-    watch: {
-        currentLocale () {
-            this.checkDateFormat();
-        }
     }
 };
 </script>
