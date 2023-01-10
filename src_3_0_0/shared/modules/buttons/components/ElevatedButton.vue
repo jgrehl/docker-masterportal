@@ -21,7 +21,7 @@ export default {
 
 <template>
     <button
-        class="btn btn-primary d-flex align-items-center"
+        class="btn btn-primary d-flex align-items-center shadow"
         type="button"
         :aria-label="text"
         @click="interaction"
