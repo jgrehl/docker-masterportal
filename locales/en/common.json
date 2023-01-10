@@ -435,8 +435,8 @@
                 "invisibleLayer": "The following topics cannot be printed in the selected print scale {{scale}}:"
             },
             "shadow": {
-                "shadowDisplayOn": "Show shadow on the map:",
-                "shadowDisplayOff": "Hide shadow on the map:",
+                "shadowDisplayOn": "Show shadow on the map",
+                "shadowDisplayOff": "Hide shadow on the map",
                 "pickDate": "Select a date:",
                 "slideHour": "Select time:",
                 "slideDate": "Select a date:"

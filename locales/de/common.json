@@ -439,8 +439,8 @@
                 "invisibleLayer": "Folgende Themen können im ausgewählten Druckmaßstab {{scale}} nicht gedruckt werden:"
             },
             "shadow": {
-                "shadowDisplayOn": "Schatten auf der Karte einblenden:",
-                "shadowDisplayOff": "Schatten auf der Karte ausblenden:",
+                "shadowDisplayOn": "Schatten auf der Karte einblenden",
+                "shadowDisplayOff": "Schatten auf der Karte ausblenden",
                 "pickDate": "Wählen Sie ein Datum:",
                 "slideHour": "Wählen Sie eine Uhrzeit:",
                 "slideDate": "Wählen Sie ein Datum:"
