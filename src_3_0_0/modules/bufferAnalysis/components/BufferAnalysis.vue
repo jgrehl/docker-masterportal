@@ -2,7 +2,6 @@
 import {mapActions, mapGetters, mapMutations} from "vuex";
 import getters from "../store/gettersBufferAnalysis";
 import mutations from "../store/mutationsBufferAnalysis";
-import actions from "../store/actionsBufferAnalysis";
 import {ResultType} from "../store/enums";
 import FlatButton from "../../../shared/modules/buttons/components/FlatButton.vue";
 
@@ -122,7 +121,7 @@ export default {
     },
     methods: {
         ...mapMutations("Modules/BufferAnalysis", Object.keys(mutations)),
-        ...mapActions("Modules/BufferAnalysis", Object.keys(actions)),
+        ...mapActions("Modules/BufferAnalysis", ["initJSTSParser", "loadSelectOptions", "applyValuesFromSavedUrlBuffer", "resetModule", "applySelectedSourceLayer", "applyBufferRadius", "applySelectedTargetLayer", "buildUrlFromToolState"]),
         ...mapActions("Map", ["toggleLayerVisibility"]),
 
         /**
