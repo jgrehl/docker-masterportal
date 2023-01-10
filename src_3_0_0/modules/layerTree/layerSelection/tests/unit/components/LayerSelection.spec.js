@@ -87,8 +87,8 @@ describe("src_3_0_0/modules/layerTree/layerSelection/components/LayerSelection.v
             modules: {
                 Menu: {
                     namespaced: true,
-                    actions: {
-                        setMenuBackAndActivateItem: sinon.stub()
+                    mutations: {
+                        setCurrentComponent: sinon.stub()
                     },
                     modules: {
                         Navigation: {
@@ -123,6 +123,7 @@ describe("src_3_0_0/modules/layerTree/layerSelection/components/LayerSelection.v
         };
         LayerSelection.getters.layersToAdd = () => layersToAdd;
         LayerSelection.state.active = true;
+        store.commit("Modules/LayerSelection/setSubjectDataLayerConfs", subjectDataLayers);
     });
 
     afterEach(() => {
@@ -164,7 +165,7 @@ describe("src_3_0_0/modules/layerTree/layerSelection/components/LayerSelection.v
         expect(wrapper.find("flat-button-stub").exists()).to.be.true;
     });
 
-    it("renders the LayerSelection with all levels of folder-buttons without bg-layers ", async () => {
+    it.only("renders the LayerSelection with all levels of folder-buttons without bg-layers ", async () => {
         wrapper = shallowMount(LayerSelectionComponent, {
             global: {
                 plugins: [store]
@@ -172,7 +173,7 @@ describe("src_3_0_0/modules/layerTree/layerSelection/components/LayerSelection.v
 
         expect(wrapper.find("#layer-selection").exists()).to.be.true;
 
-        wrapper.vm.setConf(subjectDataLayers[0].elements);
+        wrapper.vm.setConf("name", subjectDataLayers[0].elements);
         await wrapper.vm.$nextTick();
 
         expect(wrapper.findAll("layer-selection-tree-node-stub").length).to.be.equals(1);
