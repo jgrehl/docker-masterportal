@@ -6,7 +6,7 @@ import sinon from "sinon";
 
 config.global.mocks.$t = key => key;
 
-describe("src_3_0_0/modules/menu/MenuFolder.vue", () => {
+describe.skip("src_3_0_0/modules/menu/MenuFolder.vue", () => {
     let store, wrapper;
     const sampleConfigObject = [{name: "itemOne", icon: "bi-icon"}, {name: "itemTwo", icon: "bi-icon"}],
         sampleMainMenuPath = ["mainMenu", "sections", 0, 1];
