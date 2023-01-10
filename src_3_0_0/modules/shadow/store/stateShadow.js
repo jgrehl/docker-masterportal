@@ -8,7 +8,7 @@
  * @property {Boolean} showDescription If true, description will be shown.
  * @property {String[]} supportedDevices Devices on which the module is displayed.
  * @property {String[]} supportedMapModes Map mode in which this module can be used.
- * @property {String} type Type of the Contact component.
+ * @property {String} type Type of the Shadow component.
 
  * @property {Boolean} isShadowEnabled Flag determining if the module should have shadow enabled initially. (config-param)
  * @property {Object} shadowTime Object to define start date and time. (config-param)
