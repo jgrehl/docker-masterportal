@@ -12,7 +12,8 @@ describe("src_3_0_0/modules/layerTree/layerSelection/store/actionsLayerSelection
         commit = sinon.spy();
         dispatch = sinon.spy();
         getters = {
-            layersToAdd: ["1", "2"]
+            layersToAdd: ["1", "2"],
+            menuSide: "menuSide"
         };
         rootGetters = {
             determineZIndex: () => 0
@@ -54,7 +55,8 @@ describe("src_3_0_0/modules/layerTree/layerSelection/store/actionsLayerSelection
             expect(dispatch.firstCall.args[0]).to.be.equals("replaceByIdInLayerConfig");
             expect(dispatch.firstCall.args[1]).to.deep.equals(expectedArg);
             expect(dispatch.secondCall.args[0]).to.be.equals("updateAllZIndexes");
-            expect(dispatch.thirdCall.args[0]).to.be.equals("navigateBackToMainMenu");
+            expect(dispatch.thirdCall.args[0]).to.be.equals("Menu/navigateBack");
+            expect(dispatch.thirdCall.args[1]).to.be.equals("menuSide");
         });
     });
 });
