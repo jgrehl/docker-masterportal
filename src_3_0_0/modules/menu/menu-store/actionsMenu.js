@@ -42,7 +42,7 @@ export default {
     mergeMenuState ({commit, state}, {mainMenu, secondaryMenu}) {
         commit("setMainMenu", Object.assign(state.mainMenu, mainMenu));
         commit("setSecondaryMenu", Object.assign(state.secondaryMenu, secondaryMenu));
-        //why that?
+        // why that?
         // commit("setEntries", {
         //     mainMenu: {
         //         component: "root",
