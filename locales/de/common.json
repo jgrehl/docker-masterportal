@@ -68,7 +68,7 @@
             "shadow": "Schatten",
             "commuterLines": "Pendler (Linien)",
             "commuterAnimation": "Pendler (Animation)",
-            "layerSlider": "Zeitreihe",
+            "layerSlider": "Layerserie",
             "featureLister": "Liste",
             "saveSelection": "Auswahl speichern",
             "getInfos": "Informationen abfragen",
@@ -463,7 +463,7 @@
             },
             "layerSlider": {
                 "displayLayers": "Anzeige diverser Layer.",
-                "changeSliderTypeToHandle": "Ansicht in den Handle-Modus wechseln",
+                "changeSliderTypeToHandle": "Ansicht in den Slider-Modus wechseln",
                 "changeSliderTypeToPlayer": "Ansicht in den Player-Modus wechseln",
                 "title": "Simulation von Beispiel-Diensten",
                 "titleNotConfigured": "Titel nicht konfiguriert",
