@@ -3,7 +3,7 @@
  * @typedef {Object} ScaleSwitcherState
  * @property {Boolean} active If true, scaleSwitcher will rendered.
  * @property {Boolean} hasMouseMapInteractions If this attribute is true, then all other modules will be deactivated when this attribute is also true. Only one module with this attribute true may be open at the same time, since conflicts can arise in the card interactions.
- * @property {String} description The descritption that should be shown in the button in the right menu.
+ * @property {String} description The description that should be shown in the button in the right menu.
  * @property {String} icon Icon next to title (config-param)
  * @property {String} name Displayed as title (config-param)
  * @property {Boolean} showDescription If true, description will be shown.
