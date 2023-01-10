@@ -2,7 +2,7 @@
  * User type definition
  * @typedef {Object} OpenConfigState
  * @property {Boolean} active If true, scaleSwitcher will rendered.
- * @property {String} description The descritption that should be shown in the button in the right menu.
+ * @property {String} description The description that should be shown in the button in the right menu.
  * @property {String} icon Icon next to title (config-param)
  * @property {String} name Displayed as title (config-param)
  * @property {Boolean} showDescription If true, description will be shown.
