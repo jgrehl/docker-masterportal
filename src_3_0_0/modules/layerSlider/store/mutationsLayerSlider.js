@@ -7,7 +7,7 @@ const mutations = {
     /**
      * Setter for the activeLayer.
      * The current progressbar is also set by the layerId index.
-     * @param {Object} state Context state object.
+     * @param {Object} state the state
      * @param {Object} layerId The layer id.
      * @returns {void}
      */
@@ -18,7 +18,7 @@ const mutations = {
 
     /**
      * Setter for the progressbar width.
-     * @param {Object} state Context state object.
+     * @param {Object} state the state
      * @param {Object[]} layerIds The configuration of the layers from config.json.
      * @returns {void}
      */
@@ -28,7 +28,7 @@ const mutations = {
 
     /**
      * Setter of the windows interval.
-     * @param {Object} state Context state object.
+     * @param {Object} state the state
      * @param {Function} intervalFunction Function to be executed in this.
      * @returns {void}
      */
@@ -45,7 +45,7 @@ const mutations = {
     /**
      * Resets the active layer to default value.
      * The current progressbar is also set to the default value.
-     * @param {Object} state Context state object.
+     * @param {Object} state the state
      * @returns {void}
      */
     resetActiveLayer (state) {
