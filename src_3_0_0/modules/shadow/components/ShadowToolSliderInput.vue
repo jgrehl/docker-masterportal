@@ -54,6 +54,7 @@ export default {
         </div>
         <input
             :id="'shadow-slider-input-' + label"
+            class="form-range"
             :value="value"
             type="range"
             :min="min"
