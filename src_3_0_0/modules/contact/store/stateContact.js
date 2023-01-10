@@ -2,7 +2,7 @@
  * Contact tool state definition.
  * @typedef {Object} ContactState
  * @property {Boolean} active If true, SaveSelection will be rendered.
- * @property {String} description The descritption that should be shown in the button in the right menu.
+ * @property {String} description The description that should be shown in the button in the right menu.
  * @property {String} name Displayed as the title. (config-param)
  * @property {String} icon Icon next to the title. (config-param)
  * @property {String} serviceId The id of the service (rest-services.json) that contains the url of the mail service. (config-param)

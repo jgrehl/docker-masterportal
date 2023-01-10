@@ -68,7 +68,7 @@
             "shadow": "Shadows",
             "commuterLines": "Commuter (Lines)",
             "commuterAnimation": "Commuter (Animation)",
-            "layerSlider": "Time series",
+            "layerSlider": "Layer series",
             "featureLister": "List",
             "saveSelection": "Save selection",
             "getInfos": "Retrieve information",
