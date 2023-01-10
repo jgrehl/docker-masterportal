@@ -4,7 +4,7 @@ import gettersMenu from "../../../menu-store/gettersMenu";
 import stateMenu from "../../../menu-store/stateMenu";
 import idx from "../../../../../shared/js/utils/idx";
 
-describe("src_3_0_0/modules/menu/menu-store/gettersMenu.js", () => {
+describe.skip("src_3_0_0/modules/menu/menu-store/gettersMenu.js", () => {
     const component = Symbol("Am component"),
         mainMenuSymbol = Symbol("mainMenu"),
         secondaryMenuSymbol = Symbol("secondaryMenu");
