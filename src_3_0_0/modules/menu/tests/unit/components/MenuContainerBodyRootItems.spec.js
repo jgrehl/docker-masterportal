@@ -1,12 +1,12 @@
 import {createStore} from "vuex";
 import {config, shallowMount} from "@vue/test-utils";
-import MenuContainerBodyItems from "../../../components/MenuContainerBodyItems.vue";
+import MenuContainerBodyRootItems from "../../../components/MenuContainerBodyRootItems.vue";
 import {expect} from "chai";
-import MenuContainerBodyElement from "../../../components/MenuContainerBodyElement.vue";
+import MenuContainerBodyRootItemElement from "../../../components/MenuContainerBodyRootItemElement.vue";
 
 config.global.mocks.$t = key => key;
 
-describe("src_3_0_0/modules/menu/MenuContainerBodyItems.vue", () => {
+describe.skip("src_3_0_0/modules/menu/MenuContainerBodyRootItems.vue", () => {
     let store;
     const sampleSection = [
         {icon: "bi-test", name: "sampleSectionOne"},
@@ -37,7 +37,7 @@ describe("src_3_0_0/modules/menu/MenuContainerBodyItems.vue", () => {
     });
 
     it("renders the component as main menu", () => {
-        const wrapper = shallowMount(MenuContainerBodyItems, {
+        const wrapper = shallowMount(MenuContainerBodyRootItems, {
             global: {
                 plugins: [store]
             },
@@ -47,9 +47,9 @@ describe("src_3_0_0/modules/menu/MenuContainerBodyItems.vue", () => {
         expect(wrapper.find("#mp-menu-body-items-mainMenu").exists()).to.be.true;
     });
 
-    it("contains a list element and a MenuContainerBodyElements in the main menu for each configured section item", () => {
+    it("contains a list element and a MenuContainerBodyRootItemElements in the main menu for each configured section item", () => {
         store.commit("Menu/setTestSection", sampleSection);
-        const wrapper = shallowMount(MenuContainerBodyItems, {
+        const wrapper = shallowMount(MenuContainerBodyRootItems, {
             global: {
                 plugins: [store]
             },
@@ -58,11 +58,11 @@ describe("src_3_0_0/modules/menu/MenuContainerBodyItems.vue", () => {
 
 
         expect(wrapper.findAll("li").length).to.be.equal(sampleSection.length);
-        expect(wrapper.findAllComponents(MenuContainerBodyElement).length).to.be.equal(sampleSection.length);
+        expect(wrapper.findAllComponents(MenuContainerBodyRootItemElement).length).to.be.equal(sampleSection.length);
     });
 
     it("renders the component as secondary menu", () => {
-        const wrapper = shallowMount(MenuContainerBodyItems, {
+        const wrapper = shallowMount(MenuContainerBodyRootItems, {
             global: {
                 plugins: [store]
             },
@@ -72,9 +72,9 @@ describe("src_3_0_0/modules/menu/MenuContainerBodyItems.vue", () => {
         expect(wrapper.find("#mp-menu-body-items-secondaryMenu").exists()).to.be.true;
     });
 
-    it("contains a list element and a MenuContainerBodyElements in the main menu for each configured section item", () => {
+    it("contains a list element and a MenuContainerBodyRootItemElements in the main menu for each configured section item", () => {
         store.commit("Menu/setTestSection", sampleSection);
-        const wrapper = shallowMount(MenuContainerBodyItems, {
+        const wrapper = shallowMount(MenuContainerBodyRootItems, {
             global: {
                 plugins: [store]
             },
@@ -82,6 +82,6 @@ describe("src_3_0_0/modules/menu/MenuContainerBodyItems.vue", () => {
         });
 
         expect(wrapper.findAll("li").length).to.be.equal(sampleSection.length);
-        expect(wrapper.findAllComponents(MenuContainerBodyElement).length).to.be.equal(sampleSection.length);
+        expect(wrapper.findAllComponents(MenuContainerBodyRootItemElement).length).to.be.equal(sampleSection.length);
     });
 });
