@@ -55,7 +55,7 @@ describe("modules/featureLister/store/actionsFeatureLister", () => {
                 },
                 createLayerAddToTreeStub = sinon.spy(createLayerAddToTreeModule, "createLayerAddToTree");
 
-            rootGetters = {"Maps/getView": {fit: () => true}, treeHighlightedFeatures: {active: true}, treeType: "light"};
+            rootGetters = {"Maps/getView": {fit: () => true}, treeHighlightedFeatures: {active: true}};
 
             actions.clickOnFeature({state, commit, dispatch, rootGetters}, featureIndex);
             expect(commit.firstCall.args[0]).to.equal("setSelectedFeature");
@@ -64,7 +64,6 @@ describe("modules/featureLister/store/actionsFeatureLister", () => {
             expect(createLayerAddToTreeStub.calledOnce).to.be.true;
             expect(createLayerAddToTreeStub.firstCall.args[0]).to.be.deep.equals(state.layerId);
             expect(createLayerAddToTreeStub.firstCall.args[1]).to.be.deep.equals([state.layer.features[featureIndex]]);
-            expect(createLayerAddToTreeStub.firstCall.args[2]).to.be.deep.equals("light");
         });
     });
 
