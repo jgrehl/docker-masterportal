@@ -53,7 +53,7 @@ export default {
                 }
             }
             if (rootGetters.treeHighlightedFeatures?.active) {
-                createLayerAddToTreeModule.createLayerAddToTree(state.layerId, [state.layer.features[featureIndex]], rootGetters.treeType, rootGetters.treeHighlightedFeatures);
+                createLayerAddToTreeModule.createLayerAddToTree(state.layerId, [state.layer.features[featureIndex]], rootGetters.treeHighlightedFeatures);
             }
         }
     },
