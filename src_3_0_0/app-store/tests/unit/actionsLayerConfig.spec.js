@@ -227,7 +227,7 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
 
                 },
                 getters = {
-                    allLayerConfigs: () => [],
+                    allLayerConfigs: [],
                     allLayerConfigsByParentKey: () => []
                 };
 
