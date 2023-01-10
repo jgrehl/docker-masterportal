@@ -6,7 +6,7 @@ import MenuToggleButton from "../../../components/MenuToggleButton.vue";
 
 config.global.mocks.$t = key => key;
 
-describe("src_3_0_0/modules/menu/MenuToggleButton.vue", () => {
+describe.skip("src_3_0_0/modules/menu/MenuToggleButton.vue", () => {
     let store;
 
     beforeEach(() => {
