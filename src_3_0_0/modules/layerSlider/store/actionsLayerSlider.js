@@ -43,7 +43,7 @@ export default {
      * @param {Object} param.commit the commit
      * @param {String} layerId The layerId
      * @param {Boolean} visibility Visibility true / false
-     * @param {Number} [transparency=0] Transparency of layer.
+     * @param {Number} transparency Transparency of layer.
      * @returns {void}
      */
     sendModification: ({commit}, {layerId, visibility, transparency}) => {
