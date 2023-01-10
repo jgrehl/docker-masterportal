@@ -1,6 +1,7 @@
 export default {
     /**
      * Adds an index to the layer ids.
+     * @param {Object} param.commit the commit
      * @param {Object[]} layerIds The configuration of the layers from config.json.
      * @returns {void}
      */
@@ -17,6 +18,8 @@ export default {
     /**
      * Checks if all layers that the layerSlider should use are also defined.
      * Non-existing layers are removed.
+     * @param {Object} param.commit the commit
+     * @param {Object} param.rootGetters the rootGetters
      * @param {Object[]} layerIds The configuration of the layers from config.json.
      * @returns {void}
      */
@@ -37,6 +40,7 @@ export default {
 
     /**
      * Sends the new visibility to layer configs.
+     * @param {Object} param.commit the commit
      * @param {String} layerId The layerId
      * @param {Boolean} visibility Visibility true / false
      * @param {Number} [transparency=0] Transparency of layer.
@@ -56,6 +60,9 @@ export default {
 
     /**
      * Finds the activeLayerId based on the index and initiates storage.
+     * @param {Object} param.commit the commit
+     * @param {Object} param.dispatch the dispatch
+     * @param {Object} param.state the state
      * @param {Number} index Index in layerIds.
      * @returns {void}
      */
@@ -66,6 +73,8 @@ export default {
 
     /**
      * Determines the visibility of the layerIds
+     * @param {Object} param.dispatch the dispatch
+     * @param {Object} param.state the state
      * @param {String} activeLayerId Id des activeLayer.
      * @returns {void}
      */

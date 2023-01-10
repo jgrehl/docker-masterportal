@@ -248,7 +248,6 @@
             "type": "layerSlider",
             "showDescription": true,
             "description": "Starte eine Slideshow",
-            "sliderType": "handle",
             "layerIds": [
               {
                 "title": "common:modules.tools.layerSlider.serviceOne",
