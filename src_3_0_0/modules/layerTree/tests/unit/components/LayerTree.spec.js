@@ -206,32 +206,27 @@ describe("src_3_0_0/modules/layerTree/components/LayerTree.vue", () => {
 
         expect(wrapper.find("#layer-tree").exists()).to.be.true;
         expect(wrapper.findAll(".layer-tree-layer-checkbox").length).to.be.equals(4);
-        expect(wrapper.find("#layer-tree-layer-" + layer2D_1.id).exists()).to.be.true;
-        expect(wrapper.find("#layer-tree-layer-" + layer2D_2.id).exists()).to.be.true;
+        expect(wrapper.find("#layer-tree-layer-" + layer_1.id).exists()).to.be.true;
+        expect(wrapper.find("#layer-tree-layer-" + layer_2.id).exists()).to.be.true;
         expect(wrapper.find("#layer-tree-layer-" + layerBG_1.id).exists()).to.be.true;
         expect(wrapper.find("#layer-tree-layer-" + layerBG_2.id).exists()).to.be.true;
     });
 
-    it("renders the LayerTree with 2D layers in folder structure - check layers", () => {
-        let inputs = null,
-            folderinputs = null;
-
+    it("no layer button - renders the LayerTree with 2D layers in folder structure - check layers", () => {
         subjectDataLayers = layersWithFolder;
         wrapper = mount(LayerTreeComponent, {
             global: {
                 plugins: [store]
             }});
-        folderinputs = wrapper.findAll("input");
-        inputs = wrapper.findAll(".layer-tree-layer-checkbox");
 
         expect(wrapper.find("#layer-tree").exists()).to.be.true;
-        // only 2 folder: one Ordner in config has only one layer and therefore no folder
-        expect(folderinputs.filter(folderinput => folderinput.attributes().id.startsWith("layer-tree-folder-checkbox-")).length).to.be.equals(2);
-        // 2 bg-layer and 3 other subjectData-layer
-        expect(inputs.length).to.equal(5);
-        expect(wrapper.find("#layer-tree-layer-" + layer2D_1.id).exists()).to.be.true;
-        expect(wrapper.find("#layer-tree-layer-" + layer2D_2.id).exists()).to.be.true;
-        expect(wrapper.find("#layer-tree-layer-" + layer2D_3.id).exists()).to.be.true;
+        expect(wrapper.findAll("li").length).to.be.equals(3);
+        expect(wrapper.find("li:nth-child(1) > div").exists()).to.be.true;
+        expect(wrapper.find("li:nth-child(2) > div").exists()).to.be.true;
+        // folder is only a li-tag with no children:
+        expect(wrapper.find("li:nth-child(3) > div").exists()).to.be.false;
+        // 2 bg-layer
+        expect(wrapper.findAll(".layer-tree-layer-checkbox").length).to.be.equals(2);
         expect(wrapper.find("#layer-tree-layer-" + layerBG_1.id).exists()).to.be.true;
         expect(wrapper.find("#layer-tree-layer-" + layerBG_2.id).exists()).to.be.true;
     });
@@ -248,12 +243,12 @@ describe("src_3_0_0/modules/layerTree/components/LayerTree.vue", () => {
         });
 
         expect(wrapper.find("#layer-tree").exists()).to.be.true;
-        expect(wrapper.findAll(".layer-tree-layer-checkbox").length).to.be.equals(5);
-        expect(wrapper.find("#layer-tree-layer-" + layer2D_1.id).exists()).to.be.true;
-        expect(wrapper.find("#layer-tree-layer-" + layer2D_2.id).exists()).to.be.true;
-        expect(wrapper.find("#layer-tree-layer-" + layer3D.id).exists()).to.be.true;
-        expect(wrapper.find("#layer-tree-layer-" + layerBG_1.id).exists()).to.be.true;
-        expect(wrapper.find("#layer-tree-layer-" + layerBG_2.id).exists()).to.be.true;
+        expect(wrapper.findAll("#add-layer-btn").length).to.be.equals(1);
+
+        button = wrapper.find("#add-layer-btn");
+        button.trigger("click");
+        await wrapper.vm.$nextTick();
+        expect(spy.calledOnce).to.be.true;
     });
 
 });

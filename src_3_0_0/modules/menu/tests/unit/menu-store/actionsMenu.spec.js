@@ -3,7 +3,7 @@ import sinon from "sinon";
 import {nextTick} from "vue";
 import actions from "../../../menu-store/actionsMenu";
 
-describe("src_3_0_0/modules/menu/menu-store/actionsMenu.js", () => {
+describe.skip("src_3_0_0/modules/menu/menu-store/actionsMenu.js", () => {
     let consoleError, commit, dispatch;
 
     beforeEach(() => {

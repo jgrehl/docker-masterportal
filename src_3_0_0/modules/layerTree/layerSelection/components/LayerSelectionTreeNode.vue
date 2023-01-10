@@ -31,7 +31,7 @@ export default {
          */
         folderClicked () {
             if (this.conf.elements) {
-                this.$emit("showNode", this.conf.elements);
+                this.$emit("showNode", this.conf.name, this.conf.elements);
             }
         }
     }

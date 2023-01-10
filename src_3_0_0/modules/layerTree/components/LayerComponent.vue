@@ -66,33 +66,9 @@ export default {
                 :is-layer-tree="isLayerTree()"
             />
             <div
-                class="layer-tree-layer-title pe-2 p-1"
-                @click="visibilityInLayerTreeChanged(!isLayerVisible)"
-                @keydown.enter="visibilityInLayerTreeChanged(!isLayerVisible)"
+                v-if="isLayerTree()"
+                class="d-flex"
             >
-                <span
-                    :id="'layer-tree-layer-checkbox-' + conf.id"
-                    title="<%=removeTopicText%>"
-                    :class="[
-                        'layer-tree-layer-checkbox pe-2',
-                        {
-                            'bi-check2-square': isLayerVisible,
-                            'bi-square': !isLayerVisible
-                        }
-                    ]"
-                />
-                <label
-                    :class="['layer-tree-layer-label', 'mt-0 d-flex flex-column align-self-start', isLayerVisible ? 'bold' : '']"
-                    :for="'layer-tree-layer-checkbox-' + conf.id"
-                    tabindex="0"
-                    :aria-label="$t(conf.name)"
-                >
-                    <span>
-                        {{ conf.name }}
-                    </span>
-                </label>
-            </div>
-            <div class="d-flex">
                 <LayerComponentIconSubMenu :layer-conf="conf" />
                 <LayerComponentIconInfo :layer-conf="conf" />
                 <LayerComponentIconDrag :layer-conf="conf" />

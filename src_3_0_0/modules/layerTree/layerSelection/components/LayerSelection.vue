@@ -2,7 +2,7 @@
 import {mapGetters, mapActions, mapMutations} from "vuex";
 import sortBy from "../../../../shared/js/utils/sortBy";
 import FlatButton from "../../../../shared/modules/buttons/components/FlatButton.vue";
-import {treeBackgroundsKey, treeSubjectsKey} from "../../../../shared/js/utils/constants";
+import {treeBackgroundsKey} from "../../../../shared/js/utils/constants";
 import LayerCheckBox from "../../components/LayerCheckBox.vue";
 import LayerSelectionTreeNode from "./LayerSelectionTreeNode.vue";
 
@@ -21,18 +21,16 @@ export default {
     },
     computed: {
         ...mapGetters(["allLayerConfigsStructured"]),
-        ...mapGetters("Modules/LayerSelection", ["active", "subjectDataLayerConfs", "layersToAdd"]),
+        ...mapGetters("Modules/LayerSelection", ["active", "subjectDataLayerConfs", "layersToAdd", "type", "menuSide"]),
         allBackgroundLayers () {
             return this.allLayerConfigsStructured(treeBackgroundsKey);
         }
 
     },
-    created () {
-        this.setSubjectDataLayerConfs(this.sort(this.allLayerConfigsStructured(treeSubjectsKey)));
-    },
     methods: {
         ...mapActions("Modules/LayerSelection", ["updateLayerTree"]),
         ...mapMutations("Modules/LayerSelection", ["setSubjectDataLayerConfs"]),
+        ...mapMutations("Menu", ["setCurrentComponent"]),
         /**
          * Sorts the configs by type: first folder, then layer.
          * @param {Array} configs list of layer and folder configs
@@ -43,12 +41,14 @@ export default {
         },
         /**
          * Sets new subject data configs and sets showBGLayers to false.
+         * @param {String} lastConfName name to show in menu to navigate back to
          * @param {Array} newConf configs to show
          * @returns {void}
          */
-        setConf (newConf) {
-            this.setSubjectDataLayerConfs(this.sort(newConf));
+        setConf (lastConfName, newConf) {
             this.showBGLayers = false;
+            this.setCurrentComponent({type: this.type, side: this.menuSide, props: {name: lastConfName}});
+            this.setSubjectDataLayerConfs(this.sort(newConf));
         }
     }
 };
