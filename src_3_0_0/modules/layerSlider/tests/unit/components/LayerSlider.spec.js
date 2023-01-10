@@ -29,7 +29,7 @@ describe("src_3_0_0/modules/layerSlider/components/LayerSlider.vue", () => {
                     }
                 }
             },
-            mutations: {
+            actions: {
                 replaceByIdInLayerConfig: sinon.stub()
             }
         });
