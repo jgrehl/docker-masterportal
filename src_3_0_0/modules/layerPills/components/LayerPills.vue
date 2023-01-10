@@ -179,13 +179,13 @@ export default {
         margin: 2px 5px;
         display: flex;
         align-items: center;
-        height: 32px;
+        max-height: fit-content;
     }
 
     .nav-link {
         color: $black;
         margin: 5px;
-        padding: 10px 0px 7px 15px;
+        padding: 0 0 0 1rem;
         width: 110px;
         white-space: nowrap;
         overflow: hidden;
