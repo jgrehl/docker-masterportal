@@ -100,7 +100,8 @@ describe("src_3_0_0/modules/layerSlider/store/actionsLayerSlider.js", () => {
                                 transparency: transparency
                             }
                         }]
-                    }
+                    },
+                    dispatch: true
                 }
             ], {}, done);
         });
