@@ -24,7 +24,7 @@ describe("src_3_0_0/shared/components/ElevatedButton.vue", () => {
             icon = button.find("i");
 
         expect(button.exists()).to.be.true;
-        expect(button.classes()).to.eql(["btn", "btn-primary", "d-flex", "align-items-center"]);
+        expect(button.classes()).to.eql(["btn", "btn-primary", "d-flex", "align-items-center", "shadow"]);
         expect(button.attributes("type")).to.equal("button");
         expect(button.text()).to.equal(text);
         expect(icon.exists()).to.be.true;
