@@ -65,7 +65,7 @@ describe("src_3_0_0/modules/layerSlider/components/LayerSliderHandle.vue", () =>
                     }
                 }
             },
-            mutations: {
+            actions: {
                 replaceByIdInLayerConfig: sinon.stub()
             }
         });
