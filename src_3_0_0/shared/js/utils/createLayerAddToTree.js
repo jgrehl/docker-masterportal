@@ -7,11 +7,10 @@ import layerCollection from "../../../core/layers/js/layerCollection";
  *
  * @param {String} layerId contains the id of the layer, the features are got from
  * @param {Array} features contains the features to add to new layer
- * @param {String} treeType the treeType
  * @param {Object} thfConfig content of config.json's property 'treeHighlightedFeatures'
  * @returns {void}
  */
-async function createLayerAddToTree (layerId, features, treeType, thfConfig = {}) {
+async function createLayerAddToTree (layerId, features, thfConfig = {}) {
     if (layerId) {
         const layerNameKey = thfConfig.layerName ? thfConfig.layerName : "common:tree.selectedFeatures",
             originalLayer = getLayer(layerId);
@@ -20,7 +19,7 @@ async function createLayerAddToTree (layerId, features, treeType, thfConfig = {}
             const originalLayerName = originalLayer.get("name").replace(i18next.t(layerNameKey), "").trim(),
                 layerName = i18next.t(layerNameKey) + " " + originalLayerName,
                 id = layerId.indexOf(originalLayerName) === -1 ? layerId + "_" + originalLayerName : layerId,
-                attributes = setAttributes(originalLayer, id, layerName, layerNameKey, treeType);
+                attributes = setAttributes(originalLayer, id, layerName, layerNameKey);
             let highlightLayer = layerCollection.getLayerById(id),
                 layerSource = null;
 
@@ -71,8 +70,6 @@ async function addLayerModel (attributes, id) {
  * @param {Object} layer to copy attributes of
  *  @param {String} id of the layer
  * @param {String} layerName name of the layer
- * @param {String} layerNameKey i18n-key of the name of the layer
- * @param {String} treeType the treeType
  * @returns {Object} the adapted attributes
  */
 function setAttributes (layer, id, layerName) {
@@ -97,6 +94,7 @@ function setAttributes (layer, id, layerName) {
 // eslint-disable-next-line
 function setStyle (layer, styleId) {
     // @todo when styleModel has moved
+    // @todo test implementation also needed
     // const styleModel = Radio.request("StyleList", "returnModelById", styleId);
 
     // if (styleModel !== undefined) {
