@@ -1,6 +1,6 @@
 /**
  * @property {Boolean} active Current status of the Tool.
- * @property {String} description The descritption that should be shown in the button in the right menu.
+ * @property {String} description The description that should be shown in the button in the right menu.
  * @property {String} icon Icon used in the header of the window.
  * @property {?VTLayer} layerModel Currently selected model of a Vector Tile Layer to style.
  * @property {String} name Title displayed at the top of the window of the Tool; can be configured through the config.json.
