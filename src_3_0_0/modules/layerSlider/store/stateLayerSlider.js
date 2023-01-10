@@ -2,10 +2,10 @@
  * User type definition
  * @typedef {Object} LayerSliderState
  * @property {Boolean} active If true, LayerSlider will rendered.
- * @property {String} description The descritption that should be shown in the button in the menu.
- * @property {String} icon "bi-hourglass-split" Icon.
+ * @property {String} description The description that should be shown in the button in the menu.
+ * @property {String} icon Icon of the layer slider.
  * @property {Objet[]} layerIds The configured layer with their ids and titles.
- * @property {String} name "Name of the LayerSlider.
+ * @property {String} name Name of the LayerSlider.
  * @property {Boolean} showDescription If true, description will be shown.
  * @property {String} sliderType The Slidertype. "player" or "handle".
  * @property {Number} timeInterval Time interval.
@@ -24,7 +24,7 @@
 const state = {
     active: false,
     description: "",
-    icon: "bi-hourglass-split",
+    icon: "bi-collection-play",
     layerIds: [],
     name: "common:menu.tools.layerSlider",
     showDescription: false,

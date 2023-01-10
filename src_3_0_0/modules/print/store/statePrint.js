@@ -2,7 +2,7 @@
  * Print Tool
  * @typedef {Object} PrintState
  * @property {Boolean} active if true, print tool will rendered
- * @property {String} description The descritption that should be shown in the button in the right menu.
+ * @property {String} description The description that should be shown in the button in the right menu.
  * @property {String} filename output filename
  * @property {String} icon icon of the print
  * @property {String} name name of the print
