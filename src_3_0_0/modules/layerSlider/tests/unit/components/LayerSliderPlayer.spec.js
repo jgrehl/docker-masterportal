@@ -24,7 +24,7 @@ describe("src_3_0_0/modules/layerSlider/components/LayerSliderPlayer.vue", () =>
                     }
                 }
             },
-            mutations: {
+            actions: {
                 replaceByIdInLayerConfig: sinon.stub()
             }
         });
