@@ -37,11 +37,24 @@ export default {
             "isShadowEnabled",
             "shadowTime"
         ]),
+        ...mapGetters("Modules/Language", [
+            "currentLocale"
+        ]),
         ...mapGetters("Maps", {
             mapMode: "mode"
         })
     },
     watch: {
+        /**
+         * Watch current locale.
+         * Check date format, if current locale is changed.
+         * @param {String} mapMode The map mode.
+         * @returns {void}
+         */
+        currentLocale () {
+            this.checkDateFormat();
+        },
+
         /**
          * Watch the map mode.
          * Initialize shadows, if map mode is 3D.
@@ -224,13 +237,7 @@ export default {
         v-if="active"
         id="modules-shadow-tool"
     >
-        <div class="d-flex flex-row justify-content-between form-switch ps-0 mb-5">
-            <label
-                class="d-flex flex-column justify-content-center form-check-label"
-                for="module-shadow-checkbox"
-            >
-                {{ shadowActivated ? $t('common:modules.tools.shadow.shadowDisplayOff') : $t('common:modules.tools.shadow.shadowDisplayOn') }}
-            </label>
+        <div class="form-check form-switch mb-3 d-flex align-items-center">
             <input
                 id="module-shadow-checkbox"
                 ref="shadowCheckBox"
@@ -241,6 +248,12 @@ export default {
                 :checked="shadowActivated"
                 @change="toggleShadow(!shadowActivated)"
             >
+            <label
+                class="form-check-label ps-2 pt-2"
+                for="module-shadow-checkbox"
+            >
+                {{ $t(shadowActivated ? "common:modules.tools.shadow.shadowDisplayOff" : "common:modules.tools.shadow.shadowDisplayOn") }}
+            </label>
         </div>
         <div
             id="control"
@@ -306,18 +319,8 @@ export default {
         }
     }
 
-    label {
-        // line-height: 26px;
-    }
-
     .form-check-input {
-        max-width: 3.5rem;
-        height: 2rem;
-    }
-
-    input {
-        height: 20px;
-        flex: 0 0 200px;
-        margin-left: 10px;
+        width: 2.5rem;
+        height: 1.5rem;
     }
 </style>
