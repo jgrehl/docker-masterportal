@@ -2,7 +2,7 @@
  * User type definition
  * @typedef {Object} AddWMSState
  * @property {Boolean} active if true, AddWMS will rendered
- * @property {String} description The descritption that should be shown in the button in the right menu.
+ * @property {String} description The description that should be shown in the button in the right menu.
  * @property {String} id id of the AddWMS component
  * @property {String} name displayed as title (config-param)
  * @property {String} icon icon next to title (config-param)
