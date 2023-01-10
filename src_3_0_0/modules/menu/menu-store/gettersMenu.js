@@ -37,7 +37,7 @@ const menuGetters = {
     },
 
     /**
-     * Returns, if a module with attribute hasMouseMapInteractions will be deactivated.
+     * Returns true, if a module with attribute hasMouseMapInteractions will be deactivated.
      * @param {MenuState} state Local vuex state.
      * @param {Object} _ Local vuex getters (discarded).
      * @param {Object} __ vuex rootState (discarded).
