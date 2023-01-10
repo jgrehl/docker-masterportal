@@ -61,13 +61,7 @@ export default {
         v-if="active"
         id="module-layer-slider"
     >
-        <div class="d-flex flex-row justify-content-between form-switch ps-0">
-            <label
-                class="d-flex flex-column justify-content-center form-check-label"
-                for="module-layer-slider-checkbox"
-            >
-                {{ $t(sliderType === "player" ? "common:modules.tools.layerSlider.changeSliderTypeToHandle" : "common:modules.tools.layerSlider.changeSliderTypeToPlayer") }}
-            </label>
+        <div class="form-check form-switch mb-3 d-flex align-items-center">
             <input
                 id="module-layer-slider-checkbox"
                 class="form-check-input"
@@ -76,6 +70,12 @@ export default {
                 role="switch"
                 @change="toggleSliderType"
             >
+            <label
+                class="form-check-label ps-2 pt-2"
+                for="module-layer-slider-checkbox"
+            >
+                {{ $t(sliderType === "player" ? "common:modules.tools.layerSlider.changeSliderTypeToHandle" : "common:modules.tools.layerSlider.changeSliderTypeToPlayer") }}
+            </label>
         </div>
         <h5 class="my-4">
             {{ $t(title) }}
@@ -94,17 +94,8 @@ export default {
 
     #module-layer-slider {
         .form-check-input {
-            max-width: 3.5rem;
-            height: 2rem;
-        }
-
-        input {
-            flex: 0 0 3.5rem;
-            margin-inline-end: 1rem;
-        }
-
-        @include media-breakpoint-up(sm) {
-            min-width: 350px;
+            width: 2.5rem;
+            height: 1.5rem;
         }
     }
 
