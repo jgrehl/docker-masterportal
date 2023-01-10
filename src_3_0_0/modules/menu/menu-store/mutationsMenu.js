@@ -27,7 +27,7 @@ export default {
     setCurrentComponent (state, {type, side, props}) {
         const currentType = state[side].navigation.currentComponent.type;
 
-        if (currentType !== type || currentType === "folder" && type === "folder") {
+        if (currentType !== type || currentType === "folder" && type === "folder" || currentType === "layerSelection" && type === "layerSelection") {
             state[side].navigation.history.push(state[side].navigation.currentComponent);
             state[side].navigation.currentComponent = {type: type, props: props};
         }
