@@ -40,14 +40,14 @@ export default {
 
     /**
      * Sends the new visibility to layer configs.
-     * @param {Object} param.commit the commit
+     * @param {Object} param.dispatch the dispatch
      * @param {String} layerId The layerId
      * @param {Boolean} visibility Visibility true / false
      * @param {Number} transparency Transparency of layer.
      * @returns {void}
      */
-    sendModification: ({commit}, {layerId, visibility, transparency}) => {
-        commit("replaceByIdInLayerConfig", {
+    sendModification: ({dispatch}, {layerId, visibility, transparency}) => {
+        dispatch("replaceByIdInLayerConfig", {
             layerConfigs: [{
                 id: layerId,
                 layer: {
