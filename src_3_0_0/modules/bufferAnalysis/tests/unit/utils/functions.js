@@ -13,12 +13,13 @@ function createLayersArray (count) {
 
 
     for (let i = 0; i < count; i++) {
-        const layer = new VectorLayer();
+        const layer = {
+            "id": i,
+            "name": "Layer-" + i,
+            "typ": "WFS",
+            "visibility": true
+        };
 
-        layer.setIsSelected = sinon.spy();
-        layer.set("name", "Layer" + i);
-        layer.set("id", i);
-        layer.set("layer", new VectorLayer());
         layers.push(layer);
     }
     return layers;
