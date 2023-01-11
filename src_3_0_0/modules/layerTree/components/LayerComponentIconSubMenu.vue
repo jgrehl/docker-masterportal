@@ -12,11 +12,6 @@ export default {
             type: Object,
             required: true
         }
-    },
-    data () {
-        return {
-            classInfo: ["btn-light", "layer-component-icon-sub-menu-button"]
-        };
     }
 };
 </script>
@@ -28,7 +23,7 @@ export default {
     >
         <IconButton
             :id="'layer-component-icon-sub-menu-button-' + layerConf.id"
-            :class-array="['btn-light, layer-component-icon-sub-menu-button']"
+            :class-array="['btn-light']"
             data-bs-toggle="collapse"
             :data-bs-target="'#collapse-sub-menu-' + layerConf.id"
             :icon="'bi-sliders'"
@@ -37,20 +32,3 @@ export default {
     </div>
 </template>
 
-<style lang="scss" scoped>
-    @import "~variables";
-    @import "~mixins";
-
-    .layer-component-icon-sub-menu-button {
-        width: 2rem;
-        height: 2rem;
-        font-size: 1.2rem;
-
-        &:hover {
-                @include primary_action_hover;
-        }
-        &:focus {
-            @include primary_action_focus;
-        }
-    }
-</style>
