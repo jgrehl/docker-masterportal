@@ -130,8 +130,8 @@ export default {
         width: 12px;
         align-items: center;
         justify-content: center;
-        top: 0em;
-        font-size: 2em;
+        top: 0rem;
+        font-size: 2rem;
     }
  }
 
