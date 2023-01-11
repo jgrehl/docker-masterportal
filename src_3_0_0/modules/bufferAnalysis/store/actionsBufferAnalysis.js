@@ -110,7 +110,8 @@ const actions = {
      * @return {void}
      */
     checkIntersectionWithBuffers ({commit, dispatch, getters: {selectedTargetLayer, jstsParser, resultType}}, bufferFeatures) {
-        const targetFeatures = selectedTargetLayer.layerSource.getFeatures();
+        const layer = layerCollection.getLayerById(selectedTargetLayer.id),
+            targetFeatures = layer?.layerSource.getFeatures() || [];
 
         targetFeatures.forEach(targetFeature => {
             const targetGeometry = targetFeature.getGeometry(),
@@ -231,13 +232,13 @@ const actions = {
 
             vectorSource.addFeatures(resultFeatures);
             resultLayer.set("gfiAttributes", gfiAttributes);
-            dispatch("Maps/addLayerOnTop", resultLayer, {root: true});
+            dispatch("Maps/addLayer", resultLayer, {root: true});
         }
-        const targetOlLayer = selectedTargetLayer,
-            sourceOlLayer = selectedSourceLayer;
+        const targetOlLayer = layerCollection.getLayerById(selectedTargetLayer.id),
+            sourceOlLayer = layerCollection.getLayerById(selectedSourceLayer.id);
 
-        targetOlLayer.setOpacity(targetOlLayer.getOpacity() * 0.5);
-        sourceOlLayer.setOpacity(sourceOlLayer.getOpacity() * 0.5);
+        targetOlLayer.layer.setOpacity(targetOlLayer.layer.getOpacity() * 0.5);
+        sourceOlLayer.layer.setOpacity(sourceOlLayer.layer.getOpacity() * 0.5);
         bufferLayer.setOpacity(0.5);
     },
     /**
