@@ -23,7 +23,6 @@
  */
 export default {
     active: false,
-    alwaysActivated: true,
     icon: "bi-info-circle",
     isVisibleInMenu: false,
     menuSide: "mainMenu",
