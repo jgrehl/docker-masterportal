@@ -2,7 +2,6 @@
  * User type definition
  * @typedef {Object} layerInformationState
  * @property {Boolean} active if true LayerInformation will be shown
- * @property {Boolean} alwaysActivated This module is always activated.
  * @property {String} icon Icon next to name (config-param).
  * @property {Object[]} isVisibleInMenu Specifies a whether a menu item is to be created.
  * @property {Object[]} menuSide Specifies in which menu the GFI should be rendered
