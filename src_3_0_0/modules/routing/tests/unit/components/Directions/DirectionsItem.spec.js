@@ -17,7 +17,7 @@ import stateDirections from "../../../../store/directions/stateDirections";
 
 config.global.mocks.$t = key => key;
 
-describe("src/modules/routing/components/Directions/DirectionsItem.vue", () => {
+describe("src_3_0_0/modules/routing/components/Directions/DirectionsItem.vue", () => {
     const mockConfigJson = {
         configJson: {
             Portalconfig: {
