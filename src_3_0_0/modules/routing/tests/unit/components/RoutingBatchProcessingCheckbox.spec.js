@@ -5,7 +5,7 @@ import RoutingBatchProcessingCheckboxComponent from "../../../components/Routing
 
 config.global.mocks.$t = key => key;
 
-describe("src/modules/routing/components/RoutingBatchProcessingCheckbox.vue", () => {
+describe("src_3_0_0/modules/routing/components/RoutingBatchProcessingCheckbox.vue", () => {
     let store,
         wrapper,
         props;
