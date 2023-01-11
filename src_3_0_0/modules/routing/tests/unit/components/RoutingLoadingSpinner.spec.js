@@ -6,7 +6,7 @@ import RoutingLoadingSpinnerComponent from "../../../components/RoutingLoadingSp
 
 config.global.mocks.$t = key => key;
 
-describe("src/modules/routing/components/RoutingLoadingSpinner.vue", () => {
+describe("src_3_0_0/modules/routing/components/RoutingLoadingSpinner.vue", () => {
     let store,
         wrapper;
 
