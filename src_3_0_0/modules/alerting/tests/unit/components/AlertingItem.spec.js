@@ -86,9 +86,19 @@ describe("src_3_0_0/modules/alerting/components/AlertingItem.vue", function () {
 
     beforeEach(() => {
         store = createStore({
-            namespaces: true,
             modules: {
-                Alerting
+                Alerting,
+                Modules: {
+                    namespaced: true,
+                    modules: {
+                        News: {
+                            namespaced: true,
+                            mutations: {
+                                addNews: sinon.stub()
+                            }
+                        }
+                    }
+                }
             },
             state: {
                 configJs: mockConfigJs,
