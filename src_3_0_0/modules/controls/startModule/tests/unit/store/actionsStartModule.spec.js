@@ -106,7 +106,6 @@ describe("src_3_0_0/modules/controls/startModule/store/actionsStartModule.js", (
             expect(rootState.Modules).to.deep.equals({
                 Abc: {
                     type: "abc",
-                    alwaysActivated: true,
                     isVisibleInMenu: false,
                     menuSide: menuSide
                 },
