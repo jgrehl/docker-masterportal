@@ -7,7 +7,7 @@ import {RoutingIsochronesArea} from "../../../../js/classes/routing-isochrones-a
 import {fetchRoutingOrsIsochrones} from "../../../../js/isochrones/routing-ors-isochrones";
 import state from "../../../../store/stateRouting";
 
-describe("src/modules/routing/js/directions/routing-ors-directions.js", () => {
+describe("src_3_0_0/modules/routing/js/directions/routing-ors-directions.js", () => {
     beforeEach(() => {
         sinon.stub(i18next, "t").callsFake((...args) => args);
         store.getters = {
