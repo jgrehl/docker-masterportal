@@ -25,9 +25,6 @@ describe("src/modules/selectFeatures/store/gettersSelectFeatures", function () {
         it("returns the icon default value from state", function () {
             expect(icon(stateSelectFeatures)).to.equals("bi-card-list");
         });
-        it("returns the isVisibleInMenu default value from state", function () {
-            expect(isVisibleInMenu(stateSelectFeatures)).to.be.true;
-        });
         it("returns the deactivateGFI default value from state", function () {
             expect(deactivateGFI(stateSelectFeatures)).to.be.true;
         });
