@@ -16,6 +16,7 @@ import LayerSlider from "../layerSlider/store/indexLayerSlider";
 import LayerTree from "../layerTree/store/indexLayerTree";
 import Measure from "../measure/store/indexMeasure";
 import MouseHover from "../mouseHover/store/indexMouseHover";
+import News from "../news/store/indexNewsView";
 import OpenConfig from "../openConfig/store/indexOpenConfig";
 import Print from "../print/store/indexPrint";
 import Routing from "../routing/store/indexRouting";
@@ -46,6 +47,7 @@ export default {
         LayerTree: {...LayerTree},
         Measure: {...Measure},
         MouseHover: {...MouseHover},
+        News: {...News},
         OpenConfig: {...OpenConfig},
         Routing: {...Routing},
         Print: {...Print},
