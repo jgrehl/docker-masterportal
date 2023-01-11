@@ -39,7 +39,7 @@ export default {
         currentComponent () {
             let current = this.menu.navigation.currentComponent.type;
 
-            if (current !== "root" && current !== "GetFeatureInfo") {
+            if (current !== "root" && current !== "getFeatureInfo") {
                 current = this.componentMap[current];
             }
 
@@ -66,12 +66,12 @@ export default {
         <MenuNavigation :side="side" />
         <GetFeatureInfo
             v-if="side === 'secondaryMenu'"
-            v-show="currentComponent === 'GetFeatureInfo'"
+            v-show="currentComponent === 'getFeatureInfo'"
         />
 
         <component
             :is="currentComponent"
-            v-if="currentComponent !== 'root' && currentComponent !== 'GetFeatureInfo'"
+            v-if="currentComponent !== 'root' && currentComponent !== 'getFeatureInfo'"
         />
 
         <MenuContainerBodyRoot
