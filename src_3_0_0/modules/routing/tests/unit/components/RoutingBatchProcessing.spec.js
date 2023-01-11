@@ -5,7 +5,7 @@ import RoutingBatchProcessingComponent from "../../../components/RoutingBatchPro
 
 config.global.mocks.$t = key => key;
 
-describe("src/modules/routing/components/RoutingBatchProcessing.vue", () => {
+describe("src_3_0_0/modules/routing/components/RoutingBatchProcessing.vue", () => {
     let store,
         wrapper,
         props;

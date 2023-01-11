@@ -5,7 +5,7 @@ import RoutingSpeedProfileIconComponent from "../../../components/RoutingSpeedPr
 
 config.global.mocks.$t = key => key;
 
-describe("src/modules/routing/components/RoutingSpeedProfileIcon.vue", () => {
+describe("src_3_0_0/modules/routing/components/RoutingSpeedProfileIcon.vue", () => {
     let store,
         wrapper,
         props;
