@@ -83,7 +83,7 @@ const menuGetters = {
      * @param {MenuState} state Local vuex state.
      * @returns {(function(type: String): Boolean)} Function returning false or the Text.
      */
-    previuosNavigationEntryText: (state) => side => {
+    previousNavigationEntryText: (state) => side => {
         const previousEntry = state[side].navigation.history.length !== 0 ? state[side].navigation.history.slice(-1)[0] : "";
         let previousEntryText = false;
 
