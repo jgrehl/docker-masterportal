@@ -1,7 +1,7 @@
 import {expect} from "chai";
 import {buildFilter, buildXmlFilter, buildStoredFilter} from "../../../js/buildFilter";
 
-describe("src/modules/tools/wfsSearch/utils/buildFilter.js", () => {
+describe("src_3_0_0/modules/wfsSearch/js/buildFilter.js", () => {
     const values = [
         {
             "clause": {

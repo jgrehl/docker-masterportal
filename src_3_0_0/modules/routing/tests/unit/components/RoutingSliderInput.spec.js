@@ -10,7 +10,7 @@ import state from "../../../store/stateRouting";
 
 config.global.mocks.$t = key => key;
 
-describe("src/modules/routing/components/RoutingSliderInput.vue", () => {
+describe("src_3_0_0/modules/routing/components/RoutingSliderInput.vue", () => {
     let store,
         wrapper,
         props;

@@ -7,7 +7,7 @@ import actions from "../../../store/actionsContact";
 
 const {onSendSuccess, send} = actions;
 
-describe("src/modules/tools/contact/store/actionsContact.js", () => {
+describe("src_3_0_0/modules/contact/store/actionsContact.js", () => {
     describe("onSendSuccess", () => {
         const payload = "0401-TICK-ETID";
         let state;

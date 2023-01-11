@@ -1,4 +1,3 @@
-// import getProxyUrl from "../../../../utils/getProxyUrl";
 import {GeoJSON, GPX, KML} from "ol/format.js";
 import Circle from "ol/geom/Circle";
 import Style from "ol/style/Style";

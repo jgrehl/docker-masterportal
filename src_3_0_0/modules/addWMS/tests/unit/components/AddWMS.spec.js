@@ -6,7 +6,7 @@ import AddWMS from "../../../store/indexAddWMS";
 
 config.global.mocks.$t = key => key;
 
-describe("src/modules/addWMS/components/AddWMS.vue", () => {
+describe("src_3_0_0/modules/addWMS/components/AddWMS.vue", () => {
     const
         mockConfigJson = {
             Portalconfig: {
