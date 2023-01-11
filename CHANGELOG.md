@@ -318,6 +318,7 @@
     - devDependencies:
         - @vue/devtools-api
 - A new module `OpenConfig` has been implemented, which can be used to load a new configuration file (config.json) at runtime.
+- A new module `News` has been implemented, it displays the recent alerts.
 - Modules can now have an attribute `hasMouseMapInteractions`. Only one module that has this attribute set to `true` can be open at the same time.
 
 ### Changed
