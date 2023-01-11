@@ -7,7 +7,7 @@ import thousandsSeparator from "../../../../../shared/js/utils/thousandsSeparato
 
 config.global.mocks.$t = key => key;
 
-describe("src/modules/routing/components/RoutingDistanceDisplay.vue", () => {
+describe("src_3_0_0/modules/routing/components/RoutingDistanceDisplay.vue", () => {
     let store,
         wrapper,
         props;

@@ -10,7 +10,7 @@ import {RoutingGeosearchResult} from "../../../../js/classes/routing-geosearch-r
 import {RoutingIsochrones} from "../../../../js/classes/routing-isochrones";
 import {RoutingIsochronesArea} from "../../../../js/classes/routing-isochrones-area";
 
-describe("src/modules/routing/store/isochrones/actionsIsochrones.js", () => {
+describe("src_3_0_0/modules/routing/store/isochrones/actionsIsochrones.js", () => {
     let state, commitSpy, commit, dispatchSpy, dispatch, dispatchMocks, getters, rootState, waypoint, isochronesAreaSource, isochronesResult;
 
     beforeEach(() => {

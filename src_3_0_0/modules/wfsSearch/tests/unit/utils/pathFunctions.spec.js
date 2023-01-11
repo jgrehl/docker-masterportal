@@ -1,7 +1,7 @@
 import {expect} from "chai";
 import {buildPath, prepareOptionsWithId, removePath} from "../../../js/pathFunctions";
 
-describe("src/modules/tools/wfsSearch/utils/pathFunctions.js", () => {
+describe("src_3_0_0/modules/wfsSearch/js/pathFunctions.js", () => {
     describe("buildPath", () => {
         it("should build a path to the currentOption based on the optionsObject", () => {
             const currentOption = "nenner",
