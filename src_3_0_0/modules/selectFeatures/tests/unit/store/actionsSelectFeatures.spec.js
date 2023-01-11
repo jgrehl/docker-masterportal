@@ -1,11 +1,12 @@
 import sinon from "sinon";
 import {expect} from "chai";
+import layerCollectionModule from "../../../../../core/layers/js/layerCollection";
 import createLayerAddToTreeModule from "../../../../../shared/js/utils/createLayerAddToTree";
 import actions from "../../../store/actionsSelectFeatures";
 import stateSelectFeatures from "../../../store/stateSelectFeatures";
 
 
-describe("src/modules/tools/selectFeatures/store/gettersSelectFeatures.js", () => {
+describe("src/modules/tools/selectFeatures/store/actionsSelectFeatures.js", () => {
     const visibleLayerList = [];
     let dispatch, rootGetters, state, createLayerAddToTreeStub, layerVisible, feature, layerId;
 
@@ -13,7 +14,6 @@ describe("src/modules/tools/selectFeatures/store/gettersSelectFeatures.js", () =
         dispatch = sinon.spy();
         createLayerAddToTreeStub = sinon.spy(createLayerAddToTreeModule, "createLayerAddToTree");
         rootGetters = {
-            "Maps/getVisibleOlLayerList": visibleLayerList,
             "treeHighlightedFeatures": {active: true},
             "treeType": "custom"
         };
@@ -38,6 +38,9 @@ describe("src/modules/tools/selectFeatures/store/gettersSelectFeatures.js", () =
             getProperties: () => []
         };
         visibleLayerList.push(layerVisible);
+        sinon.stub(layerCollectionModule, "getOlLayers").returns(
+            visibleLayerList
+        );
     });
 
     afterEach(() => {
