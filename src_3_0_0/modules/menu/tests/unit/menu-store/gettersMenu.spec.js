@@ -47,18 +47,6 @@ describe.skip("src_3_0_0/modules/menu/menu-store/gettersMenu.js", () => {
 
     afterEach(sinon.restore);
 
-    describe("componentsAlwaysActivated", () => {
-        beforeEach(() => {
-            rootGetters = {
-                "Modules/componentMap": {component: component}
-            };
-        });
-
-        it("should return an array'", () => {
-            expect(gettersMenu.componentsAlwaysActivated(undefined, undefined, rootState, rootGetters)).to.be.an("array");
-        });
-    });
-
     describe("componentFromPath", () => {
         const type = "component";
         let objectFromPathFake, side;
