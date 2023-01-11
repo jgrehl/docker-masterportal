@@ -316,7 +316,7 @@ $length: 1.5em;
 
 .loader {
     position: relative;
-    bottom: 2em;
+    bottom: 2rem;
     left: 87.5%;
     height: $length;
     width: $length;
@@ -330,10 +330,10 @@ $length: 1.5em;
         display: inline-block;
         width: 100%;
         height: 100%;
-        border-width: 0.15em;
+        border-width: 0.15rem;
         border-color: $dark_grey $dark_grey transparent transparent;
         border-style: solid;
-        border-radius: 1em;
+        border-radius: 1rem;
         box-sizing: border-box;
         top: 0;
         left: 0;
