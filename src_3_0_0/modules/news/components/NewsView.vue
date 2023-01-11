@@ -14,14 +14,22 @@ export default {
     },
     methods: {
         /**
-         * Formats the date.
-         * @returns {void}
+         * Formats the dates of the news and creates a timeframe string.
+         * @param {Object} news to get the dates from
+         * @returns {String} the formatted timeframe
          */
-        formatDate (date) {
-            if (typeof date === "string") {
-                return moment(date).format("DD.MM.YYYY");
+        getDate (news) {
+            let formattedDate = "";
+
+            if (typeof news.displayFrom === "string") {
+                formattedDate = moment(news.displayFrom).format("DD.MM.YYYY");
+
+                if (typeof news.displayUntil === "string") {
+                    formattedDate += " - ";
+                    formattedDate += moment(news.displayUntil).format("DD.MM.YYYY");
+                }
             }
-            return "";
+            return formattedDate;
         },
         /**
          * Sorts the news descending by date in 'displayFrom'.
@@ -40,23 +48,31 @@ export default {
         v-if="active"
         id="news-view"
     >
-        <div class="title d-flex flex-column justify-content-center mb-3 ps-2 bold">
+        <div
+            id="news-title"
+            class="title d-flex flex-column justify-content-center mb-3 ps-2 bold"
+        >
             {{ $t("modules.tools.news.headline") }}
         </div>
         <template
             v-for="(aNews, index) in sortByDate(news)"
             :key="index"
         >
-            <div class="small-text ps-2">
-                {{ formatDate(aNews.displayFrom) }}
+            <div
+                :id="'news_date_'+ index"
+                class="small-text ps-2"
+            >
+                {{ getDate(aNews) }}
             </div>
             <div
-                v-if="aNews.title && aNews.title.trim().length > 0"
+                v-if="aNews.category && aNews.category.trim().length > 0"
+                :id="'news_category_'+ index"
                 class="bold p-2"
             >
-                {{ aNews.title }}
+                {{ aNews.category }}
             </div>
             <div
+                :id="'news_content_'+ index"
                 class="small-text p-2 mb-5"
                 v-html="aNews.content"
             />
@@ -67,6 +83,9 @@ export default {
 
 <style lang="scss" scoped>
 @import "~variables";
+.title{
+    font-size: $font_size_lg;
+}
 .small-text {
     font-size: $font-size-sm;
     }
