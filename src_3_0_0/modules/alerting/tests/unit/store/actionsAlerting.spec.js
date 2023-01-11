@@ -73,6 +73,9 @@ describe("src_3_0_0/modules/alerting/store/actionsAlerting.js", () => {
             checkValue = actions.addSingleAlert({state, commit}, {hash: "123", content: "123", displayFrom: false});
 
         expect(checkValue).to.be.true;
+        expect(commit.calledTwice).to.be.true;
+        expect(commit.firstCall.args[0]).to.eql("Modules/News/addNews");
+        expect(commit.firstCall.args[1].content).to.eql("123");
     });
     it("addSingleAlert doesnt show alert with not valid time restriction", async function () {
         const state = {
@@ -83,6 +86,9 @@ describe("src_3_0_0/modules/alerting/store/actionsAlerting.js", () => {
             checkValue = actions.addSingleAlert({state, commit}, {hash: "123", content: "123", "displayFrom": "2022-08-24 05:00", "displayUntil": "2022-09-28 23:59"});
 
         expect(checkValue).to.be.false;
+        expect(commit.calledOnce).to.be.true;
+        expect(commit.firstCall.args[0]).to.eql("Modules/News/addNews");
+        expect(commit.firstCall.args[1].content).to.eql("123");
     });
     it("addSingleAlert shows alert with valid time restriction", async function () {
         const state = {
@@ -93,6 +99,10 @@ describe("src_3_0_0/modules/alerting/store/actionsAlerting.js", () => {
             checkValue = actions.addSingleAlert({state, commit}, {hash: "123", content: "123", "displayFrom": "2022-08-24 05:00", "displayUntil": "2088-09-28 23:59"});
 
         expect(checkValue).to.be.true;
+        expect(commit.calledTwice).to.be.true;
+        expect(commit.firstCall.args[0]).to.eql("Modules/News/addNews");
+        expect(commit.firstCall.args[1].content).to.eql("123");
+
     });
     it("addSingleAlert doesnt show alert with already existing hash", async function () {
         sinon.stub(console, "warn");
@@ -106,5 +116,10 @@ describe("src_3_0_0/modules/alerting/store/actionsAlerting.js", () => {
 
         expect(console.warn.calledOnce).to.be.true;
         expect(console.warn.firstCall.args).to.eql(["Alert ignored (duplicate): 2db391b6db7866773874b3a5e60123040adb656a"]);
+        expect(commit.calledTwice).to.be.true;
+        expect(commit.firstCall.args[0]).to.eql("Modules/News/addNews");
+        expect(commit.firstCall.args[1].content).to.eql("123");
+        expect(commit.secondCall.args[0]).to.eql("setReadyToShow");
+        expect(commit.secondCall.args[1]).to.be.true;
     });
 });
