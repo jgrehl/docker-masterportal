@@ -634,6 +634,13 @@
           }
         },
         {
+          "id": "753",
+          "styleId": "753",
+          "visibility": false,
+          "mouseHoverField": "Name",
+          "loadingStrategy": "bbox"
+        },
+        {
           "id": "GeoJSON",
           "name": "Beiträge",
           "typ": "GeoJSON",
