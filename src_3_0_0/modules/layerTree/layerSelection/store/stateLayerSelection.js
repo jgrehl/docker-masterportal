@@ -7,7 +7,6 @@ export default {
     active: false,
     type: "layerSelection",
     icon: "bi-question-circle",
-    alwaysActivated: true,
     isVisibleInMenu: false,
     menuSide: "mainMenu",
     name: "common:tree.addSubject",
