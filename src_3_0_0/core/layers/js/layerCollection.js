@@ -73,7 +73,7 @@ function getOlLayers () {
     return olLayers;
 }
 
-module.exports = {
+export default {
     addLayer,
     clear,
     getLayers,
