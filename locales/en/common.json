@@ -974,6 +974,9 @@
                 "downloadQR": "Download QRCode",
                 "myMap": "This is my map: "
             },
+            "news": {
+                "headline": "News"
+            },
             "bufferAnalysis": {
                 "sourceSelectLabel": "source layer",
                 "targetSelectLabel": "target layer",
