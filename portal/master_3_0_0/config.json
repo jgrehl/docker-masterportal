@@ -542,11 +542,6 @@
           ]
         },
         {
-          "id":"12260",
-          "typ": "WFS",
-          "visibility": false
-        },
-        {
           "id": "52",
           "name": "Parkhäuser",
           "typ": "WFS",
