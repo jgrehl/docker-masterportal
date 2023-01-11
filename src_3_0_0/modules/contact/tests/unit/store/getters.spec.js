@@ -10,7 +10,7 @@ const {
     validUsername
 } = getters;
 
-describe("tools/contact/store/gettersContact", function () {
+describe("src_3_0_0/modules/contact/store/gettersContact", function () {
     describe("validMessage", function () {
         it("confirms valid messages", function () {
             expect(validMessage({message: String().padStart(minMessageLength, "x")})).to.be.true;

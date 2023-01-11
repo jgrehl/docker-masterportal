@@ -52,6 +52,12 @@ describe("src_3_0_0/modules/shadowTool/components/ShadowTool.vue", () => {
                 Modules: {
                     namespaced: true,
                     modules: {
+                        Language: {
+                            namespaced: true,
+                            getters: {
+                                currentLocale: () => "en"
+                            }
+                        },
                         Shadow: {
                             namespaced: true,
                             getters: {

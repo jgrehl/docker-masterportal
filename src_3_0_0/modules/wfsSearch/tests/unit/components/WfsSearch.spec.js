@@ -9,7 +9,7 @@ import WfsSearchModule from "../../../store/indexWfsSearch";
 
 config.global.mocks.$t = key => key;
 
-describe("src/modules/wfsSearch/components/WfsSearch.vue", () => {
+describe("src_3_0_0/modules/wfsSearch/components/WfsSearch.vue", () => {
     const mockMapMarkerActions = {
             removePointMarker: sinon.stub()
         },
