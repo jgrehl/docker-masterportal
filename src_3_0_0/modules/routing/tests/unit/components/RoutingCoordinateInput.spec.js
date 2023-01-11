@@ -9,7 +9,7 @@ import {RoutingGeosearchResult} from "../../../js/classes/routing-geosearch-resu
 
 config.global.mocks.$t = key => key;
 
-describe("src/modules/routing/components/RoutingCoordinateInput.vue", () => {
+describe("src_3_0_0/modules/routing/components/RoutingCoordinateInput.vue", () => {
     let store,
         wrapper,
         props;

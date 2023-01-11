@@ -15,7 +15,7 @@ import {RoutingIsochronesArea} from "../../../../js/classes/routing-isochrones-a
 
 config.global.mocks.$t = key => key;
 
-describe("src/modules/routing/components/Isochrones/IsochronesItemBatchProcessing.vue", () => {
+describe("src_3_0_0/modules/routing/components/Isochrones/IsochronesItemBatchProcessing.vue", () => {
     let store, wrapper, props;
 
     beforeEach(() => {

@@ -2,7 +2,7 @@ import sinon from "sinon";
 import {expect} from "chai";
 import mutations from "../../../store/mutationsWfsSearch";
 
-describe("src/modules/tools/wfsSearch/store/mutationsWfsSearch.js", () => {
+describe("src_3_0_0/modules/wfsSearch/store/mutationsWfsSearch.js", () => {
 
     afterEach(sinon.restore);
 

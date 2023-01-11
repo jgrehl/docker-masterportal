@@ -8,7 +8,7 @@ import {
     fetchRoutingNominatimGeosearchReverse
 } from "../../../../js/geosearch/routing-nominatim-geosearch";
 
-describe("src/modules/routing/js/geosearch/routing-nominatim-geosearch.js", () => {
+describe("src_3_0_0/modules/routing/js/geosearch/routing-nominatim-geosearch.js", () => {
     beforeEach(() => {
         sinon.stub(i18next, "t").callsFake((...args) => args);
         store.getters.restServiceById = () => ({url: "tmp"});

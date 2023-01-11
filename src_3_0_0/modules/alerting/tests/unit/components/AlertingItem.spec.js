@@ -20,7 +20,7 @@ config.global.mocks.$i18n = {
     }
 };
 
-describe("src/modules/alerting/components/AlertingItem.vue", function () {
+describe("src_3_0_0/modules/alerting/components/AlertingItem.vue", function () {
     let
         wrapper,
         store;
