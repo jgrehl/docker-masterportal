@@ -12,7 +12,7 @@ import {RoutingWaypoint} from "../../../../js/classes/routing-waypoint";
 import {RoutingDirections} from "../../../../js/classes/routing-directions";
 import {RoutingGeosearchResult} from "../../../../js/classes/routing-geosearch-result";
 
-describe("src/modules/routing/store/directions/actionsDirections.js", () => {
+describe("src_3_0_0/modules/routing/store/directions/actionsDirections.js", () => {
     let state, commitSpy, commit, dispatchSpy, dispatch, dispatchMocks, getters, rootState, waypoints, wgs84Coordinates, routingDirectionsWaypointSource, routingDirectionsAvoidSource, routingDirectionsResult, routeFeature, highlightFeature, startWaypoint, endWaypoint, avoidPolygonCoordinates;
 
     beforeEach(() => {

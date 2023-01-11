@@ -16,7 +16,7 @@ import LineString from "ol/geom/LineString";
 
 config.global.mocks.$t = key => key;
 
-describe("src/modules/routing/components/RoutingDownload.vue", () => {
+describe("src_3_0_0/modules/routing/components/RoutingDownload.vue", () => {
     let store,
         wrapper,
         props;
