@@ -1,6 +1,7 @@
 <script>
 import {mapGetters, mapActions, mapMutations} from "vuex";
 import VectorLayer from "ol/layer/Vector.js";
+import layerCollection from "../../../core/layers/js/layerCollection";
 import {isPhoneNumber, getPhoneNumberAsWebLink} from "../../../shared/js/utils/isPhoneNumber.js";
 import beautifyKey from "../../../shared/js/utils/beautifyKey";
 import {isWebLink} from "../../../shared/js/utils/urlHelper";
@@ -35,7 +36,6 @@ export default {
             "featureDetails",
             "headers"
         ]),
-        ...mapGetters("Maps", ["getVisibleOlLayerList"]),
         themeTabClasses: function () {
             return this.layerListView ? this.activeTabClass : this.defaultTabClass;
         },
@@ -60,7 +60,7 @@ export default {
         }
     },
     mounted () {
-        this.getVisibleOlLayerList.forEach(async layer => {
+        layerCollection.getOlLayers().forEach(async layer => {
 
             if (layer instanceof VectorLayer && layer.get("typ") === "WFS") {
                 const layerSource = layer.getSource();

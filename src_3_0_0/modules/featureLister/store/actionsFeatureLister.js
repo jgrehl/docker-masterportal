@@ -1,5 +1,6 @@
 import rawLayerList from "@masterportal/masterportalapi/src/rawLayerList";
 import {getCenter} from "ol/extent";
+import layerCollection from "../../../core/layers/js/layerCollection";
 import createLayerAddToTreeModule from "../../../shared/js/utils/createLayerAddToTree";
 
 export default {
@@ -11,11 +12,11 @@ export default {
      * @param {Object} layer selected layer.
      * @returns {void}
      */
-    switchToList ({state, rootGetters, commit}, layer) {
+    switchToList ({state, commit}, layer) {
         commit("setLayer", layer);
         if (state.layer) {
             commit("setLayerId", layer.id);
-            commit("setGfiFeaturesOfLayer", rootGetters["Maps/getVisibleOlLayerList"]);
+            commit("setGfiFeaturesOfLayer", layerCollection.getOlLayers());
             commit("setFeatureCount", state.gfiFeaturesOfLayer.length);
             commit("setShownFeatures", state.gfiFeaturesOfLayer.length < state.maxFeatures ? state.gfiFeaturesOfLayer.length : state.maxFeatures);
             commit("setLayerListView", false);
@@ -78,10 +79,10 @@ export default {
      * @param {String} featureId id of the feature to be highlighted.
      * @returns {void}
      */
-    highlightFeature ({state, rootGetters, dispatch}, featureId) {
+    highlightFeature ({state, dispatch}, featureId) {
         dispatch("Maps/removeHighlightFeature", "decrease", {root: true});
         let featureGeometryType = "";
-        const layer = rootGetters["Maps/getVisibleOlLayerList"].find((l) => l.values_.id === state.layer.id),
+        const layer = layerCollection.getOlLayers().find((l) => l.values_.id === state.layer.id),
             layerFeatures = state.nestedFeatures ? state.rawFeaturesOfLayer : layer.getSource().getFeatures(),
             featureWrapper = layerFeatures.find(feat => {
                 featureGeometryType = feat.getGeometry().getType();
