@@ -83,7 +83,8 @@
             "wfsSearch": "WFS search",
             "layerClusterToggler": "Open Layer Cluster",
             "openConfig": "Open map",
-            "language": "Change language"
+            "language": "Change language",
+            "news": "News"
         },
         "contact": "Mail",
         "info": "Information"
