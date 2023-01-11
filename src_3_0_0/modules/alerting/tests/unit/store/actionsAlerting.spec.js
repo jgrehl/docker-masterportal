@@ -2,7 +2,7 @@ import actions from "../../../store/actionsAlerting";
 import sinon from "sinon";
 import {expect} from "chai";
 
-describe("src/modules/alerting/store/actionsAlerting.js", () => {
+describe("src_3_0_0/modules/alerting/store/actionsAlerting.js", () => {
     let commit;
 
 
