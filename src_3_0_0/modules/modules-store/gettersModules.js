@@ -16,6 +16,7 @@ import LayerPills from "../layerPills/components/LayerPills.vue";
 import LayerSlider from "../layerSlider/components/LayerSlider.vue";
 import Measure from "../measure/components/MeasureInMap.vue";
 import MouseHover from "../mouseHover/components/MouseHover.vue";
+import NewsView from "../news/components/NewsView.vue";
 import OpenConfig from "../openConfig/components/OpenConfig.vue";
 import PrintMap from "../print/components/PrintMap.vue";
 import Routing from "../routing/components/RoutingTemplate.vue";
@@ -46,6 +47,7 @@ const getters = {
             layerSlider: LayerSlider,
             measure: Measure,
             mouseHover: MouseHover,
+            news: NewsView,
             openConfig: OpenConfig,
             print: PrintMap,
             routing: Routing,
