@@ -1,7 +1,5 @@
 <script>
 import {mapActions, mapGetters, mapMutations} from "vuex";
-import getters from "../store/gettersBufferAnalysis";
-import mutations from "../store/mutationsBufferAnalysis";
 import {ResultType} from "../store/enums";
 import FlatButton from "../../../shared/modules/buttons/components/FlatButton.vue";
 
@@ -13,7 +11,7 @@ export default {
     components: {FlatButton},
     data: () => ({resultTypeEnum: ResultType}),
     computed: {
-        ...mapGetters("Modules/BufferAnalysis", Object.keys(getters)),
+        ...mapGetters("Modules/BufferAnalysis", ["bufferRadius", "selectOptions"]),
         selectedSourceLayer: {
             /**
              * getter for the computed property selectedSourceLayer
@@ -120,8 +118,8 @@ export default {
         this.resetModule();
     },
     methods: {
-        ...mapMutations("Modules/BufferAnalysis", Object.keys(mutations)),
-        ...mapActions("Modules/BufferAnalysis", ["initJSTSParser", "loadSelectOptions", "applyValuesFromSavedUrlBuffer", "resetModule", "applySelectedSourceLayer", "applyBufferRadius", "applySelectedTargetLayer", "buildUrlFromToolState"]),
+        ...mapMutations("Modules/BufferAnalysis", ["setSelectOptions", "setInputBufferRadius", "setTimerId", "setResultType", "setSelectedTargetLayer"]),
+        ...mapActions("Modules/BufferAnalysis", ["applyValuesFromSavedUrlBuffer", "applySelectedSourceLayer", "applyBufferRadius", "applySelectedTargetLayer", "buildUrlFromToolState", "initJSTSParser", "loadSelectOptions", "resetModule", "removeGeneratedLayers"]),
         ...mapActions("Map", ["toggleLayerVisibility"]),
 
         /**
