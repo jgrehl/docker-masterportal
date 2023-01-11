@@ -1,4 +1,5 @@
 import rawLayerList from "@masterportal/masterportalapi/src/rawLayerList";
+import layerCollection from "../../../core/layers/js/layerCollection";
 import createLayerAddToTreeModule from "../../../shared/js/utils/createLayerAddToTree";
 import {getCenter} from "ol/extent";
 
@@ -14,7 +15,7 @@ export default {
      */
     highlightFeature ({state, rootGetters, dispatch}, {feature, layerId}) {
         dispatch("Maps/removeHighlightFeature", "decrease", {root: true});
-        const layer = rootGetters["Maps/getVisibleOlLayerList"].find((l) => l.values_.id === layerId),
+        const layer = layerCollection.getOlLayers().find((l) => l.values_.id === layerId),
             featureGeometryType = feature.getGeometry().getType(),
             featureId = feature.getId(),
             styleObj = featureGeometryType.toLowerCase().indexOf("polygon") > -1 ? state.highlightVectorRulesPolygon : state.highlightVectorRulesPointLine,
