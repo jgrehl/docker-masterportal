@@ -7,7 +7,7 @@ import {RoutingDirectionsSegment} from "../../../../js/classes/routing-direction
 import {RoutingDirectionsStep} from "../../../../js/classes/routing-directions-step";
 import {fetchRoutingOrsDirections} from "../../../../js/directions/routing-ors-directions";
 
-describe("src/modules/routing/js/directions/routing-ors-directions.js", () => {
+describe("src_3_0_0/modules/routing/js/directions/routing-ors-directions.js", () => {
     beforeEach(() => {
         sinon.stub(i18next, "t").callsFake((...args) => args);
         store.getters = {

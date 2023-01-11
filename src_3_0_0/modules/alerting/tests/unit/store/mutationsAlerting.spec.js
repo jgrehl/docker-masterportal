@@ -1,7 +1,7 @@
 import mutations from "../../../store/mutationsAlerting";
 import {expect} from "chai";
 
-describe("src/modules/alerting/store/mutationsAlerting.js", () => {
+describe("src_3_0_0/modules/alerting/store/mutationsAlerting.js", () => {
 
     it("addToAlerts", async function () {
         const state = {

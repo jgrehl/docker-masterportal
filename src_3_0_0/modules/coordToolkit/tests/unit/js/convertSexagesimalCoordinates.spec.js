@@ -1,7 +1,7 @@
 import {expect} from "chai";
 import {convertSexagesimalFromString, convertSexagesimalToDecimal, convertSexagesimalFromDecimal} from "../../../js/convertSexagesimalCoordinates.js";
 
-describe("src/utils/convertSexagesimalCoordinates.js", () => {
+describe("src_3_0_0/modules/coordToolkit/js/convertSexagesimalCoordinates.js", () => {
     describe("convertSexagesimalFromString", () => {
         it("should return the given coord splitted", () => {
             expect(convertSexagesimalFromString("0° 00′ 00″ N 0° 00′ 00″ E")).to.deep.equal({easting: "0° 00′ 00″", northing: "0° 00′ 00″"});
