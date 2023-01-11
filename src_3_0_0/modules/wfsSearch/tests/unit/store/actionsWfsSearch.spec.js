@@ -3,7 +3,7 @@ import {expect} from "chai";
 import actions from "../../../store/actionsWfsSearch";
 import isObject from "../../../../../shared/js/utils/isObject";
 
-describe("src/modules/tools/wfsSearch/store/actionsWfsSearch.js", () => {
+describe("src_3_0_0/modules/wfsSearch/store/actionsWfsSearch.js", () => {
     let commit, dispatch;
 
     beforeEach(() => {
