@@ -3,7 +3,8 @@ import {config, shallowMount} from "@vue/test-utils";
 import BufferAnalysisComponent from "../../../components/BufferAnalysis.vue";
 import {expect} from "chai";
 import sinon from "sinon";
-import {createLayersArray} from "../utils/functions";
+import {createLayerConfigsArray} from "../utils/functions";
+import {nextTick} from "vue";
 
 config.global.mocks.$t = key => key;
 
@@ -47,10 +48,6 @@ describe("src_3_0_0/modules/bufferAnalysis/components/BufferAnalysis.vue", () =>
         loadSelectOptionsSpy = sinon.spy();
         initJSTSParserSpy = sinon.spy();
         applySelectedSourceLayerSpy = sinon.spy();
-        // BufferAnalysis.actions.checkIntersection = sinon.spy();
-        // BufferAnalysis.actions.showBuffer = sinon.spy();
-        // BufferAnalysis.actions.applyValuesFromSavedUrlBuffer = sinon.spy();
-        // BufferAnalysis.actions.loadSelectOptions = sinon.spy();
 
         store = createStore({
             namespaces: true,
@@ -104,14 +101,6 @@ describe("src_3_0_0/modules/bufferAnalysis/components/BufferAnalysis.vue", () =>
 
         mapCollection.clear();
         mapCollection.addMap(map, "2D");
-        // BufferAnalysis.actions.checkIntersection = originalCheckIntersection;
-        // BufferAnalysis.actions.showBuffer = originalShowBuffer;
-        // BufferAnalysis.actions.applyValuesFromSavedUrlBuffer = originalApplyValuesFromSavedUrlBuffer;
-        // BufferAnalysis.actions.loadSelectOptions = originalLoadSelectOptions;
-        // store.commit("Modules/BufferAnalysis/setActive", false);
-        // store.commit("Modules/BufferAnalysis/setSelectOptions", []);
-        // store.commit("Modules/BufferAnalysis/setBufferRadius", 0);
-        // store.dispatch("Modules/BufferAnalysis/resetModule");
         sinon.restore();
     });
 
@@ -142,7 +131,7 @@ describe("src_3_0_0/modules/bufferAnalysis/components/BufferAnalysis.vue", () =>
             global: {
                 plugins: [store]
             }});
-        const layers = createLayersArray(3);
+        const layers = createLayerConfigsArray(3);
         let options = [];
 
         await store.commit("Modules/BufferAnalysis/setSelectOptions", layers);
@@ -159,7 +148,7 @@ describe("src_3_0_0/modules/bufferAnalysis/components/BufferAnalysis.vue", () =>
             }});
         const selectSource = wrapper.find("#tool-bufferAnalysis-selectSourceInput"),
             range = wrapper.find("#tool-bufferAnalysis-radiusTextInput"),
-            layers = createLayersArray(3);
+            layers = createLayerConfigsArray(3);
 
 
         let sourceOptions = [];
@@ -174,11 +163,9 @@ describe("src_3_0_0/modules/bufferAnalysis/components/BufferAnalysis.vue", () =>
         await range.setValue(1000);
         expect(range.element.value).to.equal("1000");
 
-        // await wrapper.vm.$nextTick();
-        // clock.tick(1000);
-        // console.log("###");
-        // expect(applyBufferRadiusSpy.calledOnce).to.equal(true);
-        // clock.restore();
+        nextTick(() => {
+            expect(applyBufferRadiusSpy.calledOnce).to.equal(true);
+        });
     });
 
     it("sets focus to first input control", async () => {

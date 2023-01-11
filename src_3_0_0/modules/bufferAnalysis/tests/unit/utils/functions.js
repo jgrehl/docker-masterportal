@@ -1,6 +1,3 @@
-import sinon from "sinon";
-import {Vector as VectorLayer} from "ol/layer";
-
 /**
  * Creates an array with a given number of Layer Objects
  *
@@ -8,7 +5,7 @@ import {Vector as VectorLayer} from "ol/layer";
  *
  * @return {Array} the array of layer objects
  */
-function createLayersArray (count) {
+function createLayerConfigsArray (count) {
     const layers = [];
 
 
@@ -26,5 +23,5 @@ function createLayersArray (count) {
 }
 
 export {
-    createLayersArray
+    createLayerConfigsArray
 };
