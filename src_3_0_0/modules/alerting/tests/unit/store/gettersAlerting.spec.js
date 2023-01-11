@@ -1,7 +1,7 @@
 import getters from "../../../store/gettersAlerting";
 import {expect} from "chai";
 
-describe("src/modules/alerting/store/gettersAlerting.js", () => {
+describe("src_3_0_0/modules/alerting/store/gettersAlerting.js", () => {
 
     it("fetchBroadcastUrl", async function () {
         const state = {

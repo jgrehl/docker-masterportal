@@ -19,7 +19,7 @@ import stateIsochrones from "../../../../store/isochrones/stateIsochrones";
 config.silent = true;
 config.global.mocks.$t = key => key;
 
-describe("src/modules/routing/components/Isochrones/IsochronesItem.vue", () => {
+describe("src_3_0_0/modules/routing/components/Isochrones/IsochronesItem.vue", () => {
 
     let store,
         wrapper;

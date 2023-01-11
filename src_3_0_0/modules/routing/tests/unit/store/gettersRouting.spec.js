@@ -1,7 +1,7 @@
 import {expect} from "chai";
 import gettersRouting from "../../../store/gettersRouting";
 
-describe("src/modules/routing/store/gettersRouting.js", () => {
+describe("src_3_0_0/modules/routing/store/gettersRouting.js", () => {
 
     describe("filteredRoutingToolOptions", () => {
         it("should return all routingToolOptions", () => {
