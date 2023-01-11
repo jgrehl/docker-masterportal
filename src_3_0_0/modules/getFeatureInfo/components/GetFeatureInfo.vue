@@ -32,6 +32,7 @@ export default {
             "active",
             "currentFeature",
             "highlightVectorRules",
+            "menuSide",
             "name",
             "showMarker"
         ]),
@@ -79,7 +80,7 @@ export default {
                 this.reset();
             }
             else {
-                this.setCurrentComponent({type: "GetFeatureInfo", side: "secondaryMenu", props: {name: this.name}});
+                this.setCurrentComponent({type: "getFeatureInfo", side: this.menuSide, props: {name: this.name}});
             }
         },
         /**
