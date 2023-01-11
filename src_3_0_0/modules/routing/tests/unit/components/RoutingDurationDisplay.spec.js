@@ -12,7 +12,7 @@ import stateDirections from "../../../store/directions/stateDirections";
 
 config.global.mocks.$t = key => key;
 
-describe("src/modules/routing/components/RoutingDurationDisplay.vue", () => {
+describe("src_3_0_0/modules/routing/components/RoutingDurationDisplay.vue", () => {
     let store,
         wrapper,
         props;

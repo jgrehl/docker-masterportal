@@ -5,7 +5,7 @@ import {expect} from "chai";
 
 import {calculateLineLengths, calculatePolygonAreas} from "../../../js/measureCalculation";
 
-describe("tools/measure/js/measureCalculation", function () {
+describe("src_3_0_0/modules/measure/js/measureCalculation", function () {
     describe("calculateLineLengths", function () {
         it("should format measured linestring(s) in m/km/nm correctly", function () {
             const feature = new Feature({
