@@ -8,7 +8,6 @@ const {
     type,
     name,
     icon,
-    isVisibleInMenu,
     deactivateGFI} = getters;
 
 describe("src/modules/selectFeatures/store/gettersSelectFeatures", function () {
