@@ -19,7 +19,6 @@ const actions = {
      * @return {void}
      */
     checkIntersection ({dispatch, getters: {selectedTargetLayer, bufferLayer}}) {
-        // TODO
         dispatch("Maps/areLayerFeaturesLoaded", selectedTargetLayer.id, {root: true}).then(() => {
             const bufferFeatures = bufferLayer.getSource().getFeatures();
 
@@ -36,7 +35,7 @@ const actions = {
      */
     showBuffer ({dispatch, commit, getters: {selectedSourceLayer, jstsParser, bufferRadius, bufferStyle}}) {
         const layer = layerCollection.getLayerById(selectedSourceLayer.id),
-            features = layer.layerSource.getFeatures(),
+            features = layer?.layerSource.getFeatures() || [],
             vectorSource = new VectorSource(),
             bufferLayer = new VectorLayer({
                 id: "buffer_layer",
@@ -71,7 +70,7 @@ const actions = {
         commit("setResultLayer", {});
         if (bufferLayer?.ol_uid) {
             mapCollection.getMap(rootState.Maps.mode).getLayers().forEach(layer => {
-                if (layer.ol_uid === bufferLayer.ol_uid) {
+                if (layer?.ol_uid === bufferLayer.ol_uid) {
                     mapCollection.getMap(rootState.Maps.mode).removeLayer(layer);
                 }
             });
@@ -112,7 +111,7 @@ const actions = {
      */
     checkIntersectionWithBuffers ({commit, dispatch, getters: {selectedTargetLayer, jstsParser, resultType}}, bufferFeatures) {
         const targetFeatures = selectedTargetLayer.layerSource.getFeatures();
-debugger;
+
         targetFeatures.forEach(targetFeature => {
             const targetGeometry = targetFeature.getGeometry(),
                 foundIntersection = bufferFeatures.some(bufferFeature => {
