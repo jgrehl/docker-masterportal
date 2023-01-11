@@ -64,7 +64,11 @@ function getLayerById (id) {
 function getOlLayers () {
     const olLayers = [];
 
-    layerCollection.forEach(layer => olLayers.push(layer.getLayer()));
+    layerCollection.forEach(layer => {
+        if (layer.getLayer().get("visible")) {
+            olLayers.push(layer.getLayer());
+        }
+    });
 
     return olLayers;
 }
