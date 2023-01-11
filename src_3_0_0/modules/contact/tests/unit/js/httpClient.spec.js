@@ -3,7 +3,7 @@ import axios from "axios";
 
 import httpClientModule from "../../../js/httpClient";
 
-describe("tools/contact/utils/httpClient", function () {
+describe("src_3_0_0/modules/contact/js/httpClient", function () {
     describe("httpClient", function () {
         beforeEach(() => {
             sinon.stub(console, "error");
