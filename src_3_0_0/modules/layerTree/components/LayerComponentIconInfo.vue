@@ -15,11 +15,6 @@ export default {
             required: true
         }
     },
-    data () {
-        return {
-            classInfo: ["btn-light, layer-component-icon-info-button"]
-        };
-    },
     computed: {
         ...mapGetters("Modules/LayerInformation", ["icon"])
     },
@@ -35,7 +30,7 @@ export default {
     >
         <IconButton
             :id="'layer-component-icon-info-button-' + layerConf.id"
-            :class-array="classInfo"
+            :class-array="['btn-light']"
             :aria="$t('common:tree.infosAndLegend')"
             :icon="icon"
             :interaction="() => startLayerInformation(layerConf)"
@@ -44,22 +39,3 @@ export default {
     </div>
 </template>
 
-<style lang="scss" scoped>
-    @import "~variables";
-    @import "~mixins";
-
-    .layer-component-icon-info {
-        .layer-component-icon-info-button {
-            width: 2rem;
-            height: 2rem;
-            font-size: 1.2rem;
-
-            &:hover {
-                @include primary_action_hover;
-            }
-            &:focus {
-                @include primary_action_focus;
-            }
-        }
-    }
-</style>
