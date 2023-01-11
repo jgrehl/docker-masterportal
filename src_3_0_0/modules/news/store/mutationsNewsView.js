@@ -10,6 +10,12 @@ const mutations = {
      */
     ...generateSimpleMutations(stateNewsView),
 
+    /**
+     * Adds the news to the list of news.
+     * @param {Object} state current state
+     * @param {array} news a news-item
+     * @returns {void}
+     */
     addNews (state, news) {
         state.news.push(news);
     }
