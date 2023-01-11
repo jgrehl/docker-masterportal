@@ -16,26 +16,38 @@ describe("src_3_0_0/core/js/layers/layerCollection.js", () => {
 
         layer1 = {
             attributes: {
-                id: "firstLayer"
+                id: "firstLayer",
+                visible: true,
+                get: (key) => {
+                    return key;
+                }
             },
             getLayer: () => {
-                return {"attributes": layer1.attributes};
+                return layer1.attributes;
             }
         };
         layer2 = {
             attributes: {
-                id: "secondLayer"
+                id: "secondLayer",
+                visible: true,
+                get: (key) => {
+                    return key;
+                }
             },
             getLayer: () => {
-                return {"attributes": layer2.attributes};
+                return layer2.attributes;
             }
         };
         layer3 = {
             attributes: {
-                id: "thirdLayer"
+                id: "thirdLayer",
+                visible: true,
+                get: (key) => {
+                    return key;
+                }
             },
             getLayer: () => {
-                return {"attributes": layer3.attributes};
+                return layer3.attributes;
             }
         };
     });
@@ -85,7 +97,7 @@ describe("src_3_0_0/core/js/layers/layerCollection.js", () => {
             layerCollection.addLayer(layer3);
 
             expect(layerCollection.getOlLayers().length).to.equals(3);
-            expect(layerCollection.getOlLayers()).to.deep.equal([{"attributes": layer1.attributes}, {"attributes": layer2.attributes}, {"attributes": layer3.attributes}]);
+            expect(layerCollection.getOlLayers()).to.deep.equal([layer1.attributes, layer2.attributes, layer3.attributes]);
         });
     });
 });
