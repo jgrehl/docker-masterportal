@@ -37,7 +37,6 @@ const actions = {
         rootState.Modules[upperFirst(module.type)] = {
             ...rootState.Modules[upperFirst(module.type)],
             ...{
-                alwaysActivated: true,
                 isVisibleInMenu: false,
                 menuSide: menuSide
             },
