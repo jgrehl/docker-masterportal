@@ -20,13 +20,6 @@ describe.skip("src_3_0_0/modules/menu/MenuContainerBody.vue", () => {
                 Menu: {
                     namespaced: true,
                     getters: {
-                        componentsAlwaysActivated: () => [{
-                            menuSide: "secondaryMenu",
-                            module: {
-                                name: "GetFeatureInfo",
-                                template: "<span />"
-                            }
-                        }],
                         componentFromPath: () => () => ({}),
                         deactivateModule: () => () => false,
                         objectFromPath: () => () => sampleConfigObject,
