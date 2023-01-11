@@ -143,6 +143,9 @@
             "currentLayoutName": "A4 Hochformat"
           },
           {
+            "type": "news"
+          },
+          {
             "type": "contact",
             "serviceId": "80001",
             "includeSystemInfo": true,
