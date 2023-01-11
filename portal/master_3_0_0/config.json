@@ -129,9 +129,6 @@
             "type": "fileImport"
           },
           {
-            "type": "language"
-          },
-          {
             "type": "openConfig"
           },
           {
@@ -141,26 +138,6 @@
             "filename": "Ausdruck",
             "title": "Mein Titel",
             "currentLayoutName": "A4 Hochformat"
-          },
-          {
-            "type": "news"
-          },
-          {
-            "type": "contact",
-            "serviceId": "80001",
-            "includeSystemInfo": true,
-            "from": [
-              {
-                "email": "lgvgeoportal-hilfe@gv.hamburg.de",
-                "name": "LGVGeoportalHilfe"
-              }
-            ],
-            "to": [
-              {
-                "email": "lgvgeoportal-hilfe@gv.hamburg.de",
-                "name": "LGVGeoportalHilfe"
-              }
-            ]
           },
           {
             "type": "wfsSearch",
@@ -210,6 +187,29 @@
                 ]
               }
             ]
+          },
+          {
+            "type": "contact",
+            "serviceId": "80001",
+            "includeSystemInfo": true,
+            "from": [
+              {
+                "email": "lgvgeoportal-hilfe@gv.hamburg.de",
+                "name": "LGVGeoportalHilfe"
+              }
+            ],
+            "to": [
+              {
+                "email": "lgvgeoportal-hilfe@gv.hamburg.de",
+                "name": "LGVGeoportalHilfe"
+              }
+            ]
+          },
+          {
+            "type": "news"
+          },
+          {
+            "type": "language"
           },
           {
             "name": "folder1",
