@@ -83,20 +83,9 @@ export default {
         max-height: 350px;
     }
 
-    @include media-breakpoint-up(sm)  {
-        .layer-tree{
-            max-width: 400px;
-        }
-    }
     .sticky{
         position : sticky;
         bottom:0;
     }
 
-
-    @include media-breakpoint-up(sm)  {
-        .layer-tree{
-            max-width: 400px;
-        }
-    }
 </style>
