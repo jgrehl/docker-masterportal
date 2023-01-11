@@ -8,8 +8,6 @@ const {
     type,
     name,
     icon,
-    renderToWindow,
-    resizableWindow,
     isVisibleInMenu,
     deactivateGFI} = getters;
 
