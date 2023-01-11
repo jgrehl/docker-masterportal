@@ -205,9 +205,11 @@
         "vue/one-component-per-file": ["error"],
         "vue/prop-name-casing": ["error"],
         "vue/require-default-prop": ["error"],
+        "vue/require-explicit-emits": ["error"],
         "vue/require-prop-types": ["error"],
         "vue/singleline-html-element-content-newline": ["error"],
         "vue/v-bind-style": ["error"],
+        "vue/v-on-event-hyphenation": ["error"],
         "vue/v-on-style": ["error"],
         "vue/v-slot-style": ["error"],
         // vue plugin Recommended Rules
@@ -243,7 +245,7 @@
             }
         ],
         /*
-         * rule turned off since it's e.g. deprecated here:
+         * rule turned off since it`s e.g. deprecated here:
          * https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/issues/398
          * It does not work too well for the Masterportal where changes in
          * e.g. select elements are supposed to immediately trigger changes
