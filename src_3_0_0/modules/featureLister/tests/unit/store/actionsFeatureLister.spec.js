@@ -1,6 +1,7 @@
 import {expect} from "chai";
 import sinon from "sinon";
 import actions from "../../../store/actionsFeatureLister";
+import layerCollection from "../../../../../core/layers/js/layerCollection";
 import createLayerAddToTreeModule from "../../../../../shared/js/utils/createLayerAddToTree";
 
 describe("modules/featureLister/store/actionsFeatureLister", () => {
@@ -19,8 +20,22 @@ describe("modules/featureLister/store/actionsFeatureLister", () => {
         "</div>";
 
     beforeEach(() => {
+        const state = {
+            geometry: {getType: () => {
+                "Point";
+            }},
+            source: {getFeatures: () => [{name: "feature", id: "1", getId: () => "1", getGeometry: () => state.geometry}]}
+        };
+
         commit = sinon.spy();
         dispatch = sinon.spy();
+        sinon.stub(layerCollection, "getOlLayers").returns(
+            [
+                {name: "ersterLayer", values_: {id: "123"}, getSource: () => state.source, features: [{getAttributesToShow: () => "TestAttributes"}], geometryType: "Point"},
+                {name: "zweiterLayer", values_: {id: "456"}, features: [{getAttributesToShow: () => "TestAttributes"}], geometryType: "Point"},
+                {name: "dritterLayer", values_: {id: "789"}, features: [{getAttributesToShow: () => "TestAttributes"}], geometryType: "Point"}
+            ]
+        );
     });
     afterEach(sinon.restore);
 
@@ -132,22 +147,10 @@ describe("modules/featureLister/store/actionsFeatureLister", () => {
             }
         };
 
-        rootGetters = {"Maps/getVisibleOlLayerList": [
-            {name: "ersterLayer", values_: {id: "123"}, getSource: () => state.source, features: [{getAttributesToShow: () => "TestAttributes"}], geometryType: "Point"},
-            {name: "zweiterLayer", values_: {id: "456"}, features: [{getAttributesToShow: () => "TestAttributes"}], geometryType: "Point"},
-            {name: "dritterLayer", values_: {id: "789"}, features: [{getAttributesToShow: () => "TestAttributes"}], geometryType: "Point"}]
-        };
-
         it("highlights a feature depending on its geometryType", () => {
             const featureId = "123";
 
-            rootGetters = {"Maps/getVisibleOlLayerList": [
-                {name: "ersterLayer", values_: {id: "123"}, getSource: () => state.source, features: [{getAttributesToShow: () => "TestAttributes"}], geometryType: "Point"},
-                {name: "zweiterLayer", values_: {id: "456"}, features: [{getAttributesToShow: () => "TestAttributes"}], geometryType: "Point"},
-                {name: "dritterLayer", values_: {id: "789"}, features: [{getAttributesToShow: () => "TestAttributes"}], geometryType: "Point"}]
-            };
-
-            actions.highlightFeature({state, rootGetters, dispatch}, featureId);
+            actions.highlightFeature({state, dispatch}, featureId);
             expect(dispatch.firstCall.args[0]).to.equal("Maps/removeHighlightFeature");
             expect(dispatch.firstCall.args[1]).to.equal("decrease");
             expect(dispatch.secondCall.args[0]).to.equal("Maps/highlightFeature");
@@ -155,14 +158,8 @@ describe("modules/featureLister/store/actionsFeatureLister", () => {
         it("highlights a nested feature depending on its geometryType", () => {
             const featureId = "123";
 
-            rootGetters = {"Maps/getVisibleOlLayerList": [
-                {name: "ersterLayer", values_: {id: "123"}, getSource: () => state.source, features: [{getAttributesToShow: () => "TestAttributes"}], geometryType: "Point"},
-                {name: "zweiterLayer", values_: {id: "456"}, features: [{getAttributesToShow: () => "TestAttributes"}], geometryType: "Point"},
-                {name: "dritterLayer", values_: {id: "789"}, features: [{getAttributesToShow: () => "TestAttributes"}], geometryType: "Point"}]
-            };
-
             state.nestedFeatures = true;
-            actions.highlightFeature({state, rootGetters, dispatch}, featureId);
+            actions.highlightFeature({state, dispatch}, featureId);
             expect(dispatch.firstCall.args[0]).to.equal("Maps/removeHighlightFeature");
             expect(dispatch.firstCall.args[1]).to.equal("decrease");
             expect(dispatch.secondCall.args[0]).to.equal("Maps/highlightFeature");
