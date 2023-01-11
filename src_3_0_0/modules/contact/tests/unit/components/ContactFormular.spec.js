@@ -24,7 +24,7 @@ function fillFields ({nameInput, mailInput, phoneInput, messageInput}) {
     messageInput.trigger("keyup");
 }
 
-describe("src/modules/contact/components/ContactFormular.vue", () => {
+describe("src_3_0_0/modules/contact/components/ContactFormular.vue", () => {
     let store, wrapper;
 
     beforeEach(() => {

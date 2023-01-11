@@ -7,7 +7,7 @@ import {expect} from "chai";
 
 import style from "../../../js/measureStyle";
 
-describe("tools/measure/js/measureStyle", function () {
+describe("src_3_0_0/modules/measure/js/measureStyle", function () {
     it("get correct coordinates for polygon", function () {
         const source = new VectorSource(),
             layer = new VectorLayer({

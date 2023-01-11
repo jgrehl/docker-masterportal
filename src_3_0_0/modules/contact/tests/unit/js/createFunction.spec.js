@@ -2,7 +2,7 @@ import {expect} from "chai";
 
 import {createMessage, createSubject, createTicketId} from "../../../js/createFunctions";
 
-describe("contact/utils/createFunctions", function () {
+describe("src_3_0_0/modules/contact/js/createFunctions", function () {
     describe("createTicketId", function () {
         it("generates an id with expected format", function () {
             expect(createTicketId()).to.match(/^\d{4}-\d{4,5}-\d{4,5}$/);
