@@ -71,15 +71,7 @@ const getters = {
      * @param {*} getter the getter
      * @returns {String} the projection code
      */
-    projectionCode: state => state.projection?.getCode(),
-
-    /**
-     * Gets all visible ol layers from map
-     * @returns {Object[]} all visible ol layers
-     */
-    getVisibleOlLayerList: () => {
-        return mapCollection.getMap("2D").getLayers().getArray().filter(layer => layer.getVisible());
-    }
+    projectionCode: state => state.projection?.getCode()
 };
 
 export default getters;
