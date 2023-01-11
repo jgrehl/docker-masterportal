@@ -324,7 +324,7 @@ export default {
             display:inline-block;
             height:100%;
             vertical-align:middle;
-            margin-right:-0.25em;
+            margin-right:-0.25rem;
         }
     }
     .vh-center-inner-wrapper {
