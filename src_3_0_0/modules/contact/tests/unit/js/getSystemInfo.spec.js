@@ -2,7 +2,7 @@ import {expect} from "chai";
 
 import getSystemInfo from "../../../js/getSystemInfo";
 
-describe("tools/contact/utils/getSystemInfo", function () {
+describe("src_3_0_0/modules/contact/js/getSystemInfo", function () {
     it("returns values from global variables", function () {
         const systemInfo = getSystemInfo();
 

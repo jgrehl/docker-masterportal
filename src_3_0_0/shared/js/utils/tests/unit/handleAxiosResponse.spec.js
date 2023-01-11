@@ -3,7 +3,7 @@ import sinon from "sinon";
 
 import handleAxiosResponse from "../../handleAxiosResponse";
 
-describe("src/utils/handleAxiosResponse.js", () => {
+describe("src_3_0_0/shared/js/utils/handleAxiosResponse.js", () => {
     const callContext = "Unit Tests",
         ccString = `${callContext}, handleAxiosResponse:`,
         invalidResponse = `${ccString} The received response is not valid.`,

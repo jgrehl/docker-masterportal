@@ -12,7 +12,7 @@ import Isochrones from "../../../store/isochrones/indexIsochrones";
 
 config.global.mocks.$t = key => key;
 
-describe("src/modules/routing/components/RoutingTemplate.vue", () => {
+describe("src_3_0_0/modules/routing/components/RoutingTemplate.vue", () => {
     let store,
         wrapper;
 
