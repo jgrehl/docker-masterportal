@@ -56,10 +56,23 @@ function getLayerById (id) {
     return layerCollection.find(layer => layer.attributes.id === id);
 }
 
+/**
+ * Returns an layer by id of the layer collection.
+ * @param {String} id The layer id.
+ * @returns {Layer} The layer.
+ */
+function getOlLayers () {
+    const olLayers = [];
+
+    layerCollection.forEach(layer => olLayers.push(layer.getLayer()));
+
+    return olLayers;
+}
 
 module.exports = {
     addLayer,
     clear,
     getLayers,
-    getLayerById
+    getLayerById,
+    getOlLayers
 };
