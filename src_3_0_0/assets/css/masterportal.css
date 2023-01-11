@@ -181,7 +181,7 @@ label {
         left:50%;
         margin-left:-85px;
         border-radius: 14px;
-    }    
+    }
 }
 @media (min-width: 1024px) {
     #loader-spinner-itself.default {
@@ -191,7 +191,7 @@ label {
         bottom: 0;
         right: 0;
         border-radius: 14px 0 0 0;
-    }    
+    }
 }
 #loader-spinner-itself.default {
     animation: loaderSpinAnimation 1s 0.1s ease-in-out infinite both;
@@ -246,11 +246,11 @@ label {
     opacity:0;
 }
 #portal-logo-main-title {
-    margin:10px 0 8px 0;    
+    margin:10px 0 8px 0;
 }
 #portal-logo-sub-title {
     font-size:0.75em;
-    margin:8px 0 0 0;    
+    margin:8px 0 0 0;
 }
 /* End "Loader Overlay" */
 
