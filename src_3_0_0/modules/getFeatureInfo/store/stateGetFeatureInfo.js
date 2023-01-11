@@ -17,7 +17,6 @@
  */
 const state = {
     active: false,
-    alwaysActivated: true,
     hasMouseMapInteractions: true,
     icon: "bi-info-circle-fill",
     isVisibleInMenu: false,
