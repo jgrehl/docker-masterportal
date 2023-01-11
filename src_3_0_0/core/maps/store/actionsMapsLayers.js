@@ -1,5 +1,7 @@
 import VectorLayer from "ol/layer/Vector.js";
 import VectorSource from "ol/source/Vector.js";
+import {Vector} from "ol/layer.js";
+import Cluster from "ol/source/Cluster";
 
 /**
  * Interactions with the layers of the map.
@@ -25,31 +27,38 @@ export default {
     /**
      * Verifies if all features of a given layerId are loaded
      * and waits if the layer has not been loaded previously
-     *
+     * @param {Object} _ - context object.
      * @param {String} layerId - the layer ID to check loaded status
      *
      * @return {Promise} Resolves if the given Layer is fully loaded
      */
-    async areLayerFeaturesLoaded (layerId) {
-        const map2D = mapCollection.getMap("2D");
-
-        await new Promise(resolve => {
-            map2D.getLayers().getArray().forEach(layer => {
-                if (layer.id === layerId) {
-                    resolve();
+    async areLayerFeaturesLoaded (_, layerId) {
+        const map2D = mapCollection.getMap("2D"),
+            layer = map2D.getLayers().getArray().find(singleLayer => {
+                if (singleLayer.get("id") === layerId) {
+                    return true;
                 }
+                return false;
             });
 
-            // To Do: was muss hier her??
-            // const channel = Radio.channel("VectorLayer");
+        await new Promise(resolve => {
+            if (layer instanceof Vector) {
+                let layerSource = layer.getSource();
 
-            // channel.on({"featuresLoaded": id => {
-            //     commit("addLoadedLayerId", id);
-            //     if (id === layerId) {
-            //         resolve();
-            //     }
-            // }});
+                if (layer.getSource() instanceof Cluster) {
+                    layerSource = layerSource.getSource();
+                }
+                if (layerSource.getFeatures().length > 0) {
+                    resolve();
+                }
+                else {
+                    layerSource.once("featuresloadend", () => {
+                        resolve();
+                    });
+                }
+            }
         });
+
     },
 
     /**
