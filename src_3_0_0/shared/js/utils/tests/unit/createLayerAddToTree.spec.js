@@ -10,7 +10,8 @@ describe("src/utils/createLayerAddToTree.js", () => {
         originalLayer,
         newLayer,
         layerSource,
-        createdLayer;
+        createdLayer,
+        highlightLayerFeatures;
     const treeHighlightedFeatures = {
         active: true,
         layerName: "common:tree.selectedFeatures"
@@ -27,13 +28,15 @@ describe("src/utils/createLayerAddToTree.js", () => {
         });
 
         beforeEach(() => {
+            highlightLayerFeatures = [];
             layerInCollection = false;
             setIsSelectedSpy = sinon.spy();
             layerSource = {
                 getFeatures: () => {
-                    return [];
+                    return highlightLayerFeatures;
                 },
-                addFeatures: sinon.spy()
+                addFeatures: sinon.spy(),
+                removeFeature: sinon.spy()
             };
             createdLayer = {
                 get: (key) => {
@@ -116,20 +119,24 @@ describe("src/utils/createLayerAddToTree.js", () => {
             expect(store.dispatch.args[0][1].layerConfig).to.equal(null);
         });
 
-        it("test create new layer and addFeatures", async () => {
+        it("test create new layer remove features and addFeatures", async () => {
             const layerId = "idOriginal",
-                features = [{featureId: "featureId"}];
+                features = [{featureId: "featureIdNew"}];
 
+            highlightLayerFeatures = [{featureId: "featureId"}];
             await createLayerAddToTreeModule.createLayerAddToTree(layerId, features, treeHighlightedFeatures);
 
             expect(store.dispatch.args[0][0]).to.equal("addLayerToLayerConfig");
             expect(store.dispatch.args[0][1].layerConfig.id).to.equal("idOriginal_originalName");
             expect(store.dispatch.args[0][1].layerConfig.visibility).to.equal(true);
+            expect(store.dispatch.args[0][1].layerConfig.typ).to.equal("VectorBase");
+            expect(layerSource.removeFeature.calledOnce).to.be.true;
+            expect(layerSource.removeFeature.args[0][0]).to.be.deep.equals(highlightLayerFeatures[0]);
             expect(layerSource.addFeatures.calledOnce).to.be.true;
-
+            expect(layerSource.addFeatures.args[0][0]).to.be.deep.equals(features);
         });
 
-        it("test use existing layer om layerCollection and addFeatures", async () => {
+        it("test use existing layer of layerCollection and addFeatures", async () => {
             const layerId = "idOriginal",
                 features = [{featureId: "featureId"}];
 
@@ -138,6 +145,7 @@ describe("src/utils/createLayerAddToTree.js", () => {
             await createLayerAddToTreeModule.createLayerAddToTree(layerId, features, treeHighlightedFeatures);
 
             expect(layerSource.addFeatures.calledOnce).to.be.true;
+            expect(layerSource.addFeatures.args[0][0]).to.be.deep.equals(features);
         });
     });
 });
