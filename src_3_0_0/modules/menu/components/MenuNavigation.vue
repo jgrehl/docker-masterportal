@@ -12,10 +12,10 @@ export default {
         }
     },
     computed: {
-        ...mapGetters("Menu", ["previuosNavigationEntryText", "currentComponentName"]),
+        ...mapGetters("Menu", ["previousNavigationEntryText", "currentComponentName"]),
 
-        previuosNavigation () {
-            return this.previuosNavigationEntryText(this.side);
+        previousNavigation () {
+            return this.previousNavigationEntryText(this.side);
         },
 
         currentTitle () {
@@ -30,17 +30,17 @@ export default {
 
 <template>
     <a
-        v-if="previuosNavigation"
+        v-if="previousNavigation"
         :id="'mp-navigation-' + side"
         class="p-2 mp-menu-navigation"
         href="#"
         @click="navigateBack(side)"
         @keypress="navigateBack(side)"
     >
-        <h6 class="mp-menu-navigation-link mb-3"><p class="bi-chevron-left" />{{ previuosNavigation }}</h6>
+        <h6 class="mp-menu-navigation-link mb-3"><p class="bi-chevron-left" />{{ previousNavigation }}</h6>
     </a>
     <h5
-        v-if="previuosNavigation"
+        v-if="previousNavigation"
         class="mp-menu-navigation-moduletitle mb-4"
     >
         {{ currentTitle }}
