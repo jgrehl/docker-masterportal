@@ -1,3 +1,4 @@
+import {nextTick} from "vue";
 /**
  * Selects given layer by object or ID
  * Also unselects all previous selected layers and
@@ -24,7 +25,7 @@ function applySelectedSourceLayer ({getters, commit, dispatch}, selectedSourceLa
     if (selectedLayer) {
         getters.selectOptions.forEach(layerOption => {
             if (selectedLayer.id === layerOption.id) {
-                commit("replaceByIdInLayerConfig", {
+                dispatch("replaceByIdInLayerConfig", {
                     layerConfigs: [{
                         id: layerOption.id,
                         layer: {
@@ -35,7 +36,7 @@ function applySelectedSourceLayer ({getters, commit, dispatch}, selectedSourceLa
                 }, {root: true});
             }
             else {
-                commit("replaceByIdInLayerConfig", {
+                dispatch("replaceByIdInLayerConfig", {
                     layerConfigs: [{
                         id: layerOption.id,
                         layer: {
@@ -51,19 +52,19 @@ function applySelectedSourceLayer ({getters, commit, dispatch}, selectedSourceLa
     else if (selectedLayer !== null) {
         throw new Error(i18next.t("common:modules.tools.bufferAnalysis.sourceLayerNotFound", {layerId: selectedSourceLayer}));
     }
+    nextTick(() => {
+        commit("setSelectedSourceLayer", selectedLayer);
+        // remove previously generated layers and show buffer
+        if (getters.bufferRadius && selectedLayer) {
+            dispatch("Maps/areLayerFeaturesLoaded", selectedLayer.id, {root: true}).then(() => {
+                dispatch("removeGeneratedLayers");
+                dispatch("showBuffer");
+            });
+        }
+    });
 
-    commit("setSelectedSourceLayer", selectedLayer);
-    // remove previously generated layers and show buffer
-    if (getters.bufferRadius && selectedLayer) {
-        dispatch("removeGeneratedLayers");
-        dispatch("showBuffer");
-        // ToDo !!
-        // dispatch("Maps/areLayerFeaturesLoaded", selectedLayer.id, {root: true}).then(() => {
-        //     dispatch("removeGeneratedLayers");
-        //     dispatch("showBuffer");
-        // });
-    }
 }
+
 /**
  * Selects given layer by object or ID
  * triggers also the intersection check action
@@ -82,7 +83,7 @@ function applySelectedTargetLayer ({commit, getters, dispatch}, selectedTargetLa
     commit("setSelectedTargetLayer", selectedLayer);
     // select the new target layer and check for intersections
     if (selectedLayer) {
-        commit("replaceByIdInLayerConfig", {
+        dispatch("replaceByIdInLayerConfig", {
             layerConfigs: [{
                 id: selectedLayer.id,
                 layer: {
