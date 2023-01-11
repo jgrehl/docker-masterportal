@@ -115,6 +115,8 @@ export default {
             if (Array.isArray(data.globalAlerts)) {
                 collectedAlertIds = [...collectedAlertIds, ...data.globalAlerts];
             }
+            // todo weg!
+            this.currentUrl = "https://geofos/fhh-atlas/";
 
             if (data.restrictedAlerts !== undefined && typeof data.restrictedAlerts === "object") {
                 Object.keys(data.restrictedAlerts).forEach(restrictedAlertUrl => {

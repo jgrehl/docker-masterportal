@@ -83,7 +83,8 @@
             "routing": "Routing",
             "layerClusterToggler": "Layer-Gruppe öffnen",
             "openConfig": "Karte öffnen",
-            "language": "Sprache ändern"
+            "language": "Sprache ändern",
+            "news": "Neuigkeiten"
         },
         "contact": "Kontakt",
         "info": "Informationen"
@@ -880,6 +881,9 @@
                 "shareLink": "Link kopieren",
                 "downloadQR": "QRCode herunterladen",
                 "myMap": "Hier ist mein Kartenausschnitt: "
+            },
+            "news": {
+                "headline": "Neuigkeiten"
             },
             "bufferAnalysis": {
                 "sourceSelectLabel": "Quell-Layer",
