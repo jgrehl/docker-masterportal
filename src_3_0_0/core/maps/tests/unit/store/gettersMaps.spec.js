@@ -54,7 +54,8 @@ describe("src_3_0_0/core/maps/store/gettersMap.js", () => {
     describe("getLayerByName", () => {
         it("returns layer by name", () => {
             expect(gettersMap.getLayerByName()("layer2")).to.deep.equal(layer2);
-
+            expect(gettersMap.getLayerByName()("nameUnknown")).to.equal(undefined);
+            expect(gettersMap.getLayerByName()("undefined")).to.equal(undefined);
         });
     });
 
