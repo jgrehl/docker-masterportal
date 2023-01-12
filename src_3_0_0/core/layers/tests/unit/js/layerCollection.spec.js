@@ -30,7 +30,7 @@ describe("src_3_0_0/core/js/layers/layerCollection.js", () => {
             attributes: {
                 id: "secondLayer",
                 visible: false,
-                get: (key) => {
+                get: function (key) {
                     return this[key];
                 }
             },
