@@ -103,7 +103,7 @@ export function getGfiFeature (layerAttributes, properties) {
 /**
  * getter for layer model by tileFeature
  * @param {Object} tileFeature the feature as Cesium3DTileFeature, Cesium3DTilePointFeature, Cesium.Entity or olFeature (may be clustered)
- * @param {Function} [getModelByAttributesOpt=null] a function(filter) to get the model with (replaces Radio-Event; for testing only)
+ * @param {Function} [getModelByAttributesOpt=null] a function(filter) to get the model with
  * @param {Function} [isCesium3dTileFeatureOpt=null] a function(feature) to check if something is of instance Cesium.Cesium3DTileFeature or Cesium.Cesium3DTilePointFeature (for testing only)
  * @param {Function} [isCesiumEntityOpt=null] a function(entity) to check if something is of instance Cesium.Entity (for testing only)
  * @returns {(Object[]|undefined)}  a model that matches the attributes gotten by tileFeature or undefined
