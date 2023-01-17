@@ -5,7 +5,7 @@ import TileWMS from "ol/source/TileWMS";
 import store from "../../../../../app-store";
 import Layer2d from "../../../js/layer2d";
 
-describe.only("src_3_0_0/core/js/layers/layer2d.js", () => {
+describe("src_3_0_0/core/js/layers/layer2d.js", () => {
     let warn,
         origDispatch;
 
