@@ -171,6 +171,6 @@ Layer2d.prototype.errorHandling = function (errorCode, layerName) {
         store.dispatch("Alerting/addSingleAlert", {content: alertingContent, multipleAlert: true});
     }
     store.watch((state, getters) => getters["Alerting/showTheModal"], showTheModal => {
-        this.setIsSelected(showTheModal);
+        this.getLayer()?.setVisible(showTheModal);
     });
 };
