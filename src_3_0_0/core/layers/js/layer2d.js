@@ -1,5 +1,7 @@
 import Cluster from "ol/source/Cluster";
+import axios from "axios";
 
+import store from "../../../app-store";
 import Layer from "./layer";
 
 /**
@@ -21,6 +23,7 @@ export default function Layer2d (attributes) {
 
     this.setLayerSource(this.getLayer()?.getSource());
     this.controlAutoRefresh(attributes);
+    this.addErrorListener();
 }
 
 Layer2d.prototype = Object.create(Layer.prototype);
@@ -109,4 +112,65 @@ Layer2d.prototype.setIntervalAutoRefresh = function (value) {
  */
 Layer2d.prototype.setLayerSource = function (value) {
     this.layerSource = value;
+};
+
+/**
+ * Adds listener on 'featuresloaderror', 'tileloaderror' and 'imageloaderror' at layer source.
+ * @returns {void}
+ */
+Layer2d.prototype.addErrorListener = function () {
+    this.getLayerSource()?.on("featuresloaderror", async function () {
+        const url = this.attributes.url
+        + "&service="
+        + this.attributes.typ
+        + "&version="
+        + this.attributes.version
+        + "&request=describeFeatureType";
+
+        await this.errorHandling(await axios.get(url, {withCredentials: true})
+            .catch(function (error) {
+                return error.toJSON().status;
+            }), this.get("name"));
+    }.bind(this));
+    this.getLayerSource()?.on("tileloaderror", async function (evt) {
+        await this.errorHandling(await axios.get(evt.tile.src_, {withCredentials: true})
+            .catch(function (error) {
+                return error.toJSON().status;
+            }), this.get("name"));
+    }.bind(this));
+    this.getLayerSource()?.on("imageloaderror", async function (evt) {
+        await this.errorHandling(await axios.get(evt.image.src_, {withCredentials: true})
+            .catch(function (error) {
+                return error.toJSON().status;
+            }), this.get("name"));
+    }.bind(this));
+};
+
+/**
+ * Error handling for secure services when error 403 is thrown .
+ * @param {Number} errorCode Error Number of the request
+ * @param {String} layerName Name of the layer
+ * @returns {void}
+ */
+Layer2d.prototype.errorHandling = function (errorCode, layerName) {
+    let linkMetadata = "",
+        alertingContent = "";
+
+    if (this.get("datasets") && this.get("datasets")[0]) {
+        linkMetadata = i18next.t("common:modules:core:modelList:layer.errorHandling:LinkMetadata",
+            {linkMetadata: this.get("datasets")[0].show_doc_url + this.get("datasets")[0].md_id
+            });
+    }
+    if (errorCode === 403) {
+        alertingContent = i18next.t("common:modules.core.modelList.layer.errorHandling.403",
+            {
+                layerName: layerName
+            })
+            + linkMetadata;
+
+        store.dispatch("Alerting/addSingleAlert", {content: alertingContent, multipleAlert: true});
+    }
+    store.watch((state, getters) => getters["Alerting/showTheModal"], showTheModal => {
+        this.setIsSelected(showTheModal);
+    });
 };
