@@ -98,6 +98,9 @@ describe("src/modules/alerting/components/AlertingItem.vue", function () {
                 configJs (state, value) {
                     state.configJs = value;
                 }
+            },
+            getters: {
+                allLayerConfigs: () => []
             }
         });
         sinon.stub(axios, "get").resolves({status: 200, statusText: "OK", data: alertingData});
