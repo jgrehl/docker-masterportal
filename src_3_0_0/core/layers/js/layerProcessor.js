@@ -48,7 +48,7 @@ function watchLayerConfig () {
  * @returns {void}
  */
 export function processLayerConfig (layerConfig, mapMode) {
-    layerConfig.forEach(layerConf => {
+    layerConfig?.forEach(layerConf => {
         let layer = layerCollection.getLayerById(layerConf.id);
 
         if (layer !== undefined) {
