@@ -68,10 +68,6 @@ describe("src_3_0_0/modules/newsView/components/NewsView.vue", () => {
         sinon.restore();
     });
 
-    // after(() => {
-    //     NewsView.state = defaultState;
-    // });
-
     it("renders the NewsView component", () => {
         wrapper = shallowMount(NewsViewComponent, {
             global: {
