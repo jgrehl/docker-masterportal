@@ -3,7 +3,6 @@
  * @typedef {Object} NewsViewState
  * @property {Boolean} active If true, NewsViewState will rendered.
  * @property {String} description The descritption that should be shown in the button in the right menu.
- * @property {String} id The id of the NewsViewState component.
  * @property {String} icon The icon next to title (config-param).
  * @property {String} name The name displayed as title (config-param).
  * @property {Boolean} showDescription If true, description will be shown.
