@@ -45,13 +45,13 @@ let sbconfig,
  */
 async function loadApp () {
     /* eslint-disable no-undef */
-    const legacyAddons = Object.is(ADDONS, {}) ? {} : ADDONS,
+    const // legacyAddons = Object.is(ADDONS, {}) ? {} : ADDONS,
         utilConfig = {},
-        style = uiStyle.getUiStyle(),
-        vueI18Next = initiateVueI18Next(),
+        style = uiStyle.getUiStyle();
+        // vueI18Next = initiateVueI18Next(),
         // instantiate Vue with Vuetify Plugin if the "vuetify" flag is set in the config.js
         // returns undefined if not
-        vuetify = await instantiateVuetify();
+        // vuetify = await instantiateVuetify();
 
     /* eslint-disable no-undef */
     let app = {},
