@@ -139,6 +139,10 @@
             "title": "Mein Titel",
             "currentLayoutName": "A4 Hochformat"
           },
+          { "type": "selectFeatures",
+            "name": "common:menu.tools.selectFeatures",
+            "icon": "bi-hand-index-thumb-fill"
+          },
           {
             "type": "wfsSearch",
             "zoomLevel": 7,
