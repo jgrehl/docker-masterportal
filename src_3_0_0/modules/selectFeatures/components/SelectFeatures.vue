@@ -21,7 +21,6 @@ export default {
     watch: {
         active (newValue) {
             if (newValue) {
-                console.log("newValue", newValue)
                 this.createInteractions();
                 this.addInteractions();
             }
