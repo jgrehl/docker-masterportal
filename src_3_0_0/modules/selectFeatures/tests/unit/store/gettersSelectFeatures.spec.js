@@ -7,8 +7,7 @@ const {
     active,
     type,
     name,
-    icon,
-    deactivateGFI} = getters;
+    icon} = getters;
 
 describe("src/modules/selectFeatures/store/gettersSelectFeatures", function () {
     it("returns the active from state", function () {
@@ -25,9 +24,5 @@ describe("src/modules/selectFeatures/store/gettersSelectFeatures", function () {
         it("returns the icon default value from state", function () {
             expect(icon(stateSelectFeatures)).to.equals("bi-card-list");
         });
-        it("returns the deactivateGFI default value from state", function () {
-            expect(deactivateGFI(stateSelectFeatures)).to.be.true;
-        });
-
     });
 });
