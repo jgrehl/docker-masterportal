@@ -15,6 +15,7 @@ export default {
     name: "SelectFeatures",
     computed: {
         ...mapGetters(["ignoredKeys", "mobile"]),
+        ...mapGetters("Maps", ["mode"]),
         ...mapGetters("Modules/SelectFeatures", Object.keys(getters))
     },
     watch: {
@@ -267,23 +268,6 @@ export default {
         },
 
         /**
-         * Closes this tool window by setting active to false
-         * @returns {void}
-         */
-        close () {
-            this.setActive(false);
-
-            // TODO replace trigger when Menu is migrated
-            // set the backbone model to active false for changing css class in menu (menu/desktop/tool/view.toggleIsActiveClass)
-            // else the menu-entry for this tool is always highlighted
-            const model = Radio.request("ModelList", "getModelByAttributes", {id: this.$store.state.Tools.SelectFeatures.id});
-
-            if (model) {
-                model.set("isActive", false);
-            }
-        },
-
-        /**
          * Feature listing offer clickable elements to zoom to a feature.
          * @param {Object} event click event
          * @returns {void}
@@ -292,7 +276,7 @@ export default {
             const featureIndex = event.currentTarget.id.split("-")[0],
                 selected = this.selectedFeaturesWithRenderInformation[featureIndex];
 
-            mapCollection.getMap(this.$store.state.Maps.mode).getView().fit(selected.item.getGeometry());
+            mapCollection.getMap(this.mode).getView().fit(selected.item.getGeometry());
             this.highlightFeature({feature: selected.item, layerId: selected.layerId});
         },
 
