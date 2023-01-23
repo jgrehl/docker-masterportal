@@ -4,7 +4,6 @@
  * @property {Boolean} active if true, VueAddon will rendered
  * @property {String} name displayed as title (config-param)
  * @property {String} icon icon next to title (config-param)
- * @property {Boolean} deactivateGFI flag if tool should deactivate gfi (config-param)
  * @property {module:ol/Collection} selectedFeatures the selected Features Collection
  * @property {Array} selectedFeaturesWithRenderInformation the selected Features with RenderInformation Array
  * @property {module:ol/interaction/Select} selectInteraction the ol Select interaction
@@ -15,10 +14,8 @@
 const state = {
     active: false,
     type: "selectFeatures",
-    // defaults for config.json parameters
     name: "common:menu.tools.selectFeatures",
     icon: "bi-card-list",
-    deactivateGFI: true,
     selectedFeatures: undefined,
     selectedFeaturesWithRenderInformation: [],
     selectInteraction: undefined,
