@@ -34,12 +34,7 @@ export default {
      */
     async areLayerFeaturesLoaded (_, layerId) {
         const map2D = mapCollection.getMap("2D"),
-            layer = map2D.getLayers().getArray().find(singleLayer => {
-                if (singleLayer.get("id") === layerId) {
-                    return true;
-                }
-                return false;
-            });
+            layer = map2D.getLayers().getArray().find(singleLayer => singleLayer.get("id") === layerId);
 
         await new Promise(resolve => {
             if (layer instanceof Vector) {
