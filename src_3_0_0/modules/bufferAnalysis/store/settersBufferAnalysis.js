@@ -30,7 +30,8 @@ function applySelectedSourceLayer ({getters, commit, dispatch}, selectedSourceLa
                         id: layerOption.id,
                         layer: {
                             id: layerOption.id,
-                            visibility: true
+                            visibility: true,
+                            opacity: 1
                         }
                     }]
                 }, {root: true});
@@ -52,17 +53,14 @@ function applySelectedSourceLayer ({getters, commit, dispatch}, selectedSourceLa
     else if (selectedLayer !== null) {
         throw new Error(i18next.t("common:modules.tools.bufferAnalysis.sourceLayerNotFound", {layerId: selectedSourceLayer}));
     }
-    nextTick(() => {
-        commit("setSelectedSourceLayer", selectedLayer);
-        // remove previously generated layers and show buffer
-        if (getters.bufferRadius && selectedLayer) {
-            dispatch("Maps/areLayerFeaturesLoaded", selectedLayer.id, {root: true}).then(() => {
-                dispatch("removeGeneratedLayers");
-                dispatch("showBuffer");
-            });
-        }
-    });
-
+    commit("setSelectedSourceLayer", selectedLayer);
+    // remove previously generated layers and show buffer
+    if (getters.bufferRadius && selectedLayer) {
+        dispatch("Maps/areLayerFeaturesLoaded", selectedLayer.id, {root: true}).then(() => {
+            dispatch("removeGeneratedLayers");
+            dispatch("showBuffer");
+        });
+    }
 }
 
 /**
