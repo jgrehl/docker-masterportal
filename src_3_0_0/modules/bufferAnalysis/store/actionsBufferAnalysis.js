@@ -110,8 +110,9 @@ const actions = {
      * @return {void}
      */
     checkIntersectionWithBuffers ({commit, dispatch, getters: {selectedTargetLayer, jstsParser, resultType}}, bufferFeatures) {
+        debugger;
         const layer = layerCollection.getLayerById(selectedTargetLayer.id),
-            targetFeatures = layer?.layerSource.getFeatures() || [];
+            targetFeatures = layer?.getLayerSource().getFeatures() || [];
 
         targetFeatures.forEach(targetFeature => {
             const targetGeometry = targetFeature.getGeometry(),
