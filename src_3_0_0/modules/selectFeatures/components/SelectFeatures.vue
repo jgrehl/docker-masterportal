@@ -30,6 +30,9 @@ export default {
 
         }
     },
+    unmounted () {
+        this.clearFeatures();
+    },
     methods: {
         ...mapMutations("Modules/SelectFeatures", Object.keys(mutations)),
         ...mapActions("Maps", {
