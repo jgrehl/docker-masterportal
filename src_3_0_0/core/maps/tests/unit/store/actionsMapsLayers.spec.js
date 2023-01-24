@@ -102,4 +102,29 @@ describe("src_3_0_0/core/maps/store/actionsMapsLayers.js", () => {
         });
 
     });
+    describe("areLayerFeaturesLoaded", () => {
+        let state, commit, isResolved;
+
+        beforeEach(()=> {
+            state = {loadedLayers: []};
+            commit = sinon.spy();
+            isResolved = false;
+        });
+
+        afterEach(()=> {
+            sinon.restore();
+        });
+
+        it("Resolves immediately if layer is already fully loaded", () => {
+            addLayer({}, layer1);
+
+            actions.areLayerFeaturesLoaded({commit, state}, layer1.get("id"))
+                .then(()=> {
+                    isResolved = true;
+                })
+                .then(()=>{
+                    expect(isResolved).to.be.true;
+                });
+        });
+    });
 });

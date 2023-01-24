@@ -30,7 +30,7 @@ function initJSTSParser ({getters}) {
  *
  * @return {void}
  */
-function loadSelectOptions ({commit, rootGetters}) {
+function loadSelectOptions ({commit, rootGetters, getters}) {
     const allWFSLayerConfigs = [],
         layerConfigs = rootGetters.allSubjectDataLayerConfigs;
 
@@ -42,8 +42,9 @@ function loadSelectOptions ({commit, rootGetters}) {
 
 
     allWFSLayerConfigs.forEach(layer => {
-        // freeze layer, else the map3d is observed by vue and performance suffers
-        commit("addSelectOption", layer);
+        if (!getters.selectOptions.includes(layer)) {
+            commit("addSelectOption", layer);
+        }
     });
 }
 
