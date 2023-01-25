@@ -11,7 +11,7 @@ export default {
     components: {FlatButton},
     data: () => ({resultTypeEnum: ResultType}),
     computed: {
-        ...mapGetters("Modules/BufferAnalysis", ["bufferRadius", "selectOptions"]),
+        ...mapGetters("Modules/BufferAnalysis", ["bufferRadius", "selectOptions", "savedUrl"]),
         selectedSourceLayer: {
             /**
              * getter for the computed property selectedSourceLayer
