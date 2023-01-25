@@ -45,6 +45,17 @@ export default {
     },
 
     /**
+     * Switches back to root of side's navigation.
+     * @param {Object} state Local vuex state.
+     * @param {String} side Side on which the last entry should be removed.
+     * @returns {void}
+     */
+    switchToRoot (state, side) {
+        state[side].navigation.currentComponent = state[side].navigation.history[0];
+        state[side].navigation.history = [];
+    },
+
+    /**
      * Toggles Menucontainers
      * @param {Object} currentState current state
      * @param {String} side secondary or main Menu
