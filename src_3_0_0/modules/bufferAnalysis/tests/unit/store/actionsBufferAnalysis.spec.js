@@ -71,7 +71,10 @@ describe("src_3_0_0/modules/bufferAnalysis/store/actionsBufferAnalysis.js", () =
     describe("loadSelectOptions", () => {
         it("loads a number of layers as select options and commits them", done => {
             const source = {getFeatures: ()=>[]},
-                layers = createLayerConfigsArray(3);
+                layers = createLayerConfigsArray(3),
+                getters = {
+                    "selectOptions": []
+                };
 
             layers.forEach((layer, index) => {
                 layers[index].get = key => key === "layerSource" ? source : null;
@@ -86,7 +89,7 @@ describe("src_3_0_0/modules/bufferAnalysis/store/actionsBufferAnalysis.js", () =
                 {type: "addSelectOption", payload: layers[0], commit: true},
                 {type: "addSelectOption", payload: layers[1], commit: true},
                 {type: "addSelectOption", payload: layers[2], commit: true}
-            ], {}, done, rootGetters);
+            ], getters, done, rootGetters);
         });
     });
     describe("applySelectedSourceLayer", () => {
@@ -98,6 +101,7 @@ describe("src_3_0_0/modules/bufferAnalysis/store/actionsBufferAnalysis.js", () =
                         id: layers[0].id,
                         layer: {
                             id: layers[0].id,
+                            opacity: 1,
                             visibility: true
                         }
                     }]
