@@ -29,7 +29,7 @@ const actions = {
         dispatch("replaceByIdInLayerConfig", {layerConfigs: layerConfigs}, {root: true});
         dispatch("updateAllZIndexes", null, {root: true});
         commit("clearSelectedLayer");
-        dispatch("Menu/navigateBack", getters.menuSide, {root: true});
+        commit("Menu/switchToRoot", getters.menuSide, {root: true});
     }
 };
 
