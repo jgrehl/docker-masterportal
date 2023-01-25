@@ -11,7 +11,8 @@ describe("src/utils/createLayerAddToTree.js", () => {
         newLayer,
         layerSource,
         createdLayer,
-        highlightLayerFeatures;
+        highlightLayerFeatures,
+        rootGetters;
     const treeHighlightedFeatures = {
         active: true,
         layerName: "common:tree.selectedFeatures"
@@ -96,6 +97,14 @@ describe("src/utils/createLayerAddToTree.js", () => {
             });
 
             store.dispatch = sinon.spy();
+
+            rootGetters = {
+                "treeHighlightedFeatures": {active: true},
+                "treeType": "custom",
+                "determineZIndex": function () {
+                    return 10;
+                }
+            };
         });
 
         afterEach(() => {
@@ -106,7 +115,7 @@ describe("src/utils/createLayerAddToTree.js", () => {
             const layerId = null,
                 features = [{featureId: "featureId"}];
 
-            await createLayerAddToTreeModule.createLayerAddToTree(layerId, features, treeHighlightedFeatures);
+            await createLayerAddToTreeModule.createLayerAddToTree(rootGetters, layerId, features, treeHighlightedFeatures);
         });
 
         it("test create new layer - layer does not exist", () => {
@@ -124,7 +133,7 @@ describe("src/utils/createLayerAddToTree.js", () => {
                 features = [{featureId: "featureIdNew"}];
 
             highlightLayerFeatures = [{featureId: "featureId"}];
-            await createLayerAddToTreeModule.createLayerAddToTree(layerId, features, treeHighlightedFeatures);
+            await createLayerAddToTreeModule.createLayerAddToTree(rootGetters, layerId, features, treeHighlightedFeatures);
 
             expect(store.dispatch.args[0][0]).to.equal("addLayerToLayerConfig");
             expect(store.dispatch.args[0][1].layerConfig.id).to.equal("idOriginal_originalName");
@@ -142,8 +151,9 @@ describe("src/utils/createLayerAddToTree.js", () => {
 
             layerInCollection = true;
 
-            await createLayerAddToTreeModule.createLayerAddToTree(layerId, features, treeHighlightedFeatures);
-
+            await createLayerAddToTreeModule.createLayerAddToTree(rootGetters, layerId, features, treeHighlightedFeatures);
+            expect(store.dispatch.args[0][0]).to.equal("replaceByIdInLayerConfig");
+            expect(store.dispatch.args[1][0]).to.equal("updateAllZIndexes");
             expect(layerSource.addFeatures.calledOnce).to.be.true;
             expect(layerSource.addFeatures.args[0][0]).to.be.deep.equals(features);
         });
