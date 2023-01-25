@@ -4,13 +4,13 @@ import layerCollection from "../../../core/layers/js/layerCollection";
 
 /**
  * Creates a layer containing the given features and shows it in menu tree.
- *
+ * @param {Object} rootGetters rootGetters
  * @param {String} layerId contains the id of the layer, the features are got from
  * @param {Array} features contains the features to add to new layer
  * @param {Object} thfConfig content of config.json's property 'treeHighlightedFeatures'
  * @returns {void}
  */
-async function createLayerAddToTree (layerId, features, thfConfig = {}) {
+async function createLayerAddToTree (rootGetters, layerId, features, thfConfig = {}) {
     if (layerId) {
         const layerNameKey = thfConfig.layerName ? thfConfig.layerName : "common:tree.selectedFeatures",
             originalLayer = getLayer(layerId);
@@ -26,11 +26,23 @@ async function createLayerAddToTree (layerId, features, thfConfig = {}) {
             if (!highlightLayer) {
                 highlightLayer = await addLayerModel(attributes, id);
             }
+            else {
+                store.dispatch("replaceByIdInLayerConfig", {
+                    layerConfigs: [{
+                        id: id,
+                        layer: {
+                            visibility: attributes.visibility,
+                            showInLayerTree: attributes.showInLayerTree,
+                            zIndex: rootGetters.determineZIndex(id)
+                        }
+                    }]}, {root: true});
+                store.dispatch("updateAllZIndexes", null, {root: true});
+            }
+
             setStyle(highlightLayer, attributes.styleId);
             layerSource = highlightLayer.getLayerSource();
             layerSource.getFeatures().forEach(feature => layerSource.removeFeature(feature));
             layerSource.addFeatures(features);
-            // highlightLayer.setIsSelected(true);
         }
         else {
             console.warn("Layer with id ", layerId, " not found, layer with features was not created!");
@@ -68,7 +80,7 @@ async function addLayerModel (attributes, id) {
 /**
  * Copies the attributesof the given layer and adapts them.
  * @param {Object} layer to copy attributes of
- *  @param {String} id of the layer
+ * @param {String} id of the layer
  * @param {String} layerName name of the layer
  * @returns {Object} the adapted attributes
  */
@@ -80,6 +92,7 @@ function setAttributes (layer, id, layerName) {
     attributes.typ = "VectorBase";
     attributes.alwaysOnTop = true;
     attributes.name = layerName;
+    attributes.showInLayerTree = true;
     return attributes;
 }
 
