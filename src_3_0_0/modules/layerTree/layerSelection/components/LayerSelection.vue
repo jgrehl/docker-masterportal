@@ -2,7 +2,6 @@
 import {mapGetters, mapActions, mapMutations} from "vuex";
 import sortBy from "../../../../shared/js/utils/sortBy";
 import FlatButton from "../../../../shared/modules/buttons/components/FlatButton.vue";
-import {treeBackgroundsKey} from "../../../../shared/js/utils/constants";
 import LayerCheckBox from "../../components/LayerCheckBox.vue";
 import LayerSelectionTreeNode from "./LayerSelectionTreeNode.vue";
 
@@ -14,22 +13,13 @@ export default {
         LayerCheckBox,
         LayerSelectionTreeNode
     },
-    data: () => {
-        return {
-            showBGLayers: true
-        };
-    },
     computed: {
-        ...mapGetters(["allLayerConfigsStructured"]),
-        ...mapGetters("Modules/LayerSelection", ["active", "subjectDataLayerConfs", "layersToAdd", "type", "menuSide"]),
-        allBackgroundLayers () {
-            return this.allLayerConfigsStructured(treeBackgroundsKey);
-        }
+        ...mapGetters("Modules/LayerSelection", ["active", "subjectDataLayerConfs", "backgroundLayerConfs", "layersToAdd", "type", "menuSide"])
 
     },
     methods: {
         ...mapActions("Modules/LayerSelection", ["updateLayerTree"]),
-        ...mapMutations("Modules/LayerSelection", ["setSubjectDataLayerConfs"]),
+        ...mapMutations("Modules/LayerSelection", ["setBackgroundLayerConfs", "setSubjectDataLayerConfs"]),
         ...mapMutations("Menu", ["setCurrentComponent"]),
         /**
          * Sorts the configs by type: first folder, then layer.
@@ -40,15 +30,22 @@ export default {
             return sortBy(configs, (conf) => conf.type !== "folder");
         },
         /**
-         * Sets new subject data configs and sets showBGLayers to false.
+         * Sets new subject data configs and sets showBGLayers to false after folder was clicked.
          * @param {String} lastConfName name to show in menu to navigate back to
          * @param {Array} newConf configs to show
          * @returns {void}
          */
-        setConf (lastConfName, newConf) {
-            this.showBGLayers = false;
-            this.setCurrentComponent({type: this.type, side: this.menuSide, props: {name: lastConfName}});
-            this.setSubjectDataLayerConfs(this.sort(newConf));
+        folderClicked (lastConfName, newConf) {
+            const sortedConf = this.sort(newConf),
+                commit = {
+                    "Modules/LayerSelection/setBackgroundLayerConfs": [],
+                    "Modules/LayerSelection/setSubjectDataLayerConfs": sortedConf,
+                    "Modules/LayerSelection/setActive": true
+                };
+
+            this.setCurrentComponent({type: this.type, side: this.menuSide, props: {name: lastConfName, navigateBackCommits: commit}});
+            this.setBackgroundLayerConfs([]);
+            this.setSubjectDataLayerConfs(sortedConf);
         }
     }
 };
@@ -62,22 +59,20 @@ export default {
         aria-label=""
     >
         <h2>{{ $t("common:tree.addSubject") }}</h2>
-        <h6 v-if="showBGLayers">
+        <h6 v-if="backgroundLayerConfs.length > 0">
             {{ $t("common:tree.backgrounds") }}
         </h6>
         <div class="row align-items-center justify-content-center">
-            <template v-if="showBGLayers">
-                <template
-                    v-for="(bgConf, index) in allBackgroundLayers"
-                    :key="index"
-                >
-                    <div class="col">
-                        <LayerCheckBox
-                            :conf="bgConf"
-                            :is-layer-tree="false"
-                        />
-                    </div>
-                </template>
+            <template
+                v-for="(bgConf, index) in backgroundLayerConfs"
+                :key="index"
+            >
+                <div class="col">
+                    <LayerCheckBox
+                        :conf="bgConf"
+                        :is-layer-tree="false"
+                    />
+                </div>
             </template>
             <hr class="m-2">
             <template
@@ -86,7 +81,7 @@ export default {
             >
                 <LayerSelectionTreeNode
                     :conf="conf"
-                    @show-node="setConf"
+                    @show-node="folderClicked"
                 />
             </template>
         </div>

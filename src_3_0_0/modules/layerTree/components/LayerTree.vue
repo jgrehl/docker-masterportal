@@ -1,7 +1,7 @@
 <script>
 import {mapMutations, mapGetters} from "vuex";
 import LayerTreeNode from "./LayerTreeNode.vue";
-import {treeSubjectsKey} from "../../../shared/js/utils/constants";
+import {treeBackgroundsKey, treeSubjectsKey} from "../../../shared/js/utils/constants";
 import sortBy from "../../../shared/js/utils/sortBy";
 import ElevatedButton from "../../../shared/modules/buttons/components/ElevatedButton.vue";
 
@@ -27,7 +27,7 @@ export default {
     },
     methods: {
         ...mapMutations("Menu", ["setCurrentComponent"]),
-        ...mapMutations("Modules/LayerSelection", {setLayerSelectionActive: "setActive", setSubjectDataLayerConfs: "setSubjectDataLayerConfs"}),
+        ...mapMutations("Modules/LayerSelection", {setLayerSelectionActive: "setActive", setSubjectDataLayerConfs: "setSubjectDataLayerConfs", setBackgroundLayerConfs: "setBackgroundLayerConfs"}),
         /**
          * Sorts the configs by type: first folder, then layer.
          * @param {Array} configs list of layer and folder configs
@@ -41,10 +41,17 @@ export default {
          * @returns {void}
          */
         showLayerSelection () {
-            const confs = this.sort(this.allLayerConfigsStructured(treeSubjectsKey));
+            const subjectDataConfs = this.sort(this.allLayerConfigsStructured(treeSubjectsKey)),
+                bgConfs = this.allLayerConfigsStructured(treeBackgroundsKey),
+                commit = {
+                    "Modules/LayerSelection/setActive": true,
+                    "Modules/LayerSelection/setBackgroundLayerConfs": bgConfs,
+                    "Modules/LayerSelection/setSubjectDataLayerConfs": subjectDataConfs
+                };
 
-            this.setCurrentComponent({type: this.layerSelectionType, side: this.menuSide, props: {name: this.layerSelectionName}});
-            this.setSubjectDataLayerConfs(confs);
+            this.setCurrentComponent({type: this.layerSelectionType, side: this.menuSide, props: {name: this.layerSelectionName, navigateBackCommits: commit}});
+            this.setBackgroundLayerConfs(bgConfs);
+            this.setSubjectDataLayerConfs(subjectDataConfs);
             this.setLayerSelectionActive(true);
         }
     }
