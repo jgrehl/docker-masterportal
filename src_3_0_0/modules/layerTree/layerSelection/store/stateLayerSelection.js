@@ -12,5 +12,6 @@ export default {
     name: "common:tree.addSubject",
 
     subjectDataLayerConfs: [],
+    backgroundLayerConfs: [],
     layersToAdd: []
 };
