@@ -114,7 +114,7 @@ export default {
      * @param {String} side Side on which the navigation action occurred.
      * @returns {void}
      */
-    navigateBack ({commit, dispatch, getters}, side) {
+    navigateBack ({commit, state, dispatch, getters}, side) {
         const current = getters[side].navigation.currentComponent.type;
 
         if (current !== "folder") {
@@ -122,6 +122,16 @@ export default {
         }
         nextTick(() => {
             commit("switchToPreviousComponent", side);
+
+            nextTick(() => {
+                const props = state[side].navigation.currentComponent.props;
+
+                if (typeof props?.navigateBackCommits === "object") {
+                    Object.entries(props.navigateBackCommits).forEach(([key, value]) => {
+                        commit(key, value, {root: true});
+                    });
+                }
+            });
         });
     }
 };
