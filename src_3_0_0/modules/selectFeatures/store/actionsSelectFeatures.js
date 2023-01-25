@@ -57,7 +57,7 @@ export default {
             dispatch("Maps/setZoom", styleObj.zoomLevel, {root: true});
         }
         if (rootGetters.treeHighlightedFeatures?.active) {
-            createLayerAddToTreeModule.createLayerAddToTree(layerId, [feature], rootGetters.treeType, rootGetters.treeHighlightedFeatures);
+            createLayerAddToTreeModule.createLayerAddToTree(rootGetters, layerId, [feature], rootGetters.treeType, rootGetters.treeHighlightedFeatures);
         }
     }
 };
