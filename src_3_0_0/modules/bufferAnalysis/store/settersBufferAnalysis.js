@@ -1,4 +1,3 @@
-import {nextTick} from "vue";
 /**
  * Selects given layer by object or ID
  * Also unselects all previous selected layers and
