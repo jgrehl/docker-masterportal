@@ -35,7 +35,7 @@ const actions = {
      */
     showBuffer ({dispatch, commit, getters: {selectedSourceLayer, jstsParser, bufferRadius, bufferStyle}}) {
         const layer = layerCollection.getLayerById(selectedSourceLayer.id),
-            features = layer?.layerSource.getFeatures() || [],
+            features = layer?.getLayerSource().getFeatures() || [],
             vectorSource = new VectorSource(),
             bufferLayer = new VectorLayer({
                 id: "buffer_layer",
@@ -242,11 +242,11 @@ const actions = {
         bufferLayer.setOpacity(0.5);
     },
     /**
-     * Verifies if all features of a given layerId are loaded
+     * generates URL from state
      *
      * @return {void}
      */
-    buildUrlFromToolState ({commit, getters: {selectedSourceLayer, bufferRadius, resultType, selectedTargetLayer, id}}) {
+    buildUrlFromToolState ({commit, getters: {selectedSourceLayer, bufferRadius, resultType, selectedTargetLayer, type}}) {
         const toolState = {
             applySelectedSourceLayer: selectedSourceLayer.id,
             applyBufferRadius: bufferRadius,
@@ -257,7 +257,7 @@ const actions = {
         commit("setSavedUrl", location.origin +
             location.pathname +
             "?isinitopen=" +
-            id +
+            type +
             "&initvalues=" +
             JSON.stringify(toolState));
     },
