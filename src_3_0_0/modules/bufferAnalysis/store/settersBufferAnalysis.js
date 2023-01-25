@@ -49,6 +49,7 @@ function applySelectedSourceLayer ({getters, commit, dispatch}, selectedSourceLa
         });
     }
     // throw error if no selected layer is provided and it is not a valid null value
+    // Value selected layer will be set to null on reset, so this tests for an undefined layer
     else if (selectedLayer !== null) {
         throw new Error(i18next.t("common:modules.tools.bufferAnalysis.sourceLayerNotFound", {layerId: selectedSourceLayer}));
     }
@@ -92,6 +93,7 @@ function applySelectedTargetLayer ({commit, getters, dispatch}, selectedTargetLa
         dispatch("checkIntersection");
     }
     // throw error if no selected layer is provided and it is not a valid null value
+    // Value selected layer will be set to null on reset, so this tests for an undefined layer
     else if (selectedLayer !== null) {
         throw new Error(i18next.t("common:modules.tools.bufferAnalysis.targetLayerNotFound", {layerId: selectedTargetLayer}));
     }
