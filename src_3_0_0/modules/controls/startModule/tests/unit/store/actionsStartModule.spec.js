@@ -120,50 +120,34 @@ describe("src_3_0_0/modules/controls/startModule/store/actionsStartModule.js", (
         it("should reset meu and activate menu navigation, if module is active === false", () => {
             const moduleState = {
                     active: false,
-                    type: "selectFeatures"
+                    type: "selectFeatures",
+                    name: "common:xyz"
                 },
                 menuSide = "secondaryMenu";
 
-            onClick({commit, dispatch}, {moduleState, menuSide});
+            onClick({commit}, {moduleState, menuSide});
 
-            expect(dispatch.calledTwice).to.be.true;
-            expect(dispatch.firstCall.args[0]).to.equals("Menu/resetMenu");
-            expect(dispatch.firstCall.args[1]).to.deep.equals({
+            expect(commit.calledTwice).to.be.true;
+            expect(commit.firstCall.args[1]).to.deep.equals({
                 side: "secondaryMenu",
-                module: {
-                    type: "SelectFeatures"
+                type: "selectFeatures",
+                props: {
+                    name: "common:xyz"
                 }
             });
-            expect(dispatch.secondCall.args[0]).to.equals("Menu/activateMenuNavigation");
-            expect(dispatch.secondCall.args[1]).to.deep.equals({
-                side: "secondaryMenu",
-                module: {
-                    type: "SelectFeatures"
-                }
-            });
-
-            expect(commit.calledOnce).to.be.true;
-            expect(commit.firstCall.args[0]).to.equals("Modules/SelectFeatures/setActive");
-            expect(commit.firstCall.args[1]).to.be.true;
+            expect(commit.secondCall.args[0]).to.equals("Modules/SelectFeatures/setActive");
+            expect(commit.secondCall.args[1]).to.be.true;
         });
 
         it("should reset meu and don't activate menu navigation, if module is active === true", () => {
             const moduleState = {
                     active: true,
-                    type: "selectFeatures"
+                    type: "selectFeatures",
+                    name: "common:xyz"
                 },
                 menuSide = "secondaryMenu";
 
-            onClick({commit, dispatch}, {moduleState, menuSide});
-
-            expect(dispatch.calledOnce).to.be.true;
-            expect(dispatch.firstCall.args[0]).to.equals("Menu/resetMenu");
-            expect(dispatch.firstCall.args[1]).to.deep.equals({
-                side: "secondaryMenu",
-                module: {
-                    type: "SelectFeatures"
-                }
-            });
+            onClick({commit}, {moduleState, menuSide});
 
             expect(commit.calledOnce).to.be.true;
             expect(commit.firstCall.args[0]).to.equals("Modules/SelectFeatures/setActive");
