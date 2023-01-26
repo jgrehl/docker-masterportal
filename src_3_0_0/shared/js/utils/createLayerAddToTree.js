@@ -33,7 +33,7 @@ async function createLayerAddToTree (rootGetters, layerId, features, thfConfig =
                         layer: {
                             visibility: attributes.visibility,
                             showInLayerTree: attributes.showInLayerTree,
-                            zIndex: highlightLayer.attributes?.zIndex ? highlightLayer.attributes.zIndex : rootGetters.determineZIndex(id)
+                            zIndex: Infinity
                         }
                     }]}, {root: true});
                 store.dispatch("updateAllZIndexes", null, {root: true});
