@@ -10,7 +10,6 @@ describe.skip("src_3_0_0/modules/menu/menu-store/gettersMenu.js", () => {
         secondaryMenuSymbol = Symbol("secondaryMenu");
     let consoleErrorSpy,
         getters,
-        rootState,
         rootGetters,
         state;
 
@@ -24,14 +23,6 @@ describe.skip("src_3_0_0/modules/menu/menu-store/gettersMenu.js", () => {
         getters = {
             mainMenu: null,
             secondaryMenu: null
-        };
-        rootState = {
-            Modules: {
-                Measure: {
-                    deactivateGfi: true
-                },
-                ExampleModule: {}
-            }
         };
         rootGetters = {
             loadedConfigs: {
