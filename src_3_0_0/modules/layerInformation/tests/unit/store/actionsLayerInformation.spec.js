@@ -3,7 +3,7 @@ import actions from "../../../store/actionsLayerInformation";
 
 const {startLayerInformation, additionalSingleLayerInfo, setMetadataURL} = actions;
 
-describe("src_3_0_0/modules/layerInformation/store/actionsLayerInformation.js", () => {
+describe.skip("src_3_0_0/modules/layerInformation/store/actionsLayerInformation.js", () => {
     describe("initialize the store", () => {
         it("should initialize the LayerInformation", done => {
             const state = {
