@@ -324,4 +324,27 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
             expect(store.state.Modules.LayerPills.rightScrollDisabled).to.equal(true);
         });
     });
+
+    describe("tooltip of anchor", () => {
+        it("anchors should have the correct tooltip", () => {
+            wrapper = shallowMount(LayerPillsComponent, {
+                components: {
+                    IconButton: {
+                        name: "IconButton",
+                        template: "<button>Hier</button>"
+                    }
+                },
+                global: {
+                    plugins: [store]
+                }});
+
+            wrapper.findAll("li.nav-item a").forEach((element, index) => {
+                expect(element.attributes()).to.own.include({"data-bs-toggle": "tooltip"});
+                expect(element.attributes()).to.own.include({"data-bs-placement": "bottom"});
+                expect(element.attributes()).to.own.include({"data-bs-custom-class": "custom-tooltip"});
+                expect(element.attributes()).to.own.include({"data-bs-original-title": visibleLayers[index].name});
+                expect(element.attributes()).to.own.include({"title": visibleLayers[index].name});
+            });
+        });
+    });
 });

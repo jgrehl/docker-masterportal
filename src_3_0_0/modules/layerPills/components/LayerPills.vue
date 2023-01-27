@@ -134,6 +134,7 @@ export default {
                     data-bs-toggle="tooltip"
                     data-bs-placement="bottom"
                     data-bs-custom-class="custom-tooltip"
+                    :data-bs-original-title="layer.name"
                     :title="layer.name"
                 >
                     {{ layer.name }}
