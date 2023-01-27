@@ -9,6 +9,7 @@ export default {
     emits: ["hideFreezeWin"],
     mounted () {
         this.$nextTick(() => {
+            document.getElementById("masterportal-container").appendChild(this.$el);
             if (this.$refs.unfreeze) {
                 this.$refs.unfreeze.focus();
             }
