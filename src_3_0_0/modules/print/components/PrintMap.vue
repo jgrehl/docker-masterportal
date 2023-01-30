@@ -9,13 +9,14 @@ import thousandsSeparator from "../../../shared/js/utils/thousandsSeparator";
 import getVisibleLayer from "../js/getVisibleLayer";
 import FlatButton from "../../../shared/modules/buttons/components/FlatButton.vue";
 import InputText from "../../../shared/modules/inputs/components/InputText.vue";
+import SwitchInput from "../../../shared/modules/checkboxes/components/SwitchInput.vue";
 
 /**
  * Tool to print a part of the map
  */
 export default {
     name: "PrintMap",
-    components: {FlatButton, InputText},
+    components: {FlatButton, InputText, SwitchInput},
     data () {
         return {
             printIcon: "bi-printer",
@@ -473,42 +474,26 @@ export default {
                 </small>
             </div>
             <div class="form-check form-switch mb-3 d-flex align-items-center">
-                <input
-                    id="autoAdjustScale"
-                    type="checkbox"
-                    role="switch"
-                    aria-checked="print with info"
+                <SwitchInput
+                    :id="'autoAdjustScale'"
+                    :aria="$t('modules.tools.print.autoAdjustScale')"
+                    :interaction="($event) => setAutoAdjustScale($event.target.checked)"
+                    :label="$t('modules.tools.print.autoAdjustScale')"
                     :checked="autoAdjustScale && !isScaleSelectedManually"
-                    class="form-check-input"
-                    @change="setAutoAdjustScale($event.target.checked)"
-                >
-                <label
-                    class="form-check-label ps-2 pt-2"
-                    for="autoAdjustScale"
-                >
-                    {{ $t("common:modules.tools.print.autoAdjustScale") }}
-                </label>
+                />
             </div>
             <div
                 v-if="isGfiAvailable"
             >
                 <div class="form-check form-switch mb-3 d-flex align-items-center">
-                    <input
-                        id="printGfi"
-                        type="checkbox"
-                        role="switch"
-                        aria-checked="print with info"
-                        class="form-check-input"
+                    <SwitchInput
+                        :id="'printGfi'"
+                        :aria="$t('modules.tools.print.withInfoLabel')"
+                        :interaction="($event) => setIsGfiSelected($event.target.checked)"
+                        :label="$t('modules.tools.print.withInfoLabel')"
                         :disabled="currentFeature === null"
                         :checked="isGfiSelected"
-                        @change="setIsGfiSelected($event.target.checked)"
-                    >
-                    <label
-                        class="form-check-label ps-2 pt-2"
-                        for="printGfi"
-                    >
-                        {{ $t("common:modules.tools.print.withInfoLabel") }}
-                    </label>
+                    />
                 </div>
             </div>
             <div class="form-group form-group-sm row">
@@ -581,10 +566,6 @@ export default {
 <style lang="scss" scoped>
     @import "~variables";
 
-    .form-check-input {
-        width: 2.5rem;
-        height: 1.5rem;
-    }
     .info {
         max-width: fit-content;
         .info-icon {
