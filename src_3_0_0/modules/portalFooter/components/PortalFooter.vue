@@ -11,7 +11,7 @@ export default {
         ScaleLine
     },
     computed: {
-        ...mapGetters(["deviceMode"]),
+        ...mapGetters(["isMobile"]),
         ...mapGetters("Modules/PortalFooter", [
             "scaleLine",
             "seperator",
@@ -22,7 +22,7 @@ export default {
          * @returns {Number} The alias length for the relevant device mode.
          */
         aliasLength () {
-            if (this.deviceMode === "Mobile") {
+            if (this.isMobile) {
                 return this.urls.filter(url => url.alias_mobil).length;
             }
 
@@ -48,7 +48,7 @@ export default {
                     target="_blank"
                     class="p-0"
                 >
-                    {{ $t(deviceMode === "Mobile" ? $t(url.alias_mobile) : $t(url.alias)) }}
+                    {{ $t(isMobile ? $t(url.alias_mobile) : $t(url.alias)) }}
                 </a>
                 <span
                     v-if="index < aliasLength - 1"
