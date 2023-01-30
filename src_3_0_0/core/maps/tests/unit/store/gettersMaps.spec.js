@@ -51,18 +51,18 @@ describe("src_3_0_0/core/maps/store/gettersMap.js", () => {
         addLayer({}, layer3);
     });
 
+    describe("getLayerById", () => {
+        it("returns layer by id", () => {
+            expect(gettersMap.getLayerById()("1")).to.deep.equal(layer1);
+
+        });
+    });
+
     describe("getLayerByName", () => {
         it("returns layer by name", () => {
             expect(gettersMap.getLayerByName()("layer2")).to.deep.equal(layer2);
             expect(gettersMap.getLayerByName()("nameUnknown")).to.equal(undefined);
             expect(gettersMap.getLayerByName()("undefined")).to.equal(undefined);
-        });
-    });
-
-    describe("getLayerById", () => {
-        it("returns layer by id", () => {
-            expect(gettersMap.getLayerById()("1")).to.deep.equal(layer1);
-
         });
     });
 
@@ -88,6 +88,5 @@ describe("src_3_0_0/core/maps/store/gettersMap.js", () => {
             expect(gettersMap.isMinZoomDisplayed(stateMap)).to.be.true;
             expect(gettersMap.isMinZoomDisplayed(state)).to.be.false;
         });
-
     });
 });
