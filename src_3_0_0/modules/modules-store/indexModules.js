@@ -19,6 +19,7 @@ import Measure from "../measure/store/indexMeasure";
 import MouseHover from "../mouseHover/store/indexMouseHover";
 import News from "../news/store/indexNewsView";
 import OpenConfig from "../openConfig/store/indexOpenConfig";
+import PortalFooter from "../portalFooter/store/indexPortalFooter";
 import Print from "../print/store/indexPrint";
 import Routing from "../routing/store/indexRouting";
 import ScaleSwitcher from "../scaleSwitcher/store/indexScaleSwitcher";
@@ -53,6 +54,7 @@ export default {
         News: {...News},
         OpenConfig: {...OpenConfig},
         Routing: {...Routing},
+        PortalFooter: {...PortalFooter},
         Print: {...Print},
         ScaleSwitcher: {...ScaleSwitcher},
         SelectFeatures: {...SelectFeatures},
