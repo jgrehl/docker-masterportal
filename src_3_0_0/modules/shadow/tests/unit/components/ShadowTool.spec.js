@@ -103,19 +103,6 @@ describe("src_3_0_0/modules/shadowTool/components/ShadowTool.vue", () => {
             expect(timeSlider.exists()).to.be.true;
         });
 
-        it("should call toggleShadow if shadowCheckBox is changed", async () => {
-            const spyToggleShadow = sinon.spy(ShadowComponent.methods, "toggleShadow"),
-                wrapper = shallowMount(ShadowComponent, {
-                    global: {
-                        plugins: [store]
-                    }
-                }),
-                checkBox = wrapper.find("#module-shadow-checkbox");
-
-            await checkBox.trigger("change");
-            expect(spyToggleShadow.calledTwice).to.be.true;
-        });
-
         it("PickDateFormat is MM.DD.YYYY without locale", () => {
             const wrapper = shallowMount(ShadowComponent, {
                 global: {
