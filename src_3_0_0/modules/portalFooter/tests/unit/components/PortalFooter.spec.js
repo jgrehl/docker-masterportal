@@ -13,11 +13,11 @@ describe("src_3_0_0/modules/portalFooter/components/PortalFooter.vue", () => {
         alias: "Alphabet",
         alias_mobile: "ABC"
     }];
-    let deviceMode,
+    let isMobile,
         store;
 
     beforeEach(() => {
-        deviceMode = "Desktop";
+        isMobile = false;
 
         store = createStore({
             namespaces: true,
@@ -37,7 +37,7 @@ describe("src_3_0_0/modules/portalFooter/components/PortalFooter.vue", () => {
                 }
             },
             getters: {
-                deviceMode: () => deviceMode
+                isMobile: () => isMobile
             }
         });
     });
@@ -69,7 +69,7 @@ describe("src_3_0_0/modules/portalFooter/components/PortalFooter.vue", () => {
     });
 
     it("renders the mobile urls in footer", () => {
-        deviceMode = "Mobile";
+        isMobile = true;
 
         const wrapper = shallowMount(PortalFooterComponent, {
             global: {
