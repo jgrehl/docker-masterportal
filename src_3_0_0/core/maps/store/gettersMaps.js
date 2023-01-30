@@ -5,14 +5,6 @@ const getters = {
     ...generateSimpleGetters(stateMaps),
 
     /**
-    * Returns a layer by a given layer name.
-    * @param  {String} layerName Name of the Layer.
-    * @return {module:ol/layer/Base~BaseLayer} The layer found by name.
-    */
-    getLayerByName: () => (layerName) => {
-        return mapCollection.getMap("2D").getLayers().getArray().find(layer => layer.get("name") === layerName);
-    },
-    /**
     * Returns a layer by a given layer id.
     * @param  {String} layerId Id of the Layer.
     * @return {module:ol/layer/Base~BaseLayer} The layer found by id.
@@ -21,6 +13,14 @@ const getters = {
         return mapCollection.getMap("2D").getLayers().getArray().find(layer => layer.get("id") === layerId);
     },
 
+    /**
+    * Returns a layer by a given layer name.
+    * @param  {String} layerName Name of the Layer.
+    * @return {module:ol/layer/Base~BaseLayer} The layer found by name.
+    */
+    getLayerByName: () => (layerName) => {
+        return mapCollection.getMap("2D").getLayers().getArray().find(layer => layer.get("name") === layerName);
+    },
 
     /**
      * Returns the corresponding resolution for the scale.
