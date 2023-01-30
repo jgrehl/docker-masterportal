@@ -151,6 +151,10 @@ export default {
             <div
                 id="map"
             />
+            <component
+                :is="componentMap.portalFooter"
+                v-if="allConfigsLoaded"
+            />
         </div>
     </div>
 </template>
@@ -168,6 +172,8 @@ export default {
     font-size: $font-size-base;
 
     .mp-map {
+        display: flex;
+        flex-direction: column;
         height: 100%;
         width: 100%;
         overflow: hidden;
