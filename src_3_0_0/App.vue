@@ -1,10 +1,11 @@
 <script>
-import {mapGetters, mapActions} from "vuex";
+import {mapGetters, mapActions, mapMutations} from "vuex";
 import {Tooltip} from "bootstrap";
 import Alerting from "./modules/alerting/components/AlertingItem.vue";
 import ControlBar from "./modules/controls/components/ControlBar.vue";
 import initializeLayers from "./core/layers/js/layerProcessor";
 import {initializeMaps} from "./core/maps/js/maps";
+import isMobile from "./shared/js/utils/isMobile";
 import LoaderOverlay from "./app-store/js/loaderOverlay";
 import mapCollection from "./core/maps/js/mapCollection";
 import MenuContainer from "./modules/menu/components/MenuContainer.vue";
@@ -23,12 +24,20 @@ export default {
         ...mapGetters([
             "allConfigsLoaded",
             "configJs",
+            "deviceMode",
             "portalConfig",
             "uiStyle",
             "visibleLayerConfigs"
         ]),
-        ...mapGetters("Menu", ["mainMenu", "secondaryMenu", "mainExpanded", "secondaryExpanded"]),
-        ...mapGetters("Modules", ["componentMap"])
+        ...mapGetters("Menu", [
+            "mainExpanded",
+            "mainMenu",
+            "secondaryExpanded",
+            "secondaryMenu"
+        ]),
+        ...mapGetters("Modules", [
+            "componentMap"
+        ])
     },
     watch: {
         allConfigsLoaded (value) {
@@ -47,11 +56,15 @@ export default {
         this.setGlobalVariables();
         this.loadConfigsToTheVuexState();
         this.checkVueObservation();
+        this.regulateDeviceMode();
         new Tooltip(document.body, {
             selector: "[data-bs-toggle='tooltip']"
         });
     },
     methods: {
+        ...mapMutations([
+            "setDeviceMode"
+        ]),
         ...mapActions([
             "extendLayers",
             "loadConfigJs",
@@ -109,6 +122,46 @@ export default {
                     }
                 }, 5000);
             }
+        },
+
+        /**
+         * Regulates the device mode with an window event listener
+         * A distinction is made between mobile and desktop.
+         * @returns {void}
+         */
+        regulateDeviceMode () {
+            const desktop = "Desktop",
+                mobile = "Mobile";
+
+            this.setDeviceMode(isMobile() ? mobile : desktop);
+
+            window.addEventListener("resize", this.debounce(() => {
+                const nextIsMobile = isMobile();
+
+                if (nextIsMobile && this.deviceMode !== mobile) {
+                    this.setDeviceMode("Mobile");
+                }
+                else if (!nextIsMobile && this.deviceMode !== desktop) {
+                    this.setDeviceMode(desktop);
+                }
+            }, 250));
+        },
+
+        /**
+         * Debounce function
+         * @param {Function} callback The callback form debounce function.
+         * @param {Number} wait Wait before the callback function is called.
+         * @returns {Function} Calls the given callback after the given time.
+         */
+        debounce (callback, wait) {
+            let timeout;
+
+            return (...args) => {
+                const that = this;
+
+                clearTimeout(timeout);
+                timeout = setTimeout(() => callback.apply(that, args), wait);
+            };
         }
     }
 };

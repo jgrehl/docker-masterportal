@@ -62,33 +62,6 @@ store.commit("setStore", store);
 
 export default store;
 
-/**
- * Debounce function
- * @param {Function} callback - The callback form debounce function.
- * @param {Number} wait - Wait before the callback function is called.
- * @returns {Function} Calls the given callback after the given time.
- */
-function debounce (callback, wait) {
-    let timeout;
-
-    return (...args) => {
-        const that = this;
-
-        clearTimeout(timeout);
-        timeout = setTimeout(() => callback.apply(that, args), wait);
-    };
-}
-
-
-// resize update
-window.addEventListener("resize", debounce(() => {
-    const nextIsMobile = isMobile();
-
-    if (nextIsMobile !== store.state.mobile) {
-        store.commit("setMobile", nextIsMobile);
-    }
-}, 250));
-
 // TODO supposed to allow hot reloading vuex getters/mutations without reloading MP - doesn't work for some reason
 // copied without thought from admintool, so maybe I'm missing a parameter somewhere
 /* istanbul ignore next */
