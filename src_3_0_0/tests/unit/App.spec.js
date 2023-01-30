@@ -44,6 +44,9 @@ describe("src_3_0_0/App.vue", () => {
                     restServicesJson: false,
                     servicesJson: false
                 }
+            },
+            mutations: {
+                setDeviceMode: sinon.spy()
             }
         });
     });
