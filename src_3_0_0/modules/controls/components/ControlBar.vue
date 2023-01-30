@@ -130,7 +130,7 @@ export default {
 
 <template>
     <div
-        class="btn-group-vertical m-5 btn-group-controls shadow"
+        class="btn-group-vertical my-5 btn-group-controls shadow"
         role="group"
     >
         <div
