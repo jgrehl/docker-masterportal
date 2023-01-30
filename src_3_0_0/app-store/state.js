@@ -1,5 +1,3 @@
-import isMobile from "../shared/js/utils/isMobile";
-
 /**
  * User type definition
  * @typedef {Object} app-storeState
@@ -12,7 +10,7 @@ import isMobile from "../shared/js/utils/isMobile";
  */
 const state = {
     configJs: null,
-    deviceMode: isMobile() ? "Mobile" : "Desktop",
+    deviceMode: "Desktop",
     layerConfig: [],
     loadedConfigs: {
         configJson: false,
