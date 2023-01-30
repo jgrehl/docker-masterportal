@@ -6,12 +6,14 @@ import "vue-datepicker-next/index.css";
 
 import ShadowToolSliderInput from "./ShadowToolSliderInput.vue";
 import {updateShadow, updateCesiumTime} from "../js/utilsShadowTool.js";
+import SwitchInput from "../../../shared/modules/checkboxes/components/SwitchInput.vue";
 
 export default {
     name: "ShadowTool",
     components: {
         DatePicker,
-        ShadowToolSliderInput
+        ShadowToolSliderInput,
+        SwitchInput
     },
     data () {
         return {
@@ -238,22 +240,14 @@ export default {
         id="modules-shadow-tool"
     >
         <div class="form-check form-switch mb-3 d-flex align-items-center">
-            <input
-                id="module-shadow-checkbox"
-                ref="shadowCheckBox"
-                class="form-check-input"
-                aria-checked="true"
-                type="checkbox"
-                role="switch"
+            <SwitchInput
+                :id="'module-shadow-checkbox'"
+                :aria="$t('modules.tools.print.withInfoLabel')"
+                :interaction="toggleShadow(!shadowActivated)"
+                :label="$t(shadowActivated ? 'common:modules.tools.shadow.shadowDisplayOff' : 'common:modules.tools.shadow.shadowDisplayOn')"
+                :disabled="currentFeature === null"
                 :checked="shadowActivated"
-                @change="toggleShadow(!shadowActivated)"
-            >
-            <label
-                class="form-check-label ps-2 pt-2"
-                for="module-shadow-checkbox"
-            >
-                {{ $t(shadowActivated ? "common:modules.tools.shadow.shadowDisplayOff" : "common:modules.tools.shadow.shadowDisplayOn") }}
-            </label>
+            />
         </div>
         <div
             id="control"
