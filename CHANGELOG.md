@@ -210,6 +210,13 @@
 - The `startTool` control has been renamed to `startModule`. Modules are now completely configured within the control.
 - Update from vue 2 to vue 3
 - The configuration for `mouseHover` is moved from config.js to config.json. Also, the configuration is now optional.
+- PortalFooter
+    - The Footer has been renamed to `portalFooter` and its configuration has been moved from config.js to config.json.
+    - The `scaleLine` is now a fixed part of the `portaFooter` and is configured within it.
+    - In the `portalFooter` only `urls` and the `scaleLine` are configured. For the other contents e.g. `version` or `footerInfo` a module is created in the menu. Language switching has also been moved to a separate `language` module.
+    - The width of the ScaleLine [in cm] can now be configured with the attribute `scaleLineWidth`.
+
+Translated with www.DeepL.com/Translator (free version)
 
 ### Added
 - GFI: nested object values can now be addressed from "gfiAttributes" by dot notation. See [services.json](https://bitbucket.org/geowerkstatt-hamburg/masterportal/src/dev/doc/services.json.md#markdown-header-gfi_attributes) .
