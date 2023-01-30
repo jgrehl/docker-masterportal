@@ -19,6 +19,7 @@ import Measure from "../measure/components/MeasureInMap.vue";
 import MouseHover from "../mouseHover/components/MouseHover.vue";
 import NewsView from "../news/components/NewsView.vue";
 import OpenConfig from "../openConfig/components/OpenConfig.vue";
+import PortalFooter from "../portalFooter/components/PortalFooter.vue";
 import PrintMap from "../print/components/PrintMap.vue";
 import Routing from "../routing/components/RoutingTemplate.vue";
 import ScaleSwitcher from "../scaleSwitcher/components/ScaleSwitcher.vue";
@@ -52,6 +53,7 @@ const getters = {
             mouseHover: MouseHover,
             news: NewsView,
             openConfig: OpenConfig,
+            portalFooter: PortalFooter,
             print: PrintMap,
             routing: Routing,
             scaleSwitcher: ScaleSwitcher,
