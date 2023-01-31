@@ -466,8 +466,8 @@
                 "key": "{{shownFeatures}} of {{featureCount}} features listed"
             },
             "layerSlider": {
-                "changeSliderTypeToHandle": "change view to handle mode",
-                "changeSliderTypeToPlayer": "Change view to player mode",
+                "sliderTypeHandle": "Slidermode",
+                "sliderTypePlayer": "Playermode",
                 "displayLayers": "Display of various layers.",
                 "title": "Simulation of example services",
                 "titleNotConfigured": "Title not configured",
