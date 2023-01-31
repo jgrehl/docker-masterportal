@@ -51,7 +51,7 @@ export default {
             {{ $t(title) }}
         </h5>
         <ul
-            id="myTab"
+            id="layer-slider-tabs"
             class="nav nav-tabs nav-justified"
             role="tablist"
         >
