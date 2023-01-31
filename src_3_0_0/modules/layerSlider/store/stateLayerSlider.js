@@ -7,7 +7,6 @@
  * @property {Objet[]} layerIds The configured layer with their ids and titles.
  * @property {String} name Name of the LayerSlider.
  * @property {Boolean} showDescription If true, description will be shown.
- * @property {String} sliderType The Slidertype. "player" or "handle".
  * @property {Number} timeInterval Time interval.
  * @property {String} title The title of the currently selected layer.
  * @property {String} type Type of the LayerSlider component.
@@ -28,7 +27,6 @@ const state = {
     layerIds: [],
     name: "common:menu.tools.layerSlider",
     showDescription: false,
-    sliderType: "player",
     timeInterval: 2000,
     title: "common:modules.tools.layerSlider.title",
     type: "layerSlider",
