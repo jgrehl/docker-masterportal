@@ -472,8 +472,8 @@
             },
             "layerSlider": {
                 "displayLayers": "Anzeige diverser Layer.",
-                "changeSliderTypeToHandle": "Ansicht in den Slider-Modus wechseln",
-                "changeSliderTypeToPlayer": "Ansicht in den Player-Modus wechseln",
+                "sliderTypeHandle": "Slider-Modus",
+                "sliderTypePlayer": "Player-Modus",
                 "title": "Simulation von Beispiel-Diensten",
                 "titleNotConfigured": "Titel nicht konfiguriert",
                 "serviceOne": "Dienst 1",
