@@ -32,26 +32,12 @@ export default {
     methods: {
         ...mapMutations("Modules/LayerSlider", [
             "resetActiveLayer",
-            "setSliderType",
             "setWindowsInterval"
         ]),
         ...mapActions("Modules/LayerSlider", [
             "addIndexToLayerIds",
             "checkIfAllLayersAvailable"
-        ]),
-
-        /**
-         * Toogles the slider type.
-         * @returns {void}
-         */
-        toggleSliderType () {
-            if (this.sliderType === "player") {
-                this.setSliderType("handle");
-            }
-            else if (this.sliderType === "handle") {
-                this.setSliderType("player");
-            }
-        }
+        ])
     }
 };
 </script>
@@ -61,31 +47,72 @@ export default {
         v-if="active"
         id="module-layer-slider"
     >
-        <div class="form-check form-switch mb-3 d-flex align-items-center">
-            <input
-                id="module-layer-slider-checkbox"
-                class="form-check-input"
-                aria-checked="true"
-                type="checkbox"
-                role="switch"
-                @change="toggleSliderType"
-            >
-            <label
-                class="form-check-label ps-2 pt-2"
-                for="module-layer-slider-checkbox"
-            >
-                {{ $t(sliderType === "player" ? "common:modules.tools.layerSlider.changeSliderTypeToHandle" : "common:modules.tools.layerSlider.changeSliderTypeToPlayer") }}
-            </label>
-        </div>
         <h5 class="my-4">
             {{ $t(title) }}
         </h5>
-        <LayerSliderPlayer
-            v-if="sliderType === 'player'"
-        />
-        <LayerSliderHandle
-            v-else-if="sliderType === 'handle'"
-        />
+        <ul
+            id="myTab"
+            class="nav nav-tabs nav-justified"
+            role="tablist"
+        >
+            <li
+                class="nav-item"
+                role="presentation"
+            >
+                <button
+                    id="handle-tab"
+                    class="nav-link active"
+                    data-bs-toggle="tab"
+                    data-bs-target="#handle-tab-pane"
+                    type="button"
+                    role="tab"
+                    aria-controls="handle-tab-pane"
+                    aria-selected="true"
+                >
+                    {{ $t("modules.tools.layerSlider.sliderTypeHandle") }}
+                </button>
+            </li>
+            <li
+                class="nav-item"
+                role="presentation"
+            >
+                <button
+                    id="player-tab"
+                    class="nav-link"
+                    data-bs-toggle="tab"
+                    data-bs-target="#player-tab-pane"
+                    type="button"
+                    role="tab"
+                    aria-controls="player-tab-pane"
+                    aria-selected="false"
+                >
+                    {{ $t("modules.tools.layerSlider.sliderTypePlayer") }}
+                </button>
+            </li>
+        </ul>
+        <div
+            id="myTabContent"
+            class="tab-content"
+        >
+            <div
+                id="handle-tab-pane"
+                class="tab-pane fade show active"
+                role="tabpanel"
+                aria-labelledby="handle-tab"
+                tabindex="0"
+            >
+                <LayerSliderPlayer />
+            </div>
+            <div
+                id="player-tab-pane"
+                class="tab-pane fade"
+                role="tabpanel"
+                aria-labelledby="player-tab"
+                tabindex="0"
+            >
+                <LayerSliderHandle />
+            </div>
+        </div>
     </div>
 </template>
 
@@ -96,6 +123,24 @@ export default {
         .form-check-input {
             width: 2.5rem;
             height: 1.5rem;
+        }
+    }
+    .nav-tabs {
+        border: none;
+        .nav-link.active {
+            border-top: none;
+            border-left: none;
+            border-right: none;
+            border-bottom: 3px solid $dark_blue;
+            font-family: $font_family_accent;
+        }
+        .nav-link {
+            color: $black;
+            border: none;
+        }
+        .nav-link:hover {
+            border-radius: 0;
+            background-color: $light_blue;
         }
     }
 
