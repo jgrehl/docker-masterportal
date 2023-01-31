@@ -90,7 +90,10 @@ export default {
 </script>
 
 <template lang="html">
-    <div id="module-layer-slider-player">
+    <div
+        id="module-layer-slider-player"
+        class="mt-3"
+    >
         <div class="progress mb-3">
             <div
                 class="progress-bar"
