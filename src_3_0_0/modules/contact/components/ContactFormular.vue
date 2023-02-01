@@ -16,7 +16,6 @@ export default {
     },
     computed: {
         ...mapGetters("Modules/Contact", [
-            "active",
             "contactInfo",
             "maxLines",
             "username",
@@ -47,10 +46,7 @@ export default {
 </script>
 
 <template lang="html">
-    <div
-        v-if="active"
-        id="contact-formular"
-    >
+    <div id="contact-formular">
         <div
             v-if="contactInfo"
             id="module-contact-addionalInformation"

@@ -1,7 +1,6 @@
 /**
  * User type definition
  * @typedef {Object} FileImportState
- * @property {Boolean}  active - if true, component is rendered
  * @property {String}   description - The description that should be shown in the button in the right menu.
  * @property {Boolean}  enableZoomToExtend - If true, it is enable to zoom to features of the imported file.
  * @property {Object}   featureExtents - the Feature Extents.
@@ -17,7 +16,6 @@
  */
 
 export default {
-    active: false,
     description: "",
     enableZoomToExtend: false,
     featureExtents: {},

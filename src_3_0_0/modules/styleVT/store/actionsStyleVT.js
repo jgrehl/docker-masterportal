@@ -54,18 +54,12 @@ const initialState = Object.assign({}, stateStyleVT),
          * Else, the module is reset.
          * @param {Object} param.commit the commit
          * @param {Object} param.dispatch the dispatch
-         * @param {Boolean} payload.active Whether to activate or deactivate the module.
-         * @param {?VTLayer} payload.layerModel The layer selected to be initially selected.
+         * @param {?VTLayer} layerModel The layer selected to be initially selected.
          * @returns {void}
          */
-        startLayerProcess ({commit, dispatch}, {active, layerModel}) {
-            if (active) {
-                commit("setLayerModel", layerModel);
-                dispatch("refreshVectorTileLayerList");
-            }
-            else {
-                dispatch("resetModule");
-            }
+        startLayerProcess ({commit, dispatch}, layerModel) {
+            commit("setLayerModel", layerModel);
+            dispatch("refreshVectorTileLayerList");
         },
 
         /**

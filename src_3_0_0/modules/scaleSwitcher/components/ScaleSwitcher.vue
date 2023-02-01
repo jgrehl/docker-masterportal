@@ -1,5 +1,5 @@
 <script>
-import {mapGetters, mapMutations} from "vuex";
+import {mapMutations} from "vuex";
 import mutations from "../store/mutationsScaleSwitcher";
 
 /**
@@ -8,7 +8,6 @@ import mutations from "../store/mutationsScaleSwitcher";
 export default {
     name: "ScaleSwitcher",
     computed: {
-        ...mapGetters("Modules/ScaleSwitcher", ["active"]),
         scale: {
             get () {
                 return this.$store.state.Maps.scale;
@@ -18,24 +17,19 @@ export default {
             }
         }
     },
-    watch: {
-        /**
-         * Listens to the active property change.
-         * @param {Boolean} isActive Value deciding whether the module gets activated or deactivated.
-         * @returns {void}
-         */
-        active (isActive) {
-            if (isActive) {
-                this.setFocusToFirstControl();
-            }
-        }
-    },
     /**
-     * Lifecycle hook: adds a "close"-Listener to close the module.
+     * Lifecycle hook: sets map scales to the scales attribute.
      * @returns {void}
      */
     created () {
         this.scales = mapCollection.getMapView("2D").get("options").map(option => option.scale);
+    },
+    /**
+     * Lifecycle hook: sets focus to first control element.
+     * @returns {void}
+     */
+    mounted () {
+        this.setFocusToFirstControl();
     },
     methods: {
         ...mapMutations("Menu/ScaleSwitcher", Object.keys(mutations)),
@@ -68,7 +62,6 @@ export default {
 
 <template lang="html">
     <div
-        v-if="active"
         id="scale-switcher"
         class="form-floating"
     >

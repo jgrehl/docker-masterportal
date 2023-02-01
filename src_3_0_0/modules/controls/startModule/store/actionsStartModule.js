@@ -37,7 +37,6 @@ const actions = {
         rootState.Modules[upperFirst(module.type)] = {
             ...rootState.Modules[upperFirst(module.type)],
             ...{
-                isVisibleInMenu: false,
                 menuSide: menuSide
             },
             ...module
@@ -48,17 +47,27 @@ const actions = {
      * Activates or deactivates the associated module of the clicked control.
      * @param {Object} param store context
      * @param {Object} param.commit the commit
+     * @param {Object} param.dispatch the commit
      * @param {Object} payload The payload.
      * @param {Object} payload.moduleState The vuex states the clicked module-control.
      * @param {String} payload.menuSide The menu side.
      * @returns {void}
      */
-    onClick ({commit}, {moduleState, menuSide}) {
-        if (!moduleState.active) {
-            commit("Menu/setCurrentComponent", {type: moduleState.type, side: menuSide, props: {name: moduleState.name}}, {root: true});
-        }
+    onClick ({commit, dispatch, rootGetters}, {moduleState, menuSide}) {
+        const menuCurrentComponent = "Menu/currentComponent";
 
-        commit(`Modules/${upperFirst(moduleState.type)}/setActive`, !moduleState.active, {root: true});
+        if (rootGetters[menuCurrentComponent](menuSide).type !== moduleState.type) {
+            const menuExpanded = "Menu/expanded";
+
+            dispatch("Menu/changeCurrentComponent", {type: moduleState.type, side: menuSide, props: {name: moduleState.name}}, {root: true});
+
+            if (!rootGetters[menuExpanded](menuSide)) {
+                commit("Menu/toggleMenu", menuSide, {root: true});
+            }
+        }
+        else {
+            commit("Menu/switchToRoot", menuSide, {root: true});
+        }
     }
 };
 

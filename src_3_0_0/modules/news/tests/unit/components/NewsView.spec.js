@@ -9,17 +9,6 @@ import sinon from "sinon";
 config.global.mocks.$t = key => key;
 
 describe("src_3_0_0/modules/newsView/components/NewsView.vue", () => {
-    const mockConfigJson = {
-        Portalconfig: {
-            mainMenu: {
-                sections: [
-                    {
-                        type: "news"
-                    }
-                ]
-            }
-        }
-    };
     let store,
         wrapper,
         news;
@@ -35,11 +24,9 @@ describe("src_3_0_0/modules/newsView/components/NewsView.vue", () => {
                         News
                     }
                 }
-            },
-            state: {
-                configJson: mockConfigJson
             }
         });
+
         news = [
             {
                 category: "category 1",
@@ -60,7 +47,6 @@ describe("src_3_0_0/modules/newsView/components/NewsView.vue", () => {
                 displayUntil: "2021-02-25 18:00"
             }
         ];
-        store.commit("Modules/News/setActive", true);
         store.commit("Modules/News/setNews", []);
     });
 
