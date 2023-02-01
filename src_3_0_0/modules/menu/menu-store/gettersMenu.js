@@ -7,8 +7,18 @@ const menuGetters = {
     ...generateSimpleGetters(menuState),
 
     /**
+     * Returns the current component for a menu side.
      * @param {MenuNavigationState} state Local vuex state.
-     * @param {string} side Menu Side
+     * @param {string} side Menu Side.
+     * @returns {Object} The current component.
+     */
+    currentComponent: state => side => {
+        return state[side].navigation.currentComponent;
+    },
+
+    /**
+     * @param {MenuNavigationState} state Local vuex state.
+     * @param {string} side Menu Side.
      * @returns {object} Returns the Name of the currently visible Component.
      */
     currentComponentName: state => side => {
@@ -52,6 +62,14 @@ const menuGetters = {
         }
 
         return false;
+    },
+
+    /**
+     * @param {Object} state Local vuex state.
+     * @returns {Boolean} Whether the menu by side is opened.
+     */
+    expanded: state => side => {
+        return state[side].expanded;
     },
 
     /**

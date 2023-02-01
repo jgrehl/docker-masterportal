@@ -35,7 +35,6 @@ export default {
     },
     computed: {
         ...mapGetters("Modules/Shadow", [
-            "active",
             "isShadowEnabled",
             "shadowTime"
         ]),
@@ -213,7 +212,7 @@ export default {
 
         /**
          * Toggles the shadow.
-         * @param {Boolean} visible Shadow active.
+         * @param {Boolean} visible Shadow is visible.
          * @returns {void}
          */
         toggleShadow (visible) {
@@ -235,10 +234,7 @@ export default {
 </script>
 
 <template lang="html">
-    <div
-        v-if="active"
-        id="modules-shadow-tool"
-    >
+    <div id="modules-shadow-tool">
         <div class="form-check form-switch mb-3 d-flex align-items-center">
             <SwitchInput
                 :id="'module-shadow-checkbox'"

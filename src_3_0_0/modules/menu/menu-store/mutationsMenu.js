@@ -5,7 +5,6 @@ import {generateSimpleMutations} from "../../../shared/js/utils/generators";
 export default {
     ...generateSimpleMutations(menuState),
 
-
     /**
      * Collapses Menucontainers
      * @param {Object} currentState current state
@@ -16,6 +15,16 @@ export default {
         currentState.secondaryMenu.expanded = false;
     },
 
+    /**
+     * Merge the menu state by side.
+     * @param {Object} state current state
+     * @param {Object} menu The menu setting.
+     * @param {String} side secondary or main Menu
+     * @returns {void}
+     */
+    mergeMenuState (state, {menu, side}) {
+        Object.assign(state[side], menu);
+    },
 
     /**
      * Sets currently shown Component
@@ -25,12 +34,9 @@ export default {
      * @returns {void}
      */
     setCurrentComponent (state, {type, side, props}) {
-        const currentType = state[side].navigation.currentComponent.type;
-
-        if (currentType !== type || currentType === "folder" && type === "folder" || currentType === "layerSelection" && type === "layerSelection") {
-            state[side].navigation.history.push(state[side].navigation.currentComponent);
-            state[side].navigation.currentComponent = {type: type, props: props};
-        }
+        state[side].navigation.history.push(state[side].navigation.currentComponent);
+        state[side].navigation.currentComponent = {type: type, props: props};
+        state[side].currentComponent = type;
     },
 
     /**
@@ -41,6 +47,7 @@ export default {
      */
     switchToPreviousComponent (state, side) {
         state[side].navigation.currentComponent = {type: state[side].navigation.history.slice(-1)[0].type, props: state[side].navigation.history.slice(-1)[0].props};
+        state[side].currentComponent = state[side].navigation.history.slice(-1)[0].type;
         state[side].navigation.history.pop();
     },
 
@@ -53,6 +60,7 @@ export default {
     switchToRoot (state, side) {
         state[side].navigation.currentComponent = state[side].navigation.history[0];
         state[side].navigation.history = [];
+        state[side].currentComponent = "root";
     },
 
     /**

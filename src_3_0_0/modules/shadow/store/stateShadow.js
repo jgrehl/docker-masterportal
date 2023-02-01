@@ -1,7 +1,6 @@
 /**
  * Shadow state definition.
  * @typedef {Object} ShadowState
- * @property {Boolean} active If true, SaveSelection will be rendered.
  * @property {String} description The descritption that should be shown in the button in the menu.
  * @property {String} icon Icon next to the title. (config-param)
  * @property {String} name Displayed as the title. (config-param)
@@ -14,7 +13,6 @@
  * @property {Object} shadowTime Object to define start date and time. (config-param)
  */
 const state = {
-    active: false,
     description: "",
     icon: "bi-lamp-fill",
     name: "common:menu.tools.shadow",

@@ -1,7 +1,8 @@
 /**
  * Menu state definition.
  * @typedef {Object} MenuState
- * @property {String} activeModuleMouseMapInteractions Module that has mouse map actions and is currently activated.
+ * @property {String} currentMouseMapInteractionsComponent Component that has mouse map actions and is currently activated.
+ * @property {String} defaultComponent Default Component that has mouse map actions and is currently activated.
  * @property {Object} mainMenu the main menu settings.
  * @property {Boolean} mainMenu.expanded Specifies whether the main menu is opened.
  * @property {Object[]} mainMenu.sections The main menu sections.
@@ -16,9 +17,11 @@
  * @property {String} secondaryMenu.currentComponent The current Component shown in secondaryMenu Body Section.
  */
 export default {
-    activeModuleMouseMapInteractions: "GetFeatureInfo",
+    currentMouseMapInteractionsComponent: "getFeatureInfo",
+    defaultComponent: "getFeatureInfo",
     mainMenu: {
         expanded: false,
+        currentComponent: "root",
         title: null,
         toggleButtonIcon: "bi-list",
         sections: [[]],
@@ -32,6 +35,7 @@ export default {
     },
     secondaryMenu: {
         expanded: false,
+        currentComponent: "root",
         sections: [[]],
         title: null,
         toggleButtonIcon: "bi-tools",
