@@ -18,20 +18,10 @@ export default {
     },
     computed: {
         ...mapGetters(["portalConfig", "layerConfig"]),
-        ...mapGetters("Modules/AddWMS", ["active"]),
         ...mapGetters("Maps", ["projection", "mode"])
     },
-    watch: {
-        /**
-         * Listens to the active property change.
-         * @param {Boolean} isActive Value deciding whether the tool gets activated or deactivated.
-         * @returns {void}
-         */
-        active (isActive) {
-            if (isActive) {
-                this.setFocusToFirstControl();
-            }
-        }
+    mounted () {
+        this.setFocusToFirstControl();
     },
     methods: {
         ...mapActions(["addLayerToLayerConfig"]),
@@ -317,7 +307,6 @@ export default {
 
 <template>
     <div
-        v-if="active"
         id="addWMS"
         class="row"
     >

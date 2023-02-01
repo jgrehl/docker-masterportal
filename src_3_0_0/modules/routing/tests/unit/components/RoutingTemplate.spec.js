@@ -1,19 +1,16 @@
 import {createStore} from "vuex";
 import {expect} from "chai";
-import {config, shallowMount, mount} from "@vue/test-utils";
+import {config, shallowMount} from "@vue/test-utils";
 import RoutingComponent from "../../../components/RoutingTemplate.vue";
 import sinon from "sinon";
 import mutations from "../../../store/mutationsRouting";
 import actions from "../../../store/actionsRouting";
-import getters from "../../../store/gettersRouting";
-import state from "../../../store/stateRouting";
-import Directions from "../../../store/directions/indexDirections";
-import Isochrones from "../../../store/isochrones/indexIsochrones";
 
 config.global.mocks.$t = key => key;
 
 describe("src_3_0_0/modules/routing/components/RoutingTemplate.vue", () => {
-    let store,
+    let activeRoutingToolOption,
+        store,
         wrapper;
 
     beforeEach(() => {
@@ -55,37 +52,62 @@ describe("src_3_0_0/modules/routing/components/RoutingTemplate.vue", () => {
                         {
                             namespaced: true,
                             modules: {
-                                Directions,
-                                Isochrones
+                                namespaced: true,
+                                Directions: {
+                                    namespaced: true,
+                                    getters: {
+                                        isLoadingDirections: () => sinon.stub()
+                                    }
+                                },
+                                Isochrones: {
+                                    namespaced: true,
+                                    getters: {
+                                        isLoadingIsochrones: () => sinon.stub()
+                                    }
+                                }
                             },
-                            state,
+                            state: {
+                                geosearch: {
+                                    type: "BKG",
+                                    serviceId: "1"
+                                },
+                                geosearchReverse: {
+                                    serviceId: "1",
+                                    type: "BKG"
+                                },
+                                isochronesSettings: {
+                                    type: "ORS",
+                                    serviceId: "1"
+                                },
+                                directionsSettings: {
+                                    type: "ORS",
+                                    serviceId: "1"
+                                }
+                            },
                             mutations,
                             actions,
-                            getters
-                        }
-                    },
-                    Alerting: {
-                        namespaced: true,
-                        actions: {
-                            addSingleAlert: sinon.stub()
+                            getters: {
+                                activeRoutingToolOption: () => activeRoutingToolOption,
+                                filteredRoutingToolOptions: () => [
+                                    {
+                                        id: "DIRECTIONS",
+                                        component: {
+                                            name: "DirectionsItem"
+                                        }
+                                    },
+                                    {
+                                        id: "ISOCHRONES",
+                                        component: {
+                                            name: "IsochronesItem"
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 }
-            },
-            getters: {
-                uiStyle: () => ""
-            },
-            state: state
+            }
         });
-        store.state.geosearch.type = "BKG";
-        store.state.geosearchReverse.serviceId = "1";
-        store.state.geosearchReverse.type = "BKG";
-        store.state.geosearch.serviceId = "1";
-        store.state.isochronesSettings.type = "ORS";
-        store.state.isochronesSettings.serviceId = "1";
-        store.state.directionsSettings.type = "ORS";
-        store.state.directionsSettings.serviceId = "1";
-        store.commit("Modules/Routing/setActive", true);
     });
 
     it("renders Routing", () => {
@@ -93,33 +115,27 @@ describe("src_3_0_0/modules/routing/components/RoutingTemplate.vue", () => {
             global: {
                 plugins: [store]
             }});
+
         expect(wrapper.find("#routing").exists()).to.be.true;
     });
 
-    it("not renders routing", () => {
-        store.commit("Modules/Routing/setActive", false);
+    it("renders directions", () => {
+        activeRoutingToolOption = "DIRECTIONS";
         wrapper = shallowMount(RoutingComponent, {
             global: {
                 plugins: [store]
             }});
-        expect(wrapper.find("#routing").exists()).to.be.false;
-    });
 
-    it("renders directions", () => {
-        store.commit("Modules/Routing/setActiveRoutingToolOption", "DIRECTIONS");
-        wrapper = mount(RoutingComponent, {
-            global: {
-                plugins: [store]
-            }});
-        expect(wrapper.find("#routing-directions").exists()).to.be.true;
+        expect(wrapper.find("directions-item-stub").exists()).to.be.true;
     });
 
     it("renders isochrones", () => {
-        store.commit("Modules/Routing/setActiveRoutingToolOption", "ISOCHRONES");
-        wrapper = mount(RoutingComponent, {
+        activeRoutingToolOption = "ISOCHRONES";
+        wrapper = shallowMount(RoutingComponent, {
             global: {
                 plugins: [store]
             }});
-        expect(wrapper.find("#routing-isochrones").exists()).to.be.true;
+
+        expect(wrapper.find("isochrones-item-stub").exists()).to.be.true;
     });
 });

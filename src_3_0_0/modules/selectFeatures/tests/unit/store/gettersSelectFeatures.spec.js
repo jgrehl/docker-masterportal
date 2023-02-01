@@ -4,15 +4,11 @@ import stateSelectFeatures from "../../../store/stateSelectFeatures";
 
 
 const {
-    active,
     type,
     name,
     icon} = getters;
 
 describe("src/modules/selectFeatures/store/gettersSelectFeatures", function () {
-    it("returns the active from state", function () {
-        expect(active(stateSelectFeatures)).to.be.false;
-    });
     it("returns the type from state", function () {
         expect(type(stateSelectFeatures)).to.equals("selectFeatures");
     });

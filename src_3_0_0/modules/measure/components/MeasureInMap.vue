@@ -19,7 +19,6 @@ export default {
     },
     computed: {
         ...mapGetters("Modules/Measure", [
-            "active",
             "featureId",
             "tooltipCoord",
             "interaction",
@@ -39,28 +38,11 @@ export default {
     },
     watch: {
         /**
-         * (Re-)Creates or removes draw interaction on opening/closing tool.
-         * @param {boolean} value active state of tool
-         * @returns {void}
-         */
-        active (value) {
-            if (!value) {
-                this.removeIncompleteDrawing();
-                this.removeDrawInteraction();
-            }
-            else {
-                this.createDrawInteraction();
-                this.setFocusToFirstControl();
-            }
-        },
-        /**
          * Recreates draw interaction on geometry type update.
          * @returns {void}
          */
         selectedGeometry () {
-            if (this.active) {
-                this.createDrawInteraction();
-            }
+            this.createDrawInteraction();
         }
     },
     created () {
@@ -71,17 +53,16 @@ export default {
         });
 
     },
+    mounted () {
+        this.createDrawInteraction();
+        this.setFocusToFirstControl();
+    },
     unmounted () {
         this.removeIncompleteDrawing();
         this.removeDrawInteraction();
     },
-    mounted () {
-        if (this.active) {
-            this.createDrawInteraction();
-        }
-    },
     methods: {
-        ...mapMutations("Modules/Measure", ["setSelectedGeometry", "setSelectedUnit", "setActive"]),
+        ...mapMutations("Modules/Measure", ["setSelectedGeometry", "setSelectedUnit"]),
         ...mapActions("Modules/Measure", ["deleteFeatures", "createDrawInteraction", "removeIncompleteDrawing", "removeDrawInteraction"]),
 
         /**
@@ -126,10 +107,7 @@ export default {
 </script>
 
 <template lang="html">
-    <div
-        v-if="active"
-        id="measure"
-    >
+    <div id="measure">
         <MeasureInMapTooltip />
         <div class="form-floating mb-3">
             <select
