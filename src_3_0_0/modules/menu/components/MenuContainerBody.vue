@@ -21,25 +21,26 @@ export default {
     },
     computed: {
         ...mapGetters("Menu", [
+            "defaultComponent",
             "mainMenu",
             "secondaryMenu"
         ]),
         ...mapGetters("Modules", ["componentMap"]),
 
         /**
-         * @returns {object} Menu configuration for the given menu.
+         * @returns {Object} Menu configuration for the given menu.
          */
         menu () {
             return this.side === "mainMenu" ? this.mainMenu : this.secondaryMenu;
         },
 
         /**
-         * @returns {object} Returns the currently visible Component.
+         * @returns {Object} Returns the currently visible Component.
          */
         currentComponent () {
             let current = this.menu.navigation.currentComponent.type;
 
-            if (current !== "root" && current !== "getFeatureInfo") {
+            if (current !== "root" && current !== this.defaultComponent) {
                 current = this.componentMap[current];
             }
 

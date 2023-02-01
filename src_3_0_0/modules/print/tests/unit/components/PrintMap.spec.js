@@ -56,8 +56,6 @@ describe("src_3_0_0/modules/Print/components/PrintMap.vue", () => {
             }
         });
 
-        store.commit("Modules/Print/setActive", true);
-
         wrapper = mount(PrintComponent, {
             global: {
                 plugins: [store]

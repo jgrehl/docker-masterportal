@@ -215,6 +215,7 @@
     - The `scaleLine` is now a fixed part of the `portaFooter` and is configured within it.
     - In the `portalFooter` only `urls` and the `scaleLine` are configured. For the other contents e.g. `version` or `footerInfo` a module is created in the menu. Language switching has also been moved to a separate `language` module.
     - The width of the ScaleLine [in cm] can now be configured with the attribute `scaleLineWidth`.
+- The 'active' attribute has been removed from the modules. Instead, a module to be displayed initially can now be defined centrally for each menu window with the attribute `currentComponent`.
 
 ### Added
 - GFI: nested object values can now be addressed from "gfiAttributes" by dot notation. See [services.json](https://bitbucket.org/geowerkstatt-hamburg/masterportal/src/dev/doc/services.json.md#markdown-header-gfi_attributes) .

@@ -107,6 +107,7 @@ describe("src_3_0_0/modules/layerTree/components/LayerTree.vue", () => {
                 Menu: {
                     namespaced: true,
                     actions: {
+                        changeCurrentComponent: sinon.stub(),
                         setMenuBackAndActivateItem: sinon.stub()
                     },
                     modules: {
@@ -127,6 +128,18 @@ describe("src_3_0_0/modules/layerTree/components/LayerTree.vue", () => {
                             namespaced: true,
                             getters: {
                                 icon: sinon.stub()
+                            }
+                        },
+                        LayerSelection: {
+                            namespaced: true,
+                            getters: {
+                                name: () => sinon.stub(),
+                                type: () => sinon.stub()
+                            },
+                            mutations: {
+                                setActive: sinon.stub(),
+                                setSubjectDataLayerConfs: sinon.stub(),
+                                setBackgroundLayerConfs: sinon.stub()
                             }
                         }
                     }
@@ -182,6 +195,7 @@ describe("src_3_0_0/modules/layerTree/components/LayerTree.vue", () => {
         expect(wrapper.findAll("layer-tree-node-stub > Draggable").length).to.be.equals(0);
         expect(wrapper.find("#add-layer-btn").exists()).to.be.false;
     });
+
     it("with layer button - renders the LayerTree without layers", () => {
         subjectDataLayers = [];
         layersBG = [];

@@ -3,14 +3,14 @@ import actions from "../../../store/actionsLayerInformation";
 
 const {startLayerInformation, additionalSingleLayerInfo, setMetadataURL} = actions;
 
-describe.skip("src_3_0_0/modules/layerInformation/store/actionsLayerInformation.js", () => {
+describe("src_3_0_0/modules/layerInformation/store/actionsLayerInformation.js", () => {
     describe("initialize the store", () => {
         it("should initialize the LayerInformation", done => {
             const state = {
                     layerConf: {},
                     menuSide: "mainMenu",
-                    type: "layerInformation",
-                    active: false
+                    name: "common:layerInformation",
+                    type: "layerInformation"
                 },
                 layerConf = {
                     id: "123",
@@ -26,11 +26,14 @@ describe.skip("src_3_0_0/modules/layerInformation/store/actionsLayerInformation.
                 };
 
             testAction(startLayerInformation, layerConf, state, {}, [
+                {type: "Menu/changeCurrentComponent", payload: {
+                    type: "layerInformation",
+                    side: "mainMenu",
+                    props: {name: state.name}
+                }, dispatch: true},
                 {type: "setLayerInfo", payload: layerConf},
                 {type: "setMetadataURL", payload: layerConf.datasets[0].md_id, dispatch: true},
-                {type: "additionalSingleLayerInfo", payload: undefined, dispatch: true},
-                {type: "Menu/resetMenu", payload: {side: "mainMenu", module: {type: "layerInformation"}}, dispatch: true},
-                {type: "Menu/setMenuBackAndActivateItem", payload: {side: "mainMenu", module: {type: "layerInformation"}}, dispatch: true}
+                {type: "additionalSingleLayerInfo", payload: undefined, dispatch: true}
             ], {}, done);
         });
 
@@ -38,8 +41,8 @@ describe.skip("src_3_0_0/modules/layerInformation/store/actionsLayerInformation.
             const state = {
                     layerConf: {},
                     menuSide: "mainMenu",
-                    type: "layerInformation",
-                    active: true
+                    name: "common:layerInformation",
+                    type: "layerInformation"
                 },
                 layerConf = {
                     id: "123",
@@ -57,11 +60,14 @@ describe.skip("src_3_0_0/modules/layerInformation/store/actionsLayerInformation.
                 };
 
             testAction(startLayerInformation, layerConf, state, {}, [
+                {type: "Menu/changeCurrentComponent", payload: {
+                    type: "layerInformation",
+                    side: "mainMenu",
+                    props: {name: state.name}
+                }, dispatch: true},
                 {type: "setLayerInfo", payload: layerConf},
                 {type: "setMetadataURL", payload: layerConf.datasets[0].md_id, dispatch: true},
-                {type: "additionalSingleLayerInfo", payload: undefined, dispatch: true},
-                {type: "Menu/resetMenu", payload: {side: "mainMenu", module: {type: "layerInformation"}}, dispatch: true}
-                // {type: "setActive", payload: false}
+                {type: "additionalSingleLayerInfo", payload: undefined, dispatch: true}
             ], {}, done);
         });
 

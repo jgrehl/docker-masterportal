@@ -28,7 +28,6 @@ describe("src_3_0_0/modules/layerSlider/components/LayerSliderPlayer.vue", () =>
                 replaceByIdInLayerConfig: sinon.stub()
             }
         });
-        store.commit("Modules/LayerSlider/setActive", true);
     });
 
     afterEach(() => {

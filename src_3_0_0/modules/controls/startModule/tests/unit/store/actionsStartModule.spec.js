@@ -12,10 +12,13 @@ const {
 describe("src_3_0_0/modules/controls/startModule/store/actionsStartModule.js", () => {
     let commit,
         dispatch,
+        map,
+        rootGetters,
         rootState,
-        map;
+        type;
 
     beforeEach(() => {
+        type = "root";
         mapCollection.clear();
 
         commit = sinon.spy();
@@ -29,6 +32,15 @@ describe("src_3_0_0/modules/controls/startModule/store/actionsStartModule.js", (
                     type: "xyz"
                 }
             }
+        };
+
+        rootGetters = {
+            "Menu/currentComponent": () => {
+                return {
+                    type: type
+                };
+            },
+            "Menu/expanded": () => false
         };
 
         map = {
@@ -106,7 +118,6 @@ describe("src_3_0_0/modules/controls/startModule/store/actionsStartModule.js", (
             expect(rootState.Modules).to.deep.equals({
                 Abc: {
                     type: "abc",
-                    isVisibleInMenu: false,
                     menuSide: menuSide
                 },
                 Xyz: {
@@ -117,41 +128,44 @@ describe("src_3_0_0/modules/controls/startModule/store/actionsStartModule.js", (
     });
 
     describe("onClick", () => {
-        it("should reset meu and activate menu navigation, if module is active === false", () => {
+        it("should reset meu and activate menu navigation, if module is active", () => {
             const moduleState = {
-                    active: false,
                     type: "selectFeatures",
                     name: "common:xyz"
                 },
                 menuSide = "secondaryMenu";
 
-            onClick({commit}, {moduleState, menuSide});
+            onClick({commit, dispatch, rootGetters}, {moduleState, menuSide});
 
-            expect(commit.calledTwice).to.be.true;
-            expect(commit.firstCall.args[1]).to.deep.equals({
-                side: "secondaryMenu",
+            expect(dispatch.calledOnce).to.be.true;
+            expect(dispatch.firstCall.args[0]).to.equals("Menu/changeCurrentComponent");
+            expect(dispatch.firstCall.args[1]).to.deep.equals({
                 type: "selectFeatures",
+                side: menuSide,
                 props: {
                     name: "common:xyz"
                 }
             });
-            expect(commit.secondCall.args[0]).to.equals("Modules/SelectFeatures/setActive");
-            expect(commit.secondCall.args[1]).to.be.true;
+
+            expect(commit.calledOnce).to.be.true;
+            expect(commit.firstCall.args[0]).to.equals("Menu/toggleMenu");
+            expect(commit.firstCall.args[1]).to.equals(menuSide);
         });
 
-        it("should reset meu and don't activate menu navigation, if module is active === true", () => {
+        it("should reset meu and don't activate menu navigation, if module is not active", () => {
             const moduleState = {
-                    active: true,
                     type: "selectFeatures",
                     name: "common:xyz"
                 },
                 menuSide = "secondaryMenu";
 
-            onClick({commit}, {moduleState, menuSide});
+            type = "selectFeatures";
+
+            onClick({commit, rootGetters}, {moduleState, menuSide});
 
             expect(commit.calledOnce).to.be.true;
-            expect(commit.firstCall.args[0]).to.equals("Modules/SelectFeatures/setActive");
-            expect(commit.firstCall.args[1]).to.be.false;
+            expect(commit.firstCall.args[0]).to.equals("Menu/switchToRoot");
+            expect(commit.firstCall.args[1]).to.equals(menuSide);
         });
     });
 });

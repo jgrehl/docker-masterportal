@@ -48,8 +48,6 @@ describe("src_3_0_0/modules/contact/components/ContactFormular.vue", () => {
                 uiStyle: () => sinon.stub()
             }
         });
-
-        store.commit("Modules/Contact/setActive", true);
     });
 
     afterEach(() => {

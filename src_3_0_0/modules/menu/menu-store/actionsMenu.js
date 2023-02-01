@@ -3,106 +3,70 @@ import upperFirst from "../../../shared/js/utils/upperFirst";
 
 export default {
     /**
-     * Action triggered when a menu element has been clicked.
-     * Add an entry to the navigation and, when the element
-     * was a Folder, focus the first child-element, otherwise,
-     * call the setActive action / mutation of the element.
-     * @param {Object} context Vuex context object.
-     * @param {Array} side Path leading up to the clicked menu element.
-     * @param {Object} type Properties of the element.
-     * @returns {void}
-     */
-    clickedMenuElement ({commit, dispatch}, {name, path, side, type}) {
-
-        if (type) {
-            if (type === "folder") {
-                nextTick(() => {
-                    commit("setCurrentComponent", {type: type, side: side, props: {path: path, name: name}});
-                });
-            }
-            else {
-                commit("setCurrentComponent", {type: type, side: side, props: {name: name}});
-                nextTick(() => {
-                    dispatch("setElementActive", {moduleNamespace: type, isActive: true, side: side});
-                });
-            }
-        }
-    },
-
-    /**
-     * Merge the menu state.
-     * @param {Object} param store context
-     * @param {Object} param.commit the commit
-     * @param {Object} param.state the state
-     * @param {Object} payLoad The payload.
-     * @param {Object} payLoad.mainMenu The main menu setting.
-     * @param {Object} payLoad.secondaryMenu The secondary menu setting.
-     * @returns {void}
-     */
-    mergeMenuState ({commit, state}, {mainMenu, secondaryMenu}) {
-        commit("setMainMenu", Object.assign(state.mainMenu, mainMenu));
-        commit("setSecondaryMenu", Object.assign(state.secondaryMenu, secondaryMenu));
-        // why that?
-        // commit("setEntries", {
-        //     mainMenu: {
-        //         component: "root",
-        //         last: "notne",
-        //         history: []
-        //     },
-        //     secondaryMenu: {
-        //         component: "root",
-        //         last: "none",
-        //         history: []
-        //     }
-        // });
-    },
-
-    /**
-     * Activates the module with the given namespace.
-     * If it utilizes an action for activation, that is dispatched.
-     * Otherwise, commit the mutation.
+     * Change the currently shown Component.
      * @param {Object} param store context
      * @param {Object} param.commit the commit
      * @param {Object} param.dispatch the dispatch
-     * @param {Object} payload Object containing the payload.
-     * @param {String} payload.moduleNamespace Namespace of the module which should be activated.
-     * @param {Boolean} payload.isActive Whether the module should be activated or deactivated.
+     * @param {Object} param.state the state
+     * @param {String} type The current component type.
+     * @param {String} side secondary or main Menu
+     * @param {String} props The props of the current component.
      * @returns {void}
      */
-    setElementActive ({commit, dispatch}, {moduleNamespace, isActive}) {
-        const upperName = moduleNamespace.charAt(0).toUpperCase() + moduleNamespace.slice(1),
-            setActiveName = `Modules/${upperName}/setActive`;
+    changeCurrentComponent ({commit, dispatch, state}, {type, side, props}) {
+        const currentType = state[side].navigation.currentComponent.type;
 
-
-        dispatch("setActiveModuleMouseMapInteractions", {type: moduleNamespace, isActive: isActive});
-
-        if (Object.keys(this._actions).includes(setActiveName)) {
-            dispatch(setActiveName, isActive, {root: true});
-        }
-        else {
-            commit(setActiveName, isActive, {root: true});
+        if (currentType !== type || currentType === "folder" && type === "folder" || currentType === "layerSelection" && type === "layerSelection") {
+            commit("setCurrentComponent", {type, side, props});
+            dispatch("changeCurrentMouseMapInteractionsComponent", {type, side});
         }
     },
 
     /**
-     *
+     * Change the current component with mouse map interactions.
+     * Note: Only one such component can be active at the same time.
+     * If another one is switched on, the other one is closed and reset to "root";
      * @param {Object} param store context
      * @param {Object} param.commit the commit
-     * @param {Object} param.state the state
      * @param {Object} param.rootGetters the rootGetters
-     * @param {Object} payload Object containing the payload.
-     * @param {String} payload.type The module type.
-     * @param {Boolean} payload.isActive Whether the module should be activated or deactivated.
+     * @param {Object} param.state the state
+     * @param {String} type The component type.
+     * @param {String} side secondary or main Menu
      * @returns {void}
      */
-    setActiveModuleMouseMapInteractions ({commit, state, rootGetters}, {type, isActive}) {
-        if (rootGetters[`Modules/${upperFirst(type)}/hasMouseMapInteractions`]) {
-            if (isActive && upperFirst(type) !== state.activeModuleMouseMapInteractions) {
-                commit(`Modules/${state.activeModuleMouseMapInteractions}/setActive`, false, {root: true});
-                commit("setActiveModuleMouseMapInteractions", upperFirst(type));
+    changeCurrentMouseMapInteractionsComponent ({commit, rootGetters, state}, {type, side}) {
+        if (type !== state.currentMouseMapInteractionsComponent && rootGetters[`Modules/${upperFirst(type)}/hasMouseMapInteractions`]) {
+            const otherSide = side === "mainMenu" ? "secondaryMenu" : "mainMenu";
+
+            if (state[otherSide].navigation.currentComponent.type === state.currentMouseMapInteractionsComponent) {
+                commit("switchToRoot", otherSide);
             }
-            else if (!isActive && upperFirst(type) === state.activeModuleMouseMapInteractions) {
-                commit("setActiveModuleMouseMapInteractions", "GetFeatureInfo");
+
+            commit("setCurrentMouseMapInteractionsComponent", type);
+        }
+    },
+
+    /**
+     * Action triggered when a menu element has been clicked.
+     * Add an entry to the navigation and, when the element
+     * was a Folder, focus the first child-element.
+     * @param {Object} param store context
+     * @param {Object} param.dispatch the dispatch
+     * @param {String} name Name of the element.
+     * @param {Array} path Path leading up to the clicked menu element.
+     * @param {String} side The menu side of the element.
+     * @param {String} type type of the element.
+     * @returns {void}
+     */
+    clickedMenuElement ({dispatch}, {name, path, side, type}) {
+        if (type) {
+            if (type === "folder") {
+                nextTick(() => {
+                    dispatch("changeCurrentComponent", {type: type, side: side, props: {path: path, name: name}});
+                });
+            }
+            else {
+                dispatch("changeCurrentComponent", {type: type, side: side, props: {name: name}});
             }
         }
     },
@@ -110,28 +74,21 @@ export default {
     /**
      * Properly deactivates an element if it is not a folder
      * and removes its entry from the navigation.
-     * @param {Object} context Vuex context object.
+     * @param {Object} param store context
+     * @param {Object} param.commit the commit
+     * @param {Object} param.dispatch the dispatch
+     * @param {Object} param.getters the getters
+     * @param {Object} param.state the state
      * @param {String} side Side on which the navigation action occurred.
      * @returns {void}
      */
-    navigateBack ({commit, state, dispatch, getters}, side) {
-        const current = getters[side].navigation.currentComponent.type;
-
-        if (current !== "folder") {
-            dispatch("setElementActive", {moduleNamespace: current, isActive: false, side: side});
-        }
+    navigateBack ({commit, dispatch, getters, state}, side) {
         nextTick(() => {
+            if (getters.currentComponent(side).type === state.currentMouseMapInteractionsComponent && getters.currentComponent(side).type !== state.defaultComponent) {
+                dispatch("changeCurrentMouseMapInteractionsComponent", {type: state.defaultComponent, side});
+            }
+
             commit("switchToPreviousComponent", side);
-
-            nextTick(() => {
-                const props = state[side].navigation.currentComponent.props;
-
-                if (typeof props?.navigateBackCommits === "object") {
-                    Object.entries(props.navigateBackCommits).forEach(([key, value]) => {
-                        commit(key, value, {root: true});
-                    });
-                }
-            });
         });
     }
 };

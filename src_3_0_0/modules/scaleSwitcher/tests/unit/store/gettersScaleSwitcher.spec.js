@@ -6,7 +6,6 @@ const {
     icon,
     name,
     type,
-    active,
     hasMouseMapInteractions,
     supportedDevices,
     supportedMapModes
@@ -14,9 +13,6 @@ const {
 
 describe("src_3_0_0/modules/scaleSwitcher/store/gettersScaleSwitcher.js", () => {
     describe("ScaleSwitcher getters", () => {
-        it("returns the active from state", () => {
-            expect(active(stateScaleSwitcher)).to.be.false;
-        });
         it("returns the icon from state", () => {
             expect(icon(stateScaleSwitcher)).to.equals("bi-arrows-angle-contract");
         });

@@ -1,7 +1,6 @@
 /**
  * User type definition
  * @typedef {Object} LayerSliderState
- * @property {Boolean} active If true, LayerSlider will rendered.
  * @property {String} description The description that should be shown in the button in the menu.
  * @property {String} icon Icon of the layer slider.
  * @property {Objet[]} layerIds The configured layer with their ids and titles.
@@ -21,7 +20,6 @@
  * @property {String} sliderTicks Slider ticks. Show the positions of the layers in the slider. Used for slider input.
  */
 const state = {
-    active: false,
     description: "",
     icon: "bi-collection-play",
     layerIds: [],

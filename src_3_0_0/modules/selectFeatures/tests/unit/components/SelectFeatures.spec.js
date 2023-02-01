@@ -9,18 +9,7 @@ import sinon from "sinon";
 config.global.mocks.$t = key => key;
 
 describe("src/modules/selectFeatures/components/SelectFeatures.vue", () => {
-    const mockConfigJson = {
-            Portalconfig: {
-                secondaryMenu: {
-                    sections: [
-                        {
-                            "type": "selectFeatures"
-                        }
-                    ]
-                }
-            }
-        },
-        mockMapActions = {
+    const mockMapActions = {
             addInteraction: sinon.stub(),
             removeInteraction: sinon.stub()
         },
@@ -68,41 +57,23 @@ describe("src/modules/selectFeatures/components/SelectFeatures.vue", () => {
             getters: {
                 uiStyle: () => true,
                 treeType: () => "light"
-            },
-            state: {
-                configJson: mockConfigJson
             }
         });
         mapCollection.clear();
         mapCollection.addMap(map, "2D");
-        store.commit("Modules/SelectFeatures/setActive", true);
     });
 
     afterEach(() => {
         sinon.restore();
     });
 
-    it("renders the SelectFeatures tool if active", () => {
+    it("renders the SelectFeatures tool if mounted", () => {
         const wrapper = shallowMount(SelectFeaturesComponent, {global: {
             plugins: [store]
         }});
 
         expect(wrapper.find("#selectFeatures").exists()).to.be.true;
         expect(wrapper.find(".selectFeaturesDefaultMessage").exists()).to.be.true;
-    });
-
-    it("do not render the SelectFeatures tool if not active", async () => {
-        const wrapper = shallowMount(SelectFeaturesComponent, {global: {
-                plugins: [store]
-            }}),
-            spyRemoveInteractions = sinon.spy(wrapper.vm, "removeInteractions");
-
-        await store.commit("Modules/SelectFeatures/setActive", false);
-        expect(spyRemoveInteractions.calledOnce).to.be.true;
-
-        expect(wrapper.find("#selectFeatures").exists()).to.be.false;
-
-        spyRemoveInteractions.restore();
     });
 
     it("renders the SelectFeatures-Table if it has data", async () => {
