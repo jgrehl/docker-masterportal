@@ -51,11 +51,9 @@ export default {
          * @returns {void}
          */
         mapMode () {
-            if (this.active) {
-                this.setSupplyCoordInactive();
-                this.removeInputActions();
-                this.setSupplyCoordActive();
-            }
+            this.setSupplyCoordInactive();
+            this.removeInputActions();
+            this.setSupplyCoordActive();
         }
     },
     unmounted () {
@@ -392,10 +390,7 @@ export default {
 </script>
 
 <template lang="html">
-    <div
-        v-if="active"
-        id="coord-toolkit"
-    >
+    <div id="coord-toolkit">
         <form
             class="form-horizontal"
             role="form"

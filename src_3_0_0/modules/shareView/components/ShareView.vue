@@ -19,7 +19,7 @@ export default {
         };
     },
     computed: {
-        ...mapGetters("Modules/ShareView", ["active", "url"]),
+        ...mapGetters("Modules/ShareView", ["url"]),
         ...mapGetters("Maps", ["getView"]),
         ...mapGetters(["visibleLayerConfigs", "isMobile"]),
 
@@ -95,10 +95,7 @@ export default {
 </script>
 
 <template lang="html">
-    <div
-        v-if="active"
-        id="share-view"
-    >
+    <div id="share-view">
         <h2>{{ $t("modules.tools.shareView.shareHeadline") }}</h2>
         <div v-if="isMobile">
             <button

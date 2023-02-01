@@ -16,7 +16,6 @@ export default {
     },
     computed: {
         ...mapGetters("Modules/WfsSearch", [
-            "active",
             "name",
             "instances",
             "userHelp",
@@ -62,7 +61,7 @@ export default {
     },
     watch: {
         currentLocale () {
-            if (this.active && this.userHelp !== "hide") {
+            if (this.userHelp !== "hide") {
                 createUserHelp(this.currentInstance.literals);
             }
         }
@@ -277,13 +276,13 @@ export default {
 
 <style lang="scss" scoped>
 @import "~variables";
-.btn {
-    margin-top: 10px;
-}
-.form-group > span {
-    display: inline-block;
-}
-.title {
-        font-size: $font-size-base;
-}
+    .btn {
+        margin-top: 10px;
+    }
+    .form-group > span {
+        display: inline-block;
+    }
+    .title {
+            font-size: $font-size-base;
+    }
 </style>
