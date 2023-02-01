@@ -43,7 +43,6 @@ describe("src_3_0_0/modules/shareView/components/ShareView.vue", () => {
                         ShareView: {
                             namespaced: true,
                             getters: {
-                                active: () => true,
                                 url: () => sinon.stub()
                             }
                         }

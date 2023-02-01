@@ -27,7 +27,6 @@ describe("src_3_0_0/modules/openConfig/components/OpenConfig.vue", () => {
                         OpenConfig: {
                             namespaced: true,
                             getters: {
-                                active: () => true,
                                 icon: () => sinon.stub()
                             }
                         }
