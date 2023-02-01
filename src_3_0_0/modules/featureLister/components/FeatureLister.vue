@@ -14,7 +14,7 @@ export default {
     components: {
         FlatButton
     },
-    data: function () {
+    data () {
         return {
             defaultTabClass: "",
             activeTabClass: "active",
@@ -144,206 +144,202 @@ export default {
 </script>
 
 <template lang="html">
-    <div>
+    <div id="feature-lister">
+        <ul class="nav nav-tabs">
+            <li
+                id="module-feature-lister-themeChooser"
+                role="presentation"
+                class="nav-item"
+            >
+                <a
+                    href="#"
+                    class="nav-link"
+                    :class="themeTabClasses"
+                    @click.prevent="switchToThemes()"
+                >{{ $t("modules.tools.featureLister.chooseTheme") }}</a>
+            </li>
+            <li
+                id="module-feature-lister-list"
+                role="presentation"
+                class="nav-item"
+            >
+                <a
+                    href="#"
+                    class="nav-link"
+                    :class="listTabClasses"
+                    @click.prevent="switchToList(layer)"
+                >{{ $t("modules.tools.featureLister.list") }}</a>
+            </li>
+            <li
+                id="module-feature-lister-details"
+                role="presentation"
+                class="nav-item"
+            >
+                <a
+                    href="#"
+                    class="nav-link"
+                    :class="detailsTabClasses"
+                    @click.prevent="switchToDetails()"
+                >{{ $t("modules.tools.featureLister.details") }}</a>
+            </li>
+        </ul>
         <div
-            id="feature-lister"
+            v-if="layerListView"
+            id="feature-lister-themes"
+            class="feature-lister-themes panel panel-default"
         >
-            <ul class="nav nav-tabs">
+            <div
+                id="feature-lister-themes-header"
+                class="panel-heading"
+            >
+                {{ $t("modules.tools.featureLister.visibleVectorLayers") }}
+            </div>
+            <ul
+                v-for="layer in visibleVectorLayers"
+                id="feature-lister-themes-ul"
+                :key="'module-feature-lister-' + layer.id"
+                class="nav flex-column"
+            >
                 <li
-                    id="module-feature-lister-themeChooser"
-                    role="presentation"
+                    :id="'feature-lister-layer-' + layer.id"
                     class="nav-item"
+                    role="presentation"
                 >
                     <a
                         href="#"
                         class="nav-link"
-                        :class="themeTabClasses"
-                        @click.prevent="switchToThemes()"
-                    >{{ $t("modules.tools.featureLister.chooseTheme") }}</a>
-                </li>
-                <li
-                    id="module-feature-lister-list"
-                    role="presentation"
-                    class="nav-item"
-                >
-                    <a
-                        href="#"
-                        class="nav-link"
-                        :class="listTabClasses"
                         @click.prevent="switchToList(layer)"
-                    >{{ $t("modules.tools.featureLister.list") }}</a>
-                </li>
-                <li
-                    id="module-feature-lister-details"
-                    role="presentation"
-                    class="nav-item"
-                >
-                    <a
-                        href="#"
-                        class="nav-link"
-                        :class="detailsTabClasses"
-                        @click.prevent="switchToDetails()"
-                    >{{ $t("modules.tools.featureLister.details") }}</a>
+                    >{{ layer.name }}</a>
                 </li>
             </ul>
+        </div>
+        <template v-if="featureListView">
             <div
-                v-if="layerListView"
-                id="feature-lister-themes"
-                class="feature-lister-themes panel panel-default"
+                id="feature-lister-list-header"
+                class="panel-heading"
+            >
+                <span>{{ layer.name }}</span>
+            </div>
+            <div
+                id="feature-lister-list"
+                class="panel panel-default feature-lister-list"
             >
                 <div
-                    id="feature-lister-themes-header"
-                    class="panel-heading"
+                    class="table-responsive feature-lister-list-table-container"
                 >
-                    {{ $t("modules.tools.featureLister.visibleVectorLayers") }}
-                </div>
-                <ul
-                    v-for="layer in visibleVectorLayers"
-                    id="feature-lister-themes-ul"
-                    :key="'module-feature-lister-' + layer.id"
-                    class="nav flex-column"
-                >
-                    <li
-                        :id="'feature-lister-layer-' + layer.id"
-                        class="nav-item"
-                        role="presentation"
+                    <table
+                        id="feature-lister-list-table"
+                        class="table table-striped table-hover table-condensed table-bordered"
                     >
-                        <a
-                            href="#"
-                            class="nav-link"
-                            @click.prevent="switchToList(layer)"
-                        >{{ layer.name }}</a>
+                        <tbody>
+                            <tr class="feature-lister-list-table-tr">
+                                <th
+                                    v-for="(header, index) in headers"
+                                    :key="'module-feature-lister-' + index"
+                                    class="feature-lister-list-table-th"
+                                >
+                                    <span class="bi-sort-alpha-down" />
+                                    {{ header.value }}
+                                </th>
+                            </tr>
+                            <tr
+                                v-for="(feature, index) in featureProperties"
+                                :id="'module-feature-lister-feature-' + index"
+                                :key="'module-feature-lister-' + index"
+                                class="feature-lister-list-table-tr"
+                                @click="clickOnFeature(index)"
+                                @mouseover="hoverOverFeature(index)"
+                                @focus="hoverOverFeature(index)"
+                            >
+                                <template v-if="index < shownFeatures">
+                                    <td
+                                        v-for="(property, i) in feature"
+                                        :key="'module-feature-lister-' + i"
+                                        class="feature-lister-list-table-td"
+                                    >
+                                        {{ property }}
+                                    </td>
+                                </template>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div
+                    class="panel-footer feature-lister-list-footer"
+                >
+                    <FlatButton
+                        id="module-feature-lister-show-more"
+                        aria-label="$t('modules.tools.featureLister.more')"
+                        type="button"
+                        :text="$t('modules.tools.featureLister.more')"
+                        :icon="'bi-plus'"
+                        :disabled="featureCount <= maxFeatures || shownFeatures === featureCount"
+                        :interaction="() => showMore()"
+                    />
+                    <p
+                        class="navbar-text feature-lister-list-message"
+                    >
+                        {{ $t("modules.tools.featureLister.key", {shownFeatures, featureCount}) }}
+                    </p>
+                </div>
+            </div>
+        </template>
+        <template v-if="featureDetailView">
+            <div
+                id="feature-lister-details-header"
+                class="panel-heading"
+            >
+                <span> {{ $t("modules.tools.featureLister.detailsOfSelected") }} </span>
+            </div>
+            <div
+                id="feature-lister-details"
+                class="panel panel-default feature-lister-details"
+            >
+                <ul
+                    v-for="(feature, key) in featureDetails"
+                    :key="'module-feature-lister-' + key"
+                    class="list-group feature-lister-details-ul"
+                >
+                    <li class="list-group-item feature-lister-details-li">
+                        <strong>
+                            {{ beautifyKey(feature[0]) }}
+                        </strong>
+                    </li>
+                    <li class="list-group-item feature-lister-details-li">
+                        <p v-if="isWebLink(feature[1])">
+                            <a
+                                :href="feature[1]"
+                                target="_blank"
+                            >{{ feature[1] }}</a>
+                        </p>
+                        <p v-else-if="isPhoneNumber(feature[1])">
+                            <a :href="getPhoneNumberAsWebLink(feature[1])">{{ feature[1] }}</a>
+                        </p>
+                        <p v-else-if="isEmailAddress(feature[1])">
+                            <a :href="`mailto:${feature[1]}`">{{ feature[1] }}</a>
+                        </p>
+                        <p
+                            v-else-if="typeof feature[1] === 'string' && feature[1].includes(';')"
+                        >
+                            <span v-html="toBold(feature[1], key)" />
+                        </p>
+                        <p
+                            v-else-if="typeof feature[1] === 'string' && feature[1].includes('|')"
+                        >
+                            <span v-html="removeVerticalBar(feature[1])" />
+                        </p>
+                        <p
+                            v-else-if="typeof feature[1] === 'string' && feature[1].includes('<br>')"
+                        >
+                            <span v-html="feature[1]" />
+                        </p>
+                        <p v-else>
+                            {{ feature[1] }}
+                        </p>
                     </li>
                 </ul>
             </div>
-            <template v-if="featureListView">
-                <div
-                    id="feature-lister-list-header"
-                    class="panel-heading"
-                >
-                    <span>{{ layer.name }}</span>
-                </div>
-                <div
-                    id="feature-lister-list"
-                    class="panel panel-default feature-lister-list"
-                >
-                    <div
-                        class="table-responsive feature-lister-list-table-container"
-                    >
-                        <table
-                            id="feature-lister-list-table"
-                            class="table table-striped table-hover table-condensed table-bordered"
-                        >
-                            <tbody>
-                                <tr class="feature-lister-list-table-tr">
-                                    <th
-                                        v-for="(header, index) in headers"
-                                        :key="'module-feature-lister-' + index"
-                                        class="feature-lister-list-table-th"
-                                    >
-                                        <span class="bi-sort-alpha-down" />
-                                        {{ header.value }}
-                                    </th>
-                                </tr>
-                                <tr
-                                    v-for="(feature, index) in featureProperties"
-                                    :id="'module-feature-lister-feature-' + index"
-                                    :key="'module-feature-lister-' + index"
-                                    class="feature-lister-list-table-tr"
-                                    @click="clickOnFeature(index)"
-                                    @mouseover="hoverOverFeature(index)"
-                                    @focus="hoverOverFeature(index)"
-                                >
-                                    <template v-if="index < shownFeatures">
-                                        <td
-                                            v-for="(property, i) in feature"
-                                            :key="'module-feature-lister-' + i"
-                                            class="feature-lister-list-table-td"
-                                        >
-                                            {{ property }}
-                                        </td>
-                                    </template>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div
-                        class="panel-footer feature-lister-list-footer"
-                    >
-                        <FlatButton
-                            id="module-feature-lister-show-more"
-                            aria-label="$t('modules.tools.featureLister.more')"
-                            type="button"
-                            :text="$t('modules.tools.featureLister.more')"
-                            :icon="'bi-plus'"
-                            :disabled="featureCount <= maxFeatures || shownFeatures === featureCount"
-                            :interaction="() => showMore()"
-                        />
-                        <p
-                            class="navbar-text feature-lister-list-message"
-                        >
-                            {{ $t("modules.tools.featureLister.key", {shownFeatures, featureCount}) }}
-                        </p>
-                    </div>
-                </div>
-            </template>
-            <template v-if="featureDetailView">
-                <div
-                    id="feature-lister-details-header"
-                    class="panel-heading"
-                >
-                    <span> {{ $t("modules.tools.featureLister.detailsOfSelected") }} </span>
-                </div>
-                <div
-                    id="feature-lister-details"
-                    class="panel panel-default feature-lister-details"
-                >
-                    <ul
-                        v-for="(feature, key) in featureDetails"
-                        :key="'module-feature-lister-' + key"
-                        class="list-group feature-lister-details-ul"
-                    >
-                        <li class="list-group-item feature-lister-details-li">
-                            <strong>
-                                {{ beautifyKey(feature[0]) }}
-                            </strong>
-                        </li>
-                        <li class="list-group-item feature-lister-details-li">
-                            <p v-if="isWebLink(feature[1])">
-                                <a
-                                    :href="feature[1]"
-                                    target="_blank"
-                                >{{ feature[1] }}</a>
-                            </p>
-                            <p v-else-if="isPhoneNumber(feature[1])">
-                                <a :href="getPhoneNumberAsWebLink(feature[1])">{{ feature[1] }}</a>
-                            </p>
-                            <p v-else-if="isEmailAddress(feature[1])">
-                                <a :href="`mailto:${feature[1]}`">{{ feature[1] }}</a>
-                            </p>
-                            <p
-                                v-else-if="typeof feature[1] === 'string' && feature[1].includes(';')"
-                            >
-                                <span v-html="toBold(feature[1], key)" />
-                            </p>
-                            <p
-                                v-else-if="typeof feature[1] === 'string' && feature[1].includes('|')"
-                            >
-                                <span v-html="removeVerticalBar(feature[1])" />
-                            </p>
-                            <p
-                                v-else-if="typeof feature[1] === 'string' && feature[1].includes('<br>')"
-                            >
-                                <span v-html="feature[1]" />
-                            </p>
-                            <p v-else>
-                                {{ feature[1] }}
-                            </p>
-                        </li>
-                    </ul>
-                </div>
-            </template>
-        </div>
+        </template>
     </div>
 </template>
 

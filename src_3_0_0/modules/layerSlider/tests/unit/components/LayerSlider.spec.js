@@ -33,7 +33,6 @@ describe("src_3_0_0/modules/layerSlider/components/LayerSlider.vue", () => {
                 replaceByIdInLayerConfig: sinon.stub()
             }
         });
-        store.commit("Modules/LayerSlider/setActive", true);
     });
 
     afterEach(() => {

@@ -16,7 +16,7 @@ export default {
         };
     },
     computed: {
-        ...mapGetters("Modules/Routing", ["active", "activeRoutingToolOption", "routingToolOptions", "taskHandler", "filteredRoutingToolOptions"]),
+        ...mapGetters("Modules/Routing", ["activeRoutingToolOption", "routingToolOptions", "taskHandler", "filteredRoutingToolOptions"]),
         ...mapGetters("Modules/Routing/Directions", ["isLoadingDirections"]),
         ...mapGetters("Modules/Routing/Isochrones", ["isLoadingIsochrones"]),
         /**
@@ -48,86 +48,56 @@ export default {
                 return;
             }
             this.setActiveRoutingToolOption(option);
-        },
-        /**
-         * Toggles the quickHelp module with the routing option
-         * @returns {void}
-         */
-        toggleHelp () {
-            if (!store.getters["QuickHelp/active"]) {
-                store.commit("QuickHelp/setQuickHelpKey", "routing");
-                store.commit("QuickHelp/setActive", true);
-            }
-            else {
-                store.commit("QuickHelp/setActive", false);
-            }
         }
     }
 };
 </script>
 
 <template lang="html">
-    <div id="#toolBody">
+    <div id="routing">
         <div
-            v-if="active"
-            id="routing"
+            class="d-flex"
         >
             <div
-                class="d-flex"
+                v-for="routingToolOption of filteredRoutingToolOptions"
+                :key="routingToolOption.id"
+                :style="{
+                    width: `calc(100% / ${filteredRoutingToolOptions.length})`,
+                }"
+                :class="[
+                    'routingtooltab d-flex justify-content-center py-3 pointer',
+                    activeRoutingToolOption === routingToolOption.id ? 'active' : '',
+                ]"
+                @click="changeActiveRoutingToolOption(routingToolOption.id)"
+                @keydown.enter="changeActiveRoutingToolOption(routingToolOption.id)"
             >
-                <div
-                    v-for="routingToolOption of filteredRoutingToolOptions"
-                    :key="routingToolOption.id"
-                    :style="{
-                        width: `calc(100% / ${filteredRoutingToolOptions.length})`,
-                    }"
-                    :class="[
-                        'routingtooltab d-flex justify-content-center py-3 pointer',
-                        activeRoutingToolOption === routingToolOption.id ? 'active' : '',
-                    ]"
-                    @click="changeActiveRoutingToolOption(routingToolOption.id)"
-                    @keydown.enter="changeActiveRoutingToolOption(routingToolOption.id)"
-                >
-                    <span class="bootstrap-icon">
-                        <i class="bi-three-dots-vertical" />
-                    </span>
-                    <span>{{ $t("common:modules.tools.routing.tabs." + routingToolOption.id) }}</span>
-                    <RoutingLoadingSpinner
-                        v-if="(routingToolOption.id === 'DIRECTIONS' && isLoadingDirections) || (routingToolOption.id === 'ISOCHRONES' && isLoadingIsochrones)"
-                        class="ms-2"
-                    />
-                </div>
-
-                <div
-                    class="d-flex flex-column justify-content-center ms-2"
-                    :title="$t('common:modules.tools.routing.helpTooltip')"
-                    @click="toggleHelp()"
-                    @keydown.enter="toggleHelp()"
-                >
-                    <span class="bootstrap-icon">
-                        <i class="bi-question-circle-fill" />
-                    </span>
-                </div>
+                <span class="bootstrap-icon">
+                    <i class="bi-three-dots-vertical" />
+                </span>
+                <span>{{ $t("common:modules.tools.routing.tabs." + routingToolOption.id) }}</span>
+                <RoutingLoadingSpinner
+                    v-if="(routingToolOption.id === 'DIRECTIONS' && isLoadingDirections) || (routingToolOption.id === 'ISOCHRONES' && isLoadingIsochrones)"
+                    class="ms-2"
+                />
             </div>
-
-
-            <hr>
-
-            <component :is="activeRoutingToolOptionComponent" />
         </div>
+
+        <hr>
+
+        <component :is="activeRoutingToolOptionComponent" />
     </div>
 </template>
 
 <style lang="scss" scoped>
 @import "~variables";
 
-.pointer {
-  cursor: pointer;
-}
-.routingtooltab.active {
-  background: #dbdbdb;
-}
-.bi-question-circle-fill {
-    font-size: $font_size_huge;
-}
+    .pointer {
+        cursor: pointer;
+    }
+    .routingtooltab.active {
+        background: #dbdbdb;
+    }
+    .bi-question-circle-fill {
+        font-size: $font_size_huge;
+    }
 </style>

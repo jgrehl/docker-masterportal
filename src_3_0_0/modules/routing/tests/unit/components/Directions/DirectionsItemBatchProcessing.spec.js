@@ -42,11 +42,9 @@ describe("src_3_0_0/modules/routing/components/Directions/DirectionsItemBatchPro
                         }
                     }
                 }
-            },
-            state: {
             }
         });
-        store.commit("Modules/Routing/setActive", true);
+
         props = {
             settings: {
                 speedProfile: "CAR",
