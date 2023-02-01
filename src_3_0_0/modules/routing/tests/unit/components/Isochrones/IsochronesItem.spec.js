@@ -75,8 +75,6 @@ describe("src_3_0_0/modules/routing/components/Isochrones/IsochronesItem.vue", (
                 }
             }
         });
-        store.commit("Modules/Routing/setActive", true);
-
     });
 
     afterEach(() => {

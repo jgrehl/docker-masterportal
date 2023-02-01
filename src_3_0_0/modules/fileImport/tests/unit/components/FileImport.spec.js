@@ -7,20 +7,8 @@ import sinon from "sinon";
 config.global.mocks.$t = key => key;
 
 describe("src_3_0_0/modules/fileImport/components/FileImport.vue", () => {
-    const
-        mockConfigJson = {
-            Portalconfig: {
-                navigationSecondary: {
-                    sections: [
-                        {
-                            "type": "fileImport"
-                        }
-                    ]
-                }
-            }
-        };
-
-    let store, wrapper;
+    let store,
+        wrapper;
 
     beforeEach(() => {
         mapCollection.clear();
@@ -41,7 +29,6 @@ describe("src_3_0_0/modules/fileImport/components/FileImport.vue", () => {
                                         getSource: () => ({getFeatures: () => []})
                                     };
                                 },
-                                active: () => true,
                                 importedFileNames: () => [],
                                 selectedFiletype: () => "auto",
                                 featureExtents: () => ({
@@ -55,16 +42,7 @@ describe("src_3_0_0/modules/fileImport/components/FileImport.vue", () => {
                             }
                         }
                     }
-                },
-                Alerting: {
-                    namespaced: true,
-                    actions: {
-                        addSingleAlert: sinon.stub()
-                    }
                 }
-            },
-            state: {
-                configJson: mockConfigJson
             }
         });
     });
@@ -81,6 +59,7 @@ describe("src_3_0_0/modules/fileImport/components/FileImport.vue", () => {
 
         expect(wrapper.find("#file-import").exists()).to.be.true;
     });
+
     it("sets focus to first input control", async () => {
         const elem = document.createElement("div");
 
@@ -97,6 +76,7 @@ describe("src_3_0_0/modules/fileImport/components/FileImport.vue", () => {
         await wrapper.vm.$nextTick();
         expect(wrapper.find(".btn-secondary").element).to.equal(document.activeElement);
     });
+
     it("modifies the imported file names", () => {
         const fileNames = ["file1", "file3"];
 
@@ -111,29 +91,21 @@ describe("src_3_0_0/modules/fileImport/components/FileImport.vue", () => {
                         FileImport: {
                             namespaced: true,
                             getters: {
+                                featureExtents: sinon.stub(),
                                 layer: () => {
                                     return {
                                         getSource: () => ({getFeatures: () => []})
                                     };
                                 },
-                                active: () => true,
                                 importedFileNames: () => []
                             },
                             mutations: {
-                                setImportedFileNames: sinon.stub()
+                                setImportedFileNames: sinon.stub(),
+                                setFeatureExtents: sinon.stub()
                             }
                         }
                     }
-                },
-                Alerting: {
-                    namespaced: true,
-                    actions: {
-                        addSingleAlert: sinon.stub()
-                    }
                 }
-            },
-            state: {
-                configJson: mockConfigJson
             }
         });
 
@@ -145,6 +117,7 @@ describe("src_3_0_0/modules/fileImport/components/FileImport.vue", () => {
 
         expect(wrapper.vm.importedFileNames).to.deep.equal([]);
     });
+
     it("modifies the imported file extent", () => {
         const featureExtents = {
                 "file1": [0, 1, 2, 3],

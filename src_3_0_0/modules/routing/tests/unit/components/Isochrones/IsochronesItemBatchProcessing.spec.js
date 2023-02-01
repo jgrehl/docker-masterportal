@@ -43,11 +43,9 @@ describe("src_3_0_0/modules/routing/components/Isochrones/IsochronesItemBatchPro
                         }
                     }
                 }
-            },
-            state: {
             }
         });
-        store.commit("Modules/Routing/setActive", true);
+
         props = {
             settings: {
                 batchProcessing: {

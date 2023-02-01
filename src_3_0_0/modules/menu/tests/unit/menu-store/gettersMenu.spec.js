@@ -4,9 +4,8 @@ import gettersMenu from "../../../menu-store/gettersMenu";
 import stateMenu from "../../../menu-store/stateMenu";
 import idx from "../../../../../shared/js/utils/idx";
 
-describe.skip("src_3_0_0/modules/menu/menu-store/gettersMenu.js", () => {
-    const component = Symbol("Am component"),
-        mainMenuSymbol = Symbol("mainMenu"),
+describe("src_3_0_0/modules/menu/menu-store/gettersMenu.js", () => {
+    const mainMenuSymbol = Symbol("mainMenu"),
         secondaryMenuSymbol = Symbol("secondaryMenu");
     let consoleErrorSpy,
         getters,
@@ -38,56 +37,84 @@ describe.skip("src_3_0_0/modules/menu/menu-store/gettersMenu.js", () => {
 
     afterEach(sinon.restore);
 
-    describe("componentFromPath", () => {
-        const type = "component";
-        let objectFromPathFake, side;
-
+    describe("currentComponent", () => {
         beforeEach(() => {
-            state = {};
-            objectFromPathFake = sinon.fake.returns({type});
-            rootGetters = {
-                "Modules/componentMap": {component: component}
+            state = {
+                mainMenu: {
+                    navigation: {
+                        currentComponent: "abc"
+                    }
+                },
+                secondaryMenu: {
+                    navigation: {
+                        currentComponent: "xyz"
+                    }
+                }
             };
-            getters.objectFromPath = objectFromPathFake;
         });
 
-        it("should return a component from the componentMap if the parameter side equals 'mainMenu'", () => {
-            side = "mainMenu";
+        it("should return the current component for mainMenu", () => {
+            const side = "mainMenu",
+                currentComponent = gettersMenu.currentComponent(state)(side);
 
-            expect(gettersMenu.componentFromPath(state, getters, undefined, rootGetters)(side)).to.equal(component);
-            expect(objectFromPathFake.calledOnce).to.be.true;
-            expect(objectFromPathFake.firstCall.args.length).to.equal(2);
-            expect(objectFromPathFake.firstCall.args[0]).to.equal(side);
-            expect(objectFromPathFake.firstCall.args[1]).to.equal("last");
+            expect(currentComponent).to.equal("abc");
         });
-        it("should return a component from the componentMap if the parameter side equals 'secondaryMenu'", () => {
-            side = "secondaryMenu";
 
-            expect(gettersMenu.componentFromPath(state, getters, undefined, rootGetters)(side)).to.equal(component);
-            expect(objectFromPathFake.calledOnce).to.be.true;
-            expect(objectFromPathFake.firstCall.args.length).to.equal(2);
-            expect(objectFromPathFake.firstCall.args[0]).to.equal(side);
-            expect(objectFromPathFake.firstCall.args[1]).to.equal("last");
+        it("should return the current component for secondaryMenu", () => {
+            const side = "secondaryMenu",
+                currentComponent = gettersMenu.currentComponent(state)(side);
+
+            expect(currentComponent).to.equal("xyz");
         });
-        it("should return null and log an error if the given side does not equal 'mainMenu' or 'secondaryMenu'", () => {
-            side = "newMenu";
+    });
 
-            expect(gettersMenu.componentFromPath(state, getters)(side)).to.equal(null);
-            expect(objectFromPathFake.notCalled).to.be.true;
-            expect(consoleErrorSpy.calledOnce).to.be.true;
-            expect(consoleErrorSpy.firstCall.args.length).to.equal(1);
-            expect(consoleErrorSpy.firstCall.args[0]).to.equal(`Menu.componentMap: The given menu side ${side} is not allowed. Please use "mainMenu" or "secondaryMenu" instead.`);
+    describe("currentFolderPath", () => {
+        beforeEach(() => {
+            state = {
+                mainMenu: {
+                    navigation: {
+                        currentComponent: {
+                            props: {
+                                path: [1, 2, 3]
+                            }
+                        }
+                    }
+                },
+                secondaryMenu: {
+                    navigation: {
+                        currentComponent: {
+                            props: {
+                                path: ["x", "y", "z"]
+                            }
+                        }
+                    }
+                }
+            };
+        });
+
+        it("should return the current folder path for mainMenu", () => {
+            const side = "mainMenu",
+                currentFolderPath = gettersMenu.currentFolderPath(state)(side);
+
+            expect(currentFolderPath).to.deep.equal([1, 2, 3]);
+        });
+
+        it("should return the current folder path for secondaryMenu", () => {
+            const side = "secondaryMenu",
+                currentFolderPath = gettersMenu.currentFolderPath(state)(side);
+
+            expect(currentFolderPath).to.deep.equal(["x", "y", "z"]);
         });
     });
 
     describe("deactivateModule", () => {
         beforeEach(() => {
             state = {
-                activeModuleMouseMapInteractions: "GetFeatureInfo"
+                activeModuleMouseMapInteractions: "getFeatureInfo"
             };
         });
 
-        it("should return true, if module hasMouseMapInteractions === true and is not equal activeModuleMouseMapInteractions", () => {
+        it("should return true, if module hasMouseMapInteractions === true and is not equal currentMouseMapInteractionsComponent", () => {
             const type = "measure";
 
             rootGetters = {
@@ -97,7 +124,7 @@ describe.skip("src_3_0_0/modules/menu/menu-store/gettersMenu.js", () => {
             expect(gettersMenu.deactivateModule(state, undefined, undefined, rootGetters)(type)).to.be.true;
         });
 
-        it("should return false, if module hasMouseMapInteractions === false and is not equal activeModuleMouseMapInteractions", () => {
+        it("should return false, if module hasMouseMapInteractions === false and is not equal currentMouseMapInteractionsComponent", () => {
             const type = "measure";
 
             rootGetters = {
@@ -105,6 +132,33 @@ describe.skip("src_3_0_0/modules/menu/menu-store/gettersMenu.js", () => {
             };
 
             expect(gettersMenu.deactivateModule(state, undefined, undefined, rootGetters)(type)).to.be.false;
+        });
+    });
+
+    describe("expanded", () => {
+        beforeEach(() => {
+            state = {
+                mainMenu: {
+                    expanded: true
+                },
+                secondaryMenu: {
+                    expanded: false
+                }
+            };
+        });
+
+        it("should return the expanded for mainMenu", () => {
+            const side = "mainMenu",
+                expanded = gettersMenu.expanded(state)(side);
+
+            expect(expanded).to.be.true;
+        });
+
+        it("should return the expandedfor secondaryMenu", () => {
+            const side = "secondaryMenu",
+                expanded = gettersMenu.expanded(state)(side);
+
+            expect(expanded).to.be.false;
         });
     });
 
@@ -161,107 +215,6 @@ describe.skip("src_3_0_0/modules/menu/menu-store/gettersMenu.js", () => {
         });
         it("should return the default icon if it isn't configured on mainMenu", () => {
             expect(gettersMenu.mainToggleButtonIcon(stateMenu)).to.equal("bi-list");
-        });
-    });
-
-    describe("objectFromPath", () => {
-        const foundObject = Symbol("am object"),
-            lastEntrySymbol = Symbol("last entry"),
-            previousEntrySymbol = Symbol("previous entry");
-        let entry, lastEntryFake, previousEntryFake, sectionFake, side;
-
-        beforeEach(() => {
-            lastEntryFake = sinon.fake.returns(lastEntrySymbol);
-            rootGetters["Menu/Navigation/lastEntry"] = lastEntryFake;
-            previousEntryFake = sinon.fake.returns(previousEntrySymbol);
-            rootGetters["Menu/Navigation/previousEntry"] = previousEntryFake;
-            sectionFake = sinon.fake.returns(foundObject);
-            getters.section = sectionFake;
-        });
-
-        it("should return the last entry of the menuNavigation for the mainMenu if the respective values are set", () => {
-            entry = "last";
-            side = "mainMenu";
-
-            expect(gettersMenu.objectFromPath(undefined, getters, undefined, rootGetters)(side, entry)).to.equal(foundObject);
-            expect(sectionFake.calledOnce).to.be.true;
-            expect(sectionFake.firstCall.args.length).to.equal(1);
-            expect(sectionFake.firstCall.args[0]).to.equal(lastEntrySymbol);
-            expect(lastEntryFake.calledOnce).to.be.true;
-            expect(lastEntryFake.firstCall.args.length).to.equal(1);
-            expect(lastEntryFake.firstCall.args[0]).to.equal(side);
-            expect(previousEntryFake.notCalled).to.be.true;
-        });
-        it("should return the previous entry of the menuNavigation for the mainMenu if the respective values are set", () => {
-            entry = "previous";
-            side = "mainMenu";
-
-            expect(gettersMenu.objectFromPath(undefined, getters, undefined, rootGetters)(side, entry)).to.equal(foundObject);
-            expect(sectionFake.calledOnce).to.be.true;
-            expect(sectionFake.firstCall.args.length).to.equal(1);
-            expect(sectionFake.firstCall.args[0]).to.equal(previousEntrySymbol);
-            expect(previousEntryFake.calledOnce).to.be.true;
-            expect(previousEntryFake.firstCall.args.length).to.equal(1);
-            expect(previousEntryFake.firstCall.args[0]).to.equal(side);
-            expect(lastEntryFake.notCalled).to.be.true;
-        });
-        it("should return the last entry of the menuNavigation for the secondaryMenu if the respective values are set", () => {
-            entry = "last";
-            side = "secondaryMenu";
-
-            expect(gettersMenu.objectFromPath(undefined, getters, undefined, rootGetters)(side, entry)).to.equal(foundObject);
-            expect(sectionFake.calledOnce).to.be.true;
-            expect(sectionFake.firstCall.args.length).to.equal(1);
-            expect(sectionFake.firstCall.args[0]).to.equal(lastEntrySymbol);
-            expect(lastEntryFake.calledOnce).to.be.true;
-            expect(lastEntryFake.firstCall.args.length).to.equal(1);
-            expect(lastEntryFake.firstCall.args[0]).to.equal(side);
-            expect(previousEntryFake.notCalled).to.be.true;
-        });
-        it("should return the previous entry of the menuNavigation for the secondaryMenu if the respective values are set", () => {
-            entry = "previous";
-            side = "secondaryMenu";
-
-            expect(gettersMenu.objectFromPath(undefined, getters, undefined, rootGetters)(side, entry)).to.equal(foundObject);
-            expect(sectionFake.calledOnce).to.be.true;
-            expect(sectionFake.firstCall.args.length).to.equal(1);
-            expect(sectionFake.firstCall.args[0]).to.equal(previousEntrySymbol);
-            expect(previousEntryFake.calledOnce).to.be.true;
-            expect(previousEntryFake.firstCall.args.length).to.equal(1);
-            expect(previousEntryFake.firstCall.args[0]).to.equal(side);
-            expect(lastEntryFake.notCalled).to.be.true;
-        });
-        it("should return null and log three error messages if the given side does not equal 'mainMenu' or 'secondaryMenu'", () => {
-            entry = "last";
-            side = "newMenu";
-
-            expect(gettersMenu.objectFromPath(undefined, getters, undefined, rootGetters)(side, entry)).to.equal(null);
-            expect(sectionFake.notCalled).to.be.true;
-            expect(lastEntryFake.notCalled).to.be.true;
-            expect(previousEntryFake.notCalled).to.be.true;
-            expect(consoleErrorSpy.calledThrice).to.be.true;
-            expect(consoleErrorSpy.firstCall.args.length).to.equal(1);
-            expect(consoleErrorSpy.firstCall.args[0]).to.equal("Menu.objectFromPath: One of the following errors occurred:");
-            expect(consoleErrorSpy.secondCall.args.length).to.equal(1);
-            expect(consoleErrorSpy.secondCall.args[0]).to.equal(`Menu.objectFromPath: a) The given menu side ${side} is not allowed. Please use "mainMenu" or "secondaryMenu" instead.`);
-            expect(consoleErrorSpy.thirdCall.args.length).to.equal(1);
-            expect(consoleErrorSpy.thirdCall.args[0]).to.equal(`Menu.objectFromPath: b) The given entry in the navigation ${entry} is not allowed. Please use "last" or "previous" instead.`);
-        });
-        it("should return null and log three error messages if the given entry does not equal 'last' or 'previous'", () => {
-            entry = "middle";
-            side = "mainMenu";
-
-            expect(gettersMenu.objectFromPath(undefined, getters, undefined, rootGetters)(side, entry)).to.equal(null);
-            expect(sectionFake.notCalled).to.be.true;
-            expect(lastEntryFake.notCalled).to.be.true;
-            expect(previousEntryFake.notCalled).to.be.true;
-            expect(consoleErrorSpy.calledThrice).to.be.true;
-            expect(consoleErrorSpy.firstCall.args.length).to.equal(1);
-            expect(consoleErrorSpy.firstCall.args[0]).to.equal("Menu.objectFromPath: One of the following errors occurred:");
-            expect(consoleErrorSpy.secondCall.args.length).to.equal(1);
-            expect(consoleErrorSpy.secondCall.args[0]).to.equal(`Menu.objectFromPath: a) The given menu side ${side} is not allowed. Please use "mainMenu" or "secondaryMenu" instead.`);
-            expect(consoleErrorSpy.thirdCall.args.length).to.equal(1);
-            expect(consoleErrorSpy.thirdCall.args[0]).to.equal(`Menu.objectFromPath: b) The given entry in the navigation ${entry} is not allowed. Please use "last" or "previous" instead.`);
         });
     });
 
