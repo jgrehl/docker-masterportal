@@ -24,9 +24,6 @@ export default {
             return this.conf.type === "layer";
         }
     },
-    // mounted(){
-    //     console.log("mounted LayerSelectionTreeNode", this.conf);
-    // },
     methods: {
         /**
          * Toggles a folder, changes data-property isOpen.
