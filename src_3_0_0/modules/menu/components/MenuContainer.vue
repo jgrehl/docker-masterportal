@@ -1,5 +1,5 @@
 <script>
-import {mapGetters, mapActions, mapMutations} from "vuex";
+import {mapGetters, mapMutations} from "vuex";
 import MenuContainerBody from "./MenuContainerBody.vue";
 import ResizeHandle from "../../../shared/modules/resize/components/ResizeHandle.vue";
 
@@ -19,10 +19,20 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(["uiStyle", "mainMenuFromConfig", "secondaryMenuFromConfig", "isMobile"]),
-        ...mapGetters("Menu", ["mainExpanded", "secondaryExpanded", "titleBySide", "toggleMenu"]),
+        ...mapGetters([
+            "menuFromConfig",
+            "isMobile",
+            "uiStyle"
+        ]),
+        ...mapGetters("Menu", [
+            "mainExpanded",
+            "secondaryExpanded",
+            "titleBySide",
+            "toggleMenu"
+        ]),
+
         /**
-         * @returns {string} Defines whether the ResizeHandle should be displayed on the right or left side depending on the menu this component is rendered in.
+         * @returns {String} Defines whether the ResizeHandle should be displayed on the right or left side depending on the menu this component is rendered in.
          */
         handlePosition () {
             return this.side === "mainMenu" ? "right" : "left";
@@ -30,21 +40,24 @@ export default {
     },
     watch: {
         mainMenu (mainMenu) {
-            this.mergeMenuState({mainMenu: mainMenu, secondaryMenu: this.secondaryMenuFromConfig});
+            this.mergeMenuState({menu: mainMenu, side: "mainMenu"});
         },
         secondaryMenu (secondaryMenu) {
-            this.mergeMenuState({mainMenu: this.mainMenuFromConfig, secondaryMenu: secondaryMenu});
+            this.mergeMenuState({menu: secondaryMenu, side: "secondaryMenu"});
         }
     },
     created () {
-        this.mergeMenuState({mainMenu: this.mainMenuFromConfig, secondaryMenu: this.secondaryMenuFromConfig});
+        this.mergeMenuState({menu: this.menuFromConfig(this.side), side: this.side});
+
         if (this.isMobile) {
             this.collapseMenues();
         }
     },
     methods: {
-        ...mapActions("Menu", ["mergeMenuState"]),
-        ...mapMutations("Menu", ["collapseMenues"])
+        ...mapMutations("Menu", [
+            "collapseMenues",
+            "mergeMenuState"
+        ])
     }
 };
 </script>

@@ -18,24 +18,6 @@ import stateDirections from "../../../../store/directions/stateDirections";
 config.global.mocks.$t = key => key;
 
 describe("src_3_0_0/modules/routing/components/Directions/DirectionsItem.vue", () => {
-    const mockConfigJson = {
-        configJson: {
-            Portalconfig: {
-                mainMenu: {
-                    sections: [
-                        [
-                            {
-                                "type": "routing",
-                                "name": "translate#common:menu.tools.routing",
-                                "icon": "bi-signpost-2-fill",
-                                "renderToWindow": true
-                            }
-                        ]
-                    ]
-                }
-            }
-        }
-    };
     let store,
         wrapper;
 
@@ -80,12 +62,8 @@ describe("src_3_0_0/modules/routing/components/Directions/DirectionsItem.vue", (
                         addInteraction: sinon.stub()
                     }
                 }
-            },
-            state: {
-                configJson: mockConfigJson
             }
         });
-        store.commit("Modules/Routing/setActive", true);
     });
 
     afterEach(() => {
