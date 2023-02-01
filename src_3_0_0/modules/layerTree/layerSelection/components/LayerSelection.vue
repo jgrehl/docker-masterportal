@@ -14,7 +14,7 @@ export default {
         LayerSelectionTreeNode
     },
     computed: {
-        ...mapGetters("Modules/LayerSelection", ["active", "subjectDataLayerConfs", "backgroundLayerConfs", "layersToAdd", "type", "menuSide", "lastConfName"])
+        ...mapGetters("Modules/LayerSelection", ["active", "subjectDataLayerConfs", "backgroundLayerConfs", "layersToAdd", "type", "menuSide", "lastFolderName"])
 
     },
     unmounted () {
@@ -32,15 +32,13 @@ export default {
             return sortBy(configs, (conf) => conf.type !== "folder");
         },
         /**
-         * Sets new subject data configs and sets showBGLayers to false after folder was clicked.
-         * @param {String} lastConfName name to show in menu to navigate back to
-         * @param {Array} newConf configs to show
+         * Navigates forward after folder was clicked.
+         * @param {String} lastFolderName name to show in menu to navigate back to
+         * @param {Array} subjectDataLayerConfs configs to show
          * @returns {void}
          */
-        folderClicked (lastConfName, newConf) {
-            const subjectDataLayerConfs = this.sort(newConf);
-
-            this.navigateForward({lastConfName, subjectDataLayerConfs});
+        folderClicked (lastFolderName, subjectDataLayerConfs) {
+            this.navigateForward({lastFolderName, subjectDataLayerConfs: this.sort(subjectDataLayerConfs)});
         }
     }
 };
@@ -55,14 +53,14 @@ export default {
     >
         <div class="row align-items-center justify-content-center">
             <a
-                v-if="lastConfName"
+                v-if="lastFolderName"
                 :id="'layer-selection-navigation-'"
                 class="p-2 mp-menu-navigation"
                 href="#"
                 @click="navigateBack()"
                 @keypress="navigateBack()"
             >
-                <h6 class="mp-menu-navigation-link mb-3"><p class="bi-chevron-left" />{{ lastConfName }}</h6>
+                <h6 class="mp-menu-navigation-link mb-3"><p class="bi-chevron-left" />{{ lastFolderName }}</h6>
             </a>
             <h6 v-if="backgroundLayerConfs.length > 0">
                 {{ $t("common:tree.backgrounds") }}
@@ -123,10 +121,6 @@ export default {
 }
 
 .mp-menu-navigation-link{
-    display: flex;
-}
-
-.mp-menu-navigation-moduletitle{
     display: flex;
 }
 </style>
