@@ -34,6 +34,7 @@ describe("src_3_0_0/modules/measure/components/MeasureInMap.vue", () => {
         origdeleteFeatures = MeasureModule.actions.deleteFeatures;
         MeasureModule.actions.createDrawInteraction = sinon.spy();
         MeasureModule.actions.deleteFeatures = sinon.spy();
+        MeasureModule.actions.removeIncompleteDrawing = sinon.spy();
         MeasureModule.mutations.setSelectedGeometry = sinon.spy();
         MeasureModule.mutations.setSelectedUnit = sinon.spy();
 
@@ -58,8 +59,7 @@ describe("src_3_0_0/modules/measure/components/MeasureInMap.vue", () => {
                         mode: () => "2D"
                     },
                     mutations: {
-                        addLayerToMap: sinon.spy(),
-                        setActive: sinon.spy()
+                        addLayerToMap: sinon.spy()
                     },
                     actions: {
                         addInteraction: sinon.spy(),
@@ -76,9 +76,6 @@ describe("src_3_0_0/modules/measure/components/MeasureInMap.vue", () => {
                 uiStyle: () => ""
             }
         });
-
-        store.commit("Modules/Measure/setActive", true);
-
     });
 
     afterEach(() => {
@@ -168,19 +165,4 @@ describe("src_3_0_0/modules/measure/components/MeasureInMap.vue", () => {
         await wrapper.vm.$nextTick();
         expect(wrapper.find("#measure-tool-geometry-select").element).to.equal(document.activeElement);
     });
-
-    it("createDrawInteraction should not called if active is false and setSelectedGeometry is changend", async () => {
-        store.commit("Modules/Measure/setActive", false);
-
-        wrapper = shallowMount(MeasureInMapComponent, {
-            global: {
-                plugins: [store]
-            }});
-
-        store.commit("Modules/Measure/setSelectedGeometry", "123");
-        await wrapper.vm.$nextTick;
-
-        expect(MeasureModule.actions.createDrawInteraction.called).to.be.false;
-    });
-
 });

@@ -11,7 +11,7 @@ const actions = {
      * @param {String} ticketId The unique id of the ticket for the e-mail.
      * @return {void}
      */
-    onSendSuccess: ({state, commit, dispatch}, ticketId) => {
+    onSendSuccess: ({state, commit, dispatch, rootGetters}, ticketId) => {
         const {closeAfterSend, deleteAfterSend, withTicketNo} = state;
         let content = i18next.t("common:modules.tools.contact.successMessage");
 
@@ -36,8 +36,14 @@ const actions = {
             commit("setUsername", "");
         }
         if (closeAfterSend) {
-            // TODO dedupe as action
-            commit("setActive", false);
+            const menuCurrentComponent = "Menu/currentComponent";
+
+            if (rootGetters[menuCurrentComponent]("mainMenu").type === state.type) {
+                commit("Menu/switchToRoot", "mainMenu", {root: true});
+            }
+            else if (rootGetters[menuCurrentComponent]("secondaryMenu").type === state.type) {
+                commit("Menu/switchToRoot", "secondaryMenu", {root: true});
+            }
         }
     },
     /**

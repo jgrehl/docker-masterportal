@@ -174,7 +174,6 @@ describe("src_3_0_0/modules/print/store/actionsPrintInitialization.js", () => {
         it("should toggle the post render listener and should register listener", done => {
             const TileLayer = {},
                 state = {
-                    active: true,
                     visibleLayerList: [
                         TileLayer,
                         VectorLayer,
@@ -210,7 +209,6 @@ describe("src_3_0_0/modules/print/store/actionsPrintInitialization.js", () => {
                 },
                 scale = 40000,
                 state = {
-                    active: true,
                     visibleLayerList: [
                         TileLayer
                     ],
@@ -237,7 +235,6 @@ describe("src_3_0_0/modules/print/store/actionsPrintInitialization.js", () => {
                 },
                 scale = 40000,
                 state = {
-                    active: true,
                     visibleLayerList: [
                         TileLayer
                     ],
