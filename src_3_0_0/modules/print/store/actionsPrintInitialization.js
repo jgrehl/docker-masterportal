@@ -182,9 +182,10 @@ export default {
      * @param {Object} param.state the state
      * @param {Object} param.commit the commit
      * @param {Object} param.dispatch the dispatch
+     * @param {Boolean} [active=true] The print module is activated or deactivated
      * @returns {void}
      */
-    togglePostrenderListener: function ({state, dispatch, commit}) {
+    togglePostrenderListener: function ({state, dispatch, commit}, active = true) {
         const foundVectorTileLayers = [];
 
         getVisibleLayer(state.printMapMarker);
@@ -194,7 +195,7 @@ export default {
         * they are filtered in the following code and an alert is shown to the user informing him about which
         * layers will not be printed.
         */
-        if (foundVectorTileLayers.length && state.active) {
+        if (foundVectorTileLayers.length && active) {
             dispatch("Alerting/addSingleAlert", {
                 category: "warning",
                 content: i18next.t("common:modules.tools.print.vtlWarning")
@@ -203,13 +204,13 @@ export default {
 
         commit("setVisibleLayer", state.visibleLayerList);
 
-        if (state.active && state.layoutList.length !== 0 && state.visibleLayerList.length >= 1 && state.eventListener === undefined) {
+        if (active && state.layoutList.length !== 0 && state.visibleLayerList.length >= 1 && state.eventListener === undefined) {
             const canvasLayer = Canvas.getCanvasLayer(state.visibleLayerList);
 
             commit("setEventListener", canvasLayer.on("postrender", evt => dispatch("createPrintMask", evt)));
         }
 
-        if (!state.active) {
+        if (!active) {
             dispatch("Maps/unregisterListener", {type: state.eventListener}, {root: true});
             commit("setEventListener", undefined);
         }

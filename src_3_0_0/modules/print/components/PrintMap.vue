@@ -27,7 +27,6 @@ export default {
     },
     computed: {
         ...mapGetters("Modules/Print", [
-            "active",
             "autoAdjustScale",
             "capabilitiesFilter",
             "currentFormat",
@@ -141,17 +140,6 @@ export default {
         }
     },
     watch: {
-        active: function () {
-            if (this.active) {
-                this.setIsScaleSelectedManually(false);
-                this.retrieveCapabilites();
-                this.setCurrentMapScale(this.scale);
-            }
-            else {
-                this.setFileDownloads([]);
-                this.togglePostrenderListener();
-            }
-        },
         scale: function (value) {
             this.setCurrentMapScale(value);
         }
@@ -160,18 +148,23 @@ export default {
         this.setServiceId(this.printServiceId);
     },
     mounted () {
-        if (this.shownLayoutList.length === 0) {
-            this.$nextTick(() => {
-                if (this.active) {
-                    this.retrieveCapabilites();
-                    this.setCurrentMapScale(this.scale);
-                    this.togglePostrenderListener();
-                    this.updateCanvasByFeaturesLoadend(this.visibleLayerList);
-                }
-            });
-        }
+        this.$nextTick(() => {
+            if (this.shownLayoutList.length === 0) {
+                this.retrieveCapabilites();
+                this.setCurrentMapScale(this.scale);
+                this.togglePostrenderListener();
+                this.updateCanvasByFeaturesLoadend(this.visibleLayerList);
+                this.setIsScaleSelectedManually(false);
+                this.setCurrentMapScale(this.scale);
+            }
+        });
 
         this.setCurrentMapScale(this.scale);
+    },
+    unmounted () {
+        this.setFileDownloads([]);
+        this.togglePostrenderListener(false);
+        this.shownLayoutList = [];
     },
     methods: {
         ...mapMutations("Modules/Print", Object.keys(mutations)),
@@ -350,10 +343,7 @@ export default {
 </script>
 
 <template lang="html">
-    <div
-        v-if="active"
-        id="modules-print"
-    >
+    <div id="modules-print">
         <form
             id="printToolNew"
             class="form-horizontal"

@@ -13,8 +13,7 @@ const actions = {
      * @returns {void}
      */
     startLayerInformation ({commit, dispatch, state}, layerConf) {
-        commit("Menu/setCurrentComponent", {type: "layerInformation", side: "mainMenu", props: {name: state.name}}, {root: true});
-        commit("setActive", true);
+        dispatch("Menu/changeCurrentComponent", {type: "layerInformation", side: "mainMenu", props: {name: state.name}}, {root: true});
         commit("setLayerInfo", layerConf);
         dispatch("setMetadataURL", layerConf.datasets[0].md_id);
         dispatch("additionalSingleLayerInfo");
