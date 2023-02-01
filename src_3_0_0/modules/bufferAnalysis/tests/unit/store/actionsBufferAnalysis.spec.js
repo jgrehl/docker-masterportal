@@ -42,7 +42,6 @@ describe("src_3_0_0/modules/bufferAnalysis/store/actionsBufferAnalysis.js", () =
                 mode: "2D"
             },
             urlParams: {
-                "Modules/bufferAnalysis/active": true,
                 initvalues: [
                     "{\"applySelectedSourceLayer\":\"1711\"",
                     "\"applyBufferRadius\":\"1010\"",
