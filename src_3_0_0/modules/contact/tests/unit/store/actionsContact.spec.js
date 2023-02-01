@@ -36,8 +36,7 @@ describe("src_3_0_0/modules/contact/store/actionsContact.js", () => {
                 {type: "setMail", payload: "", commit: true},
                 {type: "setMessage", payload: "", commit: true},
                 {type: "setPhone", payload: "", commit: true},
-                {type: "setUsername", payload: "", commit: true},
-                {type: "setActive", payload: false, commit: true}
+                {type: "setUsername", payload: "", commit: true}
             ], {}, done);
         });
 
@@ -53,8 +52,7 @@ describe("src_3_0_0/modules/contact/store/actionsContact.js", () => {
                 {type: "setMail", payload: "", commit: true},
                 {type: "setMessage", payload: "", commit: true},
                 {type: "setPhone", payload: "", commit: true},
-                {type: "setUsername", payload: "", commit: true},
-                {type: "setActive", payload: false, commit: true}
+                {type: "setUsername", payload: "", commit: true}
             ], {}, done);
         });
 
@@ -69,8 +67,7 @@ describe("src_3_0_0/modules/contact/store/actionsContact.js", () => {
                         i18next.t("common:modules.tools.contact.successTicket") +
                         payload
                 }, dispatch: true},
-                {type: "setPrivacyPolicyAccepted", payload: false, commit: true},
-                {type: "setActive", payload: false, commit: true}
+                {type: "setPrivacyPolicyAccepted", payload: false, commit: true}
             ], {}, done);
         });
 

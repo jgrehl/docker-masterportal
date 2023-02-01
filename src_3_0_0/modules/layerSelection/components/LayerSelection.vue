@@ -1,5 +1,5 @@
 <script>
-import {mapGetters, mapActions, mapMutations} from "vuex";
+import {mapGetters, mapActions} from "vuex";
 import sortBy from "../../../shared/js/utils/sortBy";
 import FlatButton from "../../../shared/modules/buttons/components/FlatButton.vue";
 import LayerCheckBox from "../../layerTree/components/LayerCheckBox.vue";
@@ -25,7 +25,7 @@ export default {
     },
     methods: {
         ...mapActions("Modules/LayerSelection", ["updateLayerTree", "navigateBack", "navigateForward", "reset"]),
-        ...mapMutations("Menu", ["setCurrentComponent"]),
+
         /**
          * Sorts the configs by type: first folder, then layer.
          * @param {Array} configs list of layer and folder configs
