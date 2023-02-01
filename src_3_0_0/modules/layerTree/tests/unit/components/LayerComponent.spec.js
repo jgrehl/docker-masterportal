@@ -8,7 +8,7 @@ import LayerComponent from "../../../components/LayerComponent.vue";
 
 config.global.mocks.$t = key => key;
 
-describe.skip("src_3_0_0/modules/layerTree/components/LayerComponent.vue", () => {
+describe("src_3_0_0/modules/layerTree/components/LayerComponent.vue", () => {
     let store,
         wrapper,
         layer,
@@ -85,10 +85,7 @@ describe.skip("src_3_0_0/modules/layerTree/components/LayerComponent.vue", () =>
         });
 
         expect(wrapper.find("#layer-tree-layer-" + propsData.conf.id).exists()).to.be.true;
-        expect(wrapper.findAll(".layer-tree-layer-checkbox").length).to.be.equals(1);
-        expect(wrapper.find(".layer-tree-layer-checkbox").attributes("class")).to.include("bi-square");
-        expect(wrapper.find("label > span").text()).to.equal(propsData.conf.name);
-        expect(wrapper.find("label").attributes("class")).not.to.include("bold");
+        expect(wrapper.findAll("layer-check-box-stub").length).to.be.equals(1);
     });
 
     it("renders layer with visibility false and checkbox, icon and submenu for layerTree", () => {
@@ -100,10 +97,7 @@ describe.skip("src_3_0_0/modules/layerTree/components/LayerComponent.vue", () =>
         });
 
         expect(wrapper.find("#layer-tree-layer-" + propsData.conf.id).exists()).to.be.true;
-        expect(wrapper.findAll(".layer-tree-layer-checkbox").length).to.be.equals(1);
-        expect(wrapper.find(".layer-tree-layer-checkbox").attributes("class")).to.include("bi-check2-square");
-        expect(wrapper.find("label > span").text()).to.equal(propsData.conf.name);
-        expect(wrapper.find("label").attributes("class")).to.include("bold");
+        expect(wrapper.findAll("layer-check-box-stub").length).to.be.equals(1);
     });
 
     it("renders layer only with checkbox - no submenu", () => {
