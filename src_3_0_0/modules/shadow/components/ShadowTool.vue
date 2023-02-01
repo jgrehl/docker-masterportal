@@ -243,9 +243,8 @@ export default {
             <SwitchInput
                 :id="'module-shadow-checkbox'"
                 :aria="$t('modules.tools.print.withInfoLabel')"
-                :interaction="toggleShadow(!shadowActivated)"
+                :interaction="() => toggleShadow(!shadowActivated)"
                 :label="$t(shadowActivated ? 'common:modules.tools.shadow.shadowDisplayOff' : 'common:modules.tools.shadow.shadowDisplayOn')"
-                :disabled="currentFeature === null"
                 :checked="shadowActivated"
             />
         </div>
