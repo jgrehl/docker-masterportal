@@ -1,7 +1,6 @@
 /**
  * Contact tool state definition.
  * @typedef {Object} ContactState
- * @property {Boolean} active If true, SaveSelection will be rendered.
  * @property {String} description The description that should be shown in the button in the right menu.
  * @property {String} name Displayed as the title. (config-param)
  * @property {String} icon Icon next to the title. (config-param)
@@ -28,7 +27,6 @@
  * @property {String} type The type of the module.
 */
 const state = {
-    active: false,
     description: "",
     name: "common:menu.contact",
     icon: "bi-envelope-fill",
