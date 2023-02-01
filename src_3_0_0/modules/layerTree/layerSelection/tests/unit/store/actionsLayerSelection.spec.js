@@ -3,9 +3,9 @@ import sinon from "sinon";
 
 import actions from "../../../store/actionsLayerSelection";
 
-const {updateLayerTree} = actions;
+const {updateLayerTree, navigateForward, navigateBack, reset} = actions;
 
-describe.skip("src_3_0_0/modules/layerTree/layerSelection/store/actionsLayerSelection", function () {
+describe("src_3_0_0/modules/layerTree/layerSelection/store/actionsLayerSelection", function () {
     let commit, getters, dispatch, rootGetters;
 
     beforeEach(() => {
@@ -22,7 +22,7 @@ describe.skip("src_3_0_0/modules/layerTree/layerSelection/store/actionsLayerSele
 
     afterEach(sinon.restore);
 
-    describe("updateLayerTree", function () {
+    describe("actionsLayerSelection", function () {
         it("updateLayerTree", function () {
             const expectedArg = {
                 layerConfigs: [
@@ -49,14 +49,125 @@ describe.skip("src_3_0_0/modules/layerTree/layerSelection/store/actionsLayerSele
 
             updateLayerTree({commit, dispatch, getters, rootGetters});
 
-            expect(commit.calledOnce).to.be.true;
-            expect(commit.firstCall.args[0]).to.be.equals("clearSelectedLayer");
-            expect(dispatch.calledThrice).to.be.true;
+            expect(commit.calledTwice).to.be.true;
+            expect(commit.firstCall.args[0]).to.be.equals("clearLayerSelection");
+            expect(commit.secondCall.args[0]).to.be.equals("Menu/switchToRoot");
+            expect(commit.secondCall.args[1]).to.be.equals(getters.menuSide);
+            expect(commit.secondCall.args[2]).to.be.deep.equals({root: true});
+            expect(dispatch.calledTwice).to.be.true;
             expect(dispatch.firstCall.args[0]).to.be.equals("replaceByIdInLayerConfig");
             expect(dispatch.firstCall.args[1]).to.deep.equals(expectedArg);
             expect(dispatch.secondCall.args[0]).to.be.equals("updateAllZIndexes");
-            expect(dispatch.thirdCall.args[0]).to.be.equals("Menu/navigateBack");
-            expect(dispatch.thirdCall.args[1]).to.be.equals("menuSide");
+            expect(dispatch.secondCall.args[1]).to.be.null;
+            expect(dispatch.secondCall.args[2]).to.be.deep.equals({root: true});
+        });
+
+        it("navigateForward from layerTree", function () {
+            const subjectDataLayerConfs = [
+                    {
+                        id: "1",
+                        type: "folder",
+                        name: "name1"
+                    },
+                    {
+                        id: "2",
+                        type: "folder",
+                        name: "name2"
+                    },
+                    {
+                        id: "3",
+                        type: "layer",
+                        name: "name3"
+                    }
+                ],
+                backgroundLayerConfs = [
+                    {
+                        id: "bg1",
+                        type: "layer",
+                        name: "name-bg1"
+                    },
+                    {
+                        id: "bg2",
+                        type: "layer",
+                        name: "name-bg2"
+                    }
+                ],
+                lastFolderName = "lastFolderName";
+
+            navigateForward({commit}, {lastFolderName, subjectDataLayerConfs, backgroundLayerConfs});
+
+            expect(commit.callCount).to.be.equals(4);
+            expect(commit.firstCall.args[0]).to.be.equals("addToLayerSelection");
+            expect(commit.firstCall.args[1]).to.be.deep.equals({lastFolderName, subjectDataLayerConfs, backgroundLayerConfs});
+            expect(commit.secondCall.args[0]).to.be.equals("setLastFolderName");
+            expect(commit.secondCall.args[1]).to.be.equals(lastFolderName);
+            expect(commit.thirdCall.args[0]).to.be.equals("setBackgroundLayerConfs");
+            expect(commit.thirdCall.args[1]).to.be.deep.equals(backgroundLayerConfs);
+            expect(commit.getCall(3).args[0]).to.be.equals("setSubjectDataLayerConfs");
+            expect(commit.getCall(3).args[1]).to.be.deep.equals(subjectDataLayerConfs);
+        });
+
+        it("navigateBack inside layerSelection", function () {
+            const lastSubjectDataLayerConfs = [
+                    {
+                        id: "0",
+                        type: "folder",
+                        name: "name0"
+                    }
+                ],
+                firstSubjectDataLayerConfs = [
+                    {
+                        id: "00",
+                        type: "folder",
+                        name: "name00"
+                    }
+                ],
+                lastBackgroundLayerConfs = [
+                    {
+                        id: "bg0",
+                        type: "layer",
+                        name: "name-bg0"
+                    }
+                ],
+                firstBackgroundLayerConfs = [
+                    {
+                        id: "bg00",
+                        type: "layer",
+                        name: "name-bg00"
+                    }
+                ],
+                firstFolderName = "firstFolderName",
+                secondFolderName = "secondFolderName";
+
+            getters = {
+                lastFolderNames: [firstFolderName, secondFolderName],
+                lastSubjectDataLayerConfs: [firstBackgroundLayerConfs, lastSubjectDataLayerConfs],
+                lastBackgroundLayerConfs: [firstSubjectDataLayerConfs, lastBackgroundLayerConfs]
+            };
+
+            navigateBack({commit, getters});
+
+            expect(commit.callCount).to.be.equals(4);
+            expect(commit.firstCall.args[0]).to.be.equals("reduceToPreviousLayerSelection");
+            expect(commit.secondCall.args[0]).to.be.equals("setLastFolderName");
+            expect(commit.secondCall.args[1]).to.be.equals(secondFolderName);
+            expect(commit.thirdCall.args[0]).to.be.equals("setSubjectDataLayerConfs");
+            expect(commit.thirdCall.args[1]).to.be.deep.equals(lastSubjectDataLayerConfs);
+            expect(commit.getCall(3).args[0]).to.be.equals("setBackgroundLayerConfs");
+            expect(commit.getCall(3).args[1]).to.be.deep.equals(lastBackgroundLayerConfs);
+        });
+
+        it("reset", function () {
+            reset({commit});
+
+            expect(commit.callCount).to.be.equals(4);
+            expect(commit.firstCall.args[0]).to.be.equals("clearLayerSelection");
+            expect(commit.secondCall.args[0]).to.be.equals("setLastFolderName");
+            expect(commit.secondCall.args[1]).to.be.null;
+            expect(commit.thirdCall.args[0]).to.be.equals("setSubjectDataLayerConfs");
+            expect(commit.thirdCall.args[1]).to.be.deep.equals([]);
+            expect(commit.getCall(3).args[0]).to.be.equals("setBackgroundLayerConfs");
+            expect(commit.getCall(3).args[1]).to.be.deep.equals([]);
         });
     });
 });
