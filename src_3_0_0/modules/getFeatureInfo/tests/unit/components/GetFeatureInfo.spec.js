@@ -10,14 +10,15 @@ const mockMutations = {
         setGfiFeatures: () => sinon.stub()
     },
     mockGetters = {
-        active: () => true,
         centerMapToClickPoint: () => sinon.stub(),
         currentFeature: () => sinon.stub(),
         desktopType: () => "",
         gfiFeaturesReverse: () => sinon.stub(),
         highlightVectorRules: () => false,
         menuSide: () => false,
-        showMarker: () => sinon.stub()
+        showMarker: () => sinon.stub(),
+        visible: () => true,
+        type: () => "getFeatureInfo"
     };
 
 config.global.mocks.$t = key => key;
@@ -66,6 +67,11 @@ function getGfiStore (mobile, uiStyle, gfiFeatures, mapSize) {
             },
             Menu: {
                 namespaced: true,
+                getters: {
+                    currentComponent: () => sinon.stub(),
+                    currentMouseMapInteractionsComponent: () => "getFeatureInfo",
+                    expanded: () => sinon.stub()
+                },
                 actions: {
                     setMenuBackAndActivateItem: sinon.stub()
                 }
@@ -98,7 +104,6 @@ describe("src_3_0_0/modules/getFeatureInfo/components/GetFeatureInfo.vue", () =>
             store = getGfiStore(false, "", gfiFeatures, []);
         let wrapper = null;
 
-        store.state.Modules.GetFeatureInfo.active = true;
         wrapper = shallowMount(GfiComponent, {
             components: {
                 GetFeatureInfoDetached: {
@@ -149,7 +154,6 @@ describe("src_3_0_0/modules/getFeatureInfo/components/GetFeatureInfo.vue", () =>
         const store = getGfiStore(true, undefined, [], []);
         let wrapper = null;
 
-        store.state.Modules.GetFeatureInfo.active = true;
         wrapper = shallowMount(GfiComponent, {
             components: {
                 GetFeatureInfoDetached: {
@@ -180,7 +184,6 @@ describe("src_3_0_0/modules/getFeatureInfo/components/GetFeatureInfo.vue", () =>
             store = getGfiStore(false, undefined, gfiFeatures, []);
         let wrapper = null;
 
-        store.state.Modules.GetFeatureInfo.active = true;
         wrapper = shallowMount(GfiComponent, {
             components: {
                 GetFeatureInfoDetached: {
@@ -206,7 +209,7 @@ describe("src_3_0_0/modules/getFeatureInfo/components/GetFeatureInfo.vue", () =>
         expect(wrapper.vm.pagerIndex).to.equal(0);
     });
 
-    it("should call reset if active is false", () => {
+    it("should call reset if visible is false", () => {
         const gfiFeatures = [{
                 getGfiUrl: () => null,
                 getFeatures: () => sinon.stub(),
@@ -218,7 +221,6 @@ describe("src_3_0_0/modules/getFeatureInfo/components/GetFeatureInfo.vue", () =>
             spyReset = sinon.spy(GfiComponent.methods, "reset");
         let wrapper = null;
 
-        store.state.Modules.GetFeatureInfo.active = true;
         wrapper = shallowMount(GfiComponent, {
             components: {
                 GetFeatureInfoDetached: {
@@ -240,7 +242,7 @@ describe("src_3_0_0/modules/getFeatureInfo/components/GetFeatureInfo.vue", () =>
             }
         });
 
-        wrapper.vm.$options.watch.active.call(wrapper.vm, false);
+        wrapper.vm.$options.watch.visible.call(wrapper.vm, false);
         expect(spyReset.calledOnce).to.be.true;
     });
 
@@ -261,7 +263,6 @@ describe("src_3_0_0/modules/getFeatureInfo/components/GetFeatureInfo.vue", () =>
             store = getGfiStore(true, undefined, gfiFeatures, []);
         let wrapper = null;
 
-        store.state.Modules.GetFeatureInfo.active = true;
         wrapper = mount(GfiComponent, {
             global: {
                 plugins: [store]
@@ -289,7 +290,6 @@ describe("src_3_0_0/modules/getFeatureInfo/components/GetFeatureInfo.vue", () =>
             store = getGfiStore(true, undefined, gfiFeatures, []);
         let wrapper = null;
 
-        store.state.Modules.GetFeatureInfo.active = true;
         wrapper = mount(GfiComponent, {
             global: {
                 plugins: [store]
@@ -315,7 +315,6 @@ describe("src_3_0_0/modules/getFeatureInfo/components/GetFeatureInfo.vue", () =>
             store = getGfiStore(true, undefined, gfiFeatures, []);
         let wrapper = null;
 
-        store.state.Modules.GetFeatureInfo.active = true;
         wrapper = mount(GfiComponent, {
             global: {
                 plugins: [store]
@@ -340,7 +339,6 @@ describe("src_3_0_0/modules/getFeatureInfo/components/GetFeatureInfo.vue", () =>
             store = getGfiStore(true, undefined, gfiFeatures, []);
         let wrapper = null;
 
-        store.state.Modules.GetFeatureInfo.active = true;
         wrapper = mount(GfiComponent, {
             data () {
                 return {
@@ -370,7 +368,6 @@ describe("src_3_0_0/modules/getFeatureInfo/components/GetFeatureInfo.vue", () =>
             store = getGfiStore(true, undefined, gfiFeatures, []);
         let wrapper = null;
 
-        store.state.Modules.GetFeatureInfo.active = true;
         wrapper = mount(GfiComponent, {
             data () {
                 return {
@@ -399,7 +396,6 @@ describe("src_3_0_0/modules/getFeatureInfo/components/GetFeatureInfo.vue", () =>
             store = getGfiStore(true, undefined, gfiFeatures, []);
         let wrapper = null;
 
-        store.state.Modules.GetFeatureInfo.active = true;
         wrapper = mount(GfiComponent, {
             data () {
                 return {
@@ -426,7 +422,6 @@ describe("src_3_0_0/modules/getFeatureInfo/components/GetFeatureInfo.vue", () =>
             firstDetachedComponent = "",
             secondDetachedComponent = "";
 
-        store.state.Modules.GetFeatureInfo.active = true;
         wrapper = shallowMount(GfiComponent, {
             global: {
                 plugins: [store]

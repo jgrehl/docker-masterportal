@@ -1,7 +1,6 @@
 /**
  * User type definition
  * @typedef {Object} ShareViewState
- * @property {Boolean} active if true, ShareView will rendered
  * @property {String} description The description that should be shown in the button in the right menu.
  * @property {String} id id of the ShareView component
  * @property {String} icon icon next to title (config-param)
@@ -12,7 +11,6 @@
  * @property {String} type The type of the module.
  */
 const state = {
-    active: false,
     description: "",
     icon: "bi-share",
     name: "common:menu.tools.shareView",

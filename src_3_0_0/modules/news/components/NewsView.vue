@@ -10,7 +10,7 @@ export default {
     name: "NewsView",
     components: {},
     computed: {
-        ...mapGetters("Modules/News", ["active", "news"])
+        ...mapGetters("Modules/News", ["news"])
     },
     methods: {
         /**
@@ -44,10 +44,7 @@ export default {
 </script>
 
 <template lang="html">
-    <div
-        v-if="active"
-        id="news-view"
-    >
+    <div id="news-view">
         <div
             id="news-title"
             class="title d-flex flex-column justify-content-center mb-3 ps-2 bold"
