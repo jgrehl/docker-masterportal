@@ -7,7 +7,7 @@ import {mapActions, mapGetters} from "vuex";
 export default {
     name: "OpenConfig",
     computed: {
-        ...mapGetters("Modules/OpenConfig", ["active", "icon"])
+        ...mapGetters("Modules/OpenConfig", ["icon"])
     },
     mounted () {
         this.setFocusToFirstControl();
@@ -71,10 +71,7 @@ export default {
 </script>
 
 <template lang="html">
-    <div
-        v-if="active"
-        id="open-config"
-    >
+    <div id="open-config">
         <h2 class="ms-3">
             {{ $t("modules.tools.openConfig.headline") }}
         </h2>

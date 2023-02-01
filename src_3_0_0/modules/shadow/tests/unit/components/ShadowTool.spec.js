@@ -61,7 +61,6 @@ describe("src_3_0_0/modules/shadowTool/components/ShadowTool.vue", () => {
                         Shadow: {
                             namespaced: true,
                             getters: {
-                                active: () => true,
                                 isShadowEnabled: () => true,
                                 name: () => "common:menu.tools.shadow",
                                 shadowTime: () => {

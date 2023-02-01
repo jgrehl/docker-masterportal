@@ -43,18 +43,51 @@ export default {
     computed: {
         ...mapGetters(["deviceMode", "portalConfig"]),
         ...mapGetters("Maps", ["mode"]),
+        ...mapGetters("Menu", [
+            "mainMenu",
+            "secondaryMenu"
+        ]),
 
         /**
-         * @returns {boolean} Depending on whether the icon is given it is decided whether on is shown.
+         * @returns {Object} Menu configuration for the given menu.
+         */
+        menu () {
+            return this.side === "mainMenu" ? this.mainMenu : this.secondaryMenu;
+        },
+
+        /**
+         * @returns {Boolean} Depending on whether the icon is given it is decided whether on is shown.
          */
         showIcon () {
             return typeof this.icon === "string" && this.icon.length > 0;
         },
+
+        /**
+         * @returns {String} The menu side.
+         */
         side () {
             return this.path[0];
         },
+
+        /**
+         * @returns {String} The type of the component.
+         */
         type () {
             return this.properties.type;
+        }
+    },
+    /**
+     * Lifecycle-Hook: Sets the configured current component.
+     * @returns {void}
+     */
+    created () {
+        if (this.type === this.menu.currentComponent) {
+            this.clickedMenuElement({
+                name: this.name,
+                path: this.path,
+                side: this.side,
+                type: this.type
+            });
         }
     },
     methods: {
@@ -79,7 +112,7 @@ export default {
 <template>
     <div>
         <LightButton
-            v-if="checkIsVisible() && !(properties.isVisibleInMenu === false)"
+            v-if="checkIsVisible()"
             :interaction="() => clickedMenuElement({name, path, side, type})"
             :text="name"
             :icon="showIcon ? icon : null"

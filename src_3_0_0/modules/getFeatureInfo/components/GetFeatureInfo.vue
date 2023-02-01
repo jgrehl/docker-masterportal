@@ -25,16 +25,16 @@ export default {
     },
     computed: {
         ...mapGetters([
-            "ignoredKeys",
-            "uiStyle"
+            "ignoredKeys"
         ]),
         ...mapGetters("Modules/GetFeatureInfo", [
-            "active",
             "currentFeature",
             "highlightVectorRules",
             "menuSide",
             "name",
-            "showMarker"
+            "showMarker",
+            "type",
+            "visible"
         ]),
         ...mapGetters("Modules/GetFeatureInfo", {
             gfiFeatures: "gfiFeaturesReverse"
@@ -43,6 +43,20 @@ export default {
             clickCoordinate: "clickCoordinate",
             mapSize: "size"
         }),
+        ...mapGetters("Menu", [
+            "currentComponent",
+            "currentMouseMapInteractionsComponent",
+            "expanded"
+        ]),
+
+        /**
+         * Returns the current component type of the menu navigation by side.
+         * @returns {String} The current component type.
+         */
+        currentComponentType () {
+            return this.currentComponent(this.menuSide)?.type;
+        },
+
         /**
          * Returns the current view type.
          * It only works if the string has the same name as the component (in ./templates).
@@ -51,13 +65,7 @@ export default {
         currentViewType: function () {
             return "GetFeatureInfoDetached";
         },
-        /**
-         * Is visible if there is at least one feature and the gfi is activated.
-         * @returns {Boolean} gfi visibility
-         */
-        isVisible: function () {
-            return this.gfiFeatures !== null && this.active;
-        },
+
         /**
          * Returns the feature depending on the pager index.
          * @returns {?Object} - the current feature
@@ -71,16 +79,16 @@ export default {
     },
     watch: {
         /**
-         * Resets component, if active is false.
-         * @param {Boolean} value active
+         * Resets component, if visible is false.
+         * @param {Boolean} value visible
          * @returns {void}
          */
-        active (value) {
+        visible (value) {
             if (!value) {
                 this.reset();
             }
             else {
-                this.setCurrentComponent({type: "getFeatureInfo", side: this.menuSide, props: {name: this.name}});
+                this.changeCurrentComponent({type: this.type, side: this.menuSide, props: {name: this.name}});
             }
         },
         /**
@@ -89,19 +97,34 @@ export default {
          */
         clickCoordinate: {
             handler () {
-                this.pagerIndex = 0;
-                this.updateClick();
+                if (this.currentMouseMapInteractionsComponent === this.type) {
+                    this.pagerIndex = 0;
+                    this.updateClick();
+                }
             },
             deep: true
         },
+
+        /**
+         * Whenever current component type is changed to  "getFeatureInfo", visible is set to false.
+         * @param {String} type The current component type.
+         * @returns {void}
+         */
+        currentComponentType (type) {
+            if (type !== this.type) {
+                this.setVisible(false);
+            }
+        },
+
         /**
          * Whenever feature changes, put it into the store
-         * @param {?Object} newValue - the current feature
+         * @param {?Object} newValue the current feature
          * @returns {void}
          */
         feature (newValue) {
             this.setCurrentFeature(newValue);
         },
+
         /**
          * Whenever mapSize changes, component key is changed
          * to force re-render detached component (key-changing).
@@ -115,6 +138,7 @@ export default {
             },
             deep: true
         },
+
         /**
          * Whenever gfiFeatures changes, set pagerIndex to zero.
          * @param {Object[]} gfiFeatures The gfi features.
@@ -123,7 +147,10 @@ export default {
         gfiFeatures: {
             handler (gfiFeatures) {
                 if (gfiFeatures?.length > 0) {
-                    this.setActive(true);
+                    this.setVisible(true);
+                    if (!this.expanded(this.menuSide)) {
+                        this.toggleMenu(this.menuSide);
+                    }
                 }
             },
             deep: true
@@ -133,14 +160,14 @@ export default {
         this.createMappedProperties(this.feature);
     },
     methods: {
-        ...mapActions("Modules/GetFeatureInfo", ["updateClick"]),
-        ...mapActions("Maps", ["registerListener", "unregisterListener"]),
-        ...mapMutations("Menu", ["setCurrentComponent"]),
         ...mapMutations("Modules/GetFeatureInfo", [
-            "setActive",
             "setGfiFeatures",
-            "setCurrentFeature"
+            "setCurrentFeature",
+            "setVisible"
         ]),
+        ...mapMutations("Menu", ["toggleMenu"]),
+        ...mapActions("Modules/GetFeatureInfo", ["updateClick"]),
+        ...mapActions("Menu", ["changeCurrentComponent"]),
 
         /**
          * Reset means to set the gfiFeatures to null.
@@ -205,11 +232,12 @@ export default {
 
 <template>
     <div
-        v-if="isVisible && feature !== null"
+        v-if="visible && feature !== null"
         class="gfi"
     >
         <component
             :is="currentViewType"
+            v-if="visible && feature !== null"
             :key="componentKey"
             :feature="feature"
             @close="reset"

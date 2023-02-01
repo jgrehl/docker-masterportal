@@ -18,18 +18,6 @@ describe("src_3_0_0/modules/bufferAnalysis/components/BufferAnalysis.vue", () =>
         applySelectedSourceLayerSpy,
         wrapper;
 
-    const mockConfigJson = {
-        Portalconfig: {
-            navigationSecondary: {
-                sections: [
-                    {
-                        "type": "bufferAnalysis"
-                    }
-                ]
-            }
-        }
-    };
-
     before(() => {
         mapCollection.clear();
         const map = {
@@ -67,13 +55,11 @@ describe("src_3_0_0/modules/bufferAnalysis/components/BufferAnalysis.vue", () =>
                                 applySelectedSourceLayer: applySelectedSourceLayerSpy
                             },
                             mutations: {
-                                setActive: sinon.spy(),
                                 setSelectOptions: (state, options) => {
                                     state.selectOptions = options;
                                 }
                             },
                             getters: {
-                                active: () => sinon.stub(),
                                 selectOptions: (state) => state.selectOptions
                             }
                         }
@@ -83,12 +69,8 @@ describe("src_3_0_0/modules/bufferAnalysis/components/BufferAnalysis.vue", () =>
                     namespaced: true,
                     mode: "2D"
                 }
-            },
-            state: {
-                configJson: mockConfigJson
             }
         });
-        store.commit("Modules/BufferAnalysis/setActive", true);
     });
 
     afterEach(() => {

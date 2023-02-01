@@ -171,7 +171,7 @@ export default {
      * @returns {void}
      */
     setFirstSearchPosition ({dispatch, commit, state, rootState, getters}) {
-        if (state.mode === "search" && state.active) {
+        if (state.mode === "search") {
             const targetProjectionName = state.currentProjection?.epsg,
                 position = getters.getTransformedPosition(mapCollection.getMap("2D"), targetProjectionName);
 
