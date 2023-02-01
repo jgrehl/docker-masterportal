@@ -1,7 +1,6 @@
 /**
  * User type definition
  * @typedef {Object} OpenConfigState
- * @property {Boolean} active If true, scaleSwitcher will rendered.
  * @property {String} description The description that should be shown in the button in the right menu.
  * @property {String} icon Icon next to title (config-param)
  * @property {String} name Displayed as title (config-param)
@@ -11,7 +10,6 @@
  * @property {String} type The type of the module.
  */
 const state = {
-    active: false,
     description: "",
     icon: "bi-upload",
     name: "common:menu.tools.openConfig",

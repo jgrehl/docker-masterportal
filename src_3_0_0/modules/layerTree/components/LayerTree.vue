@@ -27,7 +27,7 @@ export default {
     },
     methods: {
         ...mapActions("Modules/LayerSelection", ["navigateForward"]),
-        ...mapMutations("Menu", ["setCurrentComponent"]),
+        ...mapActions("Menu", ["changeCurrentComponent"]),
         ...mapMutations("Modules/LayerSelection", {setLayerSelectionActive: "setActive"}),
         /**
          * Sorts the configs by type: first folder, then layer.
@@ -45,7 +45,7 @@ export default {
             const subjectDataLayerConfs = this.sort(this.allLayerConfigsStructured(treeSubjectsKey)),
                 backgroundLayerConfs = this.allLayerConfigsStructured(treeBackgroundsKey);
 
-            this.setCurrentComponent({type: this.layerSelectionType, side: this.menuSide, props: {name: this.layerSelectionName}});
+            this.changeCurrentComponent({type: this.layerSelectionType, side: this.menuSide, props: {name: this.layerSelectionName}});
             this.navigateForward({lastFolderName: "root", subjectDataLayerConfs, backgroundLayerConfs});
             this.setLayerSelectionActive(true);
         }

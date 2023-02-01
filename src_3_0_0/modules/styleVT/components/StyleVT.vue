@@ -6,7 +6,6 @@ export default {
     computed: {
         ...mapGetters(["visibleLayerConfigs"]),
         ...mapGetters("Modules/StyleVT", [
-            "active",
             "layerModel",
             "selectedLayerId",
             "selectedStyle",
@@ -14,13 +13,6 @@ export default {
         ])
     },
     watch: {
-        active (active) {
-            this.startLayerProcess({active});
-
-            if (active) {
-                this.setFocusToFirstControl();
-            }
-        },
         visibleLayerConfigs: {
             handler () {
                 this.refreshVectorTileLayerList();
@@ -29,13 +21,19 @@ export default {
         }
     },
     mounted () {
-        this.startLayerProcess({active: this.active});
+        this.startLayerProcess();
         this.setFocusToFirstControl();
     },
+    unmounted () {
+        this.resetModule();
+    },
     methods: {
-        ...mapMutations("Modules/StyleVT", ["setLayerModelById"]),
+        ...mapMutations("Modules/StyleVT", [
+            "setLayerModelById"
+        ]),
         ...mapActions("Modules/StyleVT", [
             "refreshVectorTileLayerList",
+            "resetModule",
             "startLayerProcess",
             "updateStyle"
         ]),
@@ -56,10 +54,7 @@ export default {
 </script>
 
 <template>
-    <div
-        v-if="active"
-        id="modules-style-vt"
-    >
+    <div id="modules-style-vt">
         <p
             v-if="vectorTileLayerList.length === 0"
             id="module-styleVT-noStyleableLayers"
