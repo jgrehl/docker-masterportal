@@ -86,12 +86,6 @@ describe("src_3_0_0/modules/layerSelection/components/LayerSelection.vue", () =>
         store = createStore({
             namespaces: true,
             modules: {
-                Menu: {
-                    namespaced: true,
-                    mutations: {
-                        setCurrentComponent: sinon.stub()
-                    }
-                },
                 Modules: {
                     namespaced: true,
                     modules: {

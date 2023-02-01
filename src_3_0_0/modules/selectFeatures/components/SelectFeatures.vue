@@ -18,19 +18,12 @@ export default {
         ...mapGetters("Maps", ["mode"]),
         ...mapGetters("Modules/SelectFeatures", Object.keys(getters))
     },
-    watch: {
-        active (newValue) {
-            if (newValue) {
-                this.createInteractions();
-                this.addInteractions();
-            }
-            else {
-                this.removeInteractions();
-            }
-
-        }
+    mounted () {
+        this.createInteractions();
+        this.addInteractions();
     },
     unmounted () {
+        this.removeInteractions();
         this.clearFeatures();
     },
     methods: {
@@ -301,10 +294,7 @@ export default {
 </script>
 
 <template lang="html">
-    <div
-        v-if="active"
-        id="selectFeatures"
-    >
+    <div id="selectFeatures">
         <div
             v-if="selectedFeaturesWithRenderInformation.length === 0"
             class="selectFeaturesDefaultMessage"

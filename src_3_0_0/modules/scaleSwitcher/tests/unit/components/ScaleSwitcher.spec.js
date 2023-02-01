@@ -8,26 +8,8 @@ import ScaleSwitcherComponent from "../../../components/ScaleSwitcher.vue";
 config.global.mocks.$t = key => key;
 
 describe("src_3_0_0/modules/scaleSwitcher/components/ScaleSwitcher.vue", () => {
-    const scales = ["1000", "5000", "10000"],
-        mockMapGetters = {
-            scale: sinon.stub()
-        },
-        mockMapMutations = {
-            setScale: sinon.stub()
-        },
-        mockConfigJson = {
-            Portalconfig: {
-                navigationSecondary: {
-                    sections: [
-                        {
-                            type: "scaleSwitcher"
-                        }
-                    ]
-                }
-            }
-        };
-    let active = true,
-        store,
+    const scales = ["1000", "5000", "10000"];
+    let store,
         wrapper;
 
     beforeEach(() => {
@@ -36,33 +18,19 @@ describe("src_3_0_0/modules/scaleSwitcher/components/ScaleSwitcher.vue", () => {
         store = createStore({
             namespaces: true,
             modules: {
-                Modules: {
-                    namespaced: true,
-                    modules: {
-                        namespaced: true,
-                        ScaleSwitcher: {
-                            namespaced: true,
-                            getters: {
-                                active: () => active
-                            },
-                            mutations: {
-                                setActive: sinon.stub()
-                            }
-                        }
-                    }
-                },
                 Maps: {
                     namespaced: true,
-                    getters: mockMapGetters,
-                    mutations: mockMapMutations,
+                    getters: {
+                        scale: sinon.stub()
+                    },
+                    mutations: {
+                        setScale: sinon.stub()
+                    },
                     state: {
                         scale: scales[0]
                     },
                     actions: {}
                 }
-            },
-            state: {
-                configJson: mockConfigJson
             }
         });
 
@@ -109,7 +77,6 @@ describe("src_3_0_0/modules/scaleSwitcher/components/ScaleSwitcher.vue", () => {
     });
 
     it("renders the scaleSwitcher", () => {
-        active = true;
         wrapper = shallowMount(ScaleSwitcherComponent, {
             global: {
                 plugins: [store]
@@ -118,18 +85,7 @@ describe("src_3_0_0/modules/scaleSwitcher/components/ScaleSwitcher.vue", () => {
         expect(wrapper.find("#scale-switcher").exists()).to.be.true;
     });
 
-    it("do not render the scaleSwitchers select if not active", () => {
-        active = false;
-        wrapper = shallowMount(ScaleSwitcherComponent, {
-            global: {
-                plugins: [store]
-            }});
-
-        expect(wrapper.find("#scale-switcher").exists()).to.be.false;
-    });
-
     it("has initially set all scales to select", () => {
-        active = true;
         wrapper = shallowMount(ScaleSwitcherComponent, {
             global: {
                 plugins: [store]
@@ -143,7 +99,6 @@ describe("src_3_0_0/modules/scaleSwitcher/components/ScaleSwitcher.vue", () => {
     });
 
     it("has initially selected scale", async () => {
-        active = true;
         wrapper = shallowMount(ScaleSwitcherComponent, {
             global: {
                 plugins: [store]
@@ -154,7 +109,6 @@ describe("src_3_0_0/modules/scaleSwitcher/components/ScaleSwitcher.vue", () => {
     });
 
     it("renders the correct value when select is changed", async () => {
-        active = true;
         wrapper = shallowMount(ScaleSwitcherComponent, {
             global: {
                 plugins: [store]
@@ -173,7 +127,6 @@ describe("src_3_0_0/modules/scaleSwitcher/components/ScaleSwitcher.vue", () => {
     it("sets focus to first input control", async () => {
         const elem = document.createElement("div");
 
-        active = true;
         if (document.body) {
             document.body.appendChild(elem);
         }

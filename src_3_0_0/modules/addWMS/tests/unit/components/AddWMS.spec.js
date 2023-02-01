@@ -7,20 +7,6 @@ import AddWMS from "../../../store/indexAddWMS";
 config.global.mocks.$t = key => key;
 
 describe("src_3_0_0/modules/addWMS/components/AddWMS.vue", () => {
-    const
-        mockConfigJson = {
-            Portalconfig: {
-                mainMenu: {
-                    sections: [
-                        [
-                            {
-                                type: "addWms"
-                            }
-                        ]
-                    ]
-                }
-            }
-        };
     let store,
         wrapper,
         componentData;
@@ -36,9 +22,6 @@ describe("src_3_0_0/modules/addWMS/components/AddWMS.vue", () => {
                         AddWMS
                     }
                 }
-            },
-            state: {
-                configJson: mockConfigJson
             }
         });
 
@@ -47,8 +30,6 @@ describe("src_3_0_0/modules/addWMS/components/AddWMS.vue", () => {
                 treeTyp: "custom"
             };
         };
-
-        store.commit("Modules/AddWMS/setActive", true);
 
         const elem = document.createElement("div");
 

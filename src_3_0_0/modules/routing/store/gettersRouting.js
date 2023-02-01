@@ -25,6 +25,7 @@ const getters = {
         if (options.length === 0) {
             options = ["DIRECTIONS", "ISOCHRONES"];
         }
+
         return constantsRouting.routingToolOptions.filter(option => options.includes(option.id));
     }
 };

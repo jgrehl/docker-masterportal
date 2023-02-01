@@ -25,7 +25,6 @@ describe("src_3_0_0/modules/styleVT/components/StyleVT.vue", () => {
                         StyleVT: {
                             namespaced: true,
                             getters: {
-                                active: () => true,
                                 layerModel: () => null,
                                 selectedLayerId: () => sinon.stub(),
                                 selectedStyle: () => sinon.stub(),
