@@ -84,18 +84,6 @@ export default {
             this.setTimerId(setTimeout(() => {
                 this.applyBufferRadius(newBufferRadius);
             }, 500));
-        },
-        /**
-         * Sets focus if view becomes active.
-         * @param {Boolean} isActive - if active or not
-         * @returns {void}
-         */
-        active (isActive) {
-            if (isActive) {
-                this.setFocusToFirstControl();
-                this.setSelectOptions([]);
-                this.loadSelectOptions();
-            }
         }
     },
     /**
@@ -109,6 +97,9 @@ export default {
         this.loadSelectOptions();
     },
     mounted () {
+        this.setFocusToFirstControl();
+        this.setSelectOptions([]);
+        this.loadSelectOptions();
         this.$nextTick(() => {
             this.applyValuesFromSavedUrlBuffer();
         });
@@ -147,9 +138,7 @@ export default {
 </script>
 
 <template lang="html">
-    <div
-        id="tool-bufferAnalysis"
-    >
+    <div id="tool-bufferAnalysis">
         <div class="form-floating mb-3">
             <select
                 id="tool-bufferAnalysis-selectSourceInput"

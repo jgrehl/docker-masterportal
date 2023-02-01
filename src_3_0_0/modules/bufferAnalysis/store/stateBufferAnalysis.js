@@ -5,7 +5,6 @@ import {ResultType} from "./enums";
 /**
  * User type definition
  * @typedef {Object} BufferAnalysisState
- * @property {Boolean} active if true, BufferAnalysis will rendered
  * @property {String} name displayed as title (config-param)
  * @property {String} icon icon next to title (config-param)
  * @property {String} type type of the BufferAnalysis component
@@ -26,7 +25,6 @@ import {ResultType} from "./enums";
  * @property {String} timerId timerId for debounce buffer radius input
  */
 const state = {
-    active: false,
     icon: "bi-arrows-angle-expand",
     name: "common:menu.tools.bufferAnalysis",
     type: "bufferAnalysis",

@@ -71,7 +71,6 @@ const actions = {
         if (closeTool) {
             commit("setCurrentInstanceIndex", 0);
             commit("setParsedSource", null);
-            commit("setActive", false);
         }
     },
     /**

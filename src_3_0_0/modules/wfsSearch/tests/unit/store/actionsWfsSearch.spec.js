@@ -123,14 +123,13 @@ describe("src_3_0_0/modules/wfsSearch/store/actionsWfsSearch.js", () => {
         it("should reset state parameters to their initial state and reset the tool completely", () => {
             actions.resetModule({commit, dispatch}, true);
 
-            expect(commit.callCount).to.equal(7);
+            expect(commit.callCount).to.equal(6);
             expect(commit.firstCall.args).to.eql(["setRequiredValues", null]);
             expect(commit.secondCall.args).to.eql(["setSearched", false]);
             expect(commit.thirdCall.args).to.eql(["setService", null]);
             expect(commit.getCall(3).args).to.eql(["setUserHelp", ""]);
             expect(commit.getCall(4).args).to.eql(["setCurrentInstanceIndex", 0]);
             expect(commit.getCall(5).args).to.eql(["setParsedSource", null]);
-            expect(commit.lastCall.args).to.eql(["setActive", false]);
             expect(dispatch.calledOnce).to.be.true;
             expect(dispatch.firstCall.args).to.eql(["resetResult"]);
         });
