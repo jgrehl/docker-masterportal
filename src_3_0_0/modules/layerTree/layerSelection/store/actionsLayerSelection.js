@@ -28,7 +28,7 @@ const actions = {
         });
         dispatch("replaceByIdInLayerConfig", {layerConfigs: layerConfigs}, {root: true});
         dispatch("updateAllZIndexes", null, {root: true});
-        commit("clearSelectedLayer");
+        commit("clearLayerSelection");
         commit("Menu/switchToRoot", getters.menuSide, {root: true});
     },
 
@@ -42,10 +42,8 @@ const actions = {
      * @param {Array} payload.backgroundLayerConfs background layer configurations to show in layerSelection
      * @returns {void}
      */
-    navigateForward ({commit, state}, {lastFolderName, subjectDataLayerConfs, backgroundLayerConfs = []}) {
-        state.lastFolderNames.push(lastFolderName);
-        state.lastSubjectDataLayerConfs.push(subjectDataLayerConfs);
-        state.lastBackgroundLayerConfs.push(backgroundLayerConfs);
+    navigateForward ({commit}, {lastFolderName, subjectDataLayerConfs, backgroundLayerConfs = []}) {
+        commit("addToLayerSelection", {lastFolderName, subjectDataLayerConfs, backgroundLayerConfs});
         commit("setLastFolderName", lastFolderName);
         commit("setBackgroundLayerConfs", backgroundLayerConfs);
         commit("setSubjectDataLayerConfs", subjectDataLayerConfs);
@@ -58,10 +56,8 @@ const actions = {
      * @param {Object} param.state the state
      * @returns {void}
      */
-    navigateBack ({commit, getters, state}) {
-        state.lastFolderNames.pop();
-        state.lastSubjectDataLayerConfs.pop();
-        state.lastBackgroundLayerConfs.pop();
+    navigateBack ({commit, getters}) {
+        commit("reduceToPreviousLayerSelection");
         commit("setLastFolderName", getters.lastFolderNames[getters.lastFolderNames.length - 1]);
         commit("setSubjectDataLayerConfs", getters.lastSubjectDataLayerConfs[getters.lastSubjectDataLayerConfs.length - 1]);
         commit("setBackgroundLayerConfs", getters.lastBackgroundLayerConfs[getters.lastBackgroundLayerConfs.length - 1]);
@@ -74,10 +70,8 @@ const actions = {
      * @param {Object} param.state the state
      * @returns {void}
      */
-    reset ({commit, state}) {
-        state.lastFolderNames = [];
-        state.lastSubjectDataLayerConfs = [];
-        state.lastBackgroundLayerConfs = [];
+    reset ({commit}) {
+        commit("clearLayerSelection");
         commit("setLastFolderName", null);
         commit("setSubjectDataLayerConfs", []);
         commit("setBackgroundLayerConfs", []);
