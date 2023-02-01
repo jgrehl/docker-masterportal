@@ -14,12 +14,14 @@ export default {
         LayerSelectionTreeNode
     },
     computed: {
-        ...mapGetters("Modules/LayerSelection", ["active", "subjectDataLayerConfs", "backgroundLayerConfs", "layersToAdd", "type", "menuSide"])
+        ...mapGetters("Modules/LayerSelection", ["active", "subjectDataLayerConfs", "backgroundLayerConfs", "layersToAdd", "type", "menuSide", "lastConfName"])
 
     },
+    unmounted () {
+        this.reset();
+    },
     methods: {
-        ...mapActions("Modules/LayerSelection", ["updateLayerTree"]),
-        ...mapMutations("Modules/LayerSelection", ["setBackgroundLayerConfs", "setSubjectDataLayerConfs"]),
+        ...mapActions("Modules/LayerSelection", ["updateLayerTree", "navigateBack", "navigateForward", "reset"]),
         ...mapMutations("Menu", ["setCurrentComponent"]),
         /**
          * Sorts the configs by type: first folder, then layer.
@@ -36,16 +38,9 @@ export default {
          * @returns {void}
          */
         folderClicked (lastConfName, newConf) {
-            const sortedConf = this.sort(newConf),
-                commit = {
-                    "Modules/LayerSelection/setBackgroundLayerConfs": [],
-                    "Modules/LayerSelection/setSubjectDataLayerConfs": sortedConf,
-                    "Modules/LayerSelection/setActive": true
-                };
+            const subjectDataLayerConfs = this.sort(newConf);
 
-            this.setCurrentComponent({type: this.type, side: this.menuSide, props: {name: lastConfName, navigateBackCommits: commit}});
-            this.setBackgroundLayerConfs([]);
-            this.setSubjectDataLayerConfs(sortedConf);
+            this.navigateForward({lastConfName, subjectDataLayerConfs});
         }
     }
 };
@@ -58,11 +53,20 @@ export default {
         class="layer-selection"
         aria-label=""
     >
-        <h2>{{ $t("common:tree.addSubject") }}</h2>
-        <h6 v-if="backgroundLayerConfs.length > 0">
-            {{ $t("common:tree.backgrounds") }}
-        </h6>
         <div class="row align-items-center justify-content-center">
+            <a
+                v-if="lastConfName"
+                :id="'layer-selection-navigation-'"
+                class="p-2 mp-menu-navigation"
+                href="#"
+                @click="navigateBack()"
+                @keypress="navigateBack()"
+            >
+                <h6 class="mp-menu-navigation-link mb-3"><p class="bi-chevron-left" />{{ lastConfName }}</h6>
+            </a>
+            <h6 v-if="backgroundLayerConfs.length > 0">
+                {{ $t("common:tree.backgrounds") }}
+            </h6>
             <template
                 v-for="(bgConf, index) in backgroundLayerConfs"
                 :key="index"
@@ -74,7 +78,10 @@ export default {
                     />
                 </div>
             </template>
-            <hr class="m-2">
+            <hr
+                v-if="backgroundLayerConfs.length > 0"
+                class="m-2"
+            >
             <template
                 v-for="(conf, index) in subjectDataLayerConfs"
                 :key="index"
@@ -109,5 +116,17 @@ export default {
     top: 16%;
     position: absolute;
     padding: $padding;
+}
+.mp-menu-navigation{
+    color: $black;
+    display: flex;
+}
+
+.mp-menu-navigation-link{
+    display: flex;
+}
+
+.mp-menu-navigation-moduletitle{
+    display: flex;
 }
 </style>
