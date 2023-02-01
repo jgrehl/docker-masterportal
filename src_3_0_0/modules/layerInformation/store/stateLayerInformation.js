@@ -1,9 +1,7 @@
 /**
  * User type definition
  * @typedef {Object} layerInformationState
- * @property {Boolean} active if true LayerInformation will be shown
  * @property {String} icon Icon next to name (config-param).
- * @property {Object[]} isVisibleInMenu Specifies a whether a menu item is to be created.
  * @property {Object[]} menuSide Specifies in which menu the GFI should be rendered
  * @property {String} name name of this module
  * @property {String} type the type of layer information
@@ -22,9 +20,7 @@
  * @property {String} title the layer Title
  */
 export default {
-    active: false,
     icon: "bi-info-circle",
-    isVisibleInMenu: false,
     menuSide: "mainMenu",
     name: "common:modules.layerInformation.informationAndLegend",
     type: "layerInformation",

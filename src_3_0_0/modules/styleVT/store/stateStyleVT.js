@@ -1,5 +1,6 @@
 /**
- * @property {Boolean} active Current status of the Tool.
+ * StyleVT
+ * @typedef {Object} StyleVTState
  * @property {String} description The description that should be shown in the button in the right menu.
  * @property {String} icon Icon used in the header of the window.
  * @property {?VTLayer} layerModel Currently selected model of a Vector Tile Layer to style.
@@ -9,7 +10,6 @@
  * @property {VTLayer[]} vectorTileLayerList Array of visible Vector Tile Layers selectable to style.
  */
 const state = {
-    active: false,
     description: "",
     icon: "bi-paint-bucket",
     layerModel: null,

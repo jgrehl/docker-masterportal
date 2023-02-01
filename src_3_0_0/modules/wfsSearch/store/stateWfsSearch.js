@@ -2,11 +2,9 @@
  * WfsSearch tool state definition.
  * @typedef {object} WfsSearchState
  * @type {object}
- * @property {boolean} active if true, WfsSearch will be rendered.
  * @property {boolean} type the type of the module.
  * @property {string} name Displayed as the title. (config-param)
  * @property {string} icon Icon next to the title. (config-param)
- * @property {boolean} isVisibleInMenu If true, tool is selectable in menu. (config-param)
  * @property {Object[]} instances Array of search configurations. Each object contains the parameters literals, requestConfig and title and may also contain the parameters selectSource and userHelp. More information in the documentation.
  * @property {number} currentInstanceIndex Position of the current search instance in the instances array.
  * @property {?JSON} parsedSource The requested and parsed selectSource.
@@ -25,12 +23,10 @@
  * @property {String[]} supportedMapModes Map mode in which this module can be used.
  */
 const state = {
-    active: false,
     type: "wfsSearch",
     // defaults for config.json tool parameters
     name: "common:menu.tools.wfsSearch",
     icon: "bi-search",
-    isVisibleInMenu: true,
     instances: [],
     // state parameters
     currentInstanceIndex: 0,

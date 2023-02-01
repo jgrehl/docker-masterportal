@@ -39,7 +39,6 @@ describe("src_3_0_0/modules/layerSlider/components/LayerSliderHandle.vue", () =>
                                 name: () => "common:menu.tools.layerSlider",
                                 icon: () => "bi-hourglass-split",
                                 title: () => "common:modules.tools.layerSlider.title",
-                                active: () => true,
                                 layerIds: () => layerIds,
                                 activeLayer: () => {
                                     return {
@@ -56,7 +55,6 @@ describe("src_3_0_0/modules/layerSlider/components/LayerSliderHandle.vue", () =>
                                 sendModification: sinon.stub()
                             },
                             mutations: {
-                                setActive: sinon.stub(),
                                 setLayerIds: sinon.stub(),
                                 setSliderMax: sinon.stub(),
                                 setSliderTicks: sinon.stub()

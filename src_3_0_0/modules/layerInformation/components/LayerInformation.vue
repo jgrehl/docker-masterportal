@@ -16,7 +16,6 @@ export default {
         ...mapGetters(["configJs"]),
         ...mapGetters("Modules/LayerInformation", [
             "abstractText",
-            "active",
             "customText",
             "datePublication",
             "dateRevision",
@@ -107,7 +106,6 @@ export default {
 
 <template lang="html">
     <div
-        v-if="active"
         id="modules-layer-information"
         class="body"
     >
@@ -296,7 +294,6 @@ export default {
         >ul {
             background-color: $white;
         }
-        max-height: 66vh;
         overflow-y: auto;
         overflow-x: hidden;
         padding: 5px 10px;
