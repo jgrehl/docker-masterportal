@@ -1,5 +1,5 @@
 <script>
-import {mapMutations, mapGetters} from "vuex";
+import {mapActions, mapMutations, mapGetters} from "vuex";
 import LayerTreeNode from "./LayerTreeNode.vue";
 import {treeBackgroundsKey, treeSubjectsKey} from "../../../shared/js/utils/constants";
 import sortBy from "../../../shared/js/utils/sortBy";
@@ -26,8 +26,9 @@ export default {
         }
     },
     methods: {
+        ...mapActions("Modules/LayerSelection", ["navigateForward"]),
         ...mapMutations("Menu", ["setCurrentComponent"]),
-        ...mapMutations("Modules/LayerSelection", {setLayerSelectionActive: "setActive", setSubjectDataLayerConfs: "setSubjectDataLayerConfs", setBackgroundLayerConfs: "setBackgroundLayerConfs"}),
+        ...mapMutations("Modules/LayerSelection", {setLayerSelectionActive: "setActive"}),
         /**
          * Sorts the configs by type: first folder, then layer.
          * @param {Array} configs list of layer and folder configs
@@ -41,17 +42,11 @@ export default {
          * @returns {void}
          */
         showLayerSelection () {
-            const subjectDataConfs = this.sort(this.allLayerConfigsStructured(treeSubjectsKey)),
-                bgConfs = this.allLayerConfigsStructured(treeBackgroundsKey),
-                commit = {
-                    "Modules/LayerSelection/setActive": true,
-                    "Modules/LayerSelection/setBackgroundLayerConfs": bgConfs,
-                    "Modules/LayerSelection/setSubjectDataLayerConfs": subjectDataConfs
-                };
+            const subjectDataLayerConfs = this.sort(this.allLayerConfigsStructured(treeSubjectsKey)),
+                backgroundLayerConfs = this.allLayerConfigsStructured(treeBackgroundsKey);
 
-            this.setCurrentComponent({type: this.layerSelectionType, side: this.menuSide, props: {name: this.layerSelectionName, navigateBackCommits: commit}});
-            this.setBackgroundLayerConfs(bgConfs);
-            this.setSubjectDataLayerConfs(subjectDataConfs);
+            this.setCurrentComponent({type: this.layerSelectionType, side: this.menuSide, props: {name: this.layerSelectionName}});
+            this.navigateForward({lastConfName: null, subjectDataLayerConfs, backgroundLayerConfs});
             this.setLayerSelectionActive(true);
         }
     }
