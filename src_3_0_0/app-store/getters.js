@@ -99,12 +99,12 @@ const getters = {
     },
 
     /**
-     * Returns the mainmenu of portalConfig.
+     * Returns the menu by side of the portalConfig.
      * @param {Object} state state of the app-store.
      * @returns {Object} Main menu.
      */
-    mainMenuFromConfig: state => {
-        return state.portalConfig.mainMenu || {};
+    menuFromConfig: state => side => {
+        return state.portalConfig[side] || {};
     },
 
     /**
@@ -124,15 +124,6 @@ const getters = {
      */
     restServiceById: state => id => {
         return state?.restConfig?.find(service => service.id === id);
-    },
-
-    /**
-     * Returns the secondaryMenu of portalConfig.
-     * @param {Object} state state of the app-store.
-     * @returns {Object} Secondary menu.
-     */
-    secondaryMenuFromConfig: state => {
-        return state.portalConfig.secondaryMenu || {};
     },
 
     /**

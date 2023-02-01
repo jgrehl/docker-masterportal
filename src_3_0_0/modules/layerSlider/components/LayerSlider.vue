@@ -11,23 +11,18 @@ export default {
     },
     computed: {
         ...mapGetters("Modules/LayerSlider", [
-            "active",
             "layerIds",
             "sliderType",
             "title"
         ])
     },
-    watch: {
-        active (isActive) {
-            if (!isActive) {
-                this.setWindowsInterval(null);
-                this.resetActiveLayer();
-            }
-        }
-    },
     mounted () {
         this.checkIfAllLayersAvailable(this.layerIds);
         this.addIndexToLayerIds(this.layerIds);
+    },
+    unmounted () {
+        this.setWindowsInterval(null);
+        this.resetActiveLayer();
     },
     methods: {
         ...mapMutations("Modules/LayerSlider", [
@@ -43,10 +38,7 @@ export default {
 </script>
 
 <template lang="html">
-    <div
-        v-if="active"
-        id="module-layer-slider"
-    >
+    <div id="module-layer-slider">
         <h5 class="my-4">
             {{ $t(title) }}
         </h5>

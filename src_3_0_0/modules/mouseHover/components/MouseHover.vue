@@ -4,10 +4,7 @@ import {mapActions, mapGetters} from "vuex";
 export default {
     name: "MouseHover",
     computed: {
-        ...mapGetters("Modules/MouseHover", ["infoBox", "infoText", "pleaseZoom"]),
-        ...mapGetters({
-            isMobile: "mobile"
-        })
+        ...mapGetters("Modules/MouseHover", ["infoBox", "infoText", "pleaseZoom"])
     },
     mounted () {
         this.initialize();

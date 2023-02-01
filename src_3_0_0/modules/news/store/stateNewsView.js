@@ -1,7 +1,6 @@
 /**
  * User type definition
  * @typedef {Object} NewsViewState
- * @property {Boolean} active If true, NewsViewState will rendered.
  * @property {String} description The descritption that should be shown in the button in the right menu.
  * @property {String} icon The icon next to title (config-param).
  * @property {String} name The name displayed as title (config-param).
@@ -12,7 +11,6 @@
  * @property {Object[]} news The news to display.
  */
 const state = {
-    active: false,
     description: "",
     icon: "bi-newspaper",
     name: "common:menu.tools.news",
