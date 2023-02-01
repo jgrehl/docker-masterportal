@@ -8,7 +8,7 @@ import LayerSelection from "../../../store/indexLayerSelection";
 
 config.global.mocks.$t = key => key;
 
-describe.skip("src_3_0_0/modules/layerTree/layerSelection/components/LayerSelection.vue", () => {
+describe("src_3_0_0/modules/layerTree/layerSelection/components/LayerSelection.vue", () => {
     let store,
         wrapper,
         layerBG_1,
@@ -19,8 +19,7 @@ describe.skip("src_3_0_0/modules/layerTree/layerSelection/components/LayerSelect
         subjectDataLayers,
         layersWithFolder,
         layersBG,
-        layersToAdd,
-        updateLayerTreeCalled = false;
+        layersToAdd;
 
     beforeEach(() => {
         layersToAdd = [];
@@ -82,6 +81,8 @@ describe.skip("src_3_0_0/modules/layerTree/layerSelection/components/LayerSelect
                 ]
             }];
         subjectDataLayers = layersWithFolder;
+        LayerSelection.actions.navigateForward = sinon.spy();
+        LayerSelection.actions.updateLayerTree = sinon.spy();
         store = createStore({
             namespaces: true,
             modules: {
@@ -89,15 +90,6 @@ describe.skip("src_3_0_0/modules/layerTree/layerSelection/components/LayerSelect
                     namespaced: true,
                     mutations: {
                         setCurrentComponent: sinon.stub()
-                    },
-                    modules: {
-                        Navigation: {
-                            namespaced: true,
-                            getters: {
-                                entries: sinon.stub(),
-                                isModuleActiveInMenu: sinon.stub()
-                            }
-                        }
                     }
                 },
                 Modules: {
@@ -118,12 +110,10 @@ describe.skip("src_3_0_0/modules/layerTree/layerSelection/components/LayerSelect
                 }
             }
         });
-        LayerSelection.actions.updateLayerTree = () => {
-            updateLayerTreeCalled = true;
-        };
         LayerSelection.getters.layersToAdd = () => layersToAdd;
         LayerSelection.state.active = true;
         store.commit("Modules/LayerSelection/setSubjectDataLayerConfs", subjectDataLayers);
+        store.commit("Modules/LayerSelection/setBackgroundLayerConfs", layersBG);
     });
 
     afterEach(() => {
@@ -140,8 +130,8 @@ describe.skip("src_3_0_0/modules/layerTree/layerSelection/components/LayerSelect
         expect(wrapper.find("#layer-selection").exists()).to.be.false;
     });
     it("renders the LayerSelection without layers", () => {
-        subjectDataLayers = [];
-        layersBG = [];
+        store.commit("Modules/LayerSelection/setSubjectDataLayerConfs", []);
+        store.commit("Modules/LayerSelection/setBackgroundLayerConfs", []);
         wrapper = shallowMount(LayerSelectionComponent, {
             global: {
                 plugins: [store]
@@ -173,23 +163,10 @@ describe.skip("src_3_0_0/modules/layerTree/layerSelection/components/LayerSelect
 
         expect(wrapper.find("#layer-selection").exists()).to.be.true;
 
-        wrapper.vm.setConf(subjectDataLayers[0].elements);
+        wrapper.vm.folderClicked(subjectDataLayers[0].elements);
         await wrapper.vm.$nextTick();
 
-        expect(wrapper.findAll("layer-selection-tree-node-stub").length).to.be.equals(1);
-        expect(wrapper.findAll("layer-check-box-stub").length).to.be.equals(0);
-
-        wrapper.vm.setConf(subjectDataLayers[0].elements[0].elements);
-        await wrapper.vm.$nextTick();
-
-        expect(wrapper.findAll("layer-selection-tree-node-stub").length).to.be.equals(3);
-        expect(wrapper.findAll("layer-check-box-stub").length).to.be.equals(0);
-
-        wrapper.vm.setConf(subjectDataLayers[0].elements[0].elements[2].elements);
-        await wrapper.vm.$nextTick();
-
-        expect(wrapper.findAll("layer-selection-tree-node-stub").length).to.be.equals(1);
-        expect(wrapper.findAll("layer-check-box-stub").length).to.be.equals(0);
+        expect(LayerSelection.actions.navigateForward.calledOnce).to.be.true;
     });
 
     it("click on button to add layers shall be disabled", () => {
@@ -217,7 +194,7 @@ describe.skip("src_3_0_0/modules/layerTree/layerSelection/components/LayerSelect
 
         btn.trigger("click");
         await wrapper.vm.$nextTick();
-        expect(updateLayerTreeCalled).to.be.true;
+        expect(LayerSelection.actions.updateLayerTree.calledOnce).to.be.true;
     });
 
     it("test method sort", () => {
