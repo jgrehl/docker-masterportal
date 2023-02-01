@@ -18,19 +18,10 @@ export default {
             return this.dzIsDropHovering ? "dzReady" : "";
         }
     },
-    watch: {
-        /**
-         * Listens to the active property change.
-         * @param {Boolean} isActive Value deciding whether the tool gets activated or deactivated.
-         * @returns {void}
-         */
-        active (isActive) {
-            if (isActive) {
-                this.setFocusToFirstControl();
-                this.modifyImportedFileNames(this.importedFileNames);
-                this.modifyImportedFileExtent(this.featureExtents, this.importedFileNames);
-            }
-        }
+    mounted () {
+        this.setFocusToFirstControl();
+        this.modifyImportedFileNames(this.importedFileNames);
+        this.modifyImportedFileExtent(this.featureExtents, this.importedFileNames);
     },
     methods: {
         ...mapActions(["addLayerToLayerConfig"]),

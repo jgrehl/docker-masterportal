@@ -1,7 +1,6 @@
 /**
  * Print Tool
  * @typedef {Object} PrintState
- * @property {Boolean} active if true, print tool will rendered
  * @property {String} description The description that should be shown in the button in the right menu.
  * @property {String} filename output filename
  * @property {String} icon icon of the print
@@ -50,7 +49,6 @@
  * @property {Object} defaultCapabilitiesFilter If there is no key set in capabilitiesFilter, the key from this object is taken
  */
 const state = {
-    active: false,
     description: "",
     filename: "report",
     icon: "bi-printer-fill",
