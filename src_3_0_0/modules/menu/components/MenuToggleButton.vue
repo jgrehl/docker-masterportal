@@ -1,5 +1,5 @@
 <script>
-import {mapGetters, mapMutations} from "vuex";
+import {mapActions, mapGetters} from "vuex";
 
 export default {
     name: "MenuToggleButton",
@@ -29,7 +29,7 @@ export default {
         }
     },
     methods: {
-        ...mapMutations("Menu", ["toggleMenu"])
+        ...mapActions("Menu", ["toggleMenu"])
     }
 };
 </script>
