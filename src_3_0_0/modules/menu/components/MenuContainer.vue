@@ -1,5 +1,5 @@
 <script>
-import {mapGetters, mapMutations} from "vuex";
+import {mapActions, mapGetters, mapMutations} from "vuex";
 import MenuContainerBody from "./MenuContainerBody.vue";
 import ResizeHandle from "../../../shared/modules/resize/components/ResizeHandle.vue";
 
@@ -27,8 +27,7 @@ export default {
         ...mapGetters("Menu", [
             "mainExpanded",
             "secondaryExpanded",
-            "titleBySide",
-            "toggleMenu"
+            "titleBySide"
         ]),
 
         /**
@@ -57,6 +56,9 @@ export default {
         ...mapMutations("Menu", [
             "collapseMenues",
             "mergeMenuState"
+        ]),
+        ...mapActions("Menu", [
+            "toggleMenu"
         ])
     }
 };
