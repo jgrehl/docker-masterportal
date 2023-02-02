@@ -1,6 +1,7 @@
 import rawLayerList from "@masterportal/masterportalapi/src/rawLayerList";
 import sinon from "sinon";
 import {expect} from "chai";
+import {treeTopicConfigKey, treeBackgroundsKey, treeSubjectsKey} from "../../../shared/js/utils/constants";
 import actions from "../../actionsLayerConfig";
 
 describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
@@ -100,82 +101,81 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
                 zIndex: 8
             }
         ];
-        layerConfig = {
-            Hintergrundkarten: {
-                elements: [
-                    {
-                        id: "453",
-                        visibility: true
-                    },
-                    {
-                        id: "452"
-                    }
-                ]
-            },
-            Fachdaten: {
-                elements: [
-                    {
-                        id: "1132",
-                        name: "100 Jahre Stadtgruen POIs",
-                        visibility: true
-                    },
-                    {
-                        id: "10220"
-                    }
-                ]
-            }
+        layerConfig = {};
+        layerConfig[treeBackgroundsKey] =
+        {
+            elements: [
+                {
+                    id: "453",
+                    visibility: true
+                },
+                {
+                    id: "452"
+                }
+            ]
         };
-        layerConfigCustom = {
-            Hintergrundkarten: {
-                elements: [
-                    {
-                        id: [
-                            "717",
-                            "718",
-                            "719"
-                        ],
-                        visibility: true,
-                        name: "Geobasiskarten (farbig)"
-                    },
-                    {
-                        id: "453"
-                    }
-                ]
-            },
-            Fachdaten: {
-                elements: [
-                    {
-                        name: "Lage und Gebietszugehörigkeit",
-                        type: "folder",
-                        elements: [
-                            {
-                                name: "Überschwemmungsgebiete",
-                                type: "folder",
-                                elements: [
-                                    {
-                                        name: "Überschwemmungsgebiete",
-                                        type: "folder",
-                                        elements: [
-                                            {
-                                                id: "1103"
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        id: "10220"
-                                    }
-                                ]
-                            },
-                            {
-                                id: "10220"
-                            },
-                            {
-                                id: "451"
-                            }
-                        ]
-                    }
-                ]
-            }
+        layerConfig[treeSubjectsKey] = {
+            elements: [
+                {
+                    id: "1132",
+                    name: "100 Jahre Stadtgruen POIs",
+                    visibility: true
+                },
+                {
+                    id: "10220"
+                }
+            ]
+        };
+        layerConfigCustom = {};
+        layerConfigCustom[treeBackgroundsKey] = {
+            elements: [
+                {
+                    id: [
+                        "717",
+                        "718",
+                        "719"
+                    ],
+                    visibility: true,
+                    name: "Geobasiskarten (farbig)"
+                },
+                {
+                    id: "453"
+                }
+            ]
+        };
+        layerConfigCustom[treeSubjectsKey] = {
+            elements: [
+                {
+                    name: "Lage und Gebietszugehörigkeit",
+                    type: "folder",
+                    elements: [
+                        {
+                            name: "Überschwemmungsgebiete",
+                            type: "folder",
+                            elements: [
+                                {
+                                    name: "Überschwemmungsgebiete",
+                                    type: "folder",
+                                    elements: [
+                                        {
+                                            id: "1103"
+                                        }
+                                    ]
+                                },
+                                {
+                                    id: "10220"
+                                }
+                            ]
+                        },
+                        {
+                            id: "10220"
+                        },
+                        {
+                            id: "451"
+                        }
+                    ]
+                }
+            ]
         };
         commit = sinon.spy();
         dispatch = sinon.spy();
@@ -186,7 +186,7 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
                 restConf: restConf
             },
             configJson: {
-                Themenconfig: layerConfig
+                [treeTopicConfigKey]: layerConfig
             },
             portalConfigDefaults: {
                 tree: {
@@ -207,10 +207,8 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
 
     describe("addLayerToLayerConfig", () => {
         it("addLayerToLayerConfig", () => {
-            layerConfig = {
-                Fachdaten: {
-                    elements: []
-                }
+            layerConfig[treeSubjectsKey] = {
+                elements: []
             };
             state.layerConfig = layerConfig;
             const layerToAdd = {
@@ -231,7 +229,7 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
                     allLayerConfigsByParentKey: () => []
                 };
 
-            actions.addLayerToLayerConfig({dispatch, getters, state}, {layerConfig: layerToAdd, parentKey: "Fachdaten"});
+            actions.addLayerToLayerConfig({dispatch, getters, state}, {layerConfig: layerToAdd, parentKey: treeSubjectsKey});
             expect(dispatch.callCount).to.equals(2);
             expect(dispatch.firstCall.args[0]).to.equals("updateLayerConfigZIndex");
             expect(dispatch.firstCall.args[1]).to.deep.equals({
@@ -240,8 +238,8 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
             });
             expect(dispatch.secondCall.args[0]).to.equals("addBackgroundLayerAttribute");
             expect(dispatch.secondCall.args[1]).to.be.undefined;
-            expect(state.layerConfig?.Fachdaten?.elements.length).to.equal(1);
-            expect(state.layerConfig?.Fachdaten?.elements[0]).to.deep.equal(layerToAdd);
+            expect(state.layerConfig[treeSubjectsKey]?.elements.length).to.equal(1);
+            expect(state.layerConfig[treeSubjectsKey]?.elements[0]).to.deep.equal(layerToAdd);
         });
     });
 
@@ -321,7 +319,7 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
 
         it("extend layers for special configuration with folders", () => {
             layerConfig = {
-                Fachdaten: {
+                [treeSubjectsKey]: {
                     elements: [
                         {
                             id: "1132",
@@ -405,12 +403,12 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
         describe("addBackgroundLayerAttribute", () => {
             it("add the attribute background to Hintergrundkarten", () => {
                 const getters = {
-                    allLayerConfigsByParentKey: () => layerConfig.Hintergrundkarten.elements
+                    allLayerConfigsByParentKey: () => layerConfig[treeBackgroundsKey].elements
                 };
 
                 actions.addBackgroundLayerAttribute({getters});
 
-                expect(layerConfig.Hintergrundkarten.elements).to.deep.equals([
+                expect(layerConfig[treeBackgroundsKey].elements).to.deep.equals([
                     {
                         id: "453",
                         visibility: true,
@@ -444,12 +442,12 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
                 };
 
                 state.layerConfig = layerConfig;
-                delete state.layerConfig.Fachdaten;
+                delete state.layerConfig[treeSubjectsKey];
 
                 layerList.splice(3, 2);
                 layerList.splice(4, 3);
 
-                actions.processTreeTypeAuto({commit, getters, state}, layerConfig.Hintergrundkarten.elements);
+                actions.processTreeTypeAuto({commit, getters, state}, layerConfig[treeBackgroundsKey].elements);
 
                 expect(commit.calledOnce).to.be.true;
                 expect(commit.firstCall.args[0]).to.equals("setLayerConfigByParentKey");
@@ -457,7 +455,7 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
                     layerConfigs: {
                         elements: []
                     },
-                    parentKey: "Fachdaten"
+                    parentKey: treeSubjectsKey
                 });
             });
         });
@@ -478,22 +476,22 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
 
                 actions.replaceByIdInLayerConfig({state}, {layerConfigs: [{layer: toReplace, id: "453"}]});
 
-                expect(state.layerConfig?.Hintergrundkarten?.elements).to.be.an("array");
-                expect(state.layerConfig?.Hintergrundkarten?.elements.length).to.be.equals(2);
-                expect(Object.keys(state.layerConfig?.Hintergrundkarten?.elements[0]).length).to.be.equals(4);
-                expect(state.layerConfig?.Hintergrundkarten?.elements[0].id).to.be.equals("453");
-                expect(state.layerConfig?.Hintergrundkarten?.elements[0].visibility).to.be.true;
-                expect(state.layerConfig?.Hintergrundkarten?.elements[0].att1).to.be.equals("bla");
-                expect(state.layerConfig?.Hintergrundkarten?.elements[0].att2).to.be.deep.equals(toReplace.att2);
-                expect(state.layerConfig?.Hintergrundkarten?.elements[1].id).to.be.equals("452");
-                expect(Object.keys(state.layerConfig?.Hintergrundkarten?.elements[1]).length).to.be.equals(1);
+                expect(state.layerConfig[treeBackgroundsKey].elements).to.be.an("array");
+                expect(state.layerConfig[treeBackgroundsKey].elements.length).to.be.equals(2);
+                expect(Object.keys(state.layerConfig[treeBackgroundsKey]?.elements[0]).length).to.be.equals(4);
+                expect(state.layerConfig[treeBackgroundsKey]?.elements[0].id).to.be.equals("453");
+                expect(state.layerConfig[treeBackgroundsKey]?.elements[0].visibility).to.be.true;
+                expect(state.layerConfig[treeBackgroundsKey]?.elements[0].att1).to.be.equals("bla");
+                expect(state.layerConfig[treeBackgroundsKey]?.elements[0].att2).to.be.deep.equals(toReplace.att2);
+                expect(state.layerConfig[treeBackgroundsKey]?.elements[1].id).to.be.equals("452");
+                expect(Object.keys(state.layerConfig[treeBackgroundsKey]?.elements[1]).length).to.be.equals(1);
 
-                expect(state.layerConfig?.Fachdaten?.elements).to.be.an("array");
-                expect(state.layerConfig?.Fachdaten?.elements.length).to.be.equals(2);
-                expect(state.layerConfig?.Fachdaten?.elements[0].id).to.be.equals("1132");
-                expect(Object.keys(state.layerConfig?.Fachdaten?.elements[0]).length).to.be.equals(3);
-                expect(state.layerConfig?.Fachdaten?.elements[1].id).to.be.equals("10220");
-                expect(Object.keys(state.layerConfig?.Fachdaten?.elements[1]).length).to.be.equals(1);
+                expect(state.layerConfig[treeSubjectsKey]?.elements).to.be.an("array");
+                expect(state.layerConfig[treeSubjectsKey]?.elements.length).to.be.equals(2);
+                expect(state.layerConfig[treeSubjectsKey]?.elements[0].id).to.be.equals("1132");
+                expect(Object.keys(state.layerConfig[treeSubjectsKey]?.elements[0]).length).to.be.equals(3);
+                expect(state.layerConfig[treeSubjectsKey]?.elements[1].id).to.be.equals("10220");
+                expect(Object.keys(state.layerConfig[treeSubjectsKey]?.elements[1]).length).to.be.equals(1);
             });
 
             it("replaceByIdInLayerConfig layer is not contained in layerConfig", () => {
@@ -530,61 +528,61 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
             it("updateAllZIndexes does not set zIndexes, if no zIndexes are set before", () => {
                 const getters = {
                     allLayerConfigsByParentKey: (key) => {
-                        if (key === "Hintergrundkarten") {
-                            return layerConfig.Hintergrundkarten.elements;
+                        if (key === treeBackgroundsKey) {
+                            return layerConfig[treeBackgroundsKey].elements;
                         }
-                        return layerConfig.Fachdaten.elements;
+                        return layerConfig[treeSubjectsKey].elements;
                     }
                 };
 
                 actions.updateAllZIndexes({dispatch, getters});
-                expect(layerConfig.Hintergrundkarten.elements[0].zIndex).to.be.undefined;
-                expect(layerConfig.Hintergrundkarten.elements[1].zIndex).to.be.undefined;
-                expect(layerConfig.Fachdaten.elements[0].zIndex).to.be.undefined;
-                expect(layerConfig.Fachdaten.elements[1].zIndex).to.be.undefined;
+                expect(layerConfig[treeBackgroundsKey].elements[0].zIndex).to.be.undefined;
+                expect(layerConfig[treeBackgroundsKey].elements[1].zIndex).to.be.undefined;
+                expect(layerConfig[treeSubjectsKey].elements[0].zIndex).to.be.undefined;
+                expect(layerConfig[treeSubjectsKey].elements[1].zIndex).to.be.undefined;
             });
 
             it("updateAllZIndexes with all zIndexes are set before", () => {
                 const getters = {
                     allLayerConfigsByParentKey: (key) => {
-                        if (key === "Hintergrundkarten") {
-                            return layerConfig.Hintergrundkarten.elements;
+                        if (key === treeBackgroundsKey) {
+                            return layerConfig[treeBackgroundsKey].elements;
                         }
-                        return layerConfig.Fachdaten.elements;
+                        return layerConfig[treeSubjectsKey].elements;
                     }
                 };
 
-                layerConfig.Hintergrundkarten.elements[0].zIndex = 0;
-                layerConfig.Hintergrundkarten.elements[1].zIndex = 1;
-                layerConfig.Fachdaten.elements[0].zIndex = 5;
-                layerConfig.Fachdaten.elements[1].zIndex = 6;
+                layerConfig[treeBackgroundsKey].elements[0].zIndex = 0;
+                layerConfig[treeBackgroundsKey].elements[1].zIndex = 1;
+                layerConfig[treeSubjectsKey].elements[0].zIndex = 5;
+                layerConfig[treeSubjectsKey].elements[1].zIndex = 6;
                 actions.updateAllZIndexes({getters});
 
-                expect(layerConfig.Hintergrundkarten.elements[0].zIndex).to.be.equals(0);
-                expect(layerConfig.Hintergrundkarten.elements[1].zIndex).to.be.equals(1);
-                expect(layerConfig.Fachdaten.elements[0].zIndex).to.be.equals(2);
-                expect(layerConfig.Fachdaten.elements[1].zIndex).to.be.equals(3);
+                expect(layerConfig[treeBackgroundsKey].elements[0].zIndex).to.be.equals(0);
+                expect(layerConfig[treeBackgroundsKey].elements[1].zIndex).to.be.equals(1);
+                expect(layerConfig[treeSubjectsKey].elements[0].zIndex).to.be.equals(2);
+                expect(layerConfig[treeSubjectsKey].elements[1].zIndex).to.be.equals(3);
             });
 
             it("updateAllZIndexes with some zIndexes are set before", () => {
                 const getters = {
                     allLayerConfigsByParentKey: (key) => {
-                        if (key === "Hintergrundkarten") {
-                            return layerConfig.Hintergrundkarten.elements;
+                        if (key === treeBackgroundsKey) {
+                            return layerConfig[treeBackgroundsKey].elements;
                         }
-                        return layerConfig.Fachdaten.elements;
+                        return layerConfig[treeSubjectsKey].elements;
                     }
                 };
 
-                layerConfig.Hintergrundkarten.elements[0].zIndex = 0;
-                layerConfig.Fachdaten.elements[0].zIndex = 5;
-                layerConfig.Fachdaten.elements[1].zIndex = 6;
+                layerConfig[treeBackgroundsKey].elements[0].zIndex = 0;
+                layerConfig[treeSubjectsKey].elements[0].zIndex = 5;
+                layerConfig[treeSubjectsKey].elements[1].zIndex = 6;
                 actions.updateAllZIndexes({getters});
 
-                expect(layerConfig.Hintergrundkarten.elements[0].zIndex).to.be.equals(0);
-                expect(layerConfig.Hintergrundkarten.elements[1].zIndex).to.be.equals(undefined);
-                expect(layerConfig.Fachdaten.elements[0].zIndex).to.be.equals(1);
-                expect(layerConfig.Fachdaten.elements[1].zIndex).to.be.equals(2);
+                expect(layerConfig[treeBackgroundsKey].elements[0].zIndex).to.be.equals(0);
+                expect(layerConfig[treeBackgroundsKey].elements[1].zIndex).to.be.equals(undefined);
+                expect(layerConfig[treeSubjectsKey].elements[0].zIndex).to.be.equals(1);
+                expect(layerConfig[treeSubjectsKey].elements[1].zIndex).to.be.equals(2);
             });
         });
     });

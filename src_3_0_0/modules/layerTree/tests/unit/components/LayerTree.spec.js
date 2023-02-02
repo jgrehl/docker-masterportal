@@ -2,7 +2,7 @@ import {createStore} from "vuex";
 import {config, mount, shallowMount} from "@vue/test-utils";
 import {expect} from "chai";
 import sinon from "sinon";
-
+import {treeBackgroundsKey, treeSubjectsKey} from "../../../../../shared/js/utils/constants";
 import getNestedValues from "../../../../../shared/js/utils/getNestedValues";
 import LayerTreeComponent from "../../../components/LayerTree.vue";
 import LayerTree from "../../../store/indexLayerTree";
@@ -149,10 +149,10 @@ describe("src_3_0_0/modules/layerTree/components/LayerTree.vue", () => {
                 },
                 layerConfigsByArributes: () => () => {
                     const layerConfigs = {
-                            Fachdaten: {
+                            [treeSubjectsKey]: {
                                 elements: subjectDataLayers
                             },
-                            Hintergrundkarten: {
+                            [treeBackgroundsKey]: {
                                 elements: layersBG
                             }
                         },
