@@ -137,7 +137,7 @@ describe("src_3_0_0/modules/controls/startModule/store/actionsStartModule.js", (
 
             onClick({commit, dispatch, rootGetters}, {moduleState, menuSide});
 
-            expect(dispatch.calledOnce).to.be.true;
+            expect(dispatch.calledTwice).to.be.true;
             expect(dispatch.firstCall.args[0]).to.equals("Menu/changeCurrentComponent");
             expect(dispatch.firstCall.args[1]).to.deep.equals({
                 type: "selectFeatures",
@@ -146,10 +146,8 @@ describe("src_3_0_0/modules/controls/startModule/store/actionsStartModule.js", (
                     name: "common:xyz"
                 }
             });
-
-            expect(commit.calledOnce).to.be.true;
-            expect(commit.firstCall.args[0]).to.equals("Menu/toggleMenu");
-            expect(commit.firstCall.args[1]).to.equals(menuSide);
+            expect(dispatch.secondCall.args[0]).to.equals("Menu/toggleMenu");
+            expect(dispatch.secondCall.args[1]).to.equals(menuSide);
         });
 
         it("should reset meu and don't activate menu navigation, if module is not active", () => {
