@@ -3,7 +3,8 @@ import {expect} from "chai";
 import sinon from "sinon";
 import {config, shallowMount} from "@vue/test-utils";
 import RoutingCoordinateInputComponent from "../../../components/RoutingCoordinateInput.vue";
-import Routing from "../../../store/indexRouting";
+import mutations from "../../../store/mutationsRouting";
+import actions from "../../../store/actionsRouting";
 import {RoutingWaypoint} from "../../../js/classes/routing-waypoint";
 import {RoutingGeosearchResult} from "../../../js/classes/routing-geosearch-result";
 
@@ -16,12 +17,22 @@ describe("src_3_0_0/modules/routing/components/RoutingCoordinateInput.vue", () =
 
     beforeEach(() => {
         store = createStore({
-            namespaced: true,
+            namespaces: true,
             modules: {
                 Modules: {
                     namespaced: true,
                     modules: {
-                        Routing
+                        Routing: {
+                            namespaced: true,
+                            mutations: mutations,
+                            actions: actions
+                        }
+                    }
+                },
+                Alerting: {
+                    namespaced: true,
+                    actions: {
+                        addSingleAlert: sinon.stub()
                     }
                 }
             }
