@@ -105,7 +105,7 @@ describe("src_3_0_0/shared/js/api/sensorThingsHttp", () => {
                 {x: 9.869432803790303, y: 53.47946522163486}
             ];
 
-        it.skip("should convert the given extent into a polygon transforming the projections", () => {
+        it("should convert the given extent into a polygon transforming the projections", () => {
             expect(http.convertExtentIntoPoints(extent, sourceProjection, targetProjection)).to.deep.equal(expectedOutcome);
         });
 
