@@ -165,9 +165,13 @@ export default {
             "setCurrentFeature",
             "setVisible"
         ]),
-        ...mapMutations("Menu", ["toggleMenu"]),
-        ...mapActions("Modules/GetFeatureInfo", ["updateClick"]),
-        ...mapActions("Menu", ["changeCurrentComponent"]),
+        ...mapActions("Modules/GetFeatureInfo", [
+            "updateClick"
+        ]),
+        ...mapActions("Menu", [
+            "changeCurrentComponent",
+            "toggleMenu"
+        ]),
 
         /**
          * Reset means to set the gfiFeatures to null.

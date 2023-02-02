@@ -68,6 +68,45 @@ describe("src_3_0_0/modules/menu/menu-store/gettersMenu.js", () => {
         });
     });
 
+    describe("currentComponentName", () => {
+        beforeEach(() => {
+            state = {
+                mainMenu: {
+                    navigation: {
+                        currentComponent: {
+                            type: "root",
+                            props: []
+                        }
+                    }
+                },
+                secondaryMenu: {
+                    navigation: {
+                        currentComponent: {
+                            type: "xyz",
+                            props: {
+                                name: "common:xyz"
+                            }
+                        }
+                    }
+                }
+            };
+        });
+
+        it("should return the current component name for mainMenu", () => {
+            const side = "mainMenu",
+                currentComponentName = gettersMenu.currentComponentName(state)(side);
+
+            expect(currentComponentName).to.equal(i18next.t("common:menu.name"));
+        });
+
+        it("should return the current component name for secondaryMenu", () => {
+            const side = "secondaryMenu",
+                currentComponentName = gettersMenu.currentComponentName(state)(side);
+
+            expect(currentComponentName).to.equal(i18next.t("common:xyz"));
+        });
+    });
+
     describe("currentFolderPath", () => {
         beforeEach(() => {
             state = {
@@ -215,6 +254,53 @@ describe("src_3_0_0/modules/menu/menu-store/gettersMenu.js", () => {
         });
         it("should return the default icon if it isn't configured on mainMenu", () => {
             expect(gettersMenu.mainToggleButtonIcon(stateMenu)).to.equal("bi-list");
+        });
+    });
+
+    describe("previousNavigationEntryText", () => {
+        beforeEach(() => {
+            state = {
+                mainMenu: {
+                    navigation: {
+                        history: [
+                            {
+                                type: "root",
+                                props: []
+                            }
+                        ]
+                    }
+                },
+                secondaryMenu: {
+                    navigation: {
+                        history: [
+                            {
+                                type: "root",
+                                props: []
+                            },
+                            {
+                                type: "xyz",
+                                props: {
+                                    name: "common:xyz"
+                                }
+                            }
+                        ]
+                    }
+                }
+            };
+        });
+
+        it("should return the previous navigation entry text for mainMenu", () => {
+            const side = "mainMenu",
+                previousNavigationEntryText = gettersMenu.previousNavigationEntryText(state)(side);
+
+            expect(previousNavigationEntryText).to.equal(i18next.t("common:menu.name"));
+        });
+
+        it("should return the previous navigation entry text for secondaryMenu", () => {
+            const side = "secondaryMenu",
+                previousNavigationEntryText = gettersMenu.previousNavigationEntryText(state)(side);
+
+            expect(previousNavigationEntryText).to.equal(i18next.t("common:xyz"));
         });
     });
 
