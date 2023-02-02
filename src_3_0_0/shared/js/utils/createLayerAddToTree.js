@@ -1,6 +1,7 @@
 import rawLayerList from "@masterportal/masterportalapi/src/rawLayerList";
 import store from "../../../app-store";
 import layerCollection from "../../../core/layers/js/layerCollection";
+import {treeSubjectsKey} from "../../../shared/js/utils/constants";
 
 /**
  * Creates a layer containing the given features and shows it in menu tree.
@@ -73,7 +74,7 @@ function getLayer (id) {
  * @returns {Object} the created layer
  */
 async function addLayerModel (attributes, id) {
-    await store.dispatch("addLayerToLayerConfig", {layerConfig: attributes, parentKey: "Fachdaten"}, {root: true});
+    await store.dispatch("addLayerToLayerConfig", {layerConfig: attributes, parentKey: treeSubjectsKey}, {root: true});
     return layerCollection.getLayerById(id);
 }
 
