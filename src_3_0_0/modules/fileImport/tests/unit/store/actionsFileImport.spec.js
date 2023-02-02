@@ -1,4 +1,5 @@
 import testAction from "../../../../../../test/unittests/VueTestUtils";
+import {treeSubjectsKey} from "../../../../../shared/js/utils/constants";
 import actions from "../../../store/actionsFileImport";
 import importedState from "../../../store/stateFileImport";
 import rawSources from "../../resources/rawSources.js";
@@ -199,7 +200,7 @@ describe("src_3_0_0/modules/fileImport/store/actionsFileImport.js", () => {
                             type: "layer",
                             visibility: true
                         },
-                        parentKey: "Fachdaten"
+                        parentKey: treeSubjectsKey
                     },
                     dispatch: true
                 }
