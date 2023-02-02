@@ -2,6 +2,7 @@ import rawLayerList from "@masterportal/masterportalapi/src/rawLayerList";
 import {buildTreeStructure} from "../../../js/buildTreeStructure.js";
 import {getAndMergeRawLayer, getAndMergeAllRawLayers} from "../../../js/getAndMergeRawLayer.js";
 import getNestedValues from "../../../../shared/js/utils/getNestedValues";
+import {treeBackgroundsKey, treeSubjectsKey} from "../../../../shared/js/utils/constants";
 import {expect} from "chai";
 import sinon from "sinon";
 
@@ -22,7 +23,7 @@ describe("src_3_0_0/app-store/js/buildTreeStructure.js", () => {
             }
         ],
         layerConfig = {
-            Hintergrundkarten: {
+            [treeBackgroundsKey]: {
                 elements: [
                     {
                         "id": "452",
@@ -34,7 +35,7 @@ describe("src_3_0_0/app-store/js/buildTreeStructure.js", () => {
                     }
                 ]
             },
-            Fachdaten: {
+            [treeSubjectsKey]: {
                 elements: [
                     {
                         id: "21999",
@@ -93,8 +94,8 @@ describe("src_3_0_0/app-store/js/buildTreeStructure.js", () => {
             sinon.stub(rawLayerList, "getLayerList").returns(layerList);
 
             getAndMergeAllRawLayers();
-            result = buildTreeStructure(layerConfig, categories[0], layerConfig.Fachdaten.elements);
-            layerConfig.Fachdaten.elements.forEach(layerConf => {
+            result = buildTreeStructure(layerConfig, categories[0], layerConfig[treeSubjectsKey].elements);
+            layerConfig[treeSubjectsKey].elements.forEach(layerConf => {
                 getAndMergeRawLayer(layerConf, true);
             });
             filteredResult = getNestedValues(result, "id").flat(Infinity);
