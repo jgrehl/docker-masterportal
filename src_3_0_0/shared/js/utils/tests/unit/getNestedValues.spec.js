@@ -1,5 +1,6 @@
 import getNestedValues from "../../getNestedValues.js";
 import {expect} from "chai";
+import {treeSubjectsKey} from "../../constants.js";
 
 describe("src_3_0_0/shared/js/utils/getNestedValues.js", () => {
     const starks = {
@@ -92,7 +93,7 @@ describe("src_3_0_0/shared/js/utils/getNestedValues.js", () => {
 
     it("should respect searchKeyForArrays", () => {
         const json = {
-                "Fachdaten": {
+                [treeSubjectsKey]: {
                     "elements": [
                         {
                             "id": "1",

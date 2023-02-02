@@ -2,6 +2,7 @@ import {expect} from "chai";
 import sinon from "sinon";
 import actions from "../../../store/actionsOpenConfig";
 import layerCollection from "../../../../../core/layers/js/layerCollection";
+import {treeTopicConfigKey, treeBackgroundsKey, treeSubjectsKey} from "../../../../../shared/js/utils/constants";
 
 const {
     processConfigJsonOnload
@@ -38,7 +39,7 @@ describe("src_3_0_0/modules/openConfig/store/actionsOpenConfig.js", () => {
         it("should clear layerCollection, set Portalconfig to the state and start extendLayers", () => {
             const event = {
                 target: {
-                    result: "{\r\n  \"Portalconfig\": {},\r\n  \"Themenconfig\": {}\r\n}\r\n"
+                    result: "{\r\n  \"Portalconfig\": {},\r\n  \"" + treeTopicConfigKey + "\": {}\r\n}\r\n"
                 }
             };
 
@@ -61,7 +62,7 @@ describe("src_3_0_0/modules/openConfig/store/actionsOpenConfig.js", () => {
         it("should clear layerCollection, set Portalconfig, set Layerconfig to the state and start extendLayers", () => {
             const event = {
                 target: {
-                    result: "{\r\n  \"Portalconfig\": {\r\n    \"mainMenu\": {\r\n      \"sections\": [\r\n        [\r\n          {\r\n            \"type\": \"openConfig\"\r\n          }\r\n        ]\r\n      ]\r\n    },\r\n    \"secondaryMenu\": {\r\n      \"expanded\": false,\r\n      \"sections\": [\r\n        [\r\n          {\r\n            \"type\": \"shareView\"\r\n          }\r\n        ]\r\n      ]\r\n    }\r\n  },\r\n  \"Themenconfig\": {\r\n    \"Hintergrundkarten\": {\r\n      \"elements\": [\r\n          {\r\n              \"id\": \"453\",\r\n              \"name\": \"Geobasiskarten (HamburgDE)\",\r\n              \"typ\": \"WMS\",\r\n              \"visibility\": true\r\n          }\r\n      ]\r\n    },\r\n    \"Fachdaten\": {\r\n      \"elements\": [\r\n        {\r\n          \"id\": \"10220\",\r\n          \"name\": \"Dauerzählstellen (Rad) Hamburg\",\r\n          \"typ\": \"WMS\",\r\n          \"visibility\": true\r\n        },\r\n        {\r\n          \"id\": \"2426\",\r\n          \"name\": \"Bezirke\",\r\n          \"typ\": \"WMS\",\r\n          \"visibility\": true\r\n        }\r\n      ]\r\n    }\r\n  }\r\n}\r\n"
+                    result: "{\r\n  \"Portalconfig\": {\r\n    \"mainMenu\": {\r\n      \"sections\": [\r\n        [\r\n          {\r\n            \"type\": \"openConfig\"\r\n          }\r\n        ]\r\n      ]\r\n    },\r\n    \"secondaryMenu\": {\r\n      \"expanded\": false,\r\n      \"sections\": [\r\n        [\r\n          {\r\n            \"type\": \"shareView\"\r\n          }\r\n        ]\r\n      ]\r\n    }\r\n  },\r\n  \"" + treeTopicConfigKey + "\": {\r\n    \"" + treeBackgroundsKey + "\": {\r\n      \"elements\": [\r\n          {\r\n              \"id\": \"453\",\r\n              \"name\": \"Geobasiskarten (HamburgDE)\",\r\n              \"typ\": \"WMS\",\r\n              \"visibility\": true\r\n          }\r\n      ]\r\n    },\r\n    \"" + treeSubjectsKey + "\": {\r\n      \"elements\": [\r\n        {\r\n          \"id\": \"10220\",\r\n          \"name\": \"Dauerzählstellen (Rad) Hamburg\",\r\n          \"typ\": \"WMS\",\r\n          \"visibility\": true\r\n        },\r\n        {\r\n          \"id\": \"2426\",\r\n          \"name\": \"Bezirke\",\r\n          \"typ\": \"WMS\",\r\n          \"visibility\": true\r\n        }\r\n      ]\r\n    }\r\n  }\r\n}\r\n"
                 }
             };
 
@@ -104,7 +105,7 @@ describe("src_3_0_0/modules/openConfig/store/actionsOpenConfig.js", () => {
                         }
                     ]
                 },
-                parentKey: "Hintergrundkarten"
+                parentKey: treeBackgroundsKey
             });
             expect(commit.thirdCall.args[0]).to.equals("setLayerConfigByParentKey");
             expect(commit.thirdCall.args[1]).to.deep.equals({
@@ -124,7 +125,7 @@ describe("src_3_0_0/modules/openConfig/store/actionsOpenConfig.js", () => {
                         }
                     ]
                 },
-                parentKey: "Fachdaten"
+                parentKey: treeSubjectsKey
             });
 
             expect(dispatch.calledOnce).to.be.true;
