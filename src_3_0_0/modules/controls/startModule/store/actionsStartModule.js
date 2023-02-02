@@ -62,7 +62,7 @@ const actions = {
             dispatch("Menu/changeCurrentComponent", {type: moduleState.type, side: menuSide, props: {name: moduleState.name}}, {root: true});
 
             if (!rootGetters[menuExpanded](menuSide)) {
-                commit("Menu/toggleMenu", menuSide, {root: true});
+                dispatch("Menu/toggleMenu", menuSide, {root: true});
             }
         }
         else {

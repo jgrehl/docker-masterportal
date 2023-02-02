@@ -90,5 +90,29 @@ export default {
 
             commit("switchToPreviousComponent", side);
         });
+    },
+
+    /**
+     * Toggles Menucontainers.
+     * @param {Object} param store context
+     * @param {Object} param.commit the commit
+     * @param {Object} param.rootGetters the rootGetters
+     * @param {Object} param.state the state
+     * @param {String} side secondary or main Menu
+     * @returns {void}
+     */
+    toggleMenu ({commit, rootGetters, state}, side) {
+        if (side === "mainMenu") {
+            if (rootGetters.isMobile && state.secondaryMenu.expanded) {
+                commit("setExpandedBySide", {expanded: false, side});
+            }
+            commit("setExpandedBySide", {expanded: !state.mainMenu.expanded, side});
+        }
+        else if (side === "secondaryMenu") {
+            if (rootGetters.isMobile && state.mainMenu.expanded) {
+                commit("setExpandedBySide", {expanded: false, side});
+            }
+            commit("setExpandedBySide", {expanded: !state.secondaryMenu.expanded, side});
+        }
     }
 };
