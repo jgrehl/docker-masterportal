@@ -6,22 +6,25 @@ import DirectionsComponent from "../../../../components/Directions/DirectionsIte
 import DirectionsItemBatchProcessingComponent from "../../../../components/Directions/DirectionsItemBatchProcessing.vue";
 import RoutingBatchProcessingCheckboxComponent from "../../../../components/RoutingBatchProcessingCheckbox.vue";
 import RoutingDownloadComponent from "../../../../components/RoutingDownload.vue";
-import mutations from "../../../../store/mutationsRouting";
-import state from "../../../../store/stateRouting";
-import actions from "../../../../store/actionsRouting";
-import getters from "../../../../store/gettersRouting";
-import mutationsDirections from "../../../../store/directions/mutationsDirections";
-import actionsDirections from "../../../../store/directions/actionsDirections";
-import gettersDirections from "../../../../store/directions/gettersDirections";
-import stateDirections from "../../../../store/directions/stateDirections";
 
 config.global.mocks.$t = key => key;
 
 describe("src_3_0_0/modules/routing/components/Directions/DirectionsItem.vue", () => {
-    let store,
+    let batchProcessingActive,
+        batchProcessingEnabled,
+        directionsAvoidSource,
+        mapInteractionMode,
+        routingDirections,
+        setMapInteractionModeSpy,
+        store,
         wrapper;
 
     beforeEach(() => {
+        batchProcessingActive = false;
+        batchProcessingEnabled = false;
+        mapInteractionMode = "WAYPOINTS";
+        routingDirections = null;
+
         mapCollection.clear();
         mapCollection.addMap({
             mode: "2D",
@@ -40,16 +43,57 @@ describe("src_3_0_0/modules/routing/components/Directions/DirectionsItem.vue", (
                             modules: {
                                 Directions: {
                                     namespaced: true,
-                                    state: {...stateDirections},
-                                    mutations: mutationsDirections,
-                                    actions: actionsDirections,
-                                    getters: gettersDirections
+                                    getters: {
+                                        directionsAvoidSource: () => directionsAvoidSource,
+                                        directionsRouteSource: () => {
+                                            return {
+                                                getFeatures: () => []
+                                            };
+                                        },
+                                        isInputDisabled: () => false,
+                                        mapInteractionMode: () => mapInteractionMode,
+                                        routingAvoidFeaturesOptions: () => [],
+                                        routingDirections: () => routingDirections,
+                                        settings: () => {
+                                            return {
+                                                speedProfile: "CAR"
+                                            };
+                                        },
+                                        waypoints: () => [
+                                            {
+                                                index: sinon.stub(),
+                                                getDisplayName: () => sinon.stub()
+                                            },
+                                            {
+                                                index: sinon.stub(),
+                                                getDisplayName: () => sinon.stub()
+                                            }
+                                        ]
+                                    },
+                                    mutations: {
+                                        setDirectionsAvoidSource: sinon.stub(),
+                                        setMapInteractionMode: sinon.stub(),
+                                        setRoutingDirections: sinon.stub()
+                                    },
+                                    actions: {
+                                        createInteractionFromMapInteractionMode: sinon.stub(),
+                                        initDirections: sinon.stub()
+                                    }
                                 }
                             },
-                            state: {...state},
-                            mutations,
-                            actions,
-                            getters
+                            getters: {
+                                directionsSettings: () => {
+                                    return {
+                                        batchProcessing: {
+                                            active: batchProcessingActive,
+                                            enabled: batchProcessingEnabled
+                                        }
+                                    };
+                                }
+                            },
+                            mutations: {
+                                setDirectionsAvoidSource: sinon.stub()
+                            }
                         }
                     }
                 },
@@ -60,6 +104,12 @@ describe("src_3_0_0/modules/routing/components/Directions/DirectionsItem.vue", (
                         addLayer: sinon.stub(),
                         removeInteraction: sinon.stub(),
                         addInteraction: sinon.stub()
+                    }
+                },
+                Alerting: {
+                    namespaced: true,
+                    actions: {
+                        addSingleAlert: sinon.stub()
                     }
                 }
             }
@@ -74,87 +124,97 @@ describe("src_3_0_0/modules/routing/components/Directions/DirectionsItem.vue", (
         wrapper = shallowMount(DirectionsComponent, {global: {
             plugins: [store]
         }});
+
         expect(wrapper.find("#routing-directions").exists()).to.be.true;
     });
 
     it("renders DirectionsBatchProcessingCheckbox", async () => {
+        batchProcessingEnabled = true;
         wrapper = shallowMount(DirectionsComponent, {global: {
             plugins: [store]
         }});
-        wrapper.vm.settings.batchProcessing.enabled = true;
+
         await wrapper.vm.$nextTick();
         expect(wrapper.findComponent(RoutingBatchProcessingCheckboxComponent).exists()).to.be.true;
     });
 
     it("doesn't render DirectionsBatchProcessingCheckbox", async () => {
+        batchProcessingEnabled = false;
         wrapper = shallowMount(DirectionsComponent, {global: {
             plugins: [store]
         }});
-        wrapper.vm.settings.batchProcessing.enabled = false;
+
         await wrapper.vm.$nextTick();
         expect(wrapper.findComponent(RoutingBatchProcessingCheckboxComponent).exists()).to.be.false;
     });
 
     it("renders DirectionsBatchProcessing", async () => {
+        batchProcessingEnabled = true;
+        batchProcessingActive = true;
         wrapper = shallowMount(DirectionsComponent, {global: {
             plugins: [store]
         }});
-        wrapper.vm.settings.batchProcessing.enabled = true;
-        wrapper.vm.settings.batchProcessing.active = true;
+
         await wrapper.vm.$nextTick();
         expect(wrapper.findComponent(DirectionsItemBatchProcessingComponent).exists()).to.be.true;
     });
 
     it("doesn't render DirectionsBatchProcessing", async () => {
+        batchProcessingEnabled = true;
+        batchProcessingActive = false;
         wrapper = shallowMount(DirectionsComponent, {global: {
             plugins: [store]
         }});
-        wrapper.vm.settings.batchProcessing.enabled = true;
-        wrapper.vm.settings.batchProcessing.active = false;
+
         await wrapper.vm.$nextTick();
         expect(wrapper.findComponent(DirectionsItemBatchProcessingComponent).exists()).to.be.false;
     });
 
     it("renders RoutingCoordinateInput", async () => {
+        batchProcessingEnabled = false;
         wrapper = shallowMount(DirectionsComponent, {global: {
             plugins: [store]
         }});
-        wrapper.vm.settings.batchProcessing.enabled = false;
+
         await wrapper.vm.$nextTick();
         expect(wrapper.find("#routing-directions-coordinate-input-form").exists()).to.be.true;
     });
 
     it("doesn't render RoutingCoordinateInput", async () => {
+        batchProcessingEnabled = true;
+        batchProcessingActive = true;
         wrapper = shallowMount(DirectionsComponent, {global: {
             plugins: [store]
         }});
-        wrapper.vm.settings.batchProcessing.enabled = true;
-        wrapper.vm.settings.batchProcessing.active = true;
+
+
         await wrapper.vm.$nextTick();
         expect(wrapper.find("#routing-directions-coordinate-input-form").exists()).to.be.false;
     });
 
     it("renders routing result", async () => {
-        store.commit("Modules/Routing/Directions/setRoutingDirections", {
+        batchProcessingEnabled = false;
+        routingDirections = {
             duration: 10,
             distance: 10,
             segments: []
-        });
+        };
         wrapper = shallowMount(DirectionsComponent, {global: {
             plugins: [store]
         }});
-        wrapper.vm.settings.batchProcessing.enabled = false;
+
         await wrapper.vm.$nextTick();
         expect(wrapper.find("#routing-directions-result-directions").exists()).to.be.true;
         expect(wrapper.findComponent(RoutingDownloadComponent).exists()).to.be.true;
     });
 
     it("doesn't render routing result", async () => {
-        store.commit("Modules/Routing/Directions/setRoutingDirections", null);
+        batchProcessingEnabled = false;
+        routingDirections = null;
         wrapper = shallowMount(DirectionsComponent, {global: {
             plugins: [store]
         }});
-        wrapper.vm.settings.batchProcessing.enabled = false;
+
         await wrapper.vm.$nextTick();
         expect(wrapper.find("#routing-directions-result-directions").exists()).to.be.false;
         expect(wrapper.findComponent(RoutingDownloadComponent).exists()).to.be.false;
@@ -207,40 +267,56 @@ describe("src_3_0_0/modules/routing/components/Directions/DirectionsItem.vue", (
     });
 
     it("should toggle mapInteractionMode AVOID_AREAS => WAYPOINTS", async () => {
-        store.commit("Modules/Routing/Directions/setMapInteractionMode", "AVOID_AREAS");
+        mapInteractionMode = "AVOID_AREAS";
         wrapper = shallowMount(DirectionsComponent, {global: {
             plugins: [store]
         }});
+
+        setMapInteractionModeSpy = sinon.spy(wrapper.vm, "setMapInteractionMode");
         wrapper.vm.changeMapInteractionModeAvoidAreasEdit();
-        expect(wrapper.vm.mapInteractionMode).equal("WAYPOINTS");
+
+        expect(setMapInteractionModeSpy.calledOnce).to.be.true;
+        expect(setMapInteractionModeSpy.firstCall.args[0]).to.equals("WAYPOINTS");
     });
 
     it("should toggle mapInteractionMode WAYPOINTS => AVOID_AREAS", async () => {
-        store.commit("Modules/Routing/Directions/setMapInteractionMode", "WAYPOINTS");
+        mapInteractionMode = "WAYPOINTS";
         wrapper = shallowMount(DirectionsComponent, {global: {
             plugins: [store]
         }});
+
+        setMapInteractionModeSpy = sinon.spy(wrapper.vm, "setMapInteractionMode");
         wrapper.vm.changeMapInteractionModeAvoidAreasEdit();
-        expect(wrapper.vm.mapInteractionMode).equal("AVOID_AREAS");
+
+        expect(setMapInteractionModeSpy.calledOnce).to.be.true;
+        expect(setMapInteractionModeSpy.firstCall.args[0]).to.equals("AVOID_AREAS");
     });
 
 
     it("should toggle mapInteractionMode DELETE_AVOID_AREAS => WAYPOINTS", async () => {
-        store.commit("Modules/Routing/Directions/setMapInteractionMode", "DELETE_AVOID_AREAS");
+        mapInteractionMode = "DELETE_AVOID_AREAS";
         wrapper = shallowMount(DirectionsComponent, {global: {
             plugins: [store]
         }});
+
+        setMapInteractionModeSpy = sinon.spy(wrapper.vm, "setMapInteractionMode");
         wrapper.vm.changeMapInteractionModeAvoidAreasDelete();
-        expect(wrapper.vm.mapInteractionMode).equal("WAYPOINTS");
+
+        expect(setMapInteractionModeSpy.calledOnce).to.be.true;
+        expect(setMapInteractionModeSpy.firstCall.args[0]).to.equals("WAYPOINTS");
     });
 
     it("should toggle mapInteractionMode WAYPOINTS => DELETE_AVOID_AREAS", () => {
-        store.commit("Modules/Routing/Directions/setMapInteractionMode", "WAYPOINTS");
+        mapInteractionMode = "WAYPOINTS";
         wrapper = shallowMount(DirectionsComponent, {global: {
             plugins: [store]
         }});
+
+        setMapInteractionModeSpy = sinon.spy(wrapper.vm, "setMapInteractionMode");
         wrapper.vm.changeMapInteractionModeAvoidAreasDelete();
-        expect(wrapper.vm.mapInteractionMode).equal("DELETE_AVOID_AREAS");
+
+        expect(setMapInteractionModeSpy.calledOnce).to.be.true;
+        expect(setMapInteractionModeSpy.firstCall.args[0]).to.equals("DELETE_AVOID_AREAS");
     });
 
     it("should reset all user settings", async () => {
@@ -248,15 +324,18 @@ describe("src_3_0_0/modules/routing/components/Directions/DirectionsItem.vue", (
             setRoutingDirections = sinon.spy(),
             clearDirectionsAvoidSource = sinon.spy();
 
-        store.commit("Modules/Routing/Directions/setDirectionsAvoidSource", {
+        directionsAvoidSource = {
             clear: clearDirectionsAvoidSource
-        });
+        };
+
         wrapper = shallowMount(DirectionsComponent, {global: {
             plugins: [store]
         }});
+
         wrapper.vm.setRoutingDirections = setRoutingDirections;
         wrapper.vm.removeWaypoint = removeWaypoint;
         wrapper.vm.reset();
+
         expect(removeWaypoint.calledTwice).to.be.true;
         expect(setRoutingDirections.calledOnce).to.be.true;
         expect(clearDirectionsAvoidSource.calledOnce).to.be.true;
