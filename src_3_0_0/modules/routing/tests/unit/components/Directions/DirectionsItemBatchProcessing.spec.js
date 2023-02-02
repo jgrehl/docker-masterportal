@@ -41,6 +41,12 @@ describe("src_3_0_0/modules/routing/components/Directions/DirectionsItemBatchPro
                             getters
                         }
                     }
+                },
+                Alerting: {
+                    namespaced: true,
+                    actions: {
+                        addSingleAlert: sinon.stub()
+                    }
                 }
             }
         });
