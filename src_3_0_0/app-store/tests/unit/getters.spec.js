@@ -2,8 +2,20 @@ import {expect} from "chai";
 import {treeBackgroundsKey, treeSubjectsKey} from "../../../shared/js/utils/constants";
 import getters from "../../getters";
 import stateAppStore from "../../state";
+import sinon from "sinon";
 
 describe("src_3_0_0/app-store/getters.js", () => {
+    let warn;
+
+    beforeEach(() => {
+        warn = sinon.spy();
+        sinon.stub(console, "warn").callsFake(warn);
+    });
+
+    afterEach(() => {
+        sinon.restore();
+    });
+
     describe("allConfigsLoaded", () => {
         it("should return true, if all configs are loaded", () => {
             const state = {
