@@ -1,6 +1,6 @@
 import axios from "axios";
 import {rawLayerList} from "@masterportal/masterportalapi/src";
-
+import {portalConfigKey, treeTopicConfigKey} from "../shared/js/utils/constants";
 import actionsLayerConfig from "./actionsLayerConfig";
 
 export default {
@@ -32,8 +32,8 @@ export default {
 
         axios.get(targetPath)
             .then(response => {
-                commit("setPortalConfig", response.data?.Portalconfig);
-                commit("setLayerConfig", response.data?.Themenconfig);
+                commit("setPortalConfig", response.data ? response.data[portalConfigKey] : null);
+                commit("setLayerConfig", response.data ? response.data[treeTopicConfigKey] : null);
                 commit("setLoadedConfigs", "configJson");
             })
             .catch(error => {
