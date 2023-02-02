@@ -127,7 +127,7 @@ export default {
     },
 
     /**
-     * Adds the attribute backgroundLayer to layers of Hintergrundkarten.
+     * Adds the attribute backgroundLayer to layers configured as background layers.
      * @param {Object} param.state the state
      * @returns {void}
      */
