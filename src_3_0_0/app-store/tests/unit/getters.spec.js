@@ -1,4 +1,5 @@
 import {expect} from "chai";
+import {treeBackgroundsKey, treeSubjectsKey} from "../../../shared/js/utils/constants";
 import getters from "../../getters";
 import stateAppStore from "../../state";
 
@@ -22,7 +23,7 @@ describe("src_3_0_0/app-store/getters.js", () => {
         it("should returns the configs of all layers", () => {
             const state = {
                 layerConfig: {
-                    Fachdaten: {
+                    [treeSubjectsKey]: {
                         elements: [
                             {
                                 id: 1
@@ -33,7 +34,7 @@ describe("src_3_0_0/app-store/getters.js", () => {
                             }
                         ]
                     },
-                    Hintergrundkarten: {
+                    [treeBackgroundsKey]: {
                         elements: [
                             {
                                 id: 100,
@@ -75,7 +76,7 @@ describe("src_3_0_0/app-store/getters.js", () => {
                     visibility: true
                 },
                 layerConfig = {
-                    Hintergrundkarten: {
+                    [treeBackgroundsKey]: {
                         elements: [
                             {
                                 id: "453",
@@ -86,7 +87,7 @@ describe("src_3_0_0/app-store/getters.js", () => {
                             }
                         ]
                     },
-                    Fachdaten: {
+                    [treeSubjectsKey]: {
                         elements: [
                             greenLayer,
                             {
@@ -124,7 +125,7 @@ describe("src_3_0_0/app-store/getters.js", () => {
                     name: "Geobasiskarten (farbig)"
                 },
                 layerConfig = {
-                    Hintergrundkarten: {
+                    [treeBackgroundsKey]: {
                         elements: [
                             layer,
                             {
@@ -211,7 +212,7 @@ describe("src_3_0_0/app-store/getters.js", () => {
                     ]
                 }];
             layerConfig = {
-                Hintergrundkarten: {
+                [treeBackgroundsKey]: {
                     elements: [
                         {
                             id: "453",
@@ -222,7 +223,7 @@ describe("src_3_0_0/app-store/getters.js", () => {
                         }
                     ]
                 },
-                Fachdaten: {
+                [treeSubjectsKey]: {
                     elements: layersWithFolder
                 }
             };
@@ -244,7 +245,7 @@ describe("src_3_0_0/app-store/getters.js", () => {
         });
 
         it("should return all layerConfigs of first level by key 'Fachdaten'", () => {
-            const configs = getters.allLayerConfigsStructured(state)("Fachdaten");
+            const configs = getters.allLayerConfigsStructured(state)(treeSubjectsKey);
 
             expect(configs).to.be.an("array");
             expect(configs.length).to.be.equals(1);
@@ -254,7 +255,7 @@ describe("src_3_0_0/app-store/getters.js", () => {
             expect(configs[0].elements).to.be.deep.equals(layersWithFolder[0].elements);
         });
         it("should return all layerConfigs of first level by key 'Hintergrundkarten'", () => {
-            const configs = getters.allLayerConfigsStructured(state)("Hintergrundkarten");
+            const configs = getters.allLayerConfigsStructured(state)(treeBackgroundsKey);
 
             expect(configs).to.be.an("array");
             expect(configs.length).to.be.equals(2);
@@ -263,7 +264,7 @@ describe("src_3_0_0/app-store/getters.js", () => {
         });
 
         it("allLayerConfigsByParentKey should return all layerConfigs key 'Hintergrundkarten'", () => {
-            const configs = getters.allLayerConfigsByParentKey(state)("Hintergrundkarten");
+            const configs = getters.allLayerConfigsByParentKey(state)(treeBackgroundsKey);
 
             expect(configs).to.be.an("array");
             expect(configs.length).to.be.equals(2);
@@ -272,7 +273,7 @@ describe("src_3_0_0/app-store/getters.js", () => {
         });
 
         it("allLayerConfigsByParentKey should return all layerConfigs key 'Fachdaten'", () => {
-            const configs = getters.allLayerConfigsByParentKey(state)("Fachdaten");
+            const configs = getters.allLayerConfigsByParentKey(state)(treeSubjectsKey);
 
             expect(configs).to.be.an("array");
             expect(configs.length).to.be.equals(3);
@@ -298,7 +299,7 @@ describe("src_3_0_0/app-store/getters.js", () => {
                     visibility: true
                 },
                 layerConfig = {
-                    Hintergrundkarten: {
+                    [treeBackgroundsKey]: {
                         elements: [
                             bgLayer,
                             {
@@ -306,7 +307,7 @@ describe("src_3_0_0/app-store/getters.js", () => {
                             }
                         ]
                     },
-                    Fachdaten: {
+                    [treeSubjectsKey]: {
                         elements: [
                             greenLayer,
                             {
@@ -340,7 +341,7 @@ describe("src_3_0_0/app-store/getters.js", () => {
 
         beforeEach(() => {
             layerConfig = {
-                Hintergrundkarten: {
+                [treeBackgroundsKey]: {
                     elements: [
                         {
                             id: "453",
@@ -357,7 +358,7 @@ describe("src_3_0_0/app-store/getters.js", () => {
                         }
                     ]
                 },
-                Fachdaten: {
+                [treeSubjectsKey]: {
                     elements: [
                         {
                             id: "1132",
@@ -385,11 +386,11 @@ describe("src_3_0_0/app-store/getters.js", () => {
             expect(getters.determineZIndex(state)("452")).to.be.equals(1);
         });
         it("determineZIndex for third layer with zIndex under parentKey", () => {
-            layerConfig.Hintergrundkarten.elements[1].zIndex = 1;
+            layerConfig[treeBackgroundsKey].elements[1].zIndex = 1;
             expect(getters.determineZIndex(state)("451")).to.be.equals(2);
         });
         it("determineZIndex for layer with existing zIndex", () => {
-            layerConfig.Hintergrundkarten.elements[0].zIndex = 100;
+            layerConfig[treeBackgroundsKey].elements[0].zIndex = 100;
             expect(getters.determineZIndex(state)("453")).to.be.equals(100);
         });
     });

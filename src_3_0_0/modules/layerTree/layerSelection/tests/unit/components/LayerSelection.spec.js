@@ -2,7 +2,7 @@ import {createStore} from "vuex";
 import {config, shallowMount, mount} from "@vue/test-utils";
 import {expect} from "chai";
 import sinon from "sinon";
-
+import {treeBackgroundsKey} from "../../../../../../shared/js/utils/constants";
 import LayerSelectionComponent from "../../../components/LayerSelection.vue";
 import LayerSelection from "../../../store/indexLayerSelection";
 
@@ -111,7 +111,7 @@ describe.skip("src_3_0_0/modules/layerTree/layerSelection/components/LayerSelect
             },
             getters: {
                 allLayerConfigsStructured: () => (key) =>{
-                    if (key === "Hintergrundkarten") {
+                    if (key === treeBackgroundsKey) {
                         return layersBG;
                     }
                     return subjectDataLayers;
