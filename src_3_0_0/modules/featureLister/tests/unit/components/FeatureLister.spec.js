@@ -9,19 +9,8 @@ config.global.mocks.$t = key => key;
 
 describe("src/modules/featureLister/components/FeatureLister.vue", () => {
     const mockMapGetters = {
-            getVisibleOlLayerList: () => [{name: "ersterLayer", id: "123", features: [{getAttributesToShow: () => "TestAttributes"}], geometryType: "Point"}, {name: "zweiterLayer", id: "456", features: [{getAttributesToShow: () => "TestAttributes"}], geometryType: "Point"}, {name: "dritterLayer", id: "789", features: [{getAttributesToShow: () => "TestAttributes"}], geometryType: "Point"}]
-        },
-        mockConfigJson = {
-            Portalconfig: {
-                mainMenu: {
-                    sections: [
-                        {
-                            type: "featureLister"
-                        }
-                    ]
-                }
-            }
-        };
+        getVisibleOlLayerList: () => [{name: "ersterLayer", id: "123", features: [{getAttributesToShow: () => "TestAttributes"}], geometryType: "Point"}, {name: "zweiterLayer", id: "456", features: [{getAttributesToShow: () => "TestAttributes"}], geometryType: "Point"}, {name: "dritterLayer", id: "789", features: [{getAttributesToShow: () => "TestAttributes"}], geometryType: "Point"}]
+    };
     let store,
         wrapper,
         rootGetters;
@@ -46,9 +35,6 @@ describe("src/modules/featureLister/components/FeatureLister.vue", () => {
                         removeHighlightFeature: sinon.stub()
                     }
                 }
-            },
-            state: {
-                configJson: mockConfigJson
             }
         });
     });
