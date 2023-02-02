@@ -179,4 +179,65 @@ describe("src_3_0_0/modules/menu/menu-store/actionsMenu.js", () => {
             });
         });
     });
+
+    describe("toggleMenu", () => {
+        it("should set main menu to expanded === true", () => {
+            const side = "mainMenu";
+
+            actions.toggleMenu({commit, rootGetters, state}, side);
+
+            expect(commit.calledOnce).to.be.true;
+            expect(commit.firstCall.args[0]).to.equals("setExpandedBySide");
+            expect(commit.firstCall.args[1]).to.deep.equals({
+                expanded: true,
+                side
+            });
+        });
+        it("should set secondary menu to expanded === true", () => {
+            const side = "secondaryMenu";
+
+            actions.toggleMenu({commit, rootGetters, state}, side);
+
+            expect(commit.calledOnce).to.be.true;
+            expect(commit.firstCall.args[0]).to.equals("setExpandedBySide");
+            expect(commit.firstCall.args[1]).to.deep.equals({
+                expanded: true,
+                side
+            });
+        });
+        it("should set main menu to expanded === true, if isMobile is true and secodary menu is not expanded === false", () => {
+            const side = "secondaryMenu";
+
+            rootGetters = {
+                isMobile: () => true
+            };
+
+            actions.toggleMenu({commit, rootGetters, state}, side);
+
+            expect(commit.calledOnce).to.be.true;
+            expect(commit.firstCall.args[0]).to.equals("setExpandedBySide");
+            expect(commit.firstCall.args[1]).to.deep.equals({
+                expanded: true,
+                side
+            });
+        });
+        it("should set main menu to expanded === false, if isMobile is true and secodary menu is expanded === true", () => {
+            const side = "secondaryMenu";
+
+            state.secondaryMenu.expanded = true;
+
+            rootGetters = {
+                isMobile: () => true
+            };
+
+            actions.toggleMenu({commit, rootGetters, state}, side);
+
+            expect(commit.calledOnce).to.be.true;
+            expect(commit.firstCall.args[0]).to.equals("setExpandedBySide");
+            expect(commit.firstCall.args[1]).to.deep.equals({
+                expanded: false,
+                side
+            });
+        });
+    });
 });
