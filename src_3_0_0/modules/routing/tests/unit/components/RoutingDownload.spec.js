@@ -5,9 +5,6 @@ import {config, shallowMount} from "@vue/test-utils";
 import RoutingDownloadComponent from "../../../components/RoutingDownload.vue";
 import mutations from "../../../store/mutationsRouting";
 import actions from "../../../store/actionsRouting";
-import getters from "../../../store/gettersRouting";
-import state from "../../../store/stateRouting";
-
 
 import Directions from "../../../store/directions/indexDirections";
 import Isochrones from "../../../store/isochrones/indexIsochrones";
@@ -17,13 +14,18 @@ import LineString from "ol/geom/LineString";
 config.global.mocks.$t = key => key;
 
 describe("src_3_0_0/modules/routing/components/RoutingDownload.vue", () => {
-    let store,
+    let activeRoutingToolOption,
+        downloadFileName,
+        store,
         wrapper,
         props;
 
     beforeEach(() => {
+        activeRoutingToolOption = "DIRECTIONS";
+        downloadFileName = "";
+
         store = createStore({
-            namespaced: true,
+            namespaces: true,
             modules: {
                 Modules: {
                     namespaced: true,
@@ -35,10 +37,18 @@ describe("src_3_0_0/modules/routing/components/RoutingDownload.vue", () => {
                                 Directions,
                                 Isochrones
                             },
-                            state,
+                            // state,
                             mutations,
                             actions,
-                            getters
+                            getters: {
+                                activeRoutingToolOption: () => activeRoutingToolOption,
+                                download: () => {
+                                    return {
+                                        fileName: downloadFileName,
+                                        format: "GEOJSON"
+                                    };
+                                }
+                            }
                         }
                     },
                     Alerting: {
@@ -93,13 +103,14 @@ describe("src_3_0_0/modules/routing/components/RoutingDownload.vue", () => {
     });
 
     it("enables input with filename", () => {
+        downloadFileName = "testfilename";
         wrapper = shallowMount(RoutingDownloadComponent, {
             global: {
                 plugins: [store]
             },
             props: props
         });
-        wrapper.vm.download.fileName = "testfilename";
+
         expect(wrapper.vm.isDisabled).to.be.false;
     });
 
@@ -115,13 +126,14 @@ describe("src_3_0_0/modules/routing/components/RoutingDownload.vue", () => {
     });
 
     it("returns features for 'ISOCHRONES'", () => {
-        store.commit("Modules/Routing/setActiveRoutingToolOption", "ISOCHRONES");
+        activeRoutingToolOption = "ISOCHRONES";
         wrapper = shallowMount(RoutingDownloadComponent, {
             global: {
                 plugins: [store]
             },
             props: props
         });
+
         expect(wrapper.vm.getDownloadFeatures().length).equal(0);
     });
 

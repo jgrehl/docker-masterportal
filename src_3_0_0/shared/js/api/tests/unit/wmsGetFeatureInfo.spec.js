@@ -4,7 +4,7 @@ import sinon from "sinon";
 import {parseDocumentString, parseFeatures} from "../../wmsGetFeatureInfo.js";
 import handleAxiosResponse from "../../../utils/handleAxiosResponse.js";
 
-describe("src/api/wmsGetFeatureInfo.js", () => {
+describe("src_3_0_0/shared/js/api/wmsGetFeatureInfo.js", () => {
     let warn;
 
     before(() => {
