@@ -9,8 +9,6 @@ import RoutingSliderInputComponent from "../../../../components/RoutingSliderInp
 import RoutingDownloadComponent from "../../../../components/RoutingDownload.vue";
 import mutations from "../../../../store/mutationsRouting";
 import actions from "../../../../store/actionsRouting";
-import getters from "../../../../store/gettersRouting";
-import state from "../../../../store/stateRouting";
 import mutationsIsochrones from "../../../../store/isochrones/mutationsIsochrones";
 import actionsIsochrones from "../../../../store/isochrones/actionsIsochrones";
 import gettersIsochrones from "../../../../store/isochrones/gettersIsochrones";
@@ -20,8 +18,9 @@ config.silent = true;
 config.global.mocks.$t = key => key;
 
 describe("src_3_0_0/modules/routing/components/Isochrones/IsochronesItem.vue", () => {
-
-    let store,
+    let batchProcessingActive,
+        batchProcessingEnabled,
+        store,
         wrapper;
 
     before(() => {
@@ -37,14 +36,16 @@ describe("src_3_0_0/modules/routing/components/Isochrones/IsochronesItem.vue", (
 
 
     beforeEach(() => {
+        batchProcessingActive = false;
+        batchProcessingEnabled = false;
+
         store = createStore({
-            namespaced: true,
+            namespaces: true,
             modules: {
                 Modules: {
                     namespaced: true,
                     modules: {
-                        Routing:
-                        {
+                        Routing: {
                             namespaced: true,
                             modules: {
                                 Isochrones: {
@@ -55,10 +56,18 @@ describe("src_3_0_0/modules/routing/components/Isochrones/IsochronesItem.vue", (
                                     getters: gettersIsochrones
                                 }
                             },
-                            state,
                             mutations,
                             actions,
-                            getters
+                            getters: {
+                                isochronesSettings: () => {
+                                    return {
+                                        batchProcessing: {
+                                            active: batchProcessingActive,
+                                            enabled: batchProcessingEnabled
+                                        }
+                                    };
+                                }
+                            }
                         }
                     }
                 },
@@ -71,6 +80,12 @@ describe("src_3_0_0/modules/routing/components/Isochrones/IsochronesItem.vue", (
                         addLayer: sinon.stub(),
                         removeInteraction: sinon.stub(),
                         addInteraction: sinon.stub()
+                    }
+                },
+                Alerting: {
+                    namespaced: true,
+                    actions: {
+                        addSingleAlert: sinon.stub()
                     }
                 }
             }
@@ -89,58 +104,64 @@ describe("src_3_0_0/modules/routing/components/Isochrones/IsochronesItem.vue", (
     });
 
     it("renders IsochronesBatchProcessingCheckbox", async () => {
+        batchProcessingEnabled = true;
         wrapper = shallowMount(IsochronesComponent, {global: {
             plugins: [store]
         }});
-        wrapper.vm.settings.batchProcessing.enabled = true;
+
         await wrapper.vm.$nextTick();
         expect(wrapper.findComponent(RoutingBatchProcessingCheckboxComponent).exists()).to.be.true;
     });
 
     it("doesn't render IsochronesBatchProcessingCheckbox", async () => {
+        batchProcessingEnabled = false;
         wrapper = shallowMount(IsochronesComponent, {global: {
             plugins: [store]
         }});
-        wrapper.vm.settings.batchProcessing.enabled = false;
+
         await wrapper.vm.$nextTick();
         expect(wrapper.findComponent(RoutingBatchProcessingCheckboxComponent).exists()).to.be.false;
     });
 
     it("renders IsochronesBatchProcessing", async () => {
+        batchProcessingActive = true;
+        batchProcessingEnabled = true;
         wrapper = shallowMount(IsochronesComponent, {global: {
             plugins: [store]
         }});
-        wrapper.vm.settings.batchProcessing.enabled = true;
-        wrapper.vm.settings.batchProcessing.active = true;
+
         await wrapper.vm.$nextTick();
         expect(wrapper.findComponent(IsochronesItemBatchProcessingComponent).exists()).to.be.true;
     });
 
     it("doesn't render IsochronesBatchProcessing", async () => {
+        batchProcessingActive = false;
+        batchProcessingEnabled = true;
         wrapper = shallowMount(IsochronesComponent, {global: {
             plugins: [store]
         }});
-        wrapper.vm.settings.batchProcessing.enabled = true;
-        wrapper.vm.settings.batchProcessing.active = false;
+
         await wrapper.vm.$nextTick();
         expect(wrapper.findComponent(IsochronesItemBatchProcessingComponent).exists()).to.be.false;
     });
 
     it("renders RoutingCoordinateInput", async () => {
+        batchProcessingEnabled = false;
         wrapper = shallowMount(IsochronesComponent, {global: {
             plugins: [store]
         }});
-        wrapper.vm.settings.batchProcessing.enabled = false;
+
         await wrapper.vm.$nextTick();
         expect(wrapper.find("#routing-isochrones-coordinate-input-form").exists()).to.be.true;
     });
 
     it("doesn't render RoutingCoordinateInput", async () => {
+        batchProcessingActive = true;
+        batchProcessingEnabled = true;
         wrapper = shallowMount(IsochronesComponent, {global: {
             plugins: [store]
         }});
-        wrapper.vm.settings.batchProcessing.enabled = true;
-        wrapper.vm.settings.batchProcessing.active = true;
+
         await wrapper.vm.$nextTick();
         expect(wrapper.find("#routing-isochrones-coordinate-input-form").exists()).to.be.false;
     });
@@ -182,24 +203,26 @@ describe("src_3_0_0/modules/routing/components/Isochrones/IsochronesItem.vue", (
     });
 
     it("renders isochrones result", async () => {
+        batchProcessingEnabled = false;
         store.commit("Modules/Routing/Isochrones/setRoutingIsochrones", {
             getAreas: () => []
         });
         wrapper = shallowMount(IsochronesComponent, {global: {
             plugins: [store]
         }});
-        wrapper.vm.settings.batchProcessing.enabled = false;
+
         await wrapper.vm.$nextTick();
         expect(wrapper.find("#routing-isochrones-result-isochrones").exists()).to.be.true;
         expect(wrapper.findComponent(RoutingDownloadComponent).exists()).to.be.true;
     });
 
     it("doesn't render isochrones result", async () => {
+        batchProcessingEnabled = false;
         store.commit("Modules/Routing/Isochrones/setRoutingIsochrones", null);
         wrapper = shallowMount(IsochronesComponent, {global: {
             plugins: [store]
         }});
-        wrapper.vm.settings.batchProcessing.enabled = false;
+
         await wrapper.vm.$nextTick();
         expect(wrapper.find("#routing-isochrones-result-isochrones").exists()).to.be.false;
         expect(wrapper.findComponent(RoutingDownloadComponent).exists()).to.be.false;
