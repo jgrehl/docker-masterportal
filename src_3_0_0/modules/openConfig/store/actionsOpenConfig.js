@@ -1,4 +1,5 @@
 import layerCollection from "../../../core/layers/js/layerCollection";
+import {treeTopicConfigKey} from "../../../shared/js/utils/constants";
 
 const actions = {
 
@@ -14,8 +15,8 @@ const actions = {
 
         layerCollection.clear();
         commit("setPortalConfig", configJson.Portalconfig, {root: true});
-        Object.keys(configJson.Themenconfig).forEach(topic => {
-            commit("setLayerConfigByParentKey", {layerConfigs: configJson.Themenconfig[topic], parentKey: topic}, {root: true});
+        Object.keys(configJson[treeTopicConfigKey]).forEach(topic => {
+            commit("setLayerConfigByParentKey", {layerConfigs: configJson[treeTopicConfigKey][topic], parentKey: topic}, {root: true});
         });
         dispatch("extendLayers", null, {root: true});
     }
