@@ -2,7 +2,8 @@ import {createStore} from "vuex";
 import {expect} from "chai";
 import {config, shallowMount} from "@vue/test-utils";
 import RoutingDistanceDisplayComponent from "../../../components/RoutingDistanceDisplay.vue";
-import Routing from "../../../store/indexRouting";
+import mutations from "../../../store/mutationsRouting";
+import actions from "../../../store/actionsRouting";
 import thousandsSeparator from "../../../../../shared/js/utils/thousandsSeparator";
 
 config.global.mocks.$t = key => key;
@@ -19,7 +20,11 @@ describe("src_3_0_0/modules/routing/components/RoutingDistanceDisplay.vue", () =
                 Modules: {
                     namespaced: true,
                     modules: {
-                        Routing
+                        Routing: {
+                            namespaced: true,
+                            mutations: mutations,
+                            actions: actions
+                        }
                     }
                 }
             }
