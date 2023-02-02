@@ -1,5 +1,4 @@
 import menuState from "./stateMenu";
-import store from "../../../app-store";
 import {generateSimpleMutations} from "../../../shared/js/utils/generators";
 
 export default {
@@ -7,12 +6,12 @@ export default {
 
     /**
      * Collapses Menucontainers
-     * @param {Object} currentState current state
+     * @param {Object} state current state
      * @returns {void}
      */
-    collapseMenues (currentState) {
-        currentState.mainMenu.expanded = false;
-        currentState.secondaryMenu.expanded = false;
+    collapseMenues (state) {
+        state.mainMenu.expanded = false;
+        state.secondaryMenu.expanded = false;
     },
 
     /**
@@ -40,6 +39,17 @@ export default {
     },
 
     /**
+     * Set expanded for the given side menu.
+     * @param {Object} state current state
+     * @param {Boolean} expanded Is menu expanded.
+     * @param {String} side secondary or main Menu
+     * @returns {void}
+     */
+    setExpandedBySide (state, {expanded, side}) {
+        state[side].expanded = expanded;
+    },
+
+    /**
      * Removes the last path of an entry from the given side.
      * @param {Object} state Local vuex state.
      * @param {String} side Side on which the last entry should be removed.
@@ -61,26 +71,5 @@ export default {
         state[side].navigation.currentComponent = state[side].navigation.history[0];
         state[side].navigation.history = [];
         state[side].currentComponent = "root";
-    },
-
-    /**
-     * Toggles Menucontainers
-     * @param {Object} currentState current state
-     * @param {String} side secondary or main Menu
-     * @returns {void}
-     */
-    toggleMenu (currentState, side = {}) {
-        if (side === "mainMenu") {
-            if (store.getters.isMobile && currentState.secondaryMenu.expanded) {
-                currentState.secondaryMenu.expanded = false;
-            }
-            currentState.mainMenu.expanded = !currentState.mainMenu.expanded;
-        }
-        else if (side === "secondaryMenu") {
-            if (store.getters.isMobile && currentState.mainMenu.expanded) {
-                currentState.mainMenu.expanded = false;
-            }
-            currentState.secondaryMenu.expanded = !currentState.secondaryMenu.expanded;
-        }
     }
 };
