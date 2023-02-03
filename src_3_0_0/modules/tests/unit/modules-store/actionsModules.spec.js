@@ -144,7 +144,7 @@ describe("src_3_0_0/modules/modules-store/actions.js", () => {
     });
 
     describe("addAttributesToModuleState", () => {
-        it("should commit simple attributes to state directly and update nested attributes by setDeepMerge", () => {
+        it("should commit simple attributes to state directly and update nested array attributes by setDeepMerge", () => {
             const dataObject = [{
                     "title": "dataObject",
                     "type": "TestModule",
@@ -164,6 +164,65 @@ describe("src_3_0_0/modules/modules-store/actions.js", () => {
             expect(commit.calledTwice).to.be.true;
             expect(commit.firstCall.args[0]).to.equals("TestModule/setTitle");
             expect(commit.firstCall.args[1]).to.equals("dataObject");
+        });
+
+        it("nested object", () => {
+            const dataObject = [{
+                    "type": "featureLister",
+                    "maxFeatures": 10,
+                    "highlightVectorRulesPolygon": {
+                        "fill": {
+                            "color": [
+                                255,
+                                0,
+                                127,
+                                0.9
+                            ]
+                        },
+                        "stroke": {
+                            "width": 3,
+                            "color": [
+                                0,
+                                204,
+                                204,
+                                0.9
+                            ]
+                        }
+                    }
+                }],
+                myRootState = {
+                    Modules: {
+                        FeatureLister: {
+                            "type": "featureLister"
+                        }
+                    }
+                },
+                myCommit = sinon.spy(),
+                myDispatch = sinon.stub().callsFake((dispatchFunction, {items, itemType, modulePath}) => {
+                    if (dispatchFunction === "addAttributesToModuleState") {
+                    // call addAttributesToModuleState recursiv as in original action
+                        addAttributesToModuleState({commit: myCommit, dispatch: myDispatch, rootState: myRootState}, {items, itemType, modulePath});
+                    }
+                });
+
+            addAttributesToModuleState({commit: myCommit, dispatch: myDispatch, rootState: myRootState}, {items: dataObject});
+
+            expect(myDispatch.callCount).to.be.equals(6);
+            expect(myDispatch.firstCall.args[0]).to.equals("addAttributesToModuleState");
+            expect(myDispatch.firstCall.args[1]).to.deep.equals({items: [dataObject[0].highlightVectorRulesPolygon], itemType: "featureLister", modulePath: "FeatureLister.highlightVectorRulesPolygon"});
+            expect(myDispatch.secondCall.args[0]).to.equals("addAttributesToModuleState");
+            expect(myDispatch.secondCall.args[1]).to.deep.equals({items: [dataObject[0].highlightVectorRulesPolygon.fill], itemType: undefined, modulePath: "FeatureLister.highlightVectorRulesPolygon.fill"});
+            expect(myDispatch.thirdCall.args[0]).to.equals("setDeepMerge");
+            expect(myDispatch.thirdCall.args[1]).to.deep.equals({obj: myRootState.Modules, path: "FeatureLister.highlightVectorRulesPolygon.fill.color", value: dataObject[0].highlightVectorRulesPolygon.fill.color});
+            expect(myDispatch.getCall(4).args[0]).to.equals("setDeepMerge");
+            expect(myDispatch.getCall(4).args[1]).to.deep.equals({obj: myRootState.Modules, path: "FeatureLister.highlightVectorRulesPolygon.stroke.width", value: dataObject[0].highlightVectorRulesPolygon.stroke.width});
+            expect(myDispatch.getCall(5).args[0]).to.equals("setDeepMerge");
+            expect(myDispatch.getCall(5).args[1]).to.deep.equals({obj: myRootState.Modules, path: "FeatureLister.highlightVectorRulesPolygon.stroke.color", value: dataObject[0].highlightVectorRulesPolygon.stroke.color});
+            expect(myCommit.calledTwice).to.be.true;
+            expect(myCommit.firstCall.args[0]).to.equals("FeatureLister/setType");
+            expect(myCommit.firstCall.args[1]).to.equals(dataObject[0].type);
+            expect(myCommit.secondCall.args[0]).to.equals("FeatureLister/setMaxFeatures");
+            expect(myCommit.secondCall.args[1]).to.equals(dataObject[0].maxFeatures);
         });
     });
 
