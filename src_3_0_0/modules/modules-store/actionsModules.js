@@ -85,14 +85,14 @@ export default {
                 dispatch("addAttributesToModuleState", {items: item.elements});
             }
             else {
-                const modulePathInit = modulePath && itemType ? modulePath : `${upperFirst(item.type)}`;
+                const modulePathInit = modulePath ? modulePath : `${upperFirst(item.type)}`;
 
                 for (const [key, value] of Object.entries(item)) {
                     if (typeof value === "object" && !Array.isArray(value)) {
                         dispatch("addAttributesToModuleState", {items: [value], itemType: item?.type, modulePath: modulePathInit + `.${key}`});
                     }
-                    else if (!itemType && !Array.isArray(value)) {
-                        commit(`${upperFirst(item?.type)}/set${upperFirst(key)}`, value);
+                    else if (item.type && !itemType && !Array.isArray(value)) {
+                        commit(`${upperFirst(item.type)}/set${upperFirst(key)}`, value);
                     }
                     else {
                         dispatch("setDeepMerge", {obj: rootState.Modules, path: modulePathInit + `.${key}`, value: value});
