@@ -75,4 +75,27 @@ describe("src_3_0_0/modules/layerSlider/components/LayerSlider.vue", () => {
         expect(layerSliderWrapper.find("#player-tab").classes()).to.not.contain("active");
     });
 
+    it("should reset activeLayer from store and ste invisible to layerTree in unmounted-hook", async () => {
+        const layerSliderWrapper = shallowMount(LayerSliderComponent, {
+                global: {
+                    plugins: [store]
+                }
+            }),
+            sendModificationSpy = sinon.spy(layerSliderWrapper.vm, "sendModification");
+
+
+        layerSliderWrapper.vm.$options.unmounted.call(layerSliderWrapper.vm);
+        await wrapper.vm.$nextTick();
+
+        expect(store.state.Modules.LayerSlider.windowsInterval).to.equals(null);
+        expect(sendModificationSpy.calledOnce).to.be.true;
+        expect(sendModificationSpy.firstCall.args[0]).to.deep.equals({
+            layerId: "",
+            visibility: false
+        });
+        expect(store.state.Modules.LayerSlider.activeLayer).to.deep.equals({
+            layerId: "",
+            index: -1
+        });
+    });
 });
