@@ -44,7 +44,6 @@ const actions = {
      */
     navigateForward ({commit}, {lastFolderName, subjectDataLayerConfs, backgroundLayerConfs = []}) {
         commit("addToLayerSelection", {lastFolderName, subjectDataLayerConfs, backgroundLayerConfs});
-        commit("setLastFolderName", lastFolderName);
         commit("setBackgroundLayerConfs", backgroundLayerConfs);
         commit("setSubjectDataLayerConfs", subjectDataLayerConfs);
     },
@@ -58,7 +57,6 @@ const actions = {
      */
     navigateBack ({commit, getters}) {
         commit("reduceToPreviousLayerSelection");
-        commit("setLastFolderName", getters.lastFolderNames[getters.lastFolderNames.length - 1]);
         commit("setSubjectDataLayerConfs", getters.lastSubjectDataLayerConfs[getters.lastSubjectDataLayerConfs.length - 1]);
         commit("setBackgroundLayerConfs", getters.lastBackgroundLayerConfs[getters.lastBackgroundLayerConfs.length - 1]);
 
@@ -72,7 +70,6 @@ const actions = {
      */
     reset ({commit}) {
         commit("clearLayerSelection");
-        commit("setLastFolderName", null);
         commit("setSubjectDataLayerConfs", []);
         commit("setBackgroundLayerConfs", []);
     }
