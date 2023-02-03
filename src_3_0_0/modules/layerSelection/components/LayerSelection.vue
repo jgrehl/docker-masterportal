@@ -1,8 +1,8 @@
 <script>
 import {mapGetters, mapActions, mapMutations} from "vuex";
-import sortBy from "../../../../shared/js/utils/sortBy";
-import FlatButton from "../../../../shared/modules/buttons/components/FlatButton.vue";
-import LayerCheckBox from "../../components/LayerCheckBox.vue";
+import sortBy from "../../../shared/js/utils/sortBy";
+import FlatButton from "../../../shared/modules/buttons/components/FlatButton.vue";
+import LayerCheckBox from "../../layerTree/components/LayerCheckBox.vue";
 import LayerSelectionTreeNode from "./LayerSelectionTreeNode.vue";
 
 
