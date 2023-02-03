@@ -7,7 +7,7 @@ import LayerSelectionTreeNode from "../../../components/LayerSelectionTreeNode.v
 
 config.global.mocks.$t = key => key;
 
-describe("src_3_0_0/modules/layerTree/layerSelection/components/LayerSelectionTreeNode.vue", () => {
+describe("src_3_0_0/modules/layerSelection/components/LayerSelectionTreeNode.vue", () => {
     let store,
         wrapper,
         layer,
