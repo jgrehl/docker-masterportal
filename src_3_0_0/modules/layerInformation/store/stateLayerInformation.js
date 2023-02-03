@@ -11,6 +11,7 @@
  * @property {String} abstractText the abstract Info text
  * @property {String} datePublication the date of the publication
  * @property {String} dateRevision the date of the revision
+ * @property {string} customText the custom Info text
  * @property {Array} downloadLinks the download Links
  * @property {Object} layerInfo additional layer Information
  * @property {String} metaDataCatalogueId id of the MateDataCatalogue
@@ -29,6 +30,7 @@ export default {
     type: "layerInformation",
 
     abstractText: "",
+    customText: null,
     datePublication: "",
     dateRevision: "",
     downloadLinks: null,
