@@ -17,6 +17,7 @@ export default {
         ...mapGetters("Modules/LayerInformation", [
             "abstractText",
             "active",
+            "customText",
             "datePublication",
             "dateRevision",
             "downloadLinks",
