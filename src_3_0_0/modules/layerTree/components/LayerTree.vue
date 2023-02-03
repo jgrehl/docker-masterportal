@@ -46,7 +46,7 @@ export default {
                 backgroundLayerConfs = this.allLayerConfigsStructured(treeBackgroundsKey);
 
             this.setCurrentComponent({type: this.layerSelectionType, side: this.menuSide, props: {name: this.layerSelectionName}});
-            this.navigateForward({lastConfName: null, subjectDataLayerConfs, backgroundLayerConfs});
+            this.navigateForward({lastFolderName: "root", subjectDataLayerConfs, backgroundLayerConfs});
             this.setLayerSelectionActive(true);
         }
     }
