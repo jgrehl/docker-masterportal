@@ -11,7 +11,7 @@ import Folder from "../menu/components/MenuFolder.vue";
 import GetFeatureInfo from "../getFeatureInfo/components/GetFeatureInfo.vue";
 import Language from "../language/components/LanguageItem.vue";
 import LayerInformation from "../layerInformation/components/LayerInformation.vue";
-import LayerSelection from "../layerTree/layerSelection/components/LayerSelection.vue";
+import LayerSelection from "../layerSelection/components/LayerSelection.vue";
 import LayerTree from "../layerTree/components/LayerTree.vue";
 import LayerPills from "../layerPills/components/LayerPills.vue";
 import LayerSlider from "../layerSlider/components/LayerSlider.vue";
