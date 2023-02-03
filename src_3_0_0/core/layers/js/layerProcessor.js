@@ -55,6 +55,7 @@ export function processLayerConfig (layerConfig, mapMode) {
             updateLayerAttributes(layer, layerConf);
         }
         else if (layerConf.visibility === true) {
+            Object.assign(layerConf, {showInLayerTree: true}); // a visible layer is always show in layer tree
             layer = layerFactory.createLayer(layerConf, mapMode);
             processLayer(layer, mapMode);
         }
