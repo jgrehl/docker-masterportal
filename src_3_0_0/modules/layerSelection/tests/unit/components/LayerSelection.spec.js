@@ -2,7 +2,7 @@ import {createStore} from "vuex";
 import {config, shallowMount, mount} from "@vue/test-utils";
 import {expect} from "chai";
 import sinon from "sinon";
-import {treeBackgroundsKey} from "../../../../../../shared/js/utils/constants";
+import {treeBackgroundsKey} from "../../../../../shared/js/utils/constants";
 import LayerSelectionComponent from "../../../components/LayerSelection.vue";
 import LayerSelection from "../../../store/indexLayerSelection";
 
