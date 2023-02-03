@@ -11,6 +11,7 @@ export default {
     },
     computed: {
         ...mapGetters("Modules/LayerSlider", [
+            "activeLayer",
             "layerIds",
             "sliderType",
             "title"
@@ -22,6 +23,7 @@ export default {
     },
     unmounted () {
         this.setWindowsInterval(null);
+        this.sendModification({layerId: this.activeLayer.layerId, visibility: false});
         this.resetActiveLayer();
     },
     methods: {
@@ -31,7 +33,8 @@ export default {
         ]),
         ...mapActions("Modules/LayerSlider", [
             "addIndexToLayerIds",
-            "checkIfAllLayersAvailable"
+            "checkIfAllLayersAvailable",
+            "sendModification"
         ])
     }
 };
