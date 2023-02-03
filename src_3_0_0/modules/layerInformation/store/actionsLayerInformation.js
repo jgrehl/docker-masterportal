@@ -1,5 +1,7 @@
-import {getRecordById} from "../../../shared/js/api/getCswRecordById";
+import {getMetadata, getRecordById} from "../../../shared/js/api/getCswRecordById";
 import sortBy from "../../../shared/js/utils/sortBy";
+import xml2json from "../../../shared/js/utils/xml2json";
+import axios from "axios";
 
 const actions = {
     /**
@@ -50,7 +52,7 @@ const actions = {
      * @param {Object} metaInfo the metaInformation that is necessary
      * @returns {void}
      */
-    getAbstractInfo: async function ({commit, state, rootGetters, rootState}, metaInfo) {
+    getAbstractInfo: async function ({commit, dispatch, state, rootGetters, rootState}, metaInfo) {
         const layerInfoConfig = rootState.portalConfig?.layerInformation;
         let metadata;
 
@@ -62,6 +64,7 @@ const actions = {
             const service = rootGetters.restServiceById(Config.cswId);
             let metaURL = "";
 
+            commit("setCustomText", null);
             if (service === undefined) {
                 console.warn("Rest Service with the ID " + Config.cswId + " is not configured in rest-services.json!");
             }
@@ -72,6 +75,13 @@ const actions = {
             if (metaURL !== "" && typeof metaInfo.metaId !== "undefined") {
                 metadata = await getRecordById(metaURL, metaInfo.metaId);
             }
+        }
+        else if (metaInfo.customMetadata) {
+            const metadataAsJson = await axios.get(metaInfo.cswUrl)
+                .then(response => xml2json(response.request.responseXML));
+
+            metadata = getMetadata(metadataAsJson);
+            dispatch("getCustomMetaData", {attributes: metaInfo.attributes, metadataAsJson});
         }
 
         if (typeof metadata === "undefined") {
@@ -102,6 +112,25 @@ const actions = {
             commit("setDownloadLinks", sortBy(downloadLinks, "linkName"));
         }
     },
+
+    /**
+     * Get metadata from path declared in the service configuration
+     * @param {Object} param.commit the commit
+     * @param {Object} payload object of attributes with paths to metadata information and metadata as json
+     * @returns {void}
+     */
+    getCustomMetaData: function ({commit}, payload) {
+        const customMetadata = Object.entries(payload.attributes).map(([key, value]) => {
+                return {[key]: value.split(".").reduce((o, i)=> o[i], payload.metadataAsJson).getValue()};
+            }),
+            singleObjectCustomMetadata = {};
+
+        for (let i = 0; i < customMetadata.length; i++) {
+            Object.assign(singleObjectCustomMetadata, customMetadata[i]);
+        }
+        commit("setCustomText", singleObjectCustomMetadata);
+    },
+
 
     /**
      * Checks the array of metaIDs and creates array metaURL with complete URL for template. Does not allow duplicated entries

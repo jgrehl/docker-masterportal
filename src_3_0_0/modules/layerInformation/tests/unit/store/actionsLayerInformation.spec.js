@@ -44,6 +44,8 @@ describe.skip("src_3_0_0/modules/layerInformation/store/actionsLayerInformation.
                 layerConf = {
                     id: "123",
                     metaID: "layerMetaId",
+                    attributes: null,
+                    customMetadata: false,
                     layername: "name",
                     url: "google.de",
                     urlIsVisible: true,
@@ -73,7 +75,7 @@ describe.skip("src_3_0_0/modules/layerInformation/store/actionsLayerInformation.
 
             // action, payload, state, rootState, expectedMutationsAndActions, getters = {}, done
             testAction(additionalSingleLayerInfo, null, state, {}, [
-                {type: "getAbstractInfo", payload: {metaId: state.layerInfo.metaID, cswUrl: state.layerInfo.cswUrl}, dispatch: true}
+                {type: "getAbstractInfo", payload: {attributes: state.layerInfo.attributes, metaId: state.layerInfo.metaID, cswUrl: state.layerInfo.cswUrl, customMetadata: state.layerInfo.customMetadata}, dispatch: true}
             ], {}, done);
 
         });
