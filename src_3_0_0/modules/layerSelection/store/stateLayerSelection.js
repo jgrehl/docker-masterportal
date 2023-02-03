@@ -9,7 +9,6 @@
  * @property {Array} subjectDataLayerConfs subject data layer configurations to show in layerSelection
  * @property {Array} backgroundLayerConfs background layer configurations to show in layerSelection
  * @property {Array} layersToAdd ids of layers to add to LayerTree
- * @property {String} lastFolderName name of the previous folder configuration name
  * @property {Array} lastFolderNames names of the previous folder configurations names
  * @property {Array} lastSubjectDataLayerConfs previous subject data layer configurations
  * @property {Array} lastSubjectDataLayerConfs previous background layer configurations
@@ -24,7 +23,6 @@ export default {
     subjectDataLayerConfs: [],
     backgroundLayerConfs: [],
     layersToAdd: [],
-    lastFolderName: null,
     lastFolderNames: [],
     lastSubjectDataLayerConfs: [],
     lastBackgroundLayerConfs: []
