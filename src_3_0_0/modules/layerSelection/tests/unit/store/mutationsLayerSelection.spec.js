@@ -4,7 +4,7 @@ import mutations from "../../../store/mutationsLayerSelection";
 
 const {clearLayerSelection, addSelectedLayer, removeSelectedLayer, reduceToPreviousLayerSelection, addToLayerSelection} = mutations;
 
-describe("src_3_0_0/modules/layerTree/layerSelection/store/mutationsLayerSelection", function () {
+describe("src_3_0_0/modules/layerSelection/store/mutationsLayerSelection", function () {
     describe("clearLayerSelection", function () {
         it("Clears layerSelection", function () {
             const state = {
