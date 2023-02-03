@@ -72,16 +72,16 @@
               "fill": {
                 "color": [
                   255,
-                  255,
-                  255,
+                  0,
+                  127,
                   0.9
                 ]
               },
               "stroke": {
-                "width": 4,
+                "width": 3,
                 "color": [
                   0,
-                  0,
+                  204,
                   204,
                   0.9
                 ]
@@ -89,16 +89,16 @@
             },
             "highlightVectorRulesPointLine": {
               "stroke": {
-                "width": 8,
+                "width": 7,
                 "color": [
-                  255,
                   0,
-                  255,
+                  153,
+                  0,
                   0.9
                 ]
               },
               "image": {
-                "scale": 1.5
+                "scale": 2
               }
             }
           },
