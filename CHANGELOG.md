@@ -31,8 +31,6 @@
     - In the `portalFooter` only `urls` and the `scaleLine` are configured. For the other contents e.g. `version` or `footerInfo` a module is created in the menu. Language switching has also been moved to a separate `language` module.
     - The width of the ScaleLine [in cm] can now be configured with the attribute `scaleLineWidth`.
 
-Translated with www.DeepL.com/Translator (free version)
-
 ### Added
 - The following NPM package was added:
     - devDependencies:
