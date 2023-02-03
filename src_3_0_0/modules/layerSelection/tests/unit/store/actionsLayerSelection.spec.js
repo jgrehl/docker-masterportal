@@ -5,7 +5,7 @@ import actions from "../../../store/actionsLayerSelection";
 
 const {updateLayerTree, navigateForward, navigateBack, reset} = actions;
 
-describe("src_3_0_0/modules/layerTree/layerSelection/store/actionsLayerSelection", function () {
+describe("src_3_0_0/modules/layerSelection/store/actionsLayerSelection", function () {
     let commit, getters, dispatch, rootGetters;
 
     beforeEach(() => {
