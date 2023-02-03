@@ -17,9 +17,9 @@ const mutations = {
             layername: layerConf.name,
             legendURL: layerConf.legendURL,
             metaID: layerConf.datasets[0].md_id,
-            customMetadata: null,
-            attributes: null,
-            showDocUrl: layerConf.datasets[0].show_doc_url,
+            customMetadata: layerConf.datasets[0].customMetadata,
+            attributes: layerConf.datasets[0].customMetadata,
+            showDocUrl: layerConf.datasets[0].attributes,
             typ: layerConf.typ,
             url: layerConf.url,
             urlIsVisible: layerConf.urlIsVisible
