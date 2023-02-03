@@ -1,6 +1,6 @@
 <script>
-import Layer from "../../components/LayerComponent.vue";
-import LightButton from "../../../../shared/modules/buttons/components/LightButton.vue";
+import Layer from "../../layerTree/components/LayerComponent.vue";
+import LightButton from "../../../shared/modules/buttons/components/LightButton.vue";
 
 /**
  * Representation of a node in layertree containing folders or layers.
