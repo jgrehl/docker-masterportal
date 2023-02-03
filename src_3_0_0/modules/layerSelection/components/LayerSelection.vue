@@ -14,7 +14,10 @@ export default {
         LayerSelectionTreeNode
     },
     computed: {
-        ...mapGetters("Modules/LayerSelection", ["active", "subjectDataLayerConfs", "backgroundLayerConfs", "layersToAdd", "type", "menuSide", "lastFolderName"])
+        ...mapGetters("Modules/LayerSelection", ["active", "subjectDataLayerConfs", "backgroundLayerConfs", "layersToAdd", "type", "menuSide", "lastFolderNames"]),
+        lastFolderName () {
+            return this.lastFolderNames[this.lastFolderNames.length - 1];
+        }
 
     },
     unmounted () {
