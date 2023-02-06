@@ -27,7 +27,7 @@ export default {
         };
     },
     computed: {
-        ...mapGetters(["portalConfig", "allLayerConfigs", "layerConfigsByArributes"]),
+        ...mapGetters(["portalConfig", "allLayerConfigs", "layerConfigsByAttributes"]),
 
         /**
          * v-model for sorted layerConfig.
@@ -41,7 +41,7 @@ export default {
                 let sortedLayerConfig;
 
                 if (this.addLayerButton) {
-                    sortedLayerConfig = this.layerConfigsByArributes({showInLayerTree: true});
+                    sortedLayerConfig = this.layerConfigsByAttributes({showInLayerTree: true});
                 }
                 else {
                     sortedLayerConfig = this.allLayerConfigs;
