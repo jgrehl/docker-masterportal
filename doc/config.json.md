@@ -3482,9 +3482,9 @@ The layer cluster toggler tool allows to activate and deactivate cluster layers 
         "layerIdList": [
             "8712",
             "8713",
-            "8713#900012",
-            "8713#900013",
-            "8713#900014"
+            "8713.900012",
+            "8713.900013",
+            "8713.900014"
         ]
     }
 }
@@ -5490,7 +5490,7 @@ Layer definition. Multiple ways to define layers exist. Most attributes are defi
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
-|id|yes|String||Layer ID(s). Resolved using the **[services.json](services.json.md)** file. Please mind that the given IDs **MUST** refer to the same URL, that is, use the same service. With the special character `#` as suffix, a LayerId can be used multiple times. Each LayerId marked with a suffix creates its own entry in the topic tree.|false|
+|id|yes|String||Layer ID(s). Resolved using the **[services.json](services.json.md)** file. Please mind that the given IDs **MUST** refer to the same URL, that is, use the same service. With the special character `.` as suffix, a LayerId can be used multiple times. Each LayerId marked with a suffix creates its own entry in the topic tree.|false|
 |name|no|String||Layer name.|false|
 |entities|yes|**[Entity3D](#markdown-header-themenconfiglayerentity3d)**[]||Models to be shown.|false|
 |transparency|no|Integer|0|Layer transparency.|false|

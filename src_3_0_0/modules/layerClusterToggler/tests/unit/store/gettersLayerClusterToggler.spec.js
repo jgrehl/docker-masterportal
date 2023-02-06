@@ -8,7 +8,7 @@ describe("src_3_0_0/modules/layerClusterToggler/store/gettersLayerClusterToggler
             const localState = {
                     layerIdList: [
                         "123",
-                        "111#222"
+                        "111.222"
                     ]
                 },
                 rootGetters = {
