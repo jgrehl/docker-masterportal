@@ -12,10 +12,24 @@ let zIndex = 0;
  * @returns {Object} the extended and merged raw layer
  */
 export function getAndMergeRawLayer (layerConf, showAllLayerInTree = false) {
-    const rawLayer = mergeRawLayer(layerConf, rawLayerList.getLayerWhere({id: layerConf?.id}));
+    const rawLayer = mergeRawLayer(layerConf, rawLayerList.getLayerWhere({id: splitId(layerConf?.id)}));
 
     // use layerConf, if layer is not available in rawLayerList (services.json)
     return addAdditional(rawLayer || layerConf, showAllLayerInTree);
+}
+
+/**
+ * Splits the id by seperator, if the id is a string.
+ * @param {String} id The layer id.
+ * @param {String} [seperator=#] The seperator to split by.
+ * @returns {String} The first part of the id.
+ */
+function splitId (id, seperator = "#") {
+    if (typeof id === "string") {
+        return id.split(seperator)[0];
+    }
+
+    return id;
 }
 
 /**
@@ -65,7 +79,7 @@ function mergeRawLayer (layerConf, rawLayer) {
             mergedLayer = fillGroupLayer(layerConf);
         }
         else if (rawLayer !== undefined && rawLayer !== null) {
-            mergedLayer = Object.assign(rawLayer, layerConf);
+            mergedLayer = {...rawLayer, ...layerConf};
         }
     }
     return mergedLayer;
@@ -123,7 +137,7 @@ function mergeLayerWithSeveralIds (layerConf) {
     let mergedLayer = {};
 
     ids?.forEach(id => {
-        const layer = rawLayerList.getLayerWhere({id: id});
+        const layer = rawLayerList.getLayerWhere({id: splitId(id)});
 
         if (layer) {
             existingLayers.push(layer);
