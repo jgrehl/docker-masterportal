@@ -33,8 +33,8 @@ describe("src_3_0_0/modules/layerClusterToggler/components/LayerClusterToggler.v
                                 isToggled: () => true,
                                 layerIdList: () => [
                                     "1234",
-                                    "8712#1",
-                                    "8712#2"
+                                    "8712.1",
+                                    "8712.2"
                                 ],
                                 layerNames: () => layerNames
                             },
