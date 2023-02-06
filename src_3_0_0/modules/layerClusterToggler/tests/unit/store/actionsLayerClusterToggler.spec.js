@@ -21,8 +21,8 @@ describe("src_3_0_0/modules/layerClusterToggler/store/actionsLayerClusterToggler
                 isToggled: true,
                 layerIdList: [
                     "123",
-                    "abc#1",
-                    "abc#2"
+                    "abc.1",
+                    "abc.2"
                 ]
             };
 
@@ -41,7 +41,7 @@ describe("src_3_0_0/modules/layerClusterToggler/store/actionsLayerClusterToggler
             expect(dispatch.secondCall.args[0]).to.equals("replaceByIdInLayerConfig");
             expect(dispatch.secondCall.args[1]).to.deep.equals({
                 layerConfigs: [{
-                    id: "abc#1",
+                    id: "abc.1",
                     layer: {
                         visibility: state.isToggled
                     }
@@ -50,7 +50,7 @@ describe("src_3_0_0/modules/layerClusterToggler/store/actionsLayerClusterToggler
             expect(dispatch.thirdCall.args[0]).to.equals("replaceByIdInLayerConfig");
             expect(dispatch.thirdCall.args[1]).to.deep.equals({
                 layerConfigs: [{
-                    id: "abc#2",
+                    id: "abc.2",
                     layer: {
                         visibility: state.isToggled
                     }

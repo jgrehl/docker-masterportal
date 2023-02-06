@@ -327,7 +327,7 @@
               },
               {
                 "title": "common:modules.tools.layerSlider.serviceThree",
-                "layerId": "8712#2"
+                "layerId": "8712.2"
               },
               {
                 "title": "common:modules.tools.layerSlider.serviceFour",
@@ -346,10 +346,10 @@
             "showDescription": true,
             "description": "Aktiviere oder Deaktiviere geclusterte Layer",
             "layerIdList": [
-              "8712#1",
-              "8712#2",
-              "8712#3",
-              "8712#4"
+              "8712.1",
+              "8712.2",
+              "8712.3",
+              "8712.4"
             ]
           }
         ]
@@ -586,7 +586,7 @@
           "autoRefresh": 5000
         },
         {
-          "id": "8712#1",
+          "id": "8712.1",
           "name": "Grundschulen",
           "wfsFilter": "resources/xml/schulstandort.staatlich.5.grundschulen.xml",
           "typ": "WFS",
@@ -598,7 +598,7 @@
           ]
         },
         {
-          "id": "8712#2",
+          "id": "8712.2",
           "name": "Stadtteilschulen",
           "wfsFilter": "resources/xml/schulstandort.staatlich.5.stadtteilschulen.xml",
           "typ": "WFS",
@@ -610,7 +610,7 @@
           ]
         },
         {
-          "id": "8712#3",
+          "id": "8712.3",
           "name": "Gymnasien",
           "wfsFilter": "resources/xml/schulstandort.staatlich.5.gymnasien.xml",
           "typ": "WFS",
@@ -622,7 +622,7 @@
           ]
         },
         {
-          "id": "8712#4",
+          "id": "8712.4",
           "name": "Sonderschulen",
           "wfsFilter": "resources/xml/schulstandort.staatlich.5.sonderschulen.xml",
           "typ": "WFS",
