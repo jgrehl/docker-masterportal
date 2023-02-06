@@ -6,21 +6,140 @@ import actions from "../../../store/actionsLayerSelection";
 const {updateLayerTree, navigateForward, navigateBack, reset} = actions;
 
 describe("src_3_0_0/modules/layerSelection/store/actionsLayerSelection", function () {
-    let commit, getters, dispatch, rootGetters;
+    let commit,
+        dispatch,
+        getters,
+        rootGetters;
 
     beforeEach(() => {
         commit = sinon.spy();
         dispatch = sinon.spy();
         getters = {
             layersToAdd: ["1", "2"],
-            menuSide: "menuSide"
+            menuSide: "mainMenu"
         };
         rootGetters = {
-            determineZIndex: () => 0
+            determineZIndex: () => 0,
+            isBackgroundLayer: (id) => id === "100",
+            layerConfigsByAttributes: () => []
         };
     });
 
     afterEach(sinon.restore);
+
+    describe("updateLayerTree", () => {
+        it("updateLayerTree for two layers", () => {
+            const expectedArg = {
+                layerConfigs: [
+                    {
+                        id: "1",
+                        layer: {
+                            id: "1",
+                            visibility: true,
+                            showInLayerTree: true,
+                            zIndex: 0
+                        }
+                    },
+                    {
+                        id: "2",
+                        layer: {
+                            id: "2",
+                            visibility: true,
+                            showInLayerTree: true,
+                            zIndex: 0
+                        }
+                    }
+                ]
+            };
+
+            updateLayerTree({commit, dispatch, getters, rootGetters});
+
+            expect(commit.calledTwice).to.be.true;
+            expect(commit.firstCall.args[0]).to.be.equals("clearSelectedLayer");
+            expect(commit.firstCall.args[1]).to.be.undefined;
+            expect(commit.secondCall.args[0]).to.be.equals("Menu/switchToRoot");
+            expect(commit.secondCall.args[1]).to.be.equals("mainMenu");
+
+            expect(dispatch.calledOnce).to.be.true;
+            expect(dispatch.firstCall.args[0]).to.be.equals("replaceByIdInLayerConfig");
+            expect(dispatch.firstCall.args[1]).to.deep.equals(expectedArg);
+        });
+
+        it("updateLayerTree for one layer and one background layer", () => {
+            getters = {
+                layersToAdd: ["100", "2"],
+                menuSide: "mainMenu"
+            };
+
+            rootGetters.layerConfigsByAttributes = () => [
+                {
+                    id: "100",
+                    backgroundLayer: true,
+                    visibility: true,
+                    showInLayerTree: true,
+                    zIndex: 1
+                },
+                {
+                    id: "2",
+                    visibility: true,
+                    showInLayerTree: true,
+                    zIndex: 0
+                }
+            ];
+
+            updateLayerTree({commit, dispatch, getters, rootGetters});
+
+            expect(commit.calledTwice).to.be.true;
+            expect(commit.firstCall.args[0]).to.be.equals("clearSelectedLayer");
+            expect(commit.firstCall.args[1]).to.be.undefined;
+            expect(commit.secondCall.args[0]).to.be.equals("Menu/switchToRoot");
+            expect(commit.secondCall.args[1]).to.be.equals("mainMenu");
+
+            expect(dispatch.calledTwice).to.be.true;
+            expect(dispatch.firstCall.args[0]).to.be.equals("updateLayerConfigZIndex");
+            expect(dispatch.firstCall.args[1]).to.deep.equals({
+                layerContainer: [
+                    {
+                        id: "100",
+                        backgroundLayer: true,
+                        visibility: true,
+                        showInLayerTree: true,
+                        zIndex: 1
+                    },
+                    {
+                        id: "2",
+                        visibility: true,
+                        showInLayerTree: true,
+                        zIndex: 0
+                    }
+                ],
+                maxZIndex: 1
+            });
+            expect(dispatch.secondCall.args[0]).to.be.equals("replaceByIdInLayerConfig");
+            expect(dispatch.secondCall.args[1]).to.deep.equals({
+                layerConfigs: [
+                    {
+                        id: "100",
+                        layer: {
+                            id: "100",
+                            visibility: true,
+                            showInLayerTree: true,
+                            zIndex: 2
+                        }
+                    },
+                    {
+                        id: "2",
+                        layer: {
+                            id: "2",
+                            visibility: true,
+                            showInLayerTree: true,
+                            zIndex: 0
+                        }
+                    }
+                ]
+            });
+        });
+    });
 
     describe("actionsLayerSelection", function () {
         it("updateLayerTree", function () {
