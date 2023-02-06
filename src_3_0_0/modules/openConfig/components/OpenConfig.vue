@@ -10,7 +10,9 @@ export default {
         ...mapGetters("Modules/OpenConfig", ["icon"])
     },
     mounted () {
-        this.setFocusToFirstControl();
+        this.$nextTick(() => {
+            this.setFocusToFirstControl();
+        });
     },
     methods: {
         ...mapActions("Modules/OpenConfig", ["processConfigJsonOnload"]),
@@ -72,10 +74,7 @@ export default {
 
 <template lang="html">
     <div id="open-config">
-        <h2 class="ms-3">
-            {{ $t("modules.tools.openConfig.headline") }}
-        </h2>
-        <p class="my-5 ms-3">
+        <p class="mb-4">
             {{ $t("modules.tools.openConfig.explanation") }}
         </p>
         <div
@@ -106,18 +105,14 @@ export default {
 
 <style lang="scss" scoped>
     @import "~variables";
-    @import "~mixins";
 
     p {
         color: $black;
+        font-size: $font-size-base
     }
 
     input[type="file"] {
         display: none;
-    }
-
-    .upload-button-wrapper {
-        color: $white;
     }
 
 </style>

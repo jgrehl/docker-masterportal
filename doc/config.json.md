@@ -3470,7 +3470,7 @@ The layer cluster toggler tool allows to activate and deactivate cluster layers 
 |----|--------|----|-------|-----------|------|
 |name|yes|String|"additional:addons.menu.tools.layerClusterToggler.name"|Name displayed in the tool.|false|
 |icon|yes|String|"bi-easel3"|icon displayed in the tool menu|false|
-|layerIdList|yes|**[layerIdList](#markdown-header-portalconfigmenutoollayerClusterTogglerlayerIdList)**[]|[]|Array of layer ids.|false|
+|layerIdList|yes|String[]|[]|Array of layer ids.|false|
 
 **Example**
 
@@ -3478,31 +3478,6 @@ The layer cluster toggler tool allows to activate and deactivate cluster layers 
 {
     "layerClusterToggler": {
         "name": "translate#additional:addons.menu.tools.layerClusterToggler.name",
-        "icon": "bi-easel3",
-        "layerIdList": ["8712", "21067"]
-    }
-}
-```
-
-***
-
-#### Portalconfig.menu.tool.layerClusterToggler.layerIdList
-
-[inherits]: # (Portalconfig.menu.tool)
-
-The list of layer IDs to be enabled/disabled in the cluster.
-
-|Name|Required|Type|Default|Description|Expert|
-|----|--------|----|-------|-----------|------|
-|layerId|yes|String||ID of the service to be shown in the portal. This layer ID *MUST* be configured as part of the *Themenconfig*!|false|
-|suffix|yes|String||Suffix of layer. This Suffix *MUST* be configured as part of the *Themenconfig*|false|
-
-**Example**
-
-```json
-{
-    "layerClusterToggler": {
-        "name": "common:menu.tools.layerClusterToggler.name",
         "icon": "bi-easel3",
         "layerIdList": [
             "8712",
@@ -5515,7 +5490,7 @@ Layer definition. Multiple ways to define layers exist. Most attributes are defi
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
-|id|yes|String/String[]||Layer ID(s). Resolved using the **[services.json](services.json.md)** file. Please mind that the given IDs **MUST** refer to the same URL, that is, use the same service. With the special character `#` as suffix, a LayerId can be used multiple times. Each LayerId marked with a suffix creates its own entry in the topic tree.|false|
+|id|yes|String||Layer ID(s). Resolved using the **[services.json](services.json.md)** file. Please mind that the given IDs **MUST** refer to the same URL, that is, use the same service. With the special character `#` as suffix, a LayerId can be used multiple times. Each LayerId marked with a suffix creates its own entry in the topic tree.|false|
 |name|no|String||Layer name.|false|
 |entities|yes|**[Entity3D](#markdown-header-themenconfiglayerentity3d)**[]||Models to be shown.|false|
 |transparency|no|Integer|0|Layer transparency.|false|
