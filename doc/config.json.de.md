@@ -3411,9 +3411,9 @@ Werkzeug zum gleichzeitigen Aktivieren/Deaktivieren von Layer Clustern.
         "layerIdList": [
             "8712",
             "8713",
-            "8713#900012",
-            "8713#900013",
-            "8713#900014"
+            "8713.900012",
+            "8713.900013",
+            "8713.900014"
         ]
     }
 }
@@ -5403,7 +5403,7 @@ Neben diesen Attributen gibt es auch Typ-spezifische Attribute für **[WMS](#mar
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
-|id|ja|String||Id des Layers. In der **[services.json](services.json.de.md)** werden die ids aufgelöst und die notwendigen Informationen herangezogen. ACHTUNG: Hierbei ist wichtig, dass die angegebenen ids dieselbe URL ansprechen, also den selben Dienst benutzen. Mit dem Sonderzeichen `#` als Suffix kann eine LayerId mehrmals verwendet werden. Jede mit einem Suffix gekennzeichnete LayerId erzeugt einen eigenen Eintrag im Themenbaum.|false|
+|id|ja|String||Id des Layers. In der **[services.json](services.json.de.md)** werden die ids aufgelöst und die notwendigen Informationen herangezogen. ACHTUNG: Hierbei ist wichtig, dass die angegebenen ids dieselbe URL ansprechen, also den selben Dienst benutzen. Mit dem Sonderzeichen `.` als Suffix kann eine LayerId mehrmals verwendet werden. Jede mit einem Suffix gekennzeichnete LayerId erzeugt einen eigenen Eintrag im Themenbaum.|false|
 |name|nein|String||Name des Layers.|false|
 |entities|ja|**[Entity3D](#markdown-header-themenconfiglayerentity3d)**[]||Modelle, die angezeigt werden sollen |false|
 |transparency|nein|Integer|0|Transparenz des Layers.|false|
