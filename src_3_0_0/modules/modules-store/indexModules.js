@@ -10,6 +10,7 @@ import FeatureLister from "../featureLister/store/indexFeatureLister";
 import FileImport from "../fileImport/store/indexFileImport";
 import GetFeatureInfo from "../getFeatureInfo/store/indexGetFeatureInfo";
 import Language from "../language/store/indexLanguage";
+import LayerClusterToggler from "../layerClusterToggler/store/indexLayerClusterToggler";
 import LayerInformation from "../layerInformation/store/indexLayerInformation";
 import LayerPills from "../layerPills/store/indexLayerPills";
 import LayerSelection from "../layerSelection/store/indexLayerSelection";
@@ -44,6 +45,7 @@ export default {
         FileImport: {...FileImport},
         GetFeatureInfo: {...GetFeatureInfo},
         Language: {...Language},
+        LayerClusterToggler: {...LayerClusterToggler},
         LayerInformation: {...LayerInformation},
         LayerPills: {...LayerPills},
         LayerSelection: {...LayerSelection},
