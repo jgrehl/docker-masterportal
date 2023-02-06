@@ -3470,7 +3470,7 @@ The layer cluster toggler tool allows to activate and deactivate cluster layers 
 |----|--------|----|-------|-----------|------|
 |name|yes|String|"additional:addons.menu.tools.layerClusterToggler.name"|Name displayed in the tool.|false|
 |icon|yes|String|"bi-easel3"|icon displayed in the tool menu|false|
-|clusterList|yes|**[clusterList](#markdown-header-portalconfigmenutoollayerClusterTogglerclusterList)**[]|[]|Array of layer id objects or layer id string.|false|
+|layerIdList|yes|**[layerIdList](#markdown-header-portalconfigmenutoollayerClusterTogglerlayerIdList)**[]|[]|Array of layer ids.|false|
 
 **Example**
 
@@ -3479,18 +3479,18 @@ The layer cluster toggler tool allows to activate and deactivate cluster layers 
     "layerClusterToggler": {
         "name": "translate#additional:addons.menu.tools.layerClusterToggler.name",
         "icon": "bi-easel3",
-        "clusterList": ["8712", "21067"]
+        "layerIdList": ["8712", "21067"]
     }
 }
 ```
 
 ***
 
-#### Portalconfig.menu.tool.layerClusterToggler.clusterList
+#### Portalconfig.menu.tool.layerClusterToggler.layerIdList
 
 [inherits]: # (Portalconfig.menu.tool)
 
-Defines a cluster of layer
+The list of layer IDs to be enabled/disabled in the cluster.
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
@@ -3502,27 +3502,14 @@ Defines a cluster of layer
 ```json
 {
     "layerClusterToggler": {
-        "name": "translate#additional:addons.menu.tools.layerClusterToggler.name",
+        "name": "common:menu.tools.layerClusterToggler.name",
         "icon": "bi-easel3",
-        "clusterList": [
+        "layerIdList": [
             "8712",
             "8713",
-            {
-                "layerId": "21067",
-                "suffix": "90012"
-            },
-            {
-                "layerId": "21067",
-                "suffix": "90013"
-            },
-            {
-                "layerId": "21067",
-                "suffix": "90014"
-            },
-            {
-                "layerId": "21067",
-                "suffix": "90015"
-            }
+            "8713#900012",
+            "8713#900013",
+            "8713#900014"
         ]
     }
 }

@@ -611,7 +611,9 @@
             },
             "layerClusterToggler": {
                 "idFormatError": "Please check your layerId format, it should be in array or object.",
-                "idError": "The layer with ID {{ layerId }} is not found, please check your configuration."
+                "idError": "The layer with ID {{ layerId }} is not found, please check your configuration.",
+                "toggle": "Toggle layer visibility",
+                "info": "Turn the visibility of the following layers on or off:"
             },
             "fileImport": {
                 "captions": {

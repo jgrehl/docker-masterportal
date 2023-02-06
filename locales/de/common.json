@@ -616,7 +616,9 @@
             },
             "layerClusterToggler": {
                 "idFormatError": "Prüfen Sie die LayerId. Das Format muss ein Array oder ein Objekt sein.",
-                "idError": "Der Layer mit der ID {{ layerId }} ist nicht geladen, prüfen Sie die Layer-ID auf Richtigkeit."
+                "idError": "Der Layer mit der ID {{ layerId }} ist nicht geladen, prüfen Sie die Layer-ID auf Richtigkeit.",
+                "toggle": "Sichtbarkeit der Layer umschalten",
+                "info": "Schalte die Sichtbarkeit der folgenden Layer ein bzw. aus:"
             },
             "fileImport": {
                 "captions": {
