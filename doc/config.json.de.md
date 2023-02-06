@@ -3399,7 +3399,7 @@ Werkzeug zum gleichzeitigen Aktivieren/Deaktivieren von Layer Clustern.
 |----|--------|----|-------|-----------|------|
 |name|ja|String|"additional:addons.menu.tools.layerClusterToggler.name"|Der Name des Tools.|false|
 |icon|ja|String|"bi-easel3"|Verwendetes Icon im Werkzeug-Menü.|false|
-|layerIdList|ja|**[layerIdList](#markdown-header-portalconfigmenutoollayerClusterTogglerlayerIdList)**[]|[]|Array der Layer-IDs.|false|
+|layerIdList|ja|String[]|[]|Array der Layer-IDs.|false|
 
 **Beispiel**
 
@@ -3407,30 +3407,6 @@ Werkzeug zum gleichzeitigen Aktivieren/Deaktivieren von Layer Clustern.
 {
     "layerClusterToggler": {
         "name": "translate#additional:addons.menu.tools.layerClusterToggler.name",
-        "icon": "bi-easel3",
-        "layerIdList": ["8712", "21067"]
-    }
-}
-```
-
-***
-
-#### Portalconfig.menu.tool.layerClusterToggler.layerIdList
-
-[inherits]: # (Portalconfig.menu.tool)
-
-Die Liste der Layer-IDs die im Cluster aktiviert/deaktiviert werden sollen.
-
-|Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
-|----|--------|----|-------|-----------|------|
-|layerId|ja|String||Id des Dienstes, der im Portal angezeigt werden soll. ACHTUNG: Diese LayerId muss auch in der Themenconfig konfiguriert sein.|false|
-
-**Beispiel**
-
-```json
-{
-    "layerClusterToggler": {
-        "name": "common:menu.tools.layerClusterToggler.name",
         "icon": "bi-easel3",
         "layerIdList": [
             "8712",
