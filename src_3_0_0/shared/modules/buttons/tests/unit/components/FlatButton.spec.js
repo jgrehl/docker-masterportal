@@ -24,7 +24,7 @@ describe("src_3_0_0/shared/components/FlatButton.vue", () => {
             icon = button.find("i");
 
         expect(button.exists()).to.be.true;
-        expect(button.classes()).to.eql(["btn", "btn-secondary", "d-flex", "align-items-center", "mb-3"]);
+        expect(button.classes()).to.eql(["flat-button", "btn", "btn-secondary", "d-flex", "align-items-center", "mb-3"]);
         expect(button.attributes("type")).to.equal("button");
         expect(button.text()).to.equal(text);
         expect(icon.exists()).to.be.true;
