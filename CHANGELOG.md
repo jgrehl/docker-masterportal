@@ -31,6 +31,7 @@
     - In the `portalFooter` only `urls` and the `scaleLine` are configured. For the other contents e.g. `version` or `footerInfo` a module is created in the menu. Language switching has also been moved to a separate `language` module.
     - The width of the ScaleLine [in cm] can now be configured with the attribute `scaleLineWidth`.
 - The 'active' attribute has been removed from the modules. Instead, a module to be displayed initially can now be defined centrally for each menu window with the attribute `currentComponent`.
+- LayerIds can no longer be configured as Object in the layer configuration (config.json). Instead the suffix `#` should be used to use a LayerId more than once.
 
 ### Added
 - The following NPM package was added:
