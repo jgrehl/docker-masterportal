@@ -188,6 +188,7 @@ export default {
             <component :is="componentMap.mouseHover" />
             <ControlBar class="controls" />
             <component :is="componentMap.layerPills" />
+            <component :is="componentMap.portalFooter" />
         </div>
         <MenuToggleButton
             v-if="allConfigsLoaded && secondaryMenu && uiStyle !== 'SIMPLE'"
@@ -203,10 +204,6 @@ export default {
         >
             <div
                 id="map"
-            />
-            <component
-                :is="componentMap.portalFooter"
-                v-if="allConfigsLoaded"
             />
         </div>
     </div>

@@ -35,7 +35,7 @@ export default {
 <template lang="html">
     <footer
         id="module-portal-footer"
-        class="d-flex px-2 py-1"
+        class="portal-footer d-flex px-2 py-1"
     >
         <div
             v-for="(url, index) in urls"
@@ -73,12 +73,17 @@ export default {
     @import "~mixins";
     @import "~variables";
 
-    #module-portal-footer {
+    .portal-footer {
+        background-color: $menu-background-color;
         box-shadow: 0 -6px 12px $shadow;
         font-family: $font_family_narrow;
         // font-size: $font-size-sm;
         font-size: 12px; // todo rem auf welcher Grudnlage 14 oder 16px???
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
+        margin-top: auto;
+        pointer-events: auto;
+        position: relative;
+        width: 100%;
 
         a[target=_blank]{
             color: $secondary;
@@ -92,4 +97,14 @@ export default {
             flex-grow: 1;
         }
     }
+
+    @include media-breakpoint-up(sm)  {
+        .portal-footer {
+            left: 36px;
+            width: calc( 100% + 72px); // zweimal den Menucollapse-Button...
+        }
+    }
+
+
+
 </style>
