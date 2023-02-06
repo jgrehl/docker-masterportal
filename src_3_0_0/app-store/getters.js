@@ -185,7 +185,7 @@ const getters = {
      * @param {Object} attributes to filter the layer configs by
      * @returns {Array} filtered layer configs by the given attributes
      */
-    layerConfigsByArributes: (state) => (attributes = {}) =>{
+    layerConfigsByAttributes: (state) => (attributes = {}) =>{
         const layerContainer = getters.allLayerConfigs(state);
 
         return layerContainer.filter(layerConf => {
