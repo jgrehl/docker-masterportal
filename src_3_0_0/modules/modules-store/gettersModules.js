@@ -10,6 +10,7 @@ import FileImport from "../fileImport/components/FileImport.vue";
 import Folder from "../menu/components/MenuFolder.vue";
 import GetFeatureInfo from "../getFeatureInfo/components/GetFeatureInfo.vue";
 import Language from "../language/components/LanguageItem.vue";
+import LayerClusterToggler from "../layerClusterToggler/components/LayerClusterToggler.vue";
 import LayerInformation from "../layerInformation/components/LayerInformation.vue";
 import LayerPills from "../layerPills/components/LayerPills.vue";
 import LayerSelection from "../layerSelection/components/LayerSelection.vue";
@@ -44,6 +45,7 @@ const getters = {
             folder: Folder,
             getFeatureInfo: GetFeatureInfo,
             language: Language,
+            layerClusterToggler: LayerClusterToggler,
             layerInformation: LayerInformation,
             layerPills: LayerPills,
             layerSelection: LayerSelection,
