@@ -289,7 +289,7 @@
       ]
     },
     "secondaryMenu": {
-      "expanded": true,
+      "expanded": false,
       "sections": [
         [
           {
@@ -345,7 +345,7 @@
             "type": "layerClusterToggler",
             "showDescription": true,
             "description": "Aktiviere oder Deaktiviere geclusterte Layer",
-            "clusterList": [
+            "layerIdList": [
               "8712#1",
               "8712#2",
               "8712#3",
@@ -590,7 +590,7 @@
           "name": "Grundschulen",
           "wfsFilter": "resources/xml/schulstandort.staatlich.5.grundschulen.xml",
           "typ": "WFS",
-          "visibility": true,
+          "visibility": false,
           "clusterDistance": 60,
           "mouseHoverField": [
             "schulname",
