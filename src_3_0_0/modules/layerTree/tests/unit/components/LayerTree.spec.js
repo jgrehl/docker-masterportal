@@ -163,7 +163,7 @@ describe("src_3_0_0/modules/layerTree/components/LayerTree.vue", () => {
                         }
                     };
                 },
-                layerConfigsByArributes: () => () => {
+                layerConfigsByAttributes: () => () => {
                     const layerConfigs = {
                             [treeSubjectsKey]: {
                                 elements: subjectDataLayers
