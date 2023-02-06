@@ -295,7 +295,7 @@ describe("src_3_0_0/app-store/getters.js", () => {
         });
     });
 
-    describe("layerConfigsByArributes", () => {
+    describe("layerConfigsByAttributes", () => {
         it("should return the layers for requested attributes", () => {
             const greenLayer = {
                     id: "1132",
@@ -332,16 +332,16 @@ describe("src_3_0_0/app-store/getters.js", () => {
                     layerConfig: layerConfig
                 };
 
-            expect(getters.layerConfigsByArributes(state)(undefined)).to.be.an("array");
-            expect(getters.layerConfigsByArributes(state)({id: "1132"})).to.be.an("array");
-            expect(getters.layerConfigsByArributes(state)({id: "1132"}).length).to.be.equals(1);
-            expect(getters.layerConfigsByArributes(state)({id: "1132"})[0]).to.be.deep.equals(greenLayer);
-            expect(getters.layerConfigsByArributes(state)({visibility: true}).length).to.be.equals(2);
-            expect(getters.layerConfigsByArributes(state)({visibility: true})).to.be.deep.equals([bgLayer, greenLayer]);
-            expect(getters.layerConfigsByArributes(state)({visibility: true, id: "1132"}).length).to.be.equals(1);
-            expect(getters.layerConfigsByArributes(state)({visibility: true, id: "453"}).length).to.be.equals(1);
+            expect(getters.layerConfigsByAttributes(state)(undefined)).to.be.an("array");
+            expect(getters.layerConfigsByAttributes(state)({id: "1132"})).to.be.an("array");
+            expect(getters.layerConfigsByAttributes(state)({id: "1132"}).length).to.be.equals(1);
+            expect(getters.layerConfigsByAttributes(state)({id: "1132"})[0]).to.be.deep.equals(greenLayer);
+            expect(getters.layerConfigsByAttributes(state)({visibility: true}).length).to.be.equals(2);
+            expect(getters.layerConfigsByAttributes(state)({visibility: true})).to.be.deep.equals([bgLayer, greenLayer]);
+            expect(getters.layerConfigsByAttributes(state)({visibility: true, id: "1132"}).length).to.be.equals(1);
+            expect(getters.layerConfigsByAttributes(state)({visibility: true, id: "453"}).length).to.be.equals(1);
             // @todo testen
-            // expect(getters.layerConfigsByArributes(state)({ gfiAttributes : {
+            // expect(getters.layerConfigsByAttributes(state)({ gfiAttributes : {
             //     "standort" : "Standort",
             //     "adresse" : "Adresse"
             // },}).length).to.be.equals(1);
