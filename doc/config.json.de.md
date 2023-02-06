@@ -3399,7 +3399,7 @@ Werkzeug zum gleichzeitigen Aktivieren/Deaktivieren von Layer Clustern.
 |----|--------|----|-------|-----------|------|
 |name|ja|String|"additional:addons.menu.tools.layerClusterToggler.name"|Der Name des Tools.|false|
 |icon|ja|String|"bi-easel3"|Verwendetes Icon im Werkzeug-Menü.|false|
-|clusterList|ja|**[clusterList](#markdown-header-portalconfigmenutoollayerClusterTogglerclusterList)**[]|[]|Array der Layer-IDs (als Strings oder als Objekte).|false|
+|layerIdList|ja|**[layerIdList](#markdown-header-portalconfigmenutoollayerClusterTogglerlayerIdList)**[]|[]|Array der Layer-IDs.|false|
 
 **Beispiel**
 
@@ -3408,51 +3408,36 @@ Werkzeug zum gleichzeitigen Aktivieren/Deaktivieren von Layer Clustern.
     "layerClusterToggler": {
         "name": "translate#additional:addons.menu.tools.layerClusterToggler.name",
         "icon": "bi-easel3",
-        "clusterList": ["8712", "21067"]
+        "layerIdList": ["8712", "21067"]
     }
 }
 ```
 
 ***
 
-#### Portalconfig.menu.tool.layerClusterToggler.clusterList
+#### Portalconfig.menu.tool.layerClusterToggler.layerIdList
 
 [inherits]: # (Portalconfig.menu.tool)
 
 Die Liste der Layer-IDs die im Cluster aktiviert/deaktiviert werden sollen.
-Dies können die Layer-IDs als Strings sein, oder als Objekt wenn die Suffix-Technik für ein Layer verwendet wird.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|--------|----|-------|-----------|------|
 |layerId|ja|String||Id des Dienstes, der im Portal angezeigt werden soll. ACHTUNG: Diese LayerId muss auch in der Themenconfig konfiguriert sein.|false|
-|suffix|ja|String||Suffix des Layers. Dieser Suffix muss auch in der Themenconfig konfiguriert sein.|false|
 
 **Beispiel**
 
 ```json
 {
     "layerClusterToggler": {
-        "name": "translate#additional:addons.menu.tools.layerClusterToggler.name",
+        "name": "common:menu.tools.layerClusterToggler.name",
         "icon": "bi-easel3",
-        "clusterList": [
+        "layerIdList": [
             "8712",
             "8713",
-            {
-                "layerId": "21067",
-                "suffix": "90012"
-            },
-            {
-                "layerId": "21067",
-                "suffix": "90013"
-            },
-            {
-                "layerId": "21067",
-                "suffix": "90014"
-            },
-            {
-                "layerId": "21067",
-                "suffix": "90015"
-            }
+            "8713#900012",
+            "8713#900013",
+            "8713#900014"
         ]
     }
 }
