@@ -289,7 +289,7 @@
       ]
     },
     "secondaryMenu": {
-      "expanded": false,
+      "expanded": true,
       "sections": [
         [
           {
@@ -327,7 +327,7 @@
               },
               {
                 "title": "common:modules.tools.layerSlider.serviceThree",
-                "layerId": "8712"
+                "layerId": "8712#2"
               },
               {
                 "title": "common:modules.tools.layerSlider.serviceFour",
@@ -340,6 +340,17 @@
             "isShadowEnabled": true,
             "showDescription": true,
             "description": "Zeige den Schattenwurf zu verschiedenen Zeitpunkten in der Karte an."
+          },
+          {
+            "type": "layerClusterToggler",
+            "showDescription": true,
+            "description": "Aktiviere oder Deaktiviere geclusterte Layer",
+            "clusterList": [
+              "8712#1",
+              "8712#2",
+              "8712#3",
+              "8712#4"
+            ]
           }
         ]
       ]
@@ -575,12 +586,48 @@
           "autoRefresh": 5000
         },
         {
-          "id": "8712",
-          "name": "de.hh.up:staatliche schulen",
+          "id": "8712#1",
+          "name": "Grundschulen",
+          "wfsFilter": "resources/xml/schulstandort.staatlich.5.grundschulen.xml",
+          "typ": "WFS",
+          "visibility": true,
+          "clusterDistance": 60,
+          "mouseHoverField": [
+            "schulname",
+            "kapitelbezeichnung"
+          ]
+        },
+        {
+          "id": "8712#2",
+          "name": "Stadtteilschulen",
+          "wfsFilter": "resources/xml/schulstandort.staatlich.5.stadtteilschulen.xml",
           "typ": "WFS",
           "visibility": false,
           "clusterDistance": 60,
-          "showInLayerTree": false,
+          "mouseHoverField": [
+            "schulname",
+            "kapitelbezeichnung"
+          ]
+        },
+        {
+          "id": "8712#3",
+          "name": "Gymnasien",
+          "wfsFilter": "resources/xml/schulstandort.staatlich.5.gymnasien.xml",
+          "typ": "WFS",
+          "visibility": false,
+          "clusterDistance": 60,
+          "mouseHoverField": [
+            "schulname",
+            "kapitelbezeichnung"
+          ]
+        },
+        {
+          "id": "8712#4",
+          "name": "Sonderschulen",
+          "wfsFilter": "resources/xml/schulstandort.staatlich.5.sonderschulen.xml",
+          "typ": "WFS",
+          "visibility": false,
+          "clusterDistance": 60,
           "mouseHoverField": [
             "schulname",
             "kapitelbezeichnung"
