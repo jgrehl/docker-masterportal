@@ -24,7 +24,7 @@ export function getAndMergeRawLayer (layerConf, showAllLayerInTree = false) {
  * @param {String} [seperator=#] The seperator to split by.
  * @returns {String} The first part of the id.
  */
-function splitId (id, seperator = "#") {
+function splitId (id, seperator = ".") {
     if (typeof id === "string") {
         return id.split(seperator)[0];
     }
