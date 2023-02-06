@@ -5528,7 +5528,7 @@ Layer definition. Multiple ways to define layers exist. Most attributes are defi
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
-|id|yes|String/String[]||Layer ID(s). Resolved using the **[services.json](services.json.md)** file. Please mind that the given IDs **MUST** refer to the same URL, that is, use the same service. When configuring an array of IDs, setting `minScale` and `maxScale` of each layer is required to be in the `services.json`.|false|
+|id|yes|String/String[]||Layer ID(s). Resolved using the **[services.json](services.json.md)** file. Please mind that the given IDs **MUST** refer to the same URL, that is, use the same service. With the special character `#` as suffix, a LayerId can be used multiple times. Each LayerId marked with a suffix creates its own entry in the topic tree.|false|
 |name|no|String||Layer name.|false|
 |entities|yes|**[Entity3D](#markdown-header-themenconfiglayerentity3d)**[]||Models to be shown.|false|
 |transparency|no|Integer|0|Layer transparency.|false|
@@ -5558,8 +5558,12 @@ Layer definition. Multiple ways to define layers exist. Most attributes are defi
 
 ```json
 {
-    "id": ["123", "456", "789"],
-    "name": "my test layer"
+    "id": 123#1,
+    "name": "First part of the test layer"
+},
+{
+    "id": 123#2,
+    "name": "Second part of the test layer"
 }
 ```
 
