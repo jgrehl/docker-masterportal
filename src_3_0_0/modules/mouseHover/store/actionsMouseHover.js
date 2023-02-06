@@ -4,9 +4,12 @@ export default {
     /**
      * Sets the config-params of this MouseHover into state.
      * Adds the overlay and eventListener for the map.
+     * @param {Object} param.commit the commit
+     * @param {Object} param.dispatch the dispatch
+     * @param {Object} param.state the state
      * @returns {void}
      */
-    initialize ({state, commit, dispatch}) {
+    initialize ({commit, dispatch, state}) {
         const {numFeaturesToShow, infoText} = state,
             map = mapCollection.getMap("2D");
         let featuresAtPixel = [];
@@ -59,7 +62,8 @@ export default {
 
     /**
      * Sets the layers with a mouseHoverField to the state
-     * @param {Object} state Context state object.
+     * @param {Object} param.commit the commit
+     * @param {Object} param.rootGetters the rootGetters
      * @returns {void}
      */
     setMouseHoverLayers ({commit, rootGetters}) {
@@ -70,10 +74,12 @@ export default {
 
     /**
      * Filters the infos from each feature that should be displayed.
+     * @param {Object} param.commit the commit
+     * @param {Object} param.state the state
      * @param {Array} features array of hovered Features
      * @returns {void}
      */
-    filterInfos ({state, commit}, features) {
+    filterInfos ({commit, state}, features) {
         const infoBox = [];
 
         if (features.length > 0) {
