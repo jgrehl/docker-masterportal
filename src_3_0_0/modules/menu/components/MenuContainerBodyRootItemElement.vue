@@ -81,7 +81,7 @@ export default {
      * @returns {void}
      */
     created () {
-        if (this.type === this.menu.currentComponent) {
+        if (this.type === this.menu.currentComponent && this.type !== "folder") {
             this.clickedMenuElement({
                 name: this.name,
                 path: this.path,

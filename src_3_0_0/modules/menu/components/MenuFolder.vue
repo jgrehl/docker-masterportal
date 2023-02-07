@@ -35,7 +35,7 @@ export default {
         <MenuContainerBodyRootItems
             :key="currentComponentName(side)"
             :id-appendix="side"
-            :path="currentPath"
+            :path="[...currentPath, 'elements']"
         />
     </div>
 </template>
