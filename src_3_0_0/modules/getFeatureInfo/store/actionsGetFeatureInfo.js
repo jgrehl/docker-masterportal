@@ -55,9 +55,8 @@ export default {
         }))
             .then(gfiFeatures => {
                 const clickPixel = rootGetters["Maps/clickPixel"],
-                    clickCartesianCoordinate = rootGetters["Maps/clickCartesianCoordinate"],
                     mode = rootGetters["Maps/mode"],
-                    allGfiFeatures = gfiFeaturesAtPixel(clickPixel, clickCartesianCoordinate, mode).concat(...gfiFeatures);
+                    allGfiFeatures = gfiFeaturesAtPixel(clickPixel, mode).concat(...gfiFeatures);
 
                 allGfiFeatures.sort((a, b) => {
                     const zIndexA = rootGetters.layerConfigById(a.getLayerId())?.zIndex || 0,
