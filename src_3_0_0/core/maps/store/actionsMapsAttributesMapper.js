@@ -157,7 +157,7 @@ export default {
         }
         else if (getters.mode === "3D") {
             commit("setClickCoordinate", evt.pickedPosition);
-            commit("setClickCartesianCoordinate", [evt.position.x, evt.position.y]);
+            commit("setClickPixel", [evt.position.x, evt.position.y]);
         }
     },
 
