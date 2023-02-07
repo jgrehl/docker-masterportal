@@ -76,9 +76,6 @@ export default {
                 return this.isLayerVisible;
             }
             return this.isLayerVisible || this.layersToAdd.indexOf(this.conf.id) > -1 || this.conf.showInLayerTree;
-        },
-        disabled () {
-            return !this.isLayerTree && (this.isLayerVisible || this.layersToAdd.indexOf(this.conf.id) > -1 || this.conf.showInLayerTree) || null;
         }
     }
 };
@@ -89,7 +86,6 @@ export default {
         :id="'layer-checkbox-' + conf.id"
         class="layer-tree-layer-title pe-2 p-1"
         data-bs-toggle="tooltip"
-        :title="disabled() ? $t('tree.isAlreadyAdded') :null"
         @click="clicked()"
         @keydown.enter="clicked()"
     >
@@ -99,8 +95,7 @@ export default {
                 'layer-tree-layer-checkbox pe-2',
                 {
                     'bi-check2-square': isChecked(),
-                    'bi-square': !isChecked(),
-                    'disabled': disabled()
+                    'bi-square': !isChecked()
                 }
             ]"
         />
@@ -143,12 +138,6 @@ export default {
     }
     .small-text {
     font-size: $font-size-sm;
-    }
-    input:disabled+label {
-        color: #ccc;
-        font-weight: normal;
-        font-style: italic;
-        cursor: not-allowed;
     }
 
 </style>
