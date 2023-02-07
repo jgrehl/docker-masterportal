@@ -24,7 +24,7 @@ describe("src_3_0_0/modules/layerInformation/components/LayerInformation.vue", (
                                 setMetaDataCatalogueId: () => sinon.stub()
                             },
                             getters: {
-                                active: () => true,
+                                customText: () => sinon.stub(),
                                 title: () => "",
                                 layerInfo: () => ({"metaIdArray": []}),
                                 datePublication: () => null,
