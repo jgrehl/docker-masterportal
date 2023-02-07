@@ -137,9 +137,12 @@ describe("src_3_0_0/modules/layerTree/components/LayerTree.vue", () => {
                                 type: () => sinon.stub()
                             },
                             mutations: {
-                                setActive: sinon.stub(),
+                                setBackgroundLayerConfs: sinon.stub(),
                                 setSubjectDataLayerConfs: sinon.stub(),
-                                setBackgroundLayerConfs: sinon.stub()
+                                setVisible: sinon.stub()
+                            },
+                            actions: {
+                                navigateForward: sinon.stub()
                             }
                         }
                     }
