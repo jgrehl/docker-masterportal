@@ -41,7 +41,7 @@ export default {
             if (this.isLayerTree()) {
                 return this.conf.showInLayerTree === true && showLayerTyp;
             }
-            return showLayerTyp;
+            return this.conf.showInLayerTree === false && showLayerTyp;
         },
         /**
          * Returns true, if this parent is a 'LayerTreeNode' in layer-tree and false if parent is 'LayerSelectionTreeNode' in layer-selection.
