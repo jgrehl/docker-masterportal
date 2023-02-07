@@ -2,7 +2,6 @@
 import {Pointer} from "ol/interaction.js";
 import crs from "@masterportal/masterportalapi/src/crs";
 import {mapGetters, mapActions, mapMutations} from "vuex";
-import getters from "../store/gettersCoordToolkit";
 import mutations from "../store/mutationsCoordToolkit";
 
 export default {
@@ -13,7 +12,28 @@ export default {
         };
     },
     computed: {
-        ...mapGetters("Modules/CoordToolkit", Object.keys(getters)),
+        ...mapGetters("Modules/CoordToolkit", [
+            "active",
+            "coordinatesEasting",
+            "coordinatesEastingExample",
+            "coordinatesNorthing",
+            "coordinatesNorthingExample",
+            "currentProjection",
+            "eastingNoCoord",
+            "eastingNoMatch",
+            "getEastingError",
+            "getLabel",
+            "getNorthingError",
+            "height",
+            "heightLayer",
+            "heightLayerId",
+            "mode",
+            "northingNoCoord",
+            "northingNoMatch",
+            "projections",
+            "selectPointerMove",
+            "showCopyButtons"
+        ]),
         ...mapGetters("Maps", {
             projection: "projection",
             mouseCoordinate: "mouseCoordinate",
@@ -192,7 +212,6 @@ export default {
             if (this.selectPointerMove === null) {
                 this.setMapProjection(this.projection);
                 this.createInteraction();
-                // todo mousecoord sind leer?
                 this.setPositionMapProjection(this.mouseCoordinate);
                 this.changedPosition();
             }
@@ -235,6 +254,7 @@ export default {
             else if (this.mapMode === "3D") {
                 this.eventHandler = new Cesium.ScreenSpaceEventHandler(mapCollection.getMap("3D").getCesiumScene().canvas);
                 this.eventHandler.setInputAction(this.positionClicked, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+                this.eventHandler.setInputAction(this.checkPosition, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
             }
         },
         removeInputActions () {
