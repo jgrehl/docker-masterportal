@@ -56,8 +56,8 @@ export default {
     >
         <div class="row align-items-center justify-content-center">
             <a
-                v-if="lastFolderName"
-                :id="'layer-selection-navigation-'"
+                v-if="lastFolderName !== 'root'"
+                id="layer-selection-navigation"
                 class="p-2 mp-menu-navigation"
                 href="#"
                 @click="navigateBack()"
