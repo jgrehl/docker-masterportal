@@ -14,7 +14,7 @@ export default {
         LayerSelectionTreeNode
     },
     computed: {
-        ...mapGetters("Modules/LayerSelection", ["active", "subjectDataLayerConfs", "backgroundLayerConfs", "layersToAdd", "type", "menuSide", "lastFolderNames"]),
+        ...mapGetters("Modules/LayerSelection", ["visible", "subjectDataLayerConfs", "backgroundLayerConfs", "layersToAdd", "type", "menuSide", "lastFolderNames"]),
         lastFolderName () {
             return this.lastFolderNames[this.lastFolderNames.length - 1];
         }
@@ -49,7 +49,7 @@ export default {
 
 <template>
     <div
-        v-if="active"
+        v-if="visible"
         :id="'layer-selection'"
         class="layer-selection"
         aria-label=""
