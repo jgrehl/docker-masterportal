@@ -105,7 +105,7 @@ describe("src_3_0_0/modules/layerSelection/components/LayerSelection.vue", () =>
             }
         });
         LayerSelection.getters.layersToAdd = () => layersToAdd;
-        LayerSelection.state.active = true;
+        LayerSelection.state.visible = true;
         store.commit("Modules/LayerSelection/setSubjectDataLayerConfs", subjectDataLayers);
         store.commit("Modules/LayerSelection/setBackgroundLayerConfs", layersBG);
     });
@@ -114,8 +114,8 @@ describe("src_3_0_0/modules/layerSelection/components/LayerSelection.vue", () =>
         sinon.restore();
     });
 
-    it("do not render the LayerSelection if active is false", () => {
-        LayerSelection.state.active = false;
+    it("do not render the LayerSelection if visible is false", () => {
+        LayerSelection.state.visible = false;
         wrapper = shallowMount(LayerSelectionComponent, {
             global: {
                 plugins: [store]
