@@ -11,7 +11,7 @@ const actions = {
      * @param {Object} param.rootGetters the rootGetters
      * @returns {void}
      */
-     updateLayerTree ({commit, dispatch, getters, rootGetters}) {
+    updateLayerTree ({commit, dispatch, getters, rootGetters}) {
         const layerConfigs = [],
             maxBackgroundLayerZIndex = Math.max(...rootGetters.layerConfigsByAttributes({
                 backgroundLayer: true,
@@ -42,9 +42,9 @@ const actions = {
         });
 
         dispatch("replaceByIdInLayerConfig", {layerConfigs: layerConfigs}, {root: true});
-        commit("clearSelectedLayer");
+        commit("clearLayerSelection");
         commit("Menu/switchToRoot", getters.menuSide, {root: true});
-    }
+    },
 
     /**
      * Navigates forward in layerSelection.
