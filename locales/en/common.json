@@ -129,8 +129,7 @@
         "addSubject": "Add subject",
         "backgrounds": "Baselayers",
         "selectedSubjectsCount": "You have selected {{count}} additional topics",
-        "addSelectedSubjectsToMap": "Add selected topics to the map",
-        "isAlreadyAdded": "was already added"
+        "addSelectedSubjectsToMap": "Add selected topics to the map"
     },
     "date": "Date",
     "time": "Time",
