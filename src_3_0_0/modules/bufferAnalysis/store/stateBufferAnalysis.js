@@ -28,6 +28,10 @@ const state = {
     icon: "bi-arrows-angle-expand",
     name: "common:menu.tools.bufferAnalysis",
     type: "bufferAnalysis",
+    description: "",
+    showDescription: false,
+    supportedDevices: ["Desktop", "Mobile", "Table"],
+    supportedMapModes: ["2D", "3D"],
 
     bufferLayer: {},
     bufferRadius: 0,
