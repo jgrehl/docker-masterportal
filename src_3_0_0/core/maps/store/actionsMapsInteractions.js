@@ -155,7 +155,7 @@ export default {
                 });
 
             if (index > -1) {
-                interactions.splice(index, 1);
+                map.getInteractions().removeAt(index);
             }
             else if (typeof interactions === Array) {
                 console.warn("interaction cannot be removed from map:", interaction);
