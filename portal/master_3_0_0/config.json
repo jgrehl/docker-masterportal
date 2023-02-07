@@ -103,51 +103,10 @@
             }
           },
           {
-            "type": "coordToolkit",
-            "heightLayerId": "19173",
-            "heightElementName": "value_0",
-            "heightValueWater": "-20",
-            "heightValueBuilding": "200",
-            "zoomLevel": 5
-          },
-          {
-            "type": "routing",
-            "icon": "bi-signpost-2",
-            "geosearch": {
-              "type": "BKG",
-              "serviceId": "5"
-            },
-            "geosearchReverse": {
-              "type": "BKG",
-              "serviceId": "5"
-            },
-            "directionsSettings": {
-              "type": "ORS",
-              "serviceId": "bkg_ors",
-              "speedProfile": "CAR",
-              "batchProcessing": {
-                "enabled": false,
-                "active": false
-              }
-            },
-            "isochronesSettings": {
-              "type": "ORS",
-              "serviceId": "bkg_ors",
-              "speedProfile": "CAR",
-              "batchProcessing": {
-                "enabled": false,
-                "active": false
-              }
-            }
-          },
-          {
             "type": "fileImport"
           },
           {
             "type": "openConfig"
-          },
-          {
-            "type": "bufferAnalysis"
           },
           {
             "type": "print",
@@ -248,7 +207,14 @@
                     "name": "folder1_1_1",
                     "icon": "bi-folder-plus",
                     "type": "folder",
-                    "elements": []
+                    "elements": [
+                      {
+                        "type": "fileImport"
+                      },
+                       {
+                        "type": "bufferAnalysis"
+                      }
+                    ]
                   },
                   {
                     "name": "folder1_1_2",
@@ -293,6 +259,38 @@
       "sections": [
         [
           {
+            "type": "routing",
+            "icon": "bi-signpost-2",
+            "showDescription": true,
+            "description": "Routenplaner",
+            "geosearch": {
+              "type": "BKG",
+              "serviceId": "5"
+            },
+            "geosearchReverse": {
+              "type": "BKG",
+              "serviceId": "5"
+            },
+            "directionsSettings": {
+              "type": "ORS",
+              "serviceId": "bkg_ors",
+              "speedProfile": "CAR",
+              "batchProcessing": {
+                "enabled": false,
+                "active": false
+              }
+            },
+            "isochronesSettings": {
+              "type": "ORS",
+              "serviceId": "bkg_ors",
+              "speedProfile": "CAR",
+              "batchProcessing": {
+                "enabled": false,
+                "active": false
+              }
+            }
+          },
+          {
             "type": "scaleSwitcher",
             "showDescription": true,
             "description": "Stelle den Maßstab um, ganz ohne zu scrollen."
@@ -311,6 +309,21 @@
             "type": "styleVT",
             "showDescription": true,
             "description": "Wechsel das Aussehen eines Layers vom Typ VectorTile."
+          },
+          {
+            "type": "coordToolkit",
+            "heightLayerId": "19173",
+            "heightElementName": "value_0",
+            "heightValueWater": "-20",
+            "heightValueBuilding": "200",
+            "zoomLevel": 5,
+            "showDescription": true,
+            "description": "Bestimme Koordinaten aus der Karte oder suche nach Koordinaten."
+          },
+          {
+            "type": "bufferAnalysis",
+            "showDescription": true,
+            "description": "Finde heraus, was sich in einem Umkreis um ein Feature befindet."
           },
           {
             "type": "layerSlider",
