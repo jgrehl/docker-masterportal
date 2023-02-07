@@ -1,7 +1,7 @@
 /**
  * LayerSelection state definition.
  * @typedef {Object} LayerSelectionState
- * @property {Boolean} active active if true, LayerSelection will rendered
+ * @property {Boolean} visible visible if true, LayerSelection will rendered
  * @property {String} type type of LayerSelection
  * @property {String} icon icon of LayerSelection
  * @property {String} menuSide side of menu to show LayerSelection in
@@ -14,7 +14,7 @@
  * @property {Array} lastSubjectDataLayerConfs previous background layer configurations
  */
 export default {
-    active: false,
+    visible: false,
     type: "layerSelection",
     icon: "bi-question-circle",
     menuSide: "mainMenu",
