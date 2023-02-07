@@ -11,10 +11,10 @@ import Folder from "../menu/components/MenuFolder.vue";
 import GetFeatureInfo from "../getFeatureInfo/components/GetFeatureInfo.vue";
 import Language from "../language/components/LanguageItem.vue";
 import LayerInformation from "../layerInformation/components/LayerInformation.vue";
-import LayerSelection from "../layerSelection/components/LayerSelection.vue";
-import LayerTree from "../layerTree/components/LayerTree.vue";
 import LayerPills from "../layerPills/components/LayerPills.vue";
+import LayerSelection from "../layerSelection/components/LayerSelection.vue";
 import LayerSlider from "../layerSlider/components/LayerSlider.vue";
+import LayerTree from "../layerTree/components/LayerTree.vue";
 import Measure from "../measure/components/MeasureInMap.vue";
 import MouseHover from "../mouseHover/components/MouseHover.vue";
 import NewsView from "../news/components/NewsView.vue";
@@ -45,10 +45,10 @@ const getters = {
             getFeatureInfo: GetFeatureInfo,
             language: Language,
             layerInformation: LayerInformation,
-            layerTree: LayerTree,
-            layerSelection: LayerSelection,
             layerPills: LayerPills,
+            layerSelection: LayerSelection,
             layerSlider: LayerSlider,
+            layerTree: LayerTree,
             measure: Measure,
             mouseHover: MouseHover,
             news: NewsView,
