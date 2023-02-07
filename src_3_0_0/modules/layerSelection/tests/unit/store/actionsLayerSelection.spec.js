@@ -5,7 +5,7 @@ import actions from "../../../store/actionsLayerSelection";
 
 const {updateLayerTree, navigateForward, navigateBack, reset} = actions;
 
-describe("src_3_0_0/modules/layerSelection/store/actionsLayerSelection", function () {
+describe("src_3_0_0/modules/layerSelection/store/actionsLayerSelection", () => {
     let commit,
         dispatch,
         getters,
@@ -55,7 +55,7 @@ describe("src_3_0_0/modules/layerSelection/store/actionsLayerSelection", functio
             updateLayerTree({commit, dispatch, getters, rootGetters});
 
             expect(commit.calledTwice).to.be.true;
-            expect(commit.firstCall.args[0]).to.be.equals("clearSelectedLayer");
+            expect(commit.firstCall.args[0]).to.be.equals("clearLayerSelection");
             expect(commit.firstCall.args[1]).to.be.undefined;
             expect(commit.secondCall.args[0]).to.be.equals("Menu/switchToRoot");
             expect(commit.secondCall.args[1]).to.be.equals("mainMenu");
@@ -90,7 +90,7 @@ describe("src_3_0_0/modules/layerSelection/store/actionsLayerSelection", functio
             updateLayerTree({commit, dispatch, getters, rootGetters});
 
             expect(commit.calledTwice).to.be.true;
-            expect(commit.firstCall.args[0]).to.be.equals("clearSelectedLayer");
+            expect(commit.firstCall.args[0]).to.be.equals("clearLayerSelection");
             expect(commit.firstCall.args[1]).to.be.undefined;
             expect(commit.secondCall.args[0]).to.be.equals("Menu/switchToRoot");
             expect(commit.secondCall.args[1]).to.be.equals("mainMenu");
@@ -141,47 +141,8 @@ describe("src_3_0_0/modules/layerSelection/store/actionsLayerSelection", functio
         });
     });
 
-    describe("actionsLayerSelection", function () {
-        it("updateLayerTree", function () {
-            const expectedArg = {
-                layerConfigs: [
-                    {
-                        id: "1",
-                        layer: {
-                            id: "1",
-                            visibility: true,
-                            showInLayerTree: true,
-                            zIndex: 0
-                        }
-                    },
-                    {
-                        id: "2",
-                        layer: {
-                            id: "2",
-                            visibility: true,
-                            showInLayerTree: true,
-                            zIndex: 0
-                        }
-                    }
-                ]
-            };
-
-            updateLayerTree({commit, dispatch, getters, rootGetters});
-
-            expect(commit.calledTwice).to.be.true;
-            expect(commit.firstCall.args[0]).to.be.equals("clearLayerSelection");
-            expect(commit.secondCall.args[0]).to.be.equals("Menu/switchToRoot");
-            expect(commit.secondCall.args[1]).to.be.equals(getters.menuSide);
-            expect(commit.secondCall.args[2]).to.be.deep.equals({root: true});
-            expect(dispatch.calledTwice).to.be.true;
-            expect(dispatch.firstCall.args[0]).to.be.equals("replaceByIdInLayerConfig");
-            expect(dispatch.firstCall.args[1]).to.deep.equals(expectedArg);
-            expect(dispatch.secondCall.args[0]).to.be.equals("updateAllZIndexes");
-            expect(dispatch.secondCall.args[1]).to.be.null;
-            expect(dispatch.secondCall.args[2]).to.be.deep.equals({root: true});
-        });
-
-        it("navigateForward from layerTree", function () {
+    describe("actionsLayerSelection", () => {
+        it("navigateForward from layerTree", () => {
             const subjectDataLayerConfs = [
                     {
                         id: "1",
@@ -224,7 +185,7 @@ describe("src_3_0_0/modules/layerSelection/store/actionsLayerSelection", functio
             expect(commit.thirdCall.args[1]).to.be.deep.equals(subjectDataLayerConfs);
         });
 
-        it("navigateBack inside layerSelection", function () {
+        it("navigateBack inside layerSelection", () => {
             const lastSubjectDataLayerConfs = [
                     {
                         id: "0",
@@ -272,7 +233,7 @@ describe("src_3_0_0/modules/layerSelection/store/actionsLayerSelection", functio
             expect(commit.thirdCall.args[1]).to.be.deep.equals(lastBackgroundLayerConfs);
         });
 
-        it("reset", function () {
+        it("reset", () => {
             reset({commit});
 
             expect(commit.callCount).to.be.equals(3);
