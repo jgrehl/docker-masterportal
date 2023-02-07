@@ -24,6 +24,8 @@ const state = {
     hasMouseMapInteractions: true,
     name: "common:menu.tools.routing",
     icon: "bi-signpost-2-fill",
+    description: "",
+    showDescription: false,
     supportedDevices: ["Desktop", "Mobile", "Table"],
     supportedMapModes: ["2D", "3D"],
 
