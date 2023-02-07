@@ -9,11 +9,10 @@ const getters = {
     /**
      * Gets the features at the given pixel for the gfi.
      * @param {Number[]} clickPixel The pixel coordinate of the click event in 2D
-     * @param {Number[]} clickCartesianCoordinate The coordinate of the click event in 3D
      * @param {String} mode The current map mode
      * @returns {Object[]} gfi features
      */
-    gfiFeaturesAtPixel: () => (clickPixel, clickCartesianCoordinate, mode) => {
+    gfiFeaturesAtPixel: () => (clickPixel, mode) => {
         const featuresAtPixel = [];
 
         if (clickPixel && mode === "2D") {
@@ -38,10 +37,10 @@ const getters = {
                 }
             });
         }
-        if (mode === "3D" && Array.isArray(clickCartesianCoordinate) && clickCartesianCoordinate.length === 2) {
+        if (mode === "3D") {
             // add features from map3d
             const scene = mapCollection.getMap("3D").getCesiumScene(),
-                clickFeatures = scene.drillPick({x: clickCartesianCoordinate[0], y: clickCartesianCoordinate[1]});
+                clickFeatures = scene.drillPick({x: clickPixel[0], y: clickPixel[1]});
 
             clickFeatures.forEach(clickFeature => {
                 if (clickFeature instanceof Cesium.Cesium3DTileFeature) {
