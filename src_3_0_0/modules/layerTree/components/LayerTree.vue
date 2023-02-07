@@ -28,7 +28,7 @@ export default {
     methods: {
         ...mapActions("Modules/LayerSelection", ["navigateForward"]),
         ...mapActions("Menu", ["changeCurrentComponent"]),
-        ...mapMutations("Modules/LayerSelection", {setLayerSelectionActive: "setActive"}),
+        ...mapMutations("Modules/LayerSelection", {setLayerSelectionVisible: "setVisible"}),
         /**
          * Sorts the configs by type: first folder, then layer.
          * @param {Array} configs list of layer and folder configs
@@ -38,7 +38,7 @@ export default {
             return sortBy(configs, (conf) => conf.type !== "folder");
         },
         /**
-         * Shows the component LayerSelection and sets it active.
+         * Shows the component LayerSelection and sets it visible.
          * @returns {void}
          */
         showLayerSelection () {
@@ -47,7 +47,7 @@ export default {
 
             this.changeCurrentComponent({type: this.layerSelectionType, side: this.menuSide, props: {name: this.layerSelectionName}});
             this.navigateForward({lastFolderName: "root", subjectDataLayerConfs, backgroundLayerConfs});
-            this.setLayerSelectionActive(true);
+            this.setLayerSelectionVisible(true);
         }
     }
 };
