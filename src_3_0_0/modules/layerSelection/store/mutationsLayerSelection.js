@@ -2,12 +2,6 @@ import {generateSimpleMutations} from "../../../shared/js/utils/generators";
 import stateLayerSelection from "./stateLayerSelection";
 
 const mutations = {
-    /**
-     * Creates from every state-key a setter.
-     * For example, given a state Object {key: value}, an Object
-     * {setKey:   (state, payload) => *   state[key] = payload * }
-     * will be returned.
-     */
     ...generateSimpleMutations(stateLayerSelection),
     /**
      * Clears layerSelection.
