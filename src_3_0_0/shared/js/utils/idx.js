@@ -11,7 +11,9 @@ const badPathSymbol = Symbol("Path could not be resolved.");
  */
 function idx (object, path) {
     return path.reduce(
-        (acc, currentVal) => acc && Object.prototype.hasOwnProperty.call(acc, currentVal) ? acc[currentVal] : badPathSymbol,
+        (acc, currentVal) => {
+            return acc && Object.prototype.hasOwnProperty.call(acc, currentVal) ? acc[currentVal] : badPathSymbol;
+        },
         object
     );
 }
