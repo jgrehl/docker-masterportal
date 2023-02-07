@@ -2,7 +2,6 @@
  * User type definition
  * @typedef {Object} MapState
  * @property {Number[]} center Current center values of the map.
- * @property {Number[]} clickCartesianCoordinate Current cartesian 2D coordinate.
  * @property {Number[]} clickCoordinate Current coordinates where the mouse click event was triggered.
  * @property {Number[]} clickPixel Current pixel values where the mouse click event was triggered.
  * @property {Number[]} extent Current extent values of the map.
@@ -27,7 +26,6 @@
 
 const state = {
     center: null,
-    clickCartesianCoordinate: null,
     clickCoordinate: null,
     clickPixel: null,
     extent: null,
