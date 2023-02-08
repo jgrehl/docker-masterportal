@@ -25,7 +25,7 @@ export default {
             :id="'layer-component-icon-sub-menu-button-' + layerConf.id"
             :class-array="['btn-light']"
             data-bs-toggle="collapse"
-            :data-bs-target="'#collapse-sub-menu-' + layerConf.id"
+            :data-bs-target="'#collapse-sub-menu-' + layerConf.id.split('.').join('_')"
             :icon="'bi-sliders'"
             :aria="$t('common:tree.iconSubMenu')"
         />
