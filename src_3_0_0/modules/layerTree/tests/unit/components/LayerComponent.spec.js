@@ -77,6 +77,7 @@ describe("src_3_0_0/modules/layerTree/components/LayerComponent.vue", () => {
 
     it("renders the layer given as property to the component,  isLayerTree = false", () => {
         isLayerTree = false;
+        layer.showInLayerTree = false;
         wrapper = shallowMount(LayerComponent, {
             global: {
                 plugins: [store]
@@ -102,6 +103,7 @@ describe("src_3_0_0/modules/layerTree/components/LayerComponent.vue", () => {
 
     it("renders layer only with checkbox - no submenu", () => {
         isLayerTree = false;
+        layer.showInLayerTree = false;
         wrapper = shallowMount(LayerComponent, {
             global: {
                 plugins: [store]
