@@ -1,5 +1,6 @@
 <script>
 import {mapGetters, mapActions} from "vuex";
+import layerFactory from "../../../core/layers/js/layerFactory";
 import sortBy from "../../../shared/js/utils/sortBy";
 import FlatButton from "../../../shared/modules/buttons/components/FlatButton.vue";
 import LayerCheckBox from "../../layerTree/components/LayerCheckBox.vue";
@@ -13,15 +14,25 @@ export default {
         LayerCheckBox,
         LayerSelectionTreeNode
     },
+    data () {
+        return {
+            selectAllConfId: -1,
+            selectAllConfigs: []
+        };
+    },
     computed: {
-        ...mapGetters("Modules/LayerSelection", ["visible", "subjectDataLayerConfs", "backgroundLayerConfs", "layersToAdd", "type", "menuSide", "lastFolderNames"]),
+        ...mapGetters("Maps", ["mode"]),
+        ...mapGetters("Modules/LayerSelection", ["visible", "subjectDataLayerConfs", "backgroundLayerConfs", "layersToAdd", "lastFolderNames"]),
         lastFolderName () {
             return this.lastFolderNames[this.lastFolderNames.length - 1];
         }
-
     },
     unmounted () {
         this.reset();
+    },
+    created () {
+        this.provideSelectAllProps();
+
     },
     methods: {
         ...mapActions("Modules/LayerSelection", ["updateLayerTree", "navigateBack", "navigateForward", "reset"]),
@@ -35,13 +46,53 @@ export default {
             return sortBy(configs, (conf) => conf.type !== "folder");
         },
         /**
-         * Navigates forward after folder was clicked.
+         * Navigates forwards or backwards after folder or navigation-entry was clicked.
+         * @param {String} direction 'back' or 'forward'
+         * @param {String} lastFolderName name to show in menu to navigate back to
+         * @param {Array} subjectDataLayerConfs configs to show
+         * @returns {void}
+         */
+        navigate (direction, lastFolderName, subjectDataLayerConfs) {
+            if (direction === "forward") {
+                this.navigateForward({lastFolderName, subjectDataLayerConfs: this.sort(subjectDataLayerConfs)});
+            }
+            else if (direction === "back") {
+                this.navigateBack();
+            }
+            this.$nextTick(() => {
+                this.selectAllConfId = -1;
+                this.selectAllConfigs = [];
+                this.provideSelectAllProps();
+            });
+        },
+        /**
+         * Listener for click on folder.
          * @param {String} lastFolderName name to show in menu to navigate back to
          * @param {Array} subjectDataLayerConfs configs to show
          * @returns {void}
          */
         folderClicked (lastFolderName, subjectDataLayerConfs) {
-            this.navigateForward({lastFolderName, subjectDataLayerConfs: this.sort(subjectDataLayerConfs)});
+            this.navigate("forward", lastFolderName, subjectDataLayerConfs);
+        },
+        /**
+         * Returns true, if configuration shall be controlled by SelectAllCheckBox.
+         * @param {Object} conf layer or folder configuration
+         * @returns {Boolean} true, if configuration shall be controlled by SelectAllCheckBox
+         */
+        isControlledBySelectAll (conf) {
+            return conf.type === "layer" && conf.showInLayerTree === false && (this.mode === "2D" ? !layerFactory.getLayerTypes3d().includes(conf.typ?.toUpperCase()) : true);
+        },
+        /**
+         * Provides data for SelectAllCheckBox props.
+         * @returns {void}
+         */
+        provideSelectAllProps () {
+            this.subjectDataLayerConfs.forEach(conf => {
+                if (this.isControlledBySelectAll(conf) && this.selectAllConfId === -1) {
+                    this.selectAllConfigs = this.subjectDataLayerConfs.filter(config => this.isControlledBySelectAll(config));
+                    this.selectAllConfId = conf.id;
+                }
+            });
         }
     }
 };
@@ -51,7 +102,7 @@ export default {
     <div
         v-if="visible"
         :id="'layer-selection'"
-        class="layer-selection"
+        class="w-100 layer-selection"
         aria-label=""
     >
         <div class="row align-items-center justify-content-center">
@@ -60,8 +111,8 @@ export default {
                 id="layer-selection-navigation"
                 class="p-2 mp-menu-navigation"
                 href="#"
-                @click="navigateBack()"
-                @keypress="navigateBack()"
+                @click="navigate('back')"
+                @keypress="navigate('back')"
             >
                 <h6 class="mp-menu-navigation-link mb-3"><p class="bi-chevron-left" />{{ lastFolderName }}</h6>
             </a>
@@ -89,6 +140,8 @@ export default {
             >
                 <LayerSelectionTreeNode
                     :conf="conf"
+                    :show-select-all-check-box="selectAllConfId === conf.id"
+                    :select-all-configs="selectAllConfigs"
                     @show-node="folderClicked"
                 />
             </template>
@@ -111,7 +164,6 @@ export default {
 <style lang="scss" scoped>
 @import "~variables";
 .layer-selection {
-    width: 100%;
     background-color: $menu-background-color;
     left: 0px;
     top: 16%;
