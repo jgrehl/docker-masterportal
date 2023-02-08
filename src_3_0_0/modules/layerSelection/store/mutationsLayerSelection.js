@@ -21,7 +21,11 @@ const mutations = {
      * @returns {void}
      */
     addSelectedLayer (state, {layerId}) {
-        state.layersToAdd.push(layerId);
+        const index = state.layersToAdd.indexOf(layerId);
+
+        if (index === -1) {
+            state.layersToAdd.push(layerId);
+        }
     },
     /**
      * Removes the layer id from state.layersToAdd.
