@@ -22,7 +22,6 @@ export default {
         }
     },
     computed: {
-        ...mapGetters("Maps", ["mode"]),
         ...mapGetters("Modules/LayerSelection", ["layersToAdd"]),
 
         /**
@@ -55,6 +54,10 @@ export default {
                 }
             );
         },
+        /**
+         * Listener for click on layer checkbox.
+         * @returns {void}
+         */
         clicked () {
             if (!this.isLayerVisible || this.isLayerTree) {
                 const value = !this.isChecked();
@@ -71,11 +74,15 @@ export default {
             }
 
         },
+        /**
+         * Returns true, if layer checkbox is checked.
+         * @returns {Boolean} true, if layer checkbox is checked
+         */
         isChecked () {
             if (this.isLayerTree) {
                 return this.isLayerVisible;
             }
-            return this.isLayerVisible || this.layersToAdd.indexOf(this.conf.id) > -1 || this.conf.showInLayerTree;
+            return this.isLayerVisible || this.layersToAdd.indexOf(this.conf.id) > -1;
         }
     }
 };
@@ -84,8 +91,7 @@ export default {
 <template lang="html">
     <div
         :id="'layer-checkbox-' + conf.id"
-        class="layer-tree-layer-title pe-2 p-1"
-        data-bs-toggle="tooltip"
+        class="d-flex w-100 layer-tree-layer-title pe-2 p-1"
         @click="clicked()"
         @keydown.enter="clicked()"
     >
