@@ -1,5 +1,6 @@
 <script>
 import Layer from "../../layerTree/components/LayerComponent.vue";
+import SelectAllCheckBox from "./SelectAllCheckBox.vue";
 import LightButton from "../../../shared/modules/buttons/components/LightButton.vue";
 
 /**
@@ -7,12 +8,28 @@ import LightButton from "../../../shared/modules/buttons/components/LightButton.
  */
 export default {
     name: "LayerSelectionTreeNode",
-    components: {Layer, LightButton},
-    /** current configuration */
+    components: {
+        Layer,
+        LightButton,
+        SelectAllCheckBox
+    },
     props: {
+        /** current configuration */
         conf: {
             type: Object,
             required: true
+        },
+        /** if true, SelectAllCheckBox is rendered */
+        showSelectAllCheckBox: {
+            type: Boolean,
+            default: false
+        },
+        /** layer-confs controlled by SelectAllCheckBox */
+        selectAllConfigs: {
+            type: Array,
+            default () {
+                return [];
+            }
         }
     },
     emits: ["showNode"],
@@ -39,7 +56,11 @@ export default {
 </script>
 
 <template>
-    <div class="no-list">
+    <div :id="'layer-selection-treenode-' + (conf.id ? conf.id : conf.name.replace(/\s/g, ''))">
+        <SelectAllCheckBox
+            v-if="showSelectAllCheckBox"
+            :confs="selectAllConfigs"
+        />
         <div v-if="isFolder">
             <LightButton
                 :interaction="folderClicked"
@@ -60,14 +81,3 @@ export default {
     </div>
 </template>
 
-
-<style lang="scss" scoped>
-@import "~variables";
-
-    .folder{
-        display: flex;
-        gap: 0.25rem;
-        align-items: baseline;
-    }
-
-</style>
