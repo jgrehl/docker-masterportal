@@ -131,7 +131,7 @@ const getters = {
     },
 
     /**
-     * Returns the restConfig whitch matches the id.
+     * Returns the restConfig which matches the id.
      * @param {Object} state state of the app-store.
      * @returns {Object} the restConfig layer that matches the given id.
      */
