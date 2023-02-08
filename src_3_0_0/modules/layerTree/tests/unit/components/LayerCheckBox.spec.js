@@ -13,7 +13,6 @@ describe("src_3_0_0/modules/layerTree/components/LayerCheckBox.vue", () => {
         wrapper,
         layer,
         propsData,
-        mapMode,
         replaceByIdInLayerConfigSpy,
         addSelectedLayerSpy,
         removeSelectedLayerSpy,
@@ -22,7 +21,6 @@ describe("src_3_0_0/modules/layerTree/components/LayerCheckBox.vue", () => {
 
     beforeEach(() => {
         isLayerTree = true;
-        mapMode = "2D";
         layersToAdd = [];
         layer = {
             id: "1",
@@ -58,12 +56,6 @@ describe("src_3_0_0/modules/layerTree/components/LayerCheckBox.vue", () => {
                                 layersToAdd: () => layersToAdd
                             }
                         }
-                    }
-                },
-                Maps: {
-                    namespaced: true,
-                    getters: {
-                        mode: () => mapMode
                     }
                 }
             },
@@ -133,31 +125,9 @@ describe("src_3_0_0/modules/layerTree/components/LayerCheckBox.vue", () => {
         expect(wrapper.find("#layer-checkbox-" + propsData.conf.id).attributes("title")).to.be.undefined;
         expect(wrapper.findAll(".layer-tree-layer-checkbox").length).to.be.equals(1);
         expect(wrapper.find(".bi-check2-square").exists()).to.be.true;
-        expect(wrapper.find(".disabled").exists()).to.be.false;
         expect(wrapper.find(".layer-tree-layer-label").text()).to.equal(propsData.conf.name);
         expect(wrapper.find("label").attributes("class")).to.include("bold");
     });
-
-    it("renders layer with visibility true and checkbox - disabled", () => {
-        propsData.conf.visibility = true;
-        propsData.isLayerTree = false;
-
-        wrapper = shallowMount(LayerCheckBox, {
-            global: {
-                plugins: [store]
-            },
-            propsData
-        });
-
-        expect(wrapper.find("#layer-checkbox-" + propsData.conf.id).exists()).to.be.true;
-        expect(wrapper.find("#layer-checkbox-" + propsData.conf.id).attributes("title")).to.be.equals("tree.isAlreadyAdded");
-        expect(wrapper.findAll(".layer-tree-layer-checkbox").length).to.be.equals(1);
-        expect(wrapper.find(".bi-check2-square").exists()).to.be.true;
-        expect(wrapper.find(".disabled").exists()).to.be.true;
-        expect(wrapper.find(".layer-tree-layer-label").text()).to.equal(propsData.conf.name);
-        expect(wrapper.find("label").attributes("class")).to.include("bold");
-    });
-
 
     it("computed property isLayerVisible with visibility=false ", () => {
         wrapper = shallowMount(LayerCheckBox, {
