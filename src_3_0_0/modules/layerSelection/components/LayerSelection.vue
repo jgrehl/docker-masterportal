@@ -1,5 +1,5 @@
 <script>
-import {mapGetters, mapActions} from "vuex";
+import {mapActions, mapGetters, mapMutations} from "vuex";
 import layerFactory from "../../../core/layers/js/layerFactory";
 import sortBy from "../../../shared/js/utils/sortBy";
 import FlatButton from "../../../shared/modules/buttons/components/FlatButton.vue";
@@ -22,20 +22,23 @@ export default {
     },
     computed: {
         ...mapGetters("Maps", ["mode"]),
-        ...mapGetters("Modules/LayerSelection", ["visible", "subjectDataLayerConfs", "backgroundLayerConfs", "layersToAdd", "lastFolderNames"]),
+        ...mapGetters("Modules/LayerSelection", ["visible", "subjectDataLayerConfs", "backgroundLayerConfs", "layersToAdd", "lastFolderNames", "layerInfoVisible"]),
         lastFolderName () {
             return this.lastFolderNames[this.lastFolderNames.length - 1];
         }
     },
     unmounted () {
-        this.reset();
+        if (!this.layerInfoVisible) {
+            this.reset();
+        }
     },
     created () {
         this.provideSelectAllProps();
-
+        this.setLayerInfoVisible(false);
     },
     methods: {
         ...mapActions("Modules/LayerSelection", ["updateLayerTree", "navigateBack", "navigateForward", "reset"]),
+        ...mapMutations("Modules/LayerSelection", ["setLayerInfoVisible"]),
 
         /**
          * Sorts the configs by type: first folder, then layer.
