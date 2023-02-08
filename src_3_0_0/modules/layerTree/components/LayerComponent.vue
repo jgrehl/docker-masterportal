@@ -66,12 +66,20 @@ export default {
                 :is-layer-tree="isLayerTree()"
             />
             <div
-                v-if="isLayerTree()"
                 class="d-flex"
             >
-                <LayerComponentIconSubMenu :layer-conf="conf" />
-                <LayerComponentIconInfo :layer-conf="conf" />
-                <LayerComponentIconDrag :layer-conf="conf" />
+                <LayerComponentIconSubMenu
+                    v-if="isLayerTree()"
+                    :layer-conf="conf"
+                />
+                <LayerComponentIconInfo
+                    :is-layer-tree="isLayerTree()"
+                    :layer-conf="conf"
+                />
+                <LayerComponentIconDrag
+                    v-if="isLayerTree()"
+                    :layer-conf="conf"
+                />
             </div>
         </div>
         <div
