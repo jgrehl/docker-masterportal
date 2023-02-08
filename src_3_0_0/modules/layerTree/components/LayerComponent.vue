@@ -76,7 +76,7 @@ export default {
         </div>
         <div
             v-if="isLayerTree()"
-            :id="'collapse-sub-menu-' + conf.id"
+            :id="'collapse-sub-menu-' + conf.id.split('.').join('_')"
             class="collapse"
         >
             <LayerComponentSubMenu :layer-conf="conf" />
