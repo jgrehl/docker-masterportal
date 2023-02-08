@@ -1,5 +1,5 @@
 <script>
-import {mapActions, mapGetters} from "vuex";
+import {mapActions, mapGetters, mapMutations} from "vuex";
 import IconButton from "../../../shared/modules/buttons/components/IconButton.vue";
 
 /**
@@ -13,13 +13,26 @@ export default {
         layerConf: {
             type: Object,
             required: true
+        },
+        /** true, if icon is shown in LayerTree, else icon is shown in LayerSelection */
+        isLayerTree: {
+            type: Boolean,
+            required: true
         }
     },
     computed: {
         ...mapGetters("Modules/LayerInformation", ["icon"])
     },
     methods: {
-        ...mapActions("Modules/LayerInformation", ["startLayerInformation"])
+        ...mapActions("Modules/LayerInformation", ["startLayerInformation"]),
+        ...mapMutations("Modules/LayerSelection", ["setLayerInfoVisible"]),
+
+        showLayerInformation () {
+            this.startLayerInformation(this.layerConf);
+            if (!this.isLayerTree) {
+                this.setLayerInfoVisible(true);
+            }
+        }
     }
 };
 </script>
@@ -33,7 +46,7 @@ export default {
             :class-array="['btn-light']"
             :aria="$t('common:tree.infosAndLegend')"
             :icon="icon"
-            :interaction="() => startLayerInformation(layerConf)"
+            :interaction="() => showLayerInformation()"
             :disabled="!layerConf?.datasets?.length > 0"
         />
     </div>
