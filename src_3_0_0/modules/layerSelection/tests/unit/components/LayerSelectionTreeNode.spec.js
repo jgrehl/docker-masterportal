@@ -23,7 +23,9 @@ describe("src_3_0_0/modules/layerSelection/components/LayerSelectionTreeNode.vue
             showInLayerTree: true
         };
         propsData = {
-            conf: layer
+            conf: layer,
+            showSelectAllCheckBox: false,
+            selectAllConfigs: []
         };
         store = createStore({
         });
@@ -41,8 +43,9 @@ describe("src_3_0_0/modules/layerSelection/components/LayerSelectionTreeNode.vue
             propsData
         });
 
-        expect(wrapper.find(".no-list").exists()).to.be.true;
+        expect(wrapper.find("#layer-selection-treenode-1").exists()).to.be.true;
         expect(wrapper.findAll("layer-stub").length).to.be.equals(1);
+        expect(wrapper.find("select-all-check-box-stub ").exists()).to.be.false;
     });
     it("renders a folder", () => {
         propsData = {
@@ -60,8 +63,25 @@ describe("src_3_0_0/modules/layerSelection/components/LayerSelectionTreeNode.vue
             propsData
         });
 
-        expect(wrapper.find(".no-list").exists()).to.be.true;
+        expect(wrapper.find("#layer-selection-treenode-TitelEbene1").exists()).to.be.true;
         expect(wrapper.findAll("layer-stub").length).to.be.equals(0);
+        expect(wrapper.find("select-all-check-box-stub ").exists()).to.be.false;
+    });
+    it("renders a select all checkbox and one layer", () => {
+        propsData = {
+            conf: layer,
+            showSelectAllCheckBox: true,
+            selectAllConfigs: []
+        };
+        wrapper = shallowMount(LayerSelectionTreeNode, {
+            global: {
+                plugins: [store]
+            },
+            propsData
+        });
+
+        expect(wrapper.find("select-all-check-box-stub ").exists()).to.be.true;
+        expect(wrapper.findAll("layer-stub").length).to.be.equals(1);
     });
 
 });
