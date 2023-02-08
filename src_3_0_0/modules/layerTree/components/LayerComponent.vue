@@ -90,25 +90,5 @@ export default {
 
     .layer-tree-layer {
         font-size: $font-size-base;
-
-        .layer-tree-layer-title {
-            display: flex;
-            width: 100%;
-            border-radius: 10px;
-        }
-
-
-        .layer-tree-layer-title, .layer-tree-layer-checkbox {
-            &:hover {
-                @include primary_action_hover;
-            }
-            &:focus {
-                @include primary_action_focus;
-            }
-        }
-
-        .layer-tree-layer-label {
-            cursor: pointer;
-        }
     }
 </style>
