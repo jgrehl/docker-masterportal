@@ -18,6 +18,11 @@ export default {
         path: {
             type: Array,
             default: () => []
+        },
+        side: {
+            type: String,
+            default: "mainMenu",
+            validator: value => value === "mainMenu" || value === "secondaryMenu"
         }
     },
     computed: {
