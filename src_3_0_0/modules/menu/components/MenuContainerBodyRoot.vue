@@ -68,6 +68,7 @@ export default {
         >
             <MenuContainerBodyRootItems
                 :id-appendix="side"
+                :side="side"
                 :path="path(key)"
             />
             <hr>
