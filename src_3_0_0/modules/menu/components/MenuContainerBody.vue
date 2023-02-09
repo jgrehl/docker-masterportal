@@ -73,6 +73,7 @@ export default {
         <component
             :is="currentComponent"
             v-if="currentComponent !== 'root' && currentComponent !== 'getFeatureInfo'"
+            :side="side"
         />
 
         <MenuContainerBodyRoot
