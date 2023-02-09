@@ -14,11 +14,7 @@ export default {
             default: "mainMenu",
             validator: value => value === "mainMenu" || value === "secondaryMenu"
         }
-    },
-    data () {
-        return {
-            isActive: false
-        };
+
     },
     computed: {
         ...mapGetters("Menu", ["currentComponentName", "currentFolderPath"]),
