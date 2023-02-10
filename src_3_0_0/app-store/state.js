@@ -7,6 +7,7 @@
  * @property {Object} loadedConfigs The loaded configs.
  * @property {Object} portalConfig The portal configuration.
  * @property {Object} restConf The rest-services.json data.
+ * @property {Object} urlParams The url params.
  */
 const state = {
     configJs: null,
@@ -18,7 +19,8 @@ const state = {
         servicesJson: false
     },
     portalConfig: null,
-    restConfig: null
+    restConfig: null,
+    urlParams: {}
 };
 
 export default state;
