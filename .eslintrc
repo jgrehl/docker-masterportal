@@ -64,7 +64,6 @@
         "max-depth": "error",
         "max-nested-callbacks": ["error", 10],
         "max-params": ["warn", 9],
-        "new-cap": "error",
         "no-alert": "error",
         "no-array-constructor": "error",
         "no-caller": "error",

@@ -16,5 +16,22 @@ export default {
     ...actionsMapsMapMode,
     ...actionsMapsMarker,
     ...highlightFeature,
-    ...removeHighlightFeature
+    ...removeHighlightFeature,
+
+    urlParams ({dispatch, rootState}, paramsString) {
+        const params = JSON.parse(paramsString);
+
+        dispatch("setView", {
+            center: params.center,
+            rotation: params.rotation,
+            zoom: params.zoom
+        });
+
+        if (params.mode && mapCollection.getMap(params.mode)) {
+            dispatch("changeMapMode", params.mode);
+        }
+        else {
+            rootState.configJs.startingMap3D = true;
+        }
+    }
 };
