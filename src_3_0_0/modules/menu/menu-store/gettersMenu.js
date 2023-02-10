@@ -189,6 +189,29 @@ const menuGetters = {
             return {...getters.secondaryTitle, idAppendix: side};
         }
         return null;
+    },
+
+    urlParams: (state, _, rootState, rootGetters) => side => {
+        const currentComponent = state[side].currentComponent,
+            menuString = side === "mainMenu" ? "MENU_MAIN" : "MENU_SECONDARY";
+        let params = `${menuString}=${JSON.stringify({"currentComponent": currentComponent})}`;
+
+        if (currentComponent !== "root") {
+            const moduleParam = rootGetters[`Modules/${upperFirst(currentComponent)}/urlParams`];
+
+            // if (typeof moduleParam === "undefined") {
+            //     moduleParam = JSON.stringify(rootState.Modules[upperFirst(currentComponent)]);
+            // }
+
+            if (side === "mainMenu") {
+                params = `${params}&MODULE_MAIN=${moduleParam}`;
+            }
+            else if (side === "secondaryMenu") {
+                params = `${params}&MODULE_SECONDARY=${moduleParam}`;
+            }
+        }
+
+        return params;
     }
 };
 
