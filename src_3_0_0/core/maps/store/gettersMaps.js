@@ -71,7 +71,17 @@ const getters = {
      * @param {*} getter the getter
      * @returns {String} the projection code
      */
-    projectionCode: state => state.projection?.getCode()
+    projectionCode: state => state.projection?.getCode(),
+
+    urlParams: state => {
+        const params = {
+            center: state.center,
+            mode: state.mode,
+            zoom: state.zoom
+        };
+
+        return `MAPS=${JSON.stringify(params)}`;
+    }
 };
 
 export default getters;
