@@ -7,7 +7,7 @@ export default {
      * @param {Object} param store context.
      * @param {Object} param.getters the getters.
      * @param {Object} param.dispatch the dispatch.
-     * @param {String} targetMode The target mao mode.
+     * @param {String} targetMode The target map mode.
      * @returns {void}
      */
     changeMapMode ({getters, dispatch}, targetMode) {
