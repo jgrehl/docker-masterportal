@@ -53,6 +53,15 @@ const getters = {
             selectedUnit,
             polygonUnits
         );
+    },
+
+    urlParams: state => {
+        const params = {
+            selectedGeometry: state.selectedGeometry,
+            selectedUnit: state.selectedUnit
+        };
+
+        return JSON.stringify(params);
     }
 };
 
