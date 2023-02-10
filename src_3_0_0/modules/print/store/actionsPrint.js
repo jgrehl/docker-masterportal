@@ -6,6 +6,7 @@ import BuildSpec from "../js/buildSpec";
 import {getRecordById} from "../../../shared/js/api/getCswRecordById";
 import getVisibleLayer from "../js/getVisibleLayer";
 import omit from "../../../shared/js/utils/omit";
+import upperFirst from "../../../shared/js/utils/upperFirst";
 
 const actions = {
     ...actionsPrintInitialization,
@@ -407,6 +408,12 @@ const actions = {
                 downloadUrl: fileUrl
             });
         }
+    },
+
+    urlParams ({commit}, params) {
+        Object.keys(params).forEach(key => {
+            commit(`set${upperFirst(key)}`, params[key]);
+        });
     }
 };
 
