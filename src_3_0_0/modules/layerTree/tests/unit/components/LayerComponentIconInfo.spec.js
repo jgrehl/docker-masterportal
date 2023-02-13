@@ -13,9 +13,12 @@ describe("src_3_0_0/modules/layerTree/components/LayerComponentIconInfo.vue", ()
         propsData,
         startLayerInformationSpy,
         store,
-        wrapper;
+        wrapper,
+        isLayerTree,
+        setLayerInfoVisibleSpy;
 
     beforeEach(() => {
+        isLayerTree = true;
         layer = {
             id: "1",
             name: "layer",
@@ -28,11 +31,13 @@ describe("src_3_0_0/modules/layerTree/components/LayerComponentIconInfo.vue", ()
         };
 
         propsData = {
-            layerConf: layer
+            layerConf: layer,
+            isLayerTree: isLayerTree
         };
 
         icon = "bi-test";
         startLayerInformationSpy = sinon.spy();
+        setLayerInfoVisibleSpy = sinon.spy;
 
         store = createStore({
             namespaces: true,
@@ -47,6 +52,12 @@ describe("src_3_0_0/modules/layerTree/components/LayerComponentIconInfo.vue", ()
                             },
                             getters: {
                                 icon: () => icon
+                            }
+                        },
+                        LayerSelection: {
+                            namespaced: true,
+                            mutations: {
+                                setLayerInfoVisible: setLayerInfoVisibleSpy
                             }
                         }
                     }
@@ -119,7 +130,8 @@ describe("src_3_0_0/modules/layerTree/components/LayerComponentIconInfo.vue", ()
         };
 
         propsData = {
-            layerConf: layerWithoutDatasets
+            layerConf: layerWithoutDatasets,
+            isLayerTree: isLayerTree
         };
 
         wrapper = shallowMount(LayerComponentIconInfo, {
