@@ -1,7 +1,7 @@
 <script>
 import {mapActions, mapGetters, mapMutations} from "vuex";
 import upperFirst from "../../../shared/js/utils/upperFirst";
-import isModuleVisible from "../../../shared/js/utils/isModuleVisible";
+import visibilityChecker from "../../../shared/js/utils/visibilityChecker";
 
 /**
  * Control layout component that places controls on the map.
@@ -122,7 +122,7 @@ export default {
                 supportedDevices = this.$store.getters[`Controls/${upperFirst(key)}/supportedDevices`],
                 supportedTreeTypes = this.$store.getters[`Controls/${upperFirst(key)}/supportedTreeTypes`];
 
-            return isModuleVisible(this.mode, this.deviceMode, this.portalConfig?.tree?.type, supportedMapModes, supportedDevices, supportedTreeTypes);
+            return visibilityChecker.isModuleVisible(this.mode, this.deviceMode, this.portalConfig?.tree?.type, supportedMapModes, supportedDevices, supportedTreeTypes);
         }
     }
 };
