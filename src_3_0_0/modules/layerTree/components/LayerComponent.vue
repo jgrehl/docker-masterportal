@@ -58,7 +58,7 @@ export default {
     <div
         v-if="show()"
         :id="'layer-tree-layer-' + conf.id"
-        class="layer-tree-layer d-flex flex-column justify-content-between"
+        :class="['layer-tree-layer', 'd-flex', 'flex-column', 'justify-content-between', !isLayerTree() ? 'layer-selection': '']"
     >
         <div class="d-flex justify-content-between align-items-center">
             <LayerCheckBox
@@ -98,5 +98,9 @@ export default {
 
     .layer-tree-layer {
         font-size: $font-size-base;
+
+    }
+    .layer-selection{
+        margin-left: 0.7rem;
     }
 </style>
