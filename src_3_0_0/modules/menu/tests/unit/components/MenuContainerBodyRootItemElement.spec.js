@@ -19,15 +19,9 @@ describe("src_3_0_0/modules/menu/MenuContainerBodyRootItemElement.vue", () => {
         };
     let store,
         clickedMenuElementSpy,
-        menu,
-        properties;
+        menu;
 
     beforeEach(() => {
-        properties = {
-            supportedMapModes: ["2D"],
-            supportedDevices: ["Desktop", "Mobile"],
-            supportedTreeTypes: ["light"]
-        };
         menu = {
             currentComponent: "componentType"
         };
