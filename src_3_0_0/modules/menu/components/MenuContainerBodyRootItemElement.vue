@@ -1,6 +1,6 @@
 <script>
 import {mapActions, mapGetters} from "vuex";
-import isModuleVisible from "../../../shared/js/utils/isModuleVisible";
+import visibilityChecker from "../../../shared/js/utils/visibilityChecker";
 import LightButton from "../../../shared/modules/buttons/components/LightButton.vue";
 
 export default {
@@ -102,7 +102,7 @@ export default {
                 supportedDevices = this.properties.supportedDevices,
                 supportedTreeTypes = this.properties.supportedTreeTypes;
 
-            return isModuleVisible(this.mode, this.deviceMode, this.portalConfig?.tree?.type, supportedMapModes, supportedDevices, supportedTreeTypes);
+            return visibilityChecker.isModuleVisible(this.mode, this.deviceMode, this.portalConfig?.tree?.type, supportedMapModes, supportedDevices, supportedTreeTypes);
         }
     }
 
