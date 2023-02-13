@@ -3,49 +3,51 @@ import {config, shallowMount} from "@vue/test-utils";
 import MenuContainerBody from "../../../components/MenuContainerBody.vue";
 import {expect} from "chai";
 import MenuNavigation from "../../../components/MenuNavigation.vue";
-import MenuContainerBodyRootItems from "../../../components/MenuContainerBodyRootItems.vue";
+import MenuContainerBodyRoot from "../../../components/MenuContainerBodyRoot.vue";
 import sinon from "sinon";
 
 config.global.mocks.$t = key => key;
 
-describe.skip("src_3_0_0/modules/menu/MenuContainerBody.vue", () => {
-    let store;
-    const sampleConfigObject = {name: "awesomeName"};
+describe("src_3_0_0/modules/menu/MenuContainerBody.vue", () => {
+    let store,
+        menu,
+        menuType;
 
     beforeEach(() => {
+        menuType = "type";
+        menu = {
+            navigation: {
+                currentComponent: {
+                    type: menuType
+                }
+            }
 
+        };
         store = createStore({
             namespaces: true,
             modules: {
                 Menu: {
                     namespaced: true,
                     getters: {
-                        componentFromPath: () => () => ({}),
-                        deactivateModule: () => () => false,
-                        objectFromPath: () => () => sampleConfigObject,
-                        deactivateGfi: () => sinon.stub(),
-                        mainMenu: state => ({
-                            sections: state.menuSections
-                        }),
-                        secondaryMenu: state => ({
-                            sections: state.menuSections
-                        })
-                    },
-                    state: {
-                        menuSections: []
+                        defaultComponent: sinon.stub(),
+                        mainMenu: () => menu,
+                        secondaryMenu: () => menu
+
                     },
                     mutations: {
                         addTestMenuSection: (state, section) => {
                             state.menuSections.push(section);
                         },
                         addModuleToMenuSection: sinon.stub()
-                    },
-                    modules: {
-                        Navigation: {
-                            namespaced: true,
-                            getters: {
-                                lastEntry: () => () => null
-                            }
+                    }
+                },
+                Modules: {
+                    namespaced: true,
+                    getters: {
+                        componentMap: () => {
+                            return {
+                                type: menuType
+                            };
                         }
                     }
                 }
@@ -53,84 +55,103 @@ describe.skip("src_3_0_0/modules/menu/MenuContainerBody.vue", () => {
         });
     });
 
-    describe("mainMenu", () => {
-        it("renders the component and it contains the MenuNavigation", () => {
-            const wrapper = shallowMount(MenuContainerBody, {
-                    global: {
-                        plugins: [store]
-                    },
-                    propsData: {side: "mainMenu"}
-                }),
-                mainMenuBodyWrapper = wrapper.find("#mp-body-mainMenu");
-
-            expect(mainMenuBodyWrapper.exists()).to.be.true;
-            expect(mainMenuBodyWrapper.findComponent(MenuNavigation).exists()).to.be.true;
-        });
-
-        it("it contains an equal number of MenuContainerBodyRootItems and configured sections", () => {
-            const sectionCount = 5;
-            let wrapper = null,
-                mainMenuBodyWrapper = null;
-
-            for (let i = 1; i <= sectionCount; i++) {
-                store.commit("Menu/addTestMenuSection", [{}]);
-            }
-
-            wrapper = shallowMount(MenuContainerBody, {
+    it("renders the component in mainMenu and it contains the MenuNavigation and not GetFeatureInfo", () => {
+        const wrapper = shallowMount(MenuContainerBody, {
                 global: {
                     plugins: [store]
                 },
                 propsData: {side: "mainMenu"}
-            });
-            mainMenuBodyWrapper = wrapper.find("#mp-body-mainMenu");
+            }),
+            bodyWrapper = wrapper.find("#mp-body-mainMenu");
 
-            expect(mainMenuBodyWrapper.findAllComponents(MenuContainerBodyRootItems).length).to.be.equal(sectionCount);
-        });
+        expect(bodyWrapper.exists()).to.be.true;
+        expect(bodyWrapper.findComponent(MenuNavigation).exists()).to.be.true;
+        expect(bodyWrapper.findComponent(MenuContainerBodyRoot).exists()).to.be.true;
+        expect(bodyWrapper.find("get-feature-info-stub").exists()).to.be.false;
     });
-    describe("secondaryMenu", () => {
-        it("renders the component and it contains the MenuNavigation", () => {
-            const wrapper = shallowMount(MenuContainerBody, {
-                    global: {
-                        plugins: [store]
-                    },
-                    propsData: {side: "secondaryMenu"}
-                }),
-                mainMenuBodyWrapper = wrapper.find("#mp-body-secondaryMenu");
 
-            expect(mainMenuBodyWrapper.exists()).to.be.true;
-            expect(mainMenuBodyWrapper.findComponent(MenuNavigation).exists()).to.be.true;
-        });
-
-        it("it contains an equal number of MenuContainerBodyRootItems and configured sections", () => {
-            const sectionCount = 3;
-            let wrapper = null,
-                mainMenuBodyWrapper = null;
-
-            for (let i = 1; i <= sectionCount; i++) {
-                store.commit("Menu/addTestMenuSection", [{}]);
-            }
-
-            wrapper = shallowMount(MenuContainerBody, {
+    it("renders the component in secondaryMenu and it contains the MenuNavigation and not displayed GetFeatureInfo", () => {
+        const wrapper = shallowMount(MenuContainerBody, {
                 global: {
                     plugins: [store]
                 },
                 propsData: {side: "secondaryMenu"}
-            });
-            mainMenuBodyWrapper = wrapper.find("#mp-body-secondaryMenu");
+            }),
+            bodyWrapper = wrapper.find("#mp-body-secondaryMenu");
 
-            expect(mainMenuBodyWrapper.findAllComponents(MenuContainerBodyRootItems).length).to.be.equal(sectionCount);
-        });
+        expect(bodyWrapper.exists()).to.be.true;
+        expect(bodyWrapper.findComponent(MenuNavigation).exists()).to.be.true;
+        expect(bodyWrapper.findComponent(MenuContainerBodyRoot).exists()).to.be.true;
+        expect(bodyWrapper.find("get-feature-info-stub").exists()).to.be.true;
+        expect(bodyWrapper.find("get-feature-info-stub").attributes("style")).to.be.equals("display: none;");
+        expect(bodyWrapper.find("menu-container-body-root-stub").attributes("style")).to.be.equals("display: none;");
+
     });
-    describe("GetFeatureInfo", () => {
-        it("render the GetFeatureInfo component", () => {
-            const wrapper = shallowMount(MenuContainerBody, {
+
+    it("renders the component in mainMenu, currentComponent is root", () => {
+        menuType = "root";
+        const wrapper = shallowMount(MenuContainerBody, {
+                global: {
+                    plugins: [store]
+                },
+                propsData: {side: "mainMenu"}
+            }),
+            bodyWrapper = wrapper.find("#mp-body-mainMenu");
+
+        expect(bodyWrapper.exists()).to.be.true;
+        expect(bodyWrapper.findComponent(MenuNavigation).exists()).to.be.true;
+        expect(bodyWrapper.find("menu-container-body-root-stub").exists()).to.be.true;
+        expect(bodyWrapper.find("menu-container-body-root-stub").attributes("side")).to.be.equals("mainMenu");
+        expect(bodyWrapper.find("menu-container-body-root-stub").attributes("style")).to.be.undefined;
+    });
+
+    it("renders the component in mainMenu, currentComponent is not root or getFeatureInfo", () => {
+        menuType = "component";
+        const wrapper = shallowMount(MenuContainerBody, {
+                global: {
+                    plugins: [store]
+                },
+                propsData: {side: "mainMenu"}
+            }),
+            bodyWrapper = wrapper.find("#mp-body-mainMenu");
+
+        expect(bodyWrapper.exists()).to.be.true;
+        expect(bodyWrapper.findComponent(MenuNavigation).exists()).to.be.true;
+        expect(bodyWrapper.find("component").exists()).to.be.true;
+    });
+
+    it("renders the component in secondaryMenu, currentComponent is getFeatureInfo", () => {
+        menuType = "getFeatureInfo";
+        const wrapper = shallowMount(MenuContainerBody, {
                 global: {
                     plugins: [store]
                 },
                 propsData: {side: "secondaryMenu"}
-            });
+            }),
+            bodyWrapper = wrapper.find("#mp-body-secondaryMenu");
 
-            expect(wrapper.findComponent({name: "GetFeatureInfo"}).exists()).to.be.true;
-        });
+        expect(bodyWrapper.exists()).to.be.true;
+        expect(bodyWrapper.findComponent(MenuNavigation).exists()).to.be.true;
+        expect(bodyWrapper.find("menu-container-body-root-stub").exists()).to.be.true;
+        expect(bodyWrapper.find("menu-container-body-root-stub").attributes("side")).to.be.equals("secondaryMenu");
+        expect(bodyWrapper.find("menu-container-body-root-stub").attributes("style")).to.be.equals("display: none;");
+        expect(bodyWrapper.find("get-feature-info-stub").exists()).to.be.true;
+        expect(bodyWrapper.find("get-feature-info-stub").attributes("style")).to.be.undefined;
     });
+
+    it("computed property currentComponent", () => {
+        menuType = "getFeatureInfo";
+        const wrapper = shallowMount(MenuContainerBody, {
+                global: {
+                    plugins: [store]
+                },
+                propsData: {side: "mainMenu"}
+            }),
+            bodyWrapper = wrapper.find("#mp-body-mainMenu");
+
+        expect(bodyWrapper.exists()).to.be.true;
+        expect(wrapper.vm.currentComponent).to.be.equals("getFeatureInfo");
+    });
+
+
 });
