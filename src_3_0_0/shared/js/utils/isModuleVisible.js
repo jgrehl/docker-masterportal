@@ -8,7 +8,7 @@
  * @param {String[]} [supportedTreeTypes=["light", "auto"]] The supported tree types.
  * @returns {Boolean} The module is shown.
  */
-function isModuleVisible (
+export default function isModuleVisible (
     mapMode, deviceMode, treeType = "light", supportedMapModes = ["2D", "3D"],
     supportedDevices = ["Desktop", "Mobile", "Table"], supportedTreeTypes = ["light", "auto"]
 ) {
@@ -23,7 +23,3 @@ function isModuleVisible (
 
     return isVisible;
 }
-
-export default {
-    isModuleVisible
-};
