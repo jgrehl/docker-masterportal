@@ -2,22 +2,28 @@ import {createStore} from "vuex";
 import {config, mount} from "@vue/test-utils";
 import MenuNavigation from "../../../components/MenuNavigation.vue";
 import {expect} from "chai";
-import mutations from "../../../menu-store/mutationsMenu.js";
-import state from "../../../menu-store/stateMenu.js";
 import sinon from "sinon";
 
 config.global.mocks.$t = key => key;
 
-describe.skip("src_3_0_0/core/menu/navigation/components/MenuNavigation.vue", () => {
-    let store, navigateBackSpy;
-    const sampleMainMenuPath = ["mainMenu", "sections", 0, 1, "elements", 0],
-        sampleConfigObject = {name: "awesomeName"},
-        mockAlertingActions = {
-            addSingleAlert: sinon.stub()
-        };
-
+describe("src_3_0_0/core/menu/navigation/components/MenuNavigation.vue", () => {
+    let wrapper,
+        store,
+        navigateBackSpy,
+        side,
+        componentName,
+        previousNavigationEntryText;
 
     beforeEach(() => {
+        side = "mainMenu";
+        previousNavigationEntryText = {
+            mainMenu: "previousMainMenu",
+            secondaryMenu: "previousSecondaryMenu"
+        };
+        componentName = {
+            mainMenu: "nameMainMenu",
+            secondaryMenu: "nameSecondaryMenu"
+        };
         navigateBackSpy = sinon.spy();
 
         store = createStore({
@@ -26,27 +32,11 @@ describe.skip("src_3_0_0/core/menu/navigation/components/MenuNavigation.vue", ()
                 Menu: {
                     namespaced: true,
                     getters: {
-                        objectFromPath: () => () => sampleConfigObject
+                        previousNavigationEntryText: () => (theSide) => previousNavigationEntryText[theSide],
+                        currentComponentName: () => (theSide) => componentName[theSide]
                     },
-                    modules: {
-                        Navigation: {
-                            namespaced: true,
-                            actions: {
-                                navigateBack: navigateBackSpy
-                            },
-                            getters: {
-                                name: () => () => "awesomeName",
-                                lastEntry: () => () => sampleMainMenuPath,
-                                previousEntry: () => () => sampleMainMenuPath
-                            },
-                            mutations,
-                            state
-                        },
-                        Alerting: {
-                            namespaced: true,
-                            actions: mockAlertingActions
-
-                        }
+                    actions: {
+                        navigateBack: navigateBackSpy
                     }
                 }
             }
@@ -56,33 +46,81 @@ describe.skip("src_3_0_0/core/menu/navigation/components/MenuNavigation.vue", ()
     afterEach(sinon.restore);
 
     it("renders the navigation in the main menu side", () => {
-        const wrapper = mount(MenuNavigation, {global: {
-            plugins: [store]
-        }, propsData: {side: "mainMenu"}});
+        wrapper = mount(MenuNavigation, {
+            global: {
+                plugins: [store]
+            }, propsData: {side}});
 
+        expect(wrapper.find("#mp-menu-navigation-mainMenu").exists()).to.be.true;
         expect(wrapper.find("#mp-navigation-mainMenu").exists()).to.be.true;
+        expect(wrapper.find(".mp-menu-navigation-moduletitle").exists()).to.be.true;
+        expect(wrapper.find(".mp-menu-navigation-moduletitle").text()).to.be.equals(componentName.mainMenu);
     });
 
     it("renders the navigation in the secondary menu side", () => {
-        const wrapper = mount(MenuNavigation, {global: {
+        side = "secondaryMenu";
+        wrapper = mount(MenuNavigation, {global: {
             plugins: [store]
         }, propsData: {side: "secondaryMenu"}});
 
+        expect(wrapper.find("#mp-menu-navigation-secondaryMenu").exists()).to.be.true;
         expect(wrapper.find("#mp-navigation-secondaryMenu").exists()).to.be.true;
+        expect(wrapper.find(".mp-menu-navigation-moduletitle").exists()).to.be.true;
+        expect(wrapper.find(".mp-menu-navigation-moduletitle").text()).to.be.equals(componentName.secondaryMenu);
     });
 
-    it("calls the navigateBack function every time the navigation is clicked", async () => {
-        const wrapper = mount(MenuNavigation, {global: {
+    it("renders the navigation in the main menu side without previousNavigation", () => {
+        previousNavigationEntryText = {};
+
+        wrapper = mount(MenuNavigation, {
+            global: {
                 plugins: [store]
-            }, propsData: {side: "mainMenu"}}),
-            navigation = wrapper.find("#mp-navigation-mainMenu");
+            }, propsData: {side}});
 
-        navigation.trigger("click");
-        await wrapper.vm.$nextTick();
-        expect(navigateBackSpy.calledOnce).to.be.true;
-
-        navigation.trigger("click");
-        await wrapper.vm.$nextTick();
-        expect(navigateBackSpy.calledTwice).to.be.true;
+        expect(wrapper.find("#mp-menu-navigation-mainMenu").exists()).to.be.true;
+        expect(wrapper.find("#mp-navigation-mainMenu").exists()).to.be.false;
+        expect(wrapper.find(".mp-menu-navigation-moduletitle").exists()).to.be.false;
     });
+
+    it("renders the navigation in the secondaryMenu side without previousNavigation", () => {
+        previousNavigationEntryText = {};
+        side = "secondaryMenu";
+
+        wrapper = mount(MenuNavigation, {
+            global: {
+                plugins: [store]
+            }, propsData: {side}});
+
+        expect(wrapper.find("#mp-menu-navigation-secondaryMenu").exists()).to.be.true;
+        expect(wrapper.find("#mp-navigation-secondaryMenu").exists()).to.be.false;
+        expect(wrapper.find(".mp-menu-navigation-moduletitle").exists()).to.be.false;
+    });
+
+    it("mainMenu: calls navigateBack if clicked on previousNavigation", async () => {
+        wrapper = mount(MenuNavigation, {
+            global: {
+                plugins: [store]
+            }, propsData: {side}});
+        const navigation = wrapper.find("#mp-navigation-mainMenu");
+
+        await navigation.trigger("click");
+        expect(navigateBackSpy.calledOnce).to.be.true;
+        expect(navigateBackSpy.firstCall.args[1]).to.be.equals("mainMenu");
+
+    });
+
+    it("secondaryMenu: calls navigateBack if clicked on previousNavigation", async () => {
+        side = "secondaryMenu";
+        wrapper = mount(MenuNavigation, {
+            global: {
+                plugins: [store]
+            }, propsData: {side}});
+        const navigation = wrapper.find("#mp-navigation-secondaryMenu");
+
+        await navigation.trigger("click");
+        expect(navigateBackSpy.calledOnce).to.be.true;
+        expect(navigateBackSpy.firstCall.args[1]).to.be.equals("secondaryMenu");
+
+    });
+
 });
