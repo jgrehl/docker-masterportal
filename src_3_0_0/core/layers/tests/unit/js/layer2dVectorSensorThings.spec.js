@@ -2,15 +2,17 @@ import Cluster from "ol/source/Cluster.js";
 import {expect} from "chai";
 import Feature from "ol/Feature.js";
 import Point from "ol/geom/Point.js";
-import {Circle} from "ol/style.js";
 import sinon from "sinon";
+import crs from "@masterportal/masterportalapi/src/crs";
 import store from "../../../../../app-store";
 import VectorLayer from "ol/layer/Vector.js";
 import VectorSource from "ol/source/Vector.js";
+import Collection from "ol/Collection";
+import {Circle, Style} from "ol/style.js";
 
 import Layer2dVectorSensorThings from "../../../js/layer2dVectorSensorThings";
 
-describe("src_3_0_0/core/js/layers/layer2dVectorSensorThings.js", () => {
+describe.only("src_3_0_0/core/js/layers/layer2dVectorSensorThings.js", () => {
     let attributes,
         errorStub,
         sensorThingsLayer,
@@ -27,8 +29,13 @@ describe("src_3_0_0/core/js/layers/layer2dVectorSensorThings.js", () => {
                         return {
                             getCode: () => "EPSG:4326"
                         };
-                    }
+                    },
+                    getZoom: () => 0,
+                    getResolutions: () => []
                 };
+            },
+            getLayers: () => {
+                return new Collection();
             }
         };
 
@@ -51,6 +58,7 @@ describe("src_3_0_0/core/js/layers/layer2dVectorSensorThings.js", () => {
             version: "1.1"
         };
 
+        crs.registerProjections();
         sensorThingsLayer = new Layer2dVectorSensorThings(attributes);
     });
 
@@ -60,15 +68,15 @@ describe("src_3_0_0/core/js/layers/layer2dVectorSensorThings.js", () => {
 
     describe("createLayer", () => {
         it("new Layer2dVectorSensorThings should create an layer with no warning", () => {
-            const staLayer = new Layer2dVectorSensorThings({});
+            const sensorLayer = new Layer2dVectorSensorThings({});
 
-            expect(staLayer).not.to.be.undefined;
+            expect(sensorLayer).not.to.be.undefined;
             expect(warnStub.notCalled).to.be.true;
         });
 
         it("should create an ol/VectorLayer with source and style", () => {
-            const staLayer = new Layer2dVectorSensorThings(attributes),
-                layer = staLayer.getLayer();
+            const sensorLayer = new Layer2dVectorSensorThings(attributes),
+                layer = sensorLayer.getLayer();
 
             expect(layer).to.be.an.instanceof(VectorLayer);
             expect(layer.getSource()).to.be.an.instanceof(VectorSource);
@@ -80,8 +88,8 @@ describe("src_3_0_0/core/js/layers/layer2dVectorSensorThings.js", () => {
 
         it("createLayer shall create an ol/VectorLayer with cluster-source", () => {
             attributes.clusterDistance = 60;
-            const staLayer = new Layer2dVectorSensorThings(attributes),
-                layer = staLayer.getLayer();
+            const sensorLayer = new Layer2dVectorSensorThings(attributes),
+                layer = sensorLayer.getLayer();
 
             expect(layer).to.be.an.instanceof(VectorLayer);
             expect(layer.getSource()).to.be.an.instanceof(Cluster);
@@ -566,27 +574,6 @@ describe("src_3_0_0/core/js/layers/layer2dVectorSensorThings.js", () => {
         });
     });
 
-    describe("updateFeatureLocation", () => {
-        const feature = new Feature({
-                geometry: new Point([
-                    10.086822509765625,
-                    53.55825752009741
-                ])
-            }),
-            observation = {location: {geometry: {coordinates: [566625.84, 5928050.84]}}};
-
-        it("should do nothing if first param has no getGeometry function", () => {
-            const coordinates = feature.getGeometry().getCoordinates();
-
-            sensorThingsLayer.updateFeatureLocation({});
-            expect(feature.getGeometry().getCoordinates()).to.deep.equal(coordinates);
-        });
-
-        it("should update the coordinates", () => {
-            sensorThingsLayer.updateFeatureLocation(feature, observation);
-            expect(feature.getGeometry().getCoordinates()).to.deep.equal([566625.84, 5928050.84]);
-        });
-    });
 
     describe("enlargeExtent", () => {
         it("should return correctly enlarged extent", () => {
@@ -726,9 +713,51 @@ describe("src_3_0_0/core/js/layers/layer2dVectorSensorThings.js", () => {
             expect(sensorThingsLayer.getFeaturesInExtent(features, currentExtent)).to.be.an("array").to.have.lengthOf(2);
         });
 
+        it("should return all features inside enlarged extent by 'maxSpeedKmh'", () => {
+            attributes.maxSpeedKmh = 36;
+            const sensorLayer = new Layer2dVectorSensorThings(attributes),
+                features = [],
+                feature1 = new Feature({
+                    geometry: new Point([50, 50])
+                }),
+                feature2 = new Feature({
+                    geometry: new Point([150, 150])
+                }),
+                feature3 = new Feature({
+                    geometry: new Point([301, 301])
+                }),
+                currentExtent = [100, 100, 200, 200];
+
+            features.push(feature1);
+            features.push(feature2);
+            features.push(feature3);
+
+            // enlarged extent is [ 0, 0, 300, 300 ]
+            expect(sensorLayer.getFeaturesInExtent(features, currentExtent)).to.be.an("array").to.have.lengthOf(2);
+        });
+
+        it("should only return one feature inside enlarged extent by 'maxSpeedKmh'", () => {
+            attributes.maxSpeedKmh = 36;
+            const sensorLayer = new Layer2dVectorSensorThings(attributes),
+                features = [],
+                feature1 = new Feature({
+                    geometry: new Point([50, 50])
+                }),
+                feature3 = new Feature({
+                    geometry: new Point([501, 501])
+                }),
+                currentExtent = [100, 100, 200, 200];
+
+            features.push(feature1);
+            features.push(feature3);
+
+            // enlarged extent is [ 0, 0, 300, 300 ]
+            expect(sensorLayer.getFeaturesInExtent(features, currentExtent)).to.be.an("array").to.have.lengthOf(1);
+        });
+
         it("should return all feature inside enlarged extent by 'maxSpeedKmh'", () => {
             attributes.maxSpeedKmh = 36;
-            const staLayer = new Layer2dVectorSensorThings(attributes),
+            const sensorLayer = new Layer2dVectorSensorThings(attributes),
                 features = [],
                 feature1 = new Feature({
                     geometry: new Point([50, 50])
@@ -745,12 +774,12 @@ describe("src_3_0_0/core/js/layers/layer2dVectorSensorThings.js", () => {
             features.push(feature2);
             features.push(feature3);
 
-            expect(staLayer.getFeaturesInExtent(features, currentExtent)).to.be.an("array").to.have.lengthOf(2);
+            expect(sensorLayer.getFeaturesInExtent(features, currentExtent)).to.be.an("array").to.have.lengthOf(3);
         });
 
         it("should only return one feature inside enlarged extent by 'maxSpeedKmh'", () => {
             attributes.maxSpeedKmh = 36;
-            const staLayer = new Layer2dVectorSensorThings(attributes),
+            const sensorLayer = new Layer2dVectorSensorThings(attributes),
                 features = [],
                 feature1 = new Feature({
                     geometry: new Point([50, 50])
@@ -763,7 +792,7 @@ describe("src_3_0_0/core/js/layers/layer2dVectorSensorThings.js", () => {
             features.push(feature1);
             features.push(feature3);
 
-            expect(staLayer.getFeaturesInExtent(features, currentExtent)).to.be.an("array").to.have.lengthOf(0);
+            expect(sensorLayer.getFeaturesInExtent(features, currentExtent)).to.be.an("array").to.have.lengthOf(1);
         });
     });
 
@@ -2045,6 +2074,7 @@ describe("src_3_0_0/core/js/layers/layer2dVectorSensorThings.js", () => {
         });
 
         it("should call fetchHistoricalLocations if datastream id's are found in current extent", () => {
+            sensorThingsLayer.set("historicalLocations", 5);
             const fetchHistoricalLocationsStub = sinon.stub(sensorThingsLayer, "fetchHistoricalLocations");
 
             sinon.stub(sensorThingsLayer, "getDatastreamIdsInCurrentExtent").returns([0]);
@@ -2126,20 +2156,20 @@ describe("src_3_0_0/core/js/layers/layer2dVectorSensorThings.js", () => {
     });
     describe("getScale", () => {
         it("returns the scale", () => {
-            const staLayer = new Layer2dVectorSensorThings(attributes);
+            const sensorLayer = new Layer2dVectorSensorThings(attributes);
 
-            expect(staLayer.getScale(0, 4)).to.be.equal(0.8);
-            expect(staLayer.getScale(1, 4)).to.be.equal(0.65);
-            expect(staLayer.getScale(2, 4)).to.be.equal(0.5);
-            expect(staLayer.getScale(3, 4).toFixed(2)).to.be.equal("0.35");
-            expect(staLayer.getScale(4, 4).toFixed(1)).to.be.equal("0.2");
+            expect(sensorLayer.getScale(0, 4)).to.be.equal(0.7);
+            expect(sensorLayer.getScale(1, 4)).to.be.equal(0.575);
+            expect(sensorLayer.getScale(2, 4).toFixed(2)).to.be.equal("0.45");
+            expect(sensorLayer.getScale(3, 4).toFixed(2)).to.be.equal("0.32");
+            expect(sensorLayer.getScale(4, 4).toFixed(1)).to.be.equal("0.2");
 
         });
     });
 
     describe("getStyleOfHistoricalFeature", () => {
         it("get style from type regularShape", () => {
-            const staLayer = new Layer2dVectorSensorThings(attributes),
+            const sensorLayer = new Layer2dVectorSensorThings(attributes),
                 originStyle = {
                     type: "regularShape",
                     rsRadius: 10,
@@ -2148,7 +2178,7 @@ describe("src_3_0_0/core/js/layers/layer2dVectorSensorThings.js", () => {
                     rsStrokeWidth: 2
                 },
                 scale = 0.8,
-                style = staLayer.getStyleOfHistoricalFeature(originStyle, scale);
+                style = sensorLayer.getStyleOfHistoricalFeature(originStyle, scale);
 
             expect(style.getImage()).to.be.an.instanceof(Circle);
             expect(style.getImage().getRadius()).to.equal(10);
@@ -2156,7 +2186,7 @@ describe("src_3_0_0/core/js/layers/layer2dVectorSensorThings.js", () => {
         });
 
         it("get style from type circle", () => {
-            const staLayer = new Layer2dVectorSensorThings(attributes),
+            const sensorLayer = new Layer2dVectorSensorThings(attributes),
                 originStyle = {
                     type: "circle",
                     circleRadius: 10,
@@ -2165,7 +2195,7 @@ describe("src_3_0_0/core/js/layers/layer2dVectorSensorThings.js", () => {
                     circleStrokeWidth: 2
                 },
                 scale = 0.8,
-                style = staLayer.getStyleOfHistoricalFeature(originStyle, scale);
+                style = sensorLayer.getStyleOfHistoricalFeature(originStyle, scale);
 
             expect(style.getImage()).to.be.an.instanceof(Circle);
             expect(style.getImage().getRadius()).to.equal(10);
@@ -2182,6 +2212,530 @@ describe("src_3_0_0/core/js/layers/layer2dVectorSensorThings.js", () => {
             sensorThingsLayer.keepUpdating = true;
             sensorThingsLayer.startIntervalUpdate();
             expect(sensorThingsLayer.intervallRequest).to.be.null;
+        });
+    });
+
+    describe("updateFeatureLocation", () => {
+        const feature = new Feature({
+                geometry: new Point([
+                    10.086822509765625,
+                    53.55825752009741
+                ])
+            }),
+            observation = {location: {geometry: {coordinates: [566625.84, 5928050.84]}}};
+
+        it("should do nothing if first param has no getGeometry function", () => {
+            const coordinates = feature.getGeometry().getCoordinates();
+
+            sensorThingsLayer.updateFeatureLocation({});
+            expect(feature.getGeometry().getCoordinates()).to.deep.equal(coordinates);
+        });
+        it("should update the coordinates", () => {
+            sensorThingsLayer.set("crs", "EPSG:25832");
+            sensorThingsLayer.updateFeatureLocation(feature, observation);
+            expect(feature.getGeometry().getCoordinates()).to.deep.equal([-400603.08723813354, -7845263.190976434]);
+        });
+    });
+
+    describe("enlargeExtentForMovableFeatures", () => {
+        it("should return false if the given parameter is null", () => {
+            expect(sensorThingsLayer.enlargeExtentForMovableFeatures(null)).to.be.false;
+        });
+
+        it("should return false if the given parameter is undefined", () => {
+            expect(sensorThingsLayer.enlargeExtentForMovableFeatures(undefined)).to.be.false;
+        });
+
+        it("should return false if the given parameter is null", () => {
+            expect(sensorThingsLayer.enlargeExtentForMovableFeatures(666)).to.be.false;
+        });
+
+        it("should return false if the given parameter is a string", () => {
+            expect(sensorThingsLayer.enlargeExtentForMovableFeatures("666")).to.be.false;
+        });
+
+        it("should return false if the given parameter is an object", () => {
+            expect(sensorThingsLayer.enlargeExtentForMovableFeatures({})).to.be.false;
+        });
+
+        it("should return false if the given parameter is a boolean", () => {
+            expect(sensorThingsLayer.enlargeExtentForMovableFeatures(false)).to.be.false;
+        });
+
+        it("should return false if the given parameter is an empty array", () => {
+            expect(sensorThingsLayer.enlargeExtentForMovableFeatures([])).to.be.false;
+        });
+
+        it("should call an error if the given parameter is not an array", () => {
+            sensorThingsLayer.enlargeExtentForMovableFeatures(true);
+            expect(console.error.calledOnce).to.be.true;
+        });
+
+        it("should return false if the second passed parameter is null", () => {
+            expect(sensorThingsLayer.enlargeExtentForMovableFeatures([400, 400, 900, 900], null)).to.be.false;
+        });
+
+        it("should return false if the second passed parameter is undefined", () => {
+            expect(sensorThingsLayer.enlargeExtentForMovableFeatures([400, 400, 900, 900], undefined)).to.be.false;
+        });
+
+        it("should return false if the second passed parameter is a string", () => {
+            expect(sensorThingsLayer.enlargeExtentForMovableFeatures([400, 400, 900, 900], "666")).to.be.false;
+        });
+
+        it("should return false if the second passed parameter is an object", () => {
+            expect(sensorThingsLayer.enlargeExtentForMovableFeatures([400, 400, 900, 900], {})).to.be.false;
+        });
+
+        it("should return false if the second passed parameter is a boolean", () => {
+            expect(sensorThingsLayer.enlargeExtentForMovableFeatures([400, 400, 900, 900], false)).to.be.false;
+        });
+
+        it("should return false if the second passed parameter is an empty array", () => {
+            expect(sensorThingsLayer.enlargeExtentForMovableFeatures([400, 400, 900, 900], [])).to.be.false;
+        });
+
+        it("should call an error if the second parameter is not a number", () => {
+            sensorThingsLayer.enlargeExtentForMovableFeatures([400, 400, 900, 900], null);
+            expect(console.error.calledOnce).to.be.true;
+        });
+
+        it("should call an error if the third parameter is not a number", () => {
+            sensorThingsLayer.enlargeExtentForMovableFeatures([400, 400, 900, 900], 36, null);
+            expect(console.error.calledOnce).to.be.true;
+        });
+
+        it("should return correctly enlarged extent if third parameter is not a number", () => {
+            expect(sensorThingsLayer.enlargeExtentForMovableFeatures([400, 400, 900, 900], 36, undefined)).to.be.an("array").to.deep.equal([300, 300, 1000, 1000]);
+        });
+
+        it("should return correctly enlarged extent if no third parameter is given", () => {
+            expect(sensorThingsLayer.enlargeExtentForMovableFeatures([400, 400, 900, 900], 36)).to.be.an("array").to.deep.equal([300, 300, 1000, 1000]);
+        });
+
+        it("should return correctly enlarged extent if all parameter are given", () => {
+            expect(sensorThingsLayer.enlargeExtentForMovableFeatures([400, 400, 900, 900], 36, 20)).to.be.an("array").to.deep.equal([200, 200, 1100, 1100]);
+        });
+    });
+
+    describe("updateHistoricalFeatures", () => {
+        it("should do nothing if first param is no object with 'get' method", () => {
+            const removeFeatureStub = sinon.stub(sensorThingsLayer.getLayerSource(), "removeFeature"),
+                feature = {};
+
+            sensorThingsLayer.updateHistoricalFeatures(feature);
+            expect(removeFeatureStub.called).to.be.false;
+        });
+        it("should do nothing if the get('historicalFeatureIds') function on the first param does not return an array", () => {
+            const removeFeatureStub = sinon.stub(sensorThingsLayer.getLayerSource(), "removeFeature"),
+                feature = {
+                    get: () => undefined
+                };
+
+            sensorThingsLayer.updateHistoricalFeatures(feature, feature);
+            expect(removeFeatureStub.called).to.be.false;
+        });
+        it("should do nothing if third param is no object with 'set' method", () => {
+            const removeFeatureStub = sinon.stub(sensorThingsLayer.getLayerSource(), "removeFeature"),
+                feature = {
+                    get: () => undefined
+                };
+
+            sensorThingsLayer.updateHistoricalFeatures(feature, feature);
+            expect(removeFeatureStub.called).to.be.false;
+        });
+        it("should call all expected functions", () => {
+            const removeFeatureStub = sinon.stub(sensorThingsLayer.getLayerSource(), "removeFeature"),
+                getFeatureByIdStub = sinon.stub(sensorThingsLayer.getLayerSource(), "getFeatureById"),
+                addFeatureStub = sinon.stub(sensorThingsLayer.getLayerSource(), "addFeature"),
+                getScaleStub = sinon.stub(sensorThingsLayer, "getScale"),
+                feature = {
+                    get: () => [0],
+                    getId: sinon.stub(),
+                    set: sinon.stub(),
+                    setId: sinon.stub()
+                };
+
+            sensorThingsLayer.updateHistoricalFeatures(feature, feature, sensorThingsLayer.getLayerSource());
+            expect(removeFeatureStub.called).to.be.true;
+            expect(getFeatureByIdStub.called).to.be.true;
+            expect(addFeatureStub.called).to.be.true;
+            expect(getScaleStub.called).to.be.true;
+        });
+    });
+
+    describe("fetchHistoricalLocations", () => {
+        it("should do nothing if first parameter is not a string", () => {
+            const buildSensorThingsUrlStub = sinon.stub(sensorThingsLayer, "buildSensorThingsUrl");
+
+            sensorThingsLayer.fetchHistoricalLocations();
+            expect(buildSensorThingsUrlStub.called).to.be.false;
+        });
+        it("should do nothing if second parameter is not an object", () => {
+            const buildSensorThingsUrlStub = sinon.stub(sensorThingsLayer, "buildSensorThingsUrl");
+
+            sensorThingsLayer.fetchHistoricalLocations("", undefined, "");
+            sensorThingsLayer.fetchHistoricalLocations("", null, "");
+            sensorThingsLayer.fetchHistoricalLocations("", true, "");
+            sensorThingsLayer.fetchHistoricalLocations("", false, "");
+            sensorThingsLayer.fetchHistoricalLocations("", "string", "");
+            sensorThingsLayer.fetchHistoricalLocations("", 1234, "");
+            sensorThingsLayer.fetchHistoricalLocations("", [], "");
+            expect(buildSensorThingsUrlStub.called).to.be.false;
+        });
+        it("should do nothing if third parameter is not a string", () => {
+            const buildSensorThingsUrlStub = sinon.stub(sensorThingsLayer, "buildSensorThingsUrl");
+
+            sensorThingsLayer.fetchHistoricalLocations("", {}, {});
+            sensorThingsLayer.fetchHistoricalLocations("", {}, undefined);
+            sensorThingsLayer.fetchHistoricalLocations("", {}, true);
+            sensorThingsLayer.fetchHistoricalLocations("", {}, false);
+            sensorThingsLayer.fetchHistoricalLocations("", {}, 1234);
+            sensorThingsLayer.fetchHistoricalLocations("", {}, null);
+
+            expect(buildSensorThingsUrlStub.called).to.be.false;
+        });
+    });
+
+    describe("getHistoricalLocationsOfFeatures", () => {
+        it("should do nothing", () => {
+            const fetchHistoricalLocationsByDatastreamIdStub = sinon.stub(sensorThingsLayer, "fetchHistoricalLocationsByDatastreamId");
+
+            sinon.stub(sensorThingsLayer, "getDatastreamIdsInCurrentExtent").returns([]);
+            sensorThingsLayer.getHistoricalLocationsOfFeatures();
+            expect(fetchHistoricalLocationsByDatastreamIdStub.called).to.be.false;
+        });
+        it("should call fetchHistoricalLocations if datastream id's are found in current extent", () => {
+            const fetchHistoricalLocationsByDatastreamIdStub = sinon.stub(sensorThingsLayer, "fetchHistoricalLocationsByDatastreamId");
+
+            sinon.stub(sensorThingsLayer, "getDatastreamIdsInCurrentExtent").returns([0]);
+            sensorThingsLayer.getHistoricalLocationsOfFeatures();
+            expect(fetchHistoricalLocationsByDatastreamIdStub.called).to.be.true;
+        });
+    });
+
+    describe("fetchHistoricalLocationsByDatastreamId", () => {
+        it("should do nothing if first param is no array", () => {
+            const getFeatureByDatastreamIdStub = sinon.stub(sensorThingsLayer, "getFeatureByDatastreamId");
+
+            sensorThingsLayer.fetchHistoricalLocationsByDatastreamId({});
+            expect(getFeatureByDatastreamIdStub.called).to.be.false;
+            sensorThingsLayer.fetchHistoricalLocationsByDatastreamId("");
+            expect(getFeatureByDatastreamIdStub.called).to.be.false;
+            sensorThingsLayer.fetchHistoricalLocationsByDatastreamId(1234);
+            expect(getFeatureByDatastreamIdStub.called).to.be.false;
+            sensorThingsLayer.fetchHistoricalLocationsByDatastreamId(true);
+            expect(getFeatureByDatastreamIdStub.called).to.be.false;
+            sensorThingsLayer.fetchHistoricalLocationsByDatastreamId(false);
+            expect(getFeatureByDatastreamIdStub.called).to.be.false;
+            sensorThingsLayer.fetchHistoricalLocationsByDatastreamId(undefined);
+            expect(getFeatureByDatastreamIdStub.called).to.be.false;
+            sensorThingsLayer.fetchHistoricalLocationsByDatastreamId(null);
+            expect(getFeatureByDatastreamIdStub.called).to.be.false;
+        });
+        it("should do nothing if second param is no undefined", () => {
+            const getFeatureByDatastreamIdStub = sinon.stub(sensorThingsLayer, "getFeatureByDatastreamId");
+
+            sensorThingsLayer.fetchHistoricalLocationsByDatastreamId([], undefined);
+            expect(getFeatureByDatastreamIdStub.called).to.be.false;
+        });
+        it("should do nothing if third param is NaN", () => {
+            const getFeatureByDatastreamIdStub = sinon.stub(sensorThingsLayer, "getFeatureByDatastreamId");
+
+            sensorThingsLayer.fetchHistoricalLocationsByDatastreamId([], 0, NaN);
+            expect(getFeatureByDatastreamIdStub.called).to.be.false;
+        });
+        it("should do nothing if fourth param is not a string", () => {
+            const getFeatureByDatastreamIdStub = sinon.stub(sensorThingsLayer, "getFeatureByDatastreamId");
+
+            sensorThingsLayer.fetchHistoricalLocationsByDatastreamId([], 0, 0, undefined);
+            expect(getFeatureByDatastreamIdStub.called).to.be.false;
+            sensorThingsLayer.fetchHistoricalLocationsByDatastreamId([], 0, 0, true);
+            expect(getFeatureByDatastreamIdStub.called).to.be.false;
+            sensorThingsLayer.fetchHistoricalLocationsByDatastreamId([], 0, 0, false);
+            expect(getFeatureByDatastreamIdStub.called).to.be.false;
+            sensorThingsLayer.fetchHistoricalLocationsByDatastreamId([], 0, 0, {});
+            expect(getFeatureByDatastreamIdStub.called).to.be.false;
+            sensorThingsLayer.fetchHistoricalLocationsByDatastreamId([], 0, 0, []);
+            expect(getFeatureByDatastreamIdStub.called).to.be.false;
+            sensorThingsLayer.fetchHistoricalLocationsByDatastreamId([], 0, 0, null);
+            expect(getFeatureByDatastreamIdStub.called).to.be.false;
+            sensorThingsLayer.fetchHistoricalLocationsByDatastreamId([], 0, 0, 1234);
+            expect(getFeatureByDatastreamIdStub.called).to.be.false;
+        });
+        it("should do nothing if fifht param is not an object", () => {
+            const getFeatureByDatastreamIdStub = sinon.stub(sensorThingsLayer, "getFeatureByDatastreamId");
+
+            sensorThingsLayer.fetchHistoricalLocationsByDatastreamId([], 0, 0, "string", undefined);
+            expect(getFeatureByDatastreamIdStub.called).to.be.false;
+            sensorThingsLayer.fetchHistoricalLocationsByDatastreamId([], 0, 0, "string", null);
+            expect(getFeatureByDatastreamIdStub.called).to.be.false;
+            sensorThingsLayer.fetchHistoricalLocationsByDatastreamId([], 0, 0, "string", true);
+            expect(getFeatureByDatastreamIdStub.called).to.be.false;
+            sensorThingsLayer.fetchHistoricalLocationsByDatastreamId([], 0, 0, "string", false);
+            expect(getFeatureByDatastreamIdStub.called).to.be.false;
+            sensorThingsLayer.fetchHistoricalLocationsByDatastreamId([], 0, 0, "string", 1234);
+            expect(getFeatureByDatastreamIdStub.called).to.be.false;
+            sensorThingsLayer.fetchHistoricalLocationsByDatastreamId([], 0, 0, "string", "string");
+            expect(getFeatureByDatastreamIdStub.called).to.be.false;
+            sensorThingsLayer.fetchHistoricalLocationsByDatastreamId([], 0, 0, "string", []);
+            expect(getFeatureByDatastreamIdStub.called).to.be.false;
+        });
+        it("should do nothing if sixht param is not a string", () => {
+            const getFeatureByDatastreamIdStub = sinon.stub(sensorThingsLayer, "getFeatureByDatastreamId");
+
+            sensorThingsLayer.fetchHistoricalLocationsByDatastreamId([], 0, 0, "string", {}, undefined);
+            expect(getFeatureByDatastreamIdStub.called).to.be.false;
+            sensorThingsLayer.fetchHistoricalLocationsByDatastreamId([], 0, 0, "string", {}, null);
+            expect(getFeatureByDatastreamIdStub.called).to.be.false;
+            sensorThingsLayer.fetchHistoricalLocationsByDatastreamId([], 0, 0, "string", {}, {});
+            expect(getFeatureByDatastreamIdStub.called).to.be.false;
+            sensorThingsLayer.fetchHistoricalLocationsByDatastreamId([], 0, 0, "string", {}, []);
+            expect(getFeatureByDatastreamIdStub.called).to.be.false;
+            sensorThingsLayer.fetchHistoricalLocationsByDatastreamId([], 0, 0, "string", {}, true);
+            expect(getFeatureByDatastreamIdStub.called).to.be.false;
+            sensorThingsLayer.fetchHistoricalLocationsByDatastreamId([], 0, 0, "string", {}, false);
+            expect(getFeatureByDatastreamIdStub.called).to.be.false;
+            sensorThingsLayer.fetchHistoricalLocationsByDatastreamId([], 0, 0, "string", {}, 1234);
+            expect(getFeatureByDatastreamIdStub.called).to.be.false;
+        });
+        it("should call fetchHistoricalLocations", () => {
+            const getFeatureByDatastreamIdStub = sinon.stub(sensorThingsLayer, "getFeatureByDatastreamId"),
+                fetchHistoricalLocationsStub = sinon.stub(sensorThingsLayer, "fetchHistoricalLocations");
+
+            sensorThingsLayer.fetchHistoricalLocationsByDatastreamId([], 0, 0, "string", {}, "string");
+            expect(getFeatureByDatastreamIdStub.called).to.be.true;
+            expect(fetchHistoricalLocationsStub.called).to.be.true;
+        });
+    });
+
+    describe("parseSensorDataToFeature", () => {
+        it("should not set historicalFeatures if given feature has no get function", () => {
+            const addFeatureStub = sinon.stub(sensorThingsLayer.getLayerSource(), "addFeatures"),
+                feature = {
+                    getId: () => 0
+                };
+
+            sinon.stub(sensorThingsLayer, "getAllThings").returns([]);
+            sinon.stub(sensorThingsLayer, "createFeaturesFromSensorData").returns([feature]);
+
+            sensorThingsLayer.parseSensorDataToFeature(feature, [], {}, "url", "1.1");
+
+            expect(addFeatureStub.called).to.be.false;
+        });
+        it("should not set historicalFeatures if given feature has already historicalFeatures", () => {
+            const addFeatureStub = sinon.stub(sensorThingsLayer.getLayerSource(), "addFeatures"),
+                feature = {
+                    getId: () => 0,
+                    get: () => []
+                };
+
+            sinon.stub(sensorThingsLayer, "getAllThings").returns([]);
+            sinon.stub(sensorThingsLayer, "createFeaturesFromSensorData").returns([feature]);
+
+            sensorThingsLayer.parseSensorDataToFeature(feature, [], {}, "url", "1.1");
+
+            expect(addFeatureStub.called).to.be.false;
+        });
+        it("should set historicalFeatures if given feature has no historicalFeatures and has a get function", () => {
+            const addFeatureStub = sinon.stub(sensorThingsLayer.getLayerSource(), "addFeatures"),
+                feature = {
+                    getId: () => 0,
+                    get: () => undefined,
+                    set: (val) => {
+                        feature.historicalFeatures = val;
+                    },
+                    historicalFeatures: undefined
+                };
+
+            sinon.stub(sensorThingsLayer, "getAllThings").returns([]);
+            sinon.stub(sensorThingsLayer, "createFeaturesFromSensorData").returns([feature]);
+            store.getters = {
+                "Maps/projection": {
+                    getCode: () => "EPSG:25832"
+                }
+            };
+
+            sensorThingsLayer.parseSensorDataToFeature(feature, [], {}, "url", "1.1");
+
+            expect(addFeatureStub.called).to.be.true;
+        });
+    });
+
+    describe("resetHistoricalLocations", () => {
+        it("should reset historicalLocations attribut", () => {
+            const layerSource = sensorThingsLayer.getLayerSource(),
+                removeFeatureStub = sinon.stub(layerSource, "removeFeature");
+
+            sinon.stub(layerSource, "getFeatures").returns([{
+                get: (fnName) => {
+                    if (fnName === "historicalFeatureIds") {
+                        return [0];
+                    }
+                    return 0;
+                },
+                unset: sinon.stub()
+            }]);
+            sensorThingsLayer.resetHistoricalLocations(0);
+            expect(removeFeatureStub.called).to.be.true;
+        });
+    });
+
+    describe("getScale", () => {
+        it("returns the scale", () => {
+            const sensorLayer = new Layer2dVectorSensorThings(attributes);
+
+            expect(sensorLayer.getScale(0, 4)).to.be.equal(0.7);
+            expect(sensorLayer.getScale(1, 4)).to.be.equal(0.575);
+            expect(sensorLayer.getScale(2, 4).toFixed(2)).to.be.equal("0.45");
+            expect(sensorLayer.getScale(3, 4).toFixed(2)).to.be.equal("0.32");
+            expect(sensorLayer.getScale(4, 4).toFixed(1)).to.be.equal("0.2");
+
+        });
+
+        it("should returns the correct scale if zoomLevel ignore", () => {
+            const sensorLayer = new Layer2dVectorSensorThings(attributes),
+                zoomLevel = 2;
+
+            expect(sensorLayer.getScale(0, 4, false, zoomLevel)).to.be.equal(0.7);
+
+        });
+
+        it("should returns the correct scale by the given zoomLevel", () => {
+            const sensorLayer = new Layer2dVectorSensorThings(attributes),
+                zoomLevel = 2;
+
+            expect(sensorLayer.getScale(0, 4, true, zoomLevel)).to.be.equal(1.4);
+
+        });
+
+        it("should returns the correct scale by the give zoomLevel and zoomLevelCount", () => {
+            const sensorLayer = new Layer2dVectorSensorThings(attributes),
+                zoomLevel = 3,
+                zoomLevelCount = 7;
+
+            expect(sensorLayer.getScale(0, 4, true, zoomLevel, zoomLevelCount).toFixed(2)).to.be.equal("0.30");
+        });
+    });
+
+    describe("getStyleOfHistoricalFeature", () => {
+        it("get style from type regularShape", () => {
+            const sensorLayer = new Layer2dVectorSensorThings(attributes),
+                originStyle = {
+                    type: "regularShape",
+                    rsRadius: 10,
+                    rsFillColor: [0, 72, 153, 0.7],
+                    rsStrokeColor: [0, 72, 153, 1],
+                    rsStrokeWidth: 2
+                },
+                scale = 0.8,
+                style = sensorLayer.getStyleOfHistoricalFeature(originStyle, scale);
+
+            expect(style.getImage()).to.be.an.instanceof(Circle);
+            expect(style.getImage().getRadius()).to.equal(10);
+            expect(style.getImage().getScale()).to.equal(0.8);
+        });
+
+        it("get style from type circle", () => {
+            const sensorLayer = new Layer2dVectorSensorThings(attributes),
+                originStyle = {
+                    type: "circle",
+                    circleRadius: 10,
+                    circleFillColor: [0, 72, 153, 0.7],
+                    circleStrokeColor: [0, 72, 153, 1],
+                    circleStrokeWidth: 2
+                },
+                scale = 0.8,
+                style = sensorLayer.getStyleOfHistoricalFeature(originStyle, scale);
+
+            expect(style.getImage()).to.be.an.instanceof(Circle);
+            expect(style.getImage().getRadius()).to.equal(10);
+            expect(style.getImage().getScale()).to.equal(0.8);
+        });
+
+        it("get style from type icon", () => {
+            const sensorLayer = new Layer2dVectorSensorThings(attributes),
+                originStyle = {
+                    type: "icon",
+                    circleRadius: 10,
+                    circleFillColor: [0, 72, 153, 0.7],
+                    circleStrokeColor: [0, 72, 153, 1],
+                    circleStrokeWidth: 2
+                },
+                scale = 0.8,
+                style = sensorLayer.getStyleOfHistoricalFeature(originStyle, scale);
+
+            expect(style.getImage()).to.be.an.instanceof(Circle);
+            expect(style.getImage().getRadius()).to.equal(10);
+            expect(style.getImage().getScale()).to.equal(0.8);
+        });
+
+        it("get default circle style", () => {
+            const sensorLayer = new Layer2dVectorSensorThings(attributes),
+                originStyle = {
+                    type: "icon"
+                },
+                scale = 0.8,
+                style = sensorLayer.getStyleOfHistoricalFeature(originStyle, scale);
+
+            expect(style.getImage()).to.be.an.instanceof(Circle);
+            expect(style.getImage().getRadius()).to.equal(10);
+            expect(style.getImage().getScale()).to.equal(0.8);
+        });
+    });
+
+    describe("startIntervalUpdate", () => {
+        it("should do not set timeout", () => {
+            sensorThingsLayer.startIntervalUpdate(1);
+            expect(sensorThingsLayer.intervallRequest).to.be.null;
+        });
+        it("should do not set the timeout if no timeout is passed", () => {
+            sensorThingsLayer.keepUpdating = true;
+            sensorThingsLayer.startIntervalUpdate();
+            expect(sensorThingsLayer.intervallRequest).to.be.null;
+        });
+    });
+
+    describe("setDynamicalScaleOfHistoricalFeatures", () => {
+        it("should not change the scale of feature", () => {
+            const sensorLayer = new Layer2dVectorSensorThings(attributes),
+                style = new Style({
+                    image: new Circle({
+                        scale: 1
+                    })
+                }),
+                feature = new Feature();
+
+            feature.setStyle(() => style);
+
+            sensorLayer.setDynamicalScaleOfHistoricalFeatures([feature], undefined, 10, true, true);
+            expect(feature.getStyle()(feature).getImage().getScale()).to.equal(1);
+            sensorLayer.setDynamicalScaleOfHistoricalFeatures([feature], 2, 0, true, true);
+            expect(feature.getStyle()(feature).getImage().getScale()).to.equal(1);
+            sensorLayer.setDynamicalScaleOfHistoricalFeatures([feature], 2, 10, false, true);
+            expect(feature.getStyle()(feature).getImage().getScale()).to.equal(1);
+            sensorLayer.setDynamicalScaleOfHistoricalFeatures([feature], 2, 10, true, false);
+            expect(feature.getStyle()(feature).getImage().getScale()).to.equal(1);
+        });
+
+        it("should change the scale of feature", () => {
+            const sensorLayer = new Layer2dVectorSensorThings(attributes),
+                style = new Style({
+                    image: new Circle({
+                        scale: 1
+                    })
+                }),
+                feature = new Feature();
+
+            feature.setStyle(() => style);
+            feature.set("originScale", 1);
+
+            sensorLayer.setDynamicalScaleOfHistoricalFeatures([feature], 1, 10, true, true);
+            expect(feature.getStyle()(feature).getImage().getScale()).to.equal(0.1);
+            sensorLayer.setDynamicalScaleOfHistoricalFeatures([feature], 2, 10, true, true);
+            expect(feature.getStyle()(feature).getImage().getScale()).to.equal(0.2);
+            sensorLayer.setDynamicalScaleOfHistoricalFeatures([feature], 5, 10, true, true);
+            expect(feature.getStyle()(feature).getImage().getScale()).to.equal(0.5);
         });
     });
 });
