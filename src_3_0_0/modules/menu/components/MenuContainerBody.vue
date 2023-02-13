@@ -43,7 +43,17 @@ export default {
             if (current !== "root" && current !== this.defaultComponent) {
                 current = this.componentMap[current];
             }
+
             return current;
+        }
+    },
+    methods: {
+        /**
+         * @param {Number} sectionIndex Index inside of a section of a menu.
+         * @returns {Array} Returns the path for a section inside the menu this component is rendered in.
+         */
+        path (sectionIndex) {
+            return [this.side, "sections", sectionIndex];
         }
     }
 };
