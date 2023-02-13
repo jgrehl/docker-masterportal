@@ -87,7 +87,7 @@ export default function STALayer (attrs) {
     // this.moveLayerRevisible = "";
 
     moment.locale("de");
-    this.registerInteractionMapScaleListeners();
+    // this.registerInteractionMapScaleListeners();
 }
 // Link prototypes and add prototype methods, means STALayer uses all methods and properties of Layer
 STALayer.prototype = Object.create(Layer.prototype);
@@ -368,9 +368,9 @@ STALayer.prototype.initializeSensorThings = function () {
     if (this.get("isVisibleInMap")) {
         this.toggleSubscriptionsOnMapChanges();
     }
-    if (store.getters["Maps/scale"] > this.get("maxScaleForHistoricalFeatures")) {
-        this.showHistoricalFeatures = false;
-    }
+    // if (store.getters["Maps/scale"] > this.get("maxScaleForHistoricalFeatures")) {
+    //     this.showHistoricalFeatures = false;
+    // }
 };
 
 /**
@@ -452,18 +452,18 @@ STALayer.prototype.initializeConnection = function (onsuccess, updateOnly = fals
  * @returns {void}
  */
 STALayer.prototype.toggleSubscriptionsOnMapChanges = function () {
-    const state = this.getStateOfSTALayer(this.get("isOutOfRange"), this.get("isVisibleInMap"), this.get("isSubscribed"));
+    // const state = this.getStateOfSTALayer(this.get("isOutOfRange"), this.get("isVisibleInMap"), this.get("isSubscribed"));
 
-    if (state === true) {
+    // if (state === true) {
         this.createLegend();
         // this.startSubscription(this.get("layer").getSource().getFeatures());
         // if (this.get("observeLocation") && this.moveLayerRevisible === false) {
         //     this.moveLayerRevisible = state;
         // }
-    }
-    else if (state === false) {
-        this.stopSubscription();
-    }
+    // }
+    // else if (state === false) {
+    //     this.stopSubscription();
+    // }
 };
 
 /**
