@@ -48,7 +48,9 @@ export default {
 </script>
 
 <template>
-    <div>
+    <div
+        :id="'mp-body-root-'+side"
+    >
         <MenuContainerBodyRootLogo
             v-if="titleBySide(side)"
             v-bind="titleBySide(side)"
