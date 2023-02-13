@@ -6,10 +6,15 @@ import MenuToggleButton from "../../../components/MenuToggleButton.vue";
 
 config.global.mocks.$t = key => key;
 
-describe.skip("src_3_0_0/modules/menu/MenuToggleButton.vue", () => {
-    let store;
+describe("src_3_0_0/modules/menu/MenuToggleButton.vue", () => {
+    let store,
+        side,
+        wrapper,
+        toggleMenuSpy;
 
     beforeEach(() => {
+        side = "mainMenu";
+        toggleMenuSpy = sinon.spy();
         store = createStore({
             namespaces: true,
             modules: {
@@ -20,6 +25,9 @@ describe.skip("src_3_0_0/modules/menu/MenuToggleButton.vue", () => {
                         secondaryExpanded: sinon.stub(),
                         mainToggleButtonIcon: () => "bi-list",
                         secondaryToggleButtonIcon: () => "bi-tools"
+                    },
+                    actions: {
+                        toggleMenu: toggleMenuSpy
                     }
                 }
             }
@@ -29,14 +37,13 @@ describe.skip("src_3_0_0/modules/menu/MenuToggleButton.vue", () => {
     afterEach(sinon.restore);
 
     it("should render the button including 'mainToggleButtonIcon' as the icon class for side 'main'", () => {
-        const side = "mainMenu",
-            wrapper = mount(MenuToggleButton, {
-                global: {
-                    plugins: [store]
-                },
-                propsData: {side}
-            }),
-            button = wrapper.find(`#${side}-toggle-button`),
+        wrapper = mount(MenuToggleButton, {
+            global: {
+                plugins: [store]
+            },
+            propsData: {side}
+        });
+        const button = wrapper.find(`#${side}-toggle-button`),
             icon = button.find("i");
 
         expect(button.exists()).to.be.true;
@@ -47,14 +54,14 @@ describe.skip("src_3_0_0/modules/menu/MenuToggleButton.vue", () => {
         expect(icon.classes()).to.eql(["bi-list"]);
     });
     it("should render the button including 'secondaryToggleButtonIcon' as the icon class for side 'secondaryMenu'", () => {
-        const side = "secondaryMenu",
-            wrapper = mount(MenuToggleButton, {
-                global: {
-                    plugins: [store]
-                },
-                propsData: {side}
-            }),
-            button = wrapper.find(`#${side}-toggle-button`),
+        side = "secondaryMenu";
+        wrapper = mount(MenuToggleButton, {
+            global: {
+                plugins: [store]
+            },
+            propsData: {side}
+        });
+        const button = wrapper.find(`#${side}-toggle-button`),
             icon = button.find("i");
 
         expect(button.exists()).to.be.true;
@@ -63,5 +70,32 @@ describe.skip("src_3_0_0/modules/menu/MenuToggleButton.vue", () => {
         expect(button.attributes("aria-label")).to.equal("common:menu.ariaLabelOpen");
         expect(icon.exists()).to.be.true;
         expect(icon.classes()).to.eql(["bi-tools"]);
+    });
+
+    it("mainMenu: calls toggleMenu if clicked on button", async () => {
+        wrapper = mount(MenuToggleButton, {
+            global: {
+                plugins: [store]
+            }, propsData: {side}});
+        const button = wrapper.find(`#${side}-toggle-button`);
+
+        await button.trigger("click");
+        expect(toggleMenuSpy.calledOnce).to.be.true;
+        expect(toggleMenuSpy.firstCall.args[1]).to.be.equals("mainMenu");
+
+    });
+
+    it("secondaryMenu: calls toggleMenu if clicked on button", async () => {
+        side = "secondaryMenu";
+        wrapper = mount(MenuToggleButton, {
+            global: {
+                plugins: [store]
+            }, propsData: {side}});
+        const button = wrapper.find(`#${side}-toggle-button`);
+
+        await button.trigger("click");
+        expect(toggleMenuSpy.calledOnce).to.be.true;
+        expect(toggleMenuSpy.firstCall.args[1]).to.be.equals("secondaryMenu");
+
     });
 });
