@@ -1,4 +1,5 @@
 <script>
+import getNestedValues from "../../../shared/js/utils/getNestedValues";
 import Layer from "../../layerTree/components/LayerComponent.vue";
 import SelectAllCheckBox from "./SelectAllCheckBox.vue";
 import LightButton from "../../../shared/modules/buttons/components/LightButton.vue";
@@ -50,6 +51,11 @@ export default {
             if (this.conf.elements) {
                 this.$emit("showNode", this.conf.name, this.conf.elements);
             }
+        },
+        showFolder () {
+            const allConfigs = getNestedValues(this.conf, "elements", true).flat(Infinity);
+
+            return this.isFolder && !allConfigs.every(conf => conf.showInLayerTree);
         }
     }
 };
@@ -61,7 +67,7 @@ export default {
             v-if="showSelectAllCheckBox"
             :confs="selectAllConfigs"
         />
-        <div v-if="isFolder">
+        <div v-if="showFolder()">
             <LightButton
                 :interaction="folderClicked"
                 :text="$t(conf.name)"
