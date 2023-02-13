@@ -1,6 +1,7 @@
 import {buffer, containsExtent} from "ol/extent";
 import Cluster from "ol/source/Cluster";
 import {Circle as CircleStyle, Fill, Stroke, Style} from "ol/style.js";
+import {unByKey} from "ol/Observable";
 import crs from "@masterportal/masterportalapi/src/crs";
 import {GeoJSON} from "ol/format";
 import moment from "moment";
@@ -72,6 +73,15 @@ export default function Layer2dVectorSensorThings (attributes) {
 
     this.intervallRequest = null;
     this.keepUpdating = false;
+    this.moveLayerRevisible = "";
+    this.subscribedDataStreamIds = {};
+    this.showHistoricalFeatures = true;
+    this.locationUpdating = {};
+    this.eventKeys = {};
+    this.lastScale = null;
+
+    this.registerInteractionMapResolutionListeners(this.get("scaleStyleByZoom"));
+    this.registerInteractionMapScaleListeners();
 }
 
 Layer2dVectorSensorThings.prototype = Object.create(Layer2dVector.prototype);
@@ -182,6 +192,9 @@ Layer2dVectorSensorThings.prototype.initializeSensorThings = function () {
         console.error("Connecting to mqtt-broker failed. Won't receive live updates. Reason:", err);
     }
     this.toggleSubscriptionsOnMapChanges();
+    if (store.getters["Maps/scale"] > this.get("maxScaleForHistoricalFeatures")) {
+        this.showHistoricalFeatures = false;
+    }
 };
 
 /**
@@ -218,28 +231,60 @@ Layer2dVectorSensorThings.prototype.createMqttConnectionToSensorThings = functio
             features = typeof layerSource.getFeatures === "function" && Array.isArray(layerSource.getFeatures()) ? layerSource.getFeatures() : [],
             feature = this.getFeatureByDatastreamId(features, datastreamId),
             phenomenonTime = this.getLocalTimeFormat(observation.phenomenonTime, timezone);
-        let removedFeature = null,
-            clonedFeature = null;
+        let clonedFeature = null;
 
         this.updateObservationForDatastreams(feature, datastreamId, observation);
         if (this.get("observeLocation") && isObject(feature)) {
             clonedFeature = feature.clone();
-            this.updateFeatureLocation(feature, observation);
-            if (typeof feature?.get === "function" && Array.isArray(feature.get("historicalFeatureIds")) && feature.get("historicalFeatureIds").length && isObject(observation?.location)) {
-                removedFeature = feature.get("historicalFeatureIds").pop();
-                layerSource.removeFeature(layerSource.getFeatureById(removedFeature));
-                clonedFeature.set("dataStreamId", undefined);
-                clonedFeature.setId(uniqueId("historicalFeature-"));
-                feature.get("historicalFeatureIds").unshift(clonedFeature.getId());
-                layerSource.addFeature(clonedFeature);
-                feature.get("historicalFeatureIds").forEach((id, index) => {
-                    const scale = this.getScale(index, feature.get("historicalFeatureIds").length);
-
-                    this.setStyleOfHistoricalFeature(layerSource.getFeatureById(id), scale, this.styleRule);
-                });
-            }
         }
         this.updateFeatureProperties(feature, datastreamId, observation.result, phenomenonTime, showNoDataValue, noDataValue);
+        if (this.get("observeLocation") && isObject(feature) && isObject(observation?.location) && this.subscribedDataStreamIds[datastreamId]?.subscribed) {
+            if (typeof feature?.get !== "function") {
+                return;
+            }
+            this.updateFeatureLocation(feature, observation, () => {
+                this.locationUpdating[feature.get("dataStreamId")] = false;
+            });
+            if (this.showHistoricalFeatures && Array.isArray(feature.get("historicalFeatureIds")) && feature.get("historicalFeatureIds").length) {
+                this.updateHistoricalFeatures(feature, clonedFeature, layerSource);
+            }
+        }
+    });
+};
+
+/**
+ * Update the historical features for given feature and add onto the map.
+ * @param {ol/Feature} feature The feature to update historical features for
+ * @param {ol/Feature} clonedFeature The cloned feature to use for old location
+ * @param {ol/Layer/Source} layerSource The layer source
+ * @returns {void}
+ */
+Layer2dVectorSensorThings.prototype.updateHistoricalFeatures = function (feature, clonedFeature, layerSource) {
+    if (typeof feature?.get !== "function" || !Array.isArray(feature.get("historicalFeatureIds")) || typeof clonedFeature?.set !== "function") {
+        return;
+    }
+    const removedFeature = feature.get("historicalFeatureIds").pop();
+
+    if (typeof removedFeature !== "undefined") {
+        layerSource.removeFeature(layerSource.getFeatureById(removedFeature));
+    }
+    clonedFeature.set("dataStreamId", undefined);
+    clonedFeature.setId(uniqueId("historicalFeature-"));
+    feature.get("historicalFeatureIds").unshift(clonedFeature.getId());
+    layerSource.addFeature(clonedFeature);
+    feature.get("historicalFeatureIds").forEach((id, index) => {
+        const scale = this.getScale(
+            index,
+            feature.get("historicalFeatureIds").length,
+            this.get("scaleStyleByZoom"),
+            mapCollection.getMapView("2D").getZoom() + 1,
+            mapCollection.getMapView("2D").getResolutions().length);
+
+        if (!isObject(layerSource.getFeatureById(id))) {
+            return;
+        }
+        layerSource.getFeatureById(id).set("originScale", this.getScale(index, feature.get("historicalFeatureIds").length));
+        this.setStyleOfHistoricalFeature(layerSource.getFeatureById(id), scale, this.styleRule);
     });
 };
 
@@ -336,7 +381,15 @@ Layer2dVectorSensorThings.prototype.initializeConnection = function (onsuccess, 
     this.callSensorThingsAPI(url, version, urlParams, currentExtent, intersect, sensorData => {
         const filteredSensorData = !updateOnly ? sensorData : sensorData.filter(data => !datastreamIds.includes(data?.properties?.dataStreamId)),
             features = this.createFeaturesFromSensorData(filteredSensorData, mapProjection, epsg, gfiTheme, utc),
-            layerSource = this.getLayerSource() instanceof Cluster ? this.getLayerSource().getSource() : this.getLayerSource();
+            layerSource = this.getLayerSource() instanceof Cluster ? this.getLayerSource().getSource() : this.getLayerSource(),
+            oldHistoricalFeatures = layerSource.getFeatures().filter(f => typeof f.get("dataStreamId") === "undefined"),
+            copyFeatures = {};
+
+        if (this.get("loadThingsOnlyInCurrentExtent")) {
+            oldHistoricalFeatures.forEach(oldFeature => {
+                copyFeatures[oldFeature.getId()] = oldFeature.clone();
+            });
+        }
 
         if (!updateOnly) {
             layerSource.clear();
@@ -356,7 +409,23 @@ Layer2dVectorSensorThings.prototype.initializeConnection = function (onsuccess, 
             onsuccess(features);
         }
 
-        if (typeof this.get("historicalLocations") === "number") {
+        if (typeof this.get("historicalLocations") === "number" && this.showHistoricalFeatures) {
+            if (this.get("loadThingsOnlyInCurrentExtent") && Object.entries(copyFeatures).length) {
+                features.forEach(feature => {
+                    const dataStreamIdFeature = feature.get("dataStreamId");
+
+                    if (this.subscribedDataStreamIds[dataStreamIdFeature]?.subscribed && Array.isArray(this.subscribedDataStreamIds[dataStreamIdFeature].historicalFeatureIds)) {
+                        feature.set("subscribed", true);
+                        feature.set("historicalFeatureIds", this.subscribedDataStreamIds[dataStreamIdFeature].historicalFeatureIds);
+                    }
+                });
+                Object.entries(copyFeatures).forEach(([id, feature]) => {
+                    feature.setId(id);
+                    layerSource.addFeature(feature);
+                });
+            }
+        }
+        if (this.get("observeLocation") && this.get("loadThingsOnlyInCurrentExtent")) {
             this.getHistoricalLocationsOfFeatures();
         }
     }, error => {
@@ -904,7 +973,8 @@ Layer2dVectorSensorThings.prototype.createFeaturesFromSensorData = function (sen
         }
         feature.set("utc", utc, true);
         if (isHistorical) {
-            feature.set("scale", this.getScale(index - 1, sensorData.length - 1));
+            feature.set("scale", this.getScale(index - 1, sensorData.length - 1, this.get("scaleStyleByZoom"), mapCollection.getMapView("2D").getZoom() + 1, mapCollection.getMapView("2D").getResolutions().length));
+            feature.set("originScale", this.getScale(index - 1, sensorData.length - 1));
         }
         feature = this.aggregateDataStreamValue(feature);
         feature = this.aggregateDataStreamPhenomenonTime(feature);
@@ -997,9 +1067,16 @@ Layer2dVectorSensorThings.prototype.aggregateDataStreamPhenomenonTime = function
  * @returns {void}
  */
 Layer2dVectorSensorThings.prototype.toggleSubscriptionsOnMapChanges = function () {
-    this.startSubscription(this.getLayer().getSource().getFeatures());
-    if (this.get("observeLocation") && this.get("moveLayerRevisible") === false) {
-        this.set("moveLayerRevisible", true);
+    const state = this.getStateOfSTALayer(this.getLayer().getVisible(), this.get("isSubscribed"));
+
+    if (state === true) {
+        this.startSubscription(this.getLayer().getSource().getFeatures());
+        if (this.get("observeLocation") && this.moveLayerRevisible === false) {
+            this.moveLayerRevisible = state;
+        }
+    }
+    else if (state === false) {
+        this.stopSubscription();
     }
 };
 
@@ -1015,6 +1092,42 @@ Layer2dVectorSensorThings.prototype.stopSubscription = function () {
     this.set("isSubscribed", false);
     store.dispatch("Maps/unregisterListener", {type: "moveend", listener: this.updateSubscription.bind(this)});
     this.unsubscribeFromSensorThings([], subscriptionTopics, version, mqttClient);
+    clearInterval(this.intervallRequest);
+    this.keepUpdating = false;
+};
+
+/**
+ * Starts the interval for continous updating the features in the current extent.
+ * @param {Number} timeout The timeout in milliseconds.
+ * @returns {void}
+ */
+Layer2dVectorSensorThings.prototype.startIntervalUpdate = function (timeout) {
+    if (!this.keepUpdating || typeof timeout !== "number") {
+        return;
+    }
+    if (this.intervallRequest !== null) {
+        clearInterval(this.intervallRequest);
+    }
+    this.intervallRequest = setTimeout(() => {
+        const datastreamIds = this.getDatastreamIdsInCurrentExtent(this.getLayerSource().getFeatures(), store.getters["Maps/extent"]),
+            subscriptionTopics = this.get("subscriptionTopics"),
+            version = this.get("version"),
+            mqttClient = this.mqttClient,
+            rh = this.get("mqttRh"),
+            qos = this.get("mqttQos");
+
+        this.unsubscribeFromSensorThings(datastreamIds, subscriptionTopics, version, mqttClient);
+        this.initializeConnection(features => {
+            this.subscribeToSensorThings(
+                this.getDatastreamIdsInCurrentExtent(features, store.getters["Maps/extent"]),
+                subscriptionTopics,
+                version,
+                mqttClient,
+                {rh, qos}
+            );
+        }, true);
+        this.startIntervalUpdate(timeout);
+    }, timeout);
 };
 
 /**
@@ -1076,12 +1189,11 @@ Layer2dVectorSensorThings.prototype.startIntervalUpdate = function (timeout) {
         const datastreamIds = this.getDatastreamIdsInCurrentExtent(this.getLayerSource().getFeatures(), store.getters["Maps/extent"]),
             subscriptionTopics = this.get("subscriptionTopics"),
             version = this.get("version"),
-            isVisibleInMap = this.get("isVisibleInMap"),
             mqttClient = this.mqttClient,
             rh = this.get("mqttRh"),
             qos = this.get("mqttQos");
 
-        this.unsubscribeFromSensorThings(datastreamIds, subscriptionTopics, version, isVisibleInMap, mqttClient);
+        this.unsubscribeFromSensorThings(datastreamIds, subscriptionTopics, version, mqttClient);
         this.initializeConnection(features => {
             this.subscribeToSensorThings(
                 this.getDatastreamIdsInCurrentExtent(features, store.getters["Maps/extent"]),
@@ -1107,7 +1219,7 @@ Layer2dVectorSensorThings.prototype.updateSubscription = function () {
         rh = this.get("mqttRh"),
         qos = this.get("mqttQos");
 
-    if (!this.get("loadThingsOnlyInCurrentExtent") && this.get("moveLayerRevisible") === false) {
+    if (!this.get("loadThingsOnlyInCurrentExtent") && !this.moveLayerRevisible) {
         this.unsubscribeFromSensorThings(datastreamIds, subscriptionTopics, version, mqttClient);
         this.subscribeToSensorThings(datastreamIds, subscriptionTopics, version, mqttClient, {rh, qos});
         if (typeof this.get("historicalLocations") === "number") {
@@ -1126,7 +1238,7 @@ Layer2dVectorSensorThings.prototype.updateSubscription = function () {
             );
         });
     }
-    this.set("moveLayerRevisible", false);
+    this.moveLayerRevisible = false;
 };
 
 /**
@@ -1148,15 +1260,21 @@ Layer2dVectorSensorThings.prototype.getDatastreamIdsInCurrentExtent = function (
  * @returns {ol/Feature[]} the features in the given extent
  */
 Layer2dVectorSensorThings.prototype.getFeaturesInExtent = function (features, currentExtent) {
-    const enlargedExtent = this.enlargeExtent(currentExtent, 0.05),
-        featuresInExtent = [];
+    const featuresInExtent = [];
+    let enlargedExtent = currentExtent;
+
+    if (typeof this.get("maxSpeedKmh") !== "undefined") {
+        enlargedExtent = this.enlargeExtentForMovableFeatures(currentExtent, this.get("maxSpeedKmh"), this.get("factor"));
+    }
+    else {
+        enlargedExtent = this.enlargeExtent(currentExtent, 0.05);
+    }
 
     features.forEach(feature => {
         if (containsExtent(enlargedExtent, feature.getGeometry().getExtent())) {
             featuresInExtent.push(feature);
         }
     });
-
     return featuresInExtent;
 };
 
@@ -1266,9 +1384,16 @@ Layer2dVectorSensorThings.prototype.unsubscribeFromSensorThings = function (data
             mqttClient.unsubscribe("v" + version + "/Datastreams(" + id + ")/Observations");
             if (this.get("observeLocation")) {
                 mqttClient.unsubscribe("v" + version + "/Datastreams(" + id + ")/Thing/Locations");
-                if (typeof this.get("historicalLocations") === "number") {
+                if (typeof this.get("historicalLocations") === "number" && this.showHistoricalFeatures) {
                     this.resetHistoricalLocations(id);
                 }
+                const layerSource = this.getLayerSource() instanceof Cluster ? this.getLayerSource().getSource() : this.getLayerSource(),
+                    feature = this.getFeatureByDatastreamId(layerSource.getFeatures(), id);
+
+                if (typeof feature?.set === "function") {
+                    feature.set("subscribed", false);
+                }
+                this.subscribedDataStreamIds[id] = false;
             }
             subscriptionTopics[id] = false;
         }
@@ -1290,14 +1415,39 @@ Layer2dVectorSensorThings.prototype.subscribeToSensorThings = function (dataStre
     if (!Array.isArray(dataStreamIds) || !isObject(subscriptionTopics) || !isObject(mqttClient)) {
         return false;
     }
+    const layerSource = this.getLayerSource() instanceof Cluster ? this.getLayerSource().getSource() : this.getLayerSource();
 
     dataStreamIds.forEach(id => {
         if (id && !subscriptionTopics[id]) {
             mqttClient.subscribe("v" + version + "/Datastreams(" + id + ")/Observations", mqttSubscribeOptions);
             if (this.get("observeLocation")) {
-                mqttClient.subscribe("v" + version + "/Datastreams(" + id + ")/Thing/Locations", mqttSubscribeOptions);
+                mqttClient.subscribe("v" + version + "/Datastreams(" + id + ")/Thing/Locations", mqttSubscribeOptions, () => {
+                    if (this.get("loadThingsOnlyInCurrentExtent")) {
+                        return;
+                    }
+                    this.fetchHistoricalLocationsByDatastreamId(
+                        layerSource.getFeatures(),
+                        id,
+                        parseInt(this.get("historicalLocations"), 10),
+                        this.get("url"),
+                        {orderby: "time+desc", expand: "Locations"},
+                        this.get("version"),
+                        () => {
+                            this.locationUpdating[id] = false;
+                        }
+                    );
+                });
             }
             subscriptionTopics[id] = true;
+            const feature = this.getFeatureByDatastreamId(layerSource.getFeatures(), id);
+
+            if (!isObject(feature)) {
+                return;
+            }
+            feature.set("subscribed", true);
+            this.subscribedDataStreamIds[id] = {
+                subscribed: true
+            };
         }
     });
 
@@ -1327,16 +1477,22 @@ Layer2dVectorSensorThings.prototype.updateObservationForDatastreams = function (
 * Updates the location of a feature.
 * @param {ol/Feature} feature feature to be updated
 * @param {Object} observation the observation to update the old coordinates with
+* @param {Function} onsuccess function which is called when coordinates updated once
 * @returns {void}
 */
-Layer2dVectorSensorThings.prototype.updateFeatureLocation = function (feature, observation) {
+Layer2dVectorSensorThings.prototype.updateFeatureLocation = function (feature, observation, onsuccess) {
     if (typeof feature?.getGeometry !== "function" || !Array.isArray(observation?.location?.geometry?.coordinates) || !observation.location.geometry.coordinates.length) {
         return;
     }
-
     const mapProjection = this.get("crs"),
         coordinates = this.get("epsg") !== mapProjection ? crs.transform(this.get("epsg"), mapProjection, observation.location.geometry.coordinates) : observation.location.geometry.coordinates;
 
+    if (typeof onsuccess === "function") {
+        this.locationUpdating[feature.get("dataStreamId")] = true;
+        this.eventKeys[feature.get("dataStreamId")] = feature.getGeometry().once("change", () => {
+            onsuccess();
+        });
+    }
     feature.getGeometry().setCoordinates(coordinates);
 };
 
@@ -1378,6 +1534,46 @@ Layer2dVectorSensorThings.prototype.updateFeatureProperties = function (feature,
 
     return true;
 };
+
+/**
+ * Register interaction with map view. Listens to change of scale and call removeHistoricalFeatures,
+ * if actual scale is less than configured maxScaleForHistoricalFeatures
+ * @returns {void}
+ */
+Layer2dVectorSensorThings.prototype.registerInteractionMapScaleListeners = function () {
+    // inka
+    store.watch((state, getters) => getters["Maps/scale"], scale => {
+        if (scale > this.get("maxScaleForHistoricalFeatures")) {
+            this.showHistoricalFeatures = false;
+            this.removeHistoricalFeatures();
+            this.lastScale = scale;
+            return;
+        }
+        this.showHistoricalFeatures = true;
+        if (scale <= this.get("maxScaleForHistoricalFeatures") && this.lastScale >= this.get("maxScaleForHistoricalFeatures")) {
+            this.getHistoricalLocationsOfFeatures();
+            this.lastScale = scale;
+        }
+    });
+};
+
+/**
+ * Removes the historical Features
+ * @returns {void}
+ */
+Layer2dVectorSensorThings.prototype.removeHistoricalFeatures = function () {
+    const layerSource = this.getLayerSource() instanceof Cluster ? this.getLayerSource().getSource() : this.getLayerSource(),
+        allFeatures = layerSource.getFeatures(),
+        featuresWithHistoricalIds = allFeatures.filter(feature => typeof feature.get("dataStreamId") !== "undefined" && Array.isArray(feature.get("historicalFeatureIds")));
+
+    featuresWithHistoricalIds.forEach(feature => {
+        if (typeof feature?.get === "function") {
+            feature.get("historicalFeatureIds").forEach(featureId => layerSource.removeFeature(layerSource.getFeatureById(featureId)));
+            feature.unset("historicalFeatureIds");
+        }
+    });
+};
+
 
 /**
  * Replaces a value of a piped property using dataStreamId to locate the right position in the piped property.
@@ -1448,7 +1644,7 @@ Layer2dVectorSensorThings.prototype.fetchHistoricalLocations = function (url, ur
         });
 
     http.getInExtent(requestUrl, {
-        extent: store.getters["Maps/getCurrentExtent"],
+        extent: store.getters["Maps/extent"],
         sourceProjection: store.getters["Maps/projection"].getCode(),
         targetProjection: this.get("epsg")
     }, true, result => {
@@ -1477,13 +1673,48 @@ Layer2dVectorSensorThings.prototype.getHistoricalLocationsOfFeatures = function 
         amount = parseInt(this.get("historicalLocations"), 10);
 
     datastreamIds.forEach(datastreamId => {
-        if (!isNaN(amount)) {
-            urlParam.root = `Datastreams(${datastreamId})/Thing/HistoricalLocations`;
-            urlParam.top = amount + 1;
+        this.fetchHistoricalLocationsByDatastreamId(allFeatures, datastreamId, amount, url, urlParam, version);
+    });
+};
+
+/**
+ * Fetches the historical locations by given datastream id.
+ * @param {ol/Feature[]} allFeatures All features on the map
+ * @param {Number} datastreamId Datastream id to to fetch for
+ * @param {Number} amount The amount of locations to fetch
+ * @param {String} url The base url
+ * @param {Object} urlParam Url params i.e.: {orderby: "time+desc"}
+ * @param {String} version The version
+ * @param {Function} onsuccess The function to call on success
+ * @returns {void}
+ */
+Layer2dVectorSensorThings.prototype.fetchHistoricalLocationsByDatastreamId = function (allFeatures, datastreamId, amount, url, urlParam, version, onsuccess) {
+    if (!Array.isArray(allFeatures) || typeof datastreamId === "undefined" || isNaN(amount) || typeof url !== "string" || !isObject(urlParam) || typeof version !== "string") {
+        return;
+    }
+    const feature = this.getFeatureByDatastreamId(allFeatures, datastreamId);
+
+    urlParam.root = `Datastreams(${datastreamId})/Thing/HistoricalLocations`;
+    urlParam.top = amount + 1;
+    if (this.subscribedDataStreamIds[datastreamId]?.subscribed && feature.get("historicalFeatureIds")) {
+        return;
+    }
+    this.fetchHistoricalLocations(url, urlParam, version, historicalSensorData => {
+        this.resetHistoricalLocations(datastreamId);
+        if (this.locationUpdating[datastreamId]) {
+            this.parseSensorDataToFeature(feature, historicalSensorData, urlParam, url, version);
+            return;
         }
-        this.fetchHistoricalLocations(url, urlParam, version, historicalSensorData => {
-            this.resetHistoricalLocations(datastreamId);
-            this.parseSensorDataToFeature(this.getFeatureByDatastreamId(allFeatures, datastreamId), historicalSensorData, urlParam, url, version);
+        if (!Array.isArray(historicalSensorData) || !Array.isArray(historicalSensorData[0]?.Locations) || !historicalSensorData[0].Locations.length) {
+            return;
+        }
+        this.updateFeatureLocation(feature, historicalSensorData[0].Locations[0], () => {
+            this.parseSensorDataToFeature(feature, historicalSensorData, urlParam, url, version);
+            unByKey(this.eventKeys[datastreamId]);
+            if (typeof onsuccess === "function") {
+                onsuccess();
+            }
+            this.locationUpdating[feature.get("dataStreamId")] = false;
         });
     });
 };
@@ -1518,6 +1749,9 @@ Layer2dVectorSensorThings.prototype.parseSensorDataToFeature = function (feature
     });
     layerSource.addFeatures(historicalFeatures);
     feature.set("historicalFeatureIds", historicalFeatureIds);
+    if (isObject(this.subscribedDataStreamIds[feature.get("dataStreamId")])) {
+        Object.assign(this.subscribedDataStreamIds[feature.get("dataStreamId")], {historicalFeatureIds});
+    }
 };
 
 /**
@@ -1540,10 +1774,16 @@ Layer2dVectorSensorThings.prototype.resetHistoricalLocations = function (datastr
  * The first historical fature has a scale 0.8 and the last one has a scale 0.2.
  * @param {Number} index The index of the historical feature
  * @param {Number} amount The amount of the historical features
+ * @param {Boolean} scaleStyleByZoom - Flag for the style to be dependent on the zoom level.
+ * @param {Number} [zoomLevel=1] - The current zoom level.
+ * @param {Number} [zoomLevelCount=1] - The number of zoom levels.
  * @returns {Number} scale
  */
-Layer2dVectorSensorThings.prototype.getScale = function (index, amount) {
-    return 0.8 - 0.6 * index / amount;
+Layer2dVectorSensorThings.prototype.getScale = function (index, amount, scaleStyleByZoom = false, zoomLevel = 1, zoomLevelCount = 1) {
+    if (scaleStyleByZoom) {
+        return (0.7 - 0.5 * index / amount) * zoomLevel / zoomLevelCount;
+    }
+    return 0.7 - 0.5 * index / amount;
 };
 /**
  * Sets the style of historical feature
@@ -1554,17 +1794,10 @@ Layer2dVectorSensorThings.prototype.getScale = function (index, amount) {
  */
 Layer2dVectorSensorThings.prototype.setStyleOfHistoricalFeature = function (feature, scale, styleRule) {
     if (!Array.isArray(styleRule) || !styleRule.length || !styleRule[0].style) {
-        console.error("The style rule is not right");
+        console.error("The style rule has wrong type, must be an array with at least one entry with prop style!", styleRule);
         return;
     }
-
-    const style = this.getStyleOfHistoricalFeature(styleRule[0].style, scale);
-
-    if (!style) {
-        console.error("There are not right style format for historical feature");
-        return;
-    }
-    feature.setStyle(style);
+    feature.setStyle(this.getStyleOfHistoricalFeature(styleRule[0].style, scale));
 };
 
 /**
@@ -1585,14 +1818,11 @@ Layer2dVectorSensorThings.prototype.getStyleOfHistoricalFeature = function (styl
         circleStrokeColor = style.rsStrokeColor;
         circleStrokeWidth = style.rsStrokeWidth;
     }
-    else if (style.type === "circle") {
-        circleRadius = style.circleRadius;
-        circleFillColor = style.circleFillColor;
-        circleStrokeColor = style.circleStrokeColor;
-        circleStrokeWidth = style.circleStrokeWidth;
-    }
     else {
-        return false;
+        circleRadius = style.circleRadius ? style.circleRadius : 10;
+        circleFillColor = style.circleFillColor ? style.circleFillColor : [0, 153, 255, 1];
+        circleStrokeColor = style.circleStrokeColor ? style.circleStrokeColor : [0, 0, 0, 1];
+        circleStrokeWidth = style.circleStrokeWidth ? style.circleStrokeWidth : 2;
     }
 
     return new Style({
@@ -1609,3 +1839,49 @@ Layer2dVectorSensorThings.prototype.getStyleOfHistoricalFeature = function (styl
         })
     });
 };
+
+/**
+ * Sets the scale of style for historical feature dynamically according to the zoom level
+ * @param {ol/Feature[]} features the historical features
+ * @param {Number} zoomLevel the current zoom level
+ * @param {Number} zoomLevelCount the count of zoom level
+ * @param {Boolean} observeLocation if the location is observed
+ * @param {Boolean} scaleStyleByZoom if the scale of style is reset by zoom
+ * @returns {void}
+ */
+Layer2dVectorSensorThings.prototype.setDynamicalScaleOfHistoricalFeatures = function (features, zoomLevel, zoomLevelCount, observeLocation, scaleStyleByZoom) {
+    if (!observeLocation || !scaleStyleByZoom || typeof zoomLevel !== "number" || zoomLevelCount < 1) {
+        return;
+    }
+    features.forEach(feature => {
+        if (feature.getStyle()) {
+            const style = feature.getStyle()(feature);
+
+            if (typeof style.getImage === "function" && style.getImage() !== null) {
+                style.getImage().setScale(feature.get("originScale") * zoomLevel / zoomLevelCount);
+                feature.setStyle(() => style);
+            }
+        }
+    });
+};
+
+/**
+ * Register interaction of resolution in map view.
+ * @param {Boolean} scaleStyleByZoom if the scale of style is reset by zoom
+ * @returns {void}
+ */
+Layer2dVectorSensorThings.prototype.registerInteractionMapResolutionListeners = function (scaleStyleByZoom) {
+    if (!scaleStyleByZoom) {
+        return;
+    }
+    store.watch((state, getters) => getters["Maps/resolution"], resolution => {
+        const layerSource = this.getLayerSource() instanceof Cluster ? this.getLayerSource().getSource() : this.getLayerSource(),
+            allFeatures = layerSource.getFeatures(),
+            historicalFeatures = allFeatures.filter(feature => typeof feature.get("dataStreamId") === "undefined" && typeof feature.get("originScale") !== "undefined"),
+            zoomLevel = mapCollection.getMapView("2D").getZoomForResolution(resolution) + 1,
+            zoomLevelCount = mapCollection.getMapView("2D").getResolutions().length;
+
+        this.setDynamicalScaleOfHistoricalFeatures(historicalFeatures, zoomLevel, zoomLevelCount, this.get("observeLocation"), scaleStyleByZoom);
+    });
+};
+
