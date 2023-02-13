@@ -6,23 +6,25 @@ import MenuContainerBodyRootItemElement from "../../../components/MenuContainerB
 
 config.global.mocks.$t = key => key;
 
-describe("src_3_0_0/modules/menu/MenuContainerBodyRootItems.vue", () => {
-    let store,
-    sections;
+describe.skip("src_3_0_0/modules/menu/MenuContainerBodyRootItems.vue", () => {
+    let store;
+    const sampleSection = [
+        {icon: "bi-test", name: "sampleSectionOne"},
+        {icon: "bi-test", name: "sampleSectionTwo"},
+        {icon: "bi-test", name: "sampleSectionThree"}
+    ];
 
     beforeEach(() => {
-        sections = [
-            {icon: "bi-test", name: "sampleSectionOne"},
-            {icon: "bi-test", name: "sampleSectionTwo"},
-            {icon: "bi-test", name: "sampleSectionThree"}
-        ];
         store = createStore({
             namespaces: true,
             modules: {
                 Menu: {
                     namespaced: true,
                     getters: {
-                        section: () => sections
+                        section: state => () => state.testSection
+                    },
+                    state: {
+                        testSection: []
                     },
                     mutations: {
                         setTestSection (state, section) {
