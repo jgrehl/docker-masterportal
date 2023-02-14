@@ -26,7 +26,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters("Menu", ["section"])
+        ...mapGetters("Menu", ["customMenuElementIcon", "section"])
     },
     created () {
         this.prepareItemProps();
@@ -44,6 +44,9 @@ export default {
             if ("type" in item) {
                 const stateProperties = this.$store.state.Modules[upperFirst(item.type)];
 
+                if (item.type === "customMenuElement" && !Object.prototype.hasOwnProperty.call(properties, "icon")) {
+                    properties.icon = this.customMenuElementIcon;
+                }
                 if (typeof stateProperties === "object") {
                     properties = stateProperties;
                 }
@@ -58,12 +61,20 @@ export default {
             if (items) {
                 if (Array.isArray(items)) {
                     this.section(this.path).forEach(item => {
-                        this.itemProps.push(this.chooseProperties(item));
+                        const props = this.chooseProperties(item);
+
+                        if (props) {
+                            this.itemProps.push(props);
+                        }
                     });
                 }
                 else {
                     items.elements.forEach(element => {
-                        this.itemProps.push(this.chooseProperties(element));
+                        const props = this.chooseProperties(element);
+
+                        if (props) {
+                            this.itemProps.push(props);
+                        }
                     });
                 }
             }
