@@ -84,7 +84,7 @@ export default {
             if (item?.type === "folder") {
                 dispatch("addAttributesToModuleState", {items: item.elements});
             }
-            else {
+            else if (item?.type !== "customMenuElement") {
                 const modulePathInit = modulePath ? modulePath : `${upperFirst(item.type)}`;
 
                 for (const [key, value] of Object.entries(item)) {
