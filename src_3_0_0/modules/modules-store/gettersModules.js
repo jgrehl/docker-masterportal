@@ -5,6 +5,7 @@ import AddWMS from "../addWMS/components/AddWMS.vue";
 import BufferAnalysis from "../bufferAnalysis/components/BufferAnalysis.vue";
 import Contact from "../contact/components/ContactFormular.vue";
 import CoordToolkit from "../coordToolkit/components/CoordToolkit.vue";
+import CustomMenuElement from "../menu/components/CustomMenuElement.vue";
 import FeatureLister from "../featureLister/components/FeatureLister.vue";
 import FileImport from "../fileImport/components/FileImport.vue";
 import Folder from "../menu/components/MenuFolder.vue";
@@ -40,6 +41,7 @@ const getters = {
             bufferAnalysis: BufferAnalysis,
             contact: Contact,
             coordToolkit: CoordToolkit,
+            customMenuElement: CustomMenuElement,
             featureLister: FeatureLister,
             fileImport: FileImport,
             folder: Folder,
