@@ -183,15 +183,18 @@ Layer2dVectorSensorThings.prototype.updateLayerValues = function (values) {
  * @returns {void}
  * */
 Layer2dVectorSensorThings.prototype.initializeSensorThings = function () {
-    const url = this.get("url");
-
     try {
-        this.createMqttConnectionToSensorThings(url, this.get("mqttOptions"), this.get("timezone"), this.get("showNoDataValue"), this.get("noDataValue"));
+        this.createMqttConnectionToSensorThings(this.get("url"), this.get("mqttOptions"), this.get("timezone"), this.get("showNoDataValue"), this.get("noDataValue"));
     }
     catch (err) {
         console.error("Connecting to mqtt-broker failed. Won't receive live updates. Reason:", err);
     }
     this.toggleSubscriptionsOnMapChanges();
+
+    store.watch((_, getters) => getters.visibleSubjectDataLayerConfigs, layerConfigs => {
+        this.toggleSubscriptionsOnMapChanges(layerConfigs);
+    }, {deep: true});
+
     if (store.getters["Maps/scale"] > this.get("maxScaleForHistoricalFeatures")) {
         this.showHistoricalFeatures = false;
     }
@@ -1541,7 +1544,6 @@ Layer2dVectorSensorThings.prototype.updateFeatureProperties = function (feature,
  * @returns {void}
  */
 Layer2dVectorSensorThings.prototype.registerInteractionMapScaleListeners = function () {
-    // inka
     store.watch((state, getters) => getters["Maps/scale"], scale => {
         if (scale > this.get("maxScaleForHistoricalFeatures")) {
             this.showHistoricalFeatures = false;
