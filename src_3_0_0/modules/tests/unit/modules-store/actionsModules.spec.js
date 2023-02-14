@@ -166,6 +166,22 @@ describe("src_3_0_0/modules/modules-store/actions.js", () => {
             expect(commit.firstCall.args[1]).to.equals("dataObject");
         });
 
+        it("should commit nothing to state if type is 'customMenuElement'", () => {
+            const dataObject = [{
+                    type: "customMenuElement",
+                    name: "customMenuElementName"
+
+                }],
+                rootState = {
+                    "Modules": "modul"
+                };
+
+            addAttributesToModuleState({commit, dispatch, rootState}, {items: dataObject});
+
+            expect(dispatch.notCalled).to.be.true;
+            expect(commit.notCalled).to.be.true;
+        });
+
         it("nested object", () => {
             const dataObject = [{
                     "type": "featureLister",
