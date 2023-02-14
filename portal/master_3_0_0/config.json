@@ -194,6 +194,37 @@
             "type": "language"
           },
           {
+            "name": "benutzerdefinierte Menüelemente",
+            "icon": "bi-folder-plus",
+            "type": "folder",
+            "elements": [
+              {
+                "type": "customMenuElement",
+                "name": "Url öffnen",
+                "openURL": "https://geoinfo.hamburg.de/"
+              },
+              {
+                "type": "customMenuElement",
+                "name": "HTML aus config.json",
+                "htmlContent": "<div><h1>This is a Heading</h1><p>This is a paragraph.</p></br><a href=\"https://www.w3schools.com/\" target=\"_blank\">Visit W3Schools.com!</a></div>"
+              },
+              {
+                "type": "customMenuElement",
+                "name": "HTML aus externer Datei",
+                "icon": "bi-youtube",
+                "pathToContent":  "./resources/customMenuElementContent.html"
+              }, 
+              {
+                "type": "customMenuElement",
+                "name": "common:modules.alerting.alertWindowTitle",
+                "dispatch":{
+                  "action": "Alerting/addSingleAlert",
+                  "payload":  {"title":"An alle Menschen", "content": "Hallo Welt"}
+                }
+              }
+            ]
+          },
+          {
             "name": "folder1",
             "icon": "bi-folder-plus",
             "type": "folder",
@@ -226,25 +257,6 @@
               },
               {
                 "name": "folder1_2",
-                "icon": "bi-folder-plus",
-                "type": "folder",
-                "elements": []
-              }
-            ]
-          },
-          {
-            "name": "folder2",
-            "icon": "bi-folder-plus",
-            "type": "folder",
-            "elements": [
-              {
-                "name": "folder2_1",
-                "icon": "bi-folder-plus",
-                "type": "folder",
-                "elements": []
-              },
-              {
-                "name": "folder2_2",
                 "icon": "bi-folder-plus",
                 "type": "folder",
                 "elements": []

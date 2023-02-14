@@ -19,6 +19,7 @@
 export default {
     currentMouseMapInteractionsComponent: "getFeatureInfo",
     defaultComponent: "getFeatureInfo",
+    customMenuElementIcon: "bi-asterisk",
     mainMenu: {
         expanded: false,
         currentComponent: "root",
