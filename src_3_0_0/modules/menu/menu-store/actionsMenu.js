@@ -56,17 +56,34 @@ export default {
      * @param {Array} path Path leading up to the clicked menu element.
      * @param {String} side The menu side of the element.
      * @param {String} type type of the element.
+     * @param {Object} properties properties of the element.
      * @returns {void}
      */
-    clickedMenuElement ({dispatch}, {name, path, side, type}) {
+    clickedMenuElement ({dispatch, rootGetters}, {name, path, side, type, properties}) {
         if (type) {
+            let closeMenu = false;
+
             if (type === "folder") {
                 nextTick(() => {
                     dispatch("changeCurrentComponent", {type: type, side: side, props: {path: path, name: name}});
                 });
             }
+            else if (type === "customMenuElement" && properties.openURL !== undefined) {
+                window.open(properties.openURL);
+                closeMenu = true;
+            }
+            else if (type === "customMenuElement" && properties.dispatch !== undefined) {
+                dispatch(properties.dispatch.action, properties.dispatch.payload, {root: true});
+                closeMenu = true;
+            }
             else {
-                dispatch("changeCurrentComponent", {type: type, side: side, props: {name: name}});
+                const props = properties ? Object.assign(properties, {name: name}) : {name: name};
+
+                dispatch("changeCurrentComponent", {type: type, side: side, props: props});
+            }
+
+            if (rootGetters.isMobile() && closeMenu) {
+                dispatch("Menu/toggleMenu", side, {root: true});
             }
         }
     },
