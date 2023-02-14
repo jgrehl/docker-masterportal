@@ -41,7 +41,7 @@ describe("src_3_0_0/modules/menu/MenuFolder.vue", () => {
 
         expect(wrapper.findComponent(MenuContainerBodyRootItems).exists()).to.be.true;
         expect(wrapper.find("menu-container-body-root-items-stub").attributes("idappendix")).to.be.equals("mainMenu");
-        expect(wrapper.find("menu-container-body-root-items-stub").attributes("path")).to.be.equals(currentFolderPath.join(","));
+        expect(wrapper.find("menu-container-body-root-items-stub").attributes("path")).to.be.equals(currentFolderPath.join(",") + ",elements");
     });
 
     it("renders MenuContainerBodyRootItems in secondaryMenu", () => {
@@ -54,6 +54,6 @@ describe("src_3_0_0/modules/menu/MenuFolder.vue", () => {
 
         expect(wrapper.findComponent(MenuContainerBodyRootItems).exists()).to.be.true;
         expect(wrapper.find("menu-container-body-root-items-stub").attributes("idappendix")).to.be.equals("secondaryMenu");
-        expect(wrapper.find("menu-container-body-root-items-stub").attributes("path")).to.be.equals(currentFolderPath.join(","));
+        expect(wrapper.find("menu-container-body-root-items-stub").attributes("path")).to.be.equals(currentFolderPath.join(",") + ",elements");
     });
 });
