@@ -113,7 +113,7 @@ export default {
     <div>
         <LightButton
             v-if="checkIsVisible()"
-            :interaction="() => clickedMenuElement({name, path, side, type})"
+            :interaction="() => clickedMenuElement({name, path, side, type, properties})"
             :text="name"
             :icon="showIcon ? icon : null"
             :description="showDescription ? description : null"
