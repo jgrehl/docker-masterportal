@@ -21,34 +21,6 @@ export default {
     },
 
     /**
-     * Zoom to features that are filtered by the ids.
-     * @param {Object} param store context.
-     * @param {Object} param.getters the getters.
-     * @param {Object} param.dispatch the dispatch.
-     * @param {Object} payload parameter object.
-     * @param {String[]} payload.ids The feature ids.
-     * @param {String} payload.layerId The layer id.
-     * @param {Object} payload.zoomOptions The options for zoom to extent.
-     * @param {Object} [payload.map] The parameter to get the map from the map collection.
-     * @param {String} [payload.map.mapMode="2D"] The map mode.
-     * @returns {void}
-     */
-    async zoomToFilteredFeatures ({getters, dispatch}, {ids, layerId, zoomOptions}) {
-        const layer = await getters.getLayerById({layerId: layerId});
-
-        if (layer?.getSource()) {
-            const layerSource = layer.getSource(),
-                source = layerSource instanceof Cluster ? layerSource.getSource() : layerSource,
-                filteredFeatures = source.getFeatures().filter(feature => ids.indexOf(feature.getId()) > -1),
-                calculatedExtent = await calculateExtent(filteredFeatures);
-
-            if (filteredFeatures.length > 0) {
-                dispatch("zoomToExtent", {extent: calculatedExtent, options: zoomOptions});
-            }
-        }
-    },
-
-    /**
      * Zoom to a given extent, this function allows to give projection of extent
      * Note: Used in remoteInterface.
      * @param {Object} param store context.
