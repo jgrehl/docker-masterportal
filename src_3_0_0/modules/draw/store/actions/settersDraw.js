@@ -13,13 +13,12 @@ function setStyleSettings ({getters, commit}, styleSettings) {
 }
 
 /**
- * Sets the active property of the state to the given value.
- * Also starts processes if the tool is be activated (active === true).
+ * Starts the interactions when the tool becomes visible.
  *
  * @param {Object} context actions context object.
  * @returns {void}
  */
-async function setActive ({state, commit, dispatch, rootState}) {
+async function startInteractions ({state, commit, dispatch, rootState}) {
     commit("setSymbol", state.iconList[0]);
     commit("setImgPath", rootState?.configJs?.wfsImgPath);
     dispatch("createDrawInteractionAndAddToMap", {active: state.currentInteraction === "draw"});
@@ -374,7 +373,7 @@ function setDrawLayerVisible ({getters, commit, dispatch}, value) {
 
 export {
     setStyleSettings,
-    setActive,
+    startInteractions,
     setCircleRadius,
     setCircleMethod,
     setCircleOuterRadius,

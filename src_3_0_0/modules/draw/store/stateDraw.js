@@ -155,6 +155,8 @@ const symbol = {
         withoutGUI: false,
         zIndex: 0,
         name: "common:menu.tools.draw",
+        description: "",
+        showDescription: false,
         // // // // // //
         // UI SETTINGS //
         // // // // // //
