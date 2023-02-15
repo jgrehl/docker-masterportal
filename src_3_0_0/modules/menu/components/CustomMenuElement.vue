@@ -3,7 +3,7 @@ import {mapGetters} from "vuex";
 import axios from "axios";
 
 /**
- *
+ * This module can display HTML from config.json or an external file.
  */
 export default {
     name: "CustomMenuElement",
@@ -91,8 +91,3 @@ export default {
         />
     </div>
 </template>
-
-<style lang="scss" scoped>
-@import "~variables";
-
-</style>
