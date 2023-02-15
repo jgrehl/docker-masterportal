@@ -26,8 +26,12 @@ describe("src_3_0_0/modules/menu/MenuContainerBodyRootItems.vue", () => {
                 Menu: {
                     namespaced: true,
                     getters: {
-                        section: () => () => sections
+                        section: () => () => sections,
+                        customMenuElementIcon: () => "bi-customMenuElementIcon"
                     }
+                },
+                Modules: {
+                    namespaced: true
                 }
             }
         });
@@ -112,5 +116,52 @@ describe("src_3_0_0/modules/menu/MenuContainerBodyRootItems.vue", () => {
         expect(wrapper.findAll("#mp-menu-body-items-element-2-secondaryMenu")[0].attributes("showdescription")).to.be.equal("true");
         expect(wrapper.findAll("#mp-menu-body-items-element-2-secondaryMenu")[0].attributes("description")).to.be.equal(sections[2].description);
         expect(wrapper.findAll("#mp-menu-body-items-element-2-secondaryMenu")[0].attributes("path")).to.be.equal(pathSecondaryMenu.join(",") + ",2");
+    });
+
+    it("section contains 'customMenuElement' without icon uses default icon from state", () => {
+        sections = [{
+            type: "customMenuElement",
+            name: "Url öffnen",
+            openURL: "https://geoinfo.hamburg.de/"
+        }];
+        const wrapper = shallowMount(MenuContainerBodyRootItems, {
+            global: {
+                plugins: [store]
+            },
+            propsData: {idAppendix: "secondaryMenu", path: pathSecondaryMenu}
+        });
+
+        expect(sections[0].icon).to.be.equals("bi-customMenuElementIcon");
+        expect(wrapper.findAll("li").length).to.be.equal(sections.length);
+        expect(wrapper.findAllComponents(MenuContainerBodyRootItemElement).length).to.be.equal(sections.length);
+        expect(wrapper.findAll("#mp-menu-body-items-element-0-secondaryMenu")[0].attributes("name")).to.be.equal(sections[0].name);
+        expect(wrapper.findAll("#mp-menu-body-items-element-0-secondaryMenu")[0].attributes("icon")).to.be.equal(sections[0].icon);
+        expect(wrapper.findAll("#mp-menu-body-items-element-0-secondaryMenu")[0].attributes("showdescription")).to.be.equal("false");
+        expect(wrapper.findAll("#mp-menu-body-items-element-0-secondaryMenu")[0].attributes("description")).to.be.equal("");
+        expect(wrapper.findAll("#mp-menu-body-items-element-0-secondaryMenu")[0].attributes("path")).to.be.equal(pathSecondaryMenu.join(",") + ",0");
+    });
+
+    it("section contains 'customMenuElement' with icon", () => {
+        sections = [{
+            type: "customMenuElement",
+            name: "Url öffnen",
+            openURL: "https://geoinfo.hamburg.de/",
+            icon: "bi-custom-icon"
+        }];
+        const wrapper = shallowMount(MenuContainerBodyRootItems, {
+            global: {
+                plugins: [store]
+            },
+            propsData: {idAppendix: "secondaryMenu", path: pathSecondaryMenu}
+        });
+
+        expect(sections[0].icon).not.to.be.equals("bi-customMenuElementIcon");
+        expect(wrapper.findAll("li").length).to.be.equal(sections.length);
+        expect(wrapper.findAllComponents(MenuContainerBodyRootItemElement).length).to.be.equal(sections.length);
+        expect(wrapper.findAll("#mp-menu-body-items-element-0-secondaryMenu")[0].attributes("name")).to.be.equal(sections[0].name);
+        expect(wrapper.findAll("#mp-menu-body-items-element-0-secondaryMenu")[0].attributes("icon")).to.be.equal(sections[0].icon);
+        expect(wrapper.findAll("#mp-menu-body-items-element-0-secondaryMenu")[0].attributes("showdescription")).to.be.equal("false");
+        expect(wrapper.findAll("#mp-menu-body-items-element-0-secondaryMenu")[0].attributes("description")).to.be.equal("");
+        expect(wrapper.findAll("#mp-menu-body-items-element-0-secondaryMenu")[0].attributes("path")).to.be.equal(pathSecondaryMenu.join(",") + ",0");
     });
 });
