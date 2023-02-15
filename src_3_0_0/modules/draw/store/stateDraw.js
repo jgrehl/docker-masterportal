@@ -7,7 +7,7 @@ const symbol = {
         value: "simple_point"
     },
     /**
-     * @property {Boolean} active Current status of the Tool.
+     * @property {Boolean} hasMouseMapInteractions Indicating that we have Map interactions.
      * @property {Boolean} drawLayerVisible Shows/hides the draw layer and enables/disables the tools of the draw tool.
      * @property {Object} addFeatureListener Listens to the the event "addFeature" which is fired after a feature has been added to the map.
      * @property {Boolean} addIconsOfActiveLayers If activated and possible, all symbols found in layers are added to the iconList.
@@ -39,6 +39,8 @@ const symbol = {
      * @property {module:ol/layer/Vector} layer The layer in which the features are drawn.
      * @property {module:ol/interaction/Modify} modifyInteraction The modify interaction of the draw tool.
      * @property {String} name Title of the Tool. Can be configured through the config.json.
+     * @property {String} description Description of the Tool. Can be configured through the config.json.
+     * @property {Boolean} showDescription If true, the description is shown.
      * @property {String} outerBorderColor The color of the border of the dropdown menu for the selection of the outer radius of a circle.
      * @property {Number} pointSize The size of the point.
      * @property {Number[]} redoArray Array of the IDs of features removed through the undo button.
