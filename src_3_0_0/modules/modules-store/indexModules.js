@@ -9,6 +9,7 @@ import CoordToolkit from "../coordToolkit/store/indexCoordToolkit";
 import Draw from "../draw/store/indexDraw";
 import FeatureLister from "../featureLister/store/indexFeatureLister";
 import FileImport from "../fileImport/store/indexFileImport";
+import Filter from "../filter/store/indexFilter";
 import GetFeatureInfo from "../getFeatureInfo/store/indexGetFeatureInfo";
 import Language from "../language/store/indexLanguage";
 import LayerClusterToggler from "../layerClusterToggler/store/indexLayerClusterToggler";
@@ -45,6 +46,7 @@ export default {
         Draw: {...Draw},
         FeatureLister: {...FeatureLister},
         FileImport: {...FileImport},
+        Filter: {...Filter},
         GetFeatureInfo: {...GetFeatureInfo},
         Language: {...Language},
         LayerClusterToggler: {...LayerClusterToggler},
