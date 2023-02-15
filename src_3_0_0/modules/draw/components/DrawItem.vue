@@ -283,6 +283,7 @@ export default {
         }
     },
     mounted () {
+        this.startInteractions();
         this.setCanvasCursorByInteraction(this.currentInteraction);
         this.setFocusToFirstControl();
     },
