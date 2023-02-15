@@ -277,7 +277,6 @@ describe("src/modules/tools/filter/components/SnippetDownload.vue", () => {
                     plugins: [store]
                 }
             });
-
             wrapper.vm.getDownloadHandler(dummy.handler);
             expect(last_result).to.be.an("array").that.is.empty;
         });
