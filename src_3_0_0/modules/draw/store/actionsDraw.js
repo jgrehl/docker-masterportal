@@ -508,7 +508,6 @@ const initialState = JSON.parse(JSON.stringify(stateDraw)),
         deactivateDrawInteractions ({state, rootState}) {
             mapCollection.getMap(rootState.Maps.mode).getInteractions().forEach(int => {
                 if (int instanceof Draw) {
-                    int.setActive(false);
                     if (state.deactivatedDrawInteractions.indexOf(int) === -1) {
                         state.deactivatedDrawInteractions.push(int);
                     }
@@ -590,7 +589,6 @@ const initialState = JSON.parse(JSON.stringify(stateDraw)),
          * @returns {void}
          */
         resetModule ({state, commit, dispatch, getters}) {
-            commit("setActive", false);
             dispatch("toggleInteraction", "draw");
             dispatch("manipulateInteraction", {interaction: "draw", active: false});
 
