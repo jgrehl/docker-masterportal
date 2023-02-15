@@ -3,6 +3,7 @@ import createStyle from "@masterportal/masterportalapi/src/vectorStyle/createSty
 import {getCenter} from "ol/extent";
 import webgl from "./webglRenderer";
 import Layer2d from "./layer2d";
+import Cluster from "ol/source/Cluster";
 
 /**
  * Creates a 2d vector layer.
@@ -167,4 +168,60 @@ Layer2dVector.prototype.getStyleFunction = function (attrs) {
     }
     return style;
 };
+/**
+ * Only shows features that match the given ids.
+ * @param {String} layerId the id of the layer
+ * @param {String[]} featureIdList List of feature ids.
+ * @returns {void}
+ */
+Layer2dVector.prototype.showFeaturesByIds = function (layerId, featureIdList) {
+    const layerSource = this.getLayerSource() instanceof Cluster ? this.getLayerSource().getSource() : this.getLayerSource(),
+        allLayerFeatures = layerSource.getFeatures(),
+        featuresToShow = featureIdList.map(id => layerSource.getFeatureById(id));
 
+    this.hideAllFeatures();
+    featuresToShow.forEach(feature => {
+        const style = this.getStyleAsFunction(this.get("style"));
+
+        if (feature && feature !== null) {
+            feature.set("hideInClustering", false);
+            feature.setStyle(style(feature));
+        }
+    });
+
+    layerSource.addFeatures(allLayerFeatures);
+};
+
+/**
+ * Hides all features by setting style= null for all features.
+ * @returns {void}
+ */
+Layer2dVector.prototype.hideAllFeatures = function () {
+    const layerSource = this.getLayerSource() instanceof Cluster ? this.getLayerSource().getSource() : this.getLayerSource(),
+        features = layerSource.getFeatures();
+
+    // optimization - clear and re-add to prevent cluster updates on each change
+    layerSource.clear();
+
+    features.forEach((feature) => {
+        feature.set("hideInClustering", true);
+        feature.setStyle(() => null);
+    });
+
+    layerSource.addFeatures(features);
+};
+
+/**
+ * Returns the style as a function.
+ * @param {Function|Object} style ol style object or style function.
+ * @returns {Function} - style as function.
+ */
+Layer2dVector.prototype.getStyleAsFunction = function (style) {
+    if (typeof style === "function") {
+        return style;
+    }
+
+    return function () {
+        return style;
+    };
+};
