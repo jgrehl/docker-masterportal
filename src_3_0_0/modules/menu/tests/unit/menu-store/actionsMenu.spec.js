@@ -8,8 +8,7 @@ describe("src_3_0_0/modules/menu/menu-store/actionsMenu.js", () => {
         dispatch,
         getters,
         state,
-        rootGetters,
-        isMobile;
+        rootGetters;
 
     beforeEach(() => {
         state = {
@@ -53,10 +52,9 @@ describe("src_3_0_0/modules/menu/menu-store/actionsMenu.js", () => {
                 };
             }
         };
-        isMobile = false;
         rootGetters = {
             "Modules/Abc/hasMouseMapInteractions": () => true,
-            isMobile: () => isMobile
+            isMobile: false
         };
         global.window.open = sinon.spy();
     });
@@ -178,7 +176,10 @@ describe("src_3_0_0/modules/menu/menu-store/actionsMenu.js", () => {
 
             actions.clickedMenuElement({dispatch, rootGetters}, {name, path, side, type, properties});
 
-            expect(dispatch.notCalled).to.be.true;
+            expect(dispatch.calledOnce).to.be.true;
+            expect(dispatch.firstCall.args[0]).to.equals(properties.dispatch.action);
+            expect(dispatch.firstCall.args[1]).to.be.deep.equals(properties.dispatch.payload);
+            expect(dispatch.firstCall.args[2]).to.be.deep.equals({root: true});
             expect(global.window.open.calledOnce).to.be.true;
             expect(global.window.open.firstCall.args[0]).to.equals(properties.openURL);
         });
@@ -201,7 +202,7 @@ describe("src_3_0_0/modules/menu/menu-store/actionsMenu.js", () => {
         });
 
         it("mobile: should dispatch action if type is 'customMenuElement' and properties contains only dispatch, closes menu", () => {
-            isMobile = true;
+            rootGetters.isMobile = true;
             type = "customMenuElement";
             properties = {
                 dispatch: {
@@ -222,7 +223,7 @@ describe("src_3_0_0/modules/menu/menu-store/actionsMenu.js", () => {
         });
 
         it("mobile: should dispatch action if type is 'customMenuElement' and properties contains 'openURL', closes menu", () => {
-            isMobile = true;
+            rootGetters.isMobile = true;
             type = "customMenuElement";
             properties = {
                 openURL: "http://url.de"
@@ -297,10 +298,7 @@ describe("src_3_0_0/modules/menu/menu-store/actionsMenu.js", () => {
         it("should set main menu to expanded === true, if isMobile is true and secodary menu is not expanded === false", () => {
             const side = "secondaryMenu";
 
-            rootGetters = {
-                isMobile: () => true
-            };
-
+            rootGetters.isMobile = true;
             actions.toggleMenu({commit, rootGetters, state}, side);
 
             expect(commit.calledOnce).to.be.true;
@@ -314,11 +312,7 @@ describe("src_3_0_0/modules/menu/menu-store/actionsMenu.js", () => {
             const side = "secondaryMenu";
 
             state.secondaryMenu.expanded = true;
-
-            rootGetters = {
-                isMobile: () => true
-            };
-
+            rootGetters.isMobile = true;
             actions.toggleMenu({commit, rootGetters, state}, side);
 
             expect(commit.calledOnce).to.be.true;
