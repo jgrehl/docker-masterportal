@@ -52,6 +52,7 @@ export default {
      * was a Folder, focus the first child-element.
      * @param {Object} param store context
      * @param {Object} param.dispatch the dispatch
+     * @param {Object} param.rootGetters the rootGetters
      * @param {String} name Name of the element.
      * @param {Array} path Path leading up to the clicked menu element.
      * @param {String} side The menu side of the element.
