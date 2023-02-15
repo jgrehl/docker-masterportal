@@ -1,3 +1,6 @@
+import Cluster from "ol/source/Cluster.js";
+import calculateExtent from "../../../shared/js/utils/calculateExtent";
+
 /**
  * Interactions with the Map and MapView that are exclusively about zooming.
  */
@@ -52,5 +55,33 @@ export default {
             size: mapCollection.getMap("2D").getSize(),
             ...Object.assign({duration: 800}, options)
         });
+    },
+
+    /**
+     * Zoom to features that are filtered by the ids.
+     * @param {Object} param store context.
+     * @param {Object} param.getters the getters.
+     * @param {Object} param.dispatch the dispatch.
+     * @param {Object} payload parameter object.
+     * @param {String[]} payload.ids The feature ids.
+     * @param {String} payload.layerId The layer id.
+     * @param {Object} payload.zoomOptions The options for zoom to extent.
+     * @param {Object} [payload.map] The parameter to get the map from the map collection.
+     * @param {String} [payload.map.mapMode="2D"] The map mode.
+     * @returns {void}
+     */
+    zoomToFilteredFeatures ({getters, dispatch}, {ids, layerId, zoomOptions}) {
+        const layer = getters.getLayerById(layerId);
+
+        if (layer?.getSource()) {
+            const layerSource = layer.getSource(),
+                source = layerSource instanceof Cluster ? layerSource.getSource() : layerSource,
+                filteredFeatures = source.getFeatures().filter(feature => ids.indexOf(feature.getId()) > -1),
+                calculatedExtent = calculateExtent(filteredFeatures);
+
+            if (filteredFeatures.length > 0) {
+                dispatch("zoomToExtent", {extent: calculatedExtent, options: zoomOptions});
+            }
+        }
     }
 };
