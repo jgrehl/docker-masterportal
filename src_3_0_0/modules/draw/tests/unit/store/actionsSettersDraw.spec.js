@@ -29,8 +29,6 @@ describe("src_3_0_0/modules/draw/store/actions/settersDraw.js", () => {
     }
 
     describe("setActive", () => {
-        let active;
-
         beforeEach(() => {
             state = {
                 withoutGUI: false,
@@ -43,18 +41,8 @@ describe("src_3_0_0/modules/draw/store/actions/settersDraw.js", () => {
             };
         });
 
-        it("should commit as intended if 'active' is false", () => {
-            active = false;
-
-            actions.setActive({state, commit, dispatch}, active);
-
-            expect(commit.notCalled).to.be.true;
-            expect(dispatch.notCalled).to.be.true;
-        });
         it("should commit and dispatch as intended if 'active' is true", async () => {
-            active = true;
-
-            await actions.setActive({state, commit, dispatch}, active);
+            await actions.startInteractions({state, commit, dispatch});
 
             expect(commit.callCount).to.equal(2);
             expect(dispatch.callCount).to.equal(5);
@@ -65,10 +53,9 @@ describe("src_3_0_0/modules/draw/store/actions/settersDraw.js", () => {
             expect(dispatch.getCall(4).args).to.eql(["setDrawLayerVisible", true]);
         });
         it("should commit and dispatch as intended if 'active' and 'withoutGUI' are true", async () => {
-            active = true;
             state.withoutGUI = true;
 
-            await actions.setActive({state, commit, dispatch}, active);
+            await actions.startInteractions({state, commit, dispatch});
 
             expect(commit.callCount).to.equal(2);
             expect(dispatch.callCount).to.equal(6);

@@ -19,9 +19,8 @@ describe("src_3_0_0/modules/draw/store/actions/withoutGUIDraw.js", () => {
         it("should dispatch as intended", () => {
             actions.cancelDrawWithoutGUI({commit, dispatch});
 
-            expect(commit.calledTwice).to.be.true;
+            expect(commit.calledOnce).to.be.true;
             expect(commit.firstCall.args).to.eql(["setWithoutGUI", true]);
-            expect(commit.secondCall.args).to.eql(["setActive", false]);
             expect(dispatch.calledThrice).to.be.true;
             expect(dispatch.firstCall.args).to.eql(["manipulateInteraction", {interaction: "draw", active: false}]);
             expect(dispatch.secondCall.args).to.eql(["manipulateInteraction", {interaction: "modify", active: false}]);
