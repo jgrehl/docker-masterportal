@@ -20,7 +20,6 @@ function cancelDrawWithoutGUI ({commit, dispatch}, cursor) {
     dispatch("manipulateInteraction", {interaction: "draw", active: false});
     dispatch("manipulateInteraction", {interaction: "modify", active: false});
     dispatch("manipulateInteraction", {interaction: "delete", active: false});
-    commit("setActive", false);
 
     if (typeof cursor?.cursor !== "undefined") {
         // TODO: The cursor changes from the map need to happen here
