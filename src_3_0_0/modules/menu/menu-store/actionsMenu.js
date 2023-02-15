@@ -104,13 +104,13 @@ export default {
     toggleMenu ({commit, rootGetters, state}, side) {
         if (side === "mainMenu") {
             if (rootGetters.isMobile && state.secondaryMenu.expanded) {
-                commit("setExpandedBySide", {expanded: false, side});
+                commit("setExpandedBySide", {expanded: false, side: "secondaryMenu"});
             }
             commit("setExpandedBySide", {expanded: !state.mainMenu.expanded, side});
         }
         else if (side === "secondaryMenu") {
             if (rootGetters.isMobile && state.mainMenu.expanded) {
-                commit("setExpandedBySide", {expanded: false, side});
+                commit("setExpandedBySide", {expanded: false, side: "mainMenu"});
             }
             commit("setExpandedBySide", {expanded: !state.secondaryMenu.expanded, side});
         }
