@@ -336,7 +336,9 @@
           },
           {
             "type": "draw",
-            "addIconsOfActiveLayers": true
+            "addIconsOfActiveLayers": true,
+            "showDescription": true,
+            "description": "Zeichnen / Schreiben auf der Karte."
           },
           {
             "type": "bufferAnalysis",
