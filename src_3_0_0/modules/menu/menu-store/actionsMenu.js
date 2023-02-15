@@ -61,29 +61,29 @@ export default {
      */
     clickedMenuElement ({dispatch, rootGetters}, {name, path, side, type, properties}) {
         if (type) {
-            let closeMenu = false;
-
+            if (type === "customMenuElement") {
+                if (properties.openURL !== undefined) {
+                    window.open(properties.openURL);
+                }
+                if (properties.dispatch !== undefined) {
+                    dispatch(properties.dispatch.action, properties.dispatch.payload, {root: true});
+                }
+                if (properties.htmlContent === undefined && properties.pathToContent === undefined) {
+                    if (rootGetters.isMobile) {
+                        dispatch("Menu/toggleMenu", side, {root: true});
+                    }
+                    return;
+                }
+            }
             if (type === "folder") {
                 nextTick(() => {
                     dispatch("changeCurrentComponent", {type: type, side: side, props: {path: path, name: name}});
                 });
             }
-            else if (type === "customMenuElement" && properties.openURL !== undefined) {
-                window.open(properties.openURL);
-                closeMenu = true;
-            }
-            else if (type === "customMenuElement" && properties.dispatch !== undefined) {
-                dispatch(properties.dispatch.action, properties.dispatch.payload, {root: true});
-                closeMenu = true;
-            }
             else {
                 const props = properties ? Object.assign(properties, {name: name}) : {name: name};
 
                 dispatch("changeCurrentComponent", {type: type, side: side, props: props});
-            }
-
-            if (rootGetters.isMobile() && closeMenu) {
-                dispatch("Menu/toggleMenu", side, {root: true});
             }
         }
     },
