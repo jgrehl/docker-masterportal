@@ -9,6 +9,7 @@ import CustomMenuElement from "../menu/components/CustomMenuElement.vue";
 import Draw from "../draw/components/DrawItem.vue";
 import FeatureLister from "../featureLister/components/FeatureLister.vue";
 import FileImport from "../fileImport/components/FileImport.vue";
+import FilterGeneral from "../filter/components/FilterGeneral.vue";
 import Folder from "../menu/components/MenuFolder.vue";
 import GetFeatureInfo from "../getFeatureInfo/components/GetFeatureInfo.vue";
 import Language from "../language/components/LanguageItem.vue";
@@ -45,6 +46,7 @@ const getters = {
             draw: Draw,
             featureLister: FeatureLister,
             fileImport: FileImport,
+            filter: FilterGeneral,
             folder: Folder,
             getFeatureInfo: GetFeatureInfo,
             language: Language,
