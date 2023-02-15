@@ -84,4 +84,17 @@ export default {
         overflow-y: auto;
         max-height: 100%;
     }
+
+    #mp-body-secondaryMenu {
+        overflow-y: unset;
+    }
+
+
+    @include media-breakpoint-up(sm)  {
+
+        #mp-body-secondaryMenu {
+            overflow-y: auto;
+        }
+
+    }
 </style>
