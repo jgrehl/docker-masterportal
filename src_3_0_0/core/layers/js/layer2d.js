@@ -176,7 +176,8 @@ Layer2d.prototype.errorHandling = function (errorCode, layerName) {
                 id: this.attributes.id,
                 layer: {
                     id: this.attributes.id,
-                    visibility: showTheModal
+                    visibility: showTheModal,
+                    showInLayerTree: false
                 }
             }]
         }, {root: true});
