@@ -1581,6 +1581,7 @@ A folder object defined by a name, icon, and its children.
 [type:contact]: # (Portalconfig.menu.tool.contact)
 [type:coord]: # (Portalconfig.menu.tool.coord)
 [type:coordToolkit]: # (Portalconfig.menu.tool.coordToolkit)
+[type:customMenuElement]: # (Portalconfig.menu.tool.customMenuElement)
 [type:draw]: # (Portalconfig.menu.tool.draw)
 [type:extendedFilter]: # (Portalconfig.menu.tool.extendedFilter)
 [type:featureLister]: # (Portalconfig.menu.tool.featureLister)
@@ -1593,6 +1594,7 @@ A folder object defined by a name, icon, and its children.
 [type:measure]: # (Portalconfig.menu.tool.measure)
 [type:modeler3D]: # (Portalconfig.menu.tool.modeler3D)
 [type:openConfig]: # (Portalconfig.menu.tool.openConfig)
+[type:news]: # (Portalconfig.menu.tool.news)
 [type:parcelSearch]: # (Portalconfig.menu.tool.parcelSearch)
 [type:print]: # (Portalconfig.menu.tool.print)
 [type:routing]: # (Portalconfig.menu.tool.routing)
@@ -1646,7 +1648,8 @@ Alternatively, also the paths **Portalconfig.menu.info**, **Portalconfig.menu.si
 |wfsSearch|no|**[wfsSearch](#markdown-header-portalconfigmenutoolwfssearch)**||Makes it possible to create a form to query WFS layers using filters. It is possible to either use a stored query (WFS@2.0.0) or define the query using the defined parameters (WFS@1.1.0).|false|
 |wfst|no|**[wfst](#markdown-header-portalconfigmenutoolwfst)**||WFS-T module to visualize, create, update and delete features.|false|
 |openConfig|no|**[openConfig](#markdown-header-portalconfigmenutoolopenConfig)**||With this module a configuration file (config.json) can be reloaded at runtime. The modules and map are adapted to the new configuration.|false|
-
+|news|no|**[news](#markdown-header-portalconfigmenutoolnews)**||This module shows all messages from the newsFeedPortalAlerts.json of the current portal regardless of the "read" status.|false|
+|customMenuElement|no|**[customMenuElement](#markdown-header-portalconfigmenutoolcustommenuelement)**||This module can open a link, display HTML from config.json or an external file, or perform an action. This module can be configured several times in config.json.|false|
 ***
 
 #### Portalconfig.menu.tool
@@ -4355,6 +4358,91 @@ Tool to read coordinates on mouse click.
 
 With this module a configuration file (config.json) can be reloaded at runtime. The modules and map are adapted to the new configuration.
 
+***
+#### Portalconfig.menu.tool.news
+
+[inherits]: # (Portalconfig.menu.tool)
+
+This module shows all messages from the newsFeedPortalAlerts.json of the current portal regardless of the "read" status.
+
+***
+
+#### Portalconfig.menu.tool.customMenuElement
+
+[inherits]: # (Portalconfig.menu.tool)
+
+This module can open a link, display HTML from config.json or an external file, or perform an action. This module can be configured multiple times in config.json. If `htmlContent` is specified, then `pathToContent` is not executed and vice versa.
+
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|type|yes|String|"customMenuElement"|Type of the module.|false|
+|name|no|String||Name of the module displayed in the menu.|false|
+|openURL|no|String||Url that is to be opened in a new tab by clicking on the menu item.|false|
+|htmlContent|no|String||HTML displayed in the module.|false|
+|pathToContent|no|String||Path to a file containing HTML displayed in the module.|false|
+|dispatch|no|[dispatch](#markdown-header-portalconfigmenutoolcustomMenuElementdispatch)||Vuex dispatch- action to be executed by clicking on the menu item.|true|
+
+**Example**
+```
+#!json
+ {
+    "type": "customMenuElement",
+    "name": "Open url",
+    "openURL": "https://geoinfo.hamburg.de/"
+ },
+{
+    "type": "customMenuElement",
+    "name": "Open url and show HTML",
+    "openURL": "https://geoinfo.hamburg.de/",
+    "htmlContent": "<div><h1>This is a Heading</h1><p>url was opened!<p/></div>"
+},
+{
+    "type": "customMenuElement",
+    "name": "HTML from config.json und action",
+    "htmlContent": "<div><p>This is a paragraph.</p></br><a href=\"https://www.w3schools.com/\" target=\"_blank\">Visit W3Schools.com!</a></div>",
+    "dispatch":{
+        "action": "Alerting/addSingleAlert",
+        "payload":  {"title":"to all people", "content": "Hallo world"}
+    }
+}
+```
+
+***
+#### Portalconfig.menu.tool.customMenuElement.dispatch
+
+CustomMenuElement Module `dispatch` options.
+
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|action|yes|String||Name and, if applicable, path of the Vuex-action to be executed.|true|
+|payload|no|[payload](#markdown-header-portalconfigmenutoolcustomMenuElementdispatchpayload)||Payload that is transferred to the Vuex-action.|true|
+
+**Example**
+```
+#!json
+{
+    "action": "Alerting/addSingleAlert",
+    "payload":  {"title":"to all people", "content": "Hallo world"}
+}
+```
+***
+#### Portalconfig.menu.tool.customMenuElement.dispatch.payload
+
+CustomMenuElement Module `dispatch` from `payload`. The appropriate payload for the Vuex-action must be specified. Here is the example of the `Alerting/addSingleAlert`.
+
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|title|no|String||Title of the message.|true|
+|content|yes|String||Content of the message.|true|
+
+**Example**
+```
+#!json
+{
+    "title":"to all people", 
+    "content": "Hallo world"
+}
+```
 ***
 
 #### Portalconfig.menu.tool.resetTree
