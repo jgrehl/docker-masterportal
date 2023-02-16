@@ -4378,8 +4378,8 @@ This module can open a link, display HTML from config.json or an external file, 
 |type|yes|String|"customMenuElement"|Type of the module.|false|
 |name|no|String||Name of the module displayed in the menu.|false|
 |openURL|no|String||Url that is to be opened in a new tab by clicking on the menu item.|false|
-|htmlContent|no|String||HTML displayed in the module.|false|
-|pathToContent|no|String||Path to a file containing HTML displayed in the module.|false|
+|htmlContent|no|String||HTML displayed in the module. The HTML is not validated, the responsibility for the security of the HTML lies with the operator of the portal.|false|
+|pathToContent|no|String||Path to a file containing HTML displayed in the module. The HTML is not validated, the responsibility for the security of the HTML lies with the operator of the portal.|false|
 |dispatch|no|[dispatch](#markdown-header-portalconfigmenutoolcustomMenuElementdispatch)||Vuex dispatch- action to be executed by clicking on the menu item.|true|
 
 **Example**
