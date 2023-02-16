@@ -246,8 +246,10 @@ export default {
             this.resetLayoutParameter();
             this.setCurrentLayoutName(value);
             this.setCurrentLayout(this.layoutList.find(layout => layout.name === value));
-            this.getAttributeInLayoutByName("gfi");
-            this.getAttributeInLayoutByName("legend");
+            if (this.printService !== "plotservice") {
+                this.getAttributeInLayoutByName("gfi");
+                this.getAttributeInLayoutByName("legend");
+            }
             this.updateCanvasLayer();
             await mapCollection.getMap("2D").render();
         },
