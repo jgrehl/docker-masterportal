@@ -4305,8 +4305,8 @@ Dieses Modul kann einen Link öffnen, HTML aus config.json oder einer externen D
 |type|ja|String|"customMenuElement"|type des Moduls.|false|
 |name|nein|String||Name des Moduls, der im Menü angezeigt wird|false|
 |openURL|nein|String||Url die mit dem Klick auf den Menü-Eintrag in einem neuen Tab geöffnet werden soll.|false|
-|htmlContent|nein|String||HTML, das in dem Modul angezeigt wird.|false|
-|pathToContent|nein|String||Pfad zu einer Datei, die HTML enthält, das in dem Modul angezeigt wird.|false|
+|htmlContent|nein|String||HTML, das in dem Modul angezeigt wird. Das HTML wird nicht validiert, die Verantwortung für die Sicherheit des HTMLs liegt beim Betreiber des Portals.|false|
+|pathToContent|nein|String||Pfad zu einer Datei, die HTML enthält, das in dem Modul angezeigt wird. Das HTML wird nicht validiert, die Verantwortung für die Sicherheit des HTMLs liegt beim Betreiber des Portals.|false|
 |dispatch|nein|[dispatch](#markdown-header-portalconfigmenutoolcustomMenuElementdispatch)||Vuex dispatch- action, die mit dem Klick auf den Menü-Eintrag ausgeführt werden soll.|true|
 
 
