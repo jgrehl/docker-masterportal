@@ -390,19 +390,34 @@ const BuildSpecModel = {
      */
     buildTileWms: function (layer, dpi) {
         const source = layer.getSource(),
-            mapObject = {
-                baseURL: source.getUrls()[0],
-                opacity: layer.getOpacity(),
-                type: source.getParams().SINGLETILE ? "WMS" : "tiledwms",
-                layers: source.getParams().LAYERS.split(","),
-                styles: source.getParams().STYLES ? source.getParams().STYLES.split(",") : undefined,
-                imageFormat: source.getParams().FORMAT,
-                customParams: {
-                    "TRANSPARENT": source.getParams().TRANSPARENT,
-                    "DPI": typeof dpi === "number" ? dpi : store.state.Modules.Print.dpiForPdf
-                }
-            };
+            isPlotservice = store.state.Modules.Print.printService === "plotservice";
+        let mapObject = null,
+            styles;
 
+        if (source.getParams().STYLES) {
+            if (typeof source.getParams().STYLES === "string") {
+                styles = source.getParams().STYLES.split(",");
+            }
+            else if (Array.isArray(source.getParams().STYLES)) {
+                styles = source.getParams().STYLES;
+            }
+        }
+        mapObject = {
+            baseURL: source.getUrls()[0],
+            opacity: layer.getOpacity(),
+            type: source.getParams().SINGLETILE || isPlotservice ? "WMS" : "tiledwms",
+            layers: source.getParams().LAYERS.split(","),
+            styles: styles,
+            imageFormat: source.getParams().FORMAT,
+            customParams: {
+                "TRANSPARENT": source.getParams().TRANSPARENT,
+                "DPI": typeof dpi === "number" ? dpi : store.state.Modules.Print.dpiForPdf
+            }
+        };
+
+        if (store.state.Modules.Print.printService === "plotservice") {
+            mapObject.title = layer.get("name");
+        }
         if (!source.getParams().SINGLETILE) {
             mapObject.tileSize = [source.getParams().WIDTH, source.getParams().HEIGHT];
         }
@@ -434,6 +449,9 @@ const BuildSpecModel = {
                 }
             };
 
+        if (store.state.Modules.Print.printService === "plotservice") {
+            mapObject.title = layer.get("name");
+        }
         return mapObject;
     },
 
