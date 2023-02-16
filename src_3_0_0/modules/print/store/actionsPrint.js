@@ -1,4 +1,5 @@
 import axios from "axios";
+import {DEVICE_PIXEL_RATIO} from "ol/has.js";
 
 import actionsPrintInitialization from "./actionsPrintInitialization";
 import BuildSpec from "../js/buildSpec";
@@ -189,10 +190,12 @@ const actions = {
             printFormat = printJob.format || state.currentFormat;
         let url = "",
             response = "",
-            serviceUrlDefinition = state.serviceUrl;
+            serviceUrlDefinition = state.serviceUrl,
+            filename = state.filename;
 
         if (state.printService !== "plotservice" && !state.serviceUrl.includes("/print/")) {
             serviceUrlDefinition = state.serviceUrl + "print/";
+            filename = state.filename + "." + state.outputFormat;
         }
 
         commit("setPrintFileReady", false);
@@ -229,7 +232,7 @@ const actions = {
             dispatch("downloadFile", {
                 "fileUrl": response.data.getURL,
                 "index": state.plotserviceIndex,
-                "filename": state.filename + "." + state.outputFormat
+                "filename": filename
             });
         }
         else {
@@ -244,9 +247,26 @@ const actions = {
      * @param {Object} payload object to migrate
      * @returns {Object} object for High Resolution Plot Service to start the printing
      */
-    migratePayload: function ({state}, payload) {
-        const plotservicePayload = {},
-            decodePayload = JSON.parse(decodeURIComponent(payload.replace(/imageFormat/g, "format")));
+    migratePayload: function ({state, rootGetters}, payload) {
+        const plotservicePayload = {};
+        let decodePayload = JSON.parse(decodeURIComponent(payload.replace(/imageFormat/g, "format"))),
+            halfWidth, halfHeight;
+
+        if (state.printService === "plotservice") {
+            const payloadString = decodeURIComponent(payload).replace(/imageFormat/g, "format").replace(/image\/[^"]*/g, "image/png").replace(/"TRANSPARENT":"false"/gi, "\"TRANSPARENT\":\"true\""),
+                resolution = rootGetters["Maps/resolution"],
+                scale = rootGetters["Maps/scale"],
+                // calculate width and height of print page in pixel
+                mapInfo = state.layoutMapInfo,
+                boundWidth = mapInfo[0] / state.DOTS_PER_INCH / state.INCHES_PER_METER * scale / resolution * DEVICE_PIXEL_RATIO,
+                boundHeight = mapInfo[1] / state.DOTS_PER_INCH / state.INCHES_PER_METER * scale / resolution * DEVICE_PIXEL_RATIO;
+
+            decodePayload = JSON.parse(payloadString);
+            // half of width and height of the print page transformed to coordinates
+            halfWidth = (boundWidth * resolution) / 2;
+            halfHeight = (boundHeight * resolution) / 2;
+        }
+
 
         plotservicePayload.layout = decodePayload.layout;
         plotservicePayload.srs = decodePayload.attributes.map.projection;
@@ -264,6 +284,24 @@ const actions = {
         }];
         plotservicePayload.outputFilename = state.filename + "_";
         plotservicePayload.outputFormat = state.outputFormat;
+
+        if (state.printService === "plotservice") {
+            const center = decodePayload.attributes.map.center,
+                epsgCode = mapCollection.getMapView("2D").getProjection().getCode();
+
+            if (decodePayload.layout.indexOf("Legende") > 0) {
+                plotservicePayload.legend = true;
+            }
+            if (plotservicePayload.addparam === undefined) {
+                plotservicePayload.addparam = {};
+            }
+            plotservicePayload.addparamtype = "default";
+            // calculate outer west, south, east and north coordinates of print page
+            plotservicePayload.addparam.bboxwest = String(Math.round((center[0] - halfWidth) * 10) / 10.0) + " (" + epsgCode + ")";
+            plotservicePayload.addparam.bboxsouth = String(Math.round((center[1] - halfHeight) * 10) / 10.0) + " (" + epsgCode + ")";
+            plotservicePayload.addparam.bboxeast = String(Math.round((center[0] + halfWidth) * 10) / 10.0);
+            plotservicePayload.addparam.bboxnorth = String(Math.round((center[1] + halfHeight) * 10) / 10.0);
+        }
 
         return JSON.stringify(plotservicePayload);
     },
