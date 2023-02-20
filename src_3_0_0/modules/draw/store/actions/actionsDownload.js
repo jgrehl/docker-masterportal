@@ -123,7 +123,7 @@ function setDownloadFeatures ({state, commit, dispatch, rootGetters}) {
 
         if (geometry instanceof Circle) {
             feature.set("isGeoCircle", true);
-            transformGeometry(rootGetters["Maps/projection"], geometry);
+            transformGeometry(rootGetters["Maps/projection"].getCode(), geometry);
             feature.set("geoCircleCenter", geometry.getCenter().join(","));
             feature.set("geoCircleRadius", geometry.getRadius());
             feature.setGeometry(fromCircle(geometry));
