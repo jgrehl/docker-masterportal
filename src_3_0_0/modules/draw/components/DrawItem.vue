@@ -261,8 +261,6 @@ export default {
         featuresFromDrawTool () {
             return this.layer.getSource().getFeatures().filter(feature => feature.get("fromDrawTool"));
         }
-
-        // NOTE: A nice feature would be that, similar to the interactions with the map, the Undo and Redo Buttons are disabled if not useable.
     },
     created () {
         this.checkLayer(this.layer).then((layerExists) => {
@@ -271,16 +269,6 @@ export default {
                 this.setLayer(this.layer);
             }
         });
-        // TBD
-        // Radio.trigger("RemoteInterface", "postMessage", {"initDrawTool": true});
-
-        if (this.addIconsOfActiveLayers) {
-            /*
-            listenToUpdatedVisibleLayerList(this.$store, layerModels => {
-                this.addSymbolsByLayerModels(layerModels);
-            });
-            */
-        }
     },
     mounted () {
         this.startInteractions();
@@ -324,8 +312,6 @@ export default {
                 }
 
                 if (!Array.isArray(legend)) {
-                    // TBD: await legend implementation
-                    // console.log("legend no array");
                     return;
                 }
                 legend.forEach(legendInfo => {
@@ -432,7 +418,6 @@ export default {
         }
     }
 };
-
 </script>
 
 <template lang="html">
@@ -1050,14 +1035,14 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-    @import "~variables";
-    .no-cursor {
-        cursor: none;
-    }
-    .cursor-crosshair {
-        cursor: crosshair;
-    }
-    .btn-sm {
-        font-size: $font-size-base;
-    }
+@import "~variables";
+.no-cursor {
+    cursor: none;
+}
+.cursor-crosshair {
+    cursor: crosshair;
+}
+.btn-sm {
+    font-size: $font-size-base;
+}
 </style>

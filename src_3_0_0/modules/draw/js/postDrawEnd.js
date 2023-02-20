@@ -12,9 +12,6 @@ function postDrawEnd (centerPoint, geoJSON) {
         geoJSONAddCenter.features[0].properties = {};
     }
     geoJSONAddCenter.features[0].properties.centerPoint = centerPoint;
-    // TBD30
-    // replacement needs to be inmplemented
-    // Radio.trigger("RemoteInterface", "postMessage", {"drawEnd": JSON.stringify(geoJSONAddCenter)});
 }
 
 export default postDrawEnd;

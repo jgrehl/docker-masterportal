@@ -111,11 +111,11 @@ export default {
     </form>
 </template>
 
-
 <style lang="scss" scoped>
-    #draw-filter {
-        input {
-            margin-top: 0;
-        }
+@import "~variables";
+#draw-filter {
+    input {
+        margin-top: 0;
     }
+}
 </style>
