@@ -336,6 +336,7 @@
           },
           {
             "type": "draw",
+            "enableAttributesSelector": true,
             "addIconsOfActiveLayers": true,
             "showDescription": true,
             "description": "Zeichnen / Schreiben auf der Karte."
