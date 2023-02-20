@@ -17,8 +17,6 @@ import postDrawEnd from "../js/postDrawEnd";
 
 import stateDraw from "./stateDraw";
 
-// NOTE: The Update and the Redo Buttons weren't working with the select and modify interaction in Backbone and are not yet working in Vue too.
-
 const initialState = JSON.parse(JSON.stringify(stateDraw)),
     actions = {
         ...actionsDownload,
@@ -641,7 +639,6 @@ const initialState = JSON.parse(JSON.stringify(stateDraw)),
             }
             commit("setSelectedFeature", feature);
 
-            // styleSettings for imported KML-Lines has wrong entries
             if (feature.getGeometry().getType() === "LineString" && styleSettings.colorContour === undefined) {
                 try {
                     const styles = feature.getStyle()(feature);
