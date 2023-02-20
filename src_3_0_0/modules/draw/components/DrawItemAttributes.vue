@@ -398,7 +398,7 @@ export default {
     </form>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 hr {
     margin: 0;
 }
