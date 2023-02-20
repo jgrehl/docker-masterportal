@@ -288,6 +288,7 @@ export default {
         this.setFocusToFirstControl();
     },
     unmounted () {
+        // this.clearLayer();
         this.resetModule();
         this.resetCanvasCursor();
     },
