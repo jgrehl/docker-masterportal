@@ -8,13 +8,14 @@ const symbol = {
     },
     /**
      * @property {Boolean} hasMouseMapInteractions Indicating that we have Map interactions.
+     * @property {String[]} supportedDevices Devices on which the module is displayed.
+     * @property {String[]} supportedMapModes Map mode in which this module can be used.
      * @property {Boolean} drawLayerVisible Shows/hides the draw layer and enables/disables the tools of the draw tool.
      * @property {Object} addFeatureListener Listens to the the event "addFeature" which is fired after a feature has been added to the map.
      * @property {Boolean} addIconsOfActiveLayers If activated and possible, all symbols found in layers are added to the iconList.
      * @property {String} currentInteraction The current interaction. Could be either "draw", "modify", "delete" or "none"
      * @property {String} formerInteraction The former interaction. Could be either "draw", "modify", "delete" or "none"
      * @property {Object[]} deactivatedDrawInteractions Array of draw interactions which are deactivated in the process of the tool. Can be used to reactivate them from another point.
-     * @property {Boolean} deactivateGFI If set to true, the activation of the tool deactivates the GFI tool.
      * @property {String} download.dataString Data that will be written to the file for the Download.
      * @property {module:ol/Feature[]} download.features Features that are drawn on the Map.
      * @property {String} download.file Name of the file including thr suffix.
@@ -95,20 +96,21 @@ const symbol = {
      * @property {String} writeTextSettings.font The font used for the text interaction.
      * @property {String[]} writeTextSettings.color The color of the drawn feature represented as an array.
      * @property {Number} writeTextSettings.opacity The opacity of the color of the drawn features. NOTE: The values of the transparencySettings are opacity values.
-     * @property {Number} initialWidth Size of the sidebar when opening.
-     * @property {Number} initialWidthMobile Mobile size of the sidebar when opening.
      * @property {String[]} attributesKeyList the attributes' key list
      * @property {Boolean} semicolonCSVDelimiter to decide if semicolon is used as downloaded csv delimiter.
-     */
+     * @property {Object} oldStyle for saving the old Style.
+     * @property {Object} layer the Layer we are drawing on.
+    */
     state = {
         hasMouseMapInteractions: true,
+        supportedDevices: ["Desktop", "Mobile", "Table"],
+        supportedMapModes: ["2D"],
         drawLayerVisible: true,
         addFeatureListener: {},
         addIconsOfActiveLayers: false,
         currentInteraction: "draw",
         formerInteraction: "",
         deactivatedDrawInteractions: [],
-        deactivateGFI: true,
         download: {
             dataString: "",
             enabled: true,
@@ -219,8 +221,6 @@ const symbol = {
             color: [55, 126, 184, 1],
             opacity: 1
         },
-        initialWidth: 500,
-        initialWidthMobile: 300,
         attributesKeyList: [],
         semicolonCSVDelimiter: true,
         oldStyle: undefined,
