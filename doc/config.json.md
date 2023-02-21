@@ -4380,7 +4380,7 @@ This module can open a link, display HTML from config.json or an external file, 
 |openURL|no|String||Url that is to be opened in a new tab by clicking on the menu item.|false|
 |htmlContent|no|String||HTML displayed in the module. The HTML is not validated, the responsibility for the security of the HTML lies with the operator of the portal.|false|
 |pathToContent|no|String||Path to a file containing HTML displayed in the module. The HTML is not validated, the responsibility for the security of the HTML lies with the operator of the portal.|false|
-|dispatch|no|[dispatch](#markdown-header-portalconfigmenutoolcustomMenuElementdispatch)||Vuex dispatch- action to be executed by clicking on the menu item.|true|
+|dispatch|no|[dispatch](#markdown-header-portalconfigmenutoolcustomMenuElementdispatch)||Action to be executed by clicking on the menu item.|true|
 
 **Example**
 ```
@@ -4414,8 +4414,8 @@ CustomMenuElement Module `dispatch` options.
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
-|action|yes|String||Name and, if applicable, path of the Vuex-action to be executed.|true|
-|payload|no|[payload](#markdown-header-portalconfigmenutoolcustomMenuElementdispatchpayload)||Payload that is transferred to the Vuex-action.|true|
+|action|yes|String||Name and, if applicable, path of the action to be executed.|true|
+|payload|no|[payload](#markdown-header-portalconfigmenutoolcustomMenuElementdispatchpayload)||Payload that is transferred to the action.|true|
 
 **Example**
 ```
@@ -4428,7 +4428,7 @@ CustomMenuElement Module `dispatch` options.
 ***
 #### Portalconfig.menu.tool.customMenuElement.dispatch.payload
 
-CustomMenuElement Module `dispatch` from `payload`. The appropriate payload for the Vuex-action must be specified. Here is the example of the `Alerting/addSingleAlert`.
+CustomMenuElement Module `dispatch` from `payload`. The appropriate payload for the action must be specified. Here is the example of the `Alerting/addSingleAlert`.
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
