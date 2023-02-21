@@ -4,6 +4,7 @@ import actions from "../../../store/actionsFileImport";
 import importedState from "../../../store/stateFileImport";
 import rawSources from "../../resources/rawSources.js";
 import crs from "@masterportal/masterportalapi/src/crs";
+import uniqueIdProvider from "../../../../../shared/js/utils/uniqueId.js";
 import sinon from "sinon/pkg/sinon-esm";
 
 const
@@ -24,12 +25,15 @@ before(() => {
     });
 });
 
+afterEach(() => {
+    sinon.restore();
+    uniqueIdProvider.reset();
+});
+
 describe("src_3_0_0/modules/fileImport/store/actionsFileImport.js", () => {
     beforeEach(() => {
         mapCollection.clear();
     });
-
-    afterEach(sinon.restore);
 
     describe("file import - file should add some features to the current draw layer", () => {
         it("preset \"auto\", correct kml file, correct filename", done => {
@@ -190,7 +194,7 @@ describe("src_3_0_0/modules/fileImport/store/actionsFileImport.js", () => {
                     type: "addLayerToLayerConfig",
                     payload: {
                         layerConfig: {
-                            id: "importDrawLayer51",
+                            id: "importDrawLayer1",
                             gfiAttributes: {
                                 test: "123"
                             },
