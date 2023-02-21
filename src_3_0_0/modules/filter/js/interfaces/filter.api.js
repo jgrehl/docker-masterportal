@@ -67,10 +67,10 @@ export default class FilterApi {
         if (!layerModel) {
             return;
         }
-        const type = layerModel.get("typ").toLowerCase(),
-            featureNS = layerModel.get("featureNS"),
-            url = layerModel.get("url"),
-            featureType = layerModel.get("featureType");
+        const type = layerModel.typ.toLowerCase(),
+            featureNS = layerModel.featureNS,
+            url = layerModel.url,
+            featureType = layerModel.featureType;
 
         if (type === "wfs") {
             this.service = {
@@ -93,9 +93,9 @@ export default class FilterApi {
                     extern,
                     layerId,
                     url,
-                    collection: layerModel.get("collection"),
+                    collection: layerModel.collection,
                     namespace: featureNS,
-                    limit: typeof layerModel.get("limit") === "undefined" ? 400 : layerModel.get("limit")
+                    limit: typeof layerModel.limit === "undefined" ? 400 : layerModel.limit
                 };
             }
             else {
