@@ -454,11 +454,11 @@
           ]
         },
         {
-          "id": "VectorTile_ADV",
-          "name": "ADV-Smart",
+          "id": "VectorTile_basemap_de",
+          "name": "Web Vektor",
           "typ": "VectorTile",
           "visibility": false,
-          "gfiAttributes": "shwoAll",
+          "gfiAttributes": "showAll",
           "url": "https://dev.adv-smart.de/tiles/smarttiles_de_UTM32_dev/{z}/{x}/{y}.pbf",
           "epsg": "EPSG:25832",
           "extent": [
@@ -488,25 +488,15 @@
           ],
           "vtStyles": [
             {
-              "id": "masterportal_test1",
-              "name": "Masterportal_test1",
-              "url": "https://dev.adv-smart.de/styles/playground/masterportal_test1.json",
+              "id": "farbe",
+              "name": "Farbe",
+              "url": "https://sgx.geodatenzentrum.de/gdz_basemapde_vektor/styles/bm_web_col.json",
               "defaultStyle": true
             },
             {
-              "id": "farbe",
-              "name": "Farbe",
-              "url": "https://dev.adv-smart.de/styles/playground/de_style_colour_light_UTM32_m4.3_public.json"
-            },
-            {
-              "id": "nacht",
-              "name": "Nacht",
-              "url": "https://adv-smart.de/styles/public/de_style_night.json"
-            },
-            {
-              "id": "druck",
-              "name": "Druck",
-              "url": "https://adv-smart.de/styles/public/de_style_print.json"
+              "id": "grau",
+              "name": "Grau",
+              "url": "https://sgx.geodatenzentrum.de/gdz_basemapde_vektor/styles/bm_web_gry.json"
             }
           ]
         },
