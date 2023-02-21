@@ -12,7 +12,7 @@ import {Circle, Style} from "ol/style.js";
 
 import Layer2dVectorSensorThings from "../../../js/layer2dVectorSensorThings";
 
-describe.only("src_3_0_0/core/js/layers/layer2dVectorSensorThings.js", () => {
+describe("src_3_0_0/core/js/layers/layer2dVectorSensorThings.js", () => {
     let attributes,
         errorStub,
         sensorThingsLayer,
