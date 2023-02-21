@@ -2,6 +2,7 @@ import store from "../../../app-store";
 import {nextTick} from "vue";
 import isObject from "../../../shared/js/utils/isObject.js";
 import LayerGroup from "ol/layer/Group";
+import layerCollection from "../../../core/layers/js/layerCollection";
 
 /**
  * The MapHandler has control over OL and the Map.
@@ -87,7 +88,7 @@ export default class MapHandler {
         }
 
         if (Array.isArray(visibleLayer) && !visibleLayer.length) {
-            this.handlers.changeLayerVisibility(layerId);
+            this.handlers.addLayerByLayerId(layerId);
         }
         nextTick(() => {
             layerModel = this.handlers.getLayerByLayerId(layerId);
@@ -101,7 +102,6 @@ export default class MapHandler {
                         layerModel = layer;
                     }
                 });
-
                 layerModel.set("isVisibleInMap", isVisibleInMap);
             }
 
@@ -153,10 +153,10 @@ export default class MapHandler {
      * @returns {Boolean} true if the layer is ready to use
      */
     isLayerActivated (filterId) {
-        const layer = this.getLayerModelByFilterId(filterId).layer;
+        const layer = this.getLayerModelByFilterId(filterId);
 
         if (isObject(layer)) {
-            return layer.getVisible() ? layer.getVisible() : false;
+            return layer.visiblitiy ? layer.visibility : false;
         }
         return false;
     }
@@ -170,7 +170,7 @@ export default class MapHandler {
         const layerModel = this.getLayerModelByFilterId(filterId);
 
         if (isObject(layerModel)) {
-            return layerModel.get("isVisibleInMap");
+            return layerModel.isVisibleInMap;
         }
         return false;
     }
@@ -182,19 +182,30 @@ export default class MapHandler {
      * @returns {void}
      */
     activateLayer (filterId, onActivated) {
-        const layerModel = this.getLayerModelByFilterId(filterId),
-            layerSource = typeof layerModel?.layer?.getSource()?.getSource === "function" && layerModel.get("clusterDistance") > 0 ? layerModel.layer.getSource().getSource() : layerModel?.layer?.getSource(),
-            layerConfig = store.getters.layerConfigById(layerModel?.attributes?.id);
+        const layerConfig = this.getLayerModelByFilterId(filterId);
+        let layerModel = layerCollection.getLayerById(layerConfig.id),
+            layerSource = typeof layerModel?.layer?.getSource()?.getSource === "function" && layerModel.clusterDistance > 0 ? layerModel.layer.getSource().getSource() : layerModel?.layer?.getSource();
 
-        if (!isObject(layerModel)) {
+
+        if (!isObject(layerConfig)) {
             return;
         }
 
         if (!this.isLayerActivated(filterId) && !layerSource?.features?.length > 0) {
-            (layerModel.get("typ") === "SensorThings" ? layerModel : layerSource).once("featuresloadend", () => {
-                if (typeof onActivated === "function") {
-                    onActivated();
-                }
+            layerConfig.visibility = true;
+            store.dispatch("replaceByIdInLayerConfig", layerConfig);
+
+            nextTick(() => {
+                layerModel = layerCollection.getLayerById(layerConfig.id);
+                layerSource = typeof layerModel?.layer?.getSource()?.getSource === "function" && layerConfig.clusterDistance > 0 ? layerModel.layer.getSource().getSource() : layerModel?.layer?.getSource();
+
+                (layerConfig.typ === "SensorThings" ? layerModel : layerSource).once("featuresloadend", () => {
+                    if (typeof onActivated === "function") {
+                        onActivated();
+                    }
+                });
+
+
             });
             layerConfig.showInLayerTree = true;
             store.dispatch("replaceByIdInLayerConfig", layerConfig);
@@ -251,7 +262,7 @@ export default class MapHandler {
         if (!isObject(layerModel)) {
             return false;
         }
-        return layerModel.get("autoRefresh") > 0;
+        return layerModel.autoRefresh > 0;
     }
 
     /**
@@ -267,7 +278,7 @@ export default class MapHandler {
             return;
         }
 
-        layerModel.set("isNeverVisibleInTree", false);
+        layerModel.isNeverVisibleInTree = false;
     }
 
     /**
@@ -289,7 +300,7 @@ export default class MapHandler {
             layerModel.getLayerSource().clear();
         }
         else {
-            this.handlers.showFeaturesByIds(layerModel.get("id"), []);
+            this.handlers.showFeaturesByIds(layerModel.id, []);
         }
     }
 
@@ -307,7 +318,7 @@ export default class MapHandler {
         }
         const layerModel = this.getLayerModelByFilterId(filterId);
 
-        if (!isObject(layerModel) || typeof layerModel.get !== "function") {
+        if (!isObject(layerModel)) {
             return;
         }
 
@@ -321,7 +332,7 @@ export default class MapHandler {
             layerModel.getLayerSource().addFeatures(items);
         }
         else {
-            this.handlers.showFeaturesByIds(layerModel.get("id"), this.filteredIds[filterId]);
+            this.handlers.showFeaturesByIds(layerModel.id, this.filteredIds[filterId]);
         }
     }
 
@@ -347,7 +358,7 @@ export default class MapHandler {
 
         if (isObject(layerModel) && Array.isArray(filteredFeatureIds) && filteredFeatureIds.length) {
             this.isZooming = true;
-            this.handlers.zoomToFilteredFeatures(minScale, filteredFeatureIds, layerModel.get("id"), () => {
+            this.handlers.zoomToFilteredFeatures(minScale, filteredFeatureIds, layerModel.id, () => {
                 this.isZooming = false;
             });
         }

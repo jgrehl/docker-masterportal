@@ -13,6 +13,7 @@ import {
     createLayerIfNotExists,
     zoomToFilteredFeatures,
     zoomToExtent,
+    addLayerByLayerId,
     changeLayerVisibility,
     setParserAttributeByLayerId,
     getLayers
@@ -41,6 +42,7 @@ export default {
                 createLayerIfNotExists,
                 zoomToFilteredFeatures,
                 zoomToExtent,
+                addLayerByLayerId,
                 changeLayerVisibility,
                 setParserAttributeByLayerId,
                 getLayers
