@@ -11,7 +11,7 @@ import VectorSource from "ol/source/Vector";
 import Layer2dVector from "./layer2dVector";
 
 import changeTimeZone from "../../../shared/js/utils/changeTimeZone";
-import uniqueIdProvider from "../../../shared/js/utils/uniqueId.js";
+import {uniqueId} from "../../../shared/js/utils/uniqueId.js";
 import isObject from "../../../shared/js/utils/isObject";
 import {SensorThingsHttp} from "../../../shared/js/api/sensorThingsHttp";
 import {SensorThingsMqtt} from "../../../shared/js/api/sensorThingsMqtt";
@@ -272,7 +272,7 @@ Layer2dVectorSensorThings.prototype.updateHistoricalFeatures = function (feature
         layerSource.removeFeature(layerSource.getFeatureById(removedFeature));
     }
     clonedFeature.set("dataStreamId", undefined);
-    clonedFeature.setId(uniqueIdProvider.uniqueId("historicalFeature-"));
+    clonedFeature.setId(uniqueId("historicalFeature-"));
     feature.get("historicalFeatureIds").unshift(clonedFeature.getId());
     layerSource.addFeature(clonedFeature);
     feature.get("historicalFeatureIds").forEach((id, index) => {
