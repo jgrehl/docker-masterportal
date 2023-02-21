@@ -1,25 +1,25 @@
 import {expect} from "chai";
-import uniqueIdProvider from "../../uniqueId";
+import {uniqueId, reset as resetUniqueId} from "../../uniqueId";
 
 describe("src_3_0_0/shared/js/utils/uniqueId.js", () => {
     beforeEach(() => {
-        uniqueIdProvider.reset();
+        resetUniqueId();
     });
 
     it("should increment the uniqueId internaly", () => {
-        const currentId = uniqueIdProvider.uniqueId(),
+        const currentId = uniqueId(),
             expectedId = String(parseInt(currentId, 10) + 1);
 
         expect(currentId).to.not.be.NaN;
-        expect(uniqueIdProvider.uniqueId()).to.equal(expectedId);
+        expect(uniqueId()).to.equal(expectedId);
     });
     it("should prefix the id with the given prefix", () => {
-        const currentId = uniqueIdProvider.uniqueId(),
+        const currentId = uniqueId(),
             prefix = "foo",
             expectedId = prefix + String(parseInt(currentId, 10) + 1);
 
         expect(currentId).not.to.be.NaN;
-        expect(uniqueIdProvider.uniqueId(prefix)).to.equal(expectedId);
+        expect(uniqueId(prefix)).to.equal(expectedId);
     });
     it("should increment the same id independent of the UniqueIds instance", () => {
         /**
@@ -32,10 +32,10 @@ describe("src_3_0_0/shared/js/utils/uniqueId.js", () => {
              * @returns {String}  a globally-unique id
              */
             getUniqueId (prefix) {
-                return uniqueIdProvider.uniqueId(prefix);
+                return uniqueId(prefix);
             }
         }
-        const currentId = uniqueIdProvider.uniqueId(),
+        const currentId = uniqueId(),
             expectedId = String(parseInt(currentId, 10) + 1),
             modelB = new UniqueId();
 
