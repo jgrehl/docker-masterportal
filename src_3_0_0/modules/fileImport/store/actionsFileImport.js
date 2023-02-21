@@ -7,7 +7,7 @@ import Icon from "ol/style/Icon";
 // import {createDrawStyle} from "../../draw/utils/style/createDrawStyle";
 import isObject from "../../../shared/js/utils/isObject";
 import {createEmpty as createEmptyExtent, extend} from "ol/extent";
-import uniqueIdProvider from "../../../shared/js/utils/uniqueId.js";
+import {uniqueId} from "../../../shared/js/utils/uniqueId.js";
 import layerCollection from "../../../core/layers/js/layerCollection";
 import {treeSubjectsKey} from "../../../shared/js/utils/constants";
 
@@ -314,7 +314,7 @@ export default {
                 });
             }
             if (typeof feature.get === "function" && typeof feature.get("styleId") === "undefined") {
-                feature.set("styleId", uniqueIdProvider.uniqueId(""));
+                feature.set("styleId", uniqueId(""));
             }
         });
 
@@ -598,7 +598,7 @@ export default {
      */
     async addLayerConfig ({dispatch}, attributes) {
         const layerAttributes = {
-            id: uniqueIdProvider.uniqueId("importDrawLayer"),
+            id: uniqueId("importDrawLayer"),
             name: "importDrawLayer",
             showInLayerTree: true,
             typ: "VECTORBASE",
