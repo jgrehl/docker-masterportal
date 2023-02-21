@@ -45,7 +45,7 @@ export default {
             default: ""
         },
         prechecked: {
-            type: String,
+            type: [String, Array],
             required: false,
             default: ""
         },

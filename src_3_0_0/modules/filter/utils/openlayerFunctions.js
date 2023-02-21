@@ -90,7 +90,7 @@ function isFeatureInGeometry (feature, geometry) {
  * @returns {ol/Layer} the layer
  */
 function getLayerByLayerId (layerId) {
-    return layerCollection.getLayerById(layerId);
+    return store.getters.layerConfigById(layerId);
 }
 
 /**
@@ -150,6 +150,24 @@ function zoomToExtent (extent, minScale, callback) {
 }
 
 /**
+ * Adds a layer model by the given layerId.
+ * @param {String} layerId the layer Id
+ * @returns {void}
+ */
+function addLayerByLayerId (layerId) {
+    const layer = store.getters.layerConfigById(layerId);
+
+    store.dispatch("replaceByIdInLayerConfig", {
+        layerConfigs: [{
+            id: layer.id,
+            layer: {
+                id: layer.id
+            }
+        }]
+    });
+}
+
+/**
  * changes visibility of the layer to true so its shown in the map.
  * @param {String} layerId the layer Id
  * @returns {void}
@@ -190,7 +208,7 @@ function setParserAttributeByLayerId (layerId, key, value) {
  * @returns {ol/Layer[]} a list of layers
  */
 function getLayers () {
-    return mapCollection.getMap("2D").getLayers();
+    return store.getters.allLayerConfigs;
 }
 
 export {
@@ -204,6 +222,7 @@ export {
     zoomToFilteredFeatures,
     zoomToExtent,
     showFeaturesByIds,
+    addLayerByLayerId,
     changeLayerVisibility,
     setParserAttributeByLayerId,
     getLayers
