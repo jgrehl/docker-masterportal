@@ -441,9 +441,6 @@
             1.191850178591769
           ],
           "tileSize": 512,
-          "supported": [
-            "2D"
-          ],
           "vtStyles": [
             {
               "id": "VectorTile_STYLE",
@@ -483,9 +480,6 @@
           ],
           "tileSize": 256,
           "zDirection": -1,
-          "supported": [
-            "2D"
-          ],
           "vtStyles": [
             {
               "id": "farbe",
