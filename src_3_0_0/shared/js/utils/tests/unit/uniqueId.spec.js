@@ -18,7 +18,7 @@ describe("src_3_0_0/shared/js/utils/uniqueId.js", () => {
             prefix = "foo",
             expectedId = prefix + String(parseInt(currentId, 10) + 1);
 
-        expect(currentId).not.to.be.NaN;
+        expect(currentId).to.not.be.NaN;
         expect(uniqueId(prefix)).to.equal(expectedId);
     });
     it("should increment the same id independent of the UniqueIds instance", () => {
