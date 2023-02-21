@@ -22,6 +22,14 @@ function getIdCounter () {
 }
 
 /**
+ * Resets the idCounter back to 1.
+ * @returns {void}
+ */
+function reset () {
+    idCounter = 1;
+}
+
+/**
  * increments the idCounter
  * @post the static idCounter (Util.idCounter) is incremented by 1
  * @returns {void}
@@ -30,6 +38,7 @@ function incIdCounter () {
     idCounter++;
 }
 
-module.exports = {
-    uniqueId
+export default {
+    uniqueId,
+    reset
 };
