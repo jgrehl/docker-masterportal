@@ -7,12 +7,12 @@ export default {
     props: {
         selectedFeature: {
             type: Object,
-            requried: false,
+            required: false,
             default: undefined
         },
         layer: {
             type: Object,
-            requried: false,
+            required: false,
             default: undefined
         },
         attributesKeyList: {
@@ -30,6 +30,11 @@ export default {
             validKeys: [],
             addKey: {valid: true, message: ""}
         };
+    },
+    compatConfig: {
+        MODE: 3,
+        WATCH_ARRAY: true,
+        ATTR_FALSE_VALUE: false
     },
     computed: {
         ...mapGetters("Modules/Draw", ["oldStyle"])
