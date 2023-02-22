@@ -66,8 +66,8 @@ export default {
                 if (properties.openURL !== undefined) {
                     window.open(properties.openURL);
                 }
-                if (properties.dispatch !== undefined) {
-                    dispatch(properties.dispatch.action, properties.dispatch.payload, {root: true});
+                if (properties.execute !== undefined) {
+                    dispatch(properties.execute.action, properties.execute.payload, {root: true});
                 }
                 if (properties.htmlContent === undefined && properties.pathToContent === undefined) {
                     if (rootGetters.isMobile) {
