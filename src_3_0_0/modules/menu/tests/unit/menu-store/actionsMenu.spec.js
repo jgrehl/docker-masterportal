@@ -164,11 +164,11 @@ describe("src_3_0_0/modules/menu/menu-store/actionsMenu.js", () => {
             expect(global.window.open.firstCall.args[0]).to.equals(properties.openURL);
         });
 
-        it("should open new tab if type is 'customMenuElement' and properties contains 'openURL' and 'dispatch", () => {
+        it("should open new tab if type is 'customMenuElement' and properties contains 'openURL' and 'execute", () => {
             type = "customMenuElement";
             properties = {
                 openURL: "http://url.de",
-                dispatch: {
+                execute: {
                     action: "Alerting/addSingleAlert",
                     payload: {"title": "An alle Menschen", "content": "Hallo Welt"}
                 }
@@ -177,17 +177,17 @@ describe("src_3_0_0/modules/menu/menu-store/actionsMenu.js", () => {
             actions.clickedMenuElement({dispatch, rootGetters}, {name, path, side, type, properties});
 
             expect(dispatch.calledOnce).to.be.true;
-            expect(dispatch.firstCall.args[0]).to.equals(properties.dispatch.action);
-            expect(dispatch.firstCall.args[1]).to.be.deep.equals(properties.dispatch.payload);
+            expect(dispatch.firstCall.args[0]).to.equals(properties.execute.action);
+            expect(dispatch.firstCall.args[1]).to.be.deep.equals(properties.execute.payload);
             expect(dispatch.firstCall.args[2]).to.be.deep.equals({root: true});
             expect(global.window.open.calledOnce).to.be.true;
             expect(global.window.open.firstCall.args[0]).to.equals(properties.openURL);
         });
 
-        it("should dispatch action if type is 'customMenuElement' and properties contains only 'dispatch", () => {
+        it("should execute action if type is 'customMenuElement' and properties contains only 'execute", () => {
             type = "customMenuElement";
             properties = {
-                dispatch: {
+                execute: {
                     action: "Alerting/addSingleAlert",
                     payload: {"title": "An alle Menschen", "content": "Hallo Welt"}
                 }
@@ -196,16 +196,16 @@ describe("src_3_0_0/modules/menu/menu-store/actionsMenu.js", () => {
             actions.clickedMenuElement({dispatch, rootGetters}, {name, path, side, type, properties});
 
             expect(dispatch.calledOnce).to.be.true;
-            expect(dispatch.firstCall.args[0]).to.equals(properties.dispatch.action);
-            expect(dispatch.firstCall.args[1]).to.be.deep.equals(properties.dispatch.payload);
+            expect(dispatch.firstCall.args[0]).to.equals(properties.execute.action);
+            expect(dispatch.firstCall.args[1]).to.be.deep.equals(properties.execute.payload);
             expect(dispatch.firstCall.args[2]).to.be.deep.equals({root: true});
         });
 
-        it("mobile: should dispatch action if type is 'customMenuElement' and properties contains only dispatch, closes menu", () => {
+        it("mobile: should execute action if type is 'customMenuElement' and properties contains only execute, closes menu", () => {
             rootGetters.isMobile = true;
             type = "customMenuElement";
             properties = {
-                dispatch: {
+                execute: {
                     action: "Alerting/addSingleAlert",
                     payload: {"title": "An alle Menschen", "content": "Hallo Welt"}
                 }
@@ -214,15 +214,15 @@ describe("src_3_0_0/modules/menu/menu-store/actionsMenu.js", () => {
             actions.clickedMenuElement({dispatch, rootGetters}, {name, path, side, type, properties});
 
             expect(dispatch.calledTwice).to.be.true;
-            expect(dispatch.firstCall.args[0]).to.equals(properties.dispatch.action);
-            expect(dispatch.firstCall.args[1]).to.be.deep.equals(properties.dispatch.payload);
+            expect(dispatch.firstCall.args[0]).to.equals(properties.execute.action);
+            expect(dispatch.firstCall.args[1]).to.be.deep.equals(properties.execute.payload);
             expect(dispatch.firstCall.args[2]).to.be.deep.equals({root: true});
             expect(dispatch.secondCall.args[0]).to.equals("Menu/toggleMenu");
             expect(dispatch.secondCall.args[1]).to.equals(side);
             expect(dispatch.secondCall.args[2]).to.be.deep.equals({root: true});
         });
 
-        it("mobile: should dispatch action if type is 'customMenuElement' and properties contains 'openURL', closes menu", () => {
+        it("mobile: should open new tab if type is 'customMenuElement' and properties contains 'openURL', closes menu", () => {
             rootGetters.isMobile = true;
             type = "customMenuElement";
             properties = {
