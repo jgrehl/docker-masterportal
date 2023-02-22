@@ -154,6 +154,15 @@ const mutations = {
      */
     setLayer: (state, layer) => {
         state.layer = layer;
+    },
+    /**
+    * Sets the Layer drawn with.
+    * @param {Object} state the state of draw-module
+    * @param {Object[]} keyList the data to set
+    * @returns {void}
+    */
+    setAttributesKeyList: (state, keyList) => {
+        state.attributesKeyList = keyList;
     }
 };
 
