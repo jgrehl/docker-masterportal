@@ -213,7 +213,7 @@
                 "type": "customMenuElement",
                 "name": "HTML aus config.json und Action",
                 "htmlContent": "<div><h1>This is a Heading</h1><p>This is a paragraph.</p></br><a href=\"https://www.w3schools.com/\" target=\"_blank\">Visit W3Schools.com!</a></div>",
-                "dispatch":{
+                "execute":{
                   "action": "Alerting/addSingleAlert",
                   "payload":  {"title":"An alle Menschen", "content": "Hallo Welt"}
                 }
