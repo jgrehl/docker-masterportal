@@ -42,7 +42,7 @@ export default {
                 else {
                     this.resetCanvasCursor();
                 }
-                this.setDrawLayerVisible(value);
+                this.updateDrawLayerVisible(value);
             }
         },
         /**
@@ -294,7 +294,8 @@ export default {
             "setDrawLineSettings",
             "setDrawAreaSettings",
             "setDrawCircleSettings",
-            "setLayer"
+            "setLayer",
+            "setAttributesKeyList"
         ]),
         ...mapActions("Modules/Draw", [
             "undoLastStep",
@@ -319,7 +320,8 @@ export default {
             "removeInteraction",
             "manipulateInteraction",
             "deactivateDrawInteractions",
-            "saveAsCurrentFeatureAndApplyStyleSettings"
+            "saveAsCurrentFeatureAndApplyStyleSettings",
+            "updateDrawLayerVisible"
         ]),
         ...mapActions("Maps", [
             "addLayer",
