@@ -4307,7 +4307,7 @@ Dieses Modul kann einen Link öffnen, HTML aus config.json oder einer externen D
 |openURL|nein|String||Url die mit dem Klick auf den Menü-Eintrag in einem neuen Tab geöffnet werden soll.|false|
 |htmlContent|nein|String||HTML, das in dem Modul angezeigt wird. Das HTML wird nicht validiert, die Verantwortung für die Sicherheit des HTMLs liegt beim Betreiber des Portals.|false|
 |pathToContent|nein|String||Pfad zu einer Datei, die HTML enthält, das in dem Modul angezeigt wird. Das HTML wird nicht validiert, die Verantwortung für die Sicherheit des HTMLs liegt beim Betreiber des Portals.|false|
-|dispatch|nein|[dispatch](#markdown-header-portalconfigmenutoolcustomMenuElementdispatch)||Aktion, die mit dem Klick auf den Menü-Eintrag ausgeführt werden soll.|true|
+|execute|nein|[execute](#markdown-header-portalconfigmenutoolcustomMenuElementexecute)||Aktion, die mit dem Klick auf den Menü-Eintrag ausgeführt werden soll.|true|
 
 
 **Beispiel**
@@ -4328,7 +4328,7 @@ Dieses Modul kann einen Link öffnen, HTML aus config.json oder einer externen D
     "type": "customMenuElement",
     "name": "HTML aus config.json und Action",
     "htmlContent": "<div><p>This is a paragraph.</p></br><a href=\"https://www.w3schools.com/\" target=\"_blank\">Visit W3Schools.com!</a></div>",
-    "dispatch":{
+    "execute":{
         "action": "Alerting/addSingleAlert",
         "payload":  {"title":"An alle Menschen", "content": "Hallo Welt"}
     }
@@ -4336,14 +4336,14 @@ Dieses Modul kann einen Link öffnen, HTML aus config.json oder einer externen D
 ```
 
 ***
-#### Portalconfig.menu.tool.customMenuElement.dispatch
+#### Portalconfig.menu.tool.customMenuElement.execute
 
-CustomMenuElement Module `dispatch` Optionen.
+CustomMenuElement Module `execute` Optionen.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
 |action|ja|String||Name und ggf. Pfad der Aktion, die ausgeführt werden soll.|true|
-|payload|nein|[payload](#markdown-header-portalconfigmenutoolcustomMenuElementdispatchpayload)||Payload, der an die Aktion übergeben wird.|true|
+|payload|nein|[payload](#markdown-header-portalconfigmenutoolcustomMenuElementexecutepayload)||Payload, der an die Aktion übergeben wird.|true|
 
 **Beispiel**
 ```
@@ -4354,9 +4354,9 @@ CustomMenuElement Module `dispatch` Optionen.
 }
 ```
 ***
-#### Portalconfig.menu.tool.customMenuElement.dispatch.payload
+#### Portalconfig.menu.tool.customMenuElement.execute.payload
 
-CustomMenuElement Module `dispatch` vom `payload`. Der passende payload zu der Aktion muss angegeben werden. Hier das Beispiel des `Alerting/addSingleAlert`.
+CustomMenuElement Module `execute` vom `payload`. Der passende payload zu der Aktion muss angegeben werden. Hier das Beispiel des `Alerting/addSingleAlert`.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
