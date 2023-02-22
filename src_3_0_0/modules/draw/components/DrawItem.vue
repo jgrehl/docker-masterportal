@@ -276,13 +276,30 @@ export default {
         this.setFocusToFirstControl();
     },
     unmounted () {
-        // this.clearLayer();
         this.resetModule();
         this.resetCanvasCursor();
     },
     methods: {
-        ...mapMutations("Modules/Draw", constants.keyStore.mutations),
+        ...mapMutations("Modules/Draw", [
+            "setDownloadDataString",
+            "setDownloadEnabled",
+            "setDownloadFeatures",
+            "setDownloadFile",
+            "setDownloadFileName",
+            "setDownloadFileUrl",
+            "setDownloadSelectedFormat",
+            "addSymbol",
+            "setDrawSymbolSettings",
+            "setDrawCurveSettings",
+            "setDrawLineSettings",
+            "setDrawAreaSettings",
+            "setDrawCircleSettings",
+            "setLayer"
+        ]),
         ...mapActions("Modules/Draw", [
+            "undoLastStep",
+            "redoLastStep",
+            "clearLayer",
             "setDrawType",
             "setOpacity",
             "setStrokeWidth",
@@ -720,7 +737,6 @@ export default {
                         :disabled="drawHTMLElementsModifyFeature"
                         @change="setSymbol"
                     >
-                        <!-- NOTE: caption of the iconList is deprecated in 3.0.0 -->
                         <option
                             v-for="option in iconList"
                             :key="'draw-icon-' + (option.id ? option.id : option.caption)"
