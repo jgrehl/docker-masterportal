@@ -802,6 +802,29 @@ const initialState = JSON.parse(JSON.stringify(stateDraw)),
             commit("setRedoArray", redoArray);
         },
         /**
+         * Sets drawLayervisible and let layer and interactions react in a logic way.
+         *
+         * @param {Object} context Actions context object.
+         * @param {Boolean} value The value to set.
+         * @returns {void}
+         */
+        updateDrawLayerVisible: ({getters, commit, dispatch}, value) => {
+            if (typeof getters?.layer?.setVisible === "function") {
+                getters.layer.setVisible(value);
+            }
+
+            if (value) {
+                if (getters.formerInteraction) {
+                    dispatch("toggleInteraction", getters.formerInteraction);
+                }
+            }
+            else {
+                commit("setFormerInteraction", getters.currentInteraction);
+                dispatch("toggleInteraction", "none");
+            }
+            commit("setDrawLayerVisible", value);
+        },
+        /**
          * Adds or removes one element from the undoArray.
          *
          * @param {Object} payload payload object.
