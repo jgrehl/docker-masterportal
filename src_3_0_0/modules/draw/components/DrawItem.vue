@@ -282,7 +282,28 @@ export default {
     },
     methods: {
         ...mapMutations("Modules/Draw", constants.keyStore.mutations),
-        ...mapActions("Modules/Draw", constants.keyStore.actions),
+        ...mapActions("Modules/Draw", [
+            "setDrawType",
+            "setOpacity",
+            "setStrokeWidth",
+            "setColorContour",
+            "setColor",
+            "setCircleRadius",
+            "setCircleOuterRadius",
+            "setOuterColorContour",
+            "addSymbolIfNotExists",
+            "addDrawStateToFeature",
+            "startInteractions",
+            "setCanvasCursorByInteraction",
+            "setFocusToFirstControl",
+            "resetModule",
+            "resetCanvasCursor",
+            "toggleInteraction",
+            "removeInteraction",
+            "manipulateInteraction",
+            "deactivateDrawInteractions",
+            "saveAsCurrentFeatureAndApplyStyleSettings"
+        ]),
         ...mapActions("Maps", [
             "addLayer",
             "checkLayer"
@@ -395,11 +416,9 @@ export default {
         getIconLabelKey (option) {
             if (option && option.id) {
                 if (i18next.exists(option.id)) {
-                    // console.log(option.id);
                     return option.id;
                 }
                 else if (i18next.exists("common:modules.tools.draw.iconList." + option.id)) {
-                    // console.log("common:modules.tools.draw.iconList." + option.id);
                     return "common:modules.tools.draw.iconList." + option.id;
                 }
                 // need to fake the return here for now, as long as exists doesn't work
