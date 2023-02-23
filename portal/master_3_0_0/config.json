@@ -335,6 +335,10 @@
             "description": "Bestimme Koordinaten aus der Karte oder suche nach Koordinaten."
           },
           {
+            "type": "draw",
+            "addIconsOfActiveLayers": true
+          },
+          {
             "type": "bufferAnalysis",
             "showDescription": true,
             "description": "Finde heraus, was sich in einem Umkreis um ein Feature befindet."
