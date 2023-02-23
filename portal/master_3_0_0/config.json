@@ -587,7 +587,11 @@
           "mouseHoverField": [
             "name",
             "adresse"
-          ]
+          ],
+          "featurePrefix": "de.hh.up:",
+          "wildCard": "%",
+          "singleChar": "#",
+          "escapeChar": "!"
         },
         {
           "id": "52",
@@ -718,8 +722,9 @@
           "id": "GeoJSON",
           "name": "Beiträge",
           "typ": "GeoJSON",
-          "visibility": false,
-          "url": "./resources/example_geojson.json"
+          "visibility": true,
+          "url": "./resources/example_geojson.json",
+          "styleId": "contributions"
         },
         {
           "id": "StaticImage",
