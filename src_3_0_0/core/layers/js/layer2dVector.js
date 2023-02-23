@@ -108,3 +108,13 @@ Layer2dVector.prototype.propertyNames = function (attributes) {
 Layer2dVector.prototype.onLoadingError = function (error) {
     console.error("Masterportal wfs loading error: ", error);
 };
+
+/**
+ * Setter for style of ol layer.
+ * @param {Object} value The style to set at ol layer.
+ * @returns {void}
+ */
+Layer2dVector.prototype.setStyle = function (value) {
+    this.getLayer().setStyle(value);
+};
+
