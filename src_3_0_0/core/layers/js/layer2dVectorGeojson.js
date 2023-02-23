@@ -1,4 +1,6 @@
 import {geojson} from "@masterportal/masterportalapi";
+import styleList from "@masterportal/masterportalapi/src/vectorStyle/styleList";
+import createStyle from "@masterportal/masterportalapi/src/vectorStyle/createStyle";
 import Layer2dVector from "./layer2dVector";
 
 /**
@@ -30,6 +32,7 @@ Layer2dVectorGeojson.prototype.createLayer = function (attributes) {
         options = this.getOptions(attributes);
 
     this.setLayer(geojson.createLayer(rawLayerAttributes, {layerParams, options}));
+    this.setStyle(this.getStyleFunction(attributes));
 };
 
 /**
@@ -57,7 +60,8 @@ Layer2dVectorGeojson.prototype.getOptions = function (attributes) {
         clusterGeometryFunction: this.clusterGeometryFunction,
         featuresFilter: (features) => this.featuresFilter(attributes, features),
         map: mapCollection.getMap("2D"),
-        onLoadingError: this.onLoadingError
+        onLoadingError: this.onLoadingError,
+        layerStyle: this.getStyleFunction(attributes)
     };
 
     return options;
@@ -77,4 +81,30 @@ Layer2dVectorGeojson.prototype.afterLoading = function (attributes, features) {
             }
         });
     }
+};
+
+/**
+ * Sets Style for layer.
+ * @param {Object} attrs  params of the raw layer
+ * @returns {void}
+ */
+Layer2dVectorGeojson.prototype.getStyleFunction = function (attrs) {
+    const styleId = attrs.styleId,
+        styleObject = styleList.returnStyleObject(styleId);
+    let isClusterFeature = false,
+        style = null;
+
+    if (styleObject !== undefined) {
+        style = function (feature) {
+            const feat = feature !== undefined ? feature : this;
+
+            isClusterFeature = typeof feat.get("features") === "function" || typeof feat.get("features") === "object" && Boolean(feat.get("features"));
+            return createStyle.createStyle(styleObject, feat, isClusterFeature, Config.wfsImgPath);
+        };
+    }
+    else {
+        console.error(i18next.t("common:modules.core.modelList.layer.wrongStyleId", {styleId}));
+    }
+
+    return style;
 };

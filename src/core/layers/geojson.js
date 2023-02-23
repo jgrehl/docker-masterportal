@@ -24,12 +24,7 @@ export default function GeoJSONLayer (attrs) {
     };
 
     this.createLayer(Object.assign(defaults, attrs));
-
-    // override class methods for webgl rendering
-    // has to happen before setStyle
-    if (attrs.renderer === "webgl") {
-        webgl.setLayerProperties(this);
-    }
+    // this.setStyle(this.getStyleFunction(attrs));
 
     if (!attrs.isChildLayer) {
         // call the super-layer
@@ -67,9 +62,9 @@ GeoJSONLayer.prototype.createLayer = function (attrs) {
             // altitudeMode: attrs.altitudeMode,
             hitTolerance: attrs.hitTolerance
         },
-        styleFn = this.getStyleFunction(attrs),
+        // styleFn = this.getStyleFunction(attrs),
         options = {
-            layerStyle: styleFn,
+            // layerStyle: styleFn,
             // map: mapCollection.getMap("2D"),
             // clusterGeometryFunction: (feature) => {
             //     // do not cluster invisible features; can't rely on style since it will be null initially
@@ -106,37 +101,11 @@ GeoJSONLayer.prototype.createLayer = function (attrs) {
             // }
         };
 
-    if (styleFn) {
-        styleFn.bind(this);
-    }
-    options.layerStyle = styleFn;
+    // if (styleFn) {
+    //     styleFn.bind(this);
+    // }
+    // options.layerStyle = styleFn;
     this.layer = geojson.createLayer(rawLayerAttributes, {layerParams, options});
-};
-
-/**
- * Sets Style for layer.
- * @param {Object} attrs  params of the raw layer
- * @returns {void}
- */
-GeoJSONLayer.prototype.getStyleFunction = function (attrs) {
-    const styleId = attrs.styleId,
-        styleObject = styleList.returnStyleObject(styleId);
-    let isClusterFeature = false,
-        style = null;
-
-    if (styleObject !== undefined) {
-        style = function (feature) {
-            const feat = feature !== undefined ? feature : this;
-
-            isClusterFeature = typeof feat.get("features") === "function" || typeof feat.get("features") === "object" && Boolean(feat.get("features"));
-            return createStyle.createStyle(styleObject, feat, isClusterFeature, Config.wfsImgPath);
-        };
-    }
-    else {
-        console.error(i18next.t("common:modules.core.modelList.layer.wrongStyleId", {styleId}));
-    }
-
-    return style;
 };
 
 /**
@@ -377,11 +346,10 @@ GeoJSONLayer.prototype.showAllFeatures = function () {
     }, this);
 };
 
-// setter for style
-GeoJSONLayer.prototype.setStyle = function (value) {
-    this.set("style", value);
-    this.layer.setStyle(value);
-};
+// // setter for style
+// GeoJSONLayer.prototype.setStyle = function (value) {
+//     this.layer.setStyle(value);
+// };
 
 // setter for legendURL
 GeoJSONLayer.prototype.setLegendURL = function (value) {
