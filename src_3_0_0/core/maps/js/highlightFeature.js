@@ -1,4 +1,5 @@
-// import {getStyleModelById} from "../../../../../src/core/layers/RadioBridge.js";
+import styleList from "@masterportal/masterportalapi/src/vectorStyle/styleList";
+import createStyle from "@masterportal/masterportalapi/src/vectorStyle/createStyle";
 
 /**
  * check how to highlight
@@ -168,26 +169,25 @@ function increaseFeature (commit, getters, highlightObject) {
         feature.setStyle(clonedStyle);
     }
 }
+
 /**
  * Get style via styleList
  * @param {Object} highlightObject contains several parameters for feature highlighting
  * @param {ol/feature} feature openlayers feature to highlight
+ * @fires VectorStyle#RadioRequestStyleListReturnModelById
  * @returns {ol/style} ol style
  */
-// eslint-disable-next-line
 function styleObject (highlightObject, feature) {
-    // @todo: use when getStyleModelById has moved
-    // const stylelistmodel = highlightObject.styleId ? getStyleModelById(highlightObject.styleId) : getStyleModelById(highlightObject.layer.id);
-    // let style;
+    const stylelistObject = highlightObject.styleId ? styleList.returnStyleObject(highlightObject.styleId) : styleList.returnStyleObject(highlightObject.layer.id);
+    let style;
 
-    // if (stylelistmodel !== undefined) {
-    //     style = stylelistmodel.createStyle(feature, false);
-    //     if (Array.isArray(style) && style.length > 0) {
-    //         style = style[0];
-    //     }
-    // }
-
-    // return style;
+    if (stylelistObject !== undefined) {
+        style = createStyle.createStyle(stylelistObject, feature, false, Config.wfsImgPath);
+        if (Array.isArray(style) && style.length > 0) {
+            style = style[0];
+        }
+    }
+    return style;
 }
 
 export {highlightFeature};
