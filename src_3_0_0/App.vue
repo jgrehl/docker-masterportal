@@ -44,6 +44,7 @@ export default {
             if (value) {
                 LoaderOverlay.hide();
                 this.extendLayers();
+                this.initializeVectorStyle();
                 initializeMaps(this.portalConfig, this.configJs);
                 initializeLayers(this.visibleLayerConfigs);
             }
@@ -67,6 +68,7 @@ export default {
         ]),
         ...mapActions([
             "extendLayers",
+            "initializeVectorStyle",
             "loadConfigJs",
             "loadConfigJson",
             "loadRestServicesJson",
