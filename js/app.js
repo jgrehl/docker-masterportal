@@ -15,7 +15,7 @@ import ParcelSearchView from "../modules/tools/parcelSearch/view";
 import {handleUrlParamsBeforeVueMount, readUrlParamEarly} from "../src/utils/parametricUrl/ParametricUrlBridge";
 import {createMaps} from "../src/core/maps/maps.js";
 import uiStyle from "../src/utils/uiStyle";
-
+import store from "../src/app-store";
 
 /**
  * WFSFeatureFilterView
