@@ -19,6 +19,7 @@ export default async function (config) {
             try {
                 const addonConf = allAddons[addonKey];
 
+
                 if (addonConf && Object.prototype.hasOwnProperty.call(addonConf, "type")) {
                     if (addonConf.type === "tool") {
                         await loadToolAddons(addonKey);
@@ -55,7 +56,7 @@ async function loadControl (addonKey) {
         store.registerModule(["controls", addon.component.name], addon.store);
     }
     store.commit("Controls/registerControl", {name: name, control: addon.component});
-    main.getApp().config.globalProperties.$controlAddons.push(name);
+    /* main.getApp().config.globalProperties.$controlAddons.push(name); */
 }
 
 /**
@@ -73,18 +74,18 @@ async function loadGfiThemes (addonKey) {
 
 /**
  * Creates the Vue component and adds it to Vue instance globally.
- * Registeres the store at module "Tools" and adds the local-files.
+ * Registers the store at "Modules" and adds the local-files.
  * @param {String} addonKey specified in config.js
  * @returns {void}
  */
 async function loadToolAddons (addonKey) {
     const addon = await loadAddon(addonKey);
-
     // Add the addonKey to a global array on vue instance
+
     main.getApp().config.globalProperties.$toolAddons.push(addon.component.name);
 
     // register the vuex store module
-    store.registerModule(["Tools", addon.component.name], addon.store);
+    store.registerModule(["Modules", addon.component.name], addon.store);
     store.dispatch("Tools/addTool", addon.component);
 }
 
@@ -106,7 +107,6 @@ async function loadAddon (addonKey) {
     for (const localeKey in addon.locales) {
         i18next.addResourceBundle(localeKey, "additional", addon.locales[localeKey], true);
     }
-
     return addon;
 }
 
