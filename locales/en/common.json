@@ -33,7 +33,8 @@
         "white": "White"
     },
     "app-store": {
-      "loadServicesJsonFailed": "<strong>The file {{layerConf}} could not be loaded!</strong>"
+      "loadServicesJsonFailed": "<strong>The file {{layerConf}} could not be loaded!</strong>",
+      "loadStylev3JsonFailed": "<strong>The file {{style_v3}}  could not be loaded!</strong></br>Please check the configuration 'styleConf' in config.js."
     },
     "mouseHover": {
         "infoText": "(more objects. Please zoom.)"
