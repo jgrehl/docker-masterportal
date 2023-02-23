@@ -60,12 +60,15 @@ export default {
             },
             deep: true
         },
-        attributesKeyList (val) {
-            if (this.layer && this.layer.getSource().getFeatures().length) {
-                this.layer.getSource().getFeatures().forEach(feature => {
-                    this.unifyAttributeToFeature(feature, val);
-                });
-            }
+        attributesKeyList: {
+            handler (val) {
+                if (this.layer && this.layer.getSource().getFeatures().length) {
+                    this.layer.getSource().getFeatures().forEach(feature => {
+                        this.unifyAttributeToFeature(feature, val);
+                    });
+                }
+            },
+            deep: true
         }
     },
     mounted () {
