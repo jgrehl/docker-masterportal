@@ -33,7 +33,8 @@
         "white": "Weiß"
     },
     "app-store": {
-      "loadServicesJsonFailed": "<strong>Die Datei {{layerConf}} konnte nicht geladen werden!</strong>"
+      "loadServicesJsonFailed": "<strong>Die Datei {{layerConf}} konnte nicht geladen werden!</strong>",
+      "loadStylev3JsonFailed": "<strong>Die Datei {{style_v3}} konnte nicht geladen werden!</strong></br>Bitte prüfen Sie die Konfiguration 'styleConf' in der config.js."
     },
     "mouseHover": {
         "infoText": "(weitere Objekte. Bitte zoomen.)"
