@@ -6,6 +6,7 @@ import AddWMS from "../addWMS/store/indexAddWMS";
 import BufferAnalysis from "../bufferAnalysis/store/indexBufferAnalysis";
 import Contact from "../contact/store/indexContact";
 import CoordToolkit from "../coordToolkit/store/indexCoordToolkit";
+import Draw from "../draw/store/indexDraw";
 import FeatureLister from "../featureLister/store/indexFeatureLister";
 import FileImport from "../fileImport/store/indexFileImport";
 import GetFeatureInfo from "../getFeatureInfo/store/indexGetFeatureInfo";
@@ -41,6 +42,7 @@ export default {
         BufferAnalysis: {...BufferAnalysis},
         Contact: {...Contact},
         CoordToolkit: {...CoordToolkit},
+        Draw: {...Draw},
         FeatureLister: {...FeatureLister},
         FileImport: {...FileImport},
         GetFeatureInfo: {...GetFeatureInfo},
