@@ -1,5 +1,6 @@
 import axios from "axios";
 import {rawLayerList} from "@masterportal/masterportalapi/src";
+import styleList from "@masterportal/masterportalapi/src/vectorStyle/styleList";
 import {portalConfigKey, treeTopicConfigKey} from "../shared/js/utils/constants";
 import actionsLayerConfig from "./actionsLayerConfig";
 
@@ -77,5 +78,38 @@ export default {
                 commit("setLoadedConfigs", "servicesJson");
             }
         });
+    },
+
+    /**
+     * Initializes the style list of vector styling.
+     * @param {Object} param.state the state
+     * @param {Object} param.dispatch the dispatch
+     * @param {Object} param.getters the getters
+     * @returns {void}
+     */
+    initializeVectorStyle ({state, dispatch, getters}) {
+        const styleGetters = {
+                mapMarkerPointStyleId: getters["Modules/MapMarker/pointStyleId"],
+                mapMarkerPolygonStyleId: getters["Modules/MapMarker/polygonStyleId"],
+                // VECTORSTYLE: diese 3 HighlightFeatures-getter sind hier und auch auf dev undefined
+                highlightFeaturesPointStyleId: getters["Modules/HighlightFeatures/pointStyleId"],
+                highlightFeaturesPolygonStyleId: getters["Modules/HighlightFeatures/polygonStyleId"],
+                highlightFeaturesLineStyleId: getters["Modules/HighlightFeatures/lineStyleId"]
+            },
+            layerConfigs = getters.allLayerConfigs,
+            // todo inka hier stand vorher: //Radio.request("Parser", "getItemsByAttributes", {type: "tool"})
+            // bin nicht sicher, ob das mit dem sectionsContent so richtig ist. Wenn ja dann brauchen wir dafür einen getter. Was ist mit "tools", die in foldern sind?
+            sectionsContent = getters.menuFromConfig("mainMenu").sections[0].concat(getters.menuFromConfig("secondaryMenu").sections[0]);
+
+        styleList.initializeStyleList(styleGetters, state.configJs, layerConfigs, sectionsContent,
+            (initializedStyleList, error) => {
+                if (error) {
+                    dispatch("Alerting/addSingleAlert", {
+                        category: "warning",
+                        content: i18next.t("common:app-store.loadStylev3JsonFailed", {style_v3: state.configJs?.styleConf ? state.configJs?.styleConf : "style_v3.json"})
+                    }, {root: true});
+                }
+                return initializedStyleList;
+            });
     }
 };
