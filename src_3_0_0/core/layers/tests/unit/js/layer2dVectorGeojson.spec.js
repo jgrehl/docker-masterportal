@@ -5,6 +5,7 @@ import {GeoJSON} from "ol/format.js";
 import sinon from "sinon";
 import VectorLayer from "ol/layer/Vector.js";
 import VectorSource from "ol/source/Vector.js";
+import styleList from "@masterportal/masterportalapi/src/vectorStyle/styleList.js";
 import Layer2dVectorGeojson from "../../../js/layer2dVectorGeojson";
 
 describe("src_3_0_0/core/js/layers/layer2dVectorGeojson.js", () => {
@@ -41,7 +42,7 @@ describe("src_3_0_0/core/js/layers/layer2dVectorGeojson.js", () => {
         };
     });
 
-    after(() => {
+    afterEach(() => {
         sinon.restore();
     });
 
@@ -66,14 +67,23 @@ describe("src_3_0_0/core/js/layers/layer2dVectorGeojson.js", () => {
         });
 
         it("createLayer shall create an ol.VectorLayer with cluster-source", function () {
+            const styleObj = {
+                styleId: "styleId",
+                rules: []
+            };
+            let geojsonLayer = null,
+                layer = null;
+
+            sinon.stub(styleList, "returnStyleObject").returns(styleObj);
             attributes.clusterDistance = 60;
-            const geojsonLayer = new Layer2dVectorGeojson(attributes),
-                layer = geojsonLayer.getLayer();
+            geojsonLayer = new Layer2dVectorGeojson(attributes);
+            layer = geojsonLayer.getLayer();
 
             expect(layer).to.be.an.instanceof(VectorLayer);
             expect(layer.getSource()).to.be.an.instanceof(Cluster);
             expect(layer.getSource().getDistance()).to.be.equals(attributes.clusterDistance);
             expect(layer.getSource().getSource().getFormat()).to.be.an.instanceof(GeoJSON);
+            expect(typeof layer.getStyleFunction()).to.be.equals("function");
         });
     });
 
@@ -110,7 +120,8 @@ describe("src_3_0_0/core/js/layers/layer2dVectorGeojson.js", () => {
                 "clusterGeometryFunction",
                 "featuresFilter",
                 "map",
-                "onLoadingError"
+                "onLoadingError",
+                "layerStyle"
             ];
         });
 
@@ -118,6 +129,24 @@ describe("src_3_0_0/core/js/layers/layer2dVectorGeojson.js", () => {
             const geojsonLayer = new Layer2dVectorGeojson(attributes);
 
             expect(Object.keys(geojsonLayer.getOptions(attributes))).to.deep.equals(options);
+        });
+    });
+
+    describe("getStyleFunction", () => {
+        it("getStyleFunction shall return a function", function () {
+            const styleObj = {
+                styleId: "styleId",
+                rules: []
+            };
+            let geojsonLayer = null,
+                styleFunction = null;
+
+            sinon.stub(styleList, "returnStyleObject").returns(styleObj);
+            geojsonLayer = new Layer2dVectorGeojson(attributes);
+            styleFunction = geojsonLayer.getStyleFunction(attributes);
+
+            expect(styleFunction).not.to.be.null;
+            expect(typeof styleFunction).to.be.equals("function");
         });
     });
 
