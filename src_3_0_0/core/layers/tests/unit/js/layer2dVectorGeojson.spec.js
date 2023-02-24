@@ -48,7 +48,14 @@ describe("src_3_0_0/core/js/layers/layer2dVectorGeojson.js", () => {
 
     describe("createLayer", () => {
         it("new Layer2dVectorGeojson should create an layer with no warning", () => {
-            const geojsonLayer = new Layer2dVectorGeojson({});
+            const styleObj = {
+                styleId: "styleId",
+                rules: []
+            };
+            let geojsonLayer = null;
+
+            sinon.stub(styleList, "returnStyleObject").returns(styleObj);
+            geojsonLayer = new Layer2dVectorGeojson({});
 
             expect(geojsonLayer).not.to.be.undefined;
             expect(warn.notCalled).to.be.true;
