@@ -91,44 +91,6 @@ describe("src/core/layers/geojson.js", () => {
         });
     });
 
-    describe("getStyleFunction", () => {
-        it("initStyle shall be called on creation and call createStyle if styleListLoaded=true", function () {
-            const createStyleSpy = sinon.spy(GeoJSONLayer.prototype, "createStyle");
-
-            store.getters = {
-                styleListLoaded: true
-            };
-            attributes.styleId = "styleId";
-            new GeoJSONLayer(attributes);
-
-            expect(createStyleSpy.calledOnce).to.be.true;
-        });
-        it("initStyle shall be called on creation and not call createStyle if styleListLoaded=false", function () {
-            const createStyleSpy = sinon.spy(GeoJSONLayer.prototype, "createStyle");
-
-            store.getters = {
-                styleListLoaded: false
-            };
-            attributes.styleId = "styleId";
-            new GeoJSONLayer(attributes);
-
-            expect(createStyleSpy.notCalled).to.be.true;
-        });
-
-        it("createStyle shall return a function", function () {
-            let geoJSONLayer = null,
-                styleFunction = null;
-
-            sinon.stub(styleList, "returnStyleObject").returns(true);
-            attributes.styleId = "styleId";
-            geoJSONLayer = new GeoJSONLayer(attributes);
-            geoJSONLayer.createStyle(attributes);
-            styleFunction = geoJSONLayer.getStyleFunction();
-
-            expect(styleFunction).not.to.be.null;
-            expect(typeof styleFunction).to.be.equals("function");
-        });
-    });
     describe("createLegend", () => {
         it("createLegend shall set legend", function () {
             attributes.legendURL = "https://legendUrl";

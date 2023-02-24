@@ -1,6 +1,6 @@
 import {expect} from "chai";
 import sinon from "sinon";
-
+import styleList from "@masterportal/masterportalapi/src/vectorStyle/styleList.js";
 import Layer2dVectorVectorbase from "../../../js/layer2dVectorVectorbase";
 
 describe("src_3_0_0/core/js/layers/layer2dVectorVectorbase.js", () => {
@@ -36,10 +36,16 @@ describe("src_3_0_0/core/js/layers/layer2dVectorVectorbase.js", () => {
             name: "vectorbaseTestLayer",
             typ: "VECTORBASE"
         };
+        const styleObj = {
+            styleId: "styleId",
+            rules: []
+        };
+
+        sinon.stub(styleList, "returnStyleObject").returns(styleObj);
     });
 
 
-    after(() => {
+    afterEach(() => {
         sinon.restore();
     });
 

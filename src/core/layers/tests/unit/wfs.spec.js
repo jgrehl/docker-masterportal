@@ -107,44 +107,6 @@ describe("src/core/layers/wfs.js", () => {
             expect(propertyname).to.be.equals("");
         });
     });
-    describe("getStyleFunction", () => {
-        it("initStyle shall be called on creation and call createStyle if styleListLoaded=true", function () {
-            const createStyleSpy = sinon.spy(WfsLayer.prototype, "createStyle");
-
-            store.getters = {
-                styleListLoaded: true
-            };
-            attributes.styleId = "styleId";
-            new WfsLayer(attributes);
-
-            expect(createStyleSpy.calledOnce).to.be.true;
-        });
-        it("initStyle shall be called on creation and not call createStyle if styleListLoaded=false", function () {
-            const createStyleSpy = sinon.spy(WfsLayer.prototype, "createStyle");
-
-            store.getters = {
-                styleListLoaded: false
-            };
-            attributes.styleId = "styleId";
-            new WfsLayer(attributes);
-
-            expect(createStyleSpy.notCalled).to.be.true;
-        });
-
-        it("createStyle shall return a function", function () {
-            let layer = null,
-                styleFunction = null;
-
-            sinon.stub(styleList, "returnStyleObject").returns(true);
-            attributes.styleId = "styleId";
-            layer = new WfsLayer(attributes);
-            layer.createStyle(attributes);
-            styleFunction = layer.getStyleFunction();
-
-            expect(styleFunction).not.to.be.null;
-            expect(typeof styleFunction).to.be.equals("function");
-        });
-    });
     describe("updateSource", () => {
         it("updateSource shall refresh source if 'sourceUpdated' is false", function () {
             const wfsLayer = new WfsLayer(attributes),

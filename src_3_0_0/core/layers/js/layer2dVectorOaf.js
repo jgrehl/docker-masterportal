@@ -65,7 +65,9 @@ Layer2dVectorOaf.prototype.getOptions = function (attributes) {
         featuresFilter: (features) => this.featuresFilter(attributes, features),
         loadingParams: this.loadingParams(attributes),
         loadingStrategy: attributes.loadingStrategy === "all" ? all : bbox,
-        onLoadingError: this.onLoadingError
+        onLoadingError: this.onLoadingError,
+        // todo inka in geojson layerStyle --> vereinheitlichen
+        style: this.getStyleFunction(attributes)
     };
 
     return options;
