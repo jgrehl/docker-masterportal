@@ -8,7 +8,7 @@ import sinon from "sinon";
 import STALayer from "../../sta";
 import store from "../../../../app-store";
 import Collection from "ol/Collection";
-import {Circle, Style} from "ol/style.js";
+import {Style} from "ol/style.js";
 import styleList from "@masterportal/masterportalapi/src/vectorStyle/styleList.js";
 import createStyle from "@masterportal/masterportalapi/src/vectorStyle/createStyle.js";
 
