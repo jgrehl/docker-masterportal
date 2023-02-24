@@ -10,6 +10,7 @@ import LoaderOverlay from "./app-store/js/loaderOverlay";
 import mapCollection from "./core/maps/js/mapCollection";
 import MenuContainer from "./modules/menu/components/MenuContainer.vue";
 import MenuToggleButton from "./modules/menu/components/MenuToggleButton.vue";
+import loadAddons from "./plugins/addons";
 
 
 export default {
@@ -19,6 +20,11 @@ export default {
         ControlBar,
         MenuContainer,
         MenuToggleButton
+    },
+    data () {
+        return {
+            addonsLoaded: false
+        };
     },
     computed: {
         ...mapGetters([
@@ -40,16 +46,21 @@ export default {
         ])
     },
     watch: {
-        allConfigsLoaded (value) {
+        async allConfigsLoaded (value) {
             if (value) {
+                await loadAddons(Config.addons);
+                this.addonsLoaded = true;
+                console.log('all addons are loaded');
                 LoaderOverlay.hide();
                 this.extendLayers();
                 this.initializeVectorStyle();
                 initializeMaps(this.portalConfig, this.configJs);
                 initializeLayers(this.visibleLayerConfigs);
+
             }
         },
         portalConfig (portalConfig) {
+            console.log('3- portalConfig in app');
             this.mergeModulesState(portalConfig);
         }
     },
@@ -85,6 +96,7 @@ export default {
          */
         setGlobalVariables () {
             global.mapCollection = mapCollection;
+            global.moduleCollection = {};
 
             if (typeof Cesium === "undefined") {
                 global.Cesium = null;
@@ -175,15 +187,15 @@ export default {
         class="masterportal-container"
     >
         <MenuContainer
-            v-if="allConfigsLoaded && mainMenu && uiStyle !== 'SIMPLE'"
+            v-if="allConfigsLoaded && addonsLoaded && mainMenu && uiStyle !== 'SIMPLE'"
             side="mainMenu"
         />
         <MenuToggleButton
-            v-if="allConfigsLoaded && mainMenu && uiStyle !== 'SIMPLE'"
+            v-if="allConfigsLoaded && addonsLoaded && mainMenu && uiStyle !== 'SIMPLE'"
             side="mainMenu"
         />
         <div
-            v-if="allConfigsLoaded"
+            v-if="allConfigsLoaded && addonsLoaded"
             class="elements-positioned-over-map"
         >
             <Alerting />
@@ -193,11 +205,11 @@ export default {
             <component :is="componentMap.portalFooter" />
         </div>
         <MenuToggleButton
-            v-if="allConfigsLoaded && secondaryMenu && uiStyle !== 'SIMPLE'"
+            v-if="allConfigsLoaded && addonsLoaded && secondaryMenu && uiStyle !== 'SIMPLE'"
             side="secondaryMenu"
         />
         <MenuContainer
-            v-if="allConfigsLoaded && secondaryMenu && uiStyle !== 'SIMPLE'"
+            v-if="allConfigsLoaded && addonsLoaded && secondaryMenu && uiStyle !== 'SIMPLE'&& addonsLoaded"
             side="secondaryMenu"
         />
         <div
