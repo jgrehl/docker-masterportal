@@ -1,3 +1,5 @@
+import styleList from "@masterportal/masterportalapi/src/vectorStyle/styleList";
+import createStyle from "@masterportal/masterportalapi/src/vectorStyle/createStyle";
 import Layer2d from "./layer2d";
 
 /**
@@ -16,6 +18,7 @@ export default function Layer2dVector (attributes) {
 
     this.attributes = Object.assign(defaultAttributes, attributes);
     Layer2d.call(this, this.attributes);
+    this.setStyle(this.getStyleFunction(attributes));
 }
 
 Layer2dVector.prototype = Object.create(Layer2d.prototype);
@@ -115,6 +118,31 @@ Layer2dVector.prototype.onLoadingError = function (error) {
  * @returns {void}
  */
 Layer2dVector.prototype.setStyle = function (value) {
-    this.getLayer().setStyle(value);
+    this.getLayer()?.setStyle(value);
+};
+
+/**
+ * Sets Style for layer.
+ * @param {Object} attrs  params of the raw layer
+ * @returns {void}
+ */
+Layer2dVector.prototype.getStyleFunction = function (attrs) {
+    const styleId = attrs.styleId,
+        styleObject = styleList.returnStyleObject(styleId);
+    let isClusterFeature = false,
+        style = null;
+
+    if (styleObject !== undefined) {
+        style = (feature) => {
+            const feat = feature !== undefined ? feature : this;
+
+            isClusterFeature = typeof feat.get("features") === "function" || typeof feat.get("features") === "object" && Boolean(feat.get("features"));
+            return createStyle.createStyle(styleObject, feat, isClusterFeature, Config.wfsImgPath);
+        };
+    }
+    else {
+        console.warn(i18next.t("common:modules.core.modelList.layer.wrongStyleId", {styleId}));
+    }
+    return style;
 };
 
