@@ -249,6 +249,12 @@ const initialState = JSON.parse(JSON.stringify(stateDraw)),
                 });
             });
         },
+        /**
+         * Creates modify and select interaction.
+         *
+         * @param {Boolean} active Active setting.
+         * @returns {void}
+         */
         createModifyAttributesInteractionAndAddToMap ({state, commit, dispatch}, active) {
             const modifyInteraction = createModifyAttributesInteraction(state.layer),
                 selectInteractionModify = createSelectInteraction(state.layer, 10);
@@ -262,6 +268,11 @@ const initialState = JSON.parse(JSON.stringify(stateDraw)),
             dispatch("createSelectInteractionModifyAttributesListener");
             dispatch("Maps/addInteraction", selectInteractionModify, {root: true});
         },
+        /**
+         * Creates modify attributes interaction listener.
+         *
+         * @returns {void}
+         */
         createModifyAttributesInteractionListener ({rootState, state, dispatch, commit, getters}) {
             let tooltip,
                 changeInProgress = false;
@@ -400,6 +411,11 @@ const initialState = JSON.parse(JSON.stringify(stateDraw)),
                 }
             });
         },
+        /**
+         * Creates select interaction modify attributes listener.
+         *
+         * @returns {void}
+         */
         createSelectInteractionModifyAttributesListener ({state, commit, dispatch}) {
             state.selectInteractionModifyAttributes.on("select", event => {
                 if (state.currentInteraction !== "modifyAttributes" || !event.selected.length) {
@@ -614,7 +630,6 @@ const initialState = JSON.parse(JSON.stringify(stateDraw)),
                 state.layer.getSource().un("addFeature", state.addFeatureListener.listener);
             }
         },
-
         /**
          * Saves the given feature as currentFeature and applies the styleSettings
          *
