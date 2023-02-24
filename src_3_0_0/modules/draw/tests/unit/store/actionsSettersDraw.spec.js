@@ -50,7 +50,7 @@ describe("src_3_0_0/modules/draw/store/actions/settersDraw.js", () => {
             expect(dispatch.secondCall.args).to.eql(["createSelectInteractionAndAddToMap", false]);
             expect(dispatch.thirdCall.args).to.eql(["createModifyInteractionAndAddToMap", false]);
             expect(dispatch.getCall(3).args).to.eql(["createModifyAttributesInteractionAndAddToMap", false]);
-            expect(dispatch.getCall(4).args).to.eql(["setDrawLayerVisible", true]);
+            expect(dispatch.getCall(4).args).to.eql(["updateDrawLayerVisible", true]);
         });
         it("should commit and dispatch as intended if 'active' and 'withoutGUI' are true", async () => {
             state.withoutGUI = true;
@@ -63,7 +63,7 @@ describe("src_3_0_0/modules/draw/store/actions/settersDraw.js", () => {
             expect(dispatch.secondCall.args).to.eql(["createSelectInteractionAndAddToMap", false]);
             expect(dispatch.thirdCall.args).to.eql(["createModifyInteractionAndAddToMap", false]);
             expect(dispatch.getCall(3).args).to.eql(["createModifyAttributesInteractionAndAddToMap", false]);
-            expect(dispatch.getCall(4).args).to.eql(["setDrawLayerVisible", true]);
+            expect(dispatch.getCall(4).args).to.eql(["updateDrawLayerVisible", true]);
             expect(dispatch.lastCall.args).to.eql(["toggleInteraction", "draw"]);
         });
     });
