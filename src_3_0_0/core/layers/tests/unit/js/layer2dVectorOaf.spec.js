@@ -3,6 +3,8 @@ import {expect} from "chai";
 import sinon from "sinon";
 import VectorLayer from "ol/layer/Vector.js";
 import VectorSource from "ol/source/Vector.js";
+import styleList from "@masterportal/masterportalapi/src/vectorStyle/styleList.js";
+import getGeometryTypeFromService from "@masterportal/masterportalapi/src/vectorStyle/lib/getGeometryTypeFromService";
 import Layer2dVectorOaf from "../../../js/layer2dVectorOaf";
 
 describe("src_3_0_0/core/js/layers/layer2dVectorOaf.js", () => {
@@ -40,11 +42,19 @@ describe("src_3_0_0/core/js/layers/layer2dVectorOaf.js", () => {
     });
 
 
-    after(() => {
+    afterEach(() => {
         sinon.restore();
     });
 
     describe("createLayer", () => {
+        beforeEach(() => {
+            const styleObj = {
+                styleId: "styleId",
+                rules: []
+            };
+
+            sinon.stub(styleList, "returnStyleObject").returns(styleObj);
+        });
         it("new Layer2dVectorWfs should create an layer with no warning", () => {
             const oafLayer = new Layer2dVectorOaf({});
 
@@ -123,7 +133,8 @@ describe("src_3_0_0/core/js/layers/layer2dVectorOaf.js", () => {
                 "featuresFilter",
                 "loadingParams",
                 "loadingStrategy",
-                "onLoadingError"
+                "onLoadingError",
+                "style"
             ];
         });
 
@@ -131,6 +142,18 @@ describe("src_3_0_0/core/js/layers/layer2dVectorOaf.js", () => {
             const oafLayer = new Layer2dVectorOaf(attributes);
 
             expect(Object.keys(oafLayer.getOptions(attributes))).to.deep.equals(options);
+        });
+    });
+
+    describe("getStyleFunction", () => {
+        it("getStyleFunction shall return a function", function () {
+            sinon.stub(styleList, "returnStyleObject").returns(true);
+            sinon.stub(getGeometryTypeFromService, "getGeometryTypeFromOAF").returns(true);
+            const oafLayer = new Layer2dVectorOaf(attributes),
+                styleFunction = oafLayer.getStyleFunction(attributes);
+
+            expect(styleFunction).not.to.be.null;
+            expect(typeof styleFunction).to.be.equals("function");
         });
     });
 });

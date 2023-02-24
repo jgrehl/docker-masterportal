@@ -9,7 +9,7 @@ import * as bridge from "./RadioBridge.js";
 import Cluster from "ol/source/Cluster";
 // import {bbox, all} from "ol/loadingstrategy.js";
 
-const geometryTypeRequestLayers = [];
+// const geometryTypeRequestLayers = [];
 
 /**
  * Creates a layer of type WFS.
@@ -30,7 +30,7 @@ export default function WFSLayer (attrs) {
 
     // call the super-layer
     // Layer.call(this, Object.assign(defaults, attrs), this.layer, !attrs.isChildLayer);
-    this.set("style", this.getStyleFunction(attrs));
+    // this.set("style", this.getStyleFunction(attrs));
     this.prepareFeaturesFor3D(this.layer.getSource().getFeatures());
 }
 // Link prototypes and add prototype methods, means WFSLayer uses all methods and properties of Layer
@@ -61,7 +61,7 @@ WFSLayer.prototype.createLayer = function (attrs) {
             alwaysOnTop: attrs.alwaysOnTop,
             layerSequence: attrs.layerSequence
         },
-        styleFn = this.getStyleFunction(attrs),
+        // styleFn = this.getStyleFunction(attrs),
         options = {
             // doNotLoadInitially: attrs.doNotLoadInitially,
             // wfsFilter: attrs.wfsFilter,
@@ -100,10 +100,10 @@ WFSLayer.prototype.createLayer = function (attrs) {
             // loadingStrategy: attrs.loadingStrategy === "all" ? all : bbox
         };
 
-    if (styleFn) {
-        styleFn.bind(this);
-    }
-    options.style = styleFn;
+    // if (styleFn) {
+    //     styleFn.bind(this);
+    // }
+    // options.style = styleFn;
 
     this.layer = wfs.createLayer(rawLayerAttributes, {layerParams, options});
 };
@@ -113,26 +113,26 @@ WFSLayer.prototype.createLayer = function (attrs) {
  * @param {Object} attrs  params of the raw layer
  * @returns {void}
  */
-WFSLayer.prototype.getStyleFunction = function (attrs) {
-    const styleId = attrs.styleId,
-        styleObject = styleList.returnStyleObject(styleId);
-    let isClusterFeature = false,
-        style = null;
+// WFSLayer.prototype.getStyleFunction = function (attrs) {
+//     const styleId = attrs.styleId,
+//         styleObject = styleList.returnStyleObject(styleId);
+//     let isClusterFeature = false,
+//         style = null;
 
-    if (styleObject !== undefined) {
-        style = (feature) => {
-            const feat = feature !== undefined ? feature : this;
+//     if (styleObject !== undefined) {
+//         style = (feature) => {
+//             const feat = feature !== undefined ? feature : this;
 
-            this.createLegend();
-            isClusterFeature = typeof feat.get("features") === "function" || typeof feat.get("features") === "object" && Boolean(feat.get("features"));
-            return createStyle.createStyle(styleObject, feat, isClusterFeature, Config.wfsImgPath);
-        };
-    }
-    else {
-        console.error(i18next.t("common:modules.core.modelList.layer.wrongStyleId", {styleId}));
-    }
-    return style;
-};
+//             this.createLegend();
+//             isClusterFeature = typeof feat.get("features") === "function" || typeof feat.get("features") === "object" && Boolean(feat.get("features"));
+//             return createStyle.createStyle(styleObject, feat, isClusterFeature, Config.wfsImgPath);
+//         };
+//     }
+//     else {
+//         console.error(i18next.t("common:modules.core.modelList.layer.wrongStyleId", {styleId}));
+//     }
+//     return style;
+// };
 /**
  * Updates the layers source by calling refresh at source. Depending on attribute 'sourceUpdated'.
  * @returns {void}
