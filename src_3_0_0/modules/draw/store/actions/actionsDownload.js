@@ -4,7 +4,6 @@ import {GeoJSON, GPX} from "ol/format.js";
 import convertFeaturesToKml from "../../../../shared/js/utils/convertFeaturesToKml.js";
 import {convertJsonToCsv} from "../../../../shared/js/utils/convertJsonToCsv";
 import {setCsvAttributes} from "../../js/setCsvAttributes.js";
-
 import {transform, transformPoint, transformGeometry} from "../../js/download/transformGeometry";
 
 /**
@@ -30,7 +29,6 @@ async function convertFeatures ({state, dispatch}, format) {
 
     return format.writeFeatures(convertedFeatures);
 }
-
 /**
  * Resets values to hide the UI for the Download and not cause side effects while doing so.
  *
@@ -39,7 +37,6 @@ async function convertFeatures ({state, dispatch}, format) {
 function fileDownloaded ({state, commit}) {
     commit("setDownloadSelectedFormat", state.download.selectedFormat);
 }
-
 /**
  * Converts the features to the chosen format and saves it in the state.
  *
@@ -72,7 +69,6 @@ async function prepareData ({state, commit, dispatch, rootGetters}) {
 
     commit("setDownloadDataString", features);
 }
-
 /**
  * Prepares the download.
  * If the user is using Internet Explorer as a Browser a Blob is used, otherwise the download is accomplished through the href & download combo on an anchor tag.
@@ -92,7 +88,6 @@ function prepareDownload ({state, commit, dispatch}) {
         console.error(err);
     });
 }
-
 /**
  * Commits the current features of the draw layer to the state.
  * Action is dispatched when a feature is drawn, edited or deleted.
@@ -136,7 +131,6 @@ function setDownloadFeatures ({state, commit, dispatch, rootGetters}) {
     dispatch("prepareData");
     dispatch("prepareDownload");
 }
-
 /**
  * Commits the input of the user for the name of the file to the state.
  * If at least one feature is already drawn, the download is prepared.
@@ -155,7 +149,6 @@ function setDownloadFileName ({state, commit, dispatch}, {currentTarget}) {
         dispatch("prepareDownload");
     }
 }
-
 /**
  * Commits the selection of the user for file format to the state.
  * If at least one feature is already drawn, they are converted to the chosen format and the download is prepared.
@@ -174,7 +167,6 @@ async function setDownloadSelectedFormat ({state, commit, dispatch}, value) {
         dispatch("prepareDownload");
     }
 }
-
 /**
  * Transforms the given geometry from EPSG:25832 to EPSG:4326.
  * If the geometry is not an instance of ol/LineString, ol/Point or ol/Polygon an Alert is send to the user.
@@ -204,7 +196,6 @@ function transformCoordinates ({dispatch, rootGetters}, geometry) {
             return [];
     }
 }
-
 /**
  * Checks whether the user has added the suffix of the chosen format to the filename and if not, it is added.
  *

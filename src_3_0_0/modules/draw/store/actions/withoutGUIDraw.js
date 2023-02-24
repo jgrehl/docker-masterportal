@@ -22,11 +22,9 @@ function cancelDrawWithoutGUI ({commit, dispatch}, cursor) {
     dispatch("manipulateInteraction", {interaction: "delete", active: false});
 
     if (typeof cursor?.cursor !== "undefined") {
-        // TODO: The cursor changes from the map need to happen here
         document.querySelector("#map").classList.remove("no-cursor");
     }
 }
-
 /**
  * Creates and returns a GeoJSON of all drawn features without GUI.
  * Per default the geometries of the features are added individually.
@@ -147,7 +145,6 @@ function downloadFeaturesWithoutGUI ({state, rootState}, payload) {
     }
     return JSON.stringify(featuresConverted);
 }
-
 /**
  * Sends the generated GeoJSON to the RemoteInterface to communicate with an iFrame.
  *
@@ -167,7 +164,6 @@ function downloadViaRemoteInterface () {
     });
     */
 }
-
 /**
  * Enable editing of already drawn features without GUI.
  * Used in the RemoteInterface.
@@ -178,7 +174,6 @@ function downloadViaRemoteInterface () {
 function editFeaturesWithoutGUI ({dispatch}) {
     dispatch("toggleInteraction", "modify");
 }
-
 /**
  * Initializes the drawing functionality without GUI.
  * Used in the RemoteInterface.
@@ -279,7 +274,6 @@ async function initializeWithoutGUI ({state, commit, dispatch, getters, rootStat
         }
     }
 }
-
 /**
  * Find the correct id for the translation of the given drawType.
  * If the drawType is not "Circle", "LineString", "Point" or "Polygon", simply "draw" is returned.
