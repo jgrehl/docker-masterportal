@@ -1,5 +1,6 @@
 import axios from "axios";
 import rawLayerList from "@masterportal/masterportalapi/src/rawLayerList";
+import styleList from "@masterportal/masterportalapi/src/vectorStyle/styleList";
 import sinon from "sinon";
 import {expect} from "chai";
 import actions from "../../actions";
@@ -7,13 +8,16 @@ import actions from "../../actions";
 describe("src_3_0_0/app-store/actions.js", () => {
     let axiosMock,
         commit,
+        dispatch,
         state,
-        initializeLayerListSpy;
+        initializeLayerListSpy,
+        initializeStyleListSpy;
     const restConf = "./resources/rest-services-internet.json",
         layerConf = "./services.json";
 
     beforeEach(() => {
         commit = sinon.spy();
+        dispatch = sinon.spy();
         state = {
             configJs: {
                 portalConf: "./",
@@ -29,6 +33,7 @@ describe("src_3_0_0/app-store/actions.js", () => {
         global.XMLHttpRequest = sinon.useFakeXMLHttpRequest();
         axiosMock = sinon.stub(axios, "get").returns(Promise.resolve({request: {status: 200, data: []}}));
         initializeLayerListSpy = sinon.spy(rawLayerList, "initializeLayerList");
+        initializeStyleListSpy = sinon.spy(styleList, "initializeStyleList");
     });
 
     afterEach(() => {
@@ -65,6 +70,42 @@ describe("src_3_0_0/app-store/actions.js", () => {
 
             expect(initializeLayerListSpy.calledOnce).to.be.true;
             expect(initializeLayerListSpy.calledWith(layerConf)).to.be.true;
+        });
+
+        it("initializeVectorStyle", () => {
+            const getters = {
+                    menuFromConfig: () => {
+                        return {
+                            sections: [[]]
+                        };
+                    },
+                    allLayerConfigs: [{
+                        id: "id",
+                        typ: "WMS"
+                    }],
+                    "Modules/MapMarker/pointStyleId": "pointStyleId",
+                    "Modules/MapMarker/polygonStyleId": "polygonStyleId",
+                    "Modules/HighlightFeatures/pointStyleId": "pointStyleId",
+                    "Modules/HighlightFeatures/polygonStyleId": "polygonStyleId",
+                    "Modules/HighlightFeatures/lineStyleId": "lineStyleId"
+                },
+                firstCallArg = {
+                    mapMarkerPointStyleId: "pointStyleId",
+                    mapMarkerPolygonStyleId: "polygonStyleId",
+                    highlightFeaturesPointStyleId: "pointStyleId",
+                    highlightFeaturesPolygonStyleId: "polygonStyleId",
+                    highlightFeaturesLineStyleId: "lineStyleId"
+                };
+
+            actions.initializeVectorStyle({state, dispatch, getters});
+
+            expect(initializeStyleListSpy.calledOnce).to.be.true;
+            expect(initializeStyleListSpy.firstCall.args[0]).to.be.deep.equals(firstCallArg);
+            expect(initializeStyleListSpy.firstCall.args[1]).to.equals(state.configJs);
+            expect(initializeStyleListSpy.firstCall.args[2]).to.be.deep.equals(getters.allLayerConfigs);
+            // todo inka sections testen
+            // expect(initializeStyleListSpy.firstCall.args[3]).to.be.deep.equals(getters.allLayerConfigs);
+            expect(typeof initializeStyleListSpy.firstCall.args[4]).to.be.equals("function");
         });
     });
 });
