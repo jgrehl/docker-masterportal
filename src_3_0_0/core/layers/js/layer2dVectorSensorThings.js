@@ -3,13 +3,14 @@ import Cluster from "ol/source/Cluster";
 import {Circle as CircleStyle, Fill, Stroke, Style} from "ol/style.js";
 import {unByKey} from "ol/Observable";
 import crs from "@masterportal/masterportalapi/src/crs";
+import styleList from "@masterportal/masterportalapi/src/vectorStyle/styleList";
+import createStyle from "@masterportal/masterportalapi/src/vectorStyle/createStyle";
 import {GeoJSON} from "ol/format";
 import moment from "moment";
 import "moment-timezone";
 import VectorLayer from "ol/layer/Vector";
 import VectorSource from "ol/source/Vector";
 import Layer2dVector from "./layer2dVector";
-
 import changeTimeZone from "../../../shared/js/utils/changeTimeZone";
 import {uniqueId} from "../../../shared/js/utils/uniqueId.js";
 import isObject from "../../../shared/js/utils/isObject";
@@ -66,7 +67,7 @@ export default function Layer2dVectorSensorThings (attributes) {
     };
 
     this.attributes = Object.assign(defaultAttributes, attributes);
-    this.styleRules = [];
+    this.styleRule = [];
     Layer2dVector.call(this, this.attributes);
     moment.locale("de");
     this.initializeSensorThings();
@@ -123,7 +124,8 @@ Layer2dVectorSensorThings.prototype.getOptions = function (attributes) {
     const options = {
         clusterGeometryFunction: this.clusterGeometryFunction,
         featuresFilter: (features) => this.featuresFilter(attributes, features),
-        onLoadingError: this.onLoadingError
+        onLoadingError: this.onLoadingError,
+        style: this.getStyleFunction(attributes)
     };
 
     return options;
@@ -176,6 +178,38 @@ Layer2dVectorSensorThings.prototype.updateLayerValues = function (values) {
     else if (state === false) {
         this.stopSubscription();
     }
+};
+
+/**
+ * Getter of style for layer.
+ * @param {Object} attrs params of the raw layer
+ * @returns {Function} a function to get the style with or null plus console warn if no style model was found
+ */
+Layer2dVectorSensorThings.prototype.getStyleFunction = function (attrs) {
+    const styleId = attrs?.styleId,
+        styleObject = styleList.returnStyleObject(styleId);
+
+
+    if (typeof styleObject !== "undefined") {
+        this.styleRule = styleObject.rules ? styleObject.rules : null;
+        return function (feature, resolution) {
+            const feat = typeof feature !== "undefined" ? feature : this,
+                isClusterFeature = typeof feat.get("features") === "function" || typeof feat.get("features") === "object" && Boolean(feat.get("features").length > 1),
+                style = createStyle.createStyle(styleObject, feat, isClusterFeature, Config.wfsImgPath),
+                styleElement = Array.isArray(style) ? style[0] : style,
+                mapView = mapCollection.getMap(store.getters["Maps/mode"]).getView(),
+                zoomLevel = mapView.getZoomForResolution(resolution) + 1,
+                zoomLevelCount = mapView.getResolutions().length;
+
+            if (styleElement?.getImage() !== null && attrs.scaleStyleByZoom) {
+                styleElement.getImage().setScale(styleElement.getImage().getScale() * zoomLevel / zoomLevelCount);
+            }
+            return style;
+        };
+    }
+    console.warn(i18next.t("common:modules.core.modelList.layer.wrongStyleId", {styleId}));
+
+    return null;
 };
 
 /**
@@ -1799,7 +1833,7 @@ Layer2dVectorSensorThings.prototype.setStyleOfHistoricalFeature = function (feat
         console.error("The style rule has wrong type, must be an array with at least one entry with prop style!", styleRule);
         return;
     }
-    feature.setStyle(this.getStyleOfHistoricalFeature(styleRule[0].style, scale));
+    feature.setStyle(() => this.getStyleOfHistoricalFeature(styleRule[0].style, scale));
 };
 
 /**
