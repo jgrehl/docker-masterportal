@@ -1,5 +1,6 @@
 import {expect} from "chai";
 import sinon from "sinon";
+import styleList from "@masterportal/masterportalapi/src/vectorStyle/styleList.js";
 import Layer2dVector from "../../../js/layer2dVector";
 
 describe("src_3_0_0/core/js/layers/layer2dVector.js", () => {
@@ -34,6 +35,12 @@ describe("src_3_0_0/core/js/layers/layer2dVector.js", () => {
         attributes = {
             altitudeMode: "clampToGround"
         };
+        const styleObj = {
+            styleId: "styleId",
+            rules: []
+        };
+
+        sinon.stub(styleList, "returnStyleObject").returns(styleObj);
     });
 
     afterEach(() => {
