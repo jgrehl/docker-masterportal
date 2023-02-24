@@ -114,11 +114,13 @@ Layer2dVector.prototype.onLoadingError = function (error) {
 
 /**
  * Setter for style of ol layer.
- * @param {Object} value The style to set at ol layer.
+ * @param {Object} value The style to set at ol layer. If value is null, undefined is set as style at layer to use defaultStyle.
  * @returns {void}
  */
 Layer2dVector.prototype.setStyle = function (value) {
-    this.getLayer()?.setStyle(value);
+    const style = value === null ? undefined : value;
+
+    this.getLayer()?.setStyle(style);
 };
 
 /**
