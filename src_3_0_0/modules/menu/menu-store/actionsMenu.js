@@ -3,7 +3,7 @@ import upperFirst from "../../../shared/js/utils/upperFirst";
 
 export default {
     /**
-     * Change the currently shown Component.
+     * Change the currently shown component.
      * @param {Object} param store context
      * @param {Object} param.commit the commit
      * @param {Object} param.dispatch the dispatch
