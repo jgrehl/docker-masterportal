@@ -77,7 +77,8 @@ export default class MapHandler {
             visibleLayer = typeof layers?.getArray !== "function" ? [] : layers.getArray().filter(layer => {
                 return layer.getVisible() === true && layer.get("id") === layerId;
             });
-        let layerModel = null;
+        let layerModel = null,
+            layerConfig = null;
 
         if (extern) {
             this.handlers.setParserAttributeByLayerId(layerId, "doNotLoadInitially", true);
@@ -91,7 +92,8 @@ export default class MapHandler {
             this.handlers.addLayerByLayerId(layerId);
         }
         nextTick(() => {
-            layerModel = this.handlers.getLayerByLayerId(layerId);
+            layerConfig = this.handlers.getLayerByLayerId(layerId);
+            layerModel = layerCollection.getLayerById(layerConfig?.id);
 
             if (layerModel?.layer instanceof LayerGroup) {
                 const layerSource = layerModel.get("layerSource"),
@@ -105,11 +107,11 @@ export default class MapHandler {
                 layerModel.set("isVisibleInMap", isVisibleInMap);
             }
 
-            if (!layerModel) {
+            if (!layerConfig) {
                 onerror(new Error("mapHandler - initializeLayer: Please check your filter configuration. The given layerId does not exist in your config.json. Configure an extra service object for your filter configuration or add the layer to your config.json."));
                 return;
             }
-            this.layers[filterId] = layerModel;
+            this.layers[filterId] = layerConfig;
 
             this.filteredIds[filterId] = [];
         });
@@ -229,10 +231,18 @@ export default class MapHandler {
      * @returns {void}
      */
     deactivateLayer (filterId) {
-        const layerModel = this.getLayerModelByFilterId(filterId);
+        const layerConfig = this.getLayerModelByFilterId(filterId);
 
-        if (isObject(layerModel)) {
-            layerModel.set("isSelected", false);
+        if (isObject(layerConfig)) {
+            store.dispatch("replaceByIdInLayerConfig", {
+                layerConfigs: [{
+                    id: layerConfig.id,
+                    layer: {
+                        id: layerConfig.id,
+                        visibility: false
+                    }
+                }]
+            });
         }
     }
 
@@ -271,7 +281,8 @@ export default class MapHandler {
      * @returns {void}
      */
     addExternalLayerToTree (filterId) {
-        const layerModel = this.getLayerModelByFilterId(filterId),
+        const layerConfig = this.getLayerModelByFilterId(filterId),
+            layerModel = layerCollection.getLayerById(layerConfig.id),
             features = layerModel.getLayer().getSource().getFeatures();
 
         if (!Array.isArray(features) || !features.length) {
@@ -289,7 +300,8 @@ export default class MapHandler {
      * @returns {void}
      */
     clearLayer (filterId, extern) {
-        const layerModel = this.getLayerModelByFilterId(filterId);
+        const layerConfig = this.getLayerModelByFilterId(filterId),
+            layerModel = layerCollection.getLayerById(layerConfig.id);
 
         this.filteredIds[filterId] = [];
         if (!isObject(layerModel) || typeof layerModel.getLayerSource !== "function") {
@@ -300,7 +312,7 @@ export default class MapHandler {
             layerModel.getLayerSource().clear();
         }
         else {
-            this.handlers.showFeaturesByIds(layerModel.id, []);
+            this.handlers.showFeaturesByIds(layerConfig.id, []);
         }
     }
 
@@ -316,7 +328,10 @@ export default class MapHandler {
         if (!Array.isArray(this.filteredIds[filterId]) || !Array.isArray(items)) {
             return;
         }
-        const layerModel = this.getLayerModelByFilterId(filterId);
+        const layerConfig = this.getLayerModelByFilterId(filterId),
+            layerModel = layerCollection.getLayerById(layerConfig.id),
+            layerSource = typeof layerModel?.layer?.getSource()?.getSource === "function" && layerModel.clusterDistance > 0 ? layerModel.layer.getSource().getSource() : layerModel?.layer?.getSource();
+
 
         if (!isObject(layerModel)) {
             return;
@@ -329,10 +344,10 @@ export default class MapHandler {
         });
 
         if (extern) {
-            layerModel.getLayerSource().addFeatures(items);
+            layerSource.addFeatures(items);
         }
         else {
-            this.handlers.showFeaturesByIds(layerModel.id, this.filteredIds[filterId]);
+            this.handlers.showFeaturesByIds(layerConfig.id, this.filteredIds[filterId]);
         }
     }
 
