@@ -3,9 +3,7 @@ import * as constants from "../store/constantsDraw";
 import DownloadItem from "../components/DownloadItem.vue";
 import DrawItemFeaturesFilter from "./DrawItemFeaturesFilter.vue";
 import DrawItemAttributes from "./DrawItemAttributes.vue";
-
 import {mapActions, mapGetters, mapMutations} from "vuex";
-
 import layerCollection from "../../../core/layers/js/layerCollection.js";
 
 export default {
@@ -25,7 +23,28 @@ export default {
     },
     computed: {
         ...mapGetters("Maps", ["mode"]),
-        ...mapGetters("Modules/Draw", constants.keyStore.getters),
+        ...mapGetters("Modules/Draw", [
+            "id",
+            "type",
+            "name",
+            "enableAttributesSelector",
+            "selectedFeature",
+            "iconList",
+            "symbol",
+            "layer",
+            "styleSettings",
+            "download",
+            "filterList",
+            "hasMouseMapInteractions",
+            "drawLayerVisible",
+            "currentInteraction",
+            "formerInteraction",
+            "deactivatedDrawInteractions",
+            "drawInteraction",
+            "drawType",
+            "modifyInteraction",
+            "attributesKeyList"
+        ]),
 
         /**
          * Shows/hides the draw layer and enables/disables the tools of the draw tool.

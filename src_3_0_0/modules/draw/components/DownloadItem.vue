@@ -1,21 +1,35 @@
 <script>
-import {mapActions, mapGetters, mapMutations} from "vuex";
-
-import * as constants from "../store/constantsDraw";
+import {mapActions, mapGetters} from "vuex";
 
 export default {
     name: "DownloadItem",
     computed: {
-        ...mapGetters("Modules/Draw", constants.keyStore.getters)
+        ...mapGetters("Modules/Draw", [
+            "dataString",
+            "features",
+            "file",
+            "fileName",
+            "fileUrl",
+            "download",
+            "formats",
+            "selectedFeature",
+            "preSelectedFormat",
+            "selectedFormat",
+            "disableFileDownload"
+        ])
     },
     mounted () {
         this.setDownloadSelectedFormat(this.download.preSelectedFormat);
         this.setDownloadFeatures();
-
     },
     methods: {
-        ...mapMutations("Modules/Draw", constants.keyStore.mutations),
-        ...mapActions("Modules/Draw", constants.keyStore.actions)
+        ...mapActions("Modules/Draw", [
+            "setDownloadSelectedFormat",
+            "setDownloadFeatures",
+            "setDownloadFileName",
+            "fileDownloaded",
+            "validateFileName"
+        ])
     }
 };
 </script>
