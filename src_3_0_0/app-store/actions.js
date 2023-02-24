@@ -91,7 +91,6 @@ export default {
         const styleGetters = {
                 mapMarkerPointStyleId: getters["Modules/MapMarker/pointStyleId"],
                 mapMarkerPolygonStyleId: getters["Modules/MapMarker/polygonStyleId"],
-                // VECTORSTYLE: diese 3 HighlightFeatures-getter sind hier und auch auf dev undefined
                 highlightFeaturesPointStyleId: getters["Modules/HighlightFeatures/pointStyleId"],
                 highlightFeaturesPolygonStyleId: getters["Modules/HighlightFeatures/polygonStyleId"],
                 highlightFeaturesLineStyleId: getters["Modules/HighlightFeatures/lineStyleId"]
