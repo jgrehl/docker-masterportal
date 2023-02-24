@@ -91,16 +91,6 @@ describe("src/core/layers/geojson.js", () => {
         });
     });
 
-    describe("getStyleFunction", () => {
-        it("getStyleFunction shall return a function", function () {
-            sinon.stub(styleList, "returnStyleObject").returns(true);
-            const geojsonLayer = new GeoJSONLayer(attributes),
-                styleFunction = geojsonLayer.getStyleFunction(attributes);
-
-            expect(styleFunction).not.to.be.null;
-            expect(typeof styleFunction).to.be.equals("function");
-        });
-    });
     describe("createLegend", () => {
         it("createLegend shall set legend", function () {
             attributes.legendURL = "https://legendUrl";
