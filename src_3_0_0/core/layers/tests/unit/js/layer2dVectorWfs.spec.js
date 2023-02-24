@@ -4,6 +4,7 @@ import {WFS} from "ol/format.js";
 import sinon from "sinon";
 import VectorLayer from "ol/layer/Vector.js";
 import VectorSource from "ol/source/Vector.js";
+import styleList from "@masterportal/masterportalapi/src/vectorStyle/styleList.js";
 import Layer2dVectorWfs from "../../../js/layer2dVectorWfs";
 
 describe("src_3_0_0/core/js/layers/layer2dVectorWfs.js", () => {
@@ -40,11 +41,20 @@ describe("src_3_0_0/core/js/layers/layer2dVectorWfs.js", () => {
         };
     });
 
-    after(() => {
+    afterEach(() => {
         sinon.restore();
     });
 
     describe("createLayer", () => {
+        beforeEach(() => {
+            const styleObj = {
+                styleId: "styleId",
+                rules: []
+            };
+
+            sinon.stub(styleList, "returnStyleObject").returns(styleObj);
+        });
+
         it("new Layer2dVectorWfs should create an layer with no warning", () => {
             const wfsLayer = new Layer2dVectorWfs({});
 
@@ -117,7 +127,8 @@ describe("src_3_0_0/core/js/layers/layer2dVectorWfs.js", () => {
                 "loadingParams",
                 "loadingStrategy",
                 "onLoadingError",
-                "wfsFilter"
+                "wfsFilter",
+                "style"
             ];
         });
 
@@ -125,6 +136,16 @@ describe("src_3_0_0/core/js/layers/layer2dVectorWfs.js", () => {
             const wfsLayer = new Layer2dVectorWfs(attributes);
 
             expect(Object.keys(wfsLayer.getOptions(attributes))).to.deep.equals(options);
+        });
+    });
+    describe("getStyleFunction", () => {
+        it("getStyleFunction shall return a function", function () {
+            sinon.stub(styleList, "returnStyleObject").returns(true);
+            const wfsLayer = new Layer2dVectorWfs(attributes),
+                styleFunction = wfsLayer.getStyleFunction(attributes);
+
+            expect(styleFunction).not.to.be.null;
+            expect(typeof styleFunction).to.be.equals("function");
         });
     });
 });
