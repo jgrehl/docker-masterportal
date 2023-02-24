@@ -38,7 +38,6 @@ function calculateCircle (event, circleCenter, circleRadius, map) {
         resultCoordinates[3][1]
     ];
 }
-
 /**
  * Calculates new flat and extent latitude coordinates for the (circle-) feature.
  * These coordiantes are calculated on the basis of the circle diameter specified by the user.
@@ -56,7 +55,6 @@ function getCircleExtentByDistanceLat (circleCenter, circleDiameter, map) {
 
     return transform([circleCenterWGS[0], newPositionLat], "EPSG:4326", crs.getMapProjection(map));
 }
-
 /**
  * Calculates new flat and extent longitude coordinates for the (circle-) feature.
  * These coordiantes are calculated on the basis of the circle diameter specified by the user.
