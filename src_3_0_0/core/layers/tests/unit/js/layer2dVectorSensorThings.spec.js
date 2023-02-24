@@ -9,6 +9,7 @@ import VectorLayer from "ol/layer/Vector.js";
 import VectorSource from "ol/source/Vector.js";
 import Collection from "ol/Collection";
 import styleList from "@masterportal/masterportalapi/src/vectorStyle/styleList.js";
+import createStyle from "@masterportal/masterportalapi/src/vectorStyle/createStyle.js";
 import {Circle, Style} from "ol/style.js";
 
 import Layer2dVectorSensorThings from "../../../js/layer2dVectorSensorThings";
@@ -134,12 +135,30 @@ describe("src_3_0_0/core/js/layers/layer2dVectorSensorThings.js", () => {
             options = [
                 "clusterGeometryFunction",
                 "featuresFilter",
-                "onLoadingError"
+                "onLoadingError",
+                "style"
             ];
         });
 
         it("should return the options that includes the correct keys", () => {
             expect(Object.keys(sensorThingsLayer.getOptions(attributes))).to.deep.equals(options);
+        });
+    });
+
+    describe("getStyleFunction", () => {
+        it("getStyleFunction shall return a function", () => {
+            const staLayer = new Layer2dVectorSensorThings(attributes),
+                styleFunction = staLayer.getStyleFunction(attributes);
+
+            expect(styleFunction).not.to.be.null;
+            expect(typeof styleFunction).to.be.equals("function");
+        });
+        it("getStyleFunction shall return null when style is null", () => {
+            sinon.stub(createStyle, "createStyle").returns(null);
+            const staLayer = new Layer2dVectorSensorThings(attributes),
+                styleFunction = staLayer.getStyleFunction(attributes);
+
+            expect(styleFunction).to.equal(null);
         });
     });
 
