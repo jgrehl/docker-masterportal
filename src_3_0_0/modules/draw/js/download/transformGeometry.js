@@ -23,7 +23,6 @@ function transform (sourceProjectionCode, coords, isPolygon) {
 
     return isPolygon ? [transCoords] : transCoords;
 }
-
 /**
  * Transforms the given point coordinates from a given source projection to EPSG:4326.
  *
@@ -34,7 +33,6 @@ function transform (sourceProjectionCode, coords, isPolygon) {
 function transformPoint (sourceProjectionCode, coords) {
     return proj4(proj4(sourceProjectionCode), proj4("EPSG:4326"), coords);
 }
-
 /**
  * Transforms the given geometry from a given source projection to EPSG:4326.
  *
