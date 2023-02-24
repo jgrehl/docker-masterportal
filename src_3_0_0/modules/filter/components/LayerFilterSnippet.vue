@@ -507,7 +507,7 @@ export default {
             if (this.isStrategyActive()) {
                 this.$nextTick(() => {
                     this.isLockedHandleActiveStrategy = false;
-                    this.handleActiveStrategy(undefined, this.layerConfig.resetLayer ? true : undefined);
+                    this.handleActiveStrategy(undefined, this.layerConfig.resetLayer && !this.layerConfig.clearAll ? true : undefined);
                 });
             }
         },
@@ -622,6 +622,7 @@ export default {
                         this.mapHandler.toggleWFSLayerInTree(filterId, this.hasUnfixedRules(filterQuestion.rules) || filterQuestion.commands.searchInMapExtent || filterQuestion.commands.filterGeometry);
                     }
                     this.api.filter(filterQuestion, filterAnswer => {
+                        this.paging = filterAnswer.paging;
                         if (typeof onsuccess === "function" && !alterLayer) {
                             this.amountOfFilteredItems = false;
                             if (adjustment) {
@@ -635,7 +636,6 @@ export default {
                             this.filteredItems = [];
                             this.mapHandler.clearLayer(filterId, this.isExtern());
                         }
-
                         if (!this.isParentSnippet(snippetId) && !this.hasOnlyParentRules()) {
                             if (
                                 !this.hasUnfixedRules(filterQuestion.rules)
