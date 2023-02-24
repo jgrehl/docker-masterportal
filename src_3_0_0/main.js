@@ -36,8 +36,14 @@ const configPath = window.location.pathname.substring(0, window.location.pathnam
 
 // Wait until config.js is loaded
 loadConfigJs.then(() => {
+    initLanguage(Config.portalLanguage);
+    console.log('1-before createApp');
+
+    //loading in app.vue watcher
+    //loadAddons(Config.addons);
+
     app = createApp(App);
-    loadAddons(Config.addons);
+
 
     // Load remoteInterface
     if (Object.prototype.hasOwnProperty.call(Config, "remoteInterface")) {
