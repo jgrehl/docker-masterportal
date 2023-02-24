@@ -193,7 +193,7 @@ export default class MapHandler {
             return;
         }
 
-        if (!this.isLayerActivated(filterId) && !layerSource?.features?.length > 0) {
+        if (!this.isLayerActivated(filterId) && !layerSource?.getFeatures().length > 0) {
             layerConfig.visibility = true;
             store.dispatch("replaceByIdInLayerConfig", layerConfig);
 
