@@ -79,7 +79,7 @@ export default function STALayer (attrs) {
 
     this.createLayer(Object.assign(defaults, attrs));
     Layer.call(this, Object.assign(defaults, attrs), this.layer, !attrs.isChildLayer);
-    this.initStyle(attrs);
+    // this.set("style", this.getStyleFunction(attrs));
     this.styleRules = [];
 
     // this.intervallRequest = null;
@@ -118,6 +118,7 @@ STALayer.prototype.createLayer = function (attrs) {
             alwaysOnTop: attrs.alwaysOnTop,
             layerSequence: attrs.layerSequence
         },
+        // styleFn = this.getStyleFunction(attrs),
         options = {
             // clusterGeometryFunction: (feature) => {
             //     if (feature.get("hideInClustering") === true) {
@@ -150,63 +151,16 @@ STALayer.prototype.createLayer = function (attrs) {
             }
         };
 
+    // if (typeof styleFn === "function") {
+    //     styleFn.bind(this);
+    // }
+    // options.style = styleFn;
+
     this.layer = this.createVectorLayer(rawLayerAttributes, {layerParams, options});
     this.options = options;
 };
 
 
-/**
- * Getter of style for layer.
- * @param {Object} attrs params of the raw layer
- * @returns {Function} a function to get the style with or null plus console error if no style model was found
- */
-STALayer.prototype.initStyle = function (attrs) {
-    if (store.getters.styleListLoaded) {
-        this.createStyle(attrs);
-        this.createLegend(attrs);
-    }
-    else {
-        store.watch((state, getters) => getters.styleListLoaded, value => {
-            if (value) {
-                this.createStyle(attrs);
-                this.createLegend(attrs);
-            }
-        });
-    }
-};
-
-/**
- * Creates the style function and sets it at layer.
- * @param {Object} attrs  attributes of the raw layer
- * @returns {void}
- */
-STALayer.prototype.createStyle = function (attrs) {
-    const styleObject = styleList.returnStyleObject(attrs?.styleId);
-    let styleFunction = null;
-
-    if (typeof styleObject !== "undefined") {
-        this.styleRule = styleObject.rules ? styleObject.rules : null;
-        styleFunction = function (feature, resolution) {
-            const feat = typeof feature !== "undefined" ? feature : this,
-                isClusterFeature = typeof feat.get("features") === "function" || typeof feat.get("features") === "object" && Boolean(feat.get("features").length > 1),
-                style = createStyle.createStyle(styleObject, feat, isClusterFeature, Config.wfsImgPath),
-                styleElement = Array.isArray(style) ? style[0] : style,
-                zoomLevel = store.getters["Maps/getView"].getZoomForResolution(resolution) + 1,
-                zoomLevelCount = store.getters["Maps/getView"].getResolutions().length;
-
-            if (styleElement?.getImage() !== null && attrs.scaleStyleByZoom) {
-                styleElement.getImage().setScale(styleElement.getImage().getScale() * zoomLevel / zoomLevelCount);
-            }
-            return style;
-        };
-        this.set("style", styleFunction);
-        this.layer?.setStyle(styleFunction);
-    }
-    else {
-        this.set("style", null);
-        console.warn(i18next.t("common:core.layers.errorHandling.wrongStyleId", {styleId: attrs?.styleId}));
-    }
-};
 
 /**
  * Returns the style function of this layer to be called with feature.
