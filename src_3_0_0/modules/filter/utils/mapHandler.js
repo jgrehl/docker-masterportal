@@ -158,7 +158,7 @@ export default class MapHandler {
         const layer = this.getLayerModelByFilterId(filterId);
 
         if (isObject(layer)) {
-            return layer.visiblitiy ? layer.visibility : false;
+            return layer.visibility ? layer.visibility : false;
         }
         return false;
     }
@@ -185,9 +185,8 @@ export default class MapHandler {
      */
     activateLayer (filterId, onActivated) {
         const layerConfig = this.getLayerModelByFilterId(filterId);
-        let layerModel = layerCollection.getLayerById(layerConfig.id),
+        let layerModel = layerCollection.getLayerById(layerConfig?.id),
             layerSource = typeof layerModel?.layer?.getSource()?.getSource === "function" && layerModel.clusterDistance > 0 ? layerModel.layer.getSource().getSource() : layerModel?.layer?.getSource();
-
 
         if (!isObject(layerConfig)) {
             return;
@@ -200,7 +199,6 @@ export default class MapHandler {
             nextTick(() => {
                 layerModel = layerCollection.getLayerById(layerConfig.id);
                 layerSource = typeof layerModel?.layer?.getSource()?.getSource === "function" && layerConfig.clusterDistance > 0 ? layerModel.layer.getSource().getSource() : layerModel?.layer?.getSource();
-
                 (layerConfig.typ === "SensorThings" ? layerModel : layerSource).once("featuresloadend", () => {
                     if (typeof onActivated === "function") {
                         onActivated();
