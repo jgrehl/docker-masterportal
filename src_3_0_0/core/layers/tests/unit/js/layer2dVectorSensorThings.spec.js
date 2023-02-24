@@ -8,6 +8,7 @@ import store from "../../../../../app-store";
 import VectorLayer from "ol/layer/Vector.js";
 import VectorSource from "ol/source/Vector.js";
 import Collection from "ol/Collection";
+import styleList from "@masterportal/masterportalapi/src/vectorStyle/styleList.js";
 import {Circle, Style} from "ol/style.js";
 
 import Layer2dVectorSensorThings from "../../../js/layer2dVectorSensorThings";
@@ -59,6 +60,12 @@ describe("src_3_0_0/core/js/layers/layer2dVectorSensorThings.js", () => {
         };
 
         crs.registerProjections();
+        const styleObj = {
+            styleId: "styleId",
+            rules: []
+        };
+
+        sinon.stub(styleList, "returnStyleObject").returns(styleObj);
         sensorThingsLayer = new Layer2dVectorSensorThings(attributes);
     });
 
