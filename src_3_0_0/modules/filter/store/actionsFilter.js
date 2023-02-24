@@ -53,7 +53,6 @@ export default {
                 return;
             }
         }
-
         rules[snippetId] = rule;
         context.commit("updateRules", {
             filterId,
@@ -67,7 +66,7 @@ export default {
      * @param {Number} payload.filterId the filterId to delete rules for
      * @returns {void}
      */
-    deleteAllRules: (context, {filterId}) => {
+    deleteAllRules: (context, {filterId}) => {console.log(123);
         if (typeof filterId !== "number") {
             return;
         }
@@ -80,7 +79,6 @@ export default {
             console.warn("Cannot parse rules in action updateRules", error);
             return;
         }
-
         rules.forEach((rule, idx) => {
             if (isRule(rule) && rule?.fixed) {
                 return;
