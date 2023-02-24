@@ -453,7 +453,6 @@ export default {
         initializeIcons () {
             if (this.renderIcons === "fromLegend") {
                 this.styleModel = getStyleModel(this.layerId);
-
                 createStyle.returnLegendByStyleId(this.layerId).then(legendInfos => {
                     if (!this.styleModel || !legendInfos.legendInformation || !Array.isArray(legendInfos.legendInformation)) {
                         this.legendsInfo = [];
