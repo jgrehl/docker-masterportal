@@ -330,6 +330,7 @@ export default {
             if (typeof this.dateFromComputed === "undefined" && typeof this.dateUntilComputed === "undefined") {
                 return this.prechecked[0] + " - " + this.prechecked[1];
             }
+
             return dayjs(this.dateFromComputed, this.internalFormat).format(this.getFormat("from")) + " - " + dayjs(this.dateUntilComputed, this.internalFormat).format(this.getFormat("until"));
         },
         /**
@@ -433,6 +434,7 @@ export default {
                     displayAssoc[key] = true;
                 }
             });
+
             return result;
         },
         /**
@@ -850,6 +852,7 @@ export default {
                 z-index: 2;
             }
             input[type="range"]::-moz-range-thumb {
+                -appearance: none;
                 height: 15px;
                 width: 15px;
                 background-color: $white;
