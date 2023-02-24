@@ -16,7 +16,6 @@ function createDrawInteraction (state, styleSettings) {
         freehand: state.freeHand
     });
 }
-
 /**
  * Creates a modify interaction and returns it.
  *
@@ -39,7 +38,6 @@ function createModifyAttributesInteraction (layer) {
         source: layer.getSource()
     });
 }
-
 /**
  * Creates a select interaction (for deleting features) and returns it.
  *
