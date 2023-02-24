@@ -79,14 +79,15 @@ async function loadGfiThemes (addonKey) {
  * @returns {void}
  */
 async function loadToolAddons (addonKey) {
-    const addon = await loadAddon(addonKey);
+    const addon = await loadAddon(addonKey),
+        addonName = addon.component.name;
     // Add the addonKey to a global array on vue instance
 
     main.getApp().config.globalProperties.$toolAddons.push(addon.component.name);
-
     // register the vuex store module
     store.registerModule(["Modules", addon.component.name], addon.store);
-    store.dispatch("Tools/addTool", addon.component);
+
+    moduleCollection[addonName] = addon.component;
 }
 
 /**

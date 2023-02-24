@@ -81,13 +81,17 @@ export default {
      */
     addAttributesToModuleState ({commit, dispatch, rootState}, {items, itemType, modulePath}) {
         items.forEach(item => {
+            //console.log(item);
             if (item?.type === "folder") {
                 dispatch("addAttributesToModuleState", {items: item.elements});
             }
-            else if (item?.type !== "customMenuElement") {
+            // TODO -- vueAddon
+            else if (item?.type !== "customMenuElement" && item?.type !== "vueAddon") {
                 const modulePathInit = modulePath ? modulePath : `${upperFirst(item.type)}`;
 
                 for (const [key, value] of Object.entries(item)) {
+
+
                     if (typeof value === "object" && !Array.isArray(value)) {
                         dispatch("addAttributesToModuleState", {items: [value], itemType: item?.type, modulePath: modulePathInit + `.${key}`});
                     }
