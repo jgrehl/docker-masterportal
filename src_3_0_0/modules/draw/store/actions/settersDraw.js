@@ -11,7 +11,6 @@ function setStyleSettings ({getters, commit}, styleSettings) {
 
     commit(mutationKey, styleSettings);
 }
-
 /**
  * Starts the interactions when the tool becomes visible.
  *
@@ -31,7 +30,6 @@ async function startInteractions ({state, commit, dispatch, rootState}) {
         dispatch("toggleInteraction", "draw");
     }
 }
-
 /**
  * Sets the inner radius for the circle of the current drawType.
  * @info the internal representation of circleRadius is always in meters
@@ -47,7 +45,6 @@ function setCircleRadius ({getters, commit, dispatch}, radius) {
     setStyleSettings({getters, commit}, styleSettings);
     dispatch("updateCircleRadiusDuringModify", radius);
 }
-
 /**
  * Sets the method for drawing a circle of the current drawType.
  *
@@ -64,7 +61,6 @@ function setCircleMethod ({getters, commit}, {target}) {
 
     setStyleSettings({getters, commit}, styleSettings);
 }
-
 /**
  * Sets the outer radius for the circle of the current drawType.
  * @info the internal representation of circleOuterRadius is always in meters
@@ -80,7 +76,6 @@ function setCircleOuterRadius ({getters, commit, dispatch}, radius) {
     setStyleSettings({getters, commit}, styleSettings);
     dispatch("updateCircleRadiusDuringModify", radius);
 }
-
 /**
  * Sets the color of the current drawType.
  *
@@ -104,7 +99,6 @@ function setColor ({getters, commit, dispatch}, {target}) {
     setStyleSettings({getters, commit}, styleSettings);
     dispatch("updateDrawInteraction");
 }
-
 /**
  * Sets the color of the contours of the current drawType.
  *
@@ -151,7 +145,6 @@ function setOuterColorContour ({getters, commit, dispatch}, {target}) {
     setStyleSettings({getters, commit}, styleSettings);
     dispatch("updateDrawInteraction");
 }
-
 /**
  * Adds another symbol if it doesn't exist already.
  *
@@ -166,7 +159,6 @@ function addSymbolIfNotExists ({state, commit}, symbol) {
         commit("addSymbol", symbol);
     }
 }
-
 /**
 /**
  * Sets the drawType and triggers other methods to add the new interactions
@@ -185,7 +177,6 @@ function setDrawType ({commit, dispatch}, {target}) {
 
     dispatch("updateDrawInteraction");
 }
-
 /**
  * Sets the font for the text of the current drawType.
  *
@@ -203,7 +194,6 @@ function setFont ({getters, commit, dispatch}, {target}) {
     setStyleSettings({getters, commit}, styleSettings);
     dispatch("updateDrawInteraction");
 }
-
 /**
  * Sets the font size for the text of the current drawType.
  *
@@ -221,7 +211,6 @@ function setFontSize ({getters, commit, dispatch}, {target}) {
     setStyleSettings({getters, commit}, styleSettings);
     dispatch("updateDrawInteraction");
 }
-
 /**
  * Sets the opacity of the current drawType.
  *
@@ -240,7 +229,6 @@ function setOpacity ({getters, commit, dispatch}, {target}) {
     setStyleSettings({getters, commit}, styleSettings);
     dispatch("updateDrawInteraction");
 }
-
 /**
  * Sets the opacity for the contours of the current drawType.
  *
@@ -259,7 +247,6 @@ function setOpacityContour ({getters, commit, dispatch}, {target}) {
     setStyleSettings({getters, commit}, styleSettings);
     dispatch("updateDrawInteraction");
 }
-
 /**
  * Sets the size of the point.
  *
@@ -274,7 +261,6 @@ function setPointSize ({commit, dispatch}, {target}) {
     commit("setPointSize", parseInt(selectedElement.value, 10));
     dispatch("updateDrawInteraction");
 }
-
 /**
  * Sets the strokwidth of the current drawType.
  *
@@ -292,7 +278,6 @@ function setStrokeWidth ({getters, commit, dispatch}, {target}) {
     setStyleSettings({getters, commit}, styleSettings);
     dispatch("updateDrawInteraction");
 }
-
 /**
  * Sets the symbol.
  *
@@ -310,7 +295,6 @@ function setSymbol ({state, commit, dispatch}, {target}) {
     commit("setSymbol", iconList.filter(icon => icon.id ? icon.id === selectedElement.value : icon.caption === selectedElement.value)[0]);
     dispatch("updateDrawInteraction");
 }
-
 /**
  * Sets the text of the current drawType.
  *
@@ -328,7 +312,6 @@ function setText ({getters, commit, dispatch}, {target}) {
     setStyleSettings({getters, commit}, styleSettings);
     dispatch("updateDrawInteraction");
 }
-
 /**
  * Sets the unit for the radius of the circle of the current drawType.
  *
