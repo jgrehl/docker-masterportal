@@ -6,7 +6,8 @@ import Layer2dVector from "../../../js/layer2dVector";
 describe("src_3_0_0/core/js/layers/layer2dVector.js", () => {
     let attributes,
         error,
-        warn;
+        warn,
+        styleListStub;
 
     before(() => {
         mapCollection.clear();
@@ -40,7 +41,7 @@ describe("src_3_0_0/core/js/layers/layer2dVector.js", () => {
             rules: []
         };
 
-        sinon.stub(styleList, "returnStyleObject").returns(styleObj);
+        styleListStub = sinon.stub(styleList, "returnStyleObject").returns(styleObj);
     });
 
     afterEach(() => {
@@ -205,6 +206,37 @@ describe("src_3_0_0/core/js/layers/layer2dVector.js", () => {
             layer2d.onLoadingError("The error message");
 
             expect(error.calledOnce).to.be.true;
+        });
+    });
+
+    describe("style funtions", () => {
+        it("getStyleFunction shall return a function", function () {
+            let layer2d = null,
+                styleFunction = null;
+
+            layer2d = new Layer2dVector(attributes);
+            styleFunction = layer2d.getStyleFunction(attributes);
+
+            expect(styleFunction).not.to.be.null;
+            expect(typeof styleFunction).to.be.equals("function");
+        });
+
+        it("setStyle shall set undefined at layer's style to use defaultStyle", function () {
+            let layer2d = null,
+                olLayerStyle = null;
+            const olLayer = {
+                setStyle: (value) => {
+                    olLayerStyle = value;
+                }
+            };
+
+            styleListStub.restore();
+            layer2d = new Layer2dVector(attributes);
+            layer2d.getLayer = () => olLayer;
+            layer2d.setStyle(null);
+
+            expect(olLayerStyle).not.to.be.null;
+            expect(olLayerStyle).to.be.undefined;
         });
     });
 });
