@@ -581,6 +581,7 @@
         },
         {
           "id": "1711",
+          "styleId": "1711",
           "name": "Krankenhäuser",
           "typ": "WFS",
           "visibility": true,
@@ -595,6 +596,7 @@
         },
         {
           "id": "52",
+          "styleId": "52",
           "name": "Parkhäuser",
           "typ": "WFS",
           "visibility": false,
@@ -602,6 +604,7 @@
         },
         {
           "id": "8712.1",
+          "styleId": "8712",
           "name": "Grundschulen",
           "wfsFilter": "resources/xml/schulstandort.staatlich.5.grundschulen.xml",
           "typ": "WFS",
@@ -614,6 +617,7 @@
         },
         {
           "id": "8712.2",
+          "styleId": "8712",
           "name": "Stadtteilschulen",
           "wfsFilter": "resources/xml/schulstandort.staatlich.5.stadtteilschulen.xml",
           "typ": "WFS",
@@ -626,6 +630,7 @@
         },
         {
           "id": "8712.3",
+          "styleId": "8712",
           "name": "Gymnasien",
           "wfsFilter": "resources/xml/schulstandort.staatlich.5.gymnasien.xml",
           "typ": "WFS",
@@ -638,6 +643,7 @@
         },
         {
           "id": "8712.4",
+          "styleId": "8712",
           "name": "Sonderschulen",
           "wfsFilter": "resources/xml/schulstandort.staatlich.5.sonderschulen.xml",
           "typ": "WFS",
@@ -698,7 +704,8 @@
         },
         {
           "id": "OAF",
-          "name": "Schulen",
+          "styleId": "8712",
+          "name": "Schulen (Layertyp OAF)",
           "typ": "OAF",
           "visibility": false,
           "url": "https://api.hamburg.de/datasets/v1/schulen",
@@ -714,6 +721,7 @@
         {
           "id": "753",
           "styleId": "753",
+          "typ": "WFS",
           "visibility": false,
           "mouseHoverField": "Name",
           "loadingStrategy": "bbox"
