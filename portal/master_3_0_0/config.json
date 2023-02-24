@@ -662,12 +662,14 @@
         },
         {
           "id": "18104",
+          "styleId": "18104",
           "name": "Anzahl frei verfügbarer E-Lastenräder je StadtRad-Station",
           "typ": "SensorThings",
           "visibility": false
         },
         {
           "id": "18106",
+          "styleId": "18106",
           "name": "Elektro Ladestandorte Hamburg",
           "typ": "SensorThings",
           "visibility": false,
