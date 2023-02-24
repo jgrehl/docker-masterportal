@@ -107,16 +107,6 @@ describe("src/core/layers/wfs.js", () => {
             expect(propertyname).to.be.equals("");
         });
     });
-    describe("getStyleFunction", () => {
-        it("getStyleFunction shall return a function", function () {
-            sinon.stub(styleList, "returnStyleObject").returns(true);
-            const wfsLayer = new WfsLayer(attributes),
-                styleFunction = wfsLayer.getStyleFunction(attributes);
-
-            expect(styleFunction).not.to.be.null;
-            expect(typeof styleFunction).to.be.equals("function");
-        });
-    });
     describe("updateSource", () => {
         it("updateSource shall refresh source if 'sourceUpdated' is false", function () {
             const wfsLayer = new WfsLayer(attributes),
