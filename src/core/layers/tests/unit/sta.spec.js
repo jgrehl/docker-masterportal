@@ -8,7 +8,7 @@ import sinon from "sinon";
 import STALayer from "../../sta";
 import store from "../../../../app-store";
 import Collection from "ol/Collection";
-import {Circle, Style} from "ol/style.js";
+import {Style} from "ol/style.js";
 import styleList from "@masterportal/masterportalapi/src/vectorStyle/styleList.js";
 import createStyle from "@masterportal/masterportalapi/src/vectorStyle/createStyle.js";
 
@@ -86,17 +86,6 @@ describe("src/core/layers/sta.js", () => {
             expect(layer.getSource()).to.be.an.instanceof(VectorSource);
             expect(staLayer.get("isVisibleInMap")).to.be.false;
             expect(staLayer.get("layer").getVisible()).to.be.false;
-        });
-    });
-
-    describe("getStyleFunction", () => {
-        it("getStyleFunction shall return a function", () => {
-            sinon.stub(styleList, "returnStyleObject").returns(true);
-            const staLayer = new STALayer(attributes),
-                styleFunction = staLayer.getStyleFunction(attributes);
-
-            expect(styleFunction).not.to.be.null;
-            expect(typeof styleFunction).to.be.equals("function");
         });
     });
 

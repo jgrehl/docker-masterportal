@@ -134,12 +134,23 @@ describe("src_3_0_0/core/js/layers/layer2dVectorSensorThings.js", () => {
             options = [
                 "clusterGeometryFunction",
                 "featuresFilter",
-                "onLoadingError"
+                "onLoadingError",
+                "style"
             ];
         });
 
         it("should return the options that includes the correct keys", () => {
             expect(Object.keys(sensorThingsLayer.getOptions(attributes))).to.deep.equals(options);
+        });
+    });
+
+    describe("getStyleFunction", () => {
+        it("getStyleFunction shall return a function", () => {
+            const staLayer = new Layer2dVectorSensorThings(attributes),
+                styleFunction = staLayer.getStyleFunction(attributes);
+
+            expect(styleFunction).not.to.be.null;
+            expect(typeof styleFunction).to.be.equals("function");
         });
     });
 
