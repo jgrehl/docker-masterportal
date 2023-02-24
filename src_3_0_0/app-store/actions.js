@@ -98,7 +98,8 @@ export default {
             layerConfigs = getters.allLayerConfigs,
             // todo inka hier stand vorher: //Radio.request("Parser", "getItemsByAttributes", {type: "tool"})
             // bin nicht sicher, ob das mit dem sectionsContent so richtig ist. Wenn ja dann brauchen wir dafür einen getter. Was ist mit "tools", die in foldern sind?
-            sectionsContent = getters.menuFromConfig("mainMenu").sections[0].concat(getters.menuFromConfig("secondaryMenu").sections[0]);
+            secondaryMenuSections = getters.menuFromConfig("secondaryMenu").sections ? getters.menuFromConfig("secondaryMenu").sections[0] : [],
+            sectionsContent = getters.menuFromConfig("mainMenu").sections[0].concat(secondaryMenuSections);
 
         styleList.initializeStyleList(styleGetters, state.configJs, layerConfigs, sectionsContent,
             (initializedStyleList, error) => {

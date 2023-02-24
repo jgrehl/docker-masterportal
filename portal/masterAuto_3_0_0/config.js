@@ -15,5 +15,7 @@ const Config = {
     },
     layerConf: "https://geodienste.hamburg.de/services-internet.json",
     restConf: "https://geodienste.hamburg.de/lgv-config/rest-services-internet.json",
+    styleConf: "https://geodienste.hamburg.de/lgv-config/style_v3.json",
+    wfsImgPath: "https://geodienste.hamburg.de/lgv-config/img/",
     cesiumLibrary: "https://geoportal-hamburg.de/mastercode/cesium/1_95/Cesium.js"
 };
