@@ -79,7 +79,6 @@ export default {
             }
         });
     },
-
     /**
      * Initializes the style list of vector styling.
      * @param {Object} param.state the state
