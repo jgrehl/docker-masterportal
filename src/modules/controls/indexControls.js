@@ -41,11 +41,7 @@ export default {
         rotation: RotationItem,
         startTool: StartTool,
         // totalView: TotalView,
-<<<<<<< HEAD
         // zoom: ZoomInAndOut
-=======
-        // zoom: ZoomInAndOut,
->>>>>>> 986f6e170b (add the zoom controls to src_3_0_0)
         // },
         // config.json.md control keys where the matching element is to be hidden in mobile mode
         mobileHiddenControls: [
