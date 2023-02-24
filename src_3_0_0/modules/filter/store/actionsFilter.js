@@ -66,7 +66,7 @@ export default {
      * @param {Number} payload.filterId the filterId to delete rules for
      * @returns {void}
      */
-    deleteAllRules: (context, {filterId}) => {console.log(123);
+    deleteAllRules: (context, {filterId}) => {
         if (typeof filterId !== "number") {
             return;
         }
