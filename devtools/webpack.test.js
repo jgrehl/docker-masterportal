@@ -136,6 +136,7 @@ module.exports = {
         new webpack.ProvidePlugin({
             i18next: ["i18next/dist/cjs/i18next.js"],
             mapCollection: [path.resolve(path.join(__dirname, "../src_3_0_0/core/maps/js/mapCollection.js")), "default"],
+            moduleCollection: {},
             Config: path.resolve(__dirname, "../test/unittests/deps/testConfig")
             // XMLSerializer: path.resolve(__dirname, "../test/unittests/deps/testXmlSerializer"),
             // fs: "fs",
