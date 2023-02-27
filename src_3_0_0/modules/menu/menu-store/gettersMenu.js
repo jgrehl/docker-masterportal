@@ -3,7 +3,6 @@ import {badPathSymbol, idx} from "../../../shared/js/utils/idx";
 import {generateSimpleGetters} from "../../../shared/js/utils/generators";
 import upperFirst from "../../../shared/js/utils/upperFirst";
 
-
 const menuGetters = {
     ...generateSimpleGetters(menuState),
 
