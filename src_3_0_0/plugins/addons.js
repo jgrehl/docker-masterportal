@@ -1,10 +1,3 @@
-/* todo:
-addAttributesToModuleState set function does not work
-multiple addons fail
-loading order?
-
-*/
-
 import store from "../app-store";
 import main from "../main";
 import Vue from "vue";
@@ -63,7 +56,6 @@ async function loadControl (addonKey) {
         store.registerModule(["controls", addon.component.name], addon.store);
     }
     store.commit("Controls/registerControl", {name: name, control: addon.component});
-    /* main.getApp().config.globalProperties.$controlAddons.push(name); */
 }
 
 /**
