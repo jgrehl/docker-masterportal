@@ -202,7 +202,7 @@
                 "type": "customMenuElement",
                 "name": "Url öffnen",
                 "openURL": "https://geoinfo.hamburg.de/"
-              }, 
+              },
               {
                 "type": "customMenuElement",
                 "name": "Url öffnen und HTML anzeigen",
@@ -589,6 +589,17 @@
             "name",
             "adresse"
           ],
+          "featurePrefix": "de.hh.up:",
+          "wildCard": "%",
+          "singleChar": "#",
+          "escapeChar": "!"
+        },
+        {
+          "id": "2003",
+          "styleId": "2003",
+          "name": "de.hh.up:nr_f_naturschutzgebiet",
+          "typ": "WFS",
+          "visibility": true,
           "featurePrefix": "de.hh.up:",
           "wildCard": "%",
           "singleChar": "#",
