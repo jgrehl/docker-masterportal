@@ -60,9 +60,16 @@ export default {
     mounted () {
         this.setMarker();
     },
+    beforeUnmount: function () {
+        this.removePointMarker();
+    },
     methods: {
         ...mapMutations("Modules/GetFeatureInfo", ["setShowMarker"]),
-        ...mapActions("Maps", ["setCenter"]),
+        ...mapActions("Maps", [
+            "placingPointMarker",
+            "removePointMarker",
+            "setCenter"
+        ]),
 
         /**
          * Sets the center of the view on the clickCoord and place the MapMarker on it
@@ -75,6 +82,8 @@ export default {
                     this.setCenter(this.clickCoordinate);
                 }
             }
+
+            this.placingPointMarker(this.clickCoordinate);
         },
 
         /**
