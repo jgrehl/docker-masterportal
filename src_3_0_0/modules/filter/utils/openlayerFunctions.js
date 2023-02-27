@@ -211,7 +211,7 @@ function getLayers () {
     return store.getters.allLayerConfigs;
 }
 
-export {
+export default {
     getMapProjection,
     createLayerIfNotExists,
     getFeaturesByLayerId,
