@@ -89,7 +89,6 @@ export default {
                 type: this.type
             });
         }
-         console.log('menu is created !');
     },
     methods: {
         ...mapActions("Menu", ["clickedMenuElement"]),

@@ -10,7 +10,7 @@ import main from "../main";
 import Vue from "vue";
 
 /* eslint-disable no-undef */
-const allAddons = VUE_ADDONS || {};
+const allAddons = typeof VUE_ADDONS !== "undefined" ? VUE_ADDONS : {};
 
 /**
  * Adds all addons based on config.js and addonsConf.json to the Vue Instance and store
@@ -93,12 +93,7 @@ async function loadToolAddons (addonKey) {
     main.getApp().config.globalProperties.$toolAddons.push(addon.component.name);
     // register the vuex store module
     store.registerModule(["Modules", addon.component.name], addon.store);
-    console.log(store);
-    console.log(moduleCollection);
-    moduleCollection[addonName] = addon.component;
-    console.log("addonmodulecollection" + moduleCollection);
-    console.log('################ addon component added to moduleCollection module added to the store');
-
+    // register the component
     moduleCollection[addonName] = addon.component;
 }
 
