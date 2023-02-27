@@ -500,8 +500,7 @@ describe("src/module/tools/filter/utils/mapHandler.js", () => {
         });
     });
     describe("deactivateLayer", () => {
-        it.skip("should set isSelected and isVisible to false", () => {
-            let called_setIsSelected = true;
+        it("should set isSelected and isVisible to false", () => {
             const map = new MapHandler({
                 getLayerByLayerId: () => false,
                 showFeaturesByIds: () => false,
@@ -516,20 +515,12 @@ describe("src/module/tools/filter/utils/mapHandler.js", () => {
             map.layers.filterId = {
                 type: "WFS",
                 id: "filterId",
-                isVisibleInMap: "false"
-            };
-            map.layers.filterId = {
-                get: () => false,
-                set: (command, value) => {
-                    if (command === "isSelected") {
-                        called_setIsSelected = value;
-                    }
-                }
+                isVisibleInMap: "true"
             };
 
             map.deactivateLayer("filterId");
             nextTick(() =>{
-                expect(called_setIsSelected).to.be.false;
+                expect(store.getters.layerConfigById("filterId").visibliity).to.be.false;
             });
         });
     });
