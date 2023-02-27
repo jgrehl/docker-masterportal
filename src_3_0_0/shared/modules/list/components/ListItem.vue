@@ -70,9 +70,7 @@ export default {
         }
     },
     methods: {
-        // @todo
-        // ...mapActions("MapMarker", ["placingPointMarker"]),
-        ...mapActions("Maps", ["zoomToExtent"]),
+        ...mapActions("Maps", ["placingPointMarker", "zoomToExtent"]),
         /**
          * @param {String[]} data to toggle in selection set
          * @returns {void}
@@ -169,8 +167,7 @@ export default {
                 );
 
                 pointCoordinate.keepPreviousMarker = i !== 0;
-                // @todo
-                // this.placingPointMarker(pointCoordinate);
+                this.placingPointMarker(pointCoordinate);
             }
 
             for (let i = 0; i < features.length; i++) {
