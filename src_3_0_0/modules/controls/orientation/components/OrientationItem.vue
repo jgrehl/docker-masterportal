@@ -177,7 +177,7 @@ export default {
             if (this.poiDistancesLocal.length > 0) {
                 if (!visibleWFSModels.length) {
                     this.setShowPoiIcon(false);
-                    // this.$store.dispatch("MapMarker/removePointMarker");
+                    this.$store.dispatch("Maps/removePointMarker");
                 }
                 else {
                     this.setShowPoiIcon(true);
@@ -270,7 +270,7 @@ export default {
                 console.error("The configured zoomMode: " + zoomMode + " does not exist. Please use the params 'once' or 'always'!");
             }
 
-            // this.$store.dispatch("MapMarker/removePointMarker");
+            this.$store.dispatch("Maps/removePointMarker");
         },
 
         /**
@@ -306,7 +306,7 @@ export default {
             this.removeOverlay();
 
             if (this.poiModeCurrentPositionEnabled) {
-                // this.$store.dispatch("MapMarker/removePointMarker");
+                this.$store.dispatch("Maps/removePointMarker");
                 mapCollection.getMap("2D").addOverlay(this.marker);
                 if (this.geolocation === null) {
                     geolocation = new Geolocation({tracking: true, projection: Proj.get("EPSG:4326")});
