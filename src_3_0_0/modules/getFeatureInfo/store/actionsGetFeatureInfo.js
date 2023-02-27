@@ -12,10 +12,7 @@ export default {
      */
     updateClick ({commit, dispatch}) {
         commit("setGfiFeatures", null);
-        /**
-         * @todo MapMarker
-         */
-        // dispatch("MapMarker/removePolygonMarker", null, {root: true});
+        dispatch("Maps/removePolygonMarker", null, {root: true});
         dispatch("collectGfiFeatures");
     },
 

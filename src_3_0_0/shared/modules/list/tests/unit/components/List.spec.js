@@ -36,15 +36,10 @@ describe("src_3_0_0/shared/modules/list/components/ListItem.vue", () => {
         store = createStore({
             namespaces: true,
             modules: {
-                MapMarker: {
-                    namespaced: true,
-                    actions: {
-                        placingPointMarker: sinon.stub()
-                    }
-                },
                 Maps: {
                     namespaced: true,
                     actions: {
+                        placingPointMarker: sinon.stub(),
                         zoomToExtent: sinon.spy()
                     }
                 }
