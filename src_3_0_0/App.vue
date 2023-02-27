@@ -49,8 +49,10 @@ export default {
         async allConfigsLoaded (value) {
             if (value) {
                 await loadAddons(Config.addons);
-                this.addonsLoaded = true;
                 console.log('all addons are loaded');
+                await this.mergeModulesState(this.portalConfig);
+                this.addonsLoaded = true;
+                console.log(global.moduleCollection);
                 LoaderOverlay.hide();
                 this.extendLayers();
                 this.initializeVectorStyle();
@@ -61,7 +63,7 @@ export default {
         },
         portalConfig (portalConfig) {
             console.log('3- portalConfig in app');
-            this.mergeModulesState(portalConfig);
+               // this.mergeModulesState(portalConfig);
         }
     },
     created () {
@@ -209,7 +211,7 @@ export default {
             side="secondaryMenu"
         />
         <MenuContainer
-            v-if="allConfigsLoaded && addonsLoaded && secondaryMenu && uiStyle !== 'SIMPLE'&& addonsLoaded"
+            v-if="allConfigsLoaded && addonsLoaded && secondaryMenu && uiStyle !== 'SIMPLE'"
             side="secondaryMenu"
         />
         <div
