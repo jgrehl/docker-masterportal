@@ -31,7 +31,6 @@ import ShareView from "../shareView/components/ShareView.vue";
 import StyleVT from "../styleVT/components/StyleVT.vue";
 import WfsSearch from "../wfsSearch/components/WfsSearch.vue";
 
-
 const getters = {
     ...generateSimpleGetters(stateModules),
 
