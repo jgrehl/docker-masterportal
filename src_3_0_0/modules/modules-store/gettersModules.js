@@ -70,6 +70,7 @@ const getters = {
         };
 
         global.moduleCollection = {...coreModules, ...global.moduleCollection};
+        console.log(global.moduleCollection);
         return global.moduleCollection;
     }
 };
