@@ -97,7 +97,6 @@ export default {
         },
 
         /**
-         * ToDo: MapMarker hinzufügen
          * Stopping the poi track
          * @returns {void}
          */
@@ -108,7 +107,7 @@ export default {
             });
             this.setPoiMode("currentPosition");
             this.setCurrentPositionEnabled(true);
-            // this.$store.dispatch("MapMarker/removePointMarker");
+            this.$store.dispatch("Maps/removePointMarker");
             this.hidePoiChoice();
         }
     }
