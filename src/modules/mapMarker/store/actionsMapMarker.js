@@ -27,61 +27,6 @@ export default {
     },
 
     /**
-     * With this function the coordinate, which has to be marked by the mapMarker, is written to the MapMarker state.
-     * @param {String[]} value The array with the markable coordinate pair.
-     * @param {Boolean} [value.keepPreviousMarker] whether function should
-     *                  keep or erase previously drawn markers
-     * @returns {void}
-     */
-    placingPointMarker ({state, rootState, commit, dispatch}, value) {
-        const styleObject = styleList.returnStyleObject(state.pointStyleId);
-        let coordValues = [];
-
-        if (!value?.keepPreviousMarker) {
-            dispatch("removePointMarker");
-        }
-
-        if (styleObject) {
-            if (rootState.Maps.mode === "3D") {
-                // else an error is thrown in proj4/lib/checkSanity: coordinates must be finite numbers
-                value.forEach(val => {
-                    coordValues.push(Math.round(val));
-                });
-                // tilt the camera to recognize the mapMarker
-                mapCollection.getMap("3D").getCamera().tilt_ = -200;
-            }
-            else {
-                coordValues = value;
-            }
-            const iconfeature = new Feature({
-                    geometry: new Point(coordValues)
-                }),
-                featureStyle = createStyle.createStyle(styleObject, iconfeature, false, Config.wfsImgPath);
-
-            iconfeature.setStyle(featureStyle);
-            iconfeature.set("styleId", state.pointStyleId);
-            iconfeature.set("featureId", iconfeature.ol_uid);
-
-            commit("addFeatureToMarker", {feature: iconfeature, marker: "markerPoint"});
-            commit("setVisibilityMarker", {visibility: true, marker: "markerPoint"});
-            dispatch("Maps/addLayerOnTop", state.markerPoint, {root: true});
-        }
-        else {
-            dispatch("Alerting/addSingleAlert", i18next.t("common:modules.mapMarker.nostyleObject", {styleId: state.pointStyleId}), {root: true});
-        }
-    },
-
-    /**
-     * This function has the task to remove the coordinate from the mapMarker state.
-     * This is necessary / triggered if the MapMarker should be removed.
-     * @returns {void}
-     */
-    removePointMarker ({state, commit}) {
-        mapCollection.getMap("2D").removeLayer(state.markerPoint);
-        commit("clearMarker", "markerPoint");
-        commit("setVisibilityMarker", {visbility: false, marker: "markerPoint"});
-    },
-    /**
      * Rotates the point marker.
      * @param {Object} param.commit the commit
      * @param {Object} param.dispatch the dispatch
@@ -164,29 +109,6 @@ export default {
     },
 
     /**
-     * Converts polygon to the wkt format and add this to the map.
-     * @param {ol/Feature} feature The ol feature that is added to the map.
-     * @returns {void}
-     */
-    placingPolygonMarker ({state, commit, dispatch}, feature) {
-        const styleObject = styleList.returnStyleObject(state.polygonStyleId);
-
-        dispatch("removePolygonMarker");
-
-        if (styleObject) {
-            const featureStyle = createStyle.createStyle(styleObject, feature, false, Config.wfsImgPath);
-
-            feature.setStyle(featureStyle);
-            commit("addFeatureToMarker", {feature: feature, marker: "markerPolygon"});
-            commit("setVisibilityMarker", {visibility: true, marker: "markerPolygon"});
-            dispatch("Maps/addLayerOnTop", state.markerPolygon, {root: true});
-        }
-        else {
-            dispatch("Alerting/addSingleAlert", i18next.t("common:modules.mapMarker.nostyleObject", {styleId: state.polygonStyleId}), {root: true});
-        }
-    },
-
-    /**
      * Creates a feature from the given geometry and adds it to the map.
      * @param {Object} store.getters - The Map Marker getters.
      * @param {Function} store.commit - Function to commit a mutation.
@@ -213,15 +135,5 @@ export default {
         else {
             dispatch("Alerting/addSingleAlert", i18next.t("common:modules.mapMarker.nostyleObject", {styleId: state.polygonStyleId}), {root: true});
         }
-    },
-
-    /**
-     * Removes the polygon map marker from the map.
-     * @returns {void}
-     */
-    removePolygonMarker: function ({state, commit}) {
-        mapCollection.getMap("2D").removeLayer(state.markerPolygon);
-        commit("clearMarker", "markerPolygon");
-        commit("setVisibilityMarker", {visbility: false, marker: "markerPolygon"});
     }
 };

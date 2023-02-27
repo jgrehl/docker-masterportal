@@ -65,7 +65,7 @@ describe("src_3_0_0/modules/coord/store/actionsCoordToolkit.js", () => {
                 {type: "setPositionMapProjection", payload: coordinate},
                 {type: "changedPosition", payload: undefined, dispatch: true},
                 {type: "setUpdatePosition", payload: false},
-                {type: "MapMarker/placingPointMarker", payload: coordinate, dispatch: true}
+                {type: "Maps/placingPointMarker", payload: coordinate, dispatch: true}
             ], {}, done, rootGetters);
         });
         it("positionClicked with height and update position is true", done => {
@@ -87,7 +87,7 @@ describe("src_3_0_0/modules/coord/store/actionsCoordToolkit.js", () => {
                 {type: "setPositionMapProjection", payload: coordinate},
                 {type: "changedPosition", payload: undefined, dispatch: true},
                 {type: "setUpdatePosition", payload: false},
-                {type: "MapMarker/placingPointMarker", payload: coordinate, dispatch: true},
+                {type: "Maps/placingPointMarker", payload: coordinate, dispatch: true},
                 {type: "getHeight", payload: coordinate, dispatch: true}
             ], {}, done, rootGetters);
         });
@@ -110,7 +110,7 @@ describe("src_3_0_0/modules/coord/store/actionsCoordToolkit.js", () => {
                 {type: "setPositionMapProjection", payload: coordinate},
                 {type: "changedPosition", payload: undefined, dispatch: true},
                 {type: "setUpdatePosition", payload: true},
-                {type: "MapMarker/placingPointMarker", payload: coordinate, dispatch: true},
+                {type: "Maps/placingPointMarker", payload: coordinate, dispatch: true},
                 {type: "setHeight", payload: ""}
             ], {}, done, rootGetters);
         });
