@@ -86,19 +86,23 @@ export default {
                 dispatch("addAttributesToModuleState", {items: item.elements});
             }
             // TODO -- vueAddon
-            else if (item?.type !== "customMenuElement" && item?.type !== "vueAddon") {
+            else if (item?.type !== "customMenuElement") {
                 const modulePathInit = modulePath ? modulePath : `${upperFirst(item.type)}`;
 
                 for (const [key, value] of Object.entries(item)) {
 
 
                     if (typeof value === "object" && !Array.isArray(value)) {
+                        console.log('error'+item.type);
                         dispatch("addAttributesToModuleState", {items: [value], itemType: item?.type, modulePath: modulePathInit + `.${key}`});
                     }
                     else if (item.type && !itemType && !Array.isArray(value)) {
+                        console.log('error2'+item.type+key+value);
                         commit(`${upperFirst(item.type)}/set${upperFirst(key)}`, value);
+                        console.log(rootState);
                     }
                     else {
+                        console.log('error3'+item.type);
                         dispatch("setDeepMerge", {obj: rootState.Modules, path: modulePathInit + `.${key}`, value: value});
                     }
                 }
