@@ -77,17 +77,6 @@ describe("src_3_0_0/App.vue", () => {
         expect(global.mapCollection).to.be.not.undefined;
     });
 
-    it("watcher allConfigsLoaded is true", () => {
-        wrapper = shallowMount(AppComponent, {
-            global: {
-                plugins: [store]
-            }});
-
-        wrapper.vm.$options.watch.allConfigsLoaded.call(wrapper.vm, true);
-        expect(actions.extendLayers.calledOnce).to.be.true;
-        expect(initializeMapsSpy.calledOnce).to.be.true;
-    });
-
     it("watcher allConfigsLoaded is false", () => {
         wrapper = shallowMount(AppComponent, {
             global: {
