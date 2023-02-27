@@ -89,8 +89,6 @@ export default {
      */
     initializeVectorStyle ({state, dispatch, getters}) {
         const styleGetters = {
-                mapMarkerPointStyleId: getters["Modules/MapMarker/pointStyleId"],
-                mapMarkerPolygonStyleId: getters["Modules/MapMarker/polygonStyleId"],
                 highlightFeaturesPointStyleId: getters["Modules/HighlightFeatures/pointStyleId"],
                 highlightFeaturesPolygonStyleId: getters["Modules/HighlightFeatures/polygonStyleId"],
                 highlightFeaturesLineStyleId: getters["Modules/HighlightFeatures/lineStyleId"]

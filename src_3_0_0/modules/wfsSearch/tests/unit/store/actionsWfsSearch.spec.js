@@ -150,7 +150,7 @@ describe("src_3_0_0/modules/wfsSearch/store/actionsWfsSearch.js", () => {
             expect(commit.thirdCall.args).to.eql(["setResults", []]);
             expect(commit.lastCall.args).to.eql(["setSelectedOptions", {}]);
             expect(dispatch.calledOnce).to.be.true;
-            expect(dispatch.firstCall.args).to.eql(["MapMarker/removePointMarker", null, {root: true}]);
+            expect(dispatch.firstCall.args).to.eql(["Maps/removePointMarker", null, {root: true}]);
             expect(state.requiredValues).to.eql({Gemarkung: "", Flur: ""});
         });
     });
