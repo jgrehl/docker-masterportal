@@ -36,7 +36,6 @@ const getters = {
     ...generateSimpleGetters(stateModules),
 
     componentMap: () => {
-        console.log('getter moduleCollection');
         const coreModules = {
             addWMS: AddWMS,
             bufferAnalysis: BufferAnalysis,
@@ -70,7 +69,6 @@ const getters = {
         };
 
         global.moduleCollection = {...coreModules, ...global.moduleCollection};
-        console.log(global.moduleCollection);
         return global.moduleCollection;
     }
 };
