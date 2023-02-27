@@ -1,3 +1,10 @@
+/* todo:
+addAttributesToModuleState set function does not work
+multiple addons fail
+loading order?
+
+*/
+
 import store from "../app-store";
 import main from "../main";
 import Vue from "vue";
@@ -80,12 +87,17 @@ async function loadGfiThemes (addonKey) {
  */
 async function loadToolAddons (addonKey) {
     const addon = await loadAddon(addonKey),
-        addonName = addon.component.name;
+        addonName = addon.component.name.charAt(0).toLowerCase() + addon.component.name.slice(1);
     // Add the addonKey to a global array on vue instance
 
     main.getApp().config.globalProperties.$toolAddons.push(addon.component.name);
     // register the vuex store module
     store.registerModule(["Modules", addon.component.name], addon.store);
+    console.log(store);
+    console.log(moduleCollection);
+    moduleCollection[addonName] = addon.component;
+    console.log("addonmodulecollection" + moduleCollection);
+    console.log('################ addon component added to moduleCollection module added to the store');
 
     moduleCollection[addonName] = addon.component;
 }
