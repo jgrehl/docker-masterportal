@@ -65,19 +65,14 @@ describe("src_3_0_0/modules/getFeatureInfo/components/GetFeatureInfoDetached.vue
                 Maps: {
                     namespaced: true,
                     actions: {
+                        placingPointMarker: sinon.stub(),
                         removeHighlightFeature: sinon.stub(),
+                        removePointMarker: sinon.stub(),
                         highlightFeature: sinon.stub(),
                         setCenter: sinon.stub()
                     },
                     getters: {
                         clickCoordinate: sinon.stub()
-                    }
-                },
-                MapMarker: {
-                    namespaced: true,
-                    actions: {
-                        removePointMarker: sinon.stub(),
-                        placingPointMarker: sinon.stub()
                     }
                 },
                 Menu: {
