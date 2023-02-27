@@ -23,8 +23,10 @@ describe("src_3_0_0/modules/getFeatureInfo/store/actionsGetFeatureInfo.js", () =
             expect(commit.firstCall.args[0]).to.equal("setGfiFeatures");
             expect(commit.firstCall.args[1]).to.be.null;
 
-            expect(dispatch.calledOnce).to.be.true;
-            expect(dispatch.firstCall.args[0]).to.equal("collectGfiFeatures");
+            expect(dispatch.calledTwice).to.be.true;
+            expect(dispatch.firstCall.args[0]).to.equal("Maps/removePolygonMarker");
+            expect(dispatch.firstCall.args[1]).to.be.null;
+            expect(dispatch.secondCall.args[0]).to.equal("collectGfiFeatures");
         });
     });
 });
