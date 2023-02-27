@@ -20,28 +20,12 @@ export default {
     },
     beforeUnmount: function () {
         this.removeHighlighting();
-        this.removePointMarker();
+        // this.removePointMarker();
     },
     methods: {
-        ...mapActions("MapMarker", ["removePointMarker", "placingPointMarker"]),
         ...mapActions("Maps", ["highlightFeature", "removeHighlightFeature", "setCenter"]),
         close () {
             this.$emit("close");
-        },
-
-        /**
-         * Sets the center of the view on the clickCoord and place the MapMarker on it
-         * Set Marker and Center.
-         * @returns {void}
-         */
-        setMarker () {
-            // if (this.showMarker) {
-            //     if (this.centerMapToClickPoint) {
-            //         this.setCenter(this.clickCoordinate);
-            //     }
-
-            this.placingPointMarker(this.clickCoordinate);
-            // }
         },
 
         /**

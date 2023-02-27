@@ -27,9 +27,6 @@ describe("src_3_0_0/modules/coordToolkit/components/CoordToolkit.vue", () => {
             mouseCoordinate: () => sinon.stub(),
             mode: (state) => state.mode
         },
-        mockMapMarkerActions = {
-            removePointMarker: sinon.stub()
-        },
         mockAlertingActions = {
             addSingleAlert: sinon.stub()
         },
@@ -37,7 +34,8 @@ describe("src_3_0_0/modules/coordToolkit/components/CoordToolkit.vue", () => {
             addPointerMoveHandler: sinon.stub(),
             removePointerMoveHandler: sinon.stub(),
             removeInteraction: sinon.stub(),
-            addInteraction: sinon.stub()
+            addInteraction: sinon.stub(),
+            removePointMarker: sinon.stub()
         },
         mockMapMutations = {
             setMode: (state, mapMode) => {
@@ -105,10 +103,6 @@ describe("src_3_0_0/modules/coordToolkit/components/CoordToolkit.vue", () => {
                     getters: mockMapGetters,
                     mutations: mockMapMutations,
                     actions: mockMapActions
-                },
-                MapMarker: {
-                    namespaced: true,
-                    actions: mockMapMarkerActions
                 },
                 Alerting: {
                     namespaced: true,

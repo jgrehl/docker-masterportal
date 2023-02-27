@@ -95,8 +95,7 @@ const actions = {
         commit("setSearched", false);
         commit("setResults", []);
         commit("setSelectedOptions", {});
-        // @todo remove point marker
-        dispatch("MapMarker/removePointMarker", null, {root: true});
+        dispatch("Maps/removePointMarker", null, {root: true});
         resetFieldValues(getters.currentInstance.literals);
 
         // Reset dropdowns

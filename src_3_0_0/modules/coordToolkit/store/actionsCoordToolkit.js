@@ -59,7 +59,7 @@ export default {
         commit("setUpdatePosition", !updatePosition);
 
         if (mapMode === "2D") {
-            dispatch("MapMarker/placingPointMarker", position, {root: true});
+            dispatch("Maps/placingPointMarker", position, {root: true});
 
             if (state.heightLayer) {
                 if (updatePosition) {
@@ -71,7 +71,7 @@ export default {
             }
         }
         else if (mapMode === "3D" && position.length === 3) {
-            dispatch("MapMarker/placingPointMarker", position, {root: true});
+            dispatch("Maps/placingPointMarker", position, {root: true});
             commit("setHeight", position[2].toFixed(1));
         }
     },
@@ -226,7 +226,7 @@ export default {
 
         if (state.updatePosition) {
             if (mapMode === "2D") {
-                dispatch("MapMarker/placingPointMarker", position, {root: true});
+                dispatch("Maps/placingPointMarker", position, {root: true});
             }
             if (mapMode === "3D" && position.length === 3) {
                 commit("setHeight", position[2].toFixed(1));
@@ -256,7 +256,7 @@ export default {
      * @returns {void}
      */
     removeMarker: function ({dispatch}) {
-        dispatch("MapMarker/removePointMarker", null, {root: true});
+        dispatch("Maps/removePointMarker", null, {root: true});
     },
     /**
      * Remembers the projection and shows mapmarker at the given position.
@@ -265,7 +265,7 @@ export default {
      * @returns {void}
      */
     setMarker: function ({dispatch}, event) {
-        dispatch("MapMarker/placingPointMarker", event, {root: true});
+        dispatch("Maps/placingPointMarker", event, {root: true});
     },
     /**
      * Validates the user-input depending on the selected projection and sets the error messages.
