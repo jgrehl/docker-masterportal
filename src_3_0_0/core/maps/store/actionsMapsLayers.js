@@ -1,5 +1,3 @@
-import VectorLayer from "ol/layer/Vector.js";
-import VectorSource from "ol/source/Vector.js";
 import {Vector} from "ol/layer.js";
 import Cluster from "ol/source/Cluster";
 
@@ -17,6 +15,9 @@ export default {
         const map2D = mapCollection.getMap("2D");
 
         if (!map2D.getLayers().getArray().includes(layer)) {
+            if (layer.get("alwaysOnTop")) {
+                layer.setZIndex(9999999);
+            }
             map2D.addLayer(layer);
         }
         else {
@@ -53,7 +54,6 @@ export default {
                 }
             }
         });
-
     },
 
     /**
@@ -69,32 +69,5 @@ export default {
             return true;
         }
         return false;
-    },
-
-    /**
-     * Checks if the layer with the given name already exists and uses it or creates a new layer and returns it if not.
-     * @param {Object} context - A context object of the store instance.
-     * @param {Function} context.dispatch - The dispatch function to call other actions.
-     * @param {Object} context.getters - The getters of the map.
-     * @param {Object} payload - The action payload.
-     * @param {String} payload.layerName - The name of the new layer or the already existing layer.
-     * @param {Boolean} [payload.alwaysOnTop=true] - Layers with the attribute "alwaysOnTop": true are set on top of the map.
-     * @returns {module:ol/layer/Base~BaseLaye} The found layer or a new layer with the given name.
-     */
-    async addNewLayerIfNotExists ({dispatch, getters}, {layerName, alwaysOnTop = true}) {
-        let resultLayer = await getters.getLayerByName(layerName);
-
-        if (!resultLayer) {
-            resultLayer = new VectorLayer({
-                id: layerName,
-                name: layerName,
-                source: new VectorSource(),
-                alwaysOnTop: alwaysOnTop
-            });
-
-            dispatch("addLayer", resultLayer);
-        }
-
-        return resultLayer;
     }
 };
