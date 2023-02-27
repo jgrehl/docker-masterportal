@@ -56,7 +56,7 @@ function highlightPolygon (commit, dispatch, highlightObject) {
         }
     }
     else {
-        dispatch("MapMarker/placingPolygonMarker", highlightObject.feature, {root: true});
+        dispatch("Maps/placingPolygonMarker", highlightObject.feature, {root: true});
     }
 
 }
@@ -89,7 +89,7 @@ function highlightLine (commit, dispatch, highlightObject) {
         }
     }
     else {
-        dispatch("MapMarker/placingPolygonMarker", highlightObject.feature, {root: true});
+        dispatch("Maps/placingPolygonMarker", highlightObject.feature, {root: true});
     }
 
 }
@@ -110,7 +110,7 @@ function highlightViaParametricUrl (dispatch, getters, layerIdAndFeatureId) {
         feature = getHighlightFeature(temp[0], temp[1], getters);
     }
     if (feature) {
-        dispatch("MapMarker/placingPolygonMarker", feature, {root: true});
+        dispatch("Maps/placingPolygonMarker", feature, {root: true});
     }
 }
 /**

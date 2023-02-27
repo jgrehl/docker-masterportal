@@ -4,6 +4,7 @@ import load3DScript from "@masterportal/masterportalapi/src/lib/load3DScript";
 
 import {setResolutions, setValues} from "./setValuesToMapView";
 import store from "../../../app-store";
+import mapMarker from "./mapMarker";
 
 /**
  * Create the map in different modes and update the map attributes.
@@ -16,6 +17,7 @@ function initializeMaps (portalConfig, configJs) {
     store.dispatch("Maps/setMapAttributes");
     watchPortalConfig();
     load3DMap(configJs);
+    mapMarker.initializeMapMarkers(configJs);
 }
 
 /**
