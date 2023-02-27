@@ -16,7 +16,8 @@
         "Backbone": true,
         "Cesium": true,
         "i18next": true,
-        "mapCollection": true
+        "mapCollection": true,
+        "moduleCollection": true
     },
     "plugins": [
         "chai-friendly",
