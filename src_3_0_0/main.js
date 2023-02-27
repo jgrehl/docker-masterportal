@@ -8,7 +8,6 @@ import App from "./App.vue";
 import store from "./app-store";
 import "bootstrap/js/dist/offcanvas";
 
-import loadAddons from "./plugins/addons";
 import remoteInterface from "./plugins/remoteInterface";
 // import {instantiateVuetify} from "./plugins/vuetify";
 import {initiateVueI18Next, initLanguage} from "./plugins/i18next";
@@ -37,10 +36,6 @@ const configPath = window.location.pathname.substring(0, window.location.pathnam
 // Wait until config.js is loaded
 loadConfigJs.then(() => {
     initLanguage(Config.portalLanguage);
-    console.log('1-before createApp');
-
-    //loading in app.vue watcher
-    //loadAddons(Config.addons);
 
     app = createApp(App);
 
@@ -52,11 +47,15 @@ loadConfigJs.then(() => {
 
     initiateVueI18Next(app);
     app.use(store);
+<<<<<<< HEAD
 
     initLanguage(Config.portalLanguage)
         .then(() => {
             app.mount("#masterportal-root");
         });
+=======
+    app.mount("#masterportal-root");
+>>>>>>> 762b58ca17 (BG-3809: adapt test and cleanup)
 });
 
 export default main;
