@@ -1,7 +1,8 @@
 /**
  * featureLister tool state definition.
  * @typedef {Object} FeatureListerState
- * @property {String} id id of the FeatureLister component
+ * @property {Boolean} hasMouseMapInteractions If this attribute is true, then all other modules will be deactivated when this attribute is also true. Only one module with this attribute true may be open at the same time, since conflicts can arise in the card interactions.
+ * @property {String} type type of the FeatureLister component
  * @property {String} name displayed as title (config-param)
  * @property {String} icon icon next to title (config-param)
  * @property {Number} maxFeatures default value for maxFeatures that can be overwritten in config
@@ -24,6 +25,7 @@
  */
 const state = {
     // defaults for config.json parameters
+    hasMouseMapInteractions: true,
     type: "featureLister",
     name: "common:menu.tools.featureLister",
     icon: "bi-list",
