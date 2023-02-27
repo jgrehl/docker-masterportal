@@ -67,8 +67,8 @@ const getters = {
             wfsSearch: WfsSearch
         };
 
-        global.moduleCollection = {...coreModules, ...global.moduleCollection};
-        return global.moduleCollection;
+        moduleCollection = {...coreModules, ...moduleCollection};
+        return moduleCollection;
     }
 };
 
