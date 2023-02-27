@@ -106,9 +106,6 @@
             "type": "fileImport"
           },
           {
-            "type": "vueAddon"
-          },
-          {
             "type": "openConfig"
           },
           {
