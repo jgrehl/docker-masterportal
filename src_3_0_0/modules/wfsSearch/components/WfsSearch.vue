@@ -29,7 +29,7 @@ export default {
             "currentInstance",
             "requiredFields"
         ]),
-        ...mapGetters("Language", ["currentLocale"]),
+        ...mapGetters("Modules/Language", ["currentLocale"]),
         headers () {
             if (this.results.length === 0) {
                 return null;
@@ -86,9 +86,7 @@ export default {
             "resetModule",
             "resetResult"
         ]),
-        // @todo placing Point Markere
-        ...mapActions("MapMarker", ["placingPointMarker"]),
-        ...mapActions("Maps", ["setCenter", "setZoom"]),
+        ...mapActions("Maps", ["placingPointMarker", "setCenter", "setZoom"]),
         searchFeatures,
         /**
          * Resets the selection and inputs fields and the results.
@@ -120,7 +118,6 @@ export default {
                 this.setShowResultList(true);
             }
             else if (features.length > 0) {
-            // @todo placing Point Marker
                 this.placingPointMarker(features[0].getGeometry().getCoordinates());
                 this.setCenter(features[0].getGeometry().getCoordinates());
                 this.setZoom(this.zoomLevel);
