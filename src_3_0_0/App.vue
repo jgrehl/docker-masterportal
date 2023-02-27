@@ -49,10 +49,8 @@ export default {
         async allConfigsLoaded (value) {
             if (value) {
                 await loadAddons(Config.addons);
-                console.log('all addons are loaded');
                 await this.mergeModulesState(this.portalConfig);
                 this.addonsLoaded = true;
-                console.log(global.moduleCollection);
                 LoaderOverlay.hide();
                 this.extendLayers();
                 this.initializeVectorStyle();
@@ -60,10 +58,6 @@ export default {
                 initializeLayers(this.visibleLayerConfigs);
 
             }
-        },
-        portalConfig (portalConfig) {
-            console.log('3- portalConfig in app');
-               // this.mergeModulesState(portalConfig);
         }
     },
     created () {
