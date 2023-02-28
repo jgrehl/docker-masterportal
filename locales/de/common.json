@@ -404,9 +404,12 @@
                     "info": "Sie erklären sich damit einverstanden, dass Ihre Daten zur Bearbeitung Ihres Anliegens verwendet werden. Weitere Informationen und Widerrufshinweise finden Sie in der <a href=\"{{privacyPolicyLink}}\" target=\"_blank\">Datenschutzerklärung</a>.",
                     "label": "Bitte akzeptieren Sie die Datenschutzerklärung."
                 },
-                "sendButton": "Abschicken",
+                "sendButton": "Kontakt aufnehmen",
+                "addFileButton": "Bild anhängen",
                 "successMessage": "Ihre Anfrage wurde erfolgreich versendet.",
-                "successTicket": "Ihre Ticketnummer lautet: "
+                "successTicket": "Ihre Ticketnummer lautet: ",
+                "fileSizeMessage": "Die angehängte Datei überschreitet die festgelegte Dateigröße.",
+                "fileFormatMessage": "Die angehängte Datei befindet sich nicht im korrekten Format. Zulässige Formate sind: .jpg, .jpeg und .png"
             },
             "openConfig": {
               "explanation": "Öffnen Sie eine Karte, die Sie als lokale Konfigurationsdatei abgespeichert haben.",
@@ -625,6 +628,9 @@
                     "introFormats": "Es können KML-Dateien (*.kml), GPX-Dateien (*.gpx) oder GeoJson-Dateien (*.geojson, *.json) importiert werden.",
                     "introDrawTool": "Importierte Geometrien können im Nachhinein verändert werden. Nutzen Sie hierfür das Werkzeug &quot;$t(common:menu.tools.draw)&quot;.",
                     "drawTool": "$t(common:menu.tools.draw) öffnen",
+                    "dropzone": "Datei hier ablegen",
+                    "or": "oder ",
+                    "browse": "Datei auswählen",
                     "supportedFiletypes": {
                         "auto": "Automatische Erkennung",
                         "kml": "KML-Datei (*.kml)",
