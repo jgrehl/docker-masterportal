@@ -4,6 +4,32 @@ The Masterportal is a tool-kit to create geo web applications based on [OpenLaye
 
 The Masterportal is a project by [Geowerkstatt Hamburg](https://www.hamburg.de/geowerkstatt/).
 
+## MasterPortal 3.0.0-alpha
+
+After more than two years of refactorings we can proudly present the first alpha-version of Masterportal 3.0.0! We completely removed backbonejs and jquery, moved to vue3 and vuex4 and rewrote the application-core. We redesigned the UI to match all the different usecases and usergroups. We have nearly all modules and tools working but still 
+some work to do. Features still to be added/moved to the new version are the following:
+
+* Search
+* AddOns
+* Theming
+* ParamUrls
+* Vectorstyling
+* Mapmarker  
+* Touchtable-UI
+* Performance
+* etc.
+
+To try out the new version just checkout this tag and run "npm start". You'll find working configs under "portal" as usual.
+
+Please be aware of the following:
+
+**Structure of config.json can still be changing, docs may not be up-to-date.**
+**Changelog is wip and may also not be correct.**
+**We appreciate hints, feedback and communication of bugs! Please use the Issuetracker and tag your issue with "v3.0.0-alpha"**
+
+Our further Roadmap is to work hard on 3.0.0 and to release wip-Versions, beta, rcs etc. and hopefully to be able to have a stable Version in Summer. We will support and fix bugs for V2.x until end of 2023. 
+
+
 ## User section
 
 * [Download](https://bitbucket.org/geowerkstatt-hamburg/masterportal/downloads/)
