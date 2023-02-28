@@ -21,7 +21,6 @@ export function createIconStyle (color, imgPath, pointSize, symbol, zIndex) {
                 crossOrigin: "anonymous",
                 src: symbol.value.indexOf("/") === -1 && imgPath ? imgPath + symbol.value : symbol.value,
                 scale: symbol?.scale ? symbol.scale : 1 / (96 / pointSize),
-                // funktioniert nicht bei kml:
                 opacity: symbol?.opacity ? symbol?.opacity : color[3]
             }),
             zIndex: zIndex
