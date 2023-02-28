@@ -90,8 +90,6 @@ describe("src_3_0_0/app-store/actions.js", () => {
                     "Modules/HighlightFeatures/lineStyleId": "lineStyleId"
                 },
                 firstCallArg = {
-                    mapMarkerPointStyleId: "pointStyleId",
-                    mapMarkerPolygonStyleId: "polygonStyleId",
                     highlightFeaturesPointStyleId: "pointStyleId",
                     highlightFeaturesPolygonStyleId: "polygonStyleId",
                     highlightFeaturesLineStyleId: "lineStyleId"
