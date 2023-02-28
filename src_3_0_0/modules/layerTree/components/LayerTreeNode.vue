@@ -28,6 +28,7 @@ export default {
     },
     computed: {
         ...mapGetters(["portalConfig", "allLayerConfigs", "layerConfigsByAttributes"]),
+        ...mapGetters("Modules/LayerTree", ["delay", "delayOnTouchOnly"]),
 
         /**
          * v-model for sorted layerConfig.
@@ -101,6 +102,8 @@ export default {
         class="dragArea no-list ps-0 ms-2"
         tag="ul"
         item-key="name"
+        :delay-on-touch-only="delayOnTouchOnly"
+        :delay="delay"
         chosen-class="chosen"
     >
         <template #item="{ element }">
