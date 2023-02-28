@@ -154,7 +154,6 @@ function downloadFeaturesWithoutGUI ({state, rootState}, payload) {
  */
 function downloadViaRemoteInterface () {
     /*
-    // TBD: need replacement for this
     dispatch("downloadFeaturesWithoutGUI", geomType).then(result => {
         Radio.trigger("RemoteInterface", "postMessage", {
             "downloadViaRemoteInterface": "function identifier",
@@ -268,7 +267,6 @@ async function initializeWithoutGUI ({state, commit, dispatch, getters, rootStat
             }
             catch (e) {
                 // The given JSON was invalid
-                // TBD30
                 dispatch("Alerting/addSingleAlert", i18next.t("common:modules.tools.draw.geometryDrawFailed"), {root: true});
             }
         }
