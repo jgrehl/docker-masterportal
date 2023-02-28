@@ -56,7 +56,6 @@ export default {
                 this.initializeVectorStyle();
                 initializeMaps(this.portalConfig, this.configJs);
                 initializeLayers(this.visibleLayerConfigs);
-
             }
         }
     },
