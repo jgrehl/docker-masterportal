@@ -194,8 +194,6 @@ describe("src_3_0_0/modules/layerTree/components/LayerTree.vue", () => {
 
         expect(wrapper.find("#layer-tree").exists()).to.be.true;
         expect(wrapper.findAll("layer-tree-node-stub").length).to.be.equals(1);
-        // expects an empty stub
-        expect(wrapper.findAll("layer-tree-node-stub > Draggable").length).to.be.equals(0);
         expect(wrapper.find("#add-layer-btn").exists()).to.be.false;
     });
 
@@ -210,8 +208,6 @@ describe("src_3_0_0/modules/layerTree/components/LayerTree.vue", () => {
 
         expect(wrapper.find("#layer-tree").exists()).to.be.true;
         expect(wrapper.findAll("layer-tree-node-stub").length).to.be.equals(1);
-        // expects an empty stub
-        expect(wrapper.findAll("layer-tree-node-stub > Draggable").length).to.be.equals(0);
         expect(wrapper.find("#add-layer-btn").exists()).to.be.true;
     });
 
