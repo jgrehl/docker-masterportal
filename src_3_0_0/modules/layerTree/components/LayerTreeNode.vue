@@ -101,7 +101,6 @@ export default {
         class="dragArea no-list ps-0 ms-2"
         tag="ul"
         item-key="name"
-        handle=".handle-layer-component-drag"
         chosen-class="chosen"
     >
         <template #item="{ element }">
