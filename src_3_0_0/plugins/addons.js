@@ -55,6 +55,7 @@ async function loadControl (addonKey) {
         store.registerModule(["controls", addon.component.name], addon.store);
     }
     store.commit("Controls/registerControl", {name: name, control: addon.component});
+    main.getApp().config.globalProperties.$controlAddons.push(name);
 }
 
 /**
