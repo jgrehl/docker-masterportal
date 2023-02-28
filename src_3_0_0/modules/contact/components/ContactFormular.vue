@@ -127,12 +127,14 @@ export default {
             this.fileArray.forEach(image => {
                 if (image.imgString === target) {
                     const index = this.fileArray[image];
+
                     this.fileArray.splice(index, 1);
                 }
             });
             this.uploadedImages.forEach(image => {
                 if (image === target) {
                     const index = this.uploadedImages[image];
+
                     this.uploadedImages.splice(index, 1);
                 }
             });
@@ -209,15 +211,33 @@ export default {
                 <p v-html="$t('common:modules.tools.contact.privacyPolicy.info', {privacyPolicyLink})" />
             </div>
             <div v-if="fileUpload">
-                <div class="accordion accordion-flush mb-3" id="accordionFlushFile">
+                <div
+                    id="accordionFlushFile"
+                    class="accordion accordion-flush mb-3"
+                >
                     <div class="accordion-item">
-                        <h2 class="accordion-header" id="flush-headingOne">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                            <i class="bi-image-fill me-2" />
-                            {{ $t('modules.tools.contact.addFileButton') }}
-                        </button>
+                        <h2
+                            id="flush-headingOne"
+                            class="accordion-header"
+                        >
+                            <button
+                                class="accordion-button collapsed"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#flush-collapseOne"
+                                aria-expanded="false"
+                                aria-controls="flush-collapseOne"
+                            >
+                                <i class="bi-image-fill me-2" />
+                                {{ $t('modules.tools.contact.addFileButton') }}
+                            </button>
                         </h2>
-                        <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushFile">
+                        <div
+                            id="flush-collapseOne"
+                            class="accordion-collapse collapse"
+                            aria-labelledby="flush-headingOne"
+                            data-bs-parent="#accordionFlushFile"
+                        >
                             <div class="accordion-body">
                                 <div
                                     class="vh-center-outer-wrapper drop-area-fake mb-3"
@@ -308,7 +328,7 @@ export default {
                     id="collapseAddFile"
                     class="collapse mt-3"
                 >
-                    
+
                 </div> -->
             </div>
             <div class="d-flex justify-content-center">
