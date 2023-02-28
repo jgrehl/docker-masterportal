@@ -25,6 +25,9 @@
  * @property {String[]} supportedDevices Devices on which the module is displayed.
  * @property {String[]} supportedMapModes Map mode in which this module can be used.
  * @property {String} type The type of the module.
+ * @property {Boolean} fileUpload If File Upload should be available.
+ * @property {Array} fileArray Uploaded Files.
+ * @property {Number} maxFileSize the max file size for uploadable content.
 */
 const state = {
     description: "",
@@ -51,7 +54,10 @@ const state = {
     showDescription: false,
     supportedDevices: ["Desktop", "Mobile", "Table"],
     supportedMapModes: ["2D", "3D"],
-    type: "contact"
+    type: "contact",
+    fileUpload: false,
+    fileArray: [],
+    maxFileSize: 1048576
 };
 
 export default state;
