@@ -54,7 +54,7 @@ export function openFeaturesInNewWindow (url, gfiAsNewWindow, openWindow) {
 
     let newWindowProps = gfiAsNewWindow;
 
-    if ((newWindowProps === null || typeof newWindowProps !== "object") && url.startsWith("http:", 0)) {
+    if ((newWindowProps === null || typeof newWindowProps !== "object") && url.startsWith("http:", 0) && location.protocol === "https:") {
         // make sure not to open http (no mixed content)
         newWindowProps = {
             name: "",
