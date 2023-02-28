@@ -19,8 +19,7 @@ function initializeMapMarkers (configJs) {
  * The geometries POINT and POLYGON are available.
  * @param {String} geometryType The geometry type of the map marker.
  * @param {String} styleId The style id for the map marker style.
- * @constructs
- * @returns {void}
+ * @returns {ol/layer/Vector} The vector layer for the map marker.
  */
 function createMapMarker (geometryType, styleId) {
     const mapMarker = getCreateFunctionByType(geometryType)(styleId);
