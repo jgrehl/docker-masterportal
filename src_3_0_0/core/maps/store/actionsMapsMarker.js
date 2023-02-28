@@ -10,33 +10,15 @@ export default {
      * With this function the coordinate, which has to be marked by the mapMarker, is written to the MapMarker state.
      * @param {Object} param.dispatch the dispatch
      * @param {Object} param.rootGetters the rootGetters
-     * @param {String[]} value The array with the markable coordinate pair.
-     * @param {Boolean} [value.keepPreviousMarker] whether function should keep or erase previously drawn markers
+     * @param {String[]} coordinates The array with the markable coordinate pair.
      * @returns {void}
      */
-    placingPointMarker ({dispatch, rootGetters}, value) {
-        let coordValues = [];
-
-        if (!value.keepPreviousMarker) {
-            dispatch("removePointMarker");
-        }
-
-        if (rootGetters["Maps/mode"] === "3D") {
-            // else an error is thrown in proj4/lib/checkSanity: coordinates must be finite numbers
-            value.forEach(val => {
-                coordValues.push(Math.round(val));
-            });
-
-            // tilt the camera to recognize the mapMarker
-            mapCollection.getMap("3D").getCamera().tilt_ = -200;
-        }
-        else {
-            coordValues = value;
-        }
+    placingPointMarker ({dispatch}, coordinates) {
+        dispatch("removePointMarker");
 
         const layerId = "marker_point_layer",
             feature = new Feature({
-                geometry: new Point(coordValues)
+                geometry: new Point(coordinates)
             });
 
         mapMarker.addFeatureToMapMarkerLayer(layerId, feature);
