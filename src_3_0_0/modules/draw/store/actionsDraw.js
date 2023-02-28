@@ -80,7 +80,6 @@ const initialState = JSON.parse(JSON.stringify(stateDraw)),
          */
         clearLayer ({state, dispatch}) {
             state.layer.getSource().clear();
-            // NOTE(roehlipa): As an alternative it could be committed directly; would this make it cleaner?
             dispatch("setDownloadFeatures");
         },
         /**
