@@ -103,7 +103,7 @@ describe("src_3_0_0/app-store/actions.js", () => {
             expect(initializeStyleListSpy.firstCall.args[0]).to.be.deep.equals(firstCallArg);
             expect(initializeStyleListSpy.firstCall.args[1]).to.equals(state.configJs);
             expect(initializeStyleListSpy.firstCall.args[2]).to.be.deep.equals(getters.allLayerConfigs);
-            // todo inka sections testen
+            // todo https://www.jira.geoportal-hamburg.de/browse/BG-3825 sections testen
             // expect(initializeStyleListSpy.firstCall.args[3]).to.be.deep.equals(getters.allLayerConfigs);
             expect(typeof initializeStyleListSpy.firstCall.args[4]).to.be.equals("function");
         });
