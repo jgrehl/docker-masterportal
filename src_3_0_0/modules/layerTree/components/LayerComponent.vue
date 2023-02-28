@@ -1,7 +1,6 @@
 <script>
 import {mapGetters} from "vuex";
 import layerFactory from "../../../core/layers/js/layerFactory";
-import LayerComponentIconDrag from "./LayerComponentIconDrag.vue";
 import LayerCheckBox from "./LayerCheckBox.vue";
 import LayerComponentIconInfo from "./LayerComponentIconInfo.vue";
 import LayerComponentIconSubMenu from "./LayerComponentIconSubMenu.vue";
@@ -13,7 +12,6 @@ import LayerComponentSubMenu from "./LayerComponentSubMenu.vue";
 export default {
     name: "LayerComponent",
     components: {
-        LayerComponentIconDrag,
         LayerCheckBox,
         LayerComponentIconInfo,
         LayerComponentIconSubMenu,
@@ -74,10 +72,6 @@ export default {
                 />
                 <LayerComponentIconInfo
                     :is-layer-tree="isLayerTree()"
-                    :layer-conf="conf"
-                />
-                <LayerComponentIconDrag
-                    v-if="isLayerTree()"
                     :layer-conf="conf"
                 />
             </div>
