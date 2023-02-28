@@ -128,7 +128,6 @@ export default {
 @import "~variables";
 
 .mp-menu-root-element {
-    font-size: 0.9375rem;
     min-height: 2.3rem;
 }
 
