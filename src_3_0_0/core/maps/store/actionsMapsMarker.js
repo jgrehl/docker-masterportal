@@ -68,8 +68,7 @@ export default {
      * With this function the coordinate, which has to be marked by the mapMarker, is written to the MapMarker state.
      * @param {Object} param.dispatch the dispatch
      * @param {Object} param.rootGetters the rootGetters
-     * @param {String[]} value The array with the markable coordinate pair.
-     * @param {Boolean} [value.keepPreviousMarker] whether function should keep or erase previously drawn markers
+     * @param {String[]} coordinates The array with the markable coordinate pair.
      * @returns {void}
      */
     /* placingPointMarker ({dispatch, rootGetters}, value) {
@@ -94,7 +93,7 @@ export default {
 
         const layerId = "marker_point_layer",
             feature = new Feature({
-                geometry: new Point(coordValues)
+                geometry: new Point(coordinates)
             });
 
         mapMarker.addFeatureToMapMarkerLayer(layerId, feature);
@@ -117,7 +116,7 @@ export default {
      * Removes the features from the point map marker.
      * @returns {void}
      */
-  /*   removePointMarker () {
+    /*   removePointMarker () {
         mapMarker.removeMapMarker("marker_point_layer");
     }, */
 

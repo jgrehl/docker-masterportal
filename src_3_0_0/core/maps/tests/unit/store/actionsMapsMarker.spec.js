@@ -14,14 +14,10 @@ const {
 } = actions;
 
 describe("src_3_0_0/core/maps/store/actionsMapsMarker.js", () => {
-    let dispatch,
-        rootGetters;
+    let dispatch;
 
     beforeEach(() => {
         dispatch = sinon.spy();
-        rootGetters = {
-            "Maps/mode": "2D"
-        };
 
         sinon.stub(mapMarker, "addFeatureToMapMarkerLayer");
         sinon.stub(mapMarker, "removeMapMarker");
@@ -35,7 +31,7 @@ describe("src_3_0_0/core/maps/store/actionsMapsMarker.js", () => {
         it("place a point marker", () => {
             const value = [10, 10];
 
-            placingPointMarker({dispatch, rootGetters}, value);
+            placingPointMarker({dispatch}, value);
 
             expect(dispatch.calledOnce).to.be.true;
             expect(dispatch.firstCall.args[0]).to.equals("removePointMarker");
