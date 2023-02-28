@@ -95,7 +95,8 @@ const actions = {
                     ticketId,
                     state.subject || (i18next.t("common:modules.tools.contact.mailSubject") + systemInfo.portalTitle)
                 ),
-                text: createMessage(state, includeSystemInfo ? systemInfo : null)
+                text: createMessage(state, includeSystemInfo ? systemInfo : null),
+                attachment: state.fileArray
             },
             () => dispatch("onSendSuccess", ticketId),
             () => dispatch("showWarningAlert", "common:modules.tools.contact.error.message")
