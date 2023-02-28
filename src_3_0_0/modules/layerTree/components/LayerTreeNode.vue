@@ -102,9 +102,9 @@ export default {
         class="dragArea no-list ps-0 ms-2"
         tag="ul"
         item-key="name"
+        chosen-class="chosen"
         :delay-on-touch-only="delayOnTouchOnly"
         :delay="delay"
-        chosen-class="chosen"
     >
         <template #item="{ element }">
             <li>
