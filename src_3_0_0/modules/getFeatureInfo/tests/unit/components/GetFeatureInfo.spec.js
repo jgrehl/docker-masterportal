@@ -60,8 +60,9 @@ function getGfiStore (mobile, uiStyle, gfiFeatures, mapSize) {
                     size: mapSize ? () => mapSize : sinon.stub()
                 },
                 actions: {
-                    setCenter: sinon.stub(),
+                    placingPointMarker: sinon.stub(),
                     registerListener: sinon.stub(),
+                    setCenter: sinon.stub(),
                     unregisterListener: sinon.stub()
                 }
             },
