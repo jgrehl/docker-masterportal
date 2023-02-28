@@ -11,7 +11,8 @@ config.global.mocks.$t = key => key;
 
 describe("src_3_0_0/modules/wfsSearch/components/WfsSearch.vue", () => {
     const mockMapMarkerActions = {
-            removePointMarker: sinon.stub()
+            removePointMarker: sinon.stub(),
+            placingPointMarker: sinon.stub()
         },
         mockAlertingActions = {
             addSingleAlert: sinon.stub()
@@ -57,23 +58,22 @@ describe("src_3_0_0/modules/wfsSearch/components/WfsSearch.vue", () => {
                     namespaced: true,
                     modules: {
                         namespaced: true,
-                        WfsSearch: WfsSearchModule
+                        WfsSearch: WfsSearchModule,
+                        Language: {
+                            namespaced: true,
+                            getters: {
+                                currentLocale: sinon.stub()
+                            }
+                        }
                     }
                 },
-                MapMarker: {
+                Maps: {
                     namespaced: true,
                     actions: mockMapMarkerActions
                 },
                 Alerting: {
                     namespaced: true,
                     actions: mockAlertingActions
-
-                },
-                Language: {
-                    namespaced: true,
-                    getters: {
-                        currentLocale: sinon.stub()
-                    }
                 }
             },
             getters: {
