@@ -39,7 +39,6 @@ loadConfigJs.then(() => {
 
     app = createApp(App);
 
-
     // Load remoteInterface
     if (Object.prototype.hasOwnProperty.call(Config, "remoteInterface")) {
         app.use(remoteInterface, Config.remoteInterface);
