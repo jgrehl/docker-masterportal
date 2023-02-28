@@ -103,7 +103,6 @@ function setDownloadFeatures ({state, commit, dispatch, rootGetters}) {
         const feature = drawnFeature.clone(),
             geometry = feature.getGeometry();
 
-        // console.log(feature);
         // If the feature is invisible from filter, the style will be reset by printing.
         if (!feature.get("isVisible") && feature.get("invisibleStyle")) {
             feature.setStyle(feature.get("invisibleStyle"));
