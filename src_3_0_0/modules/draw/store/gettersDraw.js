@@ -1,5 +1,6 @@
 import {generateSimpleGetters} from "../../../shared/js/utils/generators";
 import initialState from "./stateDraw";
+import main from "../js/main";
 
 const getters = {
     ...generateSimpleGetters(initialState),
@@ -13,6 +14,14 @@ const getters = {
         const stateKey = state.drawType.id + "Settings";
 
         return JSON.parse(JSON.stringify(state[stateKey]));
+    },
+    /**
+     * Returns the Layer from globalProperties
+     *
+     * @returns {Object} The layer
+     */
+    layer () {
+        return main.getApp().config.globalProperties.$layer;
     },
     /**
      * If no features are present or the filename or the format is not set, the download is disabled.
