@@ -121,7 +121,6 @@
     "resize-observer-polyfill": "^1.5.1",
     "sass": "^1.57.1",
     "sass-loader": "^10",
-    "selenium-webdriver": "^4.7.1",
     "sinon": "^15.0.1",
     "string-replace-loader": "^2.3.0",
     "svg-url-loader": "^7.1.1",

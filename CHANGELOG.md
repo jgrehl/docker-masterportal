@@ -52,23 +52,7 @@
   - 'metaIDsToMerge'
   - 'metaIDsToIgnore'
   - 'layerIDsToStyle'
-
 - The Control-Bar Design
-- The following NPM packages have been updated:
-    - dependencies:
-        - @masterportal/masterportalapi: 2.8.0 to 2.9.0
-        - @popperjs/core: 2.11.5 to 2.11.6
-        - bootstrap: 5.2.0 to 5.2.2
-        - i18next-browser-languagedetector: 6.1.4 to 6.1.8
-        - i18next-http-backend: 1.4.1 to 1.4.5
-        - moment-timezone: 0.5.34 to 0.5.37
-        - vue: 2.7.8 to 3.1.0
-        - vuex: 3.6.2 to 4.0.2
-    - devDependencies
-        - @masterportal/mpconfigparser: 1.3.0 to 1.3.1
-        - @vue/test-utils: 1.3.0 to 2.2.3
-        - mocha: 10.0.0 to 10.1.0
-        - vue-loader: 15.9.8 to 17.0.0
 
 ### Deprecated
 
@@ -97,7 +81,9 @@
 - Module contact: The attribute `serviceID` has been removed. Use `serviceId` instead.
 
 ### Fixed
+
 ---
+
 ## v2.31.0 - 2023-03-01
 ### __Breaking Changes__
 - Time library `moment.js` was replaced with [day.js](https://day.js.org/). Please consider to use `day.js` in your future pull requests.
