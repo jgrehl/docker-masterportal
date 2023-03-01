@@ -114,6 +114,7 @@ export default {
         tag="ul"
         item-key="name"
         chosen-class="chosen"
+        handle=".handle-layer-component-drag"
         :delay-on-touch-only="delayOnTouchOnly"
         :delay="delay"
         :remove-on-spill="removeOnSpill"
