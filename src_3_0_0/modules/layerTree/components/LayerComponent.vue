@@ -58,7 +58,7 @@ export default {
         :id="'layer-tree-layer-' + conf.id"
         :class="['layer-tree-layer', 'd-flex', 'flex-column', 'justify-content-between', !isLayerTree() ? 'layer-selection': '']"
     >
-        <div class="d-flex justify-content-between align-items-center">
+        <div class="d-flex justify-content-between align-items-center handle-layer-component-drag">
             <LayerCheckBox
                 :conf="conf"
                 :is-layer-tree="isLayerTree()"
