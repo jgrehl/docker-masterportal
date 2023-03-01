@@ -1,29 +1,6 @@
+// eslint-disable-next-line no-unused-vars
 const Config = {
-    addons: ["gfiOnAddress", "vcOblique", "populationRequest", "vueAddon", "tacticalMark", "trinkwasser", "schulinfo", "trafficCount", "verkehrsstaerken", "solaratlas", "dataTable"],
     ignoredKeys: ["BOUNDEDBY", "SHAPE", "SHAPE_LENGTH", "SHAPE_AREA", "OBJECTID", "GLOBALID", "GEOMETRY", "SHP", "SHP_AREA", "SHP_LENGTH", "GEOM"],
-    wfsImgPath: "https://geodienste.hamburg.de/lgv-config/img/",
-    zoomTo: [
-        {
-            id: "zoomToGeometry",
-            layerId: "1692",
-            property: "bezirk_name",
-            allowedValues: [
-                "ALTONA",
-                "HARBURG",
-                "HAMBURG-NORD",
-                "BERGEDORF",
-                "EIMSBÜTTEL",
-                "HAMBURG-MITTE",
-                "WANDSBEK"
-            ]
-        },
-        {
-            id: "zoomToFeatureId",
-            layerId: "4560",
-            property: "flaechenid",
-            styleId: "location_eventlotse"
-        }
-    ],
     namedProjections: [
         // GK DHDN
         ["EPSG:31467", "+title=Bessel/Gauß-Krüger 3 +proj=tmerc +lat_0=0 +lon_0=9 +k=1 +x_0=3500000 +y_0=0 +ellps=bessel +datum=potsdam +units=m +no_defs"],
@@ -34,31 +11,15 @@ const Config = {
         // WGS84
         ["EPSG:4326", "+title=WGS 84 (long/lat) +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"]
     ],
-    footer: {
-        urls: [{
-            "bezeichnung": "common:modules.footer.designation",
-            "url": "https://geoinfo.hamburg.de/",
-            "alias": "Landesbetrieb Geoinformation und Vermessung",
-            "alias_mobil": "LGV"
-        }],
-        showVersion: true
-    },
-    quickHelp: {
-        imgPath: "https://geodienste.hamburg.de/lgv-config/img/"
-    },
-    cswId: "3",
-    metaDataCatalogueId: "2",
-    portalConf: "./",
     layerConf: "https://geodienste.hamburg.de/services-internet.json",
     restConf: "https://geodienste.hamburg.de/lgv-config/rest-services-internet.json",
     styleConf: "https://geodienste.hamburg.de/lgv-config/style_v3.json",
-    scaleLine: true,
-    mouseHover: {
-        numFeaturesToShow: 2,
-        infoText: "common:mouseHover.infoText"
+    wfsImgPath: "https://geodienste.hamburg.de/lgv-config/img/",
+    alerting: {
+        fetchBroadcastUrl: "./resources/newsFeedPortalAlerts.json"
     },
     startingMap3D: false,
-    obliqueMap: true,
+    cesiumLibrary: "https://geoportal-hamburg.de/mastercode/cesium/1_100/Cesium.js",
     cesiumParameter: {
         fog: {
             enabled: true,
@@ -72,31 +33,6 @@ const Config = {
             tileCacheSize: 20
         }
     },
-    featureViaURL: {
-        zoomTo: "42",
-        epsg: 4326,
-        layers: [
-            {
-                id: "42",
-                geometryType: "Point",
-                name: "Punkt Feature",
-                styleId: "location_eventlotse"
-            },
-            {
-                id: "4200",
-                geometryType: "LineString",
-                name: "Übergebene Linien Feature",
-                styleId: "mapMarkerPolygon_flaecheninfo"
-            },
-            {
-                id: "4020",
-                geometryType: "Polygon",
-                name: "Übergebene Polygon Feature",
-                styleId: "mapMarkerPolygon_flaecheninfo"
-            }
-        ]
-    },
-    defaultToolId: "gfi",
     portalLanguage: {
         enabled: true,
         debug: false,
@@ -115,8 +51,3 @@ const Config = {
         changeLanguageOnStartWhen: ["querystring", "localStorage", "htmlTag"]
     }
 };
-
-// conditional export to make config readable by e2e tests
-if (typeof module !== "undefined") {
-    module.exports = Config;
-}
