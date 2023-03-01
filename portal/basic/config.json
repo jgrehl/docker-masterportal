@@ -1,21 +1,5 @@
 {
   "Portalconfig": {
-    "treeType": "light",
-    "searchBar": {
-      "komoot": {
-        "minChars": 3,
-        "serviceId": "11",
-        "limit": 20,
-        "lang": "de",
-        "lat": 53.6,
-        "lon": 10.0,
-        "bbox": "9.6,53.3,10.4,53.8"
-      },
-      "visibleVector": {},
-      "tree": {},
-      "startZoomLevel": 9,
-      "placeholder": "Suche nach: - Adresse - Aktiven WFS"
-    },
     "mapView": {
       "backgroundImage": "./resources/img/backgroundCanvas.jpeg",
       "startCenter": [
@@ -30,61 +14,154 @@
       ],
       "startZoomLevel": 1
     },
-    "menu": {
-      "tree": {
-        "name": "Themen"
-      },
-      "tools": {
-        "name": "Werkzeuge",
-        "children": {
-          "gfi": {
-            "name": "Informationen abfragen",
-            "active": true
-          },
-          "coordToolkit": {
-            "name": "Koordinaten"
-          },
-          "measure": {
-            "name": "Strecke / Fläche messen"
-          },
-          "draw": {
-            "name": "Zeichnen / Schreiben"
-          },
-          "fileImport": {
-            "name": "Datei Import"
-          },
-          "saveSelection": {
-            "name": "Auswahl speichern"
-          }
-        }
-      },
-      "legend": {
-        "name": "Legende"
-      },
-      "info": {
-        "name": "Informationen",
-        "children": {
-          "staticlinks": [
-            {
-              "name": "Masterportal",
-              "url": "https://masterportal.org"
-            }
-          ]
-        }
+    "tree": {
+      "layerPillsAmount": 2,
+      "addLayerButton": true,
+      "highlightedFeatures": {
+        "active": true
       }
+    },
+    "mainMenu": {
+      "expanded": true,
+      "title": {
+        "text": "Basic 3 alpha",
+        "logo": "./resources/img/mp_logo.png",
+        "link": "https://masterportal.org",
+        "toolTip": "Masterportal"
+      },
+      "sections": [
+        [
+          {
+            "type": "fileImport"
+          },
+          {
+            "type": "openConfig"
+          },
+          {
+            "type": "contact",
+            "serviceId": "80001",
+            "includeSystemInfo": true,
+            "from": [
+              {
+                "email": "lgvgeoportal-hilfe@gv.hamburg.de",
+                "name": "LGVGeoportalHilfe"
+              }
+            ],
+            "to": [
+              {
+                "email": "lgvgeoportal-hilfe@gv.hamburg.de",
+                "name": "LGVGeoportalHilfe"
+              }
+            ]
+          },
+          {
+            "type": "language"
+          }
+        ]
+      ]
+    },
+    "secondaryMenu": {
+      "expanded": false,
+      "sections": [
+        [
+          {
+            "type": "routing",
+            "icon": "bi-signpost-2",
+            "showDescription": true,
+            "description": "Routenplaner",
+            "geosearch": {
+              "type": "BKG",
+              "serviceId": "5"
+            },
+            "geosearchReverse": {
+              "type": "BKG",
+              "serviceId": "5"
+            },
+            "directionsSettings": {
+              "type": "ORS",
+              "serviceId": "bkg_ors",
+              "speedProfile": "CAR",
+              "batchProcessing": {
+                "enabled": false,
+                "active": false
+              }
+            },
+            "isochronesSettings": {
+              "type": "ORS",
+              "serviceId": "bkg_ors",
+              "speedProfile": "CAR",
+              "batchProcessing": {
+                "enabled": false,
+                "active": false
+              }
+            }
+          },
+          {
+            "type": "scaleSwitcher",
+            "showDescription": true,
+            "description": "Stelle den Maßstab um, ganz ohne zu scrollen."
+          },
+          {
+            "type": "shareView",
+            "showDescription": true,
+            "description": "Teile einen Link zur Karte."
+          },
+          {
+            "type": "measure",
+            "showDescription": true,
+            "description": "Miss eine Strecke oder Fläche."
+          },
+          {
+            "type": "coordToolkit",
+            "heightLayerId": "19173",
+            "heightElementName": "value_0",
+            "heightValueWater": "-20",
+            "heightValueBuilding": "200",
+            "zoomLevel": 5,
+            "showDescription": true,
+            "description": "Bestimme Koordinaten aus der Karte oder suche nach Koordinaten."
+          },
+          {
+            "type": "bufferAnalysis",
+            "showDescription": true,
+            "description": "Finde heraus, was sich in einem Umkreis um ein Feature befindet."
+          },
+          {
+            "type": "layerSlider",
+            "showDescription": true,
+            "description": "Starte eine Slideshow",
+            "layerIds": [
+              {
+                "title": "common:modules.tools.layerSlider.serviceOne",
+                "layerId": "19173"
+              },
+              {
+                "title": "common:modules.tools.layerSlider.serviceTwo",
+                "layerId": "2426"
+              },
+              {
+                "title": "common:modules.tools.layerSlider.serviceThree",
+                "layerId": "8712.2"
+              },
+              {
+                "title": "common:modules.tools.layerSlider.serviceFour",
+                "layerId": "1711"
+              }
+            ]
+          }
+        ]
+      ]
     },
     "controls": {
       "zoom": true,
       "orientation": {
         "zoomMode": "once"
-      },
-      "attributions": true,
-      "mousePosition": true
+      }
     }
   },
   "Themenconfig": {
     "Hintergrundkarten": {
-      "Layer": [
+      "elements": [
         {
           "id": "453",
           "visibility": true
@@ -108,7 +185,7 @@
       ]
     },
     "Fachdaten": {
-      "Layer": [
+      "elements": [
         {
           "id": "2426",
           "name": "WMS Bezirke",
@@ -123,18 +200,6 @@
         {
           "id": "3302",
           "name": "WMS Trinkwasser"
-        },
-        {
-          "id": "myId2",
-          "children": [
-            {
-              "id": "682"
-            },
-            {
-              "id": "1731"
-            }
-          ],
-          "name": "WMS Kita und WMS Krankenhäuser"
         },
         {
           "id": "2003",
