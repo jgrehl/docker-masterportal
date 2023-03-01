@@ -10,7 +10,7 @@ const allAddons = typeof VUE_ADDONS !== "undefined" ? VUE_ADDONS : {};
  * @param {String[]} config The array of addonKeys specified in config.js
  * @returns {void}
  */
-export default async function (config) {
+async function loadAddons (config) {
     main.getApp().config.globalProperties.$toolAddons = [];
     main.getApp().config.globalProperties.$gfiThemeAddons = [];
     main.getApp().config.globalProperties.$controlAddons = [];
@@ -109,4 +109,12 @@ async function loadAddon (addonKey) {
     }
     return addon;
 }
+
+export default {
+    loadAddons,
+    loadToolAddons,
+    loadGfiThemes,
+    loadControl,
+    loadAddon
+};
 
