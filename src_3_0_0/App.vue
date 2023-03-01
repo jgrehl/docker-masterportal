@@ -10,7 +10,7 @@ import LoaderOverlay from "./app-store/js/loaderOverlay";
 import mapCollection from "./core/maps/js/mapCollection";
 import MenuContainer from "./modules/menu/components/MenuContainer.vue";
 import MenuToggleButton from "./modules/menu/components/MenuToggleButton.vue";
-import loadAddons from "./plugins/addons";
+import addonsPlugin from "./plugins/addons";
 
 
 export default {
@@ -48,7 +48,7 @@ export default {
     watch: {
         async allConfigsLoaded (value) {
             if (value) {
-                await loadAddons(Config.addons);
+                await addonsPlugin.loadAddons(Config.addons);
                 await this.mergeModulesState(this.portalConfig);
                 this.addonsLoaded = true;
                 LoaderOverlay.hide();
