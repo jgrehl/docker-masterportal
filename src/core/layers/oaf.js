@@ -1,9 +1,9 @@
 import {oaf} from "@masterportal/masterportalapi";
 import LoaderOverlay from "../../utils/loaderOverlay";
-import styleList from "@masterportal/masterportalapi/src/vectorStyle/styleList";
-import createStyle from "@masterportal/masterportalapi/src/vectorStyle/createStyle";
-import getGeometryTypeFromService from "@masterportal/masterportalapi/src/vectorStyle/lib/getGeometryTypeFromService";
-import store from "../../app-store";
+// import styleList from "@masterportal/masterportalapi/src/vectorStyle/styleList";
+// import createStyle from "@masterportal/masterportalapi/src/vectorStyle/createStyle";
+// import getGeometryTypeFromService from "@masterportal/masterportalapi/src/vectorStyle/lib/getGeometryTypeFromService";
+// import store from "../../app-store";
 import Layer from "./layer";
 import * as bridge from "./RadioBridge.js";
 import Cluster from "ol/source/Cluster";
@@ -38,6 +38,8 @@ export default function OAFLayer (attrs) {
     if (attrs.clusterDistance) {
         this.set("isClustered", true);
     }
+
+    // this.createLegend();
 }
 // Link prototypes and add prototype methods, means OAFLayer uses all methods and properties of Layer
 OAFLayer.prototype = Object.create(Layer.prototype);
@@ -178,34 +180,34 @@ OAFLayer.prototype.updateSource = function () {
         this.layer.getSource().refresh();
     }
 };
-/**
- * Creates the legend
- * @returns {void}
- */
-OAFLayer.prototype.createLegend = function () {
-    const styleObject = styleList.returnStyleObject(this.attributes.styleId),
-        rules = styleObject?.rules,
-        legend = this.get("legend");
+// /**
+//  * Creates the legend
+//  * @returns {void}
+//  */
+// OAFLayer.prototype.createLegend = function () {
+//     const styleObject = styleList.returnStyleObject(this.attributes.styleId),
+//         rules = styleObject?.rules,
+//         legend = this.get("legend");
 
-    if (Array.isArray(legend)) {
-        this.setLegend(legend);
-    }
-    else if (styleObject && legend === true) {
-        getGeometryTypeFromService.getGeometryTypeFromOAF(rules, this.get("url"), this.get("collection"), Config.wfsImgPath,
-            (error) => {
-                if (error) {
-                    store.dispatch("Alerting/addSingleAlert", "<strong>" + i18next.t("common:modules.vectorStyle.styleObject.getGeometryTypeFromOAFFetchfailed") + "</strong> <br>"
-                    + "<small>" + i18next.t("common:modules.vectorStyle.styleObject.getGeometryTypeFromOAFFetchfailedMessage") + "</small>");
-                }
-            });
-        createStyle.returnLegendByStyleId(styleObject.styleId).then(legendInfos => {
-            this.setLegend(legendInfos.legendInformation);
-        });
-    }
-    else if (typeof legend === "string") {
-        this.setLegend([legend]);
-    }
-};
+//     if (Array.isArray(legend)) {
+//         this.setLegend(legend);
+//     }
+//     else if (styleObject && legend === true) {
+//         getGeometryTypeFromService.getGeometryTypeFromOAF(rules, this.get("url"), this.get("collection"),
+//             (error) => {
+//                 if (error) {
+//                     store.dispatch("Alerting/addSingleAlert", "<strong>" + i18next.t("common:modules.vectorStyle.styleObject.getGeometryTypeFromOAFFetchfailed") + "</strong> <br>"
+//                     + "<small>" + i18next.t("common:modules.vectorStyle.styleObject.getGeometryTypeFromOAFFetchfailedMessage") + "</small>");
+//                 }
+//             });
+//         createStyle.returnLegendByStyleId(styleObject.styleId).then(legendInfos => {
+//             this.setLegend(legendInfos.legendInformation);
+//         });
+//     }
+//     else if (typeof legend === "string") {
+//         this.setLegend([legend]);
+//     }
+// };
 /**
  * Hides all features by setting style=null for all features.
  * @returns {void}
