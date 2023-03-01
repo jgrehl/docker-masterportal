@@ -112,51 +112,42 @@ WMSLayer.prototype.getGfiUrl = function () {
 * If the parameter "legendURL" is empty, it is set to GetLegendGraphic.
 * @return {void}
 */
-WMSLayer.prototype.createLegend = function () {
-    const version = this.get("version");
-    let legend = this.get("legend");
+// WMSLayer.prototype.createLegend = function () {
+//     const version = this.get("version");
+//     let legend = this.get("legend");
 
-    /**
-    * @deprecated in 3.0.0
-    */
-    if (this.get("legendURL")) {
-        if (this.get("legendURL") === "") {
-            legend = true;
-        }
-        else if (this.get("legendURL") === "ignore") {
-            legend = false;
-        }
-        else {
-            legend = this.get("legendURL");
-        }
-    }
+//     /**
+//     * @deprecated in 3.0.0
+//     */
+//     if (this.get("legendURL")) {
+//         if (this.get("legendURL") === "") {
+//             legend = true;
+//         }
+//         else if (this.get("legendURL") === "ignore") {
+//             legend = false;
+//         }
+//         else {
+//             legend = this.get("legendURL");
+//         }
+//     }
 
-    if (Array.isArray(legend)) {
-        this.setLegend(legend);
-    }
-    else if (legend === true && this.get("url")) {
-        const layerNames = this.get("layers").split(","),
-            legends = [];
+//     if (Array.isArray(legend)) {
+//         this.setLegend(legend);
+//     }
+//     else if (legend === true && this.get("url")) {
+//         const layerNames = this.get("layers").split(","),
+//             legends = [];
 
-        // Compose GetLegendGraphic request(s)
-        layerNames.forEach(layerName => {
-            const legendUrl = new URL(this.get("url"));
+//         // Compose GetLegendGraphic request(s)
+//         layerNames.forEach(layerName => {
+//             const legendUrl = new URL(this.get("url"));
 
-            legendUrl.searchParams.set("SERVICE", "WMS");
-            legendUrl.searchParams.set("VERSION", version);
-            legendUrl.searchParams.set("REQUEST", "GetLegendGraphic");
-            legendUrl.searchParams.set("FORMAT", "image/png");
-            legendUrl.searchParams.set("LAYER", layerName);
+//             legendUrl.searchParams.set("SERVICE", "WMS");
+//             legendUrl.searchParams.set("VERSION", version);
+//             legendUrl.searchParams.set("REQUEST", "GetLegendGraphic");
+//             legendUrl.searchParams.set("FORMAT", "image/png");
+//             legendUrl.searchParams.set("LAYER", layerName);
 
-            legends.push(legendUrl.toString());
-        });
-
-        this.setLegend(legends);
-    }
-    else if (typeof legend === "string") {
-        this.setLegend([legend]);
-    }
-};
 /**
  * Returns the extent, if available. Else returns the extent of the mapView.
  * @returns {Array} the extent
