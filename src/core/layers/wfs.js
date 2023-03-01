@@ -1,9 +1,9 @@
 import {wfs} from "@masterportal/masterportalapi";
 import LoaderOverlay from "../../utils/loaderOverlay";
-import styleList from "@masterportal/masterportalapi/src/vectorStyle/styleList";
-import createStyle from "@masterportal/masterportalapi/src/vectorStyle/createStyle";
-import getGeometryTypeFromService from "@masterportal/masterportalapi/src/vectorStyle/lib/getGeometryTypeFromService";
-import store from "../../app-store";
+// import styleList from "@masterportal/masterportalapi/src/vectorStyle/styleList";
+// import createStyle from "@masterportal/masterportalapi/src/vectorStyle/createStyle";
+// import getGeometryTypeFromService from "@masterportal/masterportalapi/src/vectorStyle/lib/getGeometryTypeFromService";
+// import store from "../../app-store";
 // import Layer from "./layer";
 import * as bridge from "./RadioBridge.js";
 import Cluster from "ol/source/Cluster";
@@ -154,100 +154,6 @@ WFSLayer.prototype.updateSource = function () {
         this.set("sourceUpdated", true);
         this.layer.getSource().refresh();
     }
-};
-/**
- * Creates the legend
- * @returns {void}
- */
-WFSLayer.prototype.createLegend = function () {
-    const styleObject = styleList.returnStyleObject(this.attributes.styleId),
-        rules = styleObject?.rules,
-        isSecured = this.attributes.isSecured;
-    let legend = this.get("legend");
-
-    /**
-     * @deprecated in 3.0.0
-     */
-    if (this.get("legendURL")) {
-        if (this.get("legendURL") === "") {
-            legend = true;
-        }
-        else if (this.get("legendURL") === "ignore") {
-            legend = false;
-        }
-        else {
-            legend = this.get("legendURL");
-        }
-    }
-
-    if (Array.isArray(legend)) {
-        this.setLegend(legend);
-    }
-    else if (styleObject && legend === true) {
-        getGeometryTypeFromService.getGeometryTypeFromWFS(rules, this.get("url"), this.get("version"), this.get("featureType"), this.get("styleGeometryType"), isSecured, Config.wfsImgPath,
-            (geometryTypes, error) => {
-                if (error) {
-                    store.dispatch("Alerting/addSingleAlert", "<strong>" + i18next.t("common:modules.vectorStyle.styleObject.getGeometryTypeFromWFSFetchfailed") + "</strong> <br>"
-                        + "<small>" + i18next.t("common:modules.vectorStyle.styleObject.getGeometryTypeFromWFSFetchfailedMessage") + "</small>");
-                }
-                return geometryTypes;
-            })
-            ?.then(legendInfos => {
-                if (styleObject.styleId === "default") {
-                    this.setLegend(legendInfos);
-                }
-                else {
-                    const source = this.layer.getSource(),
-                        features = source instanceof Cluster ? source.getSource().getFeatures() : source.getFeatures();
-
-                    if (!geometryTypeRequestLayers.includes(this.get("id"))) {
-                        geometryTypeRequestLayers.push(this.get("id"));
-                    }
-                    if (rules[0].conditions !== undefined && features) {
-                        const uniqueLegendInformation = this.filterUniqueLegendInfo(features, rules, legendInfos);
-
-                        this.setLegend(uniqueLegendInformation);
-                    }
-                    else {
-                        this.setLegend(legendInfos);
-                    }
-                }
-            });
-    }
-    else if (typeof legend === "string") {
-        this.setLegend([legend]);
-    }
-};
-
-/**
-* Filters unique legend information
-* @param {Object} features selected features
-* @param {Object} rules  the styleObject rules
-* @param {Object} legendInfos styleObject legend information
-* @returns {object} uniqueLegendInformation as array
-*/
-WFSLayer.prototype.filterUniqueLegendInfo = function (features, rules, legendInfos) {
-    const rulesKey = Object.keys(rules[0].conditions.properties)[0],
-        conditionProperties = [...new Set(features.map(feature => feature.get(rulesKey)))];
-    let uniqueLegendInformation = [];
-
-    rules.forEach(rule => {
-        const value = String(rule.conditions.properties[rulesKey]);
-
-        if (conditionProperties.includes(value)) {
-            const legendInformation = legendInfos.find(legendInfo => legendInfo?.label === (rule.style?.legendValue || value));
-
-            if (typeof legendInformation !== "undefined") {
-                uniqueLegendInformation.push(legendInformation);
-            }
-        }
-    });
-
-    if (uniqueLegendInformation.length === 0) {
-        uniqueLegendInformation = legendInfos;
-    }
-
-    return uniqueLegendInformation;
 };
 
 /**
