@@ -74,6 +74,7 @@ export default {
         onInputChange (e) {
             if (e.target.files !== undefined) {
                 this.addFile(e.target.files);
+                e.target.value = null;
             }
         },
         onDrop (e) {
@@ -92,6 +93,12 @@ export default {
                     this.addSingleAlert({
                         category: "error",
                         content: this.$t("common:modules.tools.contact.fileSizeMessage")
+                    });
+                }
+                else if (!file.type.includes("image")) {
+                    this.addSingleAlert({
+                        category: "error",
+                        content: this.$t("common:modules.tools.contact.fileFormatMessage")
                     });
                 }
                 else {
@@ -315,21 +322,6 @@ export default {
                         </div>
                     </div>
                 </div>
-                <!-- <FlatButton
-                    aria-label="$t('modules.tools.contact.addFileButton')"
-                    :text="$t('modules.tools.contact.addFileButton')"
-                    :icon="'bi-image-fill'"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#collapseAddFile"
-                    aria-expanded="false"
-                    aria-controls="collapseAddFile"
-                /> -->
-                <!-- <div
-                    id="collapseAddFile"
-                    class="collapse mt-3"
-                >
-
-                </div> -->
             </div>
             <div class="d-flex justify-content-center">
                 <FlatButton
