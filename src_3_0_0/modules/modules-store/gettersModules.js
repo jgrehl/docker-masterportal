@@ -20,6 +20,7 @@ import LayerPills from "../layerPills/components/LayerPills.vue";
 import LayerSelection from "../layerSelection/components/LayerSelection.vue";
 import LayerSlider from "../layerSlider/components/LayerSlider.vue";
 import LayerTree from "../layerTree/components/LayerTree.vue";
+import Legend from "../legend/components/Legendwindow.vue";
 import Measure from "../measure/components/MeasureInMap.vue";
 import MouseHover from "../mouseHover/components/MouseHover.vue";
 import NewsView from "../news/components/NewsView.vue";
@@ -58,6 +59,7 @@ const getters = {
             layerSelection: LayerSelection,
             layerSlider: LayerSlider,
             layerTree: LayerTree,
+            legend: Legend,
             measure: Measure,
             mouseHover: MouseHover,
             news: NewsView,
