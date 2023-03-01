@@ -183,36 +183,36 @@ STALayer.prototype.updateSource = function () {
     }
 };
 
-/**
- * Creates the legend.
- * @returns {void}
- */
-STALayer.prototype.createLegend = function () {
-    const styleObject = styleList.returnStyleObject(this.attributes.styleId);
-    let legend = this.get("legend");
+// /**
+//  * Creates the legend.
+//  * @returns {void}
+//  */
+// STALayer.prototype.createLegend = function () {
+//     const styleObject = styleList.returnStyleObject(this.attributes.styleId);
+//     let legend = this.get("legend");
 
-    /**
-     * @deprecated in 3.0.0
-     */
-    if (this.get("legendURL") === "ignore") {
-        legend = false;
-    }
-    else if (this.get("legendURL")) {
-        legend = this.get("legendURL");
-    }
+//     /**
+//      * @deprecated in 3.0.0
+//      */
+//     if (this.get("legendURL") === "ignore") {
+//         legend = false;
+//     }
+//     else if (this.get("legendURL")) {
+//         legend = this.get("legendURL");
+//     }
 
-    if (Array.isArray(legend)) {
-        this.set("legend", legend);
-    }
-    else if (styleObject && legend === true) {
-        createStyle.returnLegendByStyleId(styleObject.styleId).then(legendInfos => {
-            this.setLegend(legendInfos.legendInformation);
-        });
-    }
-    else if (typeof legend === "string") {
-        this.set("legend", [legend]);
-    }
-};
+//     if (Array.isArray(legend)) {
+//         this.set("legend", legend);
+//     }
+//     else if (styleObject && legend === true) {
+//         createStyle.returnLegendByStyleId(styleObject.styleId).then(legendInfos => {
+//             this.setLegend(legendInfos.legendInformation);
+//         });
+//     }
+//     else if (typeof legend === "string") {
+//         this.set("legend", [legend]);
+//     }
+// };
 
 /**
  * Hides all features by setting style=null for all features.
@@ -409,7 +409,7 @@ STALayer.prototype.toggleSubscriptionsOnMapChanges = function () {
     // const state = this.getStateOfSTALayer(this.get("isOutOfRange"), this.get("isVisibleInMap"), this.get("isSubscribed"));
 
     // if (state === true) {
-        this.createLegend();
+        // this.createLegend();
         // this.startSubscription(this.get("layer").getSource().getFeatures());
         // if (this.get("observeLocation") && this.moveLayerRevisible === false) {
         //     this.moveLayerRevisible = state;

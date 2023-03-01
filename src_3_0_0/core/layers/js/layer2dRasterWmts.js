@@ -1,4 +1,5 @@
 import {wmts} from "@masterportal/masterportalapi";
+import getNestedValues from "../../../shared/js/utils/getNestedValues";
 import Layer2dRaster from "./layer2dRaster";
 
 /**
@@ -52,4 +53,67 @@ Layer2dRasterWmts.prototype.getLayerParams = function (attributes) {
         zIndex: attributes.zIndex
     };
 };
+
+/**
+ * If no legendURL is set an Error is written on the console.
+ * For the OptionsFromCapabilities way:
+ * If legend is empty, WMTS-Capabilities will be searched for a legendURL (OGC Standard)
+ * If a legend is found, legend will be rebuild
+ *
+ * @returns {void}
+ */
+ Layer2dRasterWmts.prototype.createLegend = function () {
+    let legend = this.getLegend();
+
+    if (this.get("legendURL")) {
+        if (this.get("legendURL") === "") {
+            legend = true;
+        }
+        else if (this.get("legendURL") === "ignore") {
+            legend = false;
+        }
+        else {
+            legend = this.get("legendURL");
+            this.setLegend([legend]);
+        }
+    }
+    if ((this.get("optionsFromCapabilities") === undefined) && (legend === true)) {
+        console.error("WMTS: No legendURL is specified for the layer!");
+    }
+    else if (this.get("optionsFromCapabilities") && !this.get("legendURL")) {
+        const capabilitiesUrl = this.get("capabilitiesUrl");
+
+        wmts.getWMTSCapabilities(capabilitiesUrl)
+            .then((result) => {
+                result.Contents.Layer.forEach((layer) => {
+                    if (layer.Identifier === this.get("layers")) {
+                        const getLegend = getNestedValues(layer, "LegendURL", true);
+
+                        if (getLegend !== null && getLegend !== undefined) {
+                            legend = getLegend[0]?.[0]?.href;
+                            if (legend) {
+                                this.setLegend([legend]);
+
+                                // rebuild Legend
+                                bridge.setLegendLayerList();
+                            }
+                        }
+                        else {
+                            this.setLegend(null);
+                            console.warn("no legend url found for layer " + this.get("layers"));
+                        }
+
+                    }
+                });
+            })
+            .catch((error) => {
+                if (error === "Fetch error") {
+                    // error message has already been printed earlier
+                    return;
+                }
+                wmts.showErrorMessage(error, this.get("name"));
+            });
+    }
+};
+
 
