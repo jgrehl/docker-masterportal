@@ -27,7 +27,7 @@
  * @property {String} type The type of the module.
  * @property {Boolean} fileUpload If File Upload should be available.
  * @property {Array} fileArray Uploaded Files.
- * @property {Number} maxFileSize the max file size for uploadable content.
+ * @property {Number} maxFileSize the max file size for uploadable content. Default: 1MB
 */
 const state = {
     description: "",
