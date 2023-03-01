@@ -44,7 +44,14 @@ export function initLanguage (portalLanguageConfig) {
     if (Config.portalLanguage !== undefined && Config.portalLanguage.enabled) {
         i18next.use(LanguageDetector);
     }
-    i18next
+
+    i18next.on("initialized", () => {
+        if (!portalLanguage.enabled) {
+            i18next.changeLanguage("de");
+        }
+    });
+
+    return i18next
         .use(Backend)
         .init({
             globalInjection: true,
@@ -107,9 +114,4 @@ export function initLanguage (portalLanguageConfig) {
                 checkWhitelist: true
             }
         });
-    i18next.on("initialized", () => {
-        if (!portalLanguage.enabled) {
-            i18next.changeLanguage("de");
-        }
-    });
 }
