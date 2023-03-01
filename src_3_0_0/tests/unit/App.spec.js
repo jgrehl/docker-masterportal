@@ -7,7 +7,7 @@ import MenuContainer from "../../modules/menu/components/MenuContainer.vue";
 import MenuToggleButton from "../../modules/menu/components/MenuToggleButton.vue";
 import maps from "../../core/maps/js/maps.js";
 
-describe.only("src_3_0_0/App.vue", () => {
+describe("src_3_0_0/App.vue", () => {
     let store,
         wrapper,
         actions,
