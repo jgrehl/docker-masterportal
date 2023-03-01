@@ -4,6 +4,7 @@ import actions from "../../../store/actionsDraw";
 import Feature from "ol/Feature";
 import Polygon from "ol/geom/Polygon";
 import MultiPolygon from "ol/geom/MultiPolygon";
+import main from "../../../js/main";
 
 describe("src_3_0_0/modules/draw/store/actions/withoutGUIDraw.js", () => {
     let commit, dispatch, state, getters;
@@ -60,10 +61,8 @@ describe("src_3_0_0/modules/draw/store/actions/withoutGUIDraw.js", () => {
                     mode: "2D"
                 }
             };
-            state = {
-                layer: {
-                    getSource: () => ({getFeatures: () => [item]})
-                }
+            main.getApp().config.globalProperties.$layer = {
+                getSource: () => ({getFeatures: () => [item]})
             };
         });
 
