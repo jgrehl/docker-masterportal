@@ -21,7 +21,7 @@ export default function Layer (attrs, layer, initialize = true) {
         isVisibleInMap: false,
         layerInfoClicked: false,
         singleBaselayer: false,
-        legend: true,
+        // legend: true,
         maxScale: "1000000000",
         minScale: "0",
         selectionIDX: 0,
