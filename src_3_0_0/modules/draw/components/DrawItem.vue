@@ -5,6 +5,9 @@ import DrawItemFeaturesFilter from "./DrawItemFeaturesFilter.vue";
 import DrawItemAttributes from "./DrawItemAttributes.vue";
 import {mapActions, mapGetters, mapMutations} from "vuex";
 import layerCollection from "../../../core/layers/js/layerCollection.js";
+import main from "../js/main";
+import VectorSource from "ol/source/Vector";
+import {Vector as VectorLayer} from "ol/layer";
 
 export default {
     name: "DrawItem",
@@ -282,10 +285,16 @@ export default {
         }
     },
     created () {
-        this.checkLayer(this.layer).then((layerExists) => {
+        main.getApp().config.globalProperties.$layer = new VectorLayer({
+            source: new VectorSource(),
+            id: "importDrawLayer",
+            name: "importDrawLayer",
+            alwaysOnTop: true
+        });
+        this.checkLayer(main.getApp().config.globalProperties.$layer).then((layerExists) => {
             if (!layerExists) {
-                this.addLayer(this.layer);
-                this.setLayer(this.layer);
+                this.addLayer(main.getApp().config.globalProperties.$layer);
+                this.setLayer(main.getApp().config.globalProperties.$layer);
             }
         });
     },

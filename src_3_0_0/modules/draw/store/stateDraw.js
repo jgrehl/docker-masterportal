@@ -1,6 +1,3 @@
-import VectorSource from "ol/source/Vector";
-import {Vector as VectorLayer} from "ol/layer";
-
 const symbol = {
         id: "iconPoint",
         type: "simple_point",
@@ -99,7 +96,6 @@ const symbol = {
      * @property {String[]} attributesKeyList the attributes' key list
      * @property {Boolean} semicolonCSVDelimiter to decide if semicolon is used as downloaded csv delimiter.
      * @property {Object} oldStyle for saving the old Style.
-     * @property {Object} layer the Layer we are drawing on.
     */
     state = {
         hasMouseMapInteractions: true,
@@ -223,14 +219,7 @@ const symbol = {
         },
         attributesKeyList: [],
         semicolonCSVDelimiter: true,
-        oldStyle: undefined,
-
-        layer: new VectorLayer({
-            source: new VectorSource(),
-            id: "importDrawLayer",
-            name: "importDrawLayer",
-            alwaysOnTop: true
-        })
+        oldStyle: undefined
     };
 
 export default state;
