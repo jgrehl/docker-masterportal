@@ -119,6 +119,15 @@ describe("src_3_0_0/modules/layerTree/components/LayerTreeNode.vue", () => {
                             getters: {
                                 icon: sinon.stub()
                             }
+                        },
+                        LayerTree: {
+                            namespaced: true,
+                            getters: {
+                                delay: () => 500,
+                                delayOnTouchOnly: () => true,
+                                removeOnSpill: () => true,
+                                touchStartThreshold: () => 3
+                            }
                         }
                     }
                 },
