@@ -1,5 +1,6 @@
 import {createStyle} from "../../js/style/createStyle";
 import {calculateCircle} from "../../js/circleCalculations";
+import main from "../../js/main";
 
 const errorBorder = "#E10019";
 
@@ -17,7 +18,7 @@ export function drawInteractionOnDrawEvent ({state, commit, dispatch, rootState}
         interaction = state["drawInteraction" + drawInteraction],
         circleMethod = styleSettings.circleMethod,
         drawType = state.drawType,
-        layerSource = state.layer.getSource();
+        layerSource = main.getApp().config.globalProperties.$layer.getSource();
 
     commit("setAddFeatureListener", layerSource.once("addfeature", event => {
         event.feature.set("fromDrawTool", true);

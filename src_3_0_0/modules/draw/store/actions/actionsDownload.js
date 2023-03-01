@@ -5,6 +5,7 @@ import convertFeaturesToKml from "../../../../shared/js/utils/convertFeaturesToK
 import {convertJsonToCsv} from "../../../../shared/js/utils/convertJsonToCsv";
 import {setCsvAttributes} from "../../js/setCsvAttributes.js";
 import {transform, transformPoint, transformGeometry} from "../../js/download/transformGeometry";
+import main from "../../js/main";
 
 /**
  * Converts the features from OpenLayers Features to features in the chosen format.
@@ -97,7 +98,7 @@ function prepareDownload ({state, commit, dispatch}) {
  */
 function setDownloadFeatures ({state, commit, dispatch, rootGetters}) {
     const downloadFeatures = [],
-        drawnFeatures = state.layer?.getSource().getFeatures();
+        drawnFeatures = main.getApp().config.globalProperties.$layer.getSource().getFeatures();
 
     drawnFeatures?.forEach(drawnFeature => {
         const feature = drawnFeature.clone(),
@@ -139,12 +140,12 @@ function setDownloadFeatures ({state, commit, dispatch, rootGetters}) {
  * @param {HTMLInputElement} event.currentTarget The HTML input element for the name of the file.
  * @returns {void}
  */
-function setDownloadFileName ({state, commit, dispatch}, {currentTarget}) {
+function setDownloadFileName ({commit, dispatch}, {currentTarget}) {
     const {value} = currentTarget;
 
     commit("setDownloadFileName", value);
 
-    if (state.layer.getSource().getFeatures().length > 0) {
+    if (main.getApp().config.globalProperties.$layer.getSource().getFeatures().length > 0) {
         dispatch("prepareDownload");
     }
 }
@@ -157,10 +158,10 @@ function setDownloadFileName ({state, commit, dispatch}, {currentTarget}) {
  * @param {String} value The selected option value from dropdown or pre selected value.
  * @returns {void}
  */
-async function setDownloadSelectedFormat ({state, commit, dispatch}, value) {
+async function setDownloadSelectedFormat ({commit, dispatch}, value) {
 
     commit("setDownloadSelectedFormat", value);
-    if (state.layer?.getSource().getFeatures().length > 0) {
+    if (main.getApp().config.globalProperties.$layer.getSource().getFeatures().length > 0) {
         await dispatch("setDownloadFeatures");
         await dispatch("prepareData");
         dispatch("prepareDownload");
