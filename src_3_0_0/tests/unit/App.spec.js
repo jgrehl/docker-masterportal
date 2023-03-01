@@ -3,9 +3,11 @@ import {expect} from "chai";
 import sinon from "sinon";
 import {shallowMount} from "@vue/test-utils";
 import AppComponent from "../../App.vue";
+import MenuContainer from "../../modules/menu/components/MenuContainer.vue";
+import MenuToggleButton from "../../modules/menu/components/MenuToggleButton.vue";
 import maps from "../../core/maps/js/maps.js";
 
-describe("src_3_0_0/App.vue", () => {
+describe.only("src_3_0_0/App.vue", () => {
     let store,
         wrapper,
         actions,
@@ -40,9 +42,9 @@ describe("src_3_0_0/App.vue", () => {
             actions: actions,
             state: {
                 loadedConfigs: {
-                    configJson: false,
-                    restServicesJson: false,
-                    servicesJson: false
+                    configJson: true,
+                    restSevicesJson: true,
+                    servicesJson: true
                 }
             },
             mutations: {
@@ -86,5 +88,14 @@ describe("src_3_0_0/App.vue", () => {
         wrapper.vm.$options.watch.allConfigsLoaded.call(wrapper.vm, false);
         expect(actions.extendLayers.notCalled).to.be.true;
         expect(initializeMapsSpy.notCalled).to.be.true;
+    });
+    it("App contains Menu components and map div", () => {
+        wrapper = shallowMount(AppComponent, {
+            global: {
+                plugins: [store]
+            }});
+
+        wrapper.findComponent(MenuContainer);
+        wrapper.findComponent(MenuToggleButton);
     });
 });
