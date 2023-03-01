@@ -6,6 +6,7 @@ import AppComponent from "../../App.vue";
 import MenuContainer from "../../modules/menu/components/MenuContainer.vue";
 import MenuToggleButton from "../../modules/menu/components/MenuToggleButton.vue";
 import maps from "../../core/maps/js/maps.js";
+import loadAddons from "../../plugins/addons";
 
 describe("src_3_0_0/App.vue", () => {
     let store,
@@ -20,11 +21,20 @@ describe("src_3_0_0/App.vue", () => {
             loadConfigJs: sinon.spy(),
             loadConfigJson: sinon.spy(),
             loadRestServicesJson: sinon.spy(),
-            loadServicesJson: sinon.spy()
+            loadServicesJson: sinon.spy(),
+            initializeVectorStyle: sinon.spy()
         };
 
         store = createStore({
             namespaced: true,
+            modules: {
+                Modules: {
+                    actions: {
+                        mergeModulesState: sinon.spy()
+                    },
+                    namespaced: true
+                }
+            },
             getters: {
                 allConfigsLoaded: sinon.stub(),
                 cesiumLibrary: () => {
@@ -42,9 +52,9 @@ describe("src_3_0_0/App.vue", () => {
             actions: actions,
             state: {
                 loadedConfigs: {
-                    configJson: true,
-                    restSevicesJson: true,
-                    servicesJson: true
+                    configJson: false,
+                    restSevicesJson: false,
+                    servicesJson: false
                 }
             },
             mutations: {
@@ -97,5 +107,15 @@ describe("src_3_0_0/App.vue", () => {
 
         wrapper.findComponent(MenuContainer);
         wrapper.findComponent(MenuToggleButton);
+    });
+    it("watcher allConfigsLoaded is true", async () => {
+        await sinon.stub(loadAddons, "loadAddons");
+        wrapper = await shallowMount(AppComponent, {
+            global: {
+                plugins: [store]
+            }});
+        await wrapper.vm.$options.watch.allConfigsLoaded.call(wrapper.vm, true);
+        expect(await actions.extendLayers.calledOnce).to.be.true;
+        expect(await initializeMapsSpy.calledOnce).to.be.true;
     });
 });
