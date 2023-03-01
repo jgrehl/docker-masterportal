@@ -36,8 +36,6 @@ const configPath = window.location.pathname.substring(0, window.location.pathnam
 
 // Wait until config.js is loaded
 loadConfigJs.then(() => {
-    initLanguage(Config.portalLanguage);
-
     app = createApp(App);
     loadAddons(Config.addons);
 
@@ -48,7 +46,11 @@ loadConfigJs.then(() => {
 
     initiateVueI18Next(app);
     app.use(store);
-    app.mount("#masterportal-root");
+
+    initLanguage(Config.portalLanguage)
+        .then(() => {
+            app.mount("#masterportal-root");
+        });
 });
 
 export default main;
