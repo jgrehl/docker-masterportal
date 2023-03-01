@@ -21,6 +21,26 @@ const Config = {
     restConf: "./resources/rest-services-internet.json",
     styleConf: "./resources/style_v3.json",
     scaleLine: true,
+    alerting: {
+        fetchBroadcastUrl: "./resources/newsFeedPortalAlerts.json"
+    },
+    portalLanguage: {
+        enabled: true,
+        debug: false,
+        languages: {
+            de: "Deutsch",
+            en: "English",
+            es: "Español",
+            it: "Italiano",
+            platt: "Platt",
+            pt: "Português",
+            ru: "Русский",
+            tr: "Türkçe",
+            ua: "Українська"
+        },
+        fallbackLanguage: "de",
+        changeLanguageOnStartWhen: ["querystring", "localStorage", "htmlTag"]
+    },
     mouseHover: {
         numFeaturesToShow: 2,
         infoText: "(weitere Objekte. Bitte zoomen.)"
