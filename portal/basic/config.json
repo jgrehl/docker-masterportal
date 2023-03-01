@@ -14,6 +14,16 @@
       ],
       "startZoomLevel": 1
     },
+    "portalFooter": {
+      "urls": [
+        {
+          "bezeichnung": "common:modules.footer.designation",
+          "url": "https://geoinfo.hamburg.de/",
+          "alias": "Landesbetrieb Geoinformation und Vermessung",
+          "alias_mobil": "LGV"
+        }
+      ]
+    },
     "tree": {
       "layerPillsAmount": 2,
       "addLayerButton": true,
