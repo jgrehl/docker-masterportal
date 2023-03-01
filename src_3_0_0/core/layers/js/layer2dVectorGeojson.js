@@ -1,4 +1,6 @@
 import {geojson} from "@masterportal/masterportalapi";
+import styleList from "@masterportal/masterportalapi/src/vectorStyle/styleList";
+import createStyle from "@masterportal/masterportalapi/src/vectorStyle/createStyle";
 import Layer2dVector from "./layer2dVector";
 
 /**
@@ -79,3 +81,38 @@ Layer2dVectorGeojson.prototype.afterLoading = function (attributes, features) {
         });
     }
 };
+
+/**
+ * Creates the legend
+ * @param {Object} attrs  attributes of the layer
+ * @returns {void}
+ */
+ Layer2dVectorGeojson.prototype.createLegend = function (attrs) {
+    const styleObject = styleList.returnStyleObject(this.get("styleId"));
+    let legend = this.getLegend();
+
+    if (this.get("legendURL")) {
+        if (this.get("legendURL") === "") {
+            legend = true;
+        }
+        else if (this.get("legendURL") === "ignore") {
+            legend = false;
+        }
+        else {
+            legend = this.get("legendURL");
+        }
+    }
+
+    if (Array.isArray(legend)) {
+        this.setLegend(legend);
+    }
+    else if (styleObject && legend === true) {
+        createStyle.returnLegendByStyleId(styleObject.styleId).then(legendInfos => {
+            this.setLegend(legendInfos.legendInformation);
+        });
+    }
+    else if (typeof legend === "string") {
+        this.setLegend([legend]);
+    }
+};
+
