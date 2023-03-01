@@ -6,7 +6,7 @@ import Draw from "ol/interaction/Draw";
 import Feature from "ol/Feature";
 import Polygon from "ol/geom/Polygon";
 import LineString from "ol/geom/LineString";
-
+import main from "../../../js/main";
 
 describe("src_3_0_0/modules/draw/store/actionsDraw.js", () => {
     let commit, state, dispatch, addInteraction;
@@ -45,9 +45,9 @@ describe("src_3_0_0/modules/draw/store/actionsDraw.js", () => {
         it("calls the clear function of the state's layer", () => {
             const clear = sinon.spy();
 
-            state = {layer: {
+            main.getApp().config.globalProperties.$layer = {
                 getSource: () => ({clear})
-            }};
+            };
 
             actions.clearLayer({state, dispatch});
 
@@ -105,9 +105,6 @@ describe("src_3_0_0/modules/draw/store/actionsDraw.js", () => {
          */
         function getState (id) {
             const result = {
-                layer: {
-                    getSource: () => ({})
-                },
                 drawType: {
                     id,
                     geometry: "Point"
@@ -253,8 +250,8 @@ describe("src_3_0_0/modules/draw/store/actionsDraw.js", () => {
             expect(definedFunctions.drawend).to.have.length(1);
         });
 
-        /* NOTE: Somehow the global object "Config" can't be found, even though it is set beforehand
-        it("enables the drawend to dispatch and uses the correct parameters", () => {
+        // dependent on remoteInterface
+        it.skip("enables the drawend to dispatch and uses the correct parameters", () => {
             const doubleCircleSymbol = Symbol(),
                 geoJSONSymbol = Symbol(),
                 set = sinon.spy();
@@ -287,7 +284,7 @@ describe("src_3_0_0/modules/draw/store/actionsDraw.js", () => {
                 "RemoteInterface", "postMessage", {"drawEnd": geoJSONSymbol})
             ).to.be.true;
         });
-*/
+
         it("enables the drawstart to dispatch and uses the correct parameters", () => {
             const isOuterCircleSymbol = Symbol(),
                 event = {
@@ -311,7 +308,7 @@ describe("src_3_0_0/modules/draw/store/actionsDraw.js", () => {
         it("enables the maxFeatures drawstart to dispatch, does so on maxFeatures reached", () => {
             let featureArray = [];
 
-            state.layer = {
+            main.getApp().config.globalProperties.$layer = {
                 getSource: () => ({
                     getFeatures: () => featureArray
                 })
@@ -342,12 +339,11 @@ describe("src_3_0_0/modules/draw/store/actionsDraw.js", () => {
         it("commits and dispatches as expected", () => {
             const activeSymbol = Symbol();
 
-            state = {
-                layer: {getSource: () => ({
+            main.getApp().config.globalProperties.$layer = {
+                getSource: () => ({
                     getFeatures: () => [],
                     addEventListener: () => ({})
-                })}
-            };
+                })};
 
             actions.createModifyInteractionAndAddToMap(
                 {state, commit, dispatch},
@@ -393,8 +389,9 @@ describe("src_3_0_0/modules/draw/store/actionsDraw.js", () => {
 
             expect(definedFunctions.modifyend).to.have.length(1);
         });
-        /* NOTE: Somehow the global object "Config" can't be found, even though it is set beforehand
-        it("should enable the modifyend to trigger to the RemoteInterface if Config.inputMap is defined", () => {
+
+        // dependent on remoteInterface
+        it.skip("should enable the modifyend to trigger to the RemoteInterface if Config.inputMap is defined", () => {
             const featureSymbol = Symbol(),
                 geoJSONSymbol = Symbol();
 
@@ -407,9 +404,7 @@ describe("src_3_0_0/modules/draw/store/actionsDraw.js", () => {
 
             expect(dispatch.calledOnce).to.be.true;
             expect(dispatch.firstCall.args).to.eql(["downloadFeaturesWithoutGUI", {prmObject: {"targetProjection": "mock"}, currentFeature: {featureSymbol}}]);
-            expect(trigger.calledOnce).to.be.true;
-            expect(trigger.firstCall.args).to.eql(["RemoteInterface", "postMessage", {"drawEnd": geoJSONSymbol}]);
-        });*/
+        });
     });
     describe("createSelectInteractionModifyListener", () => {
         let definedFunctions;
@@ -437,12 +432,11 @@ describe("src_3_0_0/modules/draw/store/actionsDraw.js", () => {
         it("commits and dispatches as expected", () => {
             const activeSymbol = Symbol();
 
-            state = {
-                layer: {getSource: () => ({
+            main.getApp().config.globalProperties.$layer = {
+                getSource: () => ({
                     getFeatures: () => [],
                     addEventListener: () => ({})
-                })}
-            };
+                })};
 
             actions.createSelectInteractionAndAddToMap(
                 {state, commit, dispatch},
@@ -474,10 +468,10 @@ describe("src_3_0_0/modules/draw/store/actionsDraw.js", () => {
                         definedFunctions[key].push(f);
                     },
                     getFeatures: () => ({clear})
-                },
-                layer: {
-                    getSource: () => ({removeFeature})
                 }
+            };
+            main.getApp().config.globalProperties.$layer = {
+                getSource: () => ({removeFeature})
             };
         });
 
@@ -600,14 +594,14 @@ describe("src_3_0_0/modules/draw/store/actionsDraw.js", () => {
             setStyle = sinon.spy();
             state = {
                 fId: 0,
-                layer: {
-                    getSource: () => ({
-                        addFeature,
-                        getFeatureById: () => ({setStyle})
-                    })
-                },
                 redoArray: [],
                 undoArray: []
+            };
+            main.getApp().config.globalProperties.$layer = {
+                getSource: () => ({
+                    addFeature,
+                    getFeatureById: () => ({setStyle})
+                })
             };
         });
 
@@ -675,13 +669,14 @@ describe("src_3_0_0/modules/draw/store/actionsDraw.js", () => {
                 addFeatureListener: {listener},
                 drawInteraction,
                 drawInteractionTwo,
-                layer: {getSource: () => ({un})},
                 modifyInteraction,
                 selectInteractionModify,
                 selectInteraction,
                 modifyAttributesInteraction,
                 selectInteractionModifyAttributes
             };
+            main.getApp().config.globalProperties.$layer = {getSource: () => ({un})};
+
             actions.resetModule({state, commit, dispatch, getters});
 
             expect(un.calledOnce).to.be.true;
@@ -772,10 +767,10 @@ describe("src_3_0_0/modules/draw/store/actionsDraw.js", () => {
 
         beforeEach(() => {
             state = {
-                layer: {
-                    getSource: () => ({getFeatures, removeFeature})
-                },
                 undoArray: []
+            };
+            main.getApp().config.globalProperties.$layer = {
+                getSource: () => ({getFeatures, removeFeature})
             };
         });
 
