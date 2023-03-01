@@ -7,6 +7,7 @@
  */
 export default function Layer (attributes) {
     const defaultAttributes = {
+        // legend: true
     };
 
     this.attributes = Object.assign(defaultAttributes, attributes);

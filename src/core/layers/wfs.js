@@ -1,9 +1,9 @@
 import {wfs} from "@masterportal/masterportalapi";
 import LoaderOverlay from "../../utils/loaderOverlay";
-import styleList from "@masterportal/masterportalapi/src/vectorStyle/styleList";
-import createStyle from "@masterportal/masterportalapi/src/vectorStyle/createStyle";
-import getGeometryTypeFromService from "@masterportal/masterportalapi/src/vectorStyle/lib/getGeometryTypeFromService";
-import store from "../../app-store";
+// import styleList from "@masterportal/masterportalapi/src/vectorStyle/styleList";
+// import createStyle from "@masterportal/masterportalapi/src/vectorStyle/createStyle";
+// import getGeometryTypeFromService from "@masterportal/masterportalapi/src/vectorStyle/lib/getGeometryTypeFromService";
+// import store from "../../app-store";
 // import Layer from "./layer";
 import * as bridge from "./RadioBridge.js";
 import Cluster from "ol/source/Cluster";
@@ -154,102 +154,6 @@ WFSLayer.prototype.updateSource = function () {
         this.set("sourceUpdated", true);
         this.layer.getSource().refresh();
     }
-};
-/**
- * Creates the legend
- * @returns {void}
- */
-WFSLayer.prototype.createLegend = function () {
-    const styleObject = styleList.returnStyleObject(this.attributes.styleId),
-        rules = styleObject?.rules,
-        isSecured = this.attributes.isSecured;
-    let legend = this.get("legend");
-
-    /**
-     * @deprecated in 3.0.0
-     */
-    if (this.get("legendURL")) {
-        if (this.get("legendURL") === "") {
-            legend = true;
-        }
-        else if (this.get("legendURL") === "ignore") {
-            legend = false;
-        }
-        else {
-            legend = this.get("legendURL");
-        }
-    }
-
-    if (Array.isArray(legend)) {
-        this.setLegend(legend);
-    }
-    else if (styleObject && legend === true) {
-        createStyle.returnLegendByStyleId(styleObject.styleId).then(legendInfos => {
-            if (styleObject.styleId === "default") {
-                this.setLegend(legendInfos.legendInformation);
-            }
-            else {
-                if (!geometryTypeRequestLayers.includes(this.get("id"))) {
-                    geometryTypeRequestLayers.push(this.get("id"));
-
-                    getGeometryTypeFromService.getGeometryTypeFromWFS(rules, this.get("url"), this.get("version"), this.get("featureType"), this.get("styleGeometryType"), isSecured, Config.wfsImgPath,
-                        (geometryTypes, error) => {
-                            if (error) {
-                                store.dispatch("Alerting/addSingleAlert", "<strong>" + i18next.t("common:modules.vectorStyle.styleObject.getGeometryTypeFromWFSFetchfailed") + "</strong> <br>"
-                                    + "<small>" + i18next.t("common:modules.vectorStyle.styleObject.getGeometryTypeFromWFSFetchfailedMessage") + "</small>");
-                            }
-                            return geometryTypes;
-                        });
-
-                }
-                if (rules[0].conditions !== undefined && this.features) {
-                    const uniqueLegendInformation = this.filterUniqueLegendInfo(this.features, rules, legendInfos);
-
-                    this.setLegend(uniqueLegendInformation);
-                }
-                else {
-                    this.setLegend(legendInfos.legendInformation);
-                }
-            }
-        });
-    }
-    else if (typeof legend === "string") {
-        this.setLegend([legend]);
-    }
-};
-
-/**
-* Filters unique legend information
-* @param {Object} features selected features
-* @param {Object} rules  the styleObject rules
-* @param {Object} legendInfos styleObject legend information
-* @returns {object} uniqueLegendInformation as array
-*/
-WFSLayer.prototype.filterUniqueLegendInfo = function (features, rules, legendInfos) {
-    const rulesKey = Object.keys(rules[0].conditions.properties)[0],
-        conditionProperties = [],
-        uniqueLegendInformation = [];
-
-    for (let i = 0; i < features.length; i++) {
-        const rulesKeyUpperCase = rulesKey.charAt(0).toUpperCase() + rulesKey.slice(1);
-
-        if (features[i].get(rulesKey) !== undefined && !conditionProperties.includes(features[i].get(rulesKey))) {
-            conditionProperties.push(features[i].get(rulesKey));
-        }
-        else if (features[i].get(rulesKeyUpperCase) !== undefined && !conditionProperties.includes(features[i].get(rulesKeyUpperCase))) {
-            conditionProperties.push(features[i].get(rulesKeyUpperCase));
-        }
-    }
-
-    legendInfos.legendInformation.forEach((info) => {
-        if (conditionProperties.includes(info.label)) {
-            if (!uniqueLegendInformation.includes(info)) {
-                uniqueLegendInformation.push(info);
-            }
-        }
-    });
-
-    return uniqueLegendInformation;
 };
 
 /**
