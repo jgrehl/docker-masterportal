@@ -100,8 +100,8 @@ export default {
 
     @include media-breakpoint-up(sm)  {
         .portal-footer {
-            left: 36px;
-            width: calc( 100% + 72px); // zweimal den Menucollapse-Button...
+            left: 31.5px; // width des Menucollapse-Button...
+            width: calc( 100% + 63px); // zweimal den Menucollapse-Button...
         }
     }
 
