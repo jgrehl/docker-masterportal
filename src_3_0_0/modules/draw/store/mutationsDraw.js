@@ -1,5 +1,6 @@
 import {generateSimpleMutations} from "../../../shared/js/utils/generators";
 import initialState from "./stateDraw";
+import main from "../js/main";
 
 const mutations = {
     /**
@@ -153,7 +154,7 @@ const mutations = {
      * @returns {void}
      */
     setLayer: (state, layer) => {
-        state.layer = layer;
+        main.getApp().config.globalProperties.$layer = layer;
     },
     /**
     * Sets the Layer drawn with.
