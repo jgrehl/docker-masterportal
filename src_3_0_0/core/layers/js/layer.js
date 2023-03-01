@@ -1,3 +1,5 @@
+import store from "../../../app-store";
+
 /**
  * Creates a layer.
  * @abstract
@@ -7,11 +9,12 @@
  */
 export default function Layer (attributes) {
     const defaultAttributes = {
-        // legend: true
+
     };
 
     this.attributes = Object.assign(defaultAttributes, attributes);
     this.createLayer(this.attributes);
+    this.createLegend();
 }
 
 /**
@@ -78,3 +81,75 @@ Layer.prototype.set = function (key, value) {
 Layer.prototype.setLayer = function (value) {
     this.layer = value;
 };
+
+/**
+ * Setter for legend, commits the legend to vue store using "Legend/setLegendOnChanged"
+ * @param {String} value legend
+ * @returns {void}
+ */
+ Layer.prototype.setLegend = function (value) {
+    this.set("legend", value);
+    console.log("setLegend", value, this.get("id"));
+    store.dispatch("Modules/Legend/setLegendOnChanged", value);
+};
+
+Layer.prototype.getLegend = function () {
+    const legend = this.get("legend");
+
+    return legend === undefined || legend === null ? true : legend;
+};
+/**
+* If the parameter "legendURL" is empty, it is set to GetLegendGraphic.
+* @return {void}
+*/
+Layer.prototype.createLegend = function () {
+    const version = this.get("version");
+    let legend = this.getLegend();
+    // console.log("legend",legend);
+    // console.log("legendURL",this.get("legendURL"));
+    // console.log("this.get(url)",this.get("url"));
+
+    if (this.get("legendURL") !== undefined) {
+        if (this.get("legendURL") === "") {
+            legend = true;
+        }
+        else if (this.get("legendURL") === "ignore") {
+            legend = false;
+        }
+        else {
+            legend = this.get("legendURL");
+        }
+    }
+    if (!this.get("layers")) {
+        console.log("field layers not filled", this);
+    }
+
+    if (Array.isArray(legend)) {
+        this.setLegend(legend);
+    }
+    else if (legend === true && this.get("url") && this.get("layers")) {
+        const layerNames = this.get("layers").split(","),
+            legends = [];
+
+        console.log("this.get(layers)", this.get("layers"));
+
+        // Compose GetLegendGraphic request(s)
+        layerNames.forEach(layerName => {
+            const legendUrl = new URL(this.get("url"));
+
+            legendUrl.searchParams.set("SERVICE", "WMS");
+            legendUrl.searchParams.set("VERSION", version);
+            legendUrl.searchParams.set("REQUEST", "GetLegendGraphic");
+            legendUrl.searchParams.set("FORMAT", "image/png");
+            legendUrl.searchParams.set("LAYER", layerName);
+
+            legends.push(legendUrl.toString());
+        });
+
+        this.setLegend(legends);
+    }
+    else if (typeof legend === "string") {
+        this.setLegend([legend]);
+    }
+};
+
