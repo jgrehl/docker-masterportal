@@ -1,9 +1,9 @@
 import Layer from "./layer";
 import {vectorBase} from "@masterportal/masterportalapi/src";
-import styleList from "@masterportal/masterportalapi/src/vectorStyle/styleList";
-import createStyle from "@masterportal/masterportalapi/src/vectorStyle/createStyle";
-import getGeometryTypeFromService from "@masterportal/masterportalapi/src/vectorStyle/lib/getGeometryTypeFromService";
-import store from "../../app-store";
+// import styleList from "@masterportal/masterportalapi/src/vectorStyle/styleList";
+// import createStyle from "@masterportal/masterportalapi/src/vectorStyle/createStyle";
+// import getGeometryTypeFromService from "@masterportal/masterportalapi/src/vectorStyle/lib/getGeometryTypeFromService";
+// import store from "../../app-store";
 import * as bridge from "./RadioBridge.js";
 import Cluster from "ol/source/Cluster";
 import webgl from "./renderer/webgl";
@@ -28,7 +28,7 @@ export default function VectorBaseLayer (attrs) {
     }
     // call the super-layer
     Layer.call(this, Object.assign(defaults, attrs), this.layer, !attrs.isChildLayer);
-    this.createLegend();
+    // this.createLegend();
 }
 // Link prototypes and add prototype methods, means VectorBaseLayer uses all methods and properties of Layer
 VectorBaseLayer.prototype = Object.create(Layer.prototype);
@@ -43,49 +43,59 @@ VectorBaseLayer.prototype.updateSource = function (layer, features) {
     vectorBase.updateSource(layer, features);
 };
 
-/**
- * Creates the legend
- * @returns {void}
- */
-VectorBaseLayer.prototype.createLegend = function () {
-    const styleObject = styleList.returnStyleObject(this.get("styleId")),
-        rules = styleObject?.rules;
-    let legend = this.get("legend");
+// /**
+//  * Creates the legend
+//  * @returns {void}
+//  */
+// VectorBaseLayer.prototype.createLegend = function () {
+//     const styleObject = styleList.returnStyleObject(this.get("styleId")),
+//         rules = styleObject?.rules;
+//     let legend = this.get("legend");
 
-    /**
-     * @deprecated in 3.0.0
-     */
-    if (this.get("legendURL")) {
-        if (this.get("legendURL") === "" || this.get("legendURL") === "ignore") {
-            legend = false;
-        }
-        else {
-            legend = this.get("legendURL");
-        }
-    }
+//     /**
+//      * @deprecated in 3.0.0
+//      */
+//     if (this.get("legendURL")) {
+//         if (this.get("legendURL") === "" || this.get("legendURL") === "ignore") {
+//             legend = false;
+//         }
+//         else {
+//             legend = this.get("legendURL");
+//         }
+//     }
 
-    if (styleObject && legend === true) {
-        createStyle.returnLegendByStyleId(styleObject.styleId).then(legendInfos => {
-            if (styleObject.styleId === "default") {
-                this.setLegend(legendInfos.legendInformation);
-            }
-            else {
-                getGeometryTypeFromService.getGeometryTypeFromWFS(rules, this.get("url"), this.get("version"), this.get("featureType"), this.get("styleGeometryType"), false, Config.wfsImgPath,
-                    (geometryTypes, error) => {
-                        if (error) {
-                            store.dispatch("Alerting/addSingleAlert", "<strong>" + i18next.t("common:modules.vectorStyle.styleObject.getGeometryTypeFromWFSFetchfailed") + "</strong> <br>"
-                                + "<small>" + i18next.t("common:modules.vectorStyle.styleObject.getGeometryTypeFromWFSFetchfailedMessage") + "</small>");
-                        }
-                        return geometryTypes;
-                    });
-            }
-            this.setLegend(legendInfos.legendInformation);
-        });
-    }
-    else if (typeof legend === "string") {
-        this.setLegend([legend]);
-    }
-};
+//     if (styleObject && legend === true) {
+//         createStyle.returnLegendByStyleId(styleObject.styleId).then(legendInfos => {
+//             if (styleObject.styleId === "default") {
+//                 const type = this.layer.getSource().getFeatures()[0].getGeometry().getType(),
+//                     typeSpecificLegends = [];
+
+//                 if (type === "MultiLineString") {
+//                     typeSpecificLegends.push(legendInfos.legendInformation.find(element => element.geometryType === "LineString"));
+//                     this.setLegend(typeSpecificLegends);
+//                 }
+//                 else {
+//                     typeSpecificLegends.push(legendInfos.legendInformation.find(element => element.geometryType === type));
+//                     this.setLegend(typeSpecificLegends);
+//                 }
+//             }
+//             else {
+//                 getGeometryTypeFromService.getGeometryTypeFromWFS(rules, this.get("url"), this.get("version"), this.get("featureType"), this.get("styleGeometryType"), false,
+//                     (geometryTypes, error) => {
+//                         if (error) {
+//                             store.dispatch("Alerting/addSingleAlert", "<strong>" + i18next.t("common:modules.vectorStyle.styleObject.getGeometryTypeFromWFSFetchfailed") + "</strong> <br>"
+//                                 + "<small>" + i18next.t("common:modules.vectorStyle.styleObject.getGeometryTypeFromWFSFetchfailedMessage") + "</small>");
+//                         }
+//                         return geometryTypes;
+//                     });
+//             }
+//             this.setLegend(legendInfos.legendInformation);
+//         });
+//     }
+//     else if (typeof legend === "string") {
+//         this.setLegend([legend]);
+//     }
+// };
 
 /**
  * Only shows features that match the given ids.

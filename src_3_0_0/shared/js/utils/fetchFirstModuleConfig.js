@@ -155,7 +155,9 @@ function fetchFirstModuleConfig (context, configPaths, moduleName, recursiveFall
     }
 
     if (!source && recursiveFallback) {
-        source = context.rootGetters.toolConfig(moduleName);
+        // todo: rootGetters.toolConfig gibt es nicht, was soll hier passieren?
+        // source = context.rootGetters.toolConfig(moduleName);
+        success = false;
     }
 
     if (source) {
