@@ -28,7 +28,7 @@ export default {
     },
     computed: {
         ...mapGetters(["portalConfig", "allLayerConfigs", "layerConfigsByAttributes"]),
-        ...mapGetters("Modules/LayerTree", ["delay", "delayOnTouchOnly"]),
+        ...mapGetters("Modules/LayerTree", ["delay", "delayOnTouchOnly", "removeOnSpill", "touchStartThreshold"]),
 
         /**
          * v-model for sorted layerConfig.
@@ -73,7 +73,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions("Modules/LayerTree", ["replaceByIdInLayerConfig"]),
+        ...mapActions("Modules/LayerTree", ["removeLayer", "replaceByIdInLayerConfig"]),
 
         /**
          * Indicates if a conf is a layer and showInlayerTree has true.
@@ -91,12 +91,23 @@ export default {
          */
         getLayerArray (conf) {
             return conf?.elements ? conf.elements.filter(el => el.type === "layer" && el.showInLayerTree === true) : [];
+        },
+
+        /**
+         * Removes the spilled layer from layer tree.
+         * @param {Event} event The spill event.
+         * @returns {void}
+         */
+        removeLayerOnSpill (event) {
+            this.removeLayer(this.sortedLayerConfig[event.oldIndex]);
         }
     }
 };
 </script>
 
 <template>
+    <!-- eslint-disable vue/attribute-hyphenation -->
+    <!-- onSpill callback only works in camelCase -->
     <Draggable
         v-model="sortedLayerConfig"
         class="dragArea no-list ps-0 ms-2"
@@ -105,6 +116,9 @@ export default {
         chosen-class="chosen"
         :delay-on-touch-only="delayOnTouchOnly"
         :delay="delay"
+        :remove-on-spill="removeOnSpill"
+        :touch-start-threshold="touchStartThreshold"
+        :onSpill="removeLayerOnSpill"
     >
         <template #item="{ element }">
             <li>
