@@ -4,6 +4,7 @@ import DrawItemComponent from "../../../components/DrawItem.vue";
 import Draw from "../../../store/indexDraw";
 import {expect} from "chai";
 import sinon from "sinon";
+import main from "../../../js/main";
 
 config.global.mocks.$t = key => key;
 config.global.mocks.$i18n = {
@@ -22,11 +23,11 @@ describe("src_3_0_0/modules/draw/components/DrawItem.vue", () => {
         componentData;
 
     beforeEach(() => {
-        Draw.state.layer = {
+        main.getApp().config.globalProperties.$layer = {
             visible: true,
-            getVisible: () => Draw.state.layer.visible,
+            getVisible: () => main.getApp().config.globalProperties.$layer.visible,
             setVisible: value => {
-                Draw.state.layer.visible = value;
+                main.getApp().config.globalProperties.$layer.visible = value;
             },
             getSource: () => {
                 return {

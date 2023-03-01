@@ -1,5 +1,6 @@
 import {Select, Modify, Draw} from "ol/interaction.js";
 import {createStyle} from "./style/createStyle";
+import main from "../js/main";
 
 /**
  * Creates a draw interaction to draw features on the map.
@@ -10,7 +11,7 @@ import {createStyle} from "./style/createStyle";
  */
 function createDrawInteraction (state, styleSettings) {
     return new Draw({
-        source: state.layer.getSource(),
+        source: main.getApp().config.globalProperties.$layer.getSource(),
         type: state.drawType.geometry,
         style: createStyle(state, styleSettings),
         freehand: state.freeHand
