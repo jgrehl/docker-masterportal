@@ -7,6 +7,7 @@ import MultiLine from "ol/geom/MultiLineString.js";
 import MultiPoint from "ol/geom/MultiPoint.js";
 import MultiPolygon from "ol/geom/MultiPolygon.js";
 import * as setters from "./settersDraw";
+import main from "../../js/main";
 
 /**
  * Resets and deactivates the Draw Tool.
@@ -38,7 +39,7 @@ function cancelDrawWithoutGUI ({commit, dispatch}, cursor) {
  * @param {module:ol/Feature} payload.currentFeature Last drawn feature (drawend event).
  * @returns {String} GeoJSON with all drawn features; If the Tool hasn't been initialized yet, no layer was created and thus an empty Object is returned.
  */
-function downloadFeaturesWithoutGUI ({state, rootState}, payload) {
+function downloadFeaturesWithoutGUI ({rootState}, payload) {
     let circularPolygon,
         features,
         featuresConverted = {"type": "FeatureCollection", "features": []},
@@ -60,8 +61,8 @@ function downloadFeaturesWithoutGUI ({state, rootState}, payload) {
         targetProjection = payload.prmObject.targetProjection;
     }
 
-    if (state.layer !== undefined && state.layer !== null) {
-        features = state.layer.getSource().getFeatures();
+    if (main.getApp().config.globalProperties.$layer !== undefined && main.getApp().config.globalProperties.$layer !== null) {
+        features = main.getApp().config.globalProperties.$layer.getSource().getFeatures();
 
         if (payload?.currentFeature !== undefined && features.every(feature => feature.get("styleId") !== payload?.currentFeature.get("styleId"))) {
             features.push(payload.currentFeature);
@@ -191,17 +192,9 @@ function editFeaturesWithoutGUI ({dispatch}) {
  */
 async function initializeWithoutGUI ({state, commit, dispatch, getters, rootState}, {drawType, color, opacity, maxFeatures, initialJSON, transformWGS, zoomToExtent}) {
     const drawTypeId = getDrawId(drawType);
-    // const collection = Radio.request("ModelList", "getCollection"),
     let featJSON,
         newColor,
         format;
-
-    /*
-    // don't know replacement for this in new repo
-    if (collection) {
-        collection.setActiveToolsToFalse(state);
-    }
-    */
 
     commit("setFreeHand", false);
     commit("setWithoutGUI", true);
@@ -228,10 +221,10 @@ async function initializeWithoutGUI ({state, commit, dispatch, getters, rootStat
             setters.setStyleSettings({getters, commit}, styleSettings);
         }
 
-        layerExists = dispatch("Maps/checkLayer", state.layer, {root: true});
+        layerExists = dispatch("Maps/checkLayer", main.getApp().config.globalProperties.$layer, {root: true});
 
         if (!layerExists) {
-            dispatch("Maps/addLayer", state.layer, {root: true});
+            dispatch("Maps/addLayer", main.getApp().config.globalProperties.$layer, {root: true});
         }
 
         dispatch("createDrawInteractionAndAddToMap", {active: true, maxFeatures});
@@ -258,11 +251,11 @@ async function initializeWithoutGUI ({state, commit, dispatch, getters, rootStat
                 }
 
                 if (featJSON.length > 0) {
-                    state.layer.setStyle(createStyle(state, styleSettings));
-                    state.layer.getSource().addFeatures(featJSON);
+                    main.getApp().config.globalProperties.$layer.setStyle(createStyle(state, styleSettings));
+                    main.getApp().config.globalProperties.$layer.getSource().addFeatures(featJSON);
                 }
                 if (featJSON.length > 0 && zoomToExtent) {
-                    dispatch("Maps/zoomToExtent", {extent: state.layer.getSource().getExtent()}, {root: true});
+                    dispatch("Maps/zoomToExtent", {extent: main.getApp().config.globalProperties.$layer.getSource().getExtent()}, {root: true});
                 }
             }
             catch (e) {

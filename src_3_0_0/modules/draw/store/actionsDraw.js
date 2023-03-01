@@ -16,6 +16,7 @@ import getDrawTypeByGeometryType from "../js/getDrawTypeByGeometryType";
 import postDrawEnd from "../js/postDrawEnd";
 
 import stateDraw from "./stateDraw";
+import main from "../js/main";
 
 const initialState = JSON.parse(JSON.stringify(stateDraw)),
     actions = {
@@ -78,8 +79,8 @@ const initialState = JSON.parse(JSON.stringify(stateDraw)),
          *
          * @returns {void}
          */
-        clearLayer ({state, dispatch}) {
-            state.layer.getSource().clear();
+        clearLayer ({dispatch}) {
+            main.getApp().config.globalProperties.$layer.getSource().clear();
             dispatch("setDownloadFeatures");
         },
         /**
@@ -203,7 +204,7 @@ const initialState = JSON.parse(JSON.stringify(stateDraw)),
             });
             if (maxFeatures && maxFeatures > 0) {
                 interaction.on("drawstart", () => {
-                    const featureCount = state.layer.getSource().getFeatures().length;
+                    const featureCount = main.getApp().config.globalProperties.$layer.getSource().getFeatures().length;
 
                     if (featureCount > maxFeatures - 1) {
                         const alert = {
@@ -254,9 +255,9 @@ const initialState = JSON.parse(JSON.stringify(stateDraw)),
          * @param {Boolean} active Active setting.
          * @returns {void}
          */
-        createModifyAttributesInteractionAndAddToMap ({state, commit, dispatch}, active) {
-            const modifyInteraction = createModifyAttributesInteraction(state.layer),
-                selectInteractionModify = createSelectInteraction(state.layer, 10);
+        createModifyAttributesInteractionAndAddToMap ({commit, dispatch}, active) {
+            const modifyInteraction = createModifyAttributesInteraction(main.getApp().config.globalProperties.$layer),
+                selectInteractionModify = createSelectInteraction(main.getApp().config.globalProperties.$layer, 10);
 
             commit("setModifyAttributesInteraction", modifyInteraction);
             dispatch("manipulateInteraction", {interaction: "modifyAttributes", active: active});
@@ -334,9 +335,9 @@ const initialState = JSON.parse(JSON.stringify(stateDraw)),
          * @param {Boolean} active Decides whether the modify interaction is active or not.
          * @returns {void}
          */
-        createModifyInteractionAndAddToMap ({state, commit, dispatch}, active) {
-            const modifyInteraction = createModifyInteraction(state.layer),
-                selectInteractionModify = createSelectInteraction(state.layer, 10);
+        createModifyInteractionAndAddToMap ({commit, dispatch}, active) {
+            const modifyInteraction = createModifyInteraction(main.getApp().config.globalProperties.$layer),
+                selectInteractionModify = createSelectInteraction(main.getApp().config.globalProperties.$layer, 10);
 
             commit("setModifyInteraction", modifyInteraction);
             dispatch("manipulateInteraction", {interaction: "modify", active: active});
@@ -489,8 +490,8 @@ const initialState = JSON.parse(JSON.stringify(stateDraw)),
          * @param {Boolean} active Decides whether the select interaction is active or not.
          * @returns {void}
          */
-        createSelectInteractionAndAddToMap ({state, commit, dispatch}, active) {
-            const selectInteraction = createSelectInteraction(state.layer);
+        createSelectInteractionAndAddToMap ({commit, dispatch}, active) {
+            const selectInteraction = createSelectInteraction(main.getApp().config.globalProperties.$layer);
 
             commit("setSelectInteraction", selectInteraction);
             dispatch("manipulateInteraction", {interaction: "delete", active: active});
@@ -505,7 +506,7 @@ const initialState = JSON.parse(JSON.stringify(stateDraw)),
         createSelectInteractionListener ({state, dispatch}) {
             state.selectInteraction.on("select", event => {
                 // remove feature from source
-                state.layer.getSource().removeFeature(event.selected[0]);
+                main.getApp().config.globalProperties.$layer.getSource().removeFeature(event.selected[0]);
                 // remove feature from interaction
                 state.selectInteraction.getFeatures().clear();
                 // remove feature from array of downloadable features
@@ -581,8 +582,8 @@ const initialState = JSON.parse(JSON.stringify(stateDraw)),
 
                 featureToRestore.setId(featureId);
                 commit("setFId", state.fId + 1);
-                state.layer.getSource().addFeature(featureToRestore);
-                state.layer.getSource().getFeatureById(featureId).setStyle(featureToRestore.getStyle());
+                main.getApp().config.globalProperties.$layer.getSource().addFeature(featureToRestore);
+                main.getApp().config.globalProperties.$layer.getSource().getFeatureById(featureId).setStyle(featureToRestore.getStyle());
                 dispatch("updateRedoArray", {remove: true});
                 dispatch("updateUndoArray", {remove: false, feature: featureToRestore});
             }
@@ -626,7 +627,7 @@ const initialState = JSON.parse(JSON.stringify(stateDraw)),
             commit("setDownloadSelectedFormat", initialState.download.selectedFormat);
 
             if (state.addFeatureListener.listener) {
-                state.layer.getSource().un("addFeature", state.addFeatureListener.listener);
+                main.getApp().config.globalProperties.$layer.getSource().un("addFeature", state.addFeatureListener.listener);
             }
         },
         /**
@@ -728,7 +729,7 @@ const initialState = JSON.parse(JSON.stringify(stateDraw)),
          */
         undoLastStep ({state, dispatch}) {
             /**
-             * NOTE: state.layer.getSource().getFeatures() doesn't return the features in the order they were added.
+             * NOTE: main.getApp().config.globalProperties.$layer.getSource().getFeatures() doesn't return the features in the order they were added.
              * Therefore it is necessary to keep an array with the features in the right order.
              */
             const features = state.undoArray,
@@ -737,7 +738,7 @@ const initialState = JSON.parse(JSON.stringify(stateDraw)),
             if (typeof featureToRemove !== "undefined" && featureToRemove !== null) {
                 dispatch("updateRedoArray", {remove: false, feature: featureToRemove});
                 dispatch("updateUndoArray", {remove: true});
-                state.layer.getSource().removeFeature(featureToRemove);
+                main.getApp().config.globalProperties.$layer.getSource().removeFeature(featureToRemove);
             }
         },
         /**
