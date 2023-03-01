@@ -1,7 +1,9 @@
 import styleList from "@masterportal/masterportalapi/src/vectorStyle/styleList";
 import createStyle from "@masterportal/masterportalapi/src/vectorStyle/createStyle";
+import getGeometryTypeFromService from "@masterportal/masterportalapi/src/vectorStyle/lib/getGeometryTypeFromService";
 import {getCenter} from "ol/extent";
 import webgl from "./webglRenderer";
+import store from "../../../app-store";
 import Layer2d from "./layer2d";
 import Cluster from "ol/source/Cluster";
 
@@ -21,6 +23,7 @@ export default function Layer2dVector (attributes) {
         styleId: "default"
     };
 
+    this.geometryTypeRequestLayers = [];
     this.attributes = Object.assign(defaultAttributes, attributes);
     Layer2d.call(this, this.attributes);
     // override class methods for webgl rendering
@@ -225,3 +228,68 @@ Layer2dVector.prototype.getStyleAsFunction = function (style) {
         return style;
     };
 };
+
+/**
+ * Creates the legend
+ * @returns {void}
+ */
+Layer2dVector.prototype.createLegend = function () {
+    const styleObject = styleList.returnStyleObject(this.attributes.styleId),
+        rules = styleObject?.rules,
+        isSecured = this.attributes.isSecured;
+    let legend = this.getLegend();
+
+    /**
+     * @deprecated in 3.0.0
+     */
+    if (this.get("legendURL")) {
+        if (this.get("legendURL") === "") {
+            legend = true;
+        }
+        else if (this.get("legendURL") === "ignore") {
+            legend = false;
+        }
+        else {
+            legend = this.get("legendURL");
+        }
+    }
+
+    if (Array.isArray(legend)) {
+        this.setLegend(legend);
+    }
+    else if (styleObject && legend === true) {
+        createStyle.returnLegendByStyleId(styleObject.styleId).then(legendInfos => {
+            if (styleObject.styleId === "default") {
+                const type = this.layer.getSource().getFeatures()[0].getGeometry().getType(),
+                    typeSpecificLegends = [];
+
+                if (type === "MultiLineString") {
+                    typeSpecificLegends.push(legendInfos.legendInformation?.find(element => element.geometryType === "LineString"));
+                    this.setLegend(typeSpecificLegends);
+                }
+                else {
+                    typeSpecificLegends.push(legendInfos.legendInformation?.find(element => element.geometryType === type));
+                    this.setLegend(typeSpecificLegends);
+                }
+            }
+            else {
+                if (!this.geometryTypeRequestLayers.includes(this.get("id"))) {
+                    this.geometryTypeRequestLayers.push(this.get("id"));
+                    getGeometryTypeFromService.getGeometryTypeFromWFS(rules, this.get("url"), this.get("version"), this.get("featureType"), this.get("styleGeometryType"), isSecured,
+                        (geometryTypes, error) => {
+                            if (error) {
+                                store.dispatch("Alerting/addSingleAlert", "<strong>" + i18next.t("common:modules.vectorStyle.styleObject.getGeometryTypeFromWFSFetchfailed") + "</strong> <br>"
+                                    + "<small>" + i18next.t("common:modules.vectorStyle.styleObject.getGeometryTypeFromWFSFetchfailedMessage") + "</small>");
+                            }
+                            return geometryTypes;
+                        });
+                }
+                this.setLegend(legendInfos.legendInformation);
+            }
+        });
+    }
+    else if (typeof legend === "string") {
+        this.setLegend([legend]);
+    }
+};
+
