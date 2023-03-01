@@ -181,6 +181,34 @@ Layer2dVectorSensorThings.prototype.updateLayerValues = function (values) {
 };
 
 /**
+ * Creates the legend.
+ * @returns {void}
+ */
+ Layer2dVectorSensorThings.prototype.createLegend = function () {
+    const styleObject = styleList.returnStyleObject(this.attributes.styleId);
+    let legend = this.getLegend();
+
+    if (this.get("legendURL") === "ignore") {
+        legend = false;
+    }
+    else if (this.get("legendURL")) {
+        legend = this.get("legendURL");
+    }
+
+    if (Array.isArray(legend)) {
+        this.set("legend", legend);
+    }
+    else if (styleObject && legend === true) {
+        createStyle.returnLegendByStyleId(styleObject.styleId).then(legendInfos => {
+            this.setLegend(legendInfos.legendInformation);
+        });
+    }
+    else if (typeof legend === "string") {
+        this.set("legend", [legend]);
+    }
+};
+
+/**
  * Getter of style for layer.
  * @param {Object} attrs params of the raw layer
  * @returns {Function} a function to get the style with or null plus console warn if no style model was found
@@ -1107,6 +1135,7 @@ Layer2dVectorSensorThings.prototype.toggleSubscriptionsOnMapChanges = function (
     const state = this.getStateOfSTALayer(this.getLayer().getVisible(), this.get("isSubscribed"));
 
     if (state === true) {
+        this.createLegend();
         this.startSubscription(this.getLayer().getSource().getFeatures());
         if (this.get("observeLocation") && this.moveLayerRevisible === false) {
             this.moveLayerRevisible = state;
