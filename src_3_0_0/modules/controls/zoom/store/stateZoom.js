@@ -7,8 +7,8 @@
  * @property {String[]} supportedMapModes Map mode in which this module can be used.
  */
 const state = {
-    iconIn: "plus-icon",
-    iconOut: "minus-icon",
+    iconIn: "bi-masterportal-zoom-in",
+    iconOut: "bi-masterportal-zoom-out",
     supportedDevices: ["Desktop", "Mobile"],
     supportedMapModes: ["2D"]
 };
