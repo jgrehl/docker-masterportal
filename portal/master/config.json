@@ -66,6 +66,9 @@
       "sections": [
         [
           {
+            "type": "legend"
+          },
+          {
             "type": "featureLister",
             "maxFeatures": 10,
             "highlightVectorRulesPolygon": {
