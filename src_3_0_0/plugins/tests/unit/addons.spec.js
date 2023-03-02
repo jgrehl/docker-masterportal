@@ -1,16 +1,20 @@
 import {expect} from "chai";
-import {config} from "@vue/test-utils";
 import sinon from "sinon";
-import addons from "../../plugins/addons";
+import addons from "../../../plugins/addons";
+import main from "../../../main";
 
 
-describe.only("src/plugins/addons.js", () => {
+describe("src/plugins/addons.js", () => {
+    const globalProperties = {
+        config:
+        {
+            globalProperties:
+            {}
+        }
+    };
 
     beforeEach(() => {
-        config.globalProperties = {};
-        config.globalProperties.$toolAddons = [];
-        config.globalProperties.$gfiThemeAddons = [];
-        config.globalProperties.$controlAddons = [];
+        sinon.stub(main, "getApp").returns(globalProperties);
 
     });
 
@@ -19,10 +23,14 @@ describe.only("src/plugins/addons.js", () => {
     });
     describe("loadAddons", () => {
         it("if config is undefined nothing happens", async () => {
-            const spy = sinon.spy(addons, "loadToolAddons");
+            const spyloadToolAddons = sinon.spy(addons, "loadToolAddons"),
+                spyloadGfiThemes = sinon.spy(addons, "loadGfiThemes"),
+                loadControl = sinon.spy(addons, "loadControl");
 
             await addons.loadAddons([undefined]);
-            expect(await spy.notCalled).to.be.true;
+            expect(await spyloadToolAddons.notCalled).to.be.true;
+            expect(await spyloadGfiThemes.notCalled).to.be.true;
+            expect(await loadControl.notCalled).to.be.true;
         });
     });
 });
