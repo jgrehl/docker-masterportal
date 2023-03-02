@@ -37,7 +37,8 @@ export default {
             "validUsername",
             "fileUpload",
             "fileArray",
-            "maxFileSize"
+            "maxFileSize",
+            "configuredFileExtensions"
         ]),
         dropZoneAdditionalClass: function () {
             return this.dzIsDropHovering ? "dzReady" : "";
@@ -95,7 +96,7 @@ export default {
                         content: this.$t("common:modules.tools.contact.fileSizeMessage")
                     });
                 }
-                else if (!file.type.includes("image")) {
+                else if (!file.type.includes("image") && this.configuredFileExtensions.length === 0) {
                     this.addSingleAlert({
                         category: "error",
                         content: this.$t("common:modules.tools.contact.fileFormatMessage")
@@ -108,9 +109,11 @@ export default {
                         const fileNameSplit = file.name.split("."),
                             fileExtension = fileNameSplit.length > 0 ? fileNameSplit[fileNameSplit.length - 1].toLowerCase() : "";
 
-                        if (fileExtension === "png" || fileExtension === "jpg" || fileExtension === "jpeg") {
+                        if (fileExtension === "png" || fileExtension === "jpg" || fileExtension === "jpeg" || this.configuredFileExtensions.includes(fileExtension)) {
                             this.fileUploaded = true;
-                            this.uploadedImages.push({src: reader.result, name: file.name});
+                            const src = file.type.includes("image") ? reader.result : URL.createObjectURL(file);
+
+                            this.uploadedImages.push({src: src, name: file.name});
                             allFiles.push({imgString: reader.result, name: file.name, fileExtension: fileExtension});
                         }
                         else {
@@ -273,6 +276,7 @@ export default {
                                                 ref="upload-input-file"
                                                 type="file"
                                                 name="image"
+                                                multiple="multiple"
                                                 @change="onInputChange"
                                             >
                                         </label>
@@ -281,13 +285,12 @@ export default {
                                         <div
                                             v-for="image in uploadedImages"
                                             :key="image"
-                                            class="row d-flex"
+                                            class="row d-flex mb-1"
                                         >
-                                            <img
+                                            <embed
                                                 :src="image.src"
+                                                height="30"
                                                 class="col-2"
-                                                height="40"
-                                                alt="Image preview"
                                             >
                                             <span class="d-flex align-items-center col">
                                                 {{ image.name }}
