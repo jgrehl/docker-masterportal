@@ -184,16 +184,9 @@ Layer2dVectorSensorThings.prototype.updateLayerValues = function (values) {
  * Creates the legend.
  * @returns {void}
  */
- Layer2dVectorSensorThings.prototype.createLegend = function () {
-    const styleObject = styleList.returnStyleObject(this.attributes.styleId);
-    let legend = this.getLegend();
-
-    if (this.get("legendURL") === "ignore") {
-        legend = false;
-    }
-    else if (this.get("legendURL")) {
-        legend = this.get("legendURL");
-    }
+Layer2dVectorSensorThings.prototype.createLegend = function () {
+    const styleObject = styleList.returnStyleObject(this.attributes.styleId),
+        legend = this.inspectLegendUrl();
 
     if (Array.isArray(legend)) {
         this.set("legend", legend);
