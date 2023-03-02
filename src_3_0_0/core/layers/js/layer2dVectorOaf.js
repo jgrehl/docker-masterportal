@@ -81,7 +81,7 @@ Layer2dVectorOaf.prototype.getOptions = function (attributes) {
  * Creates the legend
  * @returns {void}
  */
- Layer2dVectorOaf.prototype.createLegend = function () {
+Layer2dVectorOaf.prototype.createLegend = function () {
     const styleObject = styleList.returnStyleObject(this.attributes.styleId),
         rules = styleObject?.rules,
         legend = this.getLegend();

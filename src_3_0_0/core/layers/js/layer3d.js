@@ -46,21 +46,10 @@ Layer3d.prototype.updateLayerValues = function (attributes) {
  * Creates the legend.
  * @returns {void}
  */
- Layer3d.prototype.createLegend = function () {
-    const styleObject = styleList.returnStyleObject(this.get("styleId"));
-    let legend = this.getLegend();
+Layer3d.prototype.createLegend = function () {
+    const styleObject = styleList.returnStyleObject(this.get("styleId")),
+        legend = this.inspectLegendUrl();
 
-    if (this.get("legendURL")) {
-        if (this.get("legendURL") === "") {
-            legend = true;
-        }
-        else if (this.get("legendURL") === "ignore") {
-            legend = false;
-        }
-        else {
-            legend = this.get("legendURL");
-        }
-    }
     if (Array.isArray(legend)) {
         this.setLegend(legend);
     }
