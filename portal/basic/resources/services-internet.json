@@ -1,5 +1,43 @@
 [
   {
+    "id": "topplus_wmts",
+    "name": "TopPlusOpen",
+    "capabilitiesUrl": "https://sgx.geodatenzentrum.de/wmts_topplus_open/1.0.0/WMTSCapabilities.xml",
+    "optionsFromCapabilities": true,
+    "urls": [
+      "https://sgx.geodatenzentrum.de/wmts_topplus_open/tile/1.0.0/web/{Style}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.png"
+    ],
+    "typ": "WMTS",
+    "layers": "web",
+    "format": "image/png",
+    "version": "1.0.0",
+    "origin": [
+      -3803165.98427,
+      8805908.08285
+    ],
+    "isBaseLayer": true,
+    "style": "default",
+    "transparent": false,
+    "tileSize": "256",
+    "minScale": "0",
+    "maxScale": "9999999999",
+    "tileMatrixSet": "EU_EPSG_25832_TOPPLUS",
+    "coordinateSystem": "EPSG:25832",
+    "legend": [
+      "https://sg.geodatenzentrum.de/wms_topplus_open?styles=&layer=web&service=WMS&format=image/png&sld_version=1.1.0&request=GetLegendGraphic&version=1.1.1"
+    ],
+    "requestEncoding": "REST",
+    "resLength": "13",
+    "layerAttribution": "Quellenvermerk: © Bundesamt für Kartographie und Geodäsie",
+    "datasets": [
+      {
+        "md_id": "A1C4E929-3EC9-4758-9677-DB4970D226AB",
+        "csw_url": " https://gdk.gdi-de.org/gdi-de/srv/ger/csw?",
+        "show_doc_url": "https://gdk.gdi-de.org/gdi-de/srv/ger/catalog.search#/metadata/"
+      }
+    ]
+  },
+  {
     "id": "452",
     "name": "Digitale Orthophotos (belaubt) Hamburg",
     "url": "https://geodienste.hamburg.de/HH_WMS_DOP_belaubt",
