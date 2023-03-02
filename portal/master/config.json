@@ -757,7 +757,8 @@
           "styleId": "10882",
           "clusterDistance": 40,
           "searchField": "haltestelle",
-          "styleGeometryType": "Point"
+          "styleGeometryType": "Point",
+          "visibility": true
         },
         {
           "id": [
@@ -782,14 +783,14 @@
         {
           "id": "1711",
           "styleId": "1711",
-          "visibility": true,
+          "visibility": false,
           "layerAttribution": "<span>Attributierung für Fachlayer</span>",
           "mouseHoverField": [
             "name",
             "strasse"
           ],
           "searchField": "name",
-          "extendedFilter": true,
+          "extendedFilter": false,
           "loadingStrategy": "all",
           "legend": true,
           "featurePrefix": "",
@@ -799,7 +800,7 @@
         },
         {
           "id": "8712",
-          "visibility": true,
+          "visibility": false,
           "name": "Schulinfosystem",
           "styleId": "8712",
           "searchField": "schulname",

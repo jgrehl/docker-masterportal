@@ -83,6 +83,7 @@ describe("src/core/layers/geojson.js", () => {
             expect(layer.getSource().getDistance()).to.be.equals(attributes.clusterDistance);
             expect(layer.getSource().getSource().getFormat()).to.be.an.instanceof(GeoJSON);
             expect(typeof layer.getStyleFunction()).to.be.equals("function");
+            expect(typeof geojsonLayer.get("style")).to.be.equals("function");
         });
         it("createLayer with isSelected=true shall set layer visible", function () {
             attributes.isSelected = true;
