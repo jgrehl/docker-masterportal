@@ -1,5 +1,4 @@
 import {Style} from "ol/style.js";
-
 import {createDrawStyle} from "./createDrawStyle";
 import {createIconStyle} from "./createIconStyle";
 import {createTextStyle} from "./createTextStyle";
