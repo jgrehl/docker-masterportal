@@ -39,6 +39,7 @@ loadConfigJs.then(() => {
 
     app = createApp(App);
 
+
     // Load remoteInterface
     if (Object.prototype.hasOwnProperty.call(Config, "remoteInterface")) {
         app.use(remoteInterface, Config.remoteInterface);
@@ -46,15 +47,11 @@ loadConfigJs.then(() => {
 
     initiateVueI18Next(app);
     app.use(store);
-<<<<<<< HEAD
 
     initLanguage(Config.portalLanguage)
         .then(() => {
             app.mount("#masterportal-root");
         });
-=======
-    app.mount("#masterportal-root");
->>>>>>> 762b58ca17 (BG-3809: adapt test and cleanup)
 });
 
 export default main;
