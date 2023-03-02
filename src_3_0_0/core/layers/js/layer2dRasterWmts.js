@@ -55,28 +55,16 @@ Layer2dRasterWmts.prototype.getLayerParams = function (attributes) {
 };
 
 /**
- * If no legendURL is set an Error is written on the console.
+ * If no legendURL is set a warning is written on the console.
  * For the OptionsFromCapabilities way:
  * If legend is empty, WMTS-Capabilities will be searched for a legendURL (OGC Standard)
- * If a legend is found, legend will be rebuild
+ * If a legend is found, legend will be rebuild.
  *
  * @returns {void}
  */
- Layer2dRasterWmts.prototype.createLegend = function () {
-    let legend = this.getLegend();
+Layer2dRasterWmts.prototype.createLegend = function () {
+    let legend = this.inspectLegendUrl();
 
-    if (this.get("legendURL")) {
-        if (this.get("legendURL") === "") {
-            legend = true;
-        }
-        else if (this.get("legendURL") === "ignore") {
-            legend = false;
-        }
-        else {
-            legend = this.get("legendURL");
-            this.setLegend([legend]);
-        }
-    }
     if ((this.get("optionsFromCapabilities") === undefined) && (legend === true)) {
         console.error("WMTS: No legendURL is specified for the layer!");
     }
@@ -94,8 +82,8 @@ Layer2dRasterWmts.prototype.getLayerParams = function (attributes) {
                             if (legend) {
                                 this.setLegend([legend]);
 
-                                // rebuild Legend
-                                bridge.setLegendLayerList();
+                                // todo rebuild Legend, Radio.trigger("Legend", "setLayerList"); ersetzen mit was?
+                                // bridge.setLegendLayerList();
                             }
                         }
                         else {
