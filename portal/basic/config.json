@@ -75,6 +75,9 @@
       "sections": [
         [
           {
+            "type": "legend"
+          },
+          {
             "type": "routing",
             "icon": "bi-signpost-2",
             "showDescription": true,
