@@ -56,6 +56,4 @@ npm-debug.log
 /portal/*
 !/portal/basic
 !/portal/master
-!/portal/masterDefault
-!/portal/masterAuto_3_0_0
-!/portal/master_3_0_0
+!/portal/auto
