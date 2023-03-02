@@ -24,8 +24,8 @@ export default {
         this.modifyImportedFileExtent(this.featureExtents, this.importedFileNames);
     },
     methods: {
-        ...mapActions(["addLayerToLayerConfig"]),
         ...mapActions("Modules/FileImport", [
+            "addLayerConfig",
             "importKML",
             "importGeoJSON"
         ]),
@@ -74,15 +74,20 @@ export default {
                 const reader = new FileReader();
 
                 reader.onload = async f => {
-                    const fileNameSplit = file.name.split("."),
-                        fileExtension = fileNameSplit.length > 0 ? fileNameSplit[fileNameSplit.length - 1].toLowerCase() : "";
+                    this.addLayerConfig()
+                        .then(layer => {
+                            if (layer) {
+                                const fileNameSplit = file.name.split("."),
+                                    fileExtension = fileNameSplit.length > 0 ? fileNameSplit[fileNameSplit.length - 1].toLowerCase() : "";
 
-                    if (fileExtension === "geojson" || fileExtension === "json") {
-                        this.importGeoJSON({raw: f.target.result, filename: file.name});
-                    }
-                    else {
-                        this.importKML({raw: f.target.result, filename: file.name});
-                    }
+                                if (fileExtension === "geojson" || fileExtension === "json") {
+                                    this.importGeoJSON({raw: f.target.result, layer: layer.layer, filename: file.name});
+                                }
+                                else {
+                                    this.importKML({raw: f.target.result, layer: layer.layer, filename: file.name});
+                                }
+                            }
+                        });
                 };
 
                 reader.readAsText(file);

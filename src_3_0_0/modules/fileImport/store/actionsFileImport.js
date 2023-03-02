@@ -178,8 +178,9 @@ export default {
      * @param {Object} datasrc data source to import, with properties filename, layer and raw.
      * @returns {void}
      */
-    async importKML ({state, dispatch, rootGetters}, datasrc) {
+    importKML ({state, dispatch, rootGetters}, datasrc) {
         const
+            vectorLayer = datasrc.layer,
             fileName = datasrc.filename,
             format = getFormat(fileName, state.selectedFiletype, state.supportedFiletypes, supportedFormats),
             crsPropName = getCrsPropertyName(datasrc.raw),
@@ -188,8 +189,7 @@ export default {
         let
             featureError = false,
             alertingMessage,
-            features,
-            layerId = "";
+            features;
 
         if (format instanceof KML) {
             datasrc.raw = removeBadTags(datasrc.raw);
@@ -320,12 +320,7 @@ export default {
 
         features = checkIsVisibleSetting(features);
 
-        layerId = await dispatch("addLayerConfig", {
-            gfiAttributes: customAttributes,
-            name: fileName.split(".")[0]
-        });
-
-        layerCollection.getLayerById(layerId)?.getLayerSource().addFeatures(features);
+        vectorLayer.getSource().addFeatures(features);
 
         if (featureError) {
             alertingMessage = {
@@ -359,16 +354,15 @@ export default {
      * @param {Object} datasrc data source to import, with properties filename, layer and raw.
      * @returns {void}
      */
-    async importGeoJSON ({state, dispatch, rootGetters}, datasrc) {
-        const fileName = datasrc.filename,
+    importGeoJSON ({state, dispatch, rootGetters}, datasrc) {
+        const vectorLayer = datasrc.layer,
+            fileName = datasrc.filename,
             format = getFormat(fileName, state.selectedFiletype, state.supportedFiletypes, supportedFormats),
             gfiAttributes = {};
 
         let
             alertingMessage,
-            features,
-            layerId = "",
-            vectorLayer = null;
+            features;
 
         if (format === false) {
             const fileNameSplit = fileName.split("."),
@@ -410,13 +404,7 @@ export default {
             return;
         }
 
-        layerId = await dispatch("addLayerConfig", {
-            name: fileName.split(".")[0]
-        });
-
-        vectorLayer = layerCollection.getLayerById(layerId);
-
-        vectorLayer.getLayer().setStyle((feature) => {
+        vectorLayer.setStyle((feature) => {
             const drawState = feature.getProperties().drawState;
             let style;
 
@@ -539,8 +527,8 @@ export default {
                 });
             }
 
-            if (vectorLayer.getLayer().getStyleFunction()(feature) !== undefined) {
-                feature.setStyle(vectorLayer.getLayer().getStyleFunction()(feature));
+            if (vectorLayer.getStyleFunction()(feature) !== undefined) {
+                feature.setStyle(vectorLayer.getStyleFunction()(feature));
             }
 
             if (feature.get("isGeoCircle")) {
@@ -551,13 +539,13 @@ export default {
             }
 
             feature.set("source", fileName);
-            vectorLayer.getLayerSource().addFeature(feature);
+            vectorLayer.getSource().addFeature(feature);
         });
 
-        if (!vectorLayer.getLayer().get("gfiAttributes")) {
+        if (!vectorLayer.get("gfiAttributes")) {
             dispatch("replaceByIdInLayerConfig", {
                 layerConfigs: [{
-                    id: layerId,
+                    id: state.layerId,
                     layer: {gfiAttributes}
                 }]
             }, {root: true});
@@ -593,26 +581,24 @@ export default {
     /**
      * Adds a layer Config to app-store layerConfigs
      * @param {Object} param.dispatch the dispatch
-     * @param {Object} attributes The layer attributes.
-     * @returns {String} The layer id of the new layer
+     * @param {Object} param.state the state
+     * @returns {ol/layer} The created layer.
      */
-    async addLayerConfig ({dispatch}, attributes) {
-        const layerAttributes = {
-            id: uniqueId("importDrawLayer"),
-            name: "importDrawLayer",
-            showInLayerTree: true,
-            typ: "VECTORBASE",
-            type: "layer",
-            visibility: true
-        };
+    async addLayerConfig ({dispatch, state}) {
+        if (!layerCollection.getLayerById(state.layerId)) {
+            await dispatch("addLayerToLayerConfig", {
+                layerConfig: {
+                    id: state.layerId,
+                    name: "importDrawLayer",
+                    showInLayerTree: true,
+                    typ: "VECTORBASE",
+                    type: "layer",
+                    visibility: true
+                },
+                parentKey: treeSubjectsKey
+            }, {root: true});
+        }
 
-        Object.assign(layerAttributes, attributes);
-
-        await dispatch("addLayerToLayerConfig", {
-            layerConfig: layerAttributes,
-            parentKey: treeSubjectsKey
-        }, {root: true});
-
-        return layerAttributes.id;
+        return layerCollection.getLayerById(state.layerId);
     }
 };

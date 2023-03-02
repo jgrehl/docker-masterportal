@@ -7,6 +7,7 @@
  * @property {String}   icon - icon next to title
  * @property {String[]} importedFileNames - list of names of successfully imported files
  * @property {Object}   layer - the layer
+ * @property {String}   layerId - the layer id
  * @property {String}   name - Displayed as title (config-param)
  * @property {String}   selectedFiletype - This controls, which openlayers format is used when displaying the file data. Using "auto" will result in selecting one format according to the filename's suffix.
  * @property {String[]} supportedDevices Devices on which the module is displayed.
@@ -22,6 +23,7 @@ export default {
     icon: "bi-box-arrow-in-down",
     importedFileNames: [],
     layer: undefined,
+    layerId: "importDrawLayer",
     name: "common:menu.tools.fileImport",
     selectedFiletype: "auto",
     showDescription: false,
