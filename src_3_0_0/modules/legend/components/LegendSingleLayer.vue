@@ -51,7 +51,7 @@ export default {
             <div
                 v-for="(legendPart, index) in legendObj.legend"
                 :key="index"
-                class="layer-legend-container"
+                class="mt-2 layer-legend-container"
             >
                 <!-- String -->
                 <template
