@@ -35,17 +35,18 @@ describe("src_3_0_0/modules/fileImport/store/actionsFileImport.js", () => {
 
     describe("file import - file should add some features to the current draw layer", () => {
         it("preset \"auto\", correct kml file, correct filename", done => {
-            const payload = {raw: rawSources[0], filename: "TestFile1.kml"};
+            const payload = {
+                raw: rawSources[0],
+                layer: {
+                    getSource: () => {
+                        return {
+                            addFeatures: () => sinon.stub()
+                        };
+                    }
+                },
+                filename: "TestFile1.kml"};
 
             testAction(importKML, payload, importedState, {}, [
-                {
-                    type: "addLayerConfig",
-                    payload: {
-                        gfiAttributes: {},
-                        name: "TestFile1"
-                    },
-                    dispatch: true
-                },
                 {
                     type: "Alerting/addSingleAlert",
                     payload: {
@@ -96,17 +97,19 @@ describe("src_3_0_0/modules/fileImport/store/actionsFileImport.js", () => {
         });
 
         it("preset \"auto\", correct gpx file, correct filename", done => {
-            const payload = {raw: rawSources[2], filename: "TestFile1.gpx"};
+            const payload = {
+                raw: rawSources[2],
+                layer: {
+                    getSource: () => {
+                        return {
+                            addFeatures: () => sinon.stub()
+                        };
+                    }
+                },
+                filename: "TestFile1.gpx"
+            };
 
             testAction(importKML, payload, importedState, {}, [
-                {
-                    type: "addLayerConfig",
-                    payload: {
-                        gfiAttributes: {},
-                        name: "TestFile1"
-                    },
-                    dispatch: true
-                },
                 {
                     type: "Alerting/addSingleAlert",
                     payload: {
@@ -118,17 +121,19 @@ describe("src_3_0_0/modules/fileImport/store/actionsFileImport.js", () => {
         });
 
         it("preset \"auto\", correct geojson file, correct filename", done => {
-            const payload = {raw: rawSources[3], filename: "TestFile1.json"};
+            const payload = {
+                raw: rawSources[3],
+                layer: {
+                    getSource: () => {
+                        return {
+                            addFeatures: () => sinon.stub()
+                        };
+                    }
+                },
+                filename: "TestFile1.json"
+            };
 
             testAction(importKML, payload, importedState, {}, [
-                {
-                    type: "addLayerConfig",
-                    payload: {
-                        gfiAttributes: {},
-                        name: "TestFile1"
-                    },
-                    dispatch: true
-                },
                 {
                     type: "Alerting/addSingleAlert",
                     payload: {
@@ -180,23 +185,17 @@ describe("src_3_0_0/modules/fileImport/store/actionsFileImport.js", () => {
 
     describe("addLayerConfig", () => {
         it("add layer config", done => {
-            const payload = {
-                gfiAttributes: {
-                    test: "123"
-                },
-                name: "TestLayer"
+            const state = {
+                layerId: "importDrawLayer"
             };
 
-            testAction(addLayerConfig, payload, null, {}, [
+            testAction(addLayerConfig, null, state, {}, [
                 {
                     type: "addLayerToLayerConfig",
                     payload: {
                         layerConfig: {
-                            id: "importDrawLayer1",
-                            gfiAttributes: {
-                                test: "123"
-                            },
-                            name: "TestLayer",
+                            id: state.layerId,
+                            name: "importDrawLayer",
                             showInLayerTree: true,
                             typ: "VECTORBASE",
                             type: "layer",
