@@ -4,15 +4,12 @@ import StylePolygon from "@masterportal/masterportalapi/src/vectorStyle/styles/p
 import {createNominalCircleSegments} from "@masterportal/masterportalapi/src/vectorStyle/styles/point/stylePointNominal";
 import {createSVGStyle} from "@masterportal/masterportalapi/src/vectorStyle/styles/point/stylePointIcon";
 import {mapActions, mapGetters, mapMutations} from "vuex";
-import getters from "../store/gettersLegend";
-import mutations from "../store/mutationsLegend";
-import actions from "../store/actionsLegend";
 import LegendSingleLayer from "./LegendSingleLayer.vue";
 import {convertColor} from "../../../shared/js/utils/convertColor";
 import layerCollection from "../../../core/layers/js/layerCollection";
 
 export default {
-    name: "LegendWindow",
+    name: "LegendContainer",
     components: {
         LegendSingleLayer
     },
@@ -29,24 +26,6 @@ export default {
         ...mapGetters(["isMobile", "uiStyle", "visibleLayerConfigs"])
     },
     watch: {
-        /**
-         * Closes the isMobile menu and create the legend.
-         * @param {Boolean} showLegend Should be show the legend.
-         * @returns {void}
-         */
-        // showLegend (showLegend) {
-        //     if (showLegend) {
-        //         document.getElementsByClassName("navbar-collapse")[0].classList.remove("show");
-        //         this.createLegend();
-        //         // focus to first element
-        //         this.$nextTick(() => {
-        //             if (this.$refs["close-icon"]) {
-        //                 this.$refs["close-icon"].focus();
-        //             }
-        //         });
-        //     }
-        // },
-
         visibleLayerConfigs: {
             handler (newLayerConfigs, oldLayerConfigs) {
                 this.$nextTick(() => {
@@ -54,11 +33,8 @@ export default {
                         const oldConfig = oldLayerConfigs.find(config => config.id === newConfig.id);
 
                         if (!oldConfig) {
-
                             const layer = layerCollection.getLayerById(newConfig.id);
 
-                            console.log("visibility changed for ", newConfig);
-                            console.log("visibility changed for ", layer);
                             this.toggleLayerInLegend(layer, true);
                         }
                     });
@@ -66,10 +42,8 @@ export default {
                         const newConfig = newLayerConfigs.find(config => config.id === oldConfig.id);
 
                         if (!newConfig) {
-                            console.log("2 visibility changed for ", oldConfig);
                             const layer = layerCollection.getLayerById(oldConfig.id);
 
-                            console.log("visibility changed for ", layer);
                             this.toggleLayerInLegend(layer, false);
                         }
                     });
@@ -85,7 +59,6 @@ export default {
         },
         legendOnChanged: {
             handler (legend) {
-                console.log("### legendOnChanged", legend);
                 if (legend) {
                     this.createLegend();
                     if (this.layerIdForLayerInfo) {
@@ -97,12 +70,8 @@ export default {
         }
     },
     created () {
-        this.listenToLayerVisibilityChanged();
-        this.listenToUpdatedSelectedLayerList();
-        this.listenToLayerLegendUpdate();
     },
     mounted () {
-        // this.getLegendConfig(); muss schon im state sein
         this.createLegend();
     },
     methods: {
@@ -114,9 +83,7 @@ export default {
          * @returns {void}
          */
         createLegend () {
-            const visibleLayers = this.getVisibleLayers();
-
-            visibleLayers.forEach(layer => this.toggleLayerInLegend(layer, layer.get("visibility")));
+            layerCollection.getLayers().forEach(layer => this.toggleLayerInLegend(layer, layer.get("visibility")));
         },
 
         /**
@@ -153,69 +120,9 @@ export default {
         },
 
         /**
-         * Listens to changed layer visibility
-         * @returns {void}
-         */
-        listenToLayerVisibilityChanged () {
-            // Backbone.Events.listenTo(Radio.channel("Layer"), {
-            //     "layerVisibleChanged": (id, isVisibleInMap, layer) => {
-            //         this.toggleLayerInLegend(layer);
-            //     }
-            // });
-        },
-
-        /**
-         * Listens to updated selectedLayerList
-         * @returns {void}
-         */
-        listenToUpdatedSelectedLayerList () {
-            // Backbone.Events.listenTo(Radio.channel("ModelList"), {
-            //     "updatedSelectedLayerList": (layers) => {
-            //         layers.forEach(layer => this.toggleLayerInLegend(layer));
-            //     }
-            // });
-        },
-
-        /**
-         * Listens to changed layer legend
-         * @returns {void}
-         */
-        listenToLayerLegendUpdate () {
-            // Backbone.Events.listenTo(Radio.channel("LegendComponent"), {
-            //     "updateLegend": () => {
-            //         this.createLegend();
-            //     }
-            // });
-        },
-        /**
-         * Closes the legend.
-         * @param {Event} event - the DOM event
-         * @returns {void}
-         */
-        closeLegend (event) {
-            // if (event.type === "click" || event.which === 32 || event.which === 13) {
-            //     const model = getComponent(this.id);
-
-            //     this.setShowLegend(!this.showLegend);
-
-            //     if (model) {
-            //         model.set("isActive", false);
-            //     }
-            // }
-        },
-
-        /**
-         * Retrieves the visible Layers from the ModelList
-         * @returns {Object[]} - all Layer that are visible
-         */
-        getVisibleLayers () {
-            // return Radio.request("ModelList", "getModelsByAttributes", {type: "layer", isVisibleInMap: true});
-            return layerCollection.getLayers();
-        },
-
-        /**
          * Generates or removed the layers legend object.
-         * @param {Object} layer layer.
+         * @param {Object} layer the layer to show the legend for
+         * @param {Boolean} visibility visibility of layer in map
          * @returns {void}
          */
         toggleLayerInLegend (layer, visibility) {
@@ -227,7 +134,6 @@ export default {
                 layerTyp = layer.get("typ");
 
             if (visibility === false) {
-                console.log("****");
                 this.removeLegend(layerId);
             }
             else if (layerTyp === "GROUP") {
@@ -276,7 +182,6 @@ export default {
             layerSource.forEach(layer => {
                 legends.push(this.prepareLegend(layer.getLegend()));
             });
-            // legends = legends.flat(); does not work in unittest and older browser versions
             legends = [].concat(...legends);
             return legends;
         },
@@ -637,7 +542,6 @@ export default {
                     name += value;
                 });
             }
-
             return name;
         },
 
@@ -667,7 +571,6 @@ export default {
             if (encodeURIComponent(JSON.stringify(layerLegend)) !== encodeURIComponent(JSON.stringify(legendObj))) {
                 isLegendChanged = true;
             }
-
             return isLegendChanged;
         },
 
@@ -769,18 +672,13 @@ export default {
         <div
             :class="isMobile ? 'legend-window-isMobile' : (uiStyle === 'TABLE' ? 'legend-window-table': 'legend-window')"
         >
-            <div
-                :class="uiStyle === 'TABLE' ? 'legend-title-table': 'legend-title'"
-                class="row py-3 d-flex align-items-center"
-            />
             <div class="legend-content">
                 <div
-                    v-for="legendObj in legends"
-                    :key="legendObj.name"
-                    class="layer card"
+                    v-for="legendObj, index in legends"
+                    :key="index"
                 >
                     <div
-                        class="layer-title card-header"
+                        class="bold mt-3"
                         data-bs-toggle="collapse"
                         :data-bs-target="'#' + generateId(legendObj.name)"
                     >
@@ -791,6 +689,9 @@ export default {
                         :legend-obj="legendObj"
                         :render-to-id="''"
                     />
+                    <hr
+                        v-if="index < legends.length - 1"
+                    >
                 </div>
             </div>
         </div>
@@ -808,18 +709,6 @@ export default {
         width: 100%;
     }
     #legend {
-        // position: absolute;
-        // right: 1px;
-        .legend-window {
-            // position: absolute;
-            // min-width:200px;
-            // max-width:600px;
-            // right: 45px;
-            // top: 10px;
-            // margin: 10px 10px 30px 10px;
-            // background-color: $white;
-            // z-index: 9999;
-        }
         .legend-window-isMobile {
             // position: absolute;
             width: calc(100% - 20px);
@@ -827,54 +716,6 @@ export default {
             left: 10px;
             background-color: $white;
             z-index: 1;
-        }
-        .legend-title {
-            padding: 10px;
-            border-bottom: 2px solid #e7e7e7;
-            cursor: move;
-            .title{
-                display: inline-block;
-                margin: 0;
-            }
-            .close-legend {
-                // padding: 5px;
-                // cursor: pointer;
-                // &:focus {
-                //     // // @include primary_action_focus;
-                // }
-                // &:hover {
-                //     // // @include primary_action_hover;
-                // }
-            }
-            // .toggle-collapse-all {
-            //     width: 100%;
-            //     padding: 5px;
-            //     cursor: pointer;
-            //     &:focus {
-            //         // // @include primary_action_focus;
-            //     }
-            //     &:hover {
-            //         // // @include primary_action_hover;
-            //     }
-            // }
-        }
-        .legend-content {
-            margin-top: 2px;
-            max-height: 70vh;
-            overflow: auto;
-            .layer-title {
-                padding: 5px;
-                font-weight: bold;
-                background-color: $light_grey;
-                span {
-                    vertical-align: -webkit-baseline-middle;
-                }
-            }
-            .layer {
-                border: unset;
-                margin: 2px;
-                padding: 5px;
-            }
         }
     }
 
