@@ -194,6 +194,13 @@
             "13716"
           ],
           "name": "Geobasiskarten (farbig)"
+        },
+        {
+          "id":"topplus_wmts",
+          "name": "TopPlusOpen (WMTS)",
+          "typ": "WMTS",
+          "visibility":false,
+          "showInLayerTree": true
         }
       ]
     },
