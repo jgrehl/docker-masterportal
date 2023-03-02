@@ -88,21 +88,7 @@ export default {
             const allFiles = [];
 
             Array.from(files).forEach(file => {
-                // Check if filesize exceeds configured size
-                // Default 1MB
-                if (file.size > this.maxFileSize) {
-                    this.addSingleAlert({
-                        category: "error",
-                        content: this.$t("common:modules.tools.contact.fileSizeMessage")
-                    });
-                }
-                else if (!file.type.includes("image") && this.configuredFileExtensions.length === 0) {
-                    this.addSingleAlert({
-                        category: "error",
-                        content: this.$t("common:modules.tools.contact.fileFormatMessage")
-                    });
-                }
-                else {
+                if (this.checkValid(file)) {
                     const reader = new FileReader();
 
                     reader.addEventListener("load", () => {
@@ -148,6 +134,26 @@ export default {
                     this.uploadedImages.splice(index, 1);
                 }
             });
+        },
+        checkValid (file) {
+            if (!file.type.includes("image") && this.configuredFileExtensions.length === 0) {
+                this.addSingleAlert({
+                    category: "error",
+                    content: this.$t("common:modules.tools.contact.fileFormatMessage")
+                });
+                return false;
+            }
+            // Check if filesize exceeds configured size
+            // Default 1MB
+            if (file.size > this.maxFileSize) {
+                this.addSingleAlert({
+                    category: "error",
+                    content: this.$t("common:modules.tools.contact.fileSizeMessage")
+                });
+                return false;
+            }
+
+            return true;
         }
     }
 };
