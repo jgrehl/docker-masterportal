@@ -1,7 +1,6 @@
 <script>
 export default {
     name: "LegendSingleLayer",
-    components: {},
     props: {
         id: {
             type: String && undefined,
@@ -22,6 +21,9 @@ export default {
             this.$nextTick(() => {
                 const renderToElement = document.getElementById(this.renderToId);
 
+                console.log("this.renderToId", this.renderToId);
+                console.log("renderToElement", renderToElement);
+
                 if (this.renderToId !== "" && renderToElement !== null) {
                     this.$el.style.display = "block";
 
@@ -41,14 +43,14 @@ export default {
 <template>
     <div
         :id="id"
-        class="card-body layer-legend collapse show"
+        class="layer-legend collapse show"
     >
         <template
             v-if="legendObj !== undefined"
         >
             <div
                 v-for="(legendPart, index) in legendObj.legend"
-                :key="JSON.stringify(legendPart) + '_' + index"
+                :key="index"
                 class="layer-legend-container"
             >
                 <!-- String -->
@@ -98,8 +100,10 @@ export default {
                             :alt="legendPart.name ? legendPart.name : legendObj.name"
                             :src="Array.isArray(legendPart.graphic) ? legendPart.graphic[0] : legendPart.graphic"
                         >
-                        <span>
-                            {{ legendPart.name }}
+                        <span
+                            class="ms-4"
+                        >
+                            {{ $t(legendPart.name) }}
                         </span>
                     </div>
                     <div v-else>
@@ -119,8 +123,10 @@ export default {
                         >
                             {{ $t("common:modules.legend.linkToPdf") }}
                         </a>
-                        <span>
-                            {{ legendPart.name }}
+                        <span
+                            class="ms-4"
+                        >
+                            {{ $t(legendPart.name) }}
                         </span>
                     </div>
                 </template>
@@ -139,19 +145,6 @@ export default {
 <style lang="scss" scoped>
     @import "~variables";
 
-    .layer-legend {
-        padding-top: 5px;
-        padding-bottom: 5px;
-        img {
-            &.left {
-                max-width: 50px;
-                padding: 5px 0;
-            }
-        }
-    }
-    .layer-legend-container {
-        position: relative;
-    }
     .layer-legend.collapsing {
         -webkit-transition: none;
         transition: none;
