@@ -236,23 +236,8 @@ Layer2dVector.prototype.getStyleAsFunction = function (style) {
 Layer2dVector.prototype.createLegend = function () {
     const styleObject = styleList.returnStyleObject(this.attributes.styleId),
         rules = styleObject?.rules,
-        isSecured = this.attributes.isSecured;
-    let legend = this.getLegend();
-
-    /**
-     * @deprecated in 3.0.0
-     */
-    if (this.get("legendURL")) {
-        if (this.get("legendURL") === "") {
-            legend = true;
-        }
-        else if (this.get("legendURL") === "ignore") {
-            legend = false;
-        }
-        else {
-            legend = this.get("legendURL");
-        }
-    }
+        isSecured = this.attributes.isSecured,
+        legend = this.inspectLegendUrl();
 
     if (Array.isArray(legend)) {
         this.setLegend(legend);
