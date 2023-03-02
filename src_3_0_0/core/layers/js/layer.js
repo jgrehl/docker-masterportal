@@ -87,29 +87,32 @@ Layer.prototype.setLayer = function (value) {
  * @param {String} value legend
  * @returns {void}
  */
- Layer.prototype.setLegend = function (value) {
+Layer.prototype.setLegend = function (value) {
     this.set("legend", value);
     console.log("setLegend", value, this.get("id"));
     store.dispatch("Modules/Legend/setLegendOnChanged", value);
 };
 
+/**
+ * Returns the legend. If not set true is returned as default value.
+ * @returns {Array|Boolean} returns the legend
+ */
 Layer.prototype.getLegend = function () {
     const legend = this.get("legend");
 
     return legend === undefined || legend === null ? true : legend;
 };
-/**
-* If the parameter "legendURL" is empty, it is set to GetLegendGraphic.
-* @return {void}
-*/
-Layer.prototype.createLegend = function () {
-    const version = this.get("version");
-    let legend = this.getLegend();
-    // console.log("legend",legend);
-    // console.log("legendURL",this.get("legendURL"));
-    // console.log("this.get(url)",this.get("url"));
 
-    if (this.get("legendURL") !== undefined) {
+/**
+ * Inspects the 'legendUrl': if not set, legend is returned.
+ * If set to 'ignore', false is returned. If empty, true is returned
+ * else the content is returned.
+ * @returns {String|Boolean} depending on content of 'legendUrl'
+ */
+Layer.prototype.inspectLegendUrl = function () {
+    let legend = this.getLegend();
+
+    if (this.get("legendURL")) {
         if (this.get("legendURL") === "") {
             legend = true;
         }
@@ -120,9 +123,17 @@ Layer.prototype.createLegend = function () {
             legend = this.get("legendURL");
         }
     }
-    if (!this.get("layers")) {
-        console.log("field layers not filled", this);
-    }
+    return legend;
+};
+
+/**
+* If the parameter "legendURL" is empty, it is set to GetLegendGraphic.
+* If it is set to 'ignore' no legend is set.
+* @return {void}
+*/
+Layer.prototype.createLegend = function () {
+    const version = this.get("version"),
+        legend = this.inspectLegendUrl();
 
     if (Array.isArray(legend)) {
         this.setLegend(legend);
@@ -145,7 +156,6 @@ Layer.prototype.createLegend = function () {
 
             legends.push(legendUrl.toString());
         });
-
         this.setLegend(legends);
     }
     else if (typeof legend === "string") {
