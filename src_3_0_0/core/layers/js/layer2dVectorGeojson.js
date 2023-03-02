@@ -83,25 +83,12 @@ Layer2dVectorGeojson.prototype.afterLoading = function (attributes, features) {
 };
 
 /**
- * Creates the legend
- * @param {Object} attrs  attributes of the layer
+ * Creates the legend.
  * @returns {void}
  */
- Layer2dVectorGeojson.prototype.createLegend = function (attrs) {
-    const styleObject = styleList.returnStyleObject(this.get("styleId"));
-    let legend = this.getLegend();
-
-    if (this.get("legendURL")) {
-        if (this.get("legendURL") === "") {
-            legend = true;
-        }
-        else if (this.get("legendURL") === "ignore") {
-            legend = false;
-        }
-        else {
-            legend = this.get("legendURL");
-        }
-    }
+Layer2dVectorGeojson.prototype.createLegend = function () {
+    const styleObject = styleList.returnStyleObject(this.get("styleId")),
+        legend = this.inspectLegendUrl();
 
     if (Array.isArray(legend)) {
         this.setLegend(legend);
