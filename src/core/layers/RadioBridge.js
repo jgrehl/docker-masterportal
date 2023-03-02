@@ -38,26 +38,6 @@ export function listenToLayerVisibility (layerModel, listener) {
     });
 }
 
-/* ******************* Legend ******************* */
-/**
- * Set layer to rebuild legend
- * Can be done directly or is no longer needed if all layers are handled by store and modelList is refactored.
- * @returns {void}
- */
-export function setLegendLayerList () {
-    Radio.trigger("Legend", "setLayerList");
-}
-/**
- * Listens to changes of attribute SLDBody.
- * Can be done directly or is no longer needed if tree filter are refactored.
- * @param {Object} layerModel the layer
- * @returns {void}
- */
-export function listenToChangeSLDBody (layerModel) {
-    Radio.channel("Layer").on({
-        "change:SLDBody": layerModel.updateSourceSLDBody
-    });
-}
 
 /* ******************* MapView ******************* */
 /**
