@@ -20,7 +20,7 @@ import LayerPills from "../layerPills/components/LayerPills.vue";
 import LayerSelection from "../layerSelection/components/LayerSelection.vue";
 import LayerSlider from "../layerSlider/components/LayerSlider.vue";
 import LayerTree from "../layerTree/components/LayerTree.vue";
-import Legend from "../legend/components/Legendwindow.vue";
+import Legend from "../legend/components/LegendContainer.vue";
 import Measure from "../measure/components/MeasureInMap.vue";
 import MouseHover from "../mouseHover/components/MouseHover.vue";
 import NewsView from "../news/components/NewsView.vue";
