@@ -7,16 +7,16 @@ import {convertColor} from "../../../shared/js/utils/convertColor";
 export default {
     /**
      * Creates interval scaled advanced style for pointFeatures
-     * @param {Object} style The styleObject.
-     * @return {ol.Style} style
+     * @param {Object} styleObject The style.
+     * @return {ol.Style} an SVG for interval circle bars style or empty array
      */
-    drawIntervalStyle (style) {
-        const scalingShape = style.scalingShape,
-            scalingAttribute = style.scalingAttribute;
+    drawIntervalStyle (styleObject) {
+        const scalingShape = styleObject.scalingShape,
+            scalingAttribute = styleObject.scalingAttribute;
         let intervalStyle = [];
 
         if (scalingShape === "CIRCLE_BAR") {
-            intervalStyle = this.drawIntervalCircleBars(scalingAttribute, style);
+            intervalStyle = this.drawIntervalCircleBars(scalingAttribute, styleObject);
         }
 
         return intervalStyle;
@@ -25,7 +25,7 @@ export default {
     /**
      * Creates nominal scaled advanced style for pointFeatures
      * @param {Object} styleObject The styleObject.
-     * @return {ol.Style} style
+     * @return {ol.Style} an SVG for nominal circle bars style or empty array
      */
     drawNominalStyle (styleObject) {
         const scalingShape = styleObject.attributes.scalingShape.toLowerCase();
@@ -49,8 +49,7 @@ export default {
             nominalCircleSegments = [];
 
         Object.keys(scalingValues).forEach(key => {
-            const olFeature = new Feature(),
-                imageScale = styleObject.attributes.imageScale;
+            const imageScale = styleObject.attributes.imageScale;
             let svg,
                 svgSize,
                 image,
@@ -58,9 +57,10 @@ export default {
                 imageSizeWithScale,
                 svgPath;
 
-            olFeature.set(scalingAttribute, key);
-
             if (Array.isArray(styleObject.style)) {
+                const olFeature = new Feature();
+
+                olFeature.set(scalingAttribute, key);
                 svgPath = createNominalCircleSegments(olFeature, styleObject.attributes);
                 svg = createSVGStyle(svgPath, 5).getImage().getSrc();
                 svgSize = styleObject.style[0].getImage().getSize();
@@ -98,6 +98,8 @@ export default {
             clonedStyle = style.clone(),
             intervalCircleBar = clonedStyle.getStyle().getImage().getSrc();
 
+        // todo: können die 3 nächsten Zeilen weg? es wird ja die intervalCircleBar returned
+        // habe keine Legend gefunden, die den geometryType 'interval' hat.
         olFeature.set(scalingAttribute, barHeight);
         clonedStyle.setFeature(olFeature);
         clonedStyle.setIsClustered(false);
@@ -280,5 +282,33 @@ export default {
             newLegendObj = this.drawNominalStyle(style);
         }
         return newLegendObj;
+    },
+
+    /**
+     * Prepares the legend for different geometry types.
+     * @param {String} geometryType the geometry type.
+     * @param {Object} style The styleObject.
+     * @param {Object} name label of the legend.
+     * @returns {Object} - prepared legendObj.
+     */
+    prepare (geometryType, style, name) {
+        let legendObj = {
+            name
+        };
+
+        if (geometryType === "Point") {
+            legendObj = this.prepareLegendForPoint(legendObj, style);
+        }
+        else if (geometryType === "LineString") {
+            legendObj = this.prepareLegendForLineString(legendObj, style);
+        }
+        else if (geometryType === "Polygon") {
+            legendObj = this.prepareLegendForPolygon(legendObj, style);
+        }
+        else if (geometryType === "Cesium") {
+            legendObj.name = this.prepareNameForCesium(style);
+            legendObj = this.prepareLegendForCesium(legendObj, style);
+        }
+        return legendObj;
     }
 };
