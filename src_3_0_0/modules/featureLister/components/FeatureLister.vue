@@ -77,6 +77,7 @@ export default {
         });
     },
     unmounted () {
+        this.removeHighlightFeature("decrease");
         this.resetToThemeChooser();
     },
     methods: {
@@ -88,7 +89,7 @@ export default {
             "switchToDetails",
             "showMore"
         ]),
-        ...mapActions("Maps", ["areLayerFeaturesLoaded"]),
+        ...mapActions("Maps", ["areLayerFeaturesLoaded", "removeHighlightFeature"]),
         ...mapMutations("Modules/FeatureLister", [
             "resetToThemeChooser"
         ]),
