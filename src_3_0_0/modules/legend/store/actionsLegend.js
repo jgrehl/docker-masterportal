@@ -62,8 +62,7 @@ const actions = {
      */
     createLegendForLayerInfo ({commit, dispatch, getters, rootGetters}, layerId) {
         let layerForLayerInfo = layerCollection.getLayerById(layerId),
-            legendObj = null,
-            isValidLegend = null;
+            legendObj = null;
 
         if (!layerForLayerInfo) {
             const layerConfig = rootGetters.layerConfigById(layerId);
@@ -82,12 +81,9 @@ const actions = {
             legendObj = {
                 id: layerForLayerInfo.get("id"),
                 name: layerForLayerInfo.get("name"),
-                legend: getters.preparedLegend,
-                position: layerForLayerInfo.get("selectionIDX")
+                legend: getters.preparedLegend
             };
-
-            isValidLegend = validator.isValidLegendObj(legendObj);
-            if (isValidLegend) {
+            if (validator.isValidLegendObj(legendObj)) {
                 commit("setLayerInfoLegend", legendObj);
             }
         }
@@ -115,19 +111,7 @@ const actions = {
                 };
 
                 if (geometryType) {
-                    if (geometryType === "Point") {
-                        legendObj = legendDraw.prepareLegendForPoint(legendObj, style);
-                    }
-                    else if (geometryType === "LineString") {
-                        legendObj = legendDraw.prepareLegendForLineString(legendObj, style);
-                    }
-                    else if (geometryType === "Polygon") {
-                        legendObj = legendDraw.prepareLegendForPolygon(legendObj, style);
-                    }
-                    else if (geometryType === "Cesium") {
-                        legendObj.name = legendDraw.prepareNameForCesium(style);
-                        legendObj = legendDraw.prepareLegendForCesium(legendObj, style);
-                    }
+                    legendObj = legendDraw.prepare(geometryType, style, name);
                 }
                 /** Style WMS */
                 else if (legendInfo?.name && legendInfo?.graphic) {
