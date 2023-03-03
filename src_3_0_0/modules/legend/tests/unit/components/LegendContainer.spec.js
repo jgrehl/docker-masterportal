@@ -30,6 +30,11 @@ describe("src_3_0_0/modules/legend/components/LegendContainer.vue", () => {
                 return layerAttributes[key];
             },
             getLegend: () => true,
+            getLayer: () => {
+                return {
+                    getZIndex: () => 1
+                };
+            },
             getLayerSource: () => []
         };
 
@@ -90,7 +95,8 @@ describe("src_3_0_0/modules/legend/components/LegendContainer.vue", () => {
             expect(Legend.actions.addLegend.firstCall.args[1]).to.be.deep.equals({
                 id: layerAttributes.id,
                 name: layerAttributes.name,
-                legend: ["url"]
+                legend: ["url"],
+                position: 1
             });
             expect(Legend.actions.sortLegend.calledOnce).to.be.true;
         });
@@ -111,7 +117,8 @@ describe("src_3_0_0/modules/legend/components/LegendContainer.vue", () => {
             expect(Legend.actions.addLegend.firstCall.args[1]).to.be.deep.equals({
                 id: layerAttributes.id,
                 name: layerAttributes.name,
-                legend: ["url"]
+                legend: ["url"],
+                position: 1
             });
             expect(Legend.actions.sortLegend.calledOnce).to.be.true;
         });
@@ -129,7 +136,8 @@ describe("src_3_0_0/modules/legend/components/LegendContainer.vue", () => {
             expect(Legend.actions.addLegend.firstCall.args[1]).to.be.deep.equals({
                 id: layerAttributes.id,
                 name: layerAttributes.name,
-                legend: ["url"]
+                legend: ["url"],
+                position: 1
             });
             expect(Legend.actions.sortLegend.calledOnce).to.be.true;
         });
