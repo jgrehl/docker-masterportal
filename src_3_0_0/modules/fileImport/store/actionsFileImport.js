@@ -600,5 +600,20 @@ export default {
         }
 
         return layerCollection.getLayerById(state.layerId);
+    },
+
+    /**
+     * Opens the draw tool in the secondary Menu
+     * @returns {void}
+     */
+    openDrawTool ({dispatch, rootGetters}) {
+        const menuSide = "secondaryMenu",
+            menuExpanded = "Menu/expanded";
+
+        dispatch("Menu/changeCurrentComponent", {type: "draw", side: menuSide, props: {}}, {root: true});
+
+        if (!rootGetters[menuExpanded](menuSide)) {
+            dispatch("Menu/toggleMenu", menuSide, {root: true});
+        }
     }
 };
