@@ -15,7 +15,7 @@ export default {
             "legendOnChanged",
             "preparedLegend"
         ]),
-        ...mapGetters(["isMobile", "uiStyle", "visibleLayerConfigs"])
+        ...mapGetters(["uiStyle", "visibleLayerConfigs"])
     },
     watch: {
         visibleLayerConfigs: {
@@ -76,64 +76,32 @@ export default {
             const
                 layerId = layer.get("id"),
                 layerName = layer.get("name"),
-                layerLegend = layer.getLegend(),
-                layerSelectionIDX = layer.get("selectionIDX"),
                 layerTyp = layer.get("typ");
 
             if (visibility === false) {
                 this.removeLegend(layerId);
             }
             else if (layerTyp === "GROUP") {
-                this.generateLegendForGroupLayer(layer);
+                this.prepareLegendForGroupLayer(layer.getLayerSource());
             }
             else {
-                this.generateLegend(layerId, layerName, layerLegend, layerSelectionIDX);
+                this.prepareLegend(layer.getLegend());
             }
+            this.generateLegend(layerId, layerName);
         },
-
-        /**
-         * Prepares the legend with the given legendInfos
-         * @param {ol/Layer/Group} groupLayer grouplayer.
-         * @returns {Object[]} - the prepared legend.
-         */
-        generateLegendForGroupLayer (groupLayer) {
-            const id = groupLayer.get("id"),
-                legendObj = {
-                    id: id,
-                    name: groupLayer.get("name"),
-                    legend: this.prepareLegendForGroupLayer(groupLayer.get("layerSource")),
-                    position: groupLayer.get("selectionIDX")
-                },
-                isValidLegend = validator.isValidLegendObj(legendObj),
-                isNotInLegend = isValidLegend && !this.isLayerInLegend(id),
-                isLegendChanged = isValidLegend && !isNotInLegend && this.isLegendChanged(id, legendObj);
-
-            if (isNotInLegend) {
-                this.addLegend(legendObj);
-            }
-            else if (isLegendChanged) {
-                this.removeLegend(id);
-                this.addLegend(legendObj);
-            }
-            this.sortLegend();
-        },
-
 
         /**
          * Generates the legend object and adds it to the legend array in the store.
          * @param {String} id Id of layer.
          * @param {String} name Name of layer.
          * @param {Object[]} legend Legend of layer.
-         * @param {Number} selectionIDX SelectionIDX of layer.
          * @returns {void}
          */
-        generateLegend (id, name, legend, selectionIDX) {
-            this.prepareLegend(legend);
+        generateLegend (id, name) {
             const legendObj = {
                     id: id,
                     name: name,
-                    legend: this.preparedLegend,
-                    position: selectionIDX
+                    legend: this.preparedLegend
                 },
                 isValidLegend = validator.isValidLegendObj(legendObj),
                 isNotInLegend = isValidLegend && !this.isLayerInLegend(id),
