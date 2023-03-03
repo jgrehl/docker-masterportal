@@ -1,227 +1,327 @@
-import testAction from "../../../../../../test/unittests/VueTestUtils";
+import {expect} from "chai";
+import sinon from "sinon";
+import validator from "../../../js/validator";
+import layerCollection from "../../../../../core/layers/js/layerCollection";
+import layerFactory from "../../../../../core/layers/js/layerFactory";
+import legendDraw from "../../../js/legendDraw";
 import actions from "../../../store/actionsLegend";
 
 const {
-    setShowLegend,
     addLegend,
     sortLegend,
     removeLegend,
-    setShowLegendInMenu,
-    setLegendOnChanged,
-    setLayerCounterIdForLayerInfo,
-    setLayerIdForLayerInfo,
-    setLegendForLayerInfo
+    createLegendForLayerInfo,
+    prepareLegend,
+    prepareLegendForGroupLayer
 } = actions;
 
-describe("src/modules/legend/store/actionsLegend.js", () => {
-    describe("setShowLegend", () => {
-        it("should set showLegend to true", done => {
-            const payload = true,
-                state = {
-                    showLegend: false
-                };
+describe("src_3_0_0/modules/legend/store/actionsLegend.js", () => {
+    let commit,
+        dispatch;
 
-            testAction(setShowLegend, payload, state, {}, [
-                {type: "setShowLegend", payload: payload}
-            ], {}, done);
-        });
-        it("should set showLegend to false", done => {
-            const payload = false,
-                state = {
-                    showLegend: false
-                };
-
-            testAction(setShowLegend, payload, state, {}, [
-                {type: "setShowLegend", payload: payload}
-            ], {}, done);
-        });
+    beforeEach(() => {
+        commit = sinon.spy();
+        dispatch = sinon.spy();
+        sinon.stub(validator, "isValidLegendObj").returns(true);
     });
-    describe("addLegend", () => {
-        it("should add legend to legends", done => {
-            const payload = {
+
+    afterEach(sinon.restore);
+
+
+    it("addLegend should add legend to legends", () => {
+        const payload = {
+                id: "123",
+                name: "foobar",
+                legend: ["getLegendGraphicRequest"],
+                position: 1
+            },
+            state = {
+                legends: []
+            };
+
+        addLegend({state, commit}, payload);
+        expect(commit.calledOnce).to.be.true;
+        expect(commit.firstCall.args[0]).to.be.equals("setLegends");
+        expect(commit.firstCall.args[1]).to.be.deep.equals([payload]);
+    });
+
+
+    it("sortLegend should sort legends by position descending", () => {
+        const state = {
+                legends: [{
                     id: "123",
                     name: "foobar",
                     legend: ["getLegendGraphicRequest"],
                     position: 1
                 },
-                state = {
-                    legends: []
-                };
-
-            testAction(addLegend, payload, state, {}, [
-                {type: "setLegends", payload: [payload]}
-            ], {}, done);
-        });
-    });
-    describe("sortLegend", () => {
-        it("should sort legends by position descending", done => {
-            const state = {
-                    legends: [{
-                        id: "123",
-                        name: "foobar",
-                        legend: ["getLegendGraphicRequest"],
-                        position: 1
-                    },
-                    {
-                        id: "789",
-                        name: "barfoo",
-                        legend: ["getLegendGraphicRequest"],
-                        position: 3
-                    },
-                    {
-                        id: "456",
-                        name: "foofoo",
-                        legend: ["getLegendGraphicRequest"],
-                        position: 2
-                    }]
+                {
+                    id: "789",
+                    name: "barfoo",
+                    legend: ["getLegendGraphicRequest"],
+                    position: 3
                 },
-                sorted = [
-                    {
-                        id: "789",
-                        name: "barfoo",
-                        legend: ["getLegendGraphicRequest"],
-                        position: 3
-                    },
-                    {
-                        id: "456",
-                        name: "foofoo",
-                        legend: ["getLegendGraphicRequest"],
-                        position: 2
-                    },
-                    {
-                        id: "123",
-                        name: "foobar",
-                        legend: ["getLegendGraphicRequest"],
-                        position: 1
-                    }
-                ];
-
-            testAction(sortLegend, null, state, {}, [
-                {type: "setLegends", payload: sorted}
-            ], {}, done);
-        });
-    });
-    describe("removeLegend", () => {
-        it("should remove legend by id", done => {
-            const state = {
-                    legends: [{
-                        id: "789",
-                        name: "barfoo",
-                        legend: ["getLegendGraphicRequest"],
-                        position: 3
-                    },
-                    {
-                        id: "456",
-                        name: "foofoo",
-                        legend: ["getLegendGraphicRequest"],
-                        position: 2
-                    },
-                    {
-                        id: "123",
-                        name: "foobar",
-                        legend: ["getLegendGraphicRequest"],
-                        position: 1
-                    }]
+                {
+                    id: "456",
+                    name: "foofoo",
+                    legend: ["getLegendGraphicRequest"],
+                    position: 2
+                }]
+            },
+            sorted = [
+                {
+                    id: "789",
+                    name: "barfoo",
+                    legend: ["getLegendGraphicRequest"],
+                    position: 3
                 },
-                payload = "456",
-                legendsAfterRemove = [
-                    {
-                        id: "789",
-                        name: "barfoo",
-                        legend: ["getLegendGraphicRequest"],
-                        position: 3
-                    },
-                    {
-                        id: "123",
-                        name: "foobar",
-                        legend: ["getLegendGraphicRequest"],
-                        position: 1
-                    }
-                ];
-
-            testAction(removeLegend, payload, state, {}, [
-                {type: "setLegends", payload: legendsAfterRemove}
-            ], {}, done);
-        });
-    });
-    describe("setShowLegendInMenu", () => {
-        it("should set showLegendInMenu to true", done => {
-            const payload = true,
-                state = {
-                    showLegendInMenu: false
-                };
-
-            testAction(setShowLegendInMenu, payload, state, {}, [
-                {type: "setShowLegendInMenu", payload: payload}
-            ], {}, done);
-        });
-        it("should set showLegend to false", done => {
-            const payload = false,
-                state = {
-                    showLegendInMenu: false
-                };
-
-            testAction(setShowLegendInMenu, payload, state, {}, [
-                {type: "setShowLegendInMenu", payload: payload}
-            ], {}, done);
-        });
-    });
-    describe("setLegendOnChanged", () => {
-        it("should set changed legend", done => {
-            const state = {
-                    legendOnChanged: {}
+                {
+                    id: "456",
+                    name: "foofoo",
+                    legend: ["getLegendGraphicRequest"],
+                    position: 2
                 },
-                legendOnChanged = {
+                {
                     id: "123",
                     name: "foobar",
                     legend: ["getLegendGraphicRequest"],
                     position: 1
-                };
+                }
+            ];
 
-            testAction(setLegendOnChanged, legendOnChanged, state, {}, [
-                {type: "setLegendOnChanged", payload: legendOnChanged}
-            ], {}, done);
-        });
+        sortLegend({state, commit});
+        expect(commit.calledOnce).to.be.true;
+        expect(commit.firstCall.args[0]).to.be.equals("setLegends");
+        expect(commit.firstCall.args[1]).to.be.deep.equals(sorted);
     });
-    describe("setLayerIdForLayerInfo", () => {
-        it("should set LayerIdForLayerInfo", done => {
-            const payload = "id",
-                state = {
-                    layerIdForLayerInfo: null
-                };
 
-            testAction(setLayerIdForLayerInfo, payload, state, {}, [
-                {type: "setLayerIdForLayerInfo", payload: payload}
-            ], {}, done);
-        });
-    });
-    describe("setLayerCounterIdForLayerInfo", () => {
-        it("should set layerCounterIdForLayerInfo", done => {
-            const payload = "12:00",
-                state = {
-                    layerCounterIdForLayerInfo: null
-                };
 
-            testAction(setLayerCounterIdForLayerInfo, payload, state, {}, [
-                {type: "setLayerCounterIdForLayerInfo", payload: payload}
-            ], {}, done);
-        });
-    });
-    describe("setLegendForLayerInfo", () => {
-        it("should set legendForLayerInfo", done => {
-            const payload = {
+    it("removeLegend should remove legend by id", () => {
+        const state = {
+                legends: [{
+                    id: "789",
+                    name: "barfoo",
+                    legend: ["getLegendGraphicRequest"],
+                    position: 3
+                },
+                {
+                    id: "456",
+                    name: "foofoo",
+                    legend: ["getLegendGraphicRequest"],
+                    position: 2
+                },
+                {
                     id: "123",
                     name: "foobar",
                     legend: ["getLegendGraphicRequest"],
                     position: 1
+                }]
+            },
+            payload = "456",
+            legendsAfterRemove = [
+                {
+                    id: "789",
+                    name: "barfoo",
+                    legend: ["getLegendGraphicRequest"],
+                    position: 3
                 },
-                state = {
-                    legendForLayerInfo: null
-                };
+                {
+                    id: "123",
+                    name: "foobar",
+                    legend: ["getLegendGraphicRequest"],
+                    position: 1
+                }
+            ];
 
-            testAction(setLegendForLayerInfo, payload, state, {}, [
-                {type: "setLayerInfoLegend", payload: payload}
-            ], {}, done);
+        removeLegend({state, commit}, payload);
+        expect(commit.calledOnce).to.be.true;
+        expect(commit.firstCall.args[0]).to.be.equals("setLegends");
+        expect(commit.firstCall.args[1]).to.be.deep.equals(legendsAfterRemove);
+    });
+
+    describe("createLegendForLayerInfo", () => {
+        let layerAttributes,
+            layerConfig,
+            layer,
+            getters,
+            rootGetters;
+
+        beforeEach(() => {
+            layerAttributes = {
+                id: "123",
+                name: "foobar",
+                type: "WMS"
+            };
+            layerConfig = {
+                id: layerAttributes.id,
+                name: layerAttributes.name,
+                legend: ["getLegendGraphicRequest"],
+                position: 1
+            };
+            layer = {
+                id: layerAttributes.id,
+                get: (key) => {
+                    return layerAttributes[key];
+                },
+                getLegend: () => layerConfig.legend,
+                getLayerSource: () => []
+            };
+            getters = {
+                preparedLegend: ["getLegendGraphicRequest"]
+            };
+            rootGetters = {
+                layerConfigById: () => layerConfig
+            };
+
+        });
+
+        it("for visible layer should commit LayerInfoLegend", () => {
+            sinon.stub(layerCollection, "getLayerById").returns(layer);
+
+            createLegendForLayerInfo({commit, dispatch, getters, rootGetters}, layerConfig.id);
+            expect(commit.calledOnce).to.be.true;
+            expect(commit.firstCall.args[0]).to.be.equals("setLayerInfoLegend");
+            expect(commit.firstCall.args[1]).to.be.deep.equals({
+                id: layerAttributes.id,
+                name: layerAttributes.name,
+                legend: ["getLegendGraphicRequest"]
+            });
+            expect(dispatch.calledOnce).to.be.true;
+            expect(dispatch.firstCall.args[0]).to.be.equals("prepareLegend");
+            expect(dispatch.firstCall.args[1]).to.be.deep.equals(layerConfig.legend);
+        });
+
+        it("for not visible layer should commit LayerInfoLegend", () => {
+            sinon.stub(layerCollection, "getLayerById").returns(null);
+            sinon.stub(layerFactory, "createLayer").returns(layer);
+
+            createLegendForLayerInfo({commit, dispatch, getters, rootGetters}, layerConfig.id);
+            expect(commit.calledOnce).to.be.true;
+            expect(commit.firstCall.args[0]).to.be.equals("setLayerInfoLegend");
+            expect(commit.firstCall.args[1]).to.be.deep.equals({
+                id: layerAttributes.id,
+                name: layerAttributes.name,
+                legend: ["getLegendGraphicRequest"]
+            });
+            expect(dispatch.calledOnce).to.be.true;
+            expect(dispatch.firstCall.args[0]).to.be.equals("prepareLegend");
+            expect(dispatch.firstCall.args[1]).to.be.deep.equals(layerConfig.legend);
+        });
+
+        it("for visible group-layer should commit LayerInfoLegend", () => {
+            layerAttributes.typ = "GROUP";
+            sinon.stub(layerCollection, "getLayerById").returns(layer);
+
+            createLegendForLayerInfo({commit, dispatch, getters, rootGetters}, layerConfig.id);
+            expect(commit.calledOnce).to.be.true;
+            expect(commit.firstCall.args[0]).to.be.equals("setLayerInfoLegend");
+            expect(commit.firstCall.args[1]).to.be.deep.equals({
+                id: layerAttributes.id,
+                name: layerAttributes.name,
+                legend: ["getLegendGraphicRequest"]
+            });
+            expect(dispatch.calledOnce).to.be.true;
+            expect(dispatch.firstCall.args[0]).to.be.equals("prepareLegendForGroupLayer");
+            expect(dispatch.firstCall.args[1]).to.be.deep.equals(layer.getLayerSource());
         });
     });
+    describe("prepareLegend", () => {
+        it("prepareLegend with urls", () => {
+            const legendInfos = ["legendUrl1", "legendUrl2"],
+                legendObj = {
+                    label: "name",
+                    geometryType: "Point",
+                    styleObject: {}
+                };
+
+            sinon.stub(legendDraw, "prepare").returns(legendObj);
+
+            prepareLegend({commit}, legendInfos);
+            expect(commit.calledOnce).to.be.true;
+            expect(commit.firstCall.args[0]).to.be.equals("setPreparedLegend");
+            expect(commit.firstCall.args[1]).to.be.deep.equals(legendInfos);
+        });
+
+        it("prepareLegend with objects in legendInfos", () => {
+            const
+                legendObj = {
+                    label: "name",
+                    geometryType: "Point",
+                    styleObject: {}
+                },
+                legendInfos = [legendObj, legendObj];
+
+            sinon.stub(legendDraw, "prepare").returns(legendObj);
+
+            prepareLegend({commit}, legendInfos);
+            expect(commit.calledOnce).to.be.true;
+            expect(commit.firstCall.args[0]).to.be.equals("setPreparedLegend");
+            expect(commit.firstCall.args[1]).to.be.deep.equals(legendInfos);
+        });
+
+        it("prepareLegend with array in legendObj", () => {
+            const
+                legendObj = {
+                    label: "name",
+                    geometryType: "Point",
+                    styleObject: {}
+                },
+                legendInfos = [legendObj];
+
+            sinon.stub(legendDraw, "prepare").returns([legendObj, legendObj]);
+
+            prepareLegend({commit}, legendInfos);
+            expect(commit.calledOnce).to.be.true;
+            expect(commit.firstCall.args[0]).to.be.equals("setPreparedLegend");
+            expect(commit.firstCall.args[1]).to.be.deep.equals([legendObj, legendObj]);
+        });
+
+        it("prepareLegend with wms style", () => {
+            const
+                legendObj = {
+                    name: "name",
+                    graphic: {}
+                },
+                legendInfos = [legendObj];
+
+            sinon.stub(legendDraw, "prepare").returns({});
+
+            prepareLegend({commit}, legendInfos);
+            expect(commit.calledOnce).to.be.true;
+            expect(commit.firstCall.args[0]).to.be.equals("setPreparedLegend");
+            expect(commit.firstCall.args[1]).to.be.deep.equals(legendInfos);
+        });
+    });
+
+
+    it("prepareLegendForGroupLayer", () => {
+        const layer1 = {
+                id: "1",
+                getLegend: () => ["legendUrl1"]
+            },
+            layer2 = {
+                id: "2",
+                getLegend: () => ["legendUrl2"]
+            },
+            layerSource = [
+                layer1,
+                layer2
+            ],
+            getters = {
+                preparedLegend: ["getLegendGraphicRequest"]
+            };
+
+        sinon.stub(legendDraw, "prepare").returns({});
+
+        prepareLegendForGroupLayer({commit, dispatch, getters}, layerSource);
+        expect(commit.calledOnce).to.be.true;
+        expect(commit.firstCall.args[0]).to.be.equals("setPreparedLegend");
+        expect(commit.firstCall.args[1]).to.be.deep.equals(["getLegendGraphicRequest", "getLegendGraphicRequest"]);
+        expect(dispatch.calledTwice).to.be.true;
+        expect(dispatch.firstCall.args[0]).to.be.equals("prepareLegend");
+        expect(dispatch.firstCall.args[1]).to.be.deep.equals(["legendUrl1"]);
+        expect(dispatch.secondCall.args[0]).to.be.equals("prepareLegend");
+        expect(dispatch.secondCall.args[1]).to.be.deep.equals(["legendUrl2"]);
+    });
+
+
 });
