@@ -5,9 +5,13 @@ export default {
      * @returns {Boolean} - Flag if legendObject is valid.
      */
     isValidLegendObj: (legendObj) => {
-        const legend = legendObj.legend;
+        const legend = legendObj.legend,
+            position = legendObj.position;
         let isValid = true;
 
+        if (position < 0) {
+            isValid = false;
+        }
         if (typeof legend === "boolean" || !legend) {
             isValid = false;
         }
