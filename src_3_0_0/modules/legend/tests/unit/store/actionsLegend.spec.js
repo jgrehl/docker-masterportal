@@ -163,7 +163,12 @@ describe("src_3_0_0/modules/legend/store/actionsLegend.js", () => {
                     return layerAttributes[key];
                 },
                 getLegend: () => layerConfig.legend,
-                getLayerSource: () => []
+                getLayerSource: () => [],
+                getLayer: () => {
+                    return {
+                        getZIndex: () => 1
+                    };
+                }
             };
             getters = {
                 preparedLegend: ["getLegendGraphicRequest"]
@@ -183,7 +188,8 @@ describe("src_3_0_0/modules/legend/store/actionsLegend.js", () => {
             expect(commit.firstCall.args[1]).to.be.deep.equals({
                 id: layerAttributes.id,
                 name: layerAttributes.name,
-                legend: ["getLegendGraphicRequest"]
+                legend: ["getLegendGraphicRequest"],
+                position: 1
             });
             expect(dispatch.calledOnce).to.be.true;
             expect(dispatch.firstCall.args[0]).to.be.equals("prepareLegend");
@@ -200,7 +206,8 @@ describe("src_3_0_0/modules/legend/store/actionsLegend.js", () => {
             expect(commit.firstCall.args[1]).to.be.deep.equals({
                 id: layerAttributes.id,
                 name: layerAttributes.name,
-                legend: ["getLegendGraphicRequest"]
+                legend: ["getLegendGraphicRequest"],
+                position: 1
             });
             expect(dispatch.calledOnce).to.be.true;
             expect(dispatch.firstCall.args[0]).to.be.equals("prepareLegend");
@@ -217,7 +224,8 @@ describe("src_3_0_0/modules/legend/store/actionsLegend.js", () => {
             expect(commit.firstCall.args[1]).to.be.deep.equals({
                 id: layerAttributes.id,
                 name: layerAttributes.name,
-                legend: ["getLegendGraphicRequest"]
+                legend: ["getLegendGraphicRequest"],
+                position: 1
             });
             expect(dispatch.calledOnce).to.be.true;
             expect(dispatch.firstCall.args[0]).to.be.equals("prepareLegendForGroupLayer");
