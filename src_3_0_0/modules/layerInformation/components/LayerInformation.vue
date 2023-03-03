@@ -1,4 +1,5 @@
 <script>
+import LegendSingleLayer from "../../legend/components/LegendSingleLayer.vue";
 import {mapActions, mapGetters, mapMutations} from "vuex";
 import {isWebLink} from "../../../shared/js/utils/urlHelper";
 
@@ -7,6 +8,9 @@ import {isWebLink} from "../../../shared/js/utils/urlHelper";
  */
 export default {
     name: "LayerInformation",
+    components: {
+        LegendSingleLayer
+    },
     data () {
         return {
             activeTab: "layerinfo-legend"
@@ -26,6 +30,9 @@ export default {
             "periodicityKey",
             "showUrlGlobal",
             "title"
+        ]),
+        ...mapGetters("Modules/Legend", [
+            "layerInfoLegend"
         ]),
         showAdditionalMetaData () {
             return this.layerInfo.metaURL !== null && typeof this.abstractText !== "undefined" && this.abstractText !== this.noMetadataLoaded;
@@ -67,10 +74,12 @@ export default {
         if (this.configJs?.metaDataCatalogueId) {
             this.setMetaDataCatalogueId(this.configJs.metaDataCatalogueId);
         }
+        this.createLegendForLayerInfo(this.layerInfo.id);
     },
 
     methods: {
         ...mapActions("Modules/LayerInformation", ["setConfigParams"]),
+        ...mapActions("Modules/Legend", ["createLegendForLayerInfo"]),
         ...mapMutations("Modules/LayerInformation", ["setMetaDataCatalogueId"]),
         isWebLink,
 
@@ -211,12 +220,16 @@ export default {
         </ul>
         <div class="tab-content">
             <div
-                v-if="legendURL !== 'ignore'"
+
                 id="layerinfo-legend"
                 :class="getTabPaneClasses('layerinfo-legend')"
                 :show="isActiveTab('layerinfo-legend')"
-                :type="String('layerinfo-legend')"
-            />
+            >
+                <LegendSingleLayer
+                    v-if="legendURL !== 'ignore'"
+                    :legend-obj="layerInfoLegend"
+                />
+            </div>
             <div
                 id="LayerInfoDataDownload"
                 class="row"
