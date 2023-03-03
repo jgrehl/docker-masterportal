@@ -705,7 +705,7 @@
         },
         {
           "id": "GeoJSON",
-          "name": "Beiträge",
+          "name": "Beiträge (GeoJSON)",
           "typ": "GeoJSON",
           "visibility": true,
           "url": "./resources/example_geojson.json",

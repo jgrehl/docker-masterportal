@@ -89,8 +89,7 @@ Layer.prototype.setLayer = function (value) {
  */
 Layer.prototype.setLegend = function (value) {
     this.set("legend", value);
-    console.log("setLegend", value, this.get("id"));
-    store.dispatch("Modules/Legend/setLegendOnChanged", value);
+    store.commit("Modules/Legend/setLegendOnChanged", value);
 };
 
 /**
@@ -141,8 +140,6 @@ Layer.prototype.createLegend = function () {
     else if (legend === true && this.get("url") && this.get("layers")) {
         const layerNames = this.get("layers").split(","),
             legends = [];
-
-        console.log("this.get(layers)", this.get("layers"));
 
         // Compose GetLegendGraphic request(s)
         layerNames.forEach(layerName => {
