@@ -76,6 +76,7 @@ export default {
             const
                 layerId = layer.get("id"),
                 layerName = layer.get("name"),
+                zIndex = layer.getLayer().getZIndex(),
                 layerTyp = layer.get("typ");
 
             if (visibility === false) {
@@ -87,21 +88,23 @@ export default {
             else {
                 this.prepareLegend(layer.getLegend());
             }
-            this.generateLegend(layerId, layerName);
+            this.generateLegend(layerId, layerName, zIndex);
         },
 
         /**
          * Generates the legend object and adds it to the legend array in the store.
          * @param {String} id Id of layer.
          * @param {String} name Name of layer.
+         * @param {Number} zIndex ZIndex of layer.
          * @param {Object[]} legend Legend of layer.
          * @returns {void}
          */
-        generateLegend (id, name) {
+        generateLegend (id, name, zIndex) {
             const legendObj = {
                     id: id,
                     name: name,
-                    legend: this.preparedLegend
+                    legend: this.preparedLegend,
+                    position: zIndex
                 },
                 isValidLegend = validator.isValidLegendObj(legendObj),
                 isNotInLegend = isValidLegend && !this.isLayerInLegend(id),
