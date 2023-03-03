@@ -216,7 +216,9 @@ const initialState = JSON.parse(JSON.stringify(stateDraw)),
 
                         dispatch("Alerting/addSingleAlert", alert, {root: true});
                         dispatch("deactivateDrawInteractions");
-                        dispatch("removeInteraction", interaction);
+                        if (interaction) {
+                            dispatch("removeInteraction", interaction);
+                        }
                     }
                 });
             }
@@ -606,13 +608,27 @@ const initialState = JSON.parse(JSON.stringify(stateDraw)),
             dispatch("toggleInteraction", "draw");
             dispatch("manipulateInteraction", {interaction: "draw", active: false});
 
-            dispatch("removeInteraction", state.drawInteraction);
-            dispatch("removeInteraction", state.drawInteractionTwo);
-            dispatch("removeInteraction", state.modifyInteraction);
-            dispatch("removeInteraction", state.selectInteractionModify);
-            dispatch("removeInteraction", state.selectInteraction);
-            dispatch("removeInteraction", state.modifyAttributesInteraction);
-            dispatch("removeInteraction", state.selectInteractionModifyAttributes);
+            if (state.drawInteraction) {
+                dispatch("removeInteraction", state.drawInteraction);
+            }
+            if (state.drawInteractionTwo) {
+                dispatch("removeInteraction", state.drawInteractionTwo);
+            }
+            if (state.modifyInteraction) {
+                dispatch("removeInteraction", state.modifyInteraction);
+            }
+            if (state.selectInteractionModify) {
+                dispatch("removeInteraction", state.selectInteractionModify);
+            }
+            if (state.selectInteraction) {
+                dispatch("removeInteraction", state.selectInteraction);
+            }
+            if (state.modifyAttributesInteraction) {
+                dispatch("removeInteraction", state.modifyAttributesInteraction);
+            }
+            if (state.selectInteractionModifyAttributes) {
+                dispatch("removeInteraction", state.selectInteractionModifyAttributes);
+            }
 
             commit("setSelectedFeature", null);
             commit("setDrawType", initialState.drawType);
@@ -792,7 +808,9 @@ const initialState = JSON.parse(JSON.stringify(stateDraw)),
             dispatch("removeInteraction", state.drawInteraction);
             commit("setDrawInteraction", null);
             if (typeof state.drawInteractionTwo !== "undefined" && state.drawInteractionTwo !== null) {
-                dispatch("removeInteraction", state.drawInteractionTwo);
+                if (state.drawInteractionTwo) {
+                    dispatch("removeInteraction", state.drawInteractionTwo);
+                }
                 commit("setDrawInteractionTwo", null);
             }
             dispatch("createDrawInteractionAndAddToMap", {active: true});
