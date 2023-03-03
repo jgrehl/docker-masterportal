@@ -40,6 +40,7 @@ describe("src_3_0_0/core/js/layers/layer2dVectorOaf.js", () => {
             name: "oafTestLayer",
             typ: "OAF"
         };
+        sinon.stub(getGeometryTypeFromService, "getGeometryTypeFromOAF").returns(true);
     });
 
 
@@ -151,6 +152,7 @@ describe("src_3_0_0/core/js/layers/layer2dVectorOaf.js", () => {
             sinon.stub(styleList, "returnStyleObject").returns(true);
             sinon.stub(getGeometryTypeFromService, "getGeometryTypeFromOAF").returns(true);
             attributes.styleId = "styleId";
+
             const oafLayer = new Layer2dVectorOaf(attributes),
                 styleFunction = oafLayer.getStyleFunction(attributes);
 
