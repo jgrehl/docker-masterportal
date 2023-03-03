@@ -11,10 +11,9 @@ export default {
 
     showLegend: false,
     legends: [],
-    layerIdForLayerInfo: "",
-    layerCounterIdForLayerInfo: "",
     layerInfoLegend: {},
     showCollapseAllButton: false,
     legendOnChanged: [],
-    showLegendInMenu: true
+    showLegendInMenu: true,
+    preparedLegend: null
 };
