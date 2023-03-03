@@ -10,31 +10,6 @@ export default {
         legendObj: {
             type: Object && undefined,
             required: true
-        },
-        renderToId: {
-            type: String,
-            required: true
-        }
-    },
-    watch: {
-        legendObj () {
-            this.$nextTick(() => {
-                const renderToElement = document.getElementById(this.renderToId);
-
-                console.log("this.renderToId", this.renderToId);
-                console.log("renderToElement", renderToElement);
-
-                if (this.renderToId !== "" && renderToElement !== null) {
-                    this.$el.style.display = "block";
-
-                    while (renderToElement.lastElementChild) {
-                        renderToElement.removeChild(renderToElement.lastElementChild);
-                    }
-
-                    renderToElement.appendChild(new DOMParser().parseFromString(this.$el.outerHTML, "text/html").firstChild);
-                    this.$el.style.display = "none";
-                }
-            });
         }
     }
 };
@@ -43,7 +18,7 @@ export default {
 <template>
     <div
         :id="id"
-        class="layer-legend collapse show"
+        class="layer-legend show"
     >
         <template
             v-if="legendObj !== undefined"
@@ -84,7 +59,10 @@ export default {
                 <template
                     v-if="typeof legendPart === 'object'"
                 >
-                    <div v-if="Array.isArray(legendPart.graphic)">
+                    <div
+                        v-if="Array.isArray(legendPart.graphic)"
+                        class="images-row"
+                    >
                         <!--Legend as Image or SVG -->
                         <img
                             :alt="legendPart.name ? legendPart.name : legendObj.name"
@@ -99,9 +77,10 @@ export default {
                         <img
                             :alt="legendPart.name ? legendPart.name : legendObj.name"
                             :src="Array.isArray(legendPart.graphic) ? legendPart.graphic[0] : legendPart.graphic"
+                            class="second-image"
                         >
                         <span
-                            class="ms-4"
+                            class="ms-4 image-name"
                         >
                             {{ $t(legendPart.name) }}
                         </span>
@@ -145,12 +124,22 @@ export default {
 <style lang="scss" scoped>
     @import "~variables";
 
-    .layer-legend.collapsing {
-        -webkit-transition: none;
-        transition: none;
-        display: none;
-    }
     .first-image {
-        position: absolute;
+        grid-column: 1;
+        grid-row: 1;
+        z-index: 1;
+    }
+    .second-image {
+        grid-column: 1;
+        grid-row: 1;
+    }
+    .image-name {
+        grid-column: 2;
+        grid-row: 1;
+        display: flex;
+        align-items: center;
+    }
+    .images-row{
+        display: inline-grid;
     }
 </style>
