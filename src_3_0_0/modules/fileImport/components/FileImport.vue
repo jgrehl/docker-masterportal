@@ -27,7 +27,8 @@ export default {
         ...mapActions("Modules/FileImport", [
             "addLayerConfig",
             "importKML",
-            "importGeoJSON"
+            "importGeoJSON",
+            "openDrawTool"
         ]),
         ...mapActions("Maps", ["zoomToExtent"]),
         ...mapMutations("Modules/FileImport", ["setFeatureExtents"]),
@@ -251,7 +252,7 @@ export default {
             >
                 <FlatButton
                     aria-label="$t('modules.tools.fileImport.captions.drawTool')"
-                    :interaction="() => openDrawTool"
+                    :interaction="openDrawTool"
                     :text="$t('modules.tools.fileImport.captions.drawTool')"
                     :icon="'bi-pencil-fill'"
                 />
