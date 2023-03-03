@@ -1,5 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 const Config = {
+    addons: ["sdpDownload"],
     ignoredKeys: ["BOUNDEDBY", "SHAPE", "SHAPE_LENGTH", "SHAPE_AREA", "OBJECTID", "GLOBALID", "GEOMETRY", "SHP", "SHP_AREA", "SHP_LENGTH", "GEOM"],
     namedProjections: [
         // GK DHDN
