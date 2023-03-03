@@ -81,7 +81,8 @@ const actions = {
             legendObj = {
                 id: layerForLayerInfo.get("id"),
                 name: layerForLayerInfo.get("name"),
-                legend: getters.preparedLegend
+                legend: getters.preparedLegend,
+                position: layerForLayerInfo.getLayer().getZIndex()
             };
             if (validator.isValidLegendObj(legendObj)) {
                 commit("setLayerInfoLegend", legendObj);
