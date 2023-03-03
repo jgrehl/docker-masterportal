@@ -1,4 +1,4 @@
-import { expect } from "chai";
+import {expect} from "chai";
 import sinon from "sinon";
 import legendDraw from "../../../js/legendDraw";
 
@@ -9,9 +9,9 @@ describe("src_3_0_0/modules/legend/js/legendDraw", function () {
     describe("drawIntervalStyle", function () {
         it("with scalingShape 'CIRCLE_BAR'", function () {
             const style = {
-                scalingShape: "CIRCLE_BAR",
-                scalingAttribute: "scalingAttribute"
-            },
+                    scalingShape: "CIRCLE_BAR",
+                    scalingAttribute: "scalingAttribute"
+                },
                 intervalStyle = {
                     style: "x"
                 };
@@ -25,9 +25,9 @@ describe("src_3_0_0/modules/legend/js/legendDraw", function () {
 
         it("without scalingShape 'CIRCLE_BAR'", function () {
             const style = {
-                scalingShape: "scalingShape",
-                scalingAttribute: "scalingAttribute"
-            },
+                    scalingShape: "scalingShape",
+                    scalingAttribute: "scalingAttribute"
+                },
                 intervalStyle = {
                     style: "x"
                 };
@@ -43,10 +43,10 @@ describe("src_3_0_0/modules/legend/js/legendDraw", function () {
     describe("drawNominalStyle", function () {
         it("with scalingShape 'circlesegments'", function () {
             const style = {
-                attributes: {
-                    scalingShape: "circleSegments"
-                }
-            },
+                    attributes: {
+                        scalingShape: "circleSegments"
+                    }
+                },
                 nominalStyle = {
                     style: "x"
                 };
@@ -60,10 +60,10 @@ describe("src_3_0_0/modules/legend/js/legendDraw", function () {
 
         it("drawIntervalStyle without scalingShape 'circlesegments'", function () {
             const style = {
-                attributes: {
-                    scalingShape: "scalingShape"
-                }
-            },
+                    attributes: {
+                        scalingShape: "scalingShape"
+                    }
+                },
                 nominalStyle = {
                     style: "x"
                 };
@@ -79,20 +79,20 @@ describe("src_3_0_0/modules/legend/js/legendDraw", function () {
     describe("drawNominalCircleSegments", function () {
         it("simple circle segment", function () {
             const styleObject = {
-                attributes: {
-                    scalingValues: {
-                        "a": "b",
-                        "c": "d"
+                    attributes: {
+                        scalingValues: {
+                            "a": "b",
+                            "c": "d"
+                        }
+                    },
+                    style: {
+                        getImage: () => {
+                            return {
+                                getSrc: () => "src"
+                            };
+                        }
                     }
                 },
-                style: {
-                    getImage: () => {
-                        return {
-                            getSrc: () => "src"
-                        };
-                    }
-                }
-            },
                 result = legendDraw.drawNominalCircleSegments(styleObject);
 
             expect(result).to.be.an("Array");
@@ -105,30 +105,30 @@ describe("src_3_0_0/modules/legend/js/legendDraw", function () {
 
         it("nominal circle segment", function () {
             const styleObject = {
-                attributes: {
-                    imageScale: "2",
-                    scalingValues: {
-                        "a": "b",
-                        "c": "d"
+                    attributes: {
+                        imageScale: "2",
+                        scalingValues: {
+                            "a": "b",
+                            "c": "d"
+                        }
+                    },
+                    style: [{
+                        getImage: () => {
+                            return {
+                                getSrc: () => "src1",
+                                getSize: () => [1, 1]
+                            };
+                        }
+                    }, {
+                        getImage: () => {
+                            return {
+                                getSrc: () => "src2",
+                                getSize: () => [2, 2]
+                            };
+                        }
                     }
+                    ]
                 },
-                style: [{
-                    getImage: () => {
-                        return {
-                            getSrc: () => "src1",
-                            getSize: () => [1, 1]
-                        };
-                    }
-                }, {
-                    getImage: () => {
-                        return {
-                            getSrc: () => "src2",
-                            getSize: () => [2, 2]
-                        };
-                    }
-                }
-                ]
-            },
                 result = legendDraw.drawNominalCircleSegments(styleObject);
 
             expect(result).to.be.an("Array");
@@ -149,11 +149,11 @@ describe("src_3_0_0/modules/legend/js/legendDraw", function () {
     describe("prepareLegendForPoint", function () {
         it("prepareLegendForPoint type icon", function () {
             const style = {
-                type: "icon",
-                imagePath: "imagePath",
-                imageName: "imageName"
-            };
-            let result = legendDraw.prepareLegendForPoint({}, style);
+                    type: "icon",
+                    imagePath: "imagePath",
+                    imageName: "imageName"
+                },
+                result = legendDraw.prepareLegendForPoint({}, style);
 
             expect(result.graphic).to.be.equals("imagePathimageName");
         });
