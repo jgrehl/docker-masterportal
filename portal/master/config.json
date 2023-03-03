@@ -195,6 +195,9 @@
             "type": "language"
           },
           {
+            "type": "sdpDownload"
+          },
+          {
             "name": "benutzerdefinierte Menüelemente",
             "icon": "bi-folder-plus",
             "type": "folder",
