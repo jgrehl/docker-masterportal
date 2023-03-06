@@ -143,7 +143,7 @@ export default {
         setGfiAttributes (layerId) {
             const layer = openlayerFunctions.getLayerByLayerId(layerId);
 
-            this.gfiAttributes = isObject(layer?.get("gfiAttributes")) ? layer.get("gfiAttributes") : undefined;
+            this.gfiAttributes = isObject(layer?.gfiAttributes) ? layer.gfiAttributes : undefined;
         },
 
         /**
