@@ -194,6 +194,7 @@ export default {
             class="elements-positioned-over-map"
         >
             <Alerting />
+            <component :is="componentMap.graphicalSelect" />
             <component :is="componentMap.mouseHover" />
             <ControlBar class="controls" />
             <component :is="componentMap.layerPills" />
