@@ -56,7 +56,7 @@
       }
     },
     "mainMenu": {
-      "expanded": true,
+      "expanded": false,
       "title": {
         "text": "Master",
         "logo": "https://geodienste.hamburg.de/lgv-config/img/hh-logo.png",
@@ -273,7 +273,7 @@
       ]
     },
     "secondaryMenu": {
-      "expanded": false,
+      "expanded": true,
       "sections": [
         [
           {
