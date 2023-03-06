@@ -24,6 +24,7 @@ const state = {
     active: false,
     name: "Geometrie",
     type: "string",
+    hasMouseMapInteractions: true,
     displayName: "common:snippets.graphicalSelect.displayName",
     snippetType: "graphicalSelect",
     isMultiple: false,
