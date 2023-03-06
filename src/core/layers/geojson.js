@@ -29,10 +29,6 @@ export default function GeoJSONLayer (attrs) {
         this.checkForScale({scale: store.getters["Maps/scale"]});
     }
 
-    if (attrs.clusterDistance) {
-        this.set("isClustered", true);
-    }
-
     this.setStyle(this.getStyleFunction(attrs));
     this.prepareFeaturesFor3D(this.layer.getSource().getFeatures());
     this.createLegend(attrs);
