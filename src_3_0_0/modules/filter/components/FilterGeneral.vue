@@ -6,18 +6,7 @@ import LayerFilterSnippet from "./LayerFilterSnippet.vue";
 import MapHandler from "../utils/mapHandler.js";
 import FilterApi from "../js/interfaces/filter.api.js";
 import {compileLayers} from "../utils/compileLayers.js";
-
-import {
-    getLayerByLayerId,
-    showFeaturesByIds,
-    createLayerIfNotExists,
-    zoomToFilteredFeatures,
-    zoomToExtent,
-    addLayerByLayerId,
-    changeLayerVisibility,
-    setParserAttributeByLayerId,
-    getLayers
-} from "../utils/openlayerFunctions.js";
+import openlayerFunctions from "../utils/openlayerFunctions.js";
 import FilterList from "./FilterList.vue";
 import isObject from "../../../shared/js/utils/isObject.js";
 import GeometryFilter from "./GeometryFilter.vue";
@@ -37,15 +26,15 @@ export default {
         return {
             storePath: this.$store.state.Modules.Filter,
             mapHandler: new MapHandler({
-                getLayerByLayerId,
-                showFeaturesByIds,
-                createLayerIfNotExists,
-                zoomToFilteredFeatures,
-                zoomToExtent,
-                addLayerByLayerId,
-                changeLayerVisibility,
-                setParserAttributeByLayerId,
-                getLayers
+                getLayerByLayerId: openlayerFunctions.getLayerByLayerId,
+                showFeaturesByIds: openlayerFunctions.showFeaturesByIds,
+                createLayerIfNotExists: openlayerFunctions.createLayerIfNotExists,
+                zoomToFilteredFeatures: openlayerFunctions.zoomToFilteredFeatures,
+                zoomToExtent: openlayerFunctions.zoomToExtent,
+                addLayerByLayerId: openlayerFunctions.addLayerByLayerId,
+                changeLayerVisibility: openlayerFunctions.changeLayerVisibility,
+                setParserAttributeByLayerId: openlayerFunctions.setParserAttributeByLayerId,
+                getLayers: openlayerFunctions.getLayers
             }),
             layerConfigs: [],
             selectedLayerGroups: [],
