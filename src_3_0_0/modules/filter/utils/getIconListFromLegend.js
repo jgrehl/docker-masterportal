@@ -1,5 +1,5 @@
 import {convertColor} from "../../../shared/js/utils/convertColor.js";
-import {getLayerByLayerId} from "./openlayerFunctions.js";
+import openLayerFunctions from "./openlayerFunctions.js";
 import styleList from "@masterportal/masterportalapi/src/vectorStyle/styleList";
 
 /**
@@ -38,7 +38,7 @@ function getIconListFromLegend (legendInfoList, styleModel) {
   * @returns {Object} the style model
   */
 function getStyleModel (layerId) {
-    const layerConfig = getLayerByLayerId(layerId);
+    const layerConfig = openLayerFunctions.getLayerByLayerId(layerId);
     let styleId,
         styleModel;
 
