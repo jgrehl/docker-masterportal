@@ -2,12 +2,14 @@
 import {mapGetters, mapMutations, mapActions} from "vuex";
 import LayerSliderHandle from "./LayerSliderHandle.vue";
 import LayerSliderPlayer from "./LayerSliderPlayer.vue";
+import NavTab from "../../../shared/modules/tabs/components/NavTab.vue";
 
 export default {
     name: "LayerSlider",
     components: {
         LayerSliderHandle,
-        LayerSliderPlayer
+        LayerSliderPlayer,
+        NavTab
     },
     computed: {
         ...mapGetters("Modules/LayerSlider", [
@@ -50,40 +52,18 @@ export default {
             class="nav nav-tabs nav-justified"
             role="tablist"
         >
-            <li
-                class="nav-item"
-                role="presentation"
-            >
-                <button
-                    id="handle-tab"
-                    class="nav-link active"
-                    data-bs-toggle="tab"
-                    data-bs-target="#handle-tab-pane"
-                    type="button"
-                    role="tab"
-                    aria-controls="handle-tab-pane"
-                    aria-selected="true"
-                >
-                    {{ $t("modules.tools.layerSlider.sliderTypeHandle") }}
-                </button>
-            </li>
-            <li
-                class="nav-item"
-                role="presentation"
-            >
-                <button
-                    id="player-tab"
-                    class="nav-link"
-                    data-bs-toggle="tab"
-                    data-bs-target="#player-tab-pane"
-                    type="button"
-                    role="tab"
-                    aria-controls="player-tab-pane"
-                    aria-selected="false"
-                >
-                    {{ $t("modules.tools.layerSlider.sliderTypePlayer") }}
-                </button>
-            </li>
+            <NavTab
+                :id="'handle-tab'"
+                :active="true"
+                :target="'#handle-tab-pane'"
+                :label="'modules.tools.layerSlider.sliderTypeHandle'"
+            />
+            <NavTab
+                :id="'player-tab'"
+                :active="false"
+                :target="'#player-tab-pane'"
+                :label="'modules.tools.layerSlider.sliderTypePlayer'"
+            />
         </ul>
         <div
             id="myTabContent"
@@ -96,7 +76,7 @@ export default {
                 aria-labelledby="handle-tab"
                 tabindex="0"
             >
-                <LayerSliderPlayer />
+                <LayerSliderHandle />
             </div>
             <div
                 id="player-tab-pane"
@@ -105,7 +85,7 @@ export default {
                 aria-labelledby="player-tab"
                 tabindex="0"
             >
-                <LayerSliderHandle />
+                <LayerSliderPlayer />
             </div>
         </div>
     </div>
@@ -114,30 +94,12 @@ export default {
 <style lang="scss" scoped>
     @import "~variables";
 
-    #module-layer-slider {
-        .form-check-input {
-            width: 2.5rem;
-            height: 1.5rem;
-        }
+#module-layer-slider {
+    .form-check-input {
+        width: 2.5rem;
+        height: 1.5rem;
     }
-    .nav-tabs {
-        border: none;
-        .nav-link.active {
-            border-top: none;
-            border-left: none;
-            border-right: none;
-            border-bottom: 3px solid $dark_blue;
-            font-family: $font_family_accent;
-        }
-        .nav-link {
-            color: $black;
-            border: none;
-        }
-        .nav-link:hover {
-            border-radius: 0;
-            background-color: $light_blue;
-        }
-    }
+}
 
 
 </style>
