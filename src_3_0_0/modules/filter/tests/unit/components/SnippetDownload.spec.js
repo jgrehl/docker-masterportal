@@ -2,7 +2,7 @@ import {createStore} from "vuex";
 import {config, shallowMount} from "@vue/test-utils";
 import SnippetDownload from "../../../components/SnippetDownload.vue";
 import {expect} from "chai";
-import openlayersFunctions from "../../../utils/openlayerFunctions.js";
+import openlayerFunctions from "../../../utils/openlayerFunctions.js";
 import sinon from "sinon";
 
 config.global.mocks.$t = key => key;
@@ -40,7 +40,7 @@ describe("src/modules/tools/filter/components/SnippetDownload.vue", () => {
                 }
             };
 
-            sinon.stub(openlayersFunctions, "getLayerByLayerId").returns({
+            sinon.stub(openlayerFunctions, "getLayerByLayerId").returns({
                 "id": "filterId",
                 "type": "layer",
                 "showInLayerTree": false,
@@ -72,7 +72,7 @@ describe("src/modules/tools/filter/components/SnippetDownload.vue", () => {
                 }
             };
 
-            sinon.stub(openlayersFunctions, "getLayerByLayerId").returns({
+            sinon.stub(openlayerFunctions, "getLayerByLayerId").returns({
                 "id": "filterId",
                 "type": "layer",
                 "showInLayerTree": false,
@@ -126,7 +126,7 @@ describe("src/modules/tools/filter/components/SnippetDownload.vue", () => {
                     }}
                 ];
 
-            sinon.stub(openlayersFunctions, "getLayerByLayerId").returns({
+            sinon.stub(openlayerFunctions, "getLayerByLayerId").returns({
                 "id": "filterId",
                 "type": "layer",
                 "showInLayerTree": false,
@@ -152,7 +152,7 @@ describe("src/modules/tools/filter/components/SnippetDownload.vue", () => {
             expect(last_result).to.deep.equal(expected);
         });
         it("should hand over an array of properties, excluding the geometry", () => {
-            sinon.stub(openlayersFunctions, "getLayerByLayerId").returns({
+            sinon.stub(openlayerFunctions, "getLayerByLayerId").returns({
                 "id": "filterId",
                 "type": "layer",
                 "showInLayerTree": false,
