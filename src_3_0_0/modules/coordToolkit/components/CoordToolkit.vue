@@ -3,9 +3,17 @@ import {Pointer} from "ol/interaction.js";
 import crs from "@masterportal/masterportalapi/src/crs";
 import {mapGetters, mapActions, mapMutations} from "vuex";
 import mutations from "../store/mutationsCoordToolkit";
+import NavTab from "../../../shared/modules/tabs/components/NavTab.vue";
+import InputText from "../../../shared/modules/inputs/components/InputText.vue";
+import FlatButton from "../../../shared/modules/buttons/components/FlatButton.vue";
 
 export default {
     name: "CoordToolkit",
+    components: {
+        NavTab,
+        InputText,
+        FlatButton
+    },
     data () {
         return {
             eventHandler: null
@@ -321,7 +329,7 @@ export default {
                     clazz = "eastingToBottomTwoErrors";
                 }
             }
-            return clazz + " form-group form-group-sm row";
+            return clazz;
         },
         /**
          * Returns the className for the northing input field. Special Handling because fields positions are transformed.
@@ -350,21 +358,7 @@ export default {
                     clazz = "northingToTopTwoErrors";
                 }
             }
-            return clazz + " form-group form-group-sm row";
-        },
-        /**
-         * Returns the className for the labels.
-         * @returns {String} the className for the labels
-         */
-        getLabelClass () {
-            return this.showCopyButtons ? "col-md-3 col-sm-3 col-form-label" : "col-md-5 col-sm-5 col-form-label";
-        },
-        /**
-         * Returns the className for the input elements.
-         * @returns {String} the className for the input elements
-         */
-        getInputDivClass () {
-            return this.showCopyButtons ? "col-md-6 col-sm-6" : "col-md-7 col-sm-7";
+            return clazz;
         },
         /**
          * Returns true, if uiStyle is not SIMPLE or TABLE.
@@ -382,7 +376,7 @@ export default {
             let values = [];
 
             ids.forEach(id => {
-                const el = this.$refs[id];
+                const el = document.getElementById(id);
 
                 if (el) {
                     values.push(el.value);
@@ -415,50 +409,43 @@ export default {
             class="form-horizontal"
             role="form"
         >
-            <div class="radio-container form-group form-group-sm">
-                <div class="form-check">
-                    <input
-                        id="supplyCoordRadio"
-                        type="radio"
-                        name="mode"
-                        class="form-check-input"
-                        :checked="true"
-                        @click="changeMode('supply')"
-                    >
-                    <label
-                        for="supplyCoordRadio"
-                        :class="{ 'form-check-label': true, 'enabled': isEnabled('supply') }"
-                        @click="changeMode('supply')"
-                        @keydown.enter="changeMode('supply')"
-                    >{{ $t("modules.tools.coordToolkit.supply") }}</label>
-                </div>
-                <div class="form-check">
-                    <input
-                        id="searchByCoordRadio"
-                        type="radio"
-                        name="mode"
-                        class="form-check-input"
-                        @click="changeMode('search')"
-                    >
-                    <label
-                        for="searchByCoordRadio"
-                        :class="{'form-check-label': true, 'enabled': isEnabled('search') }"
-                        @click="changeMode('search')"
-                        @keydown.enter="changeMode('search')"
-                    >{{ $t("modules.tools.coordToolkit.search") }}</label>
-                </div>
-            </div>
+            <ul
+                id="layer-slider-tabs"
+                class="nav nav-tabs nav-justified"
+                role="tablist"
+            >
+                <NavTab
+                    :id="'supply-coord-tab'"
+                    :active="true"
+                    :target="'#supply-coord-pane'"
+                    :label="'modules.tools.coordToolkit.supply'"
+                    :interaction="() => changeMode('supply')"
+                />
+                <NavTab
+                    :id="'search-by-coord-tab'"
+                    :active="false"
+                    :target="'#search-by-coord-pane'"
+                    :label="'modules.tools.coordToolkit.search'"
+                    :interaction="() => changeMode('search')"
+                />
+            </ul>
             <div
                 v-if="mode === 'supply'"
-                class="hint col-md-12"
+                class="hint row my-3"
             >
-                {{ $t("modules.tools.coordToolkit.hintSupply") }}
+                <i class="bi-lightbulb-fill col-2" />
+                <span class="col-10 align-items-center d-flex">
+                    {{ $t("modules.tools.coordToolkit.hintSupply") }}
+                </span>
             </div>
             <div
                 v-if="mode === 'search'"
-                class="hint col-md-12"
+                class="hint row my-3"
             >
-                {{ $t("modules.tools.coordToolkit.hintSearch") }}
+                <i class="bi-lightbulb-fill col-2" />
+                <span class="col-10 align-items-center d-flex">
+                    {{ $t("modules.tools.coordToolkit.hintSearch") }}
+                </span>
             </div>
             <div class="form-floating mb-3">
                 <select
@@ -478,180 +465,181 @@ export default {
                 </select>
                 <label
                     for="coordSystemField"
-                    :class="getLabelClass()"
                 >{{ $t("modules.tools.coordToolkit.coordSystemField") }}</label>
             </div>
+            <div :class="getClassForEasting()">
+                <InputText
+                    :id="'coordinatesEastingField'"
+                    :label="$t(getLabel('eastingLabel'))"
+                    :placeholder="isEnabled('search') ? $t('modules.tools.coordToolkit.exampleAcronym') + coordinatesEastingExample : ''"
+                    :value="coordinatesEasting.value"
+                    :input="() => onInputEvent(coordinatesEasting)"
+                    :readonly="isEnabled('supply')"
+                    :class-obj="{ inputError: getEastingError }"
+                >
+                    <div
+                        v-if="isEnabled('supply') && !isMobile && showCopyButtons"
+                        class="copyBtn"
+                    >
+                        <button
+                            id="copyEastingBtn"
+                            type="button"
+                            class="btn btn-outline-default inside px-3"
+                            :title="$t(`common:modules.tools.coordToolkit.copyCoordBtn`, {value: $t(getLabel('eastingLabel'))})"
+                            @click="copyCoords(['coordinatesEastingField'])"
+                        >
+                            <span
+                                class="bootstrap-icon"
+                                aria-hidden="true"
+                            >
+                                <i class="bi-files" />
+                            </span>
+                        </button>
+                    </div>
+                </InputText>
+                <p
+                    v-if="eastingNoCoord"
+                    class="error-text"
+                >
+                    {{ eastingNoCoordMessage }}
+                </p>
+                <p
+                    v-if="eastingNoMatch"
+                    class="error-text"
+                >
+                    {{ eastingNoMatchMessage }}
+                    <br>
+                    {{ $t("modules.tools.coordToolkit.errorMsg.example") + coordinatesEastingExample }}
+                </p>
+            </div>
+            <div :class="getClassForNorthing()">
+                <InputText
+                    :id="'coordinatesNorthingField'"
+                    :label="$t(getLabel('northingLabel'))"
+                    :placeholder="isEnabled('search') ? $t('modules.tools.coordToolkit.exampleAcronym') + coordinatesNorthingExample : ''"
+                    :value="coordinatesNorthing.value"
+                    :input="() => onInputEvent(coordinatesNorthing)"
+                    :readonly="isEnabled('supply')"
+                    :class-obj="{ inputError: getNorthingError }"
+                >
+                    <div
+                        v-if="isEnabled('supply') && !isMobile && showCopyButtons"
+                        class="copyBtn"
+                    >
+                        <button
+                            id="copyNorthingBtn"
+                            type="button"
+                            class="btn btn-outline-default inside px-3"
+                            :title="$t(`common:modules.tools.coordToolkit.copyCoordBtn`, {value: $t(getLabel('northingLabel'))})"
+                            @click="copyCoords(['coordinatesNorthingField'])"
+                        >
+                            <span
+                                class="bootstrap-icon"
+                                aria-hidden="true"
+                            >
+                                <i class="bi-files" />
+                            </span>
+                        </button>
+                    </div>
+                </InputText>
+                <p
+                    v-if="northingNoCoord"
+                    class="error-text"
+                >
+                    {{ northingNoCoordMessage }}
+                </p>
+                <p
+                    v-if="northingNoMatch"
+                    class="error-text"
+                >
+                    {{ northingNoMatchMessage }}
+                    <br>
+                    {{ $t("modules.tools.coordToolkit.errorMsg.example") + coordinatesNorthingExample }}
+                </p>
+            </div>
+            <div v-if="isEnabled('supply') && (heightLayer !== null || mapMode === '3D')">
+                <InputText
+                    :id="'coordinatesHeightLabel'"
+                    :label="$t('modules.tools.coordToolkit.heightLabel')"
+                    :value="$t(height)"
+                    :readonly="true"
+                    :placeholder="$t('modules.tools.coordToolkit.heightLabel')"
+                />
+            </div>
+
             <div
-                :class="getClassForEasting()"
+                v-if="isEnabled('supply') && !isMobile && showCopyButtons"
+                class="d-flex justify-content-between mb-3"
             >
-                <label
-                    id="coordinatesEastingLabel"
-                    for="coordinatesEastingField"
-                    :class="getLabelClass()"
-                >{{ $t(getLabel("eastingLabel")) }}</label>
-                <div :class="getInputDivClass()">
-                    <input
-                        id="coordinatesEastingField"
-                        ref="coordinatesEastingField"
-                        v-model="coordinatesEasting.value"
-                        type="text"
-                        :readonly="isEnabled('supply')"
-                        :class="{ inputError: getEastingError, 'form-control': true}"
-                        :placeholder="isEnabled('search') ? $t('modules.tools.coordToolkit.exampleAcronym') + coordinatesEastingExample : ''"
-                        @input="onInputEvent(coordinatesEasting)"
-                    ><p
-                        v-if="eastingNoCoord"
-                        class="error-text"
-                    >
-                        {{ eastingNoCoordMessage }}
-                    </p>
-                    <p
-                        v-if="eastingNoMatch"
-                        class="error-text"
-                    >
-                        {{ eastingNoMatchMessage }}
-                        <br>
-                        {{ $t("modules.tools.coordToolkit.errorMsg.example") + coordinatesEastingExample }}
-                    </p>
-                </div>
-                <div
-                    v-if="isEnabled('supply') && !isMobile && showCopyButtons"
-                    class="col-md-1 col-sm-1 copyBtn"
+                {{ $t("menu.tools.coordToolkit") + ": " + coordinatesEasting.value + ", " + coordinatesNorthing.value }}
+                <button
+                    id="copyCoordsPairBtn"
+                    type="button"
+                    class="btn btn-outline-default copy px-3"
+                    :title="$t(`common:modules.tools.coordToolkit.copyCoordsBtn`)"
+                    @click="copyCoords(['coordinatesEastingField', 'coordinatesNorthingField'])"
                 >
-                    <button
-                        id="copyEastingBtn"
-                        type="button"
-                        class="btn btn-outline-default"
-                        :title="$t(`common:modules.tools.coordToolkit.copyCoordBtn`, {value: $t(getLabel('eastingLabel'))})"
-                        @click="copyCoords(['coordinatesEastingField'])"
+                    <span
+                        class="bootstrap-icon"
+                        aria-hidden="true"
                     >
-                        <span
-                            class="bootstrap-icon"
-                            aria-hidden="true"
-                        >
-                            <i class="bi-files" />
-                        </span>
-                    </button>
-                </div>
-                <div
-                    v-if="isEnabled('supply') && !isMobile && showCopyButtons"
-                    class="col-md-1 col-sm-1 copyBtn copyPairBtn"
-                >
-                    <button
-                        id="copyCoordsPairBtn"
-                        type="button"
-                        class="btn btn-outline-default"
-                        :title="$t(`common:modules.tools.coordToolkit.copyCoordsBtn`)"
-                        @click="copyCoords(['coordinatesEastingField', 'coordinatesNorthingField'])"
-                    >
-                        <span
-                            class="bootstrap-icon"
-                            aria-hidden="true"
-                        >
-                            <i class="bi-files" />
-                        </span>
-                    </button>
-                </div>
+                        <i class="bi-files" />
+                    </span>
+                </button>
             </div>
             <div
-                :class="getClassForNorthing()"
+                v-if="isEnabled('search')"
             >
-                <label
-                    id="coordinatesNorthingLabel"
-                    for="coordinatesNorthingField"
-                    :class="getLabelClass()"
-                >{{ $t(getLabel("northingLabel")) }}</label>
-                <div :class="getInputDivClass()">
-                    <input
-                        id="coordinatesNorthingField"
-                        ref="coordinatesNorthingField"
-                        v-model="coordinatesNorthing.value"
-                        type="text"
-                        :class="{ inputError: getNorthingError , 'form-control': true}"
-                        :readonly="isEnabled('supply')"
-                        :placeholder="isEnabled('search') ? $t('modules.tools.coordToolkit.exampleAcronym') + coordinatesNorthingExample : ''"
-                        @input="onInputEvent(coordinatesNorthing)"
-                    ><p
-                        v-if="northingNoCoord"
-                        class="error-text"
-                    >
-                        {{ northingNoCoordMessage }}
-                    </p>
-                    <p
-                        v-if="northingNoMatch"
-                        class="error-text"
-                    >
-                        {{ northingNoMatchMessage }}
-                        <br>
-                        {{ $t("modules.tools.coordToolkit.errorMsg.example") + coordinatesNorthingExample }}
-                    </p>
-                </div>
-                <div
-                    v-if="isEnabled('supply') && !isMobile && showCopyButtons"
-                    class="col-md-1 col-sm-1 copyBtn"
-                >
-                    <button
-                        id="copyNorthingBtn"
-                        type="button"
-                        class="btn btn-outline-default"
-                        :title="$t(`common:modules.tools.coordToolkit.copyCoordBtn`, {value: $t(getLabel('northingLabel'))})"
-                        @click="copyCoords(['coordinatesNorthingField'])"
-                    >
-                        <span
-                            class="bootstrap-icon"
-                            aria-hidden="true"
-                        >
-                            <i class="bi-files" />
-                        </span>
-                    </button>
-                </div>
-            </div>
-            <div
-                v-if="isEnabled('supply') && (heightLayer !== null || mapMode === '3D')"
-                class="form-group form-group-sm inputDiv row"
-            >
-                <label
-                    id="coordinatesHeightLabel"
-                    for="coordinatesHeightField"
-                    :class="getLabelClass()"
-                >{{ $t("modules.tools.coordToolkit.heightLabel") }}</label>
-                <div :class="getInputDivClass()">
-                    <input
-                        id="coordinatesHeightField"
-                        :value="$t(height)"
-                        type="text"
-                        class="form-control"
-                        :readonly="true"
-                    >
+                <div class="d-flex justify-content-center mb-3">
+                    <FlatButton
+                        :id="'searchByCoordBtn'"
+                        :text="$t('modules.tools.coordToolkit.searchBtn')"
+                        :icon="'bi-search'"
+                        :interaction="() => searchCoordinate(coordinatesEasting, coordinatesNorthing)"
+                        :disabled="getEastingError || getNorthingError || !coordinatesEasting.value || !coordinatesNorthing.value"
+                    />
                 </div>
             </div>
             <div
                 v-if="isDefaultStyle()"
-                class="form-group form-group-sm row"
             >
-                <div class="col-md-12 info">
-                    {{ $t("modules.tools.measure.influenceFactors") }}
-                    <span v-if="heightLayer !== null && mapMode === '2D'">
-                        <br>
-                        <br>
-                        {{ $t("modules.tools.coordToolkit.heightLayerInfo", {layer: heightLayer.get("name")}) }}
-                    </span>
-                </div>
-            </div>
-            <div
-                v-if="isEnabled('search')"
-                class="form-group form-group-sm row"
-            >
-                <div class="col-12 d-grid gap-2">
-                    <button
-                        id="searchByCoordBtn"
-                        class="btn btn-primary"
-                        :disabled="getEastingError || getNorthingError || !coordinatesEasting.value || !coordinatesNorthing.value"
-                        type="button"
-                        @click="searchCoordinate(coordinatesEasting, coordinatesNorthing)"
-                    >
-                        {{ $t("common:modules.tools.coordToolkit.searchBtn") }}
-                    </button>
+                <div
+                    id="accordionFlushExample"
+                    class="accordion accordion-flush"
+                >
+                    <div class="accordion-item">
+                        <h2
+                            id="flush-headingOne"
+                            class="accordion-header"
+                        >
+                            <button
+                                class="accordion-button collapsed"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#flush-collapseOne"
+                                aria-expanded="false"
+                                aria-controls="flush-collapseOne"
+                            >
+                                <i class="bi-info-circle-fill me-2" />
+                                {{ $t("menu.info") }}
+                            </button>
+                        </h2>
+                        <div
+                            id="flush-collapseOne"
+                            class="accordion-collapse collapse"
+                            aria-labelledby="flush-headingOne"
+                            data-bs-parent="#accordionFlushExample"
+                        >
+                            <div class="accordion-body">
+                                {{ $t("modules.tools.measure.influenceFactors") }}
+                                <span v-if="heightLayer !== null && mapMode === '2D'">
+                                    <br>
+                                    <br>
+                                    {{ $t("modules.tools.coordToolkit.heightLayerInfo", {layer: heightLayer.get("name")}) }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </form>
@@ -683,58 +671,31 @@ export default {
         font-size: 85%;
         color: $light_red;
     }
-    .hint{
-        margin: 5px 0 25px;
+    .hint {
         text-align:center;
         color: $black;
         transition: color 0.35s;
-    }
-    .info{
-        max-width: 550px;
-    }
-    .eastingToBottomNoError .copyPairBtn{
-        transform: translate(0px, -50px)
-    }
-    .eastingToBottomNoError{
-        transform: translate(0px, 50px)
-    }
-    .northingToTopNoError{
-        transform: translate(0px, -50px)
-    }
-    .northingToTopEastingError{
-        transform: translate(0px, -95px)
-    }
-    .eastingToBottomOneError{
-        transform: translate(0px, 85px)
-    }
-    .eastingToBottomTwoErrors{
-       transform: translate(0px, 85px);
-    }
-    .northingToTopTwoErrors{
-        transform: translate(0px, -95px)
-    }
-    .northingToTopTwoErrorsEastNoValue{
-        transform: translate(0px, -75px)
-    }
-    #copyCoordsPairBtn{
-        height: 91px;
-        position: absolute;
-    }
-    .copyBtn{
-        padding-right: 0;
-        padding-left: 0;
-        max-width: 50px;
-    }
-    @include media-breakpoint-down(md) {
-        .eastingToBottomNoError{
-            transform: translate(0px, 70px)
-        }
-        .northingToTopNoError{
-            transform: translate(0px, -70px)
+        i {
+            color: rgba(39, 148, 6);
+            font-size: $font_size_huge;
         }
     }
     .form-control[readonly] {
         background-color: $light-grey;
+    }
+    .inside {
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 100%;
+        border: none;
+        box-shadow: none;
+        color: $black;
+    }
+    .copy {
+        border: none;
+        box-shadow: none;
+        color: $black;
     }
 </style>
 
