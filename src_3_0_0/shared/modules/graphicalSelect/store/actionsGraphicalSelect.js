@@ -1,5 +1,7 @@
+
 import {GeoJSON} from "ol/format.js";
 import {fromCircle} from "ol/geom/Polygon.js";
+
 
 const actions = {
     /**
@@ -23,7 +25,8 @@ const actions = {
             const geoJson = await dispatch("featureToGeoJson", evt.feature);
 
             commit("setSelectedAreaGeoJson", geoJson);
-            payload.vm.$parent.$parent.$emit("onDrawEnd", geoJson);
+            //payload.vm.$parent.$parent.$emit("onDrawEnd", geoJson);
+            payload.vm.$parent.$emit("onDrawEnd", geoJson);
         });
 
     },
