@@ -2,7 +2,7 @@ import {config, shallowMount} from "@vue/test-utils";
 import LayerFilterSnippet from "../../../components/LayerFilterSnippet.vue";
 import {expect} from "chai";
 import MapHandler from "../../../utils/mapHandler.js";
-import openlayersFunctions from "../../../utils/openlayerFunctions.js";
+import openlayerFunctions from "../../../utils/openlayerFunctions.js";
 import sinon from "sinon";
 
 
@@ -115,7 +115,7 @@ describe("src/modules/tools/filter/components/LayerFilterSnippet.vue", () => {
             expect(wrapper.vm.getTitle({title: "title"}, 1)).to.be.equal("title");
         });
         it("should return true if title is not set", () => {
-            sinon.stub(openlayersFunctions, "getLayerByLayerId").returns({
+            sinon.stub(openlayerFunctions, "getLayerByLayerId").returns({
                 "id": "filterId",
                 "type": "layer",
                 "showInLayerTree": false,
