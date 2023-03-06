@@ -1,12 +1,6 @@
 import hash from "object-hash";
 import isObject from "../../../../shared/js/utils/isObject";
-import {
-    getMapProjection,
-    getFeaturesByLayerId,
-    getCurrentExtent,
-    isFeatureInMapExtent,
-    isFeatureInGeometry
-} from "../../utils/openlayerFunctions.js";
+import openlayerFunctions from "../../utils/openlayerFunctions.js";
 import IntervalRegister from "../../utils/intervalRegister.js";
 import InterfaceWfsIntern from "./interface.wfs.intern.js";
 import InterfaceWfsExtern from "./interface.wfs.extern.js";
@@ -34,13 +28,25 @@ export default class FilterApi {
             FilterApi.cache = {};
             FilterApi.waitingList = {};
             FilterApi.interfaces = {
-                wfsIntern: new InterfaceWfsIntern(FilterApi.intervalRegister, {getFeaturesByLayerId, isFeatureInMapExtent, isFeatureInGeometry}),
-                wfsExtern: new InterfaceWfsExtern({getCurrentExtent}),
-                oafIntern: new InterfaceOafIntern(FilterApi.intervalRegister, {getFeaturesByLayerId, isFeatureInMapExtent, isFeatureInGeometry}),
+                wfsIntern: new InterfaceWfsIntern(FilterApi.intervalRegister, {
+                    getFeaturesByLayerId: openlayerFunctions.getFeaturesByLayerId,
+                    isFeatureInMapExtent: openlayerFunctions.isFeatureInMapExtent,
+                    isFeatureInGeometry: openlayerFunctions.isFeatureInGeometry}),
+                wfsExtern: new InterfaceWfsExtern({getCurrentExtent: openlayerFunctions.getCurrentExtent}),
+                oafIntern: new InterfaceOafIntern(FilterApi.intervalRegister, {
+                    getFeaturesByLayerId: openlayerFunctions.getCurrentExtent,
+                    isFeatureInMapExtent: openlayerFunctions.isFeatureInMapExtent,
+                    isFeatureInGeometry: openlayerFunctions.isFeatureInGeometry}),
                 oafExtern: new InterfaceOafExtern(),
-                geojsonIntern: new InterfaceGeojsonIntern(FilterApi.intervalRegister, {getFeaturesByLayerId, isFeatureInMapExtent, isFeatureInGeometry}),
+                geojsonIntern: new InterfaceGeojsonIntern(FilterApi.intervalRegister, {
+                    getFeaturesByLayerId: openlayerFunctions.getCurrentExtent,
+                    isFeatureInMapExtent: openlayerFunctions.isFeatureInMapExtent,
+                    isFeatureInGeometry: openlayerFunctions.isFeatureInGeometry}),
                 geojsonExtern: new InterfaceGeojsonExtern(),
-                staIntern: new InterfaceStaIntern(FilterApi.intervalRegister, {getFeaturesByLayerId, isFeatureInMapExtent, isFeatureInGeometry}),
+                staIntern: new InterfaceStaIntern(FilterApi.intervalRegister, {
+                    getFeaturesByLayerId: openlayerFunctions.getCurrentExtent,
+                    isFeatureInMapExtent: openlayerFunctions.isFeatureInMapExtent,
+                    isFeatureInGeometry: openlayerFunctions.isFeatureInGeometry}),
                 staExtern: new InterfaceStaExtern()
             };
         }
@@ -80,7 +86,7 @@ export default class FilterApi {
                 url,
                 typename: featureType,
                 namespace: featureNS,
-                srsName: getMapProjection(),
+                srsName: openlayerFunctions.getMapProjection(),
                 featureNS: featureNS.substr(0, featureNS.lastIndexOf("/")),
                 featurePrefix: featureNS.substr(featureNS.lastIndexOf("/") + 1),
                 featureTypes: [featureType]
