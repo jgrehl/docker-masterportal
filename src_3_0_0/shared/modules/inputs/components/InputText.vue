@@ -28,6 +28,16 @@ export default {
             type: Function,
             default: null,
             required: false
+        },
+        readonly: {
+            type: Boolean,
+            default: false,
+            required: false
+        },
+        classObj: {
+            type: Object,
+            default: null,
+            required: false
         }
     }
 };
@@ -39,11 +49,14 @@ export default {
             :id="id"
             :type="type"
             class="form-control"
+            :class="classObj"
             :placeholder="placeholder"
             :value="value"
+            :readonly="readonly"
             @input="event => input(event.target.value)"
         >
         <label :for="id">{{ $t(label) }}</label>
+        <slot />
     </div>
 </template>
 
