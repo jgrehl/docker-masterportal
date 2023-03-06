@@ -54,7 +54,7 @@ export default {
         };
     },
     computed: {
-        ...mapGetters("GraphicalSelect", Object.keys(getters)),
+        ...mapGetters("Modules/GraphicalSelect", Object.keys(getters)),
         optionsValue: function () {
             return this.options ? this.options : {
                 "Box": this.$t("common:snippets.graphicalSelect.selectBySquare"),
@@ -65,7 +65,7 @@ export default {
     },
     watch: {
         selectedOptionData: function () {
-            this.createDrawInteraction();
+            // this.createDrawInteraction();
         }
     },
 
@@ -74,10 +74,10 @@ export default {
      * @returns {void}
      */
     created () {
-        this.$parent.$parent.$on("close", () => {
+        /* this.$parent.$parent.$on("close", () => {
             this.setActive(false);
             this.resetView();
-        });
+        }); */
     },
 
     /**
@@ -85,19 +85,23 @@ export default {
      * @returns {void}
      */
     mounted () {
+        this.setActive(false);
         this.selectedOptionData = this.selectedOption;
         this.createDomOverlay({id: "circle-overlay", overlay: this.circleOverlay});
         this.createDomOverlay({id: "tooltip-overlay", overlay: this.tooltipOverlay});
-        this.createDrawInteraction();
-        this.addLayerOnTop(this.layer);
+        //this.createDrawInteraction();
         this.checkOptions();
         this.setDefaultSelection(this.selectedOptionData);
     },
+    unMounted () {
+        this.setActive(false);
+        this.resetView();
+    },
 
     methods: {
-        ...mapMutations("GraphicalSelect", Object.keys(mutations)),
-        ...mapActions("GraphicalSelect", Object.keys(actions)),
-        ...mapActions("Maps", ["addLayerOnTop", "addInteraction", "removeInteraction", "registerListener"]),
+        ...mapMutations("Modules/GraphicalSelect", Object.keys(mutations)),
+        ...mapActions("Modules/GraphicalSelect", Object.keys(actions)),
+        ...mapActions("Maps", ["addLayer", "addInteraction", "removeInteraction", "registerListener"]),
         ...mapActions("Alerting", ["addSingleAlert"]),
 
         /**
@@ -263,6 +267,7 @@ export default {
             this.setDrawInteractionListener({interaction: this.draw, layer: this.layer, vm: this});
             this.setDrawInteraction(this.draw);
             this.registerListener({type: "pointermove", listener: this.showTooltipOverlay});
+            this.addLayer(this.layer);
         }
     }
 };
