@@ -336,6 +336,13 @@
             "description": "Bestimme Koordinaten aus der Karte oder suche nach Koordinaten."
           },
           {
+            "type": "draw",
+            "enableAttributesSelector": true,
+            "addIconsOfActiveLayers": true,
+            "showDescription": true,
+            "description": "Zeichnen / Schreiben auf der Karte."
+          },
+          {
             "type": "bufferAnalysis",
             "showDescription": true,
             "description": "Finde heraus, was sich in einem Umkreis um ein Feature befindet."
