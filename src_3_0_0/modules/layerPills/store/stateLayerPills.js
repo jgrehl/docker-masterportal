@@ -6,8 +6,8 @@
  * @property {Number} startIndex start index of shown layer pills from visibleSubjectDataLayer.
  * @property {Number} endIndex end index of shown layer pills from visibleSubjectDataLayer.
  * @property {Number} layerPillsAmount number of visible layerpills, as configured in config.json.
- * @property {Boolean} leftScrollDisabled if true, scroll through layerpills to the left is disabled.
- * @property {Boolean} rightScrollDisabled if true, scroll through layerpills to the right is disabled.
+ * @property {Boolean} leftScrollVisibility if true, scroll through layerpills to the left is visible.
+ * @property {Boolean} rightScrollVisibility if true, scroll through layerpills to the right is visible.
  */
 
 const state = {
@@ -17,8 +17,8 @@ const state = {
     startIndex: 0,
     endIndex: 0,
     layerPillsAmount: 0,
-    leftScrollDisabled: true,
-    rightScrollDisabled: true
+    leftScrollVisibility: true,
+    rightScrollVisibility: true
 };
 
 export default state;
