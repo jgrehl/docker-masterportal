@@ -13,6 +13,7 @@ import {EOL} from "os";
 import measureStyle from "./../../../../measure/utils/measureStyle";
 import createTestFeatures from "./testHelper";
 import sinon from "sinon";
+import styleList from "@masterportal/masterportalapi/src/vectorStyle/styleList.js";
 
 describe("src/modules/tools/print/utils/buildSpec", function () {
     let buildSpec,
@@ -21,6 +22,7 @@ describe("src/modules/tools/print/utils/buildSpec", function () {
         lineStringFeatures,
         multiLineStringFeatures,
         polygonFeatures,
+        originalGetStyleObject,
         multiPolygonFeatures;
 
     const attr = {
@@ -42,11 +44,28 @@ describe("src/modules/tools/print/utils/buildSpec", function () {
                     getText: () => "veryCreativeLabelText"
                 };
             }
+        },
+        modelFromRadio = {
+            get: key => ({
+                styleId: "8712",
+                id: "8712",
+                typ: "WFS",
+                children: sinon.spy()
+            })[key]
+        },
+        groupLayer = {
+            get: key => ({
+                styleId: "8712-child",
+                id: "8712-child",
+                typ: "GROUP",
+                children: [{id: "8712-child"}]
+            })[key]
         };
 
     before(() => {
         buildSpec = BuildSpec;
         buildSpec.setAttributes(attr);
+        originalGetStyleObject = buildSpec.getStyleObject;
         pointFeatures = createTestFeatures("resources/testFeatures.xml");
         multiPointFeatures = createTestFeatures("resources/testFeaturesSpassAmWasserMultiPoint.xml");
         polygonFeatures = createTestFeatures("resources/testFeaturesNaturschutzPolygon.xml");
@@ -502,6 +521,42 @@ describe("src/modules/tools/print/utils/buildSpec", function () {
             });
         });
     });
+
+    describe("getStyleObject", function () {
+        const vectorLayer = new Vector();
+        let layerId;
+
+        beforeEach(() => {
+            sinon.stub(styleList, "returnStyleObject").returns(true);
+        });
+
+        it("should return the style model from a given layer", function () {
+            layerId = "1711";
+            sinon.stub(Radio, "request").callsFake(() => {
+                return modelFromRadio;
+            });
+            buildSpec.getStyleObject = originalGetStyleObject;
+            expect(buildSpec.getStyleObject(vectorLayer, layerId)).to.be.true;
+        });
+        it("should return the style model of a child from a group layer", function () {
+            layerId = "8712-child";
+            sinon.stub(Radio, "request").callsFake(() => {
+                return groupLayer;
+            });
+            buildSpec.getStyleObject = originalGetStyleObject;
+            expect(buildSpec.getStyleObject(vectorLayer, layerId)).to.be.true;
+        });
+    });
+
+    describe("getStyleAttributes", function () {
+        const vectorLayer = new Vector();
+
+        it("should return \"styleId\" if styleList is not available", function () {
+            buildSpec.getStyleModel = sinon.spy();
+            expect(buildSpec.getStyleAttributes(vectorLayer, pointFeatures[0], false)).to.eql(["styleId"]);
+        });
+    });
+
     describe("getFeatureStyle", function () {
         const vectorLayer = new Vector();
 

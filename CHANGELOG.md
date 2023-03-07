@@ -19,6 +19,7 @@
 
 ### Fixed
 - Clustered GeoJSON-layer are now displayed correctly in 3D mode again.
+- Print: Layers with geometry type `polygon` are now styled correctly again in the printout.
 
 ---
 ## v2.31.0 - 2023-03-01
