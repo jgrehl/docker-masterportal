@@ -117,7 +117,6 @@
     "mock-local-storage": "^1.1.23",
     "null-loader": "^4.0.1",
     "openssl-nodejs": "^1.0.5",
-    "raf": "^3.4.1",
     "regenerator-runtime": "^0.13.11",
     "replace-in-file": "^6.3.5",
     "resize-observer-polyfill": "^1.5.1",
@@ -134,7 +133,6 @@
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.3",
     "webpack-merge": "^4.2.2",
-    "webpack-visualizer-plugin": "^0.1.11",
     "worker-loader": "^3.0.8",
     "xmlserializer": "^0.6.1",
     "zip-a-folder": "^1.1.5"
