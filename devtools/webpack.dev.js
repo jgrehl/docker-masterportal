@@ -1,8 +1,6 @@
 /* eslint-disable no-sync */
 /* eslint-disable global-require */
 const merge = require("webpack-merge"),
-    // auskommentieren um eine grafische Darstellung vom bundle als html zu erzeugen
-    // Visualizer = require("webpack-visualizer-plugin"),
     Common = require("./webpack.common.js"),
     fse = require("fs-extra"),
     HttpsProxyAgent = require("https-proxy-agent"),
