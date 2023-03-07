@@ -53,6 +53,9 @@ export default {
         ...mapMutations("Modules/LayerPills", ["setVisibleSubjectDataLayers", "setStartIndex", "setEndIndex", "setLayerPillsAmount", "setRightScrollDisabled", "setLeftScrollDisabled"]),
         ...mapMutations(["setVisibleSubjectDataLayerConfigs"]),
         ...mapActions(["replaceByIdInLayerConfig"]),
+        ...mapActions("Modules/LayerInformation", [
+            "startLayerInformation"
+        ]),
 
         setVisibleLayers (visibleLayers, mapMode) {
             if (visibleLayers) {
@@ -97,6 +100,11 @@ export default {
                 this.setStartIndex(this.startIndex - 1);
                 this.setEndIndex(this.endIndex - 1);
             }
+        },
+        showLayerInformationInMenu (layerConf) {
+            if (layerConf.datasets) {
+                this.startLayerInformation(layerConf);
+            }
         }
     }
 };
@@ -137,6 +145,9 @@ export default {
                     data-bs-custom-class="custom-tooltip"
                     :data-bs-original-title="layer.name"
                     :title="layer.name"
+                    :class="layer.datasets ? 'nav-link-hover' : ''"
+                    @click="showLayerInformationInMenu(layer)"
+                    @keydown="showLayerInformationInMenu(layer)"
                 >
                     {{ layer.name }}
                 </a>
@@ -196,6 +207,9 @@ export default {
         text-overflow: ellipsis;
         text-align: center;
     }
+    .nav-link-hover:hover {
+        cursor: pointer;
+    }
 
     .custom-tooltip {
         font-size: 20px;
@@ -207,7 +221,7 @@ export default {
         font-size: 1.2rem;
     }
 
-    @media (max-width: 820px) {
+    @media (max-width: 767px) {
         .nav-pills {
         display: flex;
         flex-wrap: nowrap;
