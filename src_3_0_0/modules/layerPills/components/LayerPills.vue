@@ -8,7 +8,14 @@ export default {
     components: {IconButton},
     computed: {
         ...mapGetters(["isMobile", "visibleSubjectDataLayerConfigs", "portalConfig"]),
-        ...mapGetters("Modules/LayerPills", ["visibleSubjectDataLayers", "startIndex", "endIndex", "layerPillsAmount", "leftScrollDisabled", "rightScrollDisabled"]),
+        ...mapGetters("Modules/LayerPills", [
+            "visibleSubjectDataLayers",
+            "startIndex",
+            "endIndex",
+            "layerPillsAmount",
+            "leftScrollVisibility",
+            "rightScrollVisibility"
+        ]),
         ...mapGetters("Maps", ["mode"])
     },
     watch: {
@@ -20,7 +27,7 @@ export default {
         },
         visibleSubjectDataLayers: {
             handler (value) {
-                this.setRightScrollDisabled(value.length <= this.layerPillsAmount);
+                this.setRightScrollVisibility(value.length <= this.layerPillsAmount);
             },
             deep: true
         },
@@ -29,18 +36,18 @@ export default {
         },
         startIndex (value) {
             if (value > 0) {
-                this.setLeftScrollDisabled(false);
+                this.setLeftScrollVisibility(false);
             }
             else {
-                this.setLeftScrollDisabled(true);
+                this.setLeftScrollVisibility(true);
             }
         },
         endIndex (value) {
             if (value < this.visibleSubjectDataLayers.length) {
-                this.setRightScrollDisabled(false);
+                this.setRightScrollVisibility(false);
             }
             else {
-                this.setRightScrollDisabled(true);
+                this.setRightScrollVisibility(true);
             }
         }
     },
@@ -50,7 +57,14 @@ export default {
         this.setLayerPillsAmount(this.endIndex);
     },
     methods: {
-        ...mapMutations("Modules/LayerPills", ["setVisibleSubjectDataLayers", "setStartIndex", "setEndIndex", "setLayerPillsAmount", "setRightScrollDisabled", "setLeftScrollDisabled"]),
+        ...mapMutations("Modules/LayerPills", [
+            "setVisibleSubjectDataLayers",
+            "setStartIndex",
+            "setEndIndex",
+            "setLayerPillsAmount",
+            "setRightScrollVisibility",
+            "setLeftScrollVisibility"
+        ]),
         ...mapMutations(["setVisibleSubjectDataLayerConfigs"]),
         ...mapActions(["replaceByIdInLayerConfig"]),
         ...mapActions("Modules/LayerInformation", [
@@ -123,6 +137,7 @@ export default {
             <li
                 v-if="!isMobile"
                 class="nav-item shadow"
+                :class="{visibility: leftScrollVisibility}"
             >
                 <IconButton
                     :id="'layerpills-left-button'"
@@ -130,7 +145,6 @@ export default {
                     :class-array="['btn-light', 'layerpillsbutton']"
                     :icon="'bi-chevron-left'"
                     :interaction="() => moveLayerPills('left')"
-                    :disabled="leftScrollDisabled"
                 />
             </li>
             <li
@@ -162,6 +176,7 @@ export default {
             <li
                 v-if="!isMobile"
                 class="nav-item shadow"
+                :class="{visibility: rightScrollVisibility}"
             >
                 <IconButton
                     :id="'layerpills-right-button'"
@@ -169,7 +184,6 @@ export default {
                     :class-array="['btn-light', 'layerpillsbutton']"
                     :icon="'bi-chevron-right'"
                     :interaction="() => moveLayerPills('right')"
-                    :disabled="rightScrollDisabled"
                 />
             </li>
         </ul>
@@ -219,6 +233,10 @@ export default {
         width: 2rem;
         height: 2rem;
         font-size: 1.2rem;
+    }
+
+    .visibility {
+        visibility: hidden;
     }
 
     @media (max-width: 767px) {
