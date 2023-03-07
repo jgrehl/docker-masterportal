@@ -110,9 +110,10 @@ export default {
         class="layer-pills-container"
     >
         <ul
-            class="nav nav-pills layerpills"
+            class="nav nav-pills"
         >
             <li
+                v-if="!isMobile"
                 class="nav-item shadow"
             >
                 <IconButton
@@ -125,7 +126,7 @@ export default {
                 />
             </li>
             <li
-                v-for="(layer, index) in visibleSubjectDataLayers.slice(startIndex, endIndex)"
+                v-for="(layer, index) in isMobile ? visibleSubjectDataLayers : visibleSubjectDataLayers.slice(startIndex, endIndex)"
                 :key="index"
                 class="nav-item shadow"
             >
@@ -148,6 +149,7 @@ export default {
                 />
             </li>
             <li
+                v-if="!isMobile"
                 class="nav-item shadow"
             >
                 <IconButton
@@ -172,6 +174,7 @@ export default {
         width: 100%;
         display: flex;
         justify-content: center;
+        pointer-events: all;
     }
 
     .nav-item {
@@ -198,14 +201,23 @@ export default {
         font-size: 20px;
     }
 
-    .layerpills {
-        pointer-events: all;
-    }
-
     .layerpillsbutton {
         width: 2rem;
         height: 2rem;
         font-size: 1.2rem;
+    }
+
+    @media (max-width: 820px) {
+        .nav-pills {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        scrollbar-width: none; /* for firefox */
+    }
+    .nav-pills::-webkit-scrollbar {
+        display: none; /* for chrome */
+    }
+
     }
 
 </style>
