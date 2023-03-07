@@ -2,10 +2,11 @@ import sinon from "sinon";
 import {config, mount} from "@vue/test-utils";
 import {expect} from "chai";
 import SwitchInput from "../../../components/SwitchInput.vue";
+import {nextTick} from "vue";
 
 config.global.mocks.$t = key => key;
 
-describe("src_3_0_0/shared/components/SwitchInput.vue", () => {
+describe("src_3_0_0/shared/modules/checkboxes/components/SwitchInput.vue", () => {
     let interactionSpy;
 
     beforeEach(() => {
@@ -28,7 +29,7 @@ describe("src_3_0_0/shared/components/SwitchInput.vue", () => {
         expect(input.attributes("aria-label")).to.equal(aria);
     });
 
-    it("should render a switch and trigger the given interaction on click", () => {
+    it("should render a switch and trigger the given interaction on click", async () => {
         const id = "perfect-sitch",
             label = "My super nice switch. Switch me!",
             aria = "read me when you need to",
@@ -37,10 +38,13 @@ describe("src_3_0_0/shared/components/SwitchInput.vue", () => {
             }),
             input = wrapper.find("input");
 
+
         expect(input.exists()).to.be.true;
 
-        input.trigger("click");
+        await input.trigger("click");
 
-        expect(interactionSpy.calledOnce).to.be.true;
+        nextTick(() => {
+            expect(interactionSpy.calledOnce).to.be.true;
+        });
     });
 });
