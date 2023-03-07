@@ -195,11 +195,16 @@ export default {
 
     .layer-pills-container {
         position: relative;
-        top: 10px;
+        top: 15px;
         width: 100%;
         display: flex;
-        justify-content: center;
+        justify-content: left;
         pointer-events: all;
+    }
+
+    .nav-pills {
+        display: flex;
+        flex-wrap: nowrap;
     }
 
     .nav-item {
