@@ -46,7 +46,9 @@ export default {
             "drawInteraction",
             "drawType",
             "modifyInteraction",
-            "attributesKeyList"
+            "attributesKeyList",
+            "outerBorderColor",
+            "innerBorderColor"
         ]),
 
         /**
@@ -336,6 +338,7 @@ export default {
             "setColor",
             "setText",
             "setCircleRadius",
+            "setCircleMethod",
             "setCircleOuterRadius",
             "setOuterColorContour",
             "addSymbolIfNotExists",
