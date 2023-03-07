@@ -19,7 +19,6 @@ const Config = {
         fetchBroadcastUrl: "./resources/newsFeedPortalAlerts.json"
     },
     startingMap3D: false,
-    cesiumLibrary: "https://geoportal-hamburg.de/mastercode/cesium/1_100/Cesium.js",
     cesiumParameter: {
         fog: {
             enabled: true,
