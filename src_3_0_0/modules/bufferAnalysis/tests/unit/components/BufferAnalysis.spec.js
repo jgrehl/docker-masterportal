@@ -150,21 +150,22 @@ describe("src_3_0_0/modules/bufferAnalysis/components/BufferAnalysis.vue", () =>
         });
     });
 
-    it("sets focus to first input control", async () => {
+    it("sets focus to first input control", () => {
         const elem = document.createElement("div");
 
         if (document.body) {
             document.body.appendChild(elem);
         }
-        // eslint-disable-next-line one-var
-        // wrapper = shallowMount(BufferAnalysisComponent, {store, localVue, attachTo: elem});
+
         wrapper = shallowMount(BufferAnalysisComponent, {
             global: {
                 plugins: [store]
             }});
 
         wrapper.vm.setFocusToFirstControl();
-        await wrapper.vm.$nextTick();
-        expect(wrapper.find("#tool-bufferAnalysis-selectSourceInput").element).to.equal(document.activeElement);
+
+        nextTick(() => {
+            expect(wrapper.find("#tool-bufferAnalysis-selectSourceInput").element).to.equal(document.activeElement);
+        });
     });
 });
