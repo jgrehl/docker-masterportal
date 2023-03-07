@@ -214,16 +214,19 @@
                 "type": "customMenuElement",
                 "name": "HTML aus config.json und Action",
                 "htmlContent": "<div><h1>This is a Heading</h1><p>This is a paragraph.</p></br><a href=\"https://www.w3schools.com/\" target=\"_blank\">Visit W3Schools.com!</a></div>",
-                "execute":{
+                "execute": {
                   "action": "Alerting/addSingleAlert",
-                  "payload":  {"title":"An alle Menschen", "content": "Hallo Welt"}
+                  "payload": {
+                    "title": "An alle Menschen",
+                    "content": "Hallo Welt"
+                  }
                 }
               },
               {
                 "type": "customMenuElement",
                 "name": "HTML aus externer Datei",
                 "icon": "bi-youtube",
-                "pathToContent":  "./resources/customMenuElementContent.html"
+                "pathToContent": "./resources/customMenuElementContent.html"
               }
             ]
           },
@@ -245,7 +248,7 @@
                       {
                         "type": "fileImport"
                       },
-                       {
+                      {
                         "type": "bufferAnalysis"
                       }
                     ]
@@ -820,6 +823,24 @@
         {
           "id": "12884",
           "name": "Gebäude LoD2",
+          "typ": "TileSet3D",
+          "visibility": true
+        },
+        {
+          "id": "16100",
+          "name": "Hauptkirchen",
+          "visibility": true,
+          "hiddenFeatures": [
+            "DEHHALKAJ00011uJ",
+            "DEHHALKAJ0000yd2",
+            "DEHHALKAJ0000ovW",
+            "DEHHALKAJ0000owm",
+            "DEHHALKAJ0000pO5"
+          ]
+        },
+        {
+          "id": "16101",
+          "name": "Brueckenflaechen HH",
           "typ": "TileSet3D",
           "visibility": true
         }
