@@ -58,7 +58,7 @@ module.exports = {
             },
             {
                 test: /\.js$/,
-                exclude: /\bsinon\b|\bturf\b|\bjsts\b/,
+                exclude: /\bturf\b|\bjsts\b/,
                 use: {
                     loader: "esbuild-loader",
                     options: {
@@ -137,9 +137,6 @@ module.exports = {
             i18next: ["i18next/dist/cjs/i18next.js"],
             mapCollection: [path.resolve(path.join(__dirname, "../src_3_0_0/core/maps/js/mapCollection.js")), "default"],
             Config: path.resolve(__dirname, "../test/unittests/deps/testConfig")
-            // XMLSerializer: path.resolve(__dirname, "../test/unittests/deps/testXmlSerializer"),
-            // fs: "fs",
-            // requestAnimationFrame: "raf"
         }),
         new VueLoaderPlugin(),
         new webpack.IgnorePlugin(/canvas/, /jsdom$/),
