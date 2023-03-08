@@ -8,11 +8,8 @@
  * @property {Number} layerPillsAmount number of visible layerpills, as configured in config.json.
  * @property {Boolean} leftScrollVisibility if true, scroll through layerpills to the left is visible.
  * @property {Boolean} rightScrollVisibility if true, scroll through layerpills to the right is visible.
- * @property {Number} masterportalContainerWidth the width of the masterportal-container DOM element
- * @property {Number} mainMenuWidth the width of the menu DOM element
- * @property {Number} secondaryMenuWidth the width of the secondary-menu DOM element
+ * @property {Number} elementsPositionedOverMapWidth the width of the elements-positioned-over-map DOM element
  * @property {Number} layerPillsListWidth the total width of layer-pills DOM element
- * @property {Number} availableSpace the available width for the layer-pills
  */
 
 const state = {
@@ -24,11 +21,8 @@ const state = {
     layerPillsAmount: Infinity,
     leftScrollVisibility: true,
     rightScrollVisibility: true,
-    masterportalContainerWidth: 0,
-    mainMenuWidth: 0,
-    secondaryMenuWidth: 0,
-    layerPillsListWidth: 0,
-    availableSpace: 0
+    elementsPositionedOverMapWidth: 0,
+    layerPillsListWidth: 0
 };
 
 export default state;
