@@ -177,13 +177,13 @@
             "fileUpload": true,
             "from": [
               {
-                "email": "lgvgeoportal-hilfe@gv.hamburg.de",
+                "email": "klara.boecker@gv.hamburg.de",
                 "name": "LGVGeoportalHilfe"
               }
             ],
             "to": [
               {
-                "email": "lgvgeoportal-hilfe@gv.hamburg.de",
+                "email": "klara.boecker@gv.hamburg.de",
                 "name": "LGVGeoportalHilfe"
               }
             ]
