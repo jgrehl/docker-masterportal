@@ -16,6 +16,7 @@ export default {
             "leftScrollVisibility",
             "rightScrollVisibility",
             "masterportalContainerWidth",
+            "elementsPositionedOverMapWidth",
             "mainMenuWidth",
             "secondaryMenuWidth",
             "layerPillsListWidth",
@@ -26,19 +27,33 @@ export default {
     },
     watch: {
         menuResizingToggle () {
-            // @Klara: Steht im menu-state, wird sonst nicht verwendet
-            // Hierfür fehlt also noch ein watcher: unsicher ob das mal funktioniert hat oder ich dabei war das umzusetzen
-            // this.updateAvailableLayerPillsContainerWidth({type: "menuResizingToggle"});
+            this.setEndIndex(1);
+            this.$nextTick(() => {
+                this.updateElementsPositionedOverMapWidth();
+                this.handleAvailableLayerPillsSpace();
+            });
         },
         mainExpanded () {
-            // this.updateAvailableLayerPillsContainerWidth({type: "mainExpanded", expanded: value});
+            this.setEndIndex(1);
+            this.$nextTick(() => {
+                this.updateElementsPositionedOverMapWidth();
+                this.handleAvailableLayerPillsSpace();
+            });
         },
         secondaryExpanded () {
-            // this.updateAvailableLayerPillsContainerWidth({type: "secondaryExpanded", expanded: value});
+            this.setEndIndex(1);
+            this.$nextTick(() => {
+                this.updateElementsPositionedOverMapWidth();
+                this.handleAvailableLayerPillsSpace();
+            });
         },
         visibleSubjectDataLayerConfigs: {
             handler (value) {
                 this.setVisibleLayers(value, this.mode);
+                this.$nextTick(() => {
+                    this.updateLayerPillsListWidth();
+                    this.handleAvailableLayerPillsSpace();
+                });
             },
             deep: true
         },
@@ -74,17 +89,8 @@ export default {
         this.setLayerPillsAmount(this.endIndex);
     },
     mounted () {
-        const masterportalContainerWidth = document.getElementById("masterportal-container").offsetWidth,
-            mainMenuWidth = parseInt(document.getElementById("mp-menu-mainMenu").style.width, 10),
-            secondaryMenuWidth = parseInt(document.getElementById("mp-menu-secondaryMenu").style.width, 10) ? parseInt(document.getElementById("mp-menu-secondaryMenu").style.width, 10) : 0,
-            layerPillsListWidth = document.getElementById("layerpills").offsetWidth,
-            availableSpace = masterportalContainerWidth - mainMenuWidth - secondaryMenuWidth;
-
-        this.setMasterportalContainerWidth(masterportalContainerWidth);
-        this.setMainMenuWidth(mainMenuWidth);
-        this.setSecondaryMenuWidth(secondaryMenuWidth);
-        this.setLayerPillsListWidth(layerPillsListWidth);
-        this.setAvailableSpace(availableSpace);
+        this.setElementsPositionedOverMapWidth(document.getElementsByClassName("elements-positioned-over-map")[0].offsetWidth);
+        this.setLayerPillsListWidth(document.getElementsByClassName("nav-pills")[0].offsetWidth);
     },
     methods: {
         ...mapMutations("Modules/LayerPills", [
@@ -95,6 +101,7 @@ export default {
             "setRightScrollVisibility",
             "setLeftScrollVisibility",
             "setMasterportalContainerWidth",
+            "setElementsPositionedOverMapWidth",
             "setMainMenuWidth",
             "setSecondaryMenuWidth",
             "setLayerPillsListWidth",
@@ -154,6 +161,22 @@ export default {
             if (layerConf.datasets) {
                 this.startLayerInformation(layerConf);
             }
+        },
+        updateElementsPositionedOverMapWidth () {
+            this.setElementsPositionedOverMapWidth(document.getElementsByClassName("elements-positioned-over-map")[0].offsetWidth);
+        },
+        updateLayerPillsListWidth () {
+            this.setLayerPillsListWidth(document.getElementsByClassName("nav-pills")[0].offsetWidth);
+        },
+        handleAvailableLayerPillsSpace () {
+            const singleLayerPillWidth = document.getElementsByClassName("nav-item")[1].offsetWidth + 15,
+                maxLayerPillsAmount = Math.ceil(this.elementsPositionedOverMapWidth / singleLayerPillWidth) - 1;
+
+            this.setEndIndex(maxLayerPillsAmount);
+
+            if (this.visibleSubjectDataLayers.length > maxLayerPillsAmount) {
+                this.setRightScrollVisibility(false);
+            }
         }
     }
 };
@@ -167,7 +190,6 @@ export default {
         class="layer-pills-container"
     >
         <ul
-            id="layerpills"
             class="nav nav-pills"
         >
             <li
@@ -228,7 +250,6 @@ export default {
 
 <style lang="scss" scoped>
     @import "~variables";
-
     .layer-pills-container {
         position: relative;
         top: 15px;
