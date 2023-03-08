@@ -649,7 +649,8 @@
                 "successfullyImportedLabel": "Erfolgreich importiert:",
                 "title": "Datei importieren",
                 "zoom": "Zoomen",
-                "fileZoom": "Auf Features dieser Datei \"{{filename}}\" zoomen"
+                "fileZoom": "Auf Features dieser Datei \"{{filename}}\" zoomen",
+                "importFiles": "Ausgewählte Dateien importieren"
             },
             "modeler3D": {
                 "entity": {

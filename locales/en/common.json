@@ -644,7 +644,8 @@
                 "successfullyImportedLabel": "Successfully imported:",
                 "title": "Import file",
                 "zoom": "Zoom",
-                "fileZoom": "Zoom to features of this file \"{{filename}}\""
+                "fileZoom": "Zoom to features of this file \"{{filename}}\"",
+                "importFiles": "Import chosen files"
             },
             "modeler3D": {
                 "entity": {
