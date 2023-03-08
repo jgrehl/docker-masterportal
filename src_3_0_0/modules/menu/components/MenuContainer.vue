@@ -119,6 +119,7 @@ export default {
 
 .mp-mainMenu {
     left: 0px;
+    overflow: scroll;
 }
 
 .mp-secondaryMenu {
