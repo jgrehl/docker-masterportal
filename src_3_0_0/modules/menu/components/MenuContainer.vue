@@ -27,7 +27,8 @@ export default {
             "currentMenuWidth",
             "mainExpanded",
             "secondaryExpanded",
-            "titleBySide"
+            "titleBySide",
+            "menuResizingToggle"
         ]),
 
         /**
@@ -124,6 +125,7 @@ export default {
             :min-width="0"
             :max-width="0.6"
             :min-height="1"
+            @end-resizing="toggleEndOfMenuResizing()"
         >
             &#8942;
         </ResizeHandle>
