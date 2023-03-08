@@ -14,11 +14,28 @@ export default {
             "endIndex",
             "layerPillsAmount",
             "leftScrollVisibility",
-            "rightScrollVisibility"
+            "rightScrollVisibility",
+            "masterportalContainerWidth",
+            "mainMenuWidth",
+            "secondaryMenuWidth",
+            "layerPillsListWidth",
+            "availableSpace"
         ]),
-        ...mapGetters("Maps", ["mode"])
+        ...mapGetters("Maps", ["mode"]),
+        ...mapGetters("Menu", ["mainExpanded", "secondaryExpanded", "menuResizingToggle"])
     },
     watch: {
+        menuResizingToggle () {
+            // @Klara: Steht im menu-state, wird sonst nicht verwendet
+            // Hierfür fehlt also noch ein watcher: unsicher ob das mal funktioniert hat oder ich dabei war das umzusetzen
+            // this.updateAvailableLayerPillsContainerWidth({type: "menuResizingToggle"});
+        },
+        mainExpanded () {
+            // this.updateAvailableLayerPillsContainerWidth({type: "mainExpanded", expanded: value});
+        },
+        secondaryExpanded () {
+            // this.updateAvailableLayerPillsContainerWidth({type: "secondaryExpanded", expanded: value});
+        },
         visibleSubjectDataLayerConfigs: {
             handler (value) {
                 this.setVisibleLayers(value, this.mode);
@@ -53,8 +70,21 @@ export default {
     },
     created () {
         this.setVisibleLayers(this.visibleSubjectDataLayerConfigs, this.mode);
-        this.setEndIndex(this.portalConfig?.tree?.layerPillsAmount ? this.portalConfig?.tree?.layerPillsAmount : 0);
+        this.setEndIndex(this.portalConfig?.tree?.layerPillsAmount ? this.portalConfig?.tree?.layerPillsAmount : this.layerPillsAmount);
         this.setLayerPillsAmount(this.endIndex);
+    },
+    mounted () {
+        const masterportalContainerWidth = document.getElementById("masterportal-container").offsetWidth,
+            mainMenuWidth = parseInt(document.getElementById("mp-menu-mainMenu").style.width, 10),
+            secondaryMenuWidth = parseInt(document.getElementById("mp-menu-secondaryMenu").style.width, 10) ? parseInt(document.getElementById("mp-menu-secondaryMenu").style.width, 10) : 0,
+            layerPillsListWidth = document.getElementById("layerpills").offsetWidth,
+            availableSpace = masterportalContainerWidth - mainMenuWidth - secondaryMenuWidth;
+
+        this.setMasterportalContainerWidth(masterportalContainerWidth);
+        this.setMainMenuWidth(mainMenuWidth);
+        this.setSecondaryMenuWidth(secondaryMenuWidth);
+        this.setLayerPillsListWidth(layerPillsListWidth);
+        this.setAvailableSpace(availableSpace);
     },
     methods: {
         ...mapMutations("Modules/LayerPills", [
@@ -63,7 +93,12 @@ export default {
             "setEndIndex",
             "setLayerPillsAmount",
             "setRightScrollVisibility",
-            "setLeftScrollVisibility"
+            "setLeftScrollVisibility",
+            "setMasterportalContainerWidth",
+            "setMainMenuWidth",
+            "setSecondaryMenuWidth",
+            "setLayerPillsListWidth",
+            "setAvailableSpace"
         ]),
         ...mapMutations(["setVisibleSubjectDataLayerConfigs"]),
         ...mapActions(["replaceByIdInLayerConfig"]),
@@ -132,6 +167,7 @@ export default {
         class="layer-pills-container"
     >
         <ul
+            id="layerpills"
             class="nav nav-pills"
         >
             <li
