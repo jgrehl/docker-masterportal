@@ -49,7 +49,6 @@
       }
     },
     "tree": {
-      "layerPillsAmount": 2,
       "addLayerButton": true,
       "highlightedFeatures": {
         "active": true
