@@ -2,13 +2,20 @@
 import {mapActions, mapGetters, mapMutations} from "vuex";
 import isObject from "../../../shared/js/utils/isObject";
 import FlatButton from "../../../shared/modules/buttons/components/FlatButton.vue";
+import IconButton from "../../../shared/modules/buttons/components/IconButton.vue";
+import FileUpload from "../../../shared/modules/inputs/components/FileUpload.vue";
 
 export default {
     name: "FileImport",
-    components: {FlatButton},
+    components: {
+        FlatButton,
+        FileUpload,
+        IconButton
+    },
     data () {
         return {
-            dzIsDropHovering: false
+            fileUploaded: false,
+            uploadedFiles: []
         };
     },
     computed: {
@@ -31,6 +38,7 @@ export default {
             "openDrawTool"
         ]),
         ...mapActions("Maps", ["zoomToExtent"]),
+        ...mapActions("Alerting", ["addSingleAlert"]),
         ...mapMutations("Modules/FileImport", ["setFeatureExtents"]),
 
         /**
@@ -44,31 +52,39 @@ export default {
                 }
             });
         },
-        onDZDragenter () {
-            this.dzIsDropHovering = true;
-        },
-        onDZDragend () {
-            this.dzIsDropHovering = false;
-        },
-        onDZMouseenter () {
-            this.dzIsHovering = true;
-        },
-        onDZMouseleave () {
-            this.dzIsHovering = false;
-        },
         onInputChange (e) {
             if (e.target.files !== undefined) {
-                this.addFile(e.target.files);
+                Array.from(e.target.files).forEach(file => {
+                    if (this.checkValid(file)) {
+                        this.uploadedFiles.push(file);
+                        this.fileUploaded = true;
+                    }
+                });
+                e.target.value = null;
             }
         },
         onDrop (e) {
-            this.dzIsDropHovering = false;
             if (e.dataTransfer.files !== undefined) {
-                this.addFile(e.dataTransfer.files);
+                Array.from(e.dataTransfer.files).forEach(file => {
+                    if (this.checkValid(file)) {
+                        this.uploadedFiles.push(file);
+                        this.fileUploaded = true;
+                    }
+                });
             }
         },
-        addFile (files) {
-            Array.from(files).forEach(file => {
+        checkValid (file) {
+            if (file.name.includes(".json") || file.name.includes(".geojson") || file.name.includes(".kml") || file.name.includes(".gpx")) {
+                return true;
+            }
+            this.addSingleAlert({
+                category: "error",
+                content: this.$t("modules.tools.fileImport.alertingMessages.formatError", {filename: file.name})
+            });
+            return false;
+        },
+        addFile () {
+            this.uploadedFiles.forEach(file => {
                 if (this.importedFileNames.includes(file)) {
                     return;
                 }
@@ -84,8 +100,14 @@ export default {
                                 if (fileExtension === "geojson" || fileExtension === "json") {
                                     this.importGeoJSON({raw: f.target.result, layer: layer.layer, filename: file.name});
                                 }
-                                else {
+                                else if (fileExtension === "kml") {
                                     this.importKML({raw: f.target.result, layer: layer.layer, filename: file.name});
+                                }
+                                else {
+                                    this.addSingleAlert({
+                                        category: "error",
+                                        content: this.$t("modules.tools.fileImport.alertingMessages.formatError", {filename: file.name})
+                                    });
                                 }
                             }
                         });
@@ -93,6 +115,16 @@ export default {
 
                 reader.readAsText(file);
             });
+        },
+        removeFile (file) {
+            if (this.uploadedFiles.includes(file)) {
+                const index = this.importedFileNames[file];
+
+                this.uploadedFiles.splice(index, 1);
+                if (this.uploadedFiles.length === 0) {
+                    this.fileUploaded = false;
+                }
+            }
         },
         triggerClickOnFileInput (event) {
             if (event.which === 32 || event.which === 13) {
@@ -164,54 +196,40 @@ export default {
             class="mb-3"
             v-html="$t('modules.tools.fileImport.captions.introFormats')"
         />
-        <div
-            class="vh-center-outer-wrapper drop-area-fake mb-3"
-            :class="dropZoneAdditionalClass"
+        <FileUpload
+            :id="'fileUpload'"
+            :keydown="(e) => triggerClickOnFileInput(e)"
+            :change="(e) => onInputChange(e)"
+            :drop="(e) => onDrop(e)"
         >
-            <div
-                class="vh-center-inner-wrapper"
-            >
-                <p
-                    class="caption"
+            <div v-if="fileUploaded">
+                <div
+                    v-for="file in uploadedFiles"
+                    :key="file"
+                    :class="enableZoomToExtend ? 'hasZoom' : ''"
+                    class="row d-flex mb-1"
                 >
-                    {{ $t("modules.tools.fileImport.captions.dropzone") }}
-                </p>
+                    <span class="d-flex align-items-center col">
+                        {{ file.name }}
+                    </span>
+                    <IconButton
+                        :aria="$t('modules.tools.fileUpload.removeAttachment')"
+                        :icon="'bi-trash'"
+                        :interaction="() => removeFile(file)"
+                        class="remove-btn col-3"
+                    />
+                </div>
             </div>
+        </FileUpload>
 
-            <!-- eslint-disable-next-line vuejs-accessibility/mouse-events-have-key-events -->
-            <div
-                class="drop-area"
-                @drop.prevent="onDrop"
-                @dragover.prevent
-                @dragenter.prevent="onDZDragenter"
-                @dragleave="onDZDragend"
-                @mouseenter="onDZMouseenter"
-                @mouseleave="onDZMouseleave"
+        <div class="d-flex justify-content-center">
+            <FlatButton
+                v-if="fileUploaded"
+                :aria-label="$t('modules.tools.fileImport.importFiles')"
+                :interaction="() => addFile()"
+                :text="$t('modules.tools.fileImport.importFiles')"
+                :icon="'bi-upload'"
             />
-            <!--
-                The previous element does not provide a @focusin or @focus reaction as would
-                be considered correct by the linting rule set. Since it's a drop-area for file
-                dropping by mouse, the concept does not apply. Keyboard users may use the
-                matching input fields.
-            -->
-        </div>
-        <div
-            class="d-flex justify-content-center"
-        >
-            <label
-                ref="upload-label"
-                class="btn btn-secondary btn-icon"
-                tabindex="0"
-                @keydown="triggerClickOnFileInput"
-            >
-                <input
-                    ref="upload-input-file"
-                    type="file"
-                    @change="onInputChange"
-                >
-                <i class="bi-box-arrow-in-down" />
-                {{ $t("modules.tools.fileImport.captions.browse") }}
-            </label>
         </div>
 
         <div v-if="importedFileNames.length > 0">
@@ -269,71 +287,18 @@ export default {
         border: 1px solid #DDDDDD;
     }
 
+    .remove-btn {
+        z-index: 20;
+        position: relative;
+    }
+
     input[type="file"] {
         display: none;
     }
     input[type="button"] {
         display: none;
     }
-    .drop-area-fake {
-        background-color: $white;
-        border-radius: 12px;
-        border: 2px dashed $dark_blue;
-        padding:24px;
-        transition: background 0.25s, border-color 0.25s;
 
-        &.dzReady {
-            border-color:transparent;
-            background-color: $dark_blue;
-
-            p.caption {
-                color: $white;
-            }
-        }
-
-        p.caption {
-            color: $dark_blue;
-            margin:0;
-            text-align:center;
-            transition: color 0.35s;
-            font-family: $font_family_accent;
-            font-size: $font-size-lg;
-        }
-    }
-    .drop-area {
-        position:absolute;
-        top:0;
-        left:0;
-        right:0;
-        bottom:0;
-        z-index:10;
-    }
-    .vh-center-outer-wrapper {
-        top:0;
-        left:0;
-        right:0;
-        bottom:0;
-        text-align:center;
-        position:relative;
-
-        &:before {
-            content:'';
-            display:inline-block;
-            height:100%;
-            vertical-align:middle;
-            margin-right:-0.25rem;
-        }
-    }
-    .vh-center-inner-wrapper {
-        text-align:left;
-        display:inline-block;
-        vertical-align:middle;
-        position:relative;
-    }
-
-    .successfullyImportedLabel {
-        font-weight: bold;
-    }
     .introDrawTool {
         font-style: italic;
     }
