@@ -521,6 +521,7 @@ const BuildSpecModel = {
                     clonedFeature = feature.clone();
                     styleAttributes.forEach(attribute => {
                         clonedFeature.set(attribute, (clonedFeature.get("features") ? clonedFeature.get("features")[0] : clonedFeature).get(attribute) + "_" + String(index));
+                        clonedFeature.ol_uid = feature.ol_uid;
                     });
                     geometryType = feature.getGeometry().getType();
 
@@ -534,7 +535,7 @@ const BuildSpecModel = {
                         }
                     }
                     stylingRules = this.getStylingRules(layer, clonedFeature, styleAttributes, style);
-                    if (styleFromStyleList !== undefined && styleFromStyleList.attributes.labelField && styleFromStyleList.attributes.labelField.length > 0) {
+                    if (styleFromStyleList?.attributes?.labelField?.length > 0) {
                         stylingRules = stylingRules.replaceAll(limiter, " AND ");
                         limiter = " AND ";
                     }
