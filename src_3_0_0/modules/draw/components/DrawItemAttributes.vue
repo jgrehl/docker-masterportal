@@ -31,11 +31,6 @@ export default {
             addKey: {valid: true, message: ""}
         };
     },
-    compatConfig: {
-        MODE: 3,
-        WATCH_ARRAY: true,
-        ATTR_FALSE_VALUE: false
-    },
     computed: {
         ...mapGetters("Modules/Draw", ["oldStyle"])
     },
@@ -329,7 +324,7 @@ export default {
                             v-model="attribute.key"
                             aria-label="attribute"
                             type="text"
-                            :title="validKeys[attribute.key].valid === false ? validKeys[attribute.key].message : false"
+                            :title="validKeys[attribute.key].valid === null ? validKeys[attribute.key].message : null"
                             :class="[validKeys[attribute.key].valid === false ? 'is-invalid' : '', 'form-control']"
                             placeholder="Attribute key"
                         >
@@ -365,7 +360,7 @@ export default {
                             v-model="attributeKey"
                             aria-label="attribute"
                             type="text"
-                            :title="addKey.valid === false ? addKey.message : false"
+                            :title="addKey.valid === null ? addKey.message : null"
                             :class="[addKey.valid === false ? 'is-invalid' : '', 'form-control']"
                             :placeholder="$t('common:modules.tools.draw.attributeSelect.input.key')"
                             @input="addKey.valid = true"
