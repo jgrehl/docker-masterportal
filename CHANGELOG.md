@@ -346,20 +346,24 @@
     - @masterportal/masterportalapi: 2.15.1 to 2.16.0 (This also raised ol to version 7.3.0)
     - axios: 1.2.0 to 1.3.4
     - bootstrap-icons: 1.10.2 to 1.10.3
+    - charts.js to 4.2.1
     - i18next: 22.0.6 to 22.4.11
     - i18next-http-backend: 2.0.2 to 2.2.0
     - jquery: 3.6.1 to 3.6.4
   - devDependencies:
     - @sinonjs/fake-timers: 10.0.0 to 10.0.2
+    - @vue/test-utils to 2.3.1
     - canvas: 2.10.2 to 2.11.0
     - esbuild-loader: 2.20.0 to 3.0.1
     - eslint: 8.28.0 to 8.36.0
     - eslint-plugin-vue: 9.8.0 to 9.9.0
+    - fs-extra to 11.1.0
     - husky: 8.0.2 to 8.0.3
     - jsdoc: 4.0.0 to 4.0.2
     - mocha: 10.1.0 to 10.2.0
     - sass: 1.56.1 to 1.59.3
     - sinon: 14.0.2 to 15.0.2
+    - vue-loader to 17.0.1
 - The version of node was updated, must be `>= 16.13.2 <= 16.18.1`
 - The version of npm was updated, must be `>= 8.1.2 <= 8.19.3`
 - Parameters moved from config.js to config.json:
@@ -391,6 +395,7 @@
         - backbone.radio
         - bootstrap-colorpicker
         - bootstrap-datepicker
+        - bootstrap-slider
         - bootstrap-toggle
         - jquery
         - jquery-ui
@@ -400,10 +405,18 @@
         - vue-template-compiler
         - vue2-datepicker
     - devDependencies:
+        - dotenv
         - eslint-plugin-backbone
         - eslint-plugin-you-dont-need-lodash-underscore
+        - jaguarjs-jsdoc
         - jsdoc
+        - jsdom
+        - node-fetch
+        - npm-run-all
+        - raf
+        - selenium-webdriver
         - sinon-chai
+        - webpack-visualizer-plugin
 - Module print: The attribute `mapfishServiceId` has been removed. Use `printServiceId` instead.
 - Module contact: The attribute `serviceID` has been removed. Use `serviceId` instead.
 
