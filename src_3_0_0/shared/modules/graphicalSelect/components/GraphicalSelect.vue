@@ -65,7 +65,7 @@ export default {
     },
     watch: {
         selectedOptionData: function () {
-            // this.createDrawInteraction();
+            this.createDrawInteraction();
         }
     },
 
@@ -85,11 +85,11 @@ export default {
      * @returns {void}
      */
     mounted () {
-        this.setActive(false);
+        this.setActive(true);
         this.selectedOptionData = this.selectedOption;
         this.createDomOverlay({id: "circle-overlay", overlay: this.circleOverlay});
         this.createDomOverlay({id: "tooltip-overlay", overlay: this.tooltipOverlay});
-        //this.createDrawInteraction();
+        this.createDrawInteraction();
         this.checkOptions();
         this.setDefaultSelection(this.selectedOptionData);
     },
@@ -276,7 +276,7 @@ export default {
 <template>
     <form>
         <Dropdown
-            v-if="selectElement === 'Dropdown'"
+            v-if="selectElement === 'Dropdown' && active === true"
             v-model="selectedOptionData"
             :options="optionsValue"
             :focus-on-creation="focusOnCreation"
