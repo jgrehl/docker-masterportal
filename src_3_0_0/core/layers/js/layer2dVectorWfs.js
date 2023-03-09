@@ -66,7 +66,6 @@ Layer2dVectorWfs.prototype.getOptions = function (attributes) {
         loadingStrategy: attributes.loadingStrategy === "all" ? all : bbox,
         onLoadingError: this.onLoadingError,
         wfsFilter: attributes.wfsFilter,
-        // todo inka in geojson layerStyle --> vereinheitlichen
         style: this.getStyleFunction(attributes)
     };
 
