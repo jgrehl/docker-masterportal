@@ -34,6 +34,16 @@ Layer.prototype.updateLayerValues = function () {
 };
 
 /**
+ * To be overwritten, does nothing.
+ * @abstract
+ * @returns {void}
+ */
+Layer.prototype.visibilityChanged = function () {
+    // do in children
+};
+
+
+/**
  * Getter for attribute values.
  * @param {String} key The attribute key.
  * @returns {*} The attribute value

@@ -792,6 +792,67 @@
           "legend": ["https://geodienste.hamburg.de/lgv-config/img/Legende_Laermberechnung_Tag.png", "https://geodienste.hamburg.de/lgv-config/img/Legende_Laermberechnung_Nacht.png"]
         },
         {
+          "id": "1534",
+          "name": "Grünflächen (WebGL)",
+          "renderer": "webgl",
+          "typ" : "WFS",
+          "styleId": "1534",
+          "isPointLayer": false,
+          "gfiAttributes": "showAll",
+          "legendURL": "",
+          "loadingStrategy": "all",
+          "mouseHoverField": [
+            "belegenheit",
+            "nutzung"
+          ]
+        },
+        {
+          "id": "webgl_dipas",
+          "name": "DIPAS Data GeoJSON (WebGL)",
+          "renderer": "webgl",
+          "typ": "GeoJSON",
+          "url": "./webgl_assets/dipas.test.geojson",
+          "format": "text/html; charset=utf-8",
+          "minScale": "0",
+          "maxScale": "2500000",
+          "gfiAttributes": "showAll",
+          "layerAttribution": "nicht vorhanden",
+          "legendURL": "",
+          "loadingStrategy": "all",
+          "hitTolerance": 20,
+          "isPointLayer": true,
+          "bboxGeometry": [568426.27, 5931985.58, 569614.86, 5933174.11],
+          "mouseHoverField": [
+            "Category",
+            "Value"
+          ],
+          "style": {
+            "symbol": {
+              "symbolType": "circle",
+              "size": [
+                "interpolate",
+                ["linear"],
+                ["get", "Total_votes"],
+                0,
+                6,
+                18,
+                24
+              ],
+              "color": [
+                "interpolate",
+                ["linear"],
+                ["get", "compound"],
+                -1,
+                [240, 40, 30],
+                1,
+                [0, 200, 60]
+              ],
+              "opacity": 0.8,
+              "rotateWithView": true
+            }
+          }
+        },
+        {
           "id": "Entities3D",
           "name": "3D-Entities Testlayer",
           "typ": "Entities3D",
