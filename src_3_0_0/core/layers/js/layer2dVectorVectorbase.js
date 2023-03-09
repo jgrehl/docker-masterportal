@@ -25,4 +25,5 @@ Layer2dVectorVectorbase.prototype = Object.create(Layer2dVector.prototype);
  */
 Layer2dVectorVectorbase.prototype.createLayer = function (attributes) {
     this.layer = vectorBase.createLayer(attributes);
+    this.features = attributes.features;
 };
