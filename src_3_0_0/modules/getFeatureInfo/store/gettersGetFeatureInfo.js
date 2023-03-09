@@ -1,3 +1,5 @@
+import Point from "ol/geom/Point";
+import {buffer} from "ol/extent";
 import {createGfiFeature} from "../../../shared/js/utils/getWmsFeaturesByMimeType";
 import {generateSimpleGetters} from "../../../shared/js/utils/generators";
 import {getGfiFeaturesByTileFeature} from "../../../shared/js/utils/getGfiFeaturesByTileFeature";
@@ -35,7 +37,34 @@ const getters = {
                         ));
                     }
                 }
+            }, {
+                // filter WebGL layers and look at them individually
+                layerFilter: layer => layer.get("renderer") !== "WebGL"
             });
+            /** check WebGL Layers
+            * use buffered coord instead of pixel for hitTolerance and to catch overlapping WebGL features
+            */
+            mapCollection.getMap("2D").getLayers().getArray()
+                .filter(layer => layer.get("renderer") === "webgl")
+                .forEach(layer => {
+                    if (layer.get("gfiAttributes") && layer.get("gfiAttributes") !== "ignore") {
+                        /**
+                         * use OL resolution based buffer to adjust the hitTolerance (in m) for lower zoom levels
+                         */
+                        const hitBox = buffer(
+                            new Point(clickPixel).getExtent(),
+                            (layer.get("hitTolerance") || 1) * Math.sqrt(mapCollection.getMapView("2D").getResolution())
+                        );
+
+                        layer.getSource()?.forEachFeatureIntersectingExtent(hitBox, feature => {
+                            featuresAtPixel.push(createGfiFeature(
+                                layer,
+                                "",
+                                feature
+                            ));
+                        });
+                    }
+                });
         }
         if (mode === "3D") {
             // add features from map3d
