@@ -54,8 +54,7 @@ export default {
             deep: true
         },
         visibleSubjectDataLayers: {
-            handler (value) {
-                this.setRightScrollVisibility(value.length <= this.layerPillsAmount);
+            handler () {
                 this.$nextTick(() => {
                     this.updateLayerPillsListWidth();
                     this.handleAvailableLayerPillsSpace();
@@ -169,17 +168,18 @@ export default {
             this.setLayerPillsListWidth(document.getElementsByClassName("nav-pills")[0].offsetWidth);
         },
         handleAvailableLayerPillsSpace () {
-            const singleLayerPillWidth = document.getElementsByClassName("nav-item")[1].offsetWidth + 15,
+            const singleLayerPillWidth = 170,
                 maxLayerPillsAmount = Math.ceil(this.elementsPositionedOverMapWidth / singleLayerPillWidth) - 1;
-
-            // @todo beim nach links klicken, werden 37 angezeigt
-            // console.log("maxLayerPillsAmount", singleLayerPillWidth, this.elementsPositionedOverMapWidth, maxLayerPillsAmount);
 
             this.setEndIndex(this.startIndex + maxLayerPillsAmount);
 
-            if (this.visibleSubjectDataLayers.length > maxLayerPillsAmount) {
+            console.log("handleAvailableLayerPillsSpace", this.visibleSubjectDataLayers.length, maxLayerPillsAmount);
+            if (this.visibleSubjectDataLayers.length > this.endIndex) {
                 this.setRightScrollVisibility(false);
             }
+            // if (this.visibleSubjectDataLayers.length > maxLayerPillsAmount) {
+            //     this.setRightScrollVisibility(false);
+            // }
         }
     }
 };
@@ -224,7 +224,7 @@ export default {
                     @click="showLayerInformationInMenu(layer)"
                     @keydown="showLayerInformationInMenu(layer)"
                 >
-                    {{ startIndex }} {{ endIndex }} {{ layer.name }}
+                    {{ layer.name }}
                 </a>
                 <IconButton
                     :aria="$t('common:modules.layerPills.remove')"
