@@ -3,19 +3,11 @@
 
 [Semantic versioning](https://semver.org/spec/v2.0.0.html) is used.
 
-## Unreleased - in development
-### __Breaking Changes__
-
-### Added
-
+## v2.31.1 - 2023-03-09
 ### Changed
 - The following NPM packages have been updated:
     - dependencies:
         - @masterportal/masterportalapi: 2.14.0 to 2.15.1
-
-### Deprecated
-
-### Removed
 
 ### Fixed
 - Clustered GeoJSON-layer are now displayed correctly in 3D mode again.
