@@ -4,6 +4,7 @@ import replaceInNestedValues from "../shared/js/utils/replaceInNestedValues";
 import {getAndMergeAllRawLayers, getAndMergeRawLayer} from "./js/getAndMergeRawLayer";
 import {sortObjects} from "../shared/js/utils/sortObjects";
 import {treeOrder, treeBackgroundsKey, treeSubjectsKey} from "../shared/js/utils/constants";
+import layerCollection from "../core/layers/js/layerCollection";
 
 export default {
     /**
@@ -36,7 +37,9 @@ export default {
 
     /**
      * Replaces the layer with the id of the layer toReplace in state's layerConfig.
+     * Calls 'visibilityChanged' at layer.
      * @param {Object} state store state
+     * @param {Object} getters the getters
      * @param {Object} [payload={}] the payload
      * @param {Object[]} [payload.layerConfigs=[]] Array of configs of layers to replace, and the id to match in state.layerConfigs
      * @param {Object} payload.layerConfigs.layer layerConfig
@@ -44,10 +47,11 @@ export default {
      * @param {Boolean} [payload.trigger=true] if true then getters are triggered
      * @returns {void}
      */
-    replaceByIdInLayerConfig ({state}, {layerConfigs = [], trigger = true} = {}) {
+    replaceByIdInLayerConfig ({state, getters}, {layerConfigs = [], trigger = true} = {}) {
         layerConfigs.forEach(config => {
             const replacement = config.layer,
                 id = config.id,
+                lastVisibility = getters.layerConfigById(id).visibility,
                 assigned = replaceInNestedValues(state.layerConfig, "elements", replacement, {key: "id", value: id});
 
             if (assigned.length > 1) {
@@ -57,6 +61,10 @@ export default {
             // necessary to trigger the getters
             if (trigger) {
                 state.layerConfig = {...state.layerConfig};
+            }
+
+            if (typeof replacement.visibility === "boolean" && typeof lastVisibility === "boolean" && lastVisibility !== replacement.visibility) {
+                layerCollection.getLayerById(id)?.visibilityChanged(replacement.visibility);
             }
         });
     },
