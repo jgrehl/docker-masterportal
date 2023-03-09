@@ -1,5 +1,7 @@
 import styleList from "@masterportal/masterportalapi/src/vectorStyle/styleList";
 import createStyle from "@masterportal/masterportalapi/src/vectorStyle/createStyle";
+import {getCenter} from "ol/extent";
+import webgl from "./webglRenderer";
 import Layer2d from "./layer2d";
 
 /**
@@ -13,11 +15,17 @@ import Layer2d from "./layer2d";
 export default function Layer2dVector (attributes) {
     const defaultAttributes = {
         altitudeMode: "clampToGround",
-        crs: mapCollection.getMapView("2D").getProjection().getCode()
+        crs: mapCollection.getMapView("2D").getProjection().getCode(),
+        renderer: "default"
     };
 
     this.attributes = Object.assign(defaultAttributes, attributes);
     Layer2d.call(this, this.attributes);
+    // override class methods for webgl rendering
+    // has to happen before setStyle
+    if (attributes.renderer === "webgl") {
+        webgl.setLayerProperties(this);
+    }
     this.setStyle(this.getStyleFunction(attributes));
 }
 
@@ -49,7 +57,9 @@ Layer2dVector.prototype.featuresFilter = function (attributes, features) {
     let filteredFeatures = features.filter(feature => feature.getGeometry() !== undefined);
 
     if (attributes.bboxGeometry) {
-        filteredFeatures = filteredFeatures.filter((feature) => attributes.bboxGeometry.intersectsExtent(feature.getGeometry().getExtent()));
+        filteredFeatures = filteredFeatures.filter(
+            (feature) => attributes.bboxGeometry.intersectsCoordinate(getCenter(feature.getGeometry().getExtent()))
+        );
     }
 
     return filteredFeatures;
@@ -68,7 +78,12 @@ Layer2dVector.prototype.getLayerParams = function (attributes) {
         name: attributes.name,
         opacity: (100 - attributes.transparency) / 100,
         typ: attributes.typ,
-        zIndex: attributes.zIndex
+        zIndex: attributes.zIndex,
+        renderer: attributes.renderer, // use "default" (canvas) or "webgl" renderer
+        styleId: attributes.styleId, // styleId to pass to masterportalapi
+        style: attributes.style, // style function to style the layer or WebGLPoints style syntax
+        excludeTypesFromParsing: attributes.excludeTypesFromParsing, // types that should not be parsed from strings, only necessary for webgl
+        isPointLayer: attributes.isPointLayer // whether the source will only hold point data, only necessary for webgl
     };
 };
 
@@ -129,21 +144,24 @@ Layer2dVector.prototype.setStyle = function (value) {
  * @returns {void}
  */
 Layer2dVector.prototype.getStyleFunction = function (attrs) {
-    const styleId = attrs.styleId,
-        styleObject = styleList.returnStyleObject(styleId);
-    let isClusterFeature = false,
-        style = null;
+    let style = null;
 
-    if (styleObject !== undefined) {
-        style = (feature) => {
-            const feat = feature !== undefined ? feature : this;
+    if (typeof attrs.styleId !== "undefined") {
+        const styleId = attrs.styleId,
+            styleObject = styleList.returnStyleObject(styleId);
+        let isClusterFeature = false;
 
-            isClusterFeature = typeof feat.get("features") === "function" || typeof feat.get("features") === "object" && Boolean(feat.get("features"));
-            return createStyle.createStyle(styleObject, feat, isClusterFeature, Config.wfsImgPath);
-        };
-    }
-    else {
-        console.warn(i18next.t("common:modules.core.modelList.layer.wrongStyleId", {styleId}));
+        if (styleObject !== undefined) {
+            style = (feature) => {
+                const feat = feature !== undefined ? feature : this;
+
+                isClusterFeature = typeof feat.get("features") === "function" || typeof feat.get("features") === "object" && Boolean(feat.get("features"));
+                return createStyle.createStyle(styleObject, feat, isClusterFeature, Config.wfsImgPath);
+            };
+        }
+        else {
+            console.warn(i18next.t("common:modules.core.modelList.layer.wrongStyleId", {styleId}));
+        }
     }
     return style;
 };
