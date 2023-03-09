@@ -50,16 +50,16 @@ export default {
         visibleSubjectDataLayerConfigs: {
             handler (value) {
                 this.setVisibleLayers(value, this.mode);
-                this.$nextTick(() => {
-                    this.updateLayerPillsListWidth();
-                    this.handleAvailableLayerPillsSpace();
-                });
             },
             deep: true
         },
         visibleSubjectDataLayers: {
             handler (value) {
                 this.setRightScrollVisibility(value.length <= this.layerPillsAmount);
+                this.$nextTick(() => {
+                    this.updateLayerPillsListWidth();
+                    this.handleAvailableLayerPillsSpace();
+                });
             },
             deep: true
         },
@@ -172,7 +172,10 @@ export default {
             const singleLayerPillWidth = document.getElementsByClassName("nav-item")[1].offsetWidth + 15,
                 maxLayerPillsAmount = Math.ceil(this.elementsPositionedOverMapWidth / singleLayerPillWidth) - 1;
 
-            this.setEndIndex(maxLayerPillsAmount);
+            // @todo beim nach links klicken, werden 37 angezeigt
+            // console.log("maxLayerPillsAmount", singleLayerPillWidth, this.elementsPositionedOverMapWidth, maxLayerPillsAmount);
+
+            this.setEndIndex(this.startIndex + maxLayerPillsAmount);
 
             if (this.visibleSubjectDataLayers.length > maxLayerPillsAmount) {
                 this.setRightScrollVisibility(false);
@@ -221,7 +224,7 @@ export default {
                     @click="showLayerInformationInMenu(layer)"
                     @keydown="showLayerInformationInMenu(layer)"
                 >
-                    {{ layer.name }}
+                    {{ startIndex }} {{ endIndex }} {{ layer.name }}
                 </a>
                 <IconButton
                     :aria="$t('common:modules.layerPills.remove')"
