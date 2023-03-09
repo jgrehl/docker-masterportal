@@ -2,6 +2,7 @@ import {expect} from "chai";
 import sinon from "sinon";
 import styleList from "@masterportal/masterportalapi/src/vectorStyle/styleList.js";
 import Layer2dVector from "../../../js/layer2dVector";
+import webgl from "../../../js/webglRenderer";
 
 describe("src_3_0_0/core/js/layers/layer2dVector.js", () => {
     let attributes,
@@ -87,8 +88,8 @@ describe("src_3_0_0/core/js/layers/layer2dVector.js", () => {
 
         it("featuresFilter shall filter bboxGeometry", function () {
             attributes.bboxGeometry = {
-                intersectsExtent: (extent) => {
-                    if (extent.includes("1")) {
+                intersectsCoordinate: (coord) => {
+                    if (coord[0] === 0.5 && coord[1] === 0.5) {
                         return true;
                     }
                     return false;
@@ -100,7 +101,7 @@ describe("src_3_0_0/core/js/layers/layer2dVector.js", () => {
                     id: "1",
                     getGeometry: () => {
                         return {
-                            getExtent: () => ["1"]
+                            getExtent: () => [0, 0, 1, 1]
                         };
 
                     }
@@ -113,7 +114,7 @@ describe("src_3_0_0/core/js/layers/layer2dVector.js", () => {
                     id: "3",
                     getGeometry: () => {
                         return {
-                            getExtent: () => ["2"]
+                            getExtent: () => [2, 2, 3, 3]
                         };
                     }
                 }],
@@ -237,6 +238,24 @@ describe("src_3_0_0/core/js/layers/layer2dVector.js", () => {
 
             expect(olLayerStyle).not.to.be.null;
             expect(olLayerStyle).to.be.undefined;
+        });
+    });
+
+    describe("Use WebGL renderer", () => {
+        it("Should create the layer with WebGL methods, if renderer: \"webgl\" is set", function () {
+            const
+                vectorLayer = new Layer2dVector({...attributes, renderer: "webgl"}),
+                layer = vectorLayer.getLayer();
+
+            expect(vectorLayer.isDisposed).to.equal(webgl.isDisposed);
+            expect(vectorLayer.setIsSelected).to.equal(webgl.setIsSelected);
+            expect(vectorLayer.hideAllFeatures).to.equal(webgl.hideAllFeatures);
+            expect(vectorLayer.showAllFeatures).to.equal(webgl.showAllFeatures);
+            expect(vectorLayer.showFeaturesByIds).to.equal(webgl.showFeaturesByIds);
+            expect(vectorLayer.setStyle).to.equal(webgl.setStyle);
+            expect(vectorLayer.styling).to.equal(webgl.setStyle);
+            expect(vectorLayer.source).to.equal(layer.getSource());
+            expect(layer.get("isPointLayer")).to.not.be.undefined;
         });
     });
 });
