@@ -63,6 +63,7 @@ module.exports = {
                     loader: "esbuild-loader",
                     options: {
                         loader: "js",
+                        // was upgraded to es2018 as tests failed
                         target: "es2018",
                         format: "cjs",
                         platform: "node"
