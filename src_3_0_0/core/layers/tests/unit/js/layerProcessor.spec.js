@@ -45,7 +45,7 @@ describe("src_3_0_0/core/js/layers/layerProcessor.js", () => {
         mapCollection.addMap(map, "2D");
     });
 
-    after(() => {
+    afterEach(() => {
         sinon.restore();
     });
 
