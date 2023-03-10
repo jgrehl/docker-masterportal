@@ -10,8 +10,8 @@ import store from "../../../app-store";
  * @returns {void}
  */
 function initializeMapMarkers (configJs) {
-    store.dispatch("Maps/addLayer", createMapMarker("POINT", configJs?.pointStyleId));
-    store.dispatch("Maps/addLayer", createMapMarker("POLYGON", configJs?.polygonStyleId));
+    store.dispatch("Maps/addLayer", createMapMarker("POINT", configJs?.mapMarker?.pointStyleId));
+    store.dispatch("Maps/addLayer", createMapMarker("POLYGON", configJs?.mapMarker?.polygonStyleId));
 }
 
 /**
