@@ -463,18 +463,21 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
         describe("replaceByIdInLayerConfig", () => {
             it("replaceByIdInLayerConfig layer is contained in layerConfig", () => {
                 const toReplace = {
-                    id: "453",
-                    visibility: true,
-                    att1: "bla",
-                    att2: [{
-                        foo: "foo",
-                        bar: "bar"
-                    }]
-                };
+                        id: "453",
+                        visibility: true,
+                        att1: "bla",
+                        att2: [{
+                            foo: "foo",
+                            bar: "bar"
+                        }]
+                    },
+                    getters = {
+                        layerConfigById: () => sinon.stub()
+                    };
 
                 state.layerConfig = layerConfig;
 
-                actions.replaceByIdInLayerConfig({state}, {layerConfigs: [{layer: toReplace, id: "453"}]});
+                actions.replaceByIdInLayerConfig({state, getters}, {layerConfigs: [{layer: toReplace, id: "453"}]});
 
                 expect(state.layerConfig[treeBackgroundsKey].elements).to.be.an("array");
                 expect(state.layerConfig[treeBackgroundsKey].elements.length).to.be.equals(2);
@@ -496,30 +499,36 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
 
             it("replaceByIdInLayerConfig layer is not contained in layerConfig", () => {
                 const toReplace = {
-                    id: "unknown",
-                    visibility: true,
-                    att1: "bla",
-                    att2: [{
-                        foo: "foo",
-                        bar: "bar"
-                    }]
-                };
+                        id: "unknown",
+                        visibility: true,
+                        att1: "bla",
+                        att2: [{
+                            foo: "foo",
+                            bar: "bar"
+                        }]
+                    },
+                    getters = {
+                        layerConfigById: () => sinon.stub()
+                    };
                 let stateCopy = null;
 
                 state.layerConfig = layerConfig;
                 stateCopy = {...state};
 
-                actions.replaceByIdInLayerConfig({state}, {layerConfigs: [{layer: toReplace, id: "unknown"}]});
+                actions.replaceByIdInLayerConfig({state, getters}, {layerConfigs: [{layer: toReplace, id: "unknown"}]});
                 expect(state).to.be.deep.equals(stateCopy);
             });
 
             it("replaceByIdInLayerConfig toReplace-layer is undefined", () => {
                 let stateCopy = null;
+                const getters = {
+                    layerConfigById: () => sinon.stub()
+                };
 
                 state.layerConfig = layerConfig;
                 stateCopy = {...state};
 
-                actions.replaceByIdInLayerConfig({state}, undefined);
+                actions.replaceByIdInLayerConfig({state, getters}, undefined);
                 expect(state).to.be.deep.equals(stateCopy);
             });
         });
