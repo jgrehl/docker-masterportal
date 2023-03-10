@@ -34,7 +34,7 @@ export default function OAFLayer (attrs) {
     // call the super-layer
     Layer.call(this, Object.assign(defaults, attrs), this.layer, !attrs.isChildLayer);
     this.set("style", this.getStyleFunction(attrs));
-    this.prepareFeaturesFor3D(this.layer.getSource().getFeatures());
+    // this.prepareFeaturesFor3D(this.layer.getSource().getFeatures());
     if (attrs.clusterDistance) {
         this.set("isClustered", true);
     }
