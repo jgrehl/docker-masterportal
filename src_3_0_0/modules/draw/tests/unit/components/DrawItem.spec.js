@@ -65,6 +65,7 @@ describe("src_3_0_0/modules/draw/components/DrawItem.vue", () => {
                 drawing: true
             };
         };
+        store.dispatch("Modules/Draw/startInteractions");
     });
 
     it("sets focus to first input control", async () => {
