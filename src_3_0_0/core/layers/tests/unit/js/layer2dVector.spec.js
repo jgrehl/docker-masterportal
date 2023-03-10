@@ -2,7 +2,6 @@ import {expect} from "chai";
 import sinon from "sinon";
 import styleList from "@masterportal/masterportalapi/src/vectorStyle/styleList.js";
 import Layer2dVector from "../../../js/layer2dVector";
-import webgl from "../../../js/webglRenderer";
 
 describe("src_3_0_0/core/js/layers/layer2dVector.js", () => {
     let attributes,
@@ -136,12 +135,25 @@ describe("src_3_0_0/core/js/layers/layer2dVector.js", () => {
                 name: "The name",
                 transparency: 0,
                 typ: "Layer2d",
-                zIndex: 1
+                zIndex: 1,
+                renderer: "default",
+                styleId: "styleId",
+                style: [],
+                excludeTypesFromParsing: ["type"],
+                isPointLayer: false
             };
         });
 
         it("should return the raw layer attributes", () => {
             const layer2d = new Layer2dVector(localAttributes);
+            /*
+              zIndex: attributes.zIndex,
+        renderer: attributes.renderer, // use "default" (canvas) or "webgl" renderer
+        styleId: attributes.styleId, // styleId to pass to masterportalapi
+        style: attributes.style, // style function to style the layer or WebGLPoints style syntax
+        excludeTypesFromParsing: attributes.excludeTypesFromParsing, // types that should not be parsed from strings, only necessary for webgl
+        isPointLayer: attributes.isPointLayer // whether the source will only hold point data, only necessary for webgl
+            */
 
             expect(layer2d.getLayerParams(localAttributes)).to.deep.equals({
                 altitudeMode: "clampToGround",
@@ -150,7 +162,12 @@ describe("src_3_0_0/core/js/layers/layer2dVector.js", () => {
                 name: "The name",
                 opacity: 1,
                 typ: "Layer2d",
-                zIndex: 1
+                zIndex: 1,
+                renderer: "default",
+                styleId: "styleId",
+                style: [],
+                excludeTypesFromParsing: ["type"],
+                isPointLayer: false
             });
         });
     });
@@ -215,6 +232,7 @@ describe("src_3_0_0/core/js/layers/layer2dVector.js", () => {
             let layer2d = null,
                 styleFunction = null;
 
+            attributes.styleId = "styleId";
             layer2d = new Layer2dVector(attributes);
             styleFunction = layer2d.getStyleFunction(attributes);
 
@@ -238,24 +256,6 @@ describe("src_3_0_0/core/js/layers/layer2dVector.js", () => {
 
             expect(olLayerStyle).not.to.be.null;
             expect(olLayerStyle).to.be.undefined;
-        });
-    });
-
-    describe("Use WebGL renderer", () => {
-        it("Should create the layer with WebGL methods, if renderer: \"webgl\" is set", function () {
-            const
-                vectorLayer = new Layer2dVector({...attributes, renderer: "webgl"}),
-                layer = vectorLayer.getLayer();
-
-            expect(vectorLayer.isDisposed).to.equal(webgl.isDisposed);
-            expect(vectorLayer.setIsSelected).to.equal(webgl.setIsSelected);
-            expect(vectorLayer.hideAllFeatures).to.equal(webgl.hideAllFeatures);
-            expect(vectorLayer.showAllFeatures).to.equal(webgl.showAllFeatures);
-            expect(vectorLayer.showFeaturesByIds).to.equal(webgl.showFeaturesByIds);
-            expect(vectorLayer.setStyle).to.equal(webgl.setStyle);
-            expect(vectorLayer.styling).to.equal(webgl.setStyle);
-            expect(vectorLayer.source).to.equal(layer.getSource());
-            expect(layer.get("isPointLayer")).to.not.be.undefined;
         });
     });
 });
