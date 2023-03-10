@@ -51,7 +51,7 @@ export default {
         layerConfigs.forEach(config => {
             const replacement = config.layer,
                 id = config.id,
-                lastVisibility = getters.layerConfigById(id).visibility,
+                lastVisibility = typeof getters.layerConfigById === "function" ? getters.layerConfigById(id)?.visibility : null,
                 assigned = replaceInNestedValues(state.layerConfig, "elements", replacement, {key: "id", value: id});
 
             if (assigned.length > 1) {

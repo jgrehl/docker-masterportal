@@ -5,6 +5,7 @@ import sinon from "sinon";
 import VectorLayer from "ol/layer/Vector.js";
 import VectorSource from "ol/source/Vector.js";
 import styleList from "@masterportal/masterportalapi/src/vectorStyle/styleList.js";
+import webgl from "../../../js/webglRenderer";
 import Layer2dVectorWfs from "../../../js/layer2dVectorWfs";
 
 describe("src_3_0_0/core/js/layers/layer2dVectorWfs.js", () => {
@@ -141,11 +142,28 @@ describe("src_3_0_0/core/js/layers/layer2dVectorWfs.js", () => {
     describe("getStyleFunction", () => {
         it("getStyleFunction shall return a function", function () {
             sinon.stub(styleList, "returnStyleObject").returns(true);
+            attributes.styleId = "styleId";
             const wfsLayer = new Layer2dVectorWfs(attributes),
                 styleFunction = wfsLayer.getStyleFunction(attributes);
 
             expect(styleFunction).not.to.be.null;
             expect(typeof styleFunction).to.be.equals("function");
+        });
+    });
+
+    describe("Use WebGL renderer", () => {
+        it("Should create the layer with WebGL methods, if renderer: \"webgl\" is set", function () {
+            const vectorLayer = new Layer2dVectorWfs({...attributes, renderer: "webgl"}),
+                layer = vectorLayer.getLayer();
+
+            expect(vectorLayer.isDisposed).to.equal(webgl.isDisposed);
+            expect(vectorLayer.setIsSelected).to.equal(webgl.setIsSelected);
+            expect(vectorLayer.hideAllFeatures).to.equal(webgl.hideAllFeatures);
+            expect(vectorLayer.showAllFeatures).to.equal(webgl.showAllFeatures);
+            expect(vectorLayer.showFeaturesByIds).to.equal(webgl.showFeaturesByIds);
+            expect(vectorLayer.setStyle).to.equal(webgl.setStyle);
+            expect(vectorLayer.source).to.equal(layer.getSource());
+            expect(layer.get("isPointLayer")).to.not.be.undefined;
         });
     });
 });
