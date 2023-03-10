@@ -24,7 +24,6 @@ export default function GeoJSONLayer (attrs) {
     };
 
     this.createLayer(Object.assign(defaults, attrs));
-    // this.setStyle(this.getStyleFunction(attrs));
 
     if (!attrs.isChildLayer) {
         // call the super-layer
@@ -32,8 +31,9 @@ export default function GeoJSONLayer (attrs) {
         this.checkForScale({scale: store.getters["Maps/scale"]});
     }
 
-    this.initStyle(attrs);
-    this.prepareFeaturesFor3D(this.layer.getSource().getFeatures());
+    // this.setStyle(this.getStyleFunction(attrs));
+    // this.prepareFeaturesFor3D(this.layer.getSource().getFeatures());
+    this.createLegend(attrs);
 }
 
 // Link prototypes and add prototype methods, means GeoJSONLayer uses all methods and properties of Layer
