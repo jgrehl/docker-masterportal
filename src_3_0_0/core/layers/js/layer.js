@@ -47,7 +47,7 @@ Layer.prototype.visibilityChanged = function () {
  * @param {ol/Feature[]} features The olFeatures.
  * @returns {void}
  */
-Layer.prototype.prepareFeaturesFor3D = function (features) {
+Layer.prototype.prepareFeaturesFor3D = function (features = []) {
     features.forEach(feature => {
         let geometry = feature.getGeometry();
 

@@ -27,7 +27,7 @@ export default function Layer2dVector (attributes) {
         webgl.setLayerProperties(this);
     }
     this.setStyle(this.getStyleFunction(attributes));
-    this.prepareFeaturesFor3D(this.layer.getSource().getFeatures());
+    this.prepareFeaturesFor3D(this.layer?.getSource().getFeatures());
 }
 
 Layer2dVector.prototype = Object.create(Layer2d.prototype);
