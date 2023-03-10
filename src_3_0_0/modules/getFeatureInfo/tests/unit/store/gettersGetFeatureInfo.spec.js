@@ -5,6 +5,7 @@ import sinon from "sinon";
 import getters from "../../../store/gettersGetFeatureInfo";
 
 describe("src_3_0_0/modules/getFeatureInfo/store/gettersGetFeatureInfo.js", () => {
+
     describe("gfiFeaturesAtPixel", () => {
         it("gfiFeaturesAtPixel returns an array", () => {
             const gfiFeaturesAtPixel = getters.gfiFeaturesAtPixel(),
@@ -12,7 +13,12 @@ describe("src_3_0_0/modules/getFeatureInfo/store/gettersGetFeatureInfo.js", () =
                     id: "ol",
                     mode: "2D",
                     view: new View(),
-                    forEachFeatureAtPixel: sinon.spy()
+                    forEachFeatureAtPixel: sinon.spy(),
+                    getLayers: () => {
+                        return {
+                            getArray: () => []
+                        };
+                    }
                 };
 
             mapCollection.clear();
