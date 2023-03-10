@@ -53,7 +53,7 @@ export default {
             .then(gfiFeatures => {
                 const clickPixel = rootGetters["Maps/clickPixel"],
                     mode = rootGetters["Maps/mode"],
-                    allGfiFeatures = gfiFeaturesAtPixel(clickPixel, mode).concat(...gfiFeatures);
+                    allGfiFeatures = gfiFeaturesAtPixel(clickPixel, clickCoordinate, mode).concat(...gfiFeatures);
 
                 allGfiFeatures.sort((a, b) => {
                     const zIndexA = rootGetters.layerConfigById(a.getLayerId())?.zIndex || 0,
