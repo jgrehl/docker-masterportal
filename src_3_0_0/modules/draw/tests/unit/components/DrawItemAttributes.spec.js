@@ -1,5 +1,4 @@
 import DrawItemAttributes from "../../../components/DrawItemAttributes.vue";
-import Draw from "../../../components/DrawItem.vue";
 import {createStore} from "vuex";
 import {config, shallowMount} from "@vue/test-utils";
 import {expect} from "chai";
@@ -17,9 +16,11 @@ describe("src_3_0_0/modules/draw/components/DrawItemAttributes.vue", () => {
                 Modules: {
                     namespaced: true,
                     modules: {
-                        Draw,
-                        actions: {
-                            setDownloadFeatures: () => sinon.stub()
+                        Draw: {
+                            namespaced: true,
+                            actions: {
+                                setDownloadFeatures: () => sinon.stub()
+                            }
                         }
                     }
                 }
