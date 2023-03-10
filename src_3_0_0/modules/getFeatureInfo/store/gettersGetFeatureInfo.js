@@ -14,7 +14,7 @@ const getters = {
      * @param {String} mode The current map mode
      * @returns {Object[]} gfi features
      */
-    gfiFeaturesAtPixel: () => (clickPixel, mode) => {
+    gfiFeaturesAtPixel: () => (clickPixel, clickCoordinate, mode) => {
         const featuresAtPixel = [];
 
         if (clickPixel && mode === "2D") {
@@ -52,7 +52,7 @@ const getters = {
                          * use OL resolution based buffer to adjust the hitTolerance (in m) for lower zoom levels
                          */
                         const hitBox = buffer(
-                            new Point(clickPixel).getExtent(),
+                            new Point(clickCoordinate).getExtent(),
                             (layer.get("hitTolerance") || 1) * Math.sqrt(mapCollection.getMapView("2D").getResolution())
                         );
 
