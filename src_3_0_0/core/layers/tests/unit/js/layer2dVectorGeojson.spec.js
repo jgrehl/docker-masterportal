@@ -7,6 +7,7 @@ import VectorLayer from "ol/layer/Vector.js";
 import VectorSource from "ol/source/Vector.js";
 import styleList from "@masterportal/masterportalapi/src/vectorStyle/styleList.js";
 import Layer2dVectorGeojson from "../../../js/layer2dVectorGeojson";
+import webgl from "../../../js/webglRenderer";
 
 describe("src_3_0_0/core/js/layers/layer2dVectorGeojson.js", () => {
     let attributes,
@@ -149,6 +150,7 @@ describe("src_3_0_0/core/js/layers/layer2dVectorGeojson.js", () => {
                 styleFunction = null;
 
             sinon.stub(styleList, "returnStyleObject").returns(styleObj);
+            attributes.styleId = "styleId";
             geojsonLayer = new Layer2dVectorGeojson(attributes);
             styleFunction = geojsonLayer.getStyleFunction(attributes);
 
@@ -169,6 +171,22 @@ describe("src_3_0_0/core/js/layers/layer2dVectorGeojson.js", () => {
 
             expect(features[0].getId()).to.equals("geojson-id-feature-id-0");
             expect(features[1].getId()).to.equals("geojson-id-feature-id-1");
+        });
+    });
+
+    describe("Use WebGL renderer", () => {
+        it("Should create the layer with WebGL methods, if renderer: \"webgl\" is set", function () {
+            const vectorLayer = new Layer2dVectorGeojson({...attributes, renderer: "webgl"}),
+                layer = vectorLayer.getLayer();
+
+            expect(vectorLayer.isDisposed).to.equal(webgl.isDisposed);
+            expect(vectorLayer.setIsSelected).to.equal(webgl.setIsSelected);
+            expect(vectorLayer.hideAllFeatures).to.equal(webgl.hideAllFeatures);
+            expect(vectorLayer.showAllFeatures).to.equal(webgl.showAllFeatures);
+            expect(vectorLayer.showFeaturesByIds).to.equal(webgl.showFeaturesByIds);
+            expect(vectorLayer.setStyle).to.equal(webgl.setStyle);
+            expect(vectorLayer.source).to.equal(layer.getSource());
+            expect(layer.get("isPointLayer")).to.not.be.undefined;
         });
     });
 });
