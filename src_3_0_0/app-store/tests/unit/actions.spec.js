@@ -83,16 +83,22 @@ describe("src_3_0_0/app-store/actions.js", () => {
                         id: "id",
                         typ: "WMS"
                     }],
-                    "Modules/MapMarker/pointStyleId": "pointStyleId",
-                    "Modules/MapMarker/polygonStyleId": "polygonStyleId",
                     "Modules/HighlightFeatures/pointStyleId": "pointStyleId",
                     "Modules/HighlightFeatures/polygonStyleId": "polygonStyleId",
-                    "Modules/HighlightFeatures/lineStyleId": "lineStyleId"
+                    "Modules/HighlightFeatures/lineStyleId": "lineStyleId",
+                    configJs: {
+                        mapMarker: {
+                            pointStyleId: "123",
+                            polygonStyleId: "abc"
+                        }
+                    }
                 },
                 firstCallArg = {
                     highlightFeaturesPointStyleId: "pointStyleId",
                     highlightFeaturesPolygonStyleId: "polygonStyleId",
-                    highlightFeaturesLineStyleId: "lineStyleId"
+                    highlightFeaturesLineStyleId: "lineStyleId",
+                    mapMarkerPointStyleId: "123",
+                    mapMarkerPolygonStyleId: "abc"
                 };
 
             actions.initializeVectorStyle({state, dispatch, getters});
