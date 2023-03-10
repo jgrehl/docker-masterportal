@@ -24,7 +24,6 @@ export default function GeoJSONLayer (attrs) {
     };
 
     this.createLayer(Object.assign(defaults, attrs));
-    // this.setStyle(this.getStyleFunction(attrs));
 
     if (!attrs.isChildLayer) {
         // call the super-layer
@@ -32,8 +31,8 @@ export default function GeoJSONLayer (attrs) {
         this.checkForScale({scale: store.getters["Maps/scale"]});
     }
 
-    this.setStyle(this.getStyleFunction(attrs));
-    this.prepareFeaturesFor3D(this.layer.getSource().getFeatures());
+    // this.setStyle(this.getStyleFunction(attrs));
+    // this.prepareFeaturesFor3D(this.layer.getSource().getFeatures());
     this.createLegend(attrs);
 }
 
