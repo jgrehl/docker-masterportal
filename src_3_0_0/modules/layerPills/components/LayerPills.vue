@@ -128,9 +128,9 @@ export default {
             }
         },
         removeLayerFromVisibleLayers (layer) {
-            const layerIndex = this.visibleSubjectDataLayers.indexOf(layer) + 1;
+            const maxNumVisibleLayerPills = this.endIndex - this.startIndex;
 
-            if (layerIndex > this.layerPillsAmount) {
+            if (this.visibleSubjectDataLayers.length > maxNumVisibleLayerPills && this.rightScrollVisibility === true) {
                 this.setStartIndex(this.startIndex - 1);
                 this.setEndIndex(this.endIndex - 1);
             }
@@ -144,7 +144,6 @@ export default {
                     }
                 }]
             });
-
         },
         moveLayerPills (direction) {
             if (direction === "right") {
@@ -165,7 +164,7 @@ export default {
             this.setElementsPositionedOverMapWidth(document.getElementsByClassName("elements-positioned-over-map")[0].offsetWidth);
         },
         updateLayerPillsListWidth () {
-            this.setLayerPillsListWidth(document.getElementsByClassName("nav-pills")[0].offsetWidth);
+            this.setLayerPillsListWidth(document.getElementsByClassName("nav-pills")[0]?.offsetWidth);
         },
         handleAvailableLayerPillsSpace () {
             const singleLayerPillWidth = 170,
@@ -173,13 +172,20 @@ export default {
 
             this.setEndIndex(this.startIndex + maxLayerPillsAmount);
 
-            console.log("handleAvailableLayerPillsSpace", this.visibleSubjectDataLayers.length, maxLayerPillsAmount);
+            if (maxLayerPillsAmount < this.visibleSubjectDataLayers.length && this.endIndex - 1 > this.visibleSubjectDataLayers.length && this.rightScrollVisibility === false) {
+                this.setEndIndex(this.visibleSubjectDataLayers.length);
+                this.setStartIndex(this.visibleSubjectDataLayers.length - maxLayerPillsAmount);
+            }
+            if (maxLayerPillsAmount >= this.visibleSubjectDataLayers.length && this.startIndex > 0 && this.leftScrollVisibility === false) {
+                this.setStartIndex(this.endIndex - maxLayerPillsAmount - 1);
+                this.setEndIndex(this.startIndex + maxLayerPillsAmount);
+            }
             if (this.visibleSubjectDataLayers.length > this.endIndex) {
                 this.setRightScrollVisibility(false);
             }
-            // if (this.visibleSubjectDataLayers.length > maxLayerPillsAmount) {
-            //     this.setRightScrollVisibility(false);
-            // }
+            else {
+                this.setRightScrollVisibility(true);
+            }
         }
     }
 };
