@@ -43,7 +43,8 @@ describe("src_3_0_0/modules/draw/components/DrawItem.vue", () => {
                     namespaced: true,
                     actions: {
                         addLayer: sinon.stub(),
-                        checkLayer: sinon.stub()
+                        checkLayer: sinon.stub(),
+                        addInteraction: sinon.stub()
                     },
                     getters: {
                         mode: () => "2D"
@@ -64,7 +65,6 @@ describe("src_3_0_0/modules/draw/components/DrawItem.vue", () => {
                 drawing: true
             };
         };
-        store.commit("Modules/Draw/startInteractions");
     });
 
     it("sets focus to first input control", async () => {
@@ -91,17 +91,18 @@ describe("src_3_0_0/modules/draw/components/DrawItem.vue", () => {
         expect(wrapper.find("#tool-draw-deleteInteraction").element.disabled).to.be.false;
         expect(wrapper.find("#tool-draw-deleteAllInteraction").element.disabled).to.be.false;
 
-        await wrapper.find("#tool-draw-drawLayerVisible").trigger("click");
+        wrapper.find("#tool-draw-drawLayerVisible").trigger("click").then(() => {
+            expect(wrapper.vm.drawLayerVisible).to.be.false;
+            expect(wrapper.vm.layer.getVisible()).to.be.false;
+            expect(wrapper.find("#tool-draw-drawType").element.disabled).to.be.true;
+            expect(wrapper.find("#tool-draw-drawInteraction").element.disabled).to.be.true;
+            expect(wrapper.find("#tool-draw-undoInteraction").element.disabled).to.be.true;
+            expect(wrapper.find("#tool-draw-redoInteraction").element.disabled).to.be.true;
+            expect(wrapper.find("#tool-draw-editInteraction").element.disabled).to.be.true;
+            expect(wrapper.find("#tool-draw-deleteInteraction").element.disabled).to.be.true;
+            expect(wrapper.find("#tool-draw-deleteAllInteraction").element.disabled).to.be.true;
+        });
 
-        expect(wrapper.vm.drawLayerVisible).to.be.false;
-        expect(wrapper.vm.layer.getVisible()).to.be.false;
-        expect(wrapper.find("#tool-draw-drawType").element.disabled).to.be.true;
-        expect(wrapper.find("#tool-draw-drawInteraction").element.disabled).to.be.true;
-        expect(wrapper.find("#tool-draw-undoInteraction").element.disabled).to.be.true;
-        expect(wrapper.find("#tool-draw-redoInteraction").element.disabled).to.be.true;
-        expect(wrapper.find("#tool-draw-editInteraction").element.disabled).to.be.true;
-        expect(wrapper.find("#tool-draw-deleteInteraction").element.disabled).to.be.true;
-        expect(wrapper.find("#tool-draw-deleteAllInteraction").element.disabled).to.be.true;
     });
 
     describe.skip("addSymbolsByLayerModels", () => {
