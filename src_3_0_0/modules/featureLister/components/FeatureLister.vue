@@ -77,7 +77,6 @@ export default {
         });
     },
     unmounted () {
-        this.removeHighlightFeature("decrease");
         this.resetToThemeChooser();
     },
     methods: {
