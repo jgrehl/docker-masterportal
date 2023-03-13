@@ -601,7 +601,8 @@
           "styleId": "1711",
           "name": "Krankenhäuser",
           "typ": "WFS",
-          "visibility": true,
+          "visibility": false,
+          "loadingStrategy": "all",
           "mouseHoverField": [
             "name",
             "adresse"
@@ -616,7 +617,7 @@
           "styleId": "2003",
           "name": "de.hh.up:nr_f_naturschutzgebiet",
           "typ": "WFS",
-          "visibility": true,
+          "visibility": false,
           "featurePrefix": "de.hh.up:",
           "wildCard": "%",
           "singleChar": "#",
@@ -721,7 +722,7 @@
           "id": "GeoJSON",
           "name": "Beiträge (GeoJSON)",
           "typ": "GeoJSON",
-          "visibility": true,
+          "visibility": false,
           "url": "./resources/example_geojson.json",
           "styleId": "contributions"
         },
