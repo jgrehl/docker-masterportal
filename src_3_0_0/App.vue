@@ -5,8 +5,7 @@ import Alerting from "./modules/alerting/components/AlertingItem.vue";
 import ControlBar from "./modules/controls/components/ControlBar.vue";
 import initializeLayers from "./core/layers/js/layerProcessor";
 import {initializeMaps} from "./core/maps/js/maps";
-// import initializeUrlParams from "./core/urlParams/js/urlParams";
-import {initializeUrlParams_3, processUrlParams} from "./core/urlParams_3/js/urlParams";
+import {initializeUrlParams} from "./core/urlParams/js/urlParams";
 import isMobile from "./shared/js/utils/isMobile";
 import LoaderOverlay from "./app-store/js/loaderOverlay";
 import mapCollection from "./core/maps/js/mapCollection";
@@ -58,19 +57,12 @@ export default {
                 this.initializeVectorStyle();
                 initializeMaps(this.portalConfig, this.configJs);
                 initializeLayers(this.visibleLayerConfigs);
-                processUrlParams();
-                // initializeUrlParams();
             }
-        },
-        portalConfig (portalConfig) {
-            // initializeUrlParams_2();
-            this.mergeModulesState(portalConfig);
-            // processUrlParams();
         }
     },
     created () {
         this.setGlobalVariables();
-        initializeUrlParams_3();
+        initializeUrlParams();
         this.loadConfigsToTheVuexState();
         this.checkVueObservation();
         this.regulateDeviceMode();

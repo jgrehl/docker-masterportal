@@ -91,10 +91,10 @@ export default {
             coordValues = value;
         }
 
-        const layerId = "marker_point_layer",
-            feature = new Feature({
-                geometry: new Point(coordinates)
-            });
+            const layerId = "marker_point_layer",
+                feature = new Feature({
+                    geometry: new Point(coordinates.map(coord => parseFloat(coord)))
+                });
 
         mapMarker.addFeatureToMapMarkerLayer(layerId, feature);
     }, */
