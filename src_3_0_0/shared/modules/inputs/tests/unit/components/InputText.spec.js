@@ -38,4 +38,18 @@ describe("src_3_0_0/shared/components/InputText.vue", () => {
         expect(input.attributes("placeholder")).to.equal(placeholder);
         expect(input.attributes("type")).to.equal(type);
     });
+    it("should render an input field and make it readonly", () => {
+        const id = "input-awesome",
+            label = "My super nice Input",
+            placeholder = "world's best placeholder",
+            readonly = true,
+            wrapper = mount(InputText, {
+                props: {id, label, readonly, placeholder}
+            }),
+            input = wrapper.find("input");
+
+        expect(input.exists()).to.be.true;
+        expect(input.classes()).to.eql(["form-control"]);
+        expect(input.attributes("readonly")).to.to.equal("");
+    });
 });
