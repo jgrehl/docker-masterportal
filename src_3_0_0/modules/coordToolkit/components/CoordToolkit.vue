@@ -473,7 +473,7 @@ export default {
                     :label="$t(getLabel('eastingLabel'))"
                     :placeholder="isEnabled('search') ? $t('modules.tools.coordToolkit.exampleAcronym') + coordinatesEastingExample : ''"
                     :value="coordinatesEasting.value"
-                    :input="() => onInputEvent(coordinatesEasting)"
+                    :input="(value) => onInputEvent(value)"
                     :readonly="isEnabled('supply')"
                     :class-obj="{ inputError: getEastingError }"
                 >
@@ -518,7 +518,7 @@ export default {
                     :label="$t(getLabel('northingLabel'))"
                     :placeholder="isEnabled('search') ? $t('modules.tools.coordToolkit.exampleAcronym') + coordinatesNorthingExample : ''"
                     :value="coordinatesNorthing.value"
-                    :input="() => onInputEvent(coordinatesNorthing)"
+                    :input="(value) => onInputEvent(value)"
                     :readonly="isEnabled('supply')"
                     :class-obj="{ inputError: getNorthingError }"
                 >
@@ -676,7 +676,7 @@ export default {
         color: $black;
         transition: color 0.35s;
         i {
-            color: rgba(39, 148, 6);
+            color: #198754;
             font-size: $font_size_huge;
         }
     }
