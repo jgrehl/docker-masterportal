@@ -3,6 +3,7 @@ import actionsMapsInteractions from "./actionsMapsInteractions.js";
 import actionsMapsLayers from "./actionsMapsLayers.js";
 import actionsMapsMapMode from "./actionsMapsMapMode.js";
 import actionsMapsMarker from "./actionsMapsMarker.js";
+import actionsMapsZoomTo from "./actionsMapsZoomTo.js";
 import * as highlightFeature from "../js/highlightFeature.js";
 import * as removeHighlightFeature from "../js/removeHighlighting.js";
 
@@ -15,23 +16,7 @@ export default {
     ...actionsMapsLayers,
     ...actionsMapsMapMode,
     ...actionsMapsMarker,
+    ...actionsMapsZoomTo,
     ...highlightFeature,
-    ...removeHighlightFeature,
-
-    urlParams ({dispatch, rootState}, paramsString) {
-        const params = JSON.parse(paramsString);
-
-        dispatch("setView", {
-            center: params.center,
-            rotation: params.rotation,
-            zoom: params.zoom
-        });
-
-        if (params.mode && mapCollection.getMap(params.mode)) {
-            dispatch("changeMapMode", params.mode);
-        }
-        else {
-            rootState.configJs.startingMap3D = true;
-        }
-    }
+    ...removeHighlightFeature
 };

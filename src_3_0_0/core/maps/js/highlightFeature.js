@@ -1,5 +1,7 @@
 import styleList from "@masterportal/masterportalapi/src/vectorStyle/styleList";
 import createStyle from "@masterportal/masterportalapi/src/vectorStyle/createStyle";
+import layerCollection from "../../layers/js/layerCollection";
+import {nextTick} from "vue";
 
 /**
  * check how to highlight
@@ -15,7 +17,7 @@ function highlightFeature ({commit, dispatch, getters}, highlightObject) {
         increaseFeature(commit, getters, highlightObject);
     }
     else if (highlightObject.type === "viaLayerIdAndFeatureId") {
-        highlightViaParametricUrl(dispatch, getters, highlightObject.layerIdAndFeatureId);
+        highlightViaParametricUrl(dispatch, highlightObject.layerIdAndFeatureId);
     }
     else if (highlightObject.type === "highlightPolygon") {
         highlightPolygon(commit, dispatch, highlightObject);
@@ -96,39 +98,54 @@ function highlightLine (commit, dispatch, highlightObject) {
 /**
  * highlights a feature via layerid and featureid
  * @param {Object} dispatch the dispatch
- * @param {Object} getters the getters
- * @param {String} layerIdAndFeatureId contains layerid and featureid
+ * @param {String[]} layerIdAndFeatureId contains layerid and featureid
  * @returns {void}
  */
-function highlightViaParametricUrl (dispatch, getters, layerIdAndFeatureId) {
-    const featureToAdd = layerIdAndFeatureId;
-    let temp,
-        feature;
-
-    if (featureToAdd) {
-        temp = featureToAdd.split(",");
-        feature = getHighlightFeature(temp[0], temp[1], getters);
-    }
-    if (feature) {
-        dispatch("Maps/placingPolygonMarker", feature, {root: true});
+async function highlightViaParametricUrl (dispatch, layerIdAndFeatureId) {
+    if (layerIdAndFeatureId) {
+        getHighlightFeature(layerIdAndFeatureId[0], layerIdAndFeatureId[1], dispatch);
     }
 }
 /**
  * Searches the feature which shall be hightlighted
  * @param {String} layerId Id of the layer, containing the feature to hightlight
  * @param {String} featureId Id of feature which shall be hightlighted
- * @param {Object} getters the getters
+ * @param {Object} dispatch the dispatch
  * @returns {ol/feature} feature to highlight
  */
-function getHighlightFeature (layerId, featureId, getters) {
-    const layer = getters.getLayerById({layerId});
+function getHighlightFeature (layerId, featureId, dispatch) {
+    let feature;
 
-    if (layer) {
-        return layer.getSource().getFeatureById(featureId)
-            || layer.getSource().getFeatures() // if feature clustered source find cluster the highlighted feature belongs to
-                .find(feat => feat.get("features")?.find(feat_ => feat_.getId() === featureId));
-    }
-    return undefined;
+    nextTick(() => {
+        const layerSource = layerCollection.getLayerById(layerId)?.layerSource;
+
+        if (layerSource) {
+            if (layerSource.getFeatures().length > 0) {
+                feature = layerSource.getFeatureById(featureId)
+                    || layerSource.getFeatures() // if feature clustered source find cluster the highlighted feature belongs to
+                        .find(feat => feat.get("features")?.find(feat_ => feat_.getId() === featureId));
+
+                if (feature && dispatch) {
+                    dispatch("Maps/placingPolygonMarker", feature, {root: true});
+                }
+            }
+            else {
+                layerSource.once("featuresloadend", () => {
+                    feature = layerSource.getFeatureById(featureId)
+                        || layerSource.getFeatures() // if feature clustered source find cluster the highlighted feature belongs to
+                            .find(feat => feat.get("features")?.find(feat_ => feat_.getId() === featureId));
+
+                    if (feature && dispatch) {
+                        dispatch("Maps/placingPolygonMarker", feature, {root: true});
+                    }
+                });
+            }
+        }
+
+        return feature;
+    });
+
+
 }
 /**
  * increases the icon of the feature
@@ -141,7 +158,7 @@ function increaseFeature (commit, getters, highlightObject) {
     const scaleFactor = highlightObject.scale ? highlightObject.scale : 1.5,
         feature = highlightObject.feature // given already
             ? highlightObject.feature
-            : getHighlightFeature(highlightObject.layer?.id, highlightObject.id, getters); // get feature from layersource, incl. check against clustered features
+            : getHighlightFeature(highlightObject.layer?.id, highlightObject.id); // get feature from layersource, incl. check against clustered features
     let clonedStyle = styleObject(highlightObject, feature) ? styleObject(highlightObject, feature).clone() : null,
         clonedImage = null;
 
