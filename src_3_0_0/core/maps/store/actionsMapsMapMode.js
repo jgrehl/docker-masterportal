@@ -11,6 +11,7 @@ export default {
      * @returns {void}
      */
     changeMapMode ({getters, dispatch}, targetMode) {
+        console.log(targetMode);
         const currentMode = getters.mode;
 
         if (currentMode !== targetMode) {
@@ -45,14 +46,18 @@ export default {
      * Activates the 3D map mode.
      * @param {Object} param store context.
      * @param {Object} param.commit the commit.
+     * @param {Object} param.rootState the rootState.
      * @returns {void}
      */
-    activateMap3d ({commit}) {
+    activateMap3d ({commit, rootState}) {
         const map3d = mapCollection.getMap("3D");
 
         if (map3d) {
             map3d.setEnabled(true);
             commit("setMode", "3D");
+        }
+        else {
+            rootState.configJs.startingMap3D = true;
         }
     }
 };
