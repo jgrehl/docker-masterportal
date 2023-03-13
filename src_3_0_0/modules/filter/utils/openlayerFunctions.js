@@ -102,16 +102,7 @@ function getLayerByLayerId (layerId) {
 function showFeaturesByIds (layerId, ids) {
     const layer = layerCollection.getLayerById(layerId);
 
-    layer.showFeaturesByIds(layerId, ids);
-}
-
-/**
- * Creates a new layer or returns the existing one for a specific layer name.
- * @param {String} layername the id of the new layer
- * @returns {ol/Layer} the layer
- */
-function createLayerIfNotExists (layername) {
-    return store.dispatch("Maps/addNewLayerIfNotExists", {layername});
+    layer.showFeaturesByIds(ids);
 }
 
 /**
@@ -150,24 +141,6 @@ function zoomToExtent (extent, minScale, callback) {
 }
 
 /**
- * Adds a layer model by the given layerId.
- * @param {String} layerId the layer Id
- * @returns {void}
- */
-function addLayerByLayerId (layerId) {
-    const layer = store.getters.layerConfigById(layerId);
-
-    store.dispatch("replaceByIdInLayerConfig", {
-        layerConfigs: [{
-            id: layer.id,
-            layer: {
-                id: layer.id
-            }
-        }]
-    });
-}
-
-/**
  * changes visibility of the layer to true so its shown in the map.
  * @param {String} layerId the layer Id
  * @returns {void}
@@ -201,6 +174,12 @@ function setParserAttributeByLayerId (layerId, key, value) {
     if (Array.isArray(lightModels) && lightModels.length === 1) {
         lightModels[0][key] = value;
     }
+    store.dispatch("replaceByIdInLayerConfig", {
+        layerConfigs: [{
+            id: layerId,
+            layer: lightModels
+        }]
+    });
 }
 
 /**
@@ -213,7 +192,6 @@ function getLayers () {
 
 export default {
     getMapProjection,
-    createLayerIfNotExists,
     getFeaturesByLayerId,
     getLayerByLayerId,
     getCurrentExtent,
@@ -222,7 +200,6 @@ export default {
     zoomToFilteredFeatures,
     zoomToExtent,
     showFeaturesByIds,
-    addLayerByLayerId,
     changeLayerVisibility,
     setParserAttributeByLayerId,
     getLayers
