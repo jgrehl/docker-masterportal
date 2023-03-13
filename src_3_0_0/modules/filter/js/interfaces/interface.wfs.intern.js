@@ -150,7 +150,7 @@ export default class InterfaceWfsIntern {
             snippetId = clonedQuestion?.snippetId,
             commands = clonedQuestion?.commands,
             rules = clonedQuestion?.rules,
-            filterGeometry = filterQuestion?.commands?.filterGeometry,
+            filterGeometry = typeof filterQuestion?.commands?.filterGeometry === "boolean" ? filterQuestion?.commands?.filterGeometry : filterQuestion?.commands?.filterGeometry?.clone(),
             searchInMapExtent = commands?.searchInMapExtent,
             paging = commands?.paging > 0 ? commands.paging : 1000,
             features = this.getFeaturesByLayerId(service?.layerId),
