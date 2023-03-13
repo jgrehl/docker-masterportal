@@ -811,7 +811,7 @@
                     "hdmsNoMatch": "Die Eingabe für den Wert der {{valueKey}} ist nicht korrekt!",
                     "example": "Beispiel: "
                 },
-                "hintSupply": "Klicken Sie in die Karte um Lagekoordinaten und Höhe abzufragen",
+                "hintSupply": "Klicken Sie in die Karte, um Koordinaten abzufragen",
                 "hintSearch": "Geben Sie die zu suchenden Koordinaten ein",
                 "copyCoordsBtn": "Koordinatenpaar kopieren",
                 "copyCoordBtn": " {{value}} kopieren"
