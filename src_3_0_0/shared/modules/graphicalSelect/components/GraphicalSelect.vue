@@ -1,9 +1,7 @@
 <script>
+// todo komplexe aus dem state raus!
 import Dropdown from "../../dropdowns/components/DropdownSimple.vue";
 import {mapGetters, mapActions, mapMutations} from "vuex";
-import getters from "../store/gettersGraphicalSelect";
-import mutations from "../store/mutationsGraphicalSelect";
-import actions from "../store/actionsGraphicalSelect";
 import Draw, {createBox} from "ol/interaction/Draw.js";
 import VectorLayer from "ol/layer/Vector.js";
 import VectorSource from "ol/source/Vector.js";
@@ -54,7 +52,16 @@ export default {
         };
     },
     computed: {
-        ...mapGetters("Modules/GraphicalSelect", Object.keys(getters)),
+        ...mapGetters("Modules/GraphicalSelect", [
+            "active",
+            "tooltipOverlay",
+            "drawInteraction",
+            "circleOverlay",
+            "tooltipOverlay",
+            "geographicValues",
+            "selectionElements"
+
+        ]),
         optionsValue: function () {
             return this.options ? this.options : {
                 "Box": this.$t("common:snippets.graphicalSelect.selectBySquare"),
@@ -67,17 +74,6 @@ export default {
         selectedOptionData: function () {
             this.createDrawInteraction();
         }
-    },
-
-    /**
-     * Created hook:
-     * @returns {void}
-     */
-    created () {
-        /* this.$parent.$parent.$on("close", () => {
-            this.setActive(false);
-            this.resetView();
-        }); */
     },
 
     /**
@@ -99,19 +95,34 @@ export default {
     },
 
     methods: {
-        ...mapMutations("Modules/GraphicalSelect", Object.keys(mutations)),
-        ...mapActions("Modules/GraphicalSelect", Object.keys(actions)),
-        ...mapActions("Maps", ["addLayer", "addInteraction", "removeInteraction", "registerListener"]),
+        ...mapMutations("Modules/GraphicalSelect", [
+            "setDefaultSelection",
+            "setActive",
+            "setCurrentValue",
+            "setDrawInteractionListener",
+            "setDrawInteraction"
+        ]),
+        ...mapActions("Modules/GraphicalSelect", [
+            "createDomOverlay",
+            "showTooltipOverlay",
+            "toggleOverlay",
+            "setDrawInteractionListener"
+        ]),
+        ...mapActions("Maps", [
+            "addLayer",
+            "addInteraction",
+            "removeInteraction",
+            "registerListener"
+        ]),
         ...mapActions("Alerting", ["addSingleAlert"]),
 
         /**
-         * Handles (de-)activation of this Tool
-         * @param {Boolean} value flag if tool is active
+         * Handles (de-)activation of this Module
+         * @param {Boolean} value flag if module is active
          * @fires Core#RadioTriggerMapRemoveOverlay
          * @todo Replace if removeOverlay is available in vue
          * @returns {void}
          */
-
         setStatus: function (value) {
             if (value) {
                 this.createDrawInteraction();
@@ -232,7 +243,6 @@ export default {
          * @todo Replace if removeOverlay and pointermove is available in vue
          * @returns {void}
          */
-
         createDrawInteraction: function () {
             const geometryFunction = createBox(),
                 drawtype = this.selectedOptionData;
