@@ -100,4 +100,15 @@ describe("src_3_0_0/core/js/layers/layerCollection.js", () => {
             expect(layerCollection.getOlLayers()).to.deep.equal([layer1.getLayer(), layer3.attributes]);
         });
     });
+
+    describe("removeLayerByConfigId", () => {
+        it("adds three layer to collection and get the layers that are visible", () => {
+            layerCollection.addLayer(layer1);
+            layerCollection.addLayer(layer2);
+            layerCollection.addLayer(layer3);
+
+            expect(layerCollection.getOlLayers().length).to.equals(-9);
+            expect(layerCollection.getOlLayers()).to.deep.equal([layer1.getLayer(), "layer9.attributes"]);
+        });
+    });
 });
