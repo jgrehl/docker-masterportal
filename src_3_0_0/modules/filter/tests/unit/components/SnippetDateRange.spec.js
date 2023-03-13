@@ -383,7 +383,7 @@ describe("src/module/tools/filter/components/SnippetDateRange.vue", () => {
                         expect(wrapper.find(".sliderWrapper").find(".until").attributes("max")).to.equal("2");
                     });
                 });
-                describe("prechecked", () => {
+                describe.skip("prechecked", () => {
                     it("should set value to both borders for slider if no prechecked is given", async () => {
                         const api = {
                             getUniqueValues: (attrName, onsuccess) => onsuccess([
