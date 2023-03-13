@@ -18,6 +18,25 @@ function addLayer (layer) {
 }
 
 /**
+ * Removes a layer from the layerCollection and map.
+ * @param {Layer} layerId The layer Id.
+ * @returns {void}
+ */
+function removeLayerById (layerId) {
+    const removeLayer = getLayerById(layerId);
+
+    if (removeLayer instanceof Layer2d) {
+        mapCollection.getMap("2D")?.removeLayer(removeLayer.layer);
+    }
+    for (let i = 0; i < layerCollection.length; i++) {
+        if (layerCollection[i].attributes?.id === layerId) {
+            layerCollection.splice(i, 1);
+        }
+    }
+}
+
+
+/**
  * Removes all entries from the collection and remove all layers from maps.
  * @returns {void}
  */
@@ -75,6 +94,7 @@ function getOlLayers () {
 
 export default {
     addLayer,
+    removeLayerById,
     clear,
     getLayers,
     getLayerById,
