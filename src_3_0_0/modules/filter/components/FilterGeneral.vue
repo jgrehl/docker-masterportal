@@ -28,10 +28,8 @@ export default {
             mapHandler: new MapHandler({
                 getLayerByLayerId: openlayerFunctions.getLayerByLayerId,
                 showFeaturesByIds: openlayerFunctions.showFeaturesByIds,
-                createLayerIfNotExists: openlayerFunctions.createLayerIfNotExists,
                 zoomToFilteredFeatures: openlayerFunctions.zoomToFilteredFeatures,
                 zoomToExtent: openlayerFunctions.zoomToExtent,
-                addLayerByLayerId: openlayerFunctions.addLayerByLayerId,
                 changeLayerVisibility: openlayerFunctions.changeLayerVisibility,
                 setParserAttributeByLayerId: openlayerFunctions.setParserAttributeByLayerId,
                 getLayers: openlayerFunctions.getLayers
@@ -83,7 +81,7 @@ export default {
             const selectedFilterIds = [];
 
             this.layerConfigs.layers.forEach(config => {
-                if (typeof config?.active === "boolean" && config.active && config?.filterId) {
+                if (typeof config?.active === "boolean" && config.active && typeof config?.filterId !== "undefined") {
                     selectedFilterIds.push(config.filterId);
                 }
             });
@@ -280,7 +278,7 @@ export default {
             :geometry-feature="geometryFeature"
             :init-selected-geometry-index="geometrySelectorOptions.selectedGeometry"
             @update-filter-geometry="updateFilterGeometry"
-            @update-geometryfeature="updateGeometryFeature"
+            @update-geometry-feature="updateGeometryFeature"
             @update-geometry-selector-options="updateGeometrySelectorOptions"
         />
         <div v-if="Array.isArray(layerGroups) && layerGroups.length && layerSelectorVisible">
