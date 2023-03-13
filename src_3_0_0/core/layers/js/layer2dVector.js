@@ -17,7 +17,8 @@ export default function Layer2dVector (attributes) {
     const defaultAttributes = {
         altitudeMode: "clampToGround",
         crs: mapCollection.getMapView("2D").getProjection().getCode(),
-        renderer: "default"
+        renderer: "default",
+        styleId: "default"
     };
 
     this.attributes = Object.assign(defaultAttributes, attributes);
@@ -170,11 +171,10 @@ Layer2dVector.prototype.getStyleFunction = function (attrs) {
 };
 /**
  * Only shows features that match the given ids.
- * @param {String} layerId the id of the layer
  * @param {String[]} featureIdList List of feature ids.
  * @returns {void}
  */
-Layer2dVector.prototype.showFeaturesByIds = function (layerId, featureIdList) {
+Layer2dVector.prototype.showFeaturesByIds = function (featureIdList) {
     const layerSource = this.getLayerSource() instanceof Cluster ? this.getLayerSource().getSource() : this.getLayerSource(),
         allLayerFeatures = layerSource.getFeatures(),
         featuresToShow = featureIdList.map(id => layerSource.getFeatureById(id));

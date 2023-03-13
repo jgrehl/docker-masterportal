@@ -4,7 +4,7 @@ import {createRegularPolygon} from "ol/interaction/Draw";
 import {Fill, Stroke, Style} from "ol/style";
 import {Vector as VectorSource} from "ol/source";
 import {Vector as VectorLayer} from "ol/layer";
-import {mapActions} from "vuex";
+import {mapActions, mapGetters, mapMutations} from "vuex";
 import * as jsts from "jsts/dist/jsts";
 import {
     LineString,
@@ -83,8 +83,19 @@ export default {
             buffer: this.defaultBuffer,
             isBufferInputVisible: false,
             isGeometryVisible: false,
-            selectedGeometryIndex: this.initSelectedGeometryIndex
+            selectedGeometryIndex: this.initSelectedGeometryIndex,
+            lastMouseMapInteractionsComponent: ""
         };
+    },
+    computed: {
+        ...mapGetters("Menu", [
+            "currentComponent",
+            "currentMouseMapInteractionsComponent"
+        ]),
+        ...mapGetters("Modules/Filter", [
+            "type",
+            "side"
+        ])
     },
     watch: {
         selectedGeometryIndex (newValue) {
@@ -103,6 +114,15 @@ export default {
             }
         },
         isActive (val) {
+            if (val) {
+                this.lastMouseMapInteractionsComponent = this.currentMouseMapInteractionsComponent;
+                this.setHasMouseMapInteractions(true);
+                this.changeCurrentMouseMapInteractionsComponent({type: this.type, side: this.side});
+            }
+            else {
+                this.setHasMouseMapInteractions(false);
+                this.changeCurrentMouseMapInteractionsComponent({type: this.lastMouseMapInteractionsComponent, side: this.side});
+            }
             if (this.draw instanceof Draw && this.getSelectedGeometry(this.selectedGeometryIndex)?.type !== "additional") {
                 this.draw.setActive(val);
             }
@@ -155,6 +175,8 @@ export default {
 
     methods: {
         ...mapActions("Maps", ["addInteraction", "removeInteraction", "addLayer"]),
+        ...mapActions("Menu", ["changeCurrentMouseMapInteractionsComponent"]),
+        ...mapMutations("Modules/Filter", ["setHasMouseMapInteractions"]),
         translateKeyWithPlausibilityCheck,
 
         /**
