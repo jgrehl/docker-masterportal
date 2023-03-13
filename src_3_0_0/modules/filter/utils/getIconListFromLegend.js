@@ -49,7 +49,7 @@ function getStyleModel (layerId) {
         }
     }
 
-    return Object.freeze(styleModel);
+    return styleModel;
 }
 
 /**
