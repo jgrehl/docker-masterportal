@@ -90,3 +90,7 @@
 .bold {
     font-weight: bold;
 }
+
+.accordion-button:not(.collapsed) {
+    color: $dark_blue;
+}
