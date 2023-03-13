@@ -1,42 +1,74 @@
 import store from "../../../app-store";
 
 const urlParamsFacade = {
-    ISINITOPEN_MAIN: {
+    LAYERIDS: {
         getter: () => {
-            const currentComponentName = "Menu/currentComponentName";
+            const layers = store.getters.layerConfigsByAttributes({showInLayerTree: true}),
+                layerIds = layers.map(layer => layer.id).join(","),
+                visibilities = layers.map(layer => layer.visibility).join(",");
 
-            return store.getters[currentComponentName]("mainMenu");
+            return `LAYERIDS=${layerIds}&VISIBILITY=${visibilities}`;
         },
-        setter: (type) => {
-            store.dispatch("Menu/changeCurrentComponent", {
-                side: "mainMenu",
-                type: type,
-                props: []
-            }, {root: true});
+        setter: () => {
+            const params = store.getters.urlParams,
+                layerIds = params.LAYERIDS?.split(","),
+                visibilities = params.VISIBILITY?.split(",").map(param => param === "true"),
+                allLayerConfigs = store.getters.allLayerConfigs,
+                inVisibleLayers = allLayerConfigs.filter(layer => !layerIds.includes(layer.id));
+
+            inVisibleLayers.forEach(layer => {
+
+                store.dispatch("replaceByIdInLayerConfig", {
+                    layerConfigs: [{
+                        id: layer.id,
+                        layer: {
+                            showInLayerTree: false,
+                            visibility: false
+                        }
+                    }]
+                });
+            });
+
+            layerIds.forEach((layerId, index) => {
+                store.dispatch("replaceByIdInLayerConfig", {
+                    layerConfigs: [{
+                        id: layerId,
+                        layer: {
+                            showInLayerTree: true,
+                            visibility: visibilities[index]
+                        }
+                    }]
+                });
+            });
         }
     },
-    ISINITOPEN_SECONDARY: {
-        getter: () => {
-            const currentComponentName = "Menu/currentComponentName";
-
-            return store.getters[currentComponentName]("secondaryMenu");
-        },
-        setter: (type) => {
-            store.dispatch("Menu/changeCurrentComponent", {
-                side: "secondaryMenu",
-                type: type,
-                props: []
-            }, {root: true});
+    MAPS: {
+        getter: () => store.getters["Maps/urlParams"],
+        setter: () => store.dispatch("Maps/urlParams", store.getters.urlParams.MAPS)
+    },
+    MENU_MAIN: {
+        getter: () => store.getters["Menu/urlParams"]("mainMenu"),
+        setter: () => {
+            store.dispatch("Menu/urlParams", {
+                menu: store.getters.urlParams.MENU_MAIN,
+                module: store.getters.urlParams.MODULE_MAIN || "{}",
+                side: "mainMenu"
+            });
         }
     },
-    ZOOMLEVEL: {
-        getter: () => {
-            return store.getters["Maps/zoom"];
-        },
-        setter: (zoomLevel) => {
-            store.dispatch("Maps/setZoom", zoomLevel);
+    MENU_SECONDARY: {
+        getter: () => store.getters["Menu/urlParams"]("secondaryMenu"),
+        setter: () => {
+            store.dispatch("Menu/urlParams", {
+                menu: store.getters.urlParams.MENU_SECONDARY,
+                module: store.getters.urlParams.MODULE_SECONDARY || "{}",
+                side: "secondaryMenu"
+            });
         }
-    }
+    },
+    MODULE_MAIN: {},
+    MODULE_SECONDARY: {},
+    VISIBILITY: {}
 };
 
 export default urlParamsFacade;

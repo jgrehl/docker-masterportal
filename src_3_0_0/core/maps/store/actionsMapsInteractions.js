@@ -1,18 +1,30 @@
 
+import api from "@masterportal/masterportalapi/src/maps/api";
 import {unByKey as unlistenByKey} from "ol/Observable.js";
+import {toRaw} from "vue";
 
 import actionsMapsInteractionsZoom from "./actionsMapsInteractionsZoom";
 
-import {toRaw} from "vue";
-
 /**
- * Interactions with the Map and MapView.
+ * Interactions with the Map, MapView and Scene (3D).
  */
 
 const registeredActions = {};
 
 export default {
     ...actionsMapsInteractionsZoom,
+
+    /**
+     * Adds an interaction to the map.
+     * @param {Object} context store context
+     * @param {module:ol/interaction/Interaction} interaction - Interaction to be added to map.
+     * @returns {void}
+     */
+    addInteraction (context, interaction) {
+        const map = mapCollection.getMap("2D");
+
+        map.addInteraction(toRaw(interaction));
+    },
 
     /**
      * Registered listener for certain events on the map.
@@ -45,6 +57,30 @@ export default {
     },
 
     /**
+     * Removes an interaction from the map.
+     * @param {Object} context store context
+     * @param {module:ol/interaction/Interaction} interaction - Interaction to be removed from map.
+     * @returns {void}
+     */
+    removeInteraction (context, interaction) {
+        const map = mapCollection.getMap("2D");
+
+        if (map.removeInteraction(interaction) === undefined) {
+            const interactions = map.getInteractions().getArray(),
+                index = interactions.findIndex((anInteraction) => {
+                    return anInteraction.ol_uid === interaction.ol_uid;
+                });
+
+            if (index > -1) {
+                map.getInteractions().removeAt(index);
+            }
+            else if (typeof interactions === Array) {
+                console.warn("interaction cannot be removed from map:", interaction);
+            }
+        }
+    },
+
+    /**
      * Sets map view to initial properties.
      * @param {Object} param store context
      * @param {Object} param.state the state
@@ -59,46 +95,23 @@ export default {
     },
 
     /**
-     * Unsubscribes listener to certain events.
-     * @param {Object} _ not used
-     * @param {Object} payload parameter object
-     * @param {String} payload.type The event type or array of event types.
-     * @param {Function} payload.listener The listener function.
-     * @param {String | Function} payload.listenerType Type of the listener. Possible are: "function", "commit" and "dispatch".
+     * Sets the camera parameter
+     * @param {Object} param store context
+     * @param {Object} param.rootState the rootState
+     * @param {Object} cameraParams The camera params.
+     * @param {Object} cameraParams.altitude The camera altitude param.
+     * @param {Object} cameraParams.heading The camera heading param.
+     * @param {Object} cameraParams.tilt The camera tilt param.
      * @returns {void}
      */
-    unregisterListener (_, {type, listener, listenerType = "function"}) {
-        if (typeof type === "string") {
-            if (registeredActions[type] && registeredActions[type][listenerType] && registeredActions[type][listenerType][String(listener)]) {
-                mapCollection.getMap("2D").un(type, registeredActions[type][listenerType][String(listener)]);
-                registeredActions[type][listenerType][String(listener)] = null;
-            }
+    setCamera ({rootState}, cameraParams) {
+        const map3d = mapCollection.getMap("3D");
+
+        if (map3d) {
+            api.map.olcsMap.setCameraParameter(cameraParams, mapCollection.getMap("3D"), Cesium);
         }
         else {
-            unlistenByKey(type);
-        }
-    },
-
-    /**
-     * Sets center, rotation and zoom at the view.
-     * @param {Object} _ not used
-     * @param {Object} payload parameter object
-     * @param {Array.<number>} payload.center center of the view
-     * @param {number} payload.rotation rotation of the view
-     * @param {number} payload.zoom zoom of the view
-     * @returns {void}
-     */
-    setView (_, {center, rotation, zoom}) {
-        const view = mapCollection.getMapView("2D");
-
-        if (center) {
-            view.setCenter(center);
-        }
-        if (rotation) {
-            view.setRotation(rotation);
-        }
-        if (zoom) {
-            view.setZoom(zoom);
+            rootState.configJs.cesiumParameter.camera = cameraParams;
         }
     },
 
@@ -107,7 +120,7 @@ export default {
      * @param {Object} param store context
      * @param {Object} param.getters the getters
      * @param {Object} param.commit the commit
-     * @param {number[]} coords An array of numbers representing a xy-coordinate
+     * @param {Number[]} coords An array of numbers representing a xy-coordinate
      * @returns {void}
      */
     setCenter ({commit}, coords) {
@@ -128,38 +141,47 @@ export default {
     },
 
     /**
-     * Adds an interaction to the map.
-     * @param {Object} _ not used
-     * @param {module:ol/interaction/Interaction} interaction - Interaction to be added to map.
+     * Sets center, rotation and zoom at the view.
+     * @param {Object} param store context
+     * @param {Object} param.dispatch the dispatch
+     * @param {Object} payload parameter object
+     * @param {Number[]} payload.center center of the view
+     * @param {Number} payload.rotation rotation of the view
+     * @param {Number} payload.zoom zoom of the view
      * @returns {void}
      */
-    addInteraction (_, interaction) {
-        const map = mapCollection.getMap("2D");
+    setView ({dispatch}, {center, rotation, zoom}) {
+        const view = mapCollection.getMapView("2D");
 
-        map.addInteraction(toRaw(interaction));
+        if (center) {
+            dispatch("setCenter", center);
+        }
+        if (rotation) {
+            view.setRotation(rotation);
+        }
+        if (zoom) {
+            dispatch("setZoom", zoom);
+        }
     },
 
     /**
-     * Removes an interaction from the map.
-     * @param {Object} _ not used
-     * @param {module:ol/interaction/Interaction} interaction - Interaction to be removed from map.
+     * Unsubscribes listener to certain events.
+     * @param {Object} context store context
+     * @param {Object} payload parameter object
+     * @param {String} payload.type The event type or array of event types.
+     * @param {Function} payload.listener The listener function.
+     * @param {String | Function} payload.listenerType Type of the listener. Possible are: "function", "commit" and "dispatch".
      * @returns {void}
      */
-    removeInteraction (_, interaction) {
-        const map = mapCollection.getMap("2D");
-
-        if (map.removeInteraction(interaction) === undefined) {
-            const interactions = map.getInteractions().getArray(),
-                index = interactions.findIndex((anInteraction) => {
-                    return anInteraction.ol_uid === interaction.ol_uid;
-                });
-
-            if (index > -1) {
-                map.getInteractions().removeAt(index);
+    unregisterListener (context, {type, listener, listenerType = "function"}) {
+        if (typeof type === "string") {
+            if (registeredActions[type] && registeredActions[type][listenerType] && registeredActions[type][listenerType][String(listener)]) {
+                mapCollection.getMap("2D").un(type, registeredActions[type][listenerType][String(listener)]);
+                registeredActions[type][listenerType][String(listener)] = null;
             }
-            else if (typeof interactions === Array) {
-                console.warn("interaction cannot be removed from map:", interaction);
-            }
+        }
+        else {
+            unlistenByKey(type);
         }
     }
 };

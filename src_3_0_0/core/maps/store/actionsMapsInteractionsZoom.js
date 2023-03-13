@@ -1,5 +1,6 @@
-import Cluster from "ol/source/Cluster.js";
 import calculateExtent from "../../../shared/js/utils/calculateExtent";
+import Cluster from "ol/source/Cluster.js";
+import crs from "@masterportal/masterportalapi/src/crs";
 
 /**
  * Interactions with the Map and MapView that are exclusively about zooming.
@@ -82,6 +83,31 @@ export default {
             if (filteredFeatures.length > 0) {
                 dispatch("zoomToExtent", {extent: calculatedExtent, options: zoomOptions});
             }
+        }
+    },
+
+    /**
+     * Zoom to a given extent, this function allows to give projection of extent
+     * Note: Used in remoteInterface.
+     * @param {Object} param store context.
+     * @param {Object} param.dispatch the dispatch.
+     * @param {Object} zoomParams parameter object.
+     * @param {String[]} zoomParams.extent The extent to zoom.
+     * @param {Object} zoomParams.options Options for zoom.
+     * @param {string} zoomParams.projection The projection from RUL parameter.
+     * @returns {void}
+     */
+    zoomToProjExtent ({dispatch}, zoomParams) {
+        if (Object.values(zoomParams).every(val => val !== undefined)) {
+            const extent = zoomParams.extent.map(coord => parseFloat(coord)),
+                map2d = mapCollection.getMap("2D"),
+                leftBottom = extent.slice(0, 2),
+                topRight = extent.slice(2, 4),
+                transformedLeftBottom = crs.transformToMapProjection(map2d, zoomParams.projection, leftBottom),
+                transformedTopRight = crs.transformToMapProjection(map2d, zoomParams.projection, topRight),
+                extentToZoom = transformedLeftBottom.concat(transformedTopRight);
+
+            dispatch("zoomToExtent", {extent: extentToZoom, options: zoomParams.options});
         }
     }
 };

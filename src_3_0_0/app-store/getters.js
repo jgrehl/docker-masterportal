@@ -149,6 +149,16 @@ const getters = {
     },
 
     /**
+     * Gets the value to an url parameter.
+     * @param {Object} state state of the app-store.
+     * @param {String} param The url parameter.
+     * @returns {String} The value to the given url parameter.
+     */
+    getUrlParamValue: state => param => {
+        return state.urlParams[param.toUpperCase()];
+    },
+
+    /**
      * Returns the ignored keys configuration of config.js.
      * @param {Object} state state of the app-store.
      * @returns {String[]} The ignored keys config.
