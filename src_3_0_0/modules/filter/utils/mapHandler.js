@@ -3,6 +3,7 @@ import {nextTick} from "vue";
 import isObject from "../../../shared/js/utils/isObject.js";
 import LayerGroup from "ol/layer/Group";
 import layerCollection from "../../../core/layers/js/layerCollection";
+import {treeSubjectsKey} from "../../../shared/js/utils/constants";
 
 /**
  * The MapHandler has control over OL and the Map.
@@ -30,11 +31,6 @@ export default class MapHandler {
         if (typeof this.handlers?.showFeaturesByIds !== "function") {
             if (typeof onerror === "function") {
                 onerror(new Error("Filter MapHandler.constructor: The given handler needs a function 'showFeaturesByIds'"));
-            }
-        }
-        if (typeof this.handlers?.createLayerIfNotExists !== "function") {
-            if (typeof onerror === "function") {
-                onerror(new Error("Filter MapHandler.constructor: The given handler needs a function 'createLayerIfNotExists'"));
             }
         }
         if (typeof this.handlers?.zoomToFilteredFeatures !== "function") {
@@ -73,10 +69,6 @@ export default class MapHandler {
      * @returns {void}
      */
     initializeLayer (filterId, layerId, extern, onerror) {
-        const layers = this.handlers.getLayers(),
-            visibleLayer = typeof layers?.getArray !== "function" ? [] : layers.getArray().filter(layer => {
-                return layer.getVisible() === true && layer.get("id") === layerId;
-            });
         let layerModel = null,
             layerConfig = null;
 
@@ -88,23 +80,27 @@ export default class MapHandler {
             this.handlers.setParserAttributeByLayerId(layerId, "loadThingsOnlyInCurrentExtent", false);
         }
 
-        if (Array.isArray(visibleLayer) && !visibleLayer.length) {
-            this.handlers.addLayerByLayerId(layerId);
-        }
         nextTick(() => {
             layerConfig = this.handlers.getLayerByLayerId(layerId);
             layerModel = layerCollection.getLayerById(layerConfig?.id);
 
             if (layerModel?.layer instanceof LayerGroup) {
-                const layerSource = layerModel.get("layerSource"),
-                    isVisibleInMap = layerModel.get("isVisibleInMap");
+                const layerSource = layerConfig.layerSource;
 
                 layerSource.forEach(layer => {
                     if (layer.id === layerId) {
                         layerModel = layer;
                     }
                 });
-                layerModel.set("isVisibleInMap", isVisibleInMap);
+                store.dispatch("replaceByIdInLayerConfig", {
+                    layerConfigs: [{
+                        id: layerConfig.id,
+                        layer: {
+                            id: layerConfig.id,
+                            visibility: layerModel.visibility
+                        }
+                    }]
+                });
             }
 
             if (!layerConfig) {
@@ -164,20 +160,6 @@ export default class MapHandler {
     }
 
     /**
-     * Checks if the layer for the given filterId is visible on the map.
-     * @param {Number} filterId the filter id
-     * @returns {Boolean} true if the layer is visible on the map
-     */
-    isLayerVisibleInMap (filterId) {
-        const layerModel = this.getLayerModelByFilterId(filterId);
-
-        if (isObject(layerModel)) {
-            return layerModel.isVisibleInMap;
-        }
-        return false;
-    }
-
-    /**
      * Activates the layer based on the state of the layer recognized by filterId.
      * @param {Number} filterId the filter id
      * @param {Function} onActivated a function to call when the layer is activated and ready to use
@@ -210,9 +192,8 @@ export default class MapHandler {
             layerConfig.showInLayerTree = true;
             store.dispatch("replaceByIdInLayerConfig", layerConfig);
         }
-        else if (!this.isLayerVisibleInMap(filterId) || !this.isLayerActivated(filterId)) {
+        else if (!this.isLayerActivated(filterId)) {
             layerConfig.showInLayerTree = true;
-
             store.dispatch("replaceByIdInLayerConfig", layerConfig);
             if (typeof onActivated === "function") {
                 onActivated();
@@ -224,7 +205,7 @@ export default class MapHandler {
     }
 
     /**
-     * Deactivates the layer of the given filterId by setting isSelected and isVisible to false.
+     * Deactivates the layer of the given filterId by setting visibility to false.
      * @param {Number} filterId the filter id
      * @returns {void}
      */
@@ -284,10 +265,14 @@ export default class MapHandler {
             features = layerModel.getLayer().getSource().getFeatures();
 
         if (!Array.isArray(features) || !features.length) {
-            return;
+            // @todo
+            // first isNeverVisibleIntree then remove comment out of return
+            // return;
         }
-
-        layerModel.isNeverVisibleInTree = false;
+        // @todo
+        // missing Parameter for layer to set never visible in tree.
+        // did we realy need this?
+        // layerModel.isNeverVisibleInTree = false;
     }
 
     /**
@@ -416,17 +401,28 @@ export default class MapHandler {
      * @param {Boolean} isNeverVisibleInTree true as invisible false as visible in tree
      * @returns {void}
      */
-    toggleWMSLayer (wmsRefId, active, isNeverVisibleInTree = false) {
+    async toggleWMSLayer (wmsRefId, active, isNeverVisibleInTree = false) {
         if (typeof wmsRefId === "string") {
             let wmsLayerModel = this.handlers.getLayerByLayerId(wmsRefId);
 
-            if (!isObject(wmsLayerModel) || typeof wmsLayerModel.get !== "function") {
+            if (!isObject(wmsLayerModel)) {
+                await store.dispatch("addLayerToLayerConfig", {layerConfig: wmsLayerModel, parentKey: treeSubjectsKey}, {root: true});
                 wmsLayerModel = this.handlers.getLayerByLayerId(wmsRefId);
             }
 
             if (typeof wmsLayerModel !== "undefined") {
-                wmsLayerModel.set("isNeverVisibleInTree", isNeverVisibleInTree);
-                wmsLayerModel.set("isSelected", active);
+                // @todo
+                // same as above with isNeverVisibleInTree
+                // wmsLayerModel.set("isNeverVisibleInTree", isNeverVisibleInTree);
+                store.dispatch("replaceByIdInLayerConfig", {
+                    layerConfigs: [{
+                        id: wmsRefId,
+                        layer: {
+                            id: wmsRefId,
+                            visibility: active
+                        }
+                    }]
+                });
             }
         }
         else if (Array.isArray(wmsRefId) && wmsRefId.length) {
@@ -446,8 +442,17 @@ export default class MapHandler {
         if (!isObject(wfsLayerModel) || typeof wfsLayerModel.get !== "function") {
             return;
         }
-
-        wfsLayerModel.set("isNeverVisibleInTree", !active);
-        wfsLayerModel.set("isSelected", active);
+        // @todo
+        // same as above with isNeverVisibleInTree
+        // wfsLayerModel.set("isNeverVisibleInTree", !active);
+        store.dispatch("replaceByIdInLayerConfig", {
+            layerConfigs: [{
+                id: filterId,
+                layer: {
+                    id: filterId,
+                    visibility: active
+                }
+            }]
+        });
     }
 }
