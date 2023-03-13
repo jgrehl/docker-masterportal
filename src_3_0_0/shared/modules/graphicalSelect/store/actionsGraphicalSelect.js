@@ -1,4 +1,3 @@
-
 import {GeoJSON} from "ol/format.js";
 import {fromCircle} from "ol/geom/Polygon.js";
 
@@ -11,7 +10,6 @@ const actions = {
      * @param {Object} payload.interaction Interaction for drawing feature geometries
      * @param {Object} payload.layer Vector data that is rendered client-side
      * @param {Object} payload.vm vue instance
-     * @todo Replace Radio.trigger after refactoring
      * @returns {void}
      */
     setDrawInteractionListener: async function ({dispatch, commit}, payload) {
@@ -25,12 +23,10 @@ const actions = {
             const geoJson = await dispatch("featureToGeoJson", evt.feature);
 
             commit("setSelectedAreaGeoJson", geoJson);
-            //payload.vm.$parent.$parent.$emit("onDrawEnd", geoJson);
             payload.vm.$parent.$emit("onDrawEnd", geoJson);
         });
 
     },
-
     /**
     * Converts a feature to a geojson.
     * If the feature geometry is a circle, it is converted to a polygon.
@@ -48,7 +44,6 @@ const actions = {
 
         return reader.writeGeometryObject(feature.getGeometry());
     },
-
     /**
      * Shows tooltips at position of the event.
      * @param {Object} state vuex element
@@ -68,7 +63,6 @@ const actions = {
         }
         tooltipOverlay.setPosition(coords);
     },
-
     /**
      * Adds or removes the circle overlay from the map.
      * @param {Object} context vuex element
@@ -90,7 +84,6 @@ const actions = {
         }
         mapCollection.getMap("2D").addOverlay(payload.overlayTool);
     },
-
     /**
      * Creates a div element for the circle overlay
      * and adds it to the overlay.
