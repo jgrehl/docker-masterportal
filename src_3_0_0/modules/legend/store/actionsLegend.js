@@ -53,36 +53,63 @@ const actions = {
 
     /**
      * Creates the legend for the layer info.
-     * @param {Object} param.commit the commit
      * @param {Object} param.dispatch the dispatch
-     * @param {Object} param.getters the getters
      * @param {Object} param.rootGetters the rootGetters
      * @param {String} layerId Id of layer to create the layer info legend.
      * @returns {void}
      */
-    createLegendForLayerInfo ({commit, dispatch, getters, rootGetters}, layerId) {
-        let layerForLayerInfo = layerCollection.getLayerById(layerId),
-            legendObj = null;
+    async createLegendForLayerInfo ({dispatch, rootGetters}, layerId) {
+        let layerForLayerInfo = layerCollection.getLayerById(layerId);
 
         if (!layerForLayerInfo) {
             const layerConfig = rootGetters.layerConfigById(layerId);
 
             layerForLayerInfo = layerFactory.createLayer(layerConfig);
-        }
 
-        if (layerForLayerInfo) {
-            if (layerForLayerInfo.get("typ") === "GROUP") {
-                dispatch("prepareLegendForGroupLayer", layerForLayerInfo.getLayerSource());
+            if (layerForLayerInfo.get("typ") === "WFS") {
+                // dispatch("Maps/addLayer", layerForLayerInfo.getLayer(), {root: true});
+                // dispatch("Maps/areLayerFeaturesLoaded", layerId, {root: true}).then(() => {
+                //   dispatch("generateLegendForLayerInfo", layerForLayerInfo);
+                //   layerForLayerInfo.getLayer().setVisible(false);
+                // });
+                dispatch("Maps/addLayer", layerForLayerInfo.getLayer(), {root: true});
+                await dispatch("Maps/areLayerFeaturesLoaded", layerId, {root: true});
+                dispatch("generateLegendForLayerInfo", layerForLayerInfo);
+                layerForLayerInfo.getLayer().setVisible(false);
             }
             else {
-                dispatch("prepareLegend", layerForLayerInfo.getLegend());
+                dispatch("generateLegendForLayerInfo", layerForLayerInfo);
+            }
+        }
+        else {
+            dispatch("generateLegendForLayerInfo", layerForLayerInfo);
+        }
+    },
+
+    /**
+     * Generates legend for the layer info.
+     * @param {Object} param.commit the commit
+     * @param {Object} param.dispatch the dispatch
+     * @param {Object} param.getters the getters
+     * @param {Object} layer the layer
+     * @returns {void}
+     */
+    generateLegendForLayerInfo ({commit, dispatch, getters}, layer) {
+        let legendObj = null;
+
+        if (layer) {
+            if (layer.get("typ") === "GROUP") {
+                dispatch("prepareLegendForGroupLayer", layer.getLayerSource());
+            }
+            else {
+                dispatch("prepareLegend", layer.getLegend());
             }
 
             legendObj = {
-                id: layerForLayerInfo.get("id"),
-                name: layerForLayerInfo.get("name"),
+                id: layer.get("id"),
+                name: layer.get("name"),
                 legend: getters.preparedLegend,
-                position: layerForLayerInfo.getLayer().getZIndex()
+                position: layer.getLayer().getZIndex()
             };
             if (validator.isValidLegendObj(legendObj)) {
                 commit("setLayerInfoLegend", legendObj);
