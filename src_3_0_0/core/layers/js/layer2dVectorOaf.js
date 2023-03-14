@@ -90,7 +90,7 @@ Layer2dVectorOaf.prototype.createLegend = function () {
         this.setLegend(legend);
     }
     else if (styleObject && legend === true) {
-        getGeometryTypeFromService.getGeometryTypeFromOAF(rules, this.get("url"), this.get("collection"),
+        getGeometryTypeFromService.getGeometryTypeFromOAF(rules, this.get("url"), this.get("collection"), Config.wfsImgPath,
             (error) => {
                 if (error) {
                     store.dispatch("Alerting/addSingleAlert", "<strong>" + i18next.t("common:modules.vectorStyle.styleObject.getGeometryTypeFromOAFFetchfailed") + "</strong> <br>"

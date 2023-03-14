@@ -17,7 +17,7 @@ export default {
         };
     },
     computed: {
-        ...mapGetters(["portalConfig", "layerConfig"]),
+        ...mapGetters(["portalConfig"]),
         ...mapGetters("Maps", ["projection", "mode"])
     },
     mounted () {
