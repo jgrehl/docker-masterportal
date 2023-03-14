@@ -406,7 +406,7 @@ export default {
     </div>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import "~variables";
 
 $handle_size: 6px;
@@ -422,6 +422,7 @@ $handle_size: 6px;
         -webkit-user-select: none;
         -moz-user-select: none;
         -ms-user-select: none !important;
+        transition: unset !important;
         user-select: none;
     }
     &-cursor {
