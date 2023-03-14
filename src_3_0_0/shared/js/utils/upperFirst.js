@@ -10,3 +10,19 @@ export default function upperFirst (value) {
 
     return value.charAt(0).toUpperCase() + value.substring(1);
 }
+
+/**
+ * Rewrites the keys of an object in upper case.
+ * @param {Object} obj The object.
+ * @returns {Object} The object with uppercase keys.
+ */
+export function upperCaseKeys (obj) {
+    return Object.fromEntries(
+        Object.entries(obj).map(([k, v]) => [k.toUpperCase(), v])
+    );
+}
+
+// export default {
+//     upperCaseKeys,
+//     upperFirst
+// };
