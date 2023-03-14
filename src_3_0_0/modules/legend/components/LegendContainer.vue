@@ -22,12 +22,13 @@ export default {
             handler (newLayerConfigs, oldLayerConfigs) {
                 this.$nextTick(() => {
                     newLayerConfigs.forEach(newConfig => {
-                        const oldConfig = oldLayerConfigs.find(config => config.id === newConfig.id);
+                        const oldConfig = oldLayerConfigs.find(config => config.id === newConfig.id),
+                            existingLegend = this.legends.find(legendConf => legendConf.id === newConfig.id);
 
-                        if (!oldConfig) {
+                        if (!oldConfig || existingLegend && existingLegend.position !== newConfig.zIndex) {
                             const layer = layerCollection.getLayerById(newConfig.id);
 
-                            this.toggleLayerInLegend(layer, true);
+                            this.toggleLayerInLegend(layer, newConfig.visibility);
                         }
                     });
                     oldLayerConfigs.forEach(oldConfig => {
@@ -81,14 +82,17 @@ export default {
 
             if (visibility === false) {
                 this.removeLegend(layerId);
-            }
-            else if (layerTyp === "GROUP") {
-                this.prepareLegendForGroupLayer(layer.getLayerSource());
+
             }
             else {
-                this.prepareLegend(layer.getLegend());
+                if (layerTyp === "GROUP") {
+                    this.prepareLegendForGroupLayer(layer.getLayerSource());
+                }
+                else {
+                    this.prepareLegend(layer.getLegend());
+                }
+                this.generateLegend(layerId, layerName, zIndex);
             }
-            this.generateLegend(layerId, layerName, zIndex);
         },
 
         /**
