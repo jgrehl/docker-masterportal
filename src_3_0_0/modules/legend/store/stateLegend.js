@@ -11,9 +11,9 @@ export default {
 
     showLegend: false,
     legends: [],
+    waitingLegendsInfos: [],
     layerInfoLegend: {},
     showCollapseAllButton: false,
-    legendOnChanged: [],
     showLegendInMenu: true,
     preparedLegend: null
 };
