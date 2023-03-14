@@ -46,7 +46,7 @@ describe("src_3_0_0/modules/layerSelection/store/actionsLayerSelection", () => {
                             id: "2",
                             visibility: true,
                             showInLayerTree: true,
-                            zIndex: 0
+                            zIndex: 1
                         }
                     }
                 ]
