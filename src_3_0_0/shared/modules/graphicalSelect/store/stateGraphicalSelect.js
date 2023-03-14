@@ -1,4 +1,3 @@
-import Overlay from "ol/Overlay.js";
 /**
      * @typedef {object} stateGraphicalSelect
      * @description creates a dropdown to select an area in a map by square, circle or polygon. Create it like this: new GraphicalSelectModel({id: "idOfTheCaller"}).
@@ -9,8 +8,6 @@ import Overlay from "ol/Overlay.js";
      * @property {String} displayName="Geometrie auswählen" label of the dropdown
      * @property {String} snippetType="graphicalSelect" type of the dropdown values
      * @property {Object} drawInteraction=undefined the interaction to draw a square, circle or polygon
-     * @property {ol.overlay} circleOverlay=new Overlay({offset: [15, 0], positioning: "center-left"}) circle overlay (tooltip) - shows the radius
-     * @property {ol.overlay} tooltipOverlay=new Overlay({offset: [15, 20], positioning: "top-left"}) todo
      * @property {Object} selectionElements=["Dropdown"] available gui selection elements
      * @property {Object} geographicValues={"Rechteck aufziehen": "Box", "Kreis aufziehen": "Circle", "Fläche zeichnen": "Polygon"} possible values
      * @property {String} currentValue="" contains the current geographic value for "Box",  "Circle" or "Polygon"
@@ -25,19 +22,6 @@ const state = {
     hasMouseMapInteractions: true,
     displayName: "common:snippets.graphicalSelect.displayName",
     snippetType: "graphicalSelect",
-    drawInteraction: undefined,
-    circleOverlay: new Overlay({
-        id: "circle-overlay",
-        element: document.createElement("div"),
-        offset: [15, 0],
-        positioning: "center-left"
-    }),
-    tooltipOverlay: new Overlay({
-        id: "tooltip-overlay",
-        element: document.createElement("div"),
-        offset: [15, 20],
-        positioning: "top-left"
-    }),
     selectionElements: ["Dropdown"],
     geographicValues: ["Box", "Circle", "Polygon"],
     currentValue: "",
