@@ -1,6 +1,6 @@
-import {nextTick} from "vue";
 import store from "../../../app-store";
 import upperFirst, {upperCaseKeys} from "../../../shared/js/utils/upperFirst";
+import processUrlParams from "../../../shared/js/utils/processUrlParams";
 
 const menuUrlParams = {
         MENU: setAttributesToComponent
@@ -15,24 +15,7 @@ const menuUrlParams = {
  * @returns {void}
  */
 function processMenuUrlParams () {
-    const foundParams = {};
-
-    nextTick(() => {
-        [menuUrlParams, legacyMenuUrlParams].forEach(urlParams => {
-            Object.keys(urlParams).forEach(param => {
-                const value = store.getters.getUrlParamValue(param);
-
-                if (typeof value !== "undefined") {
-
-                    foundParams[param] = value;
-
-                    if (typeof urlParams[param] === "function") {
-                        urlParams[param](foundParams);
-                    }
-                }
-            });
-        });
-    });
+    processUrlParams(menuUrlParams, legacyMenuUrlParams);
 }
 
 /**
