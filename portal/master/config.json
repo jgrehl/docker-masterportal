@@ -70,9 +70,6 @@
           },
 
           {
-            "type": "fileImport"
-          },
-          {
             "type": "openConfig"
           },
           {
