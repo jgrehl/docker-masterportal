@@ -1,5 +1,6 @@
 import store from "../../../app-store";
 import highlightFeaturesByAttribute from "./highlightFeaturesByAttribute";
+import processUrlParams from "../../../shared/js/utils/processUrlParams";
 
 // Todos:
 // - highlightFeature in richtige actions umbauen
@@ -48,22 +49,7 @@ const mapUrlParams = {
  * @returns {void}
  */
 function processMapUrlParams () {
-    const foundParams = {};
-
-    [mapUrlParams, legacyMapUrlParams].forEach(urlParams => {
-        Object.keys(urlParams).forEach(param => {
-            const value = store.getters.getUrlParamValue(param);
-
-            if (typeof value !== "undefined") {
-
-                foundParams[param] = value;
-
-                if (typeof urlParams[param] === "function") {
-                    urlParams[param](foundParams);
-                }
-            }
-        });
-    });
+    processUrlParams(mapUrlParams, legacyMapUrlParams);
 }
 
 /**
