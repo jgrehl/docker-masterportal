@@ -3,7 +3,6 @@ import {mapActions, mapGetters, mapMutations} from "vuex";
 import MenuContainerBody from "./MenuContainerBody.vue";
 import ResizeHandle from "../../../shared/modules/resize/components/ResizeHandle.vue";
 
-
 export default {
     name: "MenuContainer",
     components: {

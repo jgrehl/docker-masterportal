@@ -185,7 +185,6 @@ function zoomToFeatures (params) {
  * @returns {void}
  */
 function zoomToProjExtent (params) {
-    console.log(params);
     store.dispatch("Maps/zoomToProjExtent", {
         extent: (params.ZOOMTOEXTENT || params["MAP/ZOOMTOEXTENT"])?.split(","),
         options: {duration: 0},
