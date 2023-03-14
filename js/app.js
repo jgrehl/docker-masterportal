@@ -46,16 +46,16 @@ async function loadApp () {
     /* eslint-disable no-undef */
     const // legacyAddons = Object.is(ADDONS, {}) ? {} : ADDONS,
         utilConfig = {},
-        style = uiStyle.getUiStyle();
+        style = uiStyle.getUiStyle(),
         // vueI18Next = initiateVueI18Next(),
         // instantiate Vue with Vuetify Plugin if the "vuetify" flag is set in the config.js
         // returns undefined if not
         // vuetify = await instantiateVuetify();
 
-    /* eslint-disable no-undef */
-    const app = {};
+        /* eslint-disable no-undef */
+        app = {};
     let searchbarAttributes = {};
-        // styleGetters = {};
+    // styleGetters = {};
 
     if (Object.prototype.hasOwnProperty.call(Config, "uiStyle")) {
         utilConfig.uiStyle = Config.uiStyle.toUpperCase();
