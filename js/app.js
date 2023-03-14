@@ -2,7 +2,6 @@ import loadAddons from "../src/addons";
 import "../modules/restReader/RadioBridge";
 import Autostarter from "../modules/core/autostarter";
 import Util from "../modules/core/util";
-import styleList from "@masterportal/masterportalapi/src/vectorStyle/styleList";
 import Preparser from "../modules/core/configLoader/preparser";
 import MenuLoader from "../modules/menu/menuLoader";
 import featureViaURL from "../src/utils/featureViaURL";
@@ -54,8 +53,8 @@ async function loadApp () {
         // vuetify = await instantiateVuetify();
 
     /* eslint-disable no-undef */
-    let app = {},
-        searchbarAttributes = {};
+    const app = {};
+    let searchbarAttributes = {};
         // styleGetters = {};
 
     if (Object.prototype.hasOwnProperty.call(Config, "uiStyle")) {
