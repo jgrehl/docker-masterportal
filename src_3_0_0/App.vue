@@ -13,6 +13,8 @@ import MenuContainer from "./modules/menu/components/MenuContainer.vue";
 import MenuToggleButton from "./modules/menu/components/MenuToggleButton.vue";
 import addonsPlugin from "./plugins/addons";
 
+import menuUrlParams from "./modules/menu/js/menuUrlParams";
+
 
 export default {
     name: "App",
@@ -52,6 +54,7 @@ export default {
                 await addonsPlugin.loadAddons(Config.addons);
                 await this.mergeModulesState(this.portalConfig);
                 this.addonsLoaded = true;
+                menuUrlParams.processMenuUrlParams();
                 LoaderOverlay.hide();
                 this.extendLayers();
                 this.initializeVectorStyle();
@@ -69,6 +72,8 @@ export default {
         new Tooltip(document.body, {
             selector: "[data-bs-toggle='tooltip']"
         });
+    },
+    mounted () {
     },
     methods: {
         ...mapMutations([
