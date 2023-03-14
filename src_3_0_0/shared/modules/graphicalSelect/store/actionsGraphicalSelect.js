@@ -1,5 +1,6 @@
 import {GeoJSON} from "ol/format.js";
 import {fromCircle} from "ol/geom/Polygon.js";
+import constsGraphicalSelect from "./constsGraphicalSelect";
 
 
 const actions = {
@@ -12,7 +13,7 @@ const actions = {
      * @param {Object} payload.vm vue instance
      * @returns {void}
      */
-    setDrawInteractionListener: async function ({dispatch, commit}, payload) {
+    updateDrawInteractionListener: async function ({dispatch, commit}, payload) {
         payload.interaction.on("drawstart", function () {
             // remove possible alerts
             dispatch("Alerting/cleanup", "", {root: true});
@@ -52,7 +53,7 @@ const actions = {
      */
     showTooltipOverlay: function ({state, rootState}) {
         const coords = rootState.Maps.mouseCoordinate,
-            tooltipOverlay = state.tooltipOverlay,
+            tooltipOverlay = constsGraphicalSelect.tooltipOverlay,
             currentValue = state.currentValue;
 
         if (currentValue === "Polygon") {
