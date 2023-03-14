@@ -12,7 +12,8 @@ const {
     removeLegend,
     createLegendForLayerInfo,
     prepareLegend,
-    prepareLegendForGroupLayer
+    prepareLegendForGroupLayer,
+    generateLegendForLayerInfo
 } = actions;
 
 describe("src_3_0_0/modules/legend/store/actionsLegend.js", () => {
@@ -142,8 +143,84 @@ describe("src_3_0_0/modules/legend/store/actionsLegend.js", () => {
         let layerAttributes,
             layerConfig,
             layer,
-            getters,
             rootGetters;
+
+        beforeEach(() => {
+            layerAttributes = {
+                id: "123",
+                name: "foobar",
+                typ: "WMS"
+            };
+            layerConfig = {
+                id: layerAttributes.id,
+                name: layerAttributes.name,
+                legend: ["getLegendGraphicRequest"],
+                position: 1
+            };
+            layer = {
+                id: layerAttributes.id,
+                get: (key) => {
+                    return layerAttributes[key];
+                },
+                getLegend: () => layerConfig.legend,
+                getLayerSource: () => [],
+                getLayer: () => {
+                    return {
+                        id: "olLayer",
+                        getZIndex: () => 1,
+                        setVisible: sinon.stub()
+                    };
+                }
+            };
+            rootGetters = {
+                layerConfigById: () => layerConfig
+            };
+
+        });
+
+        it("for visible layer should dispatch generateLegendForLayerInfo", () => {
+            sinon.stub(layerCollection, "getLayerById").returns(layer);
+
+            createLegendForLayerInfo({dispatch, rootGetters}, layerConfig.id);
+            expect(commit.notCalled).to.be.true;
+            expect(dispatch.calledOnce).to.be.true;
+            expect(dispatch.firstCall.args[0]).to.be.equals("generateLegendForLayerInfo");
+            expect(dispatch.firstCall.args[1]).to.be.deep.equals(layer);
+        });
+
+        it("for not visible WMS layer should dispatch generateLegendForLayerInfo", () => {
+            sinon.stub(layerCollection, "getLayerById").returns(null);
+            sinon.stub(layerFactory, "createLayer").returns(layer);
+
+            createLegendForLayerInfo({dispatch, rootGetters}, layerConfig.id);
+            expect(commit.notCalled).to.be.true;
+            expect(dispatch.calledOnce).to.be.true;
+            expect(dispatch.firstCall.args[0]).to.be.equals("generateLegendForLayerInfo");
+            expect(dispatch.firstCall.args[1]).to.be.deep.equals(layer);
+        });
+
+        it("for not visible WFS layer should load features and dispatch generateLegendForLayerInfo", async () => {
+            layerAttributes.typ = "WFS";
+            sinon.stub(layerCollection, "getLayerById").returns(null);
+            sinon.stub(layerFactory, "createLayer").returns(layer);
+
+            await createLegendForLayerInfo({dispatch, rootGetters}, layerConfig.id);
+            expect(commit.notCalled).to.be.true;
+            expect(dispatch.calledThrice).to.be.true;
+            expect(dispatch.firstCall.args[0]).to.be.equals("Maps/addLayer");
+            expect(dispatch.firstCall.args[1].id).to.be.equals(layer.getLayer().id);
+            expect(dispatch.secondCall.args[0]).to.be.equals("Maps/areLayerFeaturesLoaded");
+            expect(dispatch.secondCall.args[1]).to.be.deep.equals(layerAttributes.id);
+            expect(dispatch.thirdCall.args[0]).to.be.equals("generateLegendForLayerInfo");
+            expect(dispatch.thirdCall.args[1]).to.be.deep.equals(layer);
+        });
+    });
+
+    describe("generateLegendForLayerInfo", () => {
+        let layerAttributes,
+            layerConfig,
+            layer,
+            getters;
 
         beforeEach(() => {
             layerAttributes = {
@@ -173,34 +250,11 @@ describe("src_3_0_0/modules/legend/store/actionsLegend.js", () => {
             getters = {
                 preparedLegend: ["getLegendGraphicRequest"]
             };
-            rootGetters = {
-                layerConfigById: () => layerConfig
-            };
 
         });
 
-        it("for visible layer should commit LayerInfoLegend", () => {
-            sinon.stub(layerCollection, "getLayerById").returns(layer);
-
-            createLegendForLayerInfo({commit, dispatch, getters, rootGetters}, layerConfig.id);
-            expect(commit.calledOnce).to.be.true;
-            expect(commit.firstCall.args[0]).to.be.equals("setLayerInfoLegend");
-            expect(commit.firstCall.args[1]).to.be.deep.equals({
-                id: layerAttributes.id,
-                name: layerAttributes.name,
-                legend: ["getLegendGraphicRequest"],
-                position: 1
-            });
-            expect(dispatch.calledOnce).to.be.true;
-            expect(dispatch.firstCall.args[0]).to.be.equals("prepareLegend");
-            expect(dispatch.firstCall.args[1]).to.be.deep.equals(layerConfig.legend);
-        });
-
-        it("for not visible layer should commit LayerInfoLegend", () => {
-            sinon.stub(layerCollection, "getLayerById").returns(null);
-            sinon.stub(layerFactory, "createLayer").returns(layer);
-
-            createLegendForLayerInfo({commit, dispatch, getters, rootGetters}, layerConfig.id);
+        it("should commit LayerInfoLegend", () => {
+            generateLegendForLayerInfo({commit, dispatch, getters}, layer);
             expect(commit.calledOnce).to.be.true;
             expect(commit.firstCall.args[0]).to.be.equals("setLayerInfoLegend");
             expect(commit.firstCall.args[1]).to.be.deep.equals({
@@ -216,9 +270,8 @@ describe("src_3_0_0/modules/legend/store/actionsLegend.js", () => {
 
         it("for visible group-layer should commit LayerInfoLegend", () => {
             layerAttributes.typ = "GROUP";
-            sinon.stub(layerCollection, "getLayerById").returns(layer);
 
-            createLegendForLayerInfo({commit, dispatch, getters, rootGetters}, layerConfig.id);
+            generateLegendForLayerInfo({commit, dispatch, getters}, layer);
             expect(commit.calledOnce).to.be.true;
             expect(commit.firstCall.args[0]).to.be.equals("setLayerInfoLegend");
             expect(commit.firstCall.args[1]).to.be.deep.equals({
@@ -232,6 +285,7 @@ describe("src_3_0_0/modules/legend/store/actionsLegend.js", () => {
             expect(dispatch.firstCall.args[1]).to.be.deep.equals(layer.getLayerSource());
         });
     });
+
     describe("prepareLegend", () => {
         it("prepareLegend with urls", () => {
             const legendInfos = ["legendUrl1", "legendUrl2"],
