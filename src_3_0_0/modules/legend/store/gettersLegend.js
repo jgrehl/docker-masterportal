@@ -11,9 +11,37 @@ const getters = {
      * @param {object} state state to generate getters for
      * @returns {object.<string, function>} object of getters
      */
-    ...generateSimpleGetters(legendState)
+    ...generateSimpleGetters(legendState),
 
-    // NOTE overwrite getters here if you need a special behaviour in a getter
+     /**
+    * Checks if given layerid is in the legend.
+    * @param {String} layerId Id of layer.
+    * @returns {Boolean} - Flag if layer is in the legend
+    */
+      isLayerInLegend : state => (layerId)  => {
+        return state.legends.filter((legendObj) => {
+            return legendObj.id === layerId;
+        }).length > 0;
+    },
+
+    /**
+     * Checks if the legend object of the layer has changed
+     * @param {String} layerId Id of layer
+     * @param {Object} legendObj The legend object to be checked.
+     * @returns {Boolean} - Flag if the legendObject has changed
+     */
+    isLegendChanged: state => (legendObj) => {
+        let isLegendChanged = false;
+        const layerLegend = state.legends.filter((legend) => {
+            return legend.id === legendObj.id;
+        })[0];
+
+        if (encodeURIComponent(JSON.stringify(layerLegend)) !== encodeURIComponent(JSON.stringify(legendObj))) {
+            isLegendChanged = true;
+        }
+        return isLegendChanged;
+    },
+
 };
 
 export default getters;
