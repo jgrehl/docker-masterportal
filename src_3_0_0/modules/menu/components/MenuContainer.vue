@@ -3,6 +3,8 @@ import {mapActions, mapGetters, mapMutations} from "vuex";
 import MenuContainerBody from "./MenuContainerBody.vue";
 import ResizeHandle from "../../../shared/modules/resize/components/ResizeHandle.vue";
 
+let lastMainMenuWidth = "",
+    lastSecondaryMenuWidth = "";
 
 export default {
     name: "MenuContainer",
@@ -43,6 +45,12 @@ export default {
         },
         secondaryMenu (secondaryMenu) {
             this.mergeMenuState({menu: secondaryMenu, side: "secondaryMenu"});
+        },
+        mainExpanded () {
+            this.setWidth("mainMenu");
+        },
+        secondaryExpanded () {
+            this.setWidth("secondaryMenu");
         }
     },
     created () {
@@ -51,6 +59,10 @@ export default {
         if (this.isMobile) {
             this.collapseMenues();
         }
+
+    },
+    mounted () {
+        this.setWidth(this.side);
     },
     methods: {
         ...mapMutations("Menu", [
@@ -59,7 +71,29 @@ export default {
         ]),
         ...mapActions("Menu", [
             "toggleMenu"
-        ])
+        ]),
+        setWidth (side) {
+            const menu = side === "mainMenu" ? document.getElementById("mp-menu-mainMenu") : document.getElementById("mp-menu-secondaryMenu"),
+                expanded = side === "mainMenu" ? this.mainExpanded : this.secondaryExpanded,
+                lastWidth = side === "mainMenu" ? lastMainMenuWidth : lastSecondaryMenuWidth;
+
+            if (expanded && menu && menu.style.width) {
+                if (lastWidth !== "") {
+
+                    menu.style.width = lastWidth;
+                }
+            }
+            else if (!expanded && menu && menu.style.width !== "0px") {
+                if (side === "mainMenu") {
+                    lastMainMenuWidth = menu.style.width;
+                }
+                else if (side === "secondaryMenu") {
+                    lastSecondaryMenuWidth = menu.style.width;
+                }
+
+                menu.style.width = 0;
+            }
+        }
     }
 };
 </script>
@@ -67,12 +101,11 @@ export default {
 <template>
     <div
         :id="'mp-menu-' + side"
-        class="mp-menu shadow collapse"
+        class="mp-menu shadow"
         :class="[
             'mp-' + side,
             {
                 'mp-menu-table': uiStyle === 'TABLE',
-                'show': mainExpanded && side === 'mainMenu' || secondaryExpanded && side === 'secondaryMenu'
             }
         ]"
         tabindex="-1"
@@ -98,7 +131,7 @@ export default {
             :id="'mp-resize-handle-' + side"
             class="mp-menu-container-handle"
             :handle-position="handlePosition"
-            :min-width="0.1"
+            :min-width="0"
             :max-width="0.6"
             :min-height="1"
         >
@@ -114,6 +147,7 @@ export default {
     min-width: 100%;
     position: fixed;
     background-color: $menu-background-color;
+    transition: width 0.3s ease;
     z-index: 2;
 }
 
@@ -141,11 +175,10 @@ export default {
     top: 10px;
 }
 
-
 @include media-breakpoint-up(sm)  {
     .mp-menu {
         top: 0px;
-        min-width: 20%;
+        min-width: 0%;
         flex-grow: 0;
         flex-shrink: 0;
         position: relative;
