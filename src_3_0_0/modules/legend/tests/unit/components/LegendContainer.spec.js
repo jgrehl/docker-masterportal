@@ -239,20 +239,21 @@ describe("src_3_0_0/modules/legend/components/LegendContainer.vue", () => {
             });
         });
         describe("watcher", () => {
+            let toggleLayerInLegendStub = null,
+                config_1, config_2;
 
-            it("visibleLayerConfigs shall call toggleLayerInLegend with true", async () => {
-                let toggleLayerInLegendStub = null;
-                const config_1 = {
-                        id: "1",
-                        name: "layer_1"
-                    },
-                    config_2 = {
-                        id: "2",
-                        name: "layer_2"
-                    },
-                    newLayerConfigs = [config_1, config_2],
-                    oldLayerConfigs = [config_1];
-
+            beforeEach(() => {
+                config_1 = {
+                    id: "1",
+                    name: "layer_1",
+                    zIndex: 1
+                };
+                config_2 = {
+                    id: "2",
+                    name: "layer_2",
+                    visibility: true,
+                    zIndex: 2
+                };
                 sinon.stub(layerCollection, "getLayerById").callsFake(
                     function (id) {
                         if (id === "1") {
@@ -265,6 +266,16 @@ describe("src_3_0_0/modules/legend/components/LegendContainer.vue", () => {
                     }
                 );
                 toggleLayerInLegendStub = sinon.stub(LegendContainer.methods, "toggleLayerInLegend");
+                store.commit("Modules/Legend/setLegends", []);
+            });
+            afterEach(() => {
+                sinon.restore();
+            });
+
+            it("visibleLayerConfigs shall call toggleLayerInLegend with true", async () => {
+                const newLayerConfigs = [config_1, config_2],
+                    oldLayerConfigs = [config_1];
+
                 wrapper = shallowMount(LegendContainer, {
                     global: {
                         plugins: [store]
@@ -272,36 +283,17 @@ describe("src_3_0_0/modules/legend/components/LegendContainer.vue", () => {
 
                 wrapper.vm.$options.watch.visibleLayerConfigs.handler.call(wrapper.vm, newLayerConfigs, oldLayerConfigs);
                 await wrapper.vm.$nextTick();
+
                 expect(toggleLayerInLegendStub.calledOnce).to.be.true;
                 expect(toggleLayerInLegendStub.firstCall.args[0]).to.be.deep.equals(config_2);
                 expect(toggleLayerInLegendStub.firstCall.args[1]).to.be.equals(true);
+                toggleLayerInLegendStub.restore();
             });
 
             it("visibleLayerConfigs shall call toggleLayerInLegend with false", async () => {
-                let toggleLayerInLegendStub = null;
-                const config_1 = {
-                        id: "1",
-                        name: "layer_1"
-                    },
-                    config_2 = {
-                        id: "2",
-                        name: "layer_2"
-                    },
-                    newLayerConfigs = [config_1],
+                const newLayerConfigs = [config_1],
                     oldLayerConfigs = [config_1, config_2];
 
-                sinon.stub(layerCollection, "getLayerById").callsFake(
-                    function (id) {
-                        if (id === "1") {
-                            return config_1;
-                        }
-                        if (id === "2") {
-                            return config_2;
-                        }
-                        return null;
-                    }
-                );
-                toggleLayerInLegendStub = sinon.stub(LegendContainer.methods, "toggleLayerInLegend");
                 wrapper = shallowMount(LegendContainer, {
                     global: {
                         plugins: [store]
@@ -312,6 +304,26 @@ describe("src_3_0_0/modules/legend/components/LegendContainer.vue", () => {
                 expect(toggleLayerInLegendStub.calledOnce).to.be.true;
                 expect(toggleLayerInLegendStub.firstCall.args[0]).to.be.deep.equals(config_2);
                 expect(toggleLayerInLegendStub.firstCall.args[1]).to.be.equals(false);
+            });
+
+            it("visibleLayerConfigs shall call toggleLayerInLegend if zIndex changed", async () => {
+                const newLayerConfigs = [config_1, config_2],
+                    oldLayerConfigs = [config_1];
+
+                store.commit("Modules/Legend/setLegends", [{id: "2", position: "3"}]);
+
+                wrapper = shallowMount(LegendContainer, {
+                    global: {
+                        plugins: [store]
+                    }});
+
+                wrapper.vm.$options.watch.visibleLayerConfigs.handler.call(wrapper.vm, newLayerConfigs, oldLayerConfigs);
+                await wrapper.vm.$nextTick();
+
+                expect(toggleLayerInLegendStub.calledOnce).to.be.true;
+                expect(toggleLayerInLegendStub.firstCall.args[0]).to.be.deep.equals(config_2);
+                expect(toggleLayerInLegendStub.firstCall.args[1]).to.be.equals(true);
+                toggleLayerInLegendStub.restore();
             });
 
             it("legendOnChanged shall call createLegend if legend available", () => {
