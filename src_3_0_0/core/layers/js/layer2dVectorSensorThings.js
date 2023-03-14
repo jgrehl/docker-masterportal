@@ -455,6 +455,7 @@ Layer2dVectorSensorThings.prototype.initializeConnection = function (onsuccess, 
 
         if (Array.isArray(features) && features.length) {
             layerSource.addFeatures(features);
+            this.createLegend();
         }
 
         features.forEach(feature => {
@@ -1128,7 +1129,6 @@ Layer2dVectorSensorThings.prototype.toggleSubscriptionsOnMapChanges = function (
     const state = this.getStateOfSTALayer(this.getLayer().getVisible(), this.get("isSubscribed"));
 
     if (state === true) {
-        this.createLegend();
         this.startSubscription(this.getLayer().getSource().getFeatures());
         if (this.get("observeLocation") && this.moveLayerRevisible === false) {
             this.moveLayerRevisible = state;
@@ -1806,6 +1806,7 @@ Layer2dVectorSensorThings.prototype.parseSensorDataToFeature = function (feature
         this.setStyleOfHistoricalFeature(hFeature, hFeature.get("scale"), this.styleRule);
     });
     layerSource.addFeatures(historicalFeatures);
+    this.createLegend();
     feature.set("historicalFeatureIds", historicalFeatureIds);
     if (isObject(this.subscribedDataStreamIds[feature.get("dataStreamId")])) {
         Object.assign(this.subscribedDataStreamIds[feature.get("dataStreamId")], {historicalFeatureIds});
