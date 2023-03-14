@@ -1,4 +1,7 @@
+import {nextTick} from "vue";
 import store from "../../../app-store";
+import mapUrlParams from "../../../core/maps/js/mapUrlParams";
+import menuUrlParams from "../../../modules/menu/js/menuUrlParams";
 import urlParamsFacade from "./urlParamsFacade";
 
 /**
@@ -12,9 +15,20 @@ export function initializeUrlParams () {
         store.state.urlParams[key.toUpperCase()] = value;
     });
 
-    setTimeout(() => {
-        console.log(getValue());
-    }, 10000);
+    // setTimeout(() => {
+    //     console.log(getValue());
+    // }, 10000);
+}
+
+/**
+ * Processes the url params.
+ * @returns {void}
+ */
+export function startProcessUrlParams () {
+    nextTick(() => {
+        mapUrlParams.processMapUrlParams();
+        menuUrlParams.processMenuUrlParams();
+    });
 }
 
 
