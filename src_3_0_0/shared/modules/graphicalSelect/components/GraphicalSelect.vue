@@ -1,6 +1,7 @@
 <script>
 // todo komplexe aus dem state raus!
 import Dropdown from "../../dropdowns/components/DropdownSimple.vue";
+import constsGraphicalSelect from "../store/constsGraphicalSelect";
 import {mapGetters, mapActions, mapMutations} from "vuex";
 import Draw, {createBox} from "ol/interaction/Draw.js";
 import VectorLayer from "ol/layer/Vector.js";
@@ -48,16 +49,15 @@ export default {
     },
     data () {
         return {
-            selectedOptionData: this.selectedOption
+            selectedOptionData: this.selectedOption,
+            circleOverlay: constsGraphicalSelect.circleOverlay,
+            tooltipOverlay: constsGraphicalSelect.tooltipOverlay,
+            drawInteraction: constsGraphicalSelect.drawInteraction
         };
     },
     computed: {
         ...mapGetters("Modules/GraphicalSelect", [
             "active",
-            "tooltipOverlay",
-            "drawInteraction",
-            "circleOverlay",
-            "tooltipOverlay",
             "geographicValues",
             "selectionElements"
 
@@ -98,15 +98,13 @@ export default {
         ...mapMutations("Modules/GraphicalSelect", [
             "setDefaultSelection",
             "setActive",
-            "setCurrentValue",
-            "setDrawInteractionListener",
-            "setDrawInteraction"
+            "setCurrentValue"
         ]),
         ...mapActions("Modules/GraphicalSelect", [
             "createDomOverlay",
             "showTooltipOverlay",
             "toggleOverlay",
-            "setDrawInteractionListener"
+            "updateDrawInteractionListener"
         ]),
         ...mapActions("Maps", [
             "addLayer",
@@ -274,8 +272,8 @@ export default {
             this.addInteraction(this.draw);
             this.setCurrentValue(drawtype);
             this.toggleOverlay({type: drawtype, overlayCircle: this.circleOverlay, overlayTool: this.tooltipOverlay});
-            this.setDrawInteractionListener({interaction: this.draw, layer: this.layer, vm: this});
-            this.setDrawInteraction(this.draw);
+            this.updateDrawInteractionListener({interaction: this.draw, layer: this.layer, vm: this});
+            this.drawInteraction = this.draw;
             this.registerListener({type: "pointermove", listener: this.showTooltipOverlay});
             this.addLayer(this.layer);
         }
