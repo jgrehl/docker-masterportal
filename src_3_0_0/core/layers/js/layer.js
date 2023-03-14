@@ -83,13 +83,13 @@ Layer.prototype.setLayer = function (value) {
 };
 
 /**
- * Setter for legend, commits the legend to vue store using "Legend/setLegendOnChanged"
+ * Setter for legend, dispatches action 'Modules/Legend/createLegend'."
  * @param {String} value legend
  * @returns {void}
  */
 Layer.prototype.setLegend = function (value) {
     this.set("legend", value);
-    store.commit("Modules/Legend/setLegendOnChanged", value);
+    store.dispatch("Modules/Legend/createLegend", {root: true});
 };
 
 /**
