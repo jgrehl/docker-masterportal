@@ -1,5 +1,6 @@
 import {nextTick} from "vue";
 import store from "../../../app-store";
+import globalUrlParams from "./globalUrlParams";
 import mapUrlParams from "../../../core/maps/js/mapUrlParams";
 import menuUrlParams from "../../../modules/menu/js/menuUrlParams";
 import urlParamsFacade from "./urlParamsFacade";
@@ -14,6 +15,8 @@ export function initializeUrlParams () {
     params.forEach((value, key) => {
         store.state.urlParams[key.toUpperCase()] = value;
     });
+
+    globalUrlParams.processGlobalUrlParams();
 
     // setTimeout(() => {
     //     console.log(getValue());
@@ -30,7 +33,6 @@ export function startProcessUrlParams () {
         menuUrlParams.processMenuUrlParams();
     });
 }
-
 
 // ##################  //
 // ** zu shareView ** //
