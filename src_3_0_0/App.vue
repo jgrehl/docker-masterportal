@@ -5,16 +5,13 @@ import Alerting from "./modules/alerting/components/AlertingItem.vue";
 import ControlBar from "./modules/controls/components/ControlBar.vue";
 import initializeLayers from "./core/layers/js/layerProcessor";
 import {initializeMaps} from "./core/maps/js/maps";
-import {initializeUrlParams} from "./core/urlParams/js/urlParams";
+import {initializeUrlParams, startProcessUrlParams} from "./core/urlParams/js/urlParams";
 import isMobile from "./shared/js/utils/isMobile";
 import LoaderOverlay from "./app-store/js/loaderOverlay";
 import mapCollection from "./core/maps/js/mapCollection";
 import MenuContainer from "./modules/menu/components/MenuContainer.vue";
 import MenuToggleButton from "./modules/menu/components/MenuToggleButton.vue";
 import addonsPlugin from "./plugins/addons";
-
-import menuUrlParams from "./modules/menu/js/menuUrlParams";
-
 
 export default {
     name: "App",
@@ -54,12 +51,12 @@ export default {
                 await addonsPlugin.loadAddons(Config.addons);
                 await this.mergeModulesState(this.portalConfig);
                 this.addonsLoaded = true;
-                menuUrlParams.processMenuUrlParams();
                 LoaderOverlay.hide();
                 this.extendLayers();
                 this.initializeVectorStyle();
                 initializeMaps(this.portalConfig, this.configJs);
                 initializeLayers(this.visibleLayerConfigs);
+                startProcessUrlParams();
             }
         }
     },
@@ -72,8 +69,6 @@ export default {
         new Tooltip(document.body, {
             selector: "[data-bs-toggle='tooltip']"
         });
-    },
-    mounted () {
     },
     methods: {
         ...mapMutations([
