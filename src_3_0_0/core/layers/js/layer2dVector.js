@@ -236,7 +236,7 @@ Layer2dVector.prototype.getStyleAsFunction = function (style) {
 Layer2dVector.prototype.createLegend = function () {
     const styleObject = styleList.returnStyleObject(this.attributes.styleId),
         rules = styleObject?.rules,
-        isSecured = this.attributes.isSecured,
+        isSecured = typeof this.attributes.isSecured === "boolean" ? this.attributes.isSecured : false,
         legend = this.inspectLegendUrl();
 
     if (Array.isArray(legend)) {
@@ -260,7 +260,7 @@ Layer2dVector.prototype.createLegend = function () {
             else {
                 if (!this.geometryTypeRequestLayers.includes(this.get("id"))) {
                     this.geometryTypeRequestLayers.push(this.get("id"));
-                    getGeometryTypeFromService.getGeometryTypeFromWFS(rules, this.get("url"), this.get("version"), this.get("featureType"), this.get("styleGeometryType"), isSecured,
+                    getGeometryTypeFromService.getGeometryTypeFromWFS(rules, this.get("url"), this.get("version"), this.get("featureType"), this.get("styleGeometryType"), isSecured, Config.wfsImgPath,
                         (geometryTypes, error) => {
                             if (error) {
                                 store.dispatch("Alerting/addSingleAlert", "<strong>" + i18next.t("common:modules.vectorStyle.styleObject.getGeometryTypeFromWFSFetchfailed") + "</strong> <br>"
