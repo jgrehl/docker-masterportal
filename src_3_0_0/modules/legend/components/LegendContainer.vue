@@ -25,7 +25,7 @@ export default {
                         if (!oldConfig || existingLegend && existingLegend.position !== newConfig.zIndex) {
                             const layer = layerCollection.getLayerById(newConfig.id);
 
-                            this.toggleLayerInLegend({layer:layer, visibility: newConfig.visibility});
+                            this.toggleLayerInLegend({layer: layer, visibility: newConfig.visibility});
                         }
                     });
                     oldLayerConfigs.forEach(oldConfig => {
@@ -34,7 +34,7 @@ export default {
                         if (!newConfig) {
                             const layer = layerCollection.getLayerById(oldConfig.id);
 
-                            this.toggleLayerInLegend({layer:layer, visibility:false});
+                            this.toggleLayerInLegend({layer: layer, visibility: false});
                         }
                     });
                 });
@@ -56,7 +56,7 @@ export default {
         generateId (layerName) {
             let name = layerName;
 
-            if(Array.isArray(layerName)){
+            if (Array.isArray(layerName)) {
                 name = layerName[0];
             }
             return name ? "legend_" + name.replace(/[\W_]+/g, "_") : undefined;
