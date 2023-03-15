@@ -28,8 +28,7 @@ export default {
             "metaURLs",
             "noMetadataLoaded",
             "periodicityKey",
-            "showUrlGlobal",
-            "title"
+            "showUrlGlobal"
         ]),
         ...mapGetters("Modules/Legend", [
             "layerInfoLegend"
@@ -118,12 +117,6 @@ export default {
         id="modules-layer-information"
         class="body"
     >
-        <h4
-            class="subtitle"
-            :title="title"
-        >
-            {{ title }}
-        </h4>
         <div
             class="mb-2 abstract"
             v-html="abstractText"
@@ -311,16 +304,6 @@ export default {
 <style lang="scss" scoped>
     @import "~variables";
 
-    .subtitle {
-        color: $light_red;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        display: inline-block;
-        max-width: 100%;
-        padding-top: 1px;
-        margin-bottom: 9px;
-    }
     hr {
         margin: 15px 0 10px 0;
     }
