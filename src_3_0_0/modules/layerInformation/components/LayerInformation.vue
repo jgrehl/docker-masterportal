@@ -115,7 +115,6 @@ export default {
 <template lang="html">
     <div
         id="modules-layer-information"
-        class="body"
     >
         <div
             class="mb-2 abstract"
