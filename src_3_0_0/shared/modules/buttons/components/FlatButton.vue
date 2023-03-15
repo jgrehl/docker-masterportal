@@ -17,6 +17,11 @@ export default {
             type: String,
             default: null,
             required: false
+        },
+        spinnerTrigger: {
+            type: Boolean,
+            default: false,
+            required: false
         }
     }
 };
@@ -31,9 +36,13 @@ export default {
         @keydown.enter="interaction"
     >
         <i
-            v-if="icon !== null"
+            v-if="icon !== null && !spinnerTrigger "
             :class="icon"
             role="img"
+        />
+        <div
+            v-if="spinnerTrigger"
+            class="spinner-border mb-1"
         />
         <span class="btn-texts">
             {{ $t(text) }}
@@ -61,5 +70,12 @@ export default {
     .btn-texts {
         white-space: normal;
     }
+}
+.spinner-border {
+    border: 4px solid $dark_blue;
+    border-radius: 50%;
+    border-top: 4px solid $primary;
+    width: 20px;
+    height: 20px;
 }
 </style>
