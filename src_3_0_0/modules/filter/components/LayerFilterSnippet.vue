@@ -467,7 +467,7 @@ export default {
             this.deleteRulesOfChildren(this.getSnippetById(snippetId));
             if (this.isStrategyActive() || this.isParentSnippet(snippetId)) {
                 this.$nextTick(() => {
-                    this.handleActiveStrategy(snippetId, !this.hasUnfixedRules(this.filterRules) && this.layerConfig.resetLayer ? true : undefined);
+                    this.handleActiveStrategy(snippetId, !this.hasUnfixedRules(this.filterRules) && this.layerConfig.resetLayer && !this.layerConfig.clearAll ? true : undefined);
                 });
             }
         },
@@ -618,8 +618,8 @@ export default {
             if (this.api instanceof FilterApi && this.mapHandler instanceof MapHandler) {
                 this.mapHandler.activateLayer(filterId, () => {
                     if (Object.prototype.hasOwnProperty.call(this.layerConfig, "wmsRefId")) {
-                        this.mapHandler.toggleWMSLayer(this.layerConfig.wmsRefId, !this.hasUnfixedRules(filterQuestion.rules) && !filterQuestion.commands.searchInMapExtent && !filterQuestion.commands.filterGeometry);
-                        this.mapHandler.toggleWFSLayerInTree(filterId, this.hasUnfixedRules(filterQuestion.rules) || filterQuestion.commands.searchInMapExtent || filterQuestion.commands.filterGeometry);
+                        this.mapHandler.toggleWMSLayer(this.layerConfig.wmsRefId, !this.hasUnfixedRules(filterQuestion.rules) && !filterQuestion.commands.filterGeometry);
+                        this.mapHandler.toggleWFSLayerInTree(filterId, this.hasUnfixedRules(filterQuestion.rules) || filterQuestion.commands.filterGeometry);
                     }
                     this.api.filter(filterQuestion, filterAnswer => {
                         this.paging = filterAnswer.paging;
@@ -631,18 +631,17 @@ export default {
                             return;
                         }
 
-                        this.paging = filterAnswer.paging;
                         if (this.paging?.page === 1) {
                             this.filteredItems = [];
                             this.mapHandler.clearLayer(filterId, this.isExtern());
                         }
+
                         if (!this.isParentSnippet(snippetId) && !this.hasOnlyParentRules()) {
                             if (
                                 !this.hasUnfixedRules(filterQuestion.rules)
                                 && (
                                     this.layerConfig.clearAll || Object.prototype.hasOwnProperty.call(this.layerConfig, "wmsRefId")
                                 )
-                                && !filterQuestion.commands.searchInMapExtent
                                 && !filterQuestion.commands.filterGeometry
                             ) {
                                 if (this.layerConfig.clearAll && Object.prototype.hasOwnProperty.call(this.layerConfig, "wmsRefId")) {
@@ -754,7 +753,7 @@ export default {
                 return snippet.title;
             }
             const model = openlayerFunctions.getLayerByLayerId(layerId),
-                title = typeof model?.get === "function" && isObject(model.get("gfiAttributes")) ? model.get("gfiAttributes")[
+                title = isObject(model) && isObject(model.gfiAttributes) ? model.gfiAttributes[
                     Array.isArray(snippet.attrName) ? snippet.attrName[0] : snippet.attrName
                 ] : undefined;
 
