@@ -12,8 +12,8 @@ const actions = {
      * @param {Object} layerConf the layer configuration
      * @returns {void}
      */
-    startLayerInformation ({commit, dispatch, state}, layerConf) {
-        dispatch("Menu/changeCurrentComponent", {type: "layerInformation", side: "mainMenu", props: {name: state.name}}, {root: true});
+    startLayerInformation ({commit, dispatch}, layerConf) {
+        dispatch("Menu/changeCurrentComponent", {type: "layerInformation", side: "mainMenu", props: {name: layerConf.datasets[0].md_name}}, {root: true});
         commit("setLayerInfo", layerConf);
         dispatch("setMetadataURL", layerConf.datasets[0].md_id);
         dispatch("additionalSingleLayerInfo");
