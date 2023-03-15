@@ -1,7 +1,5 @@
 <script>
-// todo komplexe aus dem state raus!
-import Dropdown from "../../dropdowns/components/DropdownSimple.vue";
-import constsGraphicalSelect from "../store/constsGraphicalSelect";
+import constsGraphicalSelect from "../js/constsGraphicalSelect";
 import {mapGetters, mapActions, mapMutations} from "vuex";
 import Draw, {createBox} from "ol/interaction/Draw.js";
 import VectorLayer from "ol/layer/Vector.js";
@@ -10,9 +8,6 @@ import {Circle} from "ol/geom.js";
 
 export default {
     name: "GraphicalSelect",
-    components: {
-        Dropdown
-    },
     props: {
         // The used template element for graphical selection
         selectElement: {
@@ -45,6 +40,12 @@ export default {
         label: {
             type: String,
             required: true
+        },
+        // The description over the select
+        description: {
+            type: String,
+            default: "",
+            required: false
         }
     },
     data () {
@@ -68,11 +69,6 @@ export default {
                 "Circle": this.$t("common:snippets.graphicalSelect.selectByCircle"),
                 "Polygon": this.$t("common:snippets.graphicalSelect.selectByPolygon")
             };
-        }
-    },
-    watch: {
-        selectedOptionData: function () {
-            this.createDrawInteraction();
         }
     },
 
@@ -282,15 +278,33 @@ export default {
 </script>
 
 <template>
-    <form>
-        <Dropdown
-            v-if="selectElement === 'Dropdown' && active === true"
-            v-model="selectedOptionData"
-            :options="optionsValue"
-            :focus-on-creation="focusOnCreation"
-            :label="label"
-        />
-    </form>
+    <label
+        v-if="description !== ''"
+        for="graphicalSelect"
+        class="form-floating mb-2"
+    >
+        {{ $t(description) }}
+    </label>
+    <div class="form-floating mb-3">
+        <select
+            id="graphicalSelect"
+            class="form-select"
+            :aria-label="label"
+            @change="selectedOptionData=$event.target.value;createDrawInteraction()"
+        >
+            <option
+                v-for="(value, i) in optionsValue"
+                :key="i"
+                :value="i"
+                :selected="optionsValue[0]"
+            >
+                {{ value }}
+            </option>
+        </select>
+        <label for="printLayout">
+            {{ $t(label) }}
+        </label>
+    </div>
 </template>
 
 <style lang="scss" scoped>
