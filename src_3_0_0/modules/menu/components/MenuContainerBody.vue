@@ -23,7 +23,9 @@ export default {
         ...mapGetters("Menu", [
             "defaultComponent",
             "mainMenu",
-            "secondaryMenu"
+            "secondaryMenu",
+            "mainExpanded",
+            "secondaryExpanded"
         ]),
         ...mapGetters("Modules", ["componentMap"]),
 
@@ -53,6 +55,9 @@ export default {
     <div
         :id="'mp-body-' + side"
         class="mp-menu-body"
+        :class="
+            {'mp-menu-body-collapsed': !mainExpanded && side === 'mainMenu' || !secondaryExpanded && side === 'secondaryMenu'}
+        "
     >
         <MenuNavigation :side="side" />
         <GetFeatureInfo
@@ -83,7 +88,13 @@ export default {
         font-size: $font-size-base;
         overflow-y: auto;
         max-height: 100%;
+
+        &-collapsed {
+            padding: 0;
+        }
     }
+
+    
 
     #mp-body-secondaryMenu {
         overflow-y: unset;
