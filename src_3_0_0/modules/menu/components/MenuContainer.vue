@@ -153,7 +153,6 @@ export default {
 
 .mp-mainMenu {
     left: 0px;
-    overflow: scroll;
 }
 
 .mp-secondaryMenu {
@@ -168,12 +167,14 @@ export default {
 .mp-menu-header{
     display: flex;
 }
+
 .mp-menu-header-close-button {
     display: block;
     position: absolute;
     right: 10px;
     top: 10px;
 }
+
 
 @include media-breakpoint-up(sm)  {
     .mp-menu {
@@ -194,11 +195,15 @@ export default {
 
     .mp-menu-container-handle {
         display: flex;
-        width: 12px;
+        width: 9px;
         align-items: center;
         justify-content: center;
         top: 0rem;
         font-size: 2rem;
+
+        &:hover {
+            background-color: $light_grey_active;
+        }
     }
     .mp-menu-header-close-button {
         display: none;
