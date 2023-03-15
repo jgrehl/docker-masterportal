@@ -3,7 +3,7 @@ import stateGraphicalSelect from "../../../store/stateGraphicalSelect";
 import getters from "../../../store/gettersGraphicalSelect";
 
 
-describe("src/share-components/graphicalSelect/store/gettersGraphicalSelect", function () {
+describe.only("src/share-components/graphicalSelect/store/gettersGraphicalSelect", function () {
     it("returns the active from state", function () {
         expect(stateGraphicalSelect.active).to.be.false;
     });
