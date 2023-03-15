@@ -303,8 +303,8 @@ export default {
          * @returns {void}
          */
         onInputEvent (value, coordinatesValue) {
-            coordinatesValue.value = value;
             if (this.mode === "search") {
+                coordinatesValue.value = value;
                 this.validateInput(coordinatesValue);
             }
         },
