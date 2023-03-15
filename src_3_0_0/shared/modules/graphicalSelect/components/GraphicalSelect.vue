@@ -1,5 +1,5 @@
 <script>
-import constsGraphicalSelect from "../js/constsGraphicalSelect";
+import definitionsGraphicalSelect from "../js/definitionsGraphicalSelect";
 import {mapGetters, mapActions, mapMutations} from "vuex";
 import Draw, {createBox} from "ol/interaction/Draw.js";
 import VectorLayer from "ol/layer/Vector.js";
@@ -51,9 +51,9 @@ export default {
     data () {
         return {
             selectedOptionData: this.selectedOption,
-            circleOverlay: constsGraphicalSelect.circleOverlay,
-            tooltipOverlay: constsGraphicalSelect.tooltipOverlay,
-            drawInteraction: constsGraphicalSelect.drawInteraction
+            circleOverlay: definitionsGraphicalSelect.circleOverlay,
+            tooltipOverlay: definitionsGraphicalSelect.tooltipOverlay,
+            drawInteraction: definitionsGraphicalSelect.drawInteraction
         };
     },
     computed: {
