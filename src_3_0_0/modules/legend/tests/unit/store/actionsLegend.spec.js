@@ -10,24 +10,120 @@ const {
     addLegend,
     sortLegend,
     removeLegend,
+    createLegend,
     createLegendForLayerInfo,
     prepareLegend,
     prepareLegendForGroupLayer,
-    generateLegendForLayerInfo
+    generateLegendForLayerInfo,
+    toggleLayerInLegend,
+    generateLegend
 } = actions;
 
 describe("src_3_0_0/modules/legend/store/actionsLegend.js", () => {
     let commit,
-        dispatch;
+        dispatch,
+        layer1,
+        layerAttributes1,
+        layerSource1,
+        legend1,
+        layer2,
+        layerAttributes2,
+        layersInCollection,
+        validatorStub,
+        layer1Visible;
 
     beforeEach(() => {
+        layersInCollection = [];
+        layerAttributes1 = {
+            id: "1132",
+            name: "100 Jahre Stadtgruen POIs",
+            visibility: true,
+            typ: "WMS"
+        };
+        legend1 = true;
+        layer1Visible = true;
+        layerSource1 = {source: true};
+        layer1 = {
+            get: (key) => {
+                return layerAttributes1[key];
+            },
+            getLegend: () => legend1,
+            getLayer: () => {
+                return {
+                    getId: () => "id",
+                    getZIndex: () => 1,
+                    setVisible: (value) => {
+                        layer1Visible = value;
+                    }
+                };
+            },
+            getLayerSource: () => layerSource1,
+            stopSubscription: sinon.stub()
+        };
+        layerAttributes2 = {
+            id: "99",
+            name: "name",
+            visibility: false,
+            typ: "WMS"
+        };
+        layer2 = {
+            get: (key) => {
+                return layerAttributes2[key];
+            },
+            getLegend: () => true,
+            getLayer: () => {
+                return {
+                    getZIndex: () => 2
+                };
+            },
+            getLayerSource: () => []
+        };
         commit = sinon.spy();
         dispatch = sinon.spy();
-        sinon.stub(validator, "isValidLegendObj").returns(true);
+        validatorStub = sinon.stub(validator, "isValidLegendObj").returns(true);
+        sinon.stub(layerCollection, "getLayers").returns(
+            layersInCollection
+        );
     });
 
-    afterEach(sinon.restore);
+    afterEach(() => {
+        sinon.restore();
+    });
 
+    describe("createLegend", () => {
+
+        it("createLegend shall create legend for visible layer - no waitingLegendsInfos", () => {
+            layersInCollection.push(layer1);
+            const getters = {
+                waitingLegendsInfos: []
+            };
+
+            createLegend({commit, dispatch, getters});
+            expect(dispatch.calledOnce).to.be.true;
+            expect(dispatch.firstCall.args[0]).to.be.equals("toggleLayerInLegend");
+            expect(dispatch.firstCall.args[1]).to.be.deep.equals({layer: layer1, visibility: layer1.get("visibility")});
+            expect(commit.calledOnce).to.be.true;
+            expect(commit.firstCall.args[0]).to.be.equals("setWaitingLegendsInfos");
+            expect(commit.firstCall.args[1]).to.be.deep.equals([]);
+        });
+
+        it("createLegend shall create legend for visible layer - 1 waitingLegendsInfos", () => {
+            layersInCollection.push(layer1);
+            const getters = {
+                waitingLegendsInfos: [layer2]
+            };
+
+            createLegend({commit, dispatch, getters});
+            expect(dispatch.calledTwice).to.be.true;
+            expect(dispatch.firstCall.args[0]).to.be.equals("toggleLayerInLegend");
+            expect(dispatch.firstCall.args[1]).to.be.deep.equals({layer: layer1, visibility: layer1.get("visibility")});
+            expect(dispatch.secondCall.args[0]).to.be.equals("generateLegendForLayerInfo");
+            expect(dispatch.secondCall.args[1]).to.be.deep.equals(layer2);
+            expect(commit.calledOnce).to.be.true;
+            expect(commit.firstCall.args[0]).to.be.equals("setWaitingLegendsInfos");
+            expect(commit.firstCall.args[1]).to.be.deep.equals([]);
+        });
+    });
 
     it("addLegend should add legend to legends", () => {
         const payload = {
@@ -45,7 +141,6 @@ describe("src_3_0_0/modules/legend/store/actionsLegend.js", () => {
         expect(commit.firstCall.args[0]).to.be.equals("setLegends");
         expect(commit.firstCall.args[1]).to.be.deep.equals([payload]);
     });
-
 
     it("sortLegend should sort legends by position descending", () => {
         const state = {
@@ -95,7 +190,6 @@ describe("src_3_0_0/modules/legend/store/actionsLegend.js", () => {
         expect(commit.firstCall.args[1]).to.be.deep.equals(sorted);
     });
 
-
     it("removeLegend should remove legend by id", () => {
         const state = {
                 legends: [{
@@ -139,11 +233,89 @@ describe("src_3_0_0/modules/legend/store/actionsLegend.js", () => {
         expect(commit.firstCall.args[1]).to.be.deep.equals(legendsAfterRemove);
     });
 
+    describe("toggleLayerInLegend", () => {
+
+        it("toggleLayerInLegend call with not visible layer: should dispatch removeLegend", () => {
+            toggleLayerInLegend({dispatch}, {layer: layer1, visibility: false});
+            expect(dispatch.calledOnce).to.be.true;
+            expect(dispatch.firstCall.args[0]).to.be.equals("removeLegend");
+            expect(dispatch.firstCall.args[1]).to.be.deep.equals(layer1.get("id"));
+        });
+
+        it("toggleLayerInLegend call with visible layer: should dispatch twice", () => {
+            legend1 = [{pointstyle: true}];
+            toggleLayerInLegend({dispatch}, {layer: layer1, visibility: true});
+            expect(dispatch.calledTwice).to.be.true;
+            expect(dispatch.firstCall.args[0]).to.be.equals("prepareLegend");
+            expect(dispatch.firstCall.args[1]).to.be.deep.equals([{pointstyle: true}]);
+            expect(dispatch.secondCall.args[0]).to.be.equals("generateLegend");
+            expect(dispatch.secondCall.args[1]).to.be.deep.equals(layer1);
+        });
+
+        it("toggleLayerInLegend call with visible group layer: should dispatch twice", () => {
+            legend1 = [{pointstyle: true}];
+            layerAttributes1.typ = "GROUP";
+            toggleLayerInLegend({dispatch}, {layer: layer1, visibility: true});
+            expect(dispatch.calledTwice).to.be.true;
+            expect(dispatch.firstCall.args[0]).to.be.equals("prepareLegendForGroupLayer");
+            expect(dispatch.firstCall.args[1]).to.be.deep.equals(layerSource1);
+            expect(dispatch.secondCall.args[0]).to.be.equals("generateLegend");
+            expect(dispatch.secondCall.args[1]).to.be.deep.equals(layer1);
+        });
+    });
+
+    describe("generateLegend", () => {
+        let getters, legendObj;
+
+        beforeEach(() => {
+            getters = {
+                preparedLegend: ["string"],
+                isLayerInLegend: () => false,
+                isLegendChanged: () => false
+            };
+            legendObj = {
+                id: layer1.get("id"),
+                name: layer1.get("name"),
+                legend: ["string"],
+                position: layer1.getLayer().getZIndex()
+            };
+        });
+
+        it("generateLegend call with layer not yet in legend: should dispatch addLegend", () => {
+            generateLegend({dispatch, getters}, layer1);
+            expect(dispatch.calledTwice).to.be.true;
+            expect(dispatch.firstCall.args[0]).to.be.equals("addLegend");
+            expect(dispatch.firstCall.args[1]).to.be.deep.equals(legendObj);
+            expect(dispatch.secondCall.args[0]).to.be.equals("sortLegend");
+        });
+
+        it("generateLegend call with changed layer: should dispatch removeLegend and addLegend", () => {
+            getters.isLegendChanged = () => true;
+            getters.isLayerInLegend = () => true;
+            generateLegend({dispatch, getters}, layer1);
+            expect(dispatch.calledThrice).to.be.true;
+            expect(dispatch.firstCall.args[0]).to.be.equals("removeLegend");
+            expect(dispatch.firstCall.args[1]).to.be.deep.equals(layer1.get("id"));
+            expect(dispatch.secondCall.args[0]).to.be.equals("addLegend");
+            expect(dispatch.secondCall.args[1]).to.be.deep.equals(legendObj);
+            expect(dispatch.thirdCall.args[0]).to.be.equals("sortLegend");
+        });
+
+        it("generateLegend call with not valid legend shall only sort", () => {
+            validatorStub.restore();
+            sinon.stub(validator, "isValidLegendObj").returns(false);
+            generateLegend({dispatch, getters}, layer1);
+            expect(dispatch.calledOnce).to.be.true;
+            expect(dispatch.firstCall.args[0]).to.be.equals("sortLegend");
+        });
+    });
+
     describe("createLegendForLayerInfo", () => {
         let layerAttributes,
             layerConfig,
             layer,
-            rootGetters;
+            rootGetters,
+            state;
 
         beforeEach(() => {
             layerAttributes = {
@@ -175,6 +347,9 @@ describe("src_3_0_0/modules/legend/store/actionsLegend.js", () => {
             rootGetters = {
                 layerConfigById: () => layerConfig
             };
+            state = {
+                waitingLegendsInfos: []
+            };
 
         });
 
@@ -186,33 +361,57 @@ describe("src_3_0_0/modules/legend/store/actionsLegend.js", () => {
             expect(dispatch.calledOnce).to.be.true;
             expect(dispatch.firstCall.args[0]).to.be.equals("generateLegendForLayerInfo");
             expect(dispatch.firstCall.args[1]).to.be.deep.equals(layer);
+            expect(state.waitingLegendsInfos.length).to.be.equals(0);
         });
 
-        it("for not visible WMS layer should dispatch generateLegendForLayerInfo", () => {
+        it("for not visible WMS layer with legend should dispatch generateLegendForLayerInfo", () => {
+            legend1 = ["string"];
             sinon.stub(layerCollection, "getLayerById").returns(null);
-            sinon.stub(layerFactory, "createLayer").returns(layer);
+            sinon.stub(layerFactory, "createLayer").returns(layer1);
 
-            createLegendForLayerInfo({dispatch, rootGetters}, layerConfig.id);
+            createLegendForLayerInfo({state, commit, dispatch, rootGetters}, layerConfig.id);
             expect(commit.notCalled).to.be.true;
             expect(dispatch.calledOnce).to.be.true;
             expect(dispatch.firstCall.args[0]).to.be.equals("generateLegendForLayerInfo");
-            expect(dispatch.firstCall.args[1]).to.be.deep.equals(layer);
+            expect(dispatch.firstCall.args[1]).to.be.deep.equals(layer1);
+            expect(state.waitingLegendsInfos.length).to.be.equals(0);
         });
 
-        it("for not visible WFS layer should load features and dispatch generateLegendForLayerInfo", async () => {
-            layerAttributes.typ = "WFS";
+        it("for not visible WFS layer with legend=true should add to waitingLegendsInfos and ad layer tot map", async () => {
+            layerAttributes1.typ = "WFS";
             sinon.stub(layerCollection, "getLayerById").returns(null);
-            sinon.stub(layerFactory, "createLayer").returns(layer);
+            sinon.stub(layerFactory, "createLayer").returns(layer1);
 
-            await createLegendForLayerInfo({dispatch, rootGetters}, layerConfig.id);
-            expect(commit.notCalled).to.be.true;
-            expect(dispatch.calledThrice).to.be.true;
+            expect(layer1Visible).to.be.true;
+            await createLegendForLayerInfo({state, commit, dispatch, rootGetters}, layerConfig.id);
+            expect(commit.calledOnce).to.be.true;
+            expect(commit.firstCall.args[0]).to.be.equals("setLayerInfoLegend");
+            expect(commit.firstCall.args[1]).to.be.deep.equals({});
+            expect(dispatch.calledTwice).to.be.true;
             expect(dispatch.firstCall.args[0]).to.be.equals("Maps/addLayer");
-            expect(dispatch.firstCall.args[1].id).to.be.equals(layer.getLayer().id);
+            expect(dispatch.firstCall.args[1].getId()).to.be.equals("id");
             expect(dispatch.secondCall.args[0]).to.be.equals("Maps/areLayerFeaturesLoaded");
             expect(dispatch.secondCall.args[1]).to.be.deep.equals(layerAttributes.id);
-            expect(dispatch.thirdCall.args[0]).to.be.equals("generateLegendForLayerInfo");
-            expect(dispatch.thirdCall.args[1]).to.be.deep.equals(layer);
+            expect(state.waitingLegendsInfos.length).to.be.equals(1);
+            expect(layer1Visible).to.be.false;
+        });
+
+        it("for not visible SensorThings layer with legend=true should add to waitingLegendsInfos and ad layer tot map", async () => {
+            layerAttributes1.typ = "SensorThings";
+            sinon.stub(layerCollection, "getLayerById").returns(null);
+            sinon.stub(layerFactory, "createLayer").returns(layer1);
+
+            expect(layer1Visible).to.be.true;
+            await createLegendForLayerInfo({state, commit, dispatch, rootGetters}, layerConfig.id);
+            expect(commit.calledOnce).to.be.true;
+            expect(commit.firstCall.args[0]).to.be.equals("setLayerInfoLegend");
+            expect(commit.firstCall.args[1]).to.be.deep.equals({});
+            expect(dispatch.calledOnce).to.be.true;
+            expect(dispatch.firstCall.args[0]).to.be.equals("Maps/addLayer");
+            expect(dispatch.firstCall.args[1].getId()).to.be.equals("id");
+            expect(state.waitingLegendsInfos.length).to.be.equals(1);
+            expect(layer1Visible).to.be.false;
+            expect(layer1.stopSubscription.calledOnce).to.be.true;
         });
     });
 
@@ -304,8 +503,7 @@ describe("src_3_0_0/modules/legend/store/actionsLegend.js", () => {
         });
 
         it("prepareLegend with objects in legendInfos", () => {
-            const
-                legendObj = {
+            const legendObj = {
                     label: "name",
                     geometryType: "Point",
                     styleObject: {}
@@ -321,8 +519,7 @@ describe("src_3_0_0/modules/legend/store/actionsLegend.js", () => {
         });
 
         it("prepareLegend with array in legendObj", () => {
-            const
-                legendObj = {
+            const legendObj = {
                     label: "name",
                     geometryType: "Point",
                     styleObject: {}
@@ -338,8 +535,7 @@ describe("src_3_0_0/modules/legend/store/actionsLegend.js", () => {
         });
 
         it("prepareLegend with wms style", () => {
-            const
-                legendObj = {
+            const legendObj = {
                     name: "name",
                     graphic: {}
                 },
@@ -354,17 +550,16 @@ describe("src_3_0_0/modules/legend/store/actionsLegend.js", () => {
         });
     });
 
-
     it("prepareLegendForGroupLayer", () => {
-        const layer1 = {
-                id: "1",
-                getLegend: () => ["legendUrl1"]
-            },
-            layer2 = {
-                id: "2",
-                getLegend: () => ["legendUrl2"]
-            },
-            layerSource = [
+        layer1 = {
+            id: "1",
+            getLegend: () => ["legendUrl1"]
+        };
+        layer2 = {
+            id: "2",
+            getLegend: () => ["legendUrl2"]
+        };
+        const layerSource = [
                 layer1,
                 layer2
             ],
@@ -384,6 +579,5 @@ describe("src_3_0_0/modules/legend/store/actionsLegend.js", () => {
         expect(dispatch.secondCall.args[0]).to.be.equals("prepareLegend");
         expect(dispatch.secondCall.args[1]).to.be.deep.equals(["legendUrl2"]);
     });
-
 
 });
