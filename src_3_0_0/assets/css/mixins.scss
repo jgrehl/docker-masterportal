@@ -9,7 +9,7 @@
 
 /* focus styling for actions like menu-entries, buttons, icons, etc */
 @mixin primary_action_focus {
-    outline: 2px solid $accent_focus;
+    outline: 2px solid #DCE2F3;
     outline: 2px auto  Highlight;
     outline: 2px auto -webkit-focus-ring-color;
     outline-offset: -1px;
@@ -19,10 +19,9 @@
 @mixin primary_action_hover {
     opacity: 1;
     &.btn-select, &:active, &.active, &:checked, &::selection, &.show, &[aria-expanded="true"] {
-        background-color: $accent_hover;
+        background-color: #DCE2F3;
         border-radius: .25rem;
     }
-    background-color: lighten($accent_hover, 10%);
-    color: $light_grey_contrast;
+    background-color: #DCE2F3;
     cursor: pointer;
 }
