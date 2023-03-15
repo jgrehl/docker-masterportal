@@ -98,7 +98,7 @@ export default {
         <span
             :id="'layer-tree-layer-checkbox-' + conf.id"
             :class="[
-                'layer-tree-layer-checkbox pe-2',
+                'layer-tree-layer-checkbox ps-1 pe-3',
                 {
                     'bi-check2-square': isChecked(),
                     'bi-square': !isChecked()
@@ -132,6 +132,7 @@ export default {
     @import "~mixins";
 
     .layer-tree-layer-title, .layer-tree-layer-checkbox {
+        border-radius: 15px;
         &:hover {
             @include primary_action_hover;
         }
