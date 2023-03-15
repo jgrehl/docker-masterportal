@@ -1,7 +1,7 @@
 import Overlay from "ol/Overlay.js";
 
 /**
-     * @typedef {object} constsGraphicalSelect
+     * @typedef {object} definitionsGraphicalSelect
      * @description creates variables in order to keep out complex objects out from the state regarding performance issues.
      * @property {Object} drawInteraction=undefined the interaction to draw a square, circle or polygon
      * @property {ol.overlay} circleOverlay=new Overlay({offset: [15, 0], positioning: "center-left"}) circle overlay (tooltip) - shows the radius
