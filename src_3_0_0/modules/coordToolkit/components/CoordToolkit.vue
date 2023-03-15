@@ -82,9 +82,6 @@ export default {
             this.setSupplyCoordInactive();
             this.removeInputActions();
             this.setSupplyCoordActive();
-        },
-        coordinatesEasting () {
-            console.log("change");
         }
     },
     unmounted () {
@@ -301,10 +298,12 @@ export default {
         },
         /**
          * If curent mode is "search" input is validated.
-         * @param {Object} coordinatesValue value of input
+         * @param {Object} value value of input
+         * @param {Object} coordinatesValue value of the field
          * @returns {void}
          */
-        onInputEvent (coordinatesValue) {
+        onInputEvent (value, coordinatesValue) {
+            coordinatesValue.value = value;
             if (this.mode === "search") {
                 this.validateInput(coordinatesValue);
             }
@@ -473,11 +472,10 @@ export default {
             <div :class="getClassForEasting()">
                 <InputText
                     :id="'coordinatesEastingField'"
-                    :model="coordinatesEasting.value"
                     :value="coordinatesEasting.value"
                     :label="$t(getLabel('eastingLabel'))"
                     :placeholder="isEnabled('search') ? $t('modules.tools.coordToolkit.exampleAcronym') + coordinatesEastingExample : ''"
-                    :input="() => onInputEvent(coordinatesEasting)"
+                    :input="(value) => onInputEvent(value, coordinatesEasting)"
                     :readonly="isEnabled('supply')"
                     :class-obj="{ inputError: getEastingError }"
                 >
@@ -501,20 +499,23 @@ export default {
                         </button>
                     </div>
                 </InputText>
-                <p
-                    v-if="eastingNoCoord"
-                    class="error-text"
-                >
-                    {{ eastingNoCoordMessage }}
-                </p>
-                <p
-                    v-if="eastingNoMatch"
-                    class="error-text"
-                >
-                    {{ eastingNoMatchMessage }}
-                    <br>
-                    {{ $t("modules.tools.coordToolkit.errorMsg.example") + coordinatesEastingExample }}
-                </p>
+                <transition name="fade">
+                    <p
+                        v-if="eastingNoCoord"
+                        class="error-text mb-3"
+                    >
+                        {{ eastingNoCoordMessage }}
+                    </p>
+                </transition>
+                <transition name="fade">
+                    <p
+                        v-if="eastingNoMatch"
+                        class="error-text mb-3"
+                    >
+                        {{ eastingNoMatchMessage }}
+                        {{ $t("modules.tools.coordToolkit.errorMsg.example") + coordinatesEastingExample }}
+                    </p>
+                </transition>
             </div>
             <div :class="getClassForNorthing()">
                 <InputText
@@ -522,7 +523,7 @@ export default {
                     :label="$t(getLabel('northingLabel'))"
                     :placeholder="isEnabled('search') ? $t('modules.tools.coordToolkit.exampleAcronym') + coordinatesNorthingExample : ''"
                     :value="coordinatesNorthing.value"
-                    :input="() => onInputEvent(coordinatesNorthing)"
+                    :input="(value) => onInputEvent(value, coordinatesNorthing)"
                     :readonly="isEnabled('supply')"
                     :class-obj="{ inputError: getNorthingError }"
                 >
@@ -700,6 +701,12 @@ export default {
         border: none;
         box-shadow: none;
         color: $black;
+    }
+    .fade-enter-active, .fade-leave-active {
+        transition: opacity .5s;
+    }
+    .fade-enter, .fade-leave-to {
+        opacity: 0;
     }
 </style>
 
