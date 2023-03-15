@@ -106,4 +106,17 @@ describe("src_3_0_0/core/js/layers/layer2dRasterWmts.js", () => {
             });
         });
     });
+
+    describe("createLegend", () => {
+        beforeEach(() => {
+            attributes.version = "1.3.0";
+        });
+
+        it("createLegend with no optionsFromCapabilities does nothing", () => {
+            const layerWrapper = new Layer2dRasterWmts(attributes);
+
+            layerWrapper.createLegend();
+            expect(layerWrapper.getLegend()).to.be.true;
+        });
+    });
 });
