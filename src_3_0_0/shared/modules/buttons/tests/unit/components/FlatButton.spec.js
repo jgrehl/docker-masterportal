@@ -5,7 +5,7 @@ import FlatButton from "../../../components/FlatButton.vue";
 
 config.global.mocks.$t = key => key;
 
-describe.only("src_3_0_0/shared/components/FlatButton.vue", () => {
+describe("src_3_0_0/shared/components/FlatButton.vue", () => {
     let interactionSpy,
         wrapper,
         button,

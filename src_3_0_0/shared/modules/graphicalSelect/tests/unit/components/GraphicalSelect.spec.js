@@ -1,5 +1,5 @@
 import {createStore} from "vuex";
-import {shallowMount, mount, config} from "@vue/test-utils";
+import {shallowMount, config} from "@vue/test-utils";
 import {expect} from "chai";
 import GraphicalSelectComponent from "../../../components/GraphicalSelect.vue";
 import GraphicalSelect from "../../../store/indexGraphicalSelect.js";
