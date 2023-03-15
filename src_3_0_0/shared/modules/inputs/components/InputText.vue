@@ -19,6 +19,11 @@ export default {
             default: null,
             required: false
         },
+        model: {
+            type: String,
+            default: null,
+            required: false
+        },
         type: {
             type: String,
             default: null,
@@ -48,6 +53,7 @@ export default {
         <input
             :id="id"
             :type="type"
+            :v-model="model"
             class="form-control"
             :class="classObj"
             :placeholder="placeholder"
