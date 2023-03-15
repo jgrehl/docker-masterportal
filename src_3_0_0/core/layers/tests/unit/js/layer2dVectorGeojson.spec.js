@@ -6,6 +6,7 @@ import sinon from "sinon";
 import VectorLayer from "ol/layer/Vector.js";
 import VectorSource from "ol/source/Vector.js";
 import styleList from "@masterportal/masterportalapi/src/vectorStyle/styleList.js";
+import createStyle from "@masterportal/masterportalapi/src/vectorStyle/createStyle";
 import Layer2dVectorGeojson from "../../../js/layer2dVectorGeojson";
 import webgl from "../../../js/webglRenderer";
 
@@ -187,6 +188,49 @@ describe("src_3_0_0/core/js/layers/layer2dVectorGeojson.js", () => {
             expect(vectorLayer.setStyle).to.equal(webgl.setStyle);
             expect(vectorLayer.source).to.equal(layer.getSource());
             expect(layer.get("isPointLayer")).to.not.be.undefined;
+        });
+    });
+
+    describe("createLegend", () => {
+        let createStyleSpy;
+
+        beforeEach(() => {
+            const styleObj = {
+                styleId: "styleId",
+                rules: []
+            };
+
+            attributes = {
+                id: "id",
+                version: "1.3.0"
+            };
+            sinon.stub(styleList, "returnStyleObject").returns(styleObj);
+            createStyleSpy = sinon.spy(createStyle, "returnLegendByStyleId");
+        });
+
+        it("createLegend with legendURL", () => {
+            attributes.legendURL = "legendUrl1";
+            const layerWrapper = new Layer2dVectorGeojson(attributes);
+
+            layerWrapper.createLegend();
+            expect(layerWrapper.getLegend()).to.be.deep.equals([attributes.legendURL]);
+        });
+
+        it("createLegend with legendURL as array", () => {
+            attributes.legendURL = ["legendUrl1"];
+            const layerWrapper = new Layer2dVectorGeojson(attributes);
+
+            layerWrapper.createLegend();
+            expect(layerWrapper.getLegend()).to.be.deep.equals(attributes.legendURL);
+        });
+
+        it("createLegend with styleObject and legend true", () => {
+            attributes.legend = true;
+            const layerWrapper = new Layer2dVectorGeojson(attributes);
+
+            layerWrapper.createLegend();
+            // call once on creating layer and second here
+            expect(createStyleSpy.calledTwice).to.be.true;
         });
     });
 });

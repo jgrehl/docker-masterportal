@@ -9,7 +9,6 @@ import store from "../../../app-store";
  */
 export default function Layer (attributes) {
     const defaultAttributes = {
-
     };
 
     this.attributes = Object.assign(defaultAttributes, attributes);
