@@ -36,25 +36,31 @@ export default {
 
 <template>
     <button
-        v-if="description"
-        class="btn btn-light btn-description d-flex align-items-center row py-3"
         type="button"
+        class="btn btn-light d-flex align-items-center btn-description row"
+        :class="[
+            customclass,
+
+        ]"
         :aria-label="text"
-        :class="customclass"
         @click="interaction"
         @keydown.enter="interaction"
     >
         <i
             v-if="icon !== null"
-            :class="icon"
+            :class="[
+                icon, 'col-2'
+            ]"
             role="img"
-            class="col"
         />
-        <span class="col-10 lh-1 btn-texts row">
+        <span
+            class="col-10 lh-1 btn-texts row py-2">
             <span class="btn-title">
                 {{ $t(text) }}
             </span>
-            <span class="btn-description text-wrap col-12 pt-2">
+            <span 
+                v-if="description"
+                class="btn-description text-wrap col-12 pt-2">
                 {{ $t(description) }}
             </span>
         </span>
@@ -62,29 +68,6 @@ export default {
             v-if="iconEnd !== null"
             :class="iconEnd"
             class="align-self-end flex-direction"
-            role="img"
-        />
-    </button>
-    <button
-        v-else
-        class="btn btn-light d-flex align-items-center"
-        type="button"
-        :class="customclass"
-        @click="interaction"
-        @keydown.enter="interaction"
-    >
-        <i
-            v-if="icon !== null"
-            :class="icon"
-            role="img"
-        />
-        <span class="btn-title">
-            {{ $t(text) }}
-        </span>
-        <i
-            v-if="iconEnd !== null"
-            :class="iconEnd"
-            class="ms-auto"
             role="img"
         />
     </button>
@@ -103,7 +86,7 @@ export default {
     max-width: 100%;
 
     i {
-        padding-right: .5rem;
+        font-size: 1.3rem;
     }
     i:last-child {
         padding-left: .5rem;
