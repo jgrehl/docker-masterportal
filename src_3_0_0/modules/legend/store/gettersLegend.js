@@ -13,12 +13,13 @@ const getters = {
      */
     ...generateSimpleGetters(legendState),
 
-     /**
+    /**
     * Checks if given layerid is in the legend.
+    * @param {Object} state state of the app-store.
     * @param {String} layerId Id of layer.
     * @returns {Boolean} - Flag if layer is in the legend
     */
-      isLayerInLegend : state => (layerId)  => {
+    isLayerInLegend: state => (layerId) => {
         return state.legends.filter((legendObj) => {
             return legendObj.id === layerId;
         }).length > 0;
@@ -26,7 +27,7 @@ const getters = {
 
     /**
      * Checks if the legend object of the layer has changed
-     * @param {String} layerId Id of layer
+     * @param {Object} state state of the app-store.
      * @param {Object} legendObj The legend object to be checked.
      * @returns {Boolean} - Flag if the legendObject has changed
      */
@@ -40,7 +41,7 @@ const getters = {
             isLegendChanged = true;
         }
         return isLegendChanged;
-    },
+    }
 
 };
 
