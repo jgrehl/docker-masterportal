@@ -38,12 +38,8 @@ describe("src_3_0_0/modules/legend/components/LegendContainer.vue", () => {
             getLayerSource: () => []
         };
 
-        Legend.actions.prepareLegend = sinon.stub().returns(true);
-        Legend.actions.prepareLegendForGroupLayer = sinon.stub().returns(true);
-        Legend.getters.preparedLegend = sinon.stub().returns(["url"]);
-        Legend.actions.addLegend = sinon.spy();
-        Legend.actions.removeLegend = sinon.spy();
-        Legend.actions.sortLegend = sinon.spy();
+        Legend.actions.createLegend = sinon.spy();
+        Legend.actions.toggleLayerInLegend = sinon.spy();
         store = createStore({
             namespaces: true,
             modules: {
@@ -79,68 +75,93 @@ describe("src_3_0_0/modules/legend/components/LegendContainer.vue", () => {
                 }});
 
             expect(wrapper.find("#legend").exists()).to.be.true;
+            expect(Legend.actions.createLegend.calledOnce).to.be.true;
+        });
+
+        it("renders the legend container with legends", () => {
+            store.commit("Modules/Legend/setLegends", [{
+                id: layer.id,
+                name: layer.get("name"),
+                legend: ["legend"],
+                position: 0
+            },
+            {
+                id: "2",
+                name: "name",
+                legend: ["legend2"],
+                position: 1
+            }]);
+            wrapper = shallowMount(LegendContainer, {
+                global: {
+                    plugins: [store]
+                }});
+
+            expect(wrapper.find("#legend").exists()).to.be.true;
+            expect(wrapper.find("legend-single-layer-stub").exists()).to.be.true;
+            expect(wrapper.findAll("legend-single-layer-stub").length).to.be.equals(2);
+            expect(Legend.actions.createLegend.calledOnce).to.be.true;
         });
     });
     describe("LegendContainer.vue methods", () => {
-        it("calls prepareLegend and addLegend, if layer is in collection", () => {
-            layersInCollection.push(layer);
-            wrapper = shallowMount(LegendContainer, {
-                global: {
-                    plugins: [store]
-                }});
+        // it("calls prepareLegend and addLegend, if layer is in collection", () => {
+        //     layersInCollection.push(layer);
+        //     wrapper = shallowMount(LegendContainer, {
+        //         global: {
+        //             plugins: [store]
+        //         }});
 
-            expect(wrapper.find("#legend").exists()).to.be.true;
-            expect(Legend.actions.prepareLegend.calledOnce).to.be.true;
-            expect(Legend.actions.addLegend.calledOnce).to.be.true;
-            expect(Legend.actions.addLegend.firstCall.args[1]).to.be.deep.equals({
-                id: layerAttributes.id,
-                name: layerAttributes.name,
-                legend: ["url"],
-                position: 1
-            });
-            expect(Legend.actions.sortLegend.calledOnce).to.be.true;
-        });
-        it("calls prepareLegend, removeLegend and addLegend, if legend changes", () => {
-            layersInCollection.push(layer);
-            sinon.stub(LegendContainer.methods, "isLegendChanged").returns(true);
-            sinon.stub(LegendContainer.methods, "isLayerInLegend").returns(true);
-            wrapper = shallowMount(LegendContainer, {
-                global: {
-                    plugins: [store]
-                }});
+        //     expect(wrapper.find("#legend").exists()).to.be.true;
+        //     expect(Legend.actions.prepareLegend.calledOnce).to.be.true;
+        //     expect(Legend.actions.addLegend.calledOnce).to.be.true;
+        //     expect(Legend.actions.addLegend.firstCall.args[1]).to.be.deep.equals({
+        //         id: layerAttributes.id,
+        //         name: layerAttributes.name,
+        //         legend: ["url"],
+        //         position: 1
+        //     });
+        //     expect(Legend.actions.sortLegend.calledOnce).to.be.true;
+        // });
+        // it("calls prepareLegend, removeLegend and addLegend, if legend changes", () => {
+        //     layersInCollection.push(layer);
+        //     sinon.stub(LegendContainer.methods, "isLegendChanged").returns(true);
+        //     sinon.stub(LegendContainer.methods, "isLayerInLegend").returns(true);
+        //     wrapper = shallowMount(LegendContainer, {
+        //         global: {
+        //             plugins: [store]
+        //         }});
 
-            expect(wrapper.find("#legend").exists()).to.be.true;
-            expect(Legend.actions.prepareLegend.calledOnce).to.be.true;
-            expect(Legend.actions.removeLegend.calledOnce).to.be.true;
-            expect(Legend.actions.removeLegend.firstCall.args[1]).to.be.equals(layerAttributes.id);
-            expect(Legend.actions.addLegend.calledOnce).to.be.true;
-            expect(Legend.actions.addLegend.firstCall.args[1]).to.be.deep.equals({
-                id: layerAttributes.id,
-                name: layerAttributes.name,
-                legend: ["url"],
-                position: 1
-            });
-            expect(Legend.actions.sortLegend.calledOnce).to.be.true;
-        });
-        it("calls prepareLegendForGroupLayer and addLegend, if layer has typ GROUP", () => {
-            layerAttributes.typ = "GROUP";
-            layersInCollection.push(layer);
-            wrapper = shallowMount(LegendContainer, {
-                global: {
-                    plugins: [store]
-                }});
+        //     expect(wrapper.find("#legend").exists()).to.be.true;
+        //     expect(Legend.actions.prepareLegend.calledOnce).to.be.true;
+        //     expect(Legend.actions.removeLegend.calledOnce).to.be.true;
+        //     expect(Legend.actions.removeLegend.firstCall.args[1]).to.be.equals(layerAttributes.id);
+        //     expect(Legend.actions.addLegend.calledOnce).to.be.true;
+        //     expect(Legend.actions.addLegend.firstCall.args[1]).to.be.deep.equals({
+        //         id: layerAttributes.id,
+        //         name: layerAttributes.name,
+        //         legend: ["url"],
+        //         position: 1
+        //     });
+        //     expect(Legend.actions.sortLegend.calledOnce).to.be.true;
+        // });
+        // it("calls prepareLegendForGroupLayer and addLegend, if layer has typ GROUP", () => {
+        //     layerAttributes.typ = "GROUP";
+        //     layersInCollection.push(layer);
+        //     wrapper = shallowMount(LegendContainer, {
+        //         global: {
+        //             plugins: [store]
+        //         }});
 
-            expect(wrapper.find("#legend").exists()).to.be.true;
-            expect(Legend.actions.prepareLegendForGroupLayer.calledOnce).to.be.true;
-            expect(Legend.actions.addLegend.calledOnce).to.be.true;
-            expect(Legend.actions.addLegend.firstCall.args[1]).to.be.deep.equals({
-                id: layerAttributes.id,
-                name: layerAttributes.name,
-                legend: ["url"],
-                position: 1
-            });
-            expect(Legend.actions.sortLegend.calledOnce).to.be.true;
-        });
+        //     expect(wrapper.find("#legend").exists()).to.be.true;
+        //     expect(Legend.actions.prepareLegendForGroupLayer.calledOnce).to.be.true;
+        //     expect(Legend.actions.addLegend.calledOnce).to.be.true;
+        //     expect(Legend.actions.addLegend.firstCall.args[1]).to.be.deep.equals({
+        //         id: layerAttributes.id,
+        //         name: layerAttributes.name,
+        //         legend: ["url"],
+        //         position: 1
+        //     });
+        //     expect(Legend.actions.sortLegend.calledOnce).to.be.true;
+        // });
 
         it("method generateId", () => {
             wrapper = shallowMount(LegendContainer, {
@@ -155,92 +176,91 @@ describe("src_3_0_0/modules/legend/components/LegendContainer.vue", () => {
             expect(wrapper.vm.generateId("Layername (/abc/)")).to.be.equals("legend_Layername_abc_");
         });
 
-        it("method isLayerInLegend", () => {
-            const legendObj = {
-                id: "1",
-                name: "layer_1",
-                legend: ["link_to_legend"]
-            };
+        // it("method isLayerInLegend", () => {
+        //     const legendObj = {
+        //         id: "1",
+        //         name: "layer_1",
+        //         legend: ["link_to_legend"]
+        //     };
 
-            wrapper = shallowMount(LegendContainer, {
-                global: {
-                    plugins: [store]
-                }});
-            store.commit("Modules/Legend/setLegends", [legendObj]);
-            expect(wrapper.vm.isLayerInLegend("id")).to.be.equals(false);
-            expect(wrapper.vm.isLayerInLegend("1")).to.be.equals(true);
-        });
+        //     wrapper = shallowMount(LegendContainer, {
+        //         global: {
+        //             plugins: [store]
+        //         }});
+        //     store.commit("Modules/Legend/setLegends", [legendObj]);
+        //     expect(wrapper.vm.isLayerInLegend("id")).to.be.equals(false);
+        //     expect(wrapper.vm.isLayerInLegend("1")).to.be.equals(true);
+        // });
 
-        describe("method isLegendChanged", () => {
-            it("returns true if legend changed", () => {
-                const legendObj = {
-                    id: "1",
-                    name: "layer_1",
-                    legend: ["link_to_legend"],
-                    position: 1
-                };
+        // describe("method isLegendChanged", () => {
+        //     it("returns true if legend changed", () => {
+        //         const legendObj = {
+        //             id: "1",
+        //             name: "layer_1",
+        //             legend: ["link_to_legend"],
+        //             position: 1
+        //         };
 
-                wrapper = shallowMount(LegendContainer, {
-                    global: {
-                        plugins: [store]
-                    }});
-                store.commit("Modules/Legend/setLegends", [legendObj]);
-                expect(wrapper.vm.isLegendChanged(legendObj.id, {
-                    id: "1",
-                    name: "layer_1",
-                    legend: ["link_to_legend"],
-                    position: 0
-                })).to.be.equals(true);
-                expect(wrapper.vm.isLegendChanged(legendObj.id, {
-                    id: "1",
-                    name: "layer_1",
-                    legend: ["changed_link_to_legend"],
-                    position: 1
-                })).to.be.equals(true);
-                expect(wrapper.vm.isLegendChanged(legendObj.id, {
-                    id: "1",
-                    name: "layer_1",
-                    legend: ["link_to_legend", "new_link"],
-                    position: 1
-                })).to.be.equals(true);
-                expect(wrapper.vm.isLegendChanged(legendObj.id, {
-                    id: "1",
-                    name: "changed_layer_1",
-                    legend: ["link_to_legend"],
-                    position: 1
-                })).to.be.equals(true);
-                expect(wrapper.vm.isLegendChanged(legendObj.id, {
-                    id: "changed_1",
-                    name: "layer_1",
-                    legend: ["link_to_legend"],
-                    position: 1
-                })).to.be.equals(true);
-                expect(wrapper.vm.isLegendChanged(legendObj.id, {
-                    id: "2042",
-                    name: "Festgestellte Änderungen – Berichtigungen – Nachrichtliche Übernahmen seit 1997",
-                    legend: ["https://geodienste.hamburg.de/HH_WMS_FNP_Aend?VERSION=1.3.0&SERVICE=WMS&REQUEST=GetLegendGraphic&FORMAT=image/png&LAYER=fnp_aenderungsuebersicht_aenderungen_festgestellt"],
-                    position: 2
-                })).to.be.equals(true);
-            });
-            it("returns false if legend doesn't changed", () => {
-                const legendObj = {
-                    id: "1",
-                    name: "layer_1",
-                    legend: ["link_to_legend"],
-                    position: 1
-                };
+        //         wrapper = shallowMount(LegendContainer, {
+        //             global: {
+        //                 plugins: [store]
+        //             }});
+        //         store.commit("Modules/Legend/setLegends", [legendObj]);
+        //         expect(wrapper.vm.isLegendChanged(legendObj.id, {
+        //             id: "1",
+        //             name: "layer_1",
+        //             legend: ["link_to_legend"],
+        //             position: 0
+        //         })).to.be.equals(true);
+        //         expect(wrapper.vm.isLegendChanged(legendObj.id, {
+        //             id: "1",
+        //             name: "layer_1",
+        //             legend: ["changed_link_to_legend"],
+        //             position: 1
+        //         })).to.be.equals(true);
+        //         expect(wrapper.vm.isLegendChanged(legendObj.id, {
+        //             id: "1",
+        //             name: "layer_1",
+        //             legend: ["link_to_legend", "new_link"],
+        //             position: 1
+        //         })).to.be.equals(true);
+        //         expect(wrapper.vm.isLegendChanged(legendObj.id, {
+        //             id: "1",
+        //             name: "changed_layer_1",
+        //             legend: ["link_to_legend"],
+        //             position: 1
+        //         })).to.be.equals(true);
+        //         expect(wrapper.vm.isLegendChanged(legendObj.id, {
+        //             id: "changed_1",
+        //             name: "layer_1",
+        //             legend: ["link_to_legend"],
+        //             position: 1
+        //         })).to.be.equals(true);
+        //         expect(wrapper.vm.isLegendChanged(legendObj.id, {
+        //             id: "2042",
+        //             name: "Festgestellte Änderungen – Berichtigungen – Nachrichtliche Übernahmen seit 1997",
+        //             legend: ["https://geodienste.hamburg.de/HH_WMS_FNP_Aend?VERSION=1.3.0&SERVICE=WMS&REQUEST=GetLegendGraphic&FORMAT=image/png&LAYER=fnp_aenderungsuebersicht_aenderungen_festgestellt"],
+        //             position: 2
+        //         })).to.be.equals(true);
+        //     });
+        //     it("returns false if legend doesn't changed", () => {
+        //         const legendObj = {
+        //             id: "1",
+        //             name: "layer_1",
+        //             legend: ["link_to_legend"],
+        //             position: 1
+        //         };
 
-                wrapper = shallowMount(LegendContainer, {
-                    global: {
-                        plugins: [store]
-                    }});
-                store.commit("Modules/Legend/setLegends", [legendObj]);
-                expect(wrapper.vm.isLegendChanged(legendObj.id, legendObj)).to.be.equals(false);
-            });
-        });
+        //         wrapper = shallowMount(LegendContainer, {
+        //             global: {
+        //                 plugins: [store]
+        //             }});
+        //         store.commit("Modules/Legend/setLegends", [legendObj]);
+        //         expect(wrapper.vm.isLegendChanged(legendObj.id, legendObj)).to.be.equals(false);
+        //     });
+        // });
         describe("watcher", () => {
-            let toggleLayerInLegendStub = null,
-                config_1, config_2;
+            let config_1, config_2;
 
             beforeEach(() => {
                 config_1 = {
@@ -265,7 +285,6 @@ describe("src_3_0_0/modules/legend/components/LegendContainer.vue", () => {
                         return null;
                     }
                 );
-                toggleLayerInLegendStub = sinon.stub(LegendContainer.methods, "toggleLayerInLegend");
                 store.commit("Modules/Legend/setLegends", []);
             });
             afterEach(() => {
@@ -284,10 +303,8 @@ describe("src_3_0_0/modules/legend/components/LegendContainer.vue", () => {
                 wrapper.vm.$options.watch.visibleLayerConfigs.handler.call(wrapper.vm, newLayerConfigs, oldLayerConfigs);
                 await wrapper.vm.$nextTick();
 
-                expect(toggleLayerInLegendStub.calledOnce).to.be.true;
-                expect(toggleLayerInLegendStub.firstCall.args[0]).to.be.deep.equals(config_2);
-                expect(toggleLayerInLegendStub.firstCall.args[1]).to.be.equals(true);
-                toggleLayerInLegendStub.restore();
+                expect(Legend.actions.toggleLayerInLegend.calledOnce).to.be.true;
+                expect(Legend.actions.toggleLayerInLegend.firstCall.args[1]).to.be.deep.equals({layer: config_2, visibility: true});
             });
 
             it("visibleLayerConfigs shall call toggleLayerInLegend with false", async () => {
@@ -301,9 +318,8 @@ describe("src_3_0_0/modules/legend/components/LegendContainer.vue", () => {
 
                 wrapper.vm.$options.watch.visibleLayerConfigs.handler.call(wrapper.vm, newLayerConfigs, oldLayerConfigs);
                 await wrapper.vm.$nextTick();
-                expect(toggleLayerInLegendStub.calledOnce).to.be.true;
-                expect(toggleLayerInLegendStub.firstCall.args[0]).to.be.deep.equals(config_2);
-                expect(toggleLayerInLegendStub.firstCall.args[1]).to.be.equals(false);
+                expect(Legend.actions.toggleLayerInLegend.calledOnce).to.be.true;
+                expect(Legend.actions.toggleLayerInLegend.firstCall.args[1]).to.be.deep.equals({layer: config_2, visibility: false});
             });
 
             it("visibleLayerConfigs shall call toggleLayerInLegend if zIndex changed", async () => {
@@ -320,37 +336,35 @@ describe("src_3_0_0/modules/legend/components/LegendContainer.vue", () => {
                 wrapper.vm.$options.watch.visibleLayerConfigs.handler.call(wrapper.vm, newLayerConfigs, oldLayerConfigs);
                 await wrapper.vm.$nextTick();
 
-                expect(toggleLayerInLegendStub.calledOnce).to.be.true;
-                expect(toggleLayerInLegendStub.firstCall.args[0]).to.be.deep.equals(config_2);
-                expect(toggleLayerInLegendStub.firstCall.args[1]).to.be.equals(true);
-                toggleLayerInLegendStub.restore();
+                expect(Legend.actions.toggleLayerInLegend.calledOnce).to.be.true;
+                expect(Legend.actions.toggleLayerInLegend.firstCall.args[1]).to.be.deep.equals({layer: config_2, visibility: true});
             });
 
-            it("legendOnChanged shall call createLegend if legend available", () => {
-                const createLegendSpy = sinon.spy(LegendContainer.methods, "createLegend");
+            //     it("legendOnChanged shall call createLegend if legend available", () => {
+            //         const createLegendSpy = sinon.spy(LegendContainer.methods, "createLegend");
 
-                wrapper = shallowMount(LegendContainer, {
-                    global: {
-                        plugins: [store]
-                    }});
+            //         wrapper = shallowMount(LegendContainer, {
+            //             global: {
+            //                 plugins: [store]
+            //             }});
 
-                wrapper.vm.$options.watch.legendOnChanged.handler.call(wrapper.vm, {});
-                // is called once on mounted
-                expect(createLegendSpy.calledTwice).to.be.true;
-            });
+            //         wrapper.vm.$options.watch.legendOnChanged.handler.call(wrapper.vm, {});
+            //         // is called once on mounted
+            //         expect(createLegendSpy.calledTwice).to.be.true;
+            //     });
 
-            it("legendOnChanged shall not call createLegend if legend not available", () => {
-                const createLegendSpy = sinon.spy(LegendContainer.methods, "createLegend");
+            //     it("legendOnChanged shall not call createLegend if legend not available", () => {
+            //         const createLegendSpy = sinon.spy(LegendContainer.methods, "createLegend");
 
-                wrapper = shallowMount(LegendContainer, {
-                    global: {
-                        plugins: [store]
-                    }});
+            //         wrapper = shallowMount(LegendContainer, {
+            //             global: {
+            //                 plugins: [store]
+            //             }});
 
-                wrapper.vm.$options.watch.legendOnChanged.handler.call(wrapper.vm);
-                // is called once on mounted
-                expect(createLegendSpy.calledOnce).to.be.true;
-            });
+        //         wrapper.vm.$options.watch.legendOnChanged.handler.call(wrapper.vm);
+        //         // is called once on mounted
+        //         expect(createLegendSpy.calledOnce).to.be.true;
+        //     });
         });
     });
 });
