@@ -101,14 +101,15 @@ describe("src_3_0_0/core/js/layers/layerCollection.js", () => {
         });
     });
 
-    describe("removeLayerByConfigId", () => {
+    describe("removeLayerById", () => {
         it("adds three layer to collection and get the layers that are visible", () => {
             layerCollection.addLayer(layer1);
             layerCollection.addLayer(layer2);
             layerCollection.addLayer(layer3);
 
-            expect(layerCollection.getOlLayers().length).to.equals(-9);
-            expect(layerCollection.getOlLayers()).to.deep.equal([layer1.getLayer(), "layer9.attributes"]);
+            layerCollection.removeLayerById("firstLayer");
+
+            expect(layerCollection.getLayers().length).to.equals(2);
         });
     });
 });

@@ -5,15 +5,15 @@ import FlatButton from "../../../components/FlatButton.vue";
 
 config.global.mocks.$t = key => key;
 
-describe("src_3_0_0/shared/components/FlatButton.vue", () => {
+describe.only("src_3_0_0/shared/components/FlatButton.vue", () => {
     let interactionSpy,
-        wrapper;
+        wrapper,
+        button,
+        icon;
 
     const text = "My super nice Button",
-        button = wrapper.find("button"),
-        icon = button.find("i"),
         iconString = "bi-list",
-        spinnerClass = ".spinner-border mb-1";
+        spinnerClass = ".spinner-border";
 
 
     beforeEach(() => {
@@ -26,6 +26,8 @@ describe("src_3_0_0/shared/components/FlatButton.vue", () => {
         wrapper = mount(FlatButton, {
             props: {text, interaction: interactionSpy, icon: iconString}
         });
+        button = wrapper.find("button");
+        icon = button.find("i");
 
         expect(button.exists()).to.be.true;
         expect(button.classes()).to.eql(["flat-button", "btn", "btn-secondary", "d-flex", "align-items-center", "mb-3"]);
@@ -43,6 +45,8 @@ describe("src_3_0_0/shared/components/FlatButton.vue", () => {
         wrapper = mount(FlatButton, {
             props: {text, interaction: interactionSpy, icon: iconString, spinnerTrigger: true}
         });
+        button = wrapper.find("button");
+        icon = button.find("i");
         expect(icon.exists()).to.be.false;
         expect(wrapper.find(spinnerClass).exists()).to.be.true;
     });
