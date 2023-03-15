@@ -3,9 +3,24 @@
  * @typedef {Object} filter
  * @property {String}   icon - icon next to title
  * @property {String}   id - internal id of component
+ * @property {String}   type - type of the module
  * @property {String}   name - Module name
+ * @property {Boolean} resetLayer - if true it will change the reset button to a button which resets the whole layer and ignores the prechecked values
+ * @property {Boolean} layerSelectorVisible - to display a selector for the layers
+ * @property {Boolean} multiLayerSelector - if layerSelectorVisible true, wether one can open multiple sections of the selector at the same time
+ * @property {Boolean} liveZoomToFeatures - defines whether the filter immediately zooms to filter results
+ * @property {Boolean} geometrySelectorOptions - options for an additional tool for filtering within a self-drawn area. If you use this tool in conjunction with external filtering
+ * @property {Number} minScale - minimum zoom level the filter zooms in when displaying filter results
  * @property {Array}  layers - the layer configuration for filter
- * @property {Boolean} hasMouseMapInteractions If this attribute is true, then all other modules will be deactivated when this attribute is also true. Only one module with this attribute true may be open at the same time, since conflicts can arise in the card interactions.
+ * @property {Array} layerGroups - configuration of the related layers to be filtered
+ * @property {Array} rulesOfFilters - contains rules for each filter
+ * @property {String} serializedString -contains the serialized state (includes rules, filterHits, selectedAccordions)
+ * @property {Array} selectedAccordions - contains the selected accordinons
+ * @property {Array} filtersHits - contains the filter hits
+ * @property {Object/Boolean} filterGeometry - contains geometry/area to filter in
+ * @property {Boolean} geometryFeature - the geometry feature
+ * @property {Number} jumpToId - contains the filterId to jump
+ * @property {Boolean} hasMouseMapInteractions ff this attribute is true, then all other modules will be deactivated when this attribute is also true. Only one module with this attribute true may be open at the same time, since conflicts can arise in the card interactions.
 
  */
 
@@ -13,7 +28,6 @@ const state = {
     icon: "bi-funnel-fill",
     id: "filter",
     type: "filter",
-    side: "mainMenu",
     name: "common:menu.filter",
     resetLayer: false,
     layerSelectorVisible: true,
@@ -21,7 +35,6 @@ const state = {
     liveZoomToFeatures: true,
     geometrySelectorOptions: false,
     minScale: 5000,
-    saveTo: "void",
     layers: [],
     layerGroups: [],
     rulesOfFilters: [],
@@ -31,9 +44,6 @@ const state = {
     filterGeometry: false,
     geometryFeature: undefined,
     jumpToId: undefined,
-    isGeneric: null,
-    allowMultipleQueriesPerLayer: null,
-    predefinedQueries: null,
     hasMouseMapInteractions: false
 };
 
