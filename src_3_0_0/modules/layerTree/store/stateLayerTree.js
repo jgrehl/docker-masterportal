@@ -1,5 +1,5 @@
 /**
- * Menu state definition.
+ * LayerTree state definition.
  * @typedef {Object} LayerTreeState
  * @property {String} menuSide Specifies in which menu the layerTree should be rendered
  * @property {String} type The type of the layerTree component.
