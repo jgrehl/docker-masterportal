@@ -81,9 +81,6 @@ Layer2dRasterWmts.prototype.createLegend = function () {
                             legend = getLegend[0]?.[0]?.href;
                             if (legend) {
                                 this.setLegend([legend]);
-
-                                // todo rebuild Legend, Radio.trigger("Legend", "setLayerList"); ersetzen mit was?
-                                // bridge.setLegendLayerList();
                             }
                         }
                         else {
