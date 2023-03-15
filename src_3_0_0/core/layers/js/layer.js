@@ -158,5 +158,8 @@ Layer.prototype.createLegend = function () {
     else if (typeof legend === "string") {
         this.setLegend([legend]);
     }
+    else if (legend === false) {
+        this.setLegend(false);
+    }
 };
 
