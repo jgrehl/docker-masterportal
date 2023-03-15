@@ -5,23 +5,27 @@ import legendDraw from "../js/legendDraw";
 
 const actions = {
 
-     /**
-         * Creates the legend.
-         * @returns {void}
-         */
-      createLegend ({commit, dispatch, getters}) {
-        layerCollection.getLayers().forEach(layer => dispatch("toggleLayerInLegend", {layer:layer, visibility: layer.get("visibility")}));
-        getters.waitingLegendsInfos.forEach(layer => dispatch("generateLegendForLayerInfo", layer));
-        commit("setWaitingLegendsInfos", []);       
-    },
-    
     /**
-         * Adds the legend of one layer to the legends in the store
-         * @param {Object} param.commit the commit
-         * @param {Object} param.state the state
-         * @param {Object} legendObj Legend object of one layer
-         * @returns {void}
-         */
+     * Creates the legend for all visible layers.
+     * Creates legend for layerInfo for all layers contained in waitingLegendsInfos.
+     * @param {Object} param.commit the commit
+     * @param {Object} param.dispatch the dispatch
+     * @param {Object} param.getters the getters
+     * @returns {void}
+     */
+    createLegend ({commit, dispatch, getters}) {
+        layerCollection.getLayers().forEach(layer => dispatch("toggleLayerInLegend", {layer: layer, visibility: layer.get("visibility")}));
+        getters.waitingLegendsInfos?.forEach(layer => dispatch("generateLegendForLayerInfo", layer));
+        commit("setWaitingLegendsInfos", []);
+    },
+
+    /**
+     * Adds the legend of one layer to the legends in the store
+     * @param {Object} param.state the state
+     * @param {Object} param.commit the commit
+     * @param {Object} legendObj Legend object of one layer
+     * @returns {void}
+     */
     addLegend ({state, commit}, legendObj) {
         const legends = state.legends;
 
@@ -33,8 +37,8 @@ const actions = {
 
     /**
          * Sorts the Legend Entries by position descending
-         * @param {Object} param.commit the commit
          * @param {Object} param.state the state
+         * @param {Object} param.commit the commit
          * @returns {void}
          */
     sortLegend ({state, commit}) {
@@ -47,8 +51,8 @@ const actions = {
 
     /**
      * Removes a layer legend from the legends in the store by given id.
-     * @param {Object} param.commit the commit
      * @param {Object} param.state the state
+     * @param {Object} param.commit the commit
      * @param {String} id Id of layer.
      * @returns {void}
      */
@@ -61,19 +65,17 @@ const actions = {
     },
 
     /**
-         * Generates or removed the layers legend object.
-         * @param {Object} layer the layer to show the legend for
-         * @param {Boolean} visibility visibility of layer in map
-         * @returns {void}
-         */
-     toggleLayerInLegend ({dispatch}, {layer, visibility}) {
-        const
-            layerId = layer.get("id"),
+     * Generates or removed the layers legend object.
+     * @param {Object} param.dispatch the dispatch
+     * @param {Object} layer and visibility of the layer
+     * @returns {void}
+     */
+    toggleLayerInLegend ({dispatch}, {layer, visibility}) {
+        const layerId = layer.get("id"),
             layerTyp = layer.get("typ");
 
         if (visibility === false) {
             dispatch("removeLegend", layerId);
-
         }
         else {
             if (layerTyp === "GROUP") {
@@ -88,15 +90,14 @@ const actions = {
 
     /**
      * Generates the legend object and adds it to the legend array in the store.
-     * @param {String} id Id of layer.
-     * @param {String} name Name of layer.
-     * @param {Number} zIndex ZIndex of layer.
-     * @param {Object[]} legend Legend of layer.
+     * @param {Object} param.dispatch the dispatch
+     * @param {Object} param.getters the getters
+     * @param {Objec} layer the layer
      * @returns {void}
      */
     generateLegend ({dispatch, getters}, layer) {
-        const   id = layer.get("id"),
-        legendObj = {
+        const id = layer.get("id"),
+            legendObj = {
                 id: id,
                 name: layer.get("name"),
                 legend: getters.preparedLegend,
@@ -118,6 +119,8 @@ const actions = {
 
     /**
      * Creates the legend for the layer info.
+     * @param {Object} param.state the state
+     * @param {Object} param.commit the commit
      * @param {Object} param.dispatch the dispatch
      * @param {Object} param.rootGetters the rootGetters
      * @param {String} layerId Id of layer to create the layer info legend.
@@ -132,15 +135,15 @@ const actions = {
             layer = layerFactory.createLayer(layerConfig);
 
             // legend is not loaded at this time, will be triggered by adding layer to map
-            if(layer.getLegend() === true){
+            if (layer.getLegend() === true) {
                 dispatch("Maps/addLayer", layer.getLayer(), {root: true});
                 state.waitingLegendsInfos.push(layer);
                 commit("setLayerInfoLegend", {});
-                if(layer.get("typ") === "WFS"){
+                if (layer.get("typ") === "WFS") {
                     await dispatch("Maps/areLayerFeaturesLoaded", layerId, {root: true});
                     layer.getLayer().setVisible(false);
                 }
-                else  if(layer.get("typ") === "SensorThings"){
+                else if (layer.get("typ") === "SensorThings") {
                     layer.getLayer().setVisible(false);
                     layer.stopSubscription();
                 }
