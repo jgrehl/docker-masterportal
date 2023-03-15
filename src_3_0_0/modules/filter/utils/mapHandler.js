@@ -406,7 +406,7 @@ export default class MapHandler {
             let wmsLayerModel = this.handlers.getLayerByLayerId(wmsRefId);
 
             if (!isObject(wmsLayerModel)) {
-                await store.dispatch("addLayerToLayerConfig", {layerConfig: wmsLayerModel, parentKey: treeSubjectsKey}, {root: true});
+                await store.dispatch("addLayerToLayerConfig", {layerConfig: wmsRefId, parentKey: treeSubjectsKey}, {root: true});
                 wmsLayerModel = this.handlers.getLayerByLayerId(wmsRefId);
             }
 
