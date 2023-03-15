@@ -1,5 +1,4 @@
-import Vuex from "vuex";
-import {config, shallowMount, mount, createLocalVue} from "@vue/test-utils";
+import {shallowMount, mount} from "@vue/test-utils";
 import {expect} from "chai";
 import GraphicalSelectComponent from "../../../components/GraphicalSelect.vue";
 import GraphicalSelectModule from "../../../store/indexGraphicalSelect.js";
@@ -7,8 +6,7 @@ import Dropdown from "../../../../dropdowns/components/DropdownSimple.vue";
 import sinon from "sinon";
 
 
-const localVue = createLocalVue(),
-    mockMapGetters = {
+const mockMapGetters = {
     },
     mockMapActions = {
         addLayerOnTop: sinon.stub(),
@@ -17,8 +15,6 @@ const localVue = createLocalVue(),
         registerListener: sinon.stub()
     };
 
-localVue.use(Vuex);
-config.mocks.$t = key => key;
 let store;
 
 describe("src/share-components/graphicalSelect/components/GraphicalSelect.vue", () => {
