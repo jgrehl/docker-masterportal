@@ -82,6 +82,9 @@ export default {
             this.setSupplyCoordInactive();
             this.removeInputActions();
             this.setSupplyCoordActive();
+        },
+        coordinatesEasting () {
+            console.log("change");
         }
     },
     unmounted () {
@@ -470,10 +473,11 @@ export default {
             <div :class="getClassForEasting()">
                 <InputText
                     :id="'coordinatesEastingField'"
+                    :model="coordinatesEasting.value"
+                    :value="coordinatesEasting.value"
                     :label="$t(getLabel('eastingLabel'))"
                     :placeholder="isEnabled('search') ? $t('modules.tools.coordToolkit.exampleAcronym') + coordinatesEastingExample : ''"
-                    :value="coordinatesEasting.value"
-                    :input="(value) => onInputEvent(value)"
+                    :input="() => onInputEvent(coordinatesEasting)"
                     :readonly="isEnabled('supply')"
                     :class-obj="{ inputError: getEastingError }"
                 >
@@ -518,7 +522,7 @@ export default {
                     :label="$t(getLabel('northingLabel'))"
                     :placeholder="isEnabled('search') ? $t('modules.tools.coordToolkit.exampleAcronym') + coordinatesNorthingExample : ''"
                     :value="coordinatesNorthing.value"
-                    :input="(value) => onInputEvent(value)"
+                    :input="() => onInputEvent(coordinatesNorthing)"
                     :readonly="isEnabled('supply')"
                     :class-obj="{ inputError: getNorthingError }"
                 >
