@@ -6,7 +6,15 @@ import FlatButton from "../../../components/FlatButton.vue";
 config.global.mocks.$t = key => key;
 
 describe("src_3_0_0/shared/components/FlatButton.vue", () => {
-    let interactionSpy;
+    let interactionSpy,
+        wrapper;
+
+    const text = "My super nice Button",
+        button = wrapper.find("button"),
+        icon = button.find("i"),
+        iconString = "bi-list",
+        spinnerClass = ".spinner-border mb-1";
+
 
     beforeEach(() => {
         interactionSpy = sinon.spy();
@@ -15,13 +23,9 @@ describe("src_3_0_0/shared/components/FlatButton.vue", () => {
     afterEach(sinon.restore);
 
     it("should render a button with an icon and trigger the given interaction on click", () => {
-        const iconString = "bi-list",
-            text = "My super nice Button",
-            wrapper = mount(FlatButton, {
-                props: {text, interaction: interactionSpy, icon: iconString}
-            }),
-            button = wrapper.find("button"),
-            icon = button.find("i");
+        wrapper = mount(FlatButton, {
+            props: {text, interaction: interactionSpy, icon: iconString}
+        });
 
         expect(button.exists()).to.be.true;
         expect(button.classes()).to.eql(["flat-button", "btn", "btn-secondary", "d-flex", "align-items-center", "mb-3"]);
@@ -34,5 +38,12 @@ describe("src_3_0_0/shared/components/FlatButton.vue", () => {
         button.trigger("click");
 
         expect(interactionSpy.calledOnce).to.be.true;
+    });
+    it("should render a spinner and no icon if spinnerTrigger is true", () => {
+        wrapper = mount(FlatButton, {
+            props: {text, interaction: interactionSpy, icon: iconString, spinnerTrigger: true}
+        });
+        expect(icon.exists()).to.be.false;
+        expect(wrapper.find(spinnerClass).exists()).to.be.true;
     });
 });
