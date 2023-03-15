@@ -1,6 +1,6 @@
 import {GeoJSON} from "ol/format.js";
 import {fromCircle} from "ol/geom/Polygon.js";
-import constsGraphicalSelect from "../js/constsGraphicalSelect";
+import definitionsGraphicalSelect from "../js/definitionsGraphicalSelect";
 
 
 const actions = {
@@ -53,7 +53,7 @@ const actions = {
      */
     showTooltipOverlay: function ({state, rootState}) {
         const coords = rootState.Maps.mouseCoordinate,
-            tooltipOverlay = constsGraphicalSelect.tooltipOverlay,
+            tooltipOverlay = definitionsGraphicalSelect.tooltipOverlay,
             currentValue = state.currentValue;
 
         if (currentValue === "Polygon") {
