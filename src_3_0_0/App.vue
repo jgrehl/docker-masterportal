@@ -226,6 +226,7 @@ export default {
     flex-direction: row;
     position: relative;
     height: 100%;
+    overflow: hidden;
     width: 100%;
     font-family: $font_family_default;
     font-size: $font-size-base;
