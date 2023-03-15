@@ -368,13 +368,13 @@ describe("src_3_0_0/modules/coordToolkit/components/CoordToolkit.vue", () => {
                 }});
             wrapper.vm.changeMode("supply");
             expect(store.state.Modules.CoordToolkit.mode).to.be.equals("supply");
-            wrapper.vm.onInputEvent("input");
+            wrapper.vm.onInputEvent("1234", {"value": "111"});
             expect(CoordToolkit.actions.validateInput.calledOnce).to.be.false;
 
             wrapper.vm.changeMode("search");
             await wrapper.vm.$nextTick();
             expect(store.state.Modules.CoordToolkit.mode).to.be.equals("search");
-            wrapper.vm.onInputEvent("input");
+            wrapper.vm.onInputEvent("1234", {"value": "111"});
             expect(CoordToolkit.actions.validateInput.calledOnce).to.be.true;
         });
 
