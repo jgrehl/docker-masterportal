@@ -78,7 +78,6 @@ Layer2d.prototype.updateLayerValues = function (attributes) {
     this.getLayer()?.setVisible(attributes.visibility);
     this.getLayer()?.setZIndex(attributes.zIndex);
     this.controlAutoRefresh(attributes);
-
 };
 
 /**
