@@ -50,7 +50,7 @@ export default {
             <LightButton
                 :interaction="() => removeLayer(layerConf)"
                 :text="$t('common:tree.iconRemoveLayer')"
-                icon="bi-trash3-fill"
+                icon="bi-trash3"
                 customclass="light-button"
             />
         </div>
