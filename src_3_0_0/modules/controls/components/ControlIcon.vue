@@ -51,7 +51,7 @@ export default {
     <button
         type="button"
         :tabindex="disabled ? '-1' : '0'"
-        :class="['control-icon-controls', 'bootstrap-icon', 'btn', 'my-2', 'control-button-controls']"
+        :class="['control-icon-controls', 'bootstrap-icon', 'btn', 'my-2', 'control-button-controls', 'btn-light']"
         :title="title"
         :disabled="disabled"
         @click.stop="onClick"
@@ -67,54 +67,11 @@ export default {
         >
             {{ title }}
         </p>
-        <!-- special solution for zoom buttons: zoom-in -->
-        <i
-            v-else-if="iconClass==='bi-masterportal-zoom-in'"
-            :class="iconClass"
-        >
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="28"
-                height="28"
-                fill="currentColor"
-                stroke="currentColor"
-                stroke-width="1"
-                class="bi bi-plus-lg"
-                viewBox="0 0 16 16"
-            >
-                <path
-                    fill-rule="evenodd"
-                    d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"
-                />
-            </svg>
-        </i>
-        <!-- special solution for zoom buttons: zoom-out -->
-        <i
-            v-else-if="iconClass==='bi-masterportal-zoom-out'"
-            :class="iconClass"
-        >
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="28"
-                height="28"
-                fill="currentColor"
-                stroke="currentColor"
-                stroke-width="1"
-                class="bi bi-dash-lg"
-                viewBox="0 0 16 16"
-            >
-                <path
-                    fill-rule="evenodd"
-                    d="M2 8a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11A.5.5 0 0 1 2 8Z"
-                />
-            </svg>
-        </i>
-
         <slot />
     </button>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
     @import "~variables";
 
     .control-button-controls {
@@ -128,9 +85,6 @@ export default {
     }
 
     .control-icon-controls {
-        background-color: $primary;
-        color: $black;
-
         pointer-events: all;
         cursor: pointer;
         border: solid $white 1px;
@@ -153,29 +107,5 @@ export default {
             padding: .25rem 0 0 0
         }
 
-        /* pseudo-class state effects */
-        &:hover {
-            background-color: darken($primary, 10%);
-            border-color: $white;
-        }
-        &:focus {
-            background-color: darken($primary, 15%);
-            outline: 1px solid darken($primary, 15%);
-            border-color: $white;
-        }
-        &:checked {
-            border-color: $white;
-        }
-        &:active {
-            background-color: darken($primary, 5%);
-            border-color: $white;
-        }
-
-        &:disabled {
-            background-color: $light-grey;
-            color: $dark_grey;
-            cursor: default;
-            border-color: $white;
-        }
     }
 </style>
