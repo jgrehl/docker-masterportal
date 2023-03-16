@@ -47,6 +47,10 @@ const mutations = {
                 state.coordinatesEastingExample = "53.55555°";
                 state.coordinatesNorthingExample = "10.01234°";
             }
+            else if (state.currentProjection.id === "http://www.opengis.net/gml/srs/epsg.xml#ETRS893GK3") {
+                state.coordinatesEastingExample = "3564459.13";
+                state.coordinatesNorthingExample = "5935103.67";
+            }
             else {
                 state.coordinatesEastingExample = "564459.13";
                 state.coordinatesNorthingExample = "5935103.67";
