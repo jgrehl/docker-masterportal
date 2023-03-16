@@ -94,7 +94,7 @@ export default {
         ]),
         ...mapGetters("Modules/Filter", [
             "type",
-            "side"
+            "menuSide"
         ])
     },
     watch: {
@@ -117,11 +117,11 @@ export default {
             if (val) {
                 this.lastMouseMapInteractionsComponent = this.currentMouseMapInteractionsComponent;
                 this.setHasMouseMapInteractions(true);
-                this.changeCurrentMouseMapInteractionsComponent({type: this.type, side: this.side});
+                this.changeCurrentMouseMapInteractionsComponent({type: this.type, side: this.menuSide});
             }
             else {
                 this.setHasMouseMapInteractions(false);
-                this.changeCurrentMouseMapInteractionsComponent({type: this.lastMouseMapInteractionsComponent, side: this.side});
+                this.changeCurrentMouseMapInteractionsComponent({type: this.lastMouseMapInteractionsComponent, side: this.menuSide});
             }
             if (this.draw instanceof Draw && this.getSelectedGeometry(this.selectedGeometryIndex)?.type !== "additional") {
                 this.draw.setActive(val);
