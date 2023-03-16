@@ -1,4 +1,3 @@
-// Todo: cleanup && loaderoverlay
 /**
  * Handles Loader Overlay.
  */
