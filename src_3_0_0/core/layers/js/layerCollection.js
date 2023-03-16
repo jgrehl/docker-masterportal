@@ -35,7 +35,6 @@ function removeLayerById (layerId) {
     }
 }
 
-
 /**
  * Removes all entries from the collection and remove all layers from maps.
  * @returns {void}
