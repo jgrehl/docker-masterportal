@@ -5,6 +5,7 @@
  * @property {String}   id - internal id of component
  * @property {String}   type - type of the module
  * @property {String}   name - Module name
+ * @property {String} menuSide Specifies in which menu the GFI should be rendered
  * @property {Boolean} resetLayer - if true it will change the reset button to a button which resets the whole layer and ignores the prechecked values
  * @property {Boolean} layerSelectorVisible - to display a selector for the layers
  * @property {Boolean} multiLayerSelector - if layerSelectorVisible true, wether one can open multiple sections of the selector at the same time
@@ -29,6 +30,7 @@ const state = {
     id: "filter",
     type: "filter",
     name: "common:menu.filter",
+    menuSide: "mainMenu",
     resetLayer: false,
     layerSelectorVisible: true,
     multiLayerSelector: true,
