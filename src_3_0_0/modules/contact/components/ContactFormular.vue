@@ -229,7 +229,7 @@ export default {
                                 aria-expanded="false"
                                 aria-controls="flush-collapseOne"
                             >
-                                <i class="bi-image-fill me-2" />
+                                <i class="bi-image me-2" />
                                 {{ $t('modules.tools.contact.addFileButton') }}
                             </button>
                         </h2>
