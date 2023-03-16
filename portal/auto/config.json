@@ -135,6 +135,9 @@
         "sections": [
           [
             {
+              "type": "legend"
+            },
+            {
               "type": "scaleSwitcher"
             },
             {

@@ -183,37 +183,6 @@ STALayer.prototype.updateSource = function () {
     }
 };
 
-// /**
-//  * Creates the legend.
-//  * @returns {void}
-//  */
-// STALayer.prototype.createLegend = function () {
-//     const styleObject = styleList.returnStyleObject(this.attributes.styleId);
-//     let legend = this.get("legend");
-
-//     /**
-//      * @deprecated in 3.0.0
-//      */
-//     if (this.get("legendURL") === "ignore") {
-//         legend = false;
-//     }
-//     else if (this.get("legendURL")) {
-//         legend = this.get("legendURL");
-//     }
-
-//     if (Array.isArray(legend)) {
-//         this.set("legend", legend);
-//     }
-//     else if (styleObject && legend === true) {
-//         createStyle.returnLegendByStyleId(styleObject.styleId).then(legendInfos => {
-//             this.setLegend(legendInfos.legendInformation);
-//         });
-//     }
-//     else if (typeof legend === "string") {
-//         this.set("legend", [legend]);
-//     }
-// };
-
 /**
  * Hides all features by setting style=null for all features.
  * @returns {void}
@@ -400,25 +369,6 @@ STALayer.prototype.initializeConnection = function (onsuccess, updateOnly = fals
     // });
 };
 
-/**
- * Starts or stops subscription according to its conditions.
- * Because of usage of several listeners it's necessary to create a "isSubscribed" flag to prevent multiple executions.
- * @returns {void}
- */
-STALayer.prototype.toggleSubscriptionsOnMapChanges = function () {
-    // const state = this.getStateOfSTALayer(this.get("isOutOfRange"), this.get("isVisibleInMap"), this.get("isSubscribed"));
-
-    // if (state === true) {
-        // this.createLegend();
-        // this.startSubscription(this.get("layer").getSource().getFeatures());
-        // if (this.get("observeLocation") && this.moveLayerRevisible === false) {
-        //     this.moveLayerRevisible = state;
-        // }
-    // }
-    // else if (state === false) {
-    //     this.stopSubscription();
-    // }
-};
 
 /**
  * Refreshes all subscriptions by ending all established subscriptions and creating new ones.

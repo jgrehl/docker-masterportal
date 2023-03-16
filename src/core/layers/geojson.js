@@ -231,42 +231,6 @@ GeoJSONLayer.prototype.setOpenSenseMapSensorValues = function (feature, response
     }
 };
 
-// /**
-//  * Creates the legend
-//  * @param {Object} attrs  attributes of the layer
-//  * @returns {void}
-//  */
-// GeoJSONLayer.prototype.createLegend = function (attrs) {
-//     const styleObject = styleList.returnStyleObject(attrs.styleId);
-//     let legend = this.get("legend");
-
-//     /**
-//      * @deprecated in 3.0.0
-//      */
-//     if (this.get("legendURL")) {
-//         if (this.get("legendURL") === "") {
-//             legend = true;
-//         }
-//         else if (this.get("legendURL") === "ignore") {
-//             legend = false;
-//         }
-//         else {
-//             legend = this.get("legendURL");
-//         }
-//     }
-
-//     if (Array.isArray(legend)) {
-//         this.setLegend(legend);
-//     }
-//     else if (styleObject && legend === true) {
-//         createStyle.returnLegendByStyleId(styleObject.styleId).then(legendInfos => {
-//             this.setLegend(legendInfos.legendInformation);
-//         });
-//     }
-//     else if (typeof legend === "string") {
-//         this.setLegend([legend]);
-//     }
-// };
 
 /**
  * Filters the visibility of features by ids.

@@ -25,7 +25,7 @@ export default function GroupedLayers (attrs) {
     this.createLayer(Object.assign(defaults, attrs));
     // call the super-layer
     Layer.call(this, Object.assign(defaults, attrs), this.layer, attrs.isChildLayer);
-    this.createLegend();
+    // this.createLegend();
 
     if (this.get("isVisibleInMap")) {
         this.updateSource();
