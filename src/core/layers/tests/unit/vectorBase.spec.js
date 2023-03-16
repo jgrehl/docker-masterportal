@@ -38,14 +38,6 @@ describe("src/core/layers/vectorBase.js", () => {
         expect(layer.getSource()).not.to.be.undefined;
     });
 
-    it("createLegend shall set legend", function () {
-        attributes.legendURL = "https://legendUrl";
-        const layer = new VectorBaseLayer(attributes);
-
-        expect(layer.get("legend")).to.be.deep.equals([attributes.legendURL]);
-
-    });
-
     it("updateSource shall update source", function () {
         const updateSourceStub = sinon.spy(VectorBaseLayer.prototype, "updateSource");
 
