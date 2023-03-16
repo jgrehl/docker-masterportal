@@ -100,7 +100,7 @@ export default {
             :class="[
                 'layer-tree-layer-checkbox ps-1 pe-3',
                 {
-                    'bi-check2-square': isChecked(),
+                    'bi-check-square': isChecked(),
                     'bi-square': !isChecked()
                 }
             ]"
