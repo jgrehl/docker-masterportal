@@ -128,7 +128,7 @@ const symbol = {
         fId: 0,
         filterList: null,
         freeHand: false,
-        icon: "bi-pencil-fill",
+        icon: "bi-pencil",
         iconList: [
             symbol
         ],
