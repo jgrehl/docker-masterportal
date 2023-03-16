@@ -510,6 +510,35 @@ describe("src_3_0_0/modules/coord/store/actionsCoordToolkit.js", () => {
                 expect(commit.firstCall.args[0]).to.equal("resetErrorMessages");
                 expect(commit.secondCall.args[0]).to.equal("setNorthingNoMatch");
             });
+            it("Validates the coordinates according to the ETRS893GK3 coordinate system", () => {
+                const state = {
+                    currentProjection: {id: "http://www.opengis.net/gml/srs/epsg.xml#ETRS893GK3"},
+                    coordinatesEasting: {id: "easting", name: "", value: "3565900.36", errorMessage: ""}
+                };
+
+                actions.validateInput({state, commit, dispatch, getters}, state.coordinatesEasting);
+                expect(commit.firstCall.args[0]).to.equal("resetErrorMessages");
+            });
+            it("Throws an Error for missing coordinates - ETRS893GK3", () => {
+                const state = {
+                    currentProjection: {id: "http://www.opengis.net/gml/srs/epsg.xml#ETRS893GK3"},
+                    coordinatesEasting: {id: "easting", name: "", value: "", errorMessage: ""}
+                };
+
+                actions.validateInput({state, commit, dispatch}, state.coordinatesEasting);
+                expect(commit.firstCall.args[0]).to.equal("resetErrorMessages");
+                expect(commit.secondCall.args[0]).to.equal("setEastingNoCoord");
+            });
+            it("Throws an Error for wrong coordinates - ETRS893GK3", () => {
+                const state = {
+                    currentProjection: {id: "http://www.opengis.net/gml/srs/epsg.xml#ETRS893GK3"},
+                    coordinatesNorthing: {id: "northing", name: "", value: "falsche Eingabe", errorMessage: ""}
+                };
+
+                actions.validateInput({state, commit, dispatch}, state.coordinatesNorthing);
+                expect(commit.firstCall.args[0]).to.equal("resetErrorMessages");
+                expect(commit.secondCall.args[0]).to.equal("setNorthingNoMatch");
+            });
             it("Validates the coordinates according to the WGS84 coordinate system", () => {
                 const state = {
                     currentProjection: {id: "http://www.opengis.net/gml/srs/epsg.xml#4326"},
@@ -638,6 +667,16 @@ describe("src_3_0_0/modules/coord/store/actionsCoordToolkit.js", () => {
 
                 actions.transformCoordinates({state, dispatch});
 
+                expect(dispatch.firstCall.args[0]).to.equal("setZoom");
+                expect(dispatch.secondCall.args[0]).to.equal("moveToCoordinates");
+            });
+            it("Transforms coordinates of the ETRS89_3GK3, EPSG: none  and moves to coordinates", () => {
+                const state = {
+                    currentProjection: {id: "http://www.opengis.net/gml/srs/epsg.xml#ETRS893GK3", name: "ETRS89_3GK3, EPSG: none", epsg: "EPSG:8395"},
+                    selectedCoordinates: [["3565900.36"], ["5936514.61"]]
+                };
+
+                actions.transformCoordinates({state, dispatch});
                 expect(dispatch.firstCall.args[0]).to.equal("setZoom");
                 expect(dispatch.secondCall.args[0]).to.equal("moveToCoordinates");
             });

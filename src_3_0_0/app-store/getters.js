@@ -7,6 +7,13 @@ const getters = {
     ...generateSimpleGetters(stateAppStore),
 
     /**
+     * Returns the named projections from config.js.
+     * @param {Object} state state of the app-store.
+     * @returns {Array}  the named projections from config.js
+     */
+    namedProjections: state => state?.configJs.namedProjections || null,
+
+    /**
      * Returns the active category configured in config.json unter 'tree'.
      * @param {Object} state state of the app-store.
      * @returns {Object|null} The active category or the first one or null if not found
