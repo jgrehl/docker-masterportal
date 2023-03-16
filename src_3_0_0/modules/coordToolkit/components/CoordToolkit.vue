@@ -495,7 +495,7 @@ export default {
             </div>
             <p
                 v-if="isCoordInfo()"
-                class="bold mb-3"
+                class="font-bold mb-3"
             >
                 {{ $t("modules.tools.coordToolkit.postionCoordinates") }}
             </p>
@@ -626,7 +626,7 @@ export default {
             </div>
             <p
                 v-if="isEnabled('supply') && isCoordInfo()"
-                class="bold  mb-3"
+                class="font-bold mb-3"
             >
                 {{ $t("modules.tools.coordToolkit.heightLabel") }}
             </p>
@@ -709,8 +709,8 @@ export default {
                                         {{ heightLayerInfo }}
                                         <br>
                                     </span>
+                                    <hr>
                                 </span>
-                                <hr>
                                 {{ $t("modules.tools.measure.influenceFactors") }}
                             </div>
                         </div>
