@@ -1,6 +1,5 @@
 // eslint-disable-next-line no-unused-vars
 const Config = {
-    addons: ["sdpDownload"],
     alerting: {
         fetchBroadcastUrl: "./resources/newsFeedPortalAlerts.json"
     },
