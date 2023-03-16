@@ -810,7 +810,6 @@ const BuildSpecModel = {
         const legendObject = {},
             metaDataLayerList = [],
             legends = store.state.Modules.Legend.legends;
-            // console.log("print ", legends);
 
         if (isLegendSelected && legends.length > 0) {
             legendObject.layers = [];
