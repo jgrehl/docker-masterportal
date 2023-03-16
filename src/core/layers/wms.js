@@ -20,7 +20,7 @@ export default function WMSLayer (attrs) {
     this.createLayer(Object.assign(defaults, attrs));
     // call the super-layer
     Layer.call(this, Object.assign(defaults, attrs), this.layer, !attrs.isChildLayer);
-    this.createLegend();
+    // this.createLegend();
     bridge.listenToChangeSLDBody(this);
 
     // Hack for services that do not support EPSG:4326

@@ -120,31 +120,7 @@ WFSLayer.prototype.createLayer = function (attrs) {
     this.layer = wfs.createLayer(rawLayerAttributes, {layerParams, options});
 };
 
-/**
- * Sets Style for layer.
- * @param {Object} attrs  params of the raw layer
- * @returns {void}
- */
-// WFSLayer.prototype.getStyleFunction = function (attrs) {
-//     const styleId = attrs.styleId,
-//         styleObject = styleList.returnStyleObject(styleId);
-//     let isClusterFeature = false,
-//         style = null;
 
-//     if (styleObject !== undefined) {
-//         style = (feature) => {
-//             const feat = feature !== undefined ? feature : this;
-
-//             this.createLegend();
-//             isClusterFeature = typeof feat.get("features") === "function" || typeof feat.get("features") === "object" && Boolean(feat.get("features"));
-//             return createStyle.createStyle(styleObject, feat, isClusterFeature, Config.wfsImgPath);
-//         };
-//     }
-//     else {
-//         console.error(i18next.t("common:modules.core.modelList.layer.wrongStyleId", {styleId}));
-//     }
-//     return style;
-// };
 /**
  * Updates the layers source by calling refresh at source. Depending on attribute 'sourceUpdated'.
  * @returns {void}

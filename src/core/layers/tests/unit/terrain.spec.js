@@ -104,20 +104,6 @@ describe("src/core/layers/terrain.js", () => {
         expect(cesiumEllipsoidTerrainProviderSpy.calledOnce).to.equal(true);
         expect(fromUrlSpy.notCalled).to.equal(true);
     });
-    it("createLegend shall set legend", function () {
-        attributes.legendURL = "https://legendUrl";
-        const terrainLayer = new TerrainLayer(attributes);
-
-        terrainLayer.createLegend();
-        expect(terrainLayer.get("legend")).to.be.deep.equals([attributes.legendURL]);
-    });
-    it("createLegend shall not set legend (ignore)", function () {
-        attributes.legendURL = "ignore";
-        const terrainLayer = new TerrainLayer(attributes);
-
-        terrainLayer.createLegend();
-        expect(terrainLayer.get("legend")).to.equal(false);
-    });
     it("setIsVisibleInMap to true shall set isVisibleInMap", function () {
         const terrainLayer = new TerrainLayer(attributes),
             layer = terrainLayer.get("layer");
