@@ -493,7 +493,10 @@ export default {
                     {{ $t("modules.tools.coordToolkit.hintSearch") }}
                 </span>
             </div>
-            <p class="bold mb-3">
+            <p
+                v-if="isCoordInfo()"
+                class="bold mb-3"
+            >
                 {{ $t("modules.tools.coordToolkit.postionCoordinates") }}
             </p>
             <div class="form-floating mb-3">
@@ -622,7 +625,7 @@ export default {
                 <br>
             </div>
             <p
-                v-if="isEnabled('supply')"
+                v-if="isEnabled('supply') && isCoordInfo()"
                 class="bold  mb-3"
             >
                 {{ $t("modules.tools.coordToolkit.heightLabel") }}
