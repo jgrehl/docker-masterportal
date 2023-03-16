@@ -824,7 +824,7 @@ const BuildSpecModel = {
     buildLegend: function (isLegendSelected, isMetaDataAvailable, getResponse, index) {
         const legendObject = {},
             metaDataLayerList = [],
-            legends = store.state.Modules.Legend.legends;
+            legends = store.state.Legend.legends;
 
         if (isLegendSelected && legends.length > 0) {
             legendObject.layers = [];
