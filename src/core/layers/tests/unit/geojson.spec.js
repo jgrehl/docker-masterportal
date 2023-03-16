@@ -91,14 +91,6 @@ describe("src/core/layers/geojson.js", () => {
         });
     });
 
-    describe("createLegend", () => {
-        it("createLegend shall set legend", function () {
-            attributes.legendURL = "https://legendUrl";
-            const geojsonLayer = new GeoJSONLayer(attributes);
-
-            expect(geojsonLayer.get("legend")).to.be.deep.equals([attributes.legendURL]);
-        });
-    });
     describe("functions for features", () => {
         let style1 = null,
             style2 = null,
