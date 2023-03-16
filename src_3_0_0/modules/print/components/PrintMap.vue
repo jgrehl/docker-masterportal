@@ -448,7 +448,7 @@ export default {
                 </label>
                 <div class="row info mb-3 mt-2">
                     <span class="col-1 info-icon d-flex align-items-center">
-                        <i class="bi-info-circle-fill" />
+                        <i class="bi-info-circle" />
                     </span>
                     <div class="col info-text ps-3">
                         {{ $t("common:modules.tools.print.hintInfoScale") }}
