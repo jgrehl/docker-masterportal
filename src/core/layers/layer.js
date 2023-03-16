@@ -166,14 +166,7 @@ Layer.prototype.createLayer = function () {
     // do in children
     console.warn("function Layer.createLayer must be overwritten in extended layers!");
 };
-/**
- * To be overwritten, does nothing.
- * @returns {void}
- */
-Layer.prototype.createLegend = function () {
-    // do in children
-    console.warn("function Layer.createLegend must be overwritten in extended layers!");
-};
+
 /**
 * Register interaction with map view. Listens to change of scale.
 * @returns {void}
@@ -725,9 +718,6 @@ Layer.prototype.showLayerInformation = function () {
     store.dispatch("LayerInformation/setMetadataURL", layerMetaId);
     store.dispatch("Legend/setLayerIdForLayerInfo", this.get("id"));
     store.dispatch("Legend/setLayerCounterIdForLayerInfo", Date.now());
-    if (typeof this.createLegend === "function") {
-        this.createLegend();
-    }
     this.setLayerInfoChecked(true);
 };
 
