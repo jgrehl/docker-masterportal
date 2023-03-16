@@ -338,8 +338,18 @@
             "heightValueWater": "-20",
             "heightValueBuilding": "200",
             "zoomLevel": 5,
+            "heightLayerInfo": "Grundlage der Höheninformation ist das \"Digitalge Höhenmodell Hamburg DGM 1\" mit Hohenangaben im Koordinatenrefenerzsystem für Höhenangaben DE_DHHN2016_NH in Metern über Normalhöhennull (NHN).",
             "showDescription": true,
-            "description": "Bestimme Koordinaten aus der Karte oder suche nach Koordinaten."
+            "description": "Bestimme Koordinaten aus der Karte oder suche nach Koordinaten.",
+            "coordInfo": {
+              "title": "Koordinatenreferenzsystem für 2D-Lageangaben, Erläuterungen",
+              "explanations": [
+                "ETRS89_UTM32, EPSG 4647 (zE-N): Bezugssystem ETRS89, Abbildungsvorschrift UTM, Zone 32",
+                "EPSG 25832: Bezugssystem ETRS89, Abbildungsvorschrift UTM, Zone 32, ist identisch mit ETRS89_UTM32 jedoch ohne Angabe der Zonenkennung „32“ beim East-Wert",
+                "ETRS89_3GK3: Bezugssystem ETRS89, Abbildungsvorschrift Gauß-Krüger, 3. Meridianstreifen",
+                "EPSG 8395: Bezugssystem ETRS89, Abbildungsvorschrift Gauß-Krüger, 3. Meridianstreifen, ist identisch mit ETRS89_3GK3 jedoch ohne Angabe der Streifenkennung „3“ beim Rechtswert",
+                "DE_DHDN_3GK3, EPSG 31467: Bezugssystem DHDN, Abbildungsvorschrift Gauß-Krüger, 3. Meridianstreifen"
+            ]}
           },
           {
             "type": "draw",
