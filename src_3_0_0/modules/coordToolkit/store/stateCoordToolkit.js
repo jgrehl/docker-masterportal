@@ -32,6 +32,8 @@
  * @property {String} name displayed as title (config-param)
  * @property {String} icon icon next to title (config-param)
  * @property {Boolean} showDescription If true, description will be shown.
+ * @property {String} heightLayerInfo contains the info text for the height layer
+ * @property {Object} coordInfo contains the explanations for the coordinate reference systems
  */
 const state = {
     icon: "bi-globe",
@@ -68,7 +70,9 @@ const state = {
     heightValueWater: null,
     heightValueBuilding: null,
     showCopyButtons: true,
-    delimiter: "|"
+    delimiter: "|",
+    heightLayerInfo: null,
+    coordInfo: null
 };
 
 export default state;
