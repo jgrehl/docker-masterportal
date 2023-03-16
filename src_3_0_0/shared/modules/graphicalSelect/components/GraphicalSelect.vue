@@ -79,8 +79,8 @@ export default {
     mounted () {
         this.setActive(true);
         this.selectedOptionData = this.selectedOption;
-        this.createDomOverlay({id: "circle-overlay", overlay: this.circleOverlay});
-        this.createDomOverlay({id: "tooltip-overlay", overlay: this.tooltipOverlay});
+        this.createDomOverlay({id: "sdp-circle-overlay", overlay: this.circleOverlay});
+        this.createDomOverlay({id: "sdp-tooltip-overlay", overlay: this.tooltipOverlay});
         this.createDrawInteraction();
         this.checkOptions();
         this.setDefaultSelection(this.selectedOptionData);
