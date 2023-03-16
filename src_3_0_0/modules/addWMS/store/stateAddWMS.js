@@ -14,7 +14,7 @@ const state = {
     description: "",
     type: "addWMS",
     name: "common:menu.tools.addWms",
-    icon: "bi-plus-lg",
+    icon: "cloud-plus",
     showDescription: false,
     supportedDevices: ["Desktop", "Mobile", "Table"],
     supportedMapModes: ["2D", "3D"],
