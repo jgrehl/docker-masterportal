@@ -86,7 +86,7 @@ export default {
 <template>
     <ul
         :id="'mp-menu-body-items-' + idAppendix"
-        class="nav flex-column ms-2"
+        class="nav flex-column"
     >
         <li
             v-for="(props, key) in itemProps"
