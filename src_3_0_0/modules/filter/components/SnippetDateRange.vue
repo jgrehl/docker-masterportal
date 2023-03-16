@@ -225,8 +225,7 @@ export default {
                         this.getValueListFromApi(this.attrName[1], listUntil => {
                             this.initSlider(listFrom, listUntil);
                             this.$nextTick(() => {
-                                this.isInitializing = false;
-                                this.emitSnippetPrechecked(this.prechecked, this.snippetId, this.visible);
+                                this.emitSnippetPrechecked(this.snippetId, this.visible);
                             });
                         }, error => {
                             this.emitSnippetPrechecked();
@@ -243,8 +242,7 @@ export default {
                     this.getValueListFromApi(this.attrName, list => {
                         this.initSlider(list);
                         this.$nextTick(() => {
-                            this.isInitializing = false;
-                            this.emitSnippetPrechecked(this.prechecked, this.snippetId, this.visible);
+                            this.emitSnippetPrechecked(this.snippetId, this.visible);
                         });
                     }, error => {
                         this.emitSnippetPrechecked();
@@ -259,12 +257,11 @@ export default {
 
         /**
          * Emits the setSnippetPrechecked event.
-         * @param {String[]} prechecked The prechecked values.
          * @param {Number} snippetId The snippet id to emit.
          * @param {Boolean} visible true if the snippet is visible, false if not.
          * @returns {void}
          */
-        emitSnippetPrechecked (prechecked, snippetId, visible) {
+        emitSnippetPrechecked (snippetId, visible) {
             this.$emit("setSnippetPrechecked", visible && this.isPrecheckedValid(this.prechecked) ? snippetId : false);
         },
         /**
@@ -277,14 +274,19 @@ export default {
             this.initialDateRef = this.getInitialDateReference(listFrom, listUntil);
             this.currentSliderMin = 0;
             this.currentSliderMax = this.initialDateRef.length - 1;
-            if (this.isPrecheckedValid(this.prechecked)) {
-                this.sliderFrom = this.getSliderIdxCloseToFromDate(dayjs(this.prechecked[0], this.getFormat("from")).format(this.internalFormat));
-                this.sliderUntil = this.getSliderIdxCloseToUntilDate(dayjs(this.prechecked[1], this.getFormat("until")).format(this.internalFormat));
-            }
-            else {
-                this.sliderFrom = this.currentSliderMin;
-                this.sliderUntil = this.currentSliderMax;
-            }
+            this.$nextTick(() => {
+                if (this.isPrecheckedValid(this.prechecked)) {
+                    this.sliderFrom = this.getSliderIdxCloseToFromDate(dayjs(this.prechecked[0], this.getFormat("from")).format(this.internalFormat));
+                    this.sliderUntil = this.getSliderIdxCloseToUntilDate(dayjs(this.prechecked[1], this.getFormat("until")).format(this.internalFormat));
+                }
+                else {
+                    this.sliderFrom = this.currentSliderMin;
+                    this.sliderUntil = this.currentSliderMax;
+                }
+                this.$nextTick(() => {
+                    this.isInitializing = false;
+                });
+            });
         },
         /**
          * Returns the title to use for this snippet.
