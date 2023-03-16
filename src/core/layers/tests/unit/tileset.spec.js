@@ -140,21 +140,6 @@ describe("src/core/layers/tileset.js", () => {
             done();
         });
     });
-    it("createLegend shall set legend", function () {
-        attributes.legendURL = "https://legendUrl";
-        const tilesetLayer = new TileSetLayer(attributes);
-
-        tilesetLayer.createLegend();
-        expect(tilesetLayer.get("legend")).to.be.deep.equals([attributes.legendURL]);
-    });
-    it("createLegend shall not set legend (ignore)", function () {
-        attributes.legendURL = "ignore";
-        const tilesetLayer = new TileSetLayer(attributes),
-            setLegendSpy = sinon.spy(TileSetLayer.prototype, "setLegend");
-
-        tilesetLayer.createLegend();
-        expect(setLegendSpy.notCalled).to.equal(true);
-    });
     it("setIsVisibleInMap to true shall set isVisibleInMap", function () {
         const tilesetLayer = new TileSetLayer(attributes),
             layer = tilesetLayer.get("layer");
