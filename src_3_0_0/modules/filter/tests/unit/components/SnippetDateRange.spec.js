@@ -281,6 +281,7 @@ describe("src/module/tools/filter/components/SnippetDateRange.vue", () => {
                         await wrapper.vm.$nextTick();
                         await wrapper.vm.$nextTick();
                         await wrapper.vm.$nextTick();
+                        await wrapper.vm.$nextTick();
                         expect(wrapper.find(".datepickerWrapper").find(".from").find("input").element.value).to.equal("2022-08-10");
                         expect(wrapper.find(".datepickerWrapper").find(".until").find("input").element.value).to.equal("2022-08-30");
                     });
@@ -302,6 +303,7 @@ describe("src/module/tools/filter/components/SnippetDateRange.vue", () => {
                             prechecked: ["11.08.2022", "29.08.2022"],
                             operator: "INTERSECTS"
                         }});
+                        await wrapper.vm.$nextTick();
                         await wrapper.vm.$nextTick();
                         await wrapper.vm.$nextTick();
                         await wrapper.vm.$nextTick();
@@ -383,7 +385,7 @@ describe("src/module/tools/filter/components/SnippetDateRange.vue", () => {
                         expect(wrapper.find(".sliderWrapper").find(".until").attributes("max")).to.equal("2");
                     });
                 });
-                describe.skip("prechecked", () => {
+                describe("prechecked", () => {
                     it("should set value to both borders for slider if no prechecked is given", async () => {
                         const api = {
                             getUniqueValues: (attrName, onsuccess) => onsuccess([
@@ -395,11 +397,12 @@ describe("src/module/tools/filter/components/SnippetDateRange.vue", () => {
                             ])
                         };
 
-                        wrapper = shallowMount(SnippetDateRange, {propsData: {
+                        wrapper = await shallowMount(SnippetDateRange, {propsData: {
                             api,
                             attrName: "attrName",
                             format: "DD.MM.YYYY"
                         }});
+                        await wrapper.vm.$nextTick();
                         await wrapper.vm.$nextTick();
                         await wrapper.vm.$nextTick();
                         await wrapper.vm.$nextTick();
@@ -424,6 +427,7 @@ describe("src/module/tools/filter/components/SnippetDateRange.vue", () => {
                             prechecked: ["11.08.2022", "29.08.2022"],
                             operator: "INTERSECTS"
                         }});
+                        await wrapper.vm.$nextTick();
                         await wrapper.vm.$nextTick();
                         await wrapper.vm.$nextTick();
                         await wrapper.vm.$nextTick();
@@ -454,6 +458,7 @@ describe("src/module/tools/filter/components/SnippetDateRange.vue", () => {
                     prechecked: ["11.08.2022", "29.08.2022"],
                     operator: "BETWEEN"
                 }});
+                await wrapper.vm.$nextTick();
                 await wrapper.vm.$nextTick();
                 await wrapper.vm.$nextTick();
                 expect(wrapper.vm.sliderFrom).to.equal(1);
@@ -499,6 +504,7 @@ describe("src/module/tools/filter/components/SnippetDateRange.vue", () => {
 
                 await wrapper.vm.$nextTick();
                 await wrapper.vm.$nextTick();
+                await wrapper.vm.$nextTick();
                 wrapper.vm.emitCurrentRule(["01.01.2019", "31.12.2022"], "startup", "immediate");
                 expect(wrapper.emitted("changeRule")).to.be.an("array").and.to.have.lengthOf(1);
                 expect(wrapper.emitted("changeRule")[0]).to.be.an("array").and.to.have.lengthOf(1);
@@ -533,6 +539,7 @@ describe("src/module/tools/filter/components/SnippetDateRange.vue", () => {
                 }});
                 await wrapper.vm.$nextTick();
                 await wrapper.vm.$nextTick();
+                await wrapper.vm.$nextTick();
                 expect(wrapper.vm.getMeasureWidth()).to.equal("100.0%");
             });
             it("should return the correct width if value is set between min and max", async () => {
@@ -553,6 +560,7 @@ describe("src/module/tools/filter/components/SnippetDateRange.vue", () => {
                     prechecked: ["11.08.2022", "29.08.2022"],
                     operator: "BETWEEN"
                 }});
+                await wrapper.vm.$nextTick();
                 await wrapper.vm.$nextTick();
                 await wrapper.vm.$nextTick();
                 expect(wrapper.vm.getMeasureWidth()).to.equal("52.5%");
@@ -596,6 +604,7 @@ describe("src/module/tools/filter/components/SnippetDateRange.vue", () => {
                     prechecked: ["11.08.2022", "29.08.2022"],
                     operator: "BETWEEN"
                 }});
+                await wrapper.vm.$nextTick();
                 await wrapper.vm.$nextTick();
                 await wrapper.vm.$nextTick();
                 await wrapper.vm.$nextTick();
@@ -983,6 +992,7 @@ describe("src/module/tools/filter/components/SnippetDateRange.vue", () => {
                     prechecked: ["11.08.2022", "29.08.2022"],
                     operator: "BETWEEN"
                 }});
+                await wrapper.vm.$nextTick();
                 await wrapper.vm.$nextTick();
                 await wrapper.vm.$nextTick();
                 expect(wrapper.vm.getTagTitle()).to.equal("16.08.2022 - 26.08.2022");
