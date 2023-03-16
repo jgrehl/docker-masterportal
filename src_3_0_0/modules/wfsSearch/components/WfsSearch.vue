@@ -181,7 +181,7 @@ export default {
                 >
                     <i
                         id="module-wfsSearch-userHelp-icon"
-                        class="col-md-1 bi-info-circle-fill"
+                        class="col-md-1 bi-info-circle"
                     />
                     <span
                         id="module-wfsSearch-userHelp-text"

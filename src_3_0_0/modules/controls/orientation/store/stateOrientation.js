@@ -17,7 +17,7 @@
  * @property {String} showPoiIcon Wether to show the poi icon.
  */
 const state = {
-    iconGeolocate: "geo-alt-fill",
+    iconGeolocate: "geo-alt",
     iconGeolocatePOI: "record-circle",
     poiDistances: [],
     supportedDevices: ["Desktop"],
