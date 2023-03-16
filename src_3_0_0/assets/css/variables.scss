@@ -163,6 +163,7 @@ $secondary_table_style: #F2F2F2;  // background for table view style
   --bs-btn-bg: #ffffff;
   --bs-btn-border-color: #ffffff;
   --bs-btn-border-radius: 50px;
+  --bs-btn-disabled-opacity: 0.3;
   --bs-btn-hover-color: #151C27;
   --bs-btn-hover-bg: #DCE2F3;
   --bs-btn-hover-border-color: #DCE2F3;
@@ -191,7 +192,7 @@ $input-focus-border-color: #3C5F94;
  * Examples: fileImport, routing or Quickhelp
  */
 $accent: $light_blue;
-$accent_hover: #3177b1;
+$accent_hover: #DCE2F3;
 $accent_focus: #204d74;
 $accent_active: #204d74;
 $accent_disabled: #7aa9d0;
