@@ -166,14 +166,7 @@ Layer.prototype.createLayer = function () {
     // do in children
     console.warn("function Layer.createLayer must be overwritten in extended layers!");
 };
-/**
- * To be overwritten, does nothing.
- * @returns {void}
- */
-Layer.prototype.createLegend = function () {
-    // do in children
-    console.warn("function Layer.createLegend must be overwritten in extended layers!");
-};
+
 /**
 * Register interaction with map view. Listens to change of scale.
 * @returns {void}
@@ -479,6 +472,50 @@ Layer.prototype.toggleFilter = function () {
 };
 
 
+    if (this.get("datasets") && Array.isArray(this.get("datasets")) && this.get("datasets")[0] !== null && typeof this.get("datasets")[0] === "object") {
+        cswUrl = this.get("datasets")[0]?.csw_url ? this.get("datasets")[0].csw_url : null;
+        customMetadata = this.get("datasets")[0]?.customMetadata ? this.get("datasets")[0].customMetadata : false;
+        attributes = this.get("datasets")[0]?.attributes ? this.get("datasets")[0].attributes : null;
+        showDocUrl = this.get("datasets")[0]?.show_doc_url ? this.get("datasets")[0].show_doc_url : null;
+        layerMetaId = this.get("datasets")[0]?.md_id ? this.get("datasets")[0].md_id : null;
+    }
+    const metaID = [],
+        name = this.get("name");
+
+    metaID.push(layerMetaId);
+
+    store.dispatch("LayerInformation/layerInfo", {
+        "id": this.get("id"),
+        "metaID": layerMetaId,
+        "metaIdArray": metaID,
+        "layername": name,
+        "url": this.get("url"),
+        "legendURL": this.get("legendURL"),
+        "typ": this.get("typ"),
+        "cswUrl": cswUrl,
+        "customMetadata": customMetadata,
+        "attributes": attributes,
+        "showDocUrl": showDocUrl,
+        "urlIsVisible": this.get("urlIsVisible")
+    });
+
+    store.dispatch("LayerInformation/activate", true);
+    store.dispatch("LayerInformation/additionalSingleLayerInfo");
+    store.dispatch("LayerInformation/setMetadataURL", layerMetaId);
+    store.dispatch("Legend/setLayerIdForLayerInfo", this.get("id"));
+    store.dispatch("Legend/setLayerCounterIdForLayerInfo", Date.now());
+    this.setLayerInfoChecked(true);
+};
+
+/**
+ * Setter for legend, commits the legend to vue store using "Legend/setLegendOnChanged"
+ * @param {String} value legend
+ * @returns {void}
+ */
+Layer.prototype.setLegend = function (value) {
+    this.set("legend", value);
+    store.dispatch("Legend/setLegendOnChanged", value);
+};
 /**
  * Set observer for autoRefresh interval.
  * @param {Function} handler the handler to execute on autoRefresh of the layer
