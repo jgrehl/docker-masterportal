@@ -231,7 +231,7 @@ export default {
                 >
                     <table
                         id="feature-lister-list-table"
-                        class="table table-striped table-hover table-condensed table-bordered"
+                        class="table  table-hover table-condensed table-bordered"
                     >
                         <tbody>
                             <tr class="feature-lister-list-table-tr">
