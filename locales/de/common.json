@@ -207,7 +207,7 @@
             "unknown": "unbekannt"
         },
         "layerInformation": {
-          "additionalMetadata": "weitere Metadaten",
+          "additionalMetadata": "weitere Informationen...",
           "addressSuffix": "Adresse",
           "multiAddress": "Dienstadressen",
           "attachFileMessage": "ggf. Datei-Typ beim Download anhängen",
