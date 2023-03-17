@@ -268,7 +268,7 @@ export default {
         </div>
         <table
             v-if="mimeType !== 'text/html'"
-            class="table table-hover table-striped"
+            class="table table-hover"
         >
             <tbody v-if="mappedPropertiesExists(feature)">
                 <tr v-if="!hasMappedProperties(feature)">
