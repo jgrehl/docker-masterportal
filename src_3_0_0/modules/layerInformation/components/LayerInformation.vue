@@ -120,6 +120,7 @@ export default {
             class="mb-2 abstract"
             v-html="abstractText"
         />
+        <br>
         <div v-if="showAdditionalMetaData">
             <p
                 v-for="url in metaURLs"
@@ -134,6 +135,8 @@ export default {
                 </a>
             </p>
         </div>
+        <br>
+        <br>
         <p v-if="showPublication">
             {{ $t("common:modules.layerInformation.publicationCreation") }}: {{ datePublication }}
         </p>
@@ -169,47 +172,50 @@ export default {
             </div>
         </template>
         <hr>
-        <ul class="nav nav-tabs">
-            <li
-                v-if="legendURL !== 'ignore'"
-                value="layerinfo-legend"
-                class="nav-item"
-            >
-                <a
-                    href="#layerinfo-legend"
-                    class="nav-link"
-                    :class="{active: isActiveTab('layerinfo-legend') }"
-                    @click="setActiveTab"
-                >{{ $t("common:modules.layerInformation.legend") }}
-                </a>
-            </li>
-            <li
-                v-if="showDownloadLinks"
-                value="LayerInfoDataDownload"
-                class="nav-item"
-            >
-                <a
-                    href="#LayerInfoDataDownload"
-                    class="nav-link"
-                    :class="{active: isActiveTab('LayerInfoDataDownload') }"
-                    @click="setActiveTab"
-                >{{ $t("common:modules.layerInformation.downloadDataset") }}
-                </a>
-            </li>
-            <li
-                v-if="showUrl"
-                value="url"
-                class="nav-item"
-            >
-                <a
-                    href="#url"
-                    class="nav-link"
-                    :class="{active: isActiveTab('url') }"
-                    @click="setActiveTab"
-                >{{ Array.isArray(layerInfo.url) ? $t("common:modules.layerInformation.multiAddress") : $t(layerInfo.typ) + " - " + $t("common:modules.layerInformation.addressSuffix") }}
-                </a>
-            </li>
-        </ul>
+        <nav role="navigation">
+            <ul class="nav nav-tabs">
+                <li
+                    v-if="legendURL !== 'ignore'"
+                    value="layerinfo-legend"
+                    class="nav-item"
+                >
+                    <a
+                        href="#layerinfo-legend"
+                        class="nav-link"
+                        :class="{active: isActiveTab('layerinfo-legend') }"
+                        @click="setActiveTab"
+                    >{{ $t("common:modules.layerInformation.legend") }}
+                    </a>
+                </li>
+                <li
+                    v-if="showDownloadLinks"
+                    value="LayerInfoDataDownload"
+                    class="nav-item"
+                >
+                    <a
+                        href="#LayerInfoDataDownload"
+                        class="nav-link"
+                        :class="{active: isActiveTab('LayerInfoDataDownload') }"
+                        @click="setActiveTab"
+                    >{{ $t("common:modules.layerInformation.downloadDataset") }}
+                    </a>
+                </li>
+                <li
+                    v-if="showUrl"
+                    value="url"
+                    class="nav-item"
+                >
+                    <a
+                        href="#url"
+                        class="nav-link"
+                        :class="{active: isActiveTab('url') }"
+                        @click="setActiveTab"
+                    >{{ $t(layerInfo.typ) }} - {{ $t("common:modules.layerInformation.addressSuffix") }}
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
         <div class="tab-content">
             <div
 
@@ -300,21 +306,15 @@ export default {
     </div>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
     @import "~variables";
 
     hr {
         margin: 15px 0 10px 0;
     }
 
-    .body {
-        >ul {
-            background-color: $white;
-        }
-        overflow-y: auto;
-        overflow-x: hidden;
-        padding: 5px 10px;
-        font-size: $font-size-base;
+    .abstract > p {
+        font-size: 1rem;
     }
 
     .layerInformation {
@@ -352,6 +352,7 @@ export default {
 
     .nav-tabs {
         display: flex;
+        flex-wrap: nowrap;
         >li {
             font-size: $font-size-base;
             >a {
