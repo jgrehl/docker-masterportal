@@ -814,7 +814,7 @@
                 "hintSupply": "Klicken Sie in die Karte um Lagekoordinaten und Höhe abzufragen",
                 "hintSearch": "Geben Sie die zu suchenden Koordinaten ein",
                 "copyCoordsBtn": "Koordinatenpaar kopieren",
-                "copyCoordBtn": " {{value}} kopieren"
+                "copyCoordBtn": " {{- value}} kopieren"
             },
             "gfi": {
                 "errorMessage": "Bei der Informationsabfrage (GetFeatureInfo) ist ein Fehler aufgetreten.<br>Bitte versuchen Sie es zu einem späteren Zeitpunkt erneut. Falls das Problem weiterhin auftritt, wenden Sie sich bitte an den Betreiber des Dienstes.",
