@@ -13,6 +13,7 @@ export default {
     },
     computed: {
         ...mapGetters("Menu", ["previousNavigationEntryText", "currentComponentName"]),
+        ...mapGetters(["isMobile"]),
 
         previousNavigation () {
             return this.previousNavigationEntryText(this.side);
@@ -23,7 +24,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions("Menu", ["navigateBack"])
+        ...mapActions("Menu", ["navigateBack", "resetMenu"])
     }
 };
 </script>
@@ -33,15 +34,27 @@ export default {
         v-if="previousNavigation"
         :id="'mp-menu-navigation-' + side"
     >
-        <a
-            :id="'mp-navigation-' + side"
-            class="pb-2 pt-2 mp-menu-navigation"
-            href="#"
-            @click="navigateBack(side)"
-            @keypress="navigateBack(side)"
+        <div
+            class="mp-menu-navigation"
         >
-            <h6 class="mp-menu-navigation-link mb-3"><p class="bi-chevron-left me-2" />{{ previousNavigation }}</h6>
-        </a>
+            <a
+                :id="'mp-navigation-' + side"
+                class="pb-2 pt-2 mp-menu-navigation-link"
+                href="#"
+                @click="navigateBack(side)"
+                @keypress="navigateBack(side)"
+            >
+                <h6 class="mp-menu-navigation-link-text mb-3"><p class="bi-chevron-left me-2" />{{ previousNavigation }}</h6>
+            </a>
+            <button
+                v-if="!isMobile"
+                :id="'mp-menu-navigation-reset-button-' + side"
+                type="button"
+                class="btn-close p-2 mp-menu-navigation-reset-button"
+                :aria-label="$t('common:menu.ariaLabelClose')"
+                @click="resetMenu(side)"
+            />
+        </div>
         <h4
             v-if="currentTitle !== 'none'"
             class="mp-menu-navigation-moduletitle mb-4"
@@ -55,13 +68,20 @@ export default {
 @import "~variables";
 
 .mp-menu-navigation{
-    color: $black;
     display: flex;
+    justify-content: space-between;
+
+    &-link {
+        display: flex;
+        color: $black;
+
+        &-text{
+        display: flex;
+    }
+    }
 }
 
-.mp-menu-navigation-link{
-    display: flex;
-}
+
 
 .mp-menu-navigation-moduletitle{
     display: flex;
