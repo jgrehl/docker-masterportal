@@ -289,7 +289,7 @@ export default {
     .pager {
         position: absolute;
         &-right {
-            right: 30px
+            right: 40px
         }
     }
 
