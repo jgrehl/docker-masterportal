@@ -43,6 +43,7 @@ export default {
             <h6 class="mp-menu-navigation-link mb-3"><p class="bi-chevron-left me-2" />{{ previousNavigation }}</h6>
         </a>
         <h4
+            v-if="currentTitle !== 'none'"
             class="mp-menu-navigation-moduletitle mb-4"
         >
             {{ currentTitle }}
