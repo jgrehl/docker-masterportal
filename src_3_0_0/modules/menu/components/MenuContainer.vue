@@ -4,7 +4,7 @@ import MenuContainerBody from "./MenuContainerBody.vue";
 import ResizeHandle from "../../../shared/modules/resize/components/ResizeHandle.vue";
 
 let lastMainMenuWidth = "",
-    lastSecondaryMenuWidth = "";
+    lastSecondaryMenuWidth = "10%";
 
 export default {
     name: "MenuContainer",
@@ -50,7 +50,9 @@ export default {
             this.setWidth("mainMenu");
         },
         secondaryExpanded () {
-            this.setWidth("secondaryMenu");
+            if (!this.isMobile) {
+                this.setWidth("secondaryMenu");
+            }
         }
     },
     created () {
@@ -62,7 +64,9 @@ export default {
 
     },
     mounted () {
-        this.setWidth(this.side);
+        if (!this.isMobile && this.side === "secondaryMenu") {
+            this.setWidth(this.side);
+        }
     },
     methods: {
         ...mapMutations("Menu", [
@@ -70,16 +74,21 @@ export default {
             "mergeMenuState"
         ]),
         ...mapActions("Menu", [
-            "toggleMenu"
+            "toggleMenu",
+            "closeMenu"
         ]),
         setWidth (side) {
             const menu = side === "mainMenu" ? document.getElementById("mp-menu-mainMenu") : document.getElementById("mp-menu-secondaryMenu"),
-                expanded = side === "mainMenu" ? this.mainExpanded : this.secondaryExpanded,
-                lastWidth = side === "mainMenu" ? lastMainMenuWidth : lastSecondaryMenuWidth;
+                expanded = side === "mainMenu" ? this.mainExpanded : this.secondaryExpanded;
+
+            let lastWidth = side === "mainMenu" ? lastMainMenuWidth : lastSecondaryMenuWidth;
+
+            if (this.isMobile) {
+                lastWidth = "100%";
+            }
 
             if (expanded && menu && menu.style.width) {
                 if (lastWidth !== "") {
-
                     menu.style.width = lastWidth;
                 }
             }
@@ -90,7 +99,6 @@ export default {
                 else if (side === "secondaryMenu") {
                     lastSecondaryMenuWidth = menu.style.width;
                 }
-
                 menu.style.width = 0;
             }
         }
@@ -106,6 +114,7 @@ export default {
             'mp-' + side,
             {
                 'mp-menu-table': uiStyle === 'TABLE',
+                'mp-secondaryMenu-expanded': secondaryExpanded && side === 'secondaryMenu'
             }
         ]"
         tabindex="-1"
@@ -114,13 +123,16 @@ export default {
         <div
             :id="'mp-header-' + side"
             class="mp-menu-header"
+            :class="
+                {'mp-menu-header-collapsed': !mainExpanded && side === 'mainMenu' || !secondaryExpanded && side === 'secondaryMenu'}
+            "
         >
             <button
                 :id="'mp-menu-header-close-button-' + side"
                 type="button"
                 class="btn-close p-2 mp-menu-header-close-button"
                 :aria-label="$t('common:menu.ariaLabelClose')"
-                @click="toggleMenu(side)"
+                @click="closeMenu(side)"
             />
         </div>
 
@@ -128,6 +140,7 @@ export default {
             :side="side"
         />
         <ResizeHandle
+            v-if="!isMobile"
             :id="'mp-resize-handle-' + side"
             class="mp-menu-container-handle"
             :handle-position="handlePosition"
@@ -140,11 +153,10 @@ export default {
     </div>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import "~variables";
 .mp-menu {
     height: 100%;
-    min-width: 100%;
     position: fixed;
     background-color: $menu-background-color;
     transition: width 0.3s ease;
@@ -156,16 +168,25 @@ export default {
 }
 
 .mp-secondaryMenu {
-    top: 80%;
+    border-radius: 15px 15px 0 0;
+    height: 0;
     position: absolute;
+    top: 100%;
+    transition: all 0.3s ease;
+    width: 100%;
+    &-expanded {
+        height: 100%;
+        top: 70%;
+    }
 }
 
-.mp-menu-container-handle {
-    display: none;
-}
 
 .mp-menu-header{
     display: flex;
+    &-collapsed {
+        padding: 0;
+        display: none;
+    }
 }
 
 .mp-menu-header-close-button {
@@ -190,7 +211,10 @@ export default {
     }
 
     .mp-secondaryMenu {
+       border-radius: 0;
        right:0;
+       width: unset;
+       transition: width 0.3s ease;
     }
 
     .mp-menu-container-handle {
