@@ -313,7 +313,7 @@ export default {
                 <table
                     v-if="selectedFeature.properties.length > 0"
                     :key="index"
-                    class="table table-striped table-bordered"
+                    class="table table-bordered"
                 >
                     <tbody>
                         <tr
