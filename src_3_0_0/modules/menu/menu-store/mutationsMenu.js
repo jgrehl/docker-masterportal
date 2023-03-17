@@ -68,7 +68,7 @@ export default {
      * @returns {void}
      */
     switchToRoot (state, side) {
-        state[side].navigation.currentComponent = state[side].navigation.history[0];
+        state[side].navigation.currentComponent = {props: [], type: "root"};
         state[side].navigation.history = [];
         state[side].currentComponent = "root";
     }
