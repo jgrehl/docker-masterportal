@@ -91,10 +91,11 @@ export default {
 
         &-collapsed {
             padding: 0;
+            display: none;
         }
     }
 
-    
+
 
     #mp-body-secondaryMenu {
         overflow-y: unset;
@@ -105,6 +106,9 @@ export default {
 
         #mp-body-secondaryMenu {
             overflow-y: auto;
+        }
+        .mp-menu-body-collapsed {
+            display: flex;
         }
 
     }
