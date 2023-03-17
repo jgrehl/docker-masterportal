@@ -613,6 +613,26 @@ export default {
                 </p>
             </div>
             <div
+                v-if="isEnabled('supply') && !isMobile && showCopyButtons"
+                class="d-flex justify-content-between mb-3"
+            >
+                {{ $t("menu.tools.coordToolkit") + ": " + coordinatesEasting.value + ", " + coordinatesNorthing.value }}
+                <button
+                    id="copyCoordsPairBtn"
+                    type="button"
+                    class="btn btn-outline-default copy px-3"
+                    :title="$t(`common:modules.tools.coordToolkit.copyCoordsBtn`)"
+                    @click="copyCoords(['coordinatesEastingField', 'coordinatesNorthingField'])"
+                >
+                    <span
+                        class="bootstrap-icon"
+                        aria-hidden="true"
+                    >
+                        <i class="bi-files" />
+                    </span>
+                </button>
+            </div>
+            <div
                 v-if="isCoordInfo()"
             >
                 {{ coordInfo?.title }}
@@ -638,27 +658,6 @@ export default {
                     :readonly="true"
                     :placeholder="$t('modules.tools.coordToolkit.heightLabel')"
                 />
-            </div>
-
-            <div
-                v-if="isEnabled('supply') && !isMobile && showCopyButtons"
-                class="d-flex justify-content-between mb-3"
-            >
-                {{ $t("menu.tools.coordToolkit") + ": " + coordinatesEasting.value + ", " + coordinatesNorthing.value }}
-                <button
-                    id="copyCoordsPairBtn"
-                    type="button"
-                    class="btn btn-outline-default copy px-3"
-                    :title="$t(`common:modules.tools.coordToolkit.copyCoordsBtn`)"
-                    @click="copyCoords(['coordinatesEastingField', 'coordinatesNorthingField'])"
-                >
-                    <span
-                        class="bootstrap-icon"
-                        aria-hidden="true"
-                    >
-                        <i class="bi-files" />
-                    </span>
-                </button>
             </div>
             <div
                 v-if="isEnabled('search')"
