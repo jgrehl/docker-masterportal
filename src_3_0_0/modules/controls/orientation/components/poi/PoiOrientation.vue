@@ -247,7 +247,7 @@ export default {
                             :class="['tab-pane fade show', feature.category === activeCategory ? 'active' : '']"
                         >
                             <div class="table-responsive">
-                                <table class="table table-striped table-hover">
+                                <table class="table table-hover">
                                     <tbody>
                                         <tr
                                             v-for="(feat, i) in feature.features"
