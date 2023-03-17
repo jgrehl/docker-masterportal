@@ -132,5 +132,16 @@ export default {
             }
             commit("setExpandedBySide", {expanded: !state.secondaryMenu.expanded, side});
         }
+    },
+
+    /**
+     * Closes and resets Menucontainers.
+     * @param {Object} param.commit the commit
+     * @param {String} side secondary or main Menu
+     * @returns {void}
+     */
+    closeMenu ({commit, dispatch}, side) {
+        commit("switchToRoot", side);
+        dispatch("toggleMenu", side);
     }
 };
