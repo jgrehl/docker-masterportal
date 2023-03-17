@@ -34,17 +34,17 @@ export default class FilterApi {
                     isFeatureInGeometry: openlayerFunctions.isFeatureInGeometry}),
                 wfsExtern: new InterfaceWfsExtern({getCurrentExtent: openlayerFunctions.getCurrentExtent}),
                 oafIntern: new InterfaceOafIntern(FilterApi.intervalRegister, {
-                    getFeaturesByLayerId: openlayerFunctions.getCurrentExtent,
+                    getFeaturesByLayerId: openlayerFunctions.getFeaturesByLayerId,
                     isFeatureInMapExtent: openlayerFunctions.isFeatureInMapExtent,
                     isFeatureInGeometry: openlayerFunctions.isFeatureInGeometry}),
                 oafExtern: new InterfaceOafExtern(),
                 geojsonIntern: new InterfaceGeojsonIntern(FilterApi.intervalRegister, {
-                    getFeaturesByLayerId: openlayerFunctions.getCurrentExtent,
+                    getFeaturesByLayerId: openlayerFunctions.getFeaturesByLayerId,
                     isFeatureInMapExtent: openlayerFunctions.isFeatureInMapExtent,
                     isFeatureInGeometry: openlayerFunctions.isFeatureInGeometry}),
                 geojsonExtern: new InterfaceGeojsonExtern(),
                 staIntern: new InterfaceStaIntern(FilterApi.intervalRegister, {
-                    getFeaturesByLayerId: openlayerFunctions.getCurrentExtent,
+                    getFeaturesByLayerId: openlayerFunctions.getFeaturesByLayerId,
                     isFeatureInMapExtent: openlayerFunctions.isFeatureInMapExtent,
                     isFeatureInGeometry: openlayerFunctions.isFeatureInGeometry}),
                 staExtern: new InterfaceStaExtern()
