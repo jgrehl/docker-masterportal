@@ -109,13 +109,22 @@ export default {
 
 <template>
     <div>
-        <div class="bold mb-3">
+        <h4 class="gfi-title mb-4">
             {{ translate(title) }}
-        </div>
+        </h4>
         <component
             :is="theme"
             :feature="feature"
         />
-        <slot name="footer" />
+        <slot name="pager" />
     </div>
 </template>
+
+<style lang="scss" scoped>
+@import "~variables";
+
+ .gfi-title {
+    text-align: center;
+ }
+
+</style>
