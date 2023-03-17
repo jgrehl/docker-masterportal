@@ -88,7 +88,7 @@ export default {
                 this.reset();
             }
             else {
-                this.changeCurrentComponent({type: this.type, side: this.menuSide, props: {name: this.name}});
+                this.changeCurrentComponent({type: this.type, side: this.menuSide, props: {name: "none"}});
             }
         },
         /**
@@ -248,22 +248,20 @@ export default {
         >
             <!-- Slot Content for Footer -->
             <template
-                v-if="gfiFeatures.length > 1"
-                #footer
+                #pager
             >
-                <div class="gfi-footer d-flex justify-content-around mt-3">
+                <div class="gfi-pager mt-3">
                     <IconButton
+                        v-if="gfiFeatures.length > 1 && pagerIndex > 0"
                         :aria="$t('modules.tools.gfi.buttonBack')"
-                        :class-array="[pagerIndex < 1 ? 'disabled' : '', 'pager-left', 'pager', 'btn-primary']"
+                        :class-array="['pager-left', 'pager', 'btn-primary']"
                         :icon="leftIcon"
                         :interaction="decreasePagerIndex"
                     />
-                    <span class="my-auto">
-                        {{ pagerIndex+1 + "/" + gfiFeatures.length }}
-                    </span>
                     <IconButton
+                        v-if="gfiFeatures.length > 1 && pagerIndex < gfiFeatures.length - 1"
                         :aria="$t('modules.tools.gfi.buttonForward')"
-                        :class-array="[pagerIndex === gfiFeatures.length - 1 ? 'disabled' : '', 'pager-right', 'pager', 'btn-primary']"
+                        :class-array="['pager-right', 'pager', 'btn-primary']"
                         :icon="rightIcon"
                         :interaction="increasePagerIndex"
                     />
@@ -274,16 +272,27 @@ export default {
 </template>
 
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import "~variables";
 
     .gfi {
         color: $dark_blue;
     }
 
-    .gfi-footer {
-        position: sticky;
-        bottom: 0;
+    .gfi-pager {
         background-color: $menu-background-color;
+        position: absolute;
+        width: 100%;
+        top: 45px;
     }
+
+    .pager {
+        position: absolute;
+        &-right {
+            right: 30px
+        }
+    }
+
+
+
 </style>
