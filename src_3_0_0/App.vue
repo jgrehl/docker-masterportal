@@ -226,7 +226,6 @@ export default {
     flex-direction: row;
     position: relative;
     height: 100%;
-    overflow: hidden;
     width: 100%;
     font-family: $font_family_default;
     font-size: $font-size-base;
@@ -247,6 +246,12 @@ export default {
     }
 }
 
+
+@include media-breakpoint-up(sm)  {
+    .masterportal-container {
+        overflow: hidden;
+    }
+}
 .elements-positioned-over-map {
     display: flex;
     flex-direction: column;
