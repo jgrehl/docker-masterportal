@@ -92,7 +92,7 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-@import "~/mixins";
+@import "~/css/mixins.scss";
 
 $color: #fec44f;
 
