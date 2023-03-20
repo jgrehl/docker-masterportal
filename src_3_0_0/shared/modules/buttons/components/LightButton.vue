@@ -54,13 +54,15 @@ export default {
             role="img"
         />
         <span
-            class="col-10 lh-1 btn-texts row py-2">
+            class="col-10 lh-1 btn-texts row py-2"
+        >
             <span class="btn-title">
                 {{ $t(text) }}
             </span>
-            <span 
+            <span
                 v-if="description"
-                class="btn-description text-wrap col-12 pt-2">
+                class="btn-description text-wrap col-12 pt-2"
+            >
                 {{ $t(description) }}
             </span>
         </span>
