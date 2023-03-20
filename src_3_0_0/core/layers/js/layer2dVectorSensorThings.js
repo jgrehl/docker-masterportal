@@ -6,8 +6,9 @@ import crs from "@masterportal/masterportalapi/src/crs";
 import styleList from "@masterportal/masterportalapi/src/vectorStyle/styleList";
 import createStyle from "@masterportal/masterportalapi/src/vectorStyle/createStyle";
 import {GeoJSON} from "ol/format";
-import moment from "moment";
-import "moment-timezone";
+import dayjs from "dayjs";
+import localizedFormat from "dayjs/plugin/localizedFormat";
+import dayjsTimezone from "dayjs/plugin/timezone";
 import VectorLayer from "ol/layer/Vector";
 import VectorSource from "ol/source/Vector";
 import Layer2dVector from "./layer2dVector";
@@ -17,6 +18,9 @@ import isObject from "../../../shared/js/utils/isObject";
 import {SensorThingsHttp} from "../../../shared/js/api/sensorThingsHttp";
 import {SensorThingsMqtt} from "../../../shared/js/api/sensorThingsMqtt";
 import store from "../../../app-store";
+
+dayjs.extend(dayjsTimezone);
+dayjs.extend(localizedFormat);
 
 /**
  * Creates a 2d vector sensorThings (SensorThings API) layer.
@@ -69,7 +73,6 @@ export default function Layer2dVectorSensorThings (attributes) {
     this.attributes = Object.assign(defaultAttributes, attributes);
     this.styleRule = [];
     Layer2dVector.call(this, this.attributes);
-    moment.locale("de");
     this.initializeSensorThings();
 
     this.intervallRequest = null;
@@ -82,6 +85,8 @@ export default function Layer2dVectorSensorThings (attributes) {
     this.lastScale = null;
 
     this.registerInteractionMapResolutionListeners(this.get("scaleStyleByZoom"));
+    require("dayjs/locale/de.js");
+    dayjs.locale("de");
     this.registerInteractionMapScaleListeners();
 }
 
@@ -817,14 +822,14 @@ Layer2dVectorSensorThings.prototype.moveDatastreamPropertiesToThing = function (
  * @param {String} phenomenonTime phenomenonTime given by sensor
  * @param {String} timezone name of the sensors origin timezone
  * @see https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
- * @see https://momentjs.com/timezone/docs/
+ * @see https://day.js.org/docs/en/timezone/timezone
  * @returns {String} A date string based on phenomenonTime and timezone in clients local format or an empty string if an unknown phenomenonTime is given.
  */
 Layer2dVectorSensorThings.prototype.getLocalTimeFormat = function (phenomenonTime, timezone) {
     const utcTime = this.getFirstPhenomenonTime(phenomenonTime);
 
     if (utcTime) {
-        return moment(utcTime).tz(timezone).format("LLL");
+        return dayjs(utcTime).tz(timezone).format("LLL");
     }
     return "";
 };

@@ -4,7 +4,7 @@ import {
     getQueryLink,
     convertObservationsToLinechart
 } from "../../../js/staTools";
-import moment from "moment";
+import dayjs from "dayjs";
 import {expect} from "chai";
 
 describe("src_3_0_0/modules/getFeatureInfo/themes/default/js/staTools.js", () => {
@@ -22,14 +22,14 @@ describe("src_3_0_0/modules/getFeatureInfo/themes/default/js/staTools.js", () =>
         it("should convert the given phenomenonTime to the given format", () => {
             const phenomenonTime = "2021-08-05T04:15:00.000Z",
                 format = "DD.MM.YYYY HH:mm:ss",
-                expected = moment("2021-08-05T04:15:00.000Z").format(format);
+                expected = dayjs("2021-08-05T04:15:00.000Z").format(format);
 
             expect(convertPhenomenonTime(phenomenonTime, format)).to.equal(expected);
         });
         it("should convert a phenomenonTime range to the given format, using the first value", () => {
             const phenomenonTime = "2021-08-05T04:15:00.000Z/2021-08-05T04:29:59.000Z",
                 format = "DD.MM.YYYY HH:mm:ss",
-                expected = moment("2021-08-05T04:15:00.000Z").format(format);
+                expected = dayjs("2021-08-05T04:15:00.000Z").format(format);
 
             expect(convertPhenomenonTime(phenomenonTime, format)).to.equal(expected);
         });
@@ -137,10 +137,10 @@ describe("src_3_0_0/modules/getFeatureInfo/themes/default/js/staTools.js", () =>
                         lineTension: 0
                     }],
                     labels: [
-                        moment("2021-08-05T04:15:00.000Z").format(format),
-                        moment("2021-08-05T04:30:00.000Z").format(format),
-                        moment("2021-08-05T04:45:00.000Z").format(format),
-                        moment("2021-08-05T05:00:00.000Z").format(format)
+                        dayjs("2021-08-05T04:15:00.000Z").format(format),
+                        dayjs("2021-08-05T04:30:00.000Z").format(format),
+                        dayjs("2021-08-05T04:45:00.000Z").format(format),
+                        dayjs("2021-08-05T05:00:00.000Z").format(format)
                     ]
                 };
 

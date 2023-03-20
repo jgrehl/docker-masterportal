@@ -1,6 +1,6 @@
 import {createStore} from "vuex";
 import {expect} from "chai";
-import moment from "moment";
+import dayjs from "dayjs";
 import {config, shallowMount} from "@vue/test-utils";
 import sinon from "sinon";
 
@@ -61,7 +61,7 @@ describe("src_3_0_0/modules/getFeatureInfo/themes/senor/components/SensorTheme.v
             periodUnit = "month";
 
         expect(wrapper.vm.createFilterDate(periodLength, periodUnit)).equals(
-            moment().subtract(periodLength, periodUnit).subtract(1, "week").format("YYYY-MM-DDTHH:mm:ss.sss") + "Z"
+            dayjs().subtract(periodLength, periodUnit).subtract(1, "week").format("YYYY-MM-DDTHH:mm:ss.sss") + "Z"
         );
     });
 
