@@ -6,7 +6,7 @@ const webpack = require("webpack"),
     {VueLoaderPlugin} = require("vue-loader"),
 
     rootPath = path.resolve(__dirname, "../"),
-    addonBasePath = path.resolve(rootPath, "addons"),
+    addonBasePath = path.resolve(rootPath, "addons/addons_3_0_0"),
     addonConfigPath = path.resolve(addonBasePath, "addonsConf.json"),
     entryPoints = {masterportal: path.resolve(rootPath, "src_3_0_0/main.js")};
 
@@ -59,6 +59,7 @@ module.exports = function () {
         }
 
         if (isVueAddon) {
+
             vueAddonsRelPaths[addonName] = Object.assign({
                 "entry": addonCombinedRelpath
             }, addonEntryPoints[addonName]);

@@ -250,7 +250,7 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-    @import "~/css/mixins.scss";
+   /*  @import "~/css/mixins.scss";
     @import "~variables";
 
     .scrollable{
@@ -315,7 +315,7 @@ export default {
     }
     .pt-20 {
         padding-top: 20px;
-    }
+    } */
 </style>
 
 <style lang="scss" scoped>
