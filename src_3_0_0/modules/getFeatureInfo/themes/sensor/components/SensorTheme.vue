@@ -1,7 +1,7 @@
 <script>
 import axios from "axios";
 import {mapGetters} from "vuex";
-import moment from "moment";
+import dayjs from "dayjs";
 
 import SensorThemeChartsData from "./SensorThemeData.vue";
 import SensorThemeChartsBarChart from "./SensorThemeBarChart.vue";
@@ -117,7 +117,7 @@ export default {
          * @returns {String} The searched date.
          */
         createFilterDate: function (periodLength, periodUnit) {
-            const startDate = moment().subtract(periodLength, periodUnit);
+            const startDate = dayjs().subtract(periodLength, periodUnit);
 
             this.startDate = startDate;
             return startDate.subtract(1, "week").format("YYYY-MM-DDTHH:mm:ss.sss") + "Z";
