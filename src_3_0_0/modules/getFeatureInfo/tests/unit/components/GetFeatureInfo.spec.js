@@ -270,11 +270,10 @@ describe("src_3_0_0/modules/getFeatureInfo/components/GetFeatureInfo.vue", () =>
             }
         });
 
-        expect(wrapper.find(".pager-left").exists()).to.be.true;
         expect(wrapper.find(".pager-right").exists()).to.be.true;
     });
 
-    it("should disabled left pager if pagerIndex is zero", () => {
+    it("should hide left pager if pagerIndex is zero", () => {
         const gfiFeatures = [{
                 getTheme: () => "default",
                 getTitle: () => "Feature 1",
@@ -297,10 +296,10 @@ describe("src_3_0_0/modules/getFeatureInfo/components/GetFeatureInfo.vue", () =>
             }
         });
 
-        expect(wrapper.find(".pager-left").classes("disabled")).to.be.true;
+        expect(wrapper.find(".pager-left").exists()).not.to.be.true;
     });
 
-    it("should enabled right pager if pagerIndex is zero", () => {
+    it("should enable right pager if pagerIndex is zero", () => {
         const gfiFeatures = [{
                 getTheme: () => "default",
                 getTitle: () => "Feature 1",
@@ -322,10 +321,10 @@ describe("src_3_0_0/modules/getFeatureInfo/components/GetFeatureInfo.vue", () =>
             }
         });
 
-        expect(wrapper.find(".pager-right").classes("disabled")).to.be.false;
+        expect(wrapper.find(".pager-right").exists()).to.be.true;
     });
 
-    it("should disabled right pager if pagerIndex === gfiFeatures.length - 1", () => {
+    it("should hide right pager if pagerIndex === gfiFeatures.length - 1", () => {
         const gfiFeatures = [{}, {
                 getTheme: () => "default",
                 getTitle: () => "Feature 1",
@@ -351,7 +350,7 @@ describe("src_3_0_0/modules/getFeatureInfo/components/GetFeatureInfo.vue", () =>
             }
         });
 
-        expect(wrapper.find(".pager-right").classes("disabled")).to.be.true;
+        expect(wrapper.find(".pager-right").exists()).not.to.be.true;
     });
 
     it("should enable left pager if pagerIndex === gfiFeatures.length - 1", () => {
@@ -380,7 +379,7 @@ describe("src_3_0_0/modules/getFeatureInfo/components/GetFeatureInfo.vue", () =>
             }
         });
 
-        expect(wrapper.find(".pager-left").classes("disabled")).to.be.false;
+        expect(wrapper.find(".pager-left").exists()).to.be.true;
     });
 
 
@@ -408,8 +407,8 @@ describe("src_3_0_0/modules/getFeatureInfo/components/GetFeatureInfo.vue", () =>
             }
         });
 
-        expect(wrapper.find(".pager-left").classes("disabled")).to.be.false;
-        expect(wrapper.find(".pager-right").classes("disabled")).to.be.false;
+        expect(wrapper.find(".pager-left").exists()).to.be.true;
+        expect(wrapper.find(".pager-right").exists()).to.be.true;
     });
 
     it("should find a new detached component, if componentKey was changed", async () => {
