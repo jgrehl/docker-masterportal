@@ -69,7 +69,7 @@ describe("src_3_0_0/core/menu/navigation/components/MenuNavigation.vue", () => {
         expect(wrapper.find(".mp-menu-navigation-moduletitle").text()).to.be.equals(componentName.secondaryMenu);
     });
 
-    it("renders the navigation in the main menu side without previousNavigation", () => {
+    it("doesn't render the navigation in the main menu side if no previousNav available", () => {
         previousNavigationEntryText = {};
 
         wrapper = mount(MenuNavigation, {
@@ -77,12 +77,12 @@ describe("src_3_0_0/core/menu/navigation/components/MenuNavigation.vue", () => {
                 plugins: [store]
             }, propsData: {side}});
 
-        expect(wrapper.find("#mp-menu-navigation-mainMenu").exists()).to.be.true;
+        expect(wrapper.find("#mp-menu-navigation-mainMenu").exists()).to.be.false;
         expect(wrapper.find("#mp-navigation-mainMenu").exists()).to.be.false;
         expect(wrapper.find(".mp-menu-navigation-moduletitle").exists()).to.be.false;
     });
 
-    it("renders the navigation in the secondaryMenu side without previousNavigation", () => {
+    it("doesn't render the navigation in the main menu side if no previousNav available", () => {
         previousNavigationEntryText = {};
         side = "secondaryMenu";
 
@@ -91,7 +91,7 @@ describe("src_3_0_0/core/menu/navigation/components/MenuNavigation.vue", () => {
                 plugins: [store]
             }, propsData: {side}});
 
-        expect(wrapper.find("#mp-menu-navigation-secondaryMenu").exists()).to.be.true;
+        expect(wrapper.find("#mp-menu-navigation-secondaryMenu").exists()).to.be.false;
         expect(wrapper.find("#mp-navigation-secondaryMenu").exists()).to.be.false;
         expect(wrapper.find(".mp-menu-navigation-moduletitle").exists()).to.be.false;
     });
