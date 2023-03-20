@@ -1,6 +1,6 @@
 import {createStore} from "vuex";
 import {config, shallowMount} from "@vue/test-utils";
-import moment from "moment";
+import dayjs from "dayjs";
 import NewsViewComponent from "../../../components/NewsView.vue";
 import News from "../../../store/indexNewsView";
 import {expect} from "chai";
@@ -84,9 +84,9 @@ describe("src_3_0_0/modules/newsView/components/NewsView.vue", () => {
     });
 
     it("checks content of news and sorting by date", () => {
-        const date_0 = moment(news[0].displayFrom).format("DD.MM.YYYY") + " - " + moment(news[0].displayUntil).format("DD.MM.YYYY"),
-            date_1 = moment(news[1].displayFrom).format("DD.MM.YYYY") + " - " + moment(news[1].displayUntil).format("DD.MM.YYYY"),
-            date_2 = moment(news[2].displayFrom).format("DD.MM.YYYY") + " - " + moment(news[2].displayUntil).format("DD.MM.YYYY");
+        const date_0 = dayjs(news[0].displayFrom).format("DD.MM.YYYY") + " - " + dayjs(news[0].displayUntil).format("DD.MM.YYYY"),
+            date_1 = dayjs(news[1].displayFrom).format("DD.MM.YYYY") + " - " + dayjs(news[1].displayUntil).format("DD.MM.YYYY"),
+            date_2 = dayjs(news[2].displayFrom).format("DD.MM.YYYY") + " - " + dayjs(news[2].displayUntil).format("DD.MM.YYYY");
 
         store.commit("Modules/News/setNews", news);
         wrapper = shallowMount(NewsViewComponent, {
@@ -128,9 +128,9 @@ describe("src_3_0_0/modules/newsView/components/NewsView.vue", () => {
     });
 
     it("test method getDate", () => {
-        const date_0 = moment(news[0].displayFrom).format("DD.MM.YYYY") + " - " + moment(news[0].displayUntil).format("DD.MM.YYYY"),
-            date_1 = moment(news[1].displayFrom).format("DD.MM.YYYY") + " - " + moment(news[1].displayUntil).format("DD.MM.YYYY"),
-            date_2 = moment(news[2].displayFrom).format("DD.MM.YYYY") + " - " + moment(news[2].displayUntil).format("DD.MM.YYYY"),
+        const date_0 = dayjs(news[0].displayFrom).format("DD.MM.YYYY") + " - " + dayjs(news[0].displayUntil).format("DD.MM.YYYY"),
+            date_1 = dayjs(news[1].displayFrom).format("DD.MM.YYYY") + " - " + dayjs(news[1].displayUntil).format("DD.MM.YYYY"),
+            date_2 = dayjs(news[2].displayFrom).format("DD.MM.YYYY") + " - " + dayjs(news[2].displayUntil).format("DD.MM.YYYY"),
             noDate = {
                 category: "category",
                 content: "content"
@@ -172,7 +172,7 @@ describe("src_3_0_0/modules/newsView/components/NewsView.vue", () => {
             }});
 
         expect(wrapper.vm.getDate(noDate)).to.be.equals("");
-        expect(wrapper.vm.getDate(onlyDisplayFrom)).to.be.equals(moment(onlyDisplayFrom.displayFrom).format("DD.MM.YYYY"));
+        expect(wrapper.vm.getDate(onlyDisplayFrom)).to.be.equals(dayjs(onlyDisplayFrom.displayFrom).format("DD.MM.YYYY"));
         expect(wrapper.vm.getDate(onlyDisplayUntil)).to.be.equals("");
     });
 

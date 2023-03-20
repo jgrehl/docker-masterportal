@@ -1,4 +1,4 @@
-import moment from "moment";
+import dayjs from "dayjs";
 
 /**
  * Calculates the workload for the current hour.
@@ -12,13 +12,13 @@ import moment from "moment";
  * @returns {Number} The workload.
  */
 export function calculateOneHour (actualState, actualStateAsNumber, actualTimeStep, nextTimeStep, targetResult, dataByActualTimeStep = []) {
-    const endTime = moment(nextTimeStep).toDate().getTime();
+    const endTime = dayjs(nextTimeStep).toDate().getTime();
 
     let betweenRes = "",
         timeDiff = 0,
         currentState = actualState,
         currentStateAsNumber = actualStateAsNumber,
-        actualPhenomenonTime = moment(actualTimeStep).toDate().getTime();
+        actualPhenomenonTime = dayjs(actualTimeStep).toDate().getTime();
 
     dataByActualTimeStep.forEach(data => {
         const state = data?.result || currentState;
@@ -26,7 +26,7 @@ export function calculateOneHour (actualState, actualStateAsNumber, actualTimeSt
             res;
 
         if (state !== currentState) {
-            phenomenonTime = data?.phenomenonTime ? moment(data.phenomenonTime).toDate().getTime() : "";
+            phenomenonTime = data?.phenomenonTime ? dayjs(data.phenomenonTime).toDate().getTime() : "";
 
             res = (phenomenonTime - actualPhenomenonTime) * currentStateAsNumber;
             timeDiff = timeDiff + res;
@@ -59,7 +59,7 @@ export function filterDataByActualTimeStep (dayData, actualTimeStep, nextTimeSte
     }
 
     return dayData.filter(data => {
-        const dataToCheck = data?.phenomenonTime ? moment(data.phenomenonTime).format("YYYY-MM-DDTHH:mm:ss") : "";
+        const dataToCheck = data?.phenomenonTime ? dayjs(data.phenomenonTime).format("YYYY-MM-DDTHH:mm:ss") : "";
 
         return dataToCheck >= actualTimeStep && dataToCheck < nextTimeStep;
     });
@@ -74,7 +74,7 @@ export function filterDataByActualTimeStep (dayData, actualTimeStep, nextTimeSte
  */
 export function calculateWorkloadforOneDay (emptyDay, dayData, targetResult) {
     const dataFromDay = dayData || [],
-        startDate = dataFromDay.length > 0 && dataFromDay[0]?.phenomenonTime ? moment(dataFromDay[0].phenomenonTime).format("YYYY-MM-DD") : "",
+        startDate = dataFromDay.length > 0 && dataFromDay[0]?.phenomenonTime ? dayjs(dataFromDay[0].phenomenonTime).format("YYYY-MM-DD") : "",
         day = emptyDay || {};
 
     let actualState = dataFromDay.length > 0 && dataFromDay[0]?.result ? dataFromDay[0].result : "",
@@ -82,12 +82,12 @@ export function calculateWorkloadforOneDay (emptyDay, dayData, targetResult) {
 
     Object.keys(day).forEach(key => {
         const i = parseFloat(key, 10),
-            actualTimeStep = moment(startDate).add(i, "hour").format("YYYY-MM-DDTHH:mm:ss"),
-            nextTimeStep = moment(startDate).add(i + 1, "hour").format("YYYY-MM-DDTHH:mm:ss"),
+            actualTimeStep = dayjs(startDate).add(i, "hour").format("YYYY-MM-DDTHH:mm:ss"),
+            nextTimeStep = dayjs(startDate).add(i + 1, "hour").format("YYYY-MM-DDTHH:mm:ss"),
             dataByActualTimeStep = filterDataByActualTimeStep(dataFromDay, actualTimeStep, nextTimeStep);
 
         // if the requested period is in the future
-        if (moment(nextTimeStep).toDate().getTime() > moment().toDate().getTime()) {
+        if (dayjs(nextTimeStep).toDate().getTime() > dayjs().toDate().getTime()) {
             day[i] = undefined;
         }
         else if (dataByActualTimeStep.length === 0) {
@@ -129,8 +129,8 @@ export function calculateWorkloadForOneWeekday (targetResult, processedHistorica
     const allData = [];
 
     processedHistoricalDataByWeekday.forEach(dayData => {
-        const zeroTime = moment(moment(dayData[0].phenomenonTime).format("YYYY-MM-DD")).format("YYYY-MM-DDTHH:mm:ss"),
-            firstTimeDayData = moment(dayData[0].phenomenonTime).format("YYYY-MM-DDTHH:mm:ss"),
+        const zeroTime = dayjs(dayjs(dayData[0].phenomenonTime).format("YYYY-MM-DD")).format("YYYY-MM-DDTHH:mm:ss"),
+            firstTimeDayData = dayjs(dayData[0].phenomenonTime).format("YYYY-MM-DDTHH:mm:ss"),
             emptyDayObj = createInitialDayPerHour();
         let dayObj = {};
 
