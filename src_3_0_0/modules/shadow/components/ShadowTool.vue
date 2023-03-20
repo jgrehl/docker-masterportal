@@ -1,12 +1,15 @@
 <script>
 import {mapGetters, mapMutations} from "vuex";
-import moment from "moment";
+import dayjs from "dayjs";
+import dayOfYear from "dayjs/plugin/dayOfYear";
 import DatePicker from "vue-datepicker-next";
 import "vue-datepicker-next/index.css";
 
 import ShadowToolSliderInput from "./ShadowToolSliderInput.vue";
 import {updateShadow, updateCesiumTime} from "../js/utilsShadowTool.js";
 import SwitchInput from "../../../shared/modules/checkboxes/components/SwitchInput.vue";
+
+dayjs.extend(dayOfYear);
 
 export default {
     name: "ShadowTool",
@@ -17,19 +20,19 @@ export default {
     },
     data () {
         return {
-            currentDay: moment().format("DD"),
-            currentHour: moment().hour(),
-            currentMinute: moment().minute(),
-            currentMonth: moment().format("MM"),
-            currentYear: moment().format("YYYY"),
-            date: moment().format("YYYY-MM-DD"),
+            currentDay: dayjs().format("DD"),
+            currentHour: dayjs().hour(),
+            currentMinute: dayjs().minute(),
+            currentMonth: dayjs().format("MM"),
+            currentYear: dayjs().format("YYYY"),
+            date: dayjs().format("YYYY-MM-DD"),
             dateSliderValue: 0,
             displayedShadowTime: null,
             pickDateFormat: "DD.MM.YYYY",
             pickDates: null,
             shadowActivated: this.isShadowEnabled,
-            showDate: moment().format("YYYY-MM-DD"),
-            showTime: moment().format("HH:mm"),
+            showDate: dayjs().format("YYYY-MM-DD"),
+            showTime: dayjs().format("HH:mm"),
             timeSliderValue: 0
         };
     },
@@ -118,7 +121,7 @@ export default {
             this.date = showDate;
             this.checkDateFormat();
 
-            this.dateSliderValue = moment(this.date).dayOfYear();
+            this.dateSliderValue = dayjs(this.date).dayOfYear();
             this.initTimeSlider(hour, minute);
             this.updateShadowTime();
         },
@@ -129,13 +132,13 @@ export default {
          * @returns {void}
          */
         syncDateSlider (pickDate) {
-            const date = moment(pickDate).format("YYYY-MM-DD");
+            const date = dayjs(pickDate).format("YYYY-MM-DD");
 
             if (this.$refs.datePicker) {
                 this.date = date;
                 this.checkDateFormat();
                 this.updateShadowTime();
-                this.dateSliderValue = moment(date).dayOfYear();
+                this.dateSliderValue = dayjs(date).dayOfYear();
             }
         },
 
@@ -183,7 +186,7 @@ export default {
         syncDatePicker (totalDaysInYear) {
             const startDate = new Date(Number(this.currentYear), 0),
                 calculateDate = new Date(startDate.setDate(Number(totalDaysInYear))), // initialize a date in `year-01-01`
-                formatCalculateDate = moment(calculateDate).format("YYYY-MM-DD");
+                formatCalculateDate = dayjs(calculateDate).format("YYYY-MM-DD");
 
             if (this.$refs.datePicker) {
                 this.date = formatCalculateDate;
@@ -200,12 +203,12 @@ export default {
          */
         checkDateFormat () {
             if (this.currentLocale === "de" || this.currentLocale === "platt") {
-                this.showDate = moment(this.date).format("DD-MM-YYYY");
+                this.showDate = dayjs(this.date).format("DD-MM-YYYY");
                 this.pickDateFormat = "DD.MM.YYYY";
 
             }
             else {
-                this.showDate = moment(this.date).format("MM-DD-YYYY");
+                this.showDate = dayjs(this.date).format("MM-DD-YYYY");
                 this.pickDateFormat = "MM.DD.YYYY";
             }
         },
