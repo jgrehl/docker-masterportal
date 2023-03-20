@@ -59,7 +59,6 @@ module.exports = function () {
         }
 
         if (isVueAddon) {
-
             vueAddonsRelPaths[addonName] = Object.assign({
                 "entry": addonCombinedRelpath
             }, addonEntryPoints[addonName]);
