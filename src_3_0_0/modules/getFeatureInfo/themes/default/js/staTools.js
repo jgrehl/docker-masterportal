@@ -1,7 +1,8 @@
 import {convertColor} from "../../../../../shared/js/utils/convertColor";
 import {getPrimaryColor, getColorUniversalDesign} from "../../../../../shared/js/utils/colors";
 import {SensorThingsHttp} from "../../../../../shared/js/api/sensorThingsHttp.js";
-import moment from "moment";
+import dayjs from "dayjs";
+
 
 /**
  * returns an url based on the given query an @iot.selfLink of a STA object
@@ -124,7 +125,7 @@ function isObservation (observation) {
 /**
  * converts the given phenomenonTime from a STA observation into the given format
  * @param {String} phenomenonTime the phenomenonTime to convert
- * @param {String} format a format to use for moment
+ * @param {String} format a format to use for dayjs
  * @returns {String|Boolean} the phenomenonTime in the given format or false if an error occured
  */
 function convertPhenomenonTime (phenomenonTime, format) {
@@ -132,7 +133,7 @@ function convertPhenomenonTime (phenomenonTime, format) {
         return false;
     }
     const validPhenomenonTime = phenomenonTime.indexOf("/") === -1 ? phenomenonTime : phenomenonTime.split("/")[0],
-        validMoment = moment(validPhenomenonTime);
+        validMoment = dayjs(validPhenomenonTime);
 
     if (!validMoment.isValid()) {
         return false;
