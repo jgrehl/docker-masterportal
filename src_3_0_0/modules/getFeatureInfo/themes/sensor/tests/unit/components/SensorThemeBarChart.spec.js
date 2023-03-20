@@ -1,5 +1,5 @@
 import {config, shallowMount} from "@vue/test-utils";
-import moment from "moment";
+import dayjs from "dayjs";
 import {expect} from "chai";
 import sinon from "sinon";
 import Chart from "chart.js";
@@ -13,7 +13,7 @@ config.global.mocks.$i18next = {
 describe("src_3_0_0/modules/getFeatureInfo/themes/senor/components/SensorThemeBarChart.vue", () => {
     let wrapper;
 
-    moment.locale("de");
+    dayjs.locale("de");
 
     beforeEach(() => {
         wrapper = shallowMount(SensorThemeBartChart, {
@@ -167,20 +167,20 @@ describe("src_3_0_0/modules/getFeatureInfo/themes/senor/components/SensorThemeBa
     });
 
     it("should show today by initial loading ", () => {
-        expect(wrapper.find("div > div > span").text()).equals(moment().format("dddd"));
+        expect(wrapper.find("div > div > span").text()).equals(dayjs().format("dddd"));
     });
 
     it("should show the day before yesterday after two clicks on left button ", async () => {
         await wrapper.findAll("button").at(0).trigger("click");
         await wrapper.findAll("button").at(0).trigger("click");
 
-        expect(wrapper.find("div > div > span").text()).equals(moment().subtract(2, "days").format("dddd"));
+        expect(wrapper.find("div > div > span").text()).equals(dayjs().subtract(2, "days").format("dddd"));
     });
 
     it("should show the day after tomorrow after two clicks on right button ", async () => {
         await wrapper.findAll("button")[1].trigger("click");
         await wrapper.findAll("button")[1].trigger("click");
 
-        expect(wrapper.find("div > div > span").text()).equals(moment().add(2, "days").format("dddd"));
+        expect(wrapper.find("div > div > span").text()).equals(dayjs().add(2, "days").format("dddd"));
     });
 });
