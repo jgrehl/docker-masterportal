@@ -1,6 +1,6 @@
 import {expect} from "chai";
 import {createZeroTimeObservation, addIndex, processHistoricalDataByWeekdays} from "../../../js/processHistoricalDataByWeekdays.js";
-import moment from "moment";
+import dayjs from "dayjs";
 
 describe("src_3_0_0/modules/getFeatureInfo/themes/sensor/js/processHistoricalDataByWeekdays.js", () => {
     describe("createZeroTimeObservation", function () {
@@ -85,7 +85,7 @@ describe("src_3_0_0/modules/getFeatureInfo/themes/sensor/js/processHistoricalDat
             ]);
         });
         it("should return an array with seven arrays that contains divided data for correct data without lastDay input", function () {
-            const beforeOneYear = moment().subtract(1, "years").format("YYYY-MM-DD"),
+            const beforeOneYear = dayjs().subtract(1, "years").format("YYYY-MM-DD"),
                 historicalDataWithIndex = [{
                     Observations: [{
                         phenomenonTime: beforeOneYear + "T10:55:52",
