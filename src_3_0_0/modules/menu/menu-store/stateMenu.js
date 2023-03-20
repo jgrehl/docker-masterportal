@@ -22,6 +22,7 @@ export default {
     customMenuElementIcon: "bi-asterisk",
     mainMenu: {
         expanded: false,
+        width: "25%",
         currentComponent: "root",
         title: null,
         toggleButtonIcon: "bi-list",
@@ -36,6 +37,7 @@ export default {
     },
     secondaryMenu: {
         expanded: false,
+        width: "25%",
         currentComponent: "root",
         sections: [[]],
         title: null,
