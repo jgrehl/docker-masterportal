@@ -91,7 +91,7 @@ export default {
                     if (typeof value === "object" && !Array.isArray(value)) {
                         dispatch("addAttributesToModuleState", {items: [value], itemType: item?.type, modulePath: modulePathInit + `.${key}`});
                     }
-                    else if (item.type && !itemType && !Array.isArray(value)) {
+                    else if (item.type && !itemType && !Array.isArray(value) && item.type !== "sdpDownload") {
                         commit(`${upperFirst(item.type)}/set${upperFirst(key)}`, value);
                     }
                     else {
