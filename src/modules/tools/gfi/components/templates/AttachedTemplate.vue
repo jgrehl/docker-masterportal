@@ -172,7 +172,7 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-    @import "~/css/mixins.scss";
+    @import "~/mixins";
     @import "~variables";
 
     button.close {
