@@ -1,5 +1,5 @@
 <script>
-import moment from "moment";
+import dayjs from "dayjs";
 import {mapGetters} from "vuex";
 import sortBy from "../../../shared/js/utils/sortBy";
 
@@ -22,11 +22,11 @@ export default {
             let formattedDate = "";
 
             if (typeof news.displayFrom === "string") {
-                formattedDate = moment(news.displayFrom).format("DD.MM.YYYY");
+                formattedDate = dayjs(news.displayFrom).format("DD.MM.YYYY");
 
                 if (typeof news.displayUntil === "string") {
                     formattedDate += " - ";
-                    formattedDate += moment(news.displayUntil).format("DD.MM.YYYY");
+                    formattedDate += dayjs(news.displayUntil).format("DD.MM.YYYY");
                 }
             }
             return formattedDate;
