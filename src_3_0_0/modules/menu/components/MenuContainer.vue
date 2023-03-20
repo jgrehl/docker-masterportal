@@ -4,7 +4,7 @@ import MenuContainerBody from "./MenuContainerBody.vue";
 import ResizeHandle from "../../../shared/modules/resize/components/ResizeHandle.vue";
 
 let lastMainMenuWidth = "",
-    lastSecondaryMenuWidth = "10%";
+    lastSecondaryMenuWidth = "";
 
 export default {
     name: "MenuContainer",
@@ -77,6 +77,10 @@ export default {
             "toggleMenu",
             "closeMenu"
         ]),
+        /**
+         * @param {string} side Sidew of Menu
+         * @returns {void} Sets width inline because Resizehandle works with inline-Style
+         */
         setWidth (side) {
             const menu = side === "mainMenu" ? document.getElementById("mp-menu-mainMenu") : document.getElementById("mp-menu-secondaryMenu"),
                 expanded = side === "mainMenu" ? this.mainExpanded : this.secondaryExpanded;
