@@ -124,7 +124,7 @@ describe("src_3_0_0/modules/layerTree/components/LayerCheckBox.vue", () => {
         expect(wrapper.find("#layer-checkbox-" + propsData.conf.id).exists()).to.be.true;
         expect(wrapper.find("#layer-checkbox-" + propsData.conf.id).attributes("title")).to.be.undefined;
         expect(wrapper.findAll(".layer-tree-layer-checkbox").length).to.be.equals(1);
-        expect(wrapper.find(".bi-check2-square").exists()).to.be.true;
+        expect(wrapper.find(".bi-check-square").exists()).to.be.true;
         expect(wrapper.find(".layer-tree-layer-label").text()).to.equal(propsData.conf.name);
         expect(wrapper.find("label").attributes("class")).to.include("bold");
     });
