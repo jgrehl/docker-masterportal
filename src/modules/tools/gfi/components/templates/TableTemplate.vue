@@ -163,7 +163,7 @@ export default {
 </template>
 
 <style lang="scss">
-@import "~/css/mixins.scss";
+@import "~/mixins";
 @import "~variables";
 
 .gfi-detached-table {
