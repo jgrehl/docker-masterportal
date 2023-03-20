@@ -20,7 +20,8 @@ describe("src_3_0_0/modules/layerInformation/store/actionsLayerInformation.js", 
                     urlIsVisible: true,
                     datasets: [
                         {
-                            md_id: "123"
+                            md_id: "123",
+                            md_name: "MDName"
                         }
                     ]
                 };
@@ -29,7 +30,7 @@ describe("src_3_0_0/modules/layerInformation/store/actionsLayerInformation.js", 
                 {type: "Menu/changeCurrentComponent", payload: {
                     type: "layerInformation",
                     side: "mainMenu",
-                    props: {name: state.name}
+                    props: {name: layerConf.datasets[0].md_name}
                 }, dispatch: true},
                 {type: "setLayerInfo", payload: layerConf},
                 {type: "setMetadataURL", payload: layerConf.datasets[0].md_id, dispatch: true},
@@ -63,7 +64,7 @@ describe("src_3_0_0/modules/layerInformation/store/actionsLayerInformation.js", 
                 {type: "Menu/changeCurrentComponent", payload: {
                     type: "layerInformation",
                     side: "mainMenu",
-                    props: {name: state.name}
+                    props: {name: layerConf.datasets[0].md_name}
                 }, dispatch: true},
                 {type: "setLayerInfo", payload: layerConf},
                 {type: "setMetadataURL", payload: layerConf.datasets[0].md_id, dispatch: true},
