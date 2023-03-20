@@ -27,7 +27,7 @@ const state = {
     description: "",
     showDescription: false,
     supportedDevices: ["Desktop", "Mobile", "Table"],
-    supportedMapModes: ["2D", "3D"],
+    supportedMapModes: ["2D"],
 
     // Navigation Parameter
     activeRoutingToolOption: "DIRECTIONS",
