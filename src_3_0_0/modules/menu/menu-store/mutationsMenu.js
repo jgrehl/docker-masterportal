@@ -39,6 +39,17 @@ export default {
     },
 
     /**
+     * Sets current MenuWidth
+     * @param {Object} state current state
+     * @param {String} side secondary or main Menu
+     * @param {String} width width Value
+     * @returns {void}
+     */
+    setCurrentMenuWidth (state, {side, width}) {
+        state[side].width = width;
+    },
+
+    /**
      * Set expanded for the given side menu.
      * @param {Object} state current state
      * @param {Boolean} expanded Is menu expanded.

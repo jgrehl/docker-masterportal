@@ -46,6 +46,16 @@ const menuGetters = {
         return state[side].navigation.currentComponent.props.path;
     },
 
+
+    /**
+     * @param {MenuNavigationState} state Local vuex state.
+     * @param {string} side Menu Side
+     * @returns {object} Returns the current Menu-width
+     */
+    currentMenuWidth: state => side => {
+        return state[side].width;
+    },
+
     /**
      * Returns true, if a module with attribute hasMouseMapInteractions will be deactivated.
      * @param {MenuState} state Local vuex state.
