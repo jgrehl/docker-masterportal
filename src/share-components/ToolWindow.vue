@@ -109,7 +109,7 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-    @import "~/mixins";
+    @import "~/css/mixins.scss";
     @import "~variables";
 
     .tool-window-vue {
