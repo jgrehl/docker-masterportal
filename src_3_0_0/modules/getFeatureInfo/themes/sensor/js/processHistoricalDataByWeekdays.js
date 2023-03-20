@@ -1,4 +1,4 @@
-import moment from "moment";
+import dayjs from "dayjs";
 
 /**
  * Creates a zero time observations for a given observation.
@@ -7,7 +7,7 @@ import moment from "moment";
  * @returns {Object} The Observations with startDate.
  */
 export function createZeroTimeObservation (observation) {
-    const zeroTime = moment(moment(observation.phenomenonTime).format("YYYY-MM-DD")).format("YYYY-MM-DDTHH:mm:ss"),
+    const zeroTime = dayjs(dayjs(observation.phenomenonTime).format("YYYY-MM-DD")).format("YYYY-MM-DDTHH:mm:ss"),
         zeroResult = observation.result;
 
     return {phenomenonTime: zeroTime, result: zeroResult};
@@ -40,7 +40,7 @@ export function addIndex (historicalData) {
  * @returns {Object} The processed data.
  */
 export function processHistoricalDataByWeekdays (historicalObservations, startDate) {
-    const today = moment().format("YYYY-MM-DD"),
+    const today = dayjs().format("YYYY-MM-DD"),
         weekArray = [
             [], [], [], [], [], [], []
         ],
@@ -57,13 +57,13 @@ export function processHistoricalDataByWeekdays (historicalObservations, startDa
             weekArray[arrayIndex].push([]);
 
             // add start time with 0 o'clock if no observations are available before the start date.
-            if (moment(lastObservation?.phenomenonTime).format("YYYY-MM-DD") > moment(startDate).format("YYYY-MM-DD")) {
+            if (dayjs(lastObservation?.phenomenonTime).format("YYYY-MM-DD") > dayjs(startDate).format("YYYY-MM-DD")) {
                 observations.push(createZeroTimeObservation(lastObservation));
             }
         }
 
         observations.forEach(data => {
-            const phenomenonDay = moment(data.phenomenonTime).format("YYYY-MM-DD");
+            const phenomenonDay = dayjs(data.phenomenonTime).format("YYYY-MM-DD");
             let zeroTime,
                 zeroResult,
                 weekArrayIndexLength;
@@ -73,7 +73,7 @@ export function processHistoricalDataByWeekdays (historicalObservations, startDa
                 weekArrayIndexLength = weekArray[arrayIndex].length - 1;
 
                 // when the last date is reached, the loop is no longer needed
-                if (moment(actualDay) < moment(startDate)) {
+                if (dayjs(actualDay) < dayjs(startDate)) {
                     booleanLoop = false;
                     weekArray[arrayIndex].pop();
                     break;
@@ -84,12 +84,12 @@ export function processHistoricalDataByWeekdays (historicalObservations, startDa
                 }
                 // dd object with 0 o'clock and the status of the current day
                 else {
-                    zeroTime = moment(actualDay).format("YYYY-MM-DDTHH:mm:ss");
+                    zeroTime = dayjs(actualDay).format("YYYY-MM-DDTHH:mm:ss");
                     zeroResult = data.result;
                     weekArray[arrayIndex][weekArrayIndexLength].push({phenomenonTime: zeroTime, result: zeroResult});
 
                     // Then set current tag to previous tag and ArrayIndex to next array
-                    actualDay = moment(actualDay).subtract(1, "days").format("YYYY-MM-DD");
+                    actualDay = dayjs(actualDay).subtract(1, "days").format("YYYY-MM-DD");
 
                     if (arrayIndex >= 6) {
                         arrayIndex = 0;

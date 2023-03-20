@@ -1,4 +1,4 @@
-import moment from "moment";
+import dayjs from "dayjs";
 
 /**
  * Creates HTML for the system information.
@@ -58,11 +58,11 @@ function createSubject (ticketId, subject) {
 /**
  * Creates a unique id for the ticket of a user.
  * It is formatted as 'MMDD-[numbers]-[numbers]', if not prefix is given.
- * @param {String} locationOfCustomerService locale key for moment
+ * @param {String} locationOfCustomerService locale key for day.js
  * @returns {String} The generated unique Id.
  */
 function createTicketId (locationOfCustomerService = "de") {
-    const prefix = moment().locale(locationOfCustomerService).format("MMDD"),
+    const prefix = dayjs().locale(locationOfCustomerService).format("MMDD"),
         randomNumber = String(Math.floor(Math.random() * 9000) + 1000),
         anotherRandomNumber = String(Math.floor(Math.random() * 9000) + 1000);
 
