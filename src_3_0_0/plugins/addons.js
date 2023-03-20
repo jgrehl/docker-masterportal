@@ -20,7 +20,9 @@ async function loadAddons (config) {
                 const addonConf = allAddons[addonKey];
 
                 if (addonConf && Object.prototype.hasOwnProperty.call(addonConf, "type")) {
+
                     if (addonConf.type === "tool") {
+
                         await loadToolAddons(addonKey);
                     }
                     else if (addonConf.type === "gfiTheme") {
@@ -99,7 +101,7 @@ async function loadAddon (addonKey) {
         /* webpackChunkName: "[request]" */
         /* webpackInclude: /addons[\\\/].*[\\\/]index.js$/ */
         /* webpackExclude: /(node_modules)|(.+unittests.)|(.+test.)+/ */
-            `../../addons/${allAddons[addonKey].entry}`
+            `../../addons/addons_3_0_0/${allAddons[addonKey].entry}`
         ),
         addon = addonModule.default;
 
