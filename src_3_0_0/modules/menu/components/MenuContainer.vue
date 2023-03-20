@@ -3,8 +3,6 @@ import {mapActions, mapGetters, mapMutations} from "vuex";
 import MenuContainerBody from "./MenuContainerBody.vue";
 import ResizeHandle from "../../../shared/modules/resize/components/ResizeHandle.vue";
 
-let lastMainMenuWidth = "",
-    lastSecondaryMenuWidth = "";
 
 export default {
     name: "MenuContainer",
@@ -27,6 +25,7 @@ export default {
             "uiStyle"
         ]),
         ...mapGetters("Menu", [
+            "currentMenuWidth",
             "mainExpanded",
             "secondaryExpanded",
             "titleBySide"
@@ -37,6 +36,10 @@ export default {
          */
         handlePosition () {
             return this.side === "mainMenu" ? "right" : "left";
+        },
+
+        expanded () {
+            return this.side === "mainMenu" ? this.mainExpanded : this.secondaryExpanded;
         }
     },
     watch: {
@@ -46,12 +49,13 @@ export default {
         secondaryMenu (secondaryMenu) {
             this.mergeMenuState({menu: secondaryMenu, side: "secondaryMenu"});
         },
-        mainExpanded () {
-            this.setWidth("mainMenu");
-        },
-        secondaryExpanded () {
-            if (!this.isMobile) {
-                this.setWidth("secondaryMenu");
+        isMobile (isMobile) {
+            if (isMobile) {
+                this.collapseMenues();
+                this.setCurrentMenuWidth({side: this.side, width: "100%"});
+            }
+            else {
+                this.setCurrentMenuWidth({side: this.side, width: "25%"});
             }
         }
     },
@@ -60,52 +64,20 @@ export default {
 
         if (this.isMobile) {
             this.collapseMenues();
+            this.setCurrentMenuWidth({side: this.side, width: "100%"});
         }
 
-    },
-    mounted () {
-        if (!this.isMobile && this.side === "secondaryMenu") {
-            this.setWidth(this.side);
-        }
     },
     methods: {
         ...mapMutations("Menu", [
             "collapseMenues",
-            "mergeMenuState"
+            "mergeMenuState",
+            "setCurrentMenuWidth"
         ]),
         ...mapActions("Menu", [
             "toggleMenu",
             "closeMenu"
-        ]),
-        /**
-         * @param {string} side Sidew of Menu
-         * @returns {void} Sets width inline because Resizehandle works with inline-Style
-         */
-        setWidth (side) {
-            const menu = side === "mainMenu" ? document.getElementById("mp-menu-mainMenu") : document.getElementById("mp-menu-secondaryMenu"),
-                expanded = side === "mainMenu" ? this.mainExpanded : this.secondaryExpanded;
-
-            let lastWidth = side === "mainMenu" ? lastMainMenuWidth : lastSecondaryMenuWidth;
-
-            if (this.isMobile) {
-                lastWidth = "100%";
-            }
-
-            if (expanded && menu && menu.style.width) {
-                if (lastWidth !== "") {
-                    menu.style.width = lastWidth;
-                }
-            }
-            else if (!expanded && menu && menu.style.width !== "0px") {
-                if (side === "mainMenu") {
-                    lastMainMenuWidth = menu.style.width;
-                }
-                else if (side === "secondaryMenu") {
-                    lastSecondaryMenuWidth = menu.style.width;
-                }
-                menu.style.width = 0;
-            }
-        }
+        ])
     }
 };
 </script>
@@ -122,6 +94,7 @@ export default {
             }
         ]"
         tabindex="-1"
+        :style="expanded ? 'width:' + currentMenuWidth(side) : 'width:0'"
         :aria-label="titleBySide(side) ? titleBySide(side).text : null"
     >
         <div
@@ -148,6 +121,7 @@ export default {
             :id="'mp-resize-handle-' + side"
             class="mp-menu-container-handle"
             :handle-position="handlePosition"
+            :mutation="setCurrentMenuWidth"
             :min-width="0"
             :max-width="0.6"
             :min-height="1"
@@ -176,8 +150,7 @@ export default {
     height: 0;
     position: absolute;
     top: 100%;
-    transition: all 0.3s ease;
-    width: 100%;
+    transition: top 0.3s ease;
     &-expanded {
         height: 100%;
         top: 70%;
