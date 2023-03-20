@@ -81,8 +81,6 @@ export default {
     }
 }
 
-
-
 .mp-menu-navigation-moduletitle{
     display: flex;
 }
