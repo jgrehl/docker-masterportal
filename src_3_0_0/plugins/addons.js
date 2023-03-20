@@ -20,9 +20,7 @@ async function loadAddons (config) {
                 const addonConf = allAddons[addonKey];
 
                 if (addonConf && Object.prototype.hasOwnProperty.call(addonConf, "type")) {
-
                     if (addonConf.type === "tool") {
-
                         await loadToolAddons(addonKey);
                     }
                     else if (addonConf.type === "gfiTheme") {
