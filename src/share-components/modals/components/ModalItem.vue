@@ -130,7 +130,7 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-    @import "~/mixins";
+    @import "~/css/mixins.scss";
     @import "~variables";
 
     #modal-1-container{
