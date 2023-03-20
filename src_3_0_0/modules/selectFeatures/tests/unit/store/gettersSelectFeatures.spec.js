@@ -18,7 +18,7 @@ describe("src/modules/selectFeatures/store/gettersSelectFeatures", function () {
             expect(name(stateSelectFeatures)).to.be.equals("common:menu.tools.selectFeatures");
         });
         it("returns the icon default value from state", function () {
-            expect(icon(stateSelectFeatures)).to.equals("bi-card-list");
+            expect(icon(stateSelectFeatures)).to.equals("bi-hand-index");
         });
     });
 });
