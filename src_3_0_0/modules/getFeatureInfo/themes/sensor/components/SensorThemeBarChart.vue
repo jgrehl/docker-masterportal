@@ -1,7 +1,11 @@
 <script>
 import Chart from "chart.js/auto";
-import moment from "moment";
+import dayjs from "dayjs";
+import localeData from "dayjs/plugin/localeData";
+
 import {shallowRef} from "vue";
+
+dayjs.extend(localeData);
 
 import {calculateWorkloadForOneWeekday} from "../js/calculateWorkloadForOneWeekday";
 import {calculateArithmeticMean} from "../js/mathematicalOperations";
@@ -58,7 +62,7 @@ export default {
          * @returns {String} The weekday.
          */
         weekday: function () {
-            return this.momentLocale.localeData().weekdays(moment().add(this.weekdayIndex, "days"));
+            return this.momentLocale.localeData().weekdays(dayjs().add(this.weekdayIndex, "day"));
         }
     },
     watch: {
@@ -69,7 +73,7 @@ export default {
         }
     },
     created () {
-        this.momentLocale = moment().locale(this.$i18next.language);
+        this.momentLocale = dayjs().locale(this.$i18next.language);
         this.hoverBackgroundColor = this.chartsParams?.hoverBackgroundColor || this.hoverBackgroundColor;
         this.barPercentage = this.chartsParams?.barPercentage || this.barPercentage;
         this.chartColor = this.chartValue?.color || this.chartColor;
