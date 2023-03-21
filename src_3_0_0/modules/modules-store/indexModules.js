@@ -33,6 +33,7 @@ import Shadow from "../shadow/store/indexShadow";
 import ShareView from "../shareView/store/indexShareView";
 import StyleVT from "../styleVT/store/indexStyleVT";
 import WfsSearch from "../wfsSearch/store/indexWfsSearch";
+import Wfst from "../wfst/store/indexWfst";
 
 export default {
     namespaced: true,
@@ -71,6 +72,7 @@ export default {
         Shadow: {...Shadow},
         ShareView: {...ShareView},
         StyleVT: {...StyleVT},
-        WfsSearch: {...WfsSearch}
+        WfsSearch: {...WfsSearch},
+        Wfst: {...Wfst}
     }
 };
