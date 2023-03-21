@@ -5539,7 +5539,7 @@ Group layer definition to de-/activate multiple layers in one click.
 |visibility|no|Boolean|false|Layer visibility.|false|
 |supported|no|String[]|["2D", "3D"]|List of modes the layer may be used in.|false|
 |layerAttribution|no|String||**[services.json](services.json.md)** value. HTML string shown when the layer is active.|false|
-|legendURL|no|String||**[services.json](services.json.md)** value. URL used to request the legend graphic. _Deprecated, please use "legend" instead._|false|
+|legendURL|no|String||**[services.json](services.json.md)** value. URL used to request the legend graphic.|false|
 |legend|no|Boolean/String||**[services.json](services.json.md)** value. URL used to request the legend graphic. Use `true` to dynamically generate the legend from a WMS request or the styling. If of type string, it's expected to be a path to an image or a PDF file.|false|
 |maxScale|no|String||**[services.json](services.json.md)** value. Maximum scale in which the layer is still shown.|false|
 |minScale|no|String||**[services.json](services.json.md)** value. Minimum scale in which the layer is still shown.|false|
@@ -5585,7 +5585,7 @@ Layer definition. Multiple ways to define layers exist. Most attributes are defi
 |visibility|no|Boolean|false|Layer visibility.|false|
 |supported|no|String[]|["2D", "3D"]|List of modes the layer may be used in.|false|
 |layerAttribution|no|String||**[services.json](services.json.md)** value. HTML string shown when the layer is active.|false|
-|legendURL|no|String||**[services.json](services.json.md)** value. URL used to request the legend graphic. _Deprecated, please use "legend" instead._|false|
+|legendURL|no|String||**[services.json](services.json.md)** value. URL used to request the legend graphic.|false|
 |legend|no|Boolean/String||**[services.json](services.json.md)** value. URL used to request the legend graphic. Use `true` to dynamically generate the legend from a WMS request or the styling. If of type string, it's expected to be a path to an image or a PDF file.|false|
 |maxScale|no|String||**[services.json](services.json.md)** value. Maximum scale in which the layer is still shown.|false|
 |minScale|no|String||**[services.json](services.json.md)** value. Minimum scale in which the layer is still shown.|false|
