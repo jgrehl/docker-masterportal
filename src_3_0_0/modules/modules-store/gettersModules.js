@@ -34,6 +34,8 @@ import Shadow from "../shadow/components/ShadowTool.vue";
 import ShareView from "../shareView/components/ShareView.vue";
 import StyleVT from "../styleVT/components/StyleVT.vue";
 import WfsSearch from "../wfsSearch/components/WfsSearch.vue";
+import Wfst from "../wfst/components/WfsTransaction.vue";
+
 
 const getters = {
     ...generateSimpleGetters(stateModules),
@@ -72,7 +74,8 @@ const getters = {
             shadow: Shadow,
             shareView: ShareView,
             styleVT: StyleVT,
-            wfsSearch: WfsSearch
+            wfsSearch: WfsSearch,
+            wfst: Wfst
         };
 
         moduleCollection = {...coreModules, ...moduleCollection};
