@@ -6,9 +6,6 @@ export default {
             type: Object && undefined,
             required: true
         }
-    },
-    mounted(){
-        console.log(this.legendObj.legend);
     }
 };
 </script>
