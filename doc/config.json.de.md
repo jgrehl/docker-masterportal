@@ -4031,12 +4031,9 @@ Beim Bearbeiten eines Features / Hinzufügen von Attributen zu einem neuen Featu
 |layerIds|ja|String[]||Array an Ids von in **[services.json](services.json.md)** definierten Layern.|false|
 |icon|nein|String|"bi-globe"|Symbol des Werkzeugs zur Anzeige im Portal.|false|
 |name|nein|String|"WfsTransaction"|Name des Werkzeugs zur Anzeige im Portal.|false|
-|layerSelectLabel|nein|String|"common:modules.tools.wfsTransaction.layerSelectLabel"|_Deprecated in 3.0.0. Bitte setzen Sie stattdessen den Wert direkt in den Sprachdateien._ Falls gegeben wird der Wert als Label für die Layerauswahl-Select-Box verwendet. Kann ein Sprachschlüssel sein.|false|
+|layerSelectLabel|nein|String|"common:modules.tools.wfsTransaction.layerSelectLabel"|Falls gegeben wird der Wert als Label für die Layerauswahl-Select-Box verwendet. Kann ein Sprachschlüssel sein.|false|
 |toggleLayer|nein|Boolean|false|Legt fest, ob die Feature des ausgewählten Layers weiterhin angezeigt werden sollen, wenn neue Feature hinzugefügt werden.|false|
-|useProxy|nein|Boolean|false|_Deprecated in 3.0.0. Von der [GDI-DE](https://www.gdi-de.org/) wird empfohlen einen CORS-Header einzurichten._ Gibt an, ob die URL des Dienstes über einen Proxy angefragt werden soll, dabei werden die Punkte in der URL durch Unterstriche ersetzt.|false|
-|areaButton|nein|[TransactionConfig](#markdown-header-portalconfigmenutoolwfstransactiontransactionconfig)[]/Boolean|[]|_Deprecated in 3.0.0. Bitte nutzen Sie stattdessen `polygonButton`. Falls beide Konfigurationsparameter vorliegen, wird `areaButton` verwendet._ Legt fest, welche der zu `layerIds` zugehörigen Layer das Hinzufügen von Polygonen erlauben.|false|
 |delete|nein|[TransactionConfig](#markdown-header-portalconfigmenutoolwfstransactiontransactionconfig)/Boolean|false|Legt fest, welche der zu `layerIds` zugehörigen Layer das Löschen von Geometrien erlauben.|false|
-|edit|nein|String/Boolean|false|_Deprecated in 3.0.0. Bitte nutzen Sie stattdessen `update`. Falls beide Konfigurationsparameter vorliegen, wird `edit` verwendet._ Falls der Parameter als ein Boolean vorliegt, wird durch den Parameter festgelegt, ob generell das Bearbeiten von Feature möglich ist. Falls der Parameter als String vorliegt, dann wird für alle konfigurierten Layer das Bearbeiten von Feature erlaubt und der Parameter legt den Text des Buttons fest.|false|
 |lineButton|nein|[TransactionConfig](#markdown-header-portalconfigmenutoolwfstransactiontransactionconfig)[]/Boolean|[]|Legt fest, welche der zu `layerIds` zugehörigen Layer das Hinzufügen von Linien erlauben.|false|
 |pointButton|nein|[TransactionConfig](#markdown-header-portalconfigmenutoolwfstransactiontransactionconfig)[]/Boolean|[]|Legt fest, welche der zu `layerIds` zugehörigen Layer das Hinzufügen von Punkten erlauben.|false|
 |polygonButton|nein|[TransactionConfig](#markdown-header-portalconfigmenutoolwfstransactiontransactionconfig)[]/Boolean|[]|Legt fest, welche der zu `layerIds` zugehörigen Layer das Hinzufügen von Polygonen erlauben.|false|
@@ -4090,10 +4087,8 @@ Konfiguration der verschiedenen Transaktionsmethoden für den entsprechenden Lay
 |----|--------|----|-------|-----------|------|
 |available|ja|Boolean|true|Legt fest, ob der entsprechende Button der Transaktionsmethode für den Layer mit der gegebenen Id nutzbar sein soll.|false|
 |layerId|ja|String||Id des Layers, für den die Transaktionsmethode konfiguriert wird.|false|
-|caption|nein|String|"common:modules.tools.wfsTransaction.interactionSelect.*"|_Deprecated in 3.0.0. Bitte nutzen Sie stattdessen `text`. Falls beide Konfigurationsparameter vorhanden sind, wird `cpation` verwendet._ Text des Knopfes der Transaktionsmethode. Falls kein Wert vorhanden ist, wird für `*` ein Standardwert der Transaktionsmethode verwendet. Kann ein Übersetzungsschlüssel sein.|false|
 |icon|nein|String||Bootstrap Symbol zur Anzeige innerhalb des Knopfes der Transaktionsmethode. Falls kein Wert angegeben wird, wird der Standardwert der Transaktionsmethode verwendet.|false|
-|multi|nein|Boolean|false|Legt fest, ob es sich bei den gezeichneten Geometrien um Multi-X-Geometrien handeln sollte. Bei Konfiguration für die Methoden `update` / `edit` und `delete` hat der Parameter keine Auswirkung.|false|
-|show|nein|Boolean|true|_Deprecated in 3.0.0. Bitte nutzen Sie stattdessen `available`. Falls beide Konfigurationsparameter vorhanden sind, wird `show` verwendet._ Legt fest, ob der entsprechende Button der Transaktionsmethode für den Layer mit der gegebenen Id nutzbar sein soll.|false|
+|multi|nein|Boolean|false|Legt fest, ob es sich bei den gezeichneten Geometrien um Multi-X-Geometrien handeln sollte. Bei Konfiguration für die Methoden `update` und `delete` hat der Parameter keine Auswirkung.|false|
 |text|nein|String|"common:modules.tools.wfsTransaction.interactionSelect.*"|Text des Knopfes der Transaktionsmethode. Falls kein Wert vorhanden ist, wird für `*` ein Standardwert der Transaktionsmethode verwendet. Kann ein Übersetzungsschlüssel sein.|false|
 
 **Examples**
@@ -4101,15 +4096,15 @@ Konfiguration der verschiedenen Transaktionsmethoden für den entsprechenden Lay
 ```json
 {
     "layerId": "1234",
-    "show": true,
-    "caption": "Point test"
+    "available": true,
+    "text": "Point test"
 }
 ```
 
 ```json
 {
     "layerId": "5678",
-    "show": true
+    "available": true
 }
 ```
 
