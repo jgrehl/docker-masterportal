@@ -10,7 +10,6 @@ import Layer2dVector from "./layer2dVector";
  */
 export default function Layer2dVectorVectorbase (attributes) {
     const defaultAttributes = {
-        isSecured: false
     };
 
     this.attributes = Object.assign(defaultAttributes, attributes);
