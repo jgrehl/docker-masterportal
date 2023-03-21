@@ -252,22 +252,21 @@ export default {
                 return;
             }
 
-            rules.forEach((rule, snippetId) => {
-                if (this.isRule(rule)) {
-                    if (!Array.isArray(rule?.value)
-                        && (this.snippets[rule.snippetId]?.type === "dropdown"
-                        || this.snippets[rule.snippetId]?.type === "sliderRange"
-                        || this.snippets[rule.snippetId]?.type === "dateRange"
-                        )
-                    ) {
-                        this.snippets[rule.snippetId].prechecked = [rule?.value];
-                        return;
-                    }
-                    this.snippets[rule.snippetId].prechecked = rule?.value;
+            rules.forEach((rule) => {
+                if (!this.isRule(rule)) {
+                    return;
                 }
-                else {
-                    this.snippets[snippetId].prechecked = [];
+
+                if (!Array.isArray(rule?.value)
+                    && (this.snippets[rule.snippetId]?.type === "dropdown"
+                    || this.snippets[rule.snippetId]?.type === "sliderRange"
+                    || this.snippets[rule.snippetId]?.type === "dateRange"
+                    )
+                ) {
+                    this.snippets[rule.snippetId].prechecked = [rule?.value];
+                    return;
                 }
+                this.snippets[rule.snippetId].prechecked = rule?.value;
             });
         },
         /**
