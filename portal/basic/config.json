@@ -41,6 +41,32 @@
       },
       "sections": [
         [
+          { 
+            "type": "wfst",
+            "name": "WFS-T Tool",
+            "layerIds": ["lgvline", "lgvpoint", "lgvpolygon"],
+            "toggleLayer": false,
+            "lineButton": [
+              {
+              "layerId":"lgvline",
+              "available": true
+              }
+            ],
+            "pointButton": [
+              {
+                  "layerId":"lgvpoint",
+                  "available": true
+              }
+            ],
+            "polygonButton": [
+              {
+              "layerId":"lgvpolygon",
+              "available": true
+              }
+            ],
+            "update": "Bearbeiten!",
+            "delete": true
+          },
           {
             "type": "fileImport"
           },
@@ -217,6 +243,24 @@
     },
     "Fachdaten": {
       "elements": [
+        {
+          "id": "lgvline",
+          "name": "wfst_linie_test",
+          "visibility": false,
+          "typ": "WFS"
+        },
+        {
+          "id": "lgvpoint",
+          "name": "wfst_punkt_test",
+          "visibility": false,
+          "typ": "WFS"
+        },
+        {
+          "id": "lgvpolygon",
+          "name": "wfst_polygon_test",
+          "visibility": false,
+          "typ": "WFS"
+        },
         {
           "id": "2426",
           "name": "WMS Bezirke",
