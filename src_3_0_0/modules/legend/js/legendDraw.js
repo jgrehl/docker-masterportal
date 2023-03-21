@@ -141,7 +141,7 @@ export default {
         if (type === "icon") {
             legendObj.graphic = style.imagePath + style.imageName;
         }
-        else{
+        else {
             let svg = "data:image/svg+xml;charset=utf-8,";
 
             svg += "<svg height='35' width='35' version='1.1' xmlns='http://www.w3.org/2000/svg'>";
@@ -157,10 +157,10 @@ export default {
             }
             svg += "' fill='none'/>";
             svg += "</svg>";
-    
+
             legendObj.graphic = svg;
         }
-       
+
         return legendObj;
     },
 
@@ -182,7 +182,7 @@ export default {
         if (fillHatch) {
             legendObj.graphic = StylePolygon.prototype.getPolygonFillHatchLegendDataUrl(style);
         }
-        else  if (type === "icon") {
+        else if (type === "icon") {
             legendObj.graphic = style.imagePath + style.imageName;
         }
         else {
