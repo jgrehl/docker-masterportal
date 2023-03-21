@@ -1042,7 +1042,7 @@
                     "polygon": "Fläche erfassen"
                 },
                 "error": {
-                    "allLayersNotSelected": "Es wurde kein für dieses Werkzeug konfigurierter WFS-T Layer im Themenbaum aktiviert.",
+                    "allLayersNotSelected": "Aktiviere einen konfigurierten WFS-T Layer im Themenbaum",
                     "geometryOutOfRange": "Die gezeichnete Geometrie befindet sich außerhalb des erlaubten Bereiches des Layers.",
                     "layerNotConfiguredCorrectly": "Es liegen Probleme bei der Konfiguration des ausgewählten Layers für die Nutzung mit diesem Werkzeug vor; möglicherweise fehlt der Parameter 'featurePrefix'.",
                     "layerNotSelected": "Der ausgewählte Layer wurde noch nicht im Themenbaum aktiviert.",
@@ -1058,15 +1058,12 @@
                         "selectedUpdate" : "$t(common:modules.tools.wfsTransaction.transaction.success.baseSuccess, {\"transaction\": \"Bearbeiten\"})"
                     },
                     "error": {
-                        "genericFailedTransaction": "Das Speichern bzw. Löschen der Geometrie und ihrer Parameter ist leider fehlgeschlagen. Bitte wenden Sie sich an Ihren Administrator.",
-                        "axios": "$t(common:modules.tools.wfsTransaction.transaction.error.genericFailedTransaction)",
-                        "baseError": "Das Speichern der Geometrie und ihrer Parameter ist leider fehlgeschlagen.",
-                        "InvalidValue": "$t(common:modules.tools.wfsTransaction.transaction.error.baseError) Eine der Eingaben ist unzulässig bzw. nicht im richtigen Format.",
-                        "InvalidParameterValue": "$t(common:modules.tools.wfsTransaction.transaction.error.InvalidValue)",
-                        "MissingParameterValue": "$t(common:modules.tools.wfsTransaction.transaction.error.baseError) Einer oder mehrere der Parameter haben keine Eingabe und der Dienst verfügt über keinen Defaultwert.",
-                        "OperationNotSupported": "$t(common:modules.tools.wfsTransaction.transaction.error.baseError) Der Dienst unterstützt die durchgeführte Operation nicht.",
-                        "OperationParsingFailed": "$t(common:modules.tools.wfsTransaction.transaction.error.baseError) Die Transaktion konnte vom Dienst nicht verarbeitet werden. Bitte wenden Sie sich an den Administrator.",
-                        "OperationProcessingFailed": "$t(common:modules.tools.wfsTransaction.transaction.error.baseError) Während der Transaktion ist ein Fehler aufgetreten."
+                        "axios": "Das Speichern bzw. Löschen der Geometrie und ihrer Parameter ist leider fehlgeschlagen. Bitte wenden Sie sich an Ihren Administrator.",
+                        "InvalidParameterValue": "Das Speichern der Geometrie und ihrer Parameter ist leider fehlgeschlagen. Eine der Eingaben ist unzulässig bzw. nicht im richtigen Format.",
+                        "MissingParameterValue": "Das Speichern der Geometrie und ihrer Parameter ist leider fehlgeschlagen. Einer oder mehrere der Parameter haben keine Eingabe und der Dienst verfügt über keinen Defaultwert.",
+                        "OperationNotSupported": "Das Speichern der Geometrie und ihrer Parameter ist leider fehlgeschlagen. Der Dienst unterstützt die durchgeführte Operation nicht.",
+                        "OperationParsingFailed": "Das Speichern der Geometrie und ihrer Parameter ist leider fehlgeschlagen. Die Transaktion konnte vom Dienst nicht verarbeitet werden. Bitte wenden Sie sich an den Administrator.",
+                        "OperationProcessingFailed": "Das Speichern der Geometrie und ihrer Parameter ist leider fehlgeschlagen. Während der Transaktion ist ein Fehler aufgetreten."
                     }
                 },
                 "deleteInteraction": {

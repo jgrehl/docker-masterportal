@@ -112,6 +112,9 @@ export function initLanguage (portalLanguageConfig) {
 
                 // only detect languages that are in the whitelist
                 checkWhitelist: true
+            },
+            interpolation: {
+                skipOnVariables: false
             }
         });
 }

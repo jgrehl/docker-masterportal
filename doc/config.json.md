@@ -4104,12 +4104,9 @@ When editing properties of a feature / adding properties to a new features, the 
 |layerIds|yes|String[]||Array of ids of layer defined in **[services.json](services.json.md)**.|false|
 |icon|no|String|"bi-globe"|Icon displayed for the tool.|false|
 |name|no|String|"WfsTransaction"|Tool name shown in the portal.|false|
-|layerSelectLabel|no|String|"common:modules.tools.wfsTransaction.layerSelectLabel"|_Deprecated in 3.0.0. Please set the value directly in the language files._ If given, overrides the value set for the label of the layer select box. May be a locale key.|false|
+|layerSelectLabel|no|String|"common:modules.tools.wfsTransaction.layerSelectLabel"| Please set the value directly in the language files._ If given, overrides the value set for the label of the layer select box. May be a locale key.|false|
 |toggleLayer|no|Boolean|false|Whether the features of the currently selected layer should stay visible when adding a new feature.|false|
-|useProxy|no|Boolean|false|_Deprecated in 3.0.0. [GDI-DE](https://www.gdi-de.org/en) recommends setting CORS headers on the required services instead of using proxies._ Defines whether a service URL should be requested via proxy. For this, dots in the URL are replaced with underscores.|false|
-|areaButton|no|[TransactionConfig](#markdown-header-portalconfigmenutoolwfstransactiontransactionconfig)[]/Boolean|[]|_Deprecated in 3.0.0. Please use `polygonButton` instead. If both are present, `areaButton` is used for now._ Defines which layers of `layerIds` allow insert transactions of polygon geometries.|false|
 |delete|no|[TransactionConfig](#markdown-header-portalconfigmenutoolwfstransactiontransactionconfig)/Boolean|false|Defines which layers of `layerIds` allow delete transactions.|false|
-|edit|no|String/Boolean|false|_Deprecated in 3.0.0. Please use `update` instead. If both are present, `edit` is used for now._ If present as a Boolean, it is decided whether features can generally be updated and if it is present as a string, features can be updated and the String defined the value presented inside the button.|false|
 |lineButton|no|[TransactionConfig](#markdown-header-portalconfigmenutoolwfstransactiontransactionconfig)[]/Boolean|[]|Defines which layers of `layerIds` allow insert transactions of line geometries.|false|
 |pointButton|no|[TransactionConfig](#markdown-header-portalconfigmenutoolwfstransactiontransactionconfig)[]/Boolean|[]|Defines which layers of `layerIds` allow insert transactions of point geometries.|false|
 |polygonButton|no|[TransactionConfig](#markdown-header-portalconfigmenutoolwfstransactiontransactionconfig)[]/Boolean|[]|Defines which layers of `layerIds` allow insert transactions of polygon geometries.|false|
@@ -4164,10 +4161,8 @@ Specific configuration for transaction methods of given layers.
 
 |available|yes|Boolean|true|Availability of the transaction method for the layer with the given id.|false|
 |layerId|yes|String||Layer the transaction method is being configured for.|false|
-|caption|no|String|"common:modules.tools.wfsTransaction.interactionSelect.*"|_Deprecated in 3.0.0. Please use `text` instead. If both are present, `cpation` is used for now._ Button text. If no value is given, `*` will be replaced with a standard value depending on the configured button. May be a locale key.|false|
 |icon|no|String||Bootstrap icon displayed inside the button. If no value is specified, it defaults to the default value configured for the transaction method.|false|
-|multi|no|Boolean|false|Whether the drawn geometries of this layer should be Multi-X.  This parameter does not have any use for `update` / `edit` and `delete`.|false|
-|show|no|Boolean|true|_Deprecated in 3.0.0. Please use `available` instead. If both are present, `show` is used for now._ Availability of the button for the layer with the given id.|false|
+|multi|no|Boolean|false|Whether the drawn geometries of this layer should be Multi-X.  This parameter does not have any use for `update` and `delete`.|false|
 |text|no|String|"common:modules.tools.wfsTransaction.interactionSelect.*"|Button text. If no value is given, `*` will be replaced with a standard value depending on the configured button. May be a locale key.|false|
 
 **Examples**
@@ -4175,15 +4170,15 @@ Specific configuration for transaction methods of given layers.
 ```json
 {
     "layerId": "1234",
-    "show": true,
-    "caption": "Point test"
+    "available": true,
+    "text": "Point test"
 }
 ```
 
 ```json
 {
     "layerId": "5678",
-    "show": true
+    "available": true
 }
 ```
 

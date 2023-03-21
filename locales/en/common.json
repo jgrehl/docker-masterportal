@@ -1036,7 +1036,7 @@
                     "polygon": "Add area"
                 },
                 "error": {
-                    "allLayersNotSelected": "No for this tool configured WFS-T layer has been set to visible in the layer tree.",
+                    "allLayersNotSelected": "Activate a WFS-T layer in the layer tree",
                     "geometryOutOfRange": "The drawn geometry is out of range of the allowed region of the layer.",
                     "layerNotConfiguredCorrectly": "The selected layer has not been configured correctly to be used with this tool; it might be missing the parameter 'featurePrefix'.",
                     "layerNotSelected": "The selected layer has not been set to visible in the layer tree.",
