@@ -34,13 +34,11 @@ describe("src_3_0_0/modules/legend/components/LegendSingleLayer.vue", () => {
         describe("renders legend with pdf", () => {
             it("renders the legend with pdf from array with single string", () => {
                 const propsData = {
-                    id: "legend_myLayer",
                     legendObj: {
                         name: "myLayer",
                         legend: ["https://link_to_pdf.pdf"],
                         position: 1
-                    },
-                    renderToId: ""
+                    }
                 };
 
                 wrapper = shallowMount(LegendSingleLayerComponent, {
@@ -50,12 +48,11 @@ describe("src_3_0_0/modules/legend/components/LegendSingleLayer.vue", () => {
                     propsData
                 });
 
-                expect(wrapper.find("#legend_myLayer > div:nth-child(1) a").exists()).to.be.true;
-                expect(wrapper.find("#legend_myLayer > div:nth-child(1) a").attributes().href).to.equal("https://link_to_pdf.pdf");
+                expect(wrapper.find(".layer-legend > div:nth-child(1) a").exists()).to.be.true;
+                expect(wrapper.find(".layer-legend > div:nth-child(1) a").attributes().href).to.equal("https://link_to_pdf.pdf");
             });
             it("renders the legends with pdf from array of strings", () => {
                 const propsData = {
-                    id: "legend_myLayer",
                     legendObj: {
                         name: "myLayer",
                         legend: ["https://link_to_pdf.pdf", "https://another_link_to_pdf.pdf"],
@@ -69,14 +66,13 @@ describe("src_3_0_0/modules/legend/components/LegendSingleLayer.vue", () => {
                     },
                     propsData
                 });
-                expect(wrapper.find("#legend_myLayer > div:nth-child(1) a").exists()).to.be.true;
-                expect(wrapper.find("#legend_myLayer > div:nth-child(1) a").attributes().href).to.equal("https://link_to_pdf.pdf");
-                expect(wrapper.find("#legend_myLayer > div:nth-child(2) a").exists()).to.be.true;
-                expect(wrapper.find("#legend_myLayer > div:nth-child(2) a").attributes().href).to.equal("https://another_link_to_pdf.pdf");
+                expect(wrapper.find(".layer-legend > div:nth-child(1) a").exists()).to.be.true;
+                expect(wrapper.find(".layer-legend > div:nth-child(1) a").attributes().href).to.equal("https://link_to_pdf.pdf");
+                expect(wrapper.find(".layer-legend > div:nth-child(2) a").exists()).to.be.true;
+                expect(wrapper.find(".layer-legend > div:nth-child(2) a").attributes().href).to.equal("https://another_link_to_pdf.pdf");
             });
             it("renders the legend with pdf from array with single object", () => {
                 const propsData = {
-                    id: "legend_myLayer",
                     legendObj: {
                         name: "myLayer",
                         legend: [{
@@ -94,13 +90,12 @@ describe("src_3_0_0/modules/legend/components/LegendSingleLayer.vue", () => {
                     propsData
                 });
 
-                expect(wrapper.find("#legend_myLayer > div:nth-child(1) a").exists()).to.be.true;
-                expect(wrapper.find("#legend_myLayer > div:nth-child(1) a").attributes().href).to.equal("https://link_to_pdf.pdf");
-                expect(wrapper.find("#legend_myLayer > div:nth-child(1) span").text()).to.equal("foobar");
+                expect(wrapper.find(".layer-legend > div:nth-child(1) a").exists()).to.be.true;
+                expect(wrapper.find(".layer-legend > div:nth-child(1) a").attributes().href).to.equal("https://link_to_pdf.pdf");
+                expect(wrapper.find(".layer-legend > div:nth-child(1) span").text()).to.equal("foobar");
             });
             it("renders the legends with pdf from array of objects", () => {
                 const propsData = {
-                    id: "legend_myLayer",
                     legendObj: {
                         name: "myLayer",
                         legend: [{
@@ -121,19 +116,18 @@ describe("src_3_0_0/modules/legend/components/LegendSingleLayer.vue", () => {
                     },
                     propsData
                 });
-                expect(wrapper.find("#legend_myLayer > div:nth-child(1) a").exists()).to.be.true;
-                expect(wrapper.find("#legend_myLayer > div:nth-child(1) a").attributes().href).to.equal("https://link_to_pdf.pdf");
-                expect(wrapper.find("#legend_myLayer > div:nth-child(1) span").text()).to.equal("foobar");
-                expect(wrapper.find("#legend_myLayer > div:nth-child(2) a").exists()).to.be.true;
-                expect(wrapper.find("#legend_myLayer > div:nth-child(2) a").attributes().href).to.equal("https://another_link_to_pdf.pdf");
-                expect(wrapper.find("#legend_myLayer > div:nth-child(2) span").text()).to.equal("barfoo");
+                expect(wrapper.find(".layer-legend > div:nth-child(1) a").exists()).to.be.true;
+                expect(wrapper.find(".layer-legend > div:nth-child(1) a").attributes().href).to.equal("https://link_to_pdf.pdf");
+                expect(wrapper.find(".layer-legend > div:nth-child(1) span").text()).to.equal("foobar");
+                expect(wrapper.find(".layer-legend > div:nth-child(2) a").exists()).to.be.true;
+                expect(wrapper.find(".layer-legend > div:nth-child(2) a").attributes().href).to.equal("https://another_link_to_pdf.pdf");
+                expect(wrapper.find(".layer-legend > div:nth-child(2) span").text()).to.equal("barfoo");
             });
         });
     });
     describe("renders legend with img", () => {
         it("renders the legend with img from array with single string", () => {
             const propsData = {
-                id: "legend_myLayer",
                 legendObj: {
                     name: "myLayer",
                     legend: ["some_string_interpreted_as_image"],
@@ -148,18 +142,16 @@ describe("src_3_0_0/modules/legend/components/LegendSingleLayer.vue", () => {
                 propsData
             });
 
-            expect(wrapper.find("#legend_myLayer > div:nth-child(1) img").exists()).to.be.true;
-            expect(wrapper.find("#legend_myLayer > div:nth-child(1) img").attributes().src).to.equal("some_string_interpreted_as_image");
+            expect(wrapper.find(".layer-legend > div:nth-child(1) img").exists()).to.be.true;
+            expect(wrapper.find(".layer-legend > div:nth-child(1) img").attributes().src).to.equal("some_string_interpreted_as_image");
         });
         it("renders the legends with img from array of strings", () => {
             const propsData = {
-                id: "legend_myLayer",
                 legendObj: {
                     name: "myLayer",
                     legend: ["some_string_interpreted_as_image", "another_string_interpreted_as_image"],
                     position: 1
-                },
-                renderToId: ""
+                }
             };
 
             wrapper = shallowMount(LegendSingleLayerComponent, {
@@ -168,14 +160,13 @@ describe("src_3_0_0/modules/legend/components/LegendSingleLayer.vue", () => {
                 },
                 propsData
             });
-            expect(wrapper.find("#legend_myLayer > div:nth-child(1) img").exists()).to.be.true;
-            expect(wrapper.find("#legend_myLayer > div:nth-child(1) img").attributes().src).to.equal("some_string_interpreted_as_image");
-            expect(wrapper.find("#legend_myLayer > div:nth-child(2) img").exists()).to.be.true;
-            expect(wrapper.find("#legend_myLayer > div:nth-child(2) img").attributes().src).to.equal("another_string_interpreted_as_image");
+            expect(wrapper.find(".layer-legend > div:nth-child(1) img").exists()).to.be.true;
+            expect(wrapper.find(".layer-legend > div:nth-child(1) img").attributes().src).to.equal("some_string_interpreted_as_image");
+            expect(wrapper.find(".layer-legend > div:nth-child(2) img").exists()).to.be.true;
+            expect(wrapper.find(".layer-legend > div:nth-child(2) img").attributes().src).to.equal("another_string_interpreted_as_image");
         });
         it("renders the legend with img from array with single object", () => {
             const propsData = {
-                id: "legend_myLayer",
                 legendObj: {
                     name: "myLayer",
                     legend: [{
@@ -193,13 +184,12 @@ describe("src_3_0_0/modules/legend/components/LegendSingleLayer.vue", () => {
                 propsData
             });
 
-            expect(wrapper.find("#legend_myLayer > div:nth-child(1) img").exists()).to.be.true;
-            expect(wrapper.find("#legend_myLayer > div:nth-child(1) img").attributes().src).to.equal("some_string_interpreted_as_image");
-            expect(wrapper.find("#legend_myLayer > div:nth-child(1) span").text()).to.equal("foobar");
+            expect(wrapper.find(".layer-legend > div:nth-child(1) img").exists()).to.be.true;
+            expect(wrapper.find(".layer-legend > div:nth-child(1) img").attributes().src).to.equal("some_string_interpreted_as_image");
+            expect(wrapper.find(".layer-legend > div:nth-child(1) span").text()).to.equal("foobar");
         });
         it("renders the legends with img from array of objects", () => {
             const propsData = {
-                id: "legend_myLayer",
                 legendObj: {
                     name: "myLayer",
                     legend: [{
@@ -211,8 +201,7 @@ describe("src_3_0_0/modules/legend/components/LegendSingleLayer.vue", () => {
                         graphic: "another_string_interpreted_as_image"
                     }],
                     position: 1
-                },
-                renderToId: ""
+                }
             };
 
             wrapper = shallowMount(LegendSingleLayerComponent, {
@@ -221,18 +210,17 @@ describe("src_3_0_0/modules/legend/components/LegendSingleLayer.vue", () => {
                 },
                 propsData
             });
-            expect(wrapper.find("#legend_myLayer > div:nth-child(1) img").exists()).to.be.true;
-            expect(wrapper.find("#legend_myLayer > div:nth-child(1) img").attributes().src).to.equal("some_string_interpreted_as_image");
-            expect(wrapper.find("#legend_myLayer > div:nth-child(1) span").text()).to.equal("foobar");
-            expect(wrapper.find("#legend_myLayer > div:nth-child(2) img").exists()).to.be.true;
-            expect(wrapper.find("#legend_myLayer > div:nth-child(2) img").attributes().src).to.equal("another_string_interpreted_as_image");
-            expect(wrapper.find("#legend_myLayer > div:nth-child(2) span").text()).to.equal("barfoo");
+            expect(wrapper.find(".layer-legend > div:nth-child(1) img").exists()).to.be.true;
+            expect(wrapper.find(".layer-legend > div:nth-child(1) img").attributes().src).to.equal("some_string_interpreted_as_image");
+            expect(wrapper.find(".layer-legend > div:nth-child(1) span").text()).to.equal("foobar");
+            expect(wrapper.find(".layer-legend > div:nth-child(2) img").exists()).to.be.true;
+            expect(wrapper.find(".layer-legend > div:nth-child(2) img").attributes().src).to.equal("another_string_interpreted_as_image");
+            expect(wrapper.find(".layer-legend > div:nth-child(2) span").text()).to.equal("barfoo");
         });
     });
     describe("renders legend with svg", () => {
         it("renders the legend with svg from array with single object", () => {
             const propsData = {
-                id: "legend_myLayer",
                 legendObj: {
                     name: "myLayer",
                     legend: [{
@@ -267,12 +255,11 @@ describe("src_3_0_0/modules/legend/components/LegendSingleLayer.vue", () => {
                 propsData
             });
 
-            expect(wrapper.find("#legend_myLayer > div:nth-child(1) img").exists()).to.be.true;
-            expect(wrapper.find("#legend_myLayer > div:nth-child(1) span").text()).to.equal("foobar");
+            expect(wrapper.find(".layer-legend > div:nth-child(1) img").exists()).to.be.true;
+            expect(wrapper.find(".layer-legend > div:nth-child(1) span").text()).to.equal("foobar");
         });
         it("renders the legends with svg from array of objects", () => {
             const propsData = {
-                id: "legend_myLayer",
                 legendObj: {
                     name: "myLayer",
                     legend: [{
@@ -310,14 +297,13 @@ describe("src_3_0_0/modules/legend/components/LegendSingleLayer.vue", () => {
                 },
                 propsData
             });
-            expect(wrapper.find("#legend_myLayer > div:nth-child(1) img").exists()).to.be.true;
-            expect(wrapper.find("#legend_myLayer > div:nth-child(1) span").text()).to.equal("foobar");
-            expect(wrapper.find("#legend_myLayer > div:nth-child(2) img").exists()).to.be.true;
-            expect(wrapper.find("#legend_myLayer > div:nth-child(2) span").text()).to.equal("barfoo");
+            expect(wrapper.find(".layer-legend > div:nth-child(1) img").exists()).to.be.true;
+            expect(wrapper.find(".layer-legend > div:nth-child(1) span").text()).to.equal("foobar");
+            expect(wrapper.find(".layer-legend > div:nth-child(2) img").exists()).to.be.true;
+            expect(wrapper.find(".layer-legend > div:nth-child(2) span").text()).to.equal("barfoo");
         });
         it("renders the legends with graphic is an array", () => {
             const propsData = {
-                id: "legend_myLayer",
                 legendObj: {
                     name: "myLayer",
                     legend: [{
@@ -336,12 +322,12 @@ describe("src_3_0_0/modules/legend/components/LegendSingleLayer.vue", () => {
                 },
                 propsData
             });
-            expect(wrapper.findAll("#legend_myLayer > div:nth-child(1) img")[0].exists()).to.be.true;
-            expect(wrapper.findAll("#legend_myLayer > div:nth-child(1) img")[0].attributes().src).to.equal("some_string_interpreted_as_image2");
-            expect(wrapper.findAll("#legend_myLayer > div:nth-child(1) img")[0].attributes().style).to.equal("width: 60px; height: 60px; margin: 10px;");
-            expect(wrapper.find("#legend_myLayer > div:nth-child(1) span").text()).to.equal("foobar");
-            expect(wrapper.findAll("#legend_myLayer > div:nth-child(1) img")[1].exists()).to.be.true;
-            expect(wrapper.findAll("#legend_myLayer > div:nth-child(1) img")[1].attributes().src).to.equal("some_string_interpreted_as_image1");
+            expect(wrapper.findAll(".layer-legend > div:nth-child(1) img")[0].exists()).to.be.true;
+            expect(wrapper.findAll(".layer-legend > div:nth-child(1) img")[0].attributes().src).to.equal("some_string_interpreted_as_image2");
+            expect(wrapper.findAll(".layer-legend > div:nth-child(1) img")[0].attributes().style).to.equal("width: 60px; height: 60px; margin: 10px;");
+            expect(wrapper.find(".layer-legend > div:nth-child(1) span").text()).to.equal("foobar");
+            expect(wrapper.findAll(".layer-legend > div:nth-child(1) img")[1].exists()).to.be.true;
+            expect(wrapper.findAll(".layer-legend > div:nth-child(1) img")[1].attributes().src).to.equal("some_string_interpreted_as_image1");
         });
     });
 });
