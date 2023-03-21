@@ -2,11 +2,6 @@
 export default {
     name: "LegendSingleLayer",
     props: {
-        id: {
-            type: String && undefined,
-            required: false,
-            default: ""
-        },
         legendObj: {
             type: Object && undefined,
             required: true
@@ -17,7 +12,6 @@ export default {
 
 <template>
     <div
-        :id="id"
         class="layer-legend show"
     >
         <template
