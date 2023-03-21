@@ -36,11 +36,11 @@ const actions = {
     },
 
     /**
-         * Sorts the Legend Entries by position descending
-         * @param {Object} param.state the state
-         * @param {Object} param.commit the commit
-         * @returns {void}
-         */
+     * Sorts the Legend Entries by position descending
+     * @param {Object} param.state the state
+     * @param {Object} param.commit the commit
+     * @returns {void}
+     */
     sortLegend ({state, commit}) {
         const sorted = state.legends.sort(function (a, b) {
             return b.position - a.position;
@@ -92,16 +92,17 @@ const actions = {
      * Generates the legend object and adds it to the legend array in the store.
      * @param {Object} param.dispatch the dispatch
      * @param {Object} param.getters the getters
-     * @param {Objec} layer the layer
+     * @param {Object} layer the layer
      * @returns {void}
      */
     generateLegend ({dispatch, getters}, layer) {
         const id = layer.get("id"),
+            zIndex = typeof layer.getLayer().getZIndex === "function" ? layer.getLayer().getZIndex() : 0,
             legendObj = {
                 id: id,
                 name: layer.get("name"),
                 legend: getters.preparedLegend,
-                position: layer.getLayer().getZIndex()
+                position: zIndex
             },
             isValidLegend = validator.isValidLegendObj(legendObj),
             isNotInLegend = isValidLegend && !getters.isLayerInLegend(id),
@@ -180,7 +181,7 @@ const actions = {
                 id: layer.get("id"),
                 name: layer.get("name"),
                 legend: getters.preparedLegend,
-                position: layer.getLayer().getZIndex()
+                position: typeof layer.getLayer().getZIndex === "function" ? layer.getLayer().getZIndex() : 0
             };
             if (validator.isValidLegendObj(legendObj)) {
                 commit("setLayerInfoLegend", legendObj);
@@ -247,8 +248,6 @@ const actions = {
         legends = [].concat(...legends);
         commit("setPreparedLegend", legends);
     }
-
-
 };
 
 export default actions;
