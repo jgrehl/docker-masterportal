@@ -11,12 +11,11 @@ export default {
      * @return {ol.Style} an SVG for interval circle bars style or empty array
      */
     drawIntervalStyle (styleObject) {
-        const scalingShape = styleObject.scalingShape,
-            scalingAttribute = styleObject.scalingAttribute;
+        const scalingShape = styleObject.scalingShape;
         let intervalStyle = [];
 
         if (scalingShape === "CIRCLE_BAR") {
-            intervalStyle = this.drawIntervalCircleBars(scalingAttribute, styleObject);
+            intervalStyle = this.drawIntervalCircleBars(styleObject);
         }
 
         return intervalStyle;
@@ -87,24 +86,11 @@ export default {
 
     /**
      * Creats an SVG for interval circle bar style.
-     * @param {String} scalingAttribute attribute that contains the values of a feature
      * @param {ol.style} style style
      * @returns {String} - style as svg
      */
-    drawIntervalCircleBars (scalingAttribute, style) {
-        const olFeature = new Feature(),
-            circleBarScalingFactor = style.circleBarScalingFactor,
-            barHeight = String(20 / circleBarScalingFactor),
-            clonedStyle = style.clone(),
-            intervalCircleBar = clonedStyle.getStyle().getImage().getSrc();
-
-        // todo: können die 3 nächsten Zeilen weg? es wird ja die intervalCircleBar returned
-        // habe keine Legend gefunden, die den geometryType 'interval' hat.
-        olFeature.set(scalingAttribute, barHeight);
-        clonedStyle.setFeature(olFeature);
-        clonedStyle.setIsClustered(false);
-
-        return intervalCircleBar;
+    drawIntervalCircleBars (style) {
+        return style.clone().getStyle().getImage().getSrc();
     },
 
     /**
@@ -149,24 +135,32 @@ export default {
         const strokeColor = style.lineStrokeColor ? convertColor(style.lineStrokeColor, "rgbString") : "black",
             strokeWidth = style.lineStrokeWidth,
             strokeOpacity = style.lineStrokeColor[3] || 0,
-            strokeDash = style.lineStrokeDash ? style.lineStrokeDash.join(" ") : undefined;
-        let svg = "data:image/svg+xml;charset=utf-8,";
+            strokeDash = style.lineStrokeDash ? style.lineStrokeDash.join(" ") : undefined,
+            type = style.type ? style.type.toLowerCase() : style.attributes?.type.toLowerCase();
 
-        svg += "<svg height='35' width='35' version='1.1' xmlns='http://www.w3.org/2000/svg'>";
-        svg += "<path d='M 05 30 L 30 05' stroke='";
-        svg += strokeColor;
-        svg += "' stroke-opacity='";
-        svg += strokeOpacity;
-        svg += "' stroke-width='";
-        svg += strokeWidth;
-        if (strokeDash) {
-            svg += "' stroke-dasharray='";
-            svg += strokeDash;
+        if (type === "icon") {
+            legendObj.graphic = style.imagePath + style.imageName;
         }
-        svg += "' fill='none'/>";
-        svg += "</svg>";
+        else{
+            let svg = "data:image/svg+xml;charset=utf-8,";
 
-        legendObj.graphic = svg;
+            svg += "<svg height='35' width='35' version='1.1' xmlns='http://www.w3.org/2000/svg'>";
+            svg += "<path d='M 05 30 L 30 05' stroke='";
+            svg += strokeColor;
+            svg += "' stroke-opacity='";
+            svg += strokeOpacity;
+            svg += "' stroke-width='";
+            svg += strokeWidth;
+            if (strokeDash) {
+                svg += "' stroke-dasharray='";
+                svg += strokeDash;
+            }
+            svg += "' fill='none'/>";
+            svg += "</svg>";
+    
+            legendObj.graphic = svg;
+        }
+       
         return legendObj;
     },
 
@@ -182,10 +176,14 @@ export default {
             strokeWidth = style.polygonStrokeWidth,
             fillOpacity = style.polygonFillColor?.[3] || 0,
             fillHatch = style.polygonFillHatch,
-            strokeOpacity = style.polygonStrokeColor[3] || 0;
+            strokeOpacity = style.polygonStrokeColor[3] || 0,
+            type = style.type ? style.type.toLowerCase() : style.attributes?.type.toLowerCase();
 
         if (fillHatch) {
             legendObj.graphic = StylePolygon.prototype.getPolygonFillHatchLegendDataUrl(style);
+        }
+        else  if (type === "icon") {
+            legendObj.graphic = style.imagePath + style.imageName;
         }
         else {
             let svg = "data:image/svg+xml;charset=utf-8,";
