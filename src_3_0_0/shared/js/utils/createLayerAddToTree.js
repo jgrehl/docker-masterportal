@@ -1,4 +1,6 @@
 import rawLayerList from "@masterportal/masterportalapi/src/rawLayerList";
+import styleList from "@masterportal/masterportalapi/src/vectorStyle/styleList";
+import createStyle from "@masterportal/masterportalapi/src/vectorStyle/createStyle";
 import store from "../../../app-store";
 import layerCollection from "../../../core/layers/js/layerCollection";
 import {treeSubjectsKey} from "../../../shared/js/utils/constants";
@@ -104,17 +106,14 @@ function setAttributes (layer, id, layerName) {
  * @param {String} styleId styleId of the style-model
  * @returns {void}
  */
-// eslint-disable-next-line
 function setStyle (layer, styleId) {
-    // @todo when styleModel has moved
-    // @todo test implementation also needed
-    // const styleModel = Radio.request("StyleList", "returnModelById", styleId);
+    const styleObject = styleList.returnStyleObject(styleId);
 
-    // if (styleModel !== undefined) {
-    // layer.get("layer").setStyle((feature) => {
-    //      return styleModel.createStyle(feature, false);
-    //  });
-    // }
+    if (styleObject !== undefined) {
+        layer.getLayer().setStyle((feature) => {
+            return createStyle.createStyle(styleObject, feature, false, Config.wfsImgPath);
+        });
+    }
 }
 
 export default {
