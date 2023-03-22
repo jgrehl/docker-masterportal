@@ -1,5 +1,6 @@
 import {expect} from "chai";
 import sinon from "sinon";
+import styleList from "@masterportal/masterportalapi/src/vectorStyle/styleList";
 import store from "../../../../../app-store";
 import createLayerAddToTreeModule from "../../createLayerAddToTree.js";
 import layerCollection from "../../../../../core/layers/js/layerCollection.js";
@@ -12,7 +13,7 @@ describe("src/utils/createLayerAddToTree.js", () => {
         layerSource,
         createdLayer,
         highlightLayerFeatures,
-        rootGetters;
+        setStyleSpy;
     const treeHighlightedFeatures = {
         active: true,
         layerName: "common:tree.selectedFeatures"
@@ -32,6 +33,7 @@ describe("src/utils/createLayerAddToTree.js", () => {
             highlightLayerFeatures = [];
             layerInCollection = false;
             setIsSelectedSpy = sinon.spy();
+            sinon.stub(styleList, "returnStyleObject").returns({});
             layerSource = {
                 getFeatures: () => {
                     return highlightLayerFeatures;
@@ -49,6 +51,11 @@ describe("src/utils/createLayerAddToTree.js", () => {
                 getLayerSource: () => {
                     return layerSource;
                 },
+                getLayer: () => {
+                    return {
+                        setStyle: setStyleSpy
+                    };
+                },
                 setIsSelected: setIsSelectedSpy
             };
             newLayer = {
@@ -61,8 +68,14 @@ describe("src/utils/createLayerAddToTree.js", () => {
                             return addedFeatures ? [...addedFeatures] : [];
                         }
                     };
+                },
+                getLayer: () => {
+                    return {
+                        setStyle: setStyleSpy
+                    };
                 }
             };
+            setStyleSpy = sinon.spy();
             originalLayer = {
                 id: "idOriginal",
                 name: "originalName",
@@ -74,6 +87,11 @@ describe("src/utils/createLayerAddToTree.js", () => {
                         return "originalName";
                     }
                     return null;
+                },
+                getLayer: () => {
+                    return {
+                        setStyle: setStyleSpy
+                    };
                 },
                 setIsSelected: sinon.stub(),
                 attributes: {}
@@ -95,16 +113,7 @@ describe("src/utils/createLayerAddToTree.js", () => {
                 }
                 return ret;
             });
-
             store.dispatch = sinon.spy();
-
-            rootGetters = {
-                "treeHighlightedFeatures": {active: true},
-                "treeType": "custom",
-                "determineZIndex": function () {
-                    return 10;
-                }
-            };
         });
 
         afterEach(() => {
@@ -115,7 +124,8 @@ describe("src/utils/createLayerAddToTree.js", () => {
             const layerId = null,
                 features = [{featureId: "featureId"}];
 
-            await createLayerAddToTreeModule.createLayerAddToTree(rootGetters, layerId, features, treeHighlightedFeatures);
+            await createLayerAddToTreeModule.createLayerAddToTree(layerId, features, treeHighlightedFeatures);
+            expect(setStyleSpy.notCalled).to.be.true;
         });
 
         it("test create new layer - layer does not exist", () => {
@@ -126,6 +136,7 @@ describe("src/utils/createLayerAddToTree.js", () => {
 
             expect(store.dispatch.args[0][0]).to.equal("addLayerToLayerConfig");
             expect(store.dispatch.args[0][1].layerConfig).to.equal(null);
+            expect(setStyleSpy.notCalled).to.be.true;
         });
 
         it("test create new layer remove features and addFeatures", async () => {
@@ -133,7 +144,7 @@ describe("src/utils/createLayerAddToTree.js", () => {
                 features = [{featureId: "featureIdNew"}];
 
             highlightLayerFeatures = [{featureId: "featureId"}];
-            await createLayerAddToTreeModule.createLayerAddToTree(rootGetters, layerId, features, treeHighlightedFeatures);
+            await createLayerAddToTreeModule.createLayerAddToTree(layerId, features, treeHighlightedFeatures);
 
             expect(store.dispatch.args[0][0]).to.equal("addLayerToLayerConfig");
             expect(store.dispatch.args[0][1].layerConfig.id).to.equal("idOriginal_originalName");
@@ -143,6 +154,7 @@ describe("src/utils/createLayerAddToTree.js", () => {
             expect(layerSource.removeFeature.args[0][0]).to.be.deep.equals(highlightLayerFeatures[0]);
             expect(layerSource.addFeatures.calledOnce).to.be.true;
             expect(layerSource.addFeatures.args[0][0]).to.be.deep.equals(features);
+            expect(setStyleSpy.calledOnce).to.be.true;
         });
 
         it("test use existing layer of layerCollection and addFeatures", async () => {
@@ -151,11 +163,12 @@ describe("src/utils/createLayerAddToTree.js", () => {
 
             layerInCollection = true;
 
-            await createLayerAddToTreeModule.createLayerAddToTree(rootGetters, layerId, features, treeHighlightedFeatures);
+            await createLayerAddToTreeModule.createLayerAddToTree(layerId, features, treeHighlightedFeatures);
             expect(store.dispatch.args[0][0]).to.equal("replaceByIdInLayerConfig");
             expect(store.dispatch.args[1][0]).to.equal("updateAllZIndexes");
             expect(layerSource.addFeatures.calledOnce).to.be.true;
             expect(layerSource.addFeatures.args[0][0]).to.be.deep.equals(features);
+            expect(setStyleSpy.calledOnce).to.be.true;
         });
     });
 });
