@@ -206,5 +206,32 @@ describe("src_3_0_0/shared/js/api/wmsGetFeatureInfo.js", () => {
             expect(features[0].get("y_coord")).equals("5315290.1");
         });
     });
+    it("should return a feature from qgis service with the given documentString as text/xml", () => {
+        const documentString = `<GetFeatureInfoResponse>
+        <Layer name="void"/>
+        <Layer name="oidv">
+            <Feature id="A-28">
+                <Attribute value="yes" name="big"/>
+                <Attribute value="no" name="small"/>
+            </Feature>
+        </Layer>
+        <Layer name="idvo">
+            <Feature id="28-A">
+                <Attribute value="left" name="sideways"/>
+                <Attribute value="maybe" name="upwards"/>
+            </Feature>
+        </Layer>
+        <Layer name="dvoi">
+        </Layer>
+       </GetFeatureInfoResponse>`,
+            parser = new DOMParser(),
+            features = parseFeatures(parser.parseFromString(documentString, "text/xml"));
+
+        expect(features.length).equals(2);
+        expect(features[0].get("big")).equals("yes");
+        expect(features[0].get("small")).equals("no");
+        expect(features[1].get("sideways")).equals("left");
+        expect(features[1].get("upwards")).equals("maybe");
+    });
 });
 
