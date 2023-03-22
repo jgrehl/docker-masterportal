@@ -79,6 +79,7 @@ export default {
     },
     unmounted () {
         this.resetToThemeChooser();
+        this.removeHighlightFeature();
     },
     methods: {
         ...mapActions("Modules/FeatureLister", [
