@@ -13,12 +13,15 @@ describe("src/modules/featureLister/components/FeatureLister.vue", () => {
     };
     let store,
         wrapper,
-        rootGetters;
+        rootGetters,
+        removeHighlightFeatureSpy;
 
     beforeEach(() => {
         FeatureLister.actions.switchTabTo = sinon.spy(FeatureLister.actions.switchTabTo);
         FeatureLister.actions.addMouseEvents = sinon.spy(FeatureLister.actions.addMouseEvents);
+        FeatureLister.mutations.resetToThemeChooser = sinon.spy(FeatureLister.mutations.resetToThemeChooser);
         FeatureLister.getters.headers = () => [{key: "name", value: "Name"}];
+        removeHighlightFeatureSpy = sinon.spy();
 
         store = createStore({
             modules: {
@@ -32,7 +35,7 @@ describe("src/modules/featureLister/components/FeatureLister.vue", () => {
                     namespaced: true,
                     getters: mockMapGetters,
                     actions: {
-                        removeHighlightFeature: sinon.stub()
+                        removeHighlightFeature: removeHighlightFeatureSpy
                     }
                 }
             }
@@ -49,6 +52,19 @@ describe("src/modules/featureLister/components/FeatureLister.vue", () => {
         expect(store.state.Modules.FeatureLister.featureDetailView).to.be.false;
         expect(store.state.Modules.FeatureLister.featureListView).to.be.false;
         expect(store.state.Modules.FeatureLister.layerListView).to.be.true;
+        wrapper.unmount();
+        expect(removeHighlightFeatureSpy.calledOnce).to.be.true;
+        expect(FeatureLister.mutations.resetToThemeChooser.calledOnce).to.be.true;
+    });
+
+    it("calls expected functions on unmount", () => {
+        store.commit("Modules/FeatureLister/setLayerListView", true);
+        wrapper = shallowMount(FeatureListerComponent, {global: {plugins: [store]}});
+
+        expect(wrapper.find("#feature-lister-themes").exists()).to.be.true;
+        wrapper.unmount();
+        expect(removeHighlightFeatureSpy.calledOnce).to.be.true;
+        expect(FeatureLister.mutations.resetToThemeChooser.calledOnce).to.be.true;
     });
 
     it("renders list of layer features", () => {
