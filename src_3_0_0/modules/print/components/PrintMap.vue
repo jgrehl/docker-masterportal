@@ -38,6 +38,8 @@ export default {
             "formatList",
             "isGfiAvailable",
             "isGfiSelected",
+            "isLegendAvailable",
+            "isLegendSelected",
             "isScaleSelectedManually",
             "layoutMapInfo",
             "layoutList",
@@ -473,6 +475,19 @@ export default {
                     :label="$t('modules.tools.print.autoAdjustScale')"
                     :checked="autoAdjustScale && !isScaleSelectedManually"
                 />
+            </div>
+            <div
+                v-if="isLegendAvailable"
+            >
+                <div class="form-check form-switch mb-3 d-flex align-items-center">
+                    <SwitchInput
+                        :id="'printLegend'"
+                        :aria="$t('modules.tools.print.withLegendLabel')"
+                        :interaction="($event) => setIsLegendSelected($event.target.checked)"
+                        :label="$t('modules.tools.print.withLegendLabel')"
+                        :checked="isLegendSelected"
+                    />
+                </div>
             </div>
             <div
                 v-if="isGfiAvailable"
