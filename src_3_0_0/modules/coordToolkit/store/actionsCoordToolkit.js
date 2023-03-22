@@ -274,11 +274,11 @@ export default {
     /**
      * Remembers the projection and shows mapmarker at the given position.
      * @param {Object} context actions context object.
-     * @param {Event} event - pointerdown-event, to get the position from
+     * @param {Event} coordinates - the position
      * @returns {void}
      */
-    setMarker: function ({dispatch}, event) {
-        dispatch("Maps/placingPointMarker", event, {root: true});
+    setMarker: function ({dispatch}, coordinates) {
+        dispatch("Maps/placingPointMarker", [parseFloat(coordinates[0]), parseFloat(coordinates[1])], {root: true});
     },
     /**
      * Validates the user-input depending on the selected projection and sets the error messages.
