@@ -818,6 +818,35 @@ describe("src_3_0_0/modules/coord/store/actionsCoordToolkit.js", () => {
                     expect(stub.firstCall.args[0]).to.equal("123456&789123");
                 });
             });
+
+            describe("setMarker", () => {
+                it("setMarker shall parse the coordinates", () => {
+                    const coordinates = ["1234.56", "4567.89"];
+
+                    actions.setMarker({dispatch}, coordinates);
+                    expect(dispatch.calledOnce).to.be.true;
+                    expect(dispatch.firstCall.args[0]).to.equal("Maps/placingPointMarker");
+                    expect(dispatch.firstCall.args[1]).to.be.deep.equal([1234.56, 4567.89]);
+                });
+
+                it("setMarker shall call placingPointMarker", () => {
+                    const coordinates = [1234.56, 4567.89];
+
+                    actions.setMarker({dispatch}, coordinates);
+                    expect(dispatch.calledOnce).to.be.true;
+                    expect(dispatch.firstCall.args[0]).to.equal("Maps/placingPointMarker");
+                    expect(dispatch.firstCall.args[1]).to.be.deep.equal([1234.56, 4567.89]);
+                });
+            });
+
+            describe("removeMarker", () => {
+                it("removeMarker shall call removePointMarker", () => {
+                    actions.removeMarker({dispatch});
+                    expect(dispatch.calledOnce).to.be.true;
+                    expect(dispatch.firstCall.args[0]).to.equal("Maps/removePointMarker");
+                    expect(dispatch.firstCall.args[1]).to.be.null;
+                });
+            });
         });
     });
 });
