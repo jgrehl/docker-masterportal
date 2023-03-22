@@ -60,20 +60,21 @@ export default {
         }
     },
     mounted () {
-        layerCollection.getOlLayers().forEach(async layer => {
+        this.$nextTick(() => {
+            layerCollection.getOlLayers().forEach(async layer => {
+                if (layer instanceof VectorLayer && layer.get("typ") === "WFS") {
+                    const layerSource = layer.getSource();
 
-            if (layer instanceof VectorLayer && layer.get("typ") === "WFS") {
-                const layerSource = layer.getSource();
-
-                this.visibleVectorLayers.push(
-                    {
-                        name: layer.get("name"),
-                        id: layer.get("id"),
-                        features: layerSource.getFeatures(),
-                        geometryType: layerSource.getFeatures()[0] ? layerSource.getFeatures()[0].getGeometry().getType() : null
-                    }
-                );
-            }
+                    this.visibleVectorLayers.push(
+                        {
+                            name: layer.get("name"),
+                            id: layer.get("id"),
+                            features: layerSource.getFeatures(),
+                            geometryType: layerSource.getFeatures()[0] ? layerSource.getFeatures()[0].getGeometry().getType() : null
+                        }
+                    );
+                }
+            });
         });
     },
     unmounted () {
