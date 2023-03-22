@@ -7,13 +7,12 @@ import {treeSubjectsKey} from "../../../shared/js/utils/constants";
 
 /**
  * Creates a layer containing the given features and shows it in menu tree.
- * @param {Object} rootGetters rootGetters
  * @param {String} layerId contains the id of the layer, the features are got from
  * @param {Array} features contains the features to add to new layer
  * @param {Object} thfConfig content of config.json's property 'treeHighlightedFeatures'
  * @returns {void}
  */
-async function createLayerAddToTree (rootGetters, layerId, features, thfConfig = {}) {
+async function createLayerAddToTree (layerId, features, thfConfig = {}) {
     if (layerId) {
         const layerNameKey = thfConfig.layerName ? thfConfig.layerName : "common:tree.selectedFeatures",
             originalLayer = getLayer(layerId);
