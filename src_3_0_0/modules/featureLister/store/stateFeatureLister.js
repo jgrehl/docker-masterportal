@@ -5,6 +5,8 @@
  * @property {String} type type of the FeatureLister component
  * @property {String} name displayed as title (config-param)
  * @property {String} icon icon next to title (config-param)
+ * @property {String} description The description that should be shown
+ * @property {Boolean} showDescription If true, description will be shown.
  * @property {Number} maxFeatures default value for maxFeatures that can be overwritten in config
  * @property {Array} layerlist array of layers in the format {id, name, features}
  * @property {String} layerid id of visibleLayer to be displayed
@@ -29,6 +31,8 @@ const state = {
     type: "featureLister",
     name: "common:menu.tools.featureLister",
     icon: "bi-list",
+    description: "",
+    showDescription: false,
     maxFeatures: 20,
     // featureLister state
     layerlist: [],
