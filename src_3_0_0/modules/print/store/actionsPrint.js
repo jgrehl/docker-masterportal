@@ -97,19 +97,23 @@ const actions = {
             dispatch("getGfiForPrint");
             spec.buildGfi(state.isGfiSelected, state.gfiForPrint);
         }
+        if (state.isLegendAvailable) {
+            spec.buildLegend(state.isLegendSelected, state.isMetadataAvailable, print.getResponse, print.index);
+        }
+        else {
+            spec.setLegend({});
+            spec.setShowLegend(false);
+            spec = omit(spec, ["uniqueIdList"]);
+            printJob = {
+                index: print.index,
+                payload: spec.defaults,
+                printAppId: state.printAppId,
+                currentFormat: state.currentFormat,
+                getResponse: print.getResponse
+            };
 
-        spec.setLegend({});
-        spec.setShowLegend(false);
-        spec = omit(spec, ["uniqueIdList"]);
-        printJob = {
-            index: print.index,
-            payload: encodeURIComponent(JSON.stringify(spec.defaults)),
-            printAppId: state.printAppId,
-            currentFormat: state.currentFormat,
-            getResponse: print.getResponse
-        };
-
-        dispatch("createPrintJob", printJob);
+            dispatch("createPrintJob", printJob);
+        }
     },
 
     /**
