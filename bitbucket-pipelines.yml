@@ -126,7 +126,7 @@ pipelines:
             - step:
                 name: log
                 script:
-                    - echo $BITBUCKET_TAG
+                    - echo 'BITBUCKET_TAG:'$BITBUCKET_TAG
         deploy on openCode:
             - step:
                 name: deploy on openCode
