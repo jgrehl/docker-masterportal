@@ -1,5 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 const Config = {
+    addons: ["populationRequest"],
     ignoredKeys: ["BOUNDEDBY", "SHAPE", "SHAPE_LENGTH", "SHAPE_AREA", "OBJECTID", "GLOBALID", "GEOMETRY", "SHP", "SHP_AREA", "SHP_LENGTH", "GEOM"],
     namedProjections: [
         // ETRS89 UTM
@@ -23,6 +24,7 @@ const Config = {
         fetchBroadcastUrl: "./resources/newsFeedPortalAlerts.json"
     },
     startingMap3D: false,
+    cesiumLibrary: "https://geoportal-hamburg.de/mastercode/cesium/1_100/Cesium.js",
     cesiumParameter: {
         fog: {
             enabled: true,
