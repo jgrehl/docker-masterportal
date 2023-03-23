@@ -1,5 +1,6 @@
 import {expect} from "chai";
 import stateGraphicalSelect from "../../../store/stateGraphicalSelect";
+import getters from "../../../store/gettersGraphicalSelect";
 
 
 describe("src/share-components/graphicalSelect/store/gettersGraphicalSelect", function () {
@@ -10,11 +11,17 @@ describe("src/share-components/graphicalSelect/store/gettersGraphicalSelect", fu
         expect(stateGraphicalSelect.name).to.be.equal("Geometrie");
     });
 
+    it("returns the type default value from state", function () {
+        expect(stateGraphicalSelect.type).to.be.equal("string");
+    });
     it("returns the displayName default value from state", function () {
         expect(stateGraphicalSelect.displayName).to.be.equal("common:snippets.graphicalSelect.displayName");
     });
     it("returns the snippetType default value from state", function () {
         expect(stateGraphicalSelect.snippetType).to.be.equal("graphicalSelect");
+    });
+    it("returns the isMultiple default value from state", function () {
+        expect(stateGraphicalSelect.isMultiple).to.be.false;
     });
     it("returns the selectionElements default value from state", function () {
         expect(stateGraphicalSelect.selectionElements).to.be.eql(["Dropdown"]);
@@ -36,5 +43,17 @@ describe("src/share-components/graphicalSelect/store/gettersGraphicalSelect", fu
     });
     it("returns the defaultSelection default value from state", function () {
         expect(stateGraphicalSelect.defaultSelection).to.be.equal("");
+    });
+    it("returns the circleOverlay default values from state", () => {
+        expect(getters.circleOverlay(stateGraphicalSelect).getId()).to.be.equal("circle-overlay");
+        expect(getters.circleOverlay(stateGraphicalSelect).getElement()).not.to.be.undefined;
+        expect(getters.circleOverlay(stateGraphicalSelect).getOffset()).to.deep.equal([15, 0]);
+        expect(getters.circleOverlay(stateGraphicalSelect).getPositioning()).to.be.equal("center-left");
+    });
+    it("returns the tooltipOverlay default values from state", () => {
+        expect(getters.tooltipOverlay(stateGraphicalSelect).getId()).to.be.equal("tooltip-overlay");
+        expect(getters.tooltipOverlay(stateGraphicalSelect).getElement()).not.to.be.undefined;
+        expect(getters.tooltipOverlay(stateGraphicalSelect).getOffset()).to.deep.equal([15, 20]);
+        expect(getters.tooltipOverlay(stateGraphicalSelect).getPositioning()).to.be.equal("top-left");
     });
 });
