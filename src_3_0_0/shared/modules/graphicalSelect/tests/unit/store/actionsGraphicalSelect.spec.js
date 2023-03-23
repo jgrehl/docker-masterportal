@@ -7,7 +7,6 @@ import Polygon from "ol/geom/Polygon";
 import Feature from "ol/Feature";
 import Draw from "ol/interaction/Draw.js";
 import Overlay from "ol/Overlay.js";
-import definitionsGraphicalSelect from "../../../js/definitionsGraphicalSelect";
 
 
 describe("src/share-components/graphicalSelect/store/actionsGraphicalSelect", () => {
@@ -27,7 +26,7 @@ describe("src/share-components/graphicalSelect/store/actionsGraphicalSelect", ()
 
     afterEach(sinon.restore);
 
-    it("updateDrawInteractionListener defines a drawstart and drawend function on the interaction", async () => {
+    it("setDrawInteractionListener defines a drawstart and drawend function on the interaction", async () => {
         const layer = new VectorLayer({
                 name: "Geometry-Selection",
                 source: new VectorSource(),
@@ -40,7 +39,7 @@ describe("src/share-components/graphicalSelect/store/actionsGraphicalSelect", ()
             }),
             payload = {layer: layer, interaction: interaction};
 
-        await actions.updateDrawInteractionListener({dispatch, commit}, payload);
+        await actions.setDrawInteractionListener({dispatch, commit}, payload);
 
         expect(payload.interaction.listeners_.drawstart).to.have.length(1);
         expect(payload.interaction.listeners_.drawend).to.have.length(1);
@@ -78,7 +77,7 @@ describe("src/share-components/graphicalSelect/store/actionsGraphicalSelect", ()
 
         await actions.showTooltipOverlay({state, rootState});
 
-        expect(definitionsGraphicalSelect.tooltipOverlay.element.innerHTML).to.eql(state.tooltipMessagePolygon);
+        expect(state.tooltipOverlay.element.innerHTML).to.eql(state.tooltipMessagePolygon);
 
     });
     it("showTooltipOverlay sets tooltipOverlay position coordinates", async () => {
@@ -98,7 +97,7 @@ describe("src/share-components/graphicalSelect/store/actionsGraphicalSelect", ()
 
         await actions.showTooltipOverlay({state, rootState});
 
-        expect(definitionsGraphicalSelect.tooltipOverlay.getPosition()).to.eql(rootState.Maps.mouseCoordinate);
+        expect(state.tooltipOverlay.getPosition()).to.eql(rootState.Maps.mouseCoordinate);
 
     });
     it("createDomOverlay creates div with id", () => {
