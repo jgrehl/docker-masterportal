@@ -122,6 +122,11 @@ pipelines:
                 script:
                     - npm install
                     - npm audit --json
+        log:
+            - step:
+                name: log
+                script:
+                    - echo $BITBUCKET_TAG
         deploy on openCode:
             - step:
                 name: deploy on openCode
