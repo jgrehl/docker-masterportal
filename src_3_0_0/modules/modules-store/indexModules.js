@@ -6,10 +6,8 @@ import AddWMS from "../addWMS/store/indexAddWMS";
 import BufferAnalysis from "../bufferAnalysis/store/indexBufferAnalysis";
 import Contact from "../contact/store/indexContact";
 import CoordToolkit from "../coordToolkit/store/indexCoordToolkit";
-import Draw from "../draw/store/indexDraw";
 import FeatureLister from "../featureLister/store/indexFeatureLister";
 import FileImport from "../fileImport/store/indexFileImport";
-import Filter from "../filter/store/indexFilter";
 import GetFeatureInfo from "../getFeatureInfo/store/indexGetFeatureInfo";
 import GraphicalSelect from "../../shared/modules/graphicalSelect/store/indexGraphicalSelect";
 import Language from "../language/store/indexLanguage";
@@ -46,10 +44,8 @@ export default {
         BufferAnalysis: {...BufferAnalysis},
         Contact: {...Contact},
         CoordToolkit: {...CoordToolkit},
-        Draw: {...Draw},
         FeatureLister: {...FeatureLister},
         FileImport: {...FileImport},
-        Filter: {...Filter},
         GetFeatureInfo: {...GetFeatureInfo},
         GraphicalSelect: {...GraphicalSelect},
         Language: {...Language},

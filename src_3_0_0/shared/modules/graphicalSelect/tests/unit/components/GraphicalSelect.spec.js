@@ -1,25 +1,38 @@
-import {createStore} from "vuex";
-import {shallowMount, config} from "@vue/test-utils";
+import Vuex from "vuex";
+import {config, shallowMount, mount, createLocalVue} from "@vue/test-utils";
 import {expect} from "chai";
 import GraphicalSelectComponent from "../../../components/GraphicalSelect.vue";
-import GraphicalSelect from "../../../store/indexGraphicalSelect.js";
+import GraphicalSelectModule from "../../../store/indexGraphicalSelect.js";
+import Dropdown from "../../../../dropdowns/components/DropdownSimple.vue";
 import sinon from "sinon";
 
-config.global.mocks.$t = key => key;
 
-const mockMapGetters = {
+const localVue = createLocalVue(),
+    mockMapGetters = {
     },
     mockMapActions = {
-        addLayer: sinon.stub(),
+        addLayerOnTop: sinon.stub(),
         removeInteraction: sinon.stub(),
         addInteraction: sinon.stub(),
         registerListener: sinon.stub()
     };
 
+localVue.use(Vuex);
+config.mocks.$t = key => key;
 let store;
 
 describe("src/share-components/graphicalSelect/components/GraphicalSelect.vue", () => {
-    GraphicalSelectComponent.props.label = "";
+
+    const GrandParentVm = mount({
+            template: "<div/>"
+        }).vm,
+
+        Parent = {
+            created () {
+                this.$parent = GrandParentVm;
+            }
+        };
+
     beforeEach(function () {
         const map = {
             id: "ol",
@@ -31,16 +44,10 @@ describe("src/share-components/graphicalSelect/components/GraphicalSelect.vue", 
         mapCollection.clear();
         mapCollection.addMap(map, "2D");
 
-        store = createStore({
+        store = new Vuex.Store({
             namespaces: true,
             modules: {
-                namespaced: true,
-                Modules: {
-                    namespaced: true,
-                    modules: {
-                        GraphicalSelect
-                    }
-                },
+                GraphicalSelect: GraphicalSelectModule,
                 Maps: {
                     namespaced: true,
                     getters: mockMapGetters,
@@ -52,43 +59,33 @@ describe("src/share-components/graphicalSelect/components/GraphicalSelect.vue", 
 
     describe("Component DOM", () => {
         it("Dom should exist", () => {
-            const wrapper = shallowMount(GraphicalSelectComponent, {
-                global: {
-                    plugins: [store]
-                }
-            });
+            const wrapper = shallowMount(GraphicalSelectComponent, {store, localVue, parentComponent: Parent});
 
             expect(wrapper.exists()).to.be.true;
         });
 
-        it("should have a select element", () => {
-            const wrapper = shallowMount(GraphicalSelectComponent, {
-                global: {
-                    plugins: [store]
-                }
-            });
+        it("should have a form element", () => {
+            const wrapper = shallowMount(GraphicalSelectComponent, {store, localVue, parentComponent: Parent}),
+                formElement = wrapper.find("form");
 
-            expect(wrapper.find("select").exists()).to.be.true;
-            expect(wrapper.find("option").exists()).to.be.true;
-            expect(wrapper.find("label").exists()).to.be.true;
+            expect(formElement.exists()).to.be.true;
+        });
+
+        it("the form element has a select element of class form-select", () => {
+            const wrapper = shallowMount(GraphicalSelectComponent, {store, localVue, parentComponent: Parent, stubs: {"Dropdown": Dropdown}}),
+                formElement = wrapper.find("select.form-select");
+
+            expect(formElement.exists()).to.be.true;
         });
 
         it("the select element of class form-select has at least one option element", () => {
-            const wrapper = shallowMount(GraphicalSelectComponent, {
-                global: {
-                    plugins: [store]
-                }
-            });
+            const wrapper = shallowMount(GraphicalSelectComponent, {store, localVue, parentComponent: Parent, stubs: {"Dropdown": Dropdown}});
 
             expect(wrapper.findAll("select.form-select > option")).to.not.have.lengthOf(0);
         });
 
         it("options contain only provided draw modus", () => {
-            const wrapper = shallowMount(GraphicalSelectComponent, {
-                global: {
-                    plugins: [store]
-                }
-            });
+            const wrapper = shallowMount(GraphicalSelectComponent, {store, localVue, parentComponent: Parent, stubs: {"Dropdown": Dropdown}});
             let option = {};
 
             for (option in wrapper.vm.options) {
