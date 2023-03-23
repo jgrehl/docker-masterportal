@@ -68,6 +68,15 @@
           {
             "type": "legend"
           },
+
+          {
+            "type": "populationRequest",
+            "showDescription": true,
+            "description": "Einwohnerabfrage."
+          },
+          {
+            "type": "fileImport"
+          },
           {
             "type": "openConfig"
           },
@@ -177,19 +186,16 @@
                 "type": "customMenuElement",
                 "name": "HTML aus config.json und Action",
                 "htmlContent": "<div><h1>This is a Heading</h1><p>This is a paragraph.</p></br><a href=\"https://www.w3schools.com/\" target=\"_blank\">Visit W3Schools.com!</a></div>",
-                "execute": {
+                "execute":{
                   "action": "Alerting/addSingleAlert",
-                  "payload": {
-                    "title": "An alle Menschen",
-                    "content": "Hallo Welt"
-                  }
+                  "payload":  {"title":"An alle Menschen", "content": "Hallo Welt"}
                 }
               },
               {
                 "type": "customMenuElement",
                 "name": "HTML aus externer Datei",
                 "icon": "bi-youtube",
-                "pathToContent": "./resources/customMenuElementContent.html"
+                "pathToContent":  "./resources/customMenuElementContent.html"
               }
             ]
           },
@@ -211,7 +217,7 @@
                       {
                         "type": "fileImport"
                       },
-                      {
+                       {
                         "type": "bufferAnalysis"
                       }
                     ]
@@ -350,13 +356,6 @@
                 "DE_DHDN_3GK3, EPSG 31467: Bezugssystem DHDN, Abbildungsvorschrift Gauß-Krüger, 3. Meridianstreifen"
               ]
             }
-          },
-          {
-            "type": "draw",
-            "enableAttributesSelector": true,
-            "addIconsOfActiveLayers": true,
-            "showDescription": true,
-            "description": "Zeichnen / Schreiben auf der Karte."
           },
           {
             "type": "bufferAnalysis",
@@ -755,93 +754,11 @@
           "escapeChar": "!"
         },
         {
-          "id": "1534",
-          "name": "Grünflächen (WebGL)",
-          "renderer": "webgl",
-          "typ": "WFS",
-          "styleId": "1534",
-          "isPointLayer": false,
-          "gfiAttributes": "showAll",
-          "legendURL": "",
-          "loadingStrategy": "all",
-          "mouseHoverField": [
-            "belegenheit",
-            "nutzung"
-          ]
-        },
-        {
-          "id": "webgl_dipas",
-          "name": "DIPAS Data GeoJSON (WebGL)",
-          "renderer": "webgl",
-          "typ": "GeoJSON",
-          "url": "./webgl_assets/dipas.test.geojson",
-          "format": "text/html; charset=utf-8",
-          "minScale": "0",
-          "maxScale": "2500000",
-          "gfiAttributes": "showAll",
-          "layerAttribution": "nicht vorhanden",
-          "legendURL": "",
-          "loadingStrategy": "all",
-          "hitTolerance": 20,
-          "isPointLayer": true,
-          "bboxGeometry": [
-            568426.27,
-            5931985.58,
-            569614.86,
-            5933174.11
-          ],
-          "mouseHoverField": [
-            "Category",
-            "Value"
-          ],
-          "style": {
-            "symbol": {
-              "symbolType": "circle",
-              "size": [
-                "interpolate",
-                [
-                  "linear"
-                ],
-                [
-                  "get",
-                  "Total_votes"
-                ],
-                0,
-                6,
-                18,
-                24
-              ],
-              "color": [
-                "interpolate",
-                [
-                  "linear"
-                ],
-                [
-                  "get",
-                  "compound"
-                ],
-                -1,
-                [
-                  240,
-                  40,
-                  30
-                ],
-                1,
-                [
-                  0,
-                  200,
-                  60
-                ]
-              ],
-              "opacity": 0.8,
-              "rotateWithView": true
-            }
-          }
-        },
-        {
-          "name": "3D Daten",
-          "type": "folder",
-          "elements": [
+          "id": "Entities3D",
+          "name": "3D-Entities Testlayer",
+          "typ": "Entities3D",
+          "visibility": true,
+          "entities": [
             {
               "name": "3D Basisdaten",
               "type": "folder",
@@ -908,6 +825,18 @@
               ]
             }
           ]
+        },
+        {
+          "id": "12883",
+          "name": "Gelände",
+          "typ": "Terrain3D",
+          "visibility": true
+        },
+        {
+          "id": "12884",
+          "name": "Gebäude LoD2",
+          "typ": "TileSet3D",
+          "visibility": true
         }
       ]
     }
