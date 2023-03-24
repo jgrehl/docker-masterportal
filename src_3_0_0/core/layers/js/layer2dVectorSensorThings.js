@@ -459,6 +459,9 @@ Layer2dVectorSensorThings.prototype.initializeConnection = function (onsuccess, 
         }
 
         if (Array.isArray(features) && features.length) {
+            if (isObject(features[0]) && typeof features[0].getGeometry === "function" && (features[0].getGeometry().getType() === "Point" || features[0].getGeometry().getType() === "MultiPoint")) {
+                this.prepareFeaturesFor3D(features);
+            }
             layerSource.addFeatures(features);
             this.createLegend();
         }
@@ -1508,7 +1511,7 @@ Layer2dVectorSensorThings.prototype.subscribeToSensorThings = function (dataStre
             if (!isObject(feature)) {
                 return;
             }
-            feature.set("subscribed", true);
+            feature.set("subscribed", true, true);
             this.subscribedDataStreamIds[id] = {
                 subscribed: true
             };
