@@ -659,6 +659,7 @@
           "styleId": "18106",
           "name": "Elektro Ladestandorte Hamburg",
           "typ": "SensorThings",
+          "clusterDistance": 50,
           "visibility": false,
           "showInLayerTree": true,
           "loadThingsOnlyInCurrentExtent": true,
