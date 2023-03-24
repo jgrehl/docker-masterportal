@@ -4,6 +4,8 @@ import Style from "ol/style/Style";
 import Fill from "ol/style/Fill";
 import Stroke from "ol/style/Stroke";
 import Icon from "ol/style/Icon";
+import CircleStyle from "ol/style/Circle";
+import Text from "ol/style/Text";
 // import {createDrawStyle} from "../../draw/utils/style/createDrawStyle";
 import isObject from "../../../shared/js/utils/isObject";
 import {createEmpty as createEmptyExtent, extend} from "ol/extent";
@@ -275,6 +277,20 @@ export default {
                     circleRadius = parseFloat(feature.get("geoCircleRadius"));
 
                 feature.setGeometry(new Circle(circleCenter, circleRadius));
+            }
+            if (feature.get("name")) {
+                feature.setStyle(new Style(
+                    {
+                        image: new CircleStyle({
+                        }),
+                        text: new Text({
+                            text: feature.get("name"),
+                            font: "20px Arial,sans-serif",
+                            fill: new Fill({
+                                color: "#377EB8"
+                            })
+                        })
+                    }));
             }
             if (feature.getGeometry() === null) {
                 featureError = true;
