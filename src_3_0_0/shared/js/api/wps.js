@@ -99,6 +99,7 @@ export default {
     /**
      * @desc request to be built and sent to WPS
      * @param {String} wpsID The service id, defined in rest-services.json
+     * @param {String} url The service url, defined in rest-services.json
      * @param {String} identifier The functionality to be invoked by the wps
      * @param {Object} data Contains the Attributes to be sent
      * @param {Function} responseFunction function to be called
