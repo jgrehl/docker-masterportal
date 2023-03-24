@@ -1,8 +1,6 @@
 <script>
+import definitionsGraphicalSelect from "../js/definitionsGraphicalSelect";
 import {mapGetters, mapActions, mapMutations} from "vuex";
-import getters from "../store/gettersGraphicalSelect";
-import mutations from "../store/mutationsGraphicalSelect";
-import actions from "../store/actionsGraphicalSelect";
 import Draw, {createBox} from "ol/interaction/Draw.js";
 import VectorLayer from "ol/layer/Vector.js";
 import VectorSource from "ol/source/Vector.js";
@@ -10,8 +8,6 @@ import {Circle} from "ol/geom.js";
 
 export default {
     name: "GraphicalSelect",
-    components: {
-    },
     props: {
         // The used template element for graphical selection
         selectElement: {
@@ -54,11 +50,19 @@ export default {
     },
     data () {
         return {
-            selectedOptionData: this.selectedOption
+            selectedOptionData: this.selectedOption,
+            circleOverlay: definitionsGraphicalSelect.circleOverlay,
+            tooltipOverlay: definitionsGraphicalSelect.tooltipOverlay,
+            drawInteraction: definitionsGraphicalSelect.drawInteraction
         };
     },
     computed: {
-        ...mapGetters("Modules/GraphicalSelect", Object.keys(getters)),
+        ...mapGetters("Modules/GraphicalSelect", [
+            "active",
+            "geographicValues",
+            "selectionElements"
+
+        ]),
         optionsValue: function () {
             return this.options ? this.options : {
                 "Box": this.$t("common:snippets.graphicalSelect.selectBySquare"),
@@ -66,22 +70,6 @@ export default {
                 "Polygon": this.$t("common:snippets.graphicalSelect.selectByPolygon")
             };
         }
-    },
-    watch: {
-        selectedOptionData: function () {
-            this.createDrawInteraction();
-        }
-    },
-
-    /**
-     * Created hook:
-     * @returns {void}
-     */
-    created () {
-        /* this.$parent.$parent.$on("close", () => {
-            this.setActive(false);
-            this.resetView();
-        }); */
     },
 
     /**
@@ -91,8 +79,8 @@ export default {
     mounted () {
         this.setActive(true);
         this.selectedOptionData = this.selectedOption;
-        this.createDomOverlay({id: "circle-overlay", overlay: this.circleOverlay});
-        this.createDomOverlay({id: "tooltip-overlay", overlay: this.tooltipOverlay});
+        this.createDomOverlay({id: "sdp-circle-overlay", overlay: this.circleOverlay});
+        this.createDomOverlay({id: "sdp-tooltip-overlay", overlay: this.tooltipOverlay});
         this.createDrawInteraction();
         this.checkOptions();
         this.setDefaultSelection(this.selectedOptionData);
@@ -103,19 +91,32 @@ export default {
     },
 
     methods: {
-        ...mapMutations("Modules/GraphicalSelect", Object.keys(mutations)),
-        ...mapActions("Modules/GraphicalSelect", Object.keys(actions)),
-        ...mapActions("Maps", ["addLayer", "addInteraction", "removeInteraction", "registerListener"]),
+        ...mapMutations("Modules/GraphicalSelect", [
+            "setDefaultSelection",
+            "setActive",
+            "setCurrentValue"
+        ]),
+        ...mapActions("Modules/GraphicalSelect", [
+            "createDomOverlay",
+            "showTooltipOverlay",
+            "toggleOverlay",
+            "updateDrawInteractionListener"
+        ]),
+        ...mapActions("Maps", [
+            "addLayer",
+            "addInteraction",
+            "removeInteraction",
+            "registerListener"
+        ]),
         ...mapActions("Alerting", ["addSingleAlert"]),
 
         /**
-         * Handles (de-)activation of this Tool
-         * @param {Boolean} value flag if tool is active
+         * Handles (de-)activation of this Module
+         * @param {Boolean} value flag if module is active
          * @fires Core#RadioTriggerMapRemoveOverlay
          * @todo Replace if removeOverlay is available in vue
          * @returns {void}
          */
-
         setStatus: function (value) {
             if (value) {
                 this.createDrawInteraction();
@@ -236,7 +237,6 @@ export default {
          * @todo Replace if removeOverlay and pointermove is available in vue
          * @returns {void}
          */
-
         createDrawInteraction: function () {
             const geometryFunction = createBox(),
                 drawtype = this.selectedOptionData;
@@ -268,8 +268,8 @@ export default {
             this.addInteraction(this.draw);
             this.setCurrentValue(drawtype);
             this.toggleOverlay({type: drawtype, overlayCircle: this.circleOverlay, overlayTool: this.tooltipOverlay});
-            this.setDrawInteractionListener({interaction: this.draw, layer: this.layer, vm: this});
-            this.setDrawInteraction(this.draw);
+            this.updateDrawInteractionListener({interaction: this.draw, layer: this.layer, vm: this});
+            this.drawInteraction = this.draw;
             this.registerListener({type: "pointermove", listener: this.showTooltipOverlay});
             this.addLayer(this.layer);
         }
@@ -308,4 +308,5 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+ @import "~variables";
 </style>
