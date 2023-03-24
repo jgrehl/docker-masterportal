@@ -1,5 +1,5 @@
 import Vuex from "vuex";
-import {config, shallowMount, mount, createLocalVue} from "@vue/test-utils";
+import {config, shallowMount, mount} from "@vue/test-utils";
 import {expect} from "chai";
 import GraphicalSelectComponent from "../../../components/GraphicalSelect.vue";
 import GraphicalSelectModule from "../../../store/indexGraphicalSelect.js";
@@ -7,8 +7,7 @@ import Dropdown from "../../../../dropdowns/components/DropdownSimple.vue";
 import sinon from "sinon";
 
 
-const localVue = createLocalVue(),
-    mockMapGetters = {
+const mockMapGetters = {
     },
     mockMapActions = {
         addLayerOnTop: sinon.stub(),
@@ -17,11 +16,10 @@ const localVue = createLocalVue(),
         registerListener: sinon.stub()
     };
 
-localVue.use(Vuex);
-config.mocks.$t = key => key;
+config.global.mocks.$t = key => key;
 let store;
 
-describe("src/share-components/graphicalSelect/components/GraphicalSelect.vue", () => {
+describe("src_3_0_0/shared/modules/graphicalSelect/components/GraphicalSelect.vue", () => {
 
     const GrandParentVm = mount({
             template: "<div/>"
@@ -59,33 +57,33 @@ describe("src/share-components/graphicalSelect/components/GraphicalSelect.vue", 
 
     describe("Component DOM", () => {
         it("Dom should exist", () => {
-            const wrapper = shallowMount(GraphicalSelectComponent, {store, localVue, parentComponent: Parent});
+            const wrapper = shallowMount(GraphicalSelectComponent, {store, parentComponent: Parent});
 
             expect(wrapper.exists()).to.be.true;
         });
 
         it("should have a form element", () => {
-            const wrapper = shallowMount(GraphicalSelectComponent, {store, localVue, parentComponent: Parent}),
+            const wrapper = shallowMount(GraphicalSelectComponent, {store, parentComponent: Parent}),
                 formElement = wrapper.find("form");
 
             expect(formElement.exists()).to.be.true;
         });
 
         it("the form element has a select element of class form-select", () => {
-            const wrapper = shallowMount(GraphicalSelectComponent, {store, localVue, parentComponent: Parent, stubs: {"Dropdown": Dropdown}}),
+            const wrapper = shallowMount(GraphicalSelectComponent, {store, parentComponent: Parent, stubs: {"Dropdown": Dropdown}}),
                 formElement = wrapper.find("select.form-select");
 
             expect(formElement.exists()).to.be.true;
         });
 
         it("the select element of class form-select has at least one option element", () => {
-            const wrapper = shallowMount(GraphicalSelectComponent, {store, localVue, parentComponent: Parent, stubs: {"Dropdown": Dropdown}});
+            const wrapper = shallowMount(GraphicalSelectComponent, {store, parentComponent: Parent, stubs: {"Dropdown": Dropdown}});
 
             expect(wrapper.findAll("select.form-select > option")).to.not.have.lengthOf(0);
         });
 
         it("options contain only provided draw modus", () => {
-            const wrapper = shallowMount(GraphicalSelectComponent, {store, localVue, parentComponent: Parent, stubs: {"Dropdown": Dropdown}});
+            const wrapper = shallowMount(GraphicalSelectComponent, {store, parentComponent: Parent, stubs: {"Dropdown": Dropdown}});
             let option = {};
 
             for (option in wrapper.vm.options) {
