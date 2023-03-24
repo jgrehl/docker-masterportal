@@ -25,7 +25,6 @@ const actions = {
             const geoJson = await dispatch("featureToGeoJson", evt.feature);
 
             commit("setSelectedAreaGeoJson", geoJson);
-            //payload.vm.$parent.$parent.$emit("onDrawEnd", geoJson);
             payload.vm.$parent.$emit("onDrawEnd", geoJson);
         });
 
