@@ -198,7 +198,9 @@ export default {
         id="layer-pills"
         class="layer-pills-container"
     >
-        <ul
+        <TransitionGroup
+            name="list"
+            tag="ul"
             class="nav nav-pills"
         >
             <li
@@ -217,9 +219,11 @@ export default {
             <li
                 v-for="(layer, index) in isMobile ? visibleSubjectDataLayers : visibleSubjectDataLayers.slice(startIndex, endIndex)"
                 :key="index"
+                tag="li"
                 class="nav-item shadow"
             >
                 <a
+                    :key="index"
                     class="nav-link"
                     data-bs-toggle="tooltip"
                     data-bs-placement="bottom"
@@ -253,7 +257,7 @@ export default {
                     :interaction="() => moveLayerPills('right')"
                 />
             </li>
-        </ul>
+        </TransitionGroup>
     </div>
 </template>
 
@@ -295,6 +299,16 @@ export default {
     .nav-link-hover:hover {
         cursor: pointer;
     }
+
+    .list-enter-active,
+.list-leave-active {
+  transition: all 0.5s ease;
+}
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
 
     .custom-tooltip {
         font-size: 20px;
