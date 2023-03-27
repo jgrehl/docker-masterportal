@@ -3,6 +3,28 @@ import upperFirst from "../../../shared/js/utils/upperFirst";
 
 export default {
     /**
+     * Activates the current component in the menu by side.
+     * @param {Object} param store context
+     * @param {Object} param.commit the commit
+     * @param {Object} param.dispatch the dispatch
+     * @param {Object} param.rootGetters the rootGetters
+     * @param {Object} currentComponent The current component.
+     * @param {String} type The type of the current component.
+     * @param {String} side The menu side.
+     * @returns {void}
+     */
+    activateCurrentComponent ({commit, dispatch, rootGetters}, {currentComponent, type, side}) {
+        commit("setExpandedBySide", {expanded: true, side: side});
+        dispatch("changeCurrentComponent", {
+            type: currentComponent.type,
+            side: side,
+            props: {
+                name: rootGetters[`Modules/${type}/name`]
+            }
+        });
+    },
+
+    /**
      * Change the currently shown component.
      * @param {Object} param store context
      * @param {Object} param.commit the commit
