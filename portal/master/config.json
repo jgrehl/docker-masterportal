@@ -549,6 +549,11 @@
           "visibility": true
         },
         {
+          "id": "2425",
+          "name": "Stadtteile",
+          "typ": "WMS"
+        },
+        {
           "name": "Emissionen",
           "type": "folder",
           "elements": [
