@@ -1,6 +1,16 @@
 import processUrlParams from "../../../shared/js/utils/processUrlParams";
 import store from "../../../app-store";
 
+/**
+ * Here the urlParams for the layers are processed.
+ *
+ * Examples:
+ * - https://localhost:9001/portal/master/?LAYERS=[{%22id%22:%20%222426%22},{%22id%22:%221711%22,%22visibility%22:false},{%22id%22:%22452%22,%22visibility%22:true,%22transparency%22:50}]
+ * - https://localhost:9001/portal/master/?Map/layerIds=452,1711&visibility=true,false&transparency=50,0
+ * - https://localhost:9001/portal/master/?mdid=F35EAC11-C236-429F-B1BF-751C0C18E8B7
+ * - https://localhost:9001/portal/master/?mdid=F35EAC11-C236-429F-B1BF-751C0C18E8B7,C1AC42B2-C104-45B8-91F9-DA14C3C88A1F
+ */
+
 const layerUrlParams = {
         LAYERS: setLayers
     },
@@ -62,18 +72,22 @@ function setLayerIds (params) {
 function setLayersByMetadataId (params) {
     const layerMetadataIds = (params.MDID || params["MAP/MDID"]).split(","),
         backgroundLayer = store.getters.layerConfigsByAttributes({backgroundLayer: true})?.at(-1),
-        layerIds = [backgroundLayer.id];
+        layers = [{
+            id: backgroundLayer.id
+        }];
 
     store.getters.allLayerConfigs.forEach(layerConfig => {
         layerConfig?.datasets?.forEach(dataset => {
             if (layerMetadataIds.includes(dataset.md_id)) {
-                layerIds.push(layerConfig.id);
+                layers.push({
+                    id: layerConfig.id
+                });
             }
         });
     });
 
     removeCurrentLayerFromLayerTree();
-    addLayerToLayerTree(layerIds);
+    addLayerToLayerTree(layers);
 }
 
 /**
@@ -121,14 +135,10 @@ function addLayerToLayerTree (layers) {
 }
 
 export default {
-    processLayerUrlParams
+    processLayerUrlParams,
+    setLayers,
+    setLayerIds,
+    setLayersByMetadataId,
+    removeCurrentLayerFromLayerTree,
+    addLayerToLayerTree
 };
-
-/**
- * Examples:
- * - https://localhost:9001/portal/master/?lng=en&STYLE=simple
- * - https://localhost:9001/portal/master/?Map/layerIds=452,1711&visibility=true,false&transparency=50,0
- * - https://localhost:9001/portal/master/?mdid=F35EAC11-C236-429F-B1BF-751C0C18E8B7
- * - https://localhost:9001/portal/master/?mdid=F35EAC11-C236-429F-B1BF-751C0C18E8B7,C1AC42B2-C104-45B8-91F9-DA14C3C88A1F
- * - https://localhost:9001/portal/master/?LAYERS=[{%22id%22:%20%222426%22},{%22id%22:%221711%22,%22visibility%22:false},{%22id%22:%22452%22,%22visibility%22:true,%22transparency%22:50}]
- */
