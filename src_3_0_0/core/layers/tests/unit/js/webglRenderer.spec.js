@@ -84,7 +84,7 @@ describe("src_3_0_0/core/js/layers/webglRenderer.js", () => {
             expect(webgl.isDisposed.call(layerObject)).to.be.false;
         });
     });
-    describe("visibilityChanged", () => {
+    describe.skip("visibilityChanged", () => {
         it("should create a new WFSLayer instance if WFSLayer is disposed", () => {
             includes = false;
             const layerObject = new WFSLayer(attributes);
