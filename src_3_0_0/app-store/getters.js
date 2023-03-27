@@ -121,7 +121,7 @@ const getters = {
 
         if (layerConf) {
             if (Object.prototype.hasOwnProperty.call(layerConf, "zIndex") && typeof layerConf.zIndex === "number") {
-                console.warn("Cannot determine zIndex for layer with id ", layerConf.id, ". Zindex already exists:", layerConf.zIndex);
+                console.warn("Cannot determine zIndex for layer with id ", layerConf.id, ". ZIndex already exists:", layerConf.zIndex);
                 return layerConf.zIndex;
             }
             let maxZIndex = -1;
