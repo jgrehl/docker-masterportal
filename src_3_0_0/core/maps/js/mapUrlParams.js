@@ -147,7 +147,7 @@ function setView (params) {
     const center = params.CENTER || params["MAP/CENTER"];
 
     store.dispatch("Maps/setView", {
-        center: Array.isArray(center) ? center : center?.split(","),
+        center: center.startsWith("[") ? JSON.parse(center) : center?.split(","),
         rotation: params.ROTATION,
         zoom: params.ZOOM || params.ZOOMLEVEL || params["MAP/ZOOMLEVEL"]
     });
