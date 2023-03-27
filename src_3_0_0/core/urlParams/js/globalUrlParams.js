@@ -1,5 +1,10 @@
 import processUrlParams from "../../../shared/js/utils/processUrlParams";
 
+/**
+ * Examples:
+ * - https://localhost:9001/portal/master/?lng=en&STYLE=simple
+ */
+
 const globalUrlParams = {
         CONFIGJSON: setConfigJsonPath,
         LNG: setLanguage,
