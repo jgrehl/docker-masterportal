@@ -7,7 +7,7 @@ import sinon from "sinon";
 
 config.global.mocks.$t = key => key;
 
-describe("src_3_0_0/modules/menu/CustomMenuElement.vue", () => {
+describe("src_3_0_0/modules/menu/components/CustomMenuElement.vue", () => {
     let store,
         wrapper,
         currentComponent,
