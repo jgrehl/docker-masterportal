@@ -2,6 +2,17 @@ import store from "../../../app-store";
 import upperFirst, {upperCaseKeys} from "../../../shared/js/utils/upperFirst";
 import processUrlParams from "../../../shared/js/utils/processUrlParams";
 
+/**
+ * Here the urlParams for the menu are processed.
+ *
+ * Examples:
+ * - https://localhost:9001/portal/master/?MENU={%22main%22:{%22currentComponent%22:%22root%22},%22secondary%22:{%22currentComponent%22:%22measure%22,%22attributes%22:{%22selectedGeometry%22:%22Polygon%22,%22selectedUnit%22:%221%22}}}
+ * - https://localhost:9001/portal/master/?MENU={%22main%22:{%22currentComponent%22:%22fileimport%22},%22secondary%22:{%22currentComponent%22:%22MeasURe%22,%22attributes%22:{%22selectedGeometry%22:%22Polygon%22,%22selectedUnit%22:%221%22}}}
+ * - https://localhost:9001/portal/master/?isinitopen=draw
+ * - https://localhost:9001/portal/master/?isinitopen=fileimport
+ * - https://localhost:9001/portal/master/?STARTUPMODUL=fileimport
+ */
+
 const menuUrlParams = {
         MENU: setAttributesToComponent
     },
@@ -54,7 +65,6 @@ function isInitOpen (params) {
     if (side) {
         const type = upperFirst(currentComponent.type);
 
-        // activateCurrentComponent(currentComponent, upperFirst(currentComponent.type), side);
         store.dispatch("Menu/activateCurrentComponent", {currentComponent, type, side});
     }
 }
@@ -130,15 +140,10 @@ function findElement (elements, searchType) {
 }
 
 export default {
-    processMenuUrlParams
+    processMenuUrlParams,
+    setAttributesToComponent,
+    isInitOpen,
+    getCurrentComponent,
+    findInSections,
+    findElement
 };
-
-
-/**
- * Examples:
- * - https://localhost:9001/portal/master/?MENU={%22main%22:{%22currentComponent%22:%22root%22},%22secondary%22:{%22currentComponent%22:%22measure%22,%22attributes%22:{%22selectedGeometry%22:%22Polygon%22,%22selectedUnit%22:%221%22}}}
- * - https://localhost:9001/portal/master/?MENU={%22main%22:{%22currentComponent%22:%22fileimport%22},%22secondary%22:{%22currentComponent%22:%22MeasURe%22,%22attributes%22:{%22selectedGeometry%22:%22Polygon%22,%22selectedUnit%22:%221%22}}}
- * - https://localhost:9001/portal/master/?isinitopen=draw
- * - https://localhost:9001/portal/master/?isinitopen=fileimport
- * - https://localhost:9001/portal/master/?STARTUPMODUL=fileimport
- */
