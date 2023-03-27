@@ -1,6 +1,7 @@
 import {nextTick} from "vue";
 import store from "../../../app-store";
 import globalUrlParams from "./globalUrlParams";
+import layerUrlParams from "../../../core/layers/js/layerUrlParams";
 import mapUrlParams from "../../../core/maps/js/mapUrlParams";
 import menuUrlParams from "../../../modules/menu/js/menuUrlParams";
 import urlParamsFacade from "./urlParamsFacade";
@@ -29,6 +30,7 @@ export function initializeUrlParams () {
  */
 export function startProcessUrlParams () {
     nextTick(() => {
+        layerUrlParams.processLayerUrlParams();
         mapUrlParams.processMapUrlParams();
         menuUrlParams.processMenuUrlParams();
     });
