@@ -1017,7 +1017,7 @@ const BuildSpecModel = {
         else if (src.charAt(0) === "/") {
             url = origin + src;
         }
-        else if (src.indexOf("../") === 0) {
+        else if (src.indexOf("../") === 0 || src.indexOf("./") === 0) {
             url = new URL(src, window.location.href).href;
         }
         else if (origin.indexOf("localhost") === -1) {
