@@ -1,6 +1,6 @@
 <script>
 import {mapActions, mapGetters, mapMutations} from "vuex";
-import upperFirst from "../../../shared/js/utils/upperFirst";
+import changeCase from "../../../shared/js/utils/changeCase";
 import visibilityChecker from "../../../shared/js/utils/visibilityChecker";
 
 /**
@@ -78,7 +78,7 @@ export default {
          */
         prepareControls (controlsConfig, expandable = false) {
             Object.keys(controlsConfig).forEach(controlKey => {
-                if (this.componentMap[upperFirst(controlKey)]) {
+                if (this.componentMap[changeCase.upperFirst(controlKey)]) {
                     const controlValues = controlsConfig[controlKey];
 
                     if (controlValues === true) {
@@ -100,7 +100,7 @@ export default {
          */
         fillCategorizedControls (controlKey, expandable) {
             const control = {
-                componentKey: upperFirst(controlKey),
+                componentKey: changeCase.upperFirst(controlKey),
                 key: controlKey
             };
 
@@ -118,9 +118,9 @@ export default {
          * @returns {Boolean} The control is shown.
          */
         checkIsVisible (key) {
-            const supportedMapModes = this.$store.getters[`Controls/${upperFirst(key)}/supportedMapModes`],
-                supportedDevices = this.$store.getters[`Controls/${upperFirst(key)}/supportedDevices`],
-                supportedTreeTypes = this.$store.getters[`Controls/${upperFirst(key)}/supportedTreeTypes`];
+            const supportedMapModes = this.$store.getters[`Controls/${changeCase.upperFirst(key)}/supportedMapModes`],
+                supportedDevices = this.$store.getters[`Controls/${changeCase.upperFirst(key)}/supportedDevices`],
+                supportedTreeTypes = this.$store.getters[`Controls/${changeCase.upperFirst(key)}/supportedTreeTypes`];
 
             return visibilityChecker.isModuleVisible(this.mode, this.deviceMode, this.portalConfig?.tree?.type, supportedMapModes, supportedDevices, supportedTreeTypes);
         }

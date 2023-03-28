@@ -1,7 +1,7 @@
 import menuState from "./stateMenu";
 import {badPathSymbol, idx} from "../../../shared/js/utils/idx";
 import {generateSimpleGetters} from "../../../shared/js/utils/generators";
-import upperFirst from "../../../shared/js/utils/upperFirst";
+import changeCase from "../../../shared/js/utils/changeCase";
 
 const menuGetters = {
     ...generateSimpleGetters(menuState),
@@ -65,8 +65,8 @@ const menuGetters = {
      * @returns {(function(type: String): Boolean)} Function returning component identified via deactivateModule.
      */
     deactivateModule: (state, _, __, rootGetters) => type => {
-        if (rootGetters[`Modules/${upperFirst(type)}/hasMouseMapInteractions`]
-            && upperFirst(type) !== state.activeModuleMouseMapInteractions
+        if (rootGetters[`Modules/${changeCase.upperFirst(type)}/hasMouseMapInteractions`]
+            && changeCase.upperFirst(type) !== state.activeModuleMouseMapInteractions
         ) {
             return true;
         }
@@ -197,7 +197,7 @@ const menuGetters = {
         let params = `${menuString}=${JSON.stringify({"currentComponent": currentComponent})}`;
 
         if (currentComponent !== "root") {
-            const moduleParam = rootGetters[`Modules/${upperFirst(currentComponent)}/urlParams`];
+            const moduleParam = rootGetters[`Modules/${changeCase.upperFirst(currentComponent)}/urlParams`];
 
             // if (typeof moduleParam === "undefined") {
             //     moduleParam = JSON.stringify(rootState.Modules[upperFirst(currentComponent)]);
