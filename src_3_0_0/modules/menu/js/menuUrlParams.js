@@ -1,5 +1,5 @@
 import store from "../../../app-store";
-import upperFirst, {upperCaseKeys} from "../../../shared/js/utils/upperFirst";
+import changeCase from "../../../shared/js/utils/changeCase";
 import processUrlParams from "../../../shared/js/utils/processUrlParams";
 
 /**
@@ -35,14 +35,14 @@ function processMenuUrlParams () {
  * @returns {void}
  */
 function setAttributesToComponent (params) {
-    const menuParams = upperCaseKeys(JSON.parse(params.MENU));
+    const menuParams = changeCase.upperCaseKeys(JSON.parse(params.MENU));
 
     Object.keys(menuParams).forEach(menuSide => {
-        const menuSideParams = upperCaseKeys(menuParams[menuSide]),
+        const menuSideParams = changeCase.upperCaseKeys(menuParams[menuSide]),
             {currentComponent, side} = getCurrentComponent(menuSideParams.CURRENTCOMPONENT);
 
         if (side) {
-            const type = upperFirst(currentComponent.type),
+            const type = changeCase.upperFirst(currentComponent.type),
                 attributes = menuSideParams.ATTRIBUTES;
 
             store.dispatch("Menu/activateCurrentComponent", {currentComponent, type, side});
@@ -63,7 +63,7 @@ function isInitOpen (params) {
     const {currentComponent, side} = getCurrentComponent(params.ISINITOPEN || params.STARTUPMODUL);
 
     if (side) {
-        const type = upperFirst(currentComponent.type);
+        const type = changeCase.upperFirst(currentComponent.type);
 
         store.dispatch("Menu/activateCurrentComponent", {currentComponent, type, side});
     }
