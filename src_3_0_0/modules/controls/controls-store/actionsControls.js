@@ -1,4 +1,4 @@
-import upperFirst from "../../../shared/js/utils/upperFirst";
+import changeCase from "../../../shared/js/utils/changeCase";
 
 export default {
     /**
@@ -12,7 +12,7 @@ export default {
      */
     mergeControlState ({commit}, {controlKey, controlValues}) {
         Object.keys(controlValues).forEach(key => {
-            commit(`${upperFirst(controlKey)}/set${upperFirst(key)}`, controlValues[key]);
+            commit(`${changeCase.upperFirst(controlKey)}/set${changeCase.upperFirst(key)}`, controlValues[key]);
         });
     }
 };

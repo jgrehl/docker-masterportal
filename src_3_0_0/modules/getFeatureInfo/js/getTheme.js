@@ -1,4 +1,4 @@
-import upperFirst from "../../../shared/js/utils/upperFirst";
+import changeCase from "../../../shared/js/utils/changeCase";
 
 /**
  * @param {String[]} addonThemes List of names of themes defined in addons.
@@ -33,7 +33,7 @@ function getAddonTheme (addonThemes, configTheme, configThemeWithSuffix) {
  */
 function getTheme (themeFromFeature, components, addonThemes) {
     const gfiComponents = Object.keys(components),
-        configTheme = upperFirst(themeFromFeature && typeof themeFromFeature === "object" ? themeFromFeature.name : themeFromFeature),
+        configTheme = changeCase.upperFirst(themeFromFeature && typeof themeFromFeature === "object" ? themeFromFeature.name : themeFromFeature),
         configThemeWithSuffix = configTheme.slice(-5) === "Theme" ? configTheme : `${configTheme}Theme`;
     let theme = "";
 
