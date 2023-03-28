@@ -177,6 +177,8 @@ export default {
             fillOpacity = style.polygonFillColor?.[3] || 0,
             fillHatch = style.polygonFillHatch,
             strokeOpacity = style.polygonStrokeColor[3] || 0,
+            strokeCap = style.polygonStrokeCap || "round",
+            strokeDash = style.polygonStrokeDash?.toString() || "",
             type = style.type ? style.type.toLowerCase() : style.attributes?.type.toLowerCase();
 
         if (fillHatch) {
@@ -199,6 +201,10 @@ export default {
             svg += strokeOpacity;
             svg += ";stroke-width:";
             svg += strokeWidth;
+            svg += ";stroke-linecap:";
+            svg += strokeCap;
+            svg += ";stroke-dasharray:";
+            svg += strokeDash;
             svg += ";'/>";
             svg += "</svg>";
 
