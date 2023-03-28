@@ -34,6 +34,23 @@ describe("tools/featureLister/store/gettersFeatureLister", () => {
             state.gfiFeaturesOfLayer = [gfiFeature1, gfiFeature2];
             expect(Object.keys(listOfHeaders.mapHeaders(headers(state, {}, {}, {ignoredKeys: []})))).to.deep.equal(["generic", "alpha", "beta", "gamma", "delta"]);
         });
+        it("header value as object, use name as value", () => {
+            const gfiFeature = {
+                getAttributesToShow: () => ({
+                    generic: "Show Generic",
+                    alpha: {
+                        "name": "Name Von Alpha",
+                        "condition": "contains",
+                        "type": "date",
+                        "format": "MM.DD.YYYY"
+                    }
+                }),
+                getProperties: () => ({generic: "Test", alpha: "01.01.2022"})
+            };
+
+            state.gfiFeaturesOfLayer = [gfiFeature];
+            expect(listOfHeaders.mapHeaders(headers(state, {}, {}, {ignoredKeys: []}))).to.deep.equal({generic: "Show Generic", alpha: "Name Von Alpha"});
+        });
     });
 
     describe("featureDetails", () => {
