@@ -51,7 +51,12 @@ const getters = {
                     : Object.entries(keys);
                 keys.forEach(([key, value]) => {
                     if (!rootGetters.ignoredKeys.includes(key.toUpperCase())) {
-                        acc[key] = value;
+                        if (typeof value === "object" && Object.prototype.hasOwnProperty.call(value, "name")) {
+                            acc[key] = value.name;
+                        }
+                        else {
+                            acc[key] = value;
+                        }
                     }
                 });
                 return acc;
