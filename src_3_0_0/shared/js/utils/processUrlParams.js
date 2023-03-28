@@ -14,7 +14,6 @@ export default function processUrlParams (params = {}, legacyParams = {}) {
             const value = store.getters.getUrlParamValue(param);
 
             if (typeof value !== "undefined") {
-
                 foundParams[param] = value;
 
                 if (typeof urlParams[param] === "function") {
