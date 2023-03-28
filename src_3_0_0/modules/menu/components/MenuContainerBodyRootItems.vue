@@ -1,7 +1,7 @@
 <script>
 import {mapGetters} from "vuex";
 import MenuContainerBodyRootItemElement from "./MenuContainerBodyRootItemElement.vue";
-import upperFirst from "../../../shared/js/utils/upperFirst";
+import changeCase from "../../../shared/js/utils/changeCase";
 
 export default {
     name: "MenuContainerBodyRootItems",
@@ -42,7 +42,7 @@ export default {
             let properties = item;
 
             if ("type" in item) {
-                const stateProperties = this.$store.state.Modules[upperFirst(item.type)];
+                const stateProperties = this.$store.state.Modules[changeCase.upperFirst(item.type)];
 
                 if (item.type === "customMenuElement" && !Object.prototype.hasOwnProperty.call(properties, "icon")) {
                     properties.icon = this.customMenuElementIcon;
