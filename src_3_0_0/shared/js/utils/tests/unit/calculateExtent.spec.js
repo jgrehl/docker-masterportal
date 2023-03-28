@@ -3,7 +3,7 @@ import Feature from "ol/Feature";
 import Polygon from "ol/geom/Polygon";
 import calculateExtent from "../../calculateExtent.js";
 
-describe("src/utils/calculateExtent.js", () => {
+describe("src_3_0_0/shared/js/utils/calculateExtent.js", () => {
     const features = [];
 
     before(() => {
