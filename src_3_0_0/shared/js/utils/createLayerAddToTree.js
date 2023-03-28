@@ -95,6 +95,10 @@ function setAttributes (layer, id, layerName) {
     attributes.alwaysOnTop = true;
     attributes.name = layerName;
     attributes.showInLayerTree = true;
+    attributes.minScale = 0;
+    attributes.maxScale = Infinity;
+    attributes.checkForScale = false;
+    attributes.isOutOfRange = false;
     return attributes;
 }
 
