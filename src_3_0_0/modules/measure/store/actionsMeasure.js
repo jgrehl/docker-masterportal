@@ -1,6 +1,6 @@
 import source from "../js/measureSource";
 import makeDraw2d from "../js/measureDraw";
-import upperFirst from "../../../shared/js/utils/upperFirst";
+import changeCase from "../../../shared/js/utils/changeCase";
 
 export default {
     /**
@@ -69,7 +69,7 @@ export default {
 
     urlParams ({commit}, params) {
         Object.keys(params).forEach(key => {
-            commit(`set${upperFirst(key)}`, params[key]);
+            commit(`set${changeCase.upperFirst(key)}`, params[key]);
         });
     }
 };

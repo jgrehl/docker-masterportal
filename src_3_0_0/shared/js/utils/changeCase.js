@@ -3,7 +3,7 @@
  * @param {String} value A string to uppercase the first letter.
  * @returns {String} The same string, but with uppercased first letter.
  */
-export default function upperFirst (value) {
+export function upperFirst (value) {
     if (typeof value !== "string") {
         return "";
     }
@@ -22,7 +22,7 @@ export function upperCaseKeys (obj) {
     );
 }
 
-// export default {
-//     upperCaseKeys,
-//     upperFirst
-// };
+export default {
+    upperCaseKeys,
+    upperFirst
+};
