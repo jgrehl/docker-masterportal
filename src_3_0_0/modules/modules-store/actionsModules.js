@@ -1,4 +1,4 @@
-import upperFirst from "../../shared/js/utils/upperFirst";
+import changeCase from "../../shared/js/utils/changeCase";
 
 const moduleKeys = [
     "getFeatureInfo",
@@ -41,7 +41,7 @@ export default {
      */
     mergeModule ({commit}, {name, config}) {
         Object.keys(config).forEach(key => {
-            commit(`${upperFirst(name)}/set${upperFirst(key)}`, config[key]);
+            commit(`${changeCase.upperFirst(name)}/set${changeCase.upperFirst(key)}`, config[key]);
         });
     },
 
@@ -85,14 +85,14 @@ export default {
                 dispatch("addAttributesToModuleState", {items: item.elements});
             }
             else if (item?.type !== "customMenuElement") {
-                const modulePathInit = modulePath ? modulePath : `${upperFirst(item.type)}`;
+                const modulePathInit = modulePath ? modulePath : `${changeCase.upperFirst(item.type)}`;
 
                 for (const [key, value] of Object.entries(item)) {
                     if (typeof value === "object" && !Array.isArray(value)) {
                         dispatch("addAttributesToModuleState", {items: [value], itemType: item?.type, modulePath: modulePathInit + `.${key}`});
                     }
                     else if (item.type && !itemType && !Array.isArray(value)) {
-                        commit(`${upperFirst(item.type)}/set${upperFirst(key)}`, value);
+                        commit(`${changeCase.upperFirst(item.type)}/set${changeCase.upperFirst(key)}`, value);
                     }
                     else {
                         dispatch("setDeepMerge", {obj: rootState.Modules, path: modulePathInit + `.${key}`, value: value});
