@@ -173,6 +173,13 @@ describe("src_3_0_0/modules/Print/components/PrintMap.vue", () => {
             expect(wrapper.find(".modules-print-download-button-active").exists()).to.be.false;
             expect(wrapper.find(".modules-print-download-button-disabled").exists()).to.be.true;
         });
+        it("should have a legend checkbox", async () => {
+            store.commit("Modules/Print/setIsLegendAvailable", true);
+
+            await wrapper.vm.$nextTick();
+            expect(store.state.Modules.Print.isLegendAvailable).to.be.equals(true);
+            expect(wrapper.find("#printLegend").exists()).to.be.true;
+        });
     });
 
     describe("returnScale", () => {
