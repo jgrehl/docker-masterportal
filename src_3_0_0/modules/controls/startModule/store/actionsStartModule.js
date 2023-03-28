@@ -1,4 +1,4 @@
-import upperFirst from "../../../../shared/js/utils/upperFirst";
+import changeCase from "../../../../shared/js/utils/changeCase";
 
 const actions = {
     /**
@@ -18,7 +18,7 @@ const actions = {
                 dispatch("extendModuleState", {module, menuSide});
                 commit("addConfiguredModel", {
                     menuSide: menuSide,
-                    state: rootState.Modules[upperFirst(module.type)]
+                    state: rootState.Modules[changeCase.upperFirst(module.type)]
                 });
             }
         });
@@ -34,8 +34,8 @@ const actions = {
      * @returns {void}
      */
     extendModuleState ({rootState}, {module, menuSide}) {
-        rootState.Modules[upperFirst(module.type)] = {
-            ...rootState.Modules[upperFirst(module.type)],
+        rootState.Modules[changeCase.upperFirst(module.type)] = {
+            ...rootState.Modules[changeCase.upperFirst(module.type)],
             ...{
                 menuSide: menuSide
             },
