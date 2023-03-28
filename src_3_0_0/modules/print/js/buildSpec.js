@@ -662,7 +662,7 @@ const BuildSpecModel = {
         let layerModel = model;
 
         if (layerModel.get("typ") === "GROUP") {
-            layerModel = layerModel.get("layerSource").filter(childLayer => {
+            layerModel = layerModel.getLayerSource().filter(childLayer => {
                 return childLayer.get("id") === layerId;
             })[0];
         }
@@ -910,10 +910,7 @@ const BuildSpecModel = {
     buildFillStyle: function (style, obj) {
         let fillColor = style.getColor();
 
-        if (typeof fillColor === "string") {
-            fillColor = this.colorStringToRgbArray(fillColor);
-        }
-        else if (fillColor instanceof CanvasPattern) {
+        if (fillColor instanceof CanvasPattern) {
             fillColor = [0, 0, 0, 0];
         }
 
@@ -921,40 +918,6 @@ const BuildSpecModel = {
         obj.fillOpacity = fillColor[3];
 
         return obj;
-    },
-    /**
-     * Checks if colorString starts with "rgb" then calls a parsing function.
-     * @param {String} colorString rgb or rgba string
-     * @returns {Number[] | String} - parsed rgb-string as number array
-     */
-    colorStringToRgbArray: function (colorString) {
-        const parsedString = colorString;
-        let parsedArray;
-
-        if (parsedString.match(/^(rgb)/)) {
-            parsedArray = this.rgbStringToRgbArray(parsedString);
-        }
-        return parsedArray;
-    },
-    /**
-     * Parses a given rgb- or rgba-string to an numbers array.
-     * @param {String} colorString rgb or rgba string
-     * @returns {Number[]} - parsed rgb-string as number array
-     */
-    rgbStringToRgbArray: function (colorString) {
-        const indexOpenBracket = colorString.indexOf("(") + 1,
-            indexCloseBracket = colorString.indexOf(")"),
-            length = indexCloseBracket - indexOpenBracket,
-            valuesString = colorString.substring(indexOpenBracket, length),
-            rgbaStringArray = valuesString.split(","),
-            rgbaArray = [];
-
-        rgbaStringArray.forEach(function (colorValue) {
-            colorValue.trim();
-            rgbaArray.push(parseFloat(colorValue));
-        });
-
-        return rgbaArray;
     },
     /**
      * Generates the Stroke Style
