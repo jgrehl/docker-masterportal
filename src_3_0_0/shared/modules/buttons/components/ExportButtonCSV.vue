@@ -26,7 +26,7 @@ export default {
          * - if no filename is given using first case "data", the default filename is hard coded to "download" (+ postfixFormat)
          */
         data: {
-            type: [Object, Boolean],
+            type: [Array, Boolean],
             required: false,
             default: false
         },
@@ -159,7 +159,7 @@ export default {
         },
         /**
          * "downloads" the given json data
-         * @param {Object} data the json data to download
+         * @param {Array[]|Object[]} data the json data to download
          * @param {String} filename the filename to use
          * @returns {void}
          */
