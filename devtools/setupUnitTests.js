@@ -1,4 +1,5 @@
 const {config, enableAutoUnmount} = require("@vue/test-utils");
+const canvas = require("canvas");
 
 global.ResizeObserver = require("resize-observer-polyfill");
 
@@ -33,6 +34,7 @@ global.Worker = Worker;
 config.global.renderStubDefaultSlot = true;
 // global.SVGElement: @see https://github.com/vuejs/core/issues/3590
 global.SVGElement = window.SVGElement;
+global.CanvasPattern = canvas.CanvasPattern;
 
 /**
  * EnableAutoUnmount allows to automatically destroy Vue wrappers.
