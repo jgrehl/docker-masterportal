@@ -16,12 +16,16 @@ describe("src_3_0_0/core/maps/store/actionsMapsMapMode.js", () => {
         dispatch,
         getters,
         map2d,
-        map3d;
+        map3d,
+        rootState;
 
     beforeEach(() => {
         commit = sinon.spy();
         dispatch = sinon.spy();
         getters = sinon.spy();
+        rootState = {
+            configJs: {}
+        };
 
         mapCollection.clear();
         map2d = new Map({
@@ -98,7 +102,7 @@ describe("src_3_0_0/core/maps/store/actionsMapsMapMode.js", () => {
 
     describe("activateMap3d", () => {
         it("should commit 3D to mode", ()=> {
-            activateMap3d({commit});
+            activateMap3d({commit, rootState});
 
             expect(commit.calledOnce).to.be.true;
             expect(commit.firstCall.args).to.deep.equals(["setMode", "3D"]);
@@ -106,9 +110,10 @@ describe("src_3_0_0/core/maps/store/actionsMapsMapMode.js", () => {
 
         it("should not commit 3D to mode, if map3d doesn't exist", () => {
             mapCollection.clear();
-            activateMap3d({commit});
+            activateMap3d({commit, rootState});
 
             expect(commit.notCalled).to.be.true;
+            expect(rootState.configJs.startingMap3D).to.be.true;
         });
     });
 });
