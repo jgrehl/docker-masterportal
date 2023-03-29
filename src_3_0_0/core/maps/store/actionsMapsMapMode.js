@@ -11,7 +11,6 @@ export default {
      * @returns {void}
      */
     changeMapMode ({getters, dispatch}, targetMode) {
-        console.log(targetMode);
         const currentMode = getters.mode;
 
         if (currentMode !== targetMode) {
