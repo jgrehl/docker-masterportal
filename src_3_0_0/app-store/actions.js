@@ -92,7 +92,8 @@ export default {
                 mapMarkerPolygonStyleId: getters.configJs?.mapMarker?.polygonStyleId,
                 highlightFeaturesPointStyleId: getters["Modules/HighlightFeatures/pointStyleId"],
                 highlightFeaturesPolygonStyleId: getters["Modules/HighlightFeatures/polygonStyleId"],
-                highlightFeaturesLineStyleId: getters["Modules/HighlightFeatures/lineStyleId"]
+                highlightFeaturesLineStyleId: getters["Modules/HighlightFeatures/lineStyleId"],
+                zoomToFeatureId: getters.configJs.zoomTo?.find(entry => entry.id === "zoomToFeatureId")?.styleId
             },
             layerConfigs = getters.allLayerConfigs,
             // todo bei Implementierung von https://www.jira.geoportal-hamburg.de/browse/BG-3825 beachten:
