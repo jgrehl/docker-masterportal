@@ -111,6 +111,9 @@ export default {
             api.map.olcsMap.setCameraParameter(cameraParams, mapCollection.getMap("3D"), Cesium);
         }
         else {
+            if (!rootState.configJs.cesiumParameter) {
+                rootState.configJs.cesiumParameter = {};
+            }
             rootState.configJs.cesiumParameter.camera = cameraParams;
         }
     },
@@ -128,7 +131,6 @@ export default {
         let first2Coords = [coords[0], coords[1]];
 
         if (first2Coords.some(coord => typeof coord !== "number")) {
-            console.warn("Given coordinates must be of type integer! Although it might not break, something went wrong and needs to be checked!");
             first2Coords = first2Coords.map(singleCoord => parseInt(singleCoord, 10));
         }
         if (Array.isArray(first2Coords) && first2Coords.length === 2) {
