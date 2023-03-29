@@ -413,7 +413,6 @@ describe("src_3_0_0/modules/print/js/buildSpec", function () {
         const vectorLayer = new Vector();
 
         it("should return \"styleId\" if styleList is not available", function () {
-            buildSpec.getStyleModel = sinon.spy();
             expect(buildSpec.getStyleAttributes(vectorLayer, pointFeatures[0], false)).to.eql(["styleId"]);
         });
     });
@@ -1014,7 +1013,7 @@ describe("src_3_0_0/modules/print/js/buildSpec", function () {
             expect(buildSpec.buildPointStyleCircle(style)).to.be.an("object");
         });
     });
-    describe.skip("buildFillStyle", function () {
+    describe("buildFillStyle", function () {
         it("should return an style object", function () {
             style = {
                 getColor: () => sinon.stub()
