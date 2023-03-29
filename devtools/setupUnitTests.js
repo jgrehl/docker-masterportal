@@ -28,7 +28,6 @@ class Worker {
 // a mock for web worker
 global.Worker = Worker;
 
-
 /**
  * Mock for MutationObserver
  */
