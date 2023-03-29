@@ -6,7 +6,6 @@ describe("src_3_0_0/core/layers/js/layerUrlParams.js", () => {
     let dispatchCalls = [],
         zIndex;
 
-
     beforeEach(() => {
         zIndex = 0;
         dispatchCalls = [];
