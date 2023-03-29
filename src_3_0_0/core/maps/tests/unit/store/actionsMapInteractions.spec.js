@@ -10,6 +10,14 @@ const {
 } = actions;
 
 describe("src_3_0_0/core/maps/store/actionsMapsInteractions.js", () => {
+    let rootState;
+
+    beforeEach(() => {
+        rootState = {
+            configJs: {}
+        };
+    });
+
     describe("registerlistener and unregisterlistener", () => {
         let olMap,
             payload;
@@ -40,6 +48,20 @@ describe("src_3_0_0/core/maps/store/actionsMapsInteractions.js", () => {
         it("unregister pointermove listener from ol map", () => {
             unregisterListener({}, payload);
             expect(Object.keys(olMap.listeners_)).not.include("pointermove");
+        });
+    });
+
+    describe("setCamera", () => {
+        it("should set the camera params to configJs, if 3D map is not created yet", () => {
+            const cameraParams = {
+                altitude: 127,
+                heading: -1.2502079000000208,
+                tilt: 45
+            };
+
+            actions.setCamera({rootState}, cameraParams);
+
+            expect(rootState.configJs.cesiumParameter.camera).to.deep.equals(cameraParams);
         });
     });
 });
