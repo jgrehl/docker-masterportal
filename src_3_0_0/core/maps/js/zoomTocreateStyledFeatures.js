@@ -37,14 +37,11 @@ export default function (features, styleId) {
                 });
             }
             else {
-                nextTick(() => {
-                    const styleObject = styleList.returnStyleObject(styleId);
+                const styleObject = styleList.returnStyleObject(styleId);
 
-                    console.log(styleObject);
-                    style = styleObject === undefined
-                        ? new Style()
-                        : createStyle.createStyle(styleObject, feature, false, Config.wfsImgPath);
-                });
+                style = styleObject === undefined
+                    ? new Style()
+                    : createStyle.createStyle(styleObject, feature, false, Config.wfsImgPath);
             }
 
             feature.setStyle(style);
