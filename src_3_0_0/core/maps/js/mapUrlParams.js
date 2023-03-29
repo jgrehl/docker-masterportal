@@ -9,9 +9,34 @@ import processUrlParams from "../../../shared/js/utils/processUrlParams";
 //      - in Object umbauen
 // - ZOOMTOEXTENT in object umbauen (mit Proj)
 
+/**
+ * Here the urlParams for the maps are processed.
+ *
+ * Examples:
+ * - https://localhost:9001/portal/master/?highlightfeature=1711,DE.HH.UP_GESUNDHEIT_KRANKENHAEUSER_2
+ * - https://localhost:9001/portal/master/?MAPS={%22center%22:[571278.4429867676,5938534.397334521],%22mode%22:%222D%22,%22zoom%22:7}
+ * - https://localhost:9001/portal/master/?MAPS={%22center%22:[571278.4429867676,5938534.397334521],%22mode%22:%223D%22,%22zoom%22:7,%22altitude%22:127,%22heading%22:-1.2502079000000208,%22tilt%22:45}
+ * - https://localhost:9001/portal/master/?marker=565874,5934140
+ * - https://localhost:9001/portal/master/?ZOOMTOFEATUREID=18,26
+ * - https://localhost:9001/portal/master/?zoomtogeometry=bergedorf
+ *
+ * - https://localhost:9001/portal/master/?map=3d&altitude=127&heading=-1.2502079000000208&tilt=45
+ * - https://localhost:9001/portal/master/?Map/highlightfeature=1711,DE.HH.UP_GESUNDHEIT_KRANKENHAEUSER_2
+ * - https://localhost:9001/portal/master/?bezirk=bergedorf
+ * - https://localhost:9001/portal/master/?highlightFeaturesByAttribute=123&wfsId=8712&attributeName=bezirk&attributeValue=Altona&attributeQuery=IsLike
+ * - https://localhost:9001/portal/master/?MAP/MAPMODE=3d
+ * - https://localhost:9001/portal/master/?MAPMARKER=[565874,%205934140]
+ * - https://localhost:9001/portal/master/?zoomtogeometry=altona
+ * - https://localhost:9001/portal/master/?zoomlevel=0
+ * - https://localhost:9001/portal/master/?ZOOMTOEXTENT=10.0822,53.6458,10.1781,53.8003&PROJECTION=EPSG:4326
+ * - https://localhost:9001/portal/master/?zoomToExtent=510000,5850000,625000,6000000
+ * - https://localhost:9001/portal/master/?featureid=18,26
+ */
+
 const mapUrlParams = {
         HIGHLIGHTFEATURE: highlightFeature,
         MAPS: setMapAttributes,
+        MARKER: setMapMarker,
         ZOOMTOFEATUREID: zoomToFeatures,
         ZOOMTOGEOMETRY: zoomToFeatures
     },
@@ -30,7 +55,6 @@ const mapUrlParams = {
         "API/HIGHLIGHTFEATURESBYATTRIBUTE": highlightFeaturesByAttributes,
         MAP: setMode,
         "MAP/MAPMODE": setMode,
-        MARKER: setMapMarker,
         MAPMARKER: setMapMarker,
         PROJECTION: zoomToProjExtent,
         "MAP/PROJECTION": zoomToProjExtent,
@@ -62,7 +86,7 @@ function setMapAttributes (params) {
         Object.entries(JSON.parse(params.MAPS)).map(([k, v]) => [k.toUpperCase(), v])
     );
 
-    setCamera(mapUrlParams);
+    setCamera(mapsParams);
     setMode(mapsParams);
     setView(mapsParams);
 }
@@ -74,7 +98,7 @@ function setMapAttributes (params) {
  */
 function highlightFeature (params) {
     store.dispatch("Maps/highlightFeature", {
-        layerIdAndFeatureId: params.HIGHLIGHTFEATURE?.split(","),
+        layerIdAndFeatureId: (params.HIGHLIGHTFEATURE || params["MAP/HIGHLIGHTFEATURE"])?.split(","),
         type: "viaLayerIdAndFeatureId"
     });
 }
@@ -124,9 +148,10 @@ function setCamera (params) {
  * @returns {void}
  */
 function setMapMarker (params) {
-    store.dispatch("Maps/placingPointMarker",
-        params.MARKER?.split(",") || params.MAPMARKER?.split(",")
-    );
+    const marker = params.MARKER || params.MAPMARKER,
+        coordinates = marker.includes("[") ? JSON.parse(marker) : marker.split(",");
+
+    store.dispatch("Maps/placingPointMarker", coordinates);
 }
 
 /**
@@ -147,9 +172,9 @@ function setView (params) {
     const center = params.CENTER || params["MAP/CENTER"];
 
     store.dispatch("Maps/setView", {
-        center: center.startsWith("[") ? JSON.parse(center) : center?.split(","),
+        center: Array.isArray(center) ? center : center?.split(","),
         rotation: params.ROTATION,
-        zoom: params.ZOOM || params.ZOOMLEVEL || params["MAP/ZOOMLEVEL"]
+        zoom: params.ZOOM ?? params.ZOOMLEVEL ?? params["MAP/ZOOMLEVEL"]
     });
 }
 
@@ -174,20 +199,19 @@ function zoomToProjExtent (params) {
     store.dispatch("Maps/zoomToProjExtent", {
         extent: (params.ZOOMTOEXTENT || params["MAP/ZOOMTOEXTENT"])?.split(","),
         options: {duration: 0},
-        projection: params.PROJECTION || params["MAP/PROJECTION"]
+        projection: params.PROJECTION || params["MAP/PROJECTION"] || store.getters["Maps/projectionCode"]
     });
 }
 
 export default {
-    processMapUrlParams
+    processMapUrlParams,
+    setMapAttributes,
+    highlightFeature,
+    highlightFeaturesByAttributes,
+    setMapMarker,
+    setCamera,
+    setMode,
+    setView,
+    zoomToFeatures,
+    zoomToProjExtent
 };
-
-
-/**
- * Examples:
- * - https://localhost:9001/portal/master/?MAPS={%22center%22:[571278.4429867676,5938534.397334521],%22mode%22:%222D%22,%22zoom%22:7}
- * - https://localhost:9001/portal/master/?bezirk=bergedorf
- * - https://localhost:9001/portal/master/?zoomtogeometry=altona
- * - https://localhost:9001/portal/master/?zoomlevel=0
- * - https://localhost:9001/portal/master/?ZOOMTOEXTENT=10.0822,53.6458,10.1781,53.8003&PROJECTION=EPSG:4326
- */
