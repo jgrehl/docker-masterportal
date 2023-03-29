@@ -68,7 +68,6 @@
           {
             "type": "legend"
           },
-
           {
             "type": "openConfig"
           },
@@ -349,7 +348,8 @@
                 "ETRS89_3GK3: Bezugssystem ETRS89, Abbildungsvorschrift Gauß-Krüger, 3. Meridianstreifen",
                 "EPSG 8395: Bezugssystem ETRS89, Abbildungsvorschrift Gauß-Krüger, 3. Meridianstreifen, ist identisch mit ETRS89_3GK3 jedoch ohne Angabe der Streifenkennung „3“ beim Rechtswert",
                 "DE_DHDN_3GK3, EPSG 31467: Bezugssystem DHDN, Abbildungsvorschrift Gauß-Krüger, 3. Meridianstreifen"
-            ]}
+              ]
+            }
           },
           {
             "type": "draw",
@@ -603,7 +603,7 @@
           "styleId": "1711",
           "name": "Krankenhäuser",
           "typ": "WFS",
-          "visibility": false,
+          "visibility": true,
           "loadingStrategy": "all",
           "mouseHoverField": [
             "name",
@@ -637,12 +637,15 @@
           "id": "8712",
           "styleId": "8712",
           "typ": "WFS",
-          "visibility": false,
-          "clusterDistance": 60,
+          "visibility": true,
           "mouseHoverField": [
             "schulname",
             "kapitelbezeichnung"
-          ]
+          ],
+          "featurePrefix": "de.hh.up:",
+          "wildCard": "%",
+          "singleChar": "#",
+          "escapeChar": "!"
         },
         {
           "id": "19173",
@@ -731,11 +734,16 @@
         {
           "id": "StaticImage",
           "name": "Lärmberechnung",
-          "extent": [568426.27, 5931985.58, 569614.86, 5933174.11],
-          "typ": "StaticImage",
-          "visibility": false,
-          "url": "https://geodienste.hamburg.de/lgv-config/img/Laerm-Test_300dpi.png",
-          "legend": ["https://geodienste.hamburg.de/lgv-config/img/Legende_Laermberechnung_Tag.png", "https://geodienste.hamburg.de/lgv-config/img/Legende_Laermberechnung_Nacht.png"]
+          "extent": [
+            568426.27,
+            5931985.58,
+            569614.86,
+            5933174.11
+          ],
+          "legend": [
+            "https://geodienste.hamburg.de/lgv-config/img/Legende_Laermberechnung_Tag.png",
+            "https://geodienste.hamburg.de/lgv-config/img/Legende_Laermberechnung_Nacht.png"
+          ]
         },
         {
           "id": "2928",
@@ -750,7 +758,7 @@
           "id": "1534",
           "name": "Grünflächen (WebGL)",
           "renderer": "webgl",
-          "typ" : "WFS",
+          "typ": "WFS",
           "styleId": "1534",
           "isPointLayer": false,
           "gfiAttributes": "showAll",
@@ -776,7 +784,12 @@
           "loadingStrategy": "all",
           "hitTolerance": 20,
           "isPointLayer": true,
-          "bboxGeometry": [568426.27, 5931985.58, 569614.86, 5933174.11],
+          "bboxGeometry": [
+            568426.27,
+            5931985.58,
+            569614.86,
+            5933174.11
+          ],
           "mouseHoverField": [
             "Category",
             "Value"
@@ -786,8 +799,13 @@
               "symbolType": "circle",
               "size": [
                 "interpolate",
-                ["linear"],
-                ["get", "Total_votes"],
+                [
+                  "linear"
+                ],
+                [
+                  "get",
+                  "Total_votes"
+                ],
                 0,
                 6,
                 18,
@@ -795,12 +813,25 @@
               ],
               "color": [
                 "interpolate",
-                ["linear"],
-                ["get", "compound"],
+                [
+                  "linear"
+                ],
+                [
+                  "get",
+                  "compound"
+                ],
                 -1,
-                [240, 40, 30],
+                [
+                  240,
+                  40,
+                  30
+                ],
                 1,
-                [0, 200, 60]
+                [
+                  0,
+                  200,
+                  60
+                ]
               ],
               "opacity": 0.8,
               "rotateWithView": true
