@@ -91,23 +91,29 @@ export default {
      * Note: Used in remoteInterface.
      * @param {Object} param store context.
      * @param {Object} param.dispatch the dispatch.
+     * @param {Object} param.getters the getters.
      * @param {Object} zoomParams parameter object.
      * @param {String[]} zoomParams.extent The extent to zoom.
      * @param {Object} zoomParams.options Options for zoom.
      * @param {string} zoomParams.projection The projection from RUL parameter.
      * @returns {void}
      */
-    zoomToProjExtent ({dispatch}, zoomParams) {
+    zoomToProjExtent ({dispatch, getters}, zoomParams) {
         if (Object.values(zoomParams).every(val => val !== undefined)) {
-            const extent = zoomParams.extent.map(coord => parseFloat(coord)),
-                map2d = mapCollection.getMap("2D"),
-                leftBottom = extent.slice(0, 2),
-                topRight = extent.slice(2, 4),
-                transformedLeftBottom = crs.transformToMapProjection(map2d, zoomParams.projection, leftBottom),
-                transformedTopRight = crs.transformToMapProjection(map2d, zoomParams.projection, topRight),
-                extentToZoom = transformedLeftBottom.concat(transformedTopRight);
+            const projection = zoomParams.projection;
+            let extent = zoomParams.extent.map(coord => parseFloat(coord));
 
-            dispatch("zoomToExtent", {extent: extentToZoom, options: zoomParams.options});
+            if (projection !== getters["Maps/projectionCode"]) {
+                const map2d = mapCollection.getMap("2D"),
+                    leftBottom = extent.slice(0, 2),
+                    topRight = extent.slice(2, 4),
+                    transformedLeftBottom = crs.transformToMapProjection(map2d, zoomParams.projection, leftBottom),
+                    transformedTopRight = crs.transformToMapProjection(map2d, zoomParams.projection, topRight);
+
+                extent = transformedLeftBottom.concat(transformedTopRight);
+            }
+
+            dispatch("zoomToExtent", {extent: extent, options: zoomParams.options});
         }
     }
 };

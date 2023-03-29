@@ -10,7 +10,6 @@ import getAndFilterFeatures from "../js/zoomToGetAndFilterFeatures";
  */
 export default {
     zoomToFeatures ({dispatch, rootGetters}, param) {
-        console.log(param);
         const config = rootGetters.configJs?.zoomTo;
         let addFeatures = true,
             allowedValues,
@@ -60,11 +59,9 @@ export default {
                         filteredFeatures = filteredFeatures.filter(feature => allowedValues.includes(feature.get(property).toUpperCase().trim()));
                     }
                     if (styleId) {
-                        console.log(styleId);
                         filteredFeatures = createStyledFeatures(filteredFeatures, styleId);
                     }
                     if (addFeatures && filteredFeatures.length > 0) {
-                        console.log(filteredFeatures);
                         dispatch("Maps/addLayer", new VectorLayer({
                             source: new VectorSource({features: filteredFeatures})
                         }), {root: true});

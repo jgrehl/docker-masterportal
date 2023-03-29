@@ -1,5 +1,6 @@
 import {expect} from "chai";
 import Map from "ol/Map";
+import {nextTick} from "vue";
 import sinon from "sinon";
 import View from "ol/View";
 
@@ -54,11 +55,14 @@ describe("src_3_0_0/core/js/layers/layerProcessor.js", () => {
             let olLayers = [];
 
             processLayerConfig(layerConfig);
-            olLayers = mapCollection.getMap("2D").getLayers().getArray();
 
-            expect(olLayers.length).equals(2);
-            expect(olLayers[0].get("id")).to.equals("453");
-            expect(olLayers[1].get("id")).to.equals("2426");
+            nextTick(() => {
+                olLayers = mapCollection.getMap("2D").getLayers().getArray();
+
+                expect(olLayers.length).equals(2);
+                expect(olLayers[0].get("id")).to.equals("453");
+                expect(olLayers[1].get("id")).to.equals("2426");
+            });
         });
     });
 
