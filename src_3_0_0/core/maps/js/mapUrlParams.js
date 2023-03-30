@@ -2,13 +2,6 @@ import store from "../../../app-store";
 import highlightFeaturesByAttribute from "./highlightFeaturesByAttribute";
 import processUrlParams from "../../../shared/js/utils/processUrlParams";
 
-// Todos:
-// - highlightFeature in richtige actions umbauen
-// - HIGHLIGHTFEATURESBYATTRIBUTE:
-//      - in richtige actions umbauen
-//      - in Object umbauen
-// - ZOOMTOEXTENT in object umbauen (mit Proj)
-
 /**
  * Here the urlParams for the maps are processed.
  *
