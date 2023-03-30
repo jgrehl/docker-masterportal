@@ -2,6 +2,7 @@ import VectorSource from "ol/source/Vector";
 import {Vector as VectorLayer} from "ol/layer";
 import {GeoJSON} from "ol/format";
 import Feature from "ol/Feature";
+import {BufferOp} from "jsts/org/locationtech/jts/operation/buffer";
 import {ResultType} from "./enums";
 import * as setters from "./settersBufferAnalysis";
 import * as initializers from "./initializersBufferAnalysis";
@@ -47,7 +48,7 @@ const actions = {
         commit("setBufferLayer", bufferLayer);
         features.forEach(feature => {
             const jstsGeom = jstsParser.read(feature.getGeometry()),
-                buffered = jstsGeom.buffer(bufferRadius),
+                buffered = BufferOp.bufferOp(jstsGeom, bufferRadius),
                 newFeature = new Feature({
                     geometry: jstsParser.write(buffered),
                     name: "Buffers"
