@@ -4,7 +4,7 @@ import getters from "../../getters";
 import stateAppStore from "../../state";
 import sinon from "sinon";
 
-describe("src_3_0_0/app-store/getters.js", () => {
+describe.only("src_3_0_0/app-store/getters.js", () => {
     let warn;
 
     beforeEach(() => {
@@ -345,6 +345,61 @@ describe("src_3_0_0/app-store/getters.js", () => {
             //     "standort" : "Standort",
             //     "adresse" : "Adresse"
             // },}).length).to.be.equals(1);
+        });
+    });
+
+    describe("layerUrlParams", () => {
+        it("should return the layers in tree for url params", () => {
+            const state = {
+                layerConfig: {
+                    Fachdaten: {
+                        elements: [
+                            {
+                                id: "1",
+                                showInLayerTree: true,
+                                visibility: true,
+                                a: "b"
+                            },
+                            {
+                                id: "2",
+                                showInLayerTree: true,
+                                visibility: false
+                            },
+                            {
+                                id: "3",
+                                showInLayerTree: false,
+                                visibility: false
+                            }
+                        ]
+                    },
+                    Hintergrundkarten: {
+                        elements: [
+                            {
+                                id: "100",
+                                transparency: "50",
+                                showInLayerTree: true,
+                                visibility: true
+                            }
+                        ]
+                    }
+                }
+            };
+
+            expect(getters.layerUrlParams(state)).to.deep.equals([
+                {
+                    id: "1",
+                    visibility: true
+                },
+                {
+                    id: "2",
+                    visibility: false
+                },
+                {
+                    id: "100",
+                    transparency: "50",
+                    visibility: true
+                }
+            ]);
         });
     });
 
