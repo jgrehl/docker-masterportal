@@ -819,57 +819,75 @@
           }
         },
         {
-          "id": "Entities3D",
-          "name": "3D-Entities Testlayer",
-          "typ": "Entities3D",
-          "visibility": true,
-          "entities": [
+          "name": "3D Daten",
+          "type": "folder",
+          "elements": [
             {
-              "url": "https://daten-hamburg.de/gdi3d/datasource-data/Simple_Building.glb",
-              "attributes": {
-                "name": "Einfaches Haus in Planten und Blomen"
-              },
-              "latitude": 53.5631,
-              "longitude": 9.9800,
-              "height": 12,
-              "heading": 0,
-              "pitch": 0,
-              "roll": 0,
-              "scale": 5,
-              "allowPicking": true,
-              "show": true
+              "name": "3D Basisdaten",
+              "type": "folder",
+              "elements": [
+                {
+                  "id": "12883",
+                  "name": "Gelände",
+                  "typ": "Terrain3D",
+                  "visibility": false
+                }
+              ]
+            },
+            {
+              "name": "3D Gebäudedaten",
+              "type": "folder",
+              "elements": [
+                {
+                  "id": "16101",
+                  "name": "Brückenflächen HH",
+                  "typ": "TileSet3D",
+                  "visibility": true
+                },
+                {
+                  "id": "12884",
+                  "name": "Gebäude LoD2",
+                  "typ": "TileSet3D",
+                  "visibility": true
+                },
+                {
+                  "id": "16100",
+                  "name": "Hauptkirchen",
+                  "visibility": false,
+                  "hiddenFeatures": [
+                    "DEHHALKAJ00011uJ",
+                    "DEHHALKAJ0000yd2",
+                    "DEHHALKAJ0000ovW",
+                    "DEHHALKAJ0000owm",
+                    "DEHHALKAJ0000pO5"
+                  ]
+                },
+                {
+                  "id": "Entities3D",
+                  "name": "3D-Entities Testlayer",
+                  "typ": "Entities3D",
+                  "visibility": false,
+                  "entities": [
+                    {
+                      "url": "https://daten-hamburg.de/gdi3d/datasource-data/Simple_Building.glb",
+                      "attributes": {
+                        "name": "Einfaches Haus in Planten und Blomen"
+                      },
+                      "latitude": 53.5631,
+                      "longitude": 9.9800,
+                      "height": 12,
+                      "heading": 0,
+                      "pitch": 0,
+                      "roll": 0,
+                      "scale": 5,
+                      "allowPicking": true,
+                      "show": true
+                    }
+                  ]
+                }
+              ]
             }
           ]
-        },
-        {
-          "id": "12883",
-          "name": "Gelände",
-          "typ": "Terrain3D",
-          "visibility": true
-        },
-        {
-          "id": "12884",
-          "name": "Gebäude LoD2",
-          "typ": "TileSet3D",
-          "visibility": true
-        },
-        {
-          "id": "16100",
-          "name": "Hauptkirchen",
-          "visibility": true,
-          "hiddenFeatures": [
-            "DEHHALKAJ00011uJ",
-            "DEHHALKAJ0000yd2",
-            "DEHHALKAJ0000ovW",
-            "DEHHALKAJ0000owm",
-            "DEHHALKAJ0000pO5"
-          ]
-        },
-        {
-          "id": "16101",
-          "name": "Brueckenflaechen HH",
-          "typ": "TileSet3D",
-          "visibility": true
         }
       ]
     }
