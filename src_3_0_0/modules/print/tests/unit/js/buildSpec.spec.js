@@ -10,7 +10,6 @@ import Feature from "ol/Feature.js";
 import {Polygon} from "ol/geom.js";
 import VectorLayer from "ol/layer/Vector.js";
 import VectorSource from "ol/source/Vector.js";
-import {EOL} from "os";
 import measureStyle from "./../../../../measure/js/measureStyle";
 import layerCollection from "../../../../../core/layers/js/layerCollection";
 import sinon from "sinon";
@@ -623,18 +622,6 @@ describe("src_3_0_0/modules/print/js/buildSpec", function () {
             expect(list).to.be.an("array");
             expect(list[0]).to.deep.own.include({
                 type: "Feature",
-                id: "Erster_Gruener_Ring.1",
-                properties: {
-                    RoutenTyp: "Radfernwege",
-                    Status: "Hauptroute",
-                    Richtung: "Hin- und Rückweg",
-                    RoutenName: "1. Grüner Ring",
-                    Group_: "1. Grüner Ring_Hauptroute_Hinweg",
-                    Routennummer: "0",
-                    Verlauf: `${EOL}Landungsbrücken - Deichtorhallen - Planten un Blomen - Wallring - Landungsbrücken${EOL}`,
-                    Routeninformation: `${EOL}Landungsbrücken - Deichtorhallen - Planten un Blomen - Wallring - Landungsbrücken${EOL}`,
-                    _label: "veryCreativeLabelText"
-                },
                 geometry: {
                     type: "MultiLineString",
                     coordinates: [[
@@ -646,7 +633,19 @@ describe("src_3_0_0/modules/print/js/buildSpec", function () {
                         [5933232.553300001, 564780.0521999998, 0],
                         [5933229.584100001, 564741.4397, 0]
                     ]]
-                }
+                },
+                properties: {
+                    RoutenTyp: "Radfernwege",
+                    Status: "Hauptroute",
+                    Richtung: "Hin- und Rückweg",
+                    RoutenName: "1. Grüner Ring",
+                    Group_: "1. Grüner Ring_Hauptroute_Hinweg",
+                    Routennummer: "0",
+                    Verlauf: "\nLandungsbrücken - Deichtorhallen - Planten un Blomen - Wallring - Landungsbrücken\n",
+                    Routeninformation: "\nLandungsbrücken - Deichtorhallen - Planten un Blomen - Wallring - Landungsbrücken\n",
+                    _label: "veryCreativeLabelText"
+                },
+                id: "Erster_Gruener_Ring.1"
             });
         });
         it("should return array with polygon JSON", function () {
@@ -841,8 +840,8 @@ describe("src_3_0_0/modules/print/js/buildSpec", function () {
                     RoutenName: "1. Grüner Ring",
                     Group_: "1. Grüner Ring_Hauptroute_Hinweg",
                     Routennummer: "0",
-                    Verlauf: `${EOL}Landungsbrücken - Deichtorhallen - Planten un Blomen - Wallring - Landungsbrücken${EOL}`,
-                    Routeninformation: `${EOL}Landungsbrücken - Deichtorhallen - Planten un Blomen - Wallring - Landungsbrücken${EOL}`,
+                    Verlauf: "\nLandungsbrücken - Deichtorhallen - Planten un Blomen - Wallring - Landungsbrücken\n",
+                    Routeninformation: "\nLandungsbrücken - Deichtorhallen - Planten un Blomen - Wallring - Landungsbrücken\n",
                     _label: "veryCreativeLabelText"
                 },
                 geometry: {
