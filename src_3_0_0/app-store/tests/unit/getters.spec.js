@@ -4,7 +4,7 @@ import getters from "../../getters";
 import stateAppStore from "../../state";
 import sinon from "sinon";
 
-describe.only("src_3_0_0/app-store/getters.js", () => {
+describe("src_3_0_0/app-store/getters.js", () => {
     let warn;
 
     beforeEach(() => {
