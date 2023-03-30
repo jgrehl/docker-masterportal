@@ -12,12 +12,12 @@ import store from "../../../app-store";
  */
 
 const layerUrlParams = {
-        LAYERS: setLayers
+        LAYERS: setLayers,
+        MDID: setLayersByMetadataId
     },
     legacyLayerUrlParams = {
         LAYERIDS: setLayerIds,
         "MAP/LAYERIDS": setLayerIds,
-        MDID: setLayersByMetadataId,
         "MAP/MDID": setLayersByMetadataId,
         TRANSPARENCY: setLayerIds,
         VISIBILITY: setLayerIds
