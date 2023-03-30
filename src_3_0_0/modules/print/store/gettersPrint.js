@@ -14,7 +14,7 @@ const getters = {
             title: state.title
         };
 
-        return JSON.stringify(params);
+        return params;
     }
 };
 
