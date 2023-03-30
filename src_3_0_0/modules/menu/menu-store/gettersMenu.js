@@ -191,27 +191,58 @@ const menuGetters = {
         return null;
     },
 
-    urlParams: (state, _, rootState, rootGetters) => side => {
-        const currentComponent = state[side].currentComponent,
-            menuString = side === "mainMenu" ? "MENU_MAIN" : "MENU_SECONDARY";
-        let params = `${menuString}=${JSON.stringify({"currentComponent": currentComponent})}`;
+    /**
+     * Returns the url params.
+     * @param {Object} state menu store state.
+     * @param {Object} getters menu store getters.
+     * @returns {String} The url params.
+     */
+    urlParams: (state, getters) => {
+        const params = {
+                main: {
+                    currentComponent: state.mainMenu.currentComponent
+                },
+                secondary: {
+                    currentComponent: state.secondaryMenu.currentComponent
+                }
+            },
+            mainAttributes = getters.getComponentAttributes(state.mainMenu.currentComponent),
+            secondaryAttributes = getters.getComponentAttributes(state.secondaryMenu.currentComponent);
 
-        if (currentComponent !== "root") {
-            const moduleParam = rootGetters[`Modules/${changeCase.upperFirst(currentComponent)}/urlParams`];
-
-            // if (typeof moduleParam === "undefined") {
-            //     moduleParam = JSON.stringify(rootState.Modules[upperFirst(currentComponent)]);
-            // }
-
-            if (side === "mainMenu") {
-                params = `${params}&MODULE_MAIN=${moduleParam}`;
-            }
-            else if (side === "secondaryMenu") {
-                params = `${params}&MODULE_SECONDARY=${moduleParam}`;
-            }
+        if (mainAttributes) {
+            params.main.attributes = mainAttributes;
+        }
+        if (secondaryAttributes) {
+            params.secondary.attributes = secondaryAttributes;
         }
 
         return params;
+    },
+
+    /**
+     * Returns the attributes of a module.
+     * If a getters `urlParams` exists in the module the attributes are obtained from it,
+     * if none exists all attributes of the state are used.
+     * @param {Object} _ menu store state.
+     * @param {Object} __ menu store getters.
+     * @param {Object} rootState root state.
+     * @param {Object} rootGetters root getters.
+     * @returns {Object} The component attributes.
+     */
+    getComponentAttributes: (_, __, rootState, rootGetters) => currentComponent => {
+        let moduleAttributes;
+
+        if (currentComponent !== "root") {
+            const moduleName = changeCase.upperFirst(currentComponent);
+
+            moduleAttributes = rootGetters[`Modules/${moduleName}/urlParams`];
+
+            if (typeof moduleAttributes === "undefined") {
+                moduleAttributes = rootState.Modules[moduleName];
+            }
+        }
+
+        return moduleAttributes;
     }
 };
 
