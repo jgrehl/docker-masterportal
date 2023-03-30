@@ -223,6 +223,31 @@ const getters = {
     },
 
     /**
+     * Returns the layer configs for url params.
+     * @param {Object} state state of the app-store.
+     * @returns {Object[]} The layerConfigs for url params.
+     */
+    layerUrlParams: state => {
+        const layers = getters.layerConfigsByAttributes(state)({showInLayerTree: true}),
+            layerParams = [];
+
+        layers.forEach(layer => {
+            const param = {
+                id: layer.id,
+                visibility: layer.visibility
+            };
+
+            if (layer.transparency) {
+                param.transparency = layer.transparency;
+            }
+
+            layerParams.push(param);
+        });
+
+        return layerParams || [];
+    },
+
+    /**
      * Returns the mainmenu of portalConfig.
      * @param {Object} state state of the app-store.
      * @returns {Object} Main menu.
