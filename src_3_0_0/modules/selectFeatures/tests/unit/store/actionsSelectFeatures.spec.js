@@ -65,11 +65,10 @@ describe("src/modules/tools/selectFeatures/store/actionsSelectFeatures.js", () =
             expect(dispatch.getCall(3).args[0]).to.equal("Maps/setZoom");
             expect(dispatch.getCall(3).args[1]).to.deep.equal(state.highlightVectorRulesPointLine.zoomLevel);
             expect(createLayerAddToTreeStub.calledOnce).to.be.true;
-            expect(createLayerAddToTreeStub.firstCall.args[0]).to.be.deep.equals(rootGetters);
-            expect(createLayerAddToTreeStub.firstCall.args[1]).to.be.deep.equals(layerId);
-            expect(createLayerAddToTreeStub.firstCall.args[2]).to.be.deep.equals([feature]);
-            expect(createLayerAddToTreeStub.firstCall.args[3]).to.be.equals("custom");
-            expect(createLayerAddToTreeStub.firstCall.args[4]).to.be.deep.equals(rootGetters.treeHighlightedFeatures);
+            expect(createLayerAddToTreeStub.firstCall.args[0]).to.be.deep.equals(layerId);
+            expect(createLayerAddToTreeStub.firstCall.args[1]).to.be.deep.equals([feature]);
+            expect(createLayerAddToTreeStub.firstCall.args[2]).to.be.equals("custom");
+            expect(createLayerAddToTreeStub.firstCall.args[3]).to.be.deep.equals(rootGetters.treeHighlightedFeatures);
         });
 
         it("highlightFeature treeHighlightedFeatures is not active", () => {

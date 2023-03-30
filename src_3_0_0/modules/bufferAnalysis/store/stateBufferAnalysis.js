@@ -1,4 +1,5 @@
-import * as jsts from "jsts/dist/jsts";
+import GeoJSONWriter from "jsts/org/locationtech/jts/io/GeoJSONWriter";
+import OL3Parser from "jsts/org/locationtech/jts/io/OL3Parser";
 import {Fill, Stroke, Style} from "ol/style";
 import {ResultType} from "./enums";
 
@@ -44,10 +45,10 @@ const state = {
             width: 2
         })
     }),
-    geoJSONWriter: new jsts.io.GeoJSONWriter(),
+    geoJSONWriter: new GeoJSONWriter(),
     inputBufferRadius: 0,
     intersections: [],
-    jstsParser: new jsts.io.OL3Parser(),
+    jstsParser: new OL3Parser(),
     resultFeatures: [],
     resultLayer: {},
     resultType: ResultType.OUTSIDE,
