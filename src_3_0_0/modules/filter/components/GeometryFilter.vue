@@ -5,7 +5,8 @@ import {Fill, Stroke, Style} from "ol/style";
 import {Vector as VectorSource} from "ol/source";
 import {Vector as VectorLayer} from "ol/layer";
 import {mapActions, mapGetters, mapMutations} from "vuex";
-import * as jsts from "jsts/dist/jsts";
+import OL3Parser from "jsts/org/locationtech/jts/io/OL3Parser.js";
+import {BufferOp} from "jsts/org/locationtech/jts/operation/buffer";
 import {
     LineString,
     LinearRing,
@@ -133,7 +134,7 @@ export default {
             }
             const newValue = isNaN(parseInt(val, 10)) ? this.defaultBuffer : val,
                 jstsGeom = this.ol3Parser.read(this.initFeatureGeometry),
-                buffered = jstsGeom.buffer(newValue);
+                buffered = BufferOp.bufferOp(jstsGeom, newValue);
 
             if (newValue <= 0) {
                 return;
@@ -188,7 +189,7 @@ export default {
             this.feature = undefined;
 
             // jsts is used to calculate a buffer around a linestring
-            this.ol3Parser = new jsts.io.OL3Parser();
+            this.ol3Parser = new OL3Parser();
             this.ol3Parser.inject(
                 Point,
                 LineString,
@@ -363,7 +364,7 @@ export default {
         getGeometryOnDrawEnd (feature, type, buffer) {
             if (type === "LineString") {
                 const jstsGeom = this.ol3Parser.read(feature.getGeometry()),
-                    buffered = jstsGeom.buffer(buffer);
+                    buffered = BufferOp.bufferOp(jstsGeom, buffer);
 
                 return this.ol3Parser.write(buffered);
             }
