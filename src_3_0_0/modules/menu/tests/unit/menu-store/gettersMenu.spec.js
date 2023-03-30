@@ -10,6 +10,7 @@ describe("src_3_0_0/modules/menu/menu-store/gettersMenu.js", () => {
     let consoleErrorSpy,
         getters,
         rootGetters,
+        rootState,
         state;
 
     beforeEach(() => {
@@ -458,6 +459,64 @@ describe("src_3_0_0/modules/menu/menu-store/gettersMenu.js", () => {
         });
         it("should return null if a given side does not equal 'mainMenu' or 'secondaryMenu'", () => {
             expect(gettersMenu.titleBySide(undefined, getters)("newMenu")).to.equal(null);
+        });
+    });
+
+    describe("urlParams", () => {
+        beforeEach(() => {
+            state = {
+                mainMenu: {
+                    currentComponent: "root"
+                },
+                secondaryMenu: {
+                    currentComponent: "abc"
+                }
+            };
+
+            getters = {
+                getComponentAttributes: (component) => {
+                    return component === "root" ? undefined : {a: "1", b: "2"};
+                }
+            };
+        });
+
+        it("should return the menu params with attributes", () => {
+            const params = gettersMenu.urlParams(state, getters);
+
+            expect(params).to.deep.equals({
+                main: {
+                    currentComponent: "root"
+                },
+                secondary: {
+                    currentComponent: "abc",
+                    attributes: {
+                        a: "1",
+                        b: "2"
+                    }
+                }
+            });
+        });
+    });
+
+    describe("getComponentAttributes", () => {
+        beforeEach(() => {
+            rootState = {};
+            rootGetters = {
+                "Modules/CompA/urlParams": {
+                    a: 1,
+                    b: 2
+                }
+            };
+        });
+
+        it("should return the menu attributes to a component", () => {
+            const currentComponent = "compA",
+                moduleAttributes = gettersMenu.getComponentAttributes(undefined, undefined, rootState, rootGetters)(currentComponent);
+
+            expect(moduleAttributes).to.deep.equals({
+                a: 1,
+                b: 2
+            });
         });
     });
 });
