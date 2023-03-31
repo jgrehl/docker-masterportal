@@ -1,6 +1,6 @@
 import {Style} from "ol/style.js";
 import {expect} from "chai";
-import {createStyle} from "../../../../js/style/createStyle";
+import createStyleModule from "../../../../js/style/createStyle";
 
 describe("src_3_0_0/modules/draw/js/style/createStyle.js", () => {
     let iconPath;
@@ -25,7 +25,7 @@ describe("src_3_0_0/modules/draw/js/style/createStyle.js", () => {
                     colorContour: undefined,
                     strokeWidth: undefined
                 },
-                result = createStyle(state, styleSettings);
+                result = createStyleModule.createStyle(state, styleSettings);
 
             expect(result instanceof Style).to.be.true;
         });
@@ -43,7 +43,7 @@ describe("src_3_0_0/modules/draw/js/style/createStyle.js", () => {
                     strokeWidth: undefined
                 };
 
-            expect(createStyle(state, styleSettings).getFill().getColor()).to.deep.equal(color);
+            expect(createStyleModule.createStyle(state, styleSettings).getFill().getColor()).to.deep.equal(color);
         });
         it("the result color should be the same as the input color for a polygon", () => {
             const drawType = {geometry: "Polygon", id: "drawArea"},
@@ -59,7 +59,7 @@ describe("src_3_0_0/modules/draw/js/style/createStyle.js", () => {
                     strokeWidth: undefined
                 };
 
-            expect(createStyle(state, styleSettings).getFill().getColor()).to.deep.equal(color);
+            expect(createStyleModule.createStyle(state, styleSettings).getFill().getColor()).to.deep.equal(color);
         });
         it("the result color should be the same as input color excluding the opacity which should be set as a separate parameter for a point of type image", () => {
             // Image from https://material.io/resources/icons/?icon=cloud&style=baseline
@@ -76,7 +76,7 @@ describe("src_3_0_0/modules/draw/js/style/createStyle.js", () => {
                     colorContour: undefined,
                     strokeWidth: undefined
                 },
-                result = createStyle(state, styleSettings).getImage();
+                result = createStyleModule.createStyle(state, styleSettings).getImage();
 
             expect(result.getOpacity()).to.deep.equal(color[3]);
         });
@@ -96,7 +96,7 @@ describe("src_3_0_0/modules/draw/js/style/createStyle.js", () => {
 
             color = [255, 0, 0, 1];
 
-            expect(createStyle(state, styleSettings).getText().getFill().getColor()).to.deep.equal(color);
+            expect(createStyleModule.createStyle(state, styleSettings).getText().getFill().getColor()).to.deep.equal(color);
         });
     });
 });
