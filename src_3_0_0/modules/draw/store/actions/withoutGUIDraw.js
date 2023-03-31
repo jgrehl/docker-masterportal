@@ -1,5 +1,5 @@
 import {fromCircle} from "ol/geom/Polygon.js";
-import {createStyle} from "../../js/style/createStyle";
+import createStyleModule from "../../js/style/createStyle";
 import Feature from "ol/Feature";
 import crs from "@masterportal/masterportalapi/src/crs";
 import {GeoJSON} from "ol/format.js";
@@ -251,7 +251,7 @@ async function initializeWithoutGUI ({state, commit, dispatch, getters, rootStat
                 }
 
                 if (featJSON.length > 0) {
-                    main.getApp().config.globalProperties.$layer.setStyle(createStyle(state, styleSettings));
+                    main.getApp().config.globalProperties.$layer.setStyle(createStyleModule.createStyle(state, styleSettings));
                     main.getApp().config.globalProperties.$layer.getSource().addFeatures(featJSON);
                 }
                 if (featJSON.length > 0 && zoomToExtent) {
