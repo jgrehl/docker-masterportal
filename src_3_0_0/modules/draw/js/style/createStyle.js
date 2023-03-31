@@ -20,7 +20,7 @@ import {createTextStyle} from "./createTextStyle";
  * @param {String} styleSettings.text The text to be written if the drawType "writeText" is chosen.
  * @returns {module:ol/style/Style} style of the draw interaction
  */
-export function createStyle (state, styleSettings) {
+function createStyle (state, styleSettings) {
     const drawType = state.drawType,
         imgPath = state.imgPath,
         pointSize = state.pointSize,
@@ -47,3 +47,7 @@ export function createStyle (state, styleSettings) {
 
     return style.clone();
 }
+
+export default {
+    createStyle
+};
