@@ -11,10 +11,10 @@ import styleList from "@masterportal/masterportalapi/src/vectorStyle/styleList";
 function getIconListFromLegend (legendInfoList, styleModel) {
     const result = {};
 
-    legendInfoList.forEach(legendInfo => {
+    legendInfoList?.forEach(legendInfo => {
         // always show icon if configured, independend of geometry type
-        if (legendInfo.styleObject.get("type") === "icon") {
-            result[legendInfo.label] = legendInfo.styleObject.get("imagePath") + legendInfo.styleObject.get("imageName");
+        if (legendInfo.styleObject.type === "icon") {
+            result[legendInfo.label] = legendInfo.styleObject.imagePath + legendInfo.styleObject.imageName;
         }
         else if (legendInfo.geometryType) {
             if (legendInfo.geometryType === "Point") {
@@ -59,12 +59,12 @@ function getStyleModel (layerId) {
  */
 function createPolygonGraphic (style) {
     let svg = "";
-    const fillColor = style.get("polygonFillColor") ? convertColor(style.get("polygonFillColor"), "rgbString") : "black",
-        strokeColor = style.get("polygonStrokeColor") ? convertColor(style.get("polygonStrokeColor"), "rgbString") : "black",
-        strokeWidth = style.get("polygonStrokeWidth"),
-        fillOpacity = style.get("polygonFillColor")?.[3] || 0,
-        strokeOpacity = style.get("polygonStrokeColor")[3] || 0,
-        fillHatch = style.get("polygonFillHatch");
+    const fillColor = style.polygonFillColor ? convertColor(style.polygonFillColor, "rgbString") : "black",
+        strokeColor = style.polygonStrokeColor ? convertColor(style.polygonStrokeColor, "rgbString") : "black",
+        strokeWidth = style.polygonStrokeWidth,
+        fillOpacity = style.polygonFillColor?.[3] || 0,
+        strokeOpacity = style.polygonStrokeColor ? style.polygonStrokeColor[3] || 0 : 0,
+        fillHatch = style.polygonFillHatch;
 
     if (fillHatch) {
         return style.getPolygonFillHatchLegendDataUrl();
@@ -94,11 +94,11 @@ function createPolygonGraphic (style) {
  */
 function createCircleSVG (style) {
     let svg = "";
-    const circleStrokeColor = style.get("circleStrokeColor") ? convertColor(style.get("circleStrokeColor"), "rgbString") : "black",
-        circleStrokeOpacity = Array.isArray(style.get("circleStrokeColor")) && style.get("circleStrokeColor").length > 3 ? style.get("circleStrokeColor")[3] : 0,
-        circleStrokeWidth = style.get("circleStrokeWidth") ? style.get("circleStrokeWidth") : "auto",
-        circleFillColor = style.get("circleFillColor") ? convertColor(style.get("circleFillColor"), "rgbString") : "black",
-        circleFillOpacity = Array.isArray(style.get("circleFillColor")) && style.get("circleFillColor").length > 3 ? style.get("circleFillColor")[3] : 0;
+    const circleStrokeColor = style.circleStrokeColor ? convertColor(style.circleStrokeColor, "rgbString") : "black",
+        circleStrokeOpacity = Array.isArray(style.circleStrokeColor) && style.circleStrokeColor.length > 3 ? style.circleStrokeColor[3] : 0,
+        circleStrokeWidth = style.circleStrokeWidth ? style.circleStrokeWidth : "auto",
+        circleFillColor = style.circleFillColor ? convertColor(style.circleFillColor, "rgbString") : "black",
+        circleFillOpacity = Array.isArray(style.circleFillColor) && style.circleFillColor.length > 3 ? style.circleFillColor[3] : 0;
 
     svg += "<svg height='25' width='25'>";
     svg += "<circle cx='12.5' cy='12.5' r='10' stroke='";
@@ -124,10 +124,10 @@ function createCircleSVG (style) {
  */
 function createLineSVG (style) {
     let svg = "";
-    const strokeColor = style.get("lineStrokeColor") ? convertColor(style.get("lineStrokeColor"), "rgbString") : "black",
-        strokeWidth = style.get("lineStrokeWidth"),
-        strokeOpacity = style.get("lineStrokeColor")[3] || 0,
-        strokeDash = style.get("lineStrokeDash") ? style.get("lineStrokeDash").join(" ") : undefined;
+    const strokeColor = style.lineStrokeColor ? convertColor(style.lineStrokeColor, "rgbString") : "black",
+        strokeWidth = style.lineStrokeWidth,
+        strokeOpacity = style.lineStrokeColor ? style.lineStrokeColor[3] || 0 : 0,
+        strokeDash = style.lineStrokeDash ? style.lineStrokeDash.join(" ") : undefined;
 
     svg += "<svg height='25' width='25'>";
     svg += "<path d='M 05 20 L 20 05' stroke='";
@@ -146,4 +146,4 @@ function createLineSVG (style) {
     return svg;
 }
 
-export {getStyleModel, getIconListFromLegend};
+export default {getStyleModel, getIconListFromLegend};
