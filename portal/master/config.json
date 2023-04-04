@@ -744,15 +744,6 @@
           "escapeChar": "!"
         },
         {
-          "id": "StaticImage",
-          "name": "Lärmberechnung",
-          "extent": [568426.27, 5931985.58, 569614.86, 5933174.11],
-          "typ": "StaticImage",
-          "visibility": true,
-          "url": "https://geodienste.hamburg.de/lgv-config/img/Laerm-Test_300dpi.png",
-          "legend": ["https://geodienste.hamburg.de/lgv-config/img/Legende_Laermberechnung_Tag.png", "https://geodienste.hamburg.de/lgv-config/img/Legende_Laermberechnung_Nacht.png"]
-        },
-        {
           "id": "1534",
           "name": "Grünflächen (WebGL)",
           "renderer": "webgl",
