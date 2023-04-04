@@ -476,7 +476,20 @@ export default {
             }
 
             if (drawState.drawType.geometry === "Point") {
-                if (drawState.symbol.value !== "simple_point") {
+                if (drawState.text) {
+                    style = new Style({
+                        image: new CircleStyle({
+                        }),
+                        text: new Text({
+                            text: drawState.text,
+                            font: drawState.fontSize + "px Arial,sans-serif",
+                            fill: new Fill({
+                                color: drawState.color
+                            })
+                        })
+                    });
+                }
+                else if (drawState.symbol.value !== "simple_point") {
                     style = new Style({
                         image: new Icon({
                             crossOrigin: "anonymous",
