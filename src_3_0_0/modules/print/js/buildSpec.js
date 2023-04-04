@@ -6,6 +6,7 @@ import Geometry from "ol/geom/Geometry";
 import {Point} from "ol/geom.js";
 import {fromCircle} from "ol/geom/Polygon.js";
 import VectorTileLayer from "ol/layer/VectorTile";
+import StaticImageSource from "ol/source/ImageStatic.js";
 import {convertColor} from "../../../shared/js/utils/convertColor";
 import isObject from "../../../shared/js/utils/isObject";
 import differenceJS from "../../../shared/js/utils/differenceJS";
@@ -432,19 +433,30 @@ const BuildSpecModel = {
             mapObject = {
                 baseURL: source.getUrl(),
                 opacity: layer.getOpacity(),
-                type: "WMS",
-                layers: source.getParams().LAYERS.split(","),
-                styles: source.getParams().STYLES ? source.getParams().STYLES.split(",") : undefined,
-                imageFormat: source.getParams().FORMAT,
-                customParams: {
-                    "TRANSPARENT": source.getParams().TRANSPARENT,
-                    "DPI": typeof dpi === "number" ? dpi : store.state.Modules.Print.dpiForPdf
-                }
+                type: "WMS"
             };
+
+        if (source instanceof StaticImageSource) {
+            mapObject.type = "image";
+            mapObject.extent = source.getImageExtent();
+        }
+        else {
+            mapObject.layers = source.getParams().LAYERS.split(",");
+            mapObject.styles = source.getParams().STYLES ? source.getParams().STYLES.split(",") : undefined;
+            mapObject.imageFormat = source.getParams().FORMAT;
+            mapObject.customParams = {
+                "TRANSPARENT": source.getParams().TRANSPARENT,
+                "DPI": typeof dpi === "number" ? dpi : store.state.Modules.Print.dpiForPdf
+            };
+            if (source.getParams().VERSION) {
+                mapObject.version = source.getParams().VERSION;
+            }
+        }
 
         if (store.state.Modules.Print.printService === "plotservice") {
             mapObject.title = layer.get("name");
         }
+
         return mapObject;
     },
     /**
