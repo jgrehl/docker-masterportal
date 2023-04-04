@@ -1,5 +1,5 @@
 import isObject from "../../../../shared/js/utils/isObject.js";
-import {getLayerByLayerId} from "../../utils/openlayerFunctions.js";
+import openlayerFunctions from "../../utils/openlayerFunctions.js";
 import {fetchAllStaProperties, getUniqueValuesFromFetchedFeatures} from "../../utils/fetchAllStaProperties.js";
 
 /**
@@ -78,7 +78,7 @@ export default class InterfaceStaExtern {
 
         if (this.allFetchedProperties[filterId] === false) {
             this.allFetchedProperties[filterId] = true;
-            const layerModel = getLayerByLayerId(service?.layerId),
+            const layerModel = openlayerFunctions.getLayerByLayerId(service?.layerId),
                 baseUrl = layerModel.get("url"),
                 version = layerModel.get("version"),
                 urlParameter = layerModel.get("urlParameter"),
