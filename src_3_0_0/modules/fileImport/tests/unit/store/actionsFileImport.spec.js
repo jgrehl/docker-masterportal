@@ -11,7 +11,7 @@ import sinon from "sinon";
 import {expect} from "chai";
 
 const
-    {addLayerConfig, importKML, setFeatureExtents} = actions,
+    {addLayerConfig, importGeoJSON, importKML, setFeatureExtents} = actions,
     namedProjections = [
         ["EPSG:31467", "+title=Bessel/Gauß-Krüger 3 +proj=tmerc +lat_0=0 +lon_0=9 +k=1 +x_0=3500000 +y_0=0 +ellps=bessel +datum=potsdam +units=m +no_defs"],
         ["EPSG:25832", "+title=ETRS89/UTM 32N +proj=utm +zone=32 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs"],
@@ -24,7 +24,8 @@ const
     layer = new VectorLayer({
         name: "name",
         source: new VectorSource(),
-        alwaysOnTop: true
+        alwaysOnTop: true,
+        gfiAttributes: sinon.stub()
     });
 let dispatch;
 
@@ -197,6 +198,33 @@ describe("src_3_0_0/modules/fileImport/store/actionsFileImport.js", () => {
             expect(dispatch.secondCall.args[1]).to.equal("beispielText.kml");
             expect(layer.getSource().getFeatures().length).to.equal(1);
             expect(layer.getSource().getFeatures()[0].getStyle().getText().getText()).to.equal("Beispieltext");
+        });
+
+        it("adds a text style from the geojson file", () => {
+            const payload = {layer: layer, raw: "{\"type\":\"FeatureCollection\",\"features\":[{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[9.999147727017332,53.56029963338006]},\"properties\":{\"isOuterCircle\":false,\"isVisible\":true,\"drawState\":{\"opacity\":1,\"font\":\"Arial\",\"fontSize\":16,\"text\":\"Mein Schatzzzz\",\"drawType\":{\"id\":\"writeText\",\"geometry\":\"Point\"},\"symbol\":{\"id\":\"iconPoint\",\"type\":\"simple_point\",\"value\":\"simple_point\"},\"zIndex\":0,\"imgPath\":\"https://geodienste.hamburg.de/lgv-config/img/\",\"pointSize\":16,\"color\":[77,175,74,1]},\"fromDrawTool\":true,\"invisibleStyle\":{\"geometry_\":null,\"fill_\":null,\"image_\":null,\"renderer_\":null,\"hitDetectionRenderer_\":null,\"stroke_\":null,\"text_\":{\"font_\":\"16px Arial\",\"scaleArray_\":[1,1],\"text_\":\"Mein Schatzzzz\",\"textAlign_\":\"left\",\"textBaseline_\":\"bottom\",\"fill_\":{\"color_\":[77,175,74,1]},\"maxAngle_\":0.7853981633974483,\"placement_\":\"point\",\"overflow_\":false,\"stroke_\":null,\"offsetX_\":0,\"offsetY_\":0,\"backgroundFill_\":null,\"backgroundStroke_\":null,\"padding_\":null},\"zIndex_\":9999},\"styleId\":\"1\"}}]}", filename: "beispielText.geojson"},
+                state = {
+                    selectedFiletype: "auto",
+                    supportedFiletypes: {
+                        auto: {
+                            caption: "common:modules.tools.fileImport.captions.supportedFiletypes.auto"
+                        },
+                        geojson: {
+                            caption: "common:modules.tools.fileImport.captions.supportedFiletypes.geojson",
+                            rgx: /\.(geo)?json$/i
+                        }
+                    }
+                };
+
+            importGeoJSON({state, dispatch, rootGetters}, payload);
+            expect(dispatch.firstCall.args[0]).to.equal("Alerting/addSingleAlert");
+            expect(dispatch.firstCall.args[1]).to.eql({
+                category: "success",
+                content: "modules.tools.fileImport.alertingMessages.success"
+            });
+            expect(dispatch.secondCall.args[0]).to.equal("addImportedFilename");
+            expect(dispatch.secondCall.args[1]).to.equal("beispielText.geojson");
+            expect(layer.getSource().getFeatures().length).to.equal(1);
+            expect(layer.getSource().getFeatures()[0].getStyle().getText().getText()).to.equal("Mein Schatzzzz");
         });
 
         it("Sets empty feature extent", done => {
