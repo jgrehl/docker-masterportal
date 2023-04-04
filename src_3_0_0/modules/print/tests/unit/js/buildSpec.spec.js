@@ -10,6 +10,7 @@ import Feature from "ol/Feature.js";
 import {Polygon} from "ol/geom.js";
 import VectorLayer from "ol/layer/Vector.js";
 import VectorSource from "ol/source/Vector.js";
+import StaticImageSource from "ol/source/ImageStatic.js";
 import measureStyle from "./../../../../measure/js/measureStyle";
 import layerCollection from "../../../../../core/layers/js/layerCollection";
 import sinon from "sinon";
@@ -1217,6 +1218,46 @@ describe("src_3_0_0/modules/print/js/buildSpec", function () {
             };
             buildSpec.buildStrokeStyle = sinon.spy();
             expect(buildSpec.buildLineStringStyle(style, vectorLayer).type).to.eql("line");
+        });
+    });
+    describe("buildImageWms", function () {
+        it("should buildImageWms", function () {
+            const imageWmsLayer = new Tile({
+                source: new ImageWMS({
+                    url: "url",
+                    params: {
+                        LAYERS: "layer1,layer2",
+                        FORMAT: "image/png",
+                        TRANSPARENT: true
+                    }
+                }),
+                opacity: 1
+            });
+
+            expect(buildSpec.buildImageWms(imageWmsLayer)).to.deep.own.include({
+                baseURL: "url",
+                opacity: 1,
+                type: "WMS",
+                layers: ["layer1", "layer2"],
+                imageFormat: "image/png",
+                customParams: {
+                    TRANSPARENT: true,
+                    DPI: 200
+                }
+            });
+        });
+        it("should buildImageWms for static image", function () {
+            const imageWmsLayer = new Tile({
+                source: new StaticImageSource({
+                    url: "url"
+                })
+            });
+
+            expect(buildSpec.buildImageWms(imageWmsLayer)).to.deep.own.include({
+                baseURL: "url",
+                opacity: 1,
+                type: "image"
+            });
         });
     });
 });
