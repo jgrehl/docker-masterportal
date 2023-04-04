@@ -1,4 +1,5 @@
 import {requestGfi} from "../api/wmsGetFeatureInfo";
+import {interpretLinebreaks} from "./interpretLinebreaks";
 
 /**
  * returns a list of wms features for the given url and mimeType
@@ -153,7 +154,7 @@ export function handleJSONResponse (featureInfos, layer, url) {
     if (typeof featureInfos === "object" && Array.isArray(featureInfos?.features)) {
         featureInfos.features.forEach(function (feature) {
             if (typeof feature === "object") {
-                feature.getProperties = () => feature.properties || {};
+                feature.getProperties = () => interpretLinebreaks(feature.properties || {});
                 feature.getId = () => feature.id || "";
                 result.push(createGfiFeature(layer, url, feature));
             }
@@ -222,7 +223,7 @@ export function createGfiFeature (layer, url = "", feature = null, features = nu
         getTitle: () => layer.get("name"),
         getTheme: () => layer.get("gfiTheme") || "defaultTheme",
         getAttributesToShow: () => layer.get("gfiAttributes"),
-        getProperties: () => feature ? feature.getProperties() : {},
+        getProperties: () => feature ? interpretLinebreaks(feature.getProperties()) : {},
         getFeatures: () => features,
         getOlFeature: () => feature,
         getId: () => feature && typeof feature.getId === "function" ? feature.getId() : "",
