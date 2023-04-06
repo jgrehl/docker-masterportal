@@ -28,10 +28,29 @@ describe("src/modules/tools/filter/components/GeometryFilter.vue", () => {
                         addLayer: sinon.stub()
                     }
                 },
-                Tools: {
+                Menu: {
+                    namespaced: true,
+                    getters: {
+                        currentMouseMapInteractionsComponent: sinon.stub()
+                    },
+                    actions: {
+                        changeCurrentMouseMapInteractionsComponent: sinon.stub()
+                    }
+                },
+                Modules: {
                     namespaced: true,
                     modules: {
-                        Gfi: {
+                        Filter: {
+                            namespaced: true,
+                            mutations: {
+                                setHasMouseMapInteractions: sinon.stub()
+                            },
+                            getters: {
+                                type: sinon.stub(),
+                                menuSide: sinon.stub()
+                            }
+                        },
+                        GetFeatureInfo: {
                             namespaced: true
                         }
                     }
