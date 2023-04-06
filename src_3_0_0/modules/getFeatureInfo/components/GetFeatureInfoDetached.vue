@@ -109,7 +109,7 @@ export default {
 
 <template>
     <div>
-        <h4 class="gfi-title mb-4">
+        <h4 class="gfi-title font-bold mb-4">
             {{ translate(title) }}
         </h4>
         <component
