@@ -283,7 +283,7 @@ export default {
                 >
                     <td
                         v-if="!isSensorChart(value)"
-                        class="bold firstCol"
+                        class="font-bold firstCol"
                     >
                         <span v-if="beautifyKeysParam">
                             {{ beautifyKey(translateKeyWithPlausibilityCheck(key, v => $t(v))) }}
