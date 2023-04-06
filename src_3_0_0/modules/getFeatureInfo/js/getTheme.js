@@ -7,6 +7,7 @@ import changeCase from "../../../shared/js/utils/changeCase";
  * @returns {String} The theme name.
  */
 function getAddonTheme (addonThemes, configTheme, configThemeWithSuffix) {
+    debugger;
     let theme;
 
     if (addonThemes.includes(configTheme)) {
