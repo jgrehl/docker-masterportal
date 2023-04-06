@@ -40,6 +40,15 @@ describe("src_3_0_0/modules/layerInformation/components/LayerInformation.vue", (
                             actions: {
                                 setConfigParams: () => sinon.stub()
                             }
+                        },
+                        Legend: {
+                            namespaced: true,
+                            getters: {
+                                layerInfoLegend: sinon.stub()
+                            },
+                            actions: {
+                                createLegendForLayerInfo: sinon.stub()
+                            }
                         }
                     }
                 }
