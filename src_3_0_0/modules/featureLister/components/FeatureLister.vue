@@ -62,7 +62,7 @@ export default {
     mounted () {
         this.$nextTick(() => {
             layerCollection.getOlLayers().forEach(async layer => {
-                if (layer instanceof VectorLayer && layer.get("typ") === "WFS") {
+                if (layer instanceof VectorLayer && layer.get("typ") === "WFS" || layer.get("typ") === "GeoJSON") {
                     const layerSource = layer.getSource();
 
                     this.visibleVectorLayers.push(
