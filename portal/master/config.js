@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 const Config = {
-    addons: ["exampleSearch", "populationRequest"],
+    addons: ["bildungsatlas", "dataTable", "exampleSearch", "solaratlas", "sturmflut", "trafficCount", "trinkwasser", "verkehrsstaerken"],
     ignoredKeys: ["BOUNDEDBY", "SHAPE", "SHAPE_LENGTH", "SHAPE_AREA", "OBJECTID", "GLOBALID", "GEOMETRY", "SHP", "SHP_AREA", "SHP_LENGTH", "GEOM"],
     namedProjections: [
         // ETRS89 UTM
