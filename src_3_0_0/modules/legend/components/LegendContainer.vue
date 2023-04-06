@@ -68,7 +68,7 @@ export default {
             v-for="legendObj, index in legends"
             :key="index"
         >
-            <div class="bold mt-3">
+            <div class="font-bold mt-3">
                 <span>{{ legendObj.name }}</span>
             </div>
             <LegendSingleLayer
