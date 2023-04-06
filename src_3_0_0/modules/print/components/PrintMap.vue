@@ -144,6 +144,11 @@ export default {
     watch: {
         scale: function (value) {
             this.setCurrentMapScale(value);
+        },
+        currentFeature: function () {
+            if (this.currentFeature === null) {
+                this.setIsGfiSelected(false);
+            }
         }
     },
     created () {
