@@ -47,9 +47,33 @@ export default {
                 this.handleAvailableLayerPillsSpace();
             });
         },
+        // visibleSubjectDataLayerConfigs: {
+        //     handler (value) {
+        //         this.setVisibleLayers(value, this.mode);
+        //     },
+        //     deep: true
+        // },
         visibleSubjectDataLayerConfigs: {
-            handler (value) {
-                this.setVisibleLayers(value, this.mode);
+            handler (oldVal, newVal) {
+                let newValue = {},
+                    oldValue = {};
+
+                if (oldVal.length !== newVal.length) {
+                    newValue = oldVal.filter(x => !newVal.includes(x));
+                    if (newValue.length === 0) {
+                        oldValue = newVal.filter(x => !oldVal.includes(x));
+                    }
+                }
+                // warum geht er hier zweimal in den watcher? workaround machen
+                console.log("watcher", newValue);
+                // debugger;
+                // if (Object.keys(newValue).length > 0) {
+                //     this.setVisibleLayers(oldVal, this.mode, newValue, oldValue);
+                // }
+                // if (Object.keys(oldValue).length > 0) {
+                //    Hier so, dass beim abwählen eines Layers, dieser wieder aus dem Menu verschwindet
+                // }
+                this.setVisibleLayers(oldVal, this.mode, newValue, oldValue);
             },
             deep: true
         },
@@ -63,6 +87,7 @@ export default {
             deep: true
         },
         mode (value) {
+            console.log("mode", value);
             this.setVisibleLayers(this.visibleSubjectDataLayerConfigs, value);
         },
         startIndex (value) {
@@ -83,6 +108,7 @@ export default {
         }
     },
     created () {
+        console.log("created");
         this.setVisibleLayers(this.visibleSubjectDataLayerConfigs, this.mode);
         this.setEndIndex(this.portalConfig?.tree?.layerPillsAmount ? this.portalConfig?.tree?.layerPillsAmount : this.layerPillsAmount);
         this.setLayerPillsAmount(this.endIndex);
@@ -111,8 +137,11 @@ export default {
         ...mapActions("Modules/LayerInformation", [
             "startLayerInformation"
         ]),
-
-        setVisibleLayers (visibleLayers, mapMode) {
+        setVisibleLayers (visibleLayers, mapMode, newValue = {}, oldValue = {}) {
+            // console.log(newValue.length, oldValue.length);
+            // visibleSubjectDataLayers
+            // const newLayers = visible2DLayer.push(newVal).reverse()
+            // this.setVisibleSubjectDataLayers(newLayers);
             if (visibleLayers) {
                 if (mapMode === "2D") {
                     const layerTypes3d = layerFactory.getLayerTypes3d(),
@@ -120,7 +149,21 @@ export default {
                             return !layerTypes3d.includes(layer.typ?.toUpperCase());
                         });
 
-                    this.setVisibleSubjectDataLayers(visible2DLayers);
+                    // warum gehts beim ersten Mal ins if aber dann auch ins else?
+                    console.log(newValue, oldValue);
+
+                    if (Object.keys(newValue).length !== 0) {
+                        const layers = this.visibleSubjectDataLayers;
+                        console.log("if");
+
+                        layers.unshift(newValue[0]);
+
+                        this.setVisibleSubjectDataLayers(layers);
+                    }
+                    else {
+                        console.log("else");
+                        this.setVisibleSubjectDataLayers(visible2DLayers);
+                    }
                 }
                 else {
                     this.setVisibleSubjectDataLayers(visibleLayers);
