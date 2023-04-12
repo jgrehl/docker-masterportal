@@ -60,10 +60,10 @@ export default {
                 }
 
                 if (Object.keys(newValue).length > 0) {
-                    this.setVisibleLayers(oldVal, this.mode, newValue);
+                    this.setVisibleLayers(newVal, this.mode, newValue);
                 }
                 if (Object.keys(oldValue).length > 0) {
-                    this.setVisibleLayers(oldVal, this.mode, newValue);
+                    this.setVisibleLayers(newVal, this.mode, newValue);
                 }
             },
             deep: true
