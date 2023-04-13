@@ -135,7 +135,7 @@ export default {
      * @returns {void}
      */
     getGfiForPrint: function ({commit, rootGetters}) {
-        if (rootGetters["Tools/Gfi/currentFeature"] !== null && typeof rootGetters["Tools/Gfi/currentFeature"].getMappedProperties === "function" && typeof rootGetters["Tools/Gfi/currentFeature"].getTitle === "function") {
+        if (rootGetters["Tools/Gfi/currentFeature"] !== null && typeof rootGetters["Tools/Gfi/currentFeature"]?.getMappedProperties === "function" && typeof rootGetters["Tools/Gfi/currentFeature"]?.getTitle === "function") {
             commit("setGfiForPrint", [rootGetters["Modules/GetFeatureInfo/currentFeature"].getMappedProperties(), rootGetters["Modules/GetFeatureInfo/currentFeature"].getTitle(), rootGetters["Maps/clickCoordinate"]]);
         }
         else {
