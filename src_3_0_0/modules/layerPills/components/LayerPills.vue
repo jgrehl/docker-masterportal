@@ -242,13 +242,12 @@ export default {
                 />
             </li>
             <li
-                v-for="(layer, index) in isMobile ? visibleSubjectDataLayers : visibleSubjectDataLayers.slice(startIndex, endIndex)"
-                :key="index"
-                tag="li"
+                v-for="(layer) in isMobile ? visibleSubjectDataLayers : visibleSubjectDataLayers.slice(startIndex, endIndex)"
+                :key="layer"
                 class="nav-item shadow"
             >
                 <a
-                    :key="index"
+                    :key="layer"
                     class="nav-link"
                     data-bs-toggle="tooltip"
                     data-bs-placement="bottom"
@@ -325,15 +324,25 @@ export default {
         cursor: pointer;
     }
 
-    .list-enter-active,
+.list-enter-active,
 .list-leave-active {
-  transition: all 0.5s ease;
+  transition: background-color 1.5s ease;
 }
-.list-enter-from,
+.list-enter-from{
+    background-color: red;
+}
+.list-enter-to {
+  background-color: green;
+}
+
+.list-leave-from {
+    background-color: green;
+}
+
 .list-leave-to {
-  opacity: 0;
-  transform: translateX(30px);
+    background-color: red;
 }
+
 
     .custom-tooltip {
         font-size: 20px;
