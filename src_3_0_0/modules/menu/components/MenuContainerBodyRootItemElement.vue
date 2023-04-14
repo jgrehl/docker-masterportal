@@ -119,8 +119,6 @@ export default {
             :description="showDescription ? description : null"
             customclass="w-100 justify-content-start mp-menu-root-element"
         />
-        <!-- TODO(roehlipa): Properly add description -->
-        <!-- TODO(roehlipa): Buttons should look differently when mobile -->
     </div>
 </template>
 

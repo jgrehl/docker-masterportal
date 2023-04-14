@@ -84,25 +84,22 @@ export default {
 </script>
 
 <template>
-    <ul
+    <div
         :id="'mp-menu-body-items-' + idAppendix"
-        class="nav flex-column"
+        class="flex-column"
     >
-        <li
+        <MenuContainerBodyRootItemElement
             v-for="(props, key) in itemProps"
+            :id="'mp-menu-body-items-element-' + key + '-' + idAppendix"
             :key="key"
-        >
-            <MenuContainerBodyRootItemElement
-                :id="'mp-menu-body-items-element-' + key + '-' + idAppendix"
-                :properties="props"
-                :name="props.name"
-                :icon="props.icon"
-                :description="props.description"
-                :show-description="props.showDescription"
-                :path="[...path, key]"
-            />
-        </li>
-    </ul>
+            :properties="props"
+            :name="props.name"
+            :icon="props.icon"
+            :description="props.description"
+            :show-description="props.showDescription"
+            :path="[...path, key]"
+        />
+    </div>
 </template>
 
 <style lang="scss" scoped>
