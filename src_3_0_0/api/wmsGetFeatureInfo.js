@@ -161,7 +161,7 @@ function parseEsriFeatures (doc) {
  * @param {XMLDocument} doc Data to be parsed.
  * @returns {module:ol/Feature[]} Collection of openlayers features.
  */
- function parseQGisFeatures (doc) {
+export function parseQGisFeatures (doc) {
     const features = [];
 
     for (const element of doc.getElementsByTagName("Feature")) {
