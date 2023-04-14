@@ -326,23 +326,18 @@ export default {
 
 .list-enter-active,
 .list-leave-active {
-  transition: background-color 1.5s ease;
+  transition: all 1s ease;
 }
-.list-enter-from{
-    background-color: red;
+.list-enter-from,
+.list-leave-to .outer{
+    transform: translateX(-50px);
+    opacity: 0;
 }
-.list-enter-to {
-  background-color: green;
-}
-
+.list-enter-to,
 .list-leave-from {
-    background-color: green;
-}
 
-.list-leave-to {
-    background-color: red;
+  opacity: 1;
 }
-
 
     .custom-tooltip {
         font-size: 20px;
