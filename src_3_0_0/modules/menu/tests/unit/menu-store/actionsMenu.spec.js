@@ -135,8 +135,8 @@ describe("src_3_0_0/modules/menu/menu-store/actionsMenu.js", () => {
             actions.clickedMenuElement({dispatch, rootGetters}, {name, path, side, type});
 
             expect(dispatch.calledOnce).to.be.true;
-            expect(dispatch.firstCall.args[0]).to.equals("changeCurrentComponent");
-            expect(dispatch.firstCall.args[1]).to.deep.equals({type: type, side: side, props: {name: name}});
+            expect(dispatch.firstCall.args[0]).to.equal("changeCurrentComponent");
+            expect(dispatch.firstCall.args[1]).to.deep.equal({type: type, side: side, props: {name: name}});
         });
 
         it("should change current component with path for type === 'folder'", async () => {
@@ -146,8 +146,8 @@ describe("src_3_0_0/modules/menu/menu-store/actionsMenu.js", () => {
 
             await nextTick(() => {
                 expect(dispatch.calledOnce).to.be.true;
-                expect(dispatch.firstCall.args[0]).to.equals("changeCurrentComponent");
-                expect(dispatch.firstCall.args[1]).to.deep.equals({type: type, side: side, props: {path: path, name: name}});
+                expect(dispatch.firstCall.args[0]).to.equal("changeCurrentComponent");
+                expect(dispatch.firstCall.args[1]).to.deep.equal({type: type, side: side, props: {path: path, name: name}});
             });
         });
 
@@ -161,7 +161,7 @@ describe("src_3_0_0/modules/menu/menu-store/actionsMenu.js", () => {
 
             expect(dispatch.notCalled).to.be.true;
             expect(global.window.open.calledOnce).to.be.true;
-            expect(global.window.open.firstCall.args[0]).to.equals(properties.openURL);
+            expect(global.window.open.firstCall.args[0]).to.equal(properties.openURL);
         });
 
         it("should open new tab if type is 'customMenuElement' and properties contains 'openURL' and 'execute", () => {
@@ -177,11 +177,11 @@ describe("src_3_0_0/modules/menu/menu-store/actionsMenu.js", () => {
             actions.clickedMenuElement({dispatch, rootGetters}, {name, path, side, type, properties});
 
             expect(dispatch.calledOnce).to.be.true;
-            expect(dispatch.firstCall.args[0]).to.equals(properties.execute.action);
-            expect(dispatch.firstCall.args[1]).to.be.deep.equals(properties.execute.payload);
-            expect(dispatch.firstCall.args[2]).to.be.deep.equals({root: true});
+            expect(dispatch.firstCall.args[0]).to.equal(properties.execute.action);
+            expect(dispatch.firstCall.args[1]).to.be.deep.equal(properties.execute.payload);
+            expect(dispatch.firstCall.args[2]).to.be.deep.equal({root: true});
             expect(global.window.open.calledOnce).to.be.true;
-            expect(global.window.open.firstCall.args[0]).to.equals(properties.openURL);
+            expect(global.window.open.firstCall.args[0]).to.equal(properties.openURL);
         });
 
         it("should execute action if type is 'customMenuElement' and properties contains only 'execute", () => {
@@ -196,9 +196,9 @@ describe("src_3_0_0/modules/menu/menu-store/actionsMenu.js", () => {
             actions.clickedMenuElement({dispatch, rootGetters}, {name, path, side, type, properties});
 
             expect(dispatch.calledOnce).to.be.true;
-            expect(dispatch.firstCall.args[0]).to.equals(properties.execute.action);
-            expect(dispatch.firstCall.args[1]).to.be.deep.equals(properties.execute.payload);
-            expect(dispatch.firstCall.args[2]).to.be.deep.equals({root: true});
+            expect(dispatch.firstCall.args[0]).to.equal(properties.execute.action);
+            expect(dispatch.firstCall.args[1]).to.be.deep.equal(properties.execute.payload);
+            expect(dispatch.firstCall.args[2]).to.be.deep.equal({root: true});
         });
 
         it("mobile: should execute action if type is 'customMenuElement' and properties contains only execute, closes menu", () => {
@@ -214,12 +214,12 @@ describe("src_3_0_0/modules/menu/menu-store/actionsMenu.js", () => {
             actions.clickedMenuElement({dispatch, rootGetters}, {name, path, side, type, properties});
 
             expect(dispatch.calledTwice).to.be.true;
-            expect(dispatch.firstCall.args[0]).to.equals(properties.execute.action);
-            expect(dispatch.firstCall.args[1]).to.be.deep.equals(properties.execute.payload);
-            expect(dispatch.firstCall.args[2]).to.be.deep.equals({root: true});
-            expect(dispatch.secondCall.args[0]).to.equals("Menu/toggleMenu");
-            expect(dispatch.secondCall.args[1]).to.equals(side);
-            expect(dispatch.secondCall.args[2]).to.be.deep.equals({root: true});
+            expect(dispatch.firstCall.args[0]).to.equal(properties.execute.action);
+            expect(dispatch.firstCall.args[1]).to.be.deep.equal(properties.execute.payload);
+            expect(dispatch.firstCall.args[2]).to.be.deep.equal({root: true});
+            expect(dispatch.secondCall.args[0]).to.equal("Menu/toggleMenu");
+            expect(dispatch.secondCall.args[1]).to.equal(side);
+            expect(dispatch.secondCall.args[2]).to.be.deep.equal({root: true});
         });
 
         it("mobile: should open new tab if type is 'customMenuElement' and properties contains 'openURL', closes menu", () => {
@@ -232,11 +232,11 @@ describe("src_3_0_0/modules/menu/menu-store/actionsMenu.js", () => {
             actions.clickedMenuElement({dispatch, rootGetters}, {name, path, side, type, properties});
 
             expect(dispatch.calledOnce).to.be.true;
-            expect(dispatch.firstCall.args[0]).to.equals("Menu/toggleMenu");
-            expect(dispatch.firstCall.args[1]).to.equals(side);
-            expect(dispatch.firstCall.args[2]).to.be.deep.equals({root: true});
+            expect(dispatch.firstCall.args[0]).to.equal("Menu/toggleMenu");
+            expect(dispatch.firstCall.args[1]).to.equal(side);
+            expect(dispatch.firstCall.args[2]).to.be.deep.equal({root: true});
             expect(global.window.open.calledOnce).to.be.true;
-            expect(global.window.open.firstCall.args[0]).to.equals(properties.openURL);
+            expect(global.window.open.firstCall.args[0]).to.equal(properties.openURL);
         });
     });
 
@@ -248,8 +248,8 @@ describe("src_3_0_0/modules/menu/menu-store/actionsMenu.js", () => {
 
             await nextTick(() => {
                 expect(commit.calledOnce).to.be.true;
-                expect(commit.firstCall.args[0]).to.equals("switchToPreviousComponent");
-                expect(commit.firstCall.args[1]).to.equals(side);
+                expect(commit.firstCall.args[0]).to.equal("switchToPreviousComponent");
+                expect(commit.firstCall.args[1]).to.equal(side);
                 expect(dispatch.notCalled).to.be.true;
             });
         });
@@ -261,11 +261,11 @@ describe("src_3_0_0/modules/menu/menu-store/actionsMenu.js", () => {
 
             await nextTick(() => {
                 expect(commit.calledOnce).to.be.true;
-                expect(commit.firstCall.args[0]).to.equals("switchToPreviousComponent");
-                expect(commit.firstCall.args[1]).to.equals(side);
+                expect(commit.firstCall.args[0]).to.equal("switchToPreviousComponent");
+                expect(commit.firstCall.args[1]).to.equal(side);
                 expect(dispatch.calledOnce).to.be.true;
-                expect(dispatch.firstCall.args[0]).to.equals("changeCurrentMouseMapInteractionsComponent");
-                expect(dispatch.firstCall.args[1]).to.deep.equals({type: state.defaultComponent, side});
+                expect(dispatch.firstCall.args[0]).to.equal("changeCurrentMouseMapInteractionsComponent");
+                expect(dispatch.firstCall.args[1]).to.deep.equal({type: state.defaultComponent, side});
             });
         });
     });
@@ -277,8 +277,8 @@ describe("src_3_0_0/modules/menu/menu-store/actionsMenu.js", () => {
             actions.toggleMenu({commit, rootGetters, state}, side);
 
             expect(commit.calledOnce).to.be.true;
-            expect(commit.firstCall.args[0]).to.equals("setExpandedBySide");
-            expect(commit.firstCall.args[1]).to.deep.equals({
+            expect(commit.firstCall.args[0]).to.equal("setExpandedBySide");
+            expect(commit.firstCall.args[1]).to.deep.equal({
                 expanded: true,
                 side
             });
@@ -289,8 +289,8 @@ describe("src_3_0_0/modules/menu/menu-store/actionsMenu.js", () => {
             actions.toggleMenu({commit, rootGetters, state}, side);
 
             expect(commit.calledOnce).to.be.true;
-            expect(commit.firstCall.args[0]).to.equals("setExpandedBySide");
-            expect(commit.firstCall.args[1]).to.deep.equals({
+            expect(commit.firstCall.args[0]).to.equal("setExpandedBySide");
+            expect(commit.firstCall.args[1]).to.deep.equal({
                 expanded: true,
                 side
             });
@@ -302,8 +302,8 @@ describe("src_3_0_0/modules/menu/menu-store/actionsMenu.js", () => {
             actions.toggleMenu({commit, rootGetters, state}, side);
 
             expect(commit.calledOnce).to.be.true;
-            expect(commit.firstCall.args[0]).to.equals("setExpandedBySide");
-            expect(commit.firstCall.args[1]).to.deep.equals({
+            expect(commit.firstCall.args[0]).to.equal("setExpandedBySide");
+            expect(commit.firstCall.args[1]).to.deep.equal({
                 expanded: true,
                 side
             });
@@ -316,10 +316,58 @@ describe("src_3_0_0/modules/menu/menu-store/actionsMenu.js", () => {
             actions.toggleMenu({commit, rootGetters, state}, side);
 
             expect(commit.calledOnce).to.be.true;
-            expect(commit.firstCall.args[0]).to.equals("setExpandedBySide");
-            expect(commit.firstCall.args[1]).to.deep.equals({
+            expect(commit.firstCall.args[0]).to.equal("setExpandedBySide");
+            expect(commit.firstCall.args[1]).to.deep.equal({
                 expanded: false,
                 side
+            });
+        });
+    });
+
+    describe("closeMenu", () => {
+        const side = "mainMenu";
+
+        it("should close and reset MenuContainer", async () => {
+            actions.closeMenu({commit, dispatch}, side);
+
+            await nextTick(() => {
+                expect(commit.calledOnce).to.be.true;
+                expect(commit.firstCall.args[0]).to.equal("switchToRoot");
+                expect(commit.firstCall.args[1]).to.equal(side);
+                expect(dispatch.calledOnce).to.be.true;
+                expect(dispatch.firstCall.args[0]).to.equal("toggleMenu");
+                expect(dispatch.firstCall.args[1]).to.equal(side);
+            });
+        });
+
+    });
+
+    describe("resetMenu", () => {
+        const side = "mainMenu";
+
+        it("should switch to Root but not change Interaction if already GFI", async () => {
+            actions.resetMenu({commit, dispatch, getters, state}, side);
+
+            await nextTick(() => {
+                expect(dispatch.notCalled).to.be.true;
+                expect(commit.calledOnce).to.be.true;
+                expect(commit.firstCall.args[0]).to.equal("switchToRoot");
+                expect(commit.firstCall.args[1]).to.equal(side);
+            });
+        });
+
+        it("should switch to Root and change Interaction if not already GFI", async () => {
+            Object.assign(state, {currentMouseMapInteractionsComponent: "abc"});
+
+            actions.resetMenu({commit, dispatch, getters, state}, side);
+
+            await nextTick(() => {
+                expect(dispatch.calledOnce).to.be.true;
+                expect(dispatch.firstCall.args[0]).to.equal("changeCurrentMouseMapInteractionsComponent");
+                expect(dispatch.firstCall.args[1]).to.deep.equal({type: state.defaultComponent, side});
+                expect(commit.calledOnce).to.be.true;
+                expect(commit.firstCall.args[0]).to.equal("switchToRoot");
+                expect(commit.firstCall.args[1]).to.equal(side);
             });
         });
     });
