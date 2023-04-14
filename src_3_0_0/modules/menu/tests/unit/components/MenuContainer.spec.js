@@ -8,6 +8,7 @@ config.global.mocks.$t = key => key;
 
 describe("src_3_0_0/modules/menu/MenuContainer.vue", () => {
     let store,
+        currentMenuWidth,
         mainExpanded = false,
         secondaryExpanded = false,
         titleBySide,
@@ -18,6 +19,7 @@ describe("src_3_0_0/modules/menu/MenuContainer.vue", () => {
         isMobile;
 
     beforeEach(() => {
+        currentMenuWidth = sinon.stub();
         titleBySide = sinon.stub();
         closeMenuSpy = sinon.spy();
         mergeMenuStateSpy = sinon.spy();
@@ -37,6 +39,7 @@ describe("src_3_0_0/modules/menu/MenuContainer.vue", () => {
                 Menu: {
                     namespaced: true,
                     getters: {
+                        currentMenuWidth: () => currentMenuWidth,
                         mainExpanded: () => mainExpanded,
                         secondaryExpanded: () => secondaryExpanded,
                         titleBySide: () => titleBySide
@@ -62,7 +65,7 @@ describe("src_3_0_0/modules/menu/MenuContainer.vue", () => {
         sinon.restore();
     });
 
-    describe.skip("mainMenu", () => {
+    describe("mainMenu", () => {
         it("renders the mainMenu component not expanded", () => {
             const wrapper = shallowMount(MenuContainer, {
                     global: {
@@ -78,7 +81,7 @@ describe("src_3_0_0/modules/menu/MenuContainer.vue", () => {
             expect(wrapper.find("#mp-header-mainMenu").exists()).to.be.true;
             expect(wrapper.find("menu-container-body-stub").exists()).to.be.true;
             expect(wrapper.find("resize-handle-stub").exists()).to.be.true;
-            expect(wrapper.find("#mp-menu-mainMenu").attributes()).to.equal("0px");
+            expect(wrapper.find("#mp-menu-mainMenu").attributes().style).to.include("width: 0px");
             expect(collapseMenuesSpy.notCalled).to.be.true;
         });
 
@@ -99,12 +102,12 @@ describe("src_3_0_0/modules/menu/MenuContainer.vue", () => {
             expect(wrapper.find("#mp-menu-header-close-button-mainMenu").exists()).to.be.true;
             expect(wrapper.find("menu-container-body-stub").exists()).to.be.true;
             expect(wrapper.find("resize-handle-stub").exists()).to.be.true;
-            expect(wrapper.find("#mp-menu-mainMenu").style.width).not.to.equal("0px");
+            expect(wrapper.find("#mp-menu-mainMenu").attributes().style).not.to.include("width: 0px");
             expect(collapseMenuesSpy.notCalled).to.be.true;
         });
     });
 
-    describe.skip("secondaryMenu", () => {
+    describe("secondaryMenu", () => {
         it("renders the secondaryMenu component not expanded", () => {
             const wrapper = shallowMount(MenuContainer, {
                     global: {
@@ -120,7 +123,7 @@ describe("src_3_0_0/modules/menu/MenuContainer.vue", () => {
             expect(wrapper.find("#mp-header-secondaryMenu").exists()).to.be.true;
             expect(wrapper.find("menu-container-body-stub").exists()).to.be.true;
             expect(wrapper.find("resize-handle-stub").exists()).to.be.true;
-            expect(wrapper.find("#mp-menu-secondaryMenu").style.width).to.equal("0px");
+            expect(wrapper.find("#mp-menu-secondaryMenu").attributes().style).to.include("width: 0px");
             expect(collapseMenuesSpy.notCalled).to.be.true;
         });
 
@@ -140,7 +143,7 @@ describe("src_3_0_0/modules/menu/MenuContainer.vue", () => {
             expect(wrapper.find("#mp-header-secondaryMenu").exists()).to.be.true;
             expect(wrapper.find("menu-container-body-stub").exists()).to.be.true;
             expect(wrapper.find("resize-handle-stub").exists()).to.be.true;
-            expect(wrapper.find("#mp-menu-secondaryMenu").style.width).not.to.equal("0px");
+            expect(wrapper.find("#mp-menu-secondaryMenu").attributes().style).not.to.include("width: 0px");
             expect(collapseMenuesSpy.notCalled).to.be.true;
         });
     });
