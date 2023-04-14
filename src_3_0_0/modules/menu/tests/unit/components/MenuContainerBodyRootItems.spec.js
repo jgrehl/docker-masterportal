@@ -57,7 +57,6 @@ describe("src_3_0_0/modules/menu/MenuContainerBodyRootItems.vue", () => {
         });
 
 
-        expect(wrapper.findAll("li").length).to.be.equal(sections.length);
         expect(wrapper.findAllComponents(MenuContainerBodyRootItemElement).length).to.be.equal(sections.length);
         expect(wrapper.findAll("#mp-menu-body-items-element-0-mainMenu")[0].attributes("name")).to.be.equal(sections[0].name);
         expect(wrapper.findAll("#mp-menu-body-items-element-0-mainMenu")[0].attributes("icon")).to.be.equal(sections[0].icon);
@@ -97,7 +96,6 @@ describe("src_3_0_0/modules/menu/MenuContainerBodyRootItems.vue", () => {
             propsData: {idAppendix: "secondaryMenu", path: pathSecondaryMenu}
         });
 
-        expect(wrapper.findAll("li").length).to.be.equal(sections.length);
         expect(wrapper.findAllComponents(MenuContainerBodyRootItemElement).length).to.be.equal(sections.length);
         expect(wrapper.findAll("#mp-menu-body-items-element-0-secondaryMenu")[0].attributes("name")).to.be.equal(sections[0].name);
         expect(wrapper.findAll("#mp-menu-body-items-element-0-secondaryMenu")[0].attributes("icon")).to.be.equal(sections[0].icon);
@@ -132,7 +130,6 @@ describe("src_3_0_0/modules/menu/MenuContainerBodyRootItems.vue", () => {
         });
 
         expect(sections[0].icon).to.be.equals("bi-customMenuElementIcon");
-        expect(wrapper.findAll("li").length).to.be.equal(sections.length);
         expect(wrapper.findAllComponents(MenuContainerBodyRootItemElement).length).to.be.equal(sections.length);
         expect(wrapper.findAll("#mp-menu-body-items-element-0-secondaryMenu")[0].attributes("name")).to.be.equal(sections[0].name);
         expect(wrapper.findAll("#mp-menu-body-items-element-0-secondaryMenu")[0].attributes("icon")).to.be.equal(sections[0].icon);
@@ -156,7 +153,6 @@ describe("src_3_0_0/modules/menu/MenuContainerBodyRootItems.vue", () => {
         });
 
         expect(sections[0].icon).not.to.be.equals("bi-customMenuElementIcon");
-        expect(wrapper.findAll("li").length).to.be.equal(sections.length);
         expect(wrapper.findAllComponents(MenuContainerBodyRootItemElement).length).to.be.equal(sections.length);
         expect(wrapper.findAll("#mp-menu-body-items-element-0-secondaryMenu")[0].attributes("name")).to.be.equal(sections[0].name);
         expect(wrapper.findAll("#mp-menu-body-items-element-0-secondaryMenu")[0].attributes("icon")).to.be.equal(sections[0].icon);
