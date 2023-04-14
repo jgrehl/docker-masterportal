@@ -137,36 +137,6 @@ describe("src_3_0_0/modules/getFeatureInfo/components/GetFeatureInfoDetached.vue
         expect(wrapper.findComponent({name: "DefaultTheme"}).exists()).to.be.true;
     });
 
-    // it("should render the footer slot within .gfi-pager", () => {
-    //     const wrapper = mount(DetachedTemplate, {
-    //             propsData: {
-    //                 feature: {
-    //                     getTheme: () => "default",
-    //                     getTitle: () => "Hallo",
-    //                     getMimeType: () => "text/xml",
-    //                     getGfiUrl: () => "",
-    //                     getLayerId: () => sinon.stub(),
-    //                     getOlFeature: () => olFeature
-    //                 }
-    //             },
-    //             components: {
-    //                 DefaultTheme: {
-    //                     name: "DefaultTheme",
-    //                     template: "<span />"
-    //                 }
-    //             },
-    //             slots: {
-    //                 pager: "<div class=\"gfi-footer\">Pager</div>"
-    //             },
-    //             global: {
-    //                 plugins: [store]
-    //             }
-    //         }),
-    //         pager = wrapper.find(".gfi-pager");
-
-    //     expect(pager.text()).to.be.equal("Pager");
-    // });
-
     it("should set 'isContentHtml' to true", async () => {
         const wrapper = mount(DetachedTemplate, {
             propsData: {
