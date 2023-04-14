@@ -196,6 +196,13 @@ describe("src/core/layers/sta.js", () => {
             expect(styleFunction).not.to.be.null;
             expect(typeof styleFunction).to.be.equals("function");
         });
+        it("getStyleFunction shall return null when style is null", () => {
+            sinon.stub(createStyle, "createStyle").returns(null);
+            const staLayer = new STALayer(attributes),
+                styleFunction = staLayer.getStyleFunction(attributes);
+
+            expect(styleFunction).to.equal(null);
+        });
     });
 
     describe("updateSource", () => {

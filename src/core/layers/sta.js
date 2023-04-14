@@ -247,7 +247,7 @@ STALayer.prototype.getStyleFunction = function (attrs) {
                 zoomLevel = store.getters["Maps/getView"].getZoomForResolution(resolution) + 1,
                 zoomLevelCount = store.getters["Maps/getView"].getResolutions().length;
 
-            if (styleElement.getImage() !== null && attrs.scaleStyleByZoom) {
+            if (styleElement?.getImage() !== null && attrs.scaleStyleByZoom) {
                 styleElement.getImage().setScale(styleElement.getImage().getScale() * zoomLevel / zoomLevelCount);
             }
             return style;
