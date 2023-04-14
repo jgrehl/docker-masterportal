@@ -54,7 +54,7 @@ export default {
             role="img"
         />
         <span
-            class="col-10 lh-1 btn-texts row py-2"
+            class="col lh-1 btn-texts row py-2"
         >
             <span class="btn-title">
                 {{ $t(text) }}
@@ -68,7 +68,9 @@ export default {
         </span>
         <i
             v-if="iconEnd !== null"
-            :class="iconEnd"
+            :class="[
+                iconEnd, 'col-2'
+            ]"
             class="align-self-end flex-direction"
             role="img"
         />
