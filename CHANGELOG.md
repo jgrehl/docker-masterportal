@@ -3,17 +3,7 @@
 
 [Semantic versioning](https://semver.org/spec/v2.0.0.html) is used.
 
-## Unreleased - in development
-### __Breaking Changes__
-
-### Added
-
-### Changed
-
-### Deprecated
-
-### Removed
-
+## v2.32.1 - 2023-04-17.
 ### Fixed
 - Traffic Lights Data visible on scale 1:5000 again
 
