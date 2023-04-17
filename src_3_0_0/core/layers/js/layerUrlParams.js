@@ -118,19 +118,29 @@ function removeCurrentLayerFromLayerTree () {
  * @returns {void}
  */
 function addLayerToLayerTree (layers) {
-    layers.forEach(layer => {
-        const layerConfig = {...{
-            showInLayerTree: true,
-            visibility: true,
-            zIndex: store.getters.determineZIndex(layer.id)
-        }, ...layer};
+    let zIndex = 0;
 
-        store.dispatch("replaceByIdInLayerConfig", {
-            layerConfigs: [{
-                id: layer.id,
-                layer: layerConfig
-            }]
-        });
+    layers.forEach(layer => {
+        if (store.getters.layerConfigById(layer.id)) {
+            const layerConfig = {...{
+                showInLayerTree: true,
+                visibility: true,
+                zIndex: zIndex++
+            }, ...layer};
+
+            store.dispatch("replaceByIdInLayerConfig", {
+                layerConfigs: [{
+                    id: layer.id,
+                    layer: layerConfig
+                }]
+            });
+        }
+        else {
+            store.dispatch("Alerting/addSingleAlert", {
+                content: i18next.t("common:modules.core.modelList.layer.urlParamWarning", {layerId: layer.id}),
+                category: "warning"
+            });
+        }
     });
 }
 
