@@ -1,5 +1,6 @@
 import {generateSimpleGetters} from "../shared/js/utils/generators";
 import getNestedValues from "../shared/js/utils/getNestedValues";
+import {sortObjects} from "../shared/js/utils/sortObjects";
 import stateAppStore from "./state";
 import {treeBackgroundsKey, treeSubjectsKey} from "../shared/js/utils/constants";
 
@@ -231,6 +232,7 @@ const getters = {
         const layers = getters.layerConfigsByAttributes(state)({showInLayerTree: true}),
             layerParams = [];
 
+        sortObjects(layers, "zIndex");
         layers.forEach(layer => {
             const param = {
                 id: layer.id,
