@@ -1,5 +1,6 @@
 import {rawLayerList} from "@masterportal/masterportalapi/src";
 import omit from "../../shared/js/utils/omit";
+import store from "../index";
 
 let zIndex = 0;
 
@@ -68,7 +69,7 @@ export function addAdditional (rawLayer, showAllLayerInTree = false) {
  * @param {Object} rawLayer raw layer from services.json
  * @returns {Object} the extended and merged raw layer
  */
-function mergeRawLayer (layerConf, rawLayer) {
+async function mergeRawLayer (layerConf, rawLayer) {
     let mergedLayer;
 
     if (layerConf) {
@@ -82,6 +83,11 @@ function mergeRawLayer (layerConf, rawLayer) {
             mergedLayer = {...rawLayer, ...layerConf};
         }
     }
+
+    if (mergedLayer?.useProxy){
+        mergedLayer.url = await store.dispatch("getProxyUrl", mergedLayer.url)
+    }
+    console.log(mergedLayer);
     return mergedLayer;
 }
 
