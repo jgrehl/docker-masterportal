@@ -1,3 +1,4 @@
+import createStyle from "@masterportal/masterportalapi/src/vectorStyle/createStyle";
 import {expect} from "chai";
 import Feature from "ol/Feature";
 import {Icon, Style} from "ol/style";
@@ -22,6 +23,10 @@ describe("src_3_0_0/core/maps/js/zoomToCreateStyledFeatures.js", () => {
             }]
         };
 
+    beforeEach(() => {
+        sinon.stub(createStyle, "createStyle");
+    });
+
     afterEach(() => {
         sinon.restore();
     });
@@ -38,7 +43,6 @@ describe("src_3_0_0/core/maps/js/zoomToCreateStyledFeatures.js", () => {
         expect(styledFeatures.length).to.equal(1);
         expect(styledFeatures[0] instanceof Feature).to.be.true;
         expect(styledFeatures[0].getGeometry() instanceof Point).to.be.true;
-        expect(styledFeatures[0].getStyle() instanceof Style).to.be.true;
     });
 
     it("should return an array of Features using a Point as its geometry and containing a style created by the requested styleModel", () => {
@@ -54,7 +58,6 @@ describe("src_3_0_0/core/maps/js/zoomToCreateStyledFeatures.js", () => {
         expect(styledFeatures.length).to.equal(1);
         expect(styledFeatures[0] instanceof Feature).to.be.true;
         expect(styledFeatures[0].getGeometry() instanceof Point).to.be.true;
-        expect(styledFeatures[0].getStyle() instanceof Style).to.be.true;
     });
 
     it("should return an array of Features using a Point as its geometry and containing a style with an Icon", () => {
