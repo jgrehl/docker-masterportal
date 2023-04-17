@@ -112,6 +112,18 @@ export default {
     },
 
     /**
+     * Closes and resets Menucontainers.
+     * @param {Object} param store context
+     * @param {Object} param.commit the commit
+     * @param {String} side secondary or main Menu
+     * @returns {void}
+     */
+    closeMenu ({commit, dispatch}, side) {
+        commit("switchToRoot", side);
+        dispatch("toggleMenu", side);
+    },
+
+    /**
      * Properly deactivates an element if it is not a folder
      * and removes its entry from the navigation.
      * @param {Object} param store context
@@ -130,6 +142,24 @@ export default {
 
             commit("switchToPreviousComponent", side);
         });
+    },
+
+    /**
+     * Resets Menucontainers.
+     * @param {Object} param store context
+     * @param {Object} param.commit the commit
+     * @param {Object} param.dispatch the dispatch
+     * @param {Object} param.getters the getters
+     * @param {Object} param.state the state
+     * @param {String} side secondary or main Menu
+     * @returns {void}
+     */
+    resetMenu ({commit, dispatch, getters, state}, side) {
+        if (getters.currentComponent(side).type === state.currentMouseMapInteractionsComponent && getters.currentComponent(side).type !== state.defaultComponent) {
+            dispatch("changeCurrentMouseMapInteractionsComponent", {type: state.defaultComponent, side});
+        }
+
+        commit("switchToRoot", side);
     },
 
     /**
@@ -157,32 +187,20 @@ export default {
     },
 
     /**
-     * Closes and resets Menucontainers.
+    * Update the state attributes of the currentComponent.
      * @param {Object} param store context
-     * @param {Object} param.commit the commit
-     * @param {String} side secondary or main Menu
-     * @returns {void}
-     */
-    closeMenu ({commit, dispatch}, side) {
-        commit("switchToRoot", side);
-        dispatch("toggleMenu", side);
-    },
-
-    /**
-     * Resets Menucontainers.
-     * @param {Object} param store context
-     * @param {Object} param.commit the commit
      * @param {Object} param.dispatch the dispatch
-     * @param {Object} param.getters the getters
-     * @param {Object} param.state the state
-     * @param {String} side secondary or main Menu
+     * @param {Object} params The params.
+     * @param {String} type The type of the current component.
+     * @param {Object} attributes The attributes.
      * @returns {void}
      */
-    resetMenu ({commit, dispatch, getters, state}, side) {
-        if (getters.currentComponent(side).type === state.currentMouseMapInteractionsComponent && getters.currentComponent(side).type !== state.defaultComponent) {
-            dispatch("changeCurrentMouseMapInteractionsComponent", {type: state.defaultComponent, side});
+    updateComponentState ({dispatch}, {type, attributes}) {
+        if (this._actions[`Modules/${type}/urlParams`]) {
+            dispatch(`Modules/${type}/urlParams`, attributes, {root: true});
         }
-
-        commit("switchToRoot", side);
+        else {
+            Object.assign(this.state.Modules[type], attributes);
+        }
     }
 };
