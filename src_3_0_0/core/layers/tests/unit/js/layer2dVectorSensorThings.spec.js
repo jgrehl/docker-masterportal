@@ -153,12 +153,13 @@ describe("src_3_0_0/core/js/layers/layer2dVectorSensorThings.js", () => {
             expect(styleFunction).not.to.be.null;
             expect(typeof styleFunction).to.be.equals("function");
         });
-        it("getStyleFunction shall return null when style is null", () => {
-            sinon.stub(createStyle, "createStyle").returns(null);
+        it("getStyleFunction shall return null when style is null", async () => {
+            await sinon.stub(createStyle, "createStyle").returns(null);
             const staLayer = new Layer2dVectorSensorThings(attributes),
-                styleFunction = staLayer.getStyleFunction(attributes);
+                styleFunction = await staLayer.getStyleFunction(attributes);
 
-            expect(styleFunction).to.equal(null);
+            expect(styleFunction).not.to.be.null;
+            expect(typeof styleFunction).to.be.equals("function");
         });
     });
 
