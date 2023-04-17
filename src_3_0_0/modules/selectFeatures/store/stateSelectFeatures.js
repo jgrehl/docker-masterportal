@@ -15,7 +15,7 @@ const state = {
     hasMouseMapInteractions: true,
     type: "selectFeatures",
     name: "common:menu.tools.selectFeatures",
-    icon: "bi-card-list",
+    icon: "bi-hand-index",
     selectedFeatures: undefined,
     selectedFeaturesWithRenderInformation: [],
     selectInteraction: undefined,
