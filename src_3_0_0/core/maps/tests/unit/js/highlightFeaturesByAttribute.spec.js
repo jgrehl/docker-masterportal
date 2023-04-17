@@ -1,3 +1,4 @@
+import createStyle from "@masterportal/masterportalapi/src/vectorStyle/createStyle";
 import {expect} from "chai";
 import {Polygon, LineString} from "ol/geom.js";
 import sinon from "sinon";
@@ -176,6 +177,7 @@ describe("src_3_0_0/core/maps/js/highlightFeaturesByAttribute", () => {
             sinon.stub(highlightFeaturesByAttribute, "createVectorLayer").returns(highlightVector);
             sinon.stub(styleList, "returnStyleObject").returns(styleObject);
             showLayerSpy = sinon.spy(highlightFeaturesByAttribute, "showLayer");
+            sinon.stub(createStyle, "createStyle");
         });
 
         afterEach(function () {
