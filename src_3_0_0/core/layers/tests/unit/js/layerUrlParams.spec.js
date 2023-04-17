@@ -18,10 +18,10 @@ describe("src_3_0_0/core/layers/js/layerUrlParams.js", () => {
         };
 
         store.getters = {
-            determineZIndex: () => zIndex++,
             layerConfigsByAttributes: () => {
                 return [];
-            }
+            },
+            layerConfigById: () => true
         };
     });
 
@@ -147,7 +147,8 @@ describe("src_3_0_0/core/layers/js/layerUrlParams.js", () => {
                             id: "452"
                         }
                     ];
-                }
+                },
+                layerConfigById: () => true
             };
         });
 
@@ -263,7 +264,7 @@ describe("src_3_0_0/core/layers/js/layerUrlParams.js", () => {
     describe("addLayerToLayerTree", () => {
         beforeEach(() => {
             store.getters = {
-                determineZIndex: () => zIndex++
+                layerConfigById: () => true
             };
         });
 
