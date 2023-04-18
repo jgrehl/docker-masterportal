@@ -78,6 +78,31 @@ describe("src_3_0_0/core/maps/js/mapUrlParams.js", () => {
         });
     });
 
+    describe("featureViaUrl", () => {
+        it("should add a feature to map via url params", () => {
+            const params = {
+                FEATUREVIAURL: "[{\"layerId\":\"42\",\"features\":[{\"coordinates\":[10,53.5],\"label\":\"TestPunkt\"}]}]"
+
+            };
+
+            mapUrlParams.featureViaUrl(params);
+
+            expect(Object.keys(dispatchCalls).length).to.equals(1);
+            expect(dispatchCalls["Maps/featureViaUrl"]).to.deep.equals([
+                {
+                    layerId: "42",
+                    features: [
+                        {
+                            coordinates: [10, 53.5],
+                            label: "TestPunkt"
+                        }
+                    ]
+
+                }
+            ]);
+        });
+    });
+
     describe("highlightFeature", () => {
         it("should highlight a feature with HIGHLIGHTFEATURE", () => {
             const params = {
