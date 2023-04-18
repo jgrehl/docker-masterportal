@@ -143,7 +143,7 @@
         "core": {
           "modelList": {
             "layer": {
-              "urlParamWarning": "Der parametrisierte Aufruf ist Fehlerhaft. Der Layer mit der Id: <b>{{layerId}}</b> existiert nicht und wird ignoriert.",
+              "urlParamWarning": "Der parametrisierte Aufruf ist fehlerhaft. Der Layer mit der Id: <b>{{layerId}}</b> existiert nicht und wird ignoriert.",
               "wrongStyleId": "Unter der angegeben StyleId: {{styleId}} konnte kein Styleobjekt gefunden werden. Bitte stellen Sie sicher, dass in der verwendeten Style.json ein Style mit der StyleId: {{styleId}} konfiguriert ist.",
               "sensor": {
                 "httpOnError": "<strong>Unerwarteter Fehler beim Laden der Sensordaten des Layers {{name}} aufgetreten</strong>"
