@@ -681,23 +681,23 @@ export default {
                 >
                     <div class="accordion-item">
                         <h2
-                            id="flush-headingOne"
+                            id="flush-heading-coord"
                             class="accordion-header"
                         >
                             <button
                                 class="accordion-button collapsed"
                                 type="button"
                                 data-bs-toggle="collapse"
-                                data-bs-target="#flush-collapseOne"
+                                data-bs-target="#collapse-coord"
                                 aria-expanded="false"
-                                aria-controls="flush-collapseOne"
+                                aria-controls="collapse-coord"
                             >
                                 <i class="bi-info-circle-fill me-2" />
                                 {{ $t("menu.info") }}
                             </button>
                         </h2>
                         <div
-                            id="flush-collapseOne"
+                            id="collapse-coord"
                             class="accordion-collapse collapse"
                             aria-labelledby="flush-headingOne"
                             data-bs-parent="#accordionFlushExample"
