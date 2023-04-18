@@ -42,11 +42,8 @@ export default {
             deep: true
         }
     },
-    mounted () {
-        this.createLegend();
-    },
     methods: {
-        ...mapActions("Modules/Legend", ["createLegend", "toggleLayerInLegend"]),
+        ...mapActions("Modules/Legend", ["toggleLayerInLegend"]),
 
         /**
          * Generates an id using the layername and replacing all non alphanumerics with an underscore.
