@@ -1,5 +1,3 @@
-import store from "../../../app-store";
-
 /**
  * Creates a layer.
  * @abstract
@@ -88,7 +86,6 @@ Layer.prototype.setLayer = function (value) {
  */
 Layer.prototype.setLegend = function (value) {
     this.set("legend", value);
-    store.dispatch("Modules/Legend/createLegend", {root: true});
 };
 
 /**
