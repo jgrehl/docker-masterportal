@@ -1,4 +1,5 @@
 import actionsMapsAttributesMapper from "./actionsMapsAttributesMapper.js";
+import actionsMapsFeatureViaUrl from "./actionsMapsFeatureViaUrl.js";
 import actionsMapsInteractions from "./actionsMapsInteractions.js";
 import actionsMapsLayers from "./actionsMapsLayers.js";
 import actionsMapsMapMode from "./actionsMapsMapMode.js";
@@ -12,6 +13,7 @@ import * as removeHighlightFeature from "../js/removeHighlighting.js";
  */
 export default {
     ...actionsMapsAttributesMapper,
+    ...actionsMapsFeatureViaUrl,
     ...actionsMapsInteractions,
     ...actionsMapsLayers,
     ...actionsMapsMapMode,
