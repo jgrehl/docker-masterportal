@@ -19,11 +19,6 @@ export default {
             default: null,
             required: false
         },
-        checked: {
-            type: Boolean,
-            default: null,
-            required: false
-        },
         interaction: {
             type: Function,
             required: false,
@@ -31,28 +26,35 @@ export default {
                 return true;
             }
         }
+    },
+    data () {
+        return {
+            checked: undefined
+        };
     }
 };
 </script>
 
 <template>
-    <input
-        :id="id"
-        type="checkbox"
-        role="switch"
-        aria-checked="mixed"
-        :aria-label="aria"
-        class="form-check-input"
-        :disabled="disabled"
-        :checked="checked"
-        @change="interaction"
-    >
-    <label
-        class="form-check-label ps-2 pt-2"
-        :for="id"
-    >
-        {{ $t(label) }}
-    </label>
+    <div>
+        <input
+            :id="id"
+            type="checkbox"
+            role="switch"
+            aria-checked="mixed"
+            :aria-label="aria"
+            class="form-check-input"
+            :disabled="disabled || null"
+            :checked="checked"
+            @change="interaction"
+        >
+        <label
+            class="form-check-label ps-2 pt-2"
+            :for="id"
+        >
+            {{ $t(label) }}
+        </label>
+    </div>
 </template>
 
 <style lang="scss" scoped>
