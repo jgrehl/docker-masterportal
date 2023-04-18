@@ -60,6 +60,7 @@ export function processLayerConfig (layerConfig, mapMode) {
             processLayer(layer, mapMode);
         }
     });
+    store.dispatch("Modules/Legend/createLegend", {root: true});
 }
 
 /**
