@@ -8,6 +8,7 @@ import processUrlParams from "../../../shared/js/utils/processUrlParams";
  * Here the urlParams for the maps are processed.
  *
  * Examples:
+ * - https://localhost:9001/portal/master/?featureviaurl=[%7B%22layerId%22:%2242%22,%22features%22:[%7B%22coordinates%22:[10,53.5],%22label%22:%22TestPunkt%22%7D]%7D]
  * - https://localhost:9001/portal/master/?highlightfeature=1711,DE.HH.UP_GESUNDHEIT_KRANKENHAEUSER_2
  * - https://localhost:9001/portal/master/?MAPS={%22center%22:[571278.4429867676,5938534.397334521],%22mode%22:%222D%22,%22zoom%22:7}
  * - https://localhost:9001/portal/master/?MAPS={%22center%22:[571278.4429867676,5938534.397334521],%22mode%22:%223D%22,%22zoom%22:7,%22altitude%22:127,%22heading%22:-1.2502079000000208,%22tilt%22:45}
@@ -36,6 +37,7 @@ import processUrlParams from "../../../shared/js/utils/processUrlParams";
  */
 
 const mapUrlParams = {
+        FEATUREVIAURL: featureViaUrl,
         HIGHLIGHTFEATURE: highlightFeature,
         MAPS: setMapAttributes,
         MARKER: setMapMarker,
@@ -92,6 +94,21 @@ function setMapAttributes (params) {
     setCamera(mapsParams);
     setMode(mapsParams);
     setView(mapsParams);
+}
+
+/**
+ * Creates a feature via url.
+ * @param {Object} params The found params.
+ * @returns {void}
+ */
+function featureViaUrl (params) {
+    try {
+        store.dispatch("Maps/featureViaUrl", JSON.parse(params.FEATUREVIAURL));
+    }
+    catch (error) {
+        console.warn(i18next.t("common:modules.featureViaURL.messages.featureParsing"));
+        console.error(error);
+    }
 }
 
 /**
@@ -251,6 +268,7 @@ function zoomToProjExtent (params) {
 export default {
     processMapUrlParams,
     setMapAttributes,
+    featureViaUrl,
     highlightFeature,
     highlightFeaturesByAttributes,
     processProjection,
