@@ -19,6 +19,11 @@ export default {
             default: null,
             required: false
         },
+        checked: {
+            type: Boolean,
+            default: null,
+            required: false
+        },
         interaction: {
             type: Function,
             required: false,
@@ -26,11 +31,6 @@ export default {
                 return true;
             }
         }
-    },
-    data () {
-        return {
-            checked: undefined
-        };
     }
 };
 </script>
