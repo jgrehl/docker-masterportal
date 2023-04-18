@@ -4,7 +4,6 @@ import Autostarter from "../modules/core/autostarter";
 import Util from "../modules/core/util";
 import Preparser from "../modules/core/configLoader/preparser";
 import MenuLoader from "../modules/menu/menuLoader";
-import featureViaURL from "../src/utils/featureViaURL";
 import SliderView from "../modules/snippets/slider/view";
 import SliderRangeView from "../modules/snippets/slider/range/view";
 import WindowView from "../modules/window/view";
@@ -114,10 +113,6 @@ async function loadApp () {
     app.$mount();
 
     new MenuLoader();
-
-    if (Object.prototype.hasOwnProperty.call(Config, "featureViaURL")) {
-        featureViaURL(Config.featureViaURL);
-    }
 
     if (Object.prototype.hasOwnProperty.call(Config, "zoomTo")) {
         store.commit("ZoomTo/setConfig", Config.zoomTo);
