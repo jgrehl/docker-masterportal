@@ -218,25 +218,25 @@ export default {
                 >
                     <div class="accordion-item">
                         <h2
-                            id="flush-headingOne"
+                            id="flush-heading-contact"
                             class="accordion-header"
                         >
                             <button
                                 class="accordion-button collapsed"
                                 type="button"
                                 data-bs-toggle="collapse"
-                                data-bs-target="#flush-collapseOne"
+                                data-bs-target="#collapse-contact"
                                 aria-expanded="false"
-                                aria-controls="flush-collapseOne"
+                                aria-controls="collapse-contact"
                             >
                                 <i class="bi-image me-2" />
                                 {{ $t('modules.tools.contact.addFileButton') }}
                             </button>
                         </h2>
                         <div
-                            id="flush-collapseOne"
+                            id="collapse-contact"
                             class="accordion-collapse collapse"
-                            aria-labelledby="flush-headingOne"
+                            aria-labelledby="flush-heading"
                             data-bs-parent="#accordionFlushFile"
                         >
                             <div class="accordion-body">
