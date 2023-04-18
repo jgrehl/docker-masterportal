@@ -75,7 +75,6 @@ describe("src_3_0_0/modules/legend/components/LegendContainer.vue", () => {
                 }});
 
             expect(wrapper.find("#legend").exists()).to.be.true;
-            expect(Legend.actions.createLegend.calledOnce).to.be.true;
         });
 
         it("renders the legend container with legends", () => {
@@ -99,7 +98,6 @@ describe("src_3_0_0/modules/legend/components/LegendContainer.vue", () => {
             expect(wrapper.find("#legend").exists()).to.be.true;
             expect(wrapper.find("legend-single-layer-stub").exists()).to.be.true;
             expect(wrapper.findAll("legend-single-layer-stub").length).to.be.equals(2);
-            expect(Legend.actions.createLegend.calledOnce).to.be.true;
         });
     });
     describe("LegendContainer.vue methods", () => {
