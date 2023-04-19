@@ -271,7 +271,9 @@ export default {
             this.updateDrawInteractionListener({interaction: this.draw, layer: this.layer, vm: this});
             this.drawInteraction = this.draw;
             this.registerListener({type: "pointermove", listener: this.showTooltipOverlay});
-            this.addLayer(this.layer);
+            if (!mapCollection.getMap("2D").getLayers().getArray().includes(this.layer)) {
+                this.addLayer(this.layer);
+            }
         }
     }
 };
