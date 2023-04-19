@@ -20,7 +20,7 @@ async function createLayerAddToTree (layerId, features, thfConfig = {}) {
         if (originalLayer) {
             const originalLayerName = originalLayer.get("name").replace(i18next.t(layerNameKey), "").trim(),
                 layerName = i18next.t(layerNameKey) + " " + originalLayerName,
-                id = layerId.indexOf(originalLayerName) === -1 ? layerId : layerId.replace(originalLayerName, ""),
+                id = layerId,
                 attributes = setAttributes(originalLayer, id, layerName, layerNameKey);
             let highlightLayer = layerCollection.getLayerById(id),
                 layerSource = null;
