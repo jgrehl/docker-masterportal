@@ -23,7 +23,6 @@ export default {
             return fetchFirstModuleConfig(context, configPaths, "MapMarker", false);
         }
         return null;
-
     },
 
     /**
