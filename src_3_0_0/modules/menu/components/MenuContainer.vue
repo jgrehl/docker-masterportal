@@ -72,12 +72,16 @@ export default {
         ...mapMutations("Menu", [
             "collapseMenues",
             "mergeMenuState",
-            "setCurrentMenuWidth"
+            "setCurrentMenuWidth",
+            "setMenuResizingToggle"
         ]),
         ...mapActions("Menu", [
             "toggleMenu",
             "closeMenu"
-        ])
+        ]),
+        toggleEndOfMenuResizing () {
+            this.setMenuResizingToggle(!this.menuResizingToggle);
+        }
     }
 };
 </script>

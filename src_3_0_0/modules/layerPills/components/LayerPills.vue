@@ -186,7 +186,7 @@ export default {
             }
         },
         updateElementsPositionedOverMapWidth () {
-            this.setElementsPositionedOverMapWidth(document.getElementsByClassName("elements-positioned-over-map")[0].offsetWidth);
+            this.setElementsPositionedOverMapWidth(document.getElementsByClassName("elements-positioned-over-map")[0]?.offsetWidth);
         },
         updateLayerPillsListWidth () {
             this.setLayerPillsListWidth(document.getElementsByClassName("nav-pills")[0]?.offsetWidth);
@@ -324,20 +324,16 @@ export default {
         cursor: pointer;
     }
 
-.list-enter-active,
-.list-leave-active {
-  transition: all 1s ease;
-}
-.list-enter-from,
-.list-leave-to .outer{
-    transform: translateX(-50px);
-    opacity: 0;
-}
-.list-enter-to,
-.list-leave-from {
-
-  opacity: 1;
-}
+    .list-enter-active, .list-leave-active {
+      transition: width 0.3s ease;
+    }
+    .list-enter-to, .list-leave-from {
+        width: 100%;
+        transition: width 0.3s ease;
+    }
+    .list-enter-from, .list-leave-to{
+        width: 0%;
+    }
 
     .custom-tooltip {
         font-size: 20px;
