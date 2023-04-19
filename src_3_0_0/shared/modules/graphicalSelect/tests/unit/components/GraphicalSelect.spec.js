@@ -18,7 +18,7 @@ const mockMapGetters = {
 
 let store;
 
-describe("src/share-components/graphicalSelect/components/GraphicalSelect.vue", () => {
+describe("src_3_0_0/shared/modules/graphicalSelect/components/GraphicalSelect.vue", () => {
     GraphicalSelectComponent.props.label = "";
     beforeEach(function () {
         const map = {
