@@ -16,13 +16,18 @@ import processUrlParams from "../../../shared/js/utils/processUrlParams";
  * - https://localhost:9001/portal/master/?map=3d&altitude=127&heading=-1.2502079000000208&tilt=45
  * - https://localhost:9001/portal/master/?Map/highlightfeature=1711,DE.HH.UP_GESUNDHEIT_KRANKENHAEUSER_2
  * - https://localhost:9001/portal/master/?bezirk=bergedorf
+ * - https://localhost:9001/portal/master/?center=553925,5931898
+ * - https://localhost:9001/portal/master/?center=[553925,5931898]
+ * - https://localhost:9001/portal/master/?Map/center=[553925,5931898]
  * - https://localhost:9001/portal/master/?highlightFeaturesByAttribute=123&wfsId=8712&attributeName=bezirk&attributeValue=Altona&attributeQuery=IsLike
+ * - https://localhost:9001/portal/master/?mapMode=3d
  * - https://localhost:9001/portal/master/?MAP/MAPMODE=3d
  * - https://localhost:9001/portal/master/?MAPMARKER=[565874,%205934140]
  * - https://localhost:9001/portal/master/?zoomtogeometry=altona
  * - https://localhost:9001/portal/master/?zoomlevel=0
  * - https://localhost:9001/portal/master/?ZOOMTOEXTENT=10.0822,53.6458,10.1781,53.8003&PROJECTION=EPSG:4326
  * - https://localhost:9001/portal/master/?zoomToExtent=510000,5850000,625000,6000000
+ * - https://localhost:9001/portal/master/?MAP/ZOOMTOFEATUREID=18,26
  * - https://localhost:9001/portal/master/?featureid=18,26
  */
 
@@ -47,6 +52,7 @@ const mapUrlParams = {
         HIGHLIGHTFEATURESBYATTRIBUTE: highlightFeaturesByAttributes,
         "API/HIGHLIGHTFEATURESBYATTRIBUTE": highlightFeaturesByAttributes,
         MAP: setMode,
+        MAPMODE: setMode,
         "MAP/MAPMODE": setMode,
         MAPMARKER: setMapMarker,
         PROJECTION: zoomToProjExtent,
@@ -153,7 +159,7 @@ function setMapMarker (params) {
  * @returns {void}
  */
 function setMode (params) {
-    store.dispatch("Maps/changeMapMode", (params.MODE || params.MAP || params["MAP/MAPMODE"])?.toUpperCase());
+    store.dispatch("Maps/changeMapMode", (params.MODE || params.MAP || params.MAPMODE || params["MAP/MAPMODE"])?.toUpperCase());
 }
 
 /**
@@ -162,10 +168,19 @@ function setMode (params) {
  * @returns {void}
  */
 function setView (params) {
-    const center = params.CENTER || params["MAP/CENTER"];
+    let center = params.CENTER || params["MAP/CENTER"];
+
+    if (!Array.isArray(center)) {
+        if (center.includes("[")) {
+            center = JSON.parse(center);
+        }
+        else {
+            center = center?.split(",");
+        }
+    }
 
     store.dispatch("Maps/setView", {
-        center: Array.isArray(center) ? center : center?.split(","),
+        center: center,
         rotation: params.ROTATION,
         zoom: params.ZOOM ?? params.ZOOMLEVEL ?? params["MAP/ZOOMLEVEL"]
     });
