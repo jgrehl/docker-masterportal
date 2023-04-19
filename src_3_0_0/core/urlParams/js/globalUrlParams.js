@@ -54,8 +54,3 @@ function setUiStyle (params) {
 export default {
     processGlobalUrlParams
 };
-
-/**
- * Examples:
- * - https://localhost:9001/portal/master/?lng=en&STYLE=simple
- */
