@@ -3,22 +3,26 @@ import {rawLayerList} from "@masterportal/masterportalapi/src";
 import styleList from "@masterportal/masterportalapi/src/vectorStyle/styleList";
 import {portalConfigKey, treeTopicConfigKey} from "../shared/js/utils/constants";
 import actionsLayerConfig from "./actionsLayerConfig";
+import {updateProxyUrl} from "./js/getProxyUrl";
 
 export default {
     ...actionsLayerConfig,
 
     /**
-     * Commit the loaded config.js to the state.
+     * Check/adapt for proxy configs and commit the loaded config.js to the state.
      * @param {Object} param.commit the commit
      * @param {Object} configJs The config.js
      * @returns {void}
      */
     loadConfigJs ({commit}, configJs) {
+        const proxyHost = configJs.proxyHost ? configJs.proxyHost : "";
+
+        updateProxyUrl(configJs, proxyHost);
         commit("setConfigJs", configJs);
     },
 
     /**
-     * Load the config.json and commit it to the state.
+     * Load the config.json, check/adapt for proxy configs and commit it to the state.
      * @param {Object} param.commit the commit
      * @param {Object} param.state the state
      * @returns {void}
@@ -33,6 +37,7 @@ export default {
 
         axios.get(targetPath)
             .then(response => {
+                updateProxyUrl(response.data);
                 commit("setPortalConfig", response.data ? response.data[portalConfigKey] : null);
                 commit("setLayerConfig", response.data ? response.data[treeTopicConfigKey] : null);
                 commit("setLoadedConfigs", "configJson");
@@ -43,7 +48,7 @@ export default {
     },
 
     /**
-     * Load the rest-services.json and commit it to the state.
+     * Load the rest-services.json, check/adapt for proxy configs and commit it to the state.
      * @param {Object} param.commit the commit
      * @param {Object} param.state the state
      * @returns {void}
@@ -51,6 +56,7 @@ export default {
     loadRestServicesJson ({commit, state}) {
         axios.get(state.configJs?.restConf)
             .then(response => {
+                updateProxyUrl(response.data);
                 commit("setRestConfig", response.data);
                 commit("setLoadedConfigs", "restServicesJson");
             })
@@ -112,55 +118,5 @@ export default {
                 }
                 return initializedStyleList;
             });
-    },
-
-    /**
-     * Rewrites the URL by replacing the dots with underlined
-     * If a proxyHost is configured, it is prepended to the URL.
-     * This prevents CORS errors.
-     * Attention: A reverse proxy must be set up on the server side.
-     * @param {String} url The URL to rewrite.
-     * @param {String} [proxyHost=configJs.proxyHost] Specifies whether points should be replaced by underscores in URLs.
-     * @returns {String} The rewritten URL with underlined instead of dots.
-     *///proxyHost = getters.proxyHost()
-    getProxyUrl ({getters}, {url, proxyHost}) {
-        const parser = document.createElement("a");
-        let protocol = "",
-            result = url,
-            hostname = "",
-            port = "";
-
-        parser.href = url;
-        protocol = parser.protocol;
-
-        if (protocol.indexOf("//") === -1) {
-            protocol += "//";
-        }
-
-        port = parser.port;
-
-        if (!parser.hostname) {
-            parser.hostname = window.location.hostname;
-        }
-
-        if (parser.hostname === "localhost" || !parser.hostname) {
-            return url;
-        }
-
-        if (port) {
-            result = url.replace(":" + port, "");
-        }
-
-        result = url.replace(protocol, "");
-        // www und www2 usw. raus
-        // hostname = result.replace(/www\d?\./, "");
-        hostname = parser.hostname.split(".").join("_");
-
-        console.warn(`The parameter 'useProxy' is deprecated. Please set up a CORS header for the service with the URL: ${url}`
-        + " This is recommended by the GDI-DE"
-        + " (https://www.gdi-de.org/SharedDocs/Downloads/DE/GDI-DE/Dokumente/Architektur_GDI-DE_Bereitstellung_Darstellungsdienste.pdf?__blob=publicationFile)"
-        + " in chapter 4.7.1.!");
-
-        return proxyHost + "/" + result.replace(parser.hostname, hostname);
     }
 };
