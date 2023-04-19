@@ -44,7 +44,7 @@ export default {
             aria-checked="mixed"
             :aria-label="aria"
             class="form-check-input"
-            :disabled="disabled || null"
+            :disabled="disabled"
             :checked="checked"
             @change="interaction"
         >
