@@ -77,7 +77,7 @@ function createPolygonMarker (styleId = "defaultMapMarkerPolygon") {
 }
 
 /**
- * Adds a feature to the the map marker by layer id.
+ * Adds a feature to the map marker by layer id.
  * @param {String} layerId The layer id of the map marker.
  * @param {ol/Feature} feature The ol feature that is added to the map.
  * @returns {void}
