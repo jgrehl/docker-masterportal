@@ -2,6 +2,7 @@
 import LayerTree from "../../layerTree/components/LayerTree.vue";
 import MenuContainerBodyRootItems from "./MenuContainerBodyRootItems.vue";
 import MenuContainerBodyRootLogo from "./MenuContainerBodyRootLogo.vue";
+import SearchBar from "../../searchBar/components/SearchBar.vue";
 import {mapGetters} from "vuex";
 
 export default {
@@ -9,7 +10,8 @@ export default {
     components: {
         LayerTree,
         MenuContainerBodyRootItems,
-        MenuContainerBodyRootLogo
+        MenuContainerBodyRootLogo,
+        SearchBar
     },
     props: {
         /** Defines in which menu the component is being rendered */
@@ -62,6 +64,7 @@ export default {
             placeholder="Search"
             aria-label="Search"
         >
+        <SearchBar />
 
         <LayerTree v-if="side === 'mainMenu'" />
         <template
