@@ -72,7 +72,7 @@ function isInitOpen (params) {
 /**
  * Gets the current component and the related menu side in which the currentComponent is configured.
  * @param {String} searchType The search type.
- * @returns {String} The current component and the related menu side.
+ * @returns {Object} The current component and the related menu side.
  */
 function getCurrentComponent (searchType) {
     const mainMenuComponent = findInSections(store.getters["Menu/mainMenu"]?.sections, searchType),
