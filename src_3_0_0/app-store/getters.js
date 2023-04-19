@@ -324,7 +324,8 @@ const getters = {
         const layerContainer = getters.allSubjectDataLayerConfigs(state);
 
         return layerContainer.filter(layerConf => layerConf.visibility === true);
-    }
+    },
+    proxyHost: state => state?.configJs?.proxyHost || ""
 };
 
 export default getters;

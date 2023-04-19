@@ -157,7 +157,6 @@ export default {
                 }
             }, 250));
         },
-
         /**
          * Debounce function
          * @param {Function} callback The callback form debounce function.
