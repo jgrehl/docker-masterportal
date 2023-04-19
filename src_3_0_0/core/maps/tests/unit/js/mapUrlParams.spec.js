@@ -189,18 +189,7 @@ describe("src_3_0_0/core/maps/js/mapUrlParams.js", () => {
     });
 
     describe("setMode", () => {
-        it("should set map mode to 2D", () => {
-            const params = {
-                "MAP/MAPMODE": "2d"
-            };
-
-            mapUrlParams.setMode(params);
-
-            expect(Object.keys(dispatchCalls).length).to.equals(1);
-            expect(dispatchCalls["Maps/changeMapMode"]).to.equals("2D");
-        });
-
-        it("should set map mode to 3D", () => {
+        it("should set MAP (mode) to 3D", () => {
             const params = {
                 MAP: "3d"
             };
@@ -209,6 +198,28 @@ describe("src_3_0_0/core/maps/js/mapUrlParams.js", () => {
 
             expect(Object.keys(dispatchCalls).length).to.equals(1);
             expect(dispatchCalls["Maps/changeMapMode"]).to.equals("3D");
+        });
+
+        it("should set MAPMODE to 3D", () => {
+            const params = {
+                MAPMODE: "3d"
+            };
+
+            mapUrlParams.setMode(params);
+
+            expect(Object.keys(dispatchCalls).length).to.equals(1);
+            expect(dispatchCalls["Maps/changeMapMode"]).to.equals("3D");
+        });
+
+        it("should set MAP/MODE to 2D", () => {
+            const params = {
+                "MAP/MAPMODE": "2d"
+            };
+
+            mapUrlParams.setMode(params);
+
+            expect(Object.keys(dispatchCalls).length).to.equals(1);
+            expect(dispatchCalls["Maps/changeMapMode"]).to.equals("2D");
         });
     });
 
@@ -242,6 +253,36 @@ describe("src_3_0_0/core/maps/js/mapUrlParams.js", () => {
                 center: ["553925", "5931898"],
                 rotation: undefined,
                 zoom: 0
+            });
+        });
+
+        it("set MAP/CENTER as array to map view", () => {
+            const params = {
+                "MAP/CENTER": "[553925,5931898]"
+            };
+
+            mapUrlParams.setView(params);
+
+            expect(Object.keys(dispatchCalls).length).to.equals(1);
+            expect(dispatchCalls["Maps/setView"]).to.deep.equals({
+                center: [553925, 5931898],
+                rotation: undefined,
+                zoom: undefined
+            });
+        });
+
+        it("set CENTER as array to map view", () => {
+            const params = {
+                CENTER: "[553925,5931898]"
+            };
+
+            mapUrlParams.setView(params);
+
+            expect(Object.keys(dispatchCalls).length).to.equals(1);
+            expect(dispatchCalls["Maps/setView"]).to.deep.equals({
+                center: [553925, 5931898],
+                rotation: undefined,
+                zoom: undefined
             });
         });
     });
