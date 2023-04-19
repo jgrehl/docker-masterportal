@@ -55,6 +55,19 @@
         "active": true
       }
     },
+    "searchBar": {
+      "searchInterfaces": {
+        "gazetteer": {
+          "serviceId": "6",
+          "searchAddress": true,
+          "searchStreets": true,
+          "searchHouseNumbers": true,
+          "searchDistricts": true,
+          "searchParcels": true,
+          "searchStreetKey": true
+        }
+      }
+    },
     "mainMenu": {
       "expanded": true,
       "title": {
@@ -747,6 +760,9 @@
             569614.86,
             5933174.11
           ],
+          "typ": "StaticImage",
+          "visibility": false,
+          "url": "https://geodienste.hamburg.de/lgv-config/img/Laerm-Test_300dpi.png",
           "legend": [
             "https://geodienste.hamburg.de/lgv-config/img/Legende_Laermberechnung_Tag.png",
             "https://geodienste.hamburg.de/lgv-config/img/Legende_Laermberechnung_Nacht.png"
