@@ -10,7 +10,6 @@ import getters from "../getters";
  */
 export function getProxyUrl (url, proxyHost = getters.proxyHost()) {
 
-
     const parser = document.createElement("a");
     let protocol = "",
         result = url,
