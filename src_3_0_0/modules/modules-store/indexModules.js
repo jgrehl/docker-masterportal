@@ -28,6 +28,7 @@ import PortalFooter from "../portalFooter/store/indexPortalFooter";
 import Print from "../print/store/indexPrint";
 import Routing from "../routing/store/indexRouting";
 import ScaleSwitcher from "../scaleSwitcher/store/indexScaleSwitcher";
+import SearchBar from "../searchBar/store/indexSearchBar";
 import SelectFeatures from "../selectFeatures/store/indexSelectFeatures";
 import Shadow from "../shadow/store/indexShadow";
 import ShareView from "../shareView/store/indexShareView";
@@ -68,6 +69,7 @@ export default {
         PortalFooter: {...PortalFooter},
         Print: {...Print},
         ScaleSwitcher: {...ScaleSwitcher},
+        SearchBar: {...SearchBar},
         SelectFeatures: {...SelectFeatures},
         Shadow: {...Shadow},
         ShareView: {...ShareView},
