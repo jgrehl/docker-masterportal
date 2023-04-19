@@ -41,9 +41,7 @@ export default {
                     urlValues[0] = allowedValues[parseInt(urlValues[0], 10) - 1];
                 }
             }
-            else {
-                return new Promise((_, reject) => reject(i18next.t("common:utils.parametricURL.zoomTo", {wrongConfigId: id})));
-            }
+
             layerId = conf.layerId;
             property = conf.property;
 
