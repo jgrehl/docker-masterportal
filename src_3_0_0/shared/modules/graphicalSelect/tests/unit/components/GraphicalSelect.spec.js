@@ -21,12 +21,18 @@ let store;
 describe("src_3_0_0/shared/modules/graphicalSelect/components/GraphicalSelect.vue", () => {
     GraphicalSelectComponent.props.label = "";
     beforeEach(function () {
-        const map = {
-            id: "ol",
-            mode: "2D",
-            addOverlay: sinon.spy(),
-            removeOverlay: sinon.spy()
-        };
+        const layersOnMap = [],
+            map = {
+                id: "ol",
+                mode: "2D",
+                addOverlay: sinon.spy(),
+                removeOverlay: sinon.spy(),
+                getLayers: () => {
+                    return {
+                        getArray: () => layersOnMap
+                    };
+                }
+            };
 
         mapCollection.clear();
         mapCollection.addMap(map, "2D");
