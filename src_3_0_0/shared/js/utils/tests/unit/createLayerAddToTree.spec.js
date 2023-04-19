@@ -4,6 +4,7 @@ import styleList from "@masterportal/masterportalapi/src/vectorStyle/styleList";
 import store from "../../../../../app-store";
 import createLayerAddToTreeModule from "../../createLayerAddToTree.js";
 import layerCollection from "../../../../../core/layers/js/layerCollection.js";
+import {nextTick} from "vue";
 
 describe("src/utils/createLayerAddToTree.js", () => {
     let addedFeatures = null,
@@ -46,6 +47,9 @@ describe("src/utils/createLayerAddToTree.js", () => {
                     if (key === "layer") {
                         return newLayer;
                     }
+                    else if (key === "name") {
+                        return "createdName";
+                    }
                     return null;
                 },
                 getLayerSource: () => {
@@ -73,6 +77,12 @@ describe("src/utils/createLayerAddToTree.js", () => {
                     return {
                         setStyle: setStyleSpy
                     };
+                },
+                get: (key) => {
+                    if (key === "name") {
+                        return "newName";
+                    }
+                    return null;
                 }
             };
             setStyleSpy = sinon.spy();
@@ -93,6 +103,9 @@ describe("src/utils/createLayerAddToTree.js", () => {
                         setStyle: setStyleSpy
                     };
                 },
+                getLayerSource: () => {
+                    return layerSource;
+                },
                 setIsSelected: sinon.stub(),
                 attributes: {}
             };
@@ -103,13 +116,12 @@ describe("src/utils/createLayerAddToTree.js", () => {
                 if (id === "idOriginal") {
                     ret = originalLayer;
                 }
-                else if (id?.indexOf("_") > -1) {
-                    if (layerInCollection) {
-                        ret = createdLayer;
-                    }
-                    else {
-                        layerInCollection = true;
-                    }
+                else if (layerInCollection) {
+                    ret = createdLayer;
+
+                }
+                else {
+                    layerInCollection = true;
                 }
                 return ret;
             });
@@ -140,14 +152,16 @@ describe("src/utils/createLayerAddToTree.js", () => {
         });
 
         it("test create new layer remove features and addFeatures", async () => {
-            const layerId = "idOriginal",
+            const layerId = "newId",
                 features = [{featureId: "featureIdNew"}];
 
             highlightLayerFeatures = [{featureId: "featureId"}];
-            await createLayerAddToTreeModule.createLayerAddToTree(layerId, features, treeHighlightedFeatures);
+            nextTick(() => {
+                createLayerAddToTreeModule.createLayerAddToTree(layerId, features, treeHighlightedFeatures);
+            });
 
             expect(store.dispatch.args[0][0]).to.equal("addLayerToLayerConfig");
-            expect(store.dispatch.args[0][1].layerConfig.id).to.equal("idOriginal_originalName");
+            expect(store.dispatch.args[0][1].layerConfig.id).to.equal("newId");
             expect(store.dispatch.args[0][1].layerConfig.visibility).to.equal(true);
             expect(store.dispatch.args[0][1].layerConfig.typ).to.equal("VectorBase");
             expect(layerSource.removeFeature.calledOnce).to.be.true;
