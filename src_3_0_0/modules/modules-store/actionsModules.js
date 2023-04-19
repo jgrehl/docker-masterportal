@@ -5,7 +5,8 @@ const moduleKeys = [
     "mouseHover",
     "portalFooter",
     "mainMenu.sections",
-    "secondaryMenu.sections"
+    "secondaryMenu.sections",
+    "searchBar"
 ];
 
 export default {
