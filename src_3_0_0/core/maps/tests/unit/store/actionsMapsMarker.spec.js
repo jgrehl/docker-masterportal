@@ -1,5 +1,5 @@
 import {expect} from "chai";
-import Feature from "ol/Feature.js";
+import Feature from "ol/Feature";
 import Polygon from "ol/geom/Polygon";
 import sinon from "sinon";
 
@@ -131,7 +131,6 @@ describe("src_3_0_0/core/maps/store/actionsMapsMarker.js", () => {
             expect(mapMarker.removeMapMarker.firstCall.args[0]).to.equals("marker_polygon_layer");
         });
     });
-
     describe("rotatePointMarker", () => {
         beforeEach(() => {
             state = {
