@@ -325,6 +325,11 @@ const getters = {
 
         return layerContainer.filter(layerConf => layerConf.visibility === true);
     },
+    /**
+     * Returns proxyHost if given.
+     * @param {Object} state state of the app-store.
+     * @returns {String} proxhost if given or empty proxyHost
+     */
     proxyHost: state => state?.configJs?.proxyHost || ""
 };
 
