@@ -4,6 +4,7 @@ import createStyle from "@masterportal/masterportalapi/src/vectorStyle/createSty
 import store from "../../../app-store";
 import layerCollection from "../../../core/layers/js/layerCollection";
 import {treeSubjectsKey} from "../../../shared/js/utils/constants";
+import {uniqueId} from "../../../shared/js/utils/uniqueId.js";
 
 /**
  * Creates a layer containing the given features and shows it in menu tree.
@@ -20,7 +21,7 @@ async function createLayerAddToTree (layerId, features, thfConfig = {}) {
         if (originalLayer) {
             const originalLayerName = originalLayer.get("name").replace(i18next.t(layerNameKey), "").trim(),
                 layerName = i18next.t(layerNameKey) + " " + originalLayerName,
-                id = layerId,
+                id = layerId.indexOf(originalLayerName) === -1 ? layerId + "_" + uniqueId() : layerId,
                 attributes = setAttributes(originalLayer, id, layerName, layerNameKey);
             let highlightLayer = layerCollection.getLayerById(id),
                 layerSource = null;
