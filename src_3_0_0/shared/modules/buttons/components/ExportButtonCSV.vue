@@ -26,7 +26,7 @@ export default {
          * - if no filename is given using first case "data", the default filename is hard coded to "download" (+ postfixFormat)
          */
         data: {
-            type: [Array, Boolean],
+            type: [Object, Boolean],
             required: false,
             default: false
         },
@@ -124,7 +124,7 @@ export default {
          */
         handleDownloadError (msg) {
             console.warn(msg);
-            this.$store.dispatch("Alerting/addSingleAlert", this.$t("common:modules.exportButton.error.download"));
+            this.$store.dispatch("Alerting/addSingleAlert", i18next.t("common:modules.exportButton.error.download"));
         },
         /**
          * triggers the download based on the given props
@@ -159,7 +159,7 @@ export default {
         },
         /**
          * "downloads" the given json data
-         * @param {Array[]|Object[]} data the json data to download
+         * @param {Object} data the json data to download
          * @param {String} filename the filename to use
          * @returns {void}
          */
@@ -273,7 +273,6 @@ export default {
         type="button"
         class="btn btn-primary exportButton"
         @click="download()"
-        @keydown.enter="download()"
     >
         <span
             id="bootstrap-icon"
