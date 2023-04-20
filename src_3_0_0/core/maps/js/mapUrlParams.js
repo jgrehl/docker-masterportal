@@ -145,10 +145,10 @@ function processProjection (params) {
     if (params.CENTER || params["MAP/CENTER"]) {
         setView(params);
     }
-    else if (params.MARKER || params.MAPMARKER) {
+    if (params.MARKER || params.MAPMARKER) {
         setMapMarker(params);
     }
-    else if (params.ZOOMTOEXTENT || params["MAP/ZOOMTOEXTENT"]) {
+    if (params.ZOOMTOEXTENT || params["MAP/ZOOMTOEXTENT"]) {
         zoomToProjExtent(params);
     }
 }
