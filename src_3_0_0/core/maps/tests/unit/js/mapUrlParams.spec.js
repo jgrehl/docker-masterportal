@@ -1,13 +1,17 @@
+import crs from "@masterportal/masterportalapi/src/crs";
 import {expect} from "chai";
+import Map from "ol/Map";
 import sinon from "sinon";
+import View from "ol/View";
 
 import highlightFeaturesByAttribute from "../../../js/highlightFeaturesByAttribute";
 import mapUrlParams from "../../../js/mapUrlParams";
 import store from "../../../../../app-store";
 
-describe("src_3_0_0/core/maps/js/mapUrlParams.js", () => {
+describe.only("src_3_0_0/core/maps/js/mapUrlParams.js", () => {
     let dispatchCalls = {},
-        error;
+        error,
+        map;
 
     beforeEach(() => {
         dispatchCalls = {};
@@ -17,6 +21,13 @@ describe("src_3_0_0/core/maps/js/mapUrlParams.js", () => {
         store.dispatch = (arg1, arg2) => {
             dispatchCalls[arg1] = arg2 !== undefined ? arg2 : "called";
         };
+
+        mapCollection.clear();
+        map = new Map({
+            view: new View()
+        });
+
+        mapCollection.addMap(map, "2D");
     });
 
     afterEach(() => {
@@ -145,6 +156,112 @@ describe("src_3_0_0/core/maps/js/mapUrlParams.js", () => {
         });
     });
 
+    describe("processProjection", () => {
+        beforeEach(() => {
+            sinon.stub(crs, "transformToMapProjection").returns([1, 2]);
+        });
+
+        it("should set projected center coordinate with PROJECTION and CENTER", () => {
+            const params = {
+                PROJECTION: "EPSG:31467",
+                CENTER: [3565836, 5945355]
+            };
+
+            mapUrlParams.processProjection(params);
+
+            expect(Object.keys(dispatchCalls).length).to.equals(1);
+            expect(dispatchCalls["Maps/setView"]).to.deep.equals({
+                center: [1, 2],
+                rotation: undefined,
+                zoom: undefined
+            });
+        });
+
+        it("should set projected center coordinate with MAP/PROJECTION and MAP/CENTER", () => {
+            const params = {
+                "MAP/PROJECTION": "EPSG:31467",
+                "MAP/CENTER": [3565836, 5945355]
+            };
+
+            mapUrlParams.processProjection(params);
+
+            expect(Object.keys(dispatchCalls).length).to.equals(1);
+            expect(dispatchCalls["Maps/setView"]).to.deep.equals({
+                center: [1, 2],
+                rotation: undefined,
+                zoom: undefined
+            });
+        });
+
+        it("should set marker to projected coordinates with PROJECTION and MARKER", () => {
+            const params = {
+                PROJECTION: "EPSG:31467",
+                MARKER: [3565836, 5945355]
+            };
+
+            mapUrlParams.processProjection(params);
+
+            expect(Object.keys(dispatchCalls).length).to.equals(1);
+            expect(dispatchCalls["Maps/placingPointMarker"]).to.deep.equals([1, 2]);
+        });
+
+        it("should set marker to projected coordinates with MAP/PROJECTION and MAPMARKER", () => {
+            const params = {
+                "MAP/PROJECTION": "EPSG:31467",
+                MAPMARKER: [3565836, 5945355]
+            };
+
+            mapUrlParams.processProjection(params);
+
+            expect(Object.keys(dispatchCalls).length).to.equals(1);
+            expect(dispatchCalls["Maps/placingPointMarker"]).to.deep.equals([1, 2]);
+        });
+
+        it("should set marker to projected coordinates with MAP/PROJECTION and MAPMARKER", () => {
+            const params = {
+                "MAP/PROJECTION": "EPSG:31467",
+                MAPMARKER: [3565836, 5945355]
+            };
+
+            mapUrlParams.processProjection(params);
+
+            expect(Object.keys(dispatchCalls).length).to.equals(1);
+            expect(dispatchCalls["Maps/placingPointMarker"]).to.deep.equals([1, 2]);
+        });
+
+        it("should zoom to an extent with params PROJECTION and ZOOMTOEXTENT", () => {
+            const params = {
+                PROJECTION: "EPSG:4326",
+                ZOOMTOEXTENT: "10.0822,53.6458,10.1781,53.8003"
+            };
+
+            mapUrlParams.processProjection(params);
+
+            expect(Object.keys(dispatchCalls).length).to.equals(1);
+            expect(dispatchCalls["Maps/zoomToProjExtent"]).to.deep.equals({
+                extent: ["10.0822", "53.6458", "10.1781", "53.8003"],
+                options: {duration: 0},
+                projection: "EPSG:4326"
+            });
+        });
+
+        it("should zoom to an extent with params MAP/PROJECTION and MAP/ZOOMTOEXTENT", () => {
+            const params = {
+                "MAP/PROJECTION": "EPSG:4326",
+                "MAP/ZOOMTOEXTENT": "10.0822,53.6458,10.1781,53.8003"
+            };
+
+            mapUrlParams.processProjection(params);
+
+            expect(Object.keys(dispatchCalls).length).to.equals(1);
+            expect(dispatchCalls["Maps/zoomToProjExtent"]).to.deep.equals({
+                extent: ["10.0822", "53.6458", "10.1781", "53.8003"],
+                options: {duration: 0},
+                projection: "EPSG:4326"
+            });
+        });
+    });
+
     describe("setMapMarker", () => {
         it("should set coordinates to mapMarker with MARKER", () => {
             const params = {
@@ -154,7 +271,7 @@ describe("src_3_0_0/core/maps/js/mapUrlParams.js", () => {
             mapUrlParams.setMapMarker(params);
 
             expect(Object.keys(dispatchCalls).length).to.equals(1);
-            expect(dispatchCalls["Maps/placingPointMarker"]).to.deep.equals(["565874", "5934140"]);
+            expect(dispatchCalls["Maps/placingPointMarker"]).to.deep.equals([565874, 5934140]);
         });
 
         it("should set coordinates to mapMarker with MAPMARKER", () => {
