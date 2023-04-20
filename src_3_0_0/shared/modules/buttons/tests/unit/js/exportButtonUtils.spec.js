@@ -3,7 +3,7 @@ import {
     createCsvBlob
 } from "../../../js/exportButtonUtils.js";
 
-describe("src_3_0_0/shared/modules/buttons/js/exportButtonUtils.js", () => {
+describe("src/share-components/exportButton/utils/exportButtonUtils.js", () => {
     describe("createCsvBlob", () => {
         it("should create a blob object representing the given csv text", () => {
             const blob = createCsvBlob("csvText");
