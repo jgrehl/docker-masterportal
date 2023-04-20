@@ -50,7 +50,7 @@ export default function xml2json (srcDom, attributeValue = true) {
                     jsonResult[keyName].push(xml2json(child, attributeValue));
                 }
                 else {
-                    /* may occur on e.g. siblings ['a:x', 'x', 'x'] â€“
+                    /* may occur on e.g. siblings ['a:x', 'x', 'x'] -
                      * first object was written, now array comes in ... */
                     jsonResult[keyName] = [
                         jsonResult[keyName],
