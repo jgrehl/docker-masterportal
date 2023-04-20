@@ -1,3 +1,5 @@
+import crs from "@masterportal/masterportalapi/src/crs";
+
 import store from "../../../app-store";
 import highlightFeaturesByAttribute from "./highlightFeaturesByAttribute";
 import processUrlParams from "../../../shared/js/utils/processUrlParams";
@@ -23,6 +25,8 @@ import processUrlParams from "../../../shared/js/utils/processUrlParams";
  * - https://localhost:9001/portal/master/?mapMode=3d
  * - https://localhost:9001/portal/master/?MAP/MAPMODE=3d
  * - https://localhost:9001/portal/master/?MAPMARKER=[565874,%205934140]
+ * - https://localhost:9001/portal/master/?Map/projection=EPSG:31467&Map/center=[3565836,5945355]
+ * - https://localhost:9001/portal/master/?projection=EPSG:31467&marker=3565836,5945355
  * - https://localhost:9001/portal/master/?zoomtogeometry=altona
  * - https://localhost:9001/portal/master/?zoomlevel=0
  * - https://localhost:9001/portal/master/?ZOOMTOEXTENT=10.0822,53.6458,10.1781,53.8003&PROJECTION=EPSG:4326
@@ -55,8 +59,8 @@ const mapUrlParams = {
         MAPMODE: setMode,
         "MAP/MAPMODE": setMode,
         MAPMARKER: setMapMarker,
-        PROJECTION: zoomToProjExtent,
-        "MAP/PROJECTION": zoomToProjExtent,
+        PROJECTION: processProjection,
+        "MAP/PROJECTION": processProjection,
         TILT: setCamera,
         WFSID: highlightFeaturesByAttributes,
         ZOOMLEVEL: setView,
@@ -129,6 +133,27 @@ function highlightFeaturesByAttributes (params) {
 }
 
 /**
+ * Process the param PROJECTION.
+ * PROJECTION is only used in combination with one of the following parameters:
+ * - CENTER, "MAP/CENTER"
+ * - MARKER, MAPMARKER
+ * - ZOOMTOEXTENT,"MAP/ZOOMTOEXTENT"
+ * @param {Object} params The found params.
+ * @returns {void}
+ */
+function processProjection (params) {
+    if (params.CENTER || params["MAP/CENTER"]) {
+        setView(params);
+    }
+    else if (params.MARKER || params.MAPMARKER) {
+        setMapMarker(params);
+    }
+    else if (params.ZOOMTOEXTENT || params["MAP/ZOOMTOEXTENT"]) {
+        zoomToProjExtent(params);
+    }
+}
+
+/**
  * Sets the camera params.
  * @param {Object} params The found params.
  * @returns {void}
@@ -147,10 +172,21 @@ function setCamera (params) {
  * @returns {void}
  */
 function setMapMarker (params) {
-    const marker = params.MARKER || params.MAPMARKER,
-        coordinates = marker.includes("[") ? JSON.parse(marker) : marker.split(",");
+    const projection = params.PROJECTION || params["MAP/PROJECTION"];
+    let marker = params.MARKER || params.MAPMARKER;
 
-    store.dispatch("Maps/placingPointMarker", coordinates);
+    if (marker && !Array.isArray(marker)) {
+        if (marker.includes("[")) {
+            marker = JSON.parse(marker);
+        }
+        else {
+            marker = marker?.split(",");
+        }
+    }
+
+    marker = marker?.map(coord => parseFloat(coord, 10));
+
+    store.dispatch("Maps/placingPointMarker", projection ? crs.transformToMapProjection(mapCollection.getMap("2D"), projection, marker) : marker);
 }
 
 /**
@@ -168,6 +204,7 @@ function setMode (params) {
  * @returns {void}
  */
 function setView (params) {
+    const projection = params.PROJECTION || params["MAP/PROJECTION"];
     let center = params.CENTER || params["MAP/CENTER"];
 
     if (!Array.isArray(center)) {
@@ -180,7 +217,7 @@ function setView (params) {
     }
 
     store.dispatch("Maps/setView", {
-        center: center,
+        center: projection ? crs.transformToMapProjection(mapCollection.getMap("2D"), projection, center) : center,
         rotation: params.ROTATION,
         zoom: params.ZOOM ?? params.ZOOMLEVEL ?? params["MAP/ZOOMLEVEL"]
     });
@@ -216,6 +253,7 @@ export default {
     setMapAttributes,
     highlightFeature,
     highlightFeaturesByAttributes,
+    processProjection,
     setMapMarker,
     setCamera,
     setMode,
