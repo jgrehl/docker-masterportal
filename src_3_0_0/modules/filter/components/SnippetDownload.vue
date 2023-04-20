@@ -1,6 +1,6 @@
 <script>
-import ExportButtonCSV from "../../../shared/components/exportButton/components/ExportButtonCSV.vue";
-import ExportButtonGeoJSON from "../../../shared/components/exportButton/components/ExportButtonGeoJSON.vue";
+import ExportButtonCSV from "../../../shared/modules/buttons/components/ExportButtonCSV.vue";
+import ExportButtonGeoJSON from "../../../shared/modules/buttons/components/ExportButtonGeoJSON.vue";
 import openlayerFunctions from "../utils/openlayerFunctions";
 import isObject from "../../../shared/js/utils/isObject";
 import {GeoJSON} from "ol/format.js";
