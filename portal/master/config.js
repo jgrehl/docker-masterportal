@@ -99,13 +99,5 @@ const Config = {
         },
         fallbackLanguage: "de",
         changeLanguageOnStartWhen: ["querystring", "localStorage", "htmlTag"]
-    },
-    testproxyArray: [{url: "https://test.proxyURL.de/folder/", useProxy: true}, "string", "string2"],
-    testproxyObject: {
-        url: "https://test.proxyurl.de/folder/",
-        useProxy: true,
-        fetchBroadcastUrl: "./resources/newsFeedPortalAlerts.json"
-    },
-    url: "https://geodienste.hamburg.de/lgv-config/img/",
-    useProxy: true
+    }
 };
