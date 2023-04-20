@@ -70,9 +70,7 @@
           },
 
           {
-            "type": "populationRequest",
-            "showDescription": true,
-            "description": "Einwohnerabfrage."
+            "type": "populationRequest"
           },
           {
             "type": "fileImport"
