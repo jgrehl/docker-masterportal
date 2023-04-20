@@ -8,7 +8,7 @@ import highlightFeaturesByAttribute from "../../../js/highlightFeaturesByAttribu
 import mapUrlParams from "../../../js/mapUrlParams";
 import store from "../../../../../app-store";
 
-describe.only("src_3_0_0/core/maps/js/mapUrlParams.js", () => {
+describe("src_3_0_0/core/maps/js/mapUrlParams.js", () => {
     let dispatchCalls = {},
         error,
         map;
