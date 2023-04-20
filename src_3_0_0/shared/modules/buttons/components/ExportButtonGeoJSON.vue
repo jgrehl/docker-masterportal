@@ -3,7 +3,7 @@ import dayjs from "dayjs";
 import {
     downloadBlobPerNavigator,
     downloadBlobPerHTML5
-} from "../utils/exportButtonUtils.js";
+} from "../js/exportButtonUtils.js";
 
 export default {
     name: "ExportButtonGeoJSON",
