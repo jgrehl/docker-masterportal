@@ -22,12 +22,12 @@ export default {
     },
 
     /**
-     * Load the config.json, check/adapt for proxy configs and commit it to the state.
+     * Load the config.json, check/adapt for proxy configs, check/add alert config and commit it to the state.
      * @param {Object} param.commit the commit
      * @param {Object} param.state the state
      * @returns {void}
      */
-    loadConfigJson ({commit, state}) {
+    loadConfigJson ({commit, state, dispatch}) {
         const format = ".json";
         let targetPath = "config.json";
 
@@ -38,6 +38,14 @@ export default {
         axios.get(targetPath)
             .then(response => {
                 updateProxyUrl(response.data);
+                if (response.data.Portalconfig.alerts) {
+                    Object.values(response.data.Portalconfig.alerts).forEach((value) => {
+                        value.initial = true;
+                        value.initialConfirmed = value.mustBeConfirmed;
+                        dispatch("Alerting/addSingleAlert", value, {root: true});
+                    });
+
+                }
                 commit("setPortalConfig", response.data ? response.data[portalConfigKey] : null);
                 commit("setLayerConfig", response.data ? response.data[treeTopicConfigKey] : null);
                 commit("setLoadedConfigs", "configJson");
