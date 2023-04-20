@@ -4,6 +4,7 @@ import styleList from "@masterportal/masterportalapi/src/vectorStyle/styleList";
 import store from "../../../../../app-store";
 import createLayerAddToTreeModule from "../../createLayerAddToTree.js";
 import layerCollection from "../../../../../core/layers/js/layerCollection.js";
+import {reset as resetUniqueId} from "../../../../../shared/js/utils/uniqueId.js";
 
 describe("src/utils/createLayerAddToTree.js", () => {
     let addedFeatures = null,
@@ -33,6 +34,7 @@ describe("src/utils/createLayerAddToTree.js", () => {
             highlightLayerFeatures = [];
             layerInCollection = false;
             setIsSelectedSpy = sinon.spy();
+            resetUniqueId();
             sinon.stub(styleList, "returnStyleObject").returns({});
             layerSource = {
                 getFeatures: () => {
