@@ -224,7 +224,7 @@ function setView (params) {
     const projection = params.PROJECTION || params["MAP/PROJECTION"];
     let center = params.CENTER || params["MAP/CENTER"];
 
-    if (!Array.isArray(center)) {
+    if (center && !Array.isArray(center)) {
         if (center.includes("[")) {
             center = JSON.parse(center);
         }
