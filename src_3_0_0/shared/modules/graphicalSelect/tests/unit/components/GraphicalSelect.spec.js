@@ -4,35 +4,42 @@ import {expect} from "chai";
 import GraphicalSelectComponent from "../../../components/GraphicalSelect.vue";
 import GraphicalSelect from "../../../store/indexGraphicalSelect.js";
 import sinon from "sinon";
+import VectorLayer from "ol/layer/Vector.js";
+import VectorSource from "ol/source/Vector.js";
 
 config.global.mocks.$t = key => key;
 
-const mockMapGetters = {
-    },
-    mockMapActions = {
-        addLayer: sinon.stub(),
-        removeInteraction: sinon.stub(),
-        addInteraction: sinon.stub(),
-        registerListener: sinon.stub()
-    };
-
-let store;
+let store, layersOnMap, layer, mockMapGetters, mockMapActions;
 
 describe("src_3_0_0/shared/modules/graphicalSelect/components/GraphicalSelect.vue", () => {
     GraphicalSelectComponent.props.label = "";
     beforeEach(function () {
-        const layersOnMap = [],
-            map = {
-                id: "ol",
-                mode: "2D",
-                addOverlay: sinon.spy(),
-                removeOverlay: sinon.spy(),
-                getLayers: () => {
-                    return {
-                        getArray: () => layersOnMap
-                    };
-                }
-            };
+        mockMapGetters = {
+        };
+        mockMapActions = {
+            addLayer: sinon.spy(),
+            removeInteraction: sinon.stub(),
+            addInteraction: sinon.stub(),
+            registerListener: sinon.stub()
+        };
+        layersOnMap = [];
+        layer = new VectorLayer({
+            id: "geometry_selection_layer",
+            name: "Geometry-Selection",
+            source: new VectorSource(),
+            alwaysOnTop: true
+        });
+        const map = {
+            id: "ol",
+            mode: "2D",
+            addOverlay: sinon.spy(),
+            removeOverlay: sinon.spy(),
+            getLayers: () => {
+                return {
+                    getArray: () => layersOnMap
+                };
+            }
+        };
 
         mapCollection.clear();
         mapCollection.addMap(map, "2D");
@@ -100,6 +107,30 @@ describe("src_3_0_0/shared/modules/graphicalSelect/components/GraphicalSelect.vu
             for (option in wrapper.vm.options) {
                 expect(wrapper.vm.geographicValues).to.include(option);
             }
+        });
+
+        it("should add Layer 1 times to map", () => {
+            shallowMount(GraphicalSelectComponent, {
+                global: {
+                    plugins: [store]
+                }
+            });
+
+            expect(mockMapActions.addLayer.calledOnce).to.be.true;
+        });
+
+        it("should add Layer 1 times to map, though createDrawInteraction called 2 times", () => {
+            const wrapper = shallowMount(GraphicalSelectComponent, {
+                global: {
+                    plugins: [store]
+                }
+            });
+
+            layersOnMap.push(layer);
+
+            wrapper.vm.createDrawInteraction();
+
+            expect(mockMapActions.addLayer.calledOnce).to.be.true;
         });
     });
 });
