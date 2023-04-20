@@ -643,7 +643,8 @@
                 "title": "Datei importieren",
                 "zoom": "Zoomen",
                 "fileZoom": "Auf Features dieser Datei \"{{filename}}\" zoomen",
-                "importFiles": "Ausgewählte Dateien importieren"
+                "importFiles": "Ausgewählte Dateien importieren",
+                "removeAttachment": "Datei entfernen"
             },
             "parcelSearch": {
                 "wrongConfig": "Ungültige oder unvollständige Konfiguration",

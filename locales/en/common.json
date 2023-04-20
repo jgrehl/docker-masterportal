@@ -638,7 +638,8 @@
                 "title": "Import file",
                 "zoom": "Zoom",
                 "fileZoom": "Zoom to features of this file \"{{filename}}\"",
-                "importFiles": "Import chosen files"
+                "importFiles": "Import chosen files",
+                "removeAttachment": "Remove file"
             },
             "parcelSearch": {
                 "wrongConfig": "Invalid or incomplete configuration",
