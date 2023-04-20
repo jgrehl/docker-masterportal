@@ -4,23 +4,23 @@ import ExportButtonCSV from "../../../components/ExportButtonCSV.vue";
 
 config.global.mocks.$t = key => key;
 
-describe("src_3_0_0/shared/modules/buttons/components/exportButtonCSV.vue", () => {
+describe("src/share-components/exportButton/components/exportButtonCSV.vue", () => {
     before(() => {
         i18next.init({
             lng: "cimode",
             debug: false
         });
     });
-    it("createFilename", () => {
+    describe("createFilename", () => {
         const wrapper = shallowMount(ExportButtonCSV, {
-            props: {}
+            propsData: {}
         });
 
         expect(wrapper.vm.createFilename("prefix", "YYYY")).to.equal("prefix" + String(new Date().getFullYear()) + ".csv");
     });
-    it("template", () => {
+    describe("template", () => {
         const wrapper = shallowMount(ExportButtonCSV, {
-            props: {}
+            propsData: {}
         });
 
         expect(wrapper.find("button").exists()).to.be.true;
