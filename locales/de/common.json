@@ -650,7 +650,8 @@
                 "title": "Datei importieren",
                 "zoom": "Zoomen",
                 "fileZoom": "Auf Features dieser Datei \"{{filename}}\" zoomen",
-                "importFiles": "Ausgewählte Dateien importieren"
+                "importFiles": "Ausgewählte Dateien importieren",
+                "removeAttachment": "Datei entfernen"
             },
             "modeler3D": {
                 "entity": {

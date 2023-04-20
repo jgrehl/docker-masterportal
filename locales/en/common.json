@@ -645,7 +645,8 @@
                 "title": "Import file",
                 "zoom": "Zoom",
                 "fileZoom": "Zoom to features of this file \"{{filename}}\"",
-                "importFiles": "Import chosen files"
+                "importFiles": "Import chosen files",
+                "removeAttachment": "Remove file"
             },
             "modeler3D": {
                 "entity": {
