@@ -44,7 +44,6 @@ export default {
                         value.initialConfirmed = value.mustBeConfirmed;
                         dispatch("Alerting/addSingleAlert", value, {root: true});
                     });
-
                 }
                 commit("setPortalConfig", response.data ? response.data[portalConfigKey] : null);
                 commit("setLayerConfig", response.data ? response.data[treeTopicConfigKey] : null);
