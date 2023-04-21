@@ -87,6 +87,7 @@ export default {
         padding: $padding;
         font-size: $font-size-base;
         overflow-y: auto;
+        height: 100%;
         max-height: 100%;
 
         &-collapsed {
