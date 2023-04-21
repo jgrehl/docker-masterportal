@@ -4,6 +4,7 @@ import {expect} from "chai";
 import sinon from "sinon";
 import {config, shallowMount} from "@vue/test-utils";
 import {createStore} from "vuex";
+
 import axios from "axios";
 
 const Storage = require("dom-storage");
@@ -25,7 +26,30 @@ describe("src_3_0_0/modules/alerting/components/AlertingItem.vue", function () {
         wrapper,
         store;
 
-    const
+    const mockConfigJson = {
+            "Portalconfig": {
+                "alerting": {
+                    "qs-release": {
+                        "title": "Portal zur Abnahme!",
+                        "displayClass": "info",
+                        "category": "Portal zur Abnahme!",
+                        "content": "Dieses Geoportal dient der Qualitätskontrolle durch den Kunden.<br>Es ist aufgrund von möglichen Fehlern <b>nicht</b> zur Nutzung für alltägliche oder berufliche Aufgaben geeignet!<br><br>",
+                        "creationDate": "01/09/22",
+                        "mustBeConfirmed": true,
+                        "once": true
+                    },
+                    "qs-release2": {
+                        "title": "Portal zur Abnahme!2",
+                        "displayClass": "info",
+                        "category": "Portal zur Abnahme2!",
+                        "content": "2Dieses Geoportal dient der Qualitätskontrolle durch den Kunden.<br>Es ist aufgrund von möglichen Fehlern <b>nicht</b> zur Nutzung für alltägliche oder berufliche Aufgaben geeignet!<br><br>",
+                        "creationDate": "04/09/22",
+                        "mustBeConfirmed": true,
+                        "once": true
+                    }
+                }
+            }
+        },
         mockConfigJs = {
             alerting: {
                 fetchBroadcastUrl: "foo",
@@ -36,7 +60,7 @@ describe("src_3_0_0/modules/alerting/components/AlertingItem.vue", function () {
             "globalAlerts": ["Test1", "Test4"],
 
             "restrictedAlerts": {
-                "https://localhost:9001/portal/master_3_0_0/": ["Test2"],
+                "https://localhost:9001/portal/master/": ["Test2"],
                 "https://localhost:9001/portal/basic/": ["Test3"]
             },
 
@@ -102,6 +126,10 @@ describe("src_3_0_0/modules/alerting/components/AlertingItem.vue", function () {
             },
             state: {
                 configJs: mockConfigJs,
+                configJson: mockConfigJson,
+                loadedConfigs: {
+                    configJson: mockConfigJson
+                },
                 availableLocalStorage: true
             },
             mutations: {
@@ -118,12 +146,21 @@ describe("src_3_0_0/modules/alerting/components/AlertingItem.vue", function () {
             }
         });
         sinon.stub(axios, "get").resolves({status: 200, statusText: "OK", data: alertingData});
+
+        // Simulate loadConfigJson
+        Object.values(store.state.loadedConfigs.configJson.Portalconfig.alerting).forEach((value) => {
+            value.initial = true;
+            value.initialConfirmed = value.mustBeConfirmed;
+            store.dispatch("Alerting/addSingleAlert", value, {root: true});
+        });
+
         store.commit("Alerting/setShowTheModal", true);
     });
 
     afterEach(() => {
         sinon.restore();
     });
+
 
     it("Checking the initially displayed alerts", async function () {
         const
@@ -133,7 +170,7 @@ describe("src_3_0_0/modules/alerting/components/AlertingItem.vue", function () {
                 },
                 data () {
                     return {
-                        currentUrl: "https://localhost:9001/portal/master_3_0_0/"
+                        currentUrl: "https://localhost:9001/portal/master/"
                     };
                 }
             };
@@ -150,15 +187,15 @@ describe("src_3_0_0/modules/alerting/components/AlertingItem.vue", function () {
         categoryContainers = wrapper.findAll(".alertCategoryContainer");
         alertWrappers = wrapper.findAll(".singleAlertContainer");
 
-        expect(categoryContainers.length).to.equal(2);
+        expect(categoryContainers.length).to.equal(4);
         expect(categoryContainers[0].exists()).to.be.true;
         expect(categoryContainers[1].exists()).to.be.true;
+        expect(categoryContainers[2].exists()).to.be.true;
+        expect(categoryContainers[3].exists()).to.be.true;
 
-        describe("Expecting initially shown 2 category groups with 2 alerts", function () {
-            it("There are 2 category groups", function () {
-                expect(categoryContainers.length).to.equal(2);
-                expect(categoryContainers[0].exists()).to.be.true;
-                expect(categoryContainers[1].exists()).to.be.true;
+        describe("Expecting initially shown 4 category groups", function () {
+            it("There are 4 category groups", function () {
+                expect(categoryContainers.length).to.equal(4);
             });
 
             it("1st category group is named \"Test 1\"", function () {
@@ -183,11 +220,15 @@ describe("src_3_0_0/modules/alerting/components/AlertingItem.vue", function () {
             });
 
             it("2st category group is named \"Test 2\"", function () {
-                expect(categoryContainers[1].find("h3").exists()).to.be.true;
-                expect(categoryContainers[1].find("h3").text()).to.equal("Test 2");
+                expect(categoryContainers[3].find("h3").exists()).to.be.true;
+                expect(categoryContainers[3].find("h3").text()).to.equal("Test 2");
             });
             it("and contains 2 alert", function () {
-                expect(categoryContainers[1].findAll(".singleAlertContainer").length).to.equal(2);
+                expect(categoryContainers[3].findAll(".singleAlertContainer").length).to.equal(2);
+            });
+            it("1st category group is named \"Portal zur Abnahme!\"", function () {
+                expect(categoryContainers[2].find("h3").exists()).to.be.true;
+                expect(categoryContainers[2].find("h3").text()).to.equal("Portal zur Abnahme!2");
             });
 
         });
