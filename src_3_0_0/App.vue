@@ -106,8 +106,8 @@ export default {
          */
         loadConfigsToTheVuexState () {
             this.loadConfigJs(Config);
-            this.loadConfigJson();
             this.loadServicesJson();
+            this.loadConfigJson();
             this.loadRestServicesJson();
         },
 
