@@ -12,7 +12,7 @@ export function interpretLinebreaks (properties) {
             .entries(properties)
             .map(([key, value]) => [
                 key,
-                typeof value.replace === "function" ? value.replace(/(?:\r\n|\r|\n)/g, "|") : value
+                typeof value?.replace === "function" ? value.replace(/(?:\r\n|\r|\n)/g, "|") : value
             ])
     );
 }
