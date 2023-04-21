@@ -4,7 +4,7 @@ dist/
 portalconfigs/
 scripte/
 src/
-addons/
+/addons/*
 !addons/addons_3_0_0
 jsdoc/
 lib/
