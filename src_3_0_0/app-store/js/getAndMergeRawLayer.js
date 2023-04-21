@@ -1,5 +1,6 @@
 import {rawLayerList} from "@masterportal/masterportalapi/src";
 import omit from "../../shared/js/utils/omit";
+import {updateProxyUrl} from "./getProxyUrl";
 
 let zIndex = 0;
 
@@ -61,7 +62,7 @@ export function addAdditional (rawLayer, showAllLayerInTree = false) {
 }
 
 /**
- * Returns the extended raw layer to the id contained in the layer configuration.
+ * Returns the extended raw layer to the id contained in the layer configuration with updated proxy settings.
  * If id contains an array of ids, the rawlayer is merged.
  * Grouped layers children are filled with the rawlayers.
  * @param {Object} layerConf configuration of layer like in the config.json
@@ -81,6 +82,10 @@ function mergeRawLayer (layerConf, rawLayer) {
         else if (rawLayer !== undefined && rawLayer !== null) {
             mergedLayer = {...rawLayer, ...layerConf};
         }
+    }
+
+    if (mergedLayer?.useProxy === true) {
+        updateProxyUrl(mergedLayer);
     }
 
     return mergedLayer;
