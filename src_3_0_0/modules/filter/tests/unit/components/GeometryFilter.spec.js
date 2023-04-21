@@ -6,7 +6,7 @@ import sinon from "sinon";
 import Draw from "ol/interaction/Draw.js";
 import {Vector as VectorLayer} from "ol/layer";
 import Feature from "ol/Feature";
-import {Polygon} from "ol/geom";
+import {Polygon, LineString} from "ol/geom";
 
 config.global.mocks.$t = key => key;
 
@@ -79,6 +79,36 @@ describe("src/modules/tools/filter/components/GeometryFilter.vue", () => {
             expect(wrapper.find("#buttonRemoveGeometry").exists()).to.be.false;
         });
 
+        it("should render the correct values (incl. additional geometries) in the geometry selection dropdown", async () => {
+            const feature = new Feature({
+                    bezirk: "Altona",
+                    geometry: new Polygon([
+                        [
+                            [0, 0],
+                            [0, 3],
+                            [3, 3],
+                            [3, 0],
+                            [0, 0]
+                        ]
+                    ])
+                }),
+                additionalGeometries = [{
+                    attrNameForTitle: "bezirk",
+                    features: [feature]
+                }],
+                expectedValues = ["common:modules.tools.filter.geometryFilter.geometries.polygon",
+                    "common:modules.tools.filter.geometryFilter.geometries.rectangle",
+                    "common:modules.tools.filter.geometryFilter.geometries.circle",
+                    "common:modules.tools.filter.geometryFilter.geometries.lineString",
+                    "Altona"];
+
+            await wrapper.setData({isActive: true});
+            await wrapper.setProps({additionalGeometries: additionalGeometries});
+            wrapper.find("#geometrySelect").findAll("option").forEach((option, index) => {
+                expect(option.text()).to.be.equal(expectedValues[index]);
+            });
+        });
+
         it("should render geometry selection dropdown", async () => {
             await wrapper.setData({isActive: true});
 
@@ -95,6 +125,14 @@ describe("src/modules/tools/filter/components/GeometryFilter.vue", () => {
             await wrapper.setData({isGeometryVisible: true});
 
             expect(wrapper.find("#buttonRemoveGeometry").exists()).to.be.true;
+        });
+
+        it("should set the correct type to the draw interaction if user changes the geometry selection", async () => {
+            const radioInput = wrapper.find("#geometryFilterChecked");
+
+            await radioInput.setChecked();
+            await wrapper.find("select").findAll("option").at(3).setSelected();
+            expect(wrapper.vm.draw.type_).to.be.equal("LineString");
         });
     });
 
@@ -231,6 +269,115 @@ describe("src/modules/tools/filter/components/GeometryFilter.vue", () => {
                 wrapper.vm.reset();
                 expect(wrapper.vm.isGeometryVisible).to.be.false;
             });
+        });
+
+        it("should set isBufferInputVisible to false", () => {
+            wrapper.vm.isBufferInputVisible = true;
+            wrapper.vm.reset();
+            expect(wrapper.vm.isBufferInputVisible).to.be.false;
+        });
+        it("should return the given geometry", () => {
+            wrapper.vm.reset();
+            expect(wrapper.emitted()).to.have.all.keys("updateFilterGeometry", "updateGeometryFeature", "updateGeometrySelectorOptions");
+        });
+        it("should return the given geometry", () => {
+            wrapper.vm.reset();
+            expect(wrapper.emitted().updateFilterGeometry[0]).to.deep.equal([false]);
+        });
+        it("should return the given geometry", () => {
+            wrapper.vm.reset();
+            expect(wrapper.emitted().updateGeometryFeature[0]).to.deep.equal([undefined]);
+        });
+        it("should return the given geometry", () => {
+            const expectedSelectorOptions = {
+                selectedGeometry: 0,
+                defaultBuffer: 20
+            };
+
+            wrapper.vm.reset();
+            expect(wrapper.emitted().updateGeometrySelectorOptions[0]).to.deep.equal([expectedSelectorOptions]);
+        });
+    });
+    describe("getGeometryOnDrawEnd", () => {
+        it("should return the given geometry", () => {
+            const feature = new Feature({
+                    geometry: new Polygon([
+                        [
+                            [0, 0],
+                            [0, 3],
+                            [3, 3],
+                            [3, 0],
+                            [0, 0]
+                        ]
+                    ])
+                }),
+                geometry = wrapper.vm.getGeometryOnDrawEnd(feature, "Circle");
+
+            expect(geometry).to.deep.equal(feature.getGeometry());
+        });
+        it("should return a polygon geometry if the given geometry is a LineString", () => {
+            const feature = new Feature({
+                    geometry: new LineString(
+                        [
+                            [200, 200],
+                            [300, 300]
+                        ]
+                    )
+                }),
+                geometry = wrapper.vm.getGeometryOnDrawEnd(feature, "LineString", 10);
+
+            expect(geometry.getType()).to.be.equal("Polygon");
+        });
+    });
+    describe("update", () => {
+        const feature = new Feature({
+            geometry: new Polygon([
+                [
+                    [0, 0],
+                    [0, 3],
+                    [3, 3],
+                    [3, 0],
+                    [0, 0]
+                ]
+            ])
+        });
+
+        it("should return the given feature", () => {
+            wrapper.vm.update(feature, "Circle", feature.getGeometry());
+            expect(wrapper.vm.feature).to.deep.equal(feature);
+        });
+        it("should set 'isGeometryVisible' true", () => {
+            wrapper.vm.update(feature, "Circle", feature.getGeometry());
+            expect(wrapper.vm.isGeometryVisible).to.be.true;
+        });
+        it("should set 'isBufferInputVisible' true", () => {
+            wrapper.vm.update(feature, "Circle", feature.getGeometry());
+            expect(wrapper.vm.isBufferInputVisible).to.be.false;
+        });
+        it("should set 'isBufferInputVisible' false, if the given geometry type is LineString", () => {
+            wrapper.vm.update(feature, "LineString", feature.getGeometry());
+            expect(wrapper.vm.isBufferInputVisible).to.be.true;
+        });
+        it("should emit the correct events", () => {
+            wrapper.vm.update(feature, "LineString", feature.getGeometry());
+            expect(wrapper.emitted()).to.have.all.keys("updateFilterGeometry", "updateGeometryFeature", "updateGeometrySelectorOptions");
+        });
+        it("should emit the correct geometry", () => {
+            wrapper.vm.update(feature, "LineString", feature.getGeometry());
+            expect(wrapper.emitted().updateFilterGeometry[0]).to.deep.equal([feature.getGeometry()]);
+        });
+        it("should emit the correct feature", () => {
+            wrapper.vm.update(feature, "LineString", feature.getGeometry());
+            expect(wrapper.emitted().updateGeometryFeature[0]).to.deep.equal([feature]);
+        });
+        it("should emit the correct 'selectorOptions'", () => {
+            const expectedSelectorOptions = {
+                selectedGeometry: 0,
+                defaultBuffer: 20
+            };
+
+            wrapper.vm.update(feature, "LineString", feature.getGeometry());
+            expect(wrapper.emitted().updateGeometrySelectorOptions[0]).to.deep.equal([expectedSelectorOptions]);
         });
     });
 });
