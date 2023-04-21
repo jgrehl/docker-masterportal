@@ -127,6 +127,7 @@ export default {
         commit("setProjection", mapView.getProjection());
         commit("setResolutions", mapView.getResolutions());
         commit("setScales", mapView.get("options").map(option => option.scale));
+        commit("setSize", map.getSize());
     },
 
     /**
