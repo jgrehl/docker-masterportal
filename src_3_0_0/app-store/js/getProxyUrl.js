@@ -70,7 +70,7 @@ export function updateProxyUrl (obj, proxyHost) {
             }
         }
     }
-    if (obj?.useProxy === true) {
+    if (obj?.useProxy === true && obj?.url) {
         obj.url = getProxyUrl(obj.url.toLowerCase(), proxyHost);
     }
     return obj;
