@@ -5,7 +5,7 @@ import SearchInterface from "./searchInterface";
  * @constructs
  * @extends SearchInterface
  * @see {@link https://sg.geodatenzentrum.de/web_public/gdz/dokumentation/deu/geokodierungsdienst.pdf}
- * @param {String} geosearchServiceId Search service id. Resolved using the rest-services.json file.
+ * @param {String} geoSearchServiceId Search service id. Resolved using the rest-services.json file.
  * @param {String} suggestServiceId Suggestion service id. Resolved using the rest-services.json file.
  *
  * @param {String} [epsg] EPSG code of the coordinate reference system to use. By default, the value in `Portalconfig.mapView.epsg` is used.
@@ -20,7 +20,7 @@ import SearchInterface from "./searchInterface";
  * @param {Number} [suggestCount=20] Suggestion amount.
  * @returns {void}
  */
-export default function SearchInterfaceBkg ({geosearchServiceId, suggestServiceId, epsg, extent, filter, maxScore, minScore, resultEvents, searchInterfaceId, suggestCount} = {}) {
+export default function SearchInterfaceBkg ({geoSearchServiceId, suggestServiceId, epsg, extent, filter, maxScore, minScore, resultEvents, searchInterfaceId, suggestCount} = {}) {
     SearchInterface.call(this,
         "request",
         searchInterfaceId || "bkg",
@@ -29,7 +29,7 @@ export default function SearchInterfaceBkg ({geosearchServiceId, suggestServiceI
             onHover: ["setMarker"]
         });
 
-    this.geosearchServiceId = geosearchServiceId;
+    this.geoSearchServiceId = geoSearchServiceId;
     this.suggestServiceId = suggestServiceId;
 
     this.epsg = epsg;
