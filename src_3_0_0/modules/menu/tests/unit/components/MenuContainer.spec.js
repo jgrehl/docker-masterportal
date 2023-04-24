@@ -46,10 +46,12 @@ describe("src_3_0_0/modules/menu/MenuContainer.vue", () => {
                     },
                     mutations: {
                         collapseMenues: collapseMenuesSpy,
-                        mergeMenuState: mergeMenuStateSpy
+                        mergeMenuState: mergeMenuStateSpy,
+                        setCurrentMenuWidth: sinon.spy()
                     },
                     actions: {
-                        closeMenu: closeMenuSpy
+                        closeMenu: closeMenuSpy,
+                        toggleMenu: sinon.spy()
                     }
                 }
             },
