@@ -39,11 +39,7 @@ export default {
             .then(response => {
                 updateProxyUrl(response.data);
                 if (response.data.Portalconfig.alerts) {
-                    Object.values(response.data.Portalconfig.alerts).forEach((value) => {
-                        value.initial = true;
-                        value.initialConfirmed = value.mustBeConfirmed;
-                        dispatch("Alerting/addSingleAlert", value, {root: true});
-                    });
+                    dispatch("addAlertsFromConfigJson", response.data.Portalconfig.alerts);
                 }
                 commit("setPortalConfig", response.data ? response.data[portalConfigKey] : null);
                 commit("setLayerConfig", response.data ? response.data[treeTopicConfigKey] : null);
@@ -125,5 +121,18 @@ export default {
                 }
                 return initializedStyleList;
             });
+    },
+    /**
+     * Loops trough defined alerts from config json and add it to the alerting module
+     * @param {Object} param.dispatch the commit
+     * @param {Object} alerts object with defined alerts
+     * @returns {void}
+     */
+    addAlertsFromConfigJson ({dispatch}, alerts) {
+        Object.values(alerts).forEach((value) => {
+            value.initial = true;
+            value.initialConfirmed = value.mustBeConfirmed;
+            dispatch("Alerting/addSingleAlert", value, {root: true});
+        });
     }
 };
