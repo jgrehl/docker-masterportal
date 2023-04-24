@@ -31,7 +31,9 @@ describe("src_3_0_0/modules/menu/MenuContainerBody.vue", () => {
                     getters: {
                         defaultComponent: sinon.stub(),
                         mainMenu: () => menu,
-                        secondaryMenu: () => menu
+                        secondaryMenu: () => menu,
+                        mainExpanded: () => sinon.stub,
+                        secondaryExpanded: () => sinon.stub
 
                     },
                     mutations: {
