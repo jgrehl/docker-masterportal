@@ -24,7 +24,6 @@ const configPath = window.location.pathname.substring(0, window.location.pathnam
         script.src = configPath;
     }),
     main = {
-
         /**
          * Returns the app.
          * @returns {Object} the app
@@ -35,10 +34,7 @@ const configPath = window.location.pathname.substring(0, window.location.pathnam
 
 // Wait until config.js is loaded
 loadConfigJs.then(() => {
-    initLanguage(Config.portalLanguage);
-
     app = createApp(App);
-
 
     // Load remoteInterface
     if (Object.prototype.hasOwnProperty.call(Config, "remoteInterface")) {
