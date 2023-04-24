@@ -81,7 +81,6 @@
           {
             "type": "legend"
           },
-
           {
             "type": "populationRequest"
           },
@@ -781,7 +780,7 @@
           "id": "1534",
           "name": "Grünflächen (WebGL)",
           "renderer": "webgl",
-          "typ" : "WFS",
+          "typ": "WFS",
           "styleId": "1534",
           "isPointLayer": false,
           "gfiAttributes": "showAll",
@@ -807,7 +806,12 @@
           "loadingStrategy": "all",
           "hitTolerance": 20,
           "isPointLayer": true,
-          "bboxGeometry": [568426.27, 5931985.58, 569614.86, 5933174.11],
+          "bboxGeometry": [
+            568426.27,
+            5931985.58,
+            569614.86,
+            5933174.11
+          ],
           "mouseHoverField": [
             "Category",
             "Value"
@@ -817,8 +821,13 @@
               "symbolType": "circle",
               "size": [
                 "interpolate",
-                ["linear"],
-                ["get", "Total_votes"],
+                [
+                  "linear"
+                ],
+                [
+                  "get",
+                  "Total_votes"
+                ],
                 0,
                 6,
                 18,
@@ -826,12 +835,25 @@
               ],
               "color": [
                 "interpolate",
-                ["linear"],
-                ["get", "compound"],
+                [
+                  "linear"
+                ],
+                [
+                  "get",
+                  "compound"
+                ],
                 -1,
-                [240, 40, 30],
+                [
+                  240,
+                  40,
+                  30
+                ],
                 1,
-                [0, 200, 60]
+                [
+                  0,
+                  200,
+                  60
+                ]
               ],
               "opacity": 0.8,
               "rotateWithView": true
