@@ -1,25 +1,34 @@
 import {expect} from "chai";
 import Feature from "ol/Feature.js";
+import {nextTick} from "vue";
 import Polygon from "ol/geom/Polygon";
 import sinon from "sinon";
-import mapMarker from "../../../js/mapMarker";
 
 import actions from "../../../store/actionsMapsMarker";
+import mapMarker from "../../../js/mapMarker";
 
 const {
+    changeMarkerStyle,
     placingPointMarker,
     placingPolygonMarker,
     removePointMarker,
-    removePolygonMarker
+    removePolygonMarker,
+    rotatePointMarker
 } = actions;
 
 describe("src_3_0_0/core/maps/store/actionsMapsMarker.js", () => {
-    let dispatch;
+    let dispatch,
+        state;
 
     beforeEach(() => {
         dispatch = sinon.spy();
 
+        state = {
+            mode: "2D"
+        };
+
         sinon.stub(mapMarker, "addFeatureToMapMarkerLayer");
+        sinon.stub(mapMarker, "getMapmarkerLayerById");
         sinon.stub(mapMarker, "removeMapMarker");
     });
 
@@ -27,14 +36,61 @@ describe("src_3_0_0/core/maps/store/actionsMapsMarker.js", () => {
         sinon.restore();
     });
 
-    describe("placingPointMarker", () => {
-        it("place a point marker", () => {
-            const value = [10, 10];
+    describe("changeMarkerStyle", () => {
+        it("change the styleId of the marker", () => {
+            const markerId = "marker",
+                styleId = "style";
 
-            placingPointMarker({dispatch}, value);
+            changeMarkerStyle({dispatch}, {markerId, styleId});
+
+            expect(dispatch.notCalled).to.be.true;
+
+            expect(mapMarker.getMapmarkerLayerById.calledOnce).to.be.true;
+            expect(mapMarker.getMapmarkerLayerById.firstCall.args[0]).to.equals(markerId);
+        });
+    });
+
+    describe("placingPointMarker", () => {
+        it("place a point marker, if position is an array", () => {
+            const position = [10, 10];
+
+            placingPointMarker({dispatch}, position);
 
             expect(dispatch.calledOnce).to.be.true;
             expect(dispatch.firstCall.args[0]).to.equals("removePointMarker");
+
+            expect(mapMarker.addFeatureToMapMarkerLayer.calledOnce).to.be.true;
+            expect(mapMarker.addFeatureToMapMarkerLayer.firstCall.args[0]).to.equals("marker_point_layer");
+            expect(mapMarker.addFeatureToMapMarkerLayer.firstCall.args[1] instanceof Feature).to.be.true;
+        });
+
+        it("place a point marker, if position is an object", () => {
+            const position = {
+                coordinates: [10, 10]
+            };
+
+            placingPointMarker({dispatch}, position);
+
+            expect(dispatch.calledOnce).to.be.true;
+            expect(dispatch.firstCall.args[0]).to.equals("removePointMarker");
+
+            expect(mapMarker.addFeatureToMapMarkerLayer.calledOnce).to.be.true;
+            expect(mapMarker.addFeatureToMapMarkerLayer.firstCall.args[0]).to.equals("marker_point_layer");
+            expect(mapMarker.addFeatureToMapMarkerLayer.firstCall.args[1] instanceof Feature).to.be.true;
+        });
+
+        it("place and rotate a point marker, if position is an object", () => {
+            const position = {
+                coordinates: [10, 10],
+                rotation: 199.123
+            };
+
+            placingPointMarker({dispatch}, position);
+
+            expect(dispatch.calledTwice).to.be.true;
+            expect(dispatch.firstCall.args[0]).to.equals("removePointMarker");
+            expect(dispatch.secondCall.args[0]).to.equals("rotatePointMarker");
+            expect(dispatch.secondCall.args[1]).to.deep.include({position});
 
             expect(mapMarker.addFeatureToMapMarkerLayer.calledOnce).to.be.true;
             expect(mapMarker.addFeatureToMapMarkerLayer.firstCall.args[0]).to.equals("marker_point_layer");
@@ -74,6 +130,42 @@ describe("src_3_0_0/core/maps/store/actionsMapsMarker.js", () => {
 
             expect(mapMarker.removeMapMarker.calledOnce).to.be.true;
             expect(mapMarker.removeMapMarker.firstCall.args[0]).to.equals("marker_polygon_layer");
+        });
+    });
+
+    describe("rotatePointMarker", () => {
+        beforeEach(() => {
+            state = {
+                mode: "2D"
+            };
+        });
+
+        it("should rotate pointmarker and start also rotation in 3D", () => {
+            const feature = {
+                    rotation: 0,
+                    getStyle: () => {
+                        return {
+                            getImage: () => {
+                                return {
+                                    setRotation: (rotation) => {
+                                        feature.rotation = rotation;
+                                    }
+                                };
+                            }
+                        };
+                    }
+                },
+                position = {
+                    coordinates: [10, 10],
+                    rotation: 199.123
+                };
+
+            rotatePointMarker({dispatch, state}, {feature, position});
+
+            nextTick(() => {
+                expect(feature.rotation).to.equals(3.4753519664486685);
+                expect(dispatch.calledOnce).to.be.true;
+            });
         });
     });
 });
