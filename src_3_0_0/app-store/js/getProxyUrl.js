@@ -14,6 +14,7 @@ export function getProxyUrl (url, proxyHost = getters.proxyHost()) {
     let protocol = "",
         result = url,
         hostname = "",
+        resultHostname = parser.hostname,
         port = "";
 
     parser.href = url;
@@ -38,15 +39,15 @@ export function getProxyUrl (url, proxyHost = getters.proxyHost()) {
     }
 
     result = url.replace(protocol, "");
-
-    hostname = parser.hostname.split(".").join("_");
-
+    resultHostname = result.includes("/") ? result.substring(0, result.indexOf("/")) : result;
+    hostname = resultHostname;
+    hostname = hostname.replaceAll(".", "_");
     console.warn(`Please set up a CORS header for the service with the URL: ${url}`
     + " This is recommended by the GDI-DE"
     + " (https://www.gdi-de.org/SharedDocs/Downloads/DE/GDI-DE/Dokumente/Architektur_GDI-DE_Bereitstellung_Darstellungsdienste.pdf?__blob=publicationFile)"
     + " in chapter 4.7.1.!");
 
-    return proxyHost + "/" + result.replace(parser.hostname, hostname);
+    return proxyHost + "/" + result.replace(resultHostname, hostname);
 }
 
 /**
@@ -64,14 +65,14 @@ export function updateProxyUrl (obj, proxyHost) {
         }
         if (value && Array.isArray(value)) {
             for (let i = 0; i < value.length; i++) {
-                if (typeof value[i] === "object") {
+                if (typeof value[i] === "object" && value[i].useProxy === true && value[i].url) {
                     updateProxyUrl(value, proxyHost);
                 }
             }
         }
     }
     if (obj?.useProxy === true && obj?.url) {
-        obj.url = getProxyUrl(obj.url.toLowerCase(), proxyHost);
+        obj.url = getProxyUrl(obj.url, proxyHost);
     }
     return obj;
 }
