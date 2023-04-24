@@ -118,5 +118,14 @@ describe("src_3_0_0/app-store/actions.js", () => {
             // expect(initializeStyleListSpy.firstCall.args[3]).to.be.deep.equals(getters.allLayerConfigs);
             expect(typeof initializeStyleListSpy.firstCall.args[4]).to.be.equals("function");
         });
+        it("addAlertsFromConfigJson", () => {
+            actions.addAlertsFromConfigJson({dispatch}, {testAlert: {"title": "testAlert"}, testAlert2: {"title": "testAlert2"}});
+
+            expect(dispatch.calledTwice).to.be.true;
+            expect(dispatch.firstCall.args[0]).to.equals("Alerting/addSingleAlert");
+            expect(dispatch.firstCall.args[1].title).to.equals("testAlert");
+            expect(dispatch.secondCall.args[0]).to.equals("Alerting/addSingleAlert");
+            expect(dispatch.secondCall.args[1].title).to.equals("testAlert2");
+        });
     });
 });
