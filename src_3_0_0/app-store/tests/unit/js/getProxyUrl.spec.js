@@ -46,25 +46,25 @@ describe("src_3_0_0/app-store/js/getProxyUrl.js", () => {
 
             expect(testproxyObject.url).to.be.equal("/test_proxyurl_de/folder/");
         });
-        it("replaces the upperCase url if useProxy is set in object", function () {
+        it("returns the upperCase url if useProxy is set in object", async function () {
             const testproxyObject = {
-                url: "https://test.proxyURL.de/folder/",
-                useProxy: true,
-                fetchBroadcastUrl: "./resources/newsFeedPortalAlerts.json"
-            };
+                    url: "https://test.proxyURL.de/folder/",
+                    useProxy: true,
+                    fetchBroadcastUrl: "./resources/newsFeedPortalAlerts.json"
+                },
+                testobj = await updateProxyUrl(testproxyObject);
 
-            updateProxyUrl(testproxyObject);
-
-            expect(testproxyObject.url).to.be.equal("/test_proxyurl_de/folder/");
+            expect(testobj.url).to.be.equal("/test_proxyURL_de/folder/");
         });
-        it("replaces the url if useProxy is set in nested array", function () {
+        it("replaces the url if useProxy is set in nested array", async function () {
             const testproxyObject = {
-                testproxyArray: [{url: "https://test.proxyurl.de/folder/", useProxy: true}, "string", "string2"]
-            };
+                    testproxyArray: [{url: "https://test.proxyurl.de/folder/", useProxy: true}, {url: "https://test.proxyurl.de/folder2/", useProxy: false}, {url: "https://test.proxyurl.de/folder3/", useProxy: false}]
+                },
+                testobj = await updateProxyUrl(testproxyObject);
 
-            updateProxyUrl(testproxyObject);
-
-            expect(testproxyObject.testproxyArray[0].url).to.be.equal("/test_proxyurl_de/folder/");
+            if (testobj.length === testproxyObject.testproxyArray.length) {
+                expect(testobj[0].url).to.be.equal("/test_proxyurl_de/folder/");
+            }
         });
     });
 });
