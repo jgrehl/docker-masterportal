@@ -10,6 +10,7 @@ import processUrlParams from "../../../shared/js/utils/processUrlParams";
  * Examples:
  * - https://localhost:9001/portal/master/?featureviaurl=[%7B%22layerId%22:%2242%22,%22features%22:[%7B%22coordinates%22:[10,53.5],%22label%22:%22TestPunkt%22%7D]%7D]
  * - https://localhost:9001/portal/master/?highlightfeature=1711,DE.HH.UP_GESUNDHEIT_KRANKENHAEUSER_2
+ * - https://localhost:9001/portal/master/?highlightFeaturesByAttribute=123&wfsId=8712&attributeName=bezirk&attributeValue=Altona&attributeQuery=IsLike
  * - https://localhost:9001/portal/master/?MAPS={%22center%22:[571278.4429867676,5938534.397334521],%22mode%22:%222D%22,%22zoom%22:7}
  * - https://localhost:9001/portal/master/?MAPS={%22center%22:[571278.4429867676,5938534.397334521],%22mode%22:%223D%22,%22zoom%22:7,%22altitude%22:127,%22heading%22:-1.2502079000000208,%22tilt%22:45}
  * - https://localhost:9001/portal/master/?marker=565874,5934140
@@ -22,7 +23,6 @@ import processUrlParams from "../../../shared/js/utils/processUrlParams";
  * - https://localhost:9001/portal/master/?center=553925,5931898
  * - https://localhost:9001/portal/master/?center=[553925,5931898]
  * - https://localhost:9001/portal/master/?Map/center=[553925,5931898]
- * - https://localhost:9001/portal/master/?highlightFeaturesByAttribute=123&wfsId=8712&attributeName=bezirk&attributeValue=Altona&attributeQuery=IsLike
  * - https://localhost:9001/portal/master/?mapMode=3d
  * - https://localhost:9001/portal/master/?MAP/MAPMODE=3d
  * - https://localhost:9001/portal/master/?MAPMARKER=[565874,%205934140]
@@ -39,38 +39,38 @@ import processUrlParams from "../../../shared/js/utils/processUrlParams";
 const mapUrlParams = {
         FEATUREVIAURL: featureViaUrl,
         HIGHLIGHTFEATURE: highlightFeature,
+        HIGHLIGHTFEATURESBYATTRIBUTE: highlightFeaturesByAttributes,
         MAPS: setMapAttributes,
         MARKER: setMapMarker,
+        ZOOMTOEXTENT: zoomToProjExtent,
         ZOOMTOFEATUREID: zoomToFeatures,
         ZOOMTOGEOMETRY: zoomToFeatures
     },
     legacyMapUrlParams = {
         ALTITUDE: setCamera,
+        "API/HIGHLIGHTFEATURESBYATTRIBUTE": highlightFeaturesByAttributes,
         ATTRIBUTENAME: highlightFeaturesByAttributes,
         ATTRIBUTEQUERY: highlightFeaturesByAttributes,
         ATTRIBUTEVALUE: highlightFeaturesByAttributes,
         BEZIRK: zoomToFeatures,
         CENTER: setView,
-        "MAP/CENTER": setView,
         FEATUREID: zoomToFeatures,
         HEADING: setCamera,
-        "MAP/HIGHLIGHTFEATURE": highlightFeature,
-        HIGHLIGHTFEATURESBYATTRIBUTE: highlightFeaturesByAttributes,
-        "API/HIGHLIGHTFEATURESBYATTRIBUTE": highlightFeaturesByAttributes,
         MAP: setMode,
-        MAPMODE: setMode,
-        "MAP/MAPMODE": setMode,
         MAPMARKER: setMapMarker,
-        PROJECTION: processProjection,
+        MAPMODE: setMode,
+        "MAP/CENTER": setView,
+        "MAP/HIGHLIGHTFEATURE": highlightFeature,
+        "MAP/MAPMODE": setMode,
         "MAP/PROJECTION": processProjection,
-        TILT: setCamera,
-        WFSID: highlightFeaturesByAttributes,
-        ZOOMLEVEL: setView,
         "MAP/ZOOMLEVEL": setView,
-        ZOOMTOEXTENT: zoomToProjExtent,
         "MAP/ZOOMTOEXTENT": zoomToProjExtent,
         "MAP/ZOOMTOFEATUREID": zoomToFeatures,
-        "MAP/ZOOMTOGEOMETRY": zoomToFeatures
+        "MAP/ZOOMTOGEOMETRY": zoomToFeatures,
+        PROJECTION: processProjection,
+        TILT: setCamera,
+        WFSID: highlightFeaturesByAttributes,
+        ZOOMLEVEL: setView
     };
 
 /**
