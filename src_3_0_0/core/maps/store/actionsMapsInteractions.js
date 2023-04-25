@@ -161,7 +161,7 @@ export default {
         if (rotation) {
             view.setRotation(rotation);
         }
-        if (zoom) {
+        if (typeof parseInt(zoom, 10) === "number") {
             dispatch("setZoom", zoom);
         }
     },
