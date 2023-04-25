@@ -1,7 +1,10 @@
 <script>
 import {mapGetters, mapMutations, mapActions} from "vuex";
+import styleList from "@masterportal/masterportalapi/src/vectorStyle/styleList";
+import createStyle from "@masterportal/masterportalapi/src/vectorStyle/createStyle";
 import mutations from "../../store/mutationsOrientation";
 import {extractEventCoordinates} from "../../../../../../src/utils/extractEventCoordinates";
+import svgFactory from "../../../../../shared/js/utils/svgFactory";
 
 export default {
     name: "PoiOrientation",
@@ -21,7 +24,8 @@ export default {
     emits: ["hide"],
     data () {
         return {
-            poiFeatures: []
+            poiFeatures: [],
+            imgPathByFeature: {}
         };
     },
     computed: {
@@ -102,7 +106,7 @@ export default {
 
             poiFeatures.forEach(category => {
                 category.features.forEach(feat => {
-                    // feat.imgPath = this.getImgPath(feat);
+                    this.fillImagePath(feat);
                     feat.nearbyTitleText = this.getFeatureTitle(feat);
                 });
             });
@@ -181,6 +185,41 @@ export default {
             const currentTabId = evt.target.getAttribute("aria-controls");
 
             this.setActiveCategory(parseFloat(currentTabId));
+        },
+
+        /**
+         * Getting the image path from feature and stores it in 'imgPathByFeature'.
+         * @param  {ol/feature} feat Feature
+         * @return {void}
+         */
+        fillImagePath (feat) {
+            const styleObject = styleList.returnStyleObject(feat.styleId);
+
+            this.imgPathByFeature[feat.getId()] = "";
+            if (styleObject) {
+                const featureStyleObject = createStyle.getGeometryStyle(feat, styleObject.rules, false, Config.wfsImgPath),
+                    featureStyle = createStyle.createStyle(styleObject, feat, false, Config.wfsImgPath);
+
+                if (featureStyleObject.attributes?.type === "icon") {
+                    this.imgPathByFeature[feat.getId()] = featureStyle.getImage()?.getSrc() ? featureStyle.getImage()?.getSrc() : "";
+                }
+
+                else {
+                    createStyle.returnLegendByStyleId(feat.styleId).then(layerLegends => {
+                        layerLegends.legendInformation.forEach(legendInfo => {
+                            if (legendInfo.geometryType === "Point" && legendInfo.styleObject.attributes.type === "circle" && legendInfo.label === feat.legendValue) {
+                                this.imgPathByFeature[feat.getId()] = svgFactory.createCircle(legendInfo.styleObject);
+                            }
+                            else if (legendInfo.geometryType === "LineString" && legendInfo.label === feat.legendValue) {
+                                this.imgPathByFeature[feat.getId()] = svgFactory.createLine(legendInfo.styleObject);
+                            }
+                            else if (legendInfo.geometryType === "Polygon" && legendInfo.label === feat.legendValue) {
+                                this.imgPathByFeature[feat.getId()] = svgFactory.createPolygon(legendInfo.styleObject);
+                            }
+                        });
+                    });
+                }
+            }
         }
     }
 };
@@ -255,16 +294,15 @@ export default {
                                             :key="'feat' + i"
                                             @click="zoomFeature"
                                         >
-                                            <!-- ToDo: wieder herstellen, wenn Styling in Vue ist -->
-                                            <!-- <td v-if="feat.imgPath.indexOf('</svg>') !== -1">
-                                                <span v-html="feat.imgPath" />
+                                            <td v-if="imgPathByFeature[feat.getId()].indexOf('</svg>') !== -1">
+                                                <span v-html="imgPathByFeature[feat.getId()]" />
                                             </td>
-                                            <td v-else-if="feat.imgPath.length > 0">
+                                            <td v-else-if="imgPathByFeature[feat.getId()].length > 0">
                                                 <img
-                                                    :src="feat.imgPath"
+                                                    :src="imgPathByFeature[feat.getId()]"
                                                     :alt="$t('common:modules.controls.orientation.imgAlt')"
                                                 >
-                                            </td> -->
+                                            </td>
                                             <td>
                                                 <p
                                                     v-for="(featNearbyTitleText, iNearby) in feat.nearbyTitleText"
