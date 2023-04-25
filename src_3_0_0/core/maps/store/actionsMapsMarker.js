@@ -147,7 +147,7 @@ export default {
     },
 
     /**
-     * Rotates the point marker.
+     * Rotates the point marker in 2D.
      * @param {Object} param.dispatch the dispatch
      * @param {Object} param.state the state
      * @param {ol/Feature} feature The map marker feature.
