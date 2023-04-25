@@ -4,7 +4,7 @@ import ExportButtonCSV from "../../../components/ExportButtonCSV.vue";
 
 config.global.mocks.$t = key => key;
 
-describe("src/share-components/exportButton/components/exportButtonCSV.vue", () => {
+describe("src/shared/modules/buttons/components/ExportButtonCSV.vue", () => {
     before(() => {
         i18next.init({
             lng: "cimode",
