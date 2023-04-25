@@ -287,6 +287,9 @@
 ### Fixed
 - Issue #884: mapbox styles with raster sources can be displayed.
 
+### Removed
+- The url parameter `TOOLS/[tool-id]` was removed. The `MENU` parameter can be used instead.
+
 ---
 
 ## v2.32.1 - 2023-04-17
