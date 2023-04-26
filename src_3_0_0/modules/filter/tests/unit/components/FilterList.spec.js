@@ -27,8 +27,7 @@ describe("src/modules/tools/filter/components/FilterList.vue", () => {
         wrapper = shallowMount(FilterList, {
             propsData: {
                 filters: [{filterId: 0}],
-                multiLayerSelector: false,
-                "layerSelectorVisible": true
+                multiLayerSelector: false
             },
             global: {
                 plugins: [store]
@@ -38,6 +37,20 @@ describe("src/modules/tools/filter/components/FilterList.vue", () => {
 
     it("should render filters", () => {
         expect(wrapper.findAll(".panel-default")).to.have.length(1);
+    });
+
+    it("should render filter title disabled true if multiLayerSelector is false", async () => {
+        await wrapper.setProps({
+            selectedLayers: [0]
+        });
+        expect(wrapper.find(".disabled").exists()).to.be.true;
+    });
+    it("should render filter title not disabled if multiLayerSelector is true", async () => {
+        await wrapper.setProps({
+            multiLayerSelector: true,
+            selectedLayers: [0]
+        });
+        expect(wrapper.find(".disabled").exists()).to.be.false;
     });
 
     describe("updateSelectedLayers", () => {
@@ -81,9 +94,6 @@ describe("src/modules/tools/filter/components/FilterList.vue", () => {
             expect(wrapper.emitted()).to.not.have.property("resetJumpToId");
         });
         it("should emit if a number is given", async () => {
-            wrapper.vm.$refs = {0: [{
-                scrollIntoView: sinon.stub()
-            }]};
             await wrapper.vm.$nextTick();
             wrapper.vm.scrollToView(0);
             expect(wrapper.emitted()).to.have.property("resetJumpToId");

@@ -19,8 +19,8 @@ describe("src/modules/searchBar/searchInterfaces/searchInterfaceLocationFinder.j
         });
     });
 
-    describe("", () => {
-        it("", () => {
+    describe("write more unit tests for searchbar...", () => {
+        it("test", () => {
             // write more unit tests
         });
     });
