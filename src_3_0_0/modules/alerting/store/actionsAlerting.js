@@ -1,5 +1,6 @@
 import dayjs from "dayjs";
 import duration from "dayjs/plugin/duration";
+import store from "../../../app-store";
 import {fetchFirstModuleConfig} from "../../../shared/js/utils/fetchFirstModuleConfig.js";
 
 dayjs.extend(duration);
@@ -27,7 +28,12 @@ function findSingleAlertByHash (haystackAlerts, needleHash) {
  * @returns {Boolean} True if its defined timespan includes current time
  */
 function checkAlertLifespan (alertToCheck) {
+    if (alertToCheck.displayFrom === false && alertToCheck.displayUntil === false) {
+        return true;
+    }
+
     return (!alertToCheck.displayFrom || dayjs().isAfter(alertToCheck.displayFrom)) && (!alertToCheck.displayUntil || dayjs().isBefore(alertToCheck.displayUntil));
+
 }
 /**
  * Checks if an already displayed alert may be displayed again.
@@ -36,26 +42,33 @@ function checkAlertLifespan (alertToCheck) {
  * @returns {Boolean} True if the given alert may be displayed again
  */
 function checkAlertViewRestriction (displayedAlerts, alertToCheck) {
+
     const alertDisplayedAt = displayedAlerts[alertToCheck.hash];
 
-    // not yet displayed
-    if (alertDisplayedAt === undefined) {
-        return true;
+    // if hash is already in localStorage then alert is not shown
+    if (localStorage[store.getters["Alerting/localStorageDisplayedAlertsKey"]]?.includes(alertToCheck.hash)) {
+        return false;
     }
+
     // displayed, but not restricted to display multiple times
-    if (alertToCheck.once === false) {
+    if (alertToCheck.once === false || alertToCheck.once === undefined) {
         return true;
     }
     // displayed and restricted to only a single time
     if (alertToCheck.once === true) {
-        return false;
+        store.commit("Alerting/addToDisplayedAlerts", alertToCheck);
     }
     // displayed, but restriction time elapsed
     if (dayjs().isAfter(dayjs(alertDisplayedAt).add(dayjs.duration(alertToCheck.once)))) {
         return true;
     }
+    // not yet displayed
+    if (alertDisplayedAt === undefined) {
+        return true;
+    }
 
-    return false;
+    return true;
+
 }
 
 export default {
@@ -69,28 +82,29 @@ export default {
 
     },
     /**
-     * Mapping to equilavent mutation
-     * @param {Object} commit commit
-     * @param {Object} alerts alerts to be set
-     * @returns {void}
-     */
-    setDisplayedAlerts: function ({commit}, alerts = {}) {
-        commit("setDisplayedAlerts", alerts);
-    },
-    /**
-     * Removes read alerts, set displayed alerts as displayed and hide modal.
+     * Updates loacalStorage with read and once:true alerts, set displayed alerts as displayed and hide modal.
      * @param {Object} state state
      * @param {Object} commit commit
      * @returns {void}
      */
     cleanup: function ({state, commit}) {
+        const storageKey = state.localStorageDisplayedAlertsKey;
+
         state.alerts.forEach(singleAlert => {
             if (!singleAlert.mustBeConfirmed) {
-                commit("removeFromAlerts", singleAlert);
                 commit("addToDisplayedAlerts", singleAlert);
+                commit("removeFromAlerts", singleAlert);
             }
         });
+
+        if (localStorage[storageKey]) {
+            localStorage[storageKey] = JSON.stringify({...state.displayedAlerts, ...JSON.parse(localStorage[storageKey])});
+        }
+        else {
+            localStorage[storageKey] = JSON.stringify(state.displayedAlerts);
+        }
         commit("setReadyToShow", false);
+
     },
     /**
      * Marks a single alert as un/read. Triggers callback function if defined.
@@ -185,7 +199,6 @@ export default {
         if (!isInTime) {
             console.warn("Alert ignored (not the time): " + alertProtoClone.hash);
         }
-
         isNotRestricted = checkAlertViewRestriction(state.displayedAlerts, alertProtoClone);
         if (!isNotRestricted) {
             console.warn("Alert ignored (shown recently): " + alertProtoClone.hash);
@@ -197,7 +210,9 @@ export default {
             if ((newAlert.multipleAlert !== true && !newAlert.initial && state.initialClosed === true) || (newAlert.multipleAlert === true && hasInitAlert === true && state.initialClosed === true)) {
                 state.alerts = [];
             }
-            commit("addToAlerts", alertProtoClone);
+            if (!localStorage[state.localStorageDisplayedAlertsKey]?.includes(alertProtoClone.hash)) {
+                commit("addToAlerts", alertProtoClone);
+            }
         }
         // even if current alert got seeded out, there still might be another one in the pipe
         if (state.alerts.length > 0) {
