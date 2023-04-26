@@ -63,8 +63,7 @@ export default {
             "addSingleAlert",
             "alertHasBeenRead",
             "cleanup",
-            "initialize",
-            "syncAlertsStorage"
+            "initialize"
         ]),
         ...mapMutations("Alerting", [
             "removeFromAlerts"
