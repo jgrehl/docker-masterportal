@@ -424,15 +424,14 @@ export default {
             </template>
         </FilterList>
         <div v-else-if="(Array.isArray(layerConfigs.layers) && layerConfigs.layers.length) || (Array.isArray(layerConfigs.groups) && layerConfigs.groups.length)">
-            <div>
-                <h2
-                    v-for="(layerConfig, indexLayer) in filters"
-                    :key="'layer-title' + indexLayer + layerFilterSnippetPostKey"
-                >
+            <div
+                v-for="(layerConfig, indexLayer) in filters"
+                :key="'layer-title' + indexLayer + layerFilterSnippetPostKey"
+            >
+                <h2>
                     <u>{{ layerConfig.title }}</u>
                 </h2>
                 <LayerFilterSnippet
-                    :key="'layer-' + indexLayer + layerFilterSnippetPostKey"
                     :api="layerConfig.api"
                     :layer-config="layerConfig"
                     :map-handler="mapHandler"
