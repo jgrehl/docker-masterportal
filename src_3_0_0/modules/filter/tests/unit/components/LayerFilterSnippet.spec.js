@@ -54,6 +54,21 @@ describe("src/modules/tools/filter/components/LayerFilterSnippet.vue", () => {
             expect(wrapper.vm.searchInMapExtent).to.be.true;
         });
     });
+    it("should call handleActiveStrategy if strategy is active", async () => {
+        const spyHandleActiveStrategy = sinon.spy(wrapper.vm, "handleActiveStrategy");
+
+        await wrapper.setProps({layerConfig: {strategy: "active"}});
+        wrapper.vm.changeRule({
+            snippetId: 0,
+            startup: false,
+            fixed: false,
+            attrName: "test",
+            operator: "EQ"
+        });
+        await wrapper.vm.$nextTick();
+        expect(spyHandleActiveStrategy.calledOnce).to.be.true;
+    });
+
     describe("changeRule", () => {
         it("should emit the updateRules event", async () => {
             wrapper.vm.changeRule({
@@ -139,40 +154,18 @@ describe("src/modules/tools/filter/components/LayerFilterSnippet.vue", () => {
             expect(wrapper.vm.getTagTitle({value: "title", tagTitle: null})).to.equal("null");
         });
     });
-    describe("unregisterMapMoveListener", () => {
-        it("should not call the function unregisterMapMoveListener", async () => {
-            const unregisterMapMoveListener = sinon.stub(wrapper.vm, "unregisterMapMoveListener");
 
-            LayerFilterSnippet.methods.unregisterMapMoveListener = unregisterMapMoveListener;
-
-            await wrapper.vm.$nextTick();
-            wrapper.destroy();
-            expect(wrapper.vm.unregisterMapMoveListener).to.be.a("function");
-            expect(unregisterMapMoveListener.notCalled).to.be.true;
-        });
-        it("should call the function unregisterMapMoveListener", async () => {
-            const unregisterMapMoveListener = sinon.stub(wrapper.vm, "unregisterMapMoveListener");
-
-            LayerFilterSnippet.methods.registerMapMoveListener = unregisterMapMoveListener;
-
-            wrapper = shallowMount(LayerFilterSnippet, {
-                propsData: {
-                    layerConfig: {
-                        service: {
-                            type: "something external"
-                        },
-                        filterOnMove: true,
-                        strategy: "active"
-                    },
-                    mapHandler: new MapHandler({
-                        isLayerActivated: () => false
-                    })
-                }
+    describe("paging", () => {
+        it("should show stop button if paging  was set", async () => {
+            await wrapper.setData({
+                paging: {
+                    page: 1,
+                    total: 46
+                },
+                showStop: true
             });
 
-            await wrapper.vm.$nextTick();
-            expect(unregisterMapMoveListener.called).to.be.true;
-            wrapper.destroy();
+            expect(wrapper.find(".btn-secondary").exists()).to.be.true;
         });
     });
 });
