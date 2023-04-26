@@ -140,16 +140,32 @@ export default {
         },
 
         /**
-         * Whenever gfiFeatures changes, set pagerIndex to zero.
-         * @param {Object[]} gfiFeatures The gfi features.
+         * Whenever gfiFeatures changes, set this visible and expand menu.
          * @returns {void}
          */
         gfiFeatures: {
-            handler (gfiFeatures) {
-                if (gfiFeatures?.length > 0) {
-                    this.setVisible(true);
-                    if (!this.expanded(this.menuSide)) {
-                        this.toggleMenu(this.menuSide);
+            handler (newFeatures, oldFeatures) {
+                let featuresChanged = oldFeatures === null;
+
+                if (newFeatures?.length > 0) {
+                    if (oldFeatures !== null) {
+                        newFeatures.forEach(newFeature => {
+                            if (!oldFeatures.find(oldFeat => oldFeat.getId() === newFeature.getId())) {
+                                featuresChanged = true;
+                            }
+                        });
+                        oldFeatures.forEach(oldFeature => {
+                            if (!newFeatures.find(newFeat => newFeat.getId() === oldFeature.getId())) {
+                                featuresChanged = true;
+                            }
+                        });
+                    }
+
+                    if (featuresChanged) {
+                        this.setVisible(true);
+                        if (!this.expanded(this.menuSide)) {
+                            this.toggleMenu(this.menuSide);
+                        }
                     }
                 }
             },
