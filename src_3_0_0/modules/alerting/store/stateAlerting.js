@@ -42,6 +42,7 @@ export default {
     alerts: [],
     alertWindowTitle: "common:modules.alerting.alertWindowTitle",
     displayedAlerts: {},
+    displayedAlerts2: {},
     fetchBroadcastUrl: false,
     initialClosed: false,
     availableCategories: ["news", "success", "warning", "error", "info"],
