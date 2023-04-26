@@ -29,19 +29,6 @@ export default {
          */
         console: () => console
     },
-    watch: {
-        /**
-         * Syncs localstorage with displayedAlerts prop.
-         * @param {Object} newDisplayedAlerts newly changed displayedAlerts object
-         * @returns {void}
-         */
-        displayedAlerts (newDisplayedAlerts) {
-            if (this.availableLocalStorage) {
-                // Local storage is synced with this.displayedAlert
-                localStorage[this.localStorageDisplayedAlertsKey] = JSON.stringify(newDisplayedAlerts);
-            }
-        }
-    },
     /**
      * Created hook: Checks if localstorage is available.
      * @returns {void}
@@ -56,32 +43,19 @@ export default {
             this.availableLocalStorage = false;
             console.error("Spelling localestorage is not available in this application. Please allow third party cookies in your browser!");
         }
+        this.alerts = {};
+        this.displayedAlerts = {};
     },
     /**
-     * Mounted hook: Initially sets up localstorage and then fetches BroadcastConfig.
+     * Mounted hook: Initially fetches BroadcastConfig.
      * @returns {void}
      */
     mounted () {
-        let initialDisplayedAlerts;
-
-        this.initialize();
-        if (this.availableLocalStorage && localStorage[this.localStorageDisplayedAlertsKey] !== undefined) {
-            try {
-                initialDisplayedAlerts = JSON.parse(localStorage[this.localStorageDisplayedAlertsKey]);
-
-                this.setDisplayedAlerts(initialDisplayedAlerts);
-            }
-            catch (e) {
-                localStorage[this.localStorageDisplayedAlertsKey] = JSON.stringify({});
-            }
-        }
-        else {
-            this.setDisplayedAlerts({});
-        }
 
         if (this.fetchBroadcastUrl !== undefined && this.fetchBroadcastUrl !== false) {
             this.fetchBroadcast(this.fetchBroadcastUrl);
         }
+
     },
 
     methods: {
@@ -90,7 +64,7 @@ export default {
             "alertHasBeenRead",
             "cleanup",
             "initialize",
-            "setDisplayedAlerts"
+            "syncAlertsStorage"
         ]),
         ...mapMutations("Alerting", [
             "removeFromAlerts"
