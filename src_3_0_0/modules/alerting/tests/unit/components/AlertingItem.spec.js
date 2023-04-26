@@ -21,7 +21,7 @@ config.global.mocks.$i18n = {
     }
 };
 
-describe("src_3_0_0/modules/alerting/components/AlertingItem.vue", function () {
+describe.only("src_3_0_0/modules/alerting/components/AlertingItem.vue", function () {
     let
         wrapper,
         store;
@@ -36,6 +36,7 @@ describe("src_3_0_0/modules/alerting/components/AlertingItem.vue", function () {
                         "content": "Dieses Geoportal dient der Qualitätskontrolle durch den Kunden.<br>Es ist aufgrund von möglichen Fehlern <b>nicht</b> zur Nutzung für alltägliche oder berufliche Aufgaben geeignet!<br><br>",
                         "creationDate": "01/09/22",
                         "mustBeConfirmed": true,
+                        "multipleAlert": true,
                         "once": true
                     },
                     "qs-release2": {
@@ -45,6 +46,7 @@ describe("src_3_0_0/modules/alerting/components/AlertingItem.vue", function () {
                         "content": "2Dieses Geoportal dient der Qualitätskontrolle durch den Kunden.<br>Es ist aufgrund von möglichen Fehlern <b>nicht</b> zur Nutzung für alltägliche oder berufliche Aufgaben geeignet!<br><br>",
                         "creationDate": "04/09/22",
                         "mustBeConfirmed": true,
+                        "multipleAlert": true,
                         "once": true
                     }
                 }
@@ -60,7 +62,7 @@ describe("src_3_0_0/modules/alerting/components/AlertingItem.vue", function () {
             "globalAlerts": ["Test1", "Test4"],
 
             "restrictedAlerts": {
-                "https://localhost:9001/portal/master/": ["Test2"],
+                "https://localhost:9001/portal/master_3_0_0/": ["Test1"],
                 "https://localhost:9001/portal/basic/": ["Test3"]
             },
 
@@ -153,6 +155,11 @@ describe("src_3_0_0/modules/alerting/components/AlertingItem.vue", function () {
             value.initialConfirmed = value.mustBeConfirmed;
             store.dispatch("Alerting/addSingleAlert", value, {root: true});
         });
+        Object.values(alertingData.alerts).forEach((value) => {
+            value.initial = true;
+            value.initialConfirmed = value.mustBeConfirmed;
+            store.dispatch("Alerting/addSingleAlert", value, {root: true});
+        });
 
         store.commit("Alerting/setShowTheModal", true);
     });
@@ -170,7 +177,7 @@ describe("src_3_0_0/modules/alerting/components/AlertingItem.vue", function () {
                 },
                 data () {
                     return {
-                        currentUrl: "https://localhost:9001/portal/master/"
+                        currentUrl: "https://localhost:9001/portal/master_3_0_0/"
                     };
                 }
             };
@@ -203,7 +210,7 @@ describe("src_3_0_0/modules/alerting/components/AlertingItem.vue", function () {
                 expect(categoryContainers[0].find("h3").text()).to.equal("Test 1");
             });
             it("and contains 1 alerts", function () {
-                expect(categoryContainers[0].findAll(".singleAlertContainer").length).to.equal(1);
+                expect(categoryContainers[0].findAll(".singleAlertContainer").length).to.equal(2);
             });
 
             it("1st alert is of category \"error\"", function () {
@@ -213,10 +220,10 @@ describe("src_3_0_0/modules/alerting/components/AlertingItem.vue", function () {
                 expect(alertWrappers[0].html().indexOf("form-check-label")).to.equal(-1);
             });
             it("2nd alert is of category \"info\"", function () {
-                expect(alertWrappers[1].html().indexOf("bg-info")).not.to.equal(-1);
+                expect(alertWrappers[2].html().indexOf("bg-info")).not.to.equal(-1);
             });
             it("and has confirmation link", function () {
-                expect(alertWrappers[1].html().indexOf("form-check form-check-reverse form-switch mt-1")).not.to.equal(-1);
+                expect(alertWrappers[2].html().indexOf("form-check form-check-reverse form-switch mt-1")).not.to.equal(-1);
             });
 
             it("2st category group is named \"Test 2\"", function () {
@@ -235,11 +242,11 @@ describe("src_3_0_0/modules/alerting/components/AlertingItem.vue", function () {
 
         describe("Now clicking on 2nd alert's confirmation switch", function () {
             it("click", function () {
-                alertWrappers[1].find("#flexSwitchCheckDefault").trigger("click");
+                alertWrappers[2].find("#flexSwitchCheckDefault").trigger("click");
             });
 
             it("confirmation switch of second alert is checked", function () {
-                const checkedInputs = alertWrappers[1].findAll(".form-check-input:checked");
+                const checkedInputs = alertWrappers[2].findAll(".form-check-input:checked");
 
                 expect(checkedInputs.length === 1).to.be.true;
                 expect(checkedInputs[0].exists()).to.be.true;
