@@ -1,5 +1,4 @@
 import Feature from "ol/Feature.js";
-import {nextTick} from "vue";
 import Point from "ol/geom/Point.js";
 
 import mapMarker from "../js/mapMarker";
@@ -159,11 +158,9 @@ export default {
     rotatePointMarker ({dispatch, state}, {feature, position}) {
         feature.getStyle()?.getImage()?.setRotation(position.rotation * Math.PI / 180);
 
-        nextTick(() => {
-            if (state.mode === "3D") {
-                dispatch("rotatePointMarkerIn3D", position);
-            }
-        });
+        if (state.mode === "3D") {
+            dispatch("rotatePointMarkerIn3D", position);
+        }
     },
 
     /**
