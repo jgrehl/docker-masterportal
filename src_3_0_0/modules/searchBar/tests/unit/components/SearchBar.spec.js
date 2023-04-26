@@ -23,9 +23,11 @@ describe("src/modules/searchBar/components/SearchBar.vue", () => {
         store = createStore({
             namespaced: true,
             modules: {
-                namespaced: true,
-                modules: {
-                    SearchBar
+                Modules: {
+                    namespaced: true,
+                    modules: {
+                        SearchBar
+                    }
                 }
             },
             state: {
