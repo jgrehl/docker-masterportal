@@ -44,6 +44,7 @@ function checkAlertLifespan (alertToCheck) {
 function checkAlertViewRestriction (displayedAlerts, alertToCheck) {
 
     const alertDisplayedAt = displayedAlerts[alertToCheck.hash];
+    console.log(alertDisplayedAt);
 
     // if hash is already in localStorage then alert is not shown
     if (localStorage[store.getters["Alerting/localStorageDisplayedAlertsKey"]]?.includes(alertToCheck.hash)) {
@@ -59,8 +60,13 @@ function checkAlertViewRestriction (displayedAlerts, alertToCheck) {
         store.commit("Alerting/addToDisplayedAlerts", alertToCheck);
     }
     // displayed, but restriction time elapsed
-    if (dayjs().isAfter(dayjs(alertDisplayedAt).add(dayjs.duration(alertToCheck.once)))) {
-        return true;
+    console.log(dayjs());
+    console.log(dayjs(alertDisplayedAt).add(dayjs.duration(alertToCheck.once)));
+    if (dayjs().isBefore(dayjs(alertDisplayedAt).add(dayjs.duration(alertToCheck.once)))) {
+
+        // store.commit("Alerting/addToDisplayedAlerts", alertToCheck);
+        console.log('---');
+        return false;
     }
     // not yet displayed
     if (alertDisplayedAt === undefined) {
