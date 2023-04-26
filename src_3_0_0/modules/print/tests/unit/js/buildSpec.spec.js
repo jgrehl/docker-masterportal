@@ -509,6 +509,27 @@ describe("src_3_0_0/modules/print/js/buildSpec", function () {
             expect(checked1).to.be.true;
             expect(checked2).to.be.true;
         });
+
+        it("should convert point feature to JSON and remove all @ and . in key if it includes @Datastream", function () {
+            const testFeature = new Feature({
+                "@Datastreams.0.Observation.0.result": 0,
+                geometry: new Polygon([[[0, 0], [0, 1], [1, 1], [0, 0]]])
+            });
+
+            expect(buildSpec.convertFeatureToGeoJson(testFeature, style)).to.deep.own.include({
+                type: "Feature",
+                properties: {
+                    _label: "veryCreativeLabelText",
+                    "Datastreams0Observation0result": 0
+                },
+                geometry: {
+                    type: "Polygon",
+                    coordinates: [[
+                        [0, 0], [0, 1], [1, 1], [0, 0]
+                    ]]
+                }
+            });
+        });
     });
     describe("getStylingRules", function () {
         const vectorLayer = new Vector();
