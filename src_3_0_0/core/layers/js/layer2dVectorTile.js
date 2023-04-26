@@ -181,7 +181,6 @@ Layer2dVectorTile.prototype.setStyleByDefinition = function ({id, url, resolutio
                     });
             }
             else {
-                vectorTile?.setStyle(this.getLayer(), style, {resolutions: resolutions, getFonts: addMpFonts});
                 vectorTile.setStyle(this.getLayer(), style, {resolutions: resolutions, getFonts: addMpFonts}, url);
                 this.set("selectedStyleID", id);
             }
