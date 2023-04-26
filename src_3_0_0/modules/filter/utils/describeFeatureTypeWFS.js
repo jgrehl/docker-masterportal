@@ -118,10 +118,16 @@ function parseUnknownSchemaChildren (unknownSchemaChildren, typename, onsuccess,
  */
 function parseSchemaChildren (schemaChildren, typename, onsuccess, onerror) {
     const result = {};
-    let typenameFound = false;
+    let typenameFound = false,
+        complexTypeName = typename;
 
     Array.prototype.slice.call(schemaChildren).forEach(element => {
-        if (element.getAttribute("name") === typename) {
+        if (element.getAttribute("name") === complexTypeName) {
+            if (element.hasAttribute("type")) {
+                const splitType = element.getAttribute("type").split(":");
+
+                complexTypeName = splitType.length === 1 ? splitType[0] : splitType[1];
+            }
             const attributes = element.getElementsByTagName("element");
 
             if (typeof attributes !== "object" || attributes === null) {
