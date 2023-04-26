@@ -180,6 +180,7 @@ describe("src/modules/tools/filter/utils/describeFeatureTypeWFS.js", () => {
                                         children: [
                                             {
                                                 tagName: "element",
+                                                hasAttribute: () => false,
                                                 getAttribute: key => key === "exceptionCode" ? false : "typename",
                                                 getElementsByTagName: () => [
                                                     {
