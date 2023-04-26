@@ -1,6 +1,5 @@
 import {expect} from "chai";
 import Feature from "ol/Feature.js";
-import {nextTick} from "vue";
 import Polygon from "ol/geom/Polygon";
 import sinon from "sinon";
 
@@ -136,7 +135,7 @@ describe("src_3_0_0/core/maps/store/actionsMapsMarker.js", () => {
     describe("rotatePointMarker", () => {
         beforeEach(() => {
             state = {
-                mode: "2D"
+                mode: "3D"
             };
         });
 
@@ -162,10 +161,8 @@ describe("src_3_0_0/core/maps/store/actionsMapsMarker.js", () => {
 
             rotatePointMarker({dispatch, state}, {feature, position});
 
-            nextTick(() => {
-                expect(feature.rotation).to.equals(3.4753519664486685);
-                expect(dispatch.calledOnce).to.be.true;
-            });
+            expect(feature.rotation).to.equals(3.4753519664486685);
+            expect(dispatch.calledOnce).to.be.true;
         });
     });
 });
