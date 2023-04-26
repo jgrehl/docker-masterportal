@@ -5,21 +5,10 @@ import sinon from "sinon";
 
 import GfiComponent from "../../../components/GetFeatureInfo.vue";
 
-const mockMutations = {
-        setCurrentFeature: () => sinon.stub(),
-        setGfiFeatures: () => sinon.stub()
-    },
-    mockGetters = {
-        centerMapToClickPoint: () => sinon.stub(),
-        currentFeature: () => sinon.stub(),
-        desktopType: () => "",
-        gfiFeaturesReverse: () => sinon.stub(),
-        highlightVectorRules: () => false,
-        menuSide: () => false,
-        showMarker: () => sinon.stub(),
-        visible: () => true,
-        type: () => "getFeatureInfo"
-    };
+let mockMutations,
+    mockGetters,
+    menuExpanded,
+    toggleMenuSpy;
 
 config.global.mocks.$t = key => key;
 config.global.mocks.$gfiThemeAddons = [];
@@ -71,10 +60,11 @@ function getGfiStore (mobile, uiStyle, gfiFeatures, mapSize) {
                 getters: {
                     currentComponent: () => sinon.stub(),
                     currentMouseMapInteractionsComponent: () => "getFeatureInfo",
-                    expanded: () => sinon.stub()
+                    expanded: () => sinon.stub().returns(menuExpanded)
                 },
                 actions: {
-                    setMenuBackAndActivateItem: sinon.stub()
+                    setMenuBackAndActivateItem: sinon.stub(),
+                    toggleMenu: toggleMenuSpy
                 }
             }
         },
@@ -88,6 +78,26 @@ function getGfiStore (mobile, uiStyle, gfiFeatures, mapSize) {
 }
 
 
+beforeEach(() => {
+    mockMutations = {
+        setCurrentFeature: () => sinon.stub(),
+        setGfiFeatures: () => sinon.stub(),
+        setVisible: sinon.spy()
+    };
+    mockGetters = {
+        centerMapToClickPoint: () => sinon.stub(),
+        currentFeature: () => sinon.stub(),
+        desktopType: () => "",
+        gfiFeaturesReverse: () => sinon.stub(),
+        highlightVectorRules: () => false,
+        menuSide: () => false,
+        showMarker: () => sinon.stub(),
+        visible: () => true,
+        type: () => "getFeatureInfo"
+    };
+    menuExpanded = true;
+    toggleMenuSpy = sinon.spy();
+});
 afterEach(() => {
     sinon.restore();
 });
@@ -245,6 +255,144 @@ describe("src_3_0_0/modules/getFeatureInfo/components/GetFeatureInfo.vue", () =>
 
         wrapper.vm.$options.watch.visible.call(wrapper.vm, false);
         expect(spyReset.calledOnce).to.be.true;
+    });
+
+    describe("watcher gfiFeatures", () => {
+        it("should call setVisible and expand menu, if gfiFeatures changed, oldFeatures are null", () => {
+            menuExpanded = false;
+            const gfiFeaturesNew = [{
+                    getId: () => "new"
+                }],
+                store = getGfiStore(false, undefined, gfiFeaturesNew, []);
+            let wrapper = null;
+
+            wrapper = shallowMount(GfiComponent, {
+                components: {
+                    GetFeatureInfoDetached: {
+                        name: "GetFeatureInfoDetached",
+                        template: "<span />"
+                    },
+                    IconButton: {
+                        name: "IconButton",
+                        template: "<button>Hier</button>"
+                    }
+                },
+                data () {
+                    return {
+                        pagerIndex: 1
+                    };
+                },
+                global: {
+                    plugins: [store]
+                }
+            });
+
+            wrapper.vm.$options.watch.gfiFeatures.handler.call(wrapper.vm, gfiFeaturesNew, null);
+            expect(mockMutations.setVisible.calledOnce).to.be.true;
+            expect(toggleMenuSpy.calledOnce).to.be.true;
+        });
+
+        it("should call setVisible and not expand menu, if gfiFeatures changed, oldFeatures are null", () => {
+            const gfiFeaturesNew = [{
+                    getId: () => "new"
+                }],
+                store = getGfiStore(false, undefined, gfiFeaturesNew, []);
+            let wrapper = null;
+
+            wrapper = shallowMount(GfiComponent, {
+                components: {
+                    GetFeatureInfoDetached: {
+                        name: "GetFeatureInfoDetached",
+                        template: "<span />"
+                    },
+                    IconButton: {
+                        name: "IconButton",
+                        template: "<button>Hier</button>"
+                    }
+                },
+                data () {
+                    return {
+                        pagerIndex: 1
+                    };
+                },
+                global: {
+                    plugins: [store]
+                }
+            });
+
+            wrapper.vm.$options.watch.gfiFeatures.handler.call(wrapper.vm, gfiFeaturesNew, null);
+            expect(mockMutations.setVisible.calledOnce).to.be.true;
+            expect(toggleMenuSpy.notCalled).to.be.true;
+        });
+
+        it("should call setVisible and not expand menu, if gfiFeatures changed", () => {
+            const gfiFeaturesOld = [{
+                    getId: () => "old"
+                }],
+                gfiFeaturesNew = [{
+                    getId: () => "new"
+                }],
+                store = getGfiStore(false, undefined, gfiFeaturesNew.concat(gfiFeaturesOld), []);
+            let wrapper = null;
+
+            wrapper = shallowMount(GfiComponent, {
+                components: {
+                    GetFeatureInfoDetached: {
+                        name: "GetFeatureInfoDetached",
+                        template: "<span />"
+                    },
+                    IconButton: {
+                        name: "IconButton",
+                        template: "<button>Hier</button>"
+                    }
+                },
+                data () {
+                    return {
+                        pagerIndex: 1
+                    };
+                },
+                global: {
+                    plugins: [store]
+                }
+            });
+
+            wrapper.vm.$options.watch.gfiFeatures.handler.call(wrapper.vm, gfiFeaturesNew, gfiFeaturesOld);
+            expect(mockMutations.setVisible.calledOnce).to.be.true;
+            expect(toggleMenuSpy.notCalled).to.be.true;
+        });
+
+        it("should not call setVisible, if gfiFeatures not changed", () => {
+            const gfiFeaturesNew = [{
+                    getId: () => "new"
+                }],
+                store = getGfiStore(false, undefined, gfiFeaturesNew, []);
+            let wrapper = null;
+
+            wrapper = shallowMount(GfiComponent, {
+                components: {
+                    GetFeatureInfoDetached: {
+                        name: "GetFeatureInfoDetached",
+                        template: "<span />"
+                    },
+                    IconButton: {
+                        name: "IconButton",
+                        template: "<button>Hier</button>"
+                    }
+                },
+                data () {
+                    return {
+                        pagerIndex: 1
+                    };
+                },
+                global: {
+                    plugins: [store]
+                }
+            });
+
+            wrapper.vm.$options.watch.gfiFeatures.handler.call(wrapper.vm, gfiFeaturesNew, gfiFeaturesNew);
+            expect(mockMutations.setVisible.notCalled).to.be.true;
+            expect(toggleMenuSpy.notCalled).to.be.true;
+        });
     });
 
     it("should display the footer", () => {
