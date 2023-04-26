@@ -176,13 +176,13 @@ Layer2dVectorTile.prototype.setStyleByDefinition = function ({id, url, resolutio
 
                 this.fetchSpriteData(spriteDataUrl)
                     .then(spriteData => {
-                        vectorTile.setStyle(this.getLayer(), style, {options: {resolutions: resolutions, spriteData: spriteData, spriteImageUrl: spriteImageUrl, getFonts: addMpFonts}});
+                        vectorTile.setStyle(this.getLayer(), style, {options: {resolutions: resolutions, spriteData: spriteData, spriteImageUrl: spriteImageUrl, getFonts: addMpFonts}}, url);
                         this.set("selectedStyleID", id);
-                    }
-                    );
+                    });
             }
             else {
                 vectorTile?.setStyle(this.getLayer(), style, {resolutions: resolutions, getFonts: addMpFonts});
+                vectorTile.setStyle(this.getLayer(), style, {resolutions: resolutions, getFonts: addMpFonts}, url);
                 this.set("selectedStyleID", id);
             }
         });
