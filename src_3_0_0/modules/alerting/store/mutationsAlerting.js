@@ -57,14 +57,5 @@ export default {
      */
     addToDisplayedAlerts (state, newAlert) {
         state.displayedAlerts = {...state.displayedAlerts, [newAlert.hash]: dayjs().format()};
-    },
-    /**
-     * Sets all displayed alert references.
-     * @param {Object} state state
-     * @param {Object} alerts object containing all displayed alert references
-     * @returns {void}
-     */
-    setDisplayedAlerts (state, alerts) {
-        state.displayedAlerts = alerts;
     }
 };
