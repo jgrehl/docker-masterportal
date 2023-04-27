@@ -46,8 +46,8 @@ export default {
             this.availableLocalStorage = false;
             console.error("Spelling localestorage is not available in this application. Please allow third party cookies in your browser!");
         }
-        this.alerts = {};
-        this.displayedAlerts = {};
+        this.setAlerts({});
+        this.setDisplayedAlerts({});
         this.setFetchBroadcastUrl(this.configJs?.alerting?.fetchBroadcastUrl);
     },
     /**
@@ -69,7 +69,9 @@ export default {
         ]),
         ...mapMutations("Alerting", [
             "removeFromAlerts",
-            "setFetchBroadcastUrl"
+            "setFetchBroadcastUrl",
+            "setAlerts",
+            "setDisplayedAlerts"
         ]),
 
         /**
