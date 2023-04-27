@@ -36,9 +36,10 @@ export default {
      * @param {String} payload.type The event type or array of event types.
      * @param {Function} payload.listener The listener function.
      * @param {String | Function} payload.listenerType Type of the listener. Possible are: "function", "commit" and "dispatch".
+     * @param {Boolean} payload.root listener is dispatched or commited with root:true, if listenerType is 'dispatch' or 'commit' and root is true
      * @returns {void}
      */
-    registerListener ({commit, dispatch}, {type, listener, listenerType = "function"}) {
+    registerListener ({commit, dispatch}, {type, listener, listenerType = "function", root = false}) {
         registeredActions[type] = registeredActions[type] || {};
         registeredActions[type][listenerType] = registeredActions[type][listenerType] || {};
         registeredActions[type][listenerType][String(listener)] = evt => {
@@ -46,15 +47,16 @@ export default {
                 listener(evt);
             }
             else if (listenerType === "dispatch") {
-                dispatch(listener, evt);
+                dispatch(listener, evt, {root: root});
             }
             else if (listenerType === "commit") {
-                commit(listener, evt);
+                commit(listener, evt, {root: root});
             }
         };
 
         mapCollection.getMap("2D").on(type, registeredActions[type][listenerType][listener]);
     },
+
 
     /**
      * Removes an interaction from the map.
