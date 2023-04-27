@@ -2,6 +2,7 @@
 import {mapGetters, mapActions, mapMutations} from "vuex";
 import {Tooltip} from "bootstrap";
 import Alerting from "./modules/alerting/components/AlertingItem.vue";
+import BasemapSwitcher from "./modules/basemapSwitcher/components/BasemapSwitcher.vue";
 import ControlBar from "./modules/controls/components/ControlBar.vue";
 import initializeLayers from "./core/layers/js/layerProcessor";
 import {initializeMaps} from "./core/maps/js/maps";
@@ -17,6 +18,7 @@ export default {
     name: "App",
     components: {
         Alerting,
+        BasemapSwitcher,
         ControlBar,
         MenuContainer,
         MenuToggleButton
@@ -193,6 +195,7 @@ export default {
             <Alerting />
             <component :is="componentMap.mouseHover" />
             <ControlBar class="controls" />
+            <BasemapSwitcher class="basemap-switcher" />
             <component :is="componentMap.layerPills" />
             <component :is="componentMap.portalFooter" />
         </div>

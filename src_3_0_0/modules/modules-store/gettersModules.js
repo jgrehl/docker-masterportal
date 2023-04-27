@@ -1,4 +1,5 @@
 import AddWMS from "../addWMS/components/AddWMS.vue";
+import BasemapSwitcher from "../basemapSwitcher/components/BasemapSwitcher.vue";
 import BufferAnalysis from "../bufferAnalysis/components/BufferAnalysis.vue";
 import Contact from "../contact/components/ContactFormular.vue";
 import CoordToolkit from "../coordToolkit/components/CoordToolkit.vue";
@@ -40,6 +41,7 @@ const getters = {
     componentMap: () => {
         const coreModules = {
             addWMS: AddWMS,
+            basemapSwitcher: BasemapSwitcher,
             bufferAnalysis: BufferAnalysis,
             contact: Contact,
             coordToolkit: CoordToolkit,
