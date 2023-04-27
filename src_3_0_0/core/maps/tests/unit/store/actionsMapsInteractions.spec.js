@@ -16,7 +16,7 @@ describe("src_3_0_0/core/maps/store/actionsMapsInteractions.js", () => {
     let olMap,
         payload;
 
-    before(() => {
+    beforeEach(() => {
         olMap = new Map({
             id: "ol",
             mode: "2D",
@@ -41,12 +41,95 @@ describe("src_3_0_0/core/maps/store/actionsMapsInteractions.js", () => {
     });
 
     describe("registerListener", () => {
-        it("register pointermove listener to ol map", () => {
+        it("register pointermove listener to ol map and execute function", () => {
             const dispatch = sinon.spy(),
-                commit = sinon.spy();
+                commit = sinon.spy(),
+                evt = {type: "pointermove"};
+
+            payload = {
+                type: "pointermove",
+                listener: sinon.spy()
+            };
+            registerListener({commit, dispatch}, payload);
+            expect(Object.keys(olMap.listeners_)).include("pointermove");
+            olMap.listeners_.pointermove[0](evt);
+            expect(dispatch.notCalled).to.be.true;
+            expect(commit.notCalled).to.be.true;
+            expect(payload.listener.calledOnce).to.be.true;
+            expect(payload.listener.firstCall.args[0]).to.be.deep.equals(evt);
+        });
+        it("register pointermove listener to ol map and execute dispatch", () => {
+            const dispatch = sinon.spy(),
+                commit = sinon.spy(),
+                evt = {type: "pointermove"};
 
             registerListener({commit, dispatch}, payload);
             expect(Object.keys(olMap.listeners_)).include("pointermove");
+            olMap.listeners_.pointermove[0](evt);
+            expect(dispatch.calledOnce).to.be.true;
+            expect(commit.notCalled).to.be.true;
+            expect(dispatch.firstCall.args[0]).to.equals(payload.listener);
+            expect(dispatch.firstCall.args[1]).to.be.deep.equals(evt);
+            expect(dispatch.firstCall.args[2]).to.be.deep.equals({root: false});
+        });
+        it("register click listener to ol map and execute commit", () => {
+            const dispatch = sinon.spy(),
+                commit = sinon.spy(),
+                evt = {type: "click"};
+
+            payload = {
+                type: "click",
+                listener: "listenerCallback",
+                listenerType: "commit"
+            };
+            registerListener({commit, dispatch}, payload);
+            expect(Object.keys(olMap.listeners_)).include("click");
+            olMap.listeners_.click[0](evt);
+            expect(dispatch.notCalled).to.be.true;
+            expect(commit.calledOnce).to.be.true;
+            expect(commit.firstCall.args[0]).to.equals(payload.listener);
+            expect(commit.firstCall.args[1]).to.be.deep.equals(evt);
+            expect(commit.firstCall.args[2]).to.be.deep.equals({root: false});
+        });
+        it("register a listener with dispatch and root:true", () => {
+            const dispatch = sinon.spy(),
+                commit = sinon.spy(),
+                evt = {type: "click"};
+
+            payload = {
+                type: "click",
+                listener: "Controls/Orientation/mapClicked",
+                listenerType: "dispatch",
+                root: true
+            };
+            registerListener({commit, dispatch}, payload);
+            expect(Object.keys(olMap.listeners_)).include("click");
+            olMap.listeners_.click[0](evt);
+            expect(dispatch.calledOnce).to.be.true;
+            expect(commit.notCalled).to.be.true;
+            expect(dispatch.firstCall.args[0]).to.equals(payload.listener);
+            expect(dispatch.firstCall.args[1]).to.be.deep.equals(evt);
+            expect(dispatch.firstCall.args[2]).to.be.deep.equals({root: true});
+        });
+        it("register a listener with commit and root:true", () => {
+            const dispatch = sinon.spy(),
+                commit = sinon.spy(),
+                evt = {type: "click"};
+
+            payload = {
+                type: "click",
+                listener: "setSomething",
+                listenerType: "commit",
+                root: true
+            };
+            registerListener({commit, dispatch}, payload);
+            expect(Object.keys(olMap.listeners_)).include("click");
+            olMap.listeners_.click[0](evt);
+            expect(commit.calledOnce).to.be.true;
+            expect(dispatch.notCalled).to.be.true;
+            expect(commit.firstCall.args[0]).to.equals(payload.listener);
+            expect(commit.firstCall.args[1]).to.be.deep.equals(evt);
+            expect(commit.firstCall.args[2]).to.be.deep.equals({root: true});
         });
     });
 
