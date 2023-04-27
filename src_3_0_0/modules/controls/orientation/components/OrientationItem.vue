@@ -9,6 +9,7 @@ import Overlay from "ol/Overlay.js";
 import proj4 from "proj4";
 import * as Proj from "ol/proj.js";
 import {Circle, LineString} from "ol/geom.js";
+import layerCollection from "../../../../core/layers/js/layerCollection";
 
 export default {
     name: "OrientationItem",
@@ -374,28 +375,31 @@ export default {
 
         /**
          * getting the vector feature within the distance
+         * @param {Array} layerConfigs layer configs to inspect
          * @param  {Number} distance the search range
          * @param  {Array} centerPosition the center position
          * @return {ol/feature} Array of ol.features list
          */
-        getVectorFeaturesInCircle (distance, centerPosition) {
+        getVectorFeaturesInCircle (layerConfigs, distance, centerPosition) {
             const circle = new Circle(centerPosition, distance),
                 circleExtent = circle.getExtent(),
-                visibleWFSLayers = [],
-                map2D = mapCollection.getMap("2D"),
-                layers = map2D.getLayers().getArray();
+                visibleWFSLayers = [];
 
-            layers.forEach(layer => {
-                if (layer.get("typ") === "WFS") {
-                    visibleWFSLayers.push(layer);
+            layerConfigs.forEach(layerConfig => {
+                if (layerConfig.typ === "WFS" && layerConfig.visibility) {
+                    const layer = layerCollection.getLayerById(layerConfig.id);
+
+                    if (layer) {
+                        visibleWFSLayers.push(layer);
+                    }
                 }
             });
             let featuresAll = [],
                 features = [];
 
             visibleWFSLayers.forEach(layer => {
-                if (layer.get("source")) {
-                    features = layer.get("source").getFeaturesInExtent(circleExtent);
+                if (layer.getLayerSource()) {
+                    features = layer.getLayerSource().getFeaturesInExtent(circleExtent);
                     features.forEach(function (feat) {
                         Object.assign(feat, {
                             styleId: layer.get("styleId"),
