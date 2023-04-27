@@ -6,6 +6,7 @@ import mutations from "../store/mutationsCoordToolkit";
 import NavTab from "../../../shared/modules/tabs/components/NavTab.vue";
 import InputText from "../../../shared/modules/inputs/components/InputText.vue";
 import FlatButton from "../../../shared/modules/buttons/components/FlatButton.vue";
+import isMobile from "../../../shared/js/utils/isMobile";
 
 export default {
     name: "CoordToolkit",
@@ -92,6 +93,12 @@ export default {
         this.resetValues();
         this.setSupplyCoordInactive();
         this.removeInputActions();
+        this.unregisterListener({
+            type: "click",
+            listener: "Modules/CoordToolkit/positionClicked",
+            listenerType: "dispatch",
+            root: true
+        });
     },
     mounted () {
         this.removeMarker();
@@ -123,10 +130,7 @@ export default {
             "initHeightLayer",
             "copyCoordinates"
         ]),
-        ...mapActions("Maps", {
-            addPointerMoveHandlerToMap: "registerListener",
-            removePointerMoveHandlerFromMap: "unregisterListener"
-        }),
+        ...mapActions("Maps", ["registerListener", "unregisterListener"]),
         ...mapActions("Maps", {
             addInteractionToMap: "addInteraction",
             removeInteractionFromMap: "removeInteraction"
@@ -280,7 +284,17 @@ export default {
                             this.checkPosition();
                         }.bind(this),
                         handleDownEvent: function () {
-                            this.positionClicked();
+                            if (isMobile() === false) {
+                                this.positionClicked();
+                            }
+                            else {
+                                this.registerListener({
+                                    type: "click",
+                                    listener: "Modules/CoordToolkit/positionClicked",
+                                    listenerType: "dispatch",
+                                    root: true
+                                });
+                            }
                         }.bind(this)
                     },
                     this
