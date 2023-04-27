@@ -29,11 +29,33 @@ export default {
         };
     },
     computed: {
-        ...mapGetters("Controls/Orientation", ["activeCategory", "position"])
+        ...mapGetters("Controls/Orientation", ["activeCategory", "position"]),
+        ...mapGetters(["visibleLayerConfigs"])
+    },
+    watch: {
+        visibleLayerConfigs: {
+            handler (newLayerConfigs, oldLayerConfigs) {
+                newLayerConfigs.forEach(newConfig => {
+                    if (!oldLayerConfigs.find(config => config.id === newConfig.id)) {
+                        this.$nextTick(() => {
+                            this.areLayerFeaturesLoaded(newConfig.id).then(() => {
+                                this.getFeatures(newLayerConfigs);
+                            });
+                        });
+                    }
+                });
+                oldLayerConfigs?.forEach(oldConfig => {
+                    if (!newLayerConfigs.find(config => config.id === oldConfig.id)) {
+                        this.getFeatures(newLayerConfigs);
+                    }
+                });
+            },
+            deep: true
+        }
     },
     mounted () {
         this.show();
-        this.getFeatures();
+        this.getFeatures(this.visibleLayerConfigs);
         this.initActiveCategory();
         this.$nextTick(() => {
             if (this.$refs["close-icon"]) {
@@ -43,7 +65,7 @@ export default {
     },
     methods: {
         ...mapMutations("Controls/Orientation", Object.keys(mutations)),
-        ...mapActions("Maps", ["zoomToExtent"]),
+        ...mapActions("Maps", ["areLayerFeaturesLoaded", "zoomToExtent"]),
 
         /**
          * Callback when close icon has been clicked.
@@ -85,19 +107,18 @@ export default {
 
         /**
          * Getting the features within the distances
+         * @param {Array} layerConfigs visible layer configs
          * @returns {void}
          */
-        getFeatures () {
+        getFeatures (layerConfigs) {
             const poiDistances = this.poiDistances,
                 poiFeatures = [],
                 centerPosition = this.position;
             let featInCircle = [];
 
             poiDistances.forEach(distance => {
-                featInCircle = this.getFeaturesInCircle(distance, centerPosition);
-
+                featInCircle = this.getFeaturesInCircle(layerConfigs, distance, centerPosition);
                 featInCircle.sort((featureA, featureB) => featureA.dist2Pos - featureB.dist2Pos);
-
                 poiFeatures.push({
                     category: distance,
                     features: featInCircle
