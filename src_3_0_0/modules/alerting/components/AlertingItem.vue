@@ -67,9 +67,7 @@ export default {
         ]),
         ...mapMutations("Alerting", [
             "removeFromAlerts",
-            "setFetchBroadcastUrl",
-            "setAlerts",
-            "setDisplayedAlerts"
+            "setFetchBroadcastUrl"
         ]),
 
         /**
