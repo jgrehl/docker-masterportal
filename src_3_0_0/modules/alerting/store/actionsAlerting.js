@@ -42,9 +42,6 @@ function checkAlertLifespan (alertToCheck) {
  * @returns {Boolean} True if the given alert may be displayed again
  */
 function checkAlertViewRestriction (displayedAlerts, alertToCheck) {
-    if (!localStorage.alertLoadingTime) {
-        localStorage.alertLoadingTime = dayjs();
-    }
 
     // if hash is already in localStorage then alert is not shown
     if (localStorage[store.getters["Alerting/localStorageDisplayedAlertsKey"]]?.includes(alertToCheck.hash)) {
@@ -58,11 +55,6 @@ function checkAlertViewRestriction (displayedAlerts, alertToCheck) {
     // displayed and restricted to only a single time
     if (alertToCheck.once === true) {
         store.commit("Alerting/addToDisplayedAlerts", alertToCheck);
-    }
-    // not shown if time restriction elapsed
-    if (typeof alertToCheck.once === "object" && dayjs().isAfter(dayjs(localStorage.alertLoadingTime).add(dayjs.duration(alertToCheck.once)))) {
-
-        return false;
     }
 
     return true;
