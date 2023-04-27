@@ -80,7 +80,7 @@ export default {
 
     },
     /**
-     * Updates loacalStorage with read and once:true alerts, set displayed alerts as displayed and hide modal.
+     * Updates localStorage with read and once:true alerts, set displayed alerts as displayed and hide modal.
      * @param {Object} state state
      * @param {Object} commit commit
      * @returns {void}
