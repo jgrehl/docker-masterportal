@@ -13,6 +13,9 @@ export default {
         };
     },
     computed: {
+        ...mapGetters([
+            "configJs"
+        ]),
         ...mapGetters("Alerting", [
             "displayedAlerts",
             "fetchBroadcastUrl",
@@ -45,17 +48,16 @@ export default {
         }
         this.alerts = {};
         this.displayedAlerts = {};
+        this.setFetchBroadcastUrl(this.configJs?.alerting?.fetchBroadcastUrl);
     },
     /**
      * Mounted hook: Initially fetches BroadcastConfig.
      * @returns {void}
      */
     mounted () {
-        this.$nextTick(() => {
-            if (this.fetchBroadcastUrl !== undefined && this.fetchBroadcastUrl !== false) {
-                this.fetchBroadcast(this.fetchBroadcastUrl);
-            }
-        });
+        if (this.fetchBroadcastUrl !== undefined && this.fetchBroadcastUrl !== false) {
+            this.fetchBroadcast(this.fetchBroadcastUrl);
+        }
     },
 
     methods: {
@@ -66,7 +68,8 @@ export default {
             "initialize"
         ]),
         ...mapMutations("Alerting", [
-            "removeFromAlerts"
+            "removeFromAlerts",
+            "setFetchBroadcastUrl"
         ]),
 
         /**
