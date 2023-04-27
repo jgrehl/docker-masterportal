@@ -51,12 +51,11 @@ export default {
      * @returns {void}
      */
     mounted () {
-
-        if (this.fetchBroadcastUrl !== undefined && this.fetchBroadcastUrl !== false) {
-            console.log('++++');
-            this.fetchBroadcast(this.fetchBroadcastUrl);
-        }
-
+        this.$nextTick(() => {
+            if (this.fetchBroadcastUrl !== undefined && this.fetchBroadcastUrl !== false) {
+                this.fetchBroadcast(this.fetchBroadcastUrl);
+            }
+        });
     },
 
     methods: {
