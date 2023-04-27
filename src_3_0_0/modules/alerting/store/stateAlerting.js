@@ -13,7 +13,7 @@
  * @property {String} alertProto.hash hash id of an alert
  * @property {Boolean} alertProto.multipleAlert flag to show multiple alerts or a single alert
  * @property {Boolean} alertProto.mustBeConfirmed flag if an alert can be marked to show not again
- * @property {Boolean/Object} alertProto.once flag if alert is shown once or not. Can also be an object {seconds: 59, minutes: ...} (see dayjs.js) with information when the alert is shown again
+ * @property {Boolean/Object} alertProto.once flag if alert is shown once or not.
 
  * @property {String} alertWindowTitle shown title of the main alert/modal window
  * @property {Object[]} alerts array of current loaded alerts
