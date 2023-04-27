@@ -53,6 +53,7 @@ export default {
     mounted () {
 
         if (this.fetchBroadcastUrl !== undefined && this.fetchBroadcastUrl !== false) {
+            console.log('++++');
             this.fetchBroadcast(this.fetchBroadcastUrl);
         }
 
