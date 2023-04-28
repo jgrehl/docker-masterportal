@@ -97,7 +97,7 @@ describe("src_3_0_0/modules/menu/menu-store/actionsMenu.js", () => {
             const type = "abc",
                 side = "mainMenu",
                 props = {
-                    name: "common:menu.abc"
+                    name: "common:modules.menu.abc"
                 };
 
             actions.changeCurrentComponent({commit, dispatch, state}, {type, side, props});

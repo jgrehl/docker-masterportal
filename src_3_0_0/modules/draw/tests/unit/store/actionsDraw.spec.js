@@ -316,7 +316,7 @@ describe("src_3_0_0/modules/draw/store/actionsDraw.js", () => {
             expect(dispatch.called).to.be.true;
             /* NOTE: i18next isn't actually working in tests yet, so here undefined
              * is compared with undefined - works, but has limited meaning */
-            expect(dispatch.calledWith("Alerting/addSingleAlert", i18next.t("common:modules.tools.draw.limitReached", {count: 5}), {root: true}));
+            expect(dispatch.calledWith("Alerting/addSingleAlert", i18next.t("common:modules.draw.limitReached", {count: 5}), {root: true}));
             expect(dispatch.calledWith("deactivateDrawInteractions")).to.be.true;
         });
     });

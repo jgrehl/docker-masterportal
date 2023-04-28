@@ -15,7 +15,7 @@ const state = {
     hasMouseMapInteractions: false,
     description: "",
     icon: "bi-arrows-angle-contract",
-    name: "common:menu.tools.scaleSwitcher",
+    name: "common:modules.scaleSwitcher.name",
     showDescription: false,
     supportedDevices: ["Desktop", "Mobile", "Table"],
     supportedMapModes: ["2D", "3D"],

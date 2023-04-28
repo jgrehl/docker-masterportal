@@ -85,7 +85,7 @@ describe("src_3_0_0/modules/layerTree/components/SelectAllCheckBox.vue", () => {
         expect(wrapper.find("#select-all-checkbox-" + layer.id).exists()).to.be.true;
         expect(wrapper.findAll(".bi-square").length).to.be.equals(1);
         expect(wrapper.findAll(".bi-check2-square").length).to.be.equals(0);
-        expect(wrapper.find(".layer-tree-layer-label").text()).to.equal("common:tree.selectAll");
+        expect(wrapper.find(".layer-tree-layer-label").text()).to.equal("common:modules.layerSelection.selectAll");
     });
 
     it("renders select all checkbox - checked", () => {
@@ -102,7 +102,7 @@ describe("src_3_0_0/modules/layerTree/components/SelectAllCheckBox.vue", () => {
         expect(wrapper.find("#select-all-checkbox-" + layer.id).exists()).to.be.true;
         expect(wrapper.findAll(".bi-square").length).to.be.equals(0);
         expect(wrapper.findAll(".bi-check2-square").length).to.be.equals(1);
-        expect(wrapper.find(".layer-tree-layer-label").text()).to.equal("common:tree.selectAll");
+        expect(wrapper.find(".layer-tree-layer-label").text()).to.equal("common:modules.layerSelection.selectAll");
     });
 
     it("click on checkbox shall call addSelectedLayer ", async () => {

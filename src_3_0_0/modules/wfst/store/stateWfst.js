@@ -28,7 +28,7 @@
 const state = {
     // General configuration
     type: "wfst",
-    name: "WfsTransaction",
+    name: "common:modules.wfst.name",
     description: "",
     icon: "bi-globe",
     showDescription: false,
@@ -39,7 +39,7 @@ const state = {
     update: false,
     delete: false,
     layerIds: [],
-    layerSelectLabel: "common:modules.tools.wfsTransaction.layerSelectLabel",
+    layerSelectLabel: "common:modules.wfst.layerSelectLabel",
     lineButton: [],
     pointButton: [],
     polygonButton: [],

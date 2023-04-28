@@ -106,7 +106,7 @@ const actions = {
                     drawLayer.getSource().once("change", () => drawLayer.getSource().clear());
                     dispatch("Alerting/addSingleAlert", {
                         category: "error",
-                        content: i18next.t("common:modules.tools.wfsTransaction.error.geometryOutOfRange"),
+                        content: i18next.t("common:modules.wfst.error.geometryOutOfRange"),
                         mustBeConfirmed: false
                     }, {root: true});
                     return;
@@ -287,7 +287,7 @@ const actions = {
                 commit("setTransactionProcessing", false);
                 dispatch("Alerting/addSingleAlert", {
                     category: "success",
-                    content: i18next.t("common:modules.tools.wfsTransaction.transaction.success.baseSuccess", {transaction: "$t(common:modules.tools.wfsTransaction.transaction." + messageKey + ")"})
+                    content: i18next.t("common:modules.wfst.transaction.success.baseSuccess", {transaction: "$t(common:modules.wfst.transaction." + messageKey + ")"})
                 }, {root: true});
             });
     },
@@ -301,7 +301,7 @@ const actions = {
         if (type === "number" && !Number.isFinite(parseFloat(value))) {
             dispatch("Alerting/addSingleAlert", {
                 category: "error",
-                content: i18next.t("common:modules.tools.wfsTransaction.error.onlyNumbersAllowed"),
+                content: i18next.t("common:modules.wfst.error.onlyNumbersAllowed"),
                 mustBeConfirmed: false
             }, {root: true});
             return;
@@ -314,17 +314,17 @@ const actions = {
      */
     async setFeatureProperties ({commit, getters: {currentLayerIndex, layerInformation}}) {
         if (currentLayerIndex === -1) {
-            commit("setFeatureProperties", i18next.t("common:modules.tools.wfsTransaction.error.allLayersNotSelected"));
+            commit("setFeatureProperties", i18next.t("common:modules.wfst.error.allLayersNotSelected"));
             return;
         }
         const layer = layerInformation[currentLayerIndex];
 
         if (!Object.prototype.hasOwnProperty.call(layer, "featurePrefix")) {
-            commit("setFeatureProperties", i18next.t("common:modules.tools.wfsTransaction.error.layerNotConfiguredCorrectly"));
+            commit("setFeatureProperties", i18next.t("common:modules.wfst.error.layerNotConfiguredCorrectly"));
             return;
         }
         if (!layer.visibility) {
-            commit("setFeatureProperties", i18next.t("common:modules.tools.wfsTransaction.error.layerNotSelected"));
+            commit("setFeatureProperties", i18next.t("common:modules.wfst.error.layerNotSelected"));
             return;
         }
         commit("setFeatureProperties", await prepareFeaturePropertiesModule.prepareFeatureProperties(layer));
