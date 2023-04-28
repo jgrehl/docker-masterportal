@@ -179,10 +179,10 @@ describe("src/modules/tools/wfst/store/gettersWfst.js", () => {
         it("should return an error message indicating that no feature has been drawn if the feature given to the getter is not an ol/Feature", () => {
             feature = "somethingDifferent";
 
-            expect(gettersWfst.savingErrorMessage(state)(feature)).to.equal("modules.tools.wfsTransaction.error.noFeature");
+            expect(gettersWfst.savingErrorMessage(state)(feature)).to.equal("common:modules.wfst.error.noFeature");
         });
         it("should return an error message indicating that at least one required property has not received a value", () => {
-            expect(gettersWfst.savingErrorMessage(state)(feature)).to.equal("modules.tools.wfsTransaction.error.requiredPropertiesNotSet");
+            expect(gettersWfst.savingErrorMessage(state)(feature)).to.equal("common:modules.wfst.error.requiredPropertiesNotSet");
         });
         it("should return an empty string if the feature given to the getter is not undefined and all required properties have received a value", () => {
             state.featureProperties[0].value = 42;

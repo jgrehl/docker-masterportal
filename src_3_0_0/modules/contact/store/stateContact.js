@@ -32,7 +32,7 @@
 */
 const state = {
     description: "",
-    name: "common:menu.contact",
+    name: "common:modules.contact.name",
     icon: "bi-envelope-fill",
     from: [],
     serviceId: null,

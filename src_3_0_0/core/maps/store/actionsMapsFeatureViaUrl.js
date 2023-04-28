@@ -56,7 +56,7 @@ export function createGeoJSON (features, geometryType, epsg = 4326) {
     });
 
     if (flag) {
-        console.warn(i18next.t("common:modules.featureViaURL.messages.featureParsing"));
+        console.warn(i18next.t("common:core.maps.featureViaURL.messages.featureParsing"));
     }
 
     return geoJSON;
@@ -73,7 +73,7 @@ export function getFeatureIds (layerId) {
         layer = mapCollection.getMap("2D").getLayers().getArray().find(l => l.get("id") === layerId);
 
     if (typeof layer === "undefined") {
-        console.warn(i18next.t("common:modules.featureViaURL.messages.layerNotFound"));
+        console.warn(i18next.t("common:core.maps.featureViaURL.messages.layerNotFound"));
         return featureArray;
     }
     layer.getSource().getFeatures().forEach(feature => {
@@ -105,25 +105,25 @@ export default {
                 pos = layers.findIndex(element => element.id === layerId);
 
             if (pos === -1) {
-                console.error(i18next.t("common:modules.featureViaURL.messages.layerNotFound", {layerId}));
+                console.error(i18next.t("common:core.maps.featureViaURL.messages.layerNotFound", {layerId}));
                 return;
             }
             if (!layers[pos].name) {
-                console.error(i18next.t("common:modules.featureViaURL.messages.noNameDefined", {layerId}));
+                console.error(i18next.t("common:core.maps.featureViaURL.messages.noNameDefined", {layerId}));
                 return;
             }
             geometryType = layer.type !== undefined ? layer.type : layers[pos].geometryType;
             if (geometryType !== "LineString" && geometryType !== "Point" && geometryType !== "Polygon" && geometryType !== "MultiPoint" && geometryType !== "MultiLineString" && geometryType !== "MultiPolygon") {
-                console.error(i18next.t("common:modules.featureViaURL.messages.geometryNotSupported"), {layerId, geometryType});
+                console.error(i18next.t("common:core.maps.featureViaURL.messages.geometryNotSupported"), {layerId, geometryType});
                 return;
             }
             if (!features || !Array.isArray(features) || features.length === 0) {
-                dispatch("Alerting/addSingleAlert", {content: i18next.t("common:modules.featureViaURL.messages.featureParsingAll"), "multipleAlert": true}, {root: true});
+                dispatch("Alerting/addSingleAlert", {content: i18next.t("common:core.maps.featureViaURL.messages.featureParsingAll"), "multipleAlert": true}, {root: true});
                 return;
             }
             geoJSON = createGeoJSON(features, geometryType, epsg);
             if (geoJSON.features.length === 0) {
-                dispatch("Alerting/addSingleAlert", {content: i18next.t("common:modules.featureViaURL.messages.featureParsingNoneAdded"), "multipleAlert": true}, {root: true});
+                dispatch("Alerting/addSingleAlert", {content: i18next.t("common:core.maps.featureViaURL.messages.featureParsingNoneAdded"), "multipleAlert": true}, {root: true});
             }
 
             dispatch("createVectorLayer", {layers, pos, geoJSON});

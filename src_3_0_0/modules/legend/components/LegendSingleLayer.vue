@@ -109,7 +109,7 @@ export default {
             v-else
         >
             <span>
-                {{ $t("common:menu.legend.noLegendForLayerInfo") }}
+                {{ $t("common:modules.legend.noLegendForLayerInfo") }}
             </span>
         </template>
     </div>

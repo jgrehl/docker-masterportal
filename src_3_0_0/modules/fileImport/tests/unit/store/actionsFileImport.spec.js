@@ -66,7 +66,7 @@ describe("src_3_0_0/modules/fileImport/store/actionsFileImport.js", () => {
                     type: "Alerting/addSingleAlert",
                     payload: {
                         category: "success",
-                        content: i18next.t("common:modules.tools.fileImport.alertingMessages.success", {filename: payload.filename})},
+                        content: i18next.t("common:modules.fileImport.alertingMessages.success", {filename: payload.filename})},
                     dispatch: true
                 }
             ], {}, done, {"Maps/projectionCode": "EPSG:25832"});
@@ -79,7 +79,7 @@ describe("src_3_0_0/modules/fileImport/store/actionsFileImport.js", () => {
                 type: "Alerting/addSingleAlert",
                 payload: {
                     category: "error",
-                    content: i18next.t("common:modules.tools.fileImport.alertingMessages.missingFormat")
+                    content: i18next.t("common:modules.fileImport.alertingMessages.missingFormat")
                 },
                 dispatch: true
             }], {}, done);
@@ -92,7 +92,7 @@ describe("src_3_0_0/modules/fileImport/store/actionsFileImport.js", () => {
                 type: "Alerting/addSingleAlert",
                 payload: {
                     category: "error",
-                    content: i18next.t("common:modules.tools.fileImport.alertingMessages.missingFileContent")
+                    content: i18next.t("common:modules.fileImport.alertingMessages.missingFileContent")
                 },
                 dispatch: true
             }], {}, done);
@@ -105,7 +105,7 @@ describe("src_3_0_0/modules/fileImport/store/actionsFileImport.js", () => {
                 type: "Alerting/addSingleAlert",
                 payload: {
                     category: "error",
-                    content: i18next.t("common:modules.tools.fileImport.alertingMessages.missingFileContent")
+                    content: i18next.t("common:modules.fileImport.alertingMessages.missingFileContent")
                 },
                 dispatch: true
             }], {}, done);
@@ -129,7 +129,7 @@ describe("src_3_0_0/modules/fileImport/store/actionsFileImport.js", () => {
                     type: "Alerting/addSingleAlert",
                     payload: {
                         category: "success",
-                        content: i18next.t("common:modules.tools.fileImport.alertingMessages.success", {filename: payload.filename})},
+                        content: i18next.t("common:modules.fileImport.alertingMessages.success", {filename: payload.filename})},
                     dispatch: true
                 }
             ], {}, done, {"Maps/projectionCode": "EPSG:25832"});
@@ -153,7 +153,7 @@ describe("src_3_0_0/modules/fileImport/store/actionsFileImport.js", () => {
                     type: "Alerting/addSingleAlert",
                     payload: {
                         category: "success",
-                        content: i18next.t("common:modules.tools.fileImport.alertingMessages.success", {filename: payload.filename})},
+                        content: i18next.t("common:modules.fileImport.alertingMessages.success", {filename: payload.filename})},
                     dispatch: true
                 }
             ], {}, done, {"Maps/projectionCode": "EPSG:25832"});
@@ -168,7 +168,7 @@ describe("src_3_0_0/modules/fileImport/store/actionsFileImport.js", () => {
                 type: "Alerting/addSingleAlert",
                 payload: {
                     category: "error",
-                    content: i18next.t("common:modules.tools.fileImport.alertingMessages.missingFileContent")},
+                    content: i18next.t("common:modules.fileImport.alertingMessages.missingFileContent")},
                 dispatch: true
             }], {}, done);
         });
@@ -179,10 +179,10 @@ describe("src_3_0_0/modules/fileImport/store/actionsFileImport.js", () => {
                     selectedFiletype: "auto",
                     supportedFiletypes: {
                         auto: {
-                            caption: "common:modules.tools.fileImport.captions.supportedFiletypes.auto"
+                            caption: "common:modules.fileImport.captions.supportedFiletypes.auto"
                         },
                         kml: {
-                            caption: "common:modules.tools.fileImport.captions.supportedFiletypes.kml",
+                            caption: "common:modules.fileImport.captions.supportedFiletypes.kml",
                             rgx: /\.kml$/i
                         }
                     }
@@ -192,7 +192,7 @@ describe("src_3_0_0/modules/fileImport/store/actionsFileImport.js", () => {
             expect(dispatch.firstCall.args[0]).to.equal("Alerting/addSingleAlert");
             expect(dispatch.firstCall.args[1]).to.eql({
                 category: "success",
-                content: "modules.tools.fileImport.alertingMessages.success"
+                content: "common:modules.tools.fileImport.alertingMessages.success"
             });
             expect(dispatch.secondCall.args[0]).to.equal("addImportedFilename");
             expect(dispatch.secondCall.args[1]).to.equal("beispielText.kml");
@@ -273,10 +273,10 @@ describe("src_3_0_0/modules/fileImport/store/actionsFileImport.js", () => {
                     selectedFiletype: "auto",
                     supportedFiletypes: {
                         auto: {
-                            caption: "common:modules.tools.fileImport.captions.supportedFiletypes.auto"
+                            caption: "common:modules.fileImport.captions.supportedFiletypes.auto"
                         },
                         geojson: {
-                            caption: "common:modules.tools.fileImport.captions.supportedFiletypes.geojson",
+                            caption: "common:modules.fileImport.captions.supportedFiletypes.geojson",
                             rgx: /\.(geo)?json$/i
                         }
                     }
@@ -286,7 +286,7 @@ describe("src_3_0_0/modules/fileImport/store/actionsFileImport.js", () => {
             expect(dispatch.firstCall.args[0]).to.equal("Alerting/addSingleAlert");
             expect(dispatch.firstCall.args[1]).to.eql({
                 category: "success",
-                content: "modules.tools.fileImport.alertingMessages.success"
+                content: "common:modules.tools.fileImport.alertingMessages.success"
             });
             expect(dispatch.secondCall.args[0]).to.equal("addImportedFilename");
             expect(dispatch.secondCall.args[1]).to.equal("beispielText.geojson");
