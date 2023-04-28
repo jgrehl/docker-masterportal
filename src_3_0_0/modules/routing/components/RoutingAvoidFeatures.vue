@@ -83,7 +83,7 @@ export default {
             >
                 <i class="bi-chevron-right" />
             </span>
-            {{ $t('common:modules.tools.routing.avoidOptions.header') }}
+            {{ $t('common:modules.routing.avoidOptions.header') }}
         </b>
         <div
             v-if="showAvoidFeatures"
@@ -103,7 +103,7 @@ export default {
                     :disabled="disabled"
                     @change="setRoutingAvoidFeaturesOptions(option, $event.target.checked)"
                 >
-                <span class="ms-2">{{ $t('common:modules.tools.routing.avoidOptions.' + option.id) }}</span>
+                <span class="ms-2">{{ $t('common:modules.routing.avoidOptions.' + option.id) }}</span>
             </label>
         </div>
     </div>

@@ -120,7 +120,7 @@ export default {
                 <div id="tool-wfsTransaction-form-container">
                     <hr>
                     <p v-if="currentInteractionConfig.Polygon.available">
-                        {{ $t("common:modules.tools.wfsTransaction.polygonHint") }}
+                        {{ $t("common:modules.wfst.polygonHint") }}
                     </p>
                     <form
                         id="tool-wfsTransaction-form"
@@ -149,11 +149,11 @@ export default {
                         <div id="tool-wfsTransaction-form-buttons">
                             <LightButton
                                 :interaction="reset"
-                                text="common:modules.tools.wfsTransaction.form.discard"
+                                text="common:modules.wfst.form.discard"
                             />
                             <LightButton
                                 :interaction="save"
-                                text="common:modules.tools.wfsTransaction.form.save"
+                                text="common:modules.wfst.form.save"
                                 type="submit"
                             />
                         </div>
@@ -174,12 +174,12 @@ export default {
         >
             <div id="confirmActionContainer">
                 <h3>
-                    {{ $t("common:modules.tools.wfsTransaction.deleteInteraction.headline") }}
+                    {{ $t("common:modules.wfst.deleteInteraction.headline") }}
                 </h3>
                 <p
                     id="confirmation-textContent"
                 >
-                    {{ $t("common:modules.tools.wfsTransaction.deleteInteraction.text") }}
+                    {{ $t("common:modules.wfst.deleteInteraction.text") }}
                 </p>
 
                 <div

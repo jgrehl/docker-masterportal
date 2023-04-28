@@ -126,7 +126,7 @@ export default {
                 }),
                 new Style({
                     text: new Text({
-                        text: feature.get("isBeingDrawn") ? this.$t("modules.tools.measure.finishWithDoubleClick") : "",
+                        text: feature.get("isBeingDrawn") ? this.$t("common:modules.measure.finishWithDoubleClick") : "",
                         textAlign: "left",
                         font: "12px sans-serif",
                         fill: fill,

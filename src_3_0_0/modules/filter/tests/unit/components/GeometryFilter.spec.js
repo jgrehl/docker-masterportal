@@ -96,10 +96,10 @@ describe("src/modules/tools/filter/components/GeometryFilter.vue", () => {
                     attrNameForTitle: "bezirk",
                     features: [feature]
                 }],
-                expectedValues = ["common:modules.tools.filter.geometryFilter.geometries.polygon",
-                    "common:modules.tools.filter.geometryFilter.geometries.rectangle",
-                    "common:modules.tools.filter.geometryFilter.geometries.circle",
-                    "common:modules.tools.filter.geometryFilter.geometries.lineString",
+                expectedValues = ["common:modules.filter.geometryFilter.geometries.polygon",
+                    "common:modules.filter.geometryFilter.geometries.rectangle",
+                    "common:modules.filter.geometryFilter.geometries.circle",
+                    "common:modules.filter.geometryFilter.geometries.lineString",
                     "Altona"];
 
             await wrapper.setData({isActive: true});
@@ -153,7 +153,7 @@ describe("src/modules/tools/filter/components/GeometryFilter.vue", () => {
             await wrapper.find("select").findAll("option").at(1).setSelected();
 
             expect(wrapper.find("option:checked").element.value).to.be.equal("1");
-            expect(wrapper.find("option:checked").text()).to.be.equal("common:modules.tools.filter.geometryFilter.geometries.rectangle");
+            expect(wrapper.find("option:checked").text()).to.be.equal("common:modules.filter.geometryFilter.geometries.rectangle");
         });
 
         it("should call reset if user click on the remove button", async () => {
@@ -172,19 +172,19 @@ describe("src/modules/tools/filter/components/GeometryFilter.vue", () => {
                 expect(wrapper.vm.getGeometries()).to.deep.equal([
                     {
                         "type": "Polygon",
-                        "name": "common:modules.tools.filter.geometryFilter.geometries.polygon"
+                        "name": "common:modules.filter.geometryFilter.geometries.polygon"
                     },
                     {
                         "type": "Rectangle",
-                        "name": "common:modules.tools.filter.geometryFilter.geometries.rectangle"
+                        "name": "common:modules.filter.geometryFilter.geometries.rectangle"
                     },
                     {
                         "type": "Circle",
-                        "name": "common:modules.tools.filter.geometryFilter.geometries.circle"
+                        "name": "common:modules.filter.geometryFilter.geometries.circle"
                     },
                     {
                         "type": "LineString",
-                        "name": "common:modules.tools.filter.geometryFilter.geometries.lineString"
+                        "name": "common:modules.filter.geometryFilter.geometries.lineString"
                     }
                 ]);
             });
@@ -221,28 +221,28 @@ describe("src/modules/tools/filter/components/GeometryFilter.vue", () => {
             it("should return the first geometry on startup", () => {
                 expect(wrapper.vm.getSelectedGeometry(0)).to.deep.equal({
                     "type": "Polygon",
-                    "name": "common:modules.tools.filter.geometryFilter.geometries.polygon"
+                    "name": "common:modules.filter.geometryFilter.geometries.polygon"
                 });
             });
 
             it("should return the second geometry if data.selectedGeometry is set 1", () => {
                 expect(wrapper.vm.getSelectedGeometry(1)).to.deep.equal({
                     "type": "Rectangle",
-                    "name": "common:modules.tools.filter.geometryFilter.geometries.rectangle"
+                    "name": "common:modules.filter.geometryFilter.geometries.rectangle"
                 });
             });
 
             it("should return the third geometry if data.selectedGeometry is set 2", () => {
                 expect(wrapper.vm.getSelectedGeometry(2)).to.deep.equal({
                     "type": "Circle",
-                    "name": "common:modules.tools.filter.geometryFilter.geometries.circle"
+                    "name": "common:modules.filter.geometryFilter.geometries.circle"
                 });
             });
 
             it("should return the fourth geometry if data.selectedGeometry is set 3", () => {
                 expect(wrapper.vm.getSelectedGeometry(3)).to.deep.equal({
                     "type": "LineString",
-                    "name": "common:modules.tools.filter.geometryFilter.geometries.lineString"
+                    "name": "common:modules.filter.geometryFilter.geometries.lineString"
                 });
             });
         });

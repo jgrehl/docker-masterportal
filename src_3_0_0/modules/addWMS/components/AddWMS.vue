@@ -65,9 +65,9 @@ export default {
             }
             else if (url.includes("http:")) {
                 this.addSingleAlert({
-                    content: this.$t("common:modules.tools.addWMS.errorHttpsMessage"),
+                    content: this.$t("common:modules.addWMS.errorHttpsMessage"),
                     category: "error",
-                    title: this.$t("common:modules.tools.addWMS.errorTitle")});
+                    title: this.$t("common:modules.addWMS.errorTitle")});
                 return;
             }
             axios({
@@ -96,9 +96,9 @@ export default {
 
                         if (!checkExtent) {
                             this.addSingleAlert({
-                                content: this.$t("common:modules.tools.addWMS.ifInExtent"),
+                                content: this.$t("common:modules.addWMS.ifInExtent"),
                                 category: "error",
-                                title: this.$t("common:modules.tools.addWMS.errorTitle")
+                                title: this.$t("common:modules.addWMS.errorTitle")
                             });
                             return;
                         }
@@ -144,9 +144,9 @@ export default {
          */
         displayErrorMessage: function () {
             this.addSingleAlert({
-                content: this.$t("common:modules.tools.addWMS.errorMessage"),
+                content: this.$t("common:modules.addWMS.errorMessage"),
                 category: "error",
-                title: this.$t("common:modules.tools.addWMS.errorTitle")
+                title: this.$t("common:modules.addWMS.errorTitle")
             });
         },
 
@@ -184,18 +184,18 @@ export default {
                 this.addLayerToLayerConfig({layerConfig: layerObject, parentKey: treeSubjectsKey}).then((addedLayer) => {
                     if (addedLayer) {
                         this.addSingleAlert({
-                            content: this.$t("common:modules.tools.addWMS.completeMessage"),
+                            content: this.$t("common:modules.addWMS.completeMessage"),
                             category: "success",
-                            title: this.$t("common:modules.tools.addWMS.alertTitleSuccess")});
+                            title: this.$t("common:modules.addWMS.alertTitleSuccess")});
                         this.$refs.wmsUrl.value = "";
                     }
                     // @todo Radio.trigger("ModelList", "closeAllExpandedFolder");
                     // @todo replace alert message if neccessary
                     else {
                         this.addSingleAlert({
-                            content: this.$t("common:modules.tools.addWMS.alreadyAdded"),
+                            content: this.$t("common:modules.addWMS.alreadyAdded"),
                             category: "warning",
-                            title: this.$t("common:modules.tools.addWMS.errorTitle")});
+                            title: this.$t("common:modules.addWMS.errorTitle")});
                         this.$refs.wmsUrl.value = "";
                     }
                 });
@@ -314,7 +314,7 @@ export default {
             v-if="invalidUrl"
             class="addwms_error"
         >
-            {{ $t('common:modules.tools.addWMS.errorEmptyUrl') }}
+            {{ $t('common:modules.addWMS.errorEmptyUrl') }}
         </div>
         <div
             v-else
@@ -325,7 +325,7 @@ export default {
                 aria-label="WMS-Url"
                 type="text"
                 class="form-control wmsUrlsChanged"
-                :placeholder="$t('common:modules.tools.addWMS.placeholder')"
+                :placeholder="$t('common:modules.addWMS.placeholder')"
                 @keydown.enter="inputUrl"
             >
             <button
@@ -337,7 +337,7 @@ export default {
                 <span
                     class=""
                     aria-hidden="true"
-                >{{ $t('common:modules.tools.addWMS.textLoadLayer') }}</span>
+                >{{ $t('common:modules.addWMS.textLoadLayer') }}</span>
                 <span
                     class="bootstrap-icon"
                     aria-hidden="true"

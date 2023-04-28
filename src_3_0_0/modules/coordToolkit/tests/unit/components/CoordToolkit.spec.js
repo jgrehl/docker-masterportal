@@ -53,7 +53,7 @@ describe("src_3_0_0/modules/coordToolkit/components/CoordToolkit.vue", () => {
                     sections: [
                         {
                             coordToolkit: {
-                                "name": "translate#common:menu.tools.coordToolkit",
+                                "name": "common:modules.coordToolkit.name",
                                 "icon": "bi-globe",
                                 "showCopyButtons": true
                             }

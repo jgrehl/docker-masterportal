@@ -29,7 +29,7 @@ const state = {
     icon: "bi-funnel-fill",
     id: "filter",
     type: "filter",
-    name: "common:menu.filter",
+    name: "common:modules.filter.name",
     menuSide: "mainMenu",
     resetLayer: false,
     layerSelectorVisible: true,

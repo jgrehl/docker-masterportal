@@ -54,7 +54,7 @@ export function handleDrawEvent ({state, commit, dispatch, rootState}, event) {
                 if (outerRadius === null || outerRadius === 0) {
                     const alert = {
                         category: "error",
-                        content: i18next.t("common:modules.tools.draw.undefinedTwoCircles"),
+                        content: i18next.t("common:modules.draw.undefinedTwoCircles"),
                         displayClass: "error",
                         multipleAlert: true
                     };
@@ -66,7 +66,7 @@ export function handleDrawEvent ({state, commit, dispatch, rootState}, event) {
                 else {
                     const alert = {
                         category: "error",
-                        content: i18next.t("common:modules.tools.draw.undefinedInnerCircle"),
+                        content: i18next.t("common:modules.draw.undefinedInnerCircle"),
                         displayClass: "error",
                         multipleAlert: true
                     };
@@ -79,7 +79,7 @@ export function handleDrawEvent ({state, commit, dispatch, rootState}, event) {
             else {
                 const alert = {
                     category: "error",
-                    content: i18next.t("common:modules.tools.draw.undefinedRadius"),
+                    content: i18next.t("common:modules.draw.undefinedRadius"),
                     displayClass: "error",
                     multipleAlert: true
                 };
@@ -93,7 +93,7 @@ export function handleDrawEvent ({state, commit, dispatch, rootState}, event) {
                 if (drawType.id === "drawDoubleCircle") {
                     const alert = {
                         category: "error",
-                        content: i18next.t("common:modules.tools.draw.undefinedOuterCircle"),
+                        content: i18next.t("common:modules.draw.undefinedOuterCircle"),
                         displayClass: "error",
                         multipleAlert: true
                     };

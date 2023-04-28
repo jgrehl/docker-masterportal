@@ -67,9 +67,9 @@ export default {
         >
             <ElevatedButton
                 id="add-layer-btn"
-                aria-label="$t('common:tree.addLayer')"
+                aria-label="$t('common:modules.layerTree.addLayer')"
                 :interaction="showLayerSelection"
-                :text="$t('common:tree.addLayer')"
+                :text="$t('common:modules.layerTree.addLayer')"
                 :icon="'bi-plus-circle'"
             />
         </div>
