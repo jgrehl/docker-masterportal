@@ -1,6 +1,7 @@
 import axios from "axios";
 import {Vector as VectorLayer} from "ol/layer";
 import {Draw, Modify, Select, Translate} from "ol/interaction";
+import VectorSource from "ol/source/Vector";
 import {platformModifierKeyOnly, primaryAction} from "ol/events/condition";
 import {exceptionCodes} from "../constantsWfst";
 import addFeaturePropertiesToFeature from "../utils/addFeaturePropertiesToFeature";
@@ -62,7 +63,7 @@ const actions = {
             drawLayer = new VectorLayer({
                 id: "module/wfsTransaction/wfsTransaction/vectorLayer",
                 name: "module/wfsTransaction/wfsTransaction/vectorLayer",
-                source: sourceLayer.getSource(), // new VectorSource(),
+                source: new VectorSource(),
                 alwaysOnTop: true,
                 zIndex: 10
             });
@@ -72,7 +73,6 @@ const actions = {
             const {style} = layerInformation[currentLayerIndex],
                 drawOptions = {
                     source: drawLayer.getSource(),
-
                     type: (currentInteractionConfig[interaction].multi ? "Multi" : "") + interaction,
                     stopClick: true,
                     geometryName: featureProperties.find(({type}) => type === "geometry").key
@@ -96,7 +96,9 @@ const actions = {
                 sourceLayer?.setVisible(false);
             }
 
-            drawInteraction.on("drawend", () => {
+            drawInteraction.on("drawend", (event) => {
+                sourceLayer.getSource().addFeature(event.feature);
+                drawLayer.getSource().clear();
                 const currentLayer = rawLayerList.getLayerWhere({id: currentLayerId}),
                     mapScale = rootGetters["Maps/scale"];
 
@@ -282,12 +284,11 @@ const actions = {
             .finally(() => {
                 dispatch("reset");
                 layerCollection.getLayerById(layer.id).layer.getSource().refresh();
+                commit("setTransactionProcessing", false);
                 dispatch("Alerting/addSingleAlert", {
                     category: "success",
-                    content: i18next.t("common:modules.tools.wfsTransaction.transaction.success.baseSuccess", {transaction: "$t(common:modules.tools.wfsTransaction.transaction." + messageKey + ")"}),
-                    mustBeConfirmed: false
+                    content: i18next.t("common:modules.tools.wfsTransaction.transaction.success.baseSuccess", {transaction: "$t(common:modules.tools.wfsTransaction.transaction." + messageKey + ")"})
                 }, {root: true});
-                commit("setTransactionProcessing", false);
             });
     },
     /**
