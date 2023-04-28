@@ -27,9 +27,9 @@ describe("src_3_0_0/modules/contact/store/actionsContact.js", () => {
             testAction(onSendSuccess, payload, state, {}, [
                 {type: "Alerting/addSingleAlert", payload: {
                     category: "success",
-                    content: i18next.t("common:modules.tools.contact.successMessage") +
+                    content: i18next.t("common:modules.contact.successMessage") +
                         "\r\n" +
-                        i18next.t("common:modules.tools.contact.successTicket") +
+                        i18next.t("common:modules.contact.successTicket") +
                         payload
                 }, dispatch: true},
                 {type: "setPrivacyPolicyAccepted", payload: false, commit: true},
@@ -46,7 +46,7 @@ describe("src_3_0_0/modules/contact/store/actionsContact.js", () => {
             testAction(onSendSuccess, payload, state, {}, [
                 {type: "Alerting/addSingleAlert", payload: {
                     category: "success",
-                    content: i18next.t("common:modules.tools.contact.successMessage")
+                    content: i18next.t("common:modules.contact.successMessage")
                 }, dispatch: true},
                 {type: "setPrivacyPolicyAccepted", payload: false, commit: true},
                 {type: "setMail", payload: "", commit: true},
@@ -62,9 +62,9 @@ describe("src_3_0_0/modules/contact/store/actionsContact.js", () => {
             testAction(onSendSuccess, payload, state, {}, [
                 {type: "Alerting/addSingleAlert", payload: {
                     category: "success",
-                    content: i18next.t("common:modules.tools.contact.successMessage") +
+                    content: i18next.t("common:modules.contact.successMessage") +
                         "\r\n" +
-                        i18next.t("common:modules.tools.contact.successTicket") +
+                        i18next.t("common:modules.contact.successTicket") +
                         payload
                 }, dispatch: true},
                 {type: "setPrivacyPolicyAccepted", payload: false, commit: true}
@@ -77,9 +77,9 @@ describe("src_3_0_0/modules/contact/store/actionsContact.js", () => {
             testAction(onSendSuccess, payload, state, {}, [
                 {type: "Alerting/addSingleAlert", payload: {
                     category: "success",
-                    content: i18next.t("common:modules.tools.contact.successMessage") +
+                    content: i18next.t("common:modules.contact.successMessage") +
                         "\r\n" +
-                        i18next.t("common:modules.tools.contact.successTicket") +
+                        i18next.t("common:modules.contact.successTicket") +
                         payload
                 }, dispatch: true},
                 {type: "setPrivacyPolicyAccepted", payload: false, commit: true},

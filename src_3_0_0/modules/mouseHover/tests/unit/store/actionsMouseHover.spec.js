@@ -32,7 +32,7 @@ describe("src_3_0_0/modules/mouseHover/store/actionsMouseHover", () => {
             expect(dispatch.firstCall.args[0]).to.equal("setMouseHoverLayers");
             expect(commit.firstCall.args[0]).to.equal("setMouseHoverInfos");
             expect(commit.args[1]).to.eql(["setNumFeaturesToShow", 2]);
-            expect(commit.args[2]).to.eql(["setInfoText", "common:mouseHover.infoText"]);
+            expect(commit.args[2]).to.eql(["setInfoText", "common:modules.mouseHover.infoText"]);
         });
     });
 

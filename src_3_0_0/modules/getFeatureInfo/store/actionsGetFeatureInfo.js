@@ -75,7 +75,7 @@ export default {
             })
             .catch(error => {
                 console.warn(error);
-                dispatch("Alerting/addSingleAlert", i18next.t("common:modules.tools.gfi.errorMessage"), {root: true});
+                dispatch("Alerting/addSingleAlert", i18next.t("common:modules.getFeatureInfo.errorMessage"), {root: true});
             });
     }
 };

@@ -141,12 +141,12 @@ export default {
          */
         getPlaceholder () {
             if (this.waypoint.index === 0) {
-                return this.$t("common:modules.tools.routing.startpoint");
+                return this.$t("common:modules.routing.startpoint");
             }
             else if (this.waypoint.index === this.countWaypoints - 1) {
-                return this.$t("common:modules.tools.routing.endpoint");
+                return this.$t("common:modules.routing.endpoint");
             }
-            return this.$t("common:modules.tools.routing.waypoint");
+            return this.$t("common:modules.routing.waypoint");
         }
     }
 };
@@ -185,7 +185,7 @@ export default {
                         <span
                             v-show="waypoint.index !== 0"
                             class="bootstrap-icon pointer"
-                            :title="$t('common:modules.tools.routing.moveWaypointUp')"
+                            :title="$t('common:modules.routing.moveWaypointUp')"
                             @click="$emit('moveWaypointUp')"
                             @keydown.enter="$emit('moveWaypointUp')"
                         >
@@ -196,7 +196,7 @@ export default {
                         <span
                             v-show="waypoint.index !== countWaypoints - 1"
                             class="bootstrap-icon pointer"
-                            :title="$t('common:modules.tools.routing.moveWaypointDown')"
+                            :title="$t('common:modules.routing.moveWaypointDown')"
                             @click="$emit('moveWaypointDown')"
                             @keydown.enter="$emit('moveWaypointDown')"
                         >
@@ -206,7 +206,7 @@ export default {
                 </div>
                 <span
                     class="m-2 bootstrap-icon pointer"
-                    :title="$t('common:modules.tools.routing.deleteWaypoint')"
+                    :title="$t('common:modules.routing.deleteWaypoint')"
                     @click="$emit('removeWaypoint')"
                     @keydown.enter="$emit('removeWaypoint')"
                 >

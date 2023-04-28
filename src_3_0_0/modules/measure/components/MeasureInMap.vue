@@ -126,13 +126,13 @@ export default {
                 >
                     {{ is3DMode()
                         ? selectedGeometry
-                        : $t("modules.tools.measure." +
+                        : $t("common:modules.measure." +
                             (geometryValue === "LineString" ? "stretch" : "area"))
                     }}
                 </option>
             </select>
             <label for="measure-tool-geometry-select">
-                {{ $t("modules.tools.measure.geometry") }}
+                {{ $t("common:modules.measure.geometry") }}
             </label>
         </div>
 
@@ -154,28 +154,28 @@ export default {
                 </option>
             </select>
             <label for="measure-tool-unit-select">
-                {{ $t("modules.tools.measure.measure") }}
+                {{ $t("common:modules.measure.measure") }}
             </label>
         </div>
         <div
             v-if="isDefaultStyle()"
         >
             <div class="inaccuracy-list">
-                {{ $t("modules.tools.measure.influenceFactors") }}
+                {{ $t("common:modules.measure.influenceFactors") }}
                 <ul>
-                    <li>{{ $t("modules.tools.measure.scale") }}</li>
-                    <li>{{ $t("modules.tools.measure.resolution") }}</li>
-                    <li>{{ $t("modules.tools.measure.screenResolution") }}</li>
-                    <li>{{ $t("modules.tools.measure.inputAccuracy") }}</li>
-                    <li>{{ $t("modules.tools.measure.measureDistance") }}</li>
+                    <li>{{ $t("common:modules.measure.scale") }}</li>
+                    <li>{{ $t("common:modules.measure.resolution") }}</li>
+                    <li>{{ $t("common:modules.measure.screenResolution") }}</li>
+                    <li>{{ $t("common:modules.measure.inputAccuracy") }}</li>
+                    <li>{{ $t("common:modules.measure.measureDistance") }}</li>
                 </ul>
             </div>
         </div>
         <FlatButton
             id="measure-delete"
-            aria-label="$t('modules.tools.measure.deleteMeasurements')"
+            aria-label="$t('common:modules.measure.deleteMeasurements')"
             :interaction="deleteFeatures"
-            :text="$t('modules.tools.measure.deleteMeasurements')"
+            :text="$t('common:modules.measure.deleteMeasurements')"
             :icon="deleteIcon"
         />
     </div>
