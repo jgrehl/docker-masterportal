@@ -61,8 +61,8 @@ describe("src/modules/searchBar/searchInterfaces/searchInterfaceGazetteer.js", (
                             }
                         }
                     },
-                    category: "modules.searchbar.type.street",
-                    id: "ResultName1modules.searchbar.type.street",
+                    category: "common:modules.searchBar.type.street",
+                    id: "ResultName1modules.searchBar.type.street",
                     icon: "glyphicon-road",
                     name: "Result Name1"
                 }
@@ -72,22 +72,22 @@ describe("src/modules/searchBar/searchInterfaces/searchInterfaceGazetteer.js", (
 
     describe("getTranslationByType", () => {
         it("returns the translation for type = addressAffixed", () => {
-            expect(SearchInterface1.getTranslationByType("addressAffixed")).to.equal("modules.searchbar.type.address");
+            expect(SearchInterface1.getTranslationByType("addressAffixed")).to.equal("common:modules.searchBar.type.address");
         });
         it("returns the translation for type = addressUnaffixed", () => {
-            expect(SearchInterface1.getTranslationByType("addressUnaffixed")).to.equal("modules.searchbar.type.address");
+            expect(SearchInterface1.getTranslationByType("addressUnaffixed")).to.equal("common:modules.searchBar.type.address");
         });
         it("returns the translation for type = district", () => {
-            expect(SearchInterface1.getTranslationByType("district")).to.equal("modules.searchbar.type.district");
+            expect(SearchInterface1.getTranslationByType("district")).to.equal("common:modules.searchBar.type.district");
         });
         it("returns the translation for type = houseNumbersForStreet", () => {
-            expect(SearchInterface1.getTranslationByType("houseNumbersForStreet")).to.equal("modules.searchbar.type.address");
+            expect(SearchInterface1.getTranslationByType("houseNumbersForStreet")).to.equal("common:modules.searchBar.type.address");
         });
         it("returns the translation for type = parcel", () => {
-            expect(SearchInterface1.getTranslationByType("parcel")).to.equal("modules.searchbar.type.parcel");
+            expect(SearchInterface1.getTranslationByType("parcel")).to.equal("common:modules.searchBar.type.parcel");
         });
         it("returns the translation for type = street", () => {
-            expect(SearchInterface1.getTranslationByType("street")).to.equal("modules.searchbar.type.street");
+            expect(SearchInterface1.getTranslationByType("street")).to.equal("common:modules.searchBar.type.street");
         });
     });
 

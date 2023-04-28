@@ -53,6 +53,6 @@ describe("src/modules/tools/filter/components/SnippetInfo.vue", () => {
 
         expect(wrapper.find(".info-icon").exists()).to.be.true;
         expect(wrapper.find(".bottom").exists()).to.be.true;
-        expect(wrapper.find(".info-text span").text()).to.be.equal("common:modules.tools.filter.info.snippetInput");
+        expect(wrapper.find(".info-text span").text()).to.be.equal("common:modules.filter.info.snippetInput");
     });
 });

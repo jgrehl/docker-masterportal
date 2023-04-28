@@ -22,7 +22,7 @@ const state = {
     type: "routing",
     // mandatory defaults for config.json parameters
     hasMouseMapInteractions: true,
-    name: "common:menu.tools.routing",
+    name: "common:modules.routing.name",
     icon: "bi-signpost-2-fill",
     description: "",
     showDescription: false,

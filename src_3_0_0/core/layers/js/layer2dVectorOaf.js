@@ -91,8 +91,8 @@ Layer2dVectorOaf.prototype.createLegend = async function () {
             getGeometryTypeFromService.getGeometryTypeFromOAF(rules, this.get("url"), this.get("collection"), Config.wfsImgPath,
                 (error) => {
                     if (error) {
-                        store.dispatch("Alerting/addSingleAlert", "<strong>" + i18next.t("common:modules.vectorStyle.styleObject.getGeometryTypeFromOAFFetchfailed") + "</strong> <br>"
-                        + "<small>" + i18next.t("common:modules.vectorStyle.styleObject.getGeometryTypeFromOAFFetchfailedMessage") + "</small>");
+                        store.dispatch("Alerting/addSingleAlert", "<strong>" + i18next.t("common:core.layers.errorHandling.getGeometryTypeFromOAFFetchfailed") + "</strong> <br>"
+                        + "<small>" + i18next.t("common:core.layers.errorHandling.getGeometryTypeFromOAFFetchfailedMessage") + "</small>");
                     }
                 });
             const legendInfos = await createStyle.returnLegendByStyleId(styleObject.styleId);

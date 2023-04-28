@@ -13,7 +13,7 @@
 const state = {
     description: "",
     icon: "bi-share",
-    name: "common:menu.tools.shareView",
+    name: "common:modules.shareView.name",
     showDescription: false,
     supportedDevices: ["Desktop", "Mobile", "Table"],
     supportedMapModes: ["2D", "3D"],

@@ -21,7 +21,7 @@ export default {
         positioning: "bottom-left"
     }),
     numFeaturesToShow: 2,
-    infoText: "common:mouseHover.infoText",
+    infoText: "common:modules.mouseHover.infoText",
     layersFromConfig: [],
     mouseHoverLayers: [],
     mouseHoverInfos: [],

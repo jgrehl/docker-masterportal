@@ -97,18 +97,18 @@ function parseAbstract (json) {
 function parseFrequenzy (json) {
     const attributes = getMdIdentification(json)?.resourceMaintenance?.MD_MaintenanceInformation?.maintenanceAndUpdateFrequency?.MD_MaintenanceFrequencyCode?.getAttributes(),
         frequencyTypes = {
-            continual: "common:modules.cswParser.continual",
-            daily: "common:modules.cswParser.daily",
-            weekly: "common:modules.cswParser.weekly",
-            fortnightly: "common:modules.cswParser.fortnightly",
-            monthly: "common:modules.cswParser.monthly",
-            quarterly: "common:modules.cswParser.quarterly",
-            biannually: "common:modules.cswParser.biannually",
-            annually: "common:modules.cswParser.annually",
-            asNeeded: "common:modules.cswParser.asNeeded",
-            irregular: "common:modules.cswParser.irregular",
-            notPlanned: "common:modules.cswParser.notPlanned",
-            unknown: "common:modules.cswParser.unknown"
+            continual: "common:shared.js.api.cswParser.continual",
+            daily: "common:shared.js.api.cswParser.daily",
+            weekly: "common:shared.js.api.cswParser.weekly",
+            fortnightly: "common:shared.js.api.cswParser.fortnightly",
+            monthly: "common:shared.js.api.cswParser.monthly",
+            quarterly: "common:shared.js.api.cswParser.quarterly",
+            biannually: "common:shared.js.api.cswParser.biannually",
+            annually: "common:shared.js.api.cswParser.annually",
+            asNeeded: "common:shared.js.api.cswParser.asNeeded",
+            irregular: "common:shared.js.api.cswParser.irregular",
+            notPlanned: "common:shared.js.api.cswParser.notPlanned",
+            unknown: "common:shared.js.api.cswParser.unknown"
         };
 
     if (attributes?.codeListValue) {

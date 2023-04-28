@@ -56,13 +56,13 @@ export default {
                 :id="'handle-tab'"
                 :active="true"
                 :target="'#handle-tab-pane'"
-                :label="'modules.tools.layerSlider.sliderTypeHandle'"
+                :label="'common:modules.layerSlider.sliderTypeHandle'"
             />
             <NavTab
                 :id="'player-tab'"
                 :active="false"
                 :target="'#player-tab-pane'"
-                :label="'modules.tools.layerSlider.sliderTypePlayer'"
+                :label="'common:modules.layerSlider.sliderTypePlayer'"
             />
         </ul>
         <div

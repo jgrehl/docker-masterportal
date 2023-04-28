@@ -15,7 +15,7 @@ describe("src/modules/selectFeatures/store/gettersSelectFeatures", function () {
 
     describe("testing default values", function () {
         it("returns the name default value from state", function () {
-            expect(name(stateSelectFeatures)).to.be.equals("common:menu.tools.selectFeatures");
+            expect(name(stateSelectFeatures)).to.be.equals("common:modules.selectFeatures.name");
         });
         it("returns the icon default value from state", function () {
             expect(icon(stateSelectFeatures)).to.equals("bi-hand-index");

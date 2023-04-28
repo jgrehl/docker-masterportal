@@ -261,7 +261,7 @@ export default {
             >
                 <img
                     class="gfi-theme-images-image"
-                    :alt="$t('modules.tools.gfi.themes.default.imgAlt')"
+                    :alt="$t('common:modules.getFeatureInfo.themes.default.imgAlt')"
                     :src="imageAttribute"
                 >
             </a>
@@ -273,7 +273,7 @@ export default {
             <tbody v-if="mappedPropertiesExists(feature)">
                 <tr v-if="!hasMappedProperties(feature)">
                     <td>
-                        {{ $t("modules.tools.gfi.themes.default.noAttributeAvailable") }}
+                        {{ $t("common:modules.getFeatureInfo.themes.default.noAttributeAvailable") }}
                     </td>
                 </tr>
                 <tr
