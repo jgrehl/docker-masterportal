@@ -49,7 +49,7 @@ export default {
             id="news-title"
             class="title d-flex flex-column justify-content-center mb-3 ps-2 bold"
         >
-            {{ $t("modules.tools.news.headline") }}
+            {{ $t("common:modules.news.headline") }}
         </div>
         <template
             v-for="(aNews, index) in sortByDate(news)"

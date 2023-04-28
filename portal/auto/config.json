@@ -33,16 +33,16 @@
         "categories": [
           {
             "key": "kategorie_opendata",
-            "name": "common:tree.categoryOpendata",
+            "name": "common:modules.layerTree.categoryOpendata",
             "active": true
           },
           {
             "key": "kategorie_inspire",
-            "name": "common:tree.categoryInspire"
+            "name": "common:modules.layerTree.categoryInspire"
           },
           {
             "key": "kategorie_organisation",
-            "name": "common:tree.categoryOrganisation"
+            "name": "common:modules.layerTree.categoryOrganisation"
           }
         ],
         "layerIDsToIgnore": [
@@ -210,7 +210,6 @@
     },
     "Themenconfig": {
       "Hintergrundkarten": {
-        "name": "translate#common:tree.backgroundMaps",
         "elements": [
           {
             "id": "452",
@@ -260,4 +259,3 @@
       }
     }
   }
-  

@@ -31,7 +31,7 @@ export default {
             class="mb-4"
         >
             <p class="mb-2">
-                {{ $t("modules.tools.layerClusterToggler.info") }}
+                {{ $t("common:modules.layerClusterToggler.info") }}
             </p>
             <ul>
                 <li
@@ -47,9 +47,9 @@ export default {
             class="d-flex justify-content-center"
         >
             <FlatButton
-                :aria-label="$t('common:modules.tools.layerClusterToggler.toggle')"
+                :aria-label="$t('common:modules.layerClusterToggler.toggle')"
                 :interaction="() => toggleLayerVisibility()"
-                :text="$t('common:modules.tools.layerClusterToggler.toggle')"
+                :text="$t('common:modules.layerClusterToggler.toggle')"
                 :icon="icon"
             />
         </div>

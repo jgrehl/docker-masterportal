@@ -148,7 +148,7 @@ export default {
                             class="col-md-5 col-form-label"
                             for="module-wfsSearch-instances-select"
                         >
-                            {{ $t("common:modules.tools.wfsSearch.instancesSelectLabel") }}
+                            {{ $t("common:modules.wfsSearch.instancesSelectLabel") }}
                         </label>
                         <div class="col-md-7">
                             <select
@@ -186,8 +186,8 @@ export default {
                     <span
                         id="module-wfsSearch-userHelp-text"
                         class="col-md-11"
-                        :aria-label="$t('common:modules.tools.wfsSearch.userHelp.label')"
-                        v-html="$t('common:modules.tools.wfsSearch.userHelp.text', {userHelp})"
+                        :aria-label="$t('common:modules.wfsSearch.userHelp.label')"
+                        v-html="$t('common:modules.wfsSearch.userHelp.text', {userHelp})"
                     />
                 </div>
                 <hr>
@@ -208,7 +208,7 @@ export default {
                             class="btn btn-secondary col-md-12"
                             @click="resetUI"
                         >
-                            {{ $t("common:modules.tools.wfsSearch.resetButton") }}
+                            {{ $t("common:modules.wfsSearch.resetButton") }}
                         </button>
                     </div>
                     <div class="col-md-6">
@@ -217,7 +217,7 @@ export default {
                             type="submit"
                             class="btn btn-primary col-md-12"
                             :disabled="requiredFields"
-                            :value="$t('common:modules.tools.wfsSearch.searchButton')"
+                            :value="$t('common:modules.wfsSearch.searchButton')"
                         >
                     </div>
                     <div
@@ -230,7 +230,7 @@ export default {
                             :disabled="results.length === 0 || !headers"
                             @click="setShowResultList(true)"
                         >
-                            {{ $t("common:modules.tools.wfsSearch.showResults") + " " + `(${results.length})` }}
+                            {{ $t("common:modules.wfsSearch.showResults") + " " + `(${results.length})` }}
                         </button>
                     </div>
                 </div>
@@ -265,7 +265,7 @@ export default {
                     <h4>{{ $t(name) }}</h4>
                     <hr>
                 </header>
-                <span>{{ $t("common:modules.tools.wfsSearch.noResults") }}</span>
+                <span>{{ $t("common:modules.wfsSearch.noResults") }}</span>
             </template>
         </ModalItem>
     </div>

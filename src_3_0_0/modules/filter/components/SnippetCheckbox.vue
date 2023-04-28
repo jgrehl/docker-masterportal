@@ -75,7 +75,7 @@ export default {
     },
     computed: {
         ariaLabelCheckbox () {
-            return this.$t("modules.tools.filter.ariaLabel.checkbox", {param: this.attrName});
+            return this.$t("common:modules.filter.ariaLabel.checkbox", {param: this.attrName});
         },
         titleText () {
             if (this.title === true) {

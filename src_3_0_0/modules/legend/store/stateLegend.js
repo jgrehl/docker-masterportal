@@ -20,7 +20,7 @@ export default {
     type: "legend",
     icon: "bi-lightbulb",
     hasMouseMapInteractions: false,
-    name: "common:menu.tools.legend",
+    name: "common:modules.legend.name",
     description: "",
     showDescription: false,
     supportedDevices: ["Desktop", "Mobile", "Table"],

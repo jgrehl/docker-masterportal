@@ -82,7 +82,7 @@ module.exports = function buildWebpack (answers) {
             fs.copy("./src_3_0_0/assets/img", mastercodeVersionPath + "/img").then(() => {
                 // console.warn("NOTE: Copied \"./img\" to \"" + mastercodeVersionPath + "\".");
 
-                fs.copy("./locales", mastercodeVersionPath + "/locales").then(() => {
+                fs.copy("./locales_3_0_0", mastercodeVersionPath + "/locales").then(() => {
 
                     fs.copy(buildTempPath, mastercodeVersionPath).then(() => {
                         // console.warn("NOTE: Copied \"" + buildTempPath + "\" to \"" + mastercodeVersionPath + "\".");

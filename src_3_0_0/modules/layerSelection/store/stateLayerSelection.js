@@ -17,7 +17,7 @@ export default {
     visible: false,
     type: "layerSelection",
     menuSide: "mainMenu",
-    name: "common:tree.addSubject",
+    name: "common:modules.layerSelection.addSubject",
 
     subjectDataLayerConfs: [],
     backgroundLayerConfs: [],

@@ -38,7 +38,7 @@
 const state = {
     icon: "bi-globe",
     hasMouseMapInteractions: true,
-    name: "common:menu.tools.coordToolkit",
+    name: "common:modules.coordToolkit.name",
     type: "coordToolkit",
     description: "",
     showDescription: false,

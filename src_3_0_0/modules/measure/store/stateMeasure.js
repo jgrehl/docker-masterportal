@@ -36,7 +36,7 @@ import source from "../js/measureSource";
 const state = {
     // defaults for config.json tool parameters
     description: "",
-    name: "common:menu.tools.measure",
+    name: "common:modules.measure.name",
     hasMouseMapInteractions: true,
     icon: "bi-arrows-angle-expand",
     showDescription: false,

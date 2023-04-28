@@ -15,7 +15,7 @@ import {uniqueId} from "../../../shared/js/utils/uniqueId.js";
  */
 async function createLayerAddToTree (layerId, features, thfConfig = {}) {
     if (layerId) {
-        const layerNameKey = thfConfig.layerName ? thfConfig.layerName : "common:tree.selectedFeatures",
+        const layerNameKey = thfConfig.layerName ? thfConfig.layerName : "common:shared.js.utils.selectedFeatures",
             originalLayer = getLayer(layerId);
 
         if (originalLayer) {

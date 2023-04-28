@@ -81,7 +81,7 @@ export default {
             </option>
         </select>
         <label for="scale-switcher-select">
-            {{ $t("modules.tools.scaleSwitcher.label") }}
+            {{ $t("common:modules.scaleSwitcher.label") }}
         </label>
     </div>
 </template>
