@@ -67,7 +67,7 @@ export default {
             <label
                 :for="'CheckboxFilterInMapExtent-' + filterId"
             >
-                {{ $t('modules.tools.filter.searchInMapExtent') }}
+                {{ $t('common:modules.filter.searchInMapExtent') }}
             </label>
         </div>
         <div

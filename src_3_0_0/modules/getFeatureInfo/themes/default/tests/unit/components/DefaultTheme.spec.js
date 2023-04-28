@@ -193,7 +193,7 @@ describe("src_3_0_0/modules/getFeatureInfo/themes/default/components/DefaultThem
                 }
             });
 
-            expect(wrapper1.find("td").text()).equals("modules.tools.gfi.themes.default.noAttributeAvailable");
+            expect(wrapper1.find("td").text()).equals("common:modules.getFeatureInfo.themes.default.noAttributeAvailable");
         });
 
         it("should show an iframe if the mimeType is text/html", () => {

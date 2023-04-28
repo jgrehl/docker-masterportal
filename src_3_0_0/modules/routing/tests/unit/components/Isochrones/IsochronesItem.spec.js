@@ -174,12 +174,12 @@ describe("src_3_0_0/modules/routing/components/Isochrones/IsochronesItem.vue", (
         await wrapper.vm.$nextTick();
         expect(
             wrapper.findAllComponents(RoutingSliderInputComponent)
-                .filter(el => el.vm.$props.label === "common:modules.tools.routing.isochrones.maxDistance")
+                .filter(el => el.vm.$props.label === "common:modules.routing.isochrones.maxDistance")
                 .length
         ).equal(1);
         expect(
             wrapper.findAllComponents(RoutingSliderInputComponent)
-                .filter(el => el.vm.$props.label === "common:modules.tools.routing.isochrones.maxTraveltime")
+                .filter(el => el.vm.$props.label === "common:modules.routing.isochrones.maxTraveltime")
                 .length
         ).equal(0);
     });
@@ -192,12 +192,12 @@ describe("src_3_0_0/modules/routing/components/Isochrones/IsochronesItem.vue", (
         await wrapper.vm.$nextTick();
         expect(
             wrapper.findAllComponents(RoutingSliderInputComponent)
-                .filter(el => el.vm.$props.label === "common:modules.tools.routing.isochrones.maxTraveltime")
+                .filter(el => el.vm.$props.label === "common:modules.routing.isochrones.maxTraveltime")
                 .length
         ).equal(1);
         expect(
             wrapper.findAllComponents(RoutingSliderInputComponent)
-                .filter(el => el.vm.$props.label === "common:modules.tools.routing.isochrones.maxDistance")
+                .filter(el => el.vm.$props.label === "common:modules.routing.isochrones.maxDistance")
                 .length
         ).equal(0);
     });

@@ -22,7 +22,7 @@ export default {
     computed: {
         infoText () {
             if (typeof this.info === "boolean") {
-                const translationKey = "common:modules.tools.filter.info." + this.translationKey;
+                const translationKey = "common:modules.filter.info." + this.translationKey;
 
                 return this.translateKeyWithPlausibilityCheck(translationKey, key => this.$t(key));
             }

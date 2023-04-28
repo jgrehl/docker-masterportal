@@ -65,7 +65,7 @@ const getters = {
     getLabel: (state) => (key) => {
         const type = state.currentProjection?.projName !== "longlat" ? "cartesian" : "hdms";
 
-        return "modules.tools.coordToolkit." + type + "." + key;
+        return "common:modules.coordToolkit." + type + "." + key;
     }
 };
 
