@@ -154,7 +154,7 @@ const symbol = {
         tooltipCircleRadiusNode: null,
         withoutGUI: false,
         zIndex: 0,
-        name: "common:menu.tools.draw",
+        name: "common:modules.draw.name",
         description: "",
         showDescription: false,
         // // // // // //

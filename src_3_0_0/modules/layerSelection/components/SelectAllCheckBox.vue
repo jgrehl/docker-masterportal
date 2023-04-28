@@ -80,12 +80,12 @@ export default {
             class="layer-tree-layer-label mt-0 d-flex flex-column align-self-start"
             :for="'select-all-checkbox-' + ids()"
             tabindex="0"
-            :aria-label="$t('common:tree.selectAll')"
+            :aria-label="$t('common:modules.layerSelection.selectAll')"
         >
             <span
                 class="small-text"
             >
-                {{ $t("common:tree.selectAll") }}
+                {{ $t("common:modules.layerSelection.selectAll") }}
             </span>
         </label>
     </div>

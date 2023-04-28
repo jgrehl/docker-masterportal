@@ -234,7 +234,7 @@ export default {
             <select
                 :id="`module-wfsSearch-${selectableParameters.fieldName}-${selectableParameters.fieldId}-fieldSelection`"
                 class="form-select form-select-sm"
-                :aria-label="$t('common:modules.tools.wfsSearch.fieldSelectionLabel')"
+                :aria-label="$t('common:modules.wfsSearch.fieldSelectionLabel')"
                 @change="parameterIndex = $event.currentTarget.value"
             >
                 <option
@@ -277,7 +277,7 @@ export default {
                         value="1"
                         :selected="valuesReset"
                     >
-                        {{ $t("common:modules.tools.wfsSearch.optionsPlaceholder") }}
+                        {{ $t("common:modules.wfsSearch.optionsPlaceholder") }}
                     </option>
                     <option
                         v-for="(option, index) of selectableOptions"

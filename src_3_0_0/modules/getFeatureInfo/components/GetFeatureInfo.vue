@@ -269,14 +269,14 @@ export default {
                 <div class="gfi-pager mt-3">
                     <IconButton
                         v-if="gfiFeatures.length > 1 && pagerIndex > 0"
-                        :aria="$t('modules.tools.gfi.buttonBack')"
+                        :aria="$t('common:modules.getFeatureInfo.buttonBack')"
                         :class-array="['pager-left', 'pager', 'btn-primary']"
                         :icon="leftIcon"
                         :interaction="decreasePagerIndex"
                     />
                     <IconButton
                         v-if="gfiFeatures.length > 1 && pagerIndex < gfiFeatures.length - 1"
-                        :aria="$t('modules.tools.gfi.buttonForward')"
+                        :aria="$t('common:modules.getFeatureInfo.buttonForward')"
                         :class-array="['pager-right', 'pager', 'btn-primary']"
                         :icon="rightIcon"
                         :interaction="increasePagerIndex"

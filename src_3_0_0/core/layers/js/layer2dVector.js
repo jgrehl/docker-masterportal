@@ -167,7 +167,7 @@ Layer2dVector.prototype.getStyleFunction = function (attrs) {
             };
         }
         else {
-            console.warn(i18next.t("common:modules.core.modelList.layer.wrongStyleId", {styleId}));
+            console.warn(i18next.t("common:core.layers.errorHandling.wrongStyleId", {styleId}));
         }
     }
     return style;
@@ -263,8 +263,8 @@ Layer2dVector.prototype.createLegend = async function () {
                     getGeometryTypeFromService.getGeometryTypeFromWFS(rules, this.get("url"), this.get("version"), this.get("featureType"), this.get("styleGeometryType"), isSecured, Config.wfsImgPath,
                         (geometryTypes, error) => {
                             if (error) {
-                                store.dispatch("Alerting/addSingleAlert", "<strong>" + i18next.t("common:modules.vectorStyle.styleObject.getGeometryTypeFromWFSFetchfailed") + "</strong> <br>"
-                                    + "<small>" + i18next.t("common:modules.vectorStyle.styleObject.getGeometryTypeFromWFSFetchfailedMessage") + "</small>");
+                                store.dispatch("Alerting/addSingleAlert", "<strong>" + i18next.t("common:core.layers.errorHandling.getGeometryTypeFromWFSFetchfailed") + "</strong> <br>"
+                                    + "<small>" + i18next.t("common:core.layers.errorHandling.getGeometryTypeFromWFSFetchfailedMessage") + "</small>");
                             }
                             return geometryTypes;
                         });

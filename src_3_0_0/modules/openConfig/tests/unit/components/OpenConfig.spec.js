@@ -57,7 +57,7 @@ describe("src_3_0_0/modules/openConfig/components/OpenConfig.vue", () => {
         expect(wrapper.find("p").exists()).to.be.true;
         expect(wrapper.find("#open-config-input-button").exists()).to.be.true;
         expect(wrapper.find("#open-config-input-button > label").exists()).to.be.true;
-        expect(wrapper.find("#open-config-input-button > label").text()).to.equals("modules.tools.openConfig.openFile");
+        expect(wrapper.find("#open-config-input-button > label").text()).to.equals("common:modules.openConfig.openFile");
         expect(wrapper.find("#open-config-input-button > label > input").exists()).to.be.true;
         expect(wrapper.find("#open-config-input-button > label > span").exists()).to.be.true;
         expect(wrapper.find("#open-config-input-button > label > span > i").exists()).to.be.true;

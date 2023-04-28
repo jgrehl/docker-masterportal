@@ -299,7 +299,7 @@ export default {
             v-if="selectedFeaturesWithRenderInformation.length === 0"
             class="selectFeaturesDefaultMessage"
         >
-            {{ translate("common:modules.tools.selectFeatures.noFeatureChosen") }}
+            {{ translate("common:modules.selectFeatures.noFeatureChosen") }}
         </div>
         <div
             v-else
@@ -353,7 +353,7 @@ export default {
                     v-else
                     :key="index + 'z'"
                 >
-                    {{ translate("common:modules.tools.selectFeatures.propertylessFeature") }}
+                    {{ translate("common:modules.selectFeatures.propertylessFeature") }}
                 </p>
                 <a
                     :id="index + '-selectFeatures-feature'"
@@ -361,7 +361,7 @@ export default {
                     class="select-features-zoom-link"
                     @click="featureZoom"
                 >
-                    {{ translate("common:modules.tools.selectFeatures.zoomToFeature") }}
+                    {{ translate("common:modules.selectFeatures.zoomToFeature") }}
                 </a>
                 <hr
                     v-if="index !== selectedFeaturesWithRenderInformation.length - 1"
