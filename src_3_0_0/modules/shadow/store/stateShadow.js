@@ -15,7 +15,7 @@
 const state = {
     description: "",
     icon: "bi-lamp-fill",
-    name: "common:menu.tools.shadow",
+    name: "common:modules.shadow.name",
     showDescription: false,
     supportedDevices: ["Desktop", "Mobile", "Table"],
     supportedMapModes: ["3D"],

@@ -117,7 +117,7 @@ export default {
             >
                 <IconButton
                     :id="'layerpills-left-button'"
-                    :aria="$t('modules.layerPill.previous')"
+                    :aria="$t('common:modules.layerPills.previous')"
                     :class-array="['btn-light', 'layerpillsbutton']"
                     :icon="'bi-chevron-left'"
                     :interaction="() => moveLayerPills('left')"
@@ -140,7 +140,7 @@ export default {
                     {{ layer.name }}
                 </a>
                 <IconButton
-                    :aria="$t('modules.layerPill.remove')"
+                    :aria="$t('common:modules.layerPills.remove')"
                     :class-array="['btn-light', 'layerpillsbutton']"
                     class="close-button"
                     :icon="'bi-x-lg'"
@@ -152,7 +152,7 @@ export default {
             >
                 <IconButton
                     :id="'layerpills-right-button'"
-                    :aria="$t('modules.layerPill.next')"
+                    :aria="$t('common:modules.layerPills.next')"
                     :class-array="['btn-light', 'layerpillsbutton']"
                     :icon="'bi-chevron-right'"
                     :interaction="() => moveLayerPills('right')"

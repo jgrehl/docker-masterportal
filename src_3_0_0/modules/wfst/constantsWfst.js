@@ -3,29 +3,29 @@ export const defaultInteractionConfig = {
             available: false,
             icon: "bi-slash-lg",
             multi: false,
-            text: "common:modules.tools.wfsTransaction.interactionSelect.line"
+            text: "common:modules.wfst.interactionSelect.line"
         },
         Point: {
             available: false,
             icon: "bi-record-circle",
             multi: false,
-            text: "common:modules.tools.wfsTransaction.interactionSelect.point"
+            text: "common:modules.wfst.interactionSelect.point"
         },
         Polygon: {
             available: false,
             icon: "bi-hexagon-fill",
             multi: false,
-            text: "common:modules.tools.wfsTransaction.interactionSelect.polygon"
+            text: "common:modules.wfst.interactionSelect.polygon"
         },
         update: {
             available: false,
             icon: "bi-pencil-square",
-            text: "common:modules.tools.wfsTransaction.interactionSelect.update"
+            text: "common:modules.wfst.interactionSelect.update"
         },
         delete: {
             available: false,
             icon: "bi-trash",
-            text: "common:modules.tools.wfsTransaction.interactionSelect.delete"
+            text: "common:modules.wfst.interactionSelect.delete"
         }
     },
     exceptionCodes = [

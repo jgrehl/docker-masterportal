@@ -17,7 +17,7 @@
     "portalFooter": {
       "urls": [
         {
-          "bezeichnung": "common:modules.footer.designation",
+          "bezeichnung": "common:modules.portalFooter.designation",
           "url": "https://geoinfo.hamburg.de/",
           "alias": "Landesbetrieb Geoinformation und Vermessung",
           "alias_mobil": "LGV"
@@ -41,7 +41,7 @@
       },
       "sections": [
         [
-          { 
+          {
             "type": "wfst",
             "name": "WFS-T Tool",
             "layerIds": ["lgvline", "lgvpoint", "lgvpolygon"],
@@ -171,19 +171,19 @@
             "description": "Starte eine Slideshow",
             "layerIds": [
               {
-                "title": "common:modules.tools.layerSlider.serviceOne",
+                "title": "common:modules.layerSlider.serviceOne",
                 "layerId": "19173"
               },
               {
-                "title": "common:modules.tools.layerSlider.serviceTwo",
+                "title": "common:modules.layerSlider.serviceTwo",
                 "layerId": "2426"
               },
               {
-                "title": "common:modules.tools.layerSlider.serviceThree",
+                "title": "common:modules.layerSlider.serviceThree",
                 "layerId": "8712.2"
               },
               {
-                "title": "common:modules.tools.layerSlider.serviceFour",
+                "title": "common:modules.layerSlider.serviceFour",
                 "layerId": "1711"
               }
             ]

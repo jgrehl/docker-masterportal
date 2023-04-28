@@ -286,10 +286,10 @@ export default {
         getGeometries () {
             const result = [],
                 possibleGeometries = {
-                    "Polygon": this.$t("common:modules.tools.filter.geometryFilter.geometries.polygon"),
-                    "Rectangle": this.$t("common:modules.tools.filter.geometryFilter.geometries.rectangle"),
-                    "Circle": this.$t("common:modules.tools.filter.geometryFilter.geometries.circle"),
-                    "LineString": this.$t("common:modules.tools.filter.geometryFilter.geometries.lineString")
+                    "Polygon": this.$t("common:modules.filter.geometryFilter.geometries.polygon"),
+                    "Rectangle": this.$t("common:modules.filter.geometryFilter.geometries.rectangle"),
+                    "Circle": this.$t("common:modules.filter.geometryFilter.geometries.circle"),
+                    "LineString": this.$t("common:modules.filter.geometryFilter.geometries.lineString")
                 },
                 additionalGeometries = this.prepareAdditionalGeometries(this.additionalGeometries);
 
@@ -520,13 +520,13 @@ export default {
                     class="form-check-label"
                     for="geometryFilterChecked"
                 >
-                    {{ translateKeyWithPlausibilityCheck("common:modules.tools.filter.geometryFilter.activate", key => $t(key)) }}
+                    {{ translateKeyWithPlausibilityCheck("common:modules.filter.geometryFilter.activate", key => $t(key)) }}
                 </label>
                 <div
                     id="geometryFilterHelp"
                     class="form-text"
                 >
-                    {{ translateKeyWithPlausibilityCheck("common:modules.tools.filter.geometryFilter.help", key => $t(key)) }}
+                    {{ translateKeyWithPlausibilityCheck("common:modules.filter.geometryFilter.help", key => $t(key)) }}
                 </div>
             </div>
         </div>
@@ -549,7 +549,7 @@ export default {
                     </option>
                 </select>
                 <label for="geometrySelect">
-                    {{ translateKeyWithPlausibilityCheck("common:modules.tools.filter.geometryFilter.selectGeometry", key => $t(key)) }}
+                    {{ translateKeyWithPlausibilityCheck("common:modules.filter.geometryFilter.selectGeometry", key => $t(key)) }}
                 </label>
             </div>
         </div>
@@ -561,7 +561,7 @@ export default {
                 for="inputLineBuffer"
                 class="form-label"
             >
-                {{ translateKeyWithPlausibilityCheck("common:modules.tools.filter.geometryFilter.buffer", key => $t(key)) }}
+                {{ translateKeyWithPlausibilityCheck("common:modules.filter.geometryFilter.buffer", key => $t(key)) }}
             </label>
             <input
                 id="inputLineBuffer"
@@ -577,7 +577,7 @@ export default {
                 class="btn btn-primary"
                 @click="reset"
             >
-                {{ translateKeyWithPlausibilityCheck("common:modules.tools.filter.geometryFilter.removeGeometry", key => $t(key)) }}
+                {{ translateKeyWithPlausibilityCheck("common:modules.filter.geometryFilter.removeGeometry", key => $t(key)) }}
             </button>
         </div>
         <hr>

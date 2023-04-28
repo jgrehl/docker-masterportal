@@ -13,7 +13,6 @@ export function initiateVueI18Next (app) {
     app.use(I18NextVue, {i18next});
 }
 
-
 /**
 * initialization of the language with i18next
 * @pre i18next is not initialized
@@ -37,7 +36,7 @@ export function initLanguage (portalLanguageConfig) {
         },
         "fallbackLanguage": "de",
         "changeLanguageOnStartWhen": ["querystring", "localStorage", "navigator", "htmlTag"],
-        "loadPath": "/locales/{{lng}}/{{ns}}.json"
+        "loadPath": "/locales_3_0_0/{{lng}}/{{ns}}.json"
     }, portalLanguageConfig);
 
     // init i18next

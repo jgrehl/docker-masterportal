@@ -21,7 +21,7 @@ describe("src_3_0_0/shared/js/utils/getGfiFeaturesByTileFeature.js", () => {
         it("should use default values not for properties", () => {
             const result = getGfiFeature(null, null);
 
-            expect(result.getTitle()).to.equal("common:modules.layerInformation.buildings");
+            expect(result.getTitle()).to.equal("common:shared.js.utils.buildings");
             expect(result.getProperties()).to.deep.equal(null);
         });
         it("should get attributes and properties according to given parameters", () => {
@@ -44,7 +44,7 @@ describe("src_3_0_0/shared/js/utils/getGfiFeaturesByTileFeature.js", () => {
                 },
                 result = getGfiFeature(null, properties);
 
-            expect(result.getTitle()).to.equal("common:modules.layerInformation.buildings");
+            expect(result.getTitle()).to.equal("common:shared.js.utils.buildings");
             expect(result.getTheme()).to.equal("buildings_3d");
             expect(result.getProperties()).to.equal("properties attributes");
         });

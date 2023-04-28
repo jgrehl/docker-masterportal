@@ -79,7 +79,7 @@ export default {
             }
             this.addSingleAlert({
                 category: "error",
-                content: this.$t("modules.tools.fileImport.alertingMessages.formatError", {filename: file.name})
+                content: this.$t("common:modules.fileImport.alertingMessages.formatError", {filename: file.name})
             });
             return false;
         },
@@ -106,7 +106,7 @@ export default {
                                 else {
                                     this.addSingleAlert({
                                         category: "error",
-                                        content: this.$t("modules.tools.fileImport.alertingMessages.formatError", {filename: file.name})
+                                        content: this.$t("common:modules.fileImport.alertingMessages.formatError", {filename: file.name})
                                     });
                                 }
                             }
@@ -190,11 +190,11 @@ export default {
     >
         <p
             class="mb-3"
-            v-html="$t('modules.tools.fileImport.captions.introInfo')"
+            v-html="$t('common:modules.fileImport.captions.introInfo')"
         />
         <p
             class="mb-3"
-            v-html="$t('modules.tools.fileImport.captions.introFormats')"
+            v-html="$t('common:modules.fileImport.captions.introFormats')"
         />
         <FileUpload
             :id="'fileUpload'"
@@ -213,7 +213,7 @@ export default {
                         {{ file.name }}
                     </span>
                     <IconButton
-                        :aria="$t('modules.tools.fileUpload.removeAttachment')"
+                        :aria="$t('common:modules.fileImport.removeAttachment')"
                         :icon="'bi-trash'"
                         :interaction="() => removeFile(file)"
                         class="remove-btn col-3"
@@ -225,9 +225,9 @@ export default {
         <div class="d-flex justify-content-center">
             <FlatButton
                 v-if="fileUploaded"
-                :aria-label="$t('modules.tools.fileImport.importFiles')"
+                :aria-label="$t('common:modules.fileImport.importFiles')"
                 :interaction="() => addFile()"
-                :text="$t('modules.tools.fileImport.importFiles')"
+                :text="$t('common:modules.fileImport.importFiles')"
                 :icon="'bi-upload'"
             />
         </div>
@@ -239,7 +239,7 @@ export default {
                     class="successfullyImportedLabel"
                     for="succesfully-imported-files"
                 >
-                    {{ $t("modules.tools.fileImport.successfullyImportedLabel") }}
+                    {{ $t("common:modules.fileImport.successfullyImportedLabel") }}
                 </label>
                 <ul id="succesfully-imported-files">
                     <li
@@ -252,9 +252,9 @@ export default {
                         </span>
                         <FlatButton
                             v-if="enableZoomToExtend"
-                            :aria-label="$t(`common:modules.tools.fileImport.fileZoom`, {filename: filename})"
+                            :aria-label="$t(`common:modules.fileImport.fileZoom`, {filename: filename})"
                             :interaction="() => zoomTo(filename)"
-                            :text="$t('modules.tools.fileImport.zoom')"
+                            :text="$t('common:modules.fileImport.zoom')"
                             :icon="'bi-rocket-takeoff-fill'"
                         />
                     </li>
@@ -263,15 +263,15 @@ export default {
             <div class="h-seperator" />
             <p
                 class="mb-3 introDrawTool"
-                v-html="$t('modules.tools.fileImport.captions.introDrawTool')"
+                v-html="$t('common:modules.fileImport.captions.introDrawTool')"
             />
             <div
                 class="d-flex justify-content-center"
             >
                 <FlatButton
-                    aria-label="$t('modules.tools.fileImport.captions.drawTool')"
+                    aria-label="$t('common:modules.fileImport.captions.drawTool')"
                     :interaction="openDrawTool"
-                    :text="$t('modules.tools.fileImport.captions.drawTool')"
+                    :text="$t('common:modules.fileImport.captions.drawTool')"
                     :icon="'bi-pencil-fill'"
                 />
             </div>

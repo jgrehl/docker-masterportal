@@ -49,7 +49,7 @@ export default {
         <div class="remove-layer-container">
             <LightButton
                 :interaction="() => removeLayer(layerConf)"
-                :text="$t('common:tree.iconRemoveLayer')"
+                :text="$t('common:modules.layerTree.iconRemoveLayer')"
                 icon="bi-trash3"
                 customclass="light-button"
             />
@@ -63,7 +63,7 @@ export default {
             <label
                 :for="'layer-component-sub-menu-transparency-input-' + layerConf.id"
             >
-                {{ $t("common:tree.iconTransparency") + ":" }}
+                {{ $t("common:modules.layerTree.iconTransparency") + ":" }}
             </label>
             <input
                 :id="'layer-component-sub-menu-transparency-input-' + layerConf.id"

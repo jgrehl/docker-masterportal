@@ -17,7 +17,7 @@ describe("src_3_0_0/modules/scaleSwitcher/store/gettersScaleSwitcher.js", () => 
             expect(icon(stateScaleSwitcher)).to.equals("bi-arrows-angle-contract");
         });
         it("returns the name from state", () => {
-            expect(name(stateScaleSwitcher)).to.be.equals("common:menu.tools.scaleSwitcher");
+            expect(name(stateScaleSwitcher)).to.be.equals("common:modules.scaleSwitcher.name");
         });
         it("returns the supportedDevices default value from state", () => {
             expect(supportedDevices(stateScaleSwitcher)).to.be.deep.equals(["Desktop", "Mobile", "Table"]);
