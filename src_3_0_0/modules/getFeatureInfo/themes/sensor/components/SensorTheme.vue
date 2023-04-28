@@ -44,7 +44,7 @@ export default {
          * @returns {Object} The header attributes.
          */
         dataName: function () {
-            return this.gfiParams?.data?.name || this.$t("common:modules.tools.gfi.themes.sensor.sensor.dataName");
+            return this.gfiParams?.data?.name || this.$t("common:modules.getFeatureInfo.themes.sensor.sensor.dataName");
         },
 
         /**
@@ -53,9 +53,9 @@ export default {
          */
         header: function () {
             const header = this.gfiParams?.header || {
-                name: this.$t("common:modules.tools.gfi.themes.sensor.sensor.header.name"),
-                description: this.$t("common:modules.tools.gfi.themes.sensor.sensor.header.description"),
-                ownerThing: this.$t("common:modules.tools.gfi.themes.sensor.sensor.header.ownerThing")
+                name: this.$t("common:modules.getFeatureInfo.themes.sensor.sensor.header.name"),
+                description: this.$t("common:modules.getFeatureInfo.themes.sensor.sensor.header.description"),
+                ownerThing: this.$t("common:modules.getFeatureInfo.themes.sensor.sensor.header.ownerThing")
             };
 
             // "useConfigName" is set in the preparser, should be removed, with the refactoring of the core

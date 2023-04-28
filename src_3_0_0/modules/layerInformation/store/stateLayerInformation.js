@@ -22,7 +22,7 @@
 export default {
     icon: "bi-info-circle",
     menuSide: "mainMenu",
-    name: "common:modules.layerInformation.informationAndLegend",
+    name: "common:modules.layerInformation.name",
     type: "layerInformation",
 
     abstractText: "",

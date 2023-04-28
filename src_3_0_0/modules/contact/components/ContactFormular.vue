@@ -90,7 +90,7 @@ export default {
                         else {
                             this.addSingleAlert({
                                 category: "error",
-                                content: this.$t("common:modules.tools.contact.fileFormatMessage")
+                                content: this.$t("common:modules.contact.fileFormatMessage")
                             });
                         }
 
@@ -124,7 +124,7 @@ export default {
             if (!file.type.includes("image") && this.configuredFileExtensions.length === 0) {
                 this.addSingleAlert({
                     category: "error",
-                    content: this.$t("common:modules.tools.contact.fileFormatMessage")
+                    content: this.$t("common:modules.contact.fileFormatMessage")
                 });
                 return false;
             }
@@ -133,7 +133,7 @@ export default {
             if (file.size > this.maxFileSize) {
                 this.addSingleAlert({
                     category: "error",
-                    content: this.$t("common:modules.tools.contact.fileSizeMessage")
+                    content: this.$t("common:modules.contact.fileSizeMessage")
                 });
                 return false;
             }
@@ -188,7 +188,7 @@ export default {
                 html-element="textarea"
                 input-name="message"
                 :input-value="message"
-                :label-text="$t('common:modules.tools.contact.messageLabel')"
+                :label-text="$t('common:modules.contact.messageLabel')"
                 :rows="maxLines"
                 :valid-input="validMessage"
             />
@@ -207,9 +207,9 @@ export default {
                         type="checkbox"
                         @click="togglePrivacyPolicyAccepted"
                     >
-                    {{ $t("common:modules.tools.contact.privacyPolicy.label") }}
+                    {{ $t("common:modules.contact.privacyPolicy.label") }}
                 </label>
-                <p v-html="$t('common:modules.tools.contact.privacyPolicy.info', {privacyPolicyLink})" />
+                <p v-html="$t('common:modules.contact.privacyPolicy.info', {privacyPolicyLink})" />
             </div>
             <div v-if="fileUpload">
                 <div
@@ -230,7 +230,7 @@ export default {
                                 aria-controls="collapse-contact"
                             >
                                 <i class="bi-image me-2" />
-                                {{ $t('modules.tools.contact.addFileButton') }}
+                                {{ $t('common:modules.contact.addFileButton') }}
                             </button>
                         </h2>
                         <div
@@ -261,7 +261,7 @@ export default {
                                                 {{ image.name }}
                                             </span>
                                             <IconButton
-                                                :aria="$t('modules.tools.fileUpload.removeAttachment')"
+                                                :aria="$t('common:modules.fileUpload.removeAttachment')"
                                                 :icon="'bi-trash'"
                                                 :interaction="() => removeAttachment(image)"
                                                 class="remove-btn col-3"
@@ -277,9 +277,9 @@ export default {
             <div class="d-flex justify-content-center">
                 <FlatButton
                     id="module-contact-send-message"
-                    aria-label="$t('modules.tools.contact.sendButton')"
+                    aria-label="$t('common:modules.contact.sendButton')"
                     type="submit"
-                    :text="$t('modules.tools.contact.sendButton')"
+                    :text="$t('common:modules.contact.sendButton')"
                     :icon="sendIcon"
                     :disabled="!validForm"
                 />

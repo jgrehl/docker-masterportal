@@ -81,7 +81,7 @@ describe("src_3_0_0/core/maps/actionsMapsFeatureViaUrl", () => {
             geoJSON = createGeoJSON(features, geometryType, undefined);
 
             expect(spy.calledOnce).to.be.true;
-            expect(spy.firstCall.args).to.eql([i18next.t("common:modules.featureViaURL.messages.featureParsing")]);
+            expect(spy.firstCall.args).to.eql([i18next.t("common:core.maps.featureViaURL.messages.featureParsing")]);
             expect(geoJSON.features.length).to.equal(1);
         });
 
@@ -90,7 +90,7 @@ describe("src_3_0_0/core/maps/actionsMapsFeatureViaUrl", () => {
             geoJSON = createGeoJSON(features, geometryType, undefined);
 
             expect(spy.calledOnce).to.be.true;
-            expect(spy.firstCall.args).to.eql([i18next.t("common:modules.featureViaURL.messages.featureParsing")]);
+            expect(spy.firstCall.args).to.eql([i18next.t("common:core.maps.featureViaURL.messages.featureParsing")]);
             expect(geoJSON.features.length).to.equal(1);
         });
 
@@ -99,7 +99,7 @@ describe("src_3_0_0/core/maps/actionsMapsFeatureViaUrl", () => {
             geoJSON = createGeoJSON(features, geometryType, undefined);
 
             expect(spy.calledOnce).to.be.true;
-            expect(spy.firstCall.args).to.eql([i18next.t("common:modules.featureViaURL.messages.featureParsing")]);
+            expect(spy.firstCall.args).to.eql([i18next.t("common:core.maps.featureViaURL.messages.featureParsing")]);
             expect(geoJSON.features.length).to.equal(1);
         });
 
@@ -108,7 +108,7 @@ describe("src_3_0_0/core/maps/actionsMapsFeatureViaUrl", () => {
             geoJSON = createGeoJSON(features, geometryType, undefined);
 
             expect(spy.calledOnce).to.be.true;
-            expect(spy.firstCall.args).to.eql([i18next.t("common:modules.featureViaURL.messages.featureParsing")]);
+            expect(spy.firstCall.args).to.eql([i18next.t("common:core.maps.featureViaURL.messages.featureParsing")]);
             expect(geoJSON.features.length).to.equal(1);
         });
     });
@@ -119,13 +119,13 @@ describe("src_3_0_0/core/maps/actionsMapsFeatureViaUrl", () => {
 
             expect(getFeatureIds(wrongId)).to.eql([]);
             expect(spy.calledOnce).to.be.true;
-            expect(spy.firstCall.args).to.eql([i18next.t("common:modules.featureViaURL.messages.layerNotFound")]);
+            expect(spy.firstCall.args).to.eql([i18next.t("common:core.maps.featureViaURL.messages.layerNotFound")]);
         });
 
         it("should log an error on the console if no layerId was given to the function and return an empty array", () => {
             expect(getFeatureIds()).to.eql([]);
             expect(spy.calledOnce).to.be.true;
-            expect(spy.firstCall.args).to.eql([i18next.t("common:modules.featureViaURL.messages.layerNotFound")]);
+            expect(spy.firstCall.args).to.eql([i18next.t("common:core.maps.featureViaURL.messages.layerNotFound")]);
         });
     });
 

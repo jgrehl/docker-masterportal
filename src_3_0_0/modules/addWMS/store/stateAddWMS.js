@@ -13,7 +13,7 @@
 const state = {
     description: "",
     type: "addWMS",
-    name: "common:menu.tools.addWms",
+    name: "common:modules.addWMS.name",
     icon: "cloud-plus",
     showDescription: false,
     supportedDevices: ["Desktop", "Mobile", "Table"],

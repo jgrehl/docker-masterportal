@@ -27,7 +27,7 @@ export default {
             data-bs-toggle="collapse"
             :data-bs-target="'#collapse-sub-menu-' + layerConf.id.split('.').join('_')"
             :icon="'bi-sliders'"
-            :aria="$t('common:tree.iconSubMenu')"
+            :aria="$t('common:modules.layerTree.iconSubMenu')"
         />
     </div>
 </template>

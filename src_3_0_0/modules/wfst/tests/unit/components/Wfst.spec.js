@@ -114,7 +114,7 @@ describe("src/modules/modules/wfst/components/WfsTransaction.vue", () => {
         expect(wrapper.find("#tool-wfsTransaction-layerSelect-container").exists()).to.be.true;
         expect(wrapper.find("#tool-wfsTransaction-layerSelect").exists()).to.be.true;
         expect(wrapper.find("#tool-wfsTransaction-layerSelect-label").exists()).to.be.true;
-        expect(wrapper.find("#tool-wfsTransaction-layerSelect-label").text()).to.equal("common:modules.tools.wfsTransaction.layerSelectLabel");
+        expect(wrapper.find("#tool-wfsTransaction-layerSelect-label").text()).to.equal("common:modules.wfst.layerSelectLabel");
     });
     it("renders a container including the failure message that no layer has been selected in the layer tree", () => {
         exampleLayerOne.visibility = false;
@@ -128,7 +128,7 @@ describe("src/modules/modules/wfst/components/WfsTransaction.vue", () => {
         });
 
         expect(wrapper.find("#tool-wfsTransaction-layerFailure").exists()).to.be.true;
-        expect(wrapper.find("#tool-wfsTransaction-layerFailure").text()).to.equal("modules.tools.wfsTransaction.error.allLayersNotSelected");
+        expect(wrapper.find("#tool-wfsTransaction-layerFailure").text()).to.equal("common:modules.wfst.error.allLayersNotSelected");
     });
     it("renders a container including the failure message that the current layer has not been selected in the layer tree", () => {
         exampleLayerOne.visibility = false;
@@ -148,6 +148,6 @@ describe("src/modules/modules/wfst/components/WfsTransaction.vue", () => {
         wrapper.vm.setLayerIds = [{...exampleLayerOne, visibility: false}, exampleLayerTwo];
         wrapper.vm.setLayerInformation = [{...exampleLayerOne, visibility: false}, exampleLayerTwo];
         expect(wrapper.find("#tool-wfsTransaction-layerFailure").exists()).to.be.true;
-        expect(wrapper.find("#tool-wfsTransaction-layerFailure").text()).to.equal("modules.tools.wfsTransaction.error.allLayersNotSelected");
+        expect(wrapper.find("#tool-wfsTransaction-layerFailure").text()).to.equal("common:modules.wfst.error.layerNotSelected");
     });
 });

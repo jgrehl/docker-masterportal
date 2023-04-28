@@ -170,7 +170,7 @@ export default {
             :class="['pointer mr-4 ', isInputDisabled ? 'opacity-05' : '']"
             :speed-profile-id="option"
             :fill-color="option === settings.speedProfile ? '#0077ff' : '#000000'"
-            :tooltip="$t('common:modules.tools.routing.speedprofiles.' + option)"
+            :tooltip="$t('common:modules.routing.speedprofiles.' + option)"
         />
 
         <hr>
@@ -188,7 +188,7 @@ export default {
             <IsochronesItemBatchProcessing :settings="isochronesSettings" />
         </template>
         <template v-else>
-            <h6>{{ $t('common:modules.tools.routing.isochrones.startpoint') }}</h6>
+            <h6>{{ $t('common:modules.routing.isochrones.startpoint') }}</h6>
 
             <form
                 id="routing-isochrones-coordinate-input-form"
@@ -198,7 +198,7 @@ export default {
                 <div
                     class="helptext mb-3"
                 >
-                    <span>{{ $t('common:modules.tools.routing.coordinateInputHelp') }}</span>
+                    <span>{{ $t('common:modules.routing.coordinateInputHelp') }}</span>
                 </div>
                 <RoutingCoordinateInput
                     :count-waypoints="1"
@@ -215,7 +215,7 @@ export default {
             class="routing-isochrones-methodoption-lable"
             for="routing-isochrones-methodoption"
         >
-            {{ $t('common:modules.tools.routing.isochrones.optimizeHeader') }}
+            {{ $t('common:modules.routing.isochrones.optimizeHeader') }}
         </label>
         <select
             id="routing-isochrones-methodoption"
@@ -230,14 +230,14 @@ export default {
                 :selected="option === settings.isochronesMethodOption"
                 :disabled="isInputDisabled"
             >
-                {{ $t('common:modules.tools.routing.isochrones.optimization.' + option) }}
+                {{ $t('common:modules.routing.isochrones.optimization.' + option) }}
             </option>
         </select>
 
 
         <template v-if="settings.isochronesMethodOption === 'DISTANCE'">
             <RoutingSliderInput
-                :label="$t('common:modules.tools.routing.isochrones.maxDistance')"
+                :label="$t('common:modules.routing.isochrones.maxDistance')"
                 :value="settings.distanceValue"
                 :min="settings.minDistance"
                 :max="settings.maxDistance"
@@ -249,7 +249,7 @@ export default {
 
         <template v-else-if="settings.isochronesMethodOption === 'TIME'">
             <RoutingSliderInput
-                :label="$t('common:modules.tools.routing.isochrones.maxTraveltime')"
+                :label="$t('common:modules.routing.isochrones.maxTraveltime')"
                 :value="settings.timeValue"
                 :min="settings.minTime"
                 :max="settings.maxTime"
@@ -260,7 +260,7 @@ export default {
         </template>
 
         <RoutingSliderInput
-            :label="$t('common:modules.tools.routing.isochrones.interval')"
+            :label="$t('common:modules.routing.isochrones.interval')"
             :value="settings.intervalValue"
             :min="minIntervalValue"
             :max="maxIntervalValue"
@@ -290,7 +290,7 @@ export default {
                         :disabled="waypoint.getCoordinates().length === 0 || isInputDisabled"
                         @click="findIsochrones()"
                     >
-                        {{ $t('common:modules.tools.routing.isochrones.calculate') }}
+                        {{ $t('common:modules.routing.isochrones.calculate') }}
                     </button>
                 </div>
 
@@ -300,7 +300,7 @@ export default {
                 >
                     <hr class="w-100">
 
-                    <span class="mb-2">{{ $t('common:modules.tools.routing.isochrones.legend') }}</span>
+                    <span class="mb-2">{{ $t('common:modules.routing.isochrones.legend') }}</span>
                     <div
                         v-for="(area, index) of routingIsochrones.getAreas()"
                         :key="'result-area-' + index"

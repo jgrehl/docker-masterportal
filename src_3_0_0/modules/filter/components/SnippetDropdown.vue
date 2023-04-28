@@ -178,13 +178,13 @@ export default {
     },
     computed: {
         ariaLabelDropdown () {
-            return this.$t("modules.tools.filter.ariaLabel.dropdown", {param: this.attrName});
+            return this.$t("common:modules.filter.ariaLabel.dropdown", {param: this.attrName});
         },
         ariaLabelRadio () {
-            return this.$t("modules.tools.filter.ariaLabel.radio", {param: this.attrName});
+            return this.$t("common:modules.filter.ariaLabel.radio", {param: this.attrName});
         },
         ariaLabelCheckbox () {
-            return this.$t("modules.tools.filter.ariaLabel.checkbox", {param: this.attrName});
+            return this.$t("common:modules.filter.ariaLabel.checkbox", {param: this.attrName});
         },
         titleText () {
             if (this.title === true) {
@@ -196,10 +196,10 @@ export default {
             return "";
         },
         emptyList () {
-            return this.$t("modules.tools.filter.dropdown.emptyList");
+            return this.$t("common:modules.filter.dropdown.emptyList");
         },
         noElements () {
-            return this.$t("modules.tools.filter.dropdown.noElements");
+            return this.$t("common:modules.filter.dropdown.noElements");
         },
         dropdownValueComputed () {
             const dropdownValue = [];
@@ -237,7 +237,7 @@ export default {
             return dropdownValue;
         },
         selectAllTitle () {
-            return !this.allSelected ? this.$t("modules.tools.filter.dropdown.selectAll") : this.$t("modules.tools.filter.dropdown.deselectAll");
+            return !this.allSelected ? this.$t("common:modules.filter.dropdown.selectAll") : this.$t("common:modules.filter.dropdown.deselectAll");
         },
         securedOperator () {
             if (!this.operatorWhitelist.includes(this.operator)) {
