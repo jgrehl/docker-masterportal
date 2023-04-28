@@ -89,7 +89,7 @@ export default {
                 });
             }
             else {
-                this.$store.dispatch("Alerting/addSingleAlert", i18next.t("common:modules.tools.filter.alertingMessages.noMatchingFilterId"), {root: true});
+                this.$store.dispatch("Alerting/addSingleAlert", i18next.t("common:modules.filter.alertingMessages.noMatchingFilterId"), {root: true});
             }
             this.$emit("resetJumpToId");
             if (!this.selectedLayers.some(selectedLayer => selectedLayer.filterId === filterId)) {

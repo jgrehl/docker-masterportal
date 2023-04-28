@@ -74,7 +74,7 @@ describe("src_3_0_0/modules/layerClusterToggler/components/LayerClusterToggler.v
         });
 
         expect(wrapper.find("p").exists()).to.be.true;
-        expect(wrapper.find("p").text()).to.equals("modules.tools.layerClusterToggler.info");
+        expect(wrapper.find("p").text()).to.equals("common:modules.layerClusterToggler.info");
         expect(wrapper.find("ul").exists()).to.be.true;
         expect(wrapper.findAll("ul > li").length).to.equals(3);
 

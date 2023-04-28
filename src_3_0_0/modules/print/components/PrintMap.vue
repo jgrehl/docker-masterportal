@@ -300,7 +300,7 @@ export default {
             else {
                 this.addSingleAlert({
                     category: "error",
-                    content: this.$t("common:modules.tools.print.alertMessage")
+                    content: this.$t("common:modules.print.alertMessage")
                 });
             }
         },
@@ -360,8 +360,8 @@ export default {
             <div>
                 <InputText
                     :id="docTitleId"
-                    :label="$t('modules.tools.print.titleLabel')"
-                    :placeholder="$t('modules.tools.print.titleLabel')"
+                    :label="$t('common:modules.print.titleLabel')"
+                    :placeholder="$t('common:modules.print.titleLabel')"
                     :value="title"
                     :input="setTitle"
                 />
@@ -370,7 +370,7 @@ export default {
                 <select
                     id="printLayout"
                     class="form-select"
-                    :aria-label="$t('modules.tools.print.layoutLabel')"
+                    :aria-label="$t('common:modules.print.layoutLabel')"
                     @change="layoutChanged($event.target.value)"
                 >
                     <option
@@ -383,7 +383,7 @@ export default {
                     </option>
                 </select>
                 <label for="printLayout">
-                    {{ $t("modules.tools.print.layoutLabel") }}
+                    {{ $t("common:modules.print.layoutLabel") }}
                 </label>
             </div>
             <div class="form-floating mb-3">
@@ -402,7 +402,7 @@ export default {
                     </option>
                 </select>
                 <label for="printFormat">
-                    {{ $t("common:modules.tools.print.formatLabel") }}
+                    {{ $t("common:modules.print.formatLabel") }}
                 </label>
             </div>
             <div
@@ -424,7 +424,7 @@ export default {
                     </option>
                 </select>
                 <label for="printDpi">
-                    {{ $t("common:modules.tools.print.dpiLabel") }}
+                    {{ $t("common:modules.print.dpiLabel") }}
                 </label>
             </div>
             <div class="form-floating scale">
@@ -444,14 +444,14 @@ export default {
                     </option>
                 </select>
                 <label for="printScale">
-                    {{ $t("common:modules.tools.print.scaleLabel") }}
+                    {{ $t("common:modules.print.scaleLabel") }}
                 </label>
                 <div class="row info mb-3 mt-2">
                     <span class="col-1 info-icon d-flex align-items-center">
                         <i class="bi-info-circle" />
                     </span>
                     <div class="col info-text ps-3">
-                        {{ $t("common:modules.tools.print.hintInfoScale") }}
+                        {{ $t("common:modules.print.hintInfoScale") }}
                     </div>
                 </div>
             </div>
@@ -462,22 +462,22 @@ export default {
                 <InputText
                     :id="outputFileTitleId"
                     v-model="outputTitle"
-                    :label="$t('modules.tools.print.outputfileTitleLabel')"
-                    :placeholder="$t('modules.tools.print.outputfileTitleLabel')"
+                    :label="$t('common:modules.print.outputfileTitleLabel')"
+                    :placeholder="$t('common:modules.print.outputfileTitleLabel')"
                 />
                 <small
                     id="outputFileTitleWarning"
                     class="offset-md-5 col-md-7 active"
                 >
-                    {{ $t("common:modules.tools.print.validationWarning") }}
+                    {{ $t("common:modules.print.validationWarning") }}
                 </small>
             </div>
             <div class="form-check form-switch mb-3 d-flex align-items-center">
                 <SwitchInput
                     :id="'autoAdjustScale'"
-                    :aria="$t('modules.tools.print.autoAdjustScale')"
+                    :aria="$t('common:modules.print.autoAdjustScale')"
                     :interaction="($event) => setAutoAdjustScale($event.target.checked)"
-                    :label="$t('modules.tools.print.autoAdjustScale')"
+                    :label="$t('common:modules.print.autoAdjustScale')"
                     :checked="autoAdjustScale && !isScaleSelectedManually"
                 />
             </div>
@@ -487,9 +487,9 @@ export default {
                 <div class="form-check form-switch mb-3 d-flex align-items-center">
                     <SwitchInput
                         :id="'printLegend'"
-                        :aria="$t('modules.tools.print.withLegendLabel')"
+                        :aria="$t('common:modules.print.withLegendLabel')"
                         :interaction="($event) => setIsLegendSelected($event.target.checked)"
-                        :label="$t('modules.tools.print.withLegendLabel')"
+                        :label="$t('common:modules.print.withLegendLabel')"
                         :checked="isLegendSelected"
                     />
                 </div>
@@ -500,9 +500,9 @@ export default {
                 <div class="form-check form-switch mb-3 d-flex align-items-center">
                     <SwitchInput
                         :id="'printGfi'"
-                        :aria="$t('modules.tools.print.withInfoLabel')"
+                        :aria="$t('common:modules.print.withInfoLabel')"
                         :interaction="($event) => setIsGfiSelected($event.target.checked)"
-                        :label="$t('modules.tools.print.withInfoLabel')"
+                        :label="$t('common:modules.print.withInfoLabel')"
                         :disabled="currentFeature === null"
                         :checked="isGfiSelected"
                     />
@@ -512,9 +512,9 @@ export default {
                 <div class="col-md-12 d-flex justify-content-center">
                     <FlatButton
                         id="printBtn"
-                        :aria-label="$t('modules.tools.print.printLabel')"
+                        :aria-label="$t('common:modules.print.printLabel')"
                         :interaction="print"
-                        :text="$t('modules.tools.print.printLabel')"
+                        :text="$t('common:modules.print.printLabel')"
                         :icon="printIcon"
                     />
                 </div>
@@ -556,9 +556,9 @@ export default {
                 <div class="col-md-7 d-grid gap-2 modules-print-download-button-container">
                     <FlatButton
                         v-if="file.finishState"
-                        :aria-label="$t('modules.tools.print.downloadFile')"
+                        :aria-label="$t('common:modules.print.downloadFile')"
                         :interaction="($event) => download($event.target, file.downloadUrl, file.filename)"
-                        :text="$t('modules.tools.print.downloadFile')"
+                        :text="$t('common:modules.print.downloadFile')"
                         :icon="downloadIcon"
                     />
 
@@ -567,7 +567,7 @@ export default {
                         class="btn btn-outline-default modules-print-download-button-disabled rounded-pill"
                         disabled
                     >
-                        {{ $t("common:modules.tools.print.createDownloadFile") }}
+                        {{ $t("common:modules.print.createDownloadFile") }}
                     </button>
                 </div>
             </div>

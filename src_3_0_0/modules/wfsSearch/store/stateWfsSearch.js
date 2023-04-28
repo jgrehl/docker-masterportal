@@ -25,7 +25,7 @@
 const state = {
     type: "wfsSearch",
     // defaults for config.json tool parameters
-    name: "common:menu.tools.wfsSearch",
+    name: "common:modules.wfsSearch.name",
     icon: "bi-search",
     instances: [],
     // state parameters

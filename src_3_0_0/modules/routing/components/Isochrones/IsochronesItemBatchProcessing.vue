@@ -57,7 +57,7 @@ export default {
                             this.addSingleAlert({
                                 title: this.$t("common:modules.alerting.categories.error"),
                                 category: "error",
-                                content: this.$t("common:modules.tools.routing.isochrones.batchProcessing.errorSomeFailed", {countFailed: this.coundFailed})
+                                content: this.$t("common:modules.routing.isochrones.batchProcessing.errorSomeFailed", {countFailed: this.coundFailed})
                             });
                         }
                     }
@@ -128,7 +128,7 @@ export default {
         parseCsv (filecontent) {
             return new Promise((resolve, reject) => {
                 if (typeof filecontent !== "string") {
-                    reject(new Error(this.$t("common:modules.tools.routing.isochrones.batchProcessing.errorNoEntries")));
+                    reject(new Error(this.$t("common:modules.routing.isochrones.batchProcessing.errorNoEntries")));
                     return;
                 }
                 const content = filecontent.replace(/[\r]/g, "").trim(),
@@ -137,12 +137,12 @@ export default {
                     tasks = [];
 
                 if (content.length === 0 || count === 0) {
-                    reject(new Error(this.$t("common:modules.tools.routing.isochrones.batchProcessing.errorNoEntries")));
+                    reject(new Error(this.$t("common:modules.routing.isochrones.batchProcessing.errorNoEntries")));
                     return;
                 }
 
                 if (this.settings.batchProcessing.limit && count > this.settings.batchProcessing.limit) {
-                    reject(new Error(this.$t("common:modules.tools.routing.isochrones.batchProcessing.errorToManyEntriesInFile", {limit: this.settings.batchProcessing.limit})));
+                    reject(new Error(this.$t("common:modules.routing.isochrones.batchProcessing.errorToManyEntriesInFile", {limit: this.settings.batchProcessing.limit})));
                     return;
                 }
 
@@ -155,12 +155,12 @@ export default {
                     }
 
                     if (lineParts.length !== 3) {
-                        reject(new Error(this.$t("common:modules.tools.routing.isochrones.batchProcessing.errorToManyEntriesInRow", {row: i})));
+                        reject(new Error(this.$t("common:modules.routing.isochrones.batchProcessing.errorToManyEntriesInRow", {row: i})));
                         return;
                     }
 
                     if (!this.isNumber(Number(lineParts[1])) || !this.isNumber(Number(lineParts[2]))) {
-                        reject(new Error(this.$t("common:modules.tools.routing.isochrones.batchProcessing.errorRowContainsEntriesNoNumber", {row: i})));
+                        reject(new Error(this.$t("common:modules.routing.isochrones.batchProcessing.errorRowContainsEntriesNoNumber", {row: i})));
                         return;
                     }
 
@@ -196,8 +196,8 @@ export default {
                 return isochronesResult.getAreas().map(
                     area => area.getGeojsonFeature({
                         ID: id,
-                        [this.$t("common:modules.tools.routing.directions.batchProcessing.downloadHeader.xStart")]: startLon,
-                        [this.$t("common:modules.tools.routing.directions.batchProcessing.downloadHeader.yStart")]: startLat
+                        [this.$t("common:modules.routing.directions.batchProcessing.downloadHeader.xStart")]: startLon,
+                        [this.$t("common:modules.routing.directions.batchProcessing.downloadHeader.yStart")]: startLat
                     })
                 );
             }
@@ -213,8 +213,8 @@ export default {
                     },
                     properties: {
                         ID: id,
-                        [this.$t("common:modules.tools.routing.directions.batchProcessing.downloadHeader.xStart")]: startLon,
-                        [this.$t("common:modules.tools.routing.directions.batchProcessing.downloadHeader.yStart")]: startLat,
+                        [this.$t("common:modules.routing.directions.batchProcessing.downloadHeader.xStart")]: startLon,
+                        [this.$t("common:modules.routing.directions.batchProcessing.downloadHeader.yStart")]: startLat,
                         error: true
                     }
                 }
@@ -237,7 +237,7 @@ export default {
         :settings="settings"
         :progress="taskHandler ? taskHandler.progress : 0"
         :is-processing="isProcessing"
-        :structure-text="$t('common:modules.tools.routing.isochrones.batchProcessing.structure')"
+        :structure-text="$t('common:modules.routing.isochrones.batchProcessing.structure')"
         example-text="1;8.12;50.67"
         @filesadded="addFiles($event)"
         @cancel-process="taskHandler.cancelRun()"
