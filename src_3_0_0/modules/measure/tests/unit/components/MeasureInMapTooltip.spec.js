@@ -77,7 +77,7 @@ describe("src_3_0_0/modules/measure/components/MeasureInMapTooltip.vue", () => {
         expect(tp).not.to.be.null;
         expect(style.length).to.be.equals(2);
         expect(style[0].text_.text_).to.be.equals("0");
-        expect(style[1].text_.text_).to.be.equals("modules.tools.measure.finishWithDoubleClick");
+        expect(style[1].text_.text_).to.be.equals("common:modules.measure.finishWithDoubleClick");
         expect(tp.getGeometry().getLastCoordinate()).to.deep.equal([1000, 0]);
     });
     it("LineString: setValueAtTooltipLayer changes text of style", () => {
@@ -96,7 +96,7 @@ describe("src_3_0_0/modules/measure/components/MeasureInMapTooltip.vue", () => {
         expect(wrapper.vm.currentTextPoint).not.to.be.null;
         expect(style.length).to.be.equals(2);
         expect(style[0].text_.text_).to.be.equals("500 m");
-        expect(style[1].text_.text_).to.be.equals("modules.tools.measure.finishWithDoubleClick");
+        expect(style[1].text_.text_).to.be.equals("common:modules.measure.finishWithDoubleClick");
     });
     it("LineString: generateTextStyles returns two styles with measure content", () => {
         createTestStore();
@@ -114,7 +114,7 @@ describe("src_3_0_0/modules/measure/components/MeasureInMapTooltip.vue", () => {
 
         expect(styles.length).to.be.equals(2);
         expect(styles[0].text_.text_).to.be.equals("200m");
-        expect(styles[1].text_.text_).to.be.equals("modules.tools.measure.finishWithDoubleClick");
+        expect(styles[1].text_.text_).to.be.equals("common:modules.measure.finishWithDoubleClick");
     });
     it("does not render complete tooltips for finished features", () => {
         createTestStore(false);
@@ -145,7 +145,7 @@ describe("src_3_0_0/modules/measure/components/MeasureInMapTooltip.vue", () => {
         expect(tp).not.to.be.null;
         expect(style.length).to.be.equals(2);
         expect(style[0].text_.text_).to.be.equals("0");
-        expect(style[1].text_.text_).to.be.equals("modules.tools.measure.finishWithDoubleClick");
+        expect(style[1].text_.text_).to.be.equals("common:modules.measure.finishWithDoubleClick");
         expect(tp.getGeometry().getLastCoordinate()).to.deep.equal([0, 1000]);
     });
     it("Polygon: generateTextStyles returns two styles with measure content", () => {
@@ -164,7 +164,7 @@ describe("src_3_0_0/modules/measure/components/MeasureInMapTooltip.vue", () => {
 
         expect(styles.length).to.be.equals(2);
         expect(styles[0].text_.text_).to.be.equals("200m");
-        expect(styles[1].text_.text_).to.be.equals("modules.tools.measure.finishWithDoubleClick");
+        expect(styles[1].text_.text_).to.be.equals("common:modules.measure.finishWithDoubleClick");
     });
     it("Polygon: setValueAtTooltipLayer changes text of style", () => {
         createTestStore(false, true, "polygonId", "Polygon");
@@ -182,6 +182,6 @@ describe("src_3_0_0/modules/measure/components/MeasureInMapTooltip.vue", () => {
         expect(wrapper.vm.currentTextPoint).not.to.be.null;
         expect(style.length).to.be.equals(2);
         expect(style[0].text_.text_).to.be.equals("500 m");
-        expect(style[1].text_.text_).to.be.equals("modules.tools.measure.finishWithDoubleClick");
+        expect(style[1].text_.text_).to.be.equals("common:modules.measure.finishWithDoubleClick");
     });
 });

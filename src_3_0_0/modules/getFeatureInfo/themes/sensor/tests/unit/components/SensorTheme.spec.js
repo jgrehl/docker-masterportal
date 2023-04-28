@@ -186,9 +186,9 @@ describe("src_3_0_0/modules/getFeatureInfo/themes/senor/components/SensorTheme.v
     });
 
     it("should render the header", () => {
-        expect(wrapper.findAll("div > div > strong")[0].text()).equals("common:modules.tools.gfi.themes.sensor.sensor.header.name: Name");
-        expect(wrapper.findAll("div > div > strong")[1].text()).equals("common:modules.tools.gfi.themes.sensor.sensor.header.description: Beschreibung");
-        expect(wrapper.findAll("div > div > strong")[2].text()).equals("common:modules.tools.gfi.themes.sensor.sensor.header.ownerThing: Eigentümer");
+        expect(wrapper.findAll("div > div > strong")[0].text()).equals("common:modules.getFeatureInfo.themes.sensor.sensor.header.name: Name");
+        expect(wrapper.findAll("div > div > strong")[1].text()).equals("common:modules.getFeatureInfo.themes.sensor.sensor.header.description: Beschreibung");
+        expect(wrapper.findAll("div > div > strong")[2].text()).equals("common:modules.getFeatureInfo.themes.sensor.sensor.header.ownerThing: Eigentümer");
     });
 
     it("should render a menulist (div > div > ul) with class 'nav nav-pills'", () => {
@@ -199,12 +199,12 @@ describe("src_3_0_0/modules/getFeatureInfo/themes/senor/components/SensorTheme.v
     it("should render the data tab in menulist with class active by start", () => {
         expect(wrapper.find("div > div > ul > li").exists()).to.be.true;
         expect(wrapper.find("div > div > ul > li > a").classes("active")).to.be.true;
-        expect(wrapper.find("div > div > ul > li > a").text()).equals("common:modules.tools.gfi.themes.sensor.sensor.dataName");
+        expect(wrapper.find("div > div > ul > li > a").text()).equals("common:modules.getFeatureInfo.themes.sensor.sensor.dataName");
     });
 
     it("should render the four tabs in menulist for chart values configured as array", () => {
         expect(wrapper.findAll("div > div > ul > li > a").length).equals(4);
-        expect(wrapper.findAll("div > div > ul > li > a")[0].text()).equals("common:modules.tools.gfi.themes.sensor.sensor.dataName");
+        expect(wrapper.findAll("div > div > ul > li > a")[0].text()).equals("common:modules.getFeatureInfo.themes.sensor.sensor.dataName");
         expect(wrapper.findAll("div > div > ul > li > a")[1].text()).equals("available");
         expect(wrapper.findAll("div > div > ul > li > a")[2].text()).equals("charging");
         expect(wrapper.findAll("div > div > ul > li > a")[3].text()).equals("outoforder");

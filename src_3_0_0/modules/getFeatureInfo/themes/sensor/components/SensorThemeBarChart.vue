@@ -110,8 +110,8 @@ export default {
 
             this.titleText = [
                 this.$t(this.chartValue?.title || ""),
-                `${this.$t("common:modules.tools.gfi.themes.sensor.sensorBarChart.chartTitleAverage")} `
-                + this.$t(`common:modules.tools.gfi.themes.sensor.sensorBarChart.${this.periodUnit}`, {count: this.periodLength}),
+                `${this.$t("common:modules.getFeatureInfo.themes.sensor.sensorBarChart.chartTitleAverage")} `
+                + this.$t(`common:modules.getFeatureInfo.themes.sensor.sensorBarChart.${this.periodUnit}`, {count: this.periodLength}),
                 this.$t(this.noticeText)
             ];
 
@@ -235,7 +235,7 @@ export default {
                     ticks: {
                         callback: value => {
                             return value % 2 ? "" : this.$t(
-                                "common:modules.tools.gfi.themes.sensor.sensorBarChart.clock", {value}
+                                "common:modules.getFeatureInfo.themes.sensor.sensorBarChart.clock", {value}
                             );
                         }
                     }
@@ -302,7 +302,7 @@ export default {
                 id="left"
                 type="button"
                 class="leftButton kat btn"
-                :title="$t('common:modules.tools.gfi.themes.sensor.sensorBarChart.previousWeekday')"
+                :title="$t('common:modules.getFeatureInfo.themes.sensor.sensorBarChart.previousWeekday')"
                 @click="showPreviousWeekDay"
             >
                 <span class="bootstrap-icon">
@@ -314,7 +314,7 @@ export default {
                 id="right"
                 type="button"
                 class="rightButton kat btn"
-                :title="$t('common:modules.tools.gfi.themes.sensor.sensorBarChart.nextWeekday')"
+                :title="$t('common:modules.getFeatureInfo.themes.sensor.sensorBarChart.nextWeekday')"
                 @click="showNextWeekDay"
             >
                 <span class="bootstrap-icon">
