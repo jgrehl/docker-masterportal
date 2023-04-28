@@ -158,7 +158,7 @@ export default {
                     class="nav-link"
                     :class="themeTabClasses"
                     @click.prevent="switchToThemes()"
-                >{{ $t("modules.tools.featureLister.chooseTheme") }}</a>
+                >{{ $t("common:modules.featureLister.chooseTheme") }}</a>
             </li>
             <li
                 id="module-feature-lister-list"
@@ -170,7 +170,7 @@ export default {
                     class="nav-link"
                     :class="listTabClasses"
                     @click.prevent="switchToList(layer)"
-                >{{ $t("modules.tools.featureLister.list") }}</a>
+                >{{ $t("common:modules.featureLister.list") }}</a>
             </li>
             <li
                 id="module-feature-lister-details"
@@ -182,7 +182,7 @@ export default {
                     class="nav-link"
                     :class="detailsTabClasses"
                     @click.prevent="switchToDetails()"
-                >{{ $t("modules.tools.featureLister.details") }}</a>
+                >{{ $t("common:modules.featureLister.details") }}</a>
             </li>
         </ul>
         <div
@@ -194,7 +194,7 @@ export default {
                 id="feature-lister-themes-header"
                 class="panel-heading"
             >
-                {{ $t("modules.tools.featureLister.visibleVectorLayers") }}
+                {{ $t("common:modules.featureLister.visibleVectorLayers") }}
             </div>
             <ul
                 v-for="layer in visibleVectorLayers"
@@ -271,9 +271,9 @@ export default {
                 >
                     <FlatButton
                         id="module-feature-lister-show-more"
-                        aria-label="$t('modules.tools.featureLister.more')"
+                        aria-label="$t('commonmodules.featureLister.more')"
                         type="button"
-                        :text="$t('modules.tools.featureLister.more')"
+                        :text="$t('common:modules.featureLister.more')"
                         :icon="'bi-plus'"
                         :disabled="featureCount <= maxFeatures || shownFeatures === featureCount"
                         :interaction="() => showMore()"
@@ -281,7 +281,7 @@ export default {
                     <p
                         class="navbar-text feature-lister-list-message"
                     >
-                        {{ $t("modules.tools.featureLister.key", {shownFeatures, featureCount}) }}
+                        {{ $t("common:modules.featureLister.key", {shownFeatures, featureCount}) }}
                     </p>
                 </div>
             </div>
@@ -291,7 +291,7 @@ export default {
                 id="feature-lister-details-header"
                 class="panel-heading"
             >
-                <span> {{ $t("modules.tools.featureLister.detailsOfSelected") }} </span>
+                <span> {{ $t("common:modules.featureLister.detailsOfSelected") }} </span>
             </div>
             <div
                 id="feature-lister-details"

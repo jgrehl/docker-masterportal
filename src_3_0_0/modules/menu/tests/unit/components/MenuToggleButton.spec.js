@@ -49,7 +49,7 @@ describe("src_3_0_0/modules/menu/MenuToggleButton.vue", () => {
         expect(button.exists()).to.be.true;
         expect(button.classes()).to.eql(["btn", "btn-light", "bootstrap-icon", "shadow", "menu-toggle-button", "toggle-button-mainMenu"]);
         expect(button.attributes("type")).to.equal("button");
-        expect(button.attributes("aria-label")).to.equal("common:menu.ariaLabelOpen");
+        expect(button.attributes("aria-label")).to.equal("common:modules.menu.ariaLabelOpen");
         expect(icon.exists()).to.be.true;
         expect(icon.classes()).to.eql(["bi-list"]);
     });
@@ -67,7 +67,7 @@ describe("src_3_0_0/modules/menu/MenuToggleButton.vue", () => {
         expect(button.exists()).to.be.true;
         expect(button.classes()).to.eql(["btn", "btn-light", "bootstrap-icon", "shadow", "menu-toggle-button", "toggle-button-secondaryMenu"]);
         expect(button.attributes("type")).to.equal("button");
-        expect(button.attributes("aria-label")).to.equal("common:menu.ariaLabelOpen");
+        expect(button.attributes("aria-label")).to.equal("common:modules.menu.ariaLabelOpen");
         expect(icon.exists()).to.be.true;
         expect(icon.classes()).to.eql(["bi-tools"]);
     });

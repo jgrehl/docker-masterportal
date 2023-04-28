@@ -127,12 +127,12 @@ SearchInterfaceGazetteer.prototype.normalizeResults = function (searchResults) {
  */
 SearchInterfaceGazetteer.prototype.getTranslationByType = function (type) {
     const keys = {
-        addressAffixed: "common:modules.searchbar.type.address",
-        addressUnaffixed: "common:modules.searchbar.type.address",
-        district: "common:modules.searchbar.type.district",
-        houseNumbersForStreet: "common:modules.searchbar.type.address",
-        parcel: "common:modules.searchbar.type.parcel",
-        street: "common:modules.searchbar.type.street"
+        addressAffixed: "common:modules.searchBar.type.address",
+        addressUnaffixed: "common:modules.searchBar.type.address",
+        district: "common:modules.searchBar.type.district",
+        houseNumbersForStreet: "common:modules.searchBar.type.address",
+        parcel: "common:modules.searchBar.type.parcel",
+        street: "common:modules.searchBar.type.street"
     };
 
     return i18next.t(keys[type]);
