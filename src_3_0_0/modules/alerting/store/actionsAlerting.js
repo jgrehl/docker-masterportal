@@ -52,6 +52,7 @@ function checkAlertViewRestriction (displayedAlerts, alertToCheck) {
     if (alertToCheck.once === false || alertToCheck.once === undefined) {
         return true;
     }
+
     // displayed and restricted to only a single time
     if (alertToCheck.once === true) {
         store.commit("Alerting/addToDisplayedAlerts", alertToCheck);
@@ -81,7 +82,7 @@ export default {
         const storageKey = state.localStorageDisplayedAlertsKey;
 
         state.alerts.forEach(singleAlert => {
-            if (!singleAlert.mustBeConfirmed && singleAlert.initialConfirmed !== false) {
+            if (!singleAlert.mustBeConfirmed && singleAlert.initialConfirmed !== false && singleAlert.initial !== undefined) {
                 commit("addToDisplayedAlerts", singleAlert);
                 commit("removeFromAlerts", singleAlert);
             }
