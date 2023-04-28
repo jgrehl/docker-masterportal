@@ -187,7 +187,7 @@ export default {
         }
         catch (error) {
             context.dispatch("Alerting/addSingleAlert",
-                i18next.t("common:modules.tools.filter.upload.geometryParseError"),
+                i18next.t("common:modules.filter.upload.geometryParseError"),
                 {root: true}
             );
             return;

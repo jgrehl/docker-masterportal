@@ -12,7 +12,7 @@ describe("src/modules/searchBar/components/SearchBarResultList.vue", () => {
         Portalconfig: {
             searchBar: {
                 id: "searchBar",
-                placeholder: "common:modules.searchbar.placeholder.address"
+                placeholder: "common:modules.searchBar.placeholder.address"
             }
         }
     };

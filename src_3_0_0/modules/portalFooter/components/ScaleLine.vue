@@ -54,7 +54,7 @@ export default {
     <div
         v-if="mode === '2D'"
         id="modules-scales"
-        :title="$t('modules.footer.scale')"
+        :title="$t('common:modules.portalFooter.scale')"
     >
         <span class="scale-as-a-ratio px-3">
             {{ scaleToOne(scale) }}
