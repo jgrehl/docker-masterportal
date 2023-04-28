@@ -209,7 +209,7 @@ const initialState = JSON.parse(JSON.stringify(stateDraw)),
                     if (featureCount > maxFeatures - 1) {
                         const alert = {
                             category: "error",
-                            content: i18next.t("common:modules.tools.draw.limitReached", {count: maxFeatures}),
+                            content: i18next.t("common:modules.draw.limitReached", {count: maxFeatures}),
                             displayClass: "error",
                             multipleAlert: true
                         };

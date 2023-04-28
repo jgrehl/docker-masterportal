@@ -162,7 +162,7 @@ export default {
             :class="['pointer mr-4 ', isInputDisabled ? 'opacity-05' : '']"
             :speed-profile-id="option"
             :fill-color="option === settings.speedProfile ? '#0077ff' : '#000000'"
-            :tooltip="$t('common:modules.tools.routing.speedprofiles.' + option)"
+            :tooltip="$t('common:modules.routing.speedprofiles.' + option)"
         />
 
         <hr>
@@ -188,7 +188,7 @@ export default {
                 <div
                     class="helptext mb-3"
                 >
-                    <span>{{ $t('common:modules.tools.routing.coordinateInputHelp') }}</span>
+                    <span>{{ $t('common:modules.routing.coordinateInputHelp') }}</span>
                 </div>
                 <RoutingCoordinateInput
                     v-for="(waypoint, index) of waypoints"
@@ -204,7 +204,7 @@ export default {
 
             <div class="d-flex justify-content-between mt-4">
                 <div class="d-flex">
-                    <span> {{ $t('common:modules.tools.routing.directions.restrictedAreas') }}:</span>
+                    <span> {{ $t('common:modules.routing.directions.restrictedAreas') }}:</span>
 
                     <svg
                         class="m-1 pointer"
@@ -220,7 +220,7 @@ export default {
                         @click="changeMapInteractionModeAvoidAreasEdit()"
                         @keydown.enter="changeMapInteractionModeAvoidAreasEdit()"
                     >
-                        <title>{{ $t('common:modules.tools.routing.directions.editRestrictedAreas') }}</title>
+                        <title>{{ $t('common:modules.routing.directions.editRestrictedAreas') }}</title>
                         <path
                             :fill="isMapInteractionModeAvoidAreasEdit ? '#f00' : '#000'"
                             d="M3,0c1.656,0 3,1.344 3,3c0,1.656 -1.344,3 -3,3c-1.656,0 -3,-1.344 -3,-3c0,-1.656 1.344,-3 3,-3Zm0,1.5c0.828,0 1.5,0.672 1.5,1.5c0,0.828 -0.672,1.5 -1.5,1.5c-0.828,0 -1.5,-0.672 -1.5,-1.5c0,-0.828 0.672,-1.5 1.5,-1.5Z"
@@ -274,7 +274,7 @@ export default {
                         @click="changeMapInteractionModeAvoidAreasDelete()"
                         @keydown.enter="changeMapInteractionModeAvoidAreasDelete()"
                     >
-                        <title>{{ $t('common:modules.tools.routing.directions.deleteRestrictedAreas') }}</title>
+                        <title>{{ $t('common:modules.routing.directions.deleteRestrictedAreas') }}</title>
                         <path
                             :fill="isMapInteractionModeAvoidAreasDelete ? '#f00' : '#000'"
                             d="M3,0c1.656,0 3,1.344 3,3c0,1.656 -1.344,3 -3,3c-1.656,0 -3,-1.344 -3,-3c0,-1.656 1.344,-3 3,-3Zm0,1.5c0.828,0 1.5,0.672 1.5,1.5c0,0.828 -0.672,1.5 -1.5,1.5c-0.828,0 -1.5,-0.672 -1.5,-1.5c0,-0.828 0.672,-1.5 1.5,-1.5Z"
@@ -323,7 +323,7 @@ export default {
                 <div class="d-flex">
                     <span
                         class="bootstrap-icon pointer mt-2"
-                        :title="$t('common:modules.tools.routing.resetSettings')"
+                        :title="$t('common:modules.routing.resetSettings')"
                         @click="reset()"
                         @keydown.enter="reset()"
                     >
@@ -331,7 +331,7 @@ export default {
                     </span>
                     <span
                         class="bootstrap-icon pointer m-2"
-                        :title="$t('common:modules.tools.routing.addWaypoint')"
+                        :title="$t('common:modules.routing.addWaypoint')"
                         @click="addWaypoint({index: waypoints.length -1})"
                         @keydown.enter="addWaypoint({index: waypoints.length -1})"
                     >
@@ -361,7 +361,7 @@ export default {
             for="routing-directions-preference"
             class="routing-directions-preference-label"
         >
-            {{ $t("common:modules.tools.routing.directions.preferenceLabel") }}
+            {{ $t("common:modules.routing.directions.preferenceLabel") }}
         </label>
         <select
             id="routing-directions-preference"
@@ -376,7 +376,7 @@ export default {
                 :selected="option === settings.preference"
                 :disabled="isInputDisabled"
             >
-                {{ $t('common:modules.tools.routing.directions.preference.' + option) }}
+                {{ $t('common:modules.routing.directions.preference.' + option) }}
             </option>
         </select>
 
@@ -403,7 +403,7 @@ export default {
                     <RoutingSpeedProfileIcon
                         :speed-profile-id="settings.speedProfile"
                         fill-color="#000000"
-                        :tooltip="$t('common:modules.tools.routing.speedprofiles.' + settings.speedProfile)"
+                        :tooltip="$t('common:modules.routing.speedprofiles.' + settings.speedProfile)"
                     />
                     <RoutingDurationDisplay :duration="routingDirections.duration" />
                     <RoutingDistanceDisplay :distance="routingDirections.distance" />

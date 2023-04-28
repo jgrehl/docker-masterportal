@@ -51,7 +51,7 @@ export default {
                 :id="'mp-menu-navigation-reset-button-' + side"
                 type="button"
                 class="btn-close p-2 mp-menu-navigation-reset-button"
-                :aria-label="$t('common:menu.ariaLabelClose')"
+                :aria-label="$t('common:modules.menu.ariaLabelClose')"
                 @click="resetMenu(side)"
             />
         </div>
