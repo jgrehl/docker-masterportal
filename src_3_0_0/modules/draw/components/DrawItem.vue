@@ -237,9 +237,9 @@ export default {
          */
         colorContourLabelComputed () {
             if (this.drawType.id === "drawDoubleCircle" && this.currentInteraction !== "modify") {
-                return this.$t("common:modules.tools.draw.innerColorContour");
+                return this.$t("common:modules.draw.innerColorContour");
             }
-            return this.$t("common:modules.tools.draw.colorContour");
+            return this.$t("common:modules.draw.colorContour");
         },
         /**
          * computed property of the label for the normal innerRadius - in case this is a double circle
@@ -247,9 +247,9 @@ export default {
          */
         innerRadiusLabelComputed () {
             if (this.drawType.id === "drawDoubleCircle" && this.currentInteraction !== "modify") {
-                return this.$t("common:modules.tools.draw.innerRadius");
+                return this.$t("common:modules.draw.innerRadius");
             }
-            return this.$t("common:modules.tools.draw.radius");
+            return this.$t("common:modules.draw.radius");
         },
 
         /**
@@ -469,11 +469,11 @@ export default {
                 if (i18next.exists(option.id)) {
                     return option.id;
                 }
-                else if (i18next.exists("common:modules.tools.draw.iconList." + option.id)) {
-                    return "common:modules.tools.draw.iconList." + option.id;
+                else if (i18next.exists("common:modules.draw.iconList." + option.id)) {
+                    return "common:modules.draw.iconList." + option.id;
                 }
                 // need to fake the return here for now, as long as exists doesn't work
-                return "common:modules.tools.draw.iconList." + option.id;
+                return "common:modules.draw.iconList." + option.id;
             }
             return "noName";
         },
@@ -498,7 +498,7 @@ export default {
                     class="col-md-5 form-check-label"
                     for="tool-draw-drawLayerVisible"
                 >
-                    {{ $t("common:modules.tools.draw.drawLayerVisible") }}
+                    {{ $t("common:modules.draw.drawLayerVisible") }}
                 </label>
                 <div class="col-md-7">
                     <input
@@ -521,7 +521,7 @@ export default {
                     for="tool-draw-drawType"
                     class="col-md-5 col-form-label"
                 >
-                    {{ $t("common:modules.tools.draw.geometry") }}
+                    {{ $t("common:modules.draw.geometry") }}
                 </label>
                 <div class="col-md-7">
                     <select
@@ -538,7 +538,7 @@ export default {
                             :value="option.geometry"
                             :selected="option.id === drawType.id"
                         >
-                            {{ $t("common:modules.tools.draw." + option.id) }}
+                            {{ $t("common:modules.draw.drawTypeOptions." + option.id) }}
                         </option>
                     </select>
                 </div>
@@ -577,7 +577,7 @@ export default {
                     class="col-md-5 col-form-label"
                     for="tool-draw-circleMethod"
                 >
-                    {{ $t("common:modules.tools.draw.method") }}
+                    {{ $t("common:modules.draw.method") }}
                 </label>
                 <div class="col-md-7">
                     <select
@@ -590,13 +590,13 @@ export default {
                             value="interactive"
                             :selected="circleMethodComputed === 'interactive'"
                         >
-                            {{ $t("common:modules.tools.draw.interactive") }}
+                            {{ $t("common:modules.draw.interactive") }}
                         </option>
                         <option
                             value="defined"
                             :selected="circleMethodComputed === 'defined'"
                         >
-                            {{ $t("common:modules.tools.draw.defined") }}
+                            {{ $t("common:modules.draw.defined") }}
                         </option>
                     </select>
                 </div>
@@ -619,7 +619,7 @@ export default {
                         :style="{borderColor: innerBorderColor}"
                         type="number"
                         step="1"
-                        :placeholder="$t('common:modules.tools.draw.doubleCirclePlaceholder')"
+                        :placeholder="$t('common:modules.draw.doubleCirclePlaceholder')"
                         :disabled="drawCircleMethods"
                         min="0"
                     >
@@ -633,7 +633,7 @@ export default {
                     class="col-md-5 col-form-label"
                     for="tool-draw-circleOuterRadius"
                 >
-                    {{ $t("common:modules.tools.draw.outerRadius") }}
+                    {{ $t("common:modules.draw.outerRadius") }}
                 </label>
                 <div class="col-md-7">
                     <input
@@ -642,7 +642,7 @@ export default {
                         class="form-control form-control-sm"
                         :style="{borderColor: outerBorderColor}"
                         type="number"
-                        :placeholder="$t('common:modules.tools.draw.doubleCirclePlaceholder')"
+                        :placeholder="$t('common:modules.draw.doubleCirclePlaceholder')"
                         :disabled="drawCircleMethods"
                         min="0"
                     >
@@ -656,7 +656,7 @@ export default {
                     class="col-md-5 col-form-label"
                     for="tool-draw-circleUnit"
                 >
-                    {{ $t("common:modules.tools.draw.unit") }}
+                    {{ $t("common:modules.draw.unit") }}
                 </label>
                 <div class="col-md-7">
                     <select
@@ -684,14 +684,14 @@ export default {
                     class="col-md-5 col-form-label"
                     for="tool-draw-text"
                 >
-                    {{ $t("common:modules.tools.draw.text") }}
+                    {{ $t("common:modules.draw.text") }}
                 </label>
                 <div class="col-md-7">
                     <input
                         id="tool-draw-text"
                         class="form-control form-control-sm"
                         type="text"
-                        :placeholder="$t('common:modules.tools.draw.clickToPlaceText')"
+                        :placeholder="$t('common:modules.draw.clickToPlaceText')"
                         :disabled="drawHTMLElementsModifyFeature"
                         :value="textComputed"
                         @input="setText"
@@ -706,7 +706,7 @@ export default {
                     class="col-md-5 col-form-label"
                     for="tool-draw-fontSize"
                 >
-                    {{ $t("common:modules.tools.draw.fontSize") }}
+                    {{ $t("common:modules.draw.fontSize") }}
                 </label>
                 <div class="col-md-7">
                     <select
@@ -734,7 +734,7 @@ export default {
                     class="col-md-5 col-form-label"
                     for="tool-draw-font"
                 >
-                    {{ $t("common:modules.tools.draw.fontName") }}
+                    {{ $t("common:modules.draw.fontName") }}
                 </label>
                 <div class="col-md-7">
                     <select
@@ -762,7 +762,7 @@ export default {
                     class="col-md-5 col-form-label"
                     for="tool-draw-symbol"
                 >
-                    {{ $t("common:modules.tools.draw.symbol") }}
+                    {{ $t("common:modules.draw.symbol") }}
                 </label>
                 <div class="col-md-7">
                     <select
@@ -790,7 +790,7 @@ export default {
                     class="col-md-5 col-form-label"
                     for="tool-draw-strokeWidth"
                 >
-                    {{ $t("common:modules.tools.draw.lineWidth") }}
+                    {{ $t("common:modules.draw.lineWidth") }}
                 </label>
                 <div class="col-md-7">
                     <select
@@ -818,7 +818,7 @@ export default {
                     class="col-md-5 col-form-label"
                     for="tool-draw-opacity"
                 >
-                    {{ $t("common:modules.tools.draw.transparency") }}
+                    {{ $t("common:modules.draw.transparency") }}
                 </label>
                 <div class="col-md-7">
                     <select
@@ -847,7 +847,7 @@ export default {
                     class="col-md-5 col-form-label"
                     for="tool-draw-opacityContour"
                 >
-                    {{ $t("common:modules.tools.draw.transparencyOutline") }}
+                    {{ $t("common:modules.draw.transparencyOutline") }}
                 </label>
                 <div class="col-md-7">
                     <select
@@ -891,7 +891,7 @@ export default {
                             :value="option.value"
                             :selected="isEqualColorArrays(option.value, colorContourComputed)"
                         >
-                            {{ $t("common:colors." + option.color) }}
+                            {{ $t("common:modules.draw.colors." + option.color) }}
                         </option>
                     </select>
                 </div>
@@ -904,7 +904,7 @@ export default {
                     class="col-md-5 col-form-label"
                     for="tool-draw-outerColorContour"
                 >
-                    {{ $t("common:modules.tools.draw.outerColorContour") }}
+                    {{ $t("common:modules.draw.outerColorContour") }}
                 </label>
                 <div class="col-md-7">
                     <select
@@ -919,7 +919,7 @@ export default {
                             :value="option.value"
                             :selected="isEqualColorArrays(option.value, outerColorContourComputed)"
                         >
-                            {{ $t("common:colors." + option.color) }}
+                            {{ $t("common:modules.draw.colors." + option.color) }}
                         </option>
                     </select>
                 </div>
@@ -932,7 +932,7 @@ export default {
                     class="col-md-5 col-form-label"
                     for="tool-draw-pointColor"
                 >
-                    {{ $t("common:modules.tools.draw.color") }}
+                    {{ $t("common:modules.draw.color") }}
                 </label>
                 <div class="col-md-7">
                     <select
@@ -947,7 +947,7 @@ export default {
                             :value="option.value"
                             :selected="isEqualColorArrays(option.value, colorComputed)"
                         >
-                            {{ $t("common:colors." + option.color) }}
+                            {{ $t("common:modules.draw.colors." + option.color) }}
                         </option>
                     </select>
                 </div>
@@ -960,7 +960,7 @@ export default {
                     class="col-md-5 col-form-label"
                     for="tool-draw-pointColor"
                 >
-                    {{ $t("common:modules.tools.draw.color") }}
+                    {{ $t("common:modules.draw.color") }}
                 </label>
                 <div class="col-md-7">
                     <select
@@ -975,7 +975,7 @@ export default {
                             :value="option.value"
                             :selected="isEqualColorArrays(option.value, colorComputed)"
                         >
-                            {{ $t("common:colors." + option.color) }}
+                            {{ $t("common:modules.draw.colors." + option.color) }}
                         </option>
                     </select>
                 </div>
@@ -998,7 +998,7 @@ export default {
                         <span class="bootstrap-icon">
                             <i class="bi-pencil-fill" />
                         </span>
-                        {{ $t("common:modules.tools.draw.button.draw") }}
+                        {{ $t("common:modules.draw.button.draw") }}
                     </button>
                 </div>
             </div>
@@ -1013,7 +1013,7 @@ export default {
                         <span class="bootstrap-icon">
                             <i class="bi-arrow-counterclockwise" />
                         </span>
-                        {{ $t("common:modules.tools.draw.button.undo") }}
+                        {{ $t("common:modules.draw.button.undo") }}
                     </button>
                 </div>
             </div>
@@ -1028,7 +1028,7 @@ export default {
                         <span class="bootstrap-icon">
                             <i class="bi-arrow-clockwise" />
                         </span>
-                        {{ $t("common:modules.tools.draw.button.redo") }}
+                        {{ $t("common:modules.draw.button.redo") }}
                     </button>
                 </div>
             </div>
@@ -1044,7 +1044,7 @@ export default {
                         <span class="bootstrap-icon">
                             <i class="bi-wrench" />
                         </span>
-                        {{ $t("common:modules.tools.draw.button.edit") }}
+                        {{ $t("common:modules.draw.button.edit") }}
                     </button>
                 </div>
             </div>
@@ -1063,7 +1063,7 @@ export default {
                         <span class="bootstrap-icon">
                             <i class="bi-wrench" />
                         </span>
-                        {{ $t("common:modules.tools.draw.button.editAttributes") }}
+                        {{ $t("common:modules.draw.button.editAttributes") }}
                     </button>
                 </div>
             </div>
@@ -1079,7 +1079,7 @@ export default {
                         <span class="bootstrap-icon">
                             <i class="bi-trash" />
                         </span>
-                        {{ $t("common:modules.tools.draw.button.delete") }}
+                        {{ $t("common:modules.draw.button.delete") }}
                     </button>
                 </div>
             </div>
@@ -1094,7 +1094,7 @@ export default {
                         <span class="bootstrap-icon">
                             <i class="bi-trash" />
                         </span>
-                        {{ $t("common:modules.tools.draw.button.deleteAll") }}
+                        {{ $t("common:modules.draw.button.deleteAll") }}
                     </button>
                 </div>
             </div>

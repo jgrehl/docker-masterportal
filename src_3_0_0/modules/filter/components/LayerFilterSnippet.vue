@@ -109,10 +109,10 @@ export default {
             if (typeof this.layerConfig.labelFilterButton === "string") {
                 return translateKeyWithPlausibilityCheck(this.layerConfig.labelFilterButton, key => this.$t(key));
             }
-            return this.$t("common:modules.tools.filter.filterButton");
+            return this.$t("common:modules.filter.filterButton");
         },
         snippetTagsResetAllText () {
-            return this.$t("common:modules.tools.filter.snippetTags.resetAll");
+            return this.$t("common:modules.filter.snippetTags.resetAll");
         },
         fixedRules () {
             return this.filterRules.filter(rule => rule?.fixed);
@@ -871,7 +871,7 @@ export default {
                 <div
                     class="snippetTagText"
                 >
-                    {{ $t("modules.tools.filter.snippetTags.selectionText") }}
+                    {{ $t("common:modules.filter.snippetTags.selectionText") }}
                 </div>
                 <SnippetTag
                     :is-reset-all="true"
@@ -899,10 +899,10 @@ export default {
             class="filter-result"
         >
             <span>
-                {{ $t("modules.tools.filter.filterResult.label") }}
+                {{ $t("common:modules.filter.filterResult.label") }}
             </span>
             <span>
-                {{ $t("modules.tools.filter.filterResult.unit", {amountOfFilteredItems}) }}
+                {{ $t("common:modules.filter.filterResult.unit", {amountOfFilteredItems}) }}
             </span>
         </div>
         <div

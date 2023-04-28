@@ -229,12 +229,12 @@ Layer2d.prototype.errorHandling = function (errorCode, layerName) {
         alertingContent = "";
 
     if (this.get("datasets") && this.get("datasets")[0]) {
-        linkMetadata = i18next.t("common:modules:core:modelList:layer.errorHandling:LinkMetadata",
+        linkMetadata = i18next.t("common:core.layers.errorHandling.LinkMetadata",
             {linkMetadata: this.get("datasets")[0].show_doc_url + this.get("datasets")[0].md_id
             });
     }
     if (errorCode === 403) {
-        alertingContent = i18next.t("common:modules.core.modelList.layer.errorHandling.403",
+        alertingContent = i18next.t("common:core.layers.errorHandling.403",
             {
                 layerName: layerName
             })

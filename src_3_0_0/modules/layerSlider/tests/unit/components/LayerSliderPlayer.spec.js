@@ -56,7 +56,7 @@ describe("src_3_0_0/modules/layerSlider/components/LayerSliderPlayer.vue", () =>
         expect(wrapper.find("#module-layer-slider-player > div.progress").exists()).to.be.true;
         expect(wrapper.find("#module-layer-slider-player > div.progress > div.progress-bar").exists()).to.be.true;
         expect(wrapper.find("#module-layer-slider-player > div.progress > div.progress-bar > span.visually-hidden").exists()).to.be.true;
-        expect(wrapper.find("#module-layer-slider-player > div.progress > div.progress-bar > span.visually-hidden").text()).equals("modules.tools.layerSlider.displayLayers");
+        expect(wrapper.find("#module-layer-slider-player > div.progress > div.progress-bar > span.visually-hidden").text()).equals("common:modules.layerSlider.displayLayers");
     });
 
     it("renders the input-group with buttons", () => {

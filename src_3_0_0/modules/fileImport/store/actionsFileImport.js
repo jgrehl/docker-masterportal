@@ -203,7 +203,7 @@ export default {
 
             alertingMessage = {
                 category: "error",
-                content: i18next.t("common:modules.tools.fileImport.alertingMessages.missingFormat", {format: fileFormat})
+                content: i18next.t("common:modules.fileImport.alertingMessages.missingFormat", {format: fileFormat})
             };
 
             dispatch("Alerting/addSingleAlert", alertingMessage, {root: true});
@@ -243,7 +243,7 @@ export default {
             console.warn(ex);
             alertingMessage = {
                 category: "error",
-                content: i18next.t("common:modules.tools.fileImport.alertingMessages.formatError", {filename: fileName})
+                content: i18next.t("common:modules.fileImport.alertingMessages.formatError", {filename: fileName})
             };
 
             dispatch("Alerting/addSingleAlert", alertingMessage, {root: true});
@@ -253,7 +253,7 @@ export default {
         if (!Array.isArray(features) || features.length === 0) {
             alertingMessage = {
                 category: "error",
-                content: i18next.t("common:modules.tools.fileImport.alertingMessages.missingFileContent", {filename: fileName})
+                content: i18next.t("common:modules.fileImport.alertingMessages.missingFileContent", {filename: fileName})
             };
 
             dispatch("Alerting/addSingleAlert", alertingMessage, {root: true});
@@ -297,7 +297,7 @@ export default {
                 featureError = true;
                 alertingMessage = {
                     category: "error",
-                    content: i18next.t("common:modules.tools.fileImport.alertingMessages.featureError")
+                    content: i18next.t("common:modules.fileImport.alertingMessages.featureError")
                 };
 
                 dispatch("Alerting/addSingleAlert", alertingMessage, {root: true});
@@ -342,13 +342,13 @@ export default {
         if (featureError) {
             alertingMessage = {
                 category: "error",
-                content: i18next.t("common:modules.tools.fileImport.alertingMessages.successPartly", {filename: fileName})
+                content: i18next.t("common:modules.fileImport.alertingMessages.successPartly", {filename: fileName})
             };
         }
         else {
             alertingMessage = {
                 category: "success",
-                content: i18next.t("common:modules.tools.fileImport.alertingMessages.success", {filename: fileName})
+                content: i18next.t("common:modules.fileImport.alertingMessages.success", {filename: fileName})
             };
         }
         dispatch("Alerting/addSingleAlert", {
@@ -387,7 +387,7 @@ export default {
 
             alertingMessage = {
                 category: "error",
-                content: i18next.t("common:modules.tools.fileImport.alertingMessages.missingFormat", {format: fileFormat})
+                content: i18next.t("common:modules.fileImport.alertingMessages.missingFormat", {format: fileFormat})
             };
 
             dispatch("Alerting/addSingleAlert", alertingMessage, {root: true});
@@ -404,7 +404,7 @@ export default {
             console.warn(ex);
             alertingMessage = {
                 category: "error",
-                content: i18next.t("common:modules.tools.fileImport.alertingMessages.formatError", {filename: fileName})
+                content: i18next.t("common:modules.fileImport.alertingMessages.formatError", {filename: fileName})
             };
 
             dispatch("Alerting/addSingleAlert", alertingMessage, {root: true});
@@ -414,7 +414,7 @@ export default {
         if (!Array.isArray(features) || features.length === 0) {
             alertingMessage = {
                 category: "error",
-                content: i18next.t("common:modules.tools.fileImport.alertingMessages.missingFileContent", {filename: fileName})
+                content: i18next.t("common:modules.fileImport.alertingMessages.missingFileContent", {filename: fileName})
             };
 
             dispatch("Alerting/addSingleAlert", alertingMessage, {root: true});
@@ -583,7 +583,7 @@ export default {
 
         alertingMessage = {
             category: "success",
-            content: i18next.t("common:modules.tools.fileImport.alertingMessages.success", {filename: fileName})
+            content: i18next.t("common:modules.fileImport.alertingMessages.success", {filename: fileName})
         };
 
         dispatch("Alerting/addSingleAlert", alertingMessage, {root: true});

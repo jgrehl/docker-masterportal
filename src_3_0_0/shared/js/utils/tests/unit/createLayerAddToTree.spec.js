@@ -17,7 +17,7 @@ describe("src/utils/createLayerAddToTree.js", () => {
         setStyleSpy;
     const treeHighlightedFeatures = {
         active: true,
-        layerName: "common:tree.selectedFeatures"
+        layerName: "common:shared.js.utils.selectedFeatures"
     };
 
     describe("createLayerAddToTree", () => {

@@ -189,10 +189,10 @@ export default {
         replaceBoolean (value) {
             if (typeof value === "string") {
                 if (value === "true") {
-                    return value.replace("true", i18next.t("common:share-components.list.replace.true"));
+                    return value.replace("true", i18next.t("common:shared.modules.list.replace.true"));
                 }
                 if (value === "No") {
-                    return value.replace("No", i18next.t("common:share-components.list.replace.No"));
+                    return value.replace("No", i18next.t("common:shared.modules.list.replace.no"));
                 }
             }
             return "";
@@ -237,7 +237,7 @@ export default {
                         <div class="form-check">
                             <input
                                 class="form-check-input"
-                                :aria-label="$t('common:share-components.list.selection')"
+                                :aria-label="$t('common:shared.modules.list.selection')"
                                 type="checkbox"
                                 value=""
                                 :checked="isSelected(data)"
@@ -255,7 +255,7 @@ export default {
                                 class="btn btn-secondary col-md-12"
                                 @click.stop="zoomToResult(data)"
                             >
-                                {{ $t("common:share-components.list.zoomToResult") }}
+                                {{ $t("common:shared.modules.list.zoomToResult") }}
                             </button>
                         </template>
                         <template v-else-if="isWebLink(data.values_[key])">
@@ -287,11 +287,11 @@ export default {
             class="btn btn-secondary col-md-12"
             @click.stop="zoomToResult()"
         >
-            {{ $t("common:share-components.list.zoomToResults") }}
+            {{ $t("common:shared.modules.list.zoomToResults") }}
         </button>
         <nav
             v-if="pageCount > 1"
-            :aria-label="$t('common:share-components.list.pagination')"
+            :aria-label="$t('common:shared.modules.list.pagination')"
             class="mt-2"
         >
             <ul class="pagination justify-content-center flex-wrap">

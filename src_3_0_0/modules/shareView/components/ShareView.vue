@@ -36,7 +36,7 @@ export default {
          * @returns {String} url with params
          */
         twitter () {
-            return "https://twitter.com/share?url=" + this.url + "&text=" + this.$t("modules.tools.shareView.myMap");
+            return "https://twitter.com/share?url=" + this.url + "&text=" + this.$t("modules.shareView.myMap");
         }
     },
     methods: {
@@ -48,8 +48,8 @@ export default {
          */
         share () {
             const shareData = {
-                title: this.$t("modules.tools.shareView.myMap"),
-                text: this.$t("modules.tools.shareView.myMap"),
+                title: this.$t("common:modules.shareView.myMap"),
+                text: this.$t("common:modules.shareView.myMap"),
                 url: this.url
             };
 
@@ -96,15 +96,15 @@ export default {
 
 <template lang="html">
     <div id="share-view">
-        <h2>{{ $t("modules.tools.shareView.shareHeadline") }}</h2>
+        <h2>{{ $t("common:modules.shareView.shareHeadline") }}</h2>
         <div v-if="isMobile">
             <button
-                aria-label="$t('modules.tools.shareView.share')"
+                aria-label="$t('common:modules.shareView.share')"
                 class="btn btn-secondary btn-icon"
                 @click="share"
             >
                 <i class="bi-share" />
-                {{ $t("modules.tools.shareView.share") }}
+                {{ $t("common:modules.shareView.share") }}
             </button>
         </div>
         <div
@@ -113,44 +113,44 @@ export default {
             <div class="col-12">
                 <a
                     id="twitter-btn"
-                    aria-label="$t('modules.tools.shareView.shareTwitter')"
+                    aria-label="$t('common:modules.shareView.shareTwitter')"
                     class="btn btn-secondary btn-icon mb-3 pe-4 ps-3"
                     :href="twitter"
                     target="_blank"
                     role="button"
                 >
                     <i class="bi-twitter" />
-                    {{ $t("modules.tools.shareView.shareTwitter") }}
+                    {{ $t("common:modules.shareView.shareTwitter") }}
                 </a>
             </div>
             <div class="col-12">
                 <a
                     id="facebook-btn"
-                    aria-label="$t('modules.tools.shareView.shareFacebook')"
+                    aria-label="$t('common:modules.shareView.shareFacebook')"
                     class="btn btn-secondary btn-icon mb-3 pe-4 ps-3"
                     :href="facebook"
                     target="_blank"
                     role="button"
                 >
                     <i class="bi-facebook" />
-                    {{ $t("modules.tools.shareView.shareFacebook") }}
+                    {{ $t("common:modules.shareView.shareFacebook") }}
                 </a>
             </div>
             <div class="col-12">
                 <FlatButton
                     id="copy-btn"
-                    aria-label="$t('modules.tools.shareView.shareLink')"
+                    aria-label="$t('common:modules.shareView.shareLink')"
                     :interaction="copyToClipboard"
-                    :text="$t('modules.tools.shareView.shareLink')"
+                    :text="$t('common:modules.shareView.shareLink')"
                     :icon="linkIcon"
                 />
             </div>
             <div class="col-12">
                 <FlatButton
                     id="qr-btn"
-                    aria-label="$t('modules.tools.shareView.shareQR')"
+                    aria-label="$t('common:modules.shareView.shareQR')"
                     :interaction="generateQRCodeDataURL"
-                    :text="$t('modules.tools.shareView.shareQR')"
+                    :text="$t('common:modules.shareView.shareQR')"
                     :icon="qrIcon"
                 />
             </div>
@@ -163,9 +163,9 @@ export default {
                     :src="qrDataUrl"
                 >
                 <FlatButton
-                    aria-label="$t('modules.tools.shareView.downloadQR')"
+                    aria-label="$t('common:modules.shareView.downloadQR')"
                     :interaction="downloadQr"
-                    :text="$t('modules.tools.shareView.downloadQR')"
+                    :text="$t('common:modules.shareView.downloadQR')"
                     :icon="downloadIcon"
                 />
             </div>

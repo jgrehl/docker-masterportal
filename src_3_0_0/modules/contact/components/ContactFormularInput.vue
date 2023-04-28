@@ -95,7 +95,7 @@ export default {
                 class="mb-5"
                 :class="[(htmlElement === 'select' ? 'form-select' : 'form-control'), (validInput ? 'is-valid' : '')]"
                 :aria-describedby="`module-contact-${inputName}-help`"
-                :placeholder="$t(`common:modules.tools.contact.placeholder.${inputName}`)"
+                :placeholder="$t(`common:modules.contact.placeholder.${inputName}`)"
                 :style="htmlElement === 'textarea' ? 'height: 100px' : ''"
                 @focus="help($event.currentTarget)"
                 @keyup="changeFunction($event.currentTarget.value)"
@@ -112,7 +112,7 @@ export default {
                 class="invalid-feedback"
             >
                 {{ $t(
-                    `common:modules.tools.contact.error.${inputName + (inputName === "message" ? "Input" : "")}`,
+                    `common:modules.contact.error.${inputName + (inputName === "message" ? "Input" : "")}`,
                     {length: minMessageLength}
                 ) }}
             </span>

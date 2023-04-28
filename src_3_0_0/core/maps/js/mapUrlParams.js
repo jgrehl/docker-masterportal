@@ -106,7 +106,7 @@ function featureViaUrl (params) {
         store.dispatch("Maps/featureViaUrl", JSON.parse(params.FEATUREVIAURL));
     }
     catch (error) {
-        console.warn(i18next.t("common:modules.featureViaURL.messages.featureParsing"));
+        console.warn(i18next.t("common:core.maps.featureViaURL.messages.featureParsing"));
         console.error(error);
     }
 }

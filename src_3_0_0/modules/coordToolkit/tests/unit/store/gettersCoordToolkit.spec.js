@@ -99,7 +99,7 @@ describe("src_3_0_0/modules/coordToolkit/store/gettersCoordToolkit.js", () => {
 
     describe("testing default values", () => {
         it("returns the name default value from state", () => {
-            expect(getters.name(stateCoord)).to.be.equals("common:menu.tools.coordToolkit");
+            expect(getters.name(stateCoord)).to.be.equals("common:modules.coordToolkit.name");
         });
         it("returns the icon default value from state", () => {
             expect(getters.icon(stateCoord)).to.equals("bi-globe");
