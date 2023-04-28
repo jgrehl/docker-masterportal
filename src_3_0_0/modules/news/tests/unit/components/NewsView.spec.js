@@ -95,7 +95,7 @@ describe("src_3_0_0/modules/newsView/components/NewsView.vue", () => {
             }});
 
         expect(wrapper.find("#news-view").exists()).to.be.true;
-        expect(wrapper.find("#news-title").text()).to.be.equals("modules.tools.news.headline");
+        expect(wrapper.find("#news-title").text()).to.be.equals("common:modules.news.headline");
         expect(wrapper.find("#news_date_0").text()).to.be.equals(date_0);
         expect(wrapper.find("#news_date_1").text()).to.be.equals(date_2);
         expect(wrapper.find("#news_date_2").text()).to.be.equals(date_1);

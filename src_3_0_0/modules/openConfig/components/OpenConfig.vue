@@ -56,7 +56,7 @@ export default {
                     this.processConfigJsonOnload(evt);
                     this.addSingleAlert({
                         category: "succes",
-                        content: this.$t("common:modules.tools.openConfig.loadFileSuccess", {targetFileName: targetFile?.name})
+                        content: this.$t("common:modules.openConfig.loadFileSuccess", {targetFileName: targetFile?.name})
                     });
                 };
                 reader.readAsText(event.target.files[0]);
@@ -64,7 +64,7 @@ export default {
             else {
                 this.addSingleAlert({
                     category: "error",
-                    content: this.$t("common:modules.tools.openConfig.loadFileFailed", {targetFileName: targetFile?.name, targetFileFormat: targetFile?.name.split(".")[1]})
+                    content: this.$t("common:modules.openConfig.loadFileFailed", {targetFileName: targetFile?.name, targetFileFormat: targetFile?.name.split(".")[1]})
                 });
             }
         }
@@ -75,7 +75,7 @@ export default {
 <template lang="html">
     <div id="open-config">
         <p class="mb-4">
-            {{ $t("modules.tools.openConfig.explanation") }}
+            {{ $t("common:modules.openConfig.explanation") }}
         </p>
         <div
             id="open-config-input-button"
@@ -97,7 +97,7 @@ export default {
                 >
                     <i :class="icon" />
                 </span>
-                {{ $t("modules.tools.openConfig.openFile") }}
+                {{ $t("common:modules.openConfig.openFile") }}
             </label>
         </div>
     </div>

@@ -63,18 +63,18 @@ export default {
                     class="caption"
                 >
                     <i class="bi-box-arrow-in-down" />
-                    {{ $t("modules.tools.fileImport.captions.dropzone") }}
+                    {{ $t("common:shared.inputs.fileUpload.dropzone") }}
                 </p>
             </div>
             <div>
-                {{ $t("modules.tools.fileImport.captions.or") }}
+                {{ $t("common:shared.inputs.fileUpload.or") }}
                 <label
                     ref="upload-label"
                     class="fake-link"
                     tabindex="0"
                     :keydown="keydown"
                 >
-                    {{ $t("modules.tools.fileImport.captions.browse") }}
+                    {{ $t("common:shared.inputs.fileUpload.browse") }}
                     <input
                         ref="upload-input-file"
                         type="file"

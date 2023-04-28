@@ -145,7 +145,7 @@ describe("src_3_0_0/modules/getFeatureInfo/themes/senor/components/SensorThemeBa
         expect(result.x.min).equals(0);
         expect(result.x.max).equals(23);
         expect(result.x.ticks.callback).to.be.a("function");
-        expect(result.x.ticks.callback()).equals("common:modules.tools.gfi.themes.sensor.sensorBarChart.clock");
+        expect(result.x.ticks.callback()).equals("common:modules.getFeatureInfo.themes.sensor.sensorBarChart.clock");
 
         expect(result.y.min).equals(0);
         expect(result.y.max).equals(maxValue);

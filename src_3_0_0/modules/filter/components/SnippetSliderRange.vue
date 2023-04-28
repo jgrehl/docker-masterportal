@@ -729,7 +729,7 @@ export default {
                     :step="getSliderSteps(decimalPlaces)"
                     :min="currentSliderMin"
                     :max="currentSliderMax"
-                    :aria-label="$t('common:modules.tools.filter.ariaLabel.slider.from', {param: getAttrNameFrom()})"
+                    :aria-label="$t('common:modules.filter.ariaLabel.sliderRange.min', {param: getAttrNameFrom()})"
                     :disabled="disabled"
                     @input="setCurrentSource('input')"
                 >
@@ -741,7 +741,7 @@ export default {
                     :step="getSliderSteps(decimalPlaces)"
                     :min="currentSliderMin"
                     :max="currentSliderMax"
-                    :aria-label="$t('common:modules.tools.filter.ariaLabel.slider.to', {param: getAttrNameUntil()})"
+                    :aria-label="$t('common:modules.filter.ariaLabel.sliderRange.max', {param: getAttrNameUntil()})"
                     :disabled="disabled"
                     @input="setCurrentSource('input')"
                 >
@@ -757,7 +757,7 @@ export default {
             <input
                 v-model="sliderFrom"
                 type="range"
-                :aria-label="$t('common:modules.tools.filter.ariaLabel.slider.from', {param: getAttrNameFrom()})"
+                :aria-label="$t('common:modules.filter.ariaLabel.sliderRange.min', {param: getAttrNameFrom()})"
                 class="from"
                 :disabled="disabled"
                 :step="getSliderSteps(decimalPlaces)"
@@ -769,7 +769,7 @@ export default {
             <input
                 v-model="sliderUntil"
                 type="range"
-                :aria-label="$t('common:modules.tools.filter.ariaLabel.slider.to', {param: getAttrNameUntil()})"
+                :aria-label="$t('common:modules.filter.ariaLabel.sliderRange.max', {param: getAttrNameUntil()})"
                 class="until"
                 :disabled="disabled"
                 :step="getSliderSteps(decimalPlaces)"

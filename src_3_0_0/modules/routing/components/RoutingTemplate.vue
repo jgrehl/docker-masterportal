@@ -74,7 +74,7 @@ export default {
                 <span class="bootstrap-icon">
                     <i class="bi-three-dots-vertical" />
                 </span>
-                <span>{{ $t("common:modules.tools.routing.tabs." + routingToolOption.id) }}</span>
+                <span>{{ $t("common:modules.routing.tabs." + routingToolOption.id) }}</span>
                 <RoutingLoadingSpinner
                     v-if="(routingToolOption.id === 'DIRECTIONS' && isLoadingDirections) || (routingToolOption.id === 'ISOCHRONES' && isLoadingIsochrones)"
                     class="ms-2"

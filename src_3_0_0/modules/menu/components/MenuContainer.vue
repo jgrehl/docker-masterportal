@@ -107,7 +107,7 @@ export default {
                 :id="'mp-menu-header-close-button-' + side"
                 type="button"
                 class="btn-close p-2 mp-menu-header-close-button"
-                :aria-label="$t('common:menu.ariaLabelClose')"
+                :aria-label="$t('common:modules.menu.ariaLabelClose')"
                 @click="closeMenu(side)"
             />
         </div>

@@ -59,7 +59,7 @@ describe("src_3_0_0/modules/wfsSearch/components/WfsSearchField.vue", () => {
         expect(wrapper.find("select").exists()).to.be.true;
         expect(wrapper.find("label").text()).to.equal("inputLabel");
         expect(wrapper.find("input").exists()).to.be.false;
-        expect(options.at(0).text()).to.equal("common:modules.tools.wfsSearch.optionsPlaceholder");
+        expect(options.at(0).text()).to.equal("common:modules.wfsSearch.optionsPlaceholder");
         expect(options.at(1).text()).to.equal("Option A");
         expect(options.at(2).text()).to.equal("Option B");
     });
@@ -72,12 +72,12 @@ describe("src_3_0_0/modules/wfsSearch/components/WfsSearchField.vue", () => {
             props: {
                 fieldId: "fieldId",
                 fieldName: "fieldName",
-                inputLabel: "common:modules.tools.wfsSearch.parcelNumber*"
+                inputLabel: "common:modules.wfsSearch.parcelNumber*"
             }
         });
 
         expect(wrapper.find("label").exists()).to.be.true;
-        expect(wrapper.find("label").text()).to.equals("common:modules.tools.wfsSearch.parcelNumber*");
+        expect(wrapper.find("label").text()).to.equals("common:modules.wfsSearch.parcelNumber*");
         expect(wrapper.find("label").classes()).to.includes("col-md-5", "col-form-label");
     });
 });

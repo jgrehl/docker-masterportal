@@ -28,13 +28,13 @@ export default {
                 .then(() => {
                     dispatch("Alerting/addSingleAlert", {
                         category: "success",
-                        content: i18next.t("common:modules.util.copyToClipboard.contentSaved")
+                        content: i18next.t("common:modules.coordToolkit.copyToClipboard.contentSaved")
                     }, {root: true});
                 })
                 .catch(err => {
                     dispatch("Alerting/addSingleAlert", {
                         category: "error",
-                        content: i18next.t("common:modules.util.copyToClipboard.contentNotSaved")
+                        content: i18next.t("common:modules.coordToolkit.copyToClipboard.contentNotSaved")
                     }, {root: true});
                     console.error(`CopyToClipboard: ${err}`);
                 });
@@ -122,10 +122,10 @@ export default {
         if (features.length >= 1) {
             height = features[0].get(state.heightElementName);
             if (height === state.heightValueWater) {
-                height = "common:modules.tools.coordToolkit.noHeightWater";
+                height = "common:modules.coordToolkit.noHeightWater";
             }
             else if (height === state.heightValueBuilding) {
-                height = "common:modules.tools.coordToolkit.noHeightBuilding";
+                height = "common:modules.coordToolkit.noHeightBuilding";
             }
             else {
                 const heightParsed = Number.parseFloat(height);

@@ -151,7 +151,7 @@ export default {
     */
     handleGetFeatureError: function (dispatch, error) {
         console.error(error);
-        dispatch("Alerting/addSingleAlert", i18next.t("common:modules.highlightFeaturesByAttribute.messages.requestFailed"), {root: true});
+        dispatch("Alerting/addSingleAlert", i18next.t("common:core.maps.highlightFeaturesByAttribute.messages.requestFailed"), {root: true});
     },
 
     /**
@@ -165,7 +165,7 @@ export default {
     handleGetFeatureResponse: function (dispatch, rootGetters, response, highlightFeaturesLayer) {
         if (response.status !== 200) {
             console.warn(response.status);
-            dispatch("Alerting/addSingleAlert", i18next.t("common:modules.highlightFeaturesByAttribute.messages.requestFailed"), {root: true});
+            dispatch("Alerting/addSingleAlert", i18next.t("common:core.maps.highlightFeaturesByAttribute.messages.requestFailed"), {root: true});
             return;
         }
         const features = new WFS({version: highlightFeaturesLayer.version}).readFeatures(response.data);
@@ -177,7 +177,7 @@ export default {
 
             if (exceptionText) {
                 console.error("highlightFeaturesByAttribute: service exception: " + exceptionText);
-                dispatch("Alerting/addSingleAlert", i18next.t("common:modules.highlightFeaturesByAttribute.messages.requestFailed"), {root: true});
+                dispatch("Alerting/addSingleAlert", i18next.t("common:core.maps.highlightFeaturesByAttribute.messages.requestFailed"), {root: true});
                 return;
             }
         }
@@ -340,7 +340,7 @@ export default {
         }
 
         if (this.configHasErrors(layer, wfsId)) {
-            dispatch("Alerting/addSingleAlert", i18next.t("common:modules.highlightFeaturesByAttribute.messages.configurationError"), {root: true});
+            dispatch("Alerting/addSingleAlert", i18next.t("common:core.maps.highlightFeaturesByAttribute.messages.configurationError"), {root: true});
             return;
         }
         axios.post(layer.url, requestBody, {
