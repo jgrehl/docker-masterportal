@@ -152,7 +152,7 @@ describe("src/modules/tools/wfst/store/actionsWfst.js", () => {
                     expect(dispatch.secondCall.args[1]).to.eql({
                         category: "Info",
                         displayClass: "info",
-                        content: "modules.tools.wfsTransaction.transaction.success.insert",
+                        content: "common:modules.wfst.transaction.success.insert",
                         mustBeConfirmed: false
                     });
                     expect(dispatch.secondCall.args[2]).to.eql({root: true});
@@ -195,7 +195,7 @@ describe("src/modules/tools/wfst/store/actionsWfst.js", () => {
                     expect(dispatch.secondCall.args[1]).to.eql({
                         category: "Info",
                         displayClass: "info",
-                        content: "modules.tools.wfsTransaction.transaction.success.update",
+                        content: "common:modules.wfst.transaction.success.update",
                         mustBeConfirmed: false
                     });
                     expect(dispatch.secondCall.args[2]).to.eql({root: true});
@@ -238,7 +238,7 @@ describe("src/modules/tools/wfst/store/actionsWfst.js", () => {
                     expect(dispatch.secondCall.args[1]).to.eql({
                         category: "Info",
                         displayClass: "info",
-                        content: "modules.tools.wfsTransaction.transaction.success.delete",
+                        content: "common:modules.wfst.transaction.success.delete",
                         mustBeConfirmed: false
                     });
                     expect(dispatch.secondCall.args[2]).to.eql({root: true});
@@ -278,7 +278,7 @@ describe("src/modules/tools/wfst/store/actionsWfst.js", () => {
                     expect(dispatch.secondCall.args[1]).to.eql({
                         category: "Info",
                         displayClass: "info",
-                        content: "modules.tools.wfsTransaction.transaction.error.genericFailedTransaction",
+                        content: "common:modules.wfst.transaction.error.genericFailedTransaction",
                         mustBeConfirmed: false
                     });
                     expect(dispatch.secondCall.args[2]).to.eql({root: true});
@@ -321,7 +321,7 @@ describe("src/modules/tools/wfst/store/actionsWfst.js", () => {
                     expect(dispatch.secondCall.args[1]).to.eql({
                         category: "Info",
                         displayClass: "info",
-                        content: "modules.tools.wfsTransaction.transaction.error.genericFailedTransaction",
+                        content: "common:modules.wfst.transaction.error.genericFailedTransaction",
                         mustBeConfirmed: false
                     });
                     expect(dispatch.secondCall.args[2]).to.eql({root: true});
@@ -359,7 +359,7 @@ describe("src/modules/tools/wfst/store/actionsWfst.js", () => {
                     expect(dispatch.secondCall.args[1]).to.eql({
                         category: "Info",
                         displayClass: "info",
-                        content: "modules.tools.wfsTransaction.transaction.error.InvalidParameterValue",
+                        content: "common:modules.wfst.transaction.error.InvalidParameterValue",
                         mustBeConfirmed: false
                     });
                     expect(dispatch.secondCall.args[2]).to.eql({root: true});
@@ -397,7 +397,7 @@ describe("src/modules/tools/wfst/store/actionsWfst.js", () => {
             expect(dispatch.firstCall.args[0]).to.equal("Alerting/addSingleAlert");
             expect(dispatch.firstCall.args[1]).to.eql({
                 category: "error",
-                content: "modules.tools.wfsTransaction.error.onlyNumbersAllowed",
+                content: "common:modules.wfst.error.onlyNumbersAllowed",
                 mustBeConfirmed: false
             });
             expect(dispatch.firstCall.args[2]).to.eql({root: true});
@@ -434,7 +434,7 @@ describe("src/modules/tools/wfst/store/actionsWfst.js", () => {
             expect(commit.calledOnce).to.be.true;
             expect(commit.firstCall.args.length).to.equal(2);
             expect(commit.firstCall.args[0]).to.equal("setFeatureProperties");
-            expect(commit.firstCall.args[1]).to.equal("modules.tools.wfsTransaction.error.allLayersNotSelected");
+            expect(commit.firstCall.args[1]).to.equal("common:modules.wfst.error.allLayersNotSelected");
             expect(prepareFeaturePropertiesSpy.notCalled).to.be.true;
         });
         it("should commit an error message if the currently selected layer has no featurePrefix configured", async () => {
@@ -443,7 +443,7 @@ describe("src/modules/tools/wfst/store/actionsWfst.js", () => {
             expect(commit.calledOnce).to.be.true;
             expect(commit.firstCall.args.length).to.equal(2);
             expect(commit.firstCall.args[0]).to.equal("setFeatureProperties");
-            expect(commit.firstCall.args[1]).to.equal("modules.tools.wfsTransaction.error.layerNotConfiguredCorrectly");
+            expect(commit.firstCall.args[1]).to.equal("common:modules.wfst.error.layerNotConfiguredCorrectly");
             expect(prepareFeaturePropertiesSpy.notCalled).to.be.true;
         });
         it("should commit an error message if the currently selected layer is not selected in the layer tree", async () => {
@@ -455,7 +455,7 @@ describe("src/modules/tools/wfst/store/actionsWfst.js", () => {
             expect(commit.calledOnce).to.be.true;
             expect(commit.firstCall.args.length).to.equal(2);
             expect(commit.firstCall.args[0]).to.equal("setFeatureProperties");
-            expect(commit.firstCall.args[1]).to.equal("modules.tools.wfsTransaction.error.layerNotSelected");
+            expect(commit.firstCall.args[1]).to.equal("common:modules.wfst.error.layerNotSelected");
             expect(prepareFeaturePropertiesSpy.notCalled).to.be.true;
         });
     });

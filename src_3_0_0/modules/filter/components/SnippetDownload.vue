@@ -137,7 +137,7 @@ export default {
                     class="col-md-6 col-form-label"
                     for="tool-filter-download-box"
                 >
-                    {{ $t("common:modules.tools.filter.download.label") }}
+                    {{ $t("common:modules.filter.download.label") }}
                 </label>
             </div>
         </div>
@@ -147,7 +147,7 @@ export default {
                     class="col-md-5 col-form-label"
                     for="tool-filter-download-format"
                 >
-                    {{ $t("common:modules.tools.draw.download.format") }}
+                    {{ $t("common:modules.filter.download.format") }}
                 </label>
                 <div class="col-md-7">
                     <select
@@ -156,7 +156,7 @@ export default {
                         @change="setDownloadSelectedFormat($event.target.value)"
                     >
                         <option value="none">
-                            {{ $t("common:modules.tools.draw.download.pleaseChoose") }}
+                            {{ $t("common:modules.filter.download.pleaseChoose") }}
                         </option>
                         <option
                             v-for="format in formats"
@@ -174,7 +174,7 @@ export default {
                     class="col-md-5 col-form-label"
                     for="tool-filter-download-filename"
                 >
-                    {{ $t("common:modules.tools.draw.download.filename") }}
+                    {{ $t("common:modules.filter.download.filename") }}
                 </label>
                 <div class="col-md-7">
                     <input
@@ -182,7 +182,7 @@ export default {
                         v-model="filename"
                         type="text"
                         class="form-control form-control-sm"
-                        :placeholder="$t('common:modules.tools.draw.download.enterFilename')"
+                        :placeholder="$t('common:modules.filter.download.enterFilename')"
                         @keyup="enableDownloadBtn"
                     >
                 </div>
@@ -193,13 +193,13 @@ export default {
                     :filename="filename"
                     :handler="getDownloadHandler"
                     :use-semicolon="true"
-                    :title="$t('modules.tools.filter.download.labelBtn')"
+                    :title="$t('common:modules.filter.download.labelBtn')"
                     postfix-format=""
                 />
             </div>
             <div v-if="enableFileDownload && selectedFormat==='GeoJSON'">
                 <ExportButtonGeoJSON
-                    :title="$t('modules.tools.filter.download.labelBtn')"
+                    :title="$t('common:modules.filter.download.labelBtn')"
                     :data="json"
                     :filename="filename"
                     postfix-format=""

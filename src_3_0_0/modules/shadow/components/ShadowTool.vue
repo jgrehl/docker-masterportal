@@ -241,9 +241,9 @@ export default {
         <div class="form-check form-switch mb-3 d-flex align-items-center">
             <SwitchInput
                 :id="'module-shadow-checkbox'"
-                :aria="$t('modules.tools.print.withInfoLabel')"
+                :aria="$t('common:modules.shadow.withInfoLabel')"
                 :interaction="() => toggleShadow(!shadowActivated)"
-                :label="$t(shadowActivated ? 'common:modules.tools.shadow.shadowDisplayOff' : 'common:modules.tools.shadow.shadowDisplayOn')"
+                :label="$t(shadowActivated ? 'common:modules.shadow.shadowDisplayOff' : 'common:modules.shadow.shadowDisplayOn')"
                 :checked="shadowActivated"
             />
         </div>
@@ -256,7 +256,7 @@ export default {
                     class="d-flex flex-column justify-content-center form-label mb-0"
                     for="datePicker"
                 >
-                    {{ $t('common:modules.tools.shadow.pickDate') }}
+                    {{ $t('common:modules.shadow.pickDate') }}
                 </label>
                 <div
                     id="dateSelector"
@@ -289,7 +289,7 @@ export default {
             />
             <ShadowToolSliderInput
                 id="timeSlider"
-                :label="$t('common:modules.tools.shadow.slideHour')"
+                :label="$t('common:modules.shadow.slideHour')"
                 :value="timeSliderValue"
                 :valuelabel="showTime"
                 :min="1"

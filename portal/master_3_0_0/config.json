@@ -11,14 +11,14 @@
     "portalFooter": {
       "urls": [
         {
-          "bezeichnung": "common:modules.footer.designation",
+          "bezeichnung": "common:modules.portalFooter.designation",
           "url": "https://geoinfo.hamburg.de/",
           "alias": "Landesbetrieb Geoinformation und Vermessung",
           "alias_mobile": "LGV Hamburg"
         },
         {
           "url": "mailto:LGVGeoPortal-Hilfe@gv.hamburg.de?subject=Kartenunstimmigkeiten%20melden&body=Zur%20weiteren%20Bearbeitung%20bitten%20wir%20Sie%20die%20nachstehenden%20Angaben%20zu%20machen.%20Bei%20Bedarf%20fügen%20Sie%20bitte%20noch%20einen%20Screenshot%20hinzu.%20Vielen%20Dank!%0A%0A1.%20Name:%0A2.%20Telefon:%0A3.%20Anliegen",
-          "alias": "common:modules.footer.mapDiscrepancy"
+          "alias": "common:modules.portalFooter.mapDiscrepancy"
         }
       ],
       "scaleLine": true
@@ -117,16 +117,14 @@
             "currentLayoutName": "A4 Hochformat"
           },
           {
-            "type": "selectFeatures",
-            "name": "common:menu.tools.selectFeatures",
-            "icon": "bi-hand-index-thumb-fill"
+            "type": "selectFeatures"
           },
           {
             "type": "wfsSearch",
             "zoomLevel": 7,
             "instances": [
               {
-                "title": "common:menu.tools.parcelSearch",
+                "title": "common:modules.wfsSearch.parcelSearch",
                 "userHelp": "hide",
                 "requestConfig": {
                   "gazetteer": {
@@ -148,7 +146,7 @@
                         {
                           "field": {
                             "queryType": "equal",
-                            "inputLabel": "common:modules.tools.wfsSearch.district",
+                            "inputLabel": "common:modules.wfsSearch.district",
                             "fieldName": "gemarkung",
                             "usesId": true,
                             "options": "",
@@ -158,7 +156,7 @@
                         {
                           "field": {
                             "queryType": "equal",
-                            "inputLabel": "common:modules.tools.wfsSearch.parcelNumber",
+                            "inputLabel": "common:modules.wfsSearch.parcelNumber",
                             "fieldName": "flurstuecksnummer",
                             "required": true
                           }
@@ -352,19 +350,19 @@
             "description": "Starte eine Slideshow",
             "layerIds": [
               {
-                "title": "common:modules.tools.layerSlider.serviceOne",
+                "title": "common:modules.layerSlider.serviceOne",
                 "layerId": "19173"
               },
               {
-                "title": "common:modules.tools.layerSlider.serviceTwo",
+                "title": "common:modules.layerSlider.serviceTwo",
                 "layerId": "2426"
               },
               {
-                "title": "common:modules.tools.layerSlider.serviceThree",
+                "title": "common:modules.layerSlider.serviceThree",
                 "layerId": "8712.2"
               },
               {
-                "title": "common:modules.tools.layerSlider.serviceFour",
+                "title": "common:modules.layerSlider.serviceFour",
                 "layerId": "1711"
               }
             ]
@@ -703,19 +701,19 @@
                 "barPercentage": 1.1,
                 "values": {
                   "available": {
-                    "title": "common:modules.tools.gfi.themes.sensor.chargingStations.available",
+                    "title": "common:modules.getFeatureInfo.themes.sensor.chargingStations.available",
                     "color": "rgba(0, 220, 0, 1)",
-                    "noticeText": "common:modules.tools.gfi.themes.sensor.sensorBarChart.noticeTextAvailable"
+                    "noticeText": "common:modules.getFeatureInfo.themes.sensor.sensorBarChart.noticeTextAvailable"
                   },
                   "charging": {
-                    "title": "common:modules.tools.gfi.themes.sensor.chargingStations.charging",
+                    "title": "common:modules.getFeatureInfo.themes.sensor.chargingStations.charging",
                     "color": "rgba(220, 0, 0, 1)",
-                    "noticeText": "common:modules.tools.gfi.themes.sensor.sensorBarChart.noticeTextCharging"
+                    "noticeText": "common:modules.getFeatureInfo.themes.sensor.sensorBarChart.noticeTextCharging"
                   },
                   "outoforder": {
-                    "title": "common:modules.tools.gfi.themes.sensor.chargingStations.outoforder",
+                    "title": "common:modules.getFeatureInfo.themes.sensor.chargingStations.outoforder",
                     "color": "rgba(175, 175, 175, 1)",
-                    "noticeText": "common:modules.tools.gfi.themes.sensor.sensorBarChart.noticeTextOutoforder"
+                    "noticeText": "common:modules.getFeatureInfo.themes.sensor.sensorBarChart.noticeTextOutoforder"
                   }
                 }
               }

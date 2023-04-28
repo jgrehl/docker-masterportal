@@ -44,7 +44,7 @@ export default {
         <IconButton
             :id="'layer-component-icon-info-button-' + layerConf.id"
             :class-array="['btn-light']"
-            :aria="$t('common:tree.infosAndLegend')"
+            :aria="$t('common:modules.layerTree.infosAndLegend')"
             :icon="icon"
             :interaction="() => showLayerInformation()"
             :disabled="!layerConf?.datasets?.length > 0"

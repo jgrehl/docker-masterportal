@@ -59,10 +59,10 @@ export default {
             v-if="vectorTileLayerList.length === 0"
             id="module-styleVT-noStyleableLayers"
         >
-            {{ $t("common:modules.tools.styleVT.noStyleableLayers") }}
+            {{ $t("common:modules.styleVT.noStyleableLayers") }}
         </p>
         <div v-else>
-            <p>{{ $t("common:modules.tools.styleVT.introText") }}</p>
+            <p>{{ $t("common:modules.styleVT.introText") }}</p>
             <form
                 id="module-styleVT-styleableLayersAvailable"
                 class="form-horizontal"
@@ -73,7 +73,7 @@ export default {
                         for="module-styleVT-selectedLayerField"
                         class="range-label mb-1"
                     >
-                        {{ $t("common:modules.tools.styleVT.theme") }}
+                        {{ $t("common:modules.styleVT.theme") }}
                     </label>
                     <select
                         id="module-styleVT-selectedLayerField"
@@ -86,7 +86,7 @@ export default {
                             value=""
                             selected
                         >
-                            {{ $t("common:modules.tools.styleVT.chooseTheme") }}
+                            {{ $t("common:modules.styleVT.chooseTheme") }}
                         </option>
                         <option
                             v-for="vectorTileLayer in vectorTileLayerList"
@@ -107,7 +107,7 @@ export default {
                         for="module-styleVT-selectedStyleField"
                         class="style-label"
                     >
-                        {{ $t("common:modules.tools.styleVT.style") }}
+                        {{ $t("common:modules.styleVT.style") }}
                     </label>
                     <select
                         id="module-styleVT-selectedStyleField"

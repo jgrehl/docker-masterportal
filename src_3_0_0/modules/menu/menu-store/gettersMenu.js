@@ -27,7 +27,7 @@ const menuGetters = {
 
         switch (currentComponent.type) {
             case "root":
-                name = i18next.t("common:menu.name");
+                name = i18next.t("common:modules.menu.name");
                 break;
             default:
                 name = currentComponent.props !== undefined && currentComponent.props.name ? i18next.t(currentComponent.props.name) : currentComponent.type;
@@ -118,7 +118,7 @@ const menuGetters = {
         if (previousEntry !== "") {
             switch (previousEntry.type) {
                 case "root": {
-                    previousEntryText = i18next.t("common:menu.name");
+                    previousEntryText = i18next.t("common:modules.menu.name");
                     break;
                 }
                 default: {

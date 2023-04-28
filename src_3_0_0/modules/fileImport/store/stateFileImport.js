@@ -24,24 +24,24 @@ export default {
     importedFileNames: [],
     layer: undefined,
     layerId: "importDrawLayer",
-    name: "common:menu.tools.fileImport",
+    name: "common:modules.fileImport.name",
     selectedFiletype: "auto",
     showDescription: false,
     supportedDevices: ["Desktop", "Mobile", "Table"],
     supportedFiletypes: {
         auto: {
-            caption: "common:modules.tools.fileImport.captions.supportedFiletypes.auto"
+            caption: "common:modules.fileImport.captions.supportedFiletypes.auto"
         },
         kml: {
-            caption: "common:modules.tools.fileImport.captions.supportedFiletypes.kml",
+            caption: "common:modules.fileImport.captions.supportedFiletypes.kml",
             rgx: /\.kml$/i
         },
         gpx: {
-            caption: "common:modules.tools.fileImport.captions.supportedFiletypes.gpx",
+            caption: "common:modules.fileImport.captions.supportedFiletypes.gpx",
             rgx: /\.gpx$/i
         },
         geojson: {
-            caption: "common:modules.tools.fileImport.captions.supportedFiletypes.geojson",
+            caption: "common:modules.fileImport.captions.supportedFiletypes.geojson",
             rgx: /\.(geo)?json$/i
         }
     },

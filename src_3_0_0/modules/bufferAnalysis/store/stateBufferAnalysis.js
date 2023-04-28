@@ -27,7 +27,7 @@ import {ResultType} from "./enums";
  */
 const state = {
     icon: "bi-arrows-angle-expand",
-    name: "common:menu.tools.bufferAnalysis",
+    name: "common:modules.bufferAnalysis.name",
     type: "bufferAnalysis",
     description: "",
     showDescription: false,

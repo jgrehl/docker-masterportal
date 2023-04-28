@@ -23,10 +23,10 @@ const state = {
     description: "",
     icon: "bi-collection-play",
     layerIds: [],
-    name: "common:menu.tools.layerSlider",
+    name: "common:modules.layerSlider.name",
     showDescription: false,
     timeInterval: 2000,
-    title: "common:modules.tools.layerSlider.title",
+    title: "common:modules.layerSlider.title",
     type: "layerSlider",
 
     activeLayer: {

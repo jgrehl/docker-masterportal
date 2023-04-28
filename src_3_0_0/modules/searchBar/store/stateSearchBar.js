@@ -15,7 +15,7 @@
  */
 const state = {
     minCharacters: 3,
-    placeholder: "common:modules.searchbar.placeholder.address",
+    placeholder: "common:modules.searchBar.placeholder.address",
     searchInterfaces: {},
     suggestionListLength: 5,
     timeout: 5000,

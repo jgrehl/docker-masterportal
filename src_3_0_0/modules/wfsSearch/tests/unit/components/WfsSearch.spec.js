@@ -153,7 +153,7 @@ describe("src_3_0_0/modules/wfsSearch/components/WfsSearch.vue", () => {
             resetButton = wrapper.find("#module-wfsSearch-button-resetUI");
 
         expect(resetButton.exists()).to.be.true;
-        expect(resetButton.text()).to.equal("common:modules.tools.wfsSearch.resetButton");
+        expect(resetButton.text()).to.equal("common:modules.wfsSearch.resetButton");
     });
     it("renders an input element of type submit to search", () => {
         store.commit("Modules/WfsSearch/setInstances", instances);
@@ -165,7 +165,7 @@ describe("src_3_0_0/modules/wfsSearch/components/WfsSearch.vue", () => {
             searchInput = wrapper.find("#module-wfsSearch-button-search");
 
         expect(searchInput.exists()).to.be.true;
-        expect(searchInput.element.value).to.equal("common:modules.tools.wfsSearch.searchButton");
+        expect(searchInput.element.value).to.equal("common:modules.wfsSearch.searchButton");
         expect(searchInput.element.type).to.equal("submit");
     });
     it("renders a clickable button to show the search results if the user searched and results were found", async () => {
@@ -185,7 +185,7 @@ describe("src_3_0_0/modules/wfsSearch/components/WfsSearch.vue", () => {
         showResultsButton.element.disabled = false;
 
         expect(showResultsButton.exists()).to.be.true;
-        expect(showResultsButton.text()).to.equal("common:modules.tools.wfsSearch.showResults (1)");
+        expect(showResultsButton.text()).to.equal("common:modules.wfsSearch.showResults (1)");
         expect(showResultsButton.element.disabled).to.be.false;
     });
     it("renders a disabled button if the user searched and no results were found", async () => {
@@ -204,7 +204,7 @@ describe("src_3_0_0/modules/wfsSearch/components/WfsSearch.vue", () => {
         searchButton = wrapper.find("#module-wfsSearch-button-showResults");
 
         expect(searchButton.exists()).to.be.true;
-        expect(searchButton.text()).to.equal("common:modules.tools.wfsSearch.showResults (0)");
+        expect(searchButton.text()).to.equal("common:modules.wfsSearch.showResults (0)");
         expect(searchButton.element.disabled).to.be.true;
     });
     it("renders no button if the user searched but the parameter 'resultList' was not configured", () => {

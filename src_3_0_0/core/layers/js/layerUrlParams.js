@@ -137,7 +137,7 @@ function addLayerToLayerTree (layers) {
         }
         else {
             store.dispatch("Alerting/addSingleAlert", {
-                content: i18next.t("common:modules.core.modelList.layer.urlParamWarning", {layerId: layer.id}),
+                content: i18next.t("common:core.layers.urlParamWarning", {layerId: layer.id}),
                 category: "warning"
             });
         }
