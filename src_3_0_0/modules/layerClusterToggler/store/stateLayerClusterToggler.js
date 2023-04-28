@@ -16,7 +16,7 @@ export default {
     active: false,
     description: "",
     icon: "bi-list",
-    name: "common:menu.tools.layerClusterToggler",
+    name: "common:modules.layerClusterToggler.name",
     showDescription: false,
     type: "layerClusterToggler",
 

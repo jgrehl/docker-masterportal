@@ -145,7 +145,7 @@ export default {
                 ref="tool-bufferAnalysis-selectSourceInput"
                 v-model="selectedSourceLayer"
                 class="form-select"
-                :aria-label="$t('modules.tools.bufferAnalysis.sourceSelectLabel')"
+                :aria-label="$t('common:modules.bufferAnalysis.sourceSelectLabel')"
             >
                 <option
                     v-for="layer in selectOptions"
@@ -157,7 +157,7 @@ export default {
                 </option>
             </select>
             <label for="tool-bufferAnalysis-selectSourceInput">
-                {{ $t("modules.tools.bufferAnalysis.sourceSelectLabel") }}
+                {{ $t("common:modules.bufferAnalysis.sourceSelectLabel") }}
             </label>
         </div>
 
@@ -174,7 +174,7 @@ export default {
             >
             <label
                 for="tool-bufferAnalysis-radiusTextInput"
-            >{{ $t("modules.tools.bufferAnalysis.rangeLabel") }}</label>
+            >{{ $t("common:modules.bufferAnalysis.rangeLabel") }}</label>
             <input
                 id="tool-bufferAnalysis-radiusRangeInput"
                 v-model="inputBufferRadius"
@@ -192,22 +192,22 @@ export default {
                 id="tool-bufferAnalysis-resultTypeInput"
                 v-model="resultType"
                 class="form-select"
-                :aria-label="$t('modules.tools.bufferAnalysis.resultTypeLabel')"
+                :aria-label="$t('common:modules.bufferAnalysis.resultTypeLabel')"
                 :disabled="!selectedSourceLayer || !bufferRadius || selectedTargetLayer"
             >
                 <option
                     :value="resultTypeEnum.WITHIN"
                 >
-                    {{ $t("modules.tools.bufferAnalysis.overlapping") }}
+                    {{ $t("common:modules.bufferAnalysis.overlapping") }}
                 </option>
                 <option
                     :value="resultTypeEnum.OUTSIDE"
                 >
-                    {{ $t("modules.tools.bufferAnalysis.notOverlapping") }}
+                    {{ $t("common:modules.bufferAnalysis.notOverlapping") }}
                 </option>
             </select>
             <label for="tool-bufferAnalysis-resultTypeInput">
-                {{ $t("modules.tools.bufferAnalysis.resultTypeLabel") }}
+                {{ $t("common:modules.bufferAnalysis.resultTypeLabel") }}
             </label>
         </div>
 
@@ -228,26 +228,26 @@ export default {
                 </option>
             </select>
             <label for="tool-bufferAnalysis-selectTargetInput">
-                {{ $t("modules.tools.bufferAnalysis.targetSelectLabel") }}
+                {{ $t("common:modules.bufferAnalysis.targetSelectLabel") }}
             </label>
         </div>
 
         <div class="mb-3 d-flex justify-content-center">
             <FlatButton
                 id="tool-bufferAnalysis-resetButton"
-                :aria-label="$t('modules.tools.bufferAnalysis.clearButton')"
+                :aria-label="$t('common:modules.bufferAnalysis.clearButton')"
                 :interaction="resetModule"
-                :text="$t('modules.tools.bufferAnalysis.clearButton')"
+                :text="$t('common:modules.bufferAnalysis.clearButton')"
                 :icon="'bi-x-circle'"
             />
         </div>
         <div class="d-flex justify-content-center row form-floating">
             <FlatButton
                 id="tool-bufferAnalysis-saveButton"
-                :aria-label="$t('modules.tools.bufferAnalysis.saveButton')"
+                :aria-label="$t('common:modules.bufferAnalysis.saveButton')"
                 :interaction="buildAndCopyUrl"
                 :disabled="!selectedSourceLayer || !selectedTargetLayer || !bufferRadius"
-                :text="$t('modules.tools.bufferAnalysis.saveButton')"
+                :text="$t('common:modules.bufferAnalysis.saveButton')"
                 :icon="'bi-clipboard'"
             />
         </div>

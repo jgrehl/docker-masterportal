@@ -29,7 +29,7 @@ const state = {
     // defaults for config.json parameters
     hasMouseMapInteractions: true,
     type: "featureLister",
-    name: "common:menu.tools.featureLister",
+    name: "common:modules.featureLister.name",
     icon: "bi-list",
     description: "",
     showDescription: false,

@@ -114,7 +114,7 @@ export default {
     },
     computed: {
         ariaLabelSlider () {
-            return this.$t("modules.tools.filter.ariaLabel.slider", {param: this.attrName});
+            return this.$t("common:modules.filter.ariaLabel.slider", {param: this.attrName});
         },
         titleText () {
             if (this.title === true) {

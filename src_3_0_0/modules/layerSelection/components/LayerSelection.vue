@@ -120,7 +120,7 @@ export default {
                 <h6 class="mp-menu-navigation-link mb-3"><p class="bi-chevron-left" />{{ lastFolderName }}</h6>
             </a>
             <h6 v-if="backgroundLayerConfs.length > 0">
-                {{ $t("common:tree.backgrounds") }}
+                {{ $t("common:modules.layerSelection.backgrounds") }}
             </h6>
             <template
                 v-for="(bgConf, index) in backgroundLayerConfs"
@@ -150,14 +150,14 @@ export default {
             </template>
         </div>
         <div class="mt-3">
-            <span>{{ $t("tree.selectedSubjectsCount", {count: layersToAdd.length}) }}</span>
+            <span>{{ $t("common:modules.layerSelection.selectedSubjectsCount", {count: layersToAdd.length}) }}</span>
             <FlatButton
                 id="layer-selection-add-layer-btn"
                 class="mt-2  w-100"
-                aria-label="$t('tree.addSelectedSubjectsToMap')"
+                aria-label="$t('common:modules.layerSelection.addSelectedSubjectsToMap')"
                 :disabled="layersToAdd.length === 0"
                 :interaction="updateLayerTree"
-                :text="$t('tree.addSelectedSubjectsToMap')"
+                :text="$t('common:modules.layerSelection.addSelectedSubjectsToMap')"
                 :icon="'bi-plus-circle'"
             />
         </div>

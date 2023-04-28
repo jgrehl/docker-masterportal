@@ -51,7 +51,7 @@ function applySelectedSourceLayer ({getters, commit, dispatch}, selectedSourceLa
     // throw error if no selected layer is provided and it is not a valid null value
     // Value selected layer will be set to null on reset, so this tests for an undefined layer
     else if (selectedLayer !== null) {
-        throw new Error(i18next.t("common:modules.tools.bufferAnalysis.sourceLayerNotFound", {layerId: selectedSourceLayer}));
+        throw new Error(i18next.t("common:modules.bufferAnalysis.sourceLayerNotFound", {layerId: selectedSourceLayer}));
     }
     commit("setSelectedSourceLayer", selectedLayer);
     // remove previously generated layers and show buffer
@@ -95,7 +95,7 @@ function applySelectedTargetLayer ({commit, getters, dispatch}, selectedTargetLa
     // throw error if no selected layer is provided and it is not a valid null value
     // Value selected layer will be set to null on reset, so this tests for an undefined layer
     else if (selectedLayer !== null) {
-        throw new Error(i18next.t("common:modules.tools.bufferAnalysis.targetLayerNotFound", {layerId: selectedTargetLayer}));
+        throw new Error(i18next.t("common:modules.bufferAnalysis.targetLayerNotFound", {layerId: selectedTargetLayer}));
     }
 }
 /**

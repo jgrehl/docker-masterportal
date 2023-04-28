@@ -677,7 +677,7 @@ export default {
                     type="date"
                     :min="dateMinComputed"
                     :max="dateMaxComputed"
-                    :aria-label="$t('common:modules.tools.filter.ariaLabel.dateRange.from', {param: getAttrNameFrom()})"
+                    :aria-label="$t('common:modules.filter.ariaLabel.dateRange.from', {param: getAttrNameFrom()})"
                     :disabled="disabled"
                 >
             </div>
@@ -694,7 +694,7 @@ export default {
                     type="date"
                     :min="dateMinComputed"
                     :max="dateMaxComputed"
-                    :aria-label="$t('common:modules.tools.filter.ariaLabel.dateRange.to', {param: getAttrNameUntil()})"
+                    :aria-label="$t('common:modules.filter.ariaLabel.dateRange.to', {param: getAttrNameUntil()})"
                     :disabled="disabled"
                 >
             </div>
@@ -712,7 +712,7 @@ export default {
             <input
                 v-model="sliderFrom"
                 type="range"
-                :aria-label="$t('common:modules.tools.filter.ariaLabel.slider.from', {param: getAttrNameFrom()})"
+                :aria-label="$t('common:modules.filter.ariaLabel.sliderRange.min', {param: getAttrNameFrom()})"
                 class="from"
                 :disabled="disabled"
                 :min="currentSliderMin"
@@ -723,7 +723,7 @@ export default {
             <input
                 v-model="sliderUntil"
                 type="range"
-                :aria-label="$t('common:modules.tools.filter.ariaLabel.slider.to', {param: getAttrNameUntil()})"
+                :aria-label="$t('common:modules.filter.ariaLabel.sliderRange.max', {param: getAttrNameUntil()})"
                 class="until"
                 :disabled="disabled"
                 :min="currentSliderMin"

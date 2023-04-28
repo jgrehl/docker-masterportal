@@ -98,10 +98,10 @@ const getters = {
             );
 
         if (!(feature instanceof Feature)) {
-            return i18next.t("common:modules.tools.wfsTransaction.error.noFeature");
+            return i18next.t("common:modules.wfst.error.noFeature");
         }
         if (requiredPropertiesWithNoValue.length > 0) {
-            return i18next.t("common:modules.tools.wfsTransaction.error.requiredPropertiesNotSet", {properties: requiredPropertiesWithNoValue.map(({label}) => label).join(", ")});
+            return i18next.t("common:modules.wfst.error.requiredPropertiesNotSet", {properties: requiredPropertiesWithNoValue.map(({label}) => label).join(", ")});
         }
         return "";
     },

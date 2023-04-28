@@ -52,27 +52,27 @@ export default {
         ...mapGetters(["isMobile", "namedProjections", "uiStyle"]),
         eastingNoCoordMessage: function () {
             if (this.currentProjection.projName !== "longlat") {
-                return this.$t("common:modules.tools.coordToolkit.errorMsg.noCoord", {valueKey: this.$t(this.getLabel("eastingLabel"))});
+                return this.$t("common:modules.coordToolkit.errorMsg.noCoord", {valueKey: this.$t(this.getLabel("eastingLabel"))});
             }
-            return this.$t("common:modules.tools.coordToolkit.errorMsg.hdmsNoCoord", {valueKey: this.$t(this.getLabel("eastingLabel"))});
+            return this.$t("common:modules.coordToolkit.errorMsg.hdmsNoCoord", {valueKey: this.$t(this.getLabel("eastingLabel"))});
         },
         northingNoCoordMessage: function () {
             if (this.currentProjection.projName !== "longlat") {
-                return this.$t("common:modules.tools.coordToolkit.errorMsg.noCoord", {valueKey: this.$t(this.getLabel("northingLabel"))});
+                return this.$t("common:modules.coordToolkit.errorMsg.noCoord", {valueKey: this.$t(this.getLabel("northingLabel"))});
             }
-            return this.$t("common:modules.tools.coordToolkit.errorMsg.hdmsNoCoord", {valueKey: this.$t(this.getLabel("northingLabel"))});
+            return this.$t("common:modules.coordToolkit.errorMsg.hdmsNoCoord", {valueKey: this.$t(this.getLabel("northingLabel"))});
         },
         northingNoMatchMessage: function () {
             if (this.currentProjection.projName !== "longlat") {
-                return this.$t("common:modules.tools.coordToolkit.errorMsg.noMatch", {valueKey: this.$t(this.getLabel("northingLabel"))});
+                return this.$t("common:modules.coordToolkit.errorMsg.noMatch", {valueKey: this.$t(this.getLabel("northingLabel"))});
             }
-            return this.$t("common:modules.tools.coordToolkit.errorMsg.hdmsNoMatch", {valueKey: this.$t(this.getLabel("northingLabel"))});
+            return this.$t("common:modules.coordToolkit.errorMsg.hdmsNoMatch", {valueKey: this.$t(this.getLabel("northingLabel"))});
         },
         eastingNoMatchMessage: function () {
             if (this.currentProjection.projName !== "longlat") {
-                return this.$t("common:modules.tools.coordToolkit.errorMsg.noMatch", {valueKey: this.$t(this.getLabel("eastingLabel"))});
+                return this.$t("common:modules.coordToolkit.errorMsg.noMatch", {valueKey: this.$t(this.getLabel("eastingLabel"))});
             }
-            return this.$t("common:modules.tools.coordToolkit.errorMsg.hdmsNoMatch", {valueKey: this.$t(this.getLabel("eastingLabel"))});
+            return this.$t("common:modules.coordToolkit.errorMsg.hdmsNoMatch", {valueKey: this.$t(this.getLabel("eastingLabel"))});
         }
     },
     watch: {
@@ -479,14 +479,14 @@ export default {
                     :id="'supply-coord-tab'"
                     :active="true"
                     :target="'#supply-coord-pane'"
-                    :label="'modules.tools.coordToolkit.supply'"
+                    :label="'common:modules.coordToolkit.supply'"
                     :interaction="() => changeMode('supply')"
                 />
                 <NavTab
                     :id="'search-by-coord-tab'"
                     :active="false"
                     :target="'#search-by-coord-pane'"
-                    :label="'modules.tools.coordToolkit.search'"
+                    :label="'common:modules.coordToolkit.search'"
                     :interaction="() => changeMode('search')"
                 />
             </ul>
@@ -496,7 +496,7 @@ export default {
             >
                 <i class="bi-lightbulb-fill col-2" />
                 <span class="col-10 align-items-center d-flex">
-                    {{ $t("modules.tools.coordToolkit.hintSupply") }}
+                    {{ $t("common:modules.coordToolkit.hintSupply") }}
                 </span>
             </div>
             <div
@@ -505,14 +505,14 @@ export default {
             >
                 <i class="bi-lightbulb-fill col-2" />
                 <span class="col-10 align-items-center d-flex">
-                    {{ $t("modules.tools.coordToolkit.hintSearch") }}
+                    {{ $t("common:modules.coordToolkit.hintSearch") }}
                 </span>
             </div>
             <p
                 v-if="isCoordInfo()"
                 class="font-bold mb-3"
             >
-                {{ $t("modules.tools.coordToolkit.postionCoordinates") }}
+                {{ $t("common:modules.coordToolkit.postionCoordinates") }}
             </p>
             <div class="form-floating mb-3">
                 <select
@@ -532,14 +532,14 @@ export default {
                 </select>
                 <label
                     for="coordSystemField"
-                >{{ $t("modules.tools.coordToolkit.coordSystemField") }}</label>
+                >{{ $t("common:modules.coordToolkit.coordSystemField") }}</label>
             </div>
             <div :class="getClassForEasting()">
                 <InputText
                     :id="'coordinatesEastingField'"
                     :value="coordinatesEasting.value"
                     :label="$t(getLabel('eastingLabel'))"
-                    :placeholder="isEnabled('search') ? $t('modules.tools.coordToolkit.exampleAcronym') + coordinatesEastingExample : ''"
+                    :placeholder="isEnabled('search') ? $t('common:modules.coordToolkit.exampleAcronym') + coordinatesEastingExample : ''"
                     :input="(value) => onInputEvent(value, coordinatesEasting)"
                     :readonly="isEnabled('supply')"
                     :class-obj="{ inputError: getEastingError }"
@@ -552,7 +552,7 @@ export default {
                             id="copyEastingBtn"
                             type="button"
                             class="btn btn-outline-default inside px-3"
-                            :title="$t(`common:modules.tools.coordToolkit.copyCoordBtn`, {value: $t(getLabel('eastingLabel'))})"
+                            :title="$t(`common:modules.coordToolkit.copyCoordBtn`, {value: $t(getLabel('eastingLabel'))})"
                             @click="copyCoords(['coordinatesEastingField'])"
                         >
                             <span
@@ -578,7 +578,7 @@ export default {
                         class="error-text mb-3"
                     >
                         {{ eastingNoMatchMessage }}
-                        {{ $t("modules.tools.coordToolkit.errorMsg.example") + coordinatesEastingExample }}
+                        {{ $t("common:modules.coordToolkit.errorMsg.example") + coordinatesEastingExample }}
                     </p>
                 </transition>
             </div>
@@ -586,7 +586,7 @@ export default {
                 <InputText
                     :id="'coordinatesNorthingField'"
                     :label="$t(getLabel('northingLabel'))"
-                    :placeholder="isEnabled('search') ? $t('modules.tools.coordToolkit.exampleAcronym') + coordinatesNorthingExample : ''"
+                    :placeholder="isEnabled('search') ? $t('common:modules.coordToolkit.exampleAcronym') + coordinatesNorthingExample : ''"
                     :value="coordinatesNorthing.value"
                     :input="(value) => onInputEvent(value, coordinatesNorthing)"
                     :readonly="isEnabled('supply')"
@@ -600,7 +600,7 @@ export default {
                             id="copyNorthingBtn"
                             type="button"
                             class="btn btn-outline-default inside px-3"
-                            :title="$t(`common:modules.tools.coordToolkit.copyCoordBtn`, {value: $t(getLabel('northingLabel'))})"
+                            :title="$t(`common:modules.coordToolkit.copyCoordBtn`, {value: $t(getLabel('northingLabel'))})"
                             @click="copyCoords(['coordinatesNorthingField'])"
                         >
                             <span
@@ -624,19 +624,19 @@ export default {
                 >
                     {{ northingNoMatchMessage }}
                     <br>
-                    {{ $t("modules.tools.coordToolkit.errorMsg.example") + coordinatesNorthingExample }}
+                    {{ $t("common:modules.coordToolkit.errorMsg.example") + coordinatesNorthingExample }}
                 </p>
             </div>
             <div
                 v-if="isEnabled('supply') && !isMobile && showCopyButtons"
                 class="d-flex justify-content-between mb-3"
             >
-                {{ $t("menu.tools.coordToolkit") + ": " + coordinatesEasting.value + ", " + coordinatesNorthing.value }}
+                {{ $t("common:modules.coordToolkit.name") + ": " + coordinatesEasting.value + ", " + coordinatesNorthing.value }}
                 <button
                     id="copyCoordsPairBtn"
                     type="button"
                     class="btn btn-outline-default copy px-3"
-                    :title="$t(`common:modules.tools.coordToolkit.copyCoordsBtn`)"
+                    :title="$t(`common:modules.coordToolkit.copyCoordsBtn`)"
                     @click="copyCoords(['coordinatesEastingField', 'coordinatesNorthingField'])"
                 >
                     <span
@@ -663,15 +663,15 @@ export default {
                 v-if="isEnabled('supply') && isCoordInfo()"
                 class="font-bold mb-3"
             >
-                {{ $t("modules.tools.coordToolkit.heightLabel") }}
+                {{ $t("common:modules.coordToolkit.heightLabel") }}
             </p>
             <div v-if="isEnabled('supply') && (heightLayer !== null || mapMode === '3D')">
                 <InputText
                     :id="'coordinatesHeightLabel'"
-                    :label="$t('modules.tools.coordToolkit.heightLabel')"
+                    :label="$t('common:modules.coordToolkit.heightLabel')"
                     :value="$t(height)"
                     :readonly="true"
-                    :placeholder="$t('modules.tools.coordToolkit.heightLabel')"
+                    :placeholder="$t('common:modules.coordToolkit.heightLabel')"
                 />
             </div>
             <div
@@ -680,7 +680,7 @@ export default {
                 <div class="d-flex justify-content-center mb-3">
                     <FlatButton
                         :id="'searchByCoordBtn'"
-                        :text="$t('modules.tools.coordToolkit.searchBtn')"
+                        :text="$t('common:modules.coordToolkit.searchBtn')"
                         :icon="'bi-search'"
                         :interaction="() => searchCoordinate(coordinatesEasting, coordinatesNorthing)"
                         :disabled="getEastingError || getNorthingError || !coordinatesEasting.value || !coordinatesNorthing.value"
@@ -708,7 +708,7 @@ export default {
                                 aria-controls="collapse-coord"
                             >
                                 <i class="bi-info-circle-fill me-2" />
-                                {{ $t("menu.info") }}
+                                {{ $t("common.modules.coordToolkit.info") }}
                             </button>
                         </h2>
                         <div
@@ -725,7 +725,7 @@ export default {
                                     </span>
                                     <hr>
                                 </span>
-                                {{ $t("modules.tools.measure.influenceFactors") }}
+                                {{ $t("common:modules.coordToolkit.influenceFactors") }}
                             </div>
                         </div>
                     </div>

@@ -13,7 +13,7 @@
 const state = {
     description: "",
     icon: "bi-newspaper",
-    name: "common:menu.tools.news",
+    name: "common:modules.news.name",
     showDescription: false,
     supportedDevices: ["Desktop", "Mobile", "Table"],
     supportedMapModes: ["2D", "3D"],

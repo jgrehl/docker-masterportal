@@ -20,13 +20,13 @@ const state = {
     active: false,
     name: "Geometrie",
     hasMouseMapInteractions: true,
-    displayName: "common:snippets.graphicalSelect.displayName",
+    displayName: "common:shared.modules.graphicalSelect.displayName",
     snippetType: "graphicalSelect",
     selectionElements: ["Dropdown"],
     geographicValues: ["Box", "Circle", "Polygon"],
     currentValue: "",
-    tooltipMessage: "common:snippets.graphicalSelect.tooltipMessage",
-    tooltipMessagePolygon: "common:snippets.graphicalSelect.tooltipMessagePolygon",
+    tooltipMessage: "common:shared.modules.graphicalSelect.tooltipMessage",
+    tooltipMessagePolygon: "common:shared.modules.graphicalSelect.tooltipMessagePolygon",
     selectedAreaGeoJson: undefined,
     defaultSelection: ""
 };

@@ -294,7 +294,7 @@ describe("src_3_0_0/modules/menu/menu-store/gettersMenu.js", () => {
             const side = "mainMenu",
                 previousNavigationEntryText = gettersMenu.previousNavigationEntryText(state)(side);
 
-            expect(previousNavigationEntryText).to.equal(i18next.t("common:menu.name"));
+            expect(previousNavigationEntryText).to.equal(i18next.t("common:modules.menu.name"));
         });
 
         it("should return the previous navigation entry text for secondaryMenu", () => {

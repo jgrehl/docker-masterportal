@@ -44,7 +44,7 @@ export default {
         ]
         "
         type="button"
-        :aria-label="$t('common:menu.ariaLabelOpen')"
+        :aria-label="$t('common:modules.menu.ariaLabelOpen')"
         @click="toggleMenu(side)"
     >
         <i :class="iconClass" />
