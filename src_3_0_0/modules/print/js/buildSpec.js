@@ -1289,7 +1289,7 @@ const BuildSpecModel = {
                     }
                     if (legendContainsPdf) {
                         store.dispatch("Alerting/addSingleAlert", {
-                            category: i18next.t("common:modules.alerting.categories.info"),
+                            category: "info",
                             content: "<b>The layer \"" + legendObj.name + "\" contains a pre-defined Legend. " +
                             "This legens cannot be added to the print.</b><br>" +
                             "You can download the pre-defined legend from the download menu seperately.",

@@ -12,7 +12,7 @@
 const state = {
     description: "",
     icon: "bi-upload",
-    name: "common:menu.tools.openConfig",
+    name: "common:modules.openConfig.name",
     showDescription: false,
     supportedDevices: ["Desktop", "Mobile", "Table"],
     supportedMapModes: ["2D", "3D"],

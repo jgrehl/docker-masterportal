@@ -76,7 +76,7 @@ export default {
     },
     computed: {
         ariaLabelInput () {
-            return this.$t("modules.tools.filter.ariaLabel.input", {param: this.attrName});
+            return this.$t("common:modules.filter.ariaLabel.input", {param: this.attrName});
         },
         titleText () {
             if (this.title === true) {

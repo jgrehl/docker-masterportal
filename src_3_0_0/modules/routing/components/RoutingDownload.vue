@@ -178,13 +178,13 @@ export default {
         id="routing-download"
         class="form-group-sm"
     >
-        <h6>{{ $t('common:modules.tools.routing.download.header') }}</h6>
+        <h6>{{ $t('common:modules.routing.download.header') }}</h6>
 
         <div class="d-flex mb-2">
             <label
                 for="routing-DownloadFormatOptions"
                 class="col-md-4 col-form-label d-flex align-self-center"
-            >{{ $t('common:modules.tools.routing.download.format') }}</label>
+            >{{ $t('common:modules.routing.download.format') }}</label>
 
             <div class="col-md-8">
                 <select
@@ -209,7 +209,7 @@ export default {
             <label
                 for="routing-download-filename"
                 class="col-md-4 col-form-label d-flex align-self-center"
-            >{{ $t('common:modules.tools.routing.download.filename') }}</label>
+            >{{ $t('common:modules.routing.download.filename') }}</label>
 
             <div class="col-md-8">
                 <input
@@ -217,7 +217,7 @@ export default {
                     v-model="download.fileName"
                     type="text"
                     class="form-control"
-                    :placeholder="$t('common:modules.tools.routing.download.filenamePlaceholder')"
+                    :placeholder="$t('common:modules.routing.download.filenamePlaceholder')"
                 >
             </div>
         </div>
@@ -233,7 +233,7 @@ export default {
                     <span class="bootstrap-icon pointer">
                         <i class="bi-save-fill" />
                     </span>
-                    {{ $t('common:modules.tools.routing.download.saveResult') }}
+                    {{ $t('common:modules.routing.download.saveResult') }}
                 </button>
             </div>
         </div>

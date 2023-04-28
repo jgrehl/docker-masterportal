@@ -198,7 +198,7 @@ export default {
         if (foundVectorTileLayers.length && active) {
             dispatch("Alerting/addSingleAlert", {
                 category: "warning",
-                content: i18next.t("common:modules.tools.print.vtlWarning")
+                content: i18next.t("common:modules.print.vtlWarning")
             }, {root: true});
         }
 
@@ -231,7 +231,7 @@ export default {
             invisibleLayerNames = "";
         let hintInfo = "";
 
-        hintInfo = i18next.t("common:modules.tools.print.invisibleLayer", {scale: "1: " + thousandsSeparator(scale, " ")});
+        hintInfo = i18next.t("common:modules.print.invisibleLayer", {scale: "1: " + thousandsSeparator(scale, " ")});
         hintInfo = hintInfo + "<br>" + invisibleLayerNames;
 
         if (invisibleLayer.length && hintInfo !== state.hintInfo) {

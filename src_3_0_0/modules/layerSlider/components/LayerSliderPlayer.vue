@@ -103,7 +103,7 @@ export default {
                 :aria-valuemax="layerIds.length"
                 :style="currentProgressBarWidth"
             >
-                <span class="visually-hidden">{{ $t("modules.tools.layerSlider.displayLayers") }}</span>
+                <span class="visually-hidden">{{ $t("common:modules.layerSlider.displayLayers") }}</span>
             </div>
         </div>
         <div class="input-group">
@@ -179,7 +179,7 @@ export default {
                 id="title"
                 type="text"
                 class="form-control"
-                :placeholder="$t('common:modules.tools.layerSlider.titleNotConfigured')"
+                :placeholder="$t('common:modules.layerSlider.titleNotConfigured')"
                 :value="$t(activeLayer.title)"
                 readonly="true"
             >

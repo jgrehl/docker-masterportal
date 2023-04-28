@@ -19,7 +19,7 @@ const state = {
     supportedDevices: ["Desktop", "Mobile", "Table"],
     supportedMapModes: ["2D", "3D"],
     icon: "bi-flag",
-    name: "common:menu.tools.language"
+    name: "common:modules.language.name"
 };
 
 export default state;
