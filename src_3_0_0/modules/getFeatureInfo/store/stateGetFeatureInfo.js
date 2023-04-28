@@ -18,7 +18,7 @@ const state = {
     hasMouseMapInteractions: true,
     icon: "bi-info-circle-fill",
     menuSide: "secondaryMenu",
-    name: "common:menu.tools.getInfos",
+    name: "common:modules.getFeatureInfo.name",
     type: "getFeatureInfo",
     visible: false,
 

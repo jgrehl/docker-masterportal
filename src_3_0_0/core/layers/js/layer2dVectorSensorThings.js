@@ -234,7 +234,7 @@ Layer2dVectorSensorThings.prototype.getStyleFunction = function (attrs) {
             return style;
         };
     }
-    console.warn(i18next.t("common:modules.core.modelList.layer.wrongStyleId", {styleId}));
+    console.warn(i18next.t("common:core.layers.errorHandling.wrongStyleId", {styleId}));
 
     return null;
 };
