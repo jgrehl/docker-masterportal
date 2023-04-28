@@ -19,6 +19,7 @@ describe("src_3_0_0/modules/alerting/store/actionsAlerting.js", () => {
             alerts: [
                 {
                     hash: "123",
+                    initial: true,
                     mustBeConfirmed: false
                 }
             ]
@@ -26,8 +27,8 @@ describe("src_3_0_0/modules/alerting/store/actionsAlerting.js", () => {
 
         actions.cleanup({state, commit});
         expect(commit.calledThrice).to.be.true;
-        expect(commit.getCall(0).args).to.eql(["addToDisplayedAlerts", {hash: "123", mustBeConfirmed: false}]);
-        expect(commit.getCall(1).args).to.eql(["removeFromAlerts", {hash: "123", mustBeConfirmed: false}]);
+        expect(commit.getCall(0).args).to.eql(["addToDisplayedAlerts", {hash: "123", initial: true, mustBeConfirmed: false}]);
+        expect(commit.getCall(1).args).to.eql(["removeFromAlerts", {hash: "123", initial: true, mustBeConfirmed: false}]);
         expect(commit.getCall(2).args).to.eql(["setReadyToShow", false]);
     });
     it("setAlertAsRead", async function () {
