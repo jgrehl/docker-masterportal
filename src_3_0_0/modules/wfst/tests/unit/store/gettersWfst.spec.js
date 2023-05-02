@@ -4,7 +4,7 @@ import Feature from "ol/Feature";
 import {defaultInteractionConfig} from "../../../constantsWfst";
 import gettersWfst from "../../../store/gettersWfst";
 
-describe("src/modules/tools/wfst/store/gettersWfst.js", () => {
+describe("src_3_0_0/modules/wfst/store/gettersWfst.js", () => {
     let state;
 
     describe("currentInteractionConfig", () => {
@@ -17,6 +17,13 @@ describe("src/modules/tools/wfst/store/gettersWfst.js", () => {
                 text: "My WFS-T"
             };
         let consoleSpy;
+
+        before(() => {
+            i18next.init({
+                lng: "cimode",
+                debug: false
+            });
+        });
 
         beforeEach(() => {
             state = {};
@@ -179,10 +186,10 @@ describe("src/modules/tools/wfst/store/gettersWfst.js", () => {
         it("should return an error message indicating that no feature has been drawn if the feature given to the getter is not an ol/Feature", () => {
             feature = "somethingDifferent";
 
-            expect(gettersWfst.savingErrorMessage(state)(feature)).to.equal("common:modules.wfst.error.noFeature");
+            expect(gettersWfst.savingErrorMessage(state)(feature)).to.equal("modules.wfst.error.noFeature");
         });
         it("should return an error message indicating that at least one required property has not received a value", () => {
-            expect(gettersWfst.savingErrorMessage(state)(feature)).to.equal("common:modules.wfst.error.requiredPropertiesNotSet");
+            expect(gettersWfst.savingErrorMessage(state)(feature)).to.equal("modules.wfst.error.requiredPropertiesNotSet");
         });
         it("should return an empty string if the feature given to the getter is not undefined and all required properties have received a value", () => {
             state.featureProperties[0].value = 42;

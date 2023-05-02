@@ -133,7 +133,7 @@ describe("src_3_0_0/modules/menu/menu-store/actionsMenu.js", () => {
                         currentComponent: {
                             type: "getFeatureInfo",
                             props: {
-                                name: "common.gfi"
+                                name: "common:gfi"
                             }
                         },
                         history: []
