@@ -332,10 +332,10 @@ export default {
          */
         getAlertRangeText (value) {
             if (value === undefined) {
-                this.$store.dispatch("Alerting/addSingleAlert", i18next.t("common:snippets.slider.valueEmptyErrorMessage"));
+                this.$store.dispatch("Alerting/addSingleAlert", i18next.t("common:modules.filter.slider.valueEmptyErrorMessage"));
             }
             else {
-                this.$store.dispatch("Alerting/addSingleAlert", i18next.t("common:snippets.slider.valueOutOfRangeErrorMessage", {
+                this.$store.dispatch("Alerting/addSingleAlert", i18next.t("common:modules.filter.slider.valueOutOfRangeErrorMessage", {
                     inputValue: value,
                     minValueSlider: this.minimumValue,
                     maxValueSlider: this.maximumValue
