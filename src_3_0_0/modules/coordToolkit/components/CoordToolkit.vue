@@ -708,7 +708,7 @@ export default {
                                 aria-controls="collapse-coord"
                             >
                                 <i class="bi-info-circle-fill me-2" />
-                                {{ $t("common.modules.coordToolkit.info") }}
+                                {{ $t("common:modules.coordToolkit.info") }}
                             </button>
                         </h2>
                         <div
