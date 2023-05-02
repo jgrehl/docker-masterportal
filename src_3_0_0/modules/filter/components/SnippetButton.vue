@@ -27,7 +27,7 @@ export default {
         <div>
             <input
                 type="button"
-                :value="$t('button.confirm')"
+                :value="$t('common:modules.filter.button.confirm')"
                 @click="runFilter"
             >
         </div>

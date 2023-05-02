@@ -204,7 +204,7 @@ describe("src/modules/tools/draw/store/actions/drawInteractionOnDrawEvent.js", (
             expect(dispatch.firstCall.args[0]).to.equal("updateUndoArray");
             expect(dispatch.firstCall.args[1]).to.be.deep.equal({remove: false, feature: event.feature});
             expect(dispatch.secondCall.args[0]).to.equal("Alerting/addSingleAlert");
-            expect(dispatch.secondCall.args[1].content).to.be.equal("common:modules.draw.undefinedRadius");
+            expect(dispatch.secondCall.args[1].content).to.be.equal("modules.draw.undefinedRadius");
             expect(event.feature.set.calledTwice).to.be.true;
             expect(event.feature.set.firstCall.args[0]).to.equal("fromDrawTool");
             expect(event.feature.set.firstCall.args[1]).to.be.true;
@@ -230,7 +230,7 @@ describe("src/modules/tools/draw/store/actions/drawInteractionOnDrawEvent.js", (
             expect(dispatch.firstCall.args[0]).to.equal("updateUndoArray");
             expect(dispatch.firstCall.args[1]).to.be.deep.equal({remove: false, feature: event.feature});
             expect(dispatch.secondCall.args[0]).to.equal("Alerting/addSingleAlert");
-            expect(dispatch.secondCall.args[1].content).to.be.equal("common.modules.draw.undefinedTwoCircles");
+            expect(dispatch.secondCall.args[1].content).to.be.equal("modules.draw.undefinedTwoCircles");
             expect(event.feature.set.calledTwice).to.be.true;
             expect(event.feature.set.firstCall.args[0]).to.equal("fromDrawTool");
             expect(event.feature.set.firstCall.args[1]).to.be.true;
@@ -257,7 +257,7 @@ describe("src/modules/tools/draw/store/actions/drawInteractionOnDrawEvent.js", (
             expect(dispatch.firstCall.args[0]).to.equal("updateUndoArray");
             expect(dispatch.firstCall.args[1]).to.be.deep.equal({remove: false, feature: event.feature});
             expect(dispatch.secondCall.args[0]).to.equal("Alerting/addSingleAlert");
-            expect(dispatch.secondCall.args[1].content).to.be.equal("common.modules.draw.undefinedInnerCircle");
+            expect(dispatch.secondCall.args[1].content).to.be.equal("modules.draw.undefinedInnerCircle");
             expect(event.feature.set.calledTwice).to.be.true;
             expect(event.feature.set.firstCall.args[0]).to.equal("fromDrawTool");
             expect(event.feature.set.firstCall.args[1]).to.be.true;
@@ -285,7 +285,7 @@ describe("src/modules/tools/draw/store/actions/drawInteractionOnDrawEvent.js", (
             expect(dispatch.firstCall.args[0]).to.equal("updateUndoArray");
             expect(dispatch.firstCall.args[1]).to.be.deep.equal({remove: false, feature: event.feature});
             expect(dispatch.secondCall.args[0]).to.equal("Alerting/addSingleAlert");
-            expect(dispatch.secondCall.args[1].content).to.be.equal("common:modules.draw.undefinedOuterCircle");
+            expect(dispatch.secondCall.args[1].content).to.be.equal("modules.draw.undefinedOuterCircle");
             expect(event.feature.set.calledTwice).to.be.true;
             expect(event.feature.set.firstCall.args[0]).to.equal("fromDrawTool");
             expect(event.feature.set.firstCall.args[1]).to.be.true;
