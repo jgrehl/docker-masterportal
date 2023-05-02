@@ -65,6 +65,8 @@ export function initLanguage (portalLanguageConfig) {
             nonExplicitSupportedLngs: true,
             // to not look into a folder like /locals/en-US/... when en-US is detected, use load: "languageOnly" to avoid using Country-Code in path
             load: "languageOnly",
+            // allow an empty value to count as invalid (by default is true)
+            returnEmptyString: false,
 
             /**
             * getter for configured languages
