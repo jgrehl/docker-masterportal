@@ -99,6 +99,7 @@
         "info": "Sie erklären sich damit einverstanden, dass Ihre Daten zur Bearbeitung Ihres Anliegens verwendet werden. Weitere Informationen und Widerrufshinweise finden Sie in der <a href=\"{{privacyPolicyLink}}\" target=\"_blank\">Datenschutzerklärung</a>.",
         "label": "Bitte akzeptieren Sie die Datenschutzerklärung."
       },
+      "removeAttachment": "Datei entfernen",
       "sendButton": "Kontakt aufnehmen",
       "successMessage": "Ihre Anfrage wurde erfolgreich versendet.",
       "successTicket": "Ihre Ticketnummer lautet: "
@@ -154,7 +155,11 @@
         "contentNotSaved": "Inhalt konnte nicht in die Zwischenablage kopiert werden."
       },
       "errorMsg": {
-        "example": "Beispiel: "
+        "example": "Beispiel: ",
+        "noCoord": "Bitte geben Sie Ihren {{valueKey}} vollständig ein.",
+        "noMatch": "Die Eingabe für den {{valueKey}} ist nicht korrekt! ",
+        "hdmsNoCoord": "Bitte geben Sie Ihren Wert der {{valueKey}} vollständig ein.",
+        "hdmsNoMatch": "Die Eingabe für den Wert der {{valueKey}} ist nicht korrekt!"
       },
       "exampleAcronym": "Bsp. ",
       "hdms": {
@@ -167,12 +172,8 @@
       "influenceFactors": "Die angezeigten Werte unterliegen Ungenauigkeiten, die u.a. durch folgende Faktoren beeinflusst werden, z.B. Maßstab, Auflösung der Karte und des Bildschirmes.",
       "info": "Informationen",
       "name": "Koordinaten",
-      "noCoord": "Bitte geben Sie Ihren {{valueKey}} vollständig ein.",
       "noHeightBuilding": "Gebäudefläche, keine Höhen vorhanden",
       "noHeightWater": "Gewässerfläche, keine Höhen vorhanden",
-      "noMatch": "Die Eingabe für den {{valueKey}} ist nicht korrekt! ",
-      "hdmsNoCoord": "Bitte geben Sie Ihren Wert der {{valueKey}} vollständig ein.",
-      "hdmsNoMatch": "Die Eingabe für den Wert der {{valueKey}} ist nicht korrekt!",
       "postionCoordinates": "Lagekoordinaten",
       "search": "Koordinaten suchen",
       "searchBtn": "Suche",
@@ -205,14 +206,14 @@
       "color": "Füllfarbe",
       "colorContour": "Umrissfarbe",
       "colors": {
+        "black": "Schwarz",
         "blue": "Blau",
-        "yellow": "Gelb",
-        "grey": "Grau",
         "green": "Grün",
+        "grey": "Grau",
         "orange": "Orange",
         "red": "Rot",
-        "black": "Schwarz",
-        "white": "Weiß"
+        "white": "Weiß",
+        "yellow": "Gelb"
       },
       "defined": "definiert",
       "doubleCirclePlaceholder": "Bitte geben Sie einen Radius ein",
@@ -238,10 +239,10 @@
       "geometry": "Geometrie",
       "geometryDrawFailed": "Die übergebene Geometrie konnte nicht dargestellt werden.",
       "iconList": {
-        "iconPoint": "Punkt",
-        "iconLeaf": "Blatt",
         "iconCloud": "Wolke",
+        "iconLeaf": "Blatt",
         "iconMeadow": "Wiese",
+        "iconPoint": "Punkt",
         "gelber Pin": "gelber Pin"
       },
       "innerColorContour": "Innere Umrissfarbe",
@@ -281,25 +282,25 @@
         "formatError": "Die Datei \"{{filename}}\" konnte nicht gelesen werden. Bitte prüfen Sie, ob die Datei das Format *.kml. *.gpx, *.geojson oder *.json hat.",
         "missingFileContent": "Fehler beim Lesen der Datei \"{{filename}}\". Bitte überprüfen Sie den Dateityp sowie den Inhalt der Datei. Falls die Datei fehlerfrei ist, wenden Sie sich bitte an den Support.",
         "missingFormat": "Das Dateiformat {{format}} wird nicht unterstützt. Bitte wenden Sie sich an den Support.",
-        "removeAttachment": "Datei entfernen",
         "success": "Die Datei \"{{filename}}\" wurde erfolgreich importiert.",
         "successPartly": "Die Datei \"{{filename}}\" wurde teilweise importiert."
       },
       "captions": {
-        "drawTool": "$t(common:menu.tools.draw) öffnen",
+        "drawTool": "$t(common:modules.draw.name) öffnen",
         "introDrawTool": "Importierte Geometrien können im Nachhinein verändert werden. Nutzen Sie hierfür das Werkzeug &quot;$t(common:menu.tools.draw)&quot;.",
         "introFormats": "Es können KML-Dateien (*.kml), GPX-Dateien (*.gpx) oder GeoJson-Dateien (*.geojson, *.json) importiert werden.",
         "introInfo": "Importieren Sie Ihre gewünschte Datei einfach per Drag and Drop oder alternativ mit dem Öffnen-Dialog des Browsers.",
         "supportedFiletypes": {
           "auto": "Automatische Erkennung",
-          "kml": "KML-Datei (*.kml)",
+          "geojson": "GeoJson-Datei (*.geojson, *.json)",
           "gpx": "GPX-Datei (*.gpx)",
-          "geojson": "GeoJson-Datei (*.geojson, *.json)"
+          "kml": "KML-Datei (*.kml)"
         }
       },
       "fileZoom": "Auf Features dieser Datei \"{{filename}}\" zoomen",
       "importFiles": "Ausgewählte Dateien importieren",
       "name": "Datei-Import",
+      "removeAttachment": "Datei entfernen",
       "successfullyImportedLabel": "Erfolgreich importiert:",
       "zoom": "Zoomen"
     },
@@ -350,10 +351,10 @@
         "activate": "Gebiet für Filterung setzen",
         "buffer": "Puffer [m]",
         "geometries": {
-          "polygon": "Fläche",
-          "rectangle": "Rechteck",
           "circle": "Kreis",
-          "lineString": "Linie + Puffer"
+          "lineString": "Linie + Puffer",
+          "polygon": "Fläche",
+          "rectangle": "Rechteck"
         },
         "help": "Wählen Sie auf der Karte ein Gebiet aus um nur innerhalb dieses Gebietes zu filtern.",
         "removeGeometry": "Gebiet entfernen",
@@ -375,8 +376,8 @@
         "valueOutOfRangeErrorMessage": "Der Eingabewert {{inputValue}} muss innerhalb des Gültigkeitsbereiches {{minValueSlider}} und {{maxValueSlider}} liegen!"
       },
       "snippetTags": {
-        "selectionText": "Ihre Auswahl:",
-        "resetAll": "Zurücksetzen"
+        "resetAll": "Zurücksetzen",
+        "selectionText": "Ihre Auswahl:"
       },
       "upload": {
         "geometryParseError": "Die angegebene Geometry konnte nicht geladen werden"
@@ -384,12 +385,12 @@
     },
     "getFeatureInfo": {
       "boolean": {
-        "true": "Ja",
-        "yes": "Ja",
+        "0": "Nein",
         "1": "Ja",
         "false": "Nein",
         "no": "Nein",
-        "0": "Nein"
+        "true": "Ja",
+        "yes": "Ja"
       },
       "buttonBack": "Vorherige Informationen anzeigen",
       "buttonForward": "Weitere Informationen anzeigen",
@@ -409,8 +410,8 @@
           "sensor": {
             "dataName": "Daten",
             "header": {
-              "name": "Name",
               "description": "Beschreibung",
+              "name": "Name",
               "ownerThing": "Eigentümer"
             }
           },
@@ -567,10 +568,10 @@
       "addWaypoint": "Wegpunkt hinzufügen",
       "avoidOptions": {
         "header": "Verkehrswege vermeiden",
-        "HIGHWAYS": "Autobahn",
-        "TOLLWAYS": "Mautstraßen",
         "FERRIES": "Fähren",
-        "STEPS": "Treppen"
+        "HIGHWAYS": "Autobahn",
+        "STEPS": "Treppen",
+        "TOLLWAYS": "Mautstraßen"
       },
       "batchProcessing": {
         "cancel": "Stapelverarbeitung abbrechen",
@@ -611,10 +612,10 @@
         "restrictedAreas": "Sperrflächen"
       },
       "download": {
-        "header": "Herunterladen",
-        "format": "Format",
         "filename": "Dateiname",
         "filenamePlaceholder": "Bitte Dateinamen angeben",
+        "format": "Format",
+        "header": "Herunterladen",
         "saveResult": "Ergebnis speichern"
       },
       "endpoint": "Zielpunkt",
@@ -640,8 +641,8 @@
         "maxDistance": "Maximale Entfernung",
         "maxTraveltime": "Maximale Reisedauer",
         "optimization": {
-          "TIME": "Erreichbarkeit nach Zeit",
-          "DISTANCE": "Erreichbarkeit nach Distanz"
+          "DISTANCE": "Erreichbarkeit nach Distanz",
+          "TIME": "Erreichbarkeit nach Zeit"
         },
         "optimizeHeader": "Optimierung nach",
         "startpoint": "Startpunkt"
@@ -652,9 +653,9 @@
       "resetSettings": "Einstellungen zurücksetzen",
       "speedprofiles": {
         "CAR": "PKW",
-        "HGV": "LKW",
         "CYCLING": "Fahrrad",
         "FOOT": "Fußgänger",
+        "HGV": "LKW",
         "WHEELCHAIR": "Rollstuhl"
       },
       "startpoint": "Startpunkt",
