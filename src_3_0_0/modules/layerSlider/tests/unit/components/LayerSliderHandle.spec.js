@@ -36,7 +36,7 @@ describe("src_3_0_0/modules/layerSlider/components/LayerSliderHandle.vue", () =>
                             namespaced: true,
                             getters: {
                                 type: () => "layerSlider",
-                                name: () => "common:menu.tools.layerSlider",
+                                name: () => "common:modules.layerSlider.name",
                                 icon: () => "bi-hourglass-split",
                                 title: () => "common:modules.layerSlider.title",
                                 layerIds: () => layerIds,

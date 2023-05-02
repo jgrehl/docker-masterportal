@@ -66,8 +66,8 @@ export default {
         optionsValue: function () {
             return this.options ? this.options : {
                 "Box": this.$t("common:shared.modules.graphicalSelect.selectBySquare"),
-                "Circle": this.$t("common:shared.modules..graphicalSelect.selectByCircle"),
-                "Polygon": this.$t("common:shared.modules..graphicalSelect.selectByPolygon")
+                "Circle": this.$t("common:shared.modules.graphicalSelect.selectByCircle"),
+                "Polygon": this.$t("common:shared.modules.graphicalSelect.selectByPolygon")
             };
         }
     },
@@ -145,19 +145,19 @@ export default {
         checkOptions: function () {
             if (!this.geographicValues.every(key => Object.keys(this.optionsValue).includes(key))) {
                 this.addSingleAlert({
-                    "content": this.$t("common:shared.modules..graphicalSelect.alert.notSupportedOption") + this.geographicValues
+                    "content": this.$t("common:shared.modules.graphicalSelect.alert.notSupportedOption") + this.geographicValues
                 });
             }
 
             if (!this.geographicValues.includes(this.selectedOption)) {
                 this.addSingleAlert({
-                    "content": this.$t("common:shared.modules..graphicalSelect.alert.notSupportedSelection") + this.geographicValues
+                    "content": this.$t("common:shared.modules.graphicalSelect.alert.notSupportedSelection") + this.geographicValues
                 });
             }
 
             if (!this.selectionElements.includes(this.selectElement)) {
                 this.addSingleAlert({
-                    "content": this.$t("common:shared.modules..graphicalSelect.alert.notSupportedElement") + this.selectionElements
+                    "content": this.$t("common:shared.modules.graphicalSelect.alert.notSupportedElement") + this.selectionElements
                 });
             }
         },
