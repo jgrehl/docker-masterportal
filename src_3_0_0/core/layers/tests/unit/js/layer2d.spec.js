@@ -163,7 +163,7 @@ describe("src_3_0_0/core/js/layers/layer2d.js", () => {
             };
             layerWrapper.errorHandling(403, "Layer1");
             alertMessage = dispatchCalls["Alerting/addSingleAlert"];
-            expect(alertMessage.content).to.be.equals("modules.core.layers.errorHandling.403");
+            expect(alertMessage.content).to.be.equals("core.layers.errorHandling.403");
             expect(alertMessage.multipleAlert).to.be.equals(true);
         });
     });
