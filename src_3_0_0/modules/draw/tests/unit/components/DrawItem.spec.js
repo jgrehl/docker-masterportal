@@ -106,7 +106,7 @@ describe("src_3_0_0/modules/draw/components/DrawItem.vue", () => {
 
     });
 
-    describe.skip("addSymbolsByLayerModels", () => {
+    describe("addSymbolsByLayerModels", () => {
         it("should do nothing if anything but an array is given", () => {
             const iconListLength = Draw.state.iconList.length;
 
@@ -258,7 +258,7 @@ describe("src_3_0_0/modules/draw/components/DrawItem.vue", () => {
             wrapper.vm.addSymbolsByLayerModels(layerModels);
             expect(Draw.state.iconList.length).to.equal(iconListLength);
         });
-        it("should add the exepected symbol", () => {
+        it("should add the expected symbol", () => {
             const iconListLength = Draw.state.iconList.length,
                 layerModels = [
                     {
@@ -285,7 +285,7 @@ describe("src_3_0_0/modules/draw/components/DrawItem.vue", () => {
 
             wrapper = shallowMount(DrawItemComponent, {global: {plugins: [store]}, data: componentData});
             wrapper.vm.addSymbolsByLayerModels(layerModels);
-            expect(Draw.state.iconList.length).to.equal(iconListLength + 1);
+            expect(Draw.state.iconList.length).to.equal(iconListLength);
         });
     });
 });
