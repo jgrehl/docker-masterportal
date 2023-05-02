@@ -13,7 +13,7 @@ const state = {
     description: "",
     icon: "bi-paint-bucket",
     layerModel: null,
-    name: "common:modules.styleVt.name",
+    name: "common:modules.styleVT.name",
     showDescription: false,
     type: "styleVT",
     vectorTileLayerList: []
