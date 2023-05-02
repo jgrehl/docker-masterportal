@@ -239,11 +239,11 @@
       "geometry": "Geometría",
       "geometryDrawFailed": "No se ha podido visualizar la geometría transferida.",
       "iconList": {
+        "gelber Pin": "",
         "iconCloud": "Nube",
         "iconLeaf": "Hoja",
         "iconMeadow": "Campo",
-        "iconPoint": "Punto",
-        "gelber Pin": ""
+        "iconPoint": "Punto"
       },
       "innerColorContour": "Color del contorno interior",
       "innerRadius": "Radio interior",
