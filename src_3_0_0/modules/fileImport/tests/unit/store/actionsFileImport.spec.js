@@ -192,7 +192,7 @@ describe("src_3_0_0/modules/fileImport/store/actionsFileImport.js", () => {
             expect(dispatch.firstCall.args[0]).to.equal("Alerting/addSingleAlert");
             expect(dispatch.firstCall.args[1]).to.eql({
                 category: "success",
-                content: "common:modules.tools.fileImport.alertingMessages.success"
+                content: "modules.fileImport.alertingMessages.success"
             });
             expect(dispatch.secondCall.args[0]).to.equal("addImportedFilename");
             expect(dispatch.secondCall.args[1]).to.equal("beispielText.kml");
@@ -286,7 +286,7 @@ describe("src_3_0_0/modules/fileImport/store/actionsFileImport.js", () => {
             expect(dispatch.firstCall.args[0]).to.equal("Alerting/addSingleAlert");
             expect(dispatch.firstCall.args[1]).to.eql({
                 category: "success",
-                content: "common:modules.tools.fileImport.alertingMessages.success"
+                content: "modules.fileImport.alertingMessages.success"
             });
             expect(dispatch.secondCall.args[0]).to.equal("addImportedFilename");
             expect(dispatch.secondCall.args[1]).to.equal("beispielText.geojson");
