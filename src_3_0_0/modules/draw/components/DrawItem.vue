@@ -370,7 +370,7 @@ export default {
                 return;
             }
             layerConfigs.forEach(layerConfig => {
-                if (!layerConfig.id) {
+                if (!layerConfig?.id) {
                     return;
                 }
                 const layerModel = layerCollection.getLayerById(layerConfig.id),
