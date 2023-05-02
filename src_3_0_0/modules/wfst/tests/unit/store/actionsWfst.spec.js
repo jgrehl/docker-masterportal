@@ -1,17 +1,24 @@
 import axios from "axios";
 import {expect} from "chai";
 import sinon from "sinon";
-import prepareFeaturePropertiesModule from "../../../utils/prepareFeatureProperties";
-import writeTransactionModule from "../../../utils/writeTransaction";
+import prepareFeaturePropertiesModule from "../../../js/prepareFeatureProperties";
+import writeTransactionModule from "../../../js/writeTransaction";
 import actionsWfst from "../../../store/actionsWfst";
 
 
-describe("src/modules/tools/wfst/store/actionsWfst.js", () => {
+describe("src_3_0_0/modules/wfst/store/actionsWfst.js", () => {
     let commit,
         map,
         dispatch,
         getters,
         rootGetters;
+
+    before(() => {
+        i18next.init({
+            lng: "cimode",
+            debug: false
+        });
+    });
 
     beforeEach(() => {
         commit = sinon.spy();
@@ -397,7 +404,7 @@ describe("src/modules/tools/wfst/store/actionsWfst.js", () => {
             expect(dispatch.firstCall.args[0]).to.equal("Alerting/addSingleAlert");
             expect(dispatch.firstCall.args[1]).to.eql({
                 category: "error",
-                content: "common:modules.wfst.error.onlyNumbersAllowed",
+                content: "modules.wfst.error.onlyNumbersAllowed",
                 mustBeConfirmed: false
             });
             expect(dispatch.firstCall.args[2]).to.eql({root: true});
@@ -434,7 +441,7 @@ describe("src/modules/tools/wfst/store/actionsWfst.js", () => {
             expect(commit.calledOnce).to.be.true;
             expect(commit.firstCall.args.length).to.equal(2);
             expect(commit.firstCall.args[0]).to.equal("setFeatureProperties");
-            expect(commit.firstCall.args[1]).to.equal("common:modules.wfst.error.allLayersNotSelected");
+            expect(commit.firstCall.args[1]).to.equal("modules.wfst.error.allLayersNotSelected");
             expect(prepareFeaturePropertiesSpy.notCalled).to.be.true;
         });
         it("should commit an error message if the currently selected layer has no featurePrefix configured", async () => {
@@ -443,7 +450,7 @@ describe("src/modules/tools/wfst/store/actionsWfst.js", () => {
             expect(commit.calledOnce).to.be.true;
             expect(commit.firstCall.args.length).to.equal(2);
             expect(commit.firstCall.args[0]).to.equal("setFeatureProperties");
-            expect(commit.firstCall.args[1]).to.equal("common:modules.wfst.error.layerNotConfiguredCorrectly");
+            expect(commit.firstCall.args[1]).to.equal("modules.wfst.error.layerNotConfiguredCorrectly");
             expect(prepareFeaturePropertiesSpy.notCalled).to.be.true;
         });
         it("should commit an error message if the currently selected layer is not selected in the layer tree", async () => {
@@ -455,7 +462,7 @@ describe("src/modules/tools/wfst/store/actionsWfst.js", () => {
             expect(commit.calledOnce).to.be.true;
             expect(commit.firstCall.args.length).to.equal(2);
             expect(commit.firstCall.args[0]).to.equal("setFeatureProperties");
-            expect(commit.firstCall.args[1]).to.equal("common:modules.wfst.error.layerNotSelected");
+            expect(commit.firstCall.args[1]).to.equal("modules.wfst.error.layerNotSelected");
             expect(prepareFeaturePropertiesSpy.notCalled).to.be.true;
         });
     });
