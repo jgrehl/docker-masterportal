@@ -239,11 +239,11 @@
       "geometry": "Geometrie",
       "geometryDrawFailed": "Die übergebene Geometrie konnte nicht dargestellt werden.",
       "iconList": {
+        "gelber Pin": "gelber Pin",
         "iconCloud": "Wolke",
         "iconLeaf": "Blatt",
         "iconMeadow": "Wiese",
-        "iconPoint": "Punkt",
-        "gelber Pin": "gelber Pin"
+        "iconPoint": "Punkt"
       },
       "innerColorContour": "Innere Umrissfarbe",
       "innerRadius": "Innerer Radius",
