@@ -323,6 +323,10 @@
           "max": "Slider max für {{param}}"
         }
       },
+      "button": {
+        "confirm": "Bestätigen",
+        "stop": "Abbrechen"
+      },
       "download": {
         "enterFilename": "Bitte Dateiname angeben",
         "filename": "Dateiname",
@@ -353,7 +357,6 @@
         },
         "help": "Wählen Sie auf der Karte ein Gebiet aus um nur innerhalb dieses Gebietes zu filtern.",
         "removeGeometry": "Gebiet entfernen",
-        "searchInMapExtent": "Suche im aktuellen Kartenausschnitt",
         "selectGeometry": "Wählen Sie eine Geometrie aus."
       },
       "info": {
@@ -366,6 +369,11 @@
         "snippetDateRange": "Für die Eingabe eines Datumsbereichs als Suchkriterium, klicken Sie in das Eingabefeld für das Start- bzw. End-Datum und wählen jeweils ein Start- bzw. End-Datum aus dem geöffneten Kalender aus."
       },
       "name": "Filter",
+      "searchInMapExtent": "Suche im aktuellen Kartenausschnitt",
+      "slider": {
+        "valueEmptyErrorMessage": "Der Eingabewert darf nicht leer sein!",
+        "valueOutOfRangeErrorMessage": "Der Eingabewert {{inputValue}} muss innerhalb des Gültigkeitsbereiches {{minValueSlider}} und {{maxValueSlider}} liegen!"
+      },
       "snippetTags": {
         "selectionText": "Ihre Auswahl:",
         "resetAll": "Zurücksetzen"
