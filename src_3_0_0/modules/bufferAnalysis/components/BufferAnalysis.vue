@@ -216,7 +216,7 @@ export default {
                 id="tool-bufferAnalysis-selectTargetInput"
                 v-model="selectedTargetLayer"
                 class="form-select"
-                :aria-label="$t('modules.tools.bufferAnalysis.targetSelectLabel')"
+                :aria-label="$t('common:modules.bufferAnalysis.targetSelectLabel')"
                 :disabled="!selectedSourceLayer || !bufferRadius || selectedTargetLayer"
             >
                 <option

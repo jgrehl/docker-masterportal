@@ -23,7 +23,7 @@ describe("src_3_0_0/modules/modules-store/actions.js", () => {
                 sections: [
                     [
                         {
-                            title: "common:menu.tools.scaleSwitcher",
+                            title: "common:menu.scaleSwitcher",
                             icon: "bi-1-square-fill",
                             type: "scaleSwitcher"
                         },
@@ -71,7 +71,7 @@ describe("src_3_0_0/modules/modules-store/actions.js", () => {
             expect(dispatch.firstCall.args[0]).to.equals("addAttributesToModuleState");
             expect(dispatch.firstCall.args[1]).to.deep.equals({items: [
                 {
-                    "title": "common:menu.tools.scaleSwitcher",
+                    "title": "common:menu.scaleSwitcher",
                     "icon": "bi-1-square-fill",
                     "type": "scaleSwitcher"
                 },
@@ -135,7 +135,7 @@ describe("src_3_0_0/modules/modules-store/actions.js", () => {
 
             expect(commit.calledThrice).to.be.true;
             expect(commit.firstCall.args[0]).to.equals("ScaleSwitcher/setTitle");
-            expect(commit.firstCall.args[1]).to.equals("common:menu.tools.scaleSwitcher");
+            expect(commit.firstCall.args[1]).to.equals("common:menu.scaleSwitcher");
             expect(commit.secondCall.args[0]).to.equals("ScaleSwitcher/setIcon");
             expect(commit.secondCall.args[1]).to.equals("bi-1-square-fill");
             expect(commit.thirdCall.args[0]).to.equals("ScaleSwitcher/setType");
