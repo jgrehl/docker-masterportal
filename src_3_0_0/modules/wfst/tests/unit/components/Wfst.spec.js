@@ -4,11 +4,11 @@ import {expect} from "chai";
 import sinon from "sinon";
 import WfsTransaction from "../../../components/WfsTransaction.vue";
 import WfstModule from "../../../store/indexWfst";
-import prepareFeaturePropertiesModule from "../../../utils/prepareFeatureProperties";
+import prepareFeaturePropertiesModule from "../../../js/prepareFeatureProperties";
 
 config.global.mocks.$t = key => key;
 
-describe("src/modules/modules/wfst/components/WfsTransaction.vue", () => {
+describe("src_3_0_0/modules/modules/wfst/components/WfsTransaction.vue", () => {
     const layerIds = ["wfstOne", "wfstTwo"],
         exampleLayerOne = {
             get: key => exampleLayerOne[key],
@@ -128,7 +128,7 @@ describe("src/modules/modules/wfst/components/WfsTransaction.vue", () => {
         });
 
         expect(wrapper.find("#tool-wfsTransaction-layerFailure").exists()).to.be.true;
-        expect(wrapper.find("#tool-wfsTransaction-layerFailure").text()).to.equal("common:modules.wfst.error.allLayersNotSelected");
+        expect(wrapper.find("#tool-wfsTransaction-layerFailure").text()).to.equal("modules.wfst.error.allLayersNotSelected");
     });
     it("renders a container including the failure message that the current layer has not been selected in the layer tree", () => {
         exampleLayerOne.visibility = false;
