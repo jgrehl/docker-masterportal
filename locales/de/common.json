@@ -12,7 +12,7 @@
         "search": "Suchen",
         "close": "Schließen",
         "minimize": "Minimieren",
-        "confirm": "Bestätigen",
+        // "confirm": "Bestätigen",
         "edit": "Bearbeiten",
         "delete": "Löschen",
         "save": "Speichern",
@@ -20,7 +20,7 @@
         "open": "Öffnen",
         "load": "Laden",
         "reset": "Zurücksetzen",
-        "stop": "Abbrechen"
+        // "stop": "Abbrechen"
     },
     // "colors": {
     //     "blue": "Blau",
@@ -36,9 +36,9 @@
     //   "loadServicesJsonFailed": "<strong>Die Datei {{layerConf}} konnte nicht geladen werden!</strong>",
     //   "loadStylev3JsonFailed": "<strong>Die Datei {{style_v3}} konnte nicht geladen werden!</strong></br>Bitte prüfen Sie die Konfiguration 'styleConf' in der config.js."
     // },
-    "mouseHover": {
-        "infoText": "(weitere Objekte. Bitte zoomen.)"
-    },
+    // "mouseHover": {
+    //     "infoText": "(weitere Objekte. Bitte zoomen.)"
+    // },
     "mapRegion": {
         "twoFingerPanAlert": "Bitte nutzen Sie zum Navigieren und Zoomen in der Karte zwei Finger."
     },
@@ -124,7 +124,7 @@
         "externalTechnicalData": "Externe Fachdaten",
         // "selectedFeatures": "Auswahl:",
         "filterIconText": "Filter öffnen",
-        "scaleText": "Wird im folgenden Maßstabsbereich angezeigt: ",
+        "<": "Wird im folgenden Maßstabsbereich angezeigt: ",
         // "selectAll": "alle auswählen",
         // "iconRemoveLayer": "Thema aus Karte entfernen",
         // "iconSubMenu": "Weitere Funktionen anzeigen",
@@ -787,7 +787,7 @@
                 // "searchBtn": "Suche",
                 // "coordSystemField": "Koordinatenreferenzsystem",
                 // "postionCoordinates": "Lagekoordinaten",
-                "heightLabel": "Höhe",
+                // "heightLabel": "Höhe",
                 // "noHeightWater": "Gewässerfläche, keine Höhen vorhanden",
                 // "noHeightBuilding": "Gebäudefläche, keine Höhen vorhanden",
                 "heightLayerInfo": "Grundlage der Höheninformation ist das \"{{layer}}\" mit Höhenangaben in Metern über Normalhöhennull (NHN).",
@@ -815,11 +815,11 @@
             "gfi": {
                 // "errorMessage": "Bei der Informationsabfrage (GetFeatureInfo) ist ein Fehler aufgetreten.<br>Bitte versuchen Sie es zu einem späteren Zeitpunkt erneut. Falls das Problem weiterhin auftritt, wenden Sie sich bitte an den Betreiber des Dienstes.",
                 "favoriteIcons": {
-                    "compareFeatureIcon": {
-                        "toCompareList": "Auf die Vergleichsliste",
-                        "fromCompareList": "Von der Vergleichsliste entfernen"
-                    }
-                },
+                  "compareFeatureIcon": {
+                    "toCompareList": "Auf die Vergleichsliste",
+                    "fromCompareList": "Von der Vergleichsliste entfernen"
+                  }
+                }
                 // "buttonForward": "Weitere Informationen anzeigen",
                 // "buttonBack": "Vorherige Informationen anzeigen",
                 // "themes": {
@@ -1014,7 +1014,7 @@
                 // "optionsPlaceholder": "Bitte wählen Sie eine Option aus!",
                 // "resetButton": "Zurücksetzen",
                 // "searchButton": "Suchen",
-                "resultListTitle": "Suchergebnisse:",
+                "resultListTitle": "Suchergebnisse:"
                 // "instancesSelectLabel": "Instanzenauswahl",
                 // "showResults": "Zeige Ergebnisse",
                 // "searchError": "Fehler bei der Suche von Feature: {{error}}.",
@@ -1063,10 +1063,10 @@
                     // }
                 // },
                 "deleteInteraction": {
-                  "confirm": "Löschen",
+                  "confirm": "Löschen"
                   // "headline": "Achtung",
                   // "text": "Sind Sie sich sicher, dass Sie diese Geometrie löschen möchten?"
-                },
+                }
                 // "form": {
                 //     "discard": "Verwerfen",
                 //     "save": "Speichern"
@@ -1339,7 +1339,7 @@
             // "linkToPdf": "Zur externen Legende (PDF)",
             // "noLegendForLayerInfo": "Legende nicht verfügbar",
             "toggleCollapseAll": "Alle Legenden ein-/ausklappen"
-        },
+        }
         // "util": {
         //     "copyToClipboard": {
         //         "contentSaved": "Inhalt wurde in die Zwischenablage kopiert.",
@@ -1417,9 +1417,9 @@
             "from": " ab",
             "to": " bis",
             "incorrectEntry": "Fehlerhafte Eingabe, bitte eine ganze Zahl eingeben!",
-            "outOfRangeErrorMessage": "Der Eingabewert muss innerhalb des Gültigkeitsbereiches {{minValueSlider}} und {{maxValueSlider}} liegen!",
-            "valueEmptyErrorMessage": "Der Eingabewert darf nicht leer sein!",
-            "valueOutOfRangeErrorMessage": "Der Eingabewert {{inputValue}} muss innerhalb des Gültigkeitsbereiches {{minValueSlider}} und {{maxValueSlider}} liegen!"
+            "outOfRangeErrorMessage": "Der Eingabewert muss innerhalb des Gültigkeitsbereiches {{minValueSlider}} und {{maxValueSlider}} liegen!"
+            // "valueEmptyErrorMessage": "Der Eingabewert darf nicht leer sein!",
+            // "valueOutOfRangeErrorMessage": "Der Eingabewert {{inputValue}} muss innerhalb des Gültigkeitsbereiches {{minValueSlider}} und {{maxValueSlider}} liegen!"
         }
     },
     // "share-components": {
