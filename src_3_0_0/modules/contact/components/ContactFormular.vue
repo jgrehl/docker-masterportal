@@ -261,7 +261,7 @@ export default {
                                                 {{ image.name }}
                                             </span>
                                             <IconButton
-                                                :aria="$t('common:modules.fileUpload.removeAttachment')"
+                                                :aria="$t('common:modules.contact.removeAttachment')"
                                                 :icon="'bi-trash'"
                                                 :interaction="() => removeAttachment(image)"
                                                 class="remove-btn col-3"
