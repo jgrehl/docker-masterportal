@@ -239,11 +239,11 @@
       "geometry": "Geometria",
       "geometryDrawFailed": "La geometria passata non poteva essere visualizzata.",
       "iconList": {
+        "gelber Pin": "pin giallo",
         "iconCloud": "Nuvola",
         "iconLeaf": "Foglio",
         "iconMeadow": "Campo",
-        "iconPoint": "Punto",
-        "gelber Pin": "pin giallo"
+        "iconPoint": "Punto"
       },
       "innerColorContour": "Colore contorno interno",
       "innerRadius": "Raggio interno",
