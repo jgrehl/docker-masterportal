@@ -54,16 +54,18 @@ const exampleLayerInformation = {
         }
     ];
 
-describe.skip("src/modules/tools/wfst/utils/prepareFeatureProperties.js", () => {
+describe("src/modules/tools/wfst/utils/prepareFeatureProperties.js", () => {
     beforeEach(() => {
-        sinon.stub(receivePossiblePropertiesModule, "parseDescribeFeatureTypeResponse").callsFake(() => exampleProperties);
+        sinon.stub(receivePossiblePropertiesModule, "receivePossibleProperties").callsFake(() => {
+            return exampleProperties;
+        });
     });
     afterEach(sinon.restore);
 
     it("should return an empty array if the parameter gfiAttributes is set to ignore", async () => {
         exampleLayerInformation.gfiAttributes = "ignore";
 
-        const properties = await prepareFeatureProperties(exampleLayerInformation);
+        const properties = await prepareFeatureProperties.prepareFeatureProperties(exampleLayerInformation);
 
         expect(Array.isArray(properties)).to.be.true;
         expect(properties.length).to.equal(0);
@@ -71,7 +73,7 @@ describe.skip("src/modules/tools/wfst/utils/prepareFeatureProperties.js", () => 
     it("should hand through the array returned from receivePossibleProperties if the parameter gfiAttributes is set to showAll", async () => {
         exampleLayerInformation.gfiAttributes = "showAll";
 
-        const properties = await prepareFeatureProperties(exampleLayerInformation);
+        const properties = await prepareFeatureProperties.prepareFeatureProperties(exampleLayerInformation);
 
         expect(Array.isArray(properties)).to.be.true;
         expect(properties.length).to.equal(5);
@@ -83,7 +85,7 @@ describe.skip("src/modules/tools/wfst/utils/prepareFeatureProperties.js", () => 
             datum: "Datum"
         };
 
-        const properties = await prepareFeatureProperties(exampleLayerInformation);
+        const properties = await prepareFeatureProperties.prepareFeatureProperties(exampleLayerInformation);
 
         expect(Array.isArray(properties)).to.be.true;
         expect(properties.length).to.equal(3);
