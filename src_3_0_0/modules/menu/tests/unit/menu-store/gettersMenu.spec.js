@@ -97,7 +97,7 @@ describe("src_3_0_0/modules/menu/menu-store/gettersMenu.js", () => {
             const side = "mainMenu",
                 currentComponentName = gettersMenu.currentComponentName(state)(side);
 
-            expect(currentComponentName).to.equal(i18next.t("common:menu.name"));
+            expect(currentComponentName).to.equal(i18next.t("common:modules.menu.name"));
         });
 
         it("should return the current component name for secondaryMenu", () => {
