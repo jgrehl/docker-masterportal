@@ -239,11 +239,11 @@
       "geometry": "Geometry",
       "geometryDrawFailed": "The transferred geometry could not be displayed.",
       "iconList": {
+        "gelber Pin": "yellow Pin",
         "iconCloud": "Cloud",
         "iconLeaf": "Leaf",
         "iconMeadow": "Meadow",
-        "iconPoint": "Point",
-        "gelber Pin": "yellow Pin"
+        "iconPoint": "Point"
       },
       "innerColorContour": "Inner outline color",
       "innerRadius": "Inner radius",
