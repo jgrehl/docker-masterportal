@@ -63,18 +63,18 @@ export default {
                     class="caption"
                 >
                     <i class="bi-box-arrow-in-down" />
-                    {{ $t("common:shared.inputs.fileUpload.dropzone") }}
+                    {{ $t("common:shared.modules.inputs.fileUpload.dropzone") }}
                 </p>
             </div>
             <div>
-                {{ $t("common:shared.inputs.fileUpload.or") }}
+                {{ $t("common:shared.modules.inputs.fileUpload.or") }}
                 <label
                     ref="upload-label"
                     class="fake-link"
                     tabindex="0"
                     :keydown="keydown"
                 >
-                    {{ $t("common:shared.inputs.fileUpload.browse") }}
+                    {{ $t("common:shared.modules.inputs.fileUpload.browse") }}
                     <input
                         ref="upload-input-file"
                         type="file"

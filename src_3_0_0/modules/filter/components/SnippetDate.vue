@@ -124,7 +124,7 @@ export default {
     },
     computed: {
         ariaLabelDate () {
-            return this.$t("common.modules.filter.ariaLabel.date", {param: this.attrName});
+            return this.$t("common:modules.filter.ariaLabel.date", {param: this.attrName});
         },
         titleText () {
             if (this.title === true) {
