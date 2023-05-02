@@ -373,7 +373,7 @@ describe("src_3_0_0/modules/coordToolkit/components/CoordToolkit.vue", () => {
             wrapper.vm.selectionChanged(event);
 
             ret = wrapper.vm.getLabel(key);
-            expect(ret).to.be.equals("modules.tools.coordToolkit.hdms.key");
+            expect(ret).to.be.equals("common:modules.coordToolkit.hdms.key");
 
             value = "http://www.opengis.net/gml/srs/epsg.xml#31467";
             event = {
@@ -383,7 +383,7 @@ describe("src_3_0_0/modules/coordToolkit/components/CoordToolkit.vue", () => {
             };
             wrapper.vm.selectionChanged(event);
             ret = wrapper.vm.getLabel(key);
-            expect(ret).to.be.equals("modules.tools.coordToolkit.cartesian.key");
+            expect(ret).to.be.equals("common:modules.coordToolkit.cartesian.key");
 
             value = null;
             event = {
@@ -393,7 +393,7 @@ describe("src_3_0_0/modules/coordToolkit/components/CoordToolkit.vue", () => {
             };
             wrapper.vm.selectionChanged(event);
             ret = wrapper.vm.getLabel(key);
-            expect(ret).to.be.equals("modules.tools.coordToolkit.cartesian.key");
+            expect(ret).to.be.equals("common:modules.coordToolkit.cartesian.key");
         });
 
         it("changeMode changes the mode 'supply' or 'search'", async () => {

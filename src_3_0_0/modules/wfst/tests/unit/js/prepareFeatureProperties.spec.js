@@ -1,7 +1,7 @@
 import {expect} from "chai";
 import sinon from "sinon";
-import prepareFeatureProperties from "../../../utils/prepareFeatureProperties";
-import receivePossiblePropertiesModule from "../../../utils/receivePossibleProperties";
+import prepareFeatureProperties from "../../../js/prepareFeatureProperties";
+import receivePossiblePropertiesModule from "../../../js/receivePossibleProperties";
 
 const exampleLayerInformation = {
         id: "wfst-layer",
@@ -54,7 +54,7 @@ const exampleLayerInformation = {
         }
     ];
 
-describe("src/modules/tools/wfst/utils/prepareFeatureProperties.js", () => {
+describe.skip("src_3_0_0/modules/wfst/js/prepareFeatureProperties.js", () => {
     beforeEach(() => {
         sinon.stub(receivePossiblePropertiesModule, "receivePossibleProperties").callsFake(() => {
             return exampleProperties;

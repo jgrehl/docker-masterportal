@@ -1,5 +1,5 @@
 import {expect} from "chai";
-import receivePossiblePropertiesModule from "../../../utils/receivePossibleProperties";
+import receivePossiblePropertiesModule from "../../../js/receivePossibleProperties";
 // import {parseDescribeFeatureTypeResponse} from "../../../utils/receivePossibleProperties";
 
 const exampleDescribeFeatureType = "<?xml version='1.0' encoding='UTF-8'?>\n" +
@@ -60,7 +60,7 @@ const exampleDescribeFeatureType = "<?xml version='1.0' encoding='UTF-8'?>\n" +
     ];
 
 
-describe("src/modules/tools/wfst/utils/parseDescribeFeatureTypeResponse.js", () => {
+describe("src_3_0_0/modules/wfst/js/parseDescribeFeatureTypeResponse.js", () => {
     let featureType;
 
     it("should retrieve the element values (required, type, key) from the parsed XML string if an element with name = featureType can be found in the XML", () => {
