@@ -12,7 +12,8 @@ const {
     placingPolygonMarker,
     removePointMarker,
     removePolygonMarker,
-    rotatePointMarker
+    rotatePointMarker,
+    rotatePointMarkerIn3D
 } = actions;
 
 describe("src_3_0_0/core/maps/store/actionsMapsMarker.js", () => {
@@ -162,6 +163,132 @@ describe("src_3_0_0/core/maps/store/actionsMapsMarker.js", () => {
 
             expect(feature.rotation).to.equals(3.4753519664486685);
             expect(dispatch.calledOnce).to.be.true;
+        });
+    });
+    describe("rotatePointMarkerIn3D", () => {
+        const map3D = {
+                id: "1",
+                mode: "3D",
+                getCesiumScene: () => {
+                    return {
+                        drillPick: () => {
+                            return [{
+                                primitive: primitive
+                            }];
+                        }
+                    };
+                },
+                getOlMap: () => {
+                    return {
+                        getSize: () => {
+                            return [
+                                100,
+                                200
+                            ];
+                        }
+                    };
+                }
+            },
+            primitive = {
+                olFeature: {
+                    getStyle: () => {
+                        return {
+                            getImage: () => {
+                                return {
+                                    getAnchor: () => {
+                                        return [
+                                            100,
+                                            100
+                                        ];
+                                    }
+                                };
+                            }
+                        };
+                    }
+                },
+                olLayer: {
+                    get: () => {
+                        return "marker_point_layer";
+                    }
+                },
+                width: 100,
+                height: 100,
+                scale: 0.5,
+                pixelOffset: "",
+                rotation: ""
+            };
+
+        it("rotatePointMarkerIn3D with angle 0", () => {
+            const rootGetters = {
+                    "Maps/clickPixel": [0, 0]
+                },
+                position = {
+                    rotation: 0
+                },
+                rotation = 0,
+                pixelOffset = {
+                    x: 25,
+                    y: -25
+                };
+
+            mapCollection.addMap(map3D, "3D");
+            rotatePointMarkerIn3D({rootGetters}, position);
+            expect(mapCollection.getMap("3D").getCesiumScene().drillPick()[0].primitive.rotation).to.equal(rotation);
+            expect(mapCollection.getMap("3D").getCesiumScene().drillPick()[0].primitive.pixelOffset).to.deep.equal(pixelOffset);
+        });
+        it("rotatePointMarkerIn3D with angle 90", () => {
+            const rootGetters = {
+                    "Maps/clickPixel": [0, 0]
+                },
+                position = {
+                    rotation: 90
+                },
+                rotation = -1.5707963267948966,
+                pixelOffset = {
+                    x: 25,
+                    y: 25
+                };
+
+            mapCollection.addMap(map3D, "3D");
+            rotatePointMarkerIn3D({rootGetters}, position);
+            expect(mapCollection.getMap("3D").getCesiumScene().drillPick()[0].primitive.rotation).to.equal(rotation);
+            expect(mapCollection.getMap("3D").getCesiumScene().drillPick()[0].primitive.pixelOffset).to.deep.equal(pixelOffset);
+        });
+        it("rotatePointMarkerIn3D with angle 180", () => {
+            const rootGetters = {
+                    "Maps/clickPixel": [0, 0]
+                },
+                position = {
+                    rotation: 180
+                },
+                rotation = -3.141592653589793,
+                pixelOffset = {
+                    x: 25,
+                    y: 25
+                };
+
+            mapCollection.addMap(map3D, "3D");
+            rotatePointMarkerIn3D({rootGetters}, position);
+            expect(mapCollection.getMap("3D").getCesiumScene().drillPick()[0].primitive.rotation).to.equal(rotation);
+            expect(mapCollection.getMap("3D").getCesiumScene().drillPick()[0].primitive.pixelOffset).to.deep.equal(pixelOffset);
+        });
+        it("rotatePointMarkerIn3D with angle 270", () => {
+            const rootGetters = {
+                    "Maps/clickPixel": [0, 0]
+                },
+                position = {
+                    rotation: 270
+                },
+                rotation = -4.71238898038469,
+                pixelOffset = {
+                    x: -25,
+                    y: 25
+                };
+
+            mapCollection.addMap(map3D, "3D");
+            rotatePointMarkerIn3D({rootGetters}, position);
+            expect(mapCollection.getMap("3D").getCesiumScene().drillPick()[0].primitive.rotation).to.equal(rotation);
+            expect(mapCollection.getMap("3D").getCesiumScene().drillPick()[0].primitive.pixelOffset).to.deep.equal(pixelOffset);
         });
     });
 });
