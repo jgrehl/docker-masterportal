@@ -62,6 +62,7 @@ Konfiguration der Themenbaumes
 |metaIDsToMerge|nein|String[]||Alle in der `services.json` gefundenen Layer, die diesen Meta-IDs entsprechen, werden zu einer einzigen Layer im Baum zusammengeführt. Nur für den Baum-Typ `auto`.|true|
 |layerIDsToStyle|nein|**[layerIDsToStyle](#markdown-header-portalconfigtreelayeridstostyle)**[]||Spezielle Implementierung für einen HVV-Dienst (Hamburger Verkehrsbetriebe). Enthält Objekte zur Abfrage verschiedener Stile einer Layer-ID. Nur für den Baum-Typ `auto`.|true|
 |highlightedFeatures|nein|**[highlightedFeatures](#markdown-header-portalconfigtreehighlightedfeatures)**||Konfiguration zusätzlich zum Highlighting von Features.|false|
+|layerPills|nein|**[layerPills](#markdown-header-portalconfigtreelayerpills)**||Konfiguration der LayerPills.|false|
 
 
 **Beispiel**
@@ -130,6 +131,27 @@ Konfiguration zusätzlich zum Highlighting von Features. Wenn mit dem Werkzeug "
     "active": false,
     "layerName": "common:tree.selectedFeatures"
 },
+```
+
+***
+
+
+
+#### Portalconfig.tree.layerPills
+Konfiguration der LayerPills. 
+
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|active|no|Boolean|false|Gibt an, ob dieses Feature aktiv ist.|false|
+|amount|no|Number|3|Anzahl der Pills der in der Desktop-Ansicht angezeigt wird, bevor gescrolled werden muss.|false|
+
+**Example**
+```
+#!json
+layerPills": {
+    "active": true,
+    "amount": 5
+    }
 ```
 
 ***
