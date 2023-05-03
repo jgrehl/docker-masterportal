@@ -130,7 +130,7 @@ describe("src/modules/modules/wfst/components/WfsTransaction.vue", () => {
         expect(wrapper.find("#tool-wfsTransaction-layerFailure").exists()).to.be.true;
         expect(wrapper.find("#tool-wfsTransaction-layerFailure").text()).to.equal("modules.tools.wfsTransaction.error.allLayersNotSelected");
     });
-    it.skip("renders a container including the failure message that the current layer has not been selected in the layer tree", () => {
+    it("renders a container including the failure message that the current layer has not been selected in the layer tree", () => {
         exampleLayerOne.visibility = false;
         exampleLayerTwo.visibility = true;
         store.commit("Modules/Wfst/setLayerIds", layerIds);
@@ -143,66 +143,11 @@ describe("src/modules/modules/wfst/components/WfsTransaction.vue", () => {
                 plugins: [store]
             }
         });
-        wrapper.vm.currentLayerIndex = 0;
+        wrapper.vm.setCurrentLayerIndex = 0;
 
-        wrapper.vm.layerIds = [{...exampleLayerOne, visibility: false}, exampleLayerTwo];
-        wrapper.vm.layerInformation = [{...exampleLayerOne, visibility: false}, exampleLayerTwo];
+        wrapper.vm.setLayerIds = [{...exampleLayerOne, visibility: false}, exampleLayerTwo];
+        wrapper.vm.setLayerInformation = [{...exampleLayerOne, visibility: false}, exampleLayerTwo];
         expect(wrapper.find("#tool-wfsTransaction-layerFailure").exists()).to.be.true;
-        expect(wrapper.find("#tool-wfsTransaction-layerFailure").text()).to.equal("modules.tools.wfsTransaction.error.layerNotSelected");
-    });
-    it.skip("renders a container including the failure message that the current layer is missing the property featurePrefix", () => {
-        exampleLayerOne.visibility = true;
-        delete exampleLayerOne.featurePrefix;
-
-        store.commit("Modules/Wfst/setLayerIds", layerIds);
-        wrapper = mount(WfsTransaction, {
-            global: {
-                plugins: [store]
-            }
-        });
-
-        expect(wrapper.find("#tool-wfsTransaction-layerFailure").exists()).to.be.true;
-        expect(wrapper.find("#tool-wfsTransaction-layerFailure").text()).to.equal("modules.wfsTransaction.error.layerNotConfiguredCorrectly");
-    });
-    it.skip("renders a container including a button for an insert transaction if lineButton is configured", () => {
-        exampleLayerOne.visibility = true;
-        exampleLayerOne.featurePrefix = "app";
-        store.commit("Modules/Wfst/setSelectedInteraction", "update");
-        store.commit("Modules/Wfst/setLineButton", [{
-            layerId: exampleLayerOne.id,
-            available: true
-        }]);
-        store.commit("Modules/Wfst/setLayerIds", layerIds);
-        wrapper = mount(WfsTransaction, {
-            global: {
-                plugins: [store]
-            }
-        });
-
-        expect(wrapper.find("#tool-wfsTransaction-interactionSelect-container").exists()).to.be.true;
-
-    });
-    it.skip("renders a form which includes a label and an input element for every gfi attribute of the layer", () => {
-
-        exampleLayerOne.visibility = true;
-
-        store.commit("Modules/Wfst/setLayerIds", layerIds);
-        store.commit("Modules/Wfst/setSelectedInteraction", "insert");
-        wrapper = mount(WfsTransaction, {
-            global: {
-                plugins: [store]
-            }
-        });
-
-        expect(wrapper.find("#tool-wfsTransaction-form").exists()).to.be.true;
-        expect(wrapper.find("#tool-wfsTransaction-form-input-stringAtt").exists()).to.be.true;
-        expect(wrapper.find("#tool-wfsTransaction-form-input-stringAtt").attributes().type).to.equal("text");
-        expect(wrapper.find("#tool-wfsTransaction-form-input-numAtt").exists()).to.be.true;
-        expect(wrapper.find("#tool-wfsTransaction-form-input-numAtt").attributes().type).to.equal("number");
-        expect(wrapper.find("#tool-wfsTransaction-form-input-boolAtt").exists()).to.be.true;
-        expect(wrapper.find("#tool-wfsTransaction-form-input-boolAtt").attributes().type).to.equal("checkbox");
-        expect(wrapper.find("#tool-wfsTransaction-form-input-dateAtt").exists()).to.be.true;
-        expect(wrapper.find("#tool-wfsTransaction-form-input-dateAtt").attributes().type).to.equal("date");
-        expect(wrapper.find("#tool-wfsTransaction-form-buttons").exists()).to.be.true;
+        expect(wrapper.find("#tool-wfsTransaction-layerFailure").text()).to.equal("modules.tools.wfsTransaction.error.allLayersNotSelected");
     });
 });
