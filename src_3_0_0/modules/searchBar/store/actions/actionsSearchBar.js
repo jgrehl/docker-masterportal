@@ -15,6 +15,7 @@ export default {
 
     /**
      * Overwrite default values in search interface.
+     * @param {Object} param.state the state
      * @returns {void}
      */
     overwriteDefaultValues: ({state}) => {
