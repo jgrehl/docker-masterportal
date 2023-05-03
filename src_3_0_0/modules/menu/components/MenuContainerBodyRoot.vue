@@ -57,15 +57,7 @@ export default {
             v-if="titleBySide(side)"
             v-bind="titleBySide(side)"
         />
-        <input
-            v-if="side === 'mainMenu'"
-            class="form-control mr-sm-2"
-            type="search"
-            placeholder="Search"
-            aria-label="Search"
-        >
-        <SearchBar />
-
+        <SearchBar v-if="side === 'mainMenu'" />
         <LayerTree v-if="side === 'mainMenu'" />
         <template
             v-for="(_, key) in menu.sections"
