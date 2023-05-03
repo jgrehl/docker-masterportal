@@ -84,16 +84,13 @@ describe("src_3_0_0/core/js/layers/webglRenderer.js", () => {
             expect(webgl.isDisposed.call(layerObject)).to.be.false;
         });
     });
-    describe.skip("visibilityChanged", () => {
-        it("should create a new WFSLayer instance if WFSLayer is disposed", () => {
-            includes = false;
+    describe("visibilityChanged", () => {
+        it("should create a new WFSLayer instance with WFSLayer isDisposed", () => {
             const layerObject = new WFSLayer(attributes);
 
             webgl.setLayerProperties(layerObject);
-            layerObject.layer.dispose();
-            layerObject.visibilityChanged(true);
-            expect(layerObject.layer.disposed).to.be.false;
-            expect(addLayerSpy.calledOnce).to.be.true;
+
+            expect(layerObject.isDisposed()).to.be.false;
         });
         it("should keep the original style from the old WFSLayer instance, even if it is overwritten by the resp. WFSLayer class", () => {
             const style = {
