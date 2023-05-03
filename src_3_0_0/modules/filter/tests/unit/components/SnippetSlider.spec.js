@@ -4,7 +4,7 @@ import {expect} from "chai";
 
 config.global.mocks.$t = key => key;
 
-describe("src/modules/tools/filter/components/SnippetSlider.vue", () => {
+describe.only("src/modules/tools/filter/components/SnippetSlider.vue", () => {
     describe("constructor", () => {
         it("should have correct default values", () => {
             const wrapper = shallowMount(SnippetSlider, {});
@@ -43,55 +43,38 @@ describe("src/modules/tools/filter/components/SnippetSlider.vue", () => {
             expect(wrapper.find(".slider-single").element.min).to.equal("0");
             expect(wrapper.find(".slider-single").element.max).to.equal("1000");
         });
-        it.skip("should set slider value by input text", async () => {
+        it("should render the component with set min and max values and lower prechecked as minimum if configured", async () => {
             const wrapper = shallowMount(SnippetSlider, {
-                    propsData: {
-                        minValue: 20,
-                        maxValue: 100
-                    }
-                }),
-                textInput = wrapper.find(".input-single");
+                propsData: {
+                    minValue: 60,
+                    maxValue: 1000,
+                    prechecked: 50
+                }
+            });
 
-            await textInput.setValue("30");
-            expect(wrapper.find(".input-single").element.value).to.equal("30");
-            expect(wrapper.find(".slider-single").element.value).to.equal("30");
-
-            await textInput.setValue("50");
-            expect(wrapper.find(".input-single").element.value).to.equal("50");
-            expect(wrapper.find(".slider-single").element.value).to.equal("50");
-
-            await textInput.setValue("500");
-            expect(wrapper.find(".input-single").element.value).to.equal("100");
-            expect(wrapper.find(".slider-single").element.value).to.equal("100");
-
-            await textInput.setValue("10");
-            expect(wrapper.find(".input-single").element.value).to.equal("20");
-            expect(wrapper.find(".slider-single").element.value).to.equal("20");
+            await wrapper.vm.$nextTick();
+            await wrapper.vm.$nextTick();
+            await wrapper.vm.$nextTick();
+            expect(wrapper.find(".input-single").element.value).to.equal("60");
+            expect(wrapper.find(".slider-single").element.min).to.equal("60");
+            expect(wrapper.find(".slider-single").element.max).to.equal("1000");
+            expect(wrapper.find(".slider-single").element.value).to.equal("60");
         });
-        it.skip("should set input value by slider", async () => {
+        it("should render the component with set min and max values and higher prechecked as maximum if configured", async () => {
             const wrapper = shallowMount(SnippetSlider, {
-                    propsData: {
-                        minValue: 20,
-                        maxValue: 100
-                    }
-                }),
-                sliderInput = wrapper.find(".slider-single");
+                propsData: {
+                    minValue: 60,
+                    maxValue: 999,
+                    prechecked: 1100
+                }
+            });
 
-            await sliderInput.setValue("30");
-            expect(wrapper.find(".slider-single").element.value).to.equal("30");
-            expect(wrapper.find(".input-single").element.value).to.equal("30");
-
-            await sliderInput.setValue("50");
-            expect(wrapper.find(".slider-single").element.value).to.equal("50");
-            expect(wrapper.find(".input-single").element.value).to.equal("50");
-
-            await sliderInput.setValue("500");
-            expect(wrapper.find(".slider-single").element.value).to.equal("100");
-            expect(wrapper.find(".input-single").element.value).to.equal("100");
-
-            await sliderInput.setValue("10");
-            expect(wrapper.find(".slider-single").element.value).to.equal("20");
-            expect(wrapper.find(".input-single").element.value).to.equal("20");
+            await wrapper.vm.$nextTick();
+            await wrapper.vm.$nextTick();
+            await wrapper.vm.$nextTick();
+            expect(wrapper.find(".input-single").element.value).to.equal("999");
+            expect(wrapper.find(".slider-single").element.min).to.equal("60");
+            expect(wrapper.find(".slider-single").element.max).to.equal("999");
         });
         it("should render hidden if visible is false", () => {
             const wrapper = shallowMount(SnippetSlider, {
