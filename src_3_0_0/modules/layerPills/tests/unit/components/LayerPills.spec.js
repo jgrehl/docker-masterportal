@@ -12,9 +12,7 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
     let store,
         wrapper,
         visibleLayers,
-        mockConfigJson,
-        startIndex,
-        endIndex;
+        mockConfigJson;
 
     beforeEach(() => {
         visibleLayers = [
@@ -25,11 +23,12 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
         ];
         mockConfigJson = {
             tree: {
-                layerPillsAmount: 2
+                layerPills: {
+                    "active": true,
+                    "amount": 2
+                }
             }
         };
-        startIndex = 0;
-        endIndex = 2;
         store = createStore({
             namespaced: true,
             modules: {
@@ -69,9 +68,6 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
                 }
             }
         });
-
-        store.commit("Modules/LayerPills/setStartIndex", startIndex);
-        store.commit("Modules/LayerPills/setEndIndex", endIndex);
     });
 
     afterEach(() => {
@@ -109,10 +105,13 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
             expect(wrapper.find("#layer-pills").exists()).to.be.false;
         });
 
-        it("layerPillsAmount is 0", () => {
+        it("should not exist if layerPillsAmount is 0", () => {
             store.commit("setPortalConfig", {
                 tree: {
-                    layerPillsAmount: 0
+                    layerPills: {
+                        active: true,
+                        amount: 0
+                    }
                 }
             });
             wrapper = shallowMount(LayerPillsComponent, {
@@ -128,10 +127,13 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
 
             expect(wrapper.find("#layer-pills").exists()).to.be.false;
         });
-        it("scroll left and right buttons not showing ", () => {
+
+        it("should not exist if layerPills are not activated", () => {
             store.commit("setPortalConfig", {
                 tree: {
-                    layerPillsAmount: 0
+                    layerPills: {
+
+                    }
                 }
             });
             wrapper = shallowMount(LayerPillsComponent, {
@@ -161,7 +163,7 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
                 global: {
                     plugins: [store]
                 }});
-            expect(wrapper.find("#layerpills-left-button").element.disabled).to.be.true;
+            expect(wrapper.find("#layerpills-left-button").attributes().style).to.include("visibility: hidden");
         });
     });
     describe("right scroll enabled", () => {
@@ -178,7 +180,7 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
                 }});
 
             await wrapper.vm.$nextTick();
-            expect(wrapper.find("#layerpills-right-button").element.disabled).to.be.false;
+            expect(wrapper.find("#layerpills-right-button").attributes().style).to.be.undefined;
         });
     });
 
@@ -195,7 +197,7 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
                     plugins: [store]
                 }});
 
-            expect(wrapper.findAll(".close-button").length).to.equals(endIndex);
+            expect(wrapper.findAll(".close-button").length).to.equals(store.state.Modules.LayerPills.visibleSubjectDataLayers.length);
         });
     });
 
@@ -240,90 +242,8 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
                 {id: 3, name: "layer4", typ: "WFS"}]
             );
         });
-        it("moveLayerPills to the right increases and to the left decreases start and end index by 1", () => {
-            wrapper = shallowMount(LayerPillsComponent, {
-                components: {
-                    IconButton: {
-                        name: "IconButton",
-                        template: "<button>Hier</button>"
-                    }
-                },
-                global: {
-                    plugins: [store]
-                }});
-            expect(store.state.Modules.LayerPills.startIndex).to.equal(0);
-            expect(store.state.Modules.LayerPills.endIndex).to.equal(2);
-            wrapper.vm.moveLayerPills("right");
-            expect(store.state.Modules.LayerPills.startIndex).to.equal(1);
-            expect(store.state.Modules.LayerPills.endIndex).to.equal(3);
-            wrapper.vm.moveLayerPills("left");
-            expect(store.state.Modules.LayerPills.startIndex).to.equal(0);
-            expect(store.state.Modules.LayerPills.endIndex).to.equal(2);
-        });
     });
 
-    describe("watchers", () => {
-        it("startIndex < 0", () => {
-            wrapper = shallowMount(LayerPillsComponent, {
-                components: {
-                    IconButton: {
-                        name: "IconButton",
-                        template: "<button>Hier</button>"
-                    }
-                },
-                global: {
-                    plugins: [store]
-                }});
-            wrapper.vm.$options.watch.startIndex.call(wrapper.vm, 0);
-
-            expect(store.state.Modules.LayerPills.leftScrollDisabled).to.equal(true);
-        });
-        it("startIndex > 0", () => {
-            wrapper = shallowMount(LayerPillsComponent, {
-                components: {
-                    IconButton: {
-                        name: "IconButton",
-                        template: "<button>Hier</button>"
-                    }
-                },
-                global: {
-                    plugins: [store]
-                }});
-            wrapper.vm.$options.watch.startIndex.call(wrapper.vm, 2);
-
-            expect(store.state.Modules.LayerPills.leftScrollDisabled).to.equal(false);
-        });
-        it("endIndex < visibleSubjectDataLayers.length", () => {
-            wrapper = shallowMount(LayerPillsComponent, {
-                components: {
-                    IconButton: {
-                        name: "IconButton",
-                        template: "<button>Hier</button>"
-                    }
-                },
-                global: {
-                    plugins: [store]
-                }});
-            wrapper.vm.$options.watch.endIndex.call(wrapper.vm, 0);
-
-            expect(store.state.Modules.LayerPills.rightScrollDisabled).to.equal(false);
-        });
-        it("endIndex >= visibleSubjectDataLayers.length", () => {
-            wrapper = shallowMount(LayerPillsComponent, {
-                components: {
-                    IconButton: {
-                        name: "IconButton",
-                        template: "<button>Hier</button>"
-                    }
-                },
-                global: {
-                    plugins: [store]
-                }});
-            wrapper.vm.$options.watch.endIndex.call(wrapper.vm, 4);
-
-            expect(store.state.Modules.LayerPills.rightScrollDisabled).to.equal(true);
-        });
-    });
 
     describe("tooltip of anchor", () => {
         it("anchors should have the correct tooltip", () => {
