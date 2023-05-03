@@ -27,8 +27,7 @@ export default {
             "currentMenuWidth",
             "mainExpanded",
             "secondaryExpanded",
-            "titleBySide",
-            "menuResizingToggle"
+            "titleBySide"
         ]),
 
         /**
@@ -72,16 +71,12 @@ export default {
         ...mapMutations("Menu", [
             "collapseMenues",
             "mergeMenuState",
-            "setCurrentMenuWidth",
-            "setMenuResizingToggle"
+            "setCurrentMenuWidth"
         ]),
         ...mapActions("Menu", [
             "toggleMenu",
             "closeMenu"
-        ]),
-        toggleEndOfMenuResizing () {
-            this.setMenuResizingToggle(!this.menuResizingToggle);
-        }
+        ])
     }
 };
 </script>
@@ -129,7 +124,6 @@ export default {
             :min-width="0"
             :max-width="0.6"
             :min-height="1"
-            @end-resizing="toggleEndOfMenuResizing()"
         >
             &#8942;
         </ResizeHandle>
