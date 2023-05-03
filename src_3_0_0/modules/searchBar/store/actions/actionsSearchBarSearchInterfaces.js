@@ -7,9 +7,11 @@ export default {
     /**
      * Instantiate the configured search interfaces
      * and stores them in the state.
+     * @param {Object} param.commit the commit
+     * @param {Object} param.state the state
      * @returns {void}
      */
-    instantiateSearchInterfaces: ({state, commit}) => {
+    instantiateSearchInterfaces: ({commit, state}) => {
         const searchInterfacesMapper = {
             gazetteer: SearchInterfaceGazetteer
         };
@@ -22,6 +24,9 @@ export default {
     /**
      * Send search input to configured searchInterfaces
      * and push the response objects to the state attribute "searchResults".
+     * @param {Object} param.commit the commit
+     * @param {Object} param.dispatch the dispatch
+     * @param {Object} param.state the state
      * @param {Object} payload The payload.
      * @param {Object} payload.searchInput The search input.
      * @param {Object} [payload.searchType="result"] The search type "suggestion" or "result".
@@ -44,6 +49,7 @@ export default {
 
     /**
      * Clean the search suggestions and search results.
+     * @param {Object} param.commit the commit
      * @returns {void}
      */
     cleanSearchHits: ({commit}) => {
