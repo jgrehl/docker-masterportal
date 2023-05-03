@@ -5,6 +5,7 @@ import MenuContainerBodyRoot from "../../../components/MenuContainerBodyRoot.vue
 import MenuContainerBodyRootLogo from "../../../components/MenuContainerBodyRootLogo.vue";
 import MenuContainerBodyRootItems from "../../../components/MenuContainerBodyRootItems.vue";
 import LayerTree from "../../../../layerTree/components/LayerTree.vue";
+import SearchBar from "../../../../searchBar/components/SearchBar.vue";
 
 config.global.mocks.$t = key => key;
 
@@ -69,9 +70,9 @@ describe("src_3_0_0/modules/menu/MenuContainerBodyRoot.vue", () => {
 
         expect(bodyWrapper.exists()).to.be.true;
         expect(bodyWrapper.findComponent(MenuContainerBodyRootLogo).exists()).to.be.true;
+        expect(bodyWrapper.findComponent(SearchBar).exists()).to.be.true;
         expect(bodyWrapper.findComponent(LayerTree).exists()).to.be.true;
         expect(bodyWrapper.findComponent(MenuContainerBodyRootItems).exists()).to.be.false;
-        expect(bodyWrapper.find("input").exists()).to.be.true;
     });
 
     it("renders the component in secondaryMenu with no sections", () => {
@@ -86,9 +87,9 @@ describe("src_3_0_0/modules/menu/MenuContainerBodyRoot.vue", () => {
 
         expect(bodyWrapper.exists()).to.be.true;
         expect(bodyWrapper.findComponent(MenuContainerBodyRootLogo).exists()).to.be.true;
+        expect(bodyWrapper.findComponent(SearchBar).exists()).to.be.false;
         expect(bodyWrapper.findComponent(LayerTree).exists()).to.be.false;
         expect(bodyWrapper.findComponent(MenuContainerBodyRootItems).exists()).to.be.false;
-        expect(bodyWrapper.find("input").exists()).to.be.false;
     });
 
     it("renders the component in secondaryMenu with no sections and no logo", () => {
@@ -104,9 +105,9 @@ describe("src_3_0_0/modules/menu/MenuContainerBodyRoot.vue", () => {
 
         expect(bodyWrapper.exists()).to.be.true;
         expect(bodyWrapper.findComponent(MenuContainerBodyRootLogo).exists()).to.be.false;
+        expect(bodyWrapper.findComponent(SearchBar).exists()).to.be.false;
         expect(bodyWrapper.findComponent(LayerTree).exists()).to.be.false;
         expect(bodyWrapper.findComponent(MenuContainerBodyRootItems).exists()).to.be.false;
-        expect(bodyWrapper.find("input").exists()).to.be.false;
     });
 
     it("renders the component in mainMenu with sections", () => {
@@ -120,6 +121,7 @@ describe("src_3_0_0/modules/menu/MenuContainerBodyRoot.vue", () => {
 
         expect(bodyWrapper.exists()).to.be.true;
         expect(bodyWrapper.findComponent(MenuContainerBodyRootLogo).exists()).to.be.true;
+        expect(bodyWrapper.findComponent(SearchBar).exists()).to.be.true;
         expect(bodyWrapper.findComponent(LayerTree).exists()).to.be.true;
         expect(bodyWrapper.findComponent(MenuContainerBodyRootItems).exists()).to.be.true;
         expect(bodyWrapper.findAll("menu-container-body-root-items-stub").length).to.be.equals(2);
@@ -127,7 +129,6 @@ describe("src_3_0_0/modules/menu/MenuContainerBodyRoot.vue", () => {
         expect(bodyWrapper.findAll("menu-container-body-root-items-stub")[0].attributes("path")).to.be.equals("mainMenu,sections,0");
         expect(bodyWrapper.findAll("menu-container-body-root-items-stub")[1].attributes("idappendix")).to.be.equals("mainMenu");
         expect(bodyWrapper.findAll("menu-container-body-root-items-stub")[1].attributes("path")).to.be.equals("mainMenu,sections,1");
-        expect(bodyWrapper.find("input").exists()).to.be.true;
     });
 
     it("renders the component in secondaryMenu with sections and no logo", () => {
@@ -142,6 +143,7 @@ describe("src_3_0_0/modules/menu/MenuContainerBodyRoot.vue", () => {
 
         expect(bodyWrapper.exists()).to.be.true;
         expect(bodyWrapper.findComponent(MenuContainerBodyRootLogo).exists()).to.be.false;
+        expect(bodyWrapper.findComponent(SearchBar).exists()).to.be.false;
         expect(bodyWrapper.findComponent(LayerTree).exists()).to.be.false;
         expect(bodyWrapper.findComponent(MenuContainerBodyRootItems).exists()).to.be.true;
         expect(bodyWrapper.findAll("menu-container-body-root-items-stub").length).to.be.equals(2);
@@ -149,6 +151,5 @@ describe("src_3_0_0/modules/menu/MenuContainerBodyRoot.vue", () => {
         expect(bodyWrapper.findAll("menu-container-body-root-items-stub")[0].attributes("path")).to.be.equals("secondaryMenu,sections,0");
         expect(bodyWrapper.findAll("menu-container-body-root-items-stub")[1].attributes("idappendix")).to.be.equals("secondaryMenu");
         expect(bodyWrapper.findAll("menu-container-body-root-items-stub")[1].attributes("path")).to.be.equals("secondaryMenu,sections,1");
-        expect(bodyWrapper.find("input").exists()).to.be.false;
     });
 });
