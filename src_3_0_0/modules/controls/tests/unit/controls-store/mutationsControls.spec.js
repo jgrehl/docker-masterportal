@@ -1,7 +1,7 @@
 import {expect} from "chai";
 import mutations from "../../../controls-store/mutationsControls";
 
-const {registerControl, unregisterControl} = mutations;
+const {registerControl} = mutations;
 
 describe("src_3_0_0/modules/controls/controls-store/mutationsControls.js", () => {
     describe("registerControl", () => {
@@ -26,30 +26,6 @@ describe("src_3_0_0/modules/controls/controls-store/mutationsControls.js", () =>
             expect(state.expandableControls.length).to.equals(2);
             expect(state.expandableControls).to.deep.equals(["BackForward",
                 "name"]);
-        });
-    });
-
-    describe.skip("unregisterControl", () => {
-        // is not used - reactivate if 'unregisterControl' is used
-        it("remove a control from componentMap", () => {
-            const state = {
-                    componentMap: {
-                        backForward: {id: "backForward"},
-                        fullScreen: {id: "fullScreen"},
-                        name: {id: "controlId"}
-                    },
-                    mobileHiddenControls: [],
-                    expandableControls: []
-                },
-                name = "name";
-
-            unregisterControl(state, name);
-
-            expect(Object.keys(state.componentMap).length).to.equals(2);
-            expect(state.componentMap).to.deep.equals({
-                backForward: {id: "backForward"},
-                fullScreen: {id: "fullScreen"}
-            });
         });
     });
 });
