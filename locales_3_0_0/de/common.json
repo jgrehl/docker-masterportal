@@ -362,12 +362,12 @@
       },
       "info": {
         "snippetCheckbox": "Das Kontrollkästchen kann durch einen Mausklick aktiviert/deaktiviert werden.",
+        "snippetDate": "Für die Eingabe eines Datums als Suchkriterium, klicken Sie im Datumseingabefeld und wählen Sie ein Datum aus dem geöffneten Kalender aus.",
+        "snippetDateRange": "Für die Eingabe eines Datumsbereichs als Suchkriterium, klicken Sie in das Eingabefeld für das Start- bzw. End-Datum und wählen jeweils ein Start- bzw. End-Datum aus dem geöffneten Kalender aus.",
         "snippetDropdown": "Sie können einen oder mehrere Werte aus der vorgegebenen Werte-Liste auswählen.",
         "snippetInput": "Sie können die gewünschten Suchkriterien im Textfeld eingeben.",
         "snippetSlider": "Für die Eingabe eines numerischen Wertes als Suchkriterium, können Sie den Schieberegler nach Rechts oder Links schieben. Zusätzlich können Sie den Wert direkt im Eingabefeld eingeben.",
-        "snippetSliderRange": "Für die Eingabe von numerischen Werten als Minimum- bzw. Maximum-Suchkriterium können Sie den linken bzw. den rechten Schieberegler verschieben. Zusätzlich können Sie die Werte direkt in den Eingabefeldern eingeben.",
-        "snippetDate": "Für die Eingabe eines Datums als Suchkriterium, klicken Sie im Datumseingabefeld und wählen Sie ein Datum aus dem geöffneten Kalender aus.",
-        "snippetDateRange": "Für die Eingabe eines Datumsbereichs als Suchkriterium, klicken Sie in das Eingabefeld für das Start- bzw. End-Datum und wählen jeweils ein Start- bzw. End-Datum aus dem geöffneten Kalender aus."
+        "snippetSliderRange": "Für die Eingabe von numerischen Werten als Minimum- bzw. Maximum-Suchkriterium können Sie den linken bzw. den rechten Schieberegler verschieben. Zusätzlich können Sie die Werte direkt in den Eingabefeldern eingeben."
       },
       "name": "Filter",
       "searchInMapExtent": "Suche im aktuellen Kartenausschnitt",

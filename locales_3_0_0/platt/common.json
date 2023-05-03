@@ -361,12 +361,12 @@
       },
       "info": {
         "snippetCheckbox": "",
+        "snippetDate": "",
+        "snippetDateRange": "",
         "snippetDropdown": "",
         "snippetInput": "",
         "snippetSlider": "",
-        "snippetSliderRange": "",
-        "snippetDate": "",
-        "snippetDateRange": ""
+        "snippetSliderRange": ""
       },
       "name": "Filter",
       "searchInMapExtent": "",
@@ -566,8 +566,8 @@
     "routing": {
       "addWaypoint": "",
       "avoidOptions": {
-        "header": "",
         "FERRIES": "",
+        "header": "",
         "HIGHWAYS": "",
         "STEPS": "",
         "TOLLWAYS": ""

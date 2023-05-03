@@ -362,12 +362,12 @@
       },
       "info": {
         "snippetCheckbox": "La casella di controllo può essere attivata/disattivata con un clic del mouse.",
+        "snippetDate": "Per inserire una data come criterio di ricerca, fare clic nel campo di inserimento della data e selezionare una data dal calendario aperto.",
+        "snippetDateRange": "Per inserire un intervallo di date come criterio di ricerca, fare clic nel campo di immissione per la data iniziale o finale e selezionare una data iniziale o finale dal calendario aperto.",
         "snippetDropdown": "È possibile selezionare uno o più valori dall'elenco di valori indicato.",
         "snippetInput": "Nel campo di testo è possibile inserire i criteri di ricerca desiderati.",
         "snippetSlider": "Per inserire un valore numerico come criterio di ricerca, è possibile spostare il cursore a destra o a sinistra. Inoltre, è possibile inserire il valore direttamente nel campo di immissione.",
-        "snippetSliderRange": "Per inserire valori numerici come criteri di ricerca minimi o massimi, è possibile spostare il cursore a sinistra o a destra. Inoltre, è possibile inserire i valori direttamente nei campi di input.",
-        "snippetDate": "Per inserire una data come criterio di ricerca, fare clic nel campo di inserimento della data e selezionare una data dal calendario aperto.",
-        "snippetDateRange": "Per inserire un intervallo di date come criterio di ricerca, fare clic nel campo di immissione per la data iniziale o finale e selezionare una data iniziale o finale dal calendario aperto."
+        "snippetSliderRange": "Per inserire valori numerici come criteri di ricerca minimi o massimi, è possibile spostare il cursore a sinistra o a destra. Inoltre, è possibile inserire i valori direttamente nei campi di input."
       },
       "name": "Filtro",
       "searchInMapExtent": "Ricerca nella sezione della mappa corrente",
