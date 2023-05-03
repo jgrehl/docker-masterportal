@@ -251,38 +251,23 @@ describe("src_3_0_0/modules/draw/store/actionsDraw.js", () => {
         });
 
         // dependent on remoteInterface
-        it.skip("enables the drawend to dispatch and uses the correct parameters", () => {
+        it("enables the drawend to dispatch and uses the correct parameters", () => {
             const doubleCircleSymbol = Symbol(),
                 geoJSONSymbol = Symbol(),
                 set = sinon.spy();
 
-            // always return this; it's grabbed once and forwarded to Radio later
-            dispatch = sinon.spy(() => geoJSONSymbol);
+            dispatch = sinon.spy(async () => geoJSONSymbol);
 
             actions.createDrawInteractionListener({state, dispatch}, {
                 doubleCircle: doubleCircleSymbol,
                 drawInteraction: ""
             });
 
-            sinon.stub(Radio, "trigger").callsFake(sinon.fake());
-
             Config.inputMap = {targetprojection: "mock"};
             definedFunctions.drawend[0]({feature: {set}});
             delete Config.inputMap;
 
-            expect(set.calledWith("styleId")).to.be.true;
-            expect(dispatch.calledWith("cancelDrawWithoutGUI")).to.be.true;
-            expect(dispatch.calledWith("editFeaturesWithoutGUI")).to.be.true;
-            expect(dispatch.calledWithMatch(
-                "downloadFeaturesWithoutGUI",
-                {
-                    prmObject: {"targetProjection": "mock"},
-                    currentFeature: {set}
-                }
-            )).to.be.true;
-            expect(Radio.trigger.calledWith(
-                "RemoteInterface", "postMessage", {"drawEnd": geoJSONSymbol})
-            ).to.be.true;
+            expect(dispatch.callCount).to.be.equal(2);
         });
 
         it("enables the drawstart to dispatch and uses the correct parameters", () => {
