@@ -50,6 +50,10 @@
     },
     "tree": {
       "addLayerButton": true,
+      "layerPills": {
+        "active": true,
+        "amount": 5
+      },
       "highlightedFeatures": {
         "active": true
       }
