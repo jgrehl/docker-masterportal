@@ -79,7 +79,6 @@ export default {
     /**
      * With this function the coordinate, which has to be marked by the mapMarker, is written to the MapMarker state.
      * @param {Object} param.dispatch the dispatch
-     * @param {Object} param.rootGetters the rootGetters
      * @param {String[]|Object} position The array with the markable coordinate pair or an Object wird coordinates and rotation.
      * @param {String[]} [position.coordinates] The array with the coordinates.
      * @param {Number} [position.rotation] The rotation in degree.
