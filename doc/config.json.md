@@ -67,6 +67,7 @@ Configuration of the topic selection tree
 |metaIDsToMerge|no|String[]||All layers found in the `services.json` regarding these meta IDs are merged to a single layer of the layer tree. Only for tree-type `auto`.|true|
 |layerIDsToStyle|no|**[layerIDsToStyle](#markdown-header-portalconfigtreelayeridstostyle)**[]||Special implementation for a HVV (Hamburg public transportation) service. Contains objects to request various styles of a layer id. Only for tree-type `auto`.|true|
 |highlightedFeatures|no|**[highlightedFeatures](#markdown-header-portalconfigtreehighlightedfeatures)**||Configuration in addition to feature highlighting.|false|
+|layerPills|no|**[layerPills](#markdown-header-portalconfigtreelayerpills)**||Configuration of LayerPills.|false|
 
 **Example**
 ```json
@@ -147,6 +148,26 @@ Configuration in addition to highlighting features. If features are highlighted 
     "active": false,
     "layerName": "common:tree.selectedFeatures"
 },
+```
+
+***
+
+
+#### Portalconfig.tree.layerPills
+Configuration of LayerPills. 
+
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|active|no|Boolean|false|Indicates whether this feature is active.|false|
+|amount|no|Number|3|Amount of Pills shown on Desktop before scrolling needed.|false|
+
+**Example**
+```
+#!json
+layerPills": {
+    "active": true,
+    "amount": 5
+    }
 ```
 
 ***
