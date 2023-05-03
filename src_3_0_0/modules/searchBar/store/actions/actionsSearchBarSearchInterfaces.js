@@ -27,12 +27,27 @@ export default {
      * @param {Object} [payload.searchType="result"] The search type "suggestion" or "result".
      * @returns {void}
      */
-    search: ({state, commit}, {searchInput, searchType = "result"}) => {
+    search: ({commit, dispatch, state}, {searchInput, searchType = "result"}) => {
+        dispatch("cleanSearchHits");
         state.searchInterfaceInstances.forEach(instance => {
             instance.search(searchInput, searchType)
                 .then(searchHits => {
                     commit("addSearchHits", {searchHits, searchType});
+                })
+                .catch(error => {
+                    if (String(error) !== "AbortError: The user aborted a request.") {
+                        console.error(error);
+                    }
                 });
         });
+    },
+
+    /**
+     * Clean the search suggestions and search results.
+     * @returns {void}
+     */
+    cleanSearchHits: ({commit}) => {
+        commit("setSearchSuggestions", []);
+        commit("setSearchResults", []);
     }
 };
