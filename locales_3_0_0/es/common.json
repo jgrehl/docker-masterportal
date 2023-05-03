@@ -362,12 +362,12 @@
       },
       "info": {
         "snippetCheckbox": "",
+        "snippetDate": "",
+        "snippetDateRange": "",
         "snippetDropdown": "",
         "snippetInput": "",
         "snippetSlider": "",
-        "snippetSliderRange": "",
-        "snippetDate": "",
-        "snippetDateRange": ""
+        "snippetSliderRange": ""
       },
       "name": "Filtro",
       "searchInMapExtent": "",
@@ -567,8 +567,8 @@
     "routing": {
       "addWaypoint": "",
       "avoidOptions": {
-        "header": "",
         "FERRIES": "",
+        "header": "",
         "HIGHWAYS": "",
         "STEPS": "",
         "TOLLWAYS": ""
