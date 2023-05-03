@@ -4,7 +4,7 @@ import {expect} from "chai";
 
 config.global.mocks.$t = key => key;
 
-describe.only("src/modules/tools/filter/components/SnippetSlider.vue", () => {
+describe("src/modules/tools/filter/components/SnippetSlider.vue", () => {
     describe("constructor", () => {
         it("should have correct default values", () => {
             const wrapper = shallowMount(SnippetSlider, {});
