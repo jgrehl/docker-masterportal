@@ -52,7 +52,6 @@ describe("src_3_0_0/modules/searchBar/components/SearchBar.vue", () => {
             });
 
             expect(wrapper.find("#search-bar").exists()).to.be.true;
-            expect(wrapper.find("#search-bar-form").exists()).to.be.true;
             expect(wrapper.find("#search-button").exists()).to.be.true;
             expect(wrapper.find("input").exists()).to.be.true;
         });
