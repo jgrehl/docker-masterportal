@@ -7,7 +7,7 @@ import SearchBarComponent from "../../../components/SearchBar.vue";
 
 config.global.mocks.$t = key => key;
 
-describe.only("src_3_0_0/modules/searchBar/components/SearchBar.vue", () => {
+describe("src_3_0_0/modules/searchBar/components/SearchBar.vue", () => {
     let store,
         wrapper;
 
