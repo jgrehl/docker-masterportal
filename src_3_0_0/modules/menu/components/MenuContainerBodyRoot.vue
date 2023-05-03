@@ -55,6 +55,7 @@ export default {
     >
         <MenuContainerBodyRootLogo
             v-if="titleBySide(side)"
+            class="mb-2"
             v-bind="titleBySide(side)"
         />
         <SearchBar v-if="side === 'mainMenu'" />
