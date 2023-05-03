@@ -72,32 +72,27 @@ export default {
 
 <template lang="html">
     <div id="search-bar">
-        <form
-            id="search-bar-form"
-            role="search"
+        <button
+            id="search-button"
+            class="btn btn-light"
+            type="button"
+            :aria-label="$t(placeholder)"
+            @click="startSearch"
         >
-            <button
-                id="search-button"
-                class="btn btn-light"
-                type="button"
-                :aria-label="$t(placeholder)"
-                @click="startSearch"
-            >
-                <i
-                    class="bi-search"
-                    role="img"
-                />
-            </button>
-            <input
-                v-model="searchInputValue"
-                class="form-control"
-                type="search"
-                :placeholder="$t(placeholder)"
-                :aria-label="$t(placeholder)"
-                @input="startSearch"
-                @keydown.enter="startSearch"
-            >
-        </form>
+            <i
+                class="bi-search"
+                role="img"
+            />
+        </button>
+        <input
+            v-model="searchInputValue"
+            class="form-control"
+            type="search"
+            :placeholder="$t(placeholder)"
+            :aria-label="$t(placeholder)"
+            @input="startSearch"
+            @keydown.enter="startSearch"
+        >
         <SearchBarSuggestionList />
         <SearchBarResultList />
     </div>
@@ -106,7 +101,7 @@ export default {
 <style lang="scss" scoped>
     @import "~variables";
 
-    #search-bar-form {
+    #search-bar {
         position: relative;
 
         #search-button {
@@ -121,7 +116,11 @@ export default {
         }
 
         input {
-            padding-left: 38px;
+            padding-left: 42px;
+
+            @include media-breakpoint-up(md) {
+                padding-left: 38px;
+            }
         }
     }
 
