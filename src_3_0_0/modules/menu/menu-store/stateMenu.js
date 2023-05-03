@@ -49,6 +49,5 @@ export default {
             },
             history: []
         }
-    },
-    menuResizingToggle: true
+    }
 };
