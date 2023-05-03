@@ -362,12 +362,12 @@
       },
       "info": {
         "snippetCheckbox": "The checkbox can be enabled/disabled by a mouse click.",
+        "snippetDate": "To enter a date as a search criteria, click in the date input field and select a date from the opened calendar.",
+        "snippetDateRange": "To enter a date range as a search criteria, click in the input field for the start or end date and select a start or end date from the open calendar.",
         "snippetDropdown": "You can select one or more values from the given list of values.",
         "snippetInput": "You can enter the desired search criteria in the text field.",
         "snippetSlider": "To enter a numerical value as a search criterion, you can move the slider to the right or left. In addition, you can enter the value directly in the input field.",
-        "snippetSliderRange": "For entering two numerical values as range for the search criteria, you can slide the two sliders to the right or left. Additionally, you can enter the values directly in the input fields.",
-        "snippetDate": "To enter a date as a search criteria, click in the date input field and select a date from the opened calendar.",
-        "snippetDateRange": "To enter a date range as a search criteria, click in the input field for the start or end date and select a start or end date from the open calendar."
+        "snippetSliderRange": "For entering two numerical values as range for the search criteria, you can slide the two sliders to the right or left. Additionally, you can enter the values directly in the input fields."
       },
       "name": "Filtering",
       "searchInMapExtent": "Search in current map extent",
