@@ -53,6 +53,7 @@ SearchInterfaceGazetteer.prototype = Object.create(SearchInterface.prototype);
  * @returns {void}
  */
 SearchInterfaceGazetteer.prototype.search = async function (searchInput) {
+    this.searchResults = [];
     const searchResults = await this.startSearch(searchInput),
         normalizedResults = this.normalizeResults(searchResults);
 
@@ -72,8 +73,8 @@ SearchInterfaceGazetteer.prototype.startSearch = async function (searchInput) {
 
     try {
         this.searchState = "running";
-        searchResults = await search(searchInput, {
-            map: store.getters["Map/ol2DMap"],
+        searchResults = search(searchInput, {
+            map: mapCollection.getMap("2D"),
             searchAddress: this.searchAddress,
             searchStreets: this.searchStreets,
             searchDistricts: this.searchDistricts,
@@ -81,6 +82,8 @@ SearchInterfaceGazetteer.prototype.startSearch = async function (searchInput) {
             searchStreetKey: this.searchStreetKey,
             searchHouseNumbers: this.searchHouseNumbers
         }, true);
+
+        await searchResults;
         this.searchState = "finished";
     }
     catch (error) {
