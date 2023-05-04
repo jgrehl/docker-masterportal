@@ -1,5 +1,5 @@
 <script>
-import ChartJs from "chart.js";
+import ChartJs from "chart.js/auto";
 import deepAssign from "../../../js/utils/deepAssign.js";
 import thousandsSeparator from "../../../js/utils/thousandsSeparator.js";
 
@@ -28,25 +28,27 @@ export default {
         return {
             defaultOptions: {
                 responsive: true,
-                legend: {
-                    align: "start"
+                plugins: {
+                    legend: {
+                        align: "start"
+                    },
+                    tooltip: {
+                        callbacks: {
+                        // use label callback to return the desired label
+                            label: (tooltipItem, data) => {
+                                return data.datasets[tooltipItem.datasetIndex].label + ": " + thousandsSeparator(tooltipItem.value);
+                            }
+                        }
+                    }
                 },
                 scales: {
-                    yAxes: [{
+                    y: {
                         ticks: {
                             precision: 0,
                             beginAtZero: true,
                             callback: (value) => {
                                 return thousandsSeparator(value);
                             }
-                        }
-                    }]
-                },
-                tooltips: {
-                    callbacks: {
-                        // use label callback to return the desired label
-                        label: (tooltipItem, data) => {
-                            return data.datasets[tooltipItem.datasetIndex].label + ": " + thousandsSeparator(tooltipItem.value);
                         }
                     }
                 }
