@@ -69,11 +69,18 @@ async function loadControls (addonKey) {
  * @returns {void}
  */
 async function loadGfiThemes (addonKey) {
-    const addon = await loadAddon(addonKey);
+    const addon = await loadAddon(addonKey),
+        addonName = addon.component.name.charAt(0).toLowerCase() + addon.component.name.slice(1);
 
-    Vue.component(addon.component.name, addon.component);
+    main.getApp().component(addon.component.name, addon.component);
     // Add the componentName to a global array on vue instance called $gfiThemeAddons
     main.getApp().config.globalProperties.$gfiThemeAddons.push(addon.component.name);
+    // register the vuex store module
+    if (addon.store) {
+        store.registerModule(["Modules/GfiThemes", addon.component.name], addon.store);
+        // register the component
+        moduleCollection[addonName] = addon.component;
+    }
 }
 
 /**
