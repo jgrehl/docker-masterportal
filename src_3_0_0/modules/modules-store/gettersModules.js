@@ -18,6 +18,7 @@ import Language from "../language/components/LanguageItem.vue";
 import LayerClusterToggler from "../layerClusterToggler/components/LayerClusterToggler.vue";
 import LayerInformation from "../layerInformation/components/LayerInformation.vue";
 import LayerPills from "../layerPills/components/LayerPills.vue";
+import LayerPreview from "../../shared/modules/LayerPreview/components/LayerPreview.vue";
 import LayerSelection from "../layerSelection/components/LayerSelection.vue";
 import LayerSlider from "../layerSlider/components/LayerSlider.vue";
 import LayerTree from "../layerTree/components/LayerTree.vue";
@@ -60,6 +61,7 @@ const getters = {
             layerClusterToggler: LayerClusterToggler,
             layerInformation: LayerInformation,
             layerPills: LayerPills,
+            layerPreview: LayerPreview,
             layerSelection: LayerSelection,
             layerSlider: LayerSlider,
             layerTree: LayerTree,
