@@ -1030,12 +1030,12 @@ const BuildSpecModel = {
         else if (src.indexOf("../") === 0 || src.indexOf("./") === 0) {
             url = new URL(src, window.location.href).href;
         }
+        else if (src.indexOf("data:image/svg+xml;charset=utf-8") === 0) {
+            url = src;
+        }
         else if (origin.indexOf("localhost") === -1) {
             // backwards-compatibility:
             url = origin + "/lgv-config/img/" + this.getImageName(src);
-        }
-        else if (src.indexOf("data:image/svg+xml;charset=utf-8") === 0) {
-            url = src;
         }
 
         return url;
