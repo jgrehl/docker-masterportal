@@ -230,12 +230,16 @@
             ],
             "name": "Geobasiskarten (Schriftplatte)",
             "shortname": "Schriftplatte",
-            "showInLayerTree": true
+            "showInLayerTree": false,
+            "preview":{
+              "center":[564510.09,5935255.24],
+              "zoomLevel": 3
+            }
           },
           {
             "id": "453",
             "shortname": "Geobasiskarten",
-            "showInLayerTree": true
+            "showInLayerTree": false
           }
         ]
       },
