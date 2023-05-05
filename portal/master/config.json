@@ -594,6 +594,9 @@
           "name": "EOC Basemap",
           "typ": "WMTS",
           "visibility": false,
+          "xpreview":{
+            "src": "./resources/EOC_Basemap.png"
+          },
           "transparency": 20,
           "capabilitiesUrl": "https://tiles.geoservice.dlr.de/service/wmts?SERVICE=WMTS&REQUEST=GetCapabilities",
           "layers": "eoc:basemap",
