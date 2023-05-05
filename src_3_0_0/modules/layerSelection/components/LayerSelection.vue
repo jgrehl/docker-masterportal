@@ -3,6 +3,7 @@ import {mapActions, mapGetters, mapMutations} from "vuex";
 import layerFactory from "../../../core/layers/js/layerFactory";
 import sortBy from "../../../shared/js/utils/sortBy";
 import FlatButton from "../../../shared/modules/buttons/components/FlatButton.vue";
+import LayerPreview from "../../../shared/modules/LayerPreview/components/LayerPreview.vue";
 import LayerCheckBox from "../../layerTree/components/LayerCheckBox.vue";
 import LayerSelectionTreeNode from "./LayerSelectionTreeNode.vue";
 
@@ -12,7 +13,8 @@ export default {
     components: {
         FlatButton,
         LayerCheckBox,
-        LayerSelectionTreeNode
+        LayerSelectionTreeNode,
+        LayerPreview
     },
     data () {
         return {
@@ -127,6 +129,11 @@ export default {
                 :key="index"
             >
                 <div class="col">
+                    <LayerPreview
+                        :layer-id="bgConf.id"
+                        :zoom-level="6"
+                        center="564466.42,5936206.39"
+                    />
                     <LayerCheckBox
                         :conf="bgConf"
                         :is-layer-tree="false"
