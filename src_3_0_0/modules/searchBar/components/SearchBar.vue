@@ -34,8 +34,8 @@ export default {
         searchResults: {
             handler (searchResults) {
                 /* eslint-disable no-console */
-                console.log("SearchResults:");
-                console.log(searchResults);
+                // console.log("SearchResults:");
+                // console.log(searchResults);
             },
             deep: true
         },
