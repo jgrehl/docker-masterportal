@@ -481,6 +481,9 @@
           "shortname": "VectorTile",
           "typ": "VectorTile",
           "visibility": false,
+          "preview":{
+            "src": "./resources/vectorTile.png"
+          },
           "gfiAttributes": "showAll",
           "url": "https://test.geoportal-hamburg.de/vt/esri/tile/{z}/{y}/{x}.pbf",
           "epsg": "EPSG:25832",
@@ -527,6 +530,9 @@
           "name": "Web Vektor",
           "typ": "VectorTile",
           "visibility": false,
+          "preview":{
+            "src": "./resources/webVector.png"
+          },
           "gfiAttributes": "showAll",
           "legendURL": "https://geodienste.hamburg.de/HH_WMS_Geobasiskarten?language=ger&version=1.3.0&service=WMS&request=GetLegendGraphic&sld_version=1.1.0&layer=WMS_Geobasiskarten_Hamburg_N&format=image/png&STYLE=default",
           "url": "https://dev.adv-smart.de/tiles/smarttiles_de_UTM32_dev/{z}/{x}/{y}.pbf",
@@ -572,6 +578,9 @@
           "name": "EOC Basemap",
           "typ": "WMTS",
           "visibility": false,
+          "xpreview":{
+            "src": "./resources/EOC_Basemap.png"
+          },
           "transparency": 20,
           "capabilitiesUrl": "https://tiles.geoservice.dlr.de/service/wmts?SERVICE=WMTS&REQUEST=GetCapabilities",
           "layers": "eoc:basemap",
