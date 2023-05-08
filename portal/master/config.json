@@ -397,7 +397,7 @@
               },
               {
                 "title": "common:modules.tools.layerSlider.serviceThree",
-                "layerId": "8712.2"
+                "layerId": "8712"
               },
               {
                 "title": "common:modules.tools.layerSlider.serviceFour",
@@ -655,8 +655,10 @@
         {
           "id": "8712",
           "styleId": "8712",
+          "loadingStrategy": "bbox",
           "typ": "WFS",
-          "visibility": true,
+          "visibility": false,
+          "showInLayerTree": true,
           "mouseHoverField": [
             "schulname",
             "kapitelbezeichnung"
@@ -732,7 +734,8 @@
           "crs": "EPSG:25832",
           "params": {
             "anzahl_schueler": ">1000"
-          }
+          },
+          "legend": true
         },
         {
           "id": "753",
@@ -748,7 +751,8 @@
           "typ": "GeoJSON",
           "visibility": false,
           "url": "./resources/example_geojson.json",
-          "styleId": "contributions"
+          "styleId": "contributions",
+          "legend": true
         },
         {
           "id": "StaticImage",
