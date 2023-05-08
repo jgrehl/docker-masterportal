@@ -91,7 +91,7 @@
       "name": "Kontakt",
       "placeholder": {
         "mail": "Ihre E-Mail-Adresse",
-        "message": "Bitte formulieren Sie hier Ihre Frage und drücken Sie auf \"$t(common:modules.tools.contact.sendButton)\".",
+        "message": "Bitte formulieren Sie hier Ihre Frage und drücken Sie auf \"$t(common:modules.contact.sendButton)\".",
         "phone": "Ihre Telefonnummer",
         "username": "Ihr Name"
       },
@@ -287,7 +287,7 @@
       },
       "captions": {
         "drawTool": "$t(common:modules.draw.name) öffnen",
-        "introDrawTool": "Importierte Geometrien können im Nachhinein verändert werden. Nutzen Sie hierfür das Werkzeug &quot;$t(common:menu.tools.draw)&quot;.",
+        "introDrawTool": "Importierte Geometrien können im Nachhinein verändert werden. Nutzen Sie hierfür das Werkzeug &quot;$t(common:menu.draw.name)&quot;.",
         "introFormats": "Es können KML-Dateien (*.kml), GPX-Dateien (*.gpx) oder GeoJson-Dateien (*.geojson, *.json) importiert werden.",
         "introInfo": "Importieren Sie Ihre gewünschte Datei einfach per Drag and Drop oder alternativ mit dem Öffnen-Dialog des Browsers.",
         "supportedFiletypes": {
