@@ -81,27 +81,28 @@ Layer2dVectorOaf.prototype.getOptions = function (attributes) {
  * Creates the legend
  * @returns {void}
  */
-Layer2dVectorOaf.prototype.createLegend = function () {
+Layer2dVectorOaf.prototype.createLegend = async function () {
     const styleObject = styleList.returnStyleObject(this.attributes.styleId),
-        rules = styleObject?.rules,
-        legend = this.getLegend();
+        rules = styleObject?.rules;
+    let legend = this.inspectLegendUrl();
 
-    if (Array.isArray(legend)) {
-        this.setLegend(legend);
+    if (!Array.isArray(legend)) {
+        if (styleObject && legend === true) {
+            getGeometryTypeFromService.getGeometryTypeFromOAF(rules, this.get("url"), this.get("collection"), Config.wfsImgPath,
+                (error) => {
+                    if (error) {
+                        store.dispatch("Alerting/addSingleAlert", "<strong>" + i18next.t("common:modules.vectorStyle.styleObject.getGeometryTypeFromOAFFetchfailed") + "</strong> <br>"
+                        + "<small>" + i18next.t("common:modules.vectorStyle.styleObject.getGeometryTypeFromOAFFetchfailedMessage") + "</small>");
+                    }
+                });
+            const legendInfos = await createStyle.returnLegendByStyleId(styleObject.styleId);
+
+            legend = legendInfos.legendInformation;
+        }
+        else if (typeof legend === "string") {
+            legend = [legend];
+        }
     }
-    else if (styleObject && legend === true) {
-        getGeometryTypeFromService.getGeometryTypeFromOAF(rules, this.get("url"), this.get("collection"), Config.wfsImgPath,
-            (error) => {
-                if (error) {
-                    store.dispatch("Alerting/addSingleAlert", "<strong>" + i18next.t("common:modules.vectorStyle.styleObject.getGeometryTypeFromOAFFetchfailed") + "</strong> <br>"
-                    + "<small>" + i18next.t("common:modules.vectorStyle.styleObject.getGeometryTypeFromOAFFetchfailedMessage") + "</small>");
-                }
-            });
-        createStyle.returnLegendByStyleId(styleObject.styleId).then(legendInfos => {
-            this.setLegend(legendInfos.legendInformation);
-        });
-    }
-    else if (typeof legend === "string") {
-        this.setLegend([legend]);
-    }
+
+    return legend;
 };
