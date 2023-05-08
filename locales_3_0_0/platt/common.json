@@ -90,7 +90,7 @@
       "name": "Kuntakt",
       "placeholder": {
         "mail": "Dien E-Mail-Adress",
-        "message": "Bidde stell dien Fraag un tipp hier \"$t(common:modules.tools.contact.sendButton)\".",
+        "message": "Bidde stell dien Fraag un tipp hier \"$t(common:modules.contact.sendButton)\".",
         "phone": "Dien Telefonnummer",
         "username": "Dien Naam"
       },
@@ -286,7 +286,7 @@
       },
       "captions": {
         "drawTool": "$t(common:modules.draw.name) öffnen",
-        "introDrawTool": "Importierte Geometrien können im Nachhinein verändert werden. Nutzen Sie hierfür das Werkzeug &quot;$t(common:menu.tools.draw)&quot;.",
+        "introDrawTool": "Importierte Geometrien können im Nachhinein verändert werden. Nutzen Sie hierfür das Werkzeug &quot;$t(common:modules.draw.name)&quot;.",
         "introFormats": "Es können KML-Dateien (*.kml), GPX-Dateien (*.gpx) oder GeoJson-Dateien (*.geojson, *.json) importiert werden.",
         "introInfo": "Importieren Sie Ihre gewünschte Datei einfach per Drag and Drop oder alternativ mit dem Öffnen-Dialog des Browsers.",
         "supportedFiletypes": {
