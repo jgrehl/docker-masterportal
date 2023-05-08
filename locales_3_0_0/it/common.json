@@ -91,7 +91,7 @@
       "name": "Contatti",
       "placeholder": {
         "mail": "Indirizzo e-mail",
-        "message": "Si prega di formulare qui la vostra richiesta e premere \"$t(common:modules.tools.contact.sendButton)\".",
+        "message": "Si prega di formulare qui la vostra richiesta e premere \"$t(common:modules.contact.sendButton)\".",
         "phone": "Numero di telefono",
         "username": "Nome"
       },
