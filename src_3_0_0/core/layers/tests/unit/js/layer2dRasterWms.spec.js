@@ -174,4 +174,48 @@ describe("src_3_0_0/core/js/layers/layer2dRasterWms.js", () => {
             });
         });
     });
+
+    describe("createLegend", () => {
+        beforeEach(() => {
+            attributes = {
+                id: "id",
+                version: "1.3.0"
+            };
+        });
+
+        it("createLegend with legendURL", () => {
+            attributes.legendURL = "https://legendURL";
+            const layerWrapper = new Layer2dRasterWms(attributes);
+
+            expect(layerWrapper.createLegend()).to.be.deep.equals([attributes.legendURL]);
+        });
+
+        it("createLegend with ignored legendURL", () => {
+            attributes.legendURL = "ignore";
+            const layerWrapper = new Layer2dRasterWms(attributes);
+
+            layerWrapper.createLegend();
+            expect(layerWrapper.createLegend()).to.be.false;
+        });
+
+        it("createLegend with legend as Array", () => {
+            attributes.legend = ["legend"];
+            const layerWrapper = new Layer2dRasterWms(attributes);
+
+            layerWrapper.createLegend();
+            expect(layerWrapper.createLegend()).to.be.deep.equals(attributes.legend);
+        });
+
+        it("createLegend with legend true and 2 layer names", () => {
+            attributes.legend = true;
+            attributes.url = "https://url";
+            attributes.layers = "layer1,layer2";
+            const layerWrapper = new Layer2dRasterWms(attributes),
+                expectedLegend = ["https://url/?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetLegendGraphic&FORMAT=image%2Fpng&LAYER=layer1",
+                    "https://url/?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetLegendGraphic&FORMAT=image%2Fpng&LAYER=layer2"];
+
+            layerWrapper.createLegend();
+            expect(layerWrapper.createLegend()).to.be.deep.equals(expectedLegend);
+        });
+    });
 });
