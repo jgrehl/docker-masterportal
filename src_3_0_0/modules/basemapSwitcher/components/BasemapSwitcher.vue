@@ -1,11 +1,10 @@
 <script>
-import { runInThisContext } from "vm";
 import {mapActions, mapGetters, mapMutations} from "vuex";
 
 export default {
     name: "BasemapSwitcher",
     computed: {
-        ...mapGetters(["isMobile", "allBackgroundLayerConfigs", "layerConfigsByAttributes"]),
+        ...mapGetters(["isMobile", "allBackgroundLayerConfigs", "determineZIndex", "layerConfigsByAttributes"]),
         ...mapGetters("Modules/BasemapSwitcher", [
             "activatedExpandable",
             "backgroundLayerIds",
@@ -15,8 +14,18 @@ export default {
     created () {
         const backgroundLayerConfigIds = [];
 
+        Math.max(this.layerConfigsByAttributes({
+            backgroundLayer: true,
+            showInLayerTree: true
+        }).map(layer => {
+            this.setTopBackgroundLayerId(layer.id);
+            return layer.zIndex;
+        }));
+
         Object.values(this.allBackgroundLayerConfigs).forEach(layer => {
-            backgroundLayerConfigIds.push(layer.id);
+            if (layer.id !== this.topBackgroundLayerId) {
+                backgroundLayerConfigIds.push(layer.id);
+            }
         });
         this.setBackgroundLayerIds(backgroundLayerConfigIds);
     },
@@ -96,7 +105,9 @@ export default {
         align-self: start;
     }
 
-    li {
+    ul {
         list-style-type: none;
+        padding: 0;
+        margin: 0;
     }
 </style>
