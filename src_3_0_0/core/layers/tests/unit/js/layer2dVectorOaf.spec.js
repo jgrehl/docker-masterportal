@@ -11,8 +11,7 @@ import Layer2dVectorOaf from "../../../js/layer2dVectorOaf";
 
 describe("src_3_0_0/core/js/layers/layer2dVectorOaf.js", () => {
     let attributes,
-        warn,
-        getGeometryTypeFromOAFStub;
+        warn;
 
     before(() => {
         warn = sinon.spy();
@@ -42,7 +41,6 @@ describe("src_3_0_0/core/js/layers/layer2dVectorOaf.js", () => {
             name: "oafTestLayer",
             typ: "OAF"
         };
-        getGeometryTypeFromOAFStub = sinon.stub(getGeometryTypeFromService, "getGeometryTypeFromOAF").returns(true);
     });
 
 
@@ -179,8 +177,6 @@ describe("src_3_0_0/core/js/layers/layer2dVectorOaf.js", () => {
     });
 
     describe("createLegend", () => {
-        let createStyleSpy;
-
         beforeEach(() => {
             const styleObj = {
                 styleId: "styleId",
@@ -192,33 +188,33 @@ describe("src_3_0_0/core/js/layers/layer2dVectorOaf.js", () => {
                 version: "1.3.0"
             };
             sinon.stub(styleList, "returnStyleObject").returns(styleObj);
-            createStyleSpy = sinon.spy(createStyle, "returnLegendByStyleId");
         });
 
-        it("createLegend with legendURL", () => {
+        it("createLegend with legendURL", async () => {
             attributes.legend = "legendUrl1";
             const layerWrapper = new Layer2dVectorOaf(attributes);
 
-            layerWrapper.createLegend();
-            expect(layerWrapper.getLegend()).to.be.deep.equals([attributes.legend]);
+            expect(await layerWrapper.createLegend()).to.be.deep.equals([attributes.legend]);
         });
 
-        it("createLegend with legendURL as array", () => {
+        it("createLegend with legendURL as array", async () => {
             attributes.legend = ["legendUrl1"];
             const layerWrapper = new Layer2dVectorOaf(attributes);
 
-            layerWrapper.createLegend();
-            expect(layerWrapper.getLegend()).to.be.deep.equals(attributes.legend);
+            expect(await layerWrapper.createLegend()).to.be.deep.equals(attributes.legend);
         });
 
-        it("createLegend with styleObject and legend true", () => {
+        it("createLegend with styleObject and legend true", async () => {
             attributes.legend = true;
-            const layerWrapper = new Layer2dVectorOaf(attributes);
+            const layerWrapper = new Layer2dVectorOaf(attributes),
+                legendInformation = {
+                    "the": "legend Information"
+                };
 
-            layerWrapper.createLegend();
-            // call once on creating layer and second here
-            expect(createStyleSpy.calledTwice).to.be.true;
-            expect(getGeometryTypeFromOAFStub.calledTwice).to.be.true;
+            sinon.stub(createStyle, "returnLegendByStyleId").returns({legendInformation});
+            sinon.stub(getGeometryTypeFromService, "getGeometryTypeFromOAF");
+
+            expect(await layerWrapper.createLegend()).to.deep.equals(legendInformation);
         });
     });
 });
