@@ -110,13 +110,13 @@ describe("src_3_0_0/core/js/layers/layer2dRasterWmts.js", () => {
     describe("createLegend", () => {
         beforeEach(() => {
             attributes.version = "1.3.0";
+            attributes.legend = true;
         });
 
-        it("createLegend with no optionsFromCapabilities does nothing", () => {
+        it("createLegend with no optionsFromCapabilities does nothing", async () => {
             const layerWrapper = new Layer2dRasterWmts(attributes);
 
-            layerWrapper.createLegend();
-            expect(layerWrapper.getLegend()).to.be.true;
+            expect(await layerWrapper.createLegend()).to.be.true;
         });
     });
 });
