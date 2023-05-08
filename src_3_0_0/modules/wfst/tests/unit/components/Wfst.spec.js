@@ -148,6 +148,6 @@ describe("src_3_0_0/modules/modules/wfst/components/WfsTransaction.vue", () => {
         wrapper.vm.setLayerIds = [{...exampleLayerOne, visibility: false}, exampleLayerTwo];
         wrapper.vm.setLayerInformation = [{...exampleLayerOne, visibility: false}, exampleLayerTwo];
         expect(wrapper.find("#tool-wfsTransaction-layerFailure").exists()).to.be.true;
-        expect(wrapper.find("#tool-wfsTransaction-layerFailure").text()).to.equal("common:modules.wfst.error.layerNotSelected");
+        expect(wrapper.find("#tool-wfsTransaction-layerFailure").text()).to.equal("modules.wfst.error.allLayersNotSelected");
     });
 });
