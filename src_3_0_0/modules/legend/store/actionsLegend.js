@@ -1,10 +1,10 @@
+import Cluster from "ol/source/Cluster";
+
 import layerCollection from "../../../core/layers/js/layerCollection";
-import layerFactory from "../../../core/layers/js/layerFactory";
 import validator from "../js/validator";
 import legendDraw from "../js/legendDraw";
 
 const actions = {
-
     /**
      * Creates the legend for all visible layers.
      * Creates legend for layerInfo for all layers contained in waitingLegendsInfos.
@@ -14,7 +14,18 @@ const actions = {
      * @returns {void}
      */
     createLegend ({commit, dispatch, getters}) {
-        layerCollection.getLayers().forEach(layer => dispatch("toggleLayerInLegend", {layer: layer, visibility: layer.get("visibility")}));
+        layerCollection.getLayers().forEach(layer => {
+            if (typeof layer.layerSource?.getFeatures === "function" && layer.getLayerSource().getFeatures().length === 0) {
+                const layerSource = layer.getLayerSource() instanceof Cluster ? layer.getLayerSource().getSource() : layer.getLayerSource();
+
+                layerSource.on("featuresloadstart", () => {
+                    dispatch("toggleLayerInLegend", {layer: layer, visibility: layer.get("visibility")});
+                });
+            }
+            else {
+                dispatch("toggleLayerInLegend", {layer: layer, visibility: layer.get("visibility")});
+            }
+        });
         getters.waitingLegendsInfos?.forEach(layer => dispatch("generateLegendForLayerInfo", layer));
         commit("setWaitingLegendsInfos", []);
     },
@@ -70,7 +81,7 @@ const actions = {
      * @param {Object} layer and visibility of the layer
      * @returns {void}
      */
-    toggleLayerInLegend ({dispatch}, {layer, visibility}) {
+    async toggleLayerInLegend ({dispatch}, {layer, visibility}) {
         const layerId = layer.get("id"),
             layerTyp = layer.get("typ");
 
@@ -82,7 +93,7 @@ const actions = {
                 dispatch("prepareLegendForGroupLayer", layer.getLayerSource());
             }
             else {
-                dispatch("prepareLegend", layer.getLegend());
+                dispatch("prepareLegend", await layer.createLegend());
             }
             dispatch("generateLegend", layer);
         }
@@ -120,42 +131,41 @@ const actions = {
 
     /**
      * Creates the legend for the layer info.
-     * @param {Object} param.state the state
-     * @param {Object} param.commit the commit
      * @param {Object} param.dispatch the dispatch
-     * @param {Object} param.rootGetters the rootGetters
      * @param {String} layerId Id of layer to create the layer info legend.
      * @returns {void}
      */
-    async createLegendForLayerInfo ({state, commit, dispatch, rootGetters}, layerId) {
+    async createLegendForLayerInfo ({dispatch}, layerId) {
         let layer = layerCollection.getLayerById(layerId);
 
         if (!layer) {
-            const layerConfig = rootGetters.layerConfigById(layerId);
-
-            layer = layerFactory.createLayer(layerConfig);
-
-            // legend is not loaded at this time, will be triggered by adding layer to map
-            if (layer.getLegend() === true) {
-                dispatch("Maps/addLayer", layer.getLayer(), {root: true});
-                state.waitingLegendsInfos.push(layer);
-                commit("setLayerInfoLegend", {});
-                if (layer.get("typ") === "WFS") {
-                    await dispatch("Maps/areLayerFeaturesLoaded", layerId, {root: true});
-                    layer.getLayer().setVisible(false);
-                }
-                else if (layer.get("typ") === "SensorThings") {
-                    layer.getLayer().setVisible(false);
-                    layer.stopSubscription();
-                }
-            }
-            else {
-                dispatch("generateLegendForLayerInfo", layer);
-            }
+            await dispatch("changeLayerVisibility", {layerId, visibility: true});
+            layer = layerCollection.getLayerById(layerId);
+            await dispatch("generateLegendForLayerInfo", layer);
+            dispatch("changeLayerVisibility", {layerId, visibility: false});
         }
         else {
             dispatch("generateLegendForLayerInfo", layer);
         }
+    },
+
+    /**
+     * Changes the visibility of a layer.
+     * @param {Object} param.dispatch the dispatch
+     * @param {String} layerId Id of layer to create the layer info legend.
+     * @param {Boolean} visibility Visibility of layer to create the layer info legend.
+     * @returns {void}
+     */
+    async changeLayerVisibility ({dispatch}, {layerId, visibility}) {
+        await dispatch("replaceByIdInLayerConfig", {
+            layerConfigs: [{
+                id: layerId,
+                layer: {
+                    loadingStrategy: "all",
+                    visibility: visibility
+                }
+            }]
+        }, {root: true});
     },
 
     /**
@@ -166,21 +176,23 @@ const actions = {
      * @param {Object} layer the layer
      * @returns {void}
      */
-    generateLegendForLayerInfo ({commit, dispatch, getters}, layer) {
+    async generateLegendForLayerInfo ({commit, dispatch}, layer) {
         let legendObj = null;
 
         if (layer) {
+            let preparedLegend = null;
+
             if (layer.get("typ") === "GROUP") {
-                dispatch("prepareLegendForGroupLayer", layer.getLayerSource());
+                preparedLegend = dispatch("prepareLegendForGroupLayer", layer.getLayerSource());
             }
             else {
-                dispatch("prepareLegend", layer.getLegend());
+                preparedLegend = dispatch("prepareLegend", await layer.createLegend());
             }
 
             legendObj = {
                 id: layer.get("id"),
                 name: layer.get("name"),
-                legend: getters.preparedLegend,
+                legend: await preparedLegend,
                 position: typeof layer.getLayer().getZIndex === "function" ? layer.getLayer().getZIndex() : 0
             };
             if (validator.isValidLegendObj(legendObj)) {
@@ -227,7 +239,10 @@ const actions = {
                 }
             });
         }
+
         commit("setPreparedLegend", preparedLegend);
+
+        return preparedLegend;
     },
 
     /**
@@ -242,11 +257,13 @@ const actions = {
         let legends = [];
 
         layerSource.forEach(layer => {
-            dispatch("prepareLegend", layer.getLegend());
+            dispatch("prepareLegend", layer.createLegend());
             legends.push(getters.preparedLegend);
         });
         legends = [].concat(...legends);
         commit("setPreparedLegend", legends);
+
+        return legends;
     }
 };
 

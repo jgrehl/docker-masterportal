@@ -189,21 +189,22 @@ Layer2dVectorSensorThings.prototype.updateLayerValues = function (values) {
  * Creates the legend.
  * @returns {void}
  */
-Layer2dVectorSensorThings.prototype.createLegend = function () {
-    const styleObject = styleList.returnStyleObject(this.attributes.styleId),
-        legend = this.inspectLegendUrl();
+Layer2dVectorSensorThings.prototype.createLegend = async function () {
+    const styleObject = styleList.returnStyleObject(this.attributes.styleId);
+    let legend = this.inspectLegendUrl();
 
-    if (Array.isArray(legend)) {
-        this.set("legend", legend);
+    if (!Array.isArray(legend)) {
+        if (styleObject && legend === true) {
+            const legendInfos = await createStyle.returnLegendByStyleId(styleObject.styleId);
+
+            legend = legendInfos.legendInformation;
+        }
+        else if (typeof legend === "string") {
+            legend = [legend];
+        }
     }
-    else if (styleObject && legend === true) {
-        createStyle.returnLegendByStyleId(styleObject.styleId).then(legendInfos => {
-            this.setLegend(legendInfos.legendInformation);
-        });
-    }
-    else if (typeof legend === "string") {
-        this.set("legend", [legend]);
-    }
+
+    return legend;
 };
 
 /**
@@ -223,7 +224,7 @@ Layer2dVectorSensorThings.prototype.getStyleFunction = function (attrs) {
                 isClusterFeature = typeof feat.get("features") === "function" || typeof feat.get("features") === "object" && Boolean(feat.get("features").length > 1),
                 style = createStyle.createStyle(styleObject, feat, isClusterFeature, Config.wfsImgPath),
                 styleElement = Array.isArray(style) ? style[0] : style,
-                mapView = mapCollection.getMap(store.getters["Maps/mode"]).getView(),
+                mapView = mapCollection.getMapView("2D"),
                 zoomLevel = mapView.getZoomForResolution(resolution) + 1,
                 zoomLevelCount = mapView.getResolutions().length;
 
@@ -463,7 +464,7 @@ Layer2dVectorSensorThings.prototype.initializeConnection = function (onsuccess, 
                 this.prepareFeaturesFor3D(features);
             }
             layerSource.addFeatures(features);
-            this.createLegend();
+            // this.createLegend();
         }
 
         features.forEach(feature => {
@@ -1814,7 +1815,7 @@ Layer2dVectorSensorThings.prototype.parseSensorDataToFeature = function (feature
         this.setStyleOfHistoricalFeature(hFeature, hFeature.get("scale"), this.styleRule);
     });
     layerSource.addFeatures(historicalFeatures);
-    this.createLegend();
+    // this.createLegend();
     feature.set("historicalFeatureIds", historicalFeatureIds);
     if (isObject(this.subscribedDataStreamIds[feature.get("dataStreamId")])) {
         Object.assign(this.subscribedDataStreamIds[feature.get("dataStreamId")], {historicalFeatureIds});
