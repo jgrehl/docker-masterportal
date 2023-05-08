@@ -76,10 +76,15 @@ export default {
         this.createLegendForLayerInfo(this.layerInfo.id);
     },
 
+    unmounted () {
+        this.setLayerInfoLegend({});
+    },
+
     methods: {
         ...mapActions("Modules/LayerInformation", ["setConfigParams"]),
         ...mapActions("Modules/Legend", ["createLegendForLayerInfo"]),
         ...mapMutations("Modules/LayerInformation", ["setMetaDataCatalogueId"]),
+        ...mapMutations("Modules/Legend", ["setLayerInfoLegend"]),
         isWebLink,
 
         /**
