@@ -2767,39 +2767,37 @@ describe("src_3_0_0/core/js/layers/layer2dVectorSensorThings.js", () => {
     });
 
     describe("createLegend", () => {
-        let createStyleSpy;
-
         beforeEach(() => {
             attributes = {
                 id: "id",
                 version: "1.3.0"
             };
-            createStyleSpy = sinon.spy(createStyle, "returnLegendByStyleId");
         });
 
-        it("createLegend with legendURL", () => {
+        it("createLegend with legendURL", async () => {
             attributes.legendURL = "legendUrl1";
             const layerWrapper = new Layer2dVectorSensorThings(attributes);
 
-            layerWrapper.createLegend();
-            expect(layerWrapper.getLegend()).to.be.deep.equals([attributes.legendURL]);
+            expect(await layerWrapper.createLegend()).to.be.deep.equals([attributes.legendURL]);
         });
 
-        it("createLegend with legendURL as array", () => {
+        it("createLegend with legendURL as array", async () => {
             attributes.legendURL = ["legendUrl1"];
             const layerWrapper = new Layer2dVectorSensorThings(attributes);
 
-            layerWrapper.createLegend();
-            expect(layerWrapper.getLegend()).to.be.deep.equals(attributes.legendURL);
+            expect(await layerWrapper.createLegend()).to.be.deep.equals(attributes.legendURL);
         });
 
-        it("createLegend with styleObject and legend true", () => {
+        it("createLegend with styleObject and legend true", async () => {
             attributes.legend = true;
-            const layerWrapper = new Layer2dVectorSensorThings(attributes);
+            const layerWrapper = new Layer2dVectorSensorThings(attributes),
+                legendInformation = {
+                    "the": "legend Information"
+                };
 
-            layerWrapper.createLegend();
-            // call once on creating layer and second here
-            expect(createStyleSpy.calledTwice).to.be.true;
+            sinon.stub(createStyle, "returnLegendByStyleId").returns({legendInformation});
+
+            expect(await layerWrapper.createLegend()).to.deep.equals(legendInformation);
         });
     });
 });
