@@ -46,30 +46,31 @@ Layer3d.prototype.updateLayerValues = function (attributes) {
  * Creates the legend.
  * @returns {void}
  */
-Layer3d.prototype.createLegend = function () {
-    const styleObject = styleList.returnStyleObject(this.get("styleId")),
-        legend = this.inspectLegendUrl();
+Layer3d.prototype.createLegend = async function () {
+    const styleObject = styleList.returnStyleObject(this.get("styleId"));
+    let legend = this.inspectLegendUrl();
 
-    if (Array.isArray(legend)) {
-        this.setLegend(legend);
-    }
-    else if (styleObject && legend === true) {
-        createStyle.returnLegendByStyleId(styleObject.styleId).then(legendInfos => {
-            const type = this.layer.getSource().getFeatures()[0].getGeometry().getType(),
+    if (!Array.isArray(legend)) {
+        if (styleObject && legend === true) {
+            const legendInfos = await createStyle.returnLegendByStyleId(styleObject.styleId),
+                type = this.layer?.getSource().getFeatures()[0].getGeometry().getType(),
                 typeSpecificLegends = [];
 
             if (type === "MultiLineString") {
                 typeSpecificLegends.push(legendInfos.legendInformation.find(element => element.geometryType === "LineString"));
-                this.setLegend(typeSpecificLegends);
+                legend = typeSpecificLegends;
             }
             else {
                 typeSpecificLegends.push(legendInfos.legendInformation.find(element => element.geometryType === type));
-                this.setLegend(typeSpecificLegends);
+                legend = typeSpecificLegends;
             }
-            this.setLegend(legendInfos.legendInformation);
-        });
+
+            legend = legendInfos.legendInformation;
+        }
+        else if (typeof legend === "string") {
+            legend = [legend];
+        }
     }
-    else if (typeof legend === "string") {
-        this.setLegend([legend]);
-    }
+
+    return legend;
 };
