@@ -2,14 +2,14 @@ import {expect} from "chai";
 import sinon from "sinon";
 import styleList from "@masterportal/masterportalapi/src/vectorStyle/styleList.js";
 import createStyle from "@masterportal/masterportalapi/src/vectorStyle/createStyle";
+import getGeometryTypeFromService from "@masterportal/masterportalapi/src/vectorStyle/lib/getGeometryTypeFromService";
 import Layer2dVector from "../../../js/layer2dVector";
 
 describe("src_3_0_0/core/js/layers/layer2dVector.js", () => {
     let attributes,
         error,
         warn,
-        styleListStub,
-        createStyleSpy;
+        styleListStub;
 
     before(() => {
         mapCollection.clear();
@@ -44,7 +44,6 @@ describe("src_3_0_0/core/js/layers/layer2dVector.js", () => {
         };
 
         styleListStub = sinon.stub(styleList, "returnStyleObject").returns(styleObj);
-        createStyleSpy = sinon.spy(createStyle, "returnLegendByStyleId");
     });
 
     afterEach(() => {
@@ -270,29 +269,32 @@ describe("src_3_0_0/core/js/layers/layer2dVector.js", () => {
             };
         });
 
-        it("createLegend with legendURL", () => {
+        it("createLegend with legendURL", async () => {
             attributes.legendURL = "legendUrl1";
             const layerWrapper = new Layer2dVector(attributes);
 
-            layerWrapper.createLegend();
-            expect(layerWrapper.getLegend()).to.be.deep.equals([attributes.legendURL]);
+            expect(await layerWrapper.createLegend()).to.be.deep.equals([attributes.legendURL]);
         });
 
-        it("createLegend with legendURL as array", () => {
+        it("createLegend with legendURL as array", async () => {
             attributes.legendURL = ["legendUrl1"];
             const layerWrapper = new Layer2dVector(attributes);
 
-            layerWrapper.createLegend();
-            expect(layerWrapper.getLegend()).to.be.deep.equals(attributes.legendURL);
+
+            expect(await layerWrapper.createLegend()).to.be.deep.equals(attributes.legendURL);
         });
 
-        it("createLegend with styleObject and legend true", () => {
+        it("createLegend with styleObject and legend true", async () => {
             attributes.legend = true;
-            const layerWrapper = new Layer2dVector(attributes);
+            const layerWrapper = new Layer2dVector(attributes),
+                legendInformation = {
+                    "the": "legend Information"
+                };
 
-            layerWrapper.createLegend();
-            // call once on creating layer and second here
-            expect(createStyleSpy.calledTwice).to.be.true;
+            sinon.stub(createStyle, "returnLegendByStyleId").returns({legendInformation});
+            sinon.stub(getGeometryTypeFromService, "getGeometryTypeFromWFS");
+
+            expect(await layerWrapper.createLegend()).to.deep.equals(legendInformation);
         });
     });
 });
