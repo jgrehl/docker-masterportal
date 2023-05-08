@@ -11,11 +11,6 @@ export default {
             "topBackgroundLayerId"
         ])
     },
-    watch: {
-        activatedExpandable () {
-            // console.log("it switched", this.activatedExpandable);
-        }
-    },
     created () {
         const backgroundLayerConfigIds = [];
 
@@ -55,6 +50,7 @@ export default {
                 :key="layer"
             >
                 <button
+                    v-if="activatedExpandable === true"
                     class="btn btn-light"
                     @click="switchActiveBackgroundLayer(layer)"
                 >
