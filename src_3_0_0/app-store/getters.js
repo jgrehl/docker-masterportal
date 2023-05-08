@@ -85,7 +85,14 @@ const getters = {
     allSubjectDataLayerConfigs: state => {
         return getters.allLayerConfigsByParentKey(state)(treeSubjectsKey);
     },
-
+    /**
+     * Returns all basemap layers of layerConfig.
+     * @param {Object} state state of the app-store.
+     * @returns {Object[]} The layers.
+     */
+    allBackgroundLayerConfigs: state => {
+        return getters.allLayerConfigsByParentKey(state)(treeBackgroundsKey);
+    },
     /**
      * Returns path to the cesium library.
      * @param {Object} state state of the app-store.
