@@ -97,3 +97,42 @@ Layer2dRasterWms.prototype.getOptions = function (attributes) {
         resolutions: mapCollection.getMapView("2D").getResolutions()
     };
 };
+
+/**
+* If the parameter "legendURL" is empty, it is set to GetLegendGraphic.
+* If it is set to 'ignore' no legend is set.
+* @return {void}
+*/
+Layer2dRasterWms.prototype.createLegend = function () {
+    const version = this.get("version");
+    let legend = this.inspectLegendUrl();
+
+    if (!Array.isArray(legend)) {
+        if (legend === true && this.get("url") && this.get("layers")) {
+            const layerNames = this.get("layers").split(","),
+                legends = [];
+
+            // Compose GetLegendGraphic request(s)
+            layerNames.forEach(layerName => {
+                const legendUrl = new URL(this.get("url"));
+
+                legendUrl.searchParams.set("SERVICE", "WMS");
+                legendUrl.searchParams.set("VERSION", version);
+                legendUrl.searchParams.set("REQUEST", "GetLegendGraphic");
+                legendUrl.searchParams.set("FORMAT", "image/png");
+                legendUrl.searchParams.set("LAYER", layerName);
+
+                legends.push(legendUrl.toString());
+            });
+            legend = legends;
+        }
+        else if (typeof legend === "string") {
+            legend = [legend];
+        }
+        else if (legend === false) {
+            legend = false;
+        }
+    }
+
+    return legend;
+};
