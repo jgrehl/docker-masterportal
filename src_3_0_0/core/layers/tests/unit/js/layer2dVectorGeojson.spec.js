@@ -7,6 +7,7 @@ import VectorLayer from "ol/layer/Vector.js";
 import VectorSource from "ol/source/Vector.js";
 import styleList from "@masterportal/masterportalapi/src/vectorStyle/styleList.js";
 import createStyle from "@masterportal/masterportalapi/src/vectorStyle/createStyle";
+import getGeometryTypeFromService from "@masterportal/masterportalapi/src/vectorStyle/lib/getGeometryTypeFromService";
 import Layer2dVectorGeojson from "../../../js/layer2dVectorGeojson";
 import webgl from "../../../js/webglRenderer";
 
@@ -192,8 +193,6 @@ describe("src_3_0_0/core/js/layers/layer2dVectorGeojson.js", () => {
     });
 
     describe("createLegend", () => {
-        let createStyleSpy;
-
         beforeEach(() => {
             const styleObj = {
                 styleId: "styleId",
@@ -205,32 +204,33 @@ describe("src_3_0_0/core/js/layers/layer2dVectorGeojson.js", () => {
                 version: "1.3.0"
             };
             sinon.stub(styleList, "returnStyleObject").returns(styleObj);
-            createStyleSpy = sinon.spy(createStyle, "returnLegendByStyleId");
         });
 
-        it("createLegend with legendURL", () => {
+        it("createLegend with legendURL", async () => {
             attributes.legendURL = "legendUrl1";
             const layerWrapper = new Layer2dVectorGeojson(attributes);
 
-            layerWrapper.createLegend();
-            expect(layerWrapper.getLegend()).to.be.deep.equals([attributes.legendURL]);
+            expect(await layerWrapper.createLegend()).to.be.deep.equals([attributes.legendURL]);
         });
 
-        it("createLegend with legendURL as array", () => {
+        it("createLegend with legendURL as array", async () => {
             attributes.legendURL = ["legendUrl1"];
             const layerWrapper = new Layer2dVectorGeojson(attributes);
 
-            layerWrapper.createLegend();
-            expect(layerWrapper.getLegend()).to.be.deep.equals(attributes.legendURL);
+            expect(await layerWrapper.createLegend()).to.be.deep.equals(attributes.legendURL);
         });
 
-        it("createLegend with styleObject and legend true", () => {
+        it("createLegend with styleObject and legend true", async () => {
             attributes.legend = true;
-            const layerWrapper = new Layer2dVectorGeojson(attributes);
+            const layerWrapper = new Layer2dVectorGeojson(attributes),
+                legendInformation = {
+                    "the": "legend Information"
+                };
 
-            layerWrapper.createLegend();
-            // call once on creating layer and second here
-            expect(createStyleSpy.calledTwice).to.be.true;
+            sinon.stub(createStyle, "returnLegendByStyleId").returns({legendInformation});
+            sinon.stub(getGeometryTypeFromService, "getGeometryTypeFromWFS");
+
+            expect(await layerWrapper.createLegend()).to.deep.equals(legendInformation);
         });
     });
 });
