@@ -1,4 +1,5 @@
 <script>
+import { runInThisContext } from "vm";
 import {mapActions, mapGetters, mapMutations} from "vuex";
 
 export default {
@@ -20,7 +21,11 @@ export default {
         this.setBackgroundLayerIds(backgroundLayerConfigIds);
     },
     methods: {
-        ...mapMutations("Modules/BasemapSwitcher", ["setActivatedExpandable", "setBackgroundLayerIds", "setTopBackgroundLayerId"]),
+        ...mapMutations("Modules/BasemapSwitcher", [
+            "setActivatedExpandable",
+            "setBackgroundLayerIds",
+            "setTopBackgroundLayerId"
+        ]),
         ...mapMutations(["setBackgroundLayerVisibility"]),
         ...mapActions(["replaceByIdInLayerConfig"]),
         ...mapActions("Modules/BasemapSwitcher", ["updateLayerTree"]),
@@ -28,6 +33,15 @@ export default {
 
         switchActiveBackgroundLayer (layerId) {
             this.updateLayerTree(layerId);
+
+            const selectableBackroundLayerIds = this.backgroundLayerIds,
+                index = selectableBackroundLayerIds.map(id => {
+                    return id;
+                }).indexOf(layerId);
+
+            selectableBackroundLayerIds.splice(index, 1);
+            selectableBackroundLayerIds.push(this.topBackgroundLayerId);
+            this.setBackgroundLayerIds(selectableBackroundLayerIds);
 
             this.setTopBackgroundLayerId([]);
             this.setTopBackgroundLayerId(layerId);
