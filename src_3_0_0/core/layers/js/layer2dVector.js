@@ -233,28 +233,28 @@ Layer2dVector.prototype.getStyleAsFunction = function (style) {
  * Creates the legend
  * @returns {void}
  */
-Layer2dVector.prototype.createLegend = function () {
+Layer2dVector.prototype.createLegend = async function () {
     const styleObject = styleList.returnStyleObject(this.attributes.styleId),
         rules = styleObject?.rules,
-        isSecured = typeof this.attributes.isSecured === "boolean" ? this.attributes.isSecured : false,
-        legend = this.inspectLegendUrl();
+        isSecured = typeof this.attributes.isSecured === "boolean" ? this.attributes.isSecured : false;
+    let legend = this.inspectLegendUrl();
 
-    if (Array.isArray(legend)) {
-        this.setLegend(legend);
-    }
-    else if (styleObject && legend === true) {
-        createStyle.returnLegendByStyleId(styleObject.styleId).then(legendInfos => {
+    if (!Array.isArray(legend)) {
+        if (styleObject && legend === true) {
+
+            const legendInfos = await createStyle.returnLegendByStyleId(styleObject.styleId);
+
             if (styleObject.styleId === "default") {
                 const type = this.layer.getSource().getFeatures()[0].getGeometry().getType(),
                     typeSpecificLegends = [];
 
                 if (type === "MultiLineString") {
                     typeSpecificLegends.push(legendInfos.legendInformation?.find(element => element.geometryType === "LineString"));
-                    this.setLegend(typeSpecificLegends);
+                    legend = typeSpecificLegends;
                 }
                 else {
                     typeSpecificLegends.push(legendInfos.legendInformation?.find(element => element.geometryType === type));
-                    this.setLegend(typeSpecificLegends);
+                    legend = typeSpecificLegends;
                 }
             }
             else {
@@ -269,12 +269,14 @@ Layer2dVector.prototype.createLegend = function () {
                             return geometryTypes;
                         });
                 }
-                this.setLegend(legendInfos.legendInformation);
+                legend = legendInfos.legendInformation;
             }
-        });
+        }
+        else if (typeof legend === "string") {
+            legend = [legend];
+        }
     }
-    else if (typeof legend === "string") {
-        this.setLegend([legend]);
-    }
+
+    return legend;
 };
 

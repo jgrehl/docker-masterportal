@@ -34,6 +34,14 @@ describe("src_3_0_0/core/js/layers/layer.js", () => {
 
             expect(warn.calledTwice).to.be.true;
         });
+
+        it("new Layer and createLegend should create two warnings", () => {
+            const layerWrapper = new Layer({});
+
+            layerWrapper.createLegend();
+
+            expect(warn.calledTwice).to.be.true;
+        });
     });
 
     describe("get and set", () => {
@@ -62,19 +70,11 @@ describe("src_3_0_0/core/js/layers/layer.js", () => {
         });
     });
 
-    describe("setLegend", () => {
-        it("setLegend shall dispatch createLegend", () => {
-            const layerWrapper = new Layer({});
-
-            layerWrapper.setLegend(["legend"]);
-            expect(layerWrapper.attributes.legend).to.deep.equals(["legend"]);
-        });
-    });
-
     describe("inspectLegendUrl and getLegend", () => {
         beforeEach(() => {
             attributes = {
-                id: "id"
+                id: "id",
+                legend: true
             };
         });
 
@@ -104,75 +104,5 @@ describe("src_3_0_0/core/js/layers/layer.js", () => {
 
             expect(layerWrapper.inspectLegendUrl()).to.be.false;
         });
-
-        it("getLegend is undefined", () => {
-            attributes.legend = undefined;
-            const layerWrapper = new Layer(attributes);
-
-            expect(layerWrapper.getLegend()).to.be.true;
-        });
-
-        it("getLegend is null", () => {
-            attributes.legend = null;
-            const layerWrapper = new Layer(attributes);
-
-            expect(layerWrapper.getLegend()).to.be.true;
-        });
-
-        it("getLegend is filled", () => {
-            attributes.legend = ["legend"];
-            const layerWrapper = new Layer(attributes);
-
-            expect(layerWrapper.getLegend()).to.be.deep.equals(attributes.legend);
-        });
     });
-
-    describe("createLegend", () => {
-        beforeEach(() => {
-            attributes = {
-                id: "id",
-                version: "1.3.0"
-            };
-        });
-
-        it("createLegend with legendURL", () => {
-            attributes.legendURL = "https://legendURL";
-            const layerWrapper = new Layer(attributes);
-
-            layerWrapper.createLegend();
-            expect(layerWrapper.getLegend()).to.be.deep.equals([attributes.legendURL]);
-        });
-
-        it("createLegend with ignored legendURL", () => {
-            attributes.legendURL = "ignore";
-            const layerWrapper = new Layer(attributes);
-
-            layerWrapper.createLegend();
-            expect(layerWrapper.getLegend()).to.be.false;
-        });
-
-        it("createLegend with legend as Array", () => {
-            attributes.legend = ["legend"];
-            const layerWrapper = new Layer(attributes);
-
-            layerWrapper.createLegend();
-            expect(layerWrapper.getLegend()).to.be.deep.equals(attributes.legend);
-        });
-
-        it("createLegend with legend true and 2 layer names", () => {
-            attributes.legend = true;
-            attributes.url = "https://url";
-            attributes.layers = "layer1,layer2";
-            const layerWrapper = new Layer(attributes),
-                expectedLegend = ["https://url/?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetLegendGraphic&FORMAT=image%2Fpng&LAYER=layer1",
-                    "https://url/?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetLegendGraphic&FORMAT=image%2Fpng&LAYER=layer2"];
-
-            layerWrapper.createLegend();
-            expect(layerWrapper.getLegend()).to.be.deep.equals(expectedLegend);
-        });
-
-
-    });
-
-
 });
