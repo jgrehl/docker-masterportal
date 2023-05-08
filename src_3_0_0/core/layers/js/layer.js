@@ -11,7 +11,6 @@ export default function Layer (attributes) {
 
     this.attributes = Object.assign(defaultAttributes, attributes);
     this.createLayer(this.attributes);
-    this.createLegend();
 }
 
 /**
@@ -22,6 +21,15 @@ export default function Layer (attributes) {
 Layer.prototype.createLayer = function () {
     // do in children
     console.warn("Function Layer: 'createLayer' must be overwritten in extended layers!");
+};
+
+/**
+ * To be overwritten, does nothing.
+ * @abstract
+ * @returns {void}
+*/
+Layer.prototype.createLegend = function () {
+    console.warn("Function Layer: 'createLegend' must be overwritten in extended layers!");
 };
 
 /**
@@ -80,34 +88,15 @@ Layer.prototype.setLayer = function (value) {
 };
 
 /**
- * Setter for legend, dispatches action 'Modules/Legend/createLegend'."
- * @param {String} value legend
- * @returns {void}
- */
-Layer.prototype.setLegend = function (value) {
-    this.set("legend", value);
-};
-
-/**
- * Returns the legend. If not set true is returned as default value.
- * @returns {Array|Boolean} returns the legend
- */
-Layer.prototype.getLegend = function () {
-    const legend = this.get("legend");
-
-    return legend === undefined || legend === null ? true : legend;
-};
-
-/**
  * Inspects the 'legendUrl': if not set, legend is returned.
  * If set to 'ignore', false is returned. If empty, true is returned
  * else the content is returned.
  * @returns {String|Boolean} depending on content of 'legendUrl'
  */
 Layer.prototype.inspectLegendUrl = function () {
-    let legend = this.getLegend();
+    let legend = this.get("legend");
 
-    if (this.get("legendURL")) {
+    if (typeof this.get("legendURL") !== "undefined") {
         if (this.get("legendURL") === "") {
             legend = true;
         }
@@ -118,44 +107,7 @@ Layer.prototype.inspectLegendUrl = function () {
             legend = this.get("legendURL");
         }
     }
+
     return legend;
-};
-
-/**
-* If the parameter "legendURL" is empty, it is set to GetLegendGraphic.
-* If it is set to 'ignore' no legend is set.
-* @return {void}
-*/
-Layer.prototype.createLegend = function () {
-    const version = this.get("version"),
-        legend = this.inspectLegendUrl();
-
-    if (Array.isArray(legend)) {
-        this.setLegend(legend);
-    }
-    else if (legend === true && this.get("url") && this.get("layers")) {
-        const layerNames = this.get("layers").split(","),
-            legends = [];
-
-        // Compose GetLegendGraphic request(s)
-        layerNames.forEach(layerName => {
-            const legendUrl = new URL(this.get("url"));
-
-            legendUrl.searchParams.set("SERVICE", "WMS");
-            legendUrl.searchParams.set("VERSION", version);
-            legendUrl.searchParams.set("REQUEST", "GetLegendGraphic");
-            legendUrl.searchParams.set("FORMAT", "image/png");
-            legendUrl.searchParams.set("LAYER", layerName);
-
-            legends.push(legendUrl.toString());
-        });
-        this.setLegend(legends);
-    }
-    else if (typeof legend === "string") {
-        this.setLegend([legend]);
-    }
-    else if (legend === false) {
-        this.setLegend(false);
-    }
 };
 
