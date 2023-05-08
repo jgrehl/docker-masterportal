@@ -91,7 +91,7 @@
       "name": "Контакт",
       "placeholder": {
         "mail": "Ваш адрес электронной почты",
-        "message": "Пожалуйста, сформулируйте свой вопрос здесь и нажмите \"$t(common:modules.tools.contact.sendButton)\".",
+        "message": "Пожалуйста, сформулируйте свой вопрос здесь и нажмите \"$t(common:modules.contact.sendButton)\".",
         "phone": "Ваш номер телефона",
         "username": "Ваше имя"
       },
