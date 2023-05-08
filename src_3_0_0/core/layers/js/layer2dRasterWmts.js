@@ -62,43 +62,41 @@ Layer2dRasterWmts.prototype.getLayerParams = function (attributes) {
  *
  * @returns {void}
  */
-Layer2dRasterWmts.prototype.createLegend = function () {
+Layer2dRasterWmts.prototype.createLegend = async function () {
     let legend = this.inspectLegendUrl();
 
     if ((this.get("optionsFromCapabilities") === undefined) && (legend === true)) {
         console.error("WMTS: No legendURL is specified for the layer!");
     }
     else if (this.get("optionsFromCapabilities") && !this.get("legendURL")) {
-        const capabilitiesUrl = this.get("capabilitiesUrl");
+        try {
+            const capabilitiesUrl = this.get("capabilitiesUrl"),
+                result = await wmts.getWMTSCapabilities(capabilitiesUrl);
 
-        wmts.getWMTSCapabilities(capabilitiesUrl)
-            .then((result) => {
-                result.Contents.Layer.forEach((layer) => {
-                    if (layer.Identifier === this.get("layers")) {
-                        const getLegend = getNestedValues(layer, "LegendURL", true);
+            result.Contents.Layer.forEach((layer) => {
+                if (layer.Identifier === this.get("layers")) {
+                    const getLegend = getNestedValues(layer, "LegendURL", true);
 
-                        if (getLegend !== null && getLegend !== undefined) {
-                            legend = getLegend[0]?.[0]?.href;
-                            if (legend) {
-                                this.setLegend([legend]);
-                            }
+                    if (getLegend !== null && getLegend !== undefined) {
+                        legend = getLegend[0]?.[0]?.href;
+                        if (legend) {
+                            legend = [legend];
                         }
-                        else {
-                            this.setLegend(null);
-                            console.warn("no legend url found for layer " + this.get("layers"));
-                        }
-
                     }
-                });
-            })
-            .catch((error) => {
-                if (error === "Fetch error") {
-                    // error message has already been printed earlier
-                    return;
+                    else {
+                        legend = null;
+                        console.warn("no legend url found for layer " + this.get("layers"));
+                    }
+
                 }
-                wmts.showErrorMessage(error, this.get("name"));
             });
+        }
+        catch (error) {
+            wmts.showErrorMessage(error, this.get("name"));
+        }
     }
+
+    return legend;
 };
 
 

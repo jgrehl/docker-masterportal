@@ -86,20 +86,22 @@ Layer2dVectorGeojson.prototype.afterLoading = function (attributes, features) {
  * Creates the legend.
  * @returns {void}
  */
-Layer2dVectorGeojson.prototype.createLegend = function () {
-    const styleObject = styleList.returnStyleObject(this.get("styleId")),
-        legend = this.inspectLegendUrl();
+Layer2dVectorGeojson.prototype.createLegend = async function () {
+    const styleObject = styleList.returnStyleObject(this.get("styleId"));
+    let legend = this.inspectLegendUrl();
 
-    if (Array.isArray(legend)) {
-        this.setLegend(legend);
+    if (!Array.isArray(legend)) {
+        if (styleObject && legend === true) {
+            const legendInfos = await createStyle.returnLegendByStyleId(styleObject.styleId);
+
+            legend = legendInfos.legendInformation;
+
+        }
+        else if (typeof legend === "string") {
+            legend = [legend];
+        }
     }
-    else if (styleObject && legend === true) {
-        createStyle.returnLegendByStyleId(styleObject.styleId).then(legendInfos => {
-            this.setLegend(legendInfos.legendInformation);
-        });
-    }
-    else if (typeof legend === "string") {
-        this.setLegend([legend]);
-    }
+
+    return legend;
 };
 
