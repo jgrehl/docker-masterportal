@@ -385,12 +385,12 @@
     },
     "getFeatureInfo": {
       "boolean": {
-        "0": "",
-        "1": "",
-        "false": "",
-        "no": "",
-        "true": "",
-        "yes": ""
+        "0": "no",
+        "1": "si",
+        "false": "no",
+        "no": "no",
+        "true": "si",
+        "yes": "si"
       },
       "buttonBack": "",
       "buttonForward": "",
@@ -835,8 +835,8 @@
       "list": {
         "pagination": "",
         "replace": {
-          "no": "",
-          "true": ""
+          "no": "no",
+          "true": "si"
         },
         "selection": "",
         "zoomToResult": "",
