@@ -71,7 +71,8 @@
       "saveButton": "Spiekern",
       "sourceLayerNotFound": "Der gespeicherte Quell-Layer mit der ID {{layerId}} wurde nicht gefunden.",
       "sourceSelectLabel": "Quell-Layer",
-      "targetLayerNotFound": "Der gespeicherte Ziel-Layer mit der ID {{layerId}} wurde nicht gefunden."
+      "targetLayerNotFound": "Der gespeicherte Ziel-Layer mit der ID {{layerId}} wurde nicht gefunden.",
+      "targetSelectLabel": "Ziel-Layer"
     },
     "contact": {
       "addFileButton": "",
