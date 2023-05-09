@@ -1274,6 +1274,7 @@
                 "address": "Search for Address"
             },
             "showAllResults": "Show all results",
+            "searchResults": "search results",
             "locationFinder": {
                 "unknownProjection": "Result provided within a unknown coordinate system",
                 "serverError": "Server error",

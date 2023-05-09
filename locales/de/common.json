@@ -1274,6 +1274,7 @@
                 "notFound": "Dienst nicht erreichbar"
             },
             "showAllResults": "alle Ergebnisse anzeigen",
+            "searchResults": "Suchergebnisse",
             "type": {
                 // "street": "Straße",
                 // "district": "Stadtteil",
