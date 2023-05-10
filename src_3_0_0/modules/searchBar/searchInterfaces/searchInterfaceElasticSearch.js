@@ -1,4 +1,6 @@
+import axios from "axios";
 import SearchInterface from "./searchInterface";
+import store from "../../../app-store";
 
 /**
  * The search interface to the elasticSearch.
@@ -8,7 +10,7 @@ import SearchInterface from "./searchInterface";
  * @param {String} hitMap.name Attribute value will be mapped to the attribute key.
  * @param {String} serviceId Search service id. Resolved using the **[rest-services.json](rest-services.json.md)** file.
  *
- * @param {String} [hitIcon="glyphicon-list"] CSS icon class of search results, shown before the result name.
+ * @param {String} [hitIcon="bi-list-ul"] CSS icon class of search results, shown before the result name.
  * @param {Object} [hitType="common:modules.searchbar.type.subject"] Search result type shown in the result list after the result name.
  * @param {Object} [payload={}] Matches the customObject description.
  * @param {String} [responseEntryPath=""] Response JSON attribute path to found features.
@@ -17,12 +19,11 @@ import SearchInterface from "./searchInterface";
  * @param {String} [searchInterfaceId="elasticSearch"] The id of the service interface.
  * @param {String} [searchStringAttribute="searchString"] Search string attribute name for `payload` object.
  * @param {String} [type="POST"] Request type.
- * @param {Boolean} [useProxy=false] Defines whether the URL should be proxied.
  * @constructs
  * @extends SearchInterface
  * @returns {void}
  */
-export default function SearchInterfaceElasticSearch ({hitMap, serviceId, hitIcon, hitType, payload, responseEntryPath, resultEvents, searchInterfaceId, searchStringAttribute, type, useProxy} = {}) {
+export default function SearchInterfaceElasticSearch ({hitMap, serviceId, hitIcon, hitType, payload, responseEntryPath, resultEvents, searchInterfaceId, searchStringAttribute, type} = {}) {
     SearchInterface.call(this,
         "request",
         searchInterfaceId || "elasticSearch",
@@ -33,13 +34,12 @@ export default function SearchInterfaceElasticSearch ({hitMap, serviceId, hitIco
     this.hitMap = hitMap;
     this.serviceId = serviceId;
 
-    this.hitIcon = hitIcon || "glyphicon-list";
+    this.hitIcon = hitIcon || "bi-list-ul";
     this.hitType = hitType || "common:modules.searchbar.type.subject";
     this.payload = payload || {};
     this.responseEntryPath = responseEntryPath || "";
     this.searchStringAttribute = searchStringAttribute || "searchString";
     this.type = type || "POST";
-    this.useProxy = useProxy || false;
 }
 
 SearchInterfaceElasticSearch.prototype = Object.create(SearchInterface.prototype);
@@ -50,7 +50,222 @@ SearchInterfaceElasticSearch.prototype = Object.create(SearchInterface.prototype
  * @param {String} searchInput The search input.
  * @returns {void}
  */
-SearchInterfaceElasticSearch.prototype.search = function (searchInput) {
-    // Do something
-    return searchInput; // Dummy for linter
+SearchInterfaceElasticSearch.prototype.search = async function (searchInput) {
+    const searchStringAttribute = this.searchStringAttribute,
+        payload = this.appendSearchStringToPayload(this.payload, searchStringAttribute, searchInput),
+        payloadWithIgnoreIds = this.addIgnoreIdsToPayload(payload, Config?.tree),
+        requestConfig = {
+            serviceId: this.serviceId,
+            type: this.type,
+            payload: payloadWithIgnoreIds,
+            responseEntryPath: this.responseEntryPath
+        },
+        result = await this.initializeSearch(requestConfig),
+        normalizedResults = this.normalizeResults(result.hits);
+
+    this.pushHitsToSearchResultsOrSuggestions(normalizedResults);
+
+    return this.searchResults;
+};
+
+/**
+ * Recursively searches for the searchStringAttribute key and sets the searchString.
+ * Adds the search string to the payload using the given key
+ * @param {Object} payload Payload as Object
+ * @param {String} searchStringAttribute Attribute key to be added to the payload object.
+ * @param {String} searchString Search string to be added using the searchStringAttribute.
+ * @returns {Object} The payload with the search string.
+ */
+SearchInterfaceElasticSearch.prototype.appendSearchStringToPayload = function (payload, searchStringAttribute, searchString) {
+    Object.keys(payload).forEach(key => {
+        if (typeof payload[key] === "object") {
+            payload[key] = this.appendSearchStringToPayload(payload[key], searchStringAttribute, searchString);
+        }
+        else if (key === searchStringAttribute) {
+            payload[searchStringAttribute] = searchString;
+        }
+    });
+
+    return payload;
+};
+
+/**
+ * Blacklist of layerIds and metdataids.
+ * Adds layerids and metadataids to the payload that should not appear in the response.
+ * @param {Object} payload Payload as Object.
+ * @param {Object} configTree Tree configuration from config.js.
+ * @returns {Object} Payload with ignore ids.
+ */
+SearchInterfaceElasticSearch.prototype.addIgnoreIdsToPayload = function (payload, configTree) {
+    if (configTree?.layerIDsToIgnore?.length > 0) {
+        payload.params.id = configTree.layerIDsToIgnore;
+    }
+    if (configTree?.metaIDsToIgnore?.length > 0) {
+        payload.params["datasets.md_id"] = configTree.metaIDsToIgnore;
+    }
+
+    return payload;
+};
+
+/**
+ * Main function to start the search using the requestConfig.
+ * @param {Object} requestConfig The configuration of the axios request.
+ * @param {String} requestConfig.serviceId Id of the rest-service to be used. If serviceId is given, the url from the rest-service is taken.
+ * @param {String} requestConfig.url If no serviceId is given, alternatively an url can be passed.
+ * @param {String} requestConfig.type Type of request. "POST" or "GET".
+ * @param {Object} requestConfig.payload Payload used to "POST" to url or be appended to url if type is "GET".
+ * @param {String} requestConfig.responseEntryPath="" The path of the hits in the response JSON. The different levels of the response JSON are marked with "."
+ * @returns {Object} The result object of the request.
+ */
+SearchInterfaceElasticSearch.prototype.initializeSearch = async function (requestConfig) {
+    const restService = store?.getters?.restServiceById(this.serviceId),
+        url = restService ? restService.url : requestConfig.url;
+    let result = {
+        status: "success",
+        message: "",
+        hits: []
+    };
+
+    if (url) {
+        result = await this.sendRequest(url, requestConfig, result);
+    }
+    else {
+        result.status = "error";
+        result.message = `Cannot retrieve url by rest-service with id: ${this.serviceId} ! Please check the configuration for rest-services!`;
+        result.hits = [];
+    }
+    return result;
+};
+
+/**
+ * Sends the request.
+ * @param {String} url url to send request.
+ * @param {Object} requestConfig Config with all necccessary params for request.
+ * @param {Object} result Result object.
+ * @param {String} result.status Status of request "success" or "error".
+ * @param {String} result.message Message of request.
+ * @param {Object[]} result.hits Array of result hits.
+ * @returns {Object} Parsed result of request.
+ */
+SearchInterfaceElasticSearch.prototype.sendRequest = async function (url, requestConfig, result) {
+    const type = requestConfig.type || "POST",
+        payload = requestConfig.payload || undefined,
+        urlWithPayload = type === "GET" ? `${url}?source_content_type=application/json&source=${
+            JSON.stringify(payload)
+        }` : url,
+        controller = new AbortController();
+    let resultWithHits = result;
+
+    this.searchState = "running";
+    this.abortRequest();
+    this.currentController = controller;
+
+    if (type === "GET") {
+        resultWithHits = await this.sendGetRequest(urlWithPayload, controller);
+    }
+    else if (type === "POST") {
+        resultWithHits = await this.sendPostRequest(url, controller, payload);
+    }
+
+    this.searchState = "finished";
+    return resultWithHits;
+};
+
+/**
+ * Sends the GET request.
+ * @param {String} url url to send request.
+ * @param {AbortController} controller The AbortController.
+ * @returns {Object} Parsed result of request.
+ */
+SearchInterfaceElasticSearch.prototype.sendGetRequest = async function (url, controller) {
+    const res = await axios.get(url, {
+        headers: {
+            "Content-Type": "application/json;charset=UTF-8"
+        },
+        signal: controller.signal
+    });
+    let resultWithHits = {};
+
+    if (res.status === 200) {
+        resultWithHits = res.data.hits;
+    }
+    else {
+        resultWithHits.status = "error";
+        resultWithHits.message = "error occured in xhr Request!" + res.statusText;
+        resultWithHits.hits = [];
+    }
+
+    return resultWithHits;
+};
+
+/**
+ * Sends the POST request.
+ * @param {String} url url to send request.
+ * @param {AbortController} controller The AbortController.
+ * @param {Object} payload The request payload.
+ * @returns {Object} Parsed result of request.
+ */
+SearchInterfaceElasticSearch.prototype.sendPostRequest = async function (url, controller, payload) {
+    const res = await axios.post(url, payload, {
+        headers: {
+            "Content-Type": "application/json;charset=UTF-8"
+        },
+        signal: controller.signal
+    });
+    let resultWithHits = {};
+
+    if (res.status === 200) {
+        resultWithHits = res.data.hits;
+    }
+    else {
+        resultWithHits.status = "error";
+        resultWithHits.message = "error occured in xhr Request!" + res.statusText;
+        resultWithHits.hits = [];
+    }
+
+    return resultWithHits;
+};
+
+/**
+ * Normalizes the search results to display them in a SearchResult.
+ * @param {Object[]} searchResults The search results of gazetter.
+ * @returns {Object[]} The normalized search result.
+ */
+SearchInterfaceElasticSearch.prototype.normalizeResults = function (searchResults) {
+    const normalizedResults = [];
+
+    searchResults.forEach(searchResult => {
+        normalizedResults.push({
+            events: this.normalizeResultEvents(this.resultEvents, searchResult),
+            category: i18next.t(this.hitType),
+            icon: this.hitIcon,
+            id: searchResult._id,
+            name: searchResult._source.name,
+            toolTip: `${searchResult._source.name} (${searchResult._source.datasets[0].md_name})`
+        });
+    });
+
+    return normalizedResults;
+};
+
+/**
+ * Creates the possible actions and fills them.
+ * @param {Object} searchResult The search result of gazetter.
+ * @returns {Object} The possible actions.
+ */
+SearchInterfaceElasticSearch.prototype.createPossibleActions = function (searchResult) {
+    return {
+        activateLayerInTopicTree: {
+            layerId: searchResult._source.id,
+            closeResults: true
+        },
+        addLayerToTopicTree: {
+            layerId: searchResult._source.id,
+            source: searchResult._source,
+            closeResults: true
+        },
+        openTopicTree: {
+            closeResults: true
+        }
+    };
 };
