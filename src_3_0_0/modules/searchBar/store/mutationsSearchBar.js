@@ -19,11 +19,19 @@ const mutations = {
      * @param {Object} state The state of search bar.
      * @param {Object} param The params.
      * @param {Object} param.searchResults The search results.
-     * @param {Object} param.searchType The search type.
      * @returns {void}
      */
     addSearchResults (state, {searchResults}) {
         state.searchResults = state.searchResults.concat(searchResults);
+    },
+    /**
+     * Adds suggestion to the searchSuggestion
+     * @param {Object} state The state of search bar.
+     * @param {Object} item to add.
+     * @returns {void}
+     */
+    addSuggestionItem (state, item) {
+        state.searchSuggestions.push(item);
     }
 };
 
