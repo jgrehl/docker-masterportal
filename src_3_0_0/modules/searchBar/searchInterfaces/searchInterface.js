@@ -45,6 +45,26 @@ export default function SearchInterface (paging, searchInterfaceId, resultEvents
 }
 
 /**
+ * Creates the possible actions and fills them.
+ * This function must be overridden by each sub search interface.
+ * @abstract
+ * @returns {void}
+ */
+SearchInterface.prototype.createPossibleActions = function () {
+    throw new Error("This function must be overridden by the sub search interface!");
+};
+
+/**
+ * Normalizes the search results to display them in a SearchResult.
+ * This function must be overridden by each sub search interface.
+ * @abstract
+ * @returns {void}
+ */
+SearchInterface.prototype.normalizeResults = function () {
+    throw new Error("This function must be overridden by the sub search interface!");
+};
+
+/**
  * Search function that is triggered by the search bar.
  * This function must be overridden by each sub search interface.
  * @abstract
@@ -75,11 +95,31 @@ SearchInterface.prototype.clearSearchResults = function () {
 };
 
 /**
- * Adds all search hits to the search results.
+ * Normalizes and fills the result events to use them in the search result.
+ * @param {Object} resultEvents The configured result events.
+ * @param {Object} searchResult The search result of gazetter.
+ * @returns {Object} The normalized actions for SearchResult.
+ */
+SearchInterface.prototype.normalizeResultEvents = function (resultEvents, searchResult) {
+    const resultEventsAsObject = this.resultEventsToObject(resultEvents),
+        possibleActions = this.createPossibleActions(searchResult);
+
+    Object.keys(resultEventsAsObject).forEach(event => {
+        Object.keys(resultEventsAsObject[event]).forEach(action => {
+            resultEventsAsObject[event][action] = possibleActions[action];
+        });
+    });
+
+    return resultEventsAsObject;
+};
+
+/**
+ * Adds all search hits to the search result or suggestions.
  * @param {Object[]} [searchHits=[]] The search hits of an search interface.
  * @returns {void}
  */
 SearchInterface.prototype.pushHitsToSearchResults = function (searchHits = []) {
+    this.totalHits = searchHits.length;
     searchHits.forEach((searchHit, index) => {
         const extendedSearchResult = Object.assign(searchHit, {
             index: index,
