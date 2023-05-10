@@ -53,12 +53,10 @@ SearchInterfaceGazetteer.prototype = Object.create(SearchInterface.prototype);
  * @returns {void}
  */
 SearchInterfaceGazetteer.prototype.search = async function (searchInput) {
-    this.searchResults = [];
     const searchResults = await this.startSearch(searchInput),
         normalizedResults = this.normalizeResults(searchResults);
 
     this.pushHitsToSearchResults(normalizedResults);
-    this.totalHits = this.searchResults.length;
 
     return this.searchResults;
 };
@@ -136,25 +134,6 @@ SearchInterfaceGazetteer.prototype.getTranslationByType = function (type) {
     };
 
     return i18next.t(keys[type]);
-};
-
-/**
- * Normalizes and fills the result events to use them in the search result.
- * @param {Object} resultEvents The configured result events.
- * @param {Object} searchResult The search result of gazetter.
- * @returns {Object} The normalized actions for SearchResult.
- */
-SearchInterfaceGazetteer.prototype.normalizeResultEvents = function (resultEvents, searchResult) {
-    const resultEventsAsObject = this.resultEventsToObject(resultEvents),
-        possibleActions = this.createPossibleActions(searchResult);
-
-    Object.keys(resultEventsAsObject).forEach(event => {
-        Object.keys(resultEventsAsObject[event]).forEach(action => {
-            resultEventsAsObject[event][action] = possibleActions[action];
-        });
-    });
-
-    return resultEventsAsObject;
 };
 
 /**
