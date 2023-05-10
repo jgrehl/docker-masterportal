@@ -1,5 +1,5 @@
 <script>
-import {mapGetters} from "vuex";
+import {mapGetters, mapMutations} from "vuex";
 import SearchBarSuggestionListItem from "./SearchBarSuggestionListItem.vue";
 
 export default {
@@ -17,14 +17,13 @@ export default {
         };
     },
     computed: {
-        ...mapGetters("Modules/SearchBar", ["searchInterfaces", "searchResults", "suggestionListLength", "searchInput", "minCharacters"]),
-        ...mapGetters([
-            "portalConfig"
-        ]),
-        // sorts the results according the configured search providers and prepare the suggestionlist with the limit of suggestionListLength
+        ...mapGetters("Modules/SearchBar", ["searchInterfaces", "searchResults", "suggestionListLength", "searchInput", "minCharacters", "searchSuggestions"]),
+
+        // sorts the results according the configured search providers and prepare the suggestionlist with the limit of suggestionListLength, updates searchSuggestions
         limitedSortedSearchResults () {
             const results = {};
 
+            this.setSearchSuggestions([]);
             results.availableCategories = [];
             for (const [key] of Object.entries(this.searchInterfaces)) {
                 for (const [index, value] of Object.entries(this.searchResults)) {
@@ -35,12 +34,16 @@ export default {
                         }
                         if (results[value.category + "Count"] <= this.suggestionListLength) {
                             results[index] = value;
+                            this.addSuggestionItem(value);
                         }
                     }
                 }
             }
             return results;
         }
+    },
+    methods: {
+        ...mapMutations("Modules/SearchBar", ["setSearchSuggestions", "addSuggestionItem"])
     }
 };
 </script>
