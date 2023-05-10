@@ -1,23 +1,58 @@
 import {createStore} from "vuex";
-import {config, shallowMount} from "@vue/test-utils";
+import {config, mount} from "@vue/test-utils";
 import {expect} from "chai";
+import sinon from "sinon";
 
 import SearchBarSuggestionListComponent from "../../../components/SearchBarSuggestionList.vue";
-import SearchBar from "../../../store/indexSearchBar";
 
 config.global.mocks.$t = key => key;
 
 describe("src_3_0_0/modules/searchBar/components/SearchBarSuggestionList.vue", () => {
-    const mockConfigJson = {
-        Portalconfig: {
-            searchBar: {
-                id: "searchBar",
-                placeholder: "common:modules.searchBar.placeholder.address"
-            }
-        }
-    };
     let store,
         wrapper;
+    const searchResults = [
+            {
+                "category": "Straße",
+                "id": "BeidemNeuenKrahnStraße",
+                "index": 0,
+                "name": "Bei dem Neuen Krahn",
+                "searchInterfaceId": "gazetteer",
+                "displayedInfo": "",
+                "icon": "bi-signpost",
+                "imagePath": "",
+                "toolTip": "",
+                "events": {
+                }
+
+            },
+            {
+                "category": "Adresse",
+                "id": "BeidemNeuenKrahn2Adresse",
+                "index": 1,
+                "name": "Bei dem Neuen Krahn 2",
+                "searchInterfaceId": "gazetteer",
+                "displayedInfo": "",
+                "icon": "bi-signpost",
+                "imagePath": "",
+                "toolTip": "",
+                "events": {
+                }
+            }
+        ],
+        searchInterfaces = {
+            "gazetteer": {
+                "serviceId": "6",
+                "searchAddress": true,
+                "searchStreets": true,
+                "searchHouseNumbers": true,
+                "searchDistricts": true,
+                "searchParcels": true,
+                "searchStreetKey": true
+            }
+        },
+        minCharacters = 3,
+        searchInput = "1234";
+
 
     beforeEach(() => {
         store = createStore({
@@ -26,23 +61,42 @@ describe("src_3_0_0/modules/searchBar/components/SearchBarSuggestionList.vue", (
                 Modules: {
                     namespaced: true,
                     modules: {
-                        SearchBar
+                        SearchBar: {
+                            namespaced: true,
+                            actions: {
+                                instantiateSearchInterfaces: sinon.stub(),
+                                overwriteDefaultValues: sinon.stub(),
+                                search: sinon.stub()
+                            },
+                            getters: {
+                                minCharacters: () => minCharacters,
+                                searchInput: () => searchInput,
+                                searchResults: () => searchResults,
+                                searchSuggestions: () => [],
+                                searchInterfaces: () => searchInterfaces
+
+                            }
+                        }
                     }
                 }
-            },
-            state: {
-                configJson: mockConfigJson
             }
         });
     });
 
-    it("renders the SearchBarSuggestionList", () => {
-        wrapper = shallowMount(SearchBarSuggestionListComponent, {
-            global: {
-                plugins: [store]
-            }
-        });
+    afterEach(() => {
+        sinon.restore();
+    });
 
-        expect(wrapper.find("#search-bar-suggestion-list").exists()).to.be.true;
+    describe("startSearch", () => {
+        it("renders the SearchBarSuggestionList", async () => {
+            wrapper = await mount(SearchBarSuggestionListComponent, {
+                global: {
+                    plugins: [store]
+                }
+            });
+
+            expect(wrapper.find("#search-bar-suggestion-list").exists()).to.be.true;
+            expect(wrapper.findComponent({name: "SearchBarSuggestionListItem"}).exists()).to.be.true;
+        });
     });
 });
