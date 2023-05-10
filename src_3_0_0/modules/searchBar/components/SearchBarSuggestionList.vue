@@ -1,11 +1,12 @@
 <script>
-import {mapGetters, mapActions} from "vuex";
+import {mapGetters} from "vuex";
 import SearchBarSuggestionListItem from "./SearchBarSuggestionListItem.vue";
 
 export default {
     name: "SearchBarSuggestionList",
     components: {
         SearchBarSuggestionListItem
+        // todo SearchBarResultList
     },
     props: {
 
@@ -16,7 +17,7 @@ export default {
         };
     },
     computed: {
-        ...mapGetters("Modules/SearchBar", ["searchInterfaces", "searchResults", "suggestionListLength"]),
+        ...mapGetters("Modules/SearchBar", ["searchInterfaces", "searchResults", "suggestionListLength", "searchInput", "minCharacters"]),
         ...mapGetters([
             "portalConfig"
         ]),
@@ -35,58 +36,68 @@ export default {
                         if (results[value.category + "Count"] <= this.suggestionListLength) {
                             results[index] = value;
                         }
-
                     }
                 }
             }
             return results;
         }
-    },
-    components: {
-        SearchBarSuggestionListItem
-        //SearchBarResultList
-    },
-    watch: {
-    },
-    mounted () {
-    },
-    methods: {
-        ...mapActions("Modules/SearchBar", ["getconf"]),
-        /**
-         * Starts the search in searchInterfaces, if min characters are introduced.
-         * @returns {void}
-         */
     }
 };
 </script>
 
 <template lang="html">
     <div
-        v-for="category in limitedSortedSearchResults.availableCategories"
-        id="search-bar-suggestion-list"
-        :key="category"
+        v-if="searchInput.length>=minCharacters"
     >
-        <h5
-            id="search-bar-suggestion-heading"
-            class="bold mb-4 mt-4"
-        >
-            {{ category +": " + limitedSortedSearchResults[category+"Count"] + "    " + $t("common:modules.searchbar.searchResults") }}
-        </h5>
         <div
-            v-for="item in limitedSortedSearchResults"
-            :key="item.name"
+            v-for="category in limitedSortedSearchResults.availableCategories"
+            id="search-bar-suggestion-list"
+            :key="category"
         >
-            <p
-                v-if="item.category===category"
-                id="searchInputLi"
+            <h5
+                id="search-bar-suggestion-heading"
+                class="bold mb-4 mt-4"
             >
-                <SearchBarSuggestionListItem
-                    :search-result="item"
-                />
-            </p>
+                {{ category +": " + limitedSortedSearchResults[category+"Count"] + "    " + $t("common:modules.searchbar.searchResults") }}
+            </h5>
+            <div
+                v-for="item in limitedSortedSearchResults"
+                :key="item.name"
+            >
+                <p
+                    v-if="item.category===category"
+                    id="searchInputLi"
+                >
+                    <SearchBarSuggestionListItem
+                        :search-result="item"
+                    />
+                </p>
+            </div>
+            <div
+                class="showAllSection"
+            >
+                <button
+                    type="button"
+                    class="btn btn-light d-flex text-left"
+                >
+                    {{ $t("common:modules.searchbar.showAll") }}
+                    <span class="bi-chevron-right" />
+                </button>
+            </div>
         </div>
     </div>
 </template>
 
 <style lang="scss" scoped>
+button {
+    span {
+        margin-top: .1rem;
+        margin-left: .25rem;
+    }
+}
+.showAllSection{
+  display: flex;
+  justify-content: right;
+  align-items: right;
+}
 </style>
