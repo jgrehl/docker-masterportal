@@ -65,6 +65,28 @@
           "searchDistricts": true,
           "searchParcels": true,
           "searchStreetKey": true
+        },
+        "elasticSearch": {
+          "serviceId": "elastic_prod",
+          "type": "GET",
+          "payload": {
+            "id": "query",
+            "params": {
+              "query_string": "",
+              "typ": [
+                "sensorthings",
+                "wms"
+              ],
+              "size": 30
+            }
+          },
+          "searchStringAttribute": "query_string",
+          "responseEntryPath": "hits.hits",
+          "hitMap": {
+            "name": "_source.name",
+            "id": "_source.id",
+            "source": "_source"
+          }
         }
       }
     },
