@@ -1,6 +1,7 @@
 /**
  * Contains actions that communicate with the search interfaces.
  */
+import SearchInterfaceElasticSearch from "../../searchInterfaces/searchInterfaceElasticSearch";
 import SearchInterfaceGazetteer from "../../searchInterfaces/searchInterfaceGazetteer";
 
 export default {
@@ -13,11 +14,17 @@ export default {
      */
     instantiateSearchInterfaces: ({commit, state}) => {
         const searchInterfacesMapper = {
+            elasticSearch: SearchInterfaceElasticSearch,
             gazetteer: SearchInterfaceGazetteer
         };
 
         Object.keys(state.searchInterfaces).forEach(searchInterface => {
-            commit("addSearchInterfaceInstances", new searchInterfacesMapper[searchInterface](state.searchInterfaces[searchInterface]));
+            if (searchInterfacesMapper[searchInterface]) {
+                commit("addSearchInterfaceInstances", new searchInterfacesMapper[searchInterface](state.searchInterfaces[searchInterface]));
+            }
+            else {
+                console.warn(`The searchInterface: "${searchInterface}" hasn't been implemented yet`);
+            }
         });
     },
 
@@ -34,12 +41,13 @@ export default {
     search: ({commit, dispatch, state}, {searchInput}) => {
         dispatch("cleanSearchResults");
         state.searchInterfaceInstances.forEach(instance => {
+            instance.clearSearchResults();
             instance.search(searchInput)
                 .then(searchResults => {
                     commit("addSearchResults", {searchResults});
                 })
                 .catch(error => {
-                    if (String(error) !== "AbortError: The user aborted a request.") {
+                    if (String(error) !== "AbortError: The user aborted a request." && error.code !== "ERR_CANCELED") {
                         console.error(error);
                     }
                 });
