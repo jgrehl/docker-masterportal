@@ -63,7 +63,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceGazetteer.
                     },
                     category: "modules.searchBar.type.street",
                     id: "ResultName1modules.searchBar.type.street",
-                    icon: "glyphicon-road",
+                    icon: "bi-signpost-split-fill",
                     name: "Result Name1"
                 }
             ]);
