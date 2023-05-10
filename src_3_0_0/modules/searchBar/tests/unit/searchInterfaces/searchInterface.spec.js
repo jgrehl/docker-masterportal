@@ -14,6 +14,18 @@ describe("src/modules/searchBar/searchInterfaces/searchInterface.js", () => {
         SearchInterface1.clearSearchResults();
     });
 
+    describe("createPossibleActions", () => {
+        it("should throw an error if function 'createPossibleActions' is uses in SearchInterface", () => {
+            expect(SearchInterface1.search).to.throw();
+        });
+    });
+
+    describe("normalizeResults", () => {
+        it("should throw an error if function 'normalizeResults' is uses in SearchInterface", () => {
+            expect(SearchInterface1.search).to.throw();
+        });
+    });
+
     describe("search", () => {
         it("should throw an error if function 'search' is uses in SearchInterface", () => {
             expect(SearchInterface1.search).to.throw();
@@ -37,6 +49,7 @@ describe("src/modules/searchBar/searchInterfaces/searchInterface.js", () => {
         it("should push two to searchResults", () => {
             SearchInterface1.pushHitsToSearchResults([{id: "abc"}, {id: "def"}]);
 
+            expect(SearchInterface1.totalHits).equals(2);
             expect(SearchInterface1.searchResults.length).equals(2);
             expect(SearchInterface1.searchResults[0].id).equals("abc");
             expect(SearchInterface1.searchResults[1].id).equals("def");
