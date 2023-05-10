@@ -110,7 +110,7 @@ SearchInterfaceGazetteer.prototype.normalizeResults = function (searchResults) {
             events: this.normalizeResultEvents(this.resultEvents, searchResult),
             category: translatedType,
             id: searchResult.name.replace(/ /g, "") + translatedType,
-            icon: "glyphicon-road",
+            icon: "bi-signpost-split-fill",
             name: searchResult.name
         });
     });
