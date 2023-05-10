@@ -44,6 +44,7 @@ describe("src_3_0_0/modules/searchBar/store/actions/actionsSearchBarSearchInterf
         it("should search in configured search instances", async () => {
             const state = {
                     searchInterfaceInstances: [{
+                        clearSearchResults: sinon.spy(),
                         search: async (searchInput) => [searchInput]
                     }]
                 },
