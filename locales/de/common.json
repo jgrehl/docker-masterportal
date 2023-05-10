@@ -1309,7 +1309,8 @@
             "komoot": {
                 "errorMsg": "Komoot-Photon-Suche nicht erreichbar."
             },
-            "noInitialResults": "Die initiale Suche ergab keine Treffer."
+            "noInitialResults": "Die initiale Suche ergab keine Treffer.",
+            "showAll": "Alle anzeigen"
         },
         // "vectorStyle": {
             // "styleObject": {
