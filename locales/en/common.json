@@ -1316,7 +1316,8 @@
             "komoot": {
                 "errorMsg": "Searching with Komoot Photon is currently not available."
             },
-            "noInitialResults": "Initial search found no hits."
+            "noInitialResults": "Initial search found no hits.",
+            "showAll": "Show all"
         },
         "vectorStyle": {
             "styleObject": {
