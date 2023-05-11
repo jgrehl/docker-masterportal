@@ -51,7 +51,6 @@ export default {
      */
     positionClicked: function ({commit, dispatch, state, rootGetters}) {
         const updatePosition = isMobile() ? true : state.updatePosition,
-            // position = rootGetters["Maps/mouseCoordinate"],
             mapMode = rootGetters["Maps/mode"];
         let position;
 
