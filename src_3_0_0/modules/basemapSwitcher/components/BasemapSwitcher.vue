@@ -11,6 +11,15 @@ export default {
             "topBackgroundLayerId"
         ])
     },
+    watch: {
+        //
+        allBackgroundLayerConfigs: {
+            handler (newVal, oldVal) {
+                console.log("zIndex", newVal, oldVal);
+            },
+            deep: true
+        }
+    },
     created () {
         const backgroundLayerConfigIds = [];
 
