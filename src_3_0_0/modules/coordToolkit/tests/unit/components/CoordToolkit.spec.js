@@ -17,7 +17,9 @@ const namedProjections = [
 config.global.mocks.$t = key => key;
 
 describe("src_3_0_0/modules/coordToolkit/components/CoordToolkit.vue", () => {
-    const mockState = {
+    const registerListenerSpy = sinon.spy(),
+        unregisterListenerSpy = sinon.spy(),
+        mockState = {
 
             mode: "2D"
         },
@@ -36,7 +38,9 @@ describe("src_3_0_0/modules/coordToolkit/components/CoordToolkit.vue", () => {
             removePointerMoveHandler: sinon.stub(),
             removeInteraction: sinon.stub(),
             addInteraction: sinon.stub(),
-            removePointMarker: sinon.stub()
+            removePointMarker: sinon.stub(),
+            registerListener: registerListenerSpy,
+            unregisterListener: unregisterListenerSpy
         },
         mockMapMutations = {
             setMode: (state, mapMode) => {
@@ -67,6 +71,7 @@ describe("src_3_0_0/modules/coordToolkit/components/CoordToolkit.vue", () => {
         copyCoordinatesSpy = sinon.spy();
     let store,
         wrapper,
+        isMobile,
         text = "",
         origvalidateInput,
         originitHeightLayer,
@@ -75,6 +80,7 @@ describe("src_3_0_0/modules/coordToolkit/components/CoordToolkit.vue", () => {
 
     beforeEach(() => {
         origvalidateInput = CoordToolkit.actions.validateInput;
+        isMobile = false;
         originitHeightLayer = CoordToolkit.actions.initHeightLayer;
         origcopyCoordinates = CoordToolkit.actions.copyCoordinates;
         origtransformCoordinatesFromTo = CoordToolkit.actions.transformCoordinatesFromTo;
@@ -111,7 +117,7 @@ describe("src_3_0_0/modules/coordToolkit/components/CoordToolkit.vue", () => {
             },
             getters: {
                 uiStyle: () => "",
-                isMobile: () => false,
+                isMobile: () => isMobile,
                 namedProjections: () => namedProjections
             },
             state: {
@@ -199,6 +205,27 @@ describe("src_3_0_0/modules/coordToolkit/components/CoordToolkit.vue", () => {
         selected = options.filter(o => o.attributes().selected === "true");
         expect(selected.length).to.equal(1);
         expect(selected.at(0).attributes().value).to.equal("http://www.opengis.net/gml/srs/epsg.xml#25832");
+    });
+
+    it("if coordToolkit is mounted in mobile version, clicklistener is registered", () => {
+        isMobile = true;
+        wrapper = shallowMount(CoordToolkitComponent, {
+            global: {
+                plugins: [store]
+            }});
+        expect(registerListenerSpy.calledOnce).to.equal(true);
+    });
+
+    it("if coordToolkit is unmounted (in mobile version), clicklistener is unregistered", async () => {
+        wrapper = shallowMount(CoordToolkitComponent, {
+            global: {
+                plugins: [store]
+            }});
+
+        wrapper.vm.$options.unmounted.call(wrapper.vm);
+        await wrapper.vm.$nextTick();
+
+        expect(unregisterListenerSpy.calledOnce).to.equal(true);
     });
 
     describe("CoordToolkit.vue methods", () => {
