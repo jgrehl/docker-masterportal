@@ -6,7 +6,6 @@ import mutations from "../store/mutationsCoordToolkit";
 import NavTab from "../../../shared/modules/tabs/components/NavTab.vue";
 import InputText from "../../../shared/modules/inputs/components/InputText.vue";
 import FlatButton from "../../../shared/modules/buttons/components/FlatButton.vue";
-import isMobile from "../../../shared/js/utils/isMobile";
 
 export default {
     name: "CoordToolkit",
@@ -107,6 +106,14 @@ export default {
         this.setMode("supply");
         this.setSupplyCoordActive();
         this.setFocusToFirstControl();
+        if (this.isMobile === true) {
+            this.registerListener({
+                type: "click",
+                listener: "Modules/CoordToolkit/positionClicked",
+                listenerType: "dispatch",
+                root: true
+            });
+        }
         /**
          * Do this in next tick, only then heightLayerId is in state
          */
@@ -284,16 +291,8 @@ export default {
                             this.checkPosition();
                         }.bind(this),
                         handleDownEvent: function () {
-                            if (isMobile() === false) {
+                            if (this.isMobile === false) {
                                 this.positionClicked();
-                            }
-                            else {
-                                this.registerListener({
-                                    type: "click",
-                                    listener: "Modules/CoordToolkit/positionClicked",
-                                    listenerType: "dispatch",
-                                    root: true
-                                });
                             }
                         }.bind(this)
                     },
