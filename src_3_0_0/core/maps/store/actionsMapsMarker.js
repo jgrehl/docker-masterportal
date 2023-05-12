@@ -2,8 +2,6 @@ import Feature from "ol/Feature.js";
 import Point from "ol/geom/Point.js";
 
 import mapMarker from "../js/mapMarker";
-import styleList from "@masterportal/masterportalapi/src/vectorStyle/styleList";
-import createStyle from "@masterportal/masterportalapi/src/vectorStyle/createStyle";
 
 /**
  * Place and remove map markers as point or polygon.
@@ -22,87 +20,14 @@ export default {
 
     /**
      * With this function the coordinate, which has to be marked by the mapMarker, is written to the MapMarker state.
-     * @param {String[]} value The array with the markable coordinate pair.
-     * @param {Boolean} [value.keepPreviousMarker] whether function should
-     *                  keep or erase previously drawn markers
-     * @returns {void}
-     */
-    placingPointMarker ({state, rootState, commit, dispatch}, value) {
-        const styleObject = styleList.returnStyleObject(state.pointStyleId);
-        let coordValues = [];
-
-        if (!value?.keepPreviousMarker) {
-            dispatch("removePointMarker");
-        }
-
-        if (styleObject) {
-            if (rootState.Maps.mode === "3D") {
-                // else an error is thrown in proj4/lib/checkSanity: coordinates must be finite numbers
-                value.forEach(val => {
-                    coordValues.push(Math.round(val));
-                });
-                // tilt the camera to recognize the mapMarker
-                mapCollection.getMap("3D").getCamera().tilt_ = -200;
-            }
-            else {
-                coordValues = value;
-            }
-            const iconfeature = new Feature({
-                    geometry: new Point(coordValues)
-                }),
-                featureStyle = createStyle.createStyle(styleObject, iconfeature, false, Config.wfsImgPath);
-
-            iconfeature.setStyle(featureStyle);
-            iconfeature.set("styleId", state.pointStyleId);
-            iconfeature.set("featureId", iconfeature.ol_uid);
-
-            commit("addFeatureToMarker", {feature: iconfeature, marker: "markerPoint"});
-            commit("setVisibilityMarker", {visibility: true, marker: "markerPoint"});
-            dispatch("Maps/addLayerOnTop", state.markerPoint, {root: true});
-        }
-        else {
-            dispatch("Alerting/addSingleAlert", i18next.t("common:modules.mapMarker.nostyleObject", {styleId: state.pointStyleId}), {root: true});
-        }
-    },
-
-    /**
-     * This function has the task to remove the coordinate from the mapMarker state.
-     * This is necessary / triggered if the MapMarker should be removed.
-     * @returns {void}
-     */
-    removePointMarker ({state, commit}) {
-        mapMarker.removeMapMarker("marker_point_layer");
-        mapCollection.getMap("2D").removeLayer(state.markerPoint);
-        commit("clearMarker", "markerPoint");
-        commit("setVisibilityMarker", {visbility: false, marker: "markerPoint"});
-    },
-    /**
-     * With this function the coordinate, which has to be marked by the mapMarker, is written to the MapMarker state.
      * @param {Object} param.dispatch the dispatch
      * @param {String[]|Object} position The array with the markable coordinate pair or an Object wird coordinates and rotation.
      * @param {String[]} [position.coordinates] The array with the coordinates.
      * @param {Number} [position.rotation] The rotation in degree.
      * @returns {void}
      */
-    /* placingPointMarker ({dispatch, rootGetters}, value) {
-        let coordValues = [];
-
-        if (!value.keepPreviousMarker) {
-            dispatch("removePointMarker");
-        }
-
-        if (rootGetters["Maps/mode"] === "3D") {
-            // else an error is thrown in proj4/lib/checkSanity: coordinates must be finite numbers
-            value.forEach(val => {
-                coordValues.push(Math.round(val));
-            });
-
-            // tilt the camera to recognize the mapMarker
-            mapCollection.getMap("3D").getCamera().tilt_ = -200;
-        }
-        else {
-            coordValues = value;
-        }
+    placingPointMarker ({dispatch}, position) {
+        const coordinates = Array.isArray(position) ? position : position?.coordinates;
 
         dispatch("removePointMarker");
 
@@ -112,8 +37,21 @@ export default {
                     geometry: new Point(coordinates)
                 });
 
-        mapMarker.addFeatureToMapMarkerLayer(layerId, feature);
-    }, */
+            mapMarker.addFeatureToMapMarkerLayer(layerId, feature);
+
+            if (position.rotation) {
+                dispatch("rotatePointMarker", {feature, position});
+            }
+        }
+    },
+
+    /**
+     * Removes the features from the point map marker.
+     * @returns {void}
+     */
+    removePointMarker () {
+        mapMarker.removeMapMarker("marker_point_layer");
+    },
 
     /**
      * Adds a polygon feature to the the polygon map marker layer.
