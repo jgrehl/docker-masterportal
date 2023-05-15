@@ -980,7 +980,13 @@ const BuildSpecModel = {
         }
         if (typeof style.getLineDash === "function" && style.getLineDash()) {
             obj.strokeLinecap = style.getLineCap();
-            obj.strokeDashstyle = style.getLineDash().join(" ");
+            if (style.getLineDash().length > 1) {
+                obj.strokeDashstyle = style.getLineDash().join(" ");
+            }
+            else {
+                obj.strokeDashstyle = style.getLineDash()[0] + " " + style.getLineDash()[0];
+            }
+
             obj.strokeDashOffset = style.getLineDashOffset();
         }
 

@@ -4,19 +4,21 @@
 [Semantic versioning](https://semver.org/spec/v2.0.0.html) is used.
 
 ## Unreleased - in development
-### __Breaking Changes__
-
 ### Added
 
 ### Changed
-
-### Fixed
 
 ### Deprecated
 
 ### Removed
 
----   
+### Fixed
+
+## v2.33.1 - 2023-05-16
+### Fixed
+- Print:
+  - dashstyle can now be printed even if only one value was specified
+
 
 ## v2.33.0 - 2023-05-03
 ### __Breaking Changes__
