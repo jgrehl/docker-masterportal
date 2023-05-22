@@ -41,21 +41,6 @@ module.exports = {
     ],
     module: {
         rules: [
-            // replace untransformable code in olcs-package
-            {
-                test: /\.js$/,
-                include: [
-                    path.resolve(__dirname, "../node_modules/olcs/util"),
-                    path.resolve(__dirname, "../node_modules/olcs/core")
-                ],
-                use: {
-                    loader: "string-replace-loader",
-                    options: {
-                        search: "const exports = {};",
-                        replace: "var exports = {};"
-                    }
-                }
-            },
             {
                 test: /\.js$/,
                 exclude: /\bturf\b|\bjsts\b/,
