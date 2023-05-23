@@ -543,6 +543,26 @@ describe("src_3_0_0/modules/print/js/buildSpec", function () {
         it("should return \"[kh_nummer='20']\" if styleAttribute is \"kh_nummer\"", function () {
             expect(buildSpec.getStylingRules(vectorLayer, pointFeatures[0], ["kh_nummer"])).to.equal("[kh_nummer='20']");
         });
+        it("should return \"[styleId='*']\" if styleAttribute is \"styleId\"", function () {
+            const featuresArray = [
+                    {
+                        get: () => {
+                            return undefined;
+                        }
+                    }
+                ],
+                clusteredFeature = {
+                    get: (key) => {
+                        if (key === "features") {
+                            return featuresArray;
+                        }
+                        return undefined;
+                    },
+                    set: () => sinon.stub()
+                };
+
+            expect(buildSpec.getStylingRules(vectorLayer, clusteredFeature, ["styleId"])).to.equal("[styleId='*']");
+        });
     });
     describe("addFeatureToGeoJsonList", function () {
         let list = [];
