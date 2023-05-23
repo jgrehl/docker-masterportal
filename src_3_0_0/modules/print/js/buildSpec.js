@@ -786,7 +786,7 @@ const BuildSpecModel = {
                 feature.set(styleAttr[0], value);
                 return `[${styleAttr[0]}='${value}']`;
             }
-            else if (style.type) {
+            else if (style?.type) {
                 const value = feature.get("default");
 
                 return `[${styleAttr[0]}='${value}']`;
@@ -794,7 +794,7 @@ const BuildSpecModel = {
 
             // Current feature is not clustered but a single feature in a clustered layer
             return styleAttr.reduce((acc, curr) => {
-                const value = feature.get("features")[0].get(curr);
+                const value = feature.get("features")[0].get(curr) === undefined ? "*" : feature.get("features")[0].get(curr);
 
                 feature.set(curr, value);
                 return acc + `${curr}='${value}',`;
