@@ -1,5 +1,6 @@
 import {config, shallowMount} from "@vue/test-utils";
 import LayerFilterSnippet from "../../../components/LayerFilterSnippet.vue";
+import SnippetDownload from "../../../components/SnippetDownload.vue";
 import {expect} from "chai";
 import MapHandler from "../../../utils/mapHandler.js";
 import openlayerFunctions from "../../../utils/openlayerFunctions.js";
@@ -166,6 +167,26 @@ describe("src/modules/tools/filter/components/LayerFilterSnippet.vue", () => {
             });
 
             expect(wrapper.find(".btn-secondary").exists()).to.be.true;
+        });
+    });
+
+    describe("SnippetDownload", () => {
+        it("should render SnippetDownload component if download is true and filteredItems are given", async () => {
+            await wrapper.setProps({
+                layerConfig: {
+                    download: true
+                }
+            });
+            await wrapper.setData({
+                filteredItems: [
+                    {
+                        a: "a",
+                        b: "b"
+                    }
+                ]
+            });
+            await wrapper.vm.$nextTick();
+            expect(wrapper.findComponent(SnippetDownload).exists()).to.be.true;
         });
     });
 });
