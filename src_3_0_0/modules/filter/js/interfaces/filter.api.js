@@ -70,7 +70,7 @@ export default class FilterApi {
      * @returns {void}
      */
     setServiceByLayerModel (layerId, layerModel, extern, onerror) {
-        if (!layerModel) {
+        if (!isObject(layerModel)) {
             return;
         }
         const type = layerModel.typ.toLowerCase(),
