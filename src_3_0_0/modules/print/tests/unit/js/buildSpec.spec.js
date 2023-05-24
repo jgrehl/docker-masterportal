@@ -15,6 +15,7 @@ import measureStyle from "./../../../../measure/js/measureStyle";
 import layerCollection from "../../../../../core/layers/js/layerCollection";
 import sinon from "sinon";
 import BuildSpec from "../../../js/buildSpec";
+import Circle from "ol/geom/Circle.js";
 
 describe("src_3_0_0/modules/print/js/buildSpec", function () {
     let buildSpec,
@@ -508,6 +509,27 @@ describe("src_3_0_0/modules/print/js/buildSpec", function () {
             });
             expect(checked1).to.be.true;
             expect(checked2).to.be.true;
+        });
+
+        it("should convert circle feature to JSON", () => {
+            const feature = new Feature({
+                geometry: new Circle([500, 500], 10),
+                name: "The circle feature"
+            });
+            let convertedFeature = null;
+
+            feature.setId("123456");
+            convertedFeature = buildSpec.convertFeatureToGeoJson(feature, style);
+            expect(convertedFeature).to.deep.own.include({
+                type: "Feature",
+                id: "123456",
+                properties: {
+                    name: "The circle feature",
+                    _label: "veryCreativeLabelText"
+                }
+            });
+            expect(convertedFeature.geometry.type).to.equals("Polygon");
+            expect(convertedFeature.geometry.coordinates[0].length).to.equals(101);
         });
 
         it("should convert point feature to JSON and remove all @ and . in key if it includes @Datastream", function () {
