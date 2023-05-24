@@ -1,5 +1,3 @@
-// import mapCanvasToImage, {exportMapView} from "../../../../../addons/cosi/utils/mapCanvasToImage";
-
 const actions = {
     /**
      * Sets listeners for draw interaction events. On "drawend" the selected area is stored as geoJSON in the model-property "selectedAreaGeoJson".
@@ -23,7 +21,6 @@ const actions = {
         else {
             commit("setPreviewZoomLevel", {zoomLevel: parseInt(getters.previewZoomLevel, 10)});
         }
-
     }
 };
 
