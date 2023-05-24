@@ -585,7 +585,7 @@ const BuildSpecModel = {
                         styleObject.symbolizers.push(this.buildPolygonStyle(style, layer));
                     }
                     else if (geometryType === "Circle") {
-                        styleObject.symbolizers.push(this.buildPointStyle(style, layer));
+                        styleObject.symbolizers.push(this.buildPolygonStyle(style, layer));
                     }
                     else if (geometryType === "LineString" || geometryType === "MultiLineString") {
                         if (layer.values_.id === "measureLayer" && style.stroke_ === null) {
@@ -887,7 +887,7 @@ const BuildSpecModel = {
         clonedFeature.set("_label", labelText);
         // circle is not suppported by geojson
         if (clonedFeature.getGeometry().getType() === "Circle") {
-            clonedFeature.setGeometry(fromCircle(clonedFeature.getGeometry()));
+            clonedFeature.setGeometry(fromCircle(clonedFeature.getGeometry(), 100));
         }
         Object.keys(clonedFeature.getProperties()).filter(key => {
             if (key.includes("@Datastreams")) {
