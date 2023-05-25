@@ -1,18 +1,9 @@
-import {generateSimpleMutations} from "../../../js/utils/generators";
-import stateLayerPreview from "./stateLayerPreview";
 
 const mutations = {
     /**
-     * Creates from every state-key a setter.
-     * For example, given a state object {key: value}, an object
-     * {setKey:   (state, payload) => *   state[key] = payload * }
-     * will be returned.
-     */
-    ...generateSimpleMutations(stateLayerPreview),
-
-    /**
-     * Collapses Menucontainers
+     * Sets the center coordinates of the layer preview.
      * @param {Object} state current state
+     * @param {Array} center  the center coordinates
      * @returns {void}
      */
     setPreviewCenter (state, {center}) {
@@ -20,8 +11,9 @@ const mutations = {
     },
 
     /**
-     * Collapses Menucontainers
+     * Sets the zoom-level of the layer preview.
      * @param {Object} state current state
+     * @param {number} zoomLevel the zoom-level
      * @returns {void}
      */
     setPreviewZoomLevel (state, {zoomLevel}) {
