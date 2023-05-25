@@ -38,7 +38,7 @@ export default {
         axios.get(targetPath)
             .then(response => {
                 updateProxyUrl(response.data);
-                if (response.data.Portalconfig.alerts) {
+                if (response.data?.Portalconfig.alerts) {
                     dispatch("addAlertsFromConfigJson", response.data.Portalconfig.alerts);
                 }
                 commit("setPortalConfig", response.data ? response.data[portalConfigKey] : null);
