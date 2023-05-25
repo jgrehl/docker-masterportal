@@ -27,7 +27,7 @@ describe("src_3_0_0/modules/coordToolkit/components/CoordToolkit.vue", () => {
             projection: () => {
                 return {id: "http://www.opengis.net/gml/srs/epsg.xml#25832", name: "EPSG:25832", projName: "utm"};
             },
-            mouseCoordinate: () => sinon.stub(),
+            clickCoordinate: () => sinon.stub(),
             mode: (state) => state.mode
         },
         mockAlertingActions = {
@@ -76,7 +76,8 @@ describe("src_3_0_0/modules/coordToolkit/components/CoordToolkit.vue", () => {
         origvalidateInput,
         originitHeightLayer,
         origcopyCoordinates,
-        origtransformCoordinatesFromTo;
+        origtransformCoordinatesFromTo,
+        origPositionClicked;
 
     beforeEach(() => {
         origvalidateInput = CoordToolkit.actions.validateInput;
@@ -84,10 +85,12 @@ describe("src_3_0_0/modules/coordToolkit/components/CoordToolkit.vue", () => {
         originitHeightLayer = CoordToolkit.actions.initHeightLayer;
         origcopyCoordinates = CoordToolkit.actions.copyCoordinates;
         origtransformCoordinatesFromTo = CoordToolkit.actions.transformCoordinatesFromTo;
+        origPositionClicked = CoordToolkit.actions.positionClicked;
         CoordToolkit.actions.validateInput = sinon.spy();
         CoordToolkit.actions.initHeightLayer = sinon.spy();
         CoordToolkit.actions.copyCoordinates = sinon.spy();
         CoordToolkit.actions.transformCoordinatesFromTo = sinon.spy();
+        CoordToolkit.actions.positionClicked = sinon.spy();
 
         store = createStore({
             namespaced: true,
@@ -141,6 +144,7 @@ describe("src_3_0_0/modules/coordToolkit/components/CoordToolkit.vue", () => {
         CoordToolkit.actions.initHeightLayer = originitHeightLayer;
         CoordToolkit.actions.copyCoordinates = origcopyCoordinates;
         CoordToolkit.actions.transformCoordinatesFromTo = origtransformCoordinatesFromTo;
+        CoordToolkit.actions.positionClicked = origPositionClicked;
     });
 
     it("renders CoordToolkit without height field", () => {
@@ -538,6 +542,27 @@ describe("src_3_0_0/modules/coordToolkit/components/CoordToolkit.vue", () => {
             expect(store.state.Modules.CoordToolkit.northingNoMatch).to.be.false;
             expect(store.state.Modules.CoordToolkit.coordinatesEasting.value).to.be.equals("");
             expect(store.state.Modules.CoordToolkit.coordinatesNorthing.value).to.be.equals("");
+        });
+        it("watch to clickCoordinate in mode supply shall call positionClicked", async () => {
+            wrapper = shallowMount(CoordToolkitComponent, {
+                global: {
+                    plugins: [store]
+                }});
+            await wrapper.vm.$nextTick();
+            expect(store.state.Modules.CoordToolkit.mode).to.be.equals("supply");
+            wrapper.vm.$options.watch.clickCoordinate.handler.call(wrapper.vm, [10, 20]);
+            expect(CoordToolkit.actions.positionClicked.calledOnce).to.be.true;
+        });
+        it("watch to clickCoordinate in mode search shall not call positionClicked", async () => {
+            wrapper = shallowMount(CoordToolkitComponent, {
+                global: {
+                    plugins: [store]
+                }});
+            await wrapper.vm.$nextTick();
+            expect(store.state.Modules.CoordToolkit.mode).to.be.equals("supply");
+            wrapper.vm.changeMode("search");
+            wrapper.vm.$options.watch.clickCoordinate.handler.call(wrapper.vm, [10, 20]);
+            expect(CoordToolkit.actions.positionClicked.notCalled).to.be.true;
         });
     });
 });
