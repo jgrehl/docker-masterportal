@@ -39,6 +39,9 @@ describe("src_3_0_0/core/menu/navigation/components/MenuNavigation.vue", () => {
                         navigateBack: navigateBackSpy
                     }
                 }
+            },
+            getters: {
+                isMobile: () => false
             }
         });
     });
