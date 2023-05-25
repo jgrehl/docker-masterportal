@@ -1,27 +1,18 @@
-import {generateSimpleGetters} from "../../../js/utils/generators";
-import layerPreviewState from "./stateLayerPreview";
-
 const getters = {
-    /**
-     * Creates from every state-key a getter.
-     */
-    ...generateSimpleGetters(layerPreviewState),
 
     /**
-     * Returns the current component for a menu side.
-     * @param {MenuNavigationState} state Local vuex state.
-     * @param {string} side Menu Side.
-     * @returns {Object} The current component.
+     * Returns the center coordinates of the layer preview.
+     * @param {stateLayerPreview} state Local vuex state.
+     * @returns {Array} the center coordinates
      */
     previewCenter: state => {
         return state.center;
     },
 
     /**
-     * Returns the current component for a menu side.
-     * @param {MenuNavigationState} state Local vuex state.
-     * @param {string} side Menu Side.
-     * @returns {Object} The current component.
+     * Returns the zoom-level of the layer preview.
+     * @param {stateLayerPreview} state Local vuex state.
+     * @returns {number} the zoom-level
      */
     previewZoomLevel: state => {
         return state.zoomLevel;
