@@ -20,7 +20,6 @@ export default {
         };
     },
     computed: {
-        ...mapGetters(["namedProjections"]),
         ...mapGetters("Modules/CoordToolkit", [
             "active",
             "coordinatesEasting",
@@ -47,10 +46,10 @@ export default {
         ]),
         ...mapGetters("Maps", {
             projection: "projection",
-            mouseCoordinate: "mouseCoordinate",
+            clickCoordinate: "clickCoordinate",
             mapMode: "mode"
         }),
-        ...mapGetters(["isMobile", "uiStyle"]),
+        ...mapGetters(["isMobile", "namedProjections", "uiStyle"]),
         eastingNoCoordMessage: function () {
             if (this.currentProjection.projName !== "longlat") {
                 return this.$t("common:modules.tools.coordToolkit.errorMsg.noCoord", {valueKey: this.$t(this.getLabel("eastingLabel"))});
@@ -85,6 +84,18 @@ export default {
             this.setSupplyCoordInactive();
             this.removeInputActions();
             this.setSupplyCoordActive();
+        },
+        /**
+         * Watches for changes of clicked coordinates.
+         * @returns {void}
+         */
+        clickCoordinate: {
+            handler () {
+                if (this.mode !== "search") {
+                    this.positionClicked();
+                }
+            },
+            deep: true
         }
     },
     unmounted () {
@@ -137,11 +148,7 @@ export default {
             "initHeightLayer",
             "copyCoordinates"
         ]),
-        ...mapActions("Maps", ["registerListener", "unregisterListener"]),
-        ...mapActions("Maps", {
-            addInteractionToMap: "addInteraction",
-            removeInteractionFromMap: "removeInteraction"
-        }),
+        ...mapActions("Maps", ["addInteraction", "registerListener", "removeInteraction", "unregisterListener"]),
         /**
          * Sets the focus to the first control
          * @returns {void}
@@ -246,7 +253,7 @@ export default {
         setSupplyCoordInactive () {
             if (this.selectPointerMove !== null) {
                 this.setUpdatePosition(true);
-                this.removeInteractionFromMap(this.selectPointerMove);
+                this.removeInteraction(this.selectPointerMove);
                 this.setSelectPointerMove(null);
             }
             if (this.mapMode === "3D" && this.eventHandler && typeof this.eventHandler.removeInputAction === "function") {
@@ -261,7 +268,7 @@ export default {
             if (this.selectPointerMove === null) {
                 this.setMapProjection(this.projection);
                 this.createInteraction();
-                this.setPositionMapProjection(this.mouseCoordinate);
+                this.setPositionMapProjection(this.clickCoordinate);
                 this.changedPosition();
             }
         },
@@ -289,18 +296,13 @@ export default {
                     {
                         handleMoveEvent: function () {
                             this.checkPosition();
-                        }.bind(this),
-                        handleDownEvent: function () {
-                            if (this.isMobile === false) {
-                                this.positionClicked();
-                            }
                         }.bind(this)
                     },
                     this
                 );
 
                 this.setSelectPointerMove(pointerMove);
-                this.addInteractionToMap(pointerMove);
+                this.addInteraction(pointerMove);
             }
             else if (this.mapMode === "3D") {
                 this.eventHandler = new Cesium.ScreenSpaceEventHandler(mapCollection.getMap("3D").getCesiumScene().canvas);
