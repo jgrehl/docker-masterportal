@@ -144,7 +144,8 @@ describe("src_3_0_0/modules/alerting/components/AlertingItem.vue", function () {
             },
             getters: {
                 allLayerConfigs: () => [],
-                layerConfigById: () => sinon.stub()
+                layerConfigById: () => sinon.stub(),
+                configJs: () => sinon.stub()
             }
         });
         sinon.stub(axios, "get").resolves({status: 200, statusText: "OK", data: alertingData});
