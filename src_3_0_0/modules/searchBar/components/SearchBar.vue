@@ -1,12 +1,10 @@
 <script>
 import {mapGetters, mapActions, mapMutations} from "vuex";
-import SearchBarSuggestionList from "./SearchBarSuggestionList.vue";
 import SearchBarResultList from "./SearchBarResultList.vue";
 
 export default {
     name: "SearchBar",
     components: {
-        SearchBarSuggestionList,
         SearchBarResultList
     },
     computed: {
@@ -15,8 +13,7 @@ export default {
             "placeholder",
             "searchInput",
             "searchInterfaceInstances",
-            "searchResults",
-            "searchSuggestions"
+            "searchResults"
         ]),
 
         /**
@@ -37,14 +34,6 @@ export default {
                 /* eslint-disable no-console */
                 console.log("SearchResults:");
                 console.log(searchResults);
-            },
-            deep: true
-        },
-        searchSuggestions: {
-            handler (searchSuggestions) {
-                /* eslint-disable no-console */
-                console.log("SearchSuggestions:");
-                console.log(searchSuggestions);
             },
             deep: true
         }
@@ -95,7 +84,6 @@ export default {
                 @keydown.enter="startSearch"
             >
         </div>
-        <SearchBarSuggestionList />
         <SearchBarResultList />
     </div>
 </template>
