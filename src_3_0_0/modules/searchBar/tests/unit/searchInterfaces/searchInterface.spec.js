@@ -29,35 +29,17 @@ describe("src/modules/searchBar/searchInterfaces/searchInterface.js", () => {
         });
     });
 
-    describe("clearSearchSuggestions", () => {
-        it("should clear the searchSuggestions array", () => {
-            SearchInterface1.searchSuggestions.push("abc");
-            SearchInterface1.clearSearchSuggestions();
-
-            expect(SearchInterface1.searchSuggestions).is.an("array").that.is.empty;
-        });
-    });
-
-    describe("pushHitsToSearchResultsOrSuggestions", () => {
+    describe("pushHitsToSearchResults", () => {
         beforeEach(() => {
             SearchInterface1.searchResults = [];
-            SearchInterface1.searchSuggestions = [];
         });
 
         it("should push two to searchResults", () => {
-            SearchInterface1.pushHitsToSearchResultsOrSuggestions([{id: "abc"}, {id: "def"}]);
+            SearchInterface1.pushHitsToSearchResults([{id: "abc"}, {id: "def"}]);
 
             expect(SearchInterface1.searchResults.length).equals(2);
             expect(SearchInterface1.searchResults[0].id).equals("abc");
             expect(SearchInterface1.searchResults[1].id).equals("def");
-        });
-
-        it("should push two to searchSuggestions", () => {
-            SearchInterface1.pushHitsToSearchResultsOrSuggestions([{id: "abc"}, {id: "def"}], "suggestion");
-
-            expect(SearchInterface1.searchSuggestions.length).equals(2);
-            expect(SearchInterface1.searchSuggestions[0].id).equals("abc");
-            expect(SearchInterface1.searchSuggestions[1].id).equals("def");
         });
     });
 
@@ -71,19 +53,6 @@ describe("src/modules/searchBar/searchInterfaces/searchInterface.js", () => {
 
             expect(SearchInterface1.searchResults.length).equals(1);
             expect(SearchInterface1.searchResults[0].id).equals("123");
-        });
-    });
-
-    describe("pushHitToSearchSuggestions", () => {
-        beforeEach(() => {
-            SearchInterface1.searchSuggestions = [];
-        });
-
-        it("should push one hit with id '123' to searchSuggestions", () => {
-            SearchInterface1.pushHitToSearchSuggestions({id: "123"});
-
-            expect(SearchInterface1.searchSuggestions.length).equals(1);
-            expect(SearchInterface1.searchSuggestions[0].id).equals("123");
         });
     });
 

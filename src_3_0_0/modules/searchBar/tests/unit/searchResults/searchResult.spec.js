@@ -1,17 +1,18 @@
 import {expect} from "chai";
-import SearchHitSuggestion from "../../../searchHits/searchHitSuggestion.js";
+import SearchHitResult from "../../../searchResults/searchResult.js";
 
-describe("src/modules/searchBar/searchHits/searchHitSuggestion.js", () => {
-    let SearchHitSuggestion1 = null;
+describe("src_3_0_0/modules/searchBar/searchHits/searchResult.js", () => {
+    let SearchHitResult1 = null;
 
     before(() => {
-        SearchHitSuggestion1 = new SearchHitSuggestion();
+        SearchHitResult1 = new SearchHitResult();
     });
 
     describe("constructor", () => {
         it("should return an object that has the default value for empty input", () => {
-            expect(SearchHitSuggestion1).to.be.an("object").deep.equal({
+            expect(SearchHitResult1).to.be.an("object").deep.equal({
                 category: undefined,
+                events: undefined,
                 id: undefined,
                 index: undefined,
                 name: undefined,
@@ -25,6 +26,7 @@ describe("src/modules/searchBar/searchHits/searchHitSuggestion.js", () => {
         it("should return an object that has the given params for params input", () => {
             const params = {
                     category: "abc",
+                    events: {a: 1, b: 2},
                     id: "def",
                     index: 0,
                     name: "ghi",
@@ -34,9 +36,9 @@ describe("src/modules/searchBar/searchHits/searchHitSuggestion.js", () => {
                     imagePath: "stu",
                     toolTip: "xyz"
                 },
-                SearchHitSuggestion2 = new SearchHitSuggestion(params);
+                SearchHitResult2 = new SearchHitResult(params);
 
-            expect(SearchHitSuggestion2).to.be.an("object").deep.equal(params);
+            expect(SearchHitResult2).to.be.an("object").deep.equal(params);
         });
     });
 });
