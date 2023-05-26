@@ -1,19 +1,22 @@
 const actions = {
     /**
-     * Sets listeners for draw interaction events. On "drawend" the selected area is stored as geoJSON in the model-property "selectedAreaGeoJson".
-     * @param {Object} dispatch commit vuex element
-     * @param {Object} payload vuex element
-     * @param {Object} payload.interaction Interaction for drawing feature geometries
-     * @param {Object} payload.layer Vector data that is rendered client-side
-     * @param {Object} payload.vm vue instance
+     * Sets previewCenter and previewZoomlevel depening on given center and zoomlevel or initial values from map.
+     * @param {Object} param.commit the commit
+     * @param {Object} param.getters the getters
+     * @param {Object} param.rootGetters the rootGetters
+     * @param {Object} payload the payload
+     * @param {Array|String} payload.center center coordinates
+     * @param {Number} payload.zoomLevel the zoom level
      * @returns {void}
      */
     initialize: async function ({commit, getters, rootGetters}, {center, zoomLevel}) {
-        if (!getters.previewCenter) {
-            commit("setPreviewCenter", {center: center ? center : rootGetters["Maps/initialCenter"]});
+        const previewCenter = center ? center : rootGetters["Maps/initialCenter"];
+
+        if (!Array.isArray(previewCenter) && typeof previewCenter === "string" && previewCenter.indexOf(",") > -1) {
+            commit("setPreviewCenter", {center: [parseFloat(previewCenter.split(",")[0]), parseFloat(previewCenter.split(",")[1])]});
         }
-        if (!Array.isArray(getters.previewCenter)) {
-            commit("setPreviewCenter", {center: [parseFloat(getters.previewCenter.split(",")[0]), parseFloat(getters.previewCenter.split(",")[1])]});
+        else if (!getters.previewCenter) {
+            commit("setPreviewCenter", {center: previewCenter});
         }
         if (!getters.previewZoomLevel) {
             commit("setPreviewZoomLevel", {zoomLevel: zoomLevel ? zoomLevel : rootGetters["Maps/initialZoom"]});
