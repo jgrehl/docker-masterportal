@@ -43,6 +43,11 @@ export default {
         customClass: {
             type: String,
             default: ""
+        },
+        /** If true, preview is highlighted by a thick border. */
+        currentlyVisible: {
+            type: Boolean,
+            default: false
         }
     },
     emits: ["previewClicked"],
@@ -52,7 +57,8 @@ export default {
             // if smaller some WMS layers load no content in image, e.g. Geobasiskarten (Schriftplatte), handle size by css
             width: 150,
             height: 150,
-            previewUrl: null
+            previewUrl: null,
+            layerName: null
         };
     },
     computed: {
@@ -66,6 +72,7 @@ export default {
 
         if (layerConfig && this.supportedLayerTyps.includes(layerConfig.typ)) {
             this.initialize({center: this.center, zoomLevel: this.zoomLevel});
+            this.layerName = layerConfig.name;
             if (layerConfig.typ === "WMS") {
                 this.buildWMSUrl(layerConfig);
             }
@@ -201,6 +208,8 @@ export default {
     <div
         v-if="previewUrl"
         class="layerPreview"
+        data-bs-toggle="tooltip"
+        :title="layerName"
         @click="clicked()"
         @keydown.enter="clicked()"
     >
@@ -208,7 +217,10 @@ export default {
             <img
                 :class="[
                     customClass,
-                    'previewImg'
+                    'previewImg',
+                    {
+                        'thickBorder': currentlyVisible
+                    }
                 ]"
                 :src="previewUrl"
                 alt="previewImg"
@@ -222,7 +234,8 @@ export default {
                 'checkable',
                 {
                     'bi-check-circle': checked,
-                    'bi-circle': !checked
+                    'bi-circle': !checked,
+                    'checkableThickBorder': currentlyVisible
                 }
             ]"
         />
@@ -237,13 +250,20 @@ export default {
 }
 .previewImg {
     width: 50px;
-    height: auto;
+    height: 50px;
     display: block;
     -webkit-user-select: none;
     user-select: none;
     background-color: hsl(0, 0%, 90%);
     transition: background-color 300ms;
     border-radius: 50%;
+}
+.thickBorder{
+    border-width: 0.5rem;
+    border-style: solid;
+}
+.checkableThickBorder{
+    left: -1px;
 }
 .bi-check-circle::before {
     display: block;
