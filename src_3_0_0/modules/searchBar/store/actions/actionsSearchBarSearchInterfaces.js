@@ -29,15 +29,14 @@ export default {
      * @param {Object} param.state the state
      * @param {Object} payload The payload.
      * @param {Object} payload.searchInput The search input.
-     * @param {Object} [payload.searchType="result"] The search type "suggestion" or "result".
      * @returns {void}
      */
-    search: ({commit, dispatch, state}, {searchInput, searchType = "result"}) => {
-        dispatch("cleanSearchHits");
+    search: ({commit, dispatch, state}, {searchInput}) => {
+        dispatch("cleanSearchResults");
         state.searchInterfaceInstances.forEach(instance => {
-            instance.search(searchInput, searchType)
-                .then(searchHits => {
-                    commit("addSearchHits", {searchHits, searchType});
+            instance.search(searchInput)
+                .then(searchResults => {
+                    commit("addSearchResults", {searchResults});
                 })
                 .catch(error => {
                     if (String(error) !== "AbortError: The user aborted a request.") {
@@ -48,12 +47,11 @@ export default {
     },
 
     /**
-     * Clean the search suggestions and search results.
+     * Clean the search results.
      * @param {Object} param.commit the commit
      * @returns {void}
      */
-    cleanSearchHits: ({commit}) => {
-        commit("setSearchSuggestions", []);
+    cleanSearchResults: ({commit}) => {
         commit("setSearchResults", []);
     }
 };
