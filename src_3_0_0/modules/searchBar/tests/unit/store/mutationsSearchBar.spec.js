@@ -3,7 +3,7 @@ import {expect} from "chai";
 
 const {
     addSearchInterfaceInstances,
-    addSearchHits
+    addSearchResults
 } = mutations;
 
 describe("src/modules/searchBar/store/mutationsSearchBar.spec.js", () => {
@@ -22,38 +22,20 @@ describe("src/modules/searchBar/store/mutationsSearchBar.spec.js", () => {
         });
     });
 
-    describe("addSearchHits", () => {
-        const searchHits = {
+    describe("addSearchResults", () => {
+        const searchResults = {
             id: "The first search hit",
             searchInterfaceId: "The first instance"
         };
 
-        it("Should add search hits to state searchSuggestions by searchtype = 'suggestion'", () => {
+        it("Should add search hits to state searchResults", () => {
             const state = {
-                    searchSuggestions: [],
-                    searchResults: []
-                },
-                searchType = "suggestion";
-
-            addSearchHits(state, {searchHits, searchType});
-
-            expect(state.searchSuggestions).to.deep.equals([{
-                id: "The first search hit",
-                searchInterfaceId: "The first instance"
-            }]);
-            expect(state.searchResults).to.be.empty;
-        });
-
-        it("Should add search hits to state searchResults by searchtype = 'result'", () => {
-            const state = {
-                    searchSuggestions: [],
                     searchResults: []
                 },
                 searchType = "result";
 
-            addSearchHits(state, {searchHits, searchType});
+            addSearchResults(state, {searchResults, searchType});
 
-            expect(state.searchSuggestions).to.be.empty;
             expect(state.searchResults).to.deep.equals([{
                 id: "The first search hit",
                 searchInterfaceId: "The first instance"
