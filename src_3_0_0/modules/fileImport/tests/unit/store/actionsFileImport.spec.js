@@ -206,10 +206,10 @@ describe("src_3_0_0/modules/fileImport/store/actionsFileImport.js", () => {
                     selectedFiletype: "auto",
                     supportedFiletypes: {
                         auto: {
-                            caption: "common:modules.tools.fileImport.captions.supportedFiletypes.auto"
+                            caption: "common:modules.fileImport.captions.supportedFiletypes.auto"
                         },
                         kml: {
-                            caption: "common:modules.tools.fileImport.captions.supportedFiletypes.kml",
+                            caption: "common:modules.fileImport.captions.supportedFiletypes.kml",
                             rgx: /\.kml$/i
                         }
                     }
@@ -225,7 +225,7 @@ describe("src_3_0_0/modules/fileImport/store/actionsFileImport.js", () => {
             expect(dispatch.firstCall.args[0]).to.equal("Alerting/addSingleAlert");
             expect(dispatch.firstCall.args[1]).to.eql({
                 category: "success",
-                content: "modules.tools.fileImport.alertingMessages.success"
+                content: "modules.fileImport.alertingMessages.success"
             });
             expect(dispatch.secondCall.args[0]).to.equal("addImportedFilename");
             expect(dispatch.secondCall.args[1]).to.equal("beispielText.kml");
@@ -239,10 +239,10 @@ describe("src_3_0_0/modules/fileImport/store/actionsFileImport.js", () => {
                     selectedFiletype: "auto",
                     supportedFiletypes: {
                         auto: {
-                            caption: "common:modules.tools.fileImport.captions.supportedFiletypes.auto"
+                            caption: "common:modules.fileImport.captions.supportedFiletypes.auto"
                         },
                         kml: {
-                            caption: "common:modules.tools.fileImport.captions.supportedFiletypes.kml",
+                            caption: "common:modules.fileImport.captions.supportedFiletypes.kml",
                             rgx: /\.kml$/i
                         }
                     }
@@ -252,7 +252,7 @@ describe("src_3_0_0/modules/fileImport/store/actionsFileImport.js", () => {
             expect(dispatch.firstCall.args[0]).to.equal("Alerting/addSingleAlert");
             expect(dispatch.firstCall.args[1]).to.eql({
                 category: "success",
-                content: "modules.tools.fileImport.alertingMessages.success"
+                content: "modules.fileImport.alertingMessages.success"
             });
             expect(dispatch.secondCall.args[0]).to.equal("addImportedFilename");
             expect(dispatch.secondCall.args[1]).to.equal("TestFile1.kml");
