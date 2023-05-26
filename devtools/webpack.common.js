@@ -8,7 +8,11 @@ const webpack = require("webpack"),
     rootPath = path.resolve(__dirname, "../"),
     addonBasePath = path.resolve(rootPath, "addons"),
     addonConfigPath = path.resolve(addonBasePath, "addonsConf.json"),
-    entryPoints = {masterportal: path.resolve(rootPath, "js/main.js")};
+    entryPoints = {masterportal: path.resolve(rootPath, "js/main.js")},
+
+    cesiumSource = 'node_modules/cesium',
+    CopyWebpackPlugin = require('copy-webpack-plugin'),
+    cesiumWorkers = '../Build/Cesium/Workers';
 
 let addonEntryPoints = {};
 
@@ -89,13 +93,21 @@ module.exports = function () {
         output: {
             path: path.resolve(__dirname, "../build/"),
             filename: "js/[name].js",
-            publicPath: "../../build/"
+            publicPath: "../../build/",
+            // Needed to compile multiline strings in Cesium
+            sourcePrefix: ""
         },
+      /*   amd: {
+            // Enable webpack-friendly use of require in Cesium
+            toUrlUndefined: true
+        }, */
         resolve: {
             alias: {
                 text: "text-loader",
+                cesium: path.resolve(__dirname, cesiumSource),
                 "variables": path.resolve(__dirname, "..", "css", "variables.scss")
-            }
+            },
+            mainFiles: ["Cesium"]
         },
         module: {
             rules: [
@@ -184,6 +196,19 @@ module.exports = function () {
             new webpack.DefinePlugin({
                 ADDONS: JSON.stringify(addonsRelPaths),
                 VUE_ADDONS: JSON.stringify(vueAddonsRelPaths)
+            }),
+            // Copy Cesium Assets, Widgets, and Workers to a static directory
+            new CopyWebpackPlugin({
+                patterns: [
+                    {from: path.join(cesiumSource, cesiumWorkers), to: 'Workers' },
+                    {from: path.join(cesiumSource, 'Assets'), to: 'Assets' },
+                    {from: path.join(cesiumSource, 'Widgets'), to: 'Widgets' }
+                ]
+
+            }),
+            new webpack.DefinePlugin({
+                // Define relative base path in cesium for loading assets
+                CESIUM_BASE_URL: JSON.stringify('')
             })
         ]
     };
