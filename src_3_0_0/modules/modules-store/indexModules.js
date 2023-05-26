@@ -17,7 +17,7 @@ import Language from "../language/store/indexLanguage";
 import LayerClusterToggler from "../layerClusterToggler/store/indexLayerClusterToggler";
 import LayerInformation from "../layerInformation/store/indexLayerInformation";
 import LayerPills from "../layerPills/store/indexLayerPills";
-import LayerPreview from "../../shared/modules/LayerPreview/store/indexLayerPreview";
+import LayerPreview from "../../shared/modules/layerPreview/store/indexLayerPreview";
 import LayerSelection from "../layerSelection/store/indexLayerSelection";
 import LayerSlider from "../layerSlider/store/indexLayerSlider";
 import LayerTree from "../layerTree/store/indexLayerTree";
