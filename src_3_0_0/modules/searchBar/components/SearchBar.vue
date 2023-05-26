@@ -71,57 +71,40 @@ export default {
 
 <template lang="html">
     <div id="search-bar">
-        <button
-            id="search-button"
-            class="btn btn-light"
-            type="button"
-            :aria-label="$t(placeholder)"
-            @click="startSearch"
-        >
-            <i
-                class="bi-search"
-                role="img"
-            />
-        </button>
-        <input
-            v-model="searchInputValue"
-            class="form-control"
-            type="search"
-            :placeholder="$t(placeholder)"
-            :aria-label="$t(placeholder)"
-            @input="startSearch"
-            @keydown.enter="startSearch"
-        >
+        <div class="input-group mb-3">
+            <button
+                id="search-button"
+                class="btn btn-primary"
+                :aria-label="$t(placeholder)"
+                type="button"
+                @click="startSearch"
+            >
+                <i
+                    class="bi-search"
+                    role="img"
+                />
+            </button>
+            <input
+                v-model="searchInputValue"
+                type="search"
+                class="form-control"
+                :placeholder="$t(placeholder)"
+                :aria-label="$t(placeholder)"
+                @input="startSearch"
+                @keydown.enter="startSearch"
+            >
+        </div>
         <SearchBarSuggestionList />
         <SearchBarResultList />
     </div>
 </template>
 
 <style lang="scss" scoped>
-    @import "~variables";
-
     #search-bar {
-        position: relative;
-
         #search-button {
-            position: absolute;
-            margin-left: 1px;
-            margin-top: 1px;
-            max-height: 32px;
-        }
-
-        #search-button:active {
-            border-color: transparent;
-        }
-
-        input {
-            padding-left: 42px;
-
-            @include media-breakpoint-up(md) {
-                padding-left: 38px;
-            }
+            border-top-left-radius: 5px;
+            border-bottom-left-radius: 5px;
         }
     }
-
 </style>
 
