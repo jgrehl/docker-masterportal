@@ -1,5 +1,4 @@
-import SearchHitResult from "../searchHits/searchHitResult";
-import SearchHitSuggestion from "../searchHits/searchHitSuggestion";
+import SearchResult from "../searchResults/searchResult";
 import axios from "axios";
 
 /**
@@ -31,12 +30,6 @@ export default function SearchInterface (paging, searchInterfaceId, resultEvents
      * @type {Object[]}
      */
     this.searchResults = [];
-
-    /**
-     * List with suggestions of the search.
-     * @type {Object[]}
-     */
-    this.searchSuggestions = [];
 
     /**
      * Timeout for request to a search interface.
@@ -82,32 +75,18 @@ SearchInterface.prototype.clearSearchResults = function () {
 };
 
 /**
- * Sets the search suggestions to empty collection.
- * @returns {void}
- */
-SearchInterface.prototype.clearSearchSuggestions = function () {
-    this.searchSuggestions = [];
-};
-
-/**
- * Adds all search hits to the search result or suggestions.
+ * Adds all search hits to the search results.
  * @param {Object[]} [searchHits=[]] The search hits of an search interface.
- * @param {Object} [searchType="result"] The search type "suggestion" or "result".
  * @returns {void}
  */
-SearchInterface.prototype.pushHitsToSearchResultsOrSuggestions = function (searchHits = [], searchType = "result") {
+SearchInterface.prototype.pushHitsToSearchResults = function (searchHits = []) {
     searchHits.forEach((searchHit, index) => {
         const extendedSearchResult = Object.assign(searchHit, {
             index: index,
             searchInterfaceId: this.searchInterfaceId
         });
 
-        if (searchType === "result") {
-            this.pushHitToSearchResults(extendedSearchResult);
-        }
-        else if (searchType === "suggestion") {
-            this.pushHitToSearchSuggestions(extendedSearchResult);
-        }
+        this.pushHitToSearchResults(extendedSearchResult);
     });
 };
 
@@ -117,16 +96,7 @@ SearchInterface.prototype.pushHitsToSearchResultsOrSuggestions = function (searc
  * @returns {void}
  */
 SearchInterface.prototype.pushHitToSearchResults = function (searchResult = {}) {
-    this.searchResults.push(new SearchHitResult(searchResult));
-};
-
-/**
- * Adds a search result to the search suggestion.
- * @param {Object} [searchSuggestion={}] One search suggestion of an search interface.
- * @returns {void}
- */
-SearchInterface.prototype.pushHitToSearchSuggestions = function (searchSuggestion = {}) {
-    this.searchSuggestions.push(new SearchHitSuggestion(searchSuggestion));
+    this.searchResults.push(new SearchResult(searchResult));
 };
 
 /**
