@@ -8,13 +8,13 @@ import SearchInterface from "./searchInterface";
  * @param {String} definitions.icon CSS glyphicon class of search results, shown before the result name.
  * @param {String} [definitions.geometryName] Geometry attribute name required for zoom functionality.
  * @param {String} [definitions.maxFeatures] Maximum amount of features to be returned.
- * @param {String} definitions.name Category name displayed in the suggestion list.
+ * @param {String} definitions.name Category name displayed in the result list.
  * @param {String} definitions.namespaces XML name spaces to request `propertyNames` or `geometryName`. (`xmlns:wfs`, `xmlns:ogc`, and `xmlns:gml` are always used).
  * @param {String[]} definitions.propertyNames Array of attribute names to be searched.
  * @param {String} definitions.typeName The name of the WFS layer to be requested.
  * @param {String} definitions.url The WFS URL.
  *
- * @param {String} [icon="glyhicon-home"] Default icon used in the suggestion list.
+ * @param {String} [icon="bi-house-fill"] Default icon used in the result list.
  * @param {String} [geometryName="app:geom"] Geometry attribute name required for zoom functionality.
  * @param {Number} [maxFeatures=20] Maximum amount of features returned.
  * @param {String} [namespaces="xmlns:wfs='http://www.opengis.net/wfs' xmlns:ogc='http://www.opengis.net/ogc' xmlns:gml='http://www.opengis.net/gml'"] XML name spaces to request `propertyNames` or `geometryName`.
@@ -36,7 +36,7 @@ export default function SearchInterfaceSpecialWfs ({definitions, icon, geometryN
 
     this.definitions = definitions;
 
-    this.icon = icon || "glyhicon-home";
+    this.icon = icon || "bi-house-fill";
     this.geometryName = geometryName || "app:geom";
     this.maxFeatures = maxFeatures || 20;
     this.namespaces = namespaces || "xmlns:wfs='http://www.opengis.net/wfs' xmlns:ogc='http://www.opengis.net/ogc' xmlns:gml='http://www.opengis.net/gml'";

@@ -12,7 +12,6 @@
  * @property {String} [searchInput=""] The search input.
  * @property {Object[]} [searchInterfaceInstances=[]] The configured searchInterfaces.
  * @property {Object[]} [searchResults=[]] The results of the configured searchInterfaces.
- * @property {Object[]} [searchSuggestions=[]] The suggestions of the configured searchInterfaces.
  */
 const state = {
     minCharacters: 3,
@@ -25,8 +24,7 @@ const state = {
 
     searchInput: "",
     searchInterfaceInstances: [],
-    searchResults: [],
-    searchSuggestions: []
+    searchResults: []
 };
 
 export default state;
