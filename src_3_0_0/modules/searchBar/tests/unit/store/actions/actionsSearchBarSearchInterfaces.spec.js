@@ -3,7 +3,7 @@ import {expect} from "chai";
 import sinon from "sinon";
 
 const {
-    cleanSearchHits,
+    cleanSearchResults,
     instantiateSearchInterfaces,
     search
 } = actions;
@@ -53,21 +53,19 @@ describe("src_3_0_0/modules/searchBar/store/actions/actionsSearchBarSearchInterf
             await search({commit, dispatch, state}, {searchInput, searchType});
 
             expect(commit.calledOnce).to.be.true;
-            expect(commit.firstCall.args[0]).equals("addSearchHits");
+            expect(commit.firstCall.args[0]).equals("addSearchResults");
             expect(dispatch.calledOnce).to.be.true;
-            expect(dispatch.firstCall.args[0]).equals("cleanSearchHits");
+            expect(dispatch.firstCall.args[0]).equals("cleanSearchResults");
         });
     });
 
-    describe("cleanSearchHits", () => {
-        it("should set the searchSuggestions and searchResults to empty arrays", () => {
-            cleanSearchHits({commit});
+    describe("cleanSearchResults", () => {
+        it("should set the searchResults to empty arrays", () => {
+            cleanSearchResults({commit});
 
-            expect(commit.calledTwice).to.be.true;
-            expect(commit.firstCall.args[0]).equals("setSearchSuggestions");
+            expect(commit.calledOnce).to.be.true;
+            expect(commit.firstCall.args[0]).equals("setSearchResults");
             expect(commit.firstCall.args[1]).to.be.an("array").that.is.empty;
-            expect(commit.secondCall.args[0]).equals("setSearchResults");
-            expect(commit.secondCall.args[1]).to.be.an("array").that.is.empty;
         });
     });
 });
