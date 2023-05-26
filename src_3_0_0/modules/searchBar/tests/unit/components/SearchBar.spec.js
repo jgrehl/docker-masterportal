@@ -29,8 +29,7 @@ describe("src_3_0_0/modules/searchBar/components/SearchBar.vue", () => {
                                 minCharacters: () => 3,
                                 placeholder: () => "ABC",
                                 searchInput: () => "abc-straße",
-                                searchResults: () => [],
-                                searchSuggestions: () => []
+                                searchResults: () => []
                             }
                         }
                     }

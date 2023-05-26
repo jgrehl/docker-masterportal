@@ -1,5 +1,3 @@
-import SearchHit from "./searchHit";
-
 /**
  * A search result with its parameters.
  * For each search result there is a default value.
@@ -69,10 +67,17 @@ import SearchHit from "./searchHit";
     }
  * @returns {void}
  */
-export default function SearchHitResult ({category, events, id, index, name, searchInterfaceId, displayedInfo, icon, imagePath, toolTip} = {}) {
-    SearchHit.call(this, {category, id, index, name, searchInterfaceId, displayedInfo, icon, imagePath, toolTip});
+export default function SearchResult ({category, events, id, index, name, searchInterfaceId, displayedInfo, icon, imagePath, toolTip} = {}) {
+    this.category = category;
+    this.id = id;
+    this.index = index;
+    this.name = name;
+    this.searchInterfaceId = searchInterfaceId;
 
     this.events = events;
-}
 
-SearchHitResult.prototype = Object.create(SearchHit.prototype);
+    this.displayedInfo = displayedInfo || "";
+    this.icon = icon || "";
+    this.imagePath = imagePath || "";
+    this.toolTip = toolTip || "";
+}
