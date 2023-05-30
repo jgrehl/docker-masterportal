@@ -35,11 +35,11 @@ function routingOrsOptimizationMultiplicator (optimization) {
 /**
  * Requests isochrones from ors service.
  * @param {Object} params for the function
- * @param {[Number, Number]} [params.coordinates] coordinates in wgs84 projection
+ * @param {Array<{Number, Number}>} [params.coordinates] coordinates in wgs84 projection
  * @param {Function} [params.transformCoordinatesToLocal] function to transform result coordinates to local projection.
  * @param {String} [params.speedProfile] which is used to request the isochrones for.
  * @param {String} [params.optimization] which optimization to request
- * @param {{id: String}[]} [params.avoidSpeedProfileOptions] which options to avoid
+ * @param {Array<{id: String}>} [params.avoidSpeedProfileOptions] which options to avoid
  * @param {Boolean} [params.transformCoordinates] if the coordinates should be transformed to local projection
  * @returns {RoutingIsochrones} routingIsochrones
  */

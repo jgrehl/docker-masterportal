@@ -15,6 +15,18 @@ import rawLayerList from "@masterportal/masterportalapi/src/rawLayerList";
 import {getFeatureGET} from "../../../shared/js/api/wfs/getFeature";
 import {WFS} from "ol/format.js";
 
+/**
+ * Filter General
+ * @module modules/FilterGeneral
+ * @vue-data {String} storePath - Path to the store.
+ * @vue-data {Object} mapHandler - The MapHandler Object.
+ * @vue-data {Array} layerConfigs - List of layer configurations.
+ * @vue-data {Array} selectedLayerGroups - List of selected layer groups.
+ * @vue-data {Array} preparedLayerGroups - List of prepared layer groups.
+ * @vue-data {Array} flattenPreparedLayerGroups - List of prepared, flattened layer groups.
+ * @vue-data {Object} layerLoaded - The loaded layer.
+ * @vue-data {String} layerFilterSnippetPostKey - The layer filter snippet post key.
+ */
 export default {
     name: "FilterGeneral",
     components: {

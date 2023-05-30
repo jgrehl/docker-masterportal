@@ -4,6 +4,7 @@ import Layer from "./layer";
 
 /**
  * Creates a 3d layer.
+ * @name Layer3d
  * @abstract
  * @constructs
  * @extends Layer

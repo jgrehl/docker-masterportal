@@ -89,7 +89,7 @@ function createSnippetsIfNoSnippetsAreGiven (snippets, api, onsuccess, onerror) 
 
 /**
  * Removes all non object and non string snippets from the given array. Returns the result.
- * @param {*[]} snippets a list of snippets with a potential object string mix
+ * @param {Array} snippets a list of snippets with a potential object string mix
  * @returns {Object[]|String[]} a list of snippets with a object and string mix
  */
 function removeInvalidSnippets (snippets) {

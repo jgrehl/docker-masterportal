@@ -62,7 +62,7 @@ const menuGetters = {
      * @param {Object} _ Local vuex getters (discarded).
      * @param {Object} __ vuex rootState (discarded).
      * @param {Object} rootGetters vuex rootGetters.
-     * @returns {(function(type: String): Boolean)} Function returning component identified via deactivateModule.
+     * @returns {Boolean} Function returning component identified via deactivateModule.
      */
     deactivateModule: (state, _, __, rootGetters) => type => {
         if (rootGetters[`Modules/${changeCase.upperFirst(type)}/hasMouseMapInteractions`]
@@ -109,7 +109,7 @@ const menuGetters = {
     /**
      * Returns the Text to be chosen for backward menu navigation.
      * @param {MenuState} state Local vuex state.
-     * @returns {(function(type: String): Boolean)} Function returning false or the Text.
+     * @returns {Boolean} Function returning false or the Text.
      */
     previousNavigationEntryText: (state) => side => {
         const previousEntry = state[side].navigation.history.length !== 0 ? state[side].navigation.history.slice(-1)[0] : "";
@@ -158,7 +158,7 @@ const menuGetters = {
     /**
      * @param {MenuState} _ Local vuex state (discarded).
      * @param {Object} getters Local vuex getters.
-     * @returns {(function(path: Array): Object|null)} Function returning a section of the menu.
+     * @returns {(Object|null)} Function returning a section of the menu.
      */
     section: (_, getters) => path => {
         if (path && getters[path[0]]) {
@@ -179,7 +179,7 @@ const menuGetters = {
     /**
      * @param {MenuState} _ Local vuex state (discarded).
      * @param {Object} getters Local vuex getters.
-     * @returns {function(side: String): {title: string, idAppendix: string}|null} Function returning an object including the title and an appendix for the titles id to make it unique; may return null if no title is configured.
+     * @returns {({title: string, idAppendix: string}|null)} Function returning an object including the title and an appendix for the titles id to make it unique; may return null if no title is configured.
      */
     titleBySide: (_, getters) => side => {
         if (side === "mainMenu" && getters.mainTitle) {

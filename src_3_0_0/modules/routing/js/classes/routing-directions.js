@@ -5,11 +5,11 @@
 class RoutingDirections {
     /**
      * creates new RoutingDirections
-     * @param {[Number, Number, Number, Number]} bbox of the route.
+     * @param {Array<{Number, Number, Number, Number}>} bbox of the route.
      * @param {Number} distance of the route in meter.
      * @param {Number} duration of the route in seconds.
-     * @param {[Number, Number][]} lineString of the route.
-     * @param {Number[]} lineStringWaypointIndex to find out where the waypoints on the linestring are.
+     * @param {Array<{Number, Number}>} lineString of the route.
+     * @param {Array<Number>} lineStringWaypointIndex to find out where the waypoints on the linestring are.
      */
     constructor ({
         bbox,
@@ -28,7 +28,7 @@ class RoutingDirections {
 
     /**
      * Bbox of the route.
-     * @returns {[Number, Number, Number, Number]} bbox of the route.
+     * @returns {Array<{Number, Number, Number, Number}>} bbox of the route.
      */
     getBbox () {
         return this.bbox;
@@ -52,7 +52,7 @@ class RoutingDirections {
 
     /**
      * LineString of the route
-     * @returns {[Number, Number][]} lineString of the route
+     * @returns {Array<{Number, Number}>} lineString of the route
      */
     getLineString () {
         return this.lineString;
@@ -60,7 +60,7 @@ class RoutingDirections {
 
     /**
      * Segments of directions from on waypoint to another.
-     * @returns {RoutingDirectionsSegment[]} segments of directions from on waypoint to another
+     * @returns {Array<{RoutingDirectionsSegment}>} segments of directions from on waypoint to another
      */
     getSegments () {
         return this.segments;
@@ -68,7 +68,7 @@ class RoutingDirections {
 
     /**
      * LineStringWaypointIndex to find out where the waypoints on the linestring are.
-     * @returns {Number[]} lineStringWaypointIndex to find out where the waypoints on the linestring are.
+     * @returns {Array<Number>} lineStringWaypointIndex to find out where the waypoints on the linestring are.
      */
     getLineStringWaypointIndex () {
         return this.lineStringWaypointIndex;

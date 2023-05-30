@@ -56,14 +56,14 @@ class RoutingWaypoint {
 
     /**
      * Coordinates in local projection.
-     * @returns {[Number, Number]} coordinates in local projection.
+     * @returns {Array<{Number, Number}>} coordinates in local projection.
      */
     getCoordinates () {
         return this.coordinates;
     }
     /**
      * Coordinates in local projection
-     * @param {[Number, Number]} coordinates in local projection
+     * @param {Array<{Number, Number}>} coordinates in local projection
      * @returns {void}
      */
     setCoordinates (coordinates) {

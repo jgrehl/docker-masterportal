@@ -9,6 +9,36 @@ import main from "../js/main";
 import VectorSource from "ol/source/Vector";
 import {Vector as VectorLayer} from "ol/layer";
 
+/**
+ * DrawItem
+ * @module modules/DrawItem
+ * @vue-data {String} mapElement - The hmtml-String for the map.
+ * @vue-data {String} storePath - Path to the draw store.
+ * @vue-data {Object} constants - Constants for Dropdowns.
+ * @vue-data {Boolean} draing - Shows if drawing is true.
+ * @vue-computed {Boolean} drawLayerVisibleComputed - Shows/hides the draw layer and enables/disables the tools of the draw tool.
+ * @vue-computed {Boolean} drawHTMLElements - Enables or disables all the select or input elements depending on if the currentInteraction is "draw".
+ * @vue-computed {Boolean} drawHTMLElementsModifyFeature - Enables or disables the select- or input-boxes depending on the state of currentInteraction and selectedFeature.
+ * @vue-computed {Boolean} drawCircleMethods - Enables the input for the radius if the circleMethod is "defined", for interaction "modify" the rule of drawHTMLElementsModifyFeature takes place.
+ * @vue-computed {Number} circleRadiusComputed - The circle radius of the current drawType.
+ * @vue-computed {Number} circleOuterRadiusComputed - The outer circle radius of the current drawType.
+ * @vue-computed {String} circleMethodComputed - The circleMethod of the current drawType.
+ * @vue-computed {Number} unitComputed - The unit of the current drawType.
+ * @vue-computed {String} textComputed - The text of the current drawType.
+ * @vue-computed {Number} fontSizeComputed - The font-size of the current drawType.
+ * @vue-computed {String} fontComputed - The font-family of the current drawType.
+ * @vue-computed {Number} strokeWidthComputed - The stroke-width of the current drawType.
+ * @vue-computed {Number} opacityComputed - The opacity of the current drawType.
+ * @vue-computed {Number} opacityContourComputed - The opacity of the contour of the current drawType.
+ * @vue-computed {Number[]} colorContourComputed - The color of the contour of the current drawType.
+ * @vue-computed {Number[]} outerColorContourComputed - The outer color of a double circle.
+ * @vue-computed {Number[]} colorComputed - The color of the current drawType.
+ * @vue-computed {String} colorContourLabelComputed - The label for the normal colorContour - in case this is a double circle.
+ * @vue-computed {String} innerRadiusLabelComputed - The label for the normal innerRadius - in case this is a double circle.
+ * @vue-computed {Boolean} isFilterListValid - Shows if filter list is valid.
+ * @vue-computed {Boolean} isFromDrawTool - Shows if there are visible features from draw tool.
+ * @vue-computed {Object} featuresFromDrawTool - Features that are set from the draw tool.
+ */
 export default {
     name: "DrawItem",
     components: {
@@ -225,7 +255,7 @@ export default {
             return this.styleSettings?.outerColorContour;
         },
         /**
-         * computed property for the colorContour of the current drawType
+         * computed property for the color of the current drawType
          * @returns {Number[]} the current color as array of numbers - e.g. [0, 0, 0, 1]
          */
         colorComputed () {
@@ -279,7 +309,7 @@ export default {
         },
 
         /**
-         * Returns the features are setted from drawTool
+         * Returns the features are set from drawTool
          * @returns {module:ol/Feature[]} The features from drawTool
          */
         featuresFromDrawTool () {
