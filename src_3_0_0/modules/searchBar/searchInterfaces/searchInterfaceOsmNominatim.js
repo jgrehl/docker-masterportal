@@ -7,6 +7,7 @@ import {uniqueId} from "../../../shared/js/utils/uniqueId";
 
 /**
  * The search interface to the osm nominatim geocoder.
+ * @name SearchInterfaceOsmNominatim
  * @constructs
  * @extends SearchInterface
  * @see {@link https://operations.osmfoundation.org/policies/nominatim/}

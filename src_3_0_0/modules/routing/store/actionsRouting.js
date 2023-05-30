@@ -89,7 +89,7 @@ export default {
     /**
      * Async fetch Text by Coordinates.
      * @param {Object} context actions context object.
-     * @param {[Number, Number]} coordinates LonLat Coordinates.
+     * @param {Array<{Number, Number}>} coordinates LonLat Coordinates.
      * @returns {RoutingGeosearchResult} Returns parsed Array of RoutingGeosearchResults.
      */
     async fetchTextByCoordinates ({state, dispatch}, {coordinates}) {
@@ -127,8 +127,8 @@ export default {
     /**
      * Transforms the given coordinates from the local projection to the wgs84 projections
      * @param {Object} context actions context object.
-     * @param {[Number, Number]} coordinates to project
-     * @returns {[Number, Number]} projected wgs84 coordinates
+     * @param {Array<{Number, Number}>} coordinates to project
+     * @returns {Array<{Number, Number}>} projected wgs84 coordinates
      */
     transformCoordinatesLocalToWgs84Projection ({rootState}, coordinates) {
         return crs.transform(
@@ -140,8 +140,8 @@ export default {
     /**
      * Transforms the given coordinates from the wgs84 projection to the local projections
      * @param {Object} context actions context object.
-     * @param {[Number, Number]} coordinates to project
-     * @returns {[Number, Number]} projected local coordinates
+     * @param {Array<{Number, Number}>} coordinates to project
+     * @returns {Array<{Number, Number}>} projected local coordinates
      */
     transformCoordinatesWgs84ToLocalProjection ({rootState}, coordinates) {
         return crs.transform(

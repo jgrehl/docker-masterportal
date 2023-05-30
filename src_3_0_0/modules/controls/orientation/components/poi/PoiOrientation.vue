@@ -6,10 +6,16 @@ import mutations from "../../store/mutationsOrientation";
 import {extractEventCoordinates} from "../../../../../../src/utils/extractEventCoordinates";
 import svgFactory from "../../../../../shared/js/utils/svgFactory";
 
+/**
+ * Orientation control that allowsthe user to locate themselves on the map.
+ * @module modules/controls/PoiOrientation
+ * @vue-prop {Boolean | Array} poiDistances - The point of interest distances.
+ * @vue-prop {Function} getFeaturesInCircle - Function to get Features within distance.
+ * @vue-event {String} hide - Emits hide to hide the modal.
+ */
 export default {
     name: "PoiOrientation",
     props: {
-        /** id of layer to show in mini-map */
         poiDistances: {
             type: [Boolean, Array],
             required: false,

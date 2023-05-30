@@ -3,6 +3,12 @@
 import axios from "axios";
 import {mapActions, mapGetters, mapMutations} from "vuex";
 
+/**
+ * Alerting
+ * @module modules/AlertingItem
+ * @vue-data {Boolean} availableLocalStorage - Shows if localStorage is available.
+ * @vue-data {String} currentUrl - Current url.
+ */
 export default {
     name: "AlertingItem",
 
