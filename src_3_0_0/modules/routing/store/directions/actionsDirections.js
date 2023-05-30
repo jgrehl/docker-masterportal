@@ -74,7 +74,7 @@ export default {
      * Needs to be extended if new services should be configurable.
      * @param {Object} context actions context object.
      * @param {Object} parameter with wgs84Coords as input and instructions for the external service
-     * @param {[Number, Number]} [parameter.wgs84Coords] coordinates in wgs84 projection
+     * @param {Array<{Number, Number}>} [parameter.wgs84Coords] coordinates in wgs84 projection
      * @param {Boolean} [parameter.instructions] should request with instructions
      * @returns {RoutingDirections} routingDirections
      */
@@ -142,7 +142,7 @@ export default {
      * @param {Object} params with the starting and ending index
      * @param {Number} [params.fromWaypointIndex] at which waypoint to start the highlight
      * @param {Number} [params.toWaypointIndex] at which waypoint to end the highlight
-     * @param {[Number, Number]} [params.coordsIndex] alternative to select the coordinate index directly
+     * @param {Array<{Number, Number}>} [params.coordsIndex] alternative to select the coordinate index directly
      * @returns {void}
      */
     async highlightRoute ({dispatch, state}, {fromWaypointIndex, toWaypointIndex, coordsIndex}) {
@@ -165,7 +165,7 @@ export default {
      * @param {Object} params with the starting and ending index
      * @param {Number} [params.fromWaypointIndex] at which waypoint to start the zoom
      * @param {Number} [params.toWaypointIndex] at which waypoint to end the zoom
-     * @param {[Number, Number]} [params.coordsIndex] alternative to select the coordinate index directly
+     * @param {Array<{Number, Number}>} [params.coordsIndex] alternative to select the coordinate index directly
      * @returns {void}
      */
     async zoomToRoute ({dispatch, state, rootState}, {fromWaypointIndex, toWaypointIndex, coordsIndex}) {
@@ -186,7 +186,7 @@ export default {
     /**
      * Retrieves the waypoint coordinates in wgs84 projection
      * @param {Object} context actions context object.
-     * @returns {[Number, Number][]} wgs84 coordinates
+     * @returns {Array<{Number, Number}>} wgs84 coordinates
      */
     async getDirectionsCoordinatesWgs84 ({getters, dispatch}) {
         const coordinates = [];

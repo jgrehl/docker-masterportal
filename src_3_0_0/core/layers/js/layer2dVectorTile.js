@@ -5,6 +5,7 @@ import Layer2d from "./layer2d";
 
 /**
  * Creates a 2d vector tile layer.
+ * @name Layer2dVectorTile
  * @constructs
  * @extends Layer2d
  * @param {Object} attributes The attributes of the layer configuration.

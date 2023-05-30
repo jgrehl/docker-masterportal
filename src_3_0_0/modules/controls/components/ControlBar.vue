@@ -5,6 +5,8 @@ import visibilityChecker from "../../../shared/js/utils/visibilityChecker";
 
 /**
  * Control layout component that places controls on the map.
+ * @module modules/ControlBar
+ * @vue-data {Object} categorizedControls - Object of configured controls.
  */
 export default {
     name: "ControlBar",
