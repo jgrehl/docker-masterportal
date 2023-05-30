@@ -25,7 +25,7 @@ async function fetchRoutingNominatimGeosearch (search) {
 
 /**
  * Requests POI at coordinate from Nominatim
- * @param {[Number, Number]} coordinates to search at
+ * @param {Array<{Number, Number}>} coordinates to search at
  * @returns {RoutingGeosearchResult} routingGeosearchResult
  */
 async function fetchRoutingNominatimGeosearchReverse (coordinates) {

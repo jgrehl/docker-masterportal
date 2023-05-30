@@ -2,6 +2,18 @@
 import isObject from "../../../shared/js/utils/isObject";
 import {mapGetters, mapActions} from "vuex";
 
+/**
+ * Draw Item Attributes
+ * @module modules/DrawItemAttributes
+ * @vue-prop {Object} selectedFeature - The selected feature.
+ * @vue-prop {Object} layer - The layer.
+ * @vue-prop {Array} attributesKeyList - The list of attribute keys.
+ * @vue-data {String} attributeKey - The attribute key.
+ * @vue-data {String} attributeValue - The attribute value.
+ * @vue-data {Array} attributes - The attributes.
+ * @vue-data {Array} validKeys - List of valid keys.
+ * @vue-data {Object} addKeys - Keys to add.
+ */
 export default {
     name: "DrawItemAttributes",
     props: {

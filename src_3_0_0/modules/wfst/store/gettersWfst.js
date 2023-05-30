@@ -88,7 +88,7 @@ const getters = {
      * values have been set by the user.
      *
      * @param {Object} state Local vuex state.
-     * @returns {(function(feature: Feature): string)} Validity function.
+     * @returns {String} Validity function.
      */
     savingErrorMessage: state => feature => {
         const requiredPropertiesWithNoValue = state.featureProperties

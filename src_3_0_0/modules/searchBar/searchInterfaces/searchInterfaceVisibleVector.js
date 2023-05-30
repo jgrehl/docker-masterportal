@@ -9,6 +9,7 @@ import {Icon} from "ol/style.js";
 
 /**
  * The search interface to the visible vector.
+ * @name SearchInterfaceVisibleVector
  * @constructs
  * @extends SearchInterface
  * @param {Object} [resultEvents] Actions that are executed when an interaction, such as hover or click, is performed with a result list item.

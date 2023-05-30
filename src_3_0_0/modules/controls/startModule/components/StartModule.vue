@@ -2,6 +2,10 @@
 import {mapActions, mapGetters} from "vuex";
 import ControlIcon from "../../components/ControlIcon.vue";
 
+/**
+ * Start control that let's you start a different module.
+ * @module modules/controls/StartModule
+ */
 export default {
     name: "StartModule",
     components: {

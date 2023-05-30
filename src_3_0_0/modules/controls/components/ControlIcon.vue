@@ -2,6 +2,13 @@
 /**
  * ControlIcon component to be used by controls to display
  * clickable control buttons.
+ * @module modules/ControlIcon
+ * @vue-prop {String} iconName - Name of the bootstrap icon, with or without prefix 'bi-'.
+ * @vue-prop {Boolean} disabled - Whether the icon is currently clickable or marked disabled.
+ * @vue-prop {String} title - The tooltip text.
+ * @vue-prop {Function} onClick - The click-function of the Control-Button.
+ * @vue-prop {String} buttonTitle - The text for the Control-Button.
+ * @vue-computed {String} iconClass - The icon name with added prefix 'bi-' if it was missing.
  */
 export default {
     name: "ControlIcon",
@@ -25,11 +32,6 @@ export default {
         onClick: {
             type: Function,
             default: () => console.warn("No onClick function was defined on this ControlIcon.")
-        },
-        /** if true, icon is rendered as smaller inline-block */
-        inline: {
-            type: Boolean,
-            default: false
         },
         buttonTitle: {
             type: String,

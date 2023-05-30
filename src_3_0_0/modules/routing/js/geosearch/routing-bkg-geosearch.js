@@ -24,7 +24,7 @@ async function fetchRoutingBkgGeosearch (search) {
 
 /**
  * Requests POI at coordinate from BKG
- * @param {[Number, Number]} coordinates to search at
+ * @param {Array<{Number, Number}>} coordinates to search at
  * @returns {RoutingGeosearchResult} routingGeosearchResult
  */
 async function fetchRoutingBkgGeosearchReverse (coordinates) {
@@ -46,7 +46,7 @@ async function fetchRoutingBkgGeosearchReverse (coordinates) {
  * Parses Response from Bkg to RoutingGeosearchResult
  * @param {Object} geosearchResult from BKG
  * @param {Object} [geosearchResult.geometry] geosearchResult geometry
- * @param {[Number, Number]} [geosearchResult.geometry.coordinates] geosearchResult geometry coordinates
+ * @param {Array<{Number, Number}>} [geosearchResult.geometry.coordinates] geosearchResult geometry coordinates
  * @param {Object} [geosearchResult.properties] geosearchResult properties
  * @param {String} [geosearchResult.properties.text] geosearchResult properties text
  * @returns {RoutingGeosearchResult} routingGeosearchResult

@@ -45,7 +45,7 @@ function prepareLayers (layers, nextFilterId, FilterApi) {
 
 /**
  * Removes all non object and non string layers from the given array. Returns the result.
- * @param {*[]} layers a list of layers with a potential object string mix
+ * @param {Array} layers a list of layers with a potential object string mix
  * @returns {Object[]|String[]} a list of layers with a object and string mix
  */
 function removeInvalidLayers (layers) {

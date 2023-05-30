@@ -3,6 +3,7 @@ import store from "../../../app-store";
 
 /**
  * The search interface to the elasticSearch.
+ * @name SearchInterfaceElasticSearch
  * @param {Object} hitMap Object mapping result object attributes to keys.
  * @param {String} hitMap.coordinate Attribute value will be mapped to the attribute key.
  * @param {String} hitMap.id Attribute value will be mapped to the attribute key.

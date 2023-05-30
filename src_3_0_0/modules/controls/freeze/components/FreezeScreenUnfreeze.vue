@@ -3,6 +3,8 @@
 /**
  * Freeze control that allows the user to freeze the current window
  * of desktop and Mobile browser
+ * @module modules/controls/FreezeScreenUnfreeze
+ * @vue-event {String} hideFreezeWin - Emit hiding the freeze window.
  */
 export default {
     name: "FreezeScreenUnfreeze",

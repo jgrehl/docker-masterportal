@@ -23,11 +23,11 @@ function routingOrsPreference (preference) {
 /**
  * Requests directions from ors service.
  * @param {Object} params parameter
- * @param {[Number, Number]} [params.coordinates] in wgs84 projection
+ * @param {Array<{Number, Number}>} [params.coordinates] in wgs84 projection
  * @param {String} [params.language] to request the instructions in local language.
  * @param {Function} [params.transformCoordinatesToLocal] function to transform result coordinates to local projection.
  * @param {String} [params.speedProfile] to request the directions with
- * @param {{id: String}[]} [params.avoidSpeedProfileOptions] options to avoid
+ * @param {Array<{id: String}>} [params.avoidSpeedProfileOptions] options to avoid
  * @param {String} [params.preference] to request the directions with
  * @param {Object} [params.avoidPolygons] areas to avoid when requesting directions
  * @param {Boolean} [params.instructions] if the instructions should be requested

@@ -1,6 +1,7 @@
 /**
  * A search result with its parameters.
  * For each search result there is a default value.
+ * @name SearchHitResult
  * @constructs
  * @extends SearchHit
  * @param {String} category The category to which the search result should be assigned.

@@ -2,6 +2,10 @@
 import {mapActions, mapGetters} from "vuex";
 import ControlIcon from "../../components/ControlIcon.vue";
 
+/**
+ * Button to activate 3D-mode.
+ * @module modules/controls/Button3dItem
+ */
 export default {
     name: "Button3dItem",
     components: {
