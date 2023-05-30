@@ -1,4 +1,3 @@
-import axios from "axios";
 import SearchInterface from "./searchInterface";
 import store from "../../../app-store";
 
@@ -152,75 +151,14 @@ SearchInterfaceElasticSearch.prototype.sendRequest = async function (url, reques
         payload = requestConfig.payload || undefined,
         urlWithPayload = type === "GET" ? `${url}?source_content_type=application/json&source=${
             JSON.stringify(payload)
-        }` : url,
-        controller = new AbortController();
+        }` : url;
     let resultWithHits = result;
 
-    this.searchState = "running";
-    this.abortRequest();
-    this.currentController = controller;
-
     if (type === "GET") {
-        resultWithHits = await this.sendGetRequest(urlWithPayload, controller);
+        resultWithHits = await this.requestSearch(urlWithPayload, "GET");
     }
     else if (type === "POST") {
-        resultWithHits = await this.sendPostRequest(url, controller, payload);
-    }
-
-    this.searchState = "finished";
-    return resultWithHits;
-};
-
-/**
- * Sends the GET request.
- * @param {String} url url to send request.
- * @param {AbortController} controller The AbortController.
- * @returns {Object} Parsed result of request.
- */
-SearchInterfaceElasticSearch.prototype.sendGetRequest = async function (url, controller) {
-    const res = await axios.get(url, {
-        headers: {
-            "Content-Type": "application/json;charset=UTF-8"
-        },
-        signal: controller.signal
-    });
-    let resultWithHits = {};
-
-    if (res.status === 200) {
-        resultWithHits = res.data.hits;
-    }
-    else {
-        resultWithHits.status = "error";
-        resultWithHits.message = "error occured in xhr Request!" + res.statusText;
-        resultWithHits.hits = [];
-    }
-
-    return resultWithHits;
-};
-
-/**
- * Sends the POST request.
- * @param {String} url url to send request.
- * @param {AbortController} controller The AbortController.
- * @param {Object} payload The request payload.
- * @returns {Object} Parsed result of request.
- */
-SearchInterfaceElasticSearch.prototype.sendPostRequest = async function (url, controller, payload) {
-    const res = await axios.post(url, payload, {
-        headers: {
-            "Content-Type": "application/json;charset=UTF-8"
-        },
-        signal: controller.signal
-    });
-    let resultWithHits = {};
-
-    if (res.status === 200) {
-        resultWithHits = res.data.hits;
-    }
-    else {
-        resultWithHits.status = "error";
-        resultWithHits.message = "error occured in xhr Request!" + res.statusText;
-        resultWithHits.hits = [];
+        resultWithHits = await this.requestSearch(url, "POST", payload);
     }
 
     return resultWithHits;

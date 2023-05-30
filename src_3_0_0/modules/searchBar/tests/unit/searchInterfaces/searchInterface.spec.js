@@ -12,6 +12,7 @@ describe("src/modules/searchBar/searchInterfaces/searchInterface.js", () => {
 
     afterEach(() => {
         SearchInterface1.clearSearchResults();
+        sinon.restore();
     });
 
     describe("createPossibleActions", () => {
@@ -71,14 +72,88 @@ describe("src/modules/searchBar/searchInterfaces/searchInterface.js", () => {
 
     describe("requestSearch", () => {
         it("should send a get request", async () => {
+            SearchInterface1.currentController = {
+                signal: sinon.stub()
+            };
+
             const urlMock = "/testUrl",
-                responseMock = {test: 123},
-                axiosMock = sinon.stub(axios, "get").resolves(responseMock);
+                type = "GET",
+                responseMock = {
+                    data: {
+                        hits: ["hit1", "hit2"]
+                    },
+                    status: 200
+                },
+                axiosStub = sinon.stub(axios, "get").resolves(responseMock),
+                resultWithHits = await SearchInterface1.requestSearch(urlMock, type);
 
-            await SearchInterface1.requestSearch(urlMock);
+            expect(resultWithHits).to.deep.equals(["hit1", "hit2"]);
+            expect(axiosStub.calledOnce).to.be.true;
+            expect(axiosStub.firstCall.args[0]).to.equals(urlMock);
+            expect(axiosStub.firstCall.args[1]).to.have.nested.include({
+                "headers.Content-Type": "application/json;charset=UTF-8"
+            });
+        });
+    });
 
-            expect(axiosMock.calledOnce).to.be.true;
-            expect(axiosMock.args[0][0]).to.equals(urlMock);
+    describe("sendGetRequest", () => {
+        it("should return result with hits, if response status is 200", async () => {
+            SearchInterface1.currentController = {
+                signal: sinon.stub()
+            };
+
+            const returnRes = {
+                    data: {
+                        hits: ["hit", "hit"]
+                    },
+                    status: 200
+                },
+                url = "https://geodienste.hamburg.de/",
+                axiosStub = sinon.stub(axios, "get").resolves(returnRes),
+                response = await SearchInterface1.sendGetRequest(url);
+
+            expect(response).to.deep.equals({
+                data: {
+                    hits: ["hit", "hit"]
+                },
+                status: 200
+            });
+            expect(axiosStub.calledOnce).to.be.true;
+            expect(axiosStub.firstCall.args[0]).to.equals(url);
+            expect(axiosStub.firstCall.args[1]).to.have.nested.include({
+                "headers.Content-Type": "application/json;charset=UTF-8"
+            });
+        });
+    });
+
+    describe("sendPostRequest", () => {
+        it("should return result with hits, if response status is 200", async () => {
+            SearchInterface1.currentController = {
+                signal: sinon.stub()
+            };
+
+            const returnRes = {
+                    data: {
+                        hits: ["hit", "hit"]
+                    },
+                    status: 200
+                },
+                url = "https://geodienste.hamburg.de/",
+                axiosStub = sinon.stub(axios, "post").resolves(returnRes),
+                response = await SearchInterface1.sendPostRequest(url);
+
+            expect(response).to.deep.equals({
+                data: {
+                    hits: ["hit", "hit"]
+                },
+                status: 200
+            });
+            expect(axiosStub.calledOnce).to.be.true;
+            expect(axiosStub.firstCall.args[0]).to.equals(url);
+            expect(axiosStub.firstCall.args[1]).to.be.undefined;
+            expect(axiosStub.firstCall.args[2]).to.have.nested.include({
+                "headers.Content-Type": "application/json;charset=UTF-8"
+            });
         });
     });
 
