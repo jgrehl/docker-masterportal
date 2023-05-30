@@ -2,6 +2,12 @@
 import {mapActions, mapGetters, mapMutations} from "vuex";
 import mutations from "../../store/mutationsOrientation";
 
+/**
+ * Orientation control that allows the user to locate themselves on the map.
+ * @module modules/controls/PoiChoice
+ * @vue-computed {Object} choices - Object with two strings for position.
+ * @vue-event {String} track - Triggers tracking.
+ */
 export default {
     name: "PoiChoice",
     emits: ["track"],

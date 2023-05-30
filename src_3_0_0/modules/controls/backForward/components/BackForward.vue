@@ -5,6 +5,7 @@ import ControlIcon from "../../components/ControlIcon.vue";
 /**
  * The BackForward control element allows stepping back
  * and forth through view states regarding zoom and center.
+ * @module modules/controls/BackForward
  */
 export default {
     name: "BackForward",

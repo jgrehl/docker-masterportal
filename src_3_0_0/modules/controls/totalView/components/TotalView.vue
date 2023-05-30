@@ -5,6 +5,8 @@ import ControlIcon from "../../components/ControlIcon.vue";
 /**
  * TotalView adds a control that lets the user reset the
  * view's state to the initial zoom and center coordinates.
+ * @module modules/controls/TotalView
+ * @vue-computed {Boolean} mapMoved - Shows if map moved.
  */
 export default {
     name: "TotalView",

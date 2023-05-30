@@ -154,7 +154,7 @@ export default {
         },
         /**
          * Takes the selected coordinates and centers the map to the new position.
-         * @param {Array.<String[]>} features clicked feature to zoom to
+         * @param {Array<String[]>} features clicked feature to zoom to
          * @returns {void}
          */
         setCenter (features) {
