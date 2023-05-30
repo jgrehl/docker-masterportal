@@ -1,6 +1,21 @@
 <script>
 import {minMessageLength} from "../store/constantsContact";
 
+/**
+ * The Contact Form Input
+ * @module modules/ContactFormularInput
+ * @vue-data {Number} minMessageLength - The min length for the text.
+ * @vue-prop {Function} changeFunction - Function that happens on change.
+ * @vue-prop {String} htmlElement - Input or Textarea element string.
+ * @vue-prop {String} inputName - Name of the Input.
+ * @vue-prop {String} inputType - Type of the Input.
+ * @vue-prop {String} inputValue - Value of the Input.
+ * @vue-prop {String} labelText - The label.
+ * @vue-prop {Number} rows - The number of visible rows in textarea.
+ * @vue-prop {Boolean} validInput - Shows if the input is valid.
+ * @vue-prop {Boolean} focusOnCreation - Shows if the focus is on the input.
+ * @vue-prop {String} autocomplete - Turns autocomplete on or off.
+ */
 export default {
     name: "ContactFormularInput",
     props: {
@@ -97,6 +112,7 @@ export default {
                 :aria-describedby="`module-contact-${inputName}-help`"
                 :placeholder="$t(`common:modules.contact.placeholder.${inputName}`)"
                 :style="htmlElement === 'textarea' ? 'height: 100px' : ''"
+                :rows="rows"
                 @focus="help($event.currentTarget)"
                 @keyup="changeFunction($event.currentTarget.value)"
             />

@@ -8,7 +8,7 @@ import {convertColor} from "../../../../shared/js/utils/convertColor";
 class RoutingIsochronesArea {
     /**
      * creates new RoutingIsochronesArea
-     * @param {Array<Array<[Number, Number]>>} coordinates of area as polygon.
+     * @param {Array<Array<{Number, Number}>>} coordinates of area as polygon.
      * @param {Number} groupIndex of area.
      * @param {Number} value of area.
      * @param {Number} maximum value for interval.
@@ -51,7 +51,7 @@ class RoutingIsochronesArea {
 
     /**
      * Polygon coordinates.
-     * @returns {Array<Array<[Number, Number]>>} coordinates of area as polygon.
+     * @returns {Array<Array<{Number, Number}>>} coordinates of area as polygon.
      */
     getCoordinates () {
         return this.coordinates;
@@ -104,7 +104,7 @@ class RoutingIsochronesArea {
 
     /**
      * RGB color to display the area in.
-     * @returns {[Number, Number, Number]} rgb color to display the area in.
+     * @returns {Array<{Number, Number, Number}>} rgb color to display the area in.
      */
     getColor () {
         return this.color;
@@ -112,7 +112,7 @@ class RoutingIsochronesArea {
 
     /**
      * RGB color string to display the area in.
-     * @returns {[Number, Number, Number]} rgb color string to display the area in.
+     * @returns {Array<{Number, Number, Number}>} rgb color string to display the area in.
      */
     getColorRgbString () {
         return convertColor(this.color, "rgbString");

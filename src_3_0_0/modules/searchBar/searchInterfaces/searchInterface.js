@@ -3,6 +3,7 @@ import axios from "axios";
 
 /**
  * Search interface is used as a parent element for concrete search interfaces.
+ * @name SearchInterface
  * @abstract
  * @constructs
  * @param {String} paging Shows if all search hits are already in the store or if new requests have to be sent for further search hits. Possible values are "client" or "request.
