@@ -62,7 +62,7 @@ SearchInterfaceElasticSearch.prototype.search = async function (searchInput) {
         result = await this.initializeSearch(requestConfig),
         normalizedResults = this.normalizeResults(result.hits);
 
-    this.pushHitsToSearchResultsOrSuggestions(normalizedResults);
+    this.pushHitsToSearchResults(normalizedResults);
 
     return this.searchResults;
 };

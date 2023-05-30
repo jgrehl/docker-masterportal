@@ -114,7 +114,7 @@ SearchInterface.prototype.normalizeResultEvents = function (resultEvents, search
 };
 
 /**
- * Adds all search hits to the search result or suggestions.
+ * Adds all search hits to the search results.
  * @param {Object[]} [searchHits=[]] The search hits of an search interface.
  * @returns {void}
  */
