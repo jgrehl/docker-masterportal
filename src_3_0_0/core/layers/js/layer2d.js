@@ -6,6 +6,7 @@ import Layer from "./layer";
 
 /**
  * Creates a 2d layer.
+ * @name Layer2d
  * @abstract
  * @constructs
  * @extends Layer

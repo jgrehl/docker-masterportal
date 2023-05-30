@@ -3,6 +3,7 @@ import SearchInterface from "./searchInterface";
 /**
  * The search interface to the special wfs.
  * @constructs
+ * @name SearchInterfaceSpecialWfs
  * @extends SearchInterface
  * @param {Object} definitions Special WFS search definitions.
  * @param {String} definitions.icon CSS glyphicon class of search results, shown before the result name.

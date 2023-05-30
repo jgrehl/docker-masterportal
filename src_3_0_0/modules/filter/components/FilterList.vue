@@ -1,6 +1,19 @@
 <script>
 import {translateKeyWithPlausibilityCheck} from "../../../shared/js/utils/translateKeyWithPlausibilityCheck.js";
 
+/**
+ * Filter List
+ * @module modules/FilterList
+ * @vue-prop {Boolean} multidLayerSelector - Shows if multi layer selection is allowed.
+ * @vue-prop {Array} filters - List of all the filters.
+ * @vue-prop {Array} selectedLayers - List of all the selected layers.
+ * @vue-prop {Number} jumpToId - The id it should scroll to.
+ * @vue-data {Array} itemRefs - The references to the item.
+ * @vue-computed {Booleand} disabled - Shows if button should be disabled.
+ * @vue-event {String} selectedAccordions - Updates the selected accordions.
+ * @vue-event {String} setLayerLoaded - Emitting the function by transfering the filter Id of layer.
+ * @vue-event {null} resetJumpToId - Resets the function.
+ */
 export default {
     name: "FilterList",
     components: {
@@ -37,7 +50,7 @@ export default {
         /**
          * Checks if Selector should be disabled.
          * @param {Number} filterId id to check if should be disabled
-         * @returns {void}
+         * @returns {Boolean} if button should be disabled
          */
         disabled (filterId) {
             return !this.multiLayerSelector && this.selectedLayers.length > 0 && !this.selectedLayers.includes(filterId);
