@@ -150,7 +150,7 @@ export default {
         /**
          * Iterates the Properties and adds Links and Breaks.
          * @param {Array} properties Technical key to display value
-         * @returns {Array.<String[]>} Array of [key,value]-pairs - may be empty
+         * @returns {Array<String[]>} Array of [key,value]-pairs - may be empty
          */
         processLinksAndBreaks: function (properties) {
             const resultProperties = properties;
@@ -185,7 +185,7 @@ export default {
          * Prepares the properties of a feature for tabular display.
          * @param {Array} properties Technical key to display value
          * @param {Object} gfiAttributes Technical key to display key
-         * @returns {Array.<String[]>} Array of [key,value]-pairs - may be empty
+         * @returns {Array<String[]>} Array of [key,value]-pairs - may be empty
          */
         translateGFI: function (properties, gfiAttributes) {
             const resultProperties = this.processLinksAndBreaks(properties);

@@ -18,6 +18,28 @@ import isObject from "../../../shared/js/utils/isObject.js";
 import {translateKeyWithPlausibilityCheck} from "../../../shared/js/utils/translateKeyWithPlausibilityCheck.js";
 import sortBy from "../../../shared/js/utils/sortBy";
 
+/**
+ * Geometry Filter
+ * @module modules/GeometryFilter
+ * @vue-prop {Number} circleSides - The number of circle sides.
+ * @vue-prop {Number} defaultBuffer - The default buffer number.
+ * @vue-prop {String} fillColor - The fill color as rbga string.
+ * @vue-prop {Array} geometries - A list of all the geometries.
+ * @vue-prop {Array|Boolean} additionalGeometries - A list of all the geometries or boolean.
+ * @vue-prop {Boolean} invertGeometry - Shows if geometry is inverted.
+ * @vue-prop {String} strokeColor - The stroke color as rbga string.
+ * @vue-prop {Number} strokeWidth - The stroke width.
+ * @vue-prop {Object|Boolean} filterGeometry - Shows if geometry should be filtered.
+ * @vue-prop {Object} geometryFeature - The geometry feature.
+ * @vue-prop {Object} initSelectedGeometryIndex - The initial geometry index.
+ *
+ * @vue-data {Boolean} isActive - Shows if geometry filter is active.
+ * @vue-data {Object} buffer - The buffer.
+ * @vue-data {Boolean} isBufferInputVisible - Shows if buffer input is visible.
+ * @vue-data {Boolean} isGeometryVisible - Shows if geometry input is visible.
+ * @vue-data {Number} selectedGeometryIndex - The selected geometry Index.
+ * @vue-data {String} lastMouseMapInteractionsComponent - The last mouse map interaction.
+ */
 export default {
     name: "GeometryFilter",
     props: {
