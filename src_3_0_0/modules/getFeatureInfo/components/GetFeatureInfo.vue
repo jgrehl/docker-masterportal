@@ -6,6 +6,17 @@ import {mapAttributes} from "@masterportal/masterportalapi/src/lib/attributeMapp
 import omit from "../../../shared/js/utils/omit";
 import IconButton from "../../../shared/modules/buttons/components/IconButton.vue";
 
+/**
+ * GetFeatureInfo
+ * @module modules/GetFeatureInfo
+ * @vue-data {Number} pagerIndex - The current index of the pagination.
+ * @vue-data {String} componentKey - The key for re-render child component.
+ * @vue-data {String} leftIcon - The icon for button.
+ * @vue-data {String} rightIcon - The icon for the Button.
+ * @vue-computed {String} currentComponentType - The current component type of the menu navigation by side.
+ * @vue-computed {String} currentViewType - The current view type.
+ * @vue-computed {Object} feature - The feature depending on the pager index.
+ */
 export default {
     name: "GetFeatureInfo",
     components: {

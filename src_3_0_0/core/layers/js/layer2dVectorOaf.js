@@ -8,6 +8,7 @@ import Layer2dVector from "./layer2dVector";
 
 /**
  * Creates a 2d vector oaf (OGC API - Features) layer.
+ * @name Layer2dVectorOaf
  * @constructs
  * @extends Layer2dVector
  * @param {Object} attributes The attributes of the layer configuration.

@@ -4,6 +4,7 @@ import {search, setGazetteerUrl, setShowGeographicIdentifier} from "@masterporta
 
 /**
  * The search interface to the gazetteer.
+ * @name SearchInterfaceGazetteer
  * @constructs
  * @extends SearchInterface
  * @param {String} serviceId Search service id. Resolved using the rest-services.json file.

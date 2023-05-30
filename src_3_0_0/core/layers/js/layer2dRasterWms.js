@@ -4,6 +4,7 @@ import Layer2dRaster from "./layer2dRaster";
 
 /**
  * Creates a 2d raster wms (Web Map Service) layer.
+ * @name Layer2dRasterWms
  * @constructs
  * @extends Layer2dRaster
  * @param {Object} attributes The attributes of the layer configuration.

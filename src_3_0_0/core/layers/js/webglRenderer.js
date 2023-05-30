@@ -3,9 +3,9 @@ import * as webgl from "@masterportal/masterportalapi/src/renderer/webgl";
 
 
 /**
- * Hides all features by removing them from the layer source.
+ * Hides all features by removing them from the layer source. Overrides <LayerType>.hideAllFeatures
  * @public
- * @override <LayerType>.hideAllFeatures
+ * @override
  * @returns {void}
  */
 function hideAllFeatures () {
@@ -13,9 +13,9 @@ function hideAllFeatures () {
 }
 
 /**
- * sets the layerSource to have the inital features array
+ * sets the layerSource to have the inital features array. Overrides <LayerType>.showAllFeatures
  * @public
- * @override <LayerType>.showAllFeatures
+ * @override
  * @returns {void}
  */
 function showAllFeatures () {
@@ -24,10 +24,10 @@ function showAllFeatures () {
 }
 
 /**
- * Filters the visibility of features by ids.
+ * Filters the visibility of features by ids. Overrides <LayerType>.showFeaturesByIds
  * @public
  * @param  {String[]} featureIdList Feature ids to be shown.
- * @override <LayerType>.showFeaturesByIds
+ * @override
  * @return {void}
  */
 function showFeaturesByIds (featureIdList) {
@@ -39,9 +39,9 @@ function showFeaturesByIds (featureIdList) {
 
 /**
  * Is called if visibility of layer changed. If newValue is false, the layer is removed from map, else layer is added.
- * Disposes WebGL resources if layer is set invisible
+ * Disposes WebGL resources if layer is set invisible. Overrides <LayerType>.visibilityChanged.
  * @public
- * @override <LayerType>.visibilityChanged
+ * @override
  * @param {Boolean} newValue true, if layer is set visible
  * @todo rerender map after canvas render complete
  *       necessary for GPU rendering, since no map/layer event catches the rendering correctly

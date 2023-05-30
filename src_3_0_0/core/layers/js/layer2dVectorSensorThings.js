@@ -24,6 +24,7 @@ dayjs.extend(localizedFormat);
 
 /**
  * Creates a 2d vector sensorThings (SensorThings API) layer.
+ * @name Layer2dVectorSensorThings
  * @constructs
  * @extends Layer2dVector
  * @param {Object} attributes The attributes of the layer configuration.

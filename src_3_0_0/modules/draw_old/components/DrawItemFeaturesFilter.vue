@@ -1,4 +1,12 @@
 <script>
+/**
+ * Draw Download Item
+ * @module modules/DrawItemFeaturesFilter
+ * @vue-prop {Array} filterList - List of filters.
+ * @vue-prop {Array} features - List of Features.
+ * @vue-computed {Object} groupedFeatures - Features grouped based on fiter coniguration.
+ * @vue-computed {Boolean} hasFeaturesOfFilter - Shows if feature belongs to the filter.
+ */
 export default {
     name: "DrawItemFeaturesFilter",
     props: {
