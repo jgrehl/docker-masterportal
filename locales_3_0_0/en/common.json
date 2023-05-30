@@ -88,7 +88,7 @@
       "fileSizeMessage": "The attached file exceeds the specified file size.",
       "mailSubject": "Support request for the portal ",
       "messageLabel": "Your message",
-      "contact": "Contact",
+      "name": "Contact",
       "placeholder": {
         "mail": "Your E-mail Address",
         "message": "Please write down your message in here and press \"$t(common:modules.contact.sendButton)\".",
