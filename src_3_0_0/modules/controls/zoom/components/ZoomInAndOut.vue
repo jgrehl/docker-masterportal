@@ -3,6 +3,10 @@
 import {mapGetters, mapActions} from "vuex";
 import ControlIcon from "../../components/ControlIcon.vue";
 
+/**
+ * ZoomInAndOut adds a control that lets the user zoom in and out of the map.
+ * @module modules/controls/ZoomInAndOut
+ */
 export default {
     name: "ZoomInAndOut",
     components: {

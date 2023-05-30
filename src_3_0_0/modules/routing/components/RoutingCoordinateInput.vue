@@ -91,7 +91,7 @@ export default {
         },
         /**
          * Passes the input wgs84 coordinate to the waypoint
-         * @param {[Number, Number]} wgs84Coordinate which was entered in the input text
+         * @param {Array<{Number, Number}>} wgs84Coordinate which was entered in the input text
          * @returns {void}
          */
         async selectWgs84Coordinate (wgs84Coordinate) {

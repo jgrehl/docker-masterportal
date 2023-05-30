@@ -3,6 +3,7 @@ import Layer2dVector from "./layer2dVector";
 
 /**
  * Creates a 2d vector vectorbase layer.
+ * @name Layer2dVectorVectorbase
  * @constructs
  * @extends Layer2dVector
  * @param {Object} attributes The attributes of the layer configuration.

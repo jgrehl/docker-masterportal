@@ -11,7 +11,7 @@
  * @param {String} condition.key to compare with
  * @param {String} condition.value to compare with
  * @param {Number} [maxDepth=200] maximum number of self calls, default: 200
- * @returns {*[]} the replaced objects
+ * @returns {Array} the replaced objects
  */
 export default function replaceInNestedValues (obj, searchKey, replacement, condition, maxDepth = 200) {
     if (typeof obj !== "object" || obj === null) {
@@ -28,7 +28,7 @@ export default function replaceInNestedValues (obj, searchKey, replacement, cond
  * @param {Object} obj the object to search
  * @param {*} searchKey the key to search for
  * @param {Number} maxDepth depth barrier
- * @param {Object|*[]} result collection of already found values
+ * @param {Object|Array} result collection of already found values
  * @param {Number} depth current depth
  * @param {Object} replacement to replace
  * @param {Object} condition to compare with

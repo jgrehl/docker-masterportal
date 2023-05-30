@@ -9,6 +9,16 @@ import {isEmailAddress} from "../../../shared/js/utils/isEmailAddress";
 import toBold from "../../../shared/js/utils/toBold";
 import FlatButton from "../../../shared/modules/buttons/components/FlatButton.vue";
 
+/**
+ * Feature Lister
+ * @module modules/FeatureLister
+ * @vue-data {String} defaultTabClass - The CSS-Class for the tab.
+ * @vue-data {String} activeTabClass - The CSS-Class "active".
+ * @vue-data {String} disabledTabClass - The CSS-Class "disabled".
+ * @vue-computed {String} themeTabClasses - The class for the current theme-tab.
+ * @vue-computed {String} listTabClasses - The class for the current list-tab.
+ * @vue-computed {String} detailsTabClasses - The class for the current details-tab.
+ */
 export default {
     name: "FeatureLister",
     components: {

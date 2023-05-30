@@ -5,6 +5,12 @@ import FlatButton from "../../../shared/modules/buttons/components/FlatButton.vu
 
 /**
  * Tool to check if a subset of features associated to a target layer are located within or outside an applied radius to all features of a source layer.
+ * @module modules/BufferAnalysis
+ * @vue-data {Object} resultTypeEnum - Enum of result Types.
+ * @vue-computed {Object} selectedSourceLayer - Currently selected source layer.
+ * @vue-computed {Object} selectedTargetLayer - Currently selected target layer.
+ * @vue-computed {Object} resultType - Currently selected result type.
+ * @vue-computed {Object} inputBufferRadius - Current radius.
  */
 export default {
     name: "BufferAnalysis",
