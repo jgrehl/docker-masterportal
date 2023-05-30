@@ -214,55 +214,6 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceElasticSea
         });
     });
 
-    describe("sendGetRequest", ()=> {
-        it("should return result with hits, if response status is 200", async () => {
-            const controller = {
-                    signal: sinon.stub()
-                },
-                returnRes = {
-                    data: {
-                        hits: ["hit", "hit"]
-                    },
-                    status: 200
-                },
-                url = "https://geodienste.hamburg.de/",
-                axiosStub = sinon.stub(axios, "get").resolves(returnRes),
-                resultWithHits = await SearchInterface1.sendGetRequest(url, controller);
-
-            expect(resultWithHits).to.deep.equals(["hit", "hit"]);
-            expect(axiosStub.calledOnce).to.be.true;
-            expect(axiosStub.firstCall.args[0]).to.equals("https://geodienste.hamburg.de/");
-            expect(axiosStub.firstCall.args[1]).to.have.nested.include({
-                "headers.Content-Type": "application/json;charset=UTF-8"
-            });
-        });
-    });
-
-    describe("sendPostRequest", ()=> {
-        it("should return result with hits, if response status is 200", async () => {
-            const controller = {
-                    signal: sinon.stub()
-                },
-                returnRes = {
-                    data: {
-                        hits: ["hit", "hit"]
-                    },
-                    status: 200
-                },
-                url = "https://geodienste.hamburg.de/",
-                axiosStub = sinon.stub(axios, "post").resolves(returnRes),
-                resultWithHits = await SearchInterface1.sendPostRequest(url, controller);
-
-            expect(resultWithHits).to.deep.equals(["hit", "hit"]);
-            expect(axiosStub.calledOnce).to.be.true;
-            expect(axiosStub.firstCall.args[0]).to.equals("https://geodienste.hamburg.de/");
-            expect(axiosStub.firstCall.args[1]).to.be.undefined;
-            expect(axiosStub.firstCall.args[2]).to.have.nested.include({
-                "headers.Content-Type": "application/json;charset=UTF-8"
-            });
-        });
-    });
-
     describe("normalizeResults", () => {
         it("should normalize an search result", () => {
             const searchResults = [
