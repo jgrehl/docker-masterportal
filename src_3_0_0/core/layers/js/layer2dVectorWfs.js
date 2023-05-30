@@ -4,6 +4,7 @@ import Layer2dVector from "./layer2dVector";
 
 /**
  * Creates a 2d vector wfs (Web Feature Service) layer.
+ * @name Layer2dVectorWfs
  * @constructs
  * @extends Layer2dVector
  * @param {Object} attributes The attributes of the layer configuration.
