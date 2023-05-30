@@ -8,13 +8,6 @@ const getters = {
     ...generateSimpleGetters(stateAppStore),
 
     /**
-     * Returns the named projections from config.js.
-     * @param {Object} state state of the app-store.
-     * @returns {Array}  the named projections from config.js
-     */
-    namedProjections: state => state?.configJs.namedProjections || null,
-
-    /**
      * Returns the active category configured in config.json unter 'tree'.
      * @param {Object} state state of the app-store.
      * @returns {Object|null} The active category or the first one or null if not found
@@ -268,6 +261,20 @@ const getters = {
     },
 
     /**
+     * Returns the named projections from config.js.
+     * @param {Object} state state of the app-store.
+     * @returns {Array}  the named projections from config.js
+     */
+    namedProjections: state => state?.configJs.namedProjections || null,
+
+    /**
+     * Returns proxyHost if given.
+     * @param {Object} state state of the app-store.
+     * @returns {String} proxhost if given or empty proxyHost
+     */
+    proxyHost: state => state?.configJs?.proxyHost || "",
+
+    /**
      * Returns a rest service from restConf by ID
      * @param {Object} state the store state
      * @param {String} id The id for rest service
@@ -324,13 +331,7 @@ const getters = {
         const layerContainer = getters.allSubjectDataLayerConfigs(state);
 
         return layerContainer.filter(layerConf => layerConf.visibility === true);
-    },
-    /**
-     * Returns proxyHost if given.
-     * @param {Object} state state of the app-store.
-     * @returns {String} proxhost if given or empty proxyHost
-     */
-    proxyHost: state => state?.configJs?.proxyHost || ""
+    }
 };
 
 export default getters;
