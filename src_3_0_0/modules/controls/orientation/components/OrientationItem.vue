@@ -11,6 +11,16 @@ import * as Proj from "ol/proj.js";
 import {Circle, LineString} from "ol/geom.js";
 import layerCollection from "../../../../core/layers/js/layerCollection";
 
+/**
+ * Orientation control that allows the user to locate themselves on the map.
+ * @module modules/controls/OrientationItem
+ * @vue-data {Boolean} firstGeolocation - Shows if it is the first time locating.
+ * @vue-data {Object} marker - Overlay with marker.
+ * @vue-data {Boolean} tracking - Shows if the tracking is on.
+ * @vue-data {Boolean} isGeolocationDenied - Shows if geolocation is denied.
+ * @vue-data {Boolean} isGeolocationPossible - Shows if geolocation is possible.
+ * @vue-computed {Array} poiDistancesLocal - An array of local distances.
+ */
 export default {
     name: "OrientationItem",
     components: {
@@ -20,7 +30,7 @@ export default {
     },
     data () {
         return {
-            firstGeolocation: true, // flag to check if it the first time
+            firstGeolocation: true, // flag to check if it's the first time
             marker: new Overlay({
                 positioning: "center-center",
                 stopEvent: false
