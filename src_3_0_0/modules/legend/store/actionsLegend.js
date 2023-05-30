@@ -204,7 +204,7 @@ const actions = {
     /**
      * Prepares the legend with the given legendInfos
      * @param {Object} param.commit the commit
-     * @param {*[]} legendInfos legend Infos of layer
+     * @param {Array} legendInfos legend Infos of layer
      * @returns {void}
      */
     prepareLegend ({commit}, legendInfos) {

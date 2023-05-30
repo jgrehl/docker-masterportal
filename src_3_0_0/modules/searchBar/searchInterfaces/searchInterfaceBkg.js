@@ -6,6 +6,7 @@ import {uniqueId} from "../../../shared/js/utils/uniqueId";
 
 /**
  * The search interface to the bkg geocoder.
+ * @name SearchInterfaceBkg
  * @constructs
  * @extends SearchInterface
  * @see {@link https://sg.geodatenzentrum.de/web_public/gdz/dokumentation/deu/geokodierungsdienst.pdf}

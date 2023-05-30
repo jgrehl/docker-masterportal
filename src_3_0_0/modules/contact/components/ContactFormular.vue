@@ -5,6 +5,13 @@ import FlatButton from "../../../shared/modules/buttons/components/FlatButton.vu
 import IconButton from "../../../shared/modules/buttons/components/IconButton.vue";
 import FileUpload from "../../../shared/modules/inputs/components/FileUpload.vue";
 
+/**
+ * The Contact Form
+ * @module modules/ContactFormular
+ * @vue-data {String} sendIcon - The icon for the send button.
+ * @vue-data {Boolean} fileUploaded - Shows if file was uploaded.
+ * @vue-data {Array} uploadedImages - All uploaded images.
+ */
 export default {
     name: "ContactFormular",
     components: {
