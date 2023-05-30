@@ -3,6 +3,7 @@ import Layer3d from "./layer3d";
 
 /**
  * Creates a 3d layer tileset.
+ * @name Layer3dTileset
  * @abstract
  * @constructs
  * @extends Layer

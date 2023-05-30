@@ -5,6 +5,7 @@ import Layer2dVector from "./layer2dVector";
 
 /**
  * Creates a 2d vector geojson layer.
+ * @name Layer2dVectorGeojson
  * @constructs
  * @extends Layer2dVector
  * @param {Object} attributes The attributes of the layer configuration.

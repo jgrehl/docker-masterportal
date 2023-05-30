@@ -6,6 +6,7 @@ import FreezeScreenUnfreeze from "./FreezeScreenUnfreeze.vue";
 /**
  * Freeze control that allows the user to freeze the current window
  * of desktop and Mobile browser
+ * @module modules/controls/FreezeScreen
  */
 export default {
     name: "FreezeScreen",

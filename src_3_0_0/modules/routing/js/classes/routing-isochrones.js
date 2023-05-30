@@ -5,7 +5,7 @@
 class RoutingIsochrones {
     /**
      * creates new RoutingIsochrones
-     * @param {[Number, Number, Number, Number]} bbox of isochrones.
+     * @param {Array<{Number, Number, Number, Number}>} bbox of isochrones.
      */
     constructor (bbox) {
         this.bbox = bbox;
@@ -14,7 +14,7 @@ class RoutingIsochrones {
 
     /**
      * BBOX of all areas.
-     * @returns {[Number, Number, Number, Number]} bbox of all areas.
+     * @returns {Array<{Number, Number, Number, Number}>} bbox of all areas.
      */
     getBbox () {
         return this.bbox;

@@ -3,6 +3,7 @@ import Layer3d from "./layer3d";
 
 /**
  * Creates a 3d layer entities.
+ * @name Layer3dEntities
  * @abstract
  * @constructs
  * @extends Layer

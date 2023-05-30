@@ -17,7 +17,7 @@ const getters = {
      * Gets all valid coordinates from the given waypoints.
      * @param {Object} params with waypoints
      * @param {RoutingWaypoint[]} [params.waypoints] waypoints from directionsState
-     * @returns {[Number, Number][]} coordinate array
+     * @returns {Array<{Number, Number}>} coordinate array
      */
     directionsCoordinates ({waypoints}) {
         return waypoints

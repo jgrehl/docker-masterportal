@@ -5,6 +5,7 @@ import Layer2dRaster from "./layer2dRaster";
 
 /**
  * Creates a 2d raster static image layer.
+ * @name Layer2dRasterStaticImage
  * @constructs
  * @extends Layer2dRaster
  * @param {Object} attributes The attributes of the layer configuration.
