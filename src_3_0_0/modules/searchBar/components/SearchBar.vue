@@ -1,10 +1,12 @@
 <script>
 import {mapGetters, mapActions, mapMutations} from "vuex";
+import SearchBarSuggestionList from "./SearchBarSuggestionList.vue";
 import SearchBarResultList from "./SearchBarResultList.vue";
 
 export default {
     name: "SearchBar",
     components: {
+        SearchBarSuggestionList,
         SearchBarResultList
     },
     computed: {
@@ -84,6 +86,7 @@ export default {
                 @keydown.enter="startSearch"
             >
         </div>
+        <SearchBarSuggestionList />
         <SearchBarResultList />
     </div>
 </template>
