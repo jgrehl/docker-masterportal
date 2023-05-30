@@ -188,7 +188,7 @@ SearchInterfaceElasticSearch.prototype.normalizeResults = function (searchResult
 
 /**
  * Creates the possible actions and fills them.
- * @param {Object} searchResult The search result of gazetter.
+ * @param {Object} searchResult The search result of elastic search.
  * @returns {Object} The possible actions.
  */
 SearchInterfaceElasticSearch.prototype.createPossibleActions = function (searchResult) {
