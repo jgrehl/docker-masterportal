@@ -191,7 +191,7 @@ export function refreshLayerTree () {
 /**
  * Triggers resetFeatures on VectorLayer.
  * @param {String} layerId id of the layer
- * @param {Array.<module:ol/Feature~Feature.<Geometry>>} allLayerFeatures all features of the layer
+ * @param {Array<module:ol/Feature~Feature.<Geometry>>} allLayerFeatures all features of the layer
  * @returns {void}
  */
 export function resetVectorLayerFeatures (layerId, allLayerFeatures) {
@@ -200,7 +200,7 @@ export function resetVectorLayerFeatures (layerId, allLayerFeatures) {
 /**
  * Triggers featuresLoaded on VectorLayer.
  * @param {String} layerId id of the layer
- * @param {Array.<module:ol/Feature~Feature.<Geometry>>} features all features of the layer
+ * @param {Array<module:ol/Feature~Feature.<Geometry>>} features all features of the layer
  * @returns {void}
  */
 export function featuresLoaded (layerId, features) {

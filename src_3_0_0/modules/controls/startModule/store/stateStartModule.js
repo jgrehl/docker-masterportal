@@ -5,7 +5,7 @@
  * @property {String[]} secondaryMenu The modules configs for the secondary menu.
  * @property {String[]} supportedDevices Devices on which the module is displayed.
  * @property {String[]} supportedMapModes Map mode in which this module can be used.
- * @property {Object{}} configuredModuleStates The states of the confiigured modules.
+ * @property {Object} configuredModuleStates The states of the confiigured modules.
  */
 const state = {
     mainMenu: [],

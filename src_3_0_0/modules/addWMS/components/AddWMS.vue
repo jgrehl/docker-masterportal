@@ -6,6 +6,14 @@ import crs from "@masterportal/masterportalapi/src/crs";
 import axios from "axios";
 import {treeSubjectsKey} from "../../../shared/js/utils/constants";
 
+/**
+ * Adds WMS
+ * @module modules/AddWMS
+ * @vue-data {Number} uniqueId - Current unique id.
+ * @vue-data {Boolean} invalidUrl - Shows if Url is invalid.
+ * @vue-data {String} wmsUrl - Current wms url.
+ * @vue-data {String} version - Current version.
+ */
 export default {
     name: "AddWMS",
     data () {
