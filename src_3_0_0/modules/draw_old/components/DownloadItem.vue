@@ -1,6 +1,10 @@
 <script>
 import {mapActions, mapGetters} from "vuex";
 
+/**
+ * Draw Download Item
+ * @module modules/DownloadItem
+ */
 export default {
     name: "DownloadItem",
     computed: {

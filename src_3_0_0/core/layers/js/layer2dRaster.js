@@ -2,6 +2,7 @@ import Layer2d from "./layer2d";
 
 /**
  * Creates a 2d raster layer.
+ * @name Layer2dRaster
  * @abstract
  * @constructs
  * @extends Layer2d

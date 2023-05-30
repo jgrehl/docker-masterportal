@@ -9,6 +9,7 @@ import Cluster from "ol/source/Cluster";
 
 /**
  * Creates a 2d vector layer.
+ * @name Layer2dVector
  * @abstract
  * @constructs
  * @extends Layer2d
