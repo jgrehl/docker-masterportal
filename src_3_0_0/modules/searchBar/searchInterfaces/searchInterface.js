@@ -140,33 +140,71 @@ SearchInterface.prototype.pushHitToSearchResults = function (searchResult = {}) 
 };
 
 /**
- * Sends a get request to a search interface.
+ * Sends a request to a search interface.
  * If the same URL is requested again, the previous request is aborted.
  * @param {String} searchUrl The search URL.
- * @param {Object} searchParams The search params.
- * @returns {void}
+ * @param {String} type The search type: GET or POST.
+ * @param {Object} [payload] The payload for POST request.
+ * @returns {Object[]} Parsed result with hits of request.
  */
-SearchInterface.prototype.requestSearch = function (searchUrl, searchParams = {}) {
-    this.abortRequest();
+SearchInterface.prototype.requestSearch = async function (searchUrl, type, payload) {
+    let response = {},
+        resultWithHits = {};
+
     this.searchState = "running";
+    this.abortRequest();
     this.currentController = new AbortController();
 
-    axios.get(searchUrl, {
-        param: searchParams,
+    if (type === "GET") {
+        response = await this.sendGetRequest(searchUrl);
+    }
+    else if (type === "POST") {
+        response = await this.sendPostRequest(searchUrl, payload);
+    }
+
+    if (response.status === 200) {
+        this.searchState = "finished";
+        resultWithHits = response.data.hits;
+    }
+    else {
+        this.searchState = "failed";
+        resultWithHits.status = "error";
+        resultWithHits.message = "error occured in xhr Request!" + response.statusText;
+        resultWithHits.hits = [];
+    }
+
+    return resultWithHits;
+};
+
+/**
+ * Sends the GET request.
+ * @param {String} searchUrl url to send request.
+ * @returns {Promise} Result of GET request.
+ */
+SearchInterface.prototype.sendGetRequest = function (searchUrl) {
+    return axios.get(searchUrl, {
+        headers: {
+            "Content-Type": "application/json;charset=UTF-8"
+        },
         signal: this.currentController.signal,
         timeout: this.timeout
-    })
-        .then(response => {
-            this.searchState = "finished";
-            return response;
-        })
-        .catch(error => {
-            this.searchState = "failed";
-            console.error(error.toJSON());
-        })
-        .then(() => {
-            this.currentController = null;
-        });
+    });
+};
+
+/**
+ * Sends the POST request.
+ * @param {String} searchUrl url to send request.
+ * @param {Object} payload The request payload.
+ * @returns {Promise} Result of POST request.
+ */
+SearchInterface.prototype.sendPostRequest = function (searchUrl, payload) {
+    return axios.post(searchUrl, payload, {
+        headers: {
+            "Content-Type": "application/json;charset=UTF-8"
+        },
+        signal: this.currentController.signal,
+        timeout: this.timeout
+    });
 };
 
 /**
