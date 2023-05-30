@@ -5,6 +5,13 @@ import FlatButton from "../../../shared/modules/buttons/components/FlatButton.vu
 import IconButton from "../../../shared/modules/buttons/components/IconButton.vue";
 import FileUpload from "../../../shared/modules/inputs/components/FileUpload.vue";
 
+/**
+ * File Import
+ * @module modules/FileImport
+ * @vue-data {Boolean} fileUploaded - Shows if a file was uploaded.
+ * @vue-data {Array} uploadedFiles - List of importet files.
+ * @vue-computed {String} dropZoneAdditionalClass - Class for the dropzone.
+ */
 export default {
     name: "FileImport",
     components: {

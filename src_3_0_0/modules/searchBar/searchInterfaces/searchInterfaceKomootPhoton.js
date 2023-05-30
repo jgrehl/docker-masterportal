@@ -6,6 +6,7 @@ import {uniqueId} from "../../../shared/js/utils/uniqueId";
 
 /**
  * The search interface to the koomot photon geocoder.
+ * @name SearchInterfaceKomootPhoton
  * @constructs
  * @extends SearchInterface
  * @see {@link https://photon.komoot.io/}
