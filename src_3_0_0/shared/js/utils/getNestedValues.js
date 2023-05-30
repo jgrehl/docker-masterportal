@@ -7,7 +7,7 @@
  * @param {*} searchKey the key to search for
  * @param {Beoolean} searchInArrays if true the entries of arrays are inspected with 'searchKey'
  * @param {Number} [maxDepth=200] maximum number of self calls, default: 200
- * @returns {*[]} the found nested values as simple array of values
+ * @returns {Array} the found nested values as simple array of values
  */
 export default function getNestedValues (obj, searchKey, searchInArrays = false, maxDepth = 200) {
     if (typeof obj !== "object" || obj === null) {
@@ -25,7 +25,7 @@ export default function getNestedValues (obj, searchKey, searchInArrays = false,
  * @param {*} searchKey the key to search for
  * @param {Beoolean} searchInArrays if true the entries of arrays are inspected with 'searchKey'
  * @param {Number} maxDepth depth barrier
- * @param {Object|*[]} result collection of already found values
+ * @param {Object|Array} result collection of already found values
  * @param {Number} depth current depth
  * @returns {void}
  */
