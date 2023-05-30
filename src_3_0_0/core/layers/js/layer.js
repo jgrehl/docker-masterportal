@@ -1,5 +1,6 @@
 /**
  * Creates a layer.
+ * @name Layer
  * @abstract
  * @constructs
  * @param {Object} attributes The attributes of the layer configuration.

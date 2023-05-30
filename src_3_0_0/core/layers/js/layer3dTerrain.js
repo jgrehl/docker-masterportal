@@ -3,6 +3,7 @@ import Layer3d from "./layer3d";
 
 /**
  * Creates a 3d layer terrain.
+ * @name Layer3dTerrain
  * @abstract
  * @constructs
  * @extends Layer
