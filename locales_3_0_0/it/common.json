@@ -676,9 +676,11 @@
       "type": {
         "address": "indirizzo",
         "district": "distretto",
+        "folder": "Cartella (dati soggettivi)",
         "parcel": "parcella catastale",
         "street": "strada",
-        "subject": "dati specialistici"
+        "subject": "dati specialistici",
+        "topic": "oggetto"
       }
     },
     "selectFeatures": {
