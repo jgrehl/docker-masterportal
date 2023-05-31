@@ -676,9 +676,11 @@
       "type": {
         "address": "address",
         "district": "district",
+        "folder": "folder (topics)",
         "parcel": "parcel",
         "street": "street",
-        "subject": "subject (external topics)"
+        "subject": "subject (external topics)",
+        "topic": "issues & topics"
       }
     },
     "selectFeatures": {
