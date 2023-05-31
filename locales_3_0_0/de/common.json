@@ -676,9 +676,11 @@
       "type": {
         "address": "Adresse",
         "district": "Stadtteil",
+        "folder": "Ordner (Fachdaten)",
         "parcel": "Flurstück",
         "street": "Straße",
-        "subject": "Thema (externe Fachdaten)"
+        "subject": "Thema (externe Fachdaten)",
+        "topic": "Thema (Fachdaten)"
       }
     },
     "selectFeatures": {
