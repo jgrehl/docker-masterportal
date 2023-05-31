@@ -3,6 +3,7 @@
  */
 import SearchInterfaceElasticSearch from "../../searchInterfaces/searchInterfaceElasticSearch";
 import SearchInterfaceGazetteer from "../../searchInterfaces/searchInterfaceGazetteer";
+import SearchInterfaceTopicTree from "../../searchInterfaces/searchInterfaceTopicTree";
 
 export default {
     /**
@@ -15,7 +16,8 @@ export default {
     instantiateSearchInterfaces: ({commit, state}) => {
         const searchInterfacesMapper = {
             elasticSearch: SearchInterfaceElasticSearch,
-            gazetteer: SearchInterfaceGazetteer
+            gazetteer: SearchInterfaceGazetteer,
+            topicTree: SearchInterfaceTopicTree
         };
 
         Object.keys(state.searchInterfaces).forEach(searchInterface => {
