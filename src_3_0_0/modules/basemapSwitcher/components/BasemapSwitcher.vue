@@ -46,11 +46,11 @@ export default {
         ]),
         ...mapMutations(["setBackgroundLayerVisibility"]),
         ...mapActions(["replaceByIdInLayerConfig"]),
-        ...mapActions("Modules/BasemapSwitcher", ["updateLayerTree"]),
+        ...mapActions("Modules/BasemapSwitcher", ["updateLayerVisibilityAndZIndex"]),
 
 
         switchActiveBackgroundLayer (layerId) {
-            this.updateLayerTree(layerId);
+            this.updateLayerVisibilityAndZIndex(layerId);
 
             const selectableBackroundLayerIds = this.backgroundLayerIds,
                 index = selectableBackroundLayerIds.map(id => {
@@ -63,6 +63,7 @@ export default {
 
             this.setTopBackgroundLayerId([]);
             this.setTopBackgroundLayerId(layerId);
+            this.setActivatedExpandable(false);
         }
     }
 };
@@ -73,7 +74,7 @@ export default {
     <div
         v-if="backgroundLayerIds.length > 1"
         id="basemap-switcher"
-        class="btn-group-vertical my-5 btn-group-basemap-switcher shadow"
+        class="btn-group-vertical my-5 btn-group-background-switcher shadow"
         role="group"
     >
         <ul>
@@ -105,7 +106,7 @@ export default {
     #basemap-switcher {
         pointer-events: all;
     }
-    .btn-group-basemap-switcher {
+    .btn-group-background-switcher {
         background-color: $white;
         border: solid $white 1px;
         border-radius: 25px;
