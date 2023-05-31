@@ -10,7 +10,7 @@ import store from "../../../app-store";
  * @param {String} serviceId Search service id. Resolved using the **[rest-services.json](rest-services.json.md)** file.
  *
  * @param {String} [hitIcon="bi-list-ul"] CSS icon class of search results, shown before the result name.
- * @param {Object} [hitType="common:modules.searchbar.type.subject"] Search result type shown in the result list after the result name.
+ * @param {Object} [hitType="common:modules.searchBar.type.subject"] Search result type shown in the result list after the result name.
  * @param {Object} [payload={}] Matches the customObject description.
  * @param {String} [responseEntryPath=""] Response JSON attribute path to found features.
  * @param {Object} [resultEvents] Actions that are executed when an interaction, such as hover or click, is performed with a result list item.
@@ -34,7 +34,7 @@ export default function SearchInterfaceElasticSearch ({hitMap, serviceId, hitIco
     this.serviceId = serviceId;
 
     this.hitIcon = hitIcon || "bi-list-ul";
-    this.hitType = hitType || "common:modules.searchbar.type.subject";
+    this.hitType = hitType || "common:modules.searchBar.type.subject";
     this.payload = payload || {};
     this.responseEntryPath = responseEntryPath || "";
     this.searchStringAttribute = searchStringAttribute || "searchString";
