@@ -19,14 +19,14 @@ export default {
     data () {
         return {
             mapElement: document.getElementById("map"),
-            storePath: this.$store.state.Draw,
+            storePath: this.$store.state.Draw_old,
             constants: constants,
             drawing: true
         };
     },
     computed: {
         ...mapGetters("Maps", ["mode"]),
-        ...mapGetters("Modules/Draw", [
+        ...mapGetters("Modules/Draw_old", [
             "id",
             "type",
             "name",
@@ -310,7 +310,7 @@ export default {
         this.resetCanvasCursor();
     },
     methods: {
-        ...mapMutations("Modules/Draw", [
+        ...mapMutations("Modules/Draw_old", [
             "setDownloadDataString",
             "setDownloadEnabled",
             "setDownloadFeatures",
@@ -327,7 +327,7 @@ export default {
             "setLayer",
             "setAttributesKeyList"
         ]),
-        ...mapActions("Modules/Draw", [
+        ...mapActions("Modules/Draw_old", [
             "undoLastStep",
             "redoLastStep",
             "clearLayer",
