@@ -6,6 +6,7 @@ import BufferAnalysis from "../bufferAnalysis/components/BufferAnalysis.vue";
 import Contact from "../contact/components/ContactFormular.vue";
 import CoordToolkit from "../coordToolkit/components/CoordToolkit.vue";
 import CustomMenuElement from "../menu/components/CustomMenuElement.vue";
+import Draw from "../draw/components/DrawModule.vue";
 import Draw_old from "../draw_old/components/DrawItem.vue";
 import FeatureLister from "../featureLister/components/FeatureLister.vue";
 import FileImport from "../fileImport/components/FileImport.vue";
@@ -47,6 +48,7 @@ const getters = {
             contact: Contact,
             coordToolkit: CoordToolkit,
             customMenuElement: CustomMenuElement,
+            draw: Draw,
             draw_old: Draw_old,
             featureLister: FeatureLister,
             fileImport: FileImport,
