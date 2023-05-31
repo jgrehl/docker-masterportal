@@ -133,7 +133,7 @@ const symbol = {
             symbol
         ],
         id: "draw",
-        type: "draw",
+        type: "draw_old",
         idCounter: 0,
         innerBorderColor: "",
         imgPath: "",

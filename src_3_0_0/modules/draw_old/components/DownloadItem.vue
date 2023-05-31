@@ -4,7 +4,7 @@ import {mapActions, mapGetters} from "vuex";
 export default {
     name: "DownloadItem",
     computed: {
-        ...mapGetters("Modules/Draw", [
+        ...mapGetters("Modules/Draw_old", [
             "dataString",
             "features",
             "file",
@@ -23,7 +23,7 @@ export default {
         this.setDownloadFeatures();
     },
     methods: {
-        ...mapActions("Modules/Draw", [
+        ...mapActions("Modules/Draw_old", [
             "setDownloadSelectedFormat",
             "setDownloadFeatures",
             "setDownloadFileName",

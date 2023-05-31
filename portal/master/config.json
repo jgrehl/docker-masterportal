@@ -392,11 +392,16 @@
             }
           },
           {
+            "type": "draw",
+            "showDescription": true,
+            "description": "Zeichnen / Schreiben auf der Karte."
+          },
+          {
             "type": "draw_old",
             "enableAttributesSelector": true,
             "addIconsOfActiveLayers": true,
             "showDescription": true,
-            "description": "Zeichnen / Schreiben auf der Karte."
+            "description": "Altes Modul: Zeichnen / Schreiben auf der Karte."
           },
           {
             "type": "bufferAnalysis",
