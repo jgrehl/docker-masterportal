@@ -16,7 +16,7 @@ describe("src_3_0_0/modules/draw/components/DrawItemAttributes.vue", () => {
                 Modules: {
                     namespaced: true,
                     modules: {
-                        Draw: {
+                        Draw_old: {
                             namespaced: true,
                             actions: {
                                 setDownloadFeatures: () => sinon.stub()
