@@ -676,9 +676,11 @@
       "type": {
         "address": "Buscar por dirección",
         "district": "Distrito",
+        "folder": "",
         "parcel": "Unidad territorial",
         "street": "Calle",
-        "subject": "Tema específico"
+        "subject": "Tema específico",
+        "topic": "Tema"
       }
     },
     "selectFeatures": {
