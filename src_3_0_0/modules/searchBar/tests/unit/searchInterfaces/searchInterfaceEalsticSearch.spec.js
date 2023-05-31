@@ -256,7 +256,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceElasticSea
                             }
                         }
                     },
-                    category: "modules.searchbar.type.subject",
+                    category: "modules.searchBar.type.subject",
                     id: "100",
                     icon: "bi-list-ul",
                     name: "Test abc",
