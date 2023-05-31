@@ -676,9 +676,11 @@
       "type": {
         "address": "Adres",
         "district": "Semt",
+        "folder": "",
         "parcel": "Parsel alan",
         "street": "Sokak",
-        "subject": "Teknik konu"
+        "subject": "Teknik konu",
+        "topic": "Konu"
       }
     },
     "selectFeatures": {
