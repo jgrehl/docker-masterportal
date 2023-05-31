@@ -32,7 +32,7 @@ export default {
         };
     },
     computed: {
-        ...mapGetters("Modules/Draw", ["oldStyle"])
+        ...mapGetters("Modules/Draw_old", ["oldStyle"])
     },
     watch: {
         selectedFeature (newVal, oldVal) {
@@ -74,7 +74,7 @@ export default {
         this.resetStyle(this.selectedFeature);
     },
     methods: {
-        ...mapActions("Modules/Draw", ["setDownloadFeatures"]),
+        ...mapActions("Modules/Draw_old", ["setDownloadFeatures"]),
 
         /**
          * Resets the style of selected feature to old style
