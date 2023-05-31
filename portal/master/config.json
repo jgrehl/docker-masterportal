@@ -87,7 +87,8 @@
             "id": "_source.id",
             "source": "_source"
           }
-        }
+        },
+        "topicTree": {}
       }
     },
     "mainMenu": {
