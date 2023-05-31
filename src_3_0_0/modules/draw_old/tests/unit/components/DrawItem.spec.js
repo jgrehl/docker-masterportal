@@ -1,7 +1,7 @@
 import {createStore} from "vuex";
 import {config, shallowMount} from "@vue/test-utils";
 import DrawItemComponent from "../../../components/DrawItem.vue";
-import Draw from "../../../store/indexDraw";
+import Draw_old from "../../../store/indexDraw";
 import {expect} from "chai";
 import sinon from "sinon";
 import main from "../../../js/main";
@@ -53,7 +53,7 @@ describe("src_3_0_0/modules/draw/components/DrawItem.vue", () => {
                 Modules: {
                     namespaced: true,
                     modules: {
-                        Draw
+                        Draw_old
                     }
                 }
             }
@@ -65,7 +65,7 @@ describe("src_3_0_0/modules/draw/components/DrawItem.vue", () => {
                 drawing: true
             };
         };
-        store.dispatch("Modules/Draw/startInteractions");
+        store.dispatch("Modules/Draw_old/startInteractions");
     });
 
     it("sets focus to first input control", async () => {
@@ -108,47 +108,47 @@ describe("src_3_0_0/modules/draw/components/DrawItem.vue", () => {
 
     describe("addSymbolsByLayerModels", () => {
         it("should do nothing if anything but an array is given", () => {
-            const iconListLength = Draw.state.iconList.length;
+            const iconListLength = Draw_old.state.iconList.length;
 
             wrapper = shallowMount(DrawItemComponent, {global: {plugins: [store]}, data: componentData});
 
             wrapper.vm.addSymbolsByLayerModels(undefined);
-            expect(Draw.state.iconList.length).to.equal(iconListLength);
+            expect(Draw_old.state.iconList.length).to.equal(iconListLength);
 
             wrapper.vm.addSymbolsByLayerModels(null);
-            expect(Draw.state.iconList.length).to.equal(iconListLength);
+            expect(Draw_old.state.iconList.length).to.equal(iconListLength);
 
             wrapper.vm.addSymbolsByLayerModels(1234);
-            expect(Draw.state.iconList.length).to.equal(iconListLength);
+            expect(Draw_old.state.iconList.length).to.equal(iconListLength);
 
             wrapper.vm.addSymbolsByLayerModels("string");
-            expect(Draw.state.iconList.length).to.equal(iconListLength);
+            expect(Draw_old.state.iconList.length).to.equal(iconListLength);
 
             wrapper.vm.addSymbolsByLayerModels(true);
-            expect(Draw.state.iconList.length).to.equal(iconListLength);
+            expect(Draw_old.state.iconList.length).to.equal(iconListLength);
 
             wrapper.vm.addSymbolsByLayerModels(false);
-            expect(Draw.state.iconList.length).to.equal(iconListLength);
+            expect(Draw_old.state.iconList.length).to.equal(iconListLength);
 
             wrapper.vm.addSymbolsByLayerModels({});
-            expect(Draw.state.iconList.length).to.equal(iconListLength);
+            expect(Draw_old.state.iconList.length).to.equal(iconListLength);
         });
         it("should do nothing if layer models are no objects", () => {
-            const iconListLength = Draw.state.iconList.length;
+            const iconListLength = Draw_old.state.iconList.length;
 
             wrapper = shallowMount(DrawItemComponent, {global: {plugins: [store]}, data: componentData});
             wrapper.vm.addSymbolsByLayerModels([undefined, null, 1234, "string", true, false, []]);
-            expect(Draw.state.iconList.length).to.equal(iconListLength);
+            expect(Draw_old.state.iconList.length).to.equal(iconListLength);
         });
         it("should do nothing if layer models have no get function", () => {
-            const iconListLength = Draw.state.iconList.length;
+            const iconListLength = Draw_old.state.iconList.length;
 
             wrapper = shallowMount(DrawItemComponent, {global: {plugins: [store]}, data: componentData});
             wrapper.vm.addSymbolsByLayerModels([{}, {something: 1}]);
-            expect(Draw.state.iconList.length).to.equal(iconListLength);
+            expect(Draw_old.state.iconList.length).to.equal(iconListLength);
         });
         it("should do nothing if legend of layer models are no array", () => {
-            const iconListLength = Draw.state.iconList.length,
+            const iconListLength = Draw_old.state.iconList.length,
                 layerModels = [
                     {
                         get: () => false
@@ -157,10 +157,10 @@ describe("src_3_0_0/modules/draw/components/DrawItem.vue", () => {
 
             wrapper = shallowMount(DrawItemComponent, {global: {plugins: [store]}, data: componentData});
             wrapper.vm.addSymbolsByLayerModels(layerModels);
-            expect(Draw.state.iconList.length).to.equal(iconListLength);
+            expect(Draw_old.state.iconList.length).to.equal(iconListLength);
         });
         it("should do nothing if legend infos have no style object", () => {
-            const iconListLength = Draw.state.iconList.length,
+            const iconListLength = Draw_old.state.iconList.length,
                 layerModels = [
                     {
                         get: () => [undefined, null, 1234, "string", true, false, [], {}]
@@ -169,10 +169,10 @@ describe("src_3_0_0/modules/draw/components/DrawItem.vue", () => {
 
             wrapper = shallowMount(DrawItemComponent, {global: {plugins: [store]}, data: componentData});
             wrapper.vm.addSymbolsByLayerModels(layerModels);
-            expect(Draw.state.iconList.length).to.equal(iconListLength);
+            expect(Draw_old.state.iconList.length).to.equal(iconListLength);
         });
         it("should do nothing if legend infos have no imageScale that are numbers", () => {
-            const iconListLength = Draw.state.iconList.length,
+            const iconListLength = Draw_old.state.iconList.length,
                 layerModels = [
                     {
                         get: () => [
@@ -198,10 +198,10 @@ describe("src_3_0_0/modules/draw/components/DrawItem.vue", () => {
 
             wrapper = shallowMount(DrawItemComponent, {global: {plugins: [store]}, data: componentData});
             wrapper.vm.addSymbolsByLayerModels(layerModels);
-            expect(Draw.state.iconList.length).to.equal(iconListLength);
+            expect(Draw_old.state.iconList.length).to.equal(iconListLength);
         });
         it("should do nothing if legend infos have no imagePath that are strings", () => {
-            const iconListLength = Draw.state.iconList.length,
+            const iconListLength = Draw_old.state.iconList.length,
                 layerModels = [
                     {
                         get: () => [
@@ -227,10 +227,10 @@ describe("src_3_0_0/modules/draw/components/DrawItem.vue", () => {
 
             wrapper = shallowMount(DrawItemComponent, {global: {plugins: [store]}, data: componentData});
             wrapper.vm.addSymbolsByLayerModels(layerModels);
-            expect(Draw.state.iconList.length).to.equal(iconListLength);
+            expect(Draw_old.state.iconList.length).to.equal(iconListLength);
         });
         it("should do nothing if legend infos have no imageName that is a string and not empty", () => {
-            const iconListLength = Draw.state.iconList.length,
+            const iconListLength = Draw_old.state.iconList.length,
                 layerModels = [
                     {
                         get: () => [
@@ -256,10 +256,10 @@ describe("src_3_0_0/modules/draw/components/DrawItem.vue", () => {
 
             wrapper = shallowMount(DrawItemComponent, {global: {plugins: [store]}, data: componentData});
             wrapper.vm.addSymbolsByLayerModels(layerModels);
-            expect(Draw.state.iconList.length).to.equal(iconListLength);
+            expect(Draw_old.state.iconList.length).to.equal(iconListLength);
         });
         it("should add the expected symbol", () => {
-            const iconListLength = Draw.state.iconList.length,
+            const iconListLength = Draw_old.state.iconList.length,
                 layerModels = [
                     {
                         get: () => [
@@ -285,7 +285,7 @@ describe("src_3_0_0/modules/draw/components/DrawItem.vue", () => {
 
             wrapper = shallowMount(DrawItemComponent, {global: {plugins: [store]}, data: componentData});
             wrapper.vm.addSymbolsByLayerModels(layerModels);
-            expect(Draw.state.iconList.length).to.equal(iconListLength);
+            expect(Draw_old.state.iconList.length).to.equal(iconListLength);
         });
     });
 });
