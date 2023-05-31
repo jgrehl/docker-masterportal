@@ -11,7 +11,7 @@ const actions = {
      * @param {Object} layerId id of the layer to add
      * @returns {void}
      */
-    updateLayerTree ({dispatch, rootGetters}, layerId) {
+    updateLayerVisibilityAndZIndex ({dispatch, rootGetters}, layerId) {
         const layerConfigs = [],
             maxBackgroundLayerZIndex = Math.max(...rootGetters.layerConfigsByAttributes({
                 backgroundLayer: true,
@@ -40,6 +40,36 @@ const actions = {
                 showInLayerTree: true,
                 zIndex: zIndex
             }
+        });
+
+        dispatch("replaceByIdInLayerConfig", {layerConfigs: layerConfigs}, {root: true});
+        dispatch("updateBackgroundLayerVisibility", layerId);
+    },
+    /**
+     * Updates the layer visibility of the previously visible backgroundLayer
+     * Sets 'visibility' to false and keeps 'showInLayerTree' to true at each layer.
+     * @param {Object} param.dispatch the dispatch
+     * @param {Object} param.rootGetters the rootGetters
+     * @param {Object} layerId id of the layer that needs to stay visible
+     * @returns {void}
+     */
+    updateBackgroundLayerVisibility ({dispatch, rootGetters}, layerId) {
+        const layerConfigs = [],
+            visibleBackgroundLayers = rootGetters.layerConfigsByAttributes({
+                backgroundLayer: true,
+                showInLayerTree: true
+            }),
+            backgroundLayersToSetUnvisible = visibleBackgroundLayers.filter(layer => layer.id !== layerId);
+
+        backgroundLayersToSetUnvisible.forEach((layer) => {
+            layerConfigs.push({
+                id: layer.id,
+                layer: {
+                    id: layer.id,
+                    visibility: false,
+                    showInLayerTree: true
+                }
+            });
         });
 
         dispatch("replaceByIdInLayerConfig", {layerConfigs: layerConfigs}, {root: true});
