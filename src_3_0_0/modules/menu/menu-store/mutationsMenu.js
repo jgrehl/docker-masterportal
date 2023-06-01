@@ -39,6 +39,18 @@ export default {
     },
 
     /**
+     * Sets currently shown components props.
+     * @param {Object} state current state
+     * @param {String} side secondary or main Menu
+     * @param {String} props props of component
+     * @returns {void}
+     */
+    setCurrentComponentProps (state, {side, props}) {
+        state[side].navigation.currentComponent.props = props;
+    },
+
+
+    /**
      * Sets current MenuWidth
      * @param {Object} state current state
      * @param {String} side secondary or main Menu
