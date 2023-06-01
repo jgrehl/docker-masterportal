@@ -216,6 +216,7 @@ export default async function convertFeaturesToKml (features) {
         format = new KML({extractStyles: true}),
         hasIconUrl = Array(featureCount).fill(false),
         pointColors = Array(featureCount).fill(undefined),
+        pointScales = Array(featureCount).fill(undefined),
         skip = Array(featureCount).fill(false),
         textFonts = Array(featureCount).fill(undefined),
         textFontSize = Array(featureCount).fill(undefined),
@@ -258,6 +259,7 @@ export default async function convertFeaturesToKml (features) {
                 else {
                     color = style.getImage().getFill().getColor();
                     pointColors[i] = [color[0], color[1], color[2]];
+                    pointScales[i] = Math.max(...style.getImage().getSize()) / 32;
                 }
             }
         }
@@ -270,7 +272,7 @@ export default async function convertFeaturesToKml (features) {
             if (hasIconUrl[i] === false && pointColors[i]) {
                 // Please be aware of devtools/tasks/replace.js and devtools/tasks/customBuildPortalconfigsReplace.js if you change the path of the SVG
                 const iconUrl = `${window.location.origin}/img/tools/draw/circle_${getIconColor(pointColors[i])}.svg`,
-                    iconStyle = createKmlIconStyle(iconUrl, 1);
+                    iconStyle = createKmlIconStyle(iconUrl, pointScales[i]);
 
                 style.innerHTML += iconStyle;
             }
