@@ -21,9 +21,7 @@ export default {
         ]),
         ...mapGetters("Maps", ["mode"]),
         containerWidth () {
-            const width = this.isMobile ? 320 : this.amount * 158 + 70;
-
-            return width;
+            return this.isMobile ? 320 : this.amount * 158 + 70;
         }
     },
     watch: {
@@ -61,10 +59,9 @@ export default {
         ...mapMutations("Modules/LayerPills", ["setVisibleSubjectDataLayers", "setAmount", "setActive"]),
         ...mapMutations(["setVisibleSubjectDataLayerConfigs"]),
         ...mapActions(["replaceByIdInLayerConfig"]),
-        ...mapActions("Modules/LayerInformation", [
-            "startLayerInformation"
-        ]),
-        setVisibleLayers (visibleLayers, mapMode, newValue = {}) {
+        ...mapActions("Modules/LayerInformation", ["startLayerInformation"]),
+
+        setVisibleLayers (visibleLayers, mapMode, newValues = []) {
             if (visibleLayers) {
                 if (mapMode === "2D") {
                     const layerTypes3d = layerFactory.getLayerTypes3d(),
@@ -72,10 +69,10 @@ export default {
                             return !layerTypes3d.includes(layer.typ?.toUpperCase());
                         });
 
-                    if (Object.keys(newValue).length !== 0) {
+                    if (Object.keys(newValues).length !== 0) {
                         const layers = this.visibleSubjectDataLayers;
 
-                        newValue.forEach((val) => {
+                        newValues.forEach((val) => {
                             layers.unshift(val);
                         });
 
@@ -94,7 +91,6 @@ export default {
             }
         },
         removeLayerFromVisibleLayers (layer) {
-
             this.replaceByIdInLayerConfig({
                 layerConfigs: [{
                     id: layer.id,
@@ -159,16 +155,14 @@ export default {
         >
             <li
                 v-for="(layer) in visibleSubjectDataLayers"
-                :key="layer"
+                :key="layer.id"
                 class="nav-item shadow"
             >
                 <a
-                    :key="layer"
                     class="nav-link"
                     data-bs-toggle="tooltip"
                     data-bs-placement="bottom"
                     data-bs-custom-class="custom-tooltip"
-                    :data-bs-original-title="layer.name"
                     :title="layer.name"
                     :class="layer.datasets ? 'nav-link-hover' : ''"
                     @click="showLayerInformationInMenu(layer)"
