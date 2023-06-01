@@ -36,11 +36,15 @@ export default {
      * @returns {void}
      */
     changeCurrentComponent ({commit, dispatch, state}, {type, side, props}) {
-        const currentType = state[side].navigation.currentComponent.type;
+        const currentType = state[side].navigation.currentComponent.type,
+            currentProps = state[side].navigation.currentComponent.props;
 
         if (currentType !== type || currentType === "folder" && type === "folder" || currentType === "layerSelection" && type === "layerSelection") {
             commit("setCurrentComponent", {type, side, props});
             dispatch("changeCurrentMouseMapInteractionsComponent", {type, side});
+        }
+        else if (props?.name !== currentProps?.name) {
+            commit("setCurrentComponentProps", {side, props});
         }
     },
 
