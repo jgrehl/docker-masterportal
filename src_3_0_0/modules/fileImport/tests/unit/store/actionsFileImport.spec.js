@@ -234,7 +234,7 @@ describe("src_3_0_0/modules/fileImport/store/actionsFileImport.js", () => {
         });
 
         it("should set label style with color and font style", () => {
-            const payload = {layer: layer, raw: "<kml xmlns=\"http://www.opengis.net/kml/2.2\" xmlns:gx=\"http://www.google.com/kml/ext/2.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.opengis.net/kml/2.2 https://developers.google.com/kml/schema/kml22gx.xsd\"><Placemark><name>Jungfernstieg</name><Style><LabelStyle><color>ff1c1ae4</color><scale xmlns=\"\">2</scale></LabelStyle><IconStyle xmlns=\"\"><scale>0</scale><Icon><href>https://geoportal-hamburg.de/mastercode/2_7_0/img/tools/draw/circle_blue.svg</href></Icon></IconStyle></Style><ExtendedData><Data name=\"drawState\"/><Data name=\"fromDrawTool\"><value>4</value></Data><Data name=\"invisibleStyle\"/><Data name=\"isOuterCircle\"><value>false</value></Data><Data name=\"isVisible\"><value>true</value></Data><Data name=\"styleId\"><value>1</value></Data></ExtendedData><Point><coordinates>9.993521373625377,53.55359159312988</coordinates></Point></Placemark></kml>", filename: "TestFile1.kml"},
+            const payload = {layer: layer, raw: "<kml xmlns=\"http://www.opengis.net/kml/2.2\" xmlns:gx=\"http://www.google.com/kml/ext/2.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.opengis.net/kml/2.2 https://developers.google.com/kml/schema/kml22gx.xsd\"><Placemark><name>Jungfernstieg</name><Style><LabelStyle><color>ff1c1ae4</color><scale xmlns=\"\">2</scale></LabelStyle><IconStyle xmlns=\"\"><scale>0</scale><Icon><href>https://geoportal-hamburg.de/mastercode/2_7_0/img/tools/draw/circle_blue.svg</href></Icon></IconStyle></Style><ExtendedData><Data name=\"drawState\"/><Data name=\"fromDrawTool\"><value>true</value></Data><Data name=\"invisibleStyle\"/><Data name=\"isOuterCircle\"><value>false</value></Data><Data name=\"isVisible\"><value>true</value></Data><Data name=\"styleId\"><value>1</value></Data></ExtendedData><Point><coordinates>9.993521373625377,53.55359159312988</coordinates></Point></Placemark></kml>", filename: "TestFile1.kml"},
                 state = {
                     selectedFiletype: "auto",
                     supportedFiletypes: {
@@ -265,6 +265,10 @@ describe("src_3_0_0/modules/fileImport/store/actionsFileImport.js", () => {
             expect(layer.getSource().getFeatures()[0].getStyle().getText().getText()).to.equals("Jungfernstieg");
             expect(layer.getSource().getFeatures()[0].getStyle().getText().getTextAlign()).to.equals("left");
             expect(layer.getSource().getFeatures()[0].getStyle().getText().getTextBaseline()).to.equals("bottom");
+            expect(layer.getSource().getFeatures()[0].get("drawState")).to.deep.equals({
+                fontSize: 32,
+                text: "Jungfernstieg"
+            });
         });
 
         it("adds a text style from the geojson file", () => {
