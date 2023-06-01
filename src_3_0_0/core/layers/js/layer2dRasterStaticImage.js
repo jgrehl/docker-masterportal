@@ -50,6 +50,14 @@ Layer2dRasterStaticImage.prototype.getRawLayerAttributes = function (attributes)
 };
 
 /**
+ * Does nothing.
+ * @returns {void}
+*/
+Layer2dRasterStaticImage.prototype.createLegend = function () {
+    // does nothing
+};
+
+/**
  * Creates a complete ol/Layer from rawLayer.
  * @param {Object} rawLayer layer specification as in services.json
  * @returns {ol/Layer} layer that can be added to map
