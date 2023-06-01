@@ -5,14 +5,21 @@ import axios from "axios";
 
 const actions = {
     /**
-     * Starts drawing layer information
+     * Starts drawing layer information. If mobile and menu is closed, menu is opened.
      * @param {Object} param.commit the commit
      * @param {Object} param.dispatch the dispatch
-     * @param {Object} param.state the state
+     * @param {Object} param.rootGetters the rootGetters
      * @param {Object} layerConf the layer configuration
      * @returns {void}
      */
-    startLayerInformation ({commit, dispatch}, layerConf) {
+    startLayerInformation ({commit, dispatch, rootGetters}, layerConf) {
+        if (rootGetters["Modules/Legend/layerInfoLegend"].id !== layerConf.id) {
+            commit("Modules/Legend/setLayerInfoLegend", {}, {root: true});
+            dispatch("Modules/Legend/createLegendForLayerInfo", layerConf.id, {root: true});
+        }
+        if (rootGetters.isMobile && !rootGetters["Menu/expanded"]("mainMenu")) {
+            dispatch("Menu/toggleMenu", "mainMenu", {root: true});
+        }
         dispatch("Menu/changeCurrentComponent", {type: "layerInformation", side: "mainMenu", props: {name: layerConf.datasets[0].md_name}}, {root: true});
         commit("setLayerInfo", layerConf);
         dispatch("setMetadataURL", layerConf.datasets[0].md_id);
