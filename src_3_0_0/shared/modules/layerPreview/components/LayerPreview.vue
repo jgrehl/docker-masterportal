@@ -14,12 +14,12 @@ export default {
             type: String,
             required: true
         },
-        /** center coordinates fro the preview */
+        /** center coordinates for the preview */
         center: {
             type: [Array, String],
             default: null
         },
-        /** zoomLevel coordinates fro the preview */
+        /** zoomLevel coordinates for the preview */
         zoomLevel: {
             type: Number,
             default: null
