@@ -109,6 +109,22 @@ describe("src_3_0_0/modules/menu/menu-store/actionsMenu.js", () => {
             expect(dispatch.firstCall.args[0]).to.equals("changeCurrentMouseMapInteractionsComponent");
             expect(dispatch.firstCall.args[1]).to.deep.equals({type, side});
         });
+
+        it("should setCurrentComponentProps, if only props name changed", () => {
+            const type = "abc",
+                side = "mainMenu",
+                props = {
+                    name: "common:menu.abc"
+                };
+
+            state[side].navigation.currentComponent.type = type;
+            actions.changeCurrentComponent({commit, dispatch, state}, {type, side, props});
+
+            expect(commit.calledOnce).to.be.true;
+            expect(commit.firstCall.args[0]).to.equals("setCurrentComponentProps");
+            expect(commit.firstCall.args[1]).to.deep.equals({side, props});
+            expect(dispatch.notCalled).to.be.true;
+        });
     });
 
     describe("changeCurrentMouseMapInteractionsComponent", () => {
