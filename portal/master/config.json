@@ -473,7 +473,11 @@
           "shortname": "Orthophotos",
           "typ": "WMS",
           "visibility": false,
-          "transparency": 30
+          "transparency": 30,
+          "preview":{
+            "zoomLevel": 1,
+            "center": "552434.10,5934046.52"
+          }
         },
         {
           "id": [
