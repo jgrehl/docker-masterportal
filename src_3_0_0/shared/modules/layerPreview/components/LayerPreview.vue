@@ -207,7 +207,10 @@ export default {
 <template>
     <div
         v-if="previewUrl"
-        class="layerPreview"
+        :class="[
+            customClass,
+            'layerPreview'
+        ]"
         data-bs-toggle="tooltip"
         :title="layerName"
         @click="clicked()"
@@ -247,6 +250,8 @@ export default {
 
 .layerPreview{
     position: relative;
+    width: 50px;
+    height: 50px;
 }
 .previewImg {
     width: 50px;
