@@ -476,8 +476,8 @@
           "transparency": 30,
           "preview":{
             "zoomLevel": 6,
-            "xcenter": "552434.10,5934046.52",
-            "center":"565080.25,5934634.77"
+            "center":"566245.97,5938894.79",
+            "radius": 500
           }
         },
         {
