@@ -19,7 +19,7 @@ export default {
             type: [Array, String],
             default: null
         },
-        /** zoomLevel coordinates for the preview */
+        /** zoomLevel for the preview */
         zoomLevel: {
             type: Number,
             default: null
