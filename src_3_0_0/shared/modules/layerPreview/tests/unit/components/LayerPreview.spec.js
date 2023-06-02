@@ -65,7 +65,7 @@ describe("src_3_0_0/modules/layerPreview/components/LayerPreview.vue", () => {
             mode: "2D",
             getView: () => {
                 return {
-                    getResolutions: () => [2000, 1000],
+                    getResolutions: () => [2000, 1000, 500, 100, 50, 10],
                     getProjection: () => {
                         return {
                             getCode: () => "EPSG:25832"

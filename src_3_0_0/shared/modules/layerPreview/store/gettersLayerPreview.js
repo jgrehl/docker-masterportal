@@ -5,8 +5,8 @@ const getters = {
      * @param {stateLayerPreview} state Local vuex state.
      * @returns {Array} the center coordinates
      */
-    previewCenter: state => {
-        return state.center;
+    previewCenter: state => id => {
+        return state.center[id];
     },
 
     /**
@@ -14,8 +14,8 @@ const getters = {
      * @param {stateLayerPreview} state Local vuex state.
      * @returns {number} the zoom-level
      */
-    previewZoomLevel: state => {
-        return state.zoomLevel;
+    previewZoomLevel: state => id =>{
+        return state.zoomLevel[id];
     }
 };
 
