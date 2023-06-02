@@ -193,6 +193,44 @@ describe("src_3_0_0/app-store/getters.js", () => {
         });
     });
 
+    describe("visibleBackgroundLayerConfigs", () => {
+        it.only("should return all visible backgroundLayers", () => {
+            const greenLayer = {
+                    id: "1132",
+                    name: "100 Jahre Stadtgruen POIs",
+                    visibility: true
+                },
+                layerConfig = {
+                    [treeBackgroundsKey]: {
+                        elements: [
+                            {
+                                id: "453",
+                                visibility: true
+                            },
+                            {
+                                id: "452"
+                            }
+                        ]
+                    },
+                    [treeSubjectsKey]: {
+                        elements: [
+                            greenLayer,
+                            {
+                                id: "10220",
+                                visibility: true
+                            }
+                        ]
+                    }
+                },
+                state = {
+                    layerConfig: layerConfig
+                };
+
+            expect(getters.visibleBackgroundLayerConfigs(state)[0]).to.deep.equal(layerConfig[treeBackgroundsKey].elements[0]);
+            expect(getters.visibleBackgroundLayerConfigs(state)[0].id).to.deep.equal("453");
+        });
+    });
+
     describe("allLayerConfigsStructured and allLayerConfigsByParentKey", () => {
         let state,
             layerConfig,
