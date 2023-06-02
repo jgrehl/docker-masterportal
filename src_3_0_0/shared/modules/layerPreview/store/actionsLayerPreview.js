@@ -12,12 +12,12 @@ const actions = {
     initialize: async function ({commit, rootGetters}, {id, center, zoomLevel}) {
         const resolutions = mapCollection.getMapView("2D").getResolutions();
         let previewCenter = center ? center : rootGetters["Maps/initialCenter"],
-            previewZoomLevel = zoomLevel ? zoomLevel : rootGetters["Maps/initialZoom"];
+            previewZoomLevel = typeof zoomLevel === "number" ? zoomLevel : rootGetters["Maps/initialZoom"];
 
         if (!Array.isArray(previewCenter) && typeof previewCenter === "string" && previewCenter.indexOf(",") > -1) {
             previewCenter = [parseFloat(previewCenter.split(",")[0]), parseFloat(previewCenter.split(",")[1])];
         }
-        if (previewZoomLevel - 1 >= Object.keys(resolutions).length) {
+        if (resolutions[previewZoomLevel] === undefined) {
             previewZoomLevel = rootGetters["Maps/initialZoom"];
             console.warn(`Unusable zoomLevel ${zoomLevel} at layer with id:${id} configured, corrected to initialZoom ${previewZoomLevel}`);
         }

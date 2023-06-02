@@ -95,6 +95,51 @@ describe("src_3_0_0/modules/layerTree/components/LayerCheckBox.vue", () => {
         expect(wrapper.find("label").attributes("class")).not.to.include("bold");
     });
 
+    it("renders background-layer as simple preview", () => {
+        layer.backgroundLayer = true;
+        layer.showInLayerTree = false;
+
+        wrapper = shallowMount(LayerCheckBox, {
+            global: {
+                plugins: [store]
+            },
+            propsData
+        });
+
+        expect(wrapper.find("#layer-checkbox-" + propsData.conf.id).exists()).to.be.false;
+        expect(wrapper.find("#layer-tree-layer-preview-" + propsData.conf.id).exists()).to.be.true;
+        expect(wrapper.find("layer-preview-stub").exists()).to.be.true;
+        expect(wrapper.find(".pt-4").text()).to.equal(propsData.conf.name);
+    });
+
+    it("renders background-layer with preview in config", () => {
+        layer.backgroundLayer = true;
+        layer.showInLayerTree = false;
+        layer.shortname = "shortname";
+        layer.preview = {
+            customClass: "customClass",
+            center: "1,2",
+            zoomLevel: 6
+        };
+
+        wrapper = shallowMount(LayerCheckBox, {
+            global: {
+                plugins: [store]
+            },
+            propsData
+        });
+
+        expect(wrapper.find("#layer-checkbox-" + propsData.conf.id).exists()).to.be.false;
+        expect(wrapper.find("#layer-tree-layer-preview-" + propsData.conf.id).exists()).to.be.true;
+        expect(wrapper.find("layer-preview-stub").exists()).to.be.true;
+        expect(wrapper.find("layer-preview-stub").attributes("center")).to.be.equals(layer.preview.center);
+        expect(wrapper.find("layer-preview-stub").attributes("zoomlevel")).to.be.equals(String(layer.preview.zoomLevel));
+        expect(wrapper.find("layer-preview-stub").attributes("customclass")).to.be.equals(layer.preview.customClass);
+        expect(wrapper.find("layer-preview-stub").attributes("checkable")).to.be.equals("true");
+        expect(wrapper.find(".pt-4").text()).to.equal(propsData.conf.shortname);
+    });
+
+
     it("renders layer with shortname", () => {
         propsData.conf.shortname = "short";
         wrapper = shallowMount(LayerCheckBox, {
