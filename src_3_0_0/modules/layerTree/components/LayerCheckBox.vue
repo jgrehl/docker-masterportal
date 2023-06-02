@@ -99,8 +99,10 @@ export default {
             :layer-id="conf.id"
             :checkable="true"
             :checked="isChecked()"
-            :zoom-level="conf.preview?.zoomLevel ? conf.preview?.zoomLevel : 6"
-            :center="conf.preview?.center ? conf.preview?.center : '564466.42,5936206.39'"
+            :zoom-level="typeof conf.preview?.zoomLevel === 'number'? conf.preview?.zoomLevel : null"
+            :radius="conf.preview?.radius ? conf.preview?.radius : null"
+            :center="conf.preview?.center ? conf.preview?.center : null"
+            :custom-class="conf.preview?.customClass ? conf.preview?.customClass : null"
             @preview-clicked="clicked()"
         />
         <label
