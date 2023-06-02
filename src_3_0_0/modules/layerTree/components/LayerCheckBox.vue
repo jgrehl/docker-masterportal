@@ -91,10 +91,11 @@ export default {
 
 <template lang="html">
     <div
+        v-if="conf.backgroundLayer && !conf.showInLayerTree"
         class="w-100 pe-2 p-1"
-        v-if="conf.backgroundLayer && !conf.showInLayerTree">
+    >
         <LayerPreview
-            :id="'layer-tree-layer-preview-' + conf.id"      
+            :id="'layer-tree-layer-preview-' + conf.id"
             :layer-id="conf.id"
             :checkable="true"
             :checked="isChecked()"
