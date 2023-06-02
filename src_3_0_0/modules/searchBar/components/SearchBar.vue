@@ -46,14 +46,6 @@ export default {
                 console.log(searchSuggestions);
             },
             deep: true
-        },
-        searchSuggestions: {
-            handler (searchSuggestions) {
-                /* eslint-disable no-console */
-                console.log("SearchSuggestions:");
-                console.log(searchSuggestions);
-            },
-            deep: true
         }
     },
     mounted () {
