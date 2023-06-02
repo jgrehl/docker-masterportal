@@ -475,8 +475,9 @@
           "visibility": false,
           "transparency": 30,
           "preview":{
-            "zoomLevel": 1,
-            "center": "552434.10,5934046.52"
+            "zoomLevel": 6,
+            "xcenter": "552434.10,5934046.52",
+            "center":"565080.25,5934634.77"
           }
         },
         {
