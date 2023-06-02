@@ -1,5 +1,6 @@
 <script>
 import {mapActions, mapGetters, mapMutations} from "vuex";
+import LayerPreview from "../../../shared/modules/layerPreview/components/LayerPreview.vue";
 
 /**
  * Representation of a layer in layerTree.
@@ -7,7 +8,7 @@ import {mapActions, mapGetters, mapMutations} from "vuex";
 export default {
     name: "LayerCheckBox",
     components: {
-
+        LayerPreview
     },
     /** current layer configuration */
     props: {
@@ -90,6 +91,39 @@ export default {
 
 <template lang="html">
     <div
+        class="w-100 pe-2 p-1"
+        v-if="conf.backgroundLayer && !conf.showInLayerTree">
+        <LayerPreview
+            :id="'layer-tree-layer-preview-' + conf.id"      
+            :layer-id="conf.id"
+            :checkable="true"
+            :checked="isChecked()"
+            :zoom-level="conf.preview?.zoomLevel ? conf.preview?.zoomLevel : 6"
+            :center="conf.preview?.center ? conf.preview?.center : '564466.42,5936206.39'"
+            @preview-clicked="clicked()"
+        />
+        <label
+            :class="['pt-4']"
+            :for="'layer-tree-layer-preview-' + conf.id"
+            tabindex="0"
+            :aria-label="$t(conf.name)"
+        >
+            <span
+                v-if="conf.shortname"
+                class="small-text"
+            >
+                {{ $t(conf.shortname) }}
+            </span>
+            <span
+                v-else
+                class="small-text"
+            >
+                {{ $t(conf.name) }}
+            </span>
+        </label>
+    </div>
+    <div
+        v-else
         :id="'layer-checkbox-' + conf.id"
         class="d-flex w-100 layer-tree-layer-title pe-2 p-1"
         @click="clicked()"
