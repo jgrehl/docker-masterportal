@@ -86,13 +86,14 @@ const getters = {
         return getters.allLayerConfigsByParentKey(state)(treeSubjectsKey);
     },
     /**
-     * Returns all basemap layers of layerConfig.
+     * Returns all background layers of layerConfig.
      * @param {Object} state state of the app-store.
      * @returns {Object[]} The layers.
      */
     allBackgroundLayerConfigs: state => {
         return getters.allLayerConfigsByParentKey(state)(treeBackgroundsKey);
     },
+
     /**
      * Returns path to the cesium library.
      * @param {Object} state state of the app-store.
@@ -316,6 +317,17 @@ const getters = {
      */
     visibleSubjectDataLayerConfigs: (state) => {
         const layerContainer = getters.allSubjectDataLayerConfigs(state);
+
+        return layerContainer.filter(layerConf => layerConf.visibility === true);
+    },
+
+    /**
+     * Returns all visible background layer configurations.
+     * @param {Object} state state of the app-store.
+     * @returns {Object[]} The layers.
+     */
+    visibleBackgroundLayerConfigs: (state) => {
+        const layerContainer = getters.allBackgroundLayerConfigs(state);
 
         return layerContainer.filter(layerConf => layerConf.visibility === true);
     }
