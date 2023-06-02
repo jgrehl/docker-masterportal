@@ -297,4 +297,257 @@ describe("src_3_0_0/core/js/layers/layer2dVector.js", () => {
             expect(await layerWrapper.createLegend()).to.deep.equals(legendInformation);
         });
     });
+
+    describe("filterUniqueLegendInfo", () => {
+        it("returns uniqueLegendInfo for several features with same condition property (same style)", () => {
+            const wfsLayer = new Layer2dVector(attributes),
+                attributes1 = {id: 1, kategorie: "Bewässerungsanlagen", name: ""},
+                attributes2 = {id: 2, kategorie: "Bewässerungsanlagen", name: "Ludwigsluster Kanal"},
+                attributes3 = {id: 2, kategorie: "Brücken", name: "Lustige Brücke"},
+                features = [{
+                    attribute: attributes1,
+                    get: (key) => {
+                        return attributes1[key];
+                    }
+                },
+                {
+                    attribute: attributes2,
+                    get: (key) => {
+                        return attributes2[key];
+                    }
+                },
+                {
+                    attribute: attributes3,
+                    get: (key) => {
+                        return attributes3[key];
+                    }
+                }],
+                rules = [{
+                    conditions: {
+                        properties: {
+                            kategorie: "Bewässerungsanlagen"
+                        }
+                    },
+                    style: {
+                        imageName: "kanal.png"
+                    }
+                },
+                {
+                    conditions: {
+                        properties: {
+                            kategorie: "Brücken"
+                        }
+                    },
+                    style: {
+                        imageName: "bruecke.png"
+                    }
+                }],
+                legendInfos = {
+                    id: "mrh-industriekultur",
+                    legendInformation: [{
+                        geometryType: "Point",
+                        id: "Point%7B%22properties%22%3A%7B%22kategorie%22%3A%22Bew%C3%A4sserungsanlagen%22%7D%7D",
+                        label: "Bewässerungsanlagen",
+                        styleObject: {}
+                    },
+                    {
+                        geometryType: "Point",
+                        id: "Point%7B%22properties%22%3A%7B%22kategorie%22%3A%22Br%C3%BCcken%22%7D%7D",
+                        label: "Brücken",
+                        styleObject: {}
+                    }]
+                },
+                expectedUniqueLegendInfo = [{
+                    geometryType: "Point",
+                    id: "Point%7B%22properties%22%3A%7B%22kategorie%22%3A%22Bew%C3%A4sserungsanlagen%22%7D%7D",
+                    label: "Bewässerungsanlagen",
+                    styleObject: {}
+                },
+                {
+                    geometryType: "Point",
+                    id: "Point%7B%22properties%22%3A%7B%22kategorie%22%3A%22Br%C3%BCcken%22%7D%7D",
+                    label: "Brücken",
+                    styleObject: {}
+                }];
+
+            expect(wfsLayer.filterUniqueLegendInfo(features, rules, legendInfos)).to.deep.equal(expectedUniqueLegendInfo);
+            expect(wfsLayer.filterUniqueLegendInfo(features, rules, legendInfos).length).to.not.deep.equal(features.length);
+        });
+        it("return uniqueLegendInfo for feature condition property that match legendinformation", () => {
+            const wfsLayer = new Layer2dVector(attributes),
+                attributes1 = {id: 1, Schulform: "Grundschule", name: ""},
+                attributes2 = {id: 2, Schulform: "Regionale Schule", name: "Ludwigsluster Kanal"},
+                attributes3 = {id: 3, Schulform: "Waldorfschule", name: "Lustige Brücke"},
+                features = [{
+                    attribute: attributes1,
+                    get: (key) => {
+                        return attributes1[key];
+                    }
+                },
+                {
+                    attribute: attributes2,
+                    get: (key) => {
+                        return attributes2[key];
+                    }
+                },
+                {
+                    attribute: attributes3,
+                    get: (key) => {
+                        return attributes3[key];
+                    }
+                }],
+                rules = [{
+                    conditions: {
+                        properties: {
+                            Schulform: "Grundschule"
+                        }
+                    },
+                    style: {
+                        imageName: "kanal.png"
+                    }
+                },
+                {
+                    conditions: {
+                        properties: {
+                            Schulform: "Regionale Schule"
+                        }
+                    },
+                    style: {
+                        imageName: "bruecke.png"
+                    }
+                },
+                {
+                    conditions: {
+                        properties: {
+                            Schulform: "Gymnasium"
+                        }
+                    },
+                    style: {
+                        imageName: "bruecke.png"
+                    }
+                },
+                {
+                    conditions: {
+                        properties: {
+                            Schulform: "Förderschule"
+                        }
+                    },
+                    style: {
+                        imageName: "bruecke.png"
+                    }
+                },
+                {
+                    conditions: {
+                        properties: {
+                            Schulform: "Waldorfschule"
+                        }
+                    },
+                    style: {
+                        imageName: "bruecke.png"
+                    }
+                }],
+                legendInfos = {
+                    id: "mrh-industriekultur",
+                    legendInformation: [{
+                        geometryType: "Point",
+                        id: "1",
+                        label: "Grundschule",
+                        styleObject: {}
+                    },
+                    {
+                        geometryType: "Point",
+                        id: "2",
+                        label: "Regionale Schule",
+                        styleObject: {}
+                    },
+                    {
+                        geometryType: "Point",
+                        id: "3",
+                        label: "Gymnasium",
+                        styleObject: {}
+                    },
+                    {
+                        geometryType: "Point",
+                        id: "4",
+                        label: "Förderschule",
+                        styleObject: {}
+                    },
+                    {
+                        geometryType: "Point",
+                        id: "5",
+                        label: "Waldorfschule",
+                        styleObject: {}
+                    }]
+                },
+                expectedUniqueLegendInfo = [{
+                    geometryType: "Point",
+                    id: "1",
+                    label: "Grundschule",
+                    styleObject: {}
+                },
+                {
+                    geometryType: "Point",
+                    id: "2",
+                    label: "Regionale Schule",
+                    styleObject: {}
+                },
+                {
+                    geometryType: "Point",
+                    id: "5",
+                    label: "Waldorfschule",
+                    styleObject: {}
+                }];
+
+            expect(wfsLayer.filterUniqueLegendInfo(features, rules, legendInfos)).to.deep.equal(expectedUniqueLegendInfo);
+            expect(wfsLayer.filterUniqueLegendInfo(features, rules, legendInfos).length).to.deep.equal(3);
+            expect(wfsLayer.filterUniqueLegendInfo(features, rules, legendInfos).length).to.deep.equal(features.length);
+        });
+        it("return uniqueLegendInfo for feature condition property (with first letter upper case) that match legendinformation (first letter lower case", () => {
+            const wfsLayer = new Layer2dVector(attributes),
+                attributes1 = {id: 1, Kategorie: "Bewässerungsanlagen", name: ""},
+                features = [{
+                    attribute: attributes1,
+                    get: (key) => {
+                        return attributes1[key];
+                    }
+                }],
+                rules = [{
+                    conditions: {
+                        properties: {
+                            kategorie: "Bewässerungsanlagen"
+                        }
+                    },
+                    style: {
+                        imageName: "kanal.png"
+                    }
+                },
+                {
+                    conditions: {
+                        properties: {
+                            kategorie: "Brücken"
+                        }
+                    },
+                    style: {
+                        imageName: "bruecke.png"
+                    }
+                }],
+                legendInfos = {
+                    id: "mrh-industriekultur",
+                    legendInformation: [{
+                        geometryType: "Point",
+                        id: "Point%7B%22properties%22%3A%7B%22kategorie%22%3A%22Bew%C3%A4sserungsanlagen%22%7D%7D",
+                        label: "Bewässerungsanlagen",
+                        styleObject: {}
+                    }]
+                },
+                expectedUniqueLegendInfo = [{
+                    geometryType: "Point",
+                    id: "Point%7B%22properties%22%3A%7B%22kategorie%22%3A%22Bew%C3%A4sserungsanlagen%22%7D%7D",
+                    label: "Bewässerungsanlagen",
+                    styleObject: {}
+                }];
+
+            expect(wfsLayer.filterUniqueLegendInfo(features, rules, legendInfos)).to.deep.equal(expectedUniqueLegendInfo);
+        });
+    });
 });
