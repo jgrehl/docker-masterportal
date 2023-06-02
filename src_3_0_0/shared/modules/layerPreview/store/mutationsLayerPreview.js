@@ -6,8 +6,8 @@ const mutations = {
      * @param {Array} center  the center coordinates
      * @returns {void}
      */
-    setPreviewCenter (state, {center}) {
-        state.center = center;
+    setPreviewCenter (state, {id, center}) {
+        state.center[id] = center;
     },
 
     /**
@@ -16,8 +16,8 @@ const mutations = {
      * @param {number} zoomLevel the zoom-level
      * @returns {void}
      */
-    setPreviewZoomLevel (state, {zoomLevel}) {
-        state.zoomLevel = zoomLevel;
+    setPreviewZoomLevel (state, {id, zoomLevel}) {
+        state.zoomLevel[id] = zoomLevel;
     }
 
 };
