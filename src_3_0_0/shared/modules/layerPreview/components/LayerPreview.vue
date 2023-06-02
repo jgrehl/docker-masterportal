@@ -62,7 +62,7 @@ export default {
         };
     },
     computed: {
-        ...mapGetters(["layerConfigById"]),
+        ...mapGetters(["isMobile", "layerConfigById"]),
         ...mapGetters("Maps", ["initialCenter", "initialZoom"]),
         ...mapGetters("Modules/LayerPreview", ["previewCenter", "previewZoomLevel"])
 
@@ -97,11 +97,12 @@ export default {
          * @returns {ol.extent.buffer} the extent
          */
         calculateExtent () {
-            const resolution = mapCollection.getMapView("2D").getResolutions()[this.previewZoomLevel(this.layerId) - 1];
+            const resolution = mapCollection.getMapView("2D").getResolutions()[this.previewZoomLevel(this.layerId)],
+                radius = typeof this.radius === "number" ? this.radius : 1000;
 
             return buffer(
                 new Point(this.previewCenter(this.layerId)).getExtent(),
-                this.radius * Math.sqrt(resolution)
+                radius * Math.sqrt(resolution)
             );
         },
 
@@ -165,7 +166,7 @@ export default {
             }
             options = optionsFromCapabilities(capabilities, capabilitiesOptions);
             transformedCoords = proj4(proj4(mapView.getProjection().getCode()), proj4("EPSG:3857"), this.previewCenter(this.layerId));
-            tileZ = options?.tileGrid.getZForResolution(mapView.getResolutions()[this.previewZoomLevel(this.layerId) - 1]);
+            tileZ = options?.tileGrid.getZForResolution(mapView.getResolutions()[this.previewZoomLevel(this.layerId)]);
             tileCoord = options?.tileGrid.getTileCoordForCoordAndZ(transformedCoords, tileZ);
             tileMatrix = tileCoord ? "EPSG:3857:" + tileCoord[0] : "EPSG:3857:0";
 
@@ -211,7 +212,7 @@ export default {
             customClass,
             'layerPreview'
         ]"
-        data-bs-toggle="tooltip"
+        :data-bs-toggle="!isMobile ? 'tooltip' : null"
         :title="layerName"
         @click="clicked()"
         @keydown.enter="clicked()"
@@ -284,6 +285,11 @@ export default {
     width: 50px;
     height: 50px;
     font-size: 3.7rem;
+}
+@media (max-width: 767px) {
+    .checkable{
+        font-size: 3.3rem;
+}
 }
 
 </style>
