@@ -4,7 +4,12 @@ import {mapActions, mapGetters, mapMutations} from "vuex";
 export default {
     name: "BasemapSwitcher",
     computed: {
-        ...mapGetters(["isMobile", "allBackgroundLayerConfigs", "determineZIndex", "layerConfigsByAttributes"]),
+        ...mapGetters([
+            "isMobile",
+            "visibleBackgroundLayerConfigs",
+            "allBackgroundLayerConfigs",
+            "layerConfigsByAttributes"
+        ]),
         ...mapGetters("Modules/BasemapSwitcher", [
             "activatedExpandable",
             "backgroundLayerIds",
@@ -12,10 +17,26 @@ export default {
         ])
     },
     watch: {
-        //
-        allBackgroundLayerConfigs: {
-            handler (newVal, oldVal) {
-                console.log("zIndex", newVal, oldVal);
+        visibleBackgroundLayerConfigs: {
+            handler (newVal) {
+                const zIndex = [];
+                let maxZIndex = null,
+                    topLayer = null;
+
+                newVal.forEach((val) => {
+                    zIndex.push(val.zIndex);
+                });
+
+                maxZIndex = Math.max(...zIndex);
+                topLayer = newVal.filter(layer =>layer.zIndex === maxZIndex);
+
+                if (topLayer[0]?.id !== undefined) {
+                    this.setTopBackgroundLayerId(topLayer[0]?.id);
+                }
+                else {
+                    this.setTopBackgroundLayerId();
+                }
+                this.setActivatedExpandable(false);
             },
             deep: true
         }
@@ -58,7 +79,9 @@ export default {
                 }).indexOf(layerId);
 
             selectableBackroundLayerIds.splice(index, 1);
-            selectableBackroundLayerIds.push(this.topBackgroundLayerId);
+            if (this.topBackgroundLayerId !== undefined) {
+                selectableBackroundLayerIds.push(this.topBackgroundLayerId);
+            }
             this.setBackgroundLayerIds(selectableBackroundLayerIds);
 
             this.setTopBackgroundLayerId([]);
@@ -95,6 +118,12 @@ export default {
                 @click="setActivatedExpandable(!activatedExpandable)"
             >
                 {{ topBackgroundLayerId }}
+            </button>
+            <button
+                v-if="topBackgroundLayerId === undefined"
+                class="btn btn-light"
+            >
+                "Choose Map"
             </button>
         </ul>
     </div>

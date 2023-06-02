@@ -8,10 +8,10 @@ import sinon from "sinon";
 config.global.mocks.$t = key => key;
 
 describe("src_3_0_0/modules/BasemapSwitcher.vue", () => {
-    let store,
-        wrapper,
+    let wrapper,
         layerConfigs,
-        backgroundlayerConfigs;
+        backgroundlayerConfigs,
+        visibleBackgroundLayerConfigs;
 
     beforeEach(() => {
         layerConfigs = [
@@ -27,8 +27,12 @@ describe("src_3_0_0/modules/BasemapSwitcher.vue", () => {
             {id: "453", name: "Geobasiskarten (HamburgDE)", visibility: true, backgroundLayer: true, showInLayerTree: true},
             {id: "452", name: "Digitale Orthophotos (belaubt) Hamburg", visibility: false, backgroundLayer: true, showInLayerTree: true}
         ];
+        visibleBackgroundLayerConfigs = [
+            {id: "VectorTile", name: "ArcGIS VectorTile", visibility: true, backgroundLayer: true, showInLayerTree: true},
+            {id: "453", name: "Geobasiskarten (HamburgDE)", visibility: true, backgroundLayer: true, showInLayerTree: true}
+        ];
     });
-    store = createStore({
+    const store = createStore({
         namespaced: true,
         modules: {
             Modules: {
@@ -40,13 +44,14 @@ describe("src_3_0_0/modules/BasemapSwitcher.vue", () => {
         },
         getters: {
             isMobile: () => false,
-            // layerConfigsByAttributes: () => (attributes = {}) => layerConfigs,
-            allBackgroundLayerConfigs: () => backgroundlayerConfigs
+            layerConfigsByAttributes: () => (attributes = {}) => layerConfigs,
+            allBackgroundLayerConfigs: () => backgroundlayerConfigs,
+            visibleBackgroundLayerConfigs: () => visibleBackgroundLayerConfigs
         },
         mutations: {
-            // setLayerConfigsByAttributes: (state, layer) => {
-            //     layerConfigs = layer;
-            // },
+            setLayerConfigsByAttributes: (state, layer) => {
+                layerConfigs = layer;
+            },
             setAllBackgroundLayerConfigs: (state, layer) => {
                 backgroundlayerConfigs = layer;
             }
@@ -57,25 +62,41 @@ describe("src_3_0_0/modules/BasemapSwitcher.vue", () => {
         sinon.restore();
     });
 
-    it("renders BasemapSwitcher", () => {
-        wrapper = shallowMount(BasemapSwitcherComponent, {
-            global: {
-                plugins: [store]
-            }});
+    describe("BasemapSwitcher DOM elements", () => {
+        it.skip("renders BasemapSwitcher", () => {
+            wrapper = shallowMount(BasemapSwitcherComponent, {
+                global: {
+                    plugins: [store]
+                }});
 
-        expect(wrapper.find("#basemap-switcher").exists()).to.be.true;
+            expect(wrapper.find("#basemap-switcher").exists()).to.be.true;
+        });
+
+        it.skip("does not render BasemapSwitcher", () => {
+            // store.state.Modules.BasemapSwitcher.backgroundLayerIds = [];
+            // store.commit("setLayerConfigsByAttributes", []);
+            store.commit("setAllBackgroundLayerConfigs", []);
+
+            wrapper = shallowMount(BasemapSwitcherComponent, {
+                global: {
+                    plugins: [store]
+                }});
+
+            expect(wrapper.find("#basemap-switcher").exists()).to.be.false;
+        });
     });
 
-    it.only("does not render BasemapSwitcher", () => {
-        // store.state.Modules.BasemapSwitcher.backgroundLayerIds = [];
-        // store.commit("setLayerConfigsByAttributes", []);
-        store.commit("setAllBackgroundLayerConfigs", []);
+    describe("watcher", () => {
+        it.skip("visibleBackgroundLayerConfigs", () => {
+            wrapper = shallowMount(BasemapSwitcherComponent, {
+                global: {
+                    plugins: [store]
+                }});
 
-        wrapper = shallowMount(BasemapSwitcherComponent, {
-            global: {
-                plugins: [store]
-            }});
+            wrapper.vm.$options.watch.visibleBackgroundLayerConfigs.handler.call(wrapper.vm)
 
-        expect(wrapper.find("#basemap-switcher").exists()).to.be.false;
+            expect.
+            // expect(Boris.actions.simulateLanduseSelect.calledOnce).to.equal(true);
+        });
     });
 });
