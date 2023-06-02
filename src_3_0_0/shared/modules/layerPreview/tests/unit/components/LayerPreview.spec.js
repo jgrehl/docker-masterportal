@@ -230,7 +230,7 @@ describe("src_3_0_0/modules/layerPreview/components/LayerPreview.vue", () => {
         expect(wrapper.find(".customCSSClass").exists()).to.be.true;
     });
 
-    it("should contain custom css-class 2 times, if prop customClass and checkable is given", async () => {
+    it("should contain custom css-class 3 times, if prop customClass and checkable is given", async () => {
         const props = {
             layerId: "WMS",
             customClass: "customCSSClass",
@@ -244,7 +244,7 @@ describe("src_3_0_0/modules/layerPreview/components/LayerPreview.vue", () => {
             props: props
         });
         await wrapper.vm.$nextTick();
-        expect(wrapper.findAll(".customCSSClass").length).to.be.equals(2);
+        expect(wrapper.findAll(".customCSSClass").length).to.be.equals(3);
     });
 
 });
