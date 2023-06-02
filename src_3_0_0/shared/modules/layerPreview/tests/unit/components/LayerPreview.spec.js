@@ -107,7 +107,8 @@ describe("src_3_0_0/modules/layerPreview/components/LayerPreview.vue", () => {
                         return layerVectorTile;
                     }
                     return null;
-                }
+                },
+                isMobile: () => false
             }
         });
         sinon.stub(LayerPreviewComponent.methods, "calculateExtent").returns([1, 2, 3, 4]);
