@@ -122,17 +122,17 @@ export default {
             <h6 v-if="backgroundLayerConfs.length > 0">
                 {{ $t("common:modules.layerSelection.backgrounds") }}
             </h6>
-            <template
-                v-for="(bgConf, index) in backgroundLayerConfs"
-                :key="index"
-            >
-                <div class="col">
-                    <LayerCheckBox
-                        :conf="bgConf"
-                        :is-layer-tree="false"
-                    />
-                </div>
-            </template>
+            <div class="d-flex flex-row overflow-scroll">
+                <template
+                    v-for="(bgConf, index) in backgroundLayerConfs"
+                    :key="index"
+                >
+                        <LayerCheckBox
+                            :conf="bgConf"
+                            :is-layer-tree="false"
+                        />
+                </template>
+            </div>
             <hr
                 v-if="backgroundLayerConfs.length > 0"
                 class="m-2"
@@ -172,6 +172,7 @@ export default {
     top: 16%;
     position: absolute;
     padding: $padding;
+    padding-top: 0;
 }
 .mp-menu-navigation{
     color: $black;
