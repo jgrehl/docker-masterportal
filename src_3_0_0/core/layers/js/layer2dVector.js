@@ -269,7 +269,12 @@ Layer2dVector.prototype.createLegend = async function () {
                             return geometryTypes;
                         });
                 }
-                legend = legendInfos.legendInformation;
+                if (rules && rules[0]?.conditions !== undefined) {
+                    legend = this.filterUniqueLegendInfo(this.layer.getSource().getFeatures(), rules, legendInfos);
+                }
+                else {
+                    legend = legendInfos.legendInformation;
+                }
             }
         }
         else if (typeof legend === "string") {
@@ -278,5 +283,37 @@ Layer2dVector.prototype.createLegend = async function () {
     }
 
     return legend;
+};
+
+/**
+ * Filters unique legend information
+ * @param {Object} features selected features
+ * @param {Object} rules  the styleObject rules
+ * @param {Object} legendInfos styleObject legend information
+ * @returns {object} uniqueLegendInformation as array
+ */
+Layer2dVector.prototype.filterUniqueLegendInfo = function (features, rules, legendInfos) {
+    const rulesKey = Object.keys(rules[0].conditions.properties)[0],
+        conditionProperties = [],
+        uniqueLegendInformation = [];
+
+    for (let i = 0; i < features.length; i++) {
+        const rulesKeyUpperCase = rulesKey.charAt(0).toUpperCase() + rulesKey.slice(1);
+
+        if (features[i].get(rulesKey) !== undefined && !conditionProperties.includes(features[i].get(rulesKey))) {
+            conditionProperties.push(features[i].get(rulesKey));
+        }
+        else if (features[i].get(rulesKeyUpperCase) !== undefined && !conditionProperties.includes(features[i].get(rulesKeyUpperCase))) {
+            conditionProperties.push(features[i].get(rulesKeyUpperCase));
+        }
+    }
+    legendInfos.legendInformation.forEach((info) => {
+        if (conditionProperties.includes(info.label)) {
+            if (!uniqueLegendInformation.includes(info)) {
+                uniqueLegendInformation.push(info);
+            }
+        }
+    });
+    return uniqueLegendInformation;
 };
 
