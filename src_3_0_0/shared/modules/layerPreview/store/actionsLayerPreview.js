@@ -9,21 +9,20 @@ const actions = {
      * @param {Number} payload.zoomLevel the zoom level
      * @returns {void}
      */
-    initialize: async function ({commit, getters, rootGetters}, {center, zoomLevel}) {
-        const previewCenter = center ? center : rootGetters["Maps/initialCenter"];
+    initialize: async function ({commit, rootGetters}, {id, center, zoomLevel}) {
+        const resolutions = mapCollection.getMapView("2D").getResolutions();
+        let previewCenter = center ? center : rootGetters["Maps/initialCenter"],
+            previewZoomLevel = zoomLevel ? zoomLevel : rootGetters["Maps/initialZoom"];
 
         if (!Array.isArray(previewCenter) && typeof previewCenter === "string" && previewCenter.indexOf(",") > -1) {
-            commit("setPreviewCenter", {center: [parseFloat(previewCenter.split(",")[0]), parseFloat(previewCenter.split(",")[1])]});
+            previewCenter = [parseFloat(previewCenter.split(",")[0]), parseFloat(previewCenter.split(",")[1])];
         }
-        else if (!getters.previewCenter) {
-            commit("setPreviewCenter", {center: previewCenter});
+        if (previewZoomLevel - 1 >= Object.keys(resolutions).length) {
+            previewZoomLevel = rootGetters["Maps/initialZoom"];
+            console.warn(`Unusable zoomLevel ${zoomLevel} at layer with id:${id} configured, corrected to initialZoom ${previewZoomLevel}`);
         }
-        if (!getters.previewZoomLevel) {
-            commit("setPreviewZoomLevel", {zoomLevel: zoomLevel ? zoomLevel : rootGetters["Maps/initialZoom"]});
-        }
-        else {
-            commit("setPreviewZoomLevel", {zoomLevel: parseInt(getters.previewZoomLevel, 10)});
-        }
+        commit("setPreviewCenter", {id, center: previewCenter});
+        commit("setPreviewZoomLevel", {id, zoomLevel: previewZoomLevel});
     }
 };
 
