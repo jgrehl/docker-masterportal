@@ -71,7 +71,7 @@ export default {
         const layerConfig = this.layerConfigById(this.layerId);
 
         if (layerConfig && this.supportedLayerTyps.includes(layerConfig.typ)) {
-            this.initialize({center: this.center, zoomLevel: this.zoomLevel});
+            this.initialize({id: this.layerId, center: this.center, zoomLevel: this.zoomLevel});
             this.layerName = layerConfig.name;
             if (layerConfig.typ === "WMS") {
                 this.buildWMSUrl(layerConfig);
@@ -97,10 +97,10 @@ export default {
          * @returns {ol.extent.buffer} the extent
          */
         calculateExtent () {
-            const resolution = mapCollection.getMapView("2D").getResolutions()[this.previewZoomLevel - 1];
+            const resolution = mapCollection.getMapView("2D").getResolutions()[this.previewZoomLevel(this.layerId) - 1];
 
             return buffer(
-                new Point(this.previewCenter).getExtent(),
+                new Point(this.previewCenter(this.layerId)).getExtent(),
                 this.radius * Math.sqrt(resolution)
             );
         },
@@ -164,8 +164,8 @@ export default {
                 capabilitiesOptions.projection = "EPSG:3857";
             }
             options = optionsFromCapabilities(capabilities, capabilitiesOptions);
-            transformedCoords = proj4(proj4(mapView.getProjection().getCode()), proj4("EPSG:3857"), this.previewCenter);
-            tileZ = options?.tileGrid.getZForResolution(mapView.getResolutions()[this.previewZoomLevel - 1]);
+            transformedCoords = proj4(proj4(mapView.getProjection().getCode()), proj4("EPSG:3857"), this.previewCenter(this.layerId));
+            tileZ = options?.tileGrid.getZForResolution(mapView.getResolutions()[this.previewZoomLevel(this.layerId) - 1]);
             tileCoord = options?.tileGrid.getTileCoordForCoordAndZ(transformedCoords, tileZ);
             tileMatrix = tileCoord ? "EPSG:3857:" + tileCoord[0] : "EPSG:3857:0";
 
