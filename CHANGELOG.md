@@ -192,15 +192,15 @@
 - The Virtual City Planner tool (virtualcityPLANNER) has been removed
 - the `wfsSearch` modules config.json parameter 'field'-property `type` was renamed to `queryType`
 - new config.json parameter 'tree' added. Containes:
-  - 'type' (was 'treeType' at root before), the following params are possible: "auto" ( = old "default") or "light"
-  - 'addLayerButton': if true, a button to add layers is shown. On first menu side only Layers configured in config.json with attribute 'showInLayerTree':true or "visibility": true are shown.
-  - 'validLayerTypesAutoTree' (new parameter) only for tree type 'auto'
-  - 'layerIDsToIgnore' (moved from config.js) only for tree type 'auto'
-  - 'metaIDsToMerge' (moved from config.js) only for tree type 'auto'
-  - 'metaIDsToIgnore' (moved from config.js) only for tree type 'auto'
-  - 'layerIDsToStyle' (moved from config.js) only for tree type 'auto'
-  - 'categories': only for tree type 'auto', contains categories in datasets of layers. Tree is structured by them.
-  - configuration of 'Fachdaten' changed
+    - 'type' (was 'treeType' at root before), the following params are possible: "auto" ( = old "default") or "light"
+    - 'addLayerButton': if true, a button to add layers is shown. On first menu side only Layers configured in config.json with attribute 'showInLayerTree':true or "visibility": true are shown.
+    - 'validLayerTypesAutoTree' (new parameter) only for tree type 'auto'
+    - 'layerIDsToIgnore' (moved from config.js) only for tree type 'auto'
+    - 'metaIDsToMerge' (moved from config.js) only for tree type 'auto'
+    - 'metaIDsToIgnore' (moved from config.js) only for tree type 'auto'
+    - 'layerIDsToStyle' (moved from config.js) only for tree type 'auto'
+    - 'categories': only for tree type 'auto', contains categories in datasets of layers. Tree is structured by them.
+    - configuration of 'Fachdaten' changed
 - the attribute 'cache' on the layer is no longer taken into account with tree.type 'auto
 - controls: a control can only be configured in config.json as "expandable". "bottomControl" is not longer supported.
 - 'supportedTreeTypes': attribute was added like 'supportedDevices' and 'supportedMapModes' to make it configurable in which tree type the module should be displayed; default value is light.
@@ -219,20 +219,54 @@
 - LayerIds can no longer be configured as Object in the layer configuration (config.json). Instead the suffix `#` should be used to use a LayerId more than once.
 - The `mapMarker` is now a part of `map`.
 - You can configure the posiibility to add attachments to the `contact` form.
-- LayerPreview: Preview images can be generated and displayed for layer types WMS, WMTS and VectorTile.
 
 ### Added
 - GFI: nested object values can now be addressed from "gfiAttributes" by dot notation. See [services.json](https://bitbucket.org/geowerkstatt-hamburg/masterportal/src/dev/doc/services.json.md#markdown-header-gfi_attributes) .
 - PortalFooter
     - configuration for mobileFooterInfoToggler has been implemented
     - the icon (arrow) to toggle information is only visible if it is configured
+- LayerPreview: Preview images can be generated and displayed for layer types WMS, WMTS and VectorTile.
+- The following NPM package was added:
+    - dependencies:
+        - @vue/compat
+        - @vue/compiler-sfc
+        - i18next-vue
+        - qrcode
+        - vue-datepicker-next
+        - vuedraggable
+    - devDependencies:
+        - @vue/devtools-api
+- A new module `OpenConfig` has been implemented, which can be used to load a new configuration file (config.json) at runtime.
+- A new module `News` has been implemented, it displays the recent alerts.
+- A new module in menu `CustomMenuElement` has been implemented. It can open a link, display html from config.json or from external file or dispatch an action.
+- Modules can now have an attribute `hasMouseMapInteractions`. Only one module that has this attribute set to `true` can be open at the same time.
 
 ### Changed
 - The version of node was updated to `^16.13.2 || ^18.16.0`. If you use node 18, you must provide the environment variable `NODE_OPTIONS=--openssl-legacy-provider` or you can alter npm scripts using cross-env, e.g. `"start": "cross-env NODE_OPTIONS=--openssl-legacy-provider webpack-dev-server --config devtools/webpack.dev.js"` to avoid errors with webpack 4 (see https://github.com/webpack/webpack/issues/14532#issuecomment-947807590). This workaround only applies up to Masterportal version 2.38.0.
 - The version of npm was updated to `^8.1.2 || ^9.5.1`
 - The following NPM packages have been updated:
     - dependencies:
-      - @masterportal/masterportalapi: 2.17.0 to 2.19.0
+        - @masterportal/masterportalapi: 2.17.0 to 2.19.0
+        - @popperjs/core: 2.11.5 to 2.11.6
+        - bootstrap: 5.2.0 to 5.2.2
+        - charts.js to 4.2.1
+        - i18next-browser-languagedetector: 6.1.4 to 6.1.8
+        - i18next-http-backend: 1.4.1 to 1.4.5
+        - moment-timezone: 0.5.34 to 0.5.37
+        - vue: 2.7.8 to 3.1.0
+        - vuex: 3.6.2 to 4.0.2
+    - devDependencies:
+        - @masterportal/mpconfigparser: 1.3.0 to 1.3.1
+        - @vue/test-utils to 2.3.1
+        - fs-extra to 11.1.0
+        - mocha: 10.0.0 to 10.1.0
+        - vue-loader: 15.9.8 to 17.0.1
+- Parameters moved from config.js to config.json:
+    - 'layerIDsToIgnore'
+    - 'metaIDsToMerge'
+    - 'metaIDsToIgnore'
+    - 'layerIDsToStyle'
+- The Control-Bar Design changed
 
 ### Fixed
 - Tool Coordinates: no errors occur on mobile devices.
@@ -262,136 +296,7 @@
         - string-replace-loader
     - dependencies:
          - dayjs (moved to masterportalAPI dependency)
-
----
-
-## v2.33.1 - 2023-05-16
-### Fixed
-- Print:
-  - dashstyle can now be printed even if only one value was specified
-
----
-
-## v2.33.0 - 2023-05-03
-### Added
-- New Rotation control of the map. If map interaction `altShiftDragRotate` is activated the map can be rotated with `shift+alt+drag`. See [mapInteractions](https://bitbucket.org/geowerkstatt-hamburg/masterportal/src/dev/doc/config.js.md#markdown-header-mapInteractions) and [rotate control](https://bitbucket.org/geowerkstatt-hamburg/masterportal/src/dev/doc/config.json.md#markdown-header-portalconfigcontrolsrotation)
-- Issue #874: add keyboardEventTarget possibility to ol map configuration
-- Issue #882: add map rotation configuration and control
-- Filter: can be manipulated from URL with parameters
-
-### Changed
-- Issue #1020: In the language files the pluralization was adjusted. The suffix `plural` was changed to `other` and the suffix `one` was added.
-- The following NPM packages have been updated:
-  - dependencies:
-    - @masterportal/masterportalapi: 2.16.0 to 2.17.0
-
-### Fixed
-- Issue #884: mapbox styles with raster sources can be displayed.
-
-### Removed
 - The url parameter `TOOLS/[tool-id]` was removed. The `MENU` parameter can be used instead.
-
----
-
-## v2.32.1 - 2023-04-17
-### Fixed
-- Traffic Lights Data visible on scale 1:5000 again
-- Filter/ Autorefresh: The same features are displayed from a filterd GeoJson after an autorefresh as before the autorefresh.
-- Issue #842: Dropdown at WFS filter module is not filled with MapServer WFS.
-
----
-
-##  v2.32.0 - 2023-04-05
-### Added
-- Print:
-  - Printing static image added
-  - Print special style with @ and . added
-- New WebGL Render Pipeline
-    - core/layers/renderer/webgl: New layer-class methods for rendering WFS, GeoJSON, OAF or VectorBase layers using OL7's WebGL render pipelines
-- Filter:
-    - New parameter `showAllValues` is added. This prevents the values from disappearing when adjusting them.
-- CoordToolkit
-    - Added new function for ETRS89_3GK3 including new validation rule.
-    - Added new configuration parameters for elevation and coordinate reference system explanations.
-- Issue #888:
-    - Print:
-        - The print module now displays dashed lines in the printout.
-        - The print module now displays the opacity and stroke styles in the legend in the printout.
-- treeType 'default': 3D-data can be configured in folders in config.json
-- FeatureLister:
-  - The FeatureLister now works for layer-typ "WFS" and "GeoJSON".
-- The following NPM package was added:
-    - dependencies:
-        - @vue/compat
-        - @vue/compiler-sfc
-        - i18next-vue
-        - qrcode
-        - vue-datepicker-next
-        - vuedraggable
-    - devDependencies:
-        - @vue/devtools-api
-- A new module `OpenConfig` has been implemented, which can be used to load a new configuration file (config.json) at runtime.
-- A new module `News` has been implemented, it displays the recent alerts.
-- A new module in menu `CustomMenuElement` has been implemented. It can open a link, display html from config.json or from external file or dispatch an action.
-- Modules can now have an attribute `hasMouseMapInteractions`. Only one module that has this attribute set to `true` can be open at the same time.
-
-### Changed
-- Update GeoJSON, WFS, OAF getFeaturesFilterFunction filtert kann nach exakter Geometrie filtern.
-- Update GeoJSON, WFS, OAF und VectorBase für WebGL Rendering
-    - ModelList/updateLayerView: Only add layers to index if they are actually being displayed on the map (removes unnecessary calls)
-    - actionsMapLayers/addLayerOnTop: Use the ModelList for the length of the layer list, not the map, as layer that are not visible or have been disposed (WebGL) might not be on the map
-    - moverHover/actionsMouseHover: collect webgl features for mouseHoverInfo
-    - GFI/gettersGfi: collect  webgl features for GFI
-    - initializersBufferAnalysis/loadSelectOptions: only freeze non-webgl layers
-- Update parameters for getGeometryTypeFromWFS and getGeometryTypeFromOAF to pass wfsImgPath from config.
-- highlightFeaturesByAttribute: scale constraint does not affect the selection layers.
-- The following NPM packages have been updated:
-  - dependencies:
-    - @masterportal/masterportalapi: 2.15.1 to 2.16.0 (This also raised ol to version 7.3.0)
-    - axios: 1.2.0 to 1.3.4
-    - bootstrap-icons: 1.10.2 to 1.10.3
-    - charts.js to 4.2.1
-    - i18next: 22.0.6 to 22.4.11
-    - i18next-http-backend: 2.0.2 to 2.2.0
-    - jquery: 3.6.1 to 3.6.4
-  - devDependencies:
-    - @sinonjs/fake-timers: 10.0.0 to 10.0.2
-    - @vue/test-utils to 2.3.1
-    - canvas: 2.10.2 to 2.11.0
-    - esbuild-loader: 2.20.0 to 3.0.1
-    - eslint: 8.28.0 to 8.36.0
-    - eslint-plugin-vue: 9.8.0 to 9.9.0
-    - fs-extra to 11.1.0
-    - husky: 8.0.2 to 8.0.3
-    - jsdoc: 4.0.0 to 4.0.2
-    - mocha: 10.1.0 to 10.2.0
-    - sass: 1.56.1 to 1.59.3
-    - sinon: 14.0.2 to 15.0.2
-    - vue-loader to 17.0.1
-- The version of node was updated, must be `>= 16.13.2 <= 16.18.1`
-- The version of npm was updated, must be `>= 8.1.2 <= 8.19.3`
-- Parameters moved from config.js to config.json:
-  - 'layerIDsToIgnore'
-  - 'metaIDsToMerge'
-  - 'metaIDsToIgnore'
-  - 'layerIDsToStyle'
-- The Control-Bar Design
-- The following NPM packages have been updated:
-    - dependencies:
-        - @masterportal/masterportalapi: 2.8.0 to 2.9.0
-        - @popperjs/core: 2.11.5 to 2.11.6
-        - bootstrap: 5.2.0 to 5.2.2
-        - i18next-browser-languagedetector: 6.1.4 to 6.1.8
-        - i18next-http-backend: 1.4.1 to 1.4.5
-        - moment-timezone: 0.5.34 to 0.5.37
-        - vue: 2.7.8 to 3.1.0
-        - vuex: 3.6.2 to 4.0.2
-    - devDependencies
-        - @masterportal/mpconfigparser: 1.3.0 to 1.3.1
-        - @vue/test-utils: 1.3.0 to 2.2.3
-        - mocha: 10.0.0 to 10.1.0
-        - vue-loader: 15.9.8 to 17.0.0
-### Removed
 - The following NPM packages are removed:
     - dependencies
         - @panter/vue-i18next
@@ -423,6 +328,93 @@
         - webpack-visualizer-plugin
 - Module print: The attribute `mapfishServiceId` has been removed. Use `printServiceId` instead.
 - Module contact: The attribute `serviceID` has been removed. Use `serviceId` instead.
+
+---
+
+## v2.33.1 - 2023-05-16
+### Fixed
+- Print:
+  - dashstyle can now be printed even if only one value was specified
+
+---
+
+## v2.33.0 - 2023-05-03
+### Added
+- New Rotation control of the map. If map interaction `altShiftDragRotate` is activated the map can be rotated with `shift+alt+drag`. See [mapInteractions](https://bitbucket.org/geowerkstatt-hamburg/masterportal/src/dev/doc/config.js.md#markdown-header-mapInteractions) and [rotate control](https://bitbucket.org/geowerkstatt-hamburg/masterportal/src/dev/doc/config.json.md#markdown-header-portalconfigcontrolsrotation)
+- Issue #874: add keyboardEventTarget possibility to ol map configuration
+- Issue #882: add map rotation configuration and control
+- Filter: can be manipulated from URL with parameters
+
+### Changed
+- Issue #1020: In the language files the pluralization was adjusted. The suffix `plural` was changed to `other` and the suffix `one` was added.
+- The following NPM packages have been updated:
+  - dependencies:
+    - @masterportal/masterportalapi: 2.16.0 to 2.17.0
+
+### Fixed
+- Issue #884: mapbox styles with raster sources can be displayed.
+
+---
+
+## v2.32.1 - 2023-04-17
+### Fixed
+- Traffic Lights Data visible on scale 1:5000 again
+- Filter/ Autorefresh: The same features are displayed from a filterd GeoJson after an autorefresh as before the autorefresh.
+- Issue #842: Dropdown at WFS filter module is not filled with MapServer WFS.
+
+---
+
+##  v2.32.0 - 2023-04-05
+### Added
+- Print:
+  - Printing static image added
+  - Print special style with @ and . added
+- New WebGL Render Pipeline
+    - core/layers/renderer/webgl: New layer-class methods for rendering WFS, GeoJSON, OAF or VectorBase layers using OL7's WebGL render pipelines
+- Filter:
+    - New parameter `showAllValues` is added. This prevents the values from disappearing when adjusting them.
+- CoordToolkit
+    - Added new function for ETRS89_3GK3 including new validation rule.
+    - Added new configuration parameters for elevation and coordinate reference system explanations.
+- Issue #888:
+    - Print:
+        - The print module now displays dashed lines in the printout.
+        - The print module now displays the opacity and stroke styles in the legend in the printout.
+- treeType 'default': 3D-data can be configured in folders in config.json
+- FeatureLister:
+  - The FeatureLister now works for layer-typ "WFS" and "GeoJSON".
+
+### Changed
+- Update GeoJSON, WFS, OAF getFeaturesFilterFunction filtert kann nach exakter Geometrie filtern.
+- Update GeoJSON, WFS, OAF und VectorBase für WebGL Rendering
+    - ModelList/updateLayerView: Only add layers to index if they are actually being displayed on the map (removes unnecessary calls)
+    - actionsMapLayers/addLayerOnTop: Use the ModelList for the length of the layer list, not the map, as layer that are not visible or have been disposed (WebGL) might not be on the map
+    - moverHover/actionsMouseHover: collect webgl features for mouseHoverInfo
+    - GFI/gettersGfi: collect  webgl features for GFI
+    - initializersBufferAnalysis/loadSelectOptions: only freeze non-webgl layers
+- Update parameters for getGeometryTypeFromWFS and getGeometryTypeFromOAF to pass wfsImgPath from config.
+- highlightFeaturesByAttribute: scale constraint does not affect the selection layers.
+- The following NPM packages have been updated:
+  - dependencies:
+    - @masterportal/masterportalapi: 2.15.1 to 2.16.0 (This also raised ol to version 7.3.0)
+    - axios: 1.2.0 to 1.3.4
+    - bootstrap-icons: 1.10.2 to 1.10.3
+    - i18next: 22.0.6 to 22.4.11
+    - i18next-http-backend: 2.0.2 to 2.2.0
+    - jquery: 3.6.1 to 3.6.4
+  - devDependencies:
+    - @sinonjs/fake-timers: 10.0.0 to 10.0.2
+    - canvas: 2.10.2 to 2.11.0
+    - esbuild-loader: 2.20.0 to 3.0.1
+    - eslint: 8.28.0 to 8.36.0
+    - eslint-plugin-vue: 9.8.0 to 9.9.0
+    - husky: 8.0.2 to 8.0.3
+    - jsdoc: 4.0.0 to 4.0.2
+    - mocha: 10.1.0 to 10.2.0
+    - sass: 1.56.1 to 1.59.3
+    - sinon: 14.0.2 to 15.0.2
+- The version of node was updated, must be `>= 16.13.2 <= 16.18.1`
+- The version of npm was updated, must be `>= 8.1.2 <= 8.19.3`
 
 ### Fixed
 - actionsMapLayers/addLayer: don't set zIndex by default, otherwise addLayerOnTop and addLayerToIndex have no effect
