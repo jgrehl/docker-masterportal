@@ -127,10 +127,10 @@ export default {
                     v-for="(bgConf, index) in backgroundLayerConfs"
                     :key="index"
                 >
-                        <LayerCheckBox
-                            :conf="bgConf"
-                            :is-layer-tree="false"
-                        />
+                    <LayerCheckBox
+                        :conf="bgConf"
+                        :is-layer-tree="false"
+                    />
                 </template>
             </div>
             <hr
