@@ -5,6 +5,18 @@ import {isWebLink} from "../../../shared/js/utils/urlHelper";
 
 /**
  * The Layer Information that gives the user information, links and the legend for a layer
+ * @module modules/LayerInformation
+ * @vue-data {String} activeTab - The active tab.
+ * @vue-computed {Boolean} showAdditionalMetaData - Shows if additional meta data should be displayed.
+ * @vue-computed {Boolean} showCustomMetaData - Shows if custom meta data should be displayed.
+ * @vue-computed {Boolean} showPublication - Shows if publication should be displayed.
+ * @vue-computed {Boolean} showRevision - Shows if revision should be displayed.
+ * @vue-computed {Boolean} showPeriodicity - Shows if periodicity should be displayed.
+ * @vue-computed {Boolean} showDownloadLinks - Shows if download lonks should be displayed.
+ * @vue-computed {Boolean} showUrl - Shows if url should be displayed.
+ * @vue-computed {Boolean} showAttachFile - Shows if file type needs to be attached for download.
+ * @vue-computed {String} layerUrl - The layer URL.
+ * @vue-computed {String} legendURL - The legend URL.
  */
 export default {
     name: "LayerInformation",

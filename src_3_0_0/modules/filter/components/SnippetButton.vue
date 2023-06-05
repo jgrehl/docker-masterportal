@@ -1,6 +1,13 @@
 <script>
 import ProgressBar from "./ProgressBar.vue";
 
+/**
+* Snippet Button for Filter
+* @module modules/SnippetButton
+* @vue-data {Number} delay - The amount for the delay.
+* @vue-data {Boolean} showProgress - Shows if progess should be visible.
+* @vue-data {Number} progressBarKey - The progess bar key.
+*/
 export default {
     name: "SnippetButton",
     components: {

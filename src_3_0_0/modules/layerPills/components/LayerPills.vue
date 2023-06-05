@@ -3,6 +3,10 @@ import {mapActions, mapGetters, mapMutations} from "vuex";
 import layerFactory from "../../../core/layers/js/layerFactory";
 import IconButton from "../../../shared/modules/buttons/components/IconButton.vue";
 
+/**
+ * Layer Pills
+ * @module modules/LayerPills
+ */
 export default {
     name: "LayerPills",
     components: {IconButton},
