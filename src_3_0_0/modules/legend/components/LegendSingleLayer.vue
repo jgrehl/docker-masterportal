@@ -1,4 +1,9 @@
 <script>
+/**
+ * Legend Single Layer
+ * @module modules/LegendSingleLayer
+ * @vue-prop {Object} legendObj - The Legend.
+ */
 export default {
     name: "LegendSingleLayer",
     props: {
