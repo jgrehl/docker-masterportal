@@ -8,6 +8,8 @@ import LayerComponentSubMenu from "./LayerComponentSubMenu.vue";
 
 /**
  * Representation of a layer in layerTree.
+ * @module modules/LayerComponent
+ * @vue-prop {Object} conf - The current layer configuration.
  */
 export default {
     name: "LayerComponent",
@@ -17,8 +19,8 @@ export default {
         LayerComponentIconSubMenu,
         LayerComponentSubMenu
     },
-    /** current layer configuration */
     props: {
+        /** current layer configuration */
         conf: {
             type: Object,
             required: true

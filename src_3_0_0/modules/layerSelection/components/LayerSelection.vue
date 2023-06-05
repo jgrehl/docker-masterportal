@@ -6,7 +6,12 @@ import FlatButton from "../../../shared/modules/buttons/components/FlatButton.vu
 import LayerCheckBox from "../../layerTree/components/LayerCheckBox.vue";
 import LayerSelectionTreeNode from "./LayerSelectionTreeNode.vue";
 
-
+/**
+ * Layer Selection
+ * @module modules/LayerSelection
+ * @vue-data {Number} selectAllConfId - The layer id for the select all checkbox.
+ * @vue-data {Array} selectAllConfigs - The layer configurations for select all checkbox.
+ */
 export default {
     name: "LayerSelection",
     components: {

@@ -21,6 +21,41 @@ import {getSnippetAdjustments} from "../utils/getSnippetAdjustments.js";
 import openlayerFunctions from "../utils/openlayerFunctions";
 import {isRule} from "../utils/isRule.js";
 
+/**
+ * Layer Filter Snippet
+ * @module modules/LayerFilterSnippet
+ * @vue-prop {FilterApi} api - The Filter API.
+ * @vue-prop {Object} LayerConfig - The layer configuration.
+ * @vue-prop {MapHandler} mapHandler - The map handler.
+ * @vue-prop {Boolean} liveZoomToFeatures - Shows if zooming to feature is enabled.
+ * @vue-prop {Number} minScale - The minimal scale.
+ * @vue-prop {Array} filterRules - The filter rules.
+ * @vue-prop {Array} filterHits - The filter hits.
+ * @vue-prop {Array} filterGeometry - The filter geometry.
+ * @vue-prop {Boolean} isLayerFilterSelected - Shows if the layer filter is selected.
+ *
+ * @vue-event {Object} updateFilterHits - Emit update of filter hits.
+ * @vue-event {Object} updateRules - Emit update of filter rules.
+ * @vue-event {Object} deleteAllRules - Emit delete all rules.
+ *
+ * @vue-data {Object} paging - The page and the page total.
+ * @vue-data {Boolean} disabled - Shows if it is disabled.
+ * @vue-data {Boolean} showStop - Shows if terminate button is visible.
+ * @vue-data {Boolean} searchInMapExtent - Shows if search in map extend is enabled.
+ * @vue-data {Array} snippets - Array of all the snippets.
+ * @vue-data {String} postSnippetKey - The post snippet key.
+ * @vue-data {Boolean} autoRefreshSet - Shows if auto refresh is set.
+ * @vue-data {Boolean} isRefreshing - Shows if it is refreshing.
+ * @vue-data {Boolean} amountOfFilteredItems - Shows ???
+ * @vue-data {Array} precheckedSnippets - Array of prechecked snippets.
+ * @vue-data {Array} filteredItems - Array of filtered items.
+ * @vue-data {Boolean} isLockedHandleActiveStrategy - Shows if active strategy handling is locked.
+ * @vue-data {Boolean} filterButtonDisabled - Shows if filter button is disabled.
+ *
+ * @vue-computed {String} labelFilterButton - The label for the filter button.
+ * @vue-computed {String} snippetTagsResetAllText - The text for the reset tags.
+ * @vue-computed {Object} fixedRules - The fixed rules.
+ */
 export default {
     name: "LayerFilterSnippet",
     components: {
