@@ -6,16 +6,17 @@ import FlatButton from "../../../shared/modules/buttons/components/FlatButton.vu
 
 /**
  * Tool to share a view via link to twitter, facebook, qrCode or copy the link as well as any other app on mobile.
+ * @module modules/ShareView
+ * @vue-data {String} qrDataUrl - The qr code url.
+ * @vue-computed {String} facebook - The facebook url.
+ * @vue-computed {String} twitter - The twitter url.
  */
 export default {
     name: "ShareView",
     components: {FlatButton},
     data () {
         return {
-            qrDataUrl: null,
-            qrIcon: "bi-qr-code",
-            downloadIcon: "bi-download",
-            linkIcon: "bi-link"
+            qrDataUrl: null
         };
     },
     computed: {
@@ -142,7 +143,7 @@ export default {
                     aria-label="$t('common:modules.shareView.shareLink')"
                     :interaction="copyToClipboard"
                     :text="$t('common:modules.shareView.shareLink')"
-                    :icon="linkIcon"
+                    :icon="'bi-link'"
                 />
             </div>
             <div class="col-12">
@@ -151,7 +152,7 @@ export default {
                     aria-label="$t('common:modules.shareView.shareQR')"
                     :interaction="generateQRCodeDataURL"
                     :text="$t('common:modules.shareView.shareQR')"
-                    :icon="qrIcon"
+                    :icon="'bi-qr-code'"
                 />
             </div>
             <div
@@ -166,7 +167,7 @@ export default {
                     aria-label="$t('common:modules.shareView.downloadQR')"
                     :interaction="downloadQr"
                     :text="$t('common:modules.shareView.downloadQR')"
-                    :icon="downloadIcon"
+                    :icon="'bi-download'"
                 />
             </div>
         </div>

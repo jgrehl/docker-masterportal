@@ -2,6 +2,10 @@
 import {mapGetters} from "vuex";
 import thousandsSeparator from "../../../shared/js/utils/thousandsSeparator";
 
+/**
+ * Scale Line
+ * @module modules/ScaleLine
+ */
 export default {
     name: "ScaleLine",
     computed: {

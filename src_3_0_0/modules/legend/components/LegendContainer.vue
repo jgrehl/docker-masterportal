@@ -3,6 +3,10 @@ import {mapActions, mapGetters} from "vuex";
 import LegendSingleLayer from "./LegendSingleLayer.vue";
 import layerCollection from "../../../core/layers/js/layerCollection";
 
+/**
+ * Legend Container
+ * @module modules/LegendContainer
+ */
 export default {
     name: "LegendContainer",
     components: {
