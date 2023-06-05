@@ -2,6 +2,10 @@
 import {mapGetters, mapMutations} from "vuex";
 import SearchBarSuggestionListItem from "./SearchBarSuggestionListItem.vue";
 
+/**
+ * Search Bar Suggestion List
+ * @module modules/SearchBarSuggestionList
+ */
 export default {
     name: "SearchBarSuggestionList",
     components: {

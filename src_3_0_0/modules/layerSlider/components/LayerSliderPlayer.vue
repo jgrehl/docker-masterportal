@@ -1,6 +1,10 @@
 <script>
 import {mapGetters, mapMutations, mapActions} from "vuex";
 
+/**
+ * Layer Slider Player
+ * @module modules/LayerSliderPlayer
+ */
 export default {
     name: "LayerSliderPlayer",
     computed: {
