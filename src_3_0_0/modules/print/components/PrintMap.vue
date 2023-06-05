@@ -17,16 +17,19 @@ import layerCollection from "../../../core/layers/js/layerCollection";
 
 /**
  * Tool to print a part of the map
+ * @module modules/PrintMap
+ * @vue-computed {Number} currentScale - The current scale that is set in the drop down.
+ * @vue-computed {Number} dpiForPdf - The current dpi that is set in the drop down.
+ * @vue-computed {Array} dpiList - The list of available dpis.
+ * @vue-computed {Array} shownLayoutList - The list of available layouts.
+ * @vue-computed {Array} shownFormatList - The list of available formats.
+ * @vue-computed {String} outputTitle - The title for the file.
  */
 export default {
     name: "PrintMap",
     components: {FlatButton, InputText, SwitchInput},
     data () {
         return {
-            printIcon: "bi-printer",
-            downloadIcon: "bi-download",
-            docTitleId: "docTitle",
-            outputFileTitleId: "outputFileTitle",
             subtitle: "",
             textField: "",
             author: ""
@@ -449,7 +452,7 @@ export default {
         >
             <div>
                 <InputText
-                    :id="docTitleId"
+                    :id="'docTitle'"
                     :label="$t('common:modules.print.titleLabel')"
                     :placeholder="$t('common:modules.print.titleLabel')"
                     :value="title"
@@ -592,7 +595,7 @@ export default {
                 class="form-group form-group-sm row"
             >
                 <InputText
-                    :id="outputFileTitleId"
+                    :id="'outputFileTitle'"
                     v-model="outputTitle"
                     :label="$t('common:modules.print.outputfileTitleLabel')"
                     :placeholder="$t('common:modules.print.outputfileTitleLabel')"
@@ -647,7 +650,7 @@ export default {
                         :aria-label="$t('common:modules.print.printLabel')"
                         :interaction="print"
                         :text="$t('common:modules.print.printLabel')"
-                        :icon="printIcon"
+                        :icon="'bi-printer'"
                     />
                 </div>
             </div>
@@ -691,7 +694,7 @@ export default {
                         :aria-label="$t('common:modules.print.downloadFile')"
                         :interaction="($event) => download($event.target, file.downloadUrl, file.filename)"
                         :text="$t('common:modules.print.downloadFile')"
-                        :icon="downloadIcon"
+                        :icon="'bi-download'"
                     />
 
                     <button

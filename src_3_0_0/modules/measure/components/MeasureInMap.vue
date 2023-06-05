@@ -5,6 +5,8 @@ import FlatButton from "../../../shared/modules/buttons/components/FlatButton.vu
 
 /**
  * Measurement tool to measure lines and areas in the map.
+ * @module modules/MeasureInMap
+ * @vue-data {String} deleteIcon - The icon for the delete button.
  */
 export default {
     name: "MeasureInMap",

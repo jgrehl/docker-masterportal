@@ -4,6 +4,11 @@ import axios from "axios";
 
 /**
  * This module can display HTML from config.json or an external file.
+ * @module modules/CustomMenuElement
+ * @vue-prop {String} side - The side in which the menu component is being rendered.
+ * @vue-data {String} htmlContentFromPath - The hmtl string for configurations.
+ * @vue-computed {String} htmlContent - The html string for the content.
+ * @vue-computed {String} pathToContent - The path for the content.
  */
 export default {
     name: "CustomMenuElement",
