@@ -2,6 +2,12 @@
 import {mapGetters} from "vuex";
 import MenuContainerBodyRootItems from "./MenuContainerBodyRootItems.vue";
 
+/**
+ * Menu Folder
+ * @module modules/MenuFolder
+ * @vue-prop {String} side - Defines in which menu the component is being rendered.
+ * @vue-computed {String} currentPath - The path to the current folder.
+ */
 export default {
     name: "MenuFolder",
     components: {

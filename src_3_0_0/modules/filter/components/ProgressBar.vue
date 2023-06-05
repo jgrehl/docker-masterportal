@@ -1,4 +1,9 @@
 <script>
+/**
+* Progress Bar
+* @module modules/ProgressBar
+* @vue-prop {Object} paging - Paging object with page and tital amount.
+*/
 export default {
     name: "ProgressBar",
     props: {

@@ -7,6 +7,13 @@ import {createUserHelp} from "../js/literalFunctions";
 import {searchFeatures} from "../js/requests";
 import isObject from "../../../shared/js/utils/isObject";
 
+/**
+ * Wfs Search
+ * @module modules/WfsSearch
+ * @vue-computed {Object} headers - The table heads (??).
+ * @vue-computed {String} geometryName - The name of the geometry.
+ * @vue-computed {Boolean} showResults - Shows if results should be displayed.
+ */
 export default {
     name: "WfsSearch",
     components: {

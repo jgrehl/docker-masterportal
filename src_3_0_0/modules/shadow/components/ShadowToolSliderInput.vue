@@ -1,4 +1,18 @@
 <script>
+/**
+ * Shadow Tool Slider Input
+ * @module modules/ShadowToolSliderInput
+ * @vue-prop {String} label - The label.
+ * @vue-prop {String} valuelabel - The value label.
+ * @vue-prop {String} value - The value.
+ * @vue-prop {String} value - The value.
+ * @vue-prop {Number} min - The minimum for the silder.
+ * @vue-prop {Number} max - The maximum for the silder.
+ * @vue-prop {Number} step - The steps for the slider.
+ * @vue-prop {String} unit - The unit for the slider.
+ * @vue-prop {Boolean} disabled - Shows if slider is disabled.
+ * @vue-event {Number} input - Emits the slider input.
+ */
 export default {
     name: "ShadowToolSliderInput",
     props: {
