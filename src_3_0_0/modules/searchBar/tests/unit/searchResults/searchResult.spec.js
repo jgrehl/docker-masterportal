@@ -23,6 +23,7 @@ describe("src_3_0_0/modules/searchBar/searchHits/searchResult.js", () => {
                 toolTip: ""
             });
         });
+
         it("should return an object that has the given params for params input", () => {
             const params = {
                     category: "abc",
