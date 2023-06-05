@@ -7,6 +7,9 @@ import ElevatedButton from "../../../shared/modules/buttons/components/ElevatedB
 
 /**
  * Module to display the layers in menu.
+ * @module modules/LayerTree
+ * @vue-computed {String} treeType - Returns the layer tree type.
+ * @vue-computed {Boolean} addLayerButton - Indicates if the layer button should be rendered.
  */
 export default {
     name: "LayerTree",

@@ -4,6 +4,14 @@ import SensorTheme from "../themes/sensor/components/SensorTheme.vue";
 import getTheme from "../js/getTheme";
 import {mapActions, mapGetters, mapMutations} from "vuex";
 
+/**
+ * Get Feature Info Detached
+ * @module modules/GetFeatureInfoDetached
+ * @vue-prop {Object} feature - The required feature.
+ * @vue-data {Boolean} isContentHtml - Shows if content is html.
+ * @vue-computed {String} title - The title of the gfi.
+ * @vue-computed {String} theme - The theme in which the feature should be displayed.
+ */
 export default {
     name: "GetFeatureInfoDetached",
     components: {
