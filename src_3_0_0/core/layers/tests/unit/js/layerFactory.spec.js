@@ -76,4 +76,10 @@ describe("src_3_0_0/core/js/layers/layerFactory.js", () => {
             expect(terrainLayer).to.be.undefined;
         });
     });
+
+    describe("getVectorLayerTypes", () => {
+        it("should return all vector layer types", () => {
+            expect(layerFactory.getVectorLayerTypes()).to.deep.equals(["GEOJSON", "OAF", "SENSORTHINGS", "VECTORBASE", "WFS"]);
+        });
+    });
 });
