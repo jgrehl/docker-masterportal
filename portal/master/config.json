@@ -60,7 +60,7 @@
     },
     "searchBar": {
       "searchInterfaces": {
-        "gazetteer_": {
+        "gazetteer": {
           "serviceId": "6",
           "searchAddress": true,
           "searchStreets": true,
@@ -69,7 +69,7 @@
           "searchParcels": true,
           "searchStreetKey": true
         },
-        "elasticSearch_": {
+        "elasticSearch": {
           "serviceId": "elastic_prod",
           "type": "GET",
           "payload": {
@@ -91,7 +91,7 @@
             "source": "_source"
           }
         },
-        "topicTree_": {},
+        "topicTree": {},
         "visibleVector": {}
       }
     },
