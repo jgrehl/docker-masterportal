@@ -98,11 +98,12 @@ SearchInterface.prototype.clearSearchResults = function () {
  * Normalizes and fills the result events to use them in the search result.
  * @param {Object} resultEvents The configured result events.
  * @param {Object} searchResult The search result of gazetter.
+ * @param {Object} [layer] The layer that contains extend values.
  * @returns {Object} The normalized actions for SearchResult.
  */
-SearchInterface.prototype.normalizeResultEvents = function (resultEvents, searchResult) {
+SearchInterface.prototype.normalizeResultEvents = function (resultEvents, searchResult, layer) {
     const resultEventsAsObject = this.resultEventsToObject(resultEvents),
-        possibleActions = this.createPossibleActions(searchResult);
+        possibleActions = this.createPossibleActions(searchResult, layer);
 
     Object.keys(resultEventsAsObject).forEach(event => {
         Object.keys(resultEventsAsObject[event]).forEach(action => {

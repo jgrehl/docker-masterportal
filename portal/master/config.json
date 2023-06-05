@@ -609,6 +609,19 @@
           "typ": "WMS"
         },
         {
+          "id": "22078",
+          "name": "Bewohnerparkgebiete Hamburg",
+          "typ": "WFS",
+          "visibility": true,
+          "styleId": "22078",
+          "styleField": "bewirtschaftungsart",
+          "searchField": "bwp_name",
+          "mouseHoverField": [
+            "bwp_name",
+            "bewirtschaftungsart"
+          ]
+        },
+        {
           "name": "Emissionen",
           "type": "folder",
           "elements": [
@@ -660,6 +673,7 @@
           "typ": "WFS",
           "visibility": true,
           "loadingStrategy": "all",
+          "searchField": "name",
           "mouseHoverField": [
             "name",
             "adresse"
@@ -693,12 +707,14 @@
           "styleId": "8712",
           "loadingStrategy": "bbox",
           "typ": "WFS",
-          "visibility": false,
+          "visibility": true,
           "showInLayerTree": true,
           "mouseHoverField": [
             "schulname",
             "kapitelbezeichnung"
           ],
+          "searchField": "schulname",
+          "additionalInfoField": "adresse_strasse_hausnr",
           "featurePrefix": "de.hh.up:",
           "wildCard": "%",
           "singleChar": "#",
