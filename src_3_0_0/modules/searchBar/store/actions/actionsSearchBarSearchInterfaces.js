@@ -4,7 +4,7 @@
 import SearchInterfaceElasticSearch from "../../searchInterfaces/searchInterfaceElasticSearch";
 import SearchInterfaceGazetteer from "../../searchInterfaces/searchInterfaceGazetteer";
 import SearchInterfaceTopicTree from "../../searchInterfaces/searchInterfaceTopicTree";
-import SearchInterfaceVisibleVector from "../../searchInterfaces/SearchInterfaceVisibleVector";
+import SearchInterfaceVisibleVector from "../../searchInterfaces/searchInterfaceVisibleVector";
 
 export default {
     /**
