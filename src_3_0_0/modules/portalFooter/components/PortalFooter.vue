@@ -4,6 +4,8 @@ import ScaleLine from "./ScaleLine.vue";
 
 /**
  * Footer that is displayed below the map. Links can be displayed here.
+ * @module modules/PortalFooter
+ * @vue-computed {Number} aliasLength - Returns the alias length for relevant device mode.
  */
 export default {
     name: "PortalFooter",

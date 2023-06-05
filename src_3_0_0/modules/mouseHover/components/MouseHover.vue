@@ -1,6 +1,10 @@
 <script>
 import {mapActions, mapGetters} from "vuex";
 
+/**
+ * Mouse Hover
+ * @module modules/MouseHover
+ */
 export default {
     name: "MouseHover",
     computed: {

@@ -2,6 +2,12 @@
 import {mapActions, mapGetters} from "vuex";
 import FlatButton from "../../../shared/modules/buttons/components/FlatButton.vue";
 
+/**
+ * Layer Cluster Toggler
+ * @module modules/LayerClusterToggler
+ * @vue-data {String} storePath - The path to the store.
+ * @vue-data {Boolean} isToggled - Shows if the layer cluster is toggled.
+ */
 export default {
     name: "LayerClusterToggler",
     components: {
