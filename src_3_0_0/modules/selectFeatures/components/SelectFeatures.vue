@@ -11,6 +11,10 @@ import {isUrl} from "../../../shared/js/utils/urlHelper";
 import {isEmailAddress} from "../../../shared/js/utils/isEmailAddress.js";
 import {isPhoneNumber, getPhoneNumberAsWebLink} from "../../../shared/js/utils/isPhoneNumber.js";
 
+/**
+ * Select Features
+ * @module modules/SelectFeatures
+ */
 export default {
     name: "SelectFeatures",
     computed: {

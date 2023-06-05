@@ -3,6 +3,13 @@ import {mapGetters} from "vuex";
 import MenuContainerBodyRootItemElement from "./MenuContainerBodyRootItemElement.vue";
 import changeCase from "../../../shared/js/utils/changeCase";
 
+/**
+ * Menu Container Body Root Items
+ * @module modules/MenuContainerBodyRootItems
+ * @vue-prop {String} idAppendix - The appendix set on the id to make it unique.
+ * @vue-prop {Array} path - The path to find the MenuContainerBodyElement inside the store structure.
+ * @vue-prop {String} side - The side in which the menu component is being rendered.
+ */
 export default {
     name: "MenuContainerBodyRootItems",
     components: {

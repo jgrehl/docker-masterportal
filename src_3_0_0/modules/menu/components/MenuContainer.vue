@@ -3,6 +3,12 @@ import {mapActions, mapGetters, mapMutations} from "vuex";
 import MenuContainerBody from "./MenuContainerBody.vue";
 import ResizeHandle from "../../../shared/modules/resize/components/ResizeHandle.vue";
 
+/**
+ * @module modules/MenuContainer
+ * @vue-prop {String} side - The side in which the menu component is being rendered.
+ * @vue-computed {String} handlePosition - Defines whether the ResizeHandle should be displayed on the right or left side.
+ * @vue-computed {Boolean} expanded - Shows if the menu is expanded.
+ */
 export default {
     name: "MenuContainer",
     components: {
