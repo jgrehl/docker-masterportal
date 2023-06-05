@@ -21,8 +21,7 @@
  * @param {Object} [events..zoomToFeature] Specifies that the zoomToFeature action is executed on an interaction with the search result.
  * @param {Boolean} [events...closeResults] Defines if the search results should be hidden.
  * @param {String[]} [events...coordinates] The coordinates of the search result.
- * @param {module:ol/Feature~Feature} [events...feature] The ol feature of the search result.
- * @param {Object} [events...gfiAttributes] The get feature info attributes of the search result.
+ * @param {String} [events...featureId] The ol feature id the search result.
  * @param {String} [events...layerId] The layer id of the search result.
  * @param {Object} [events...source] Source information of the layer.
 
@@ -48,8 +47,8 @@
                 closeResults: false
             },
             openGetFeatureInfo: {
-                feature: "",
-                gfiAttributes: {},
+                featureId: "",
+                layerId: "",
                 closeResults: true
             },
             openTopicTree: {
