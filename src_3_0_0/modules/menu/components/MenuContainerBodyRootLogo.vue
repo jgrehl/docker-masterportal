@@ -1,4 +1,14 @@
 <script>
+
+/**
+ * Menu Container Body Root Logo
+ * @module modules/MenuContainerBodyRootLogo
+ * @vue-prop {String} idAppendix - The appendix set on the id to make it unique.
+ * @vue-prop {String} text - The name.
+ * @vue-prop {String} link - The URL of an external website to link to.
+ * @vue-prop {String} logo - The path to an external image file.
+ * @vue-prop {String} toolTip - The text that is shown on hovering the name logo.
+ */
 export default {
     name: "MenuContainerBodyRootLogo",
     props: {

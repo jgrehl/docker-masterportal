@@ -7,6 +7,8 @@ import {uniqueId} from "../../../shared/js/utils/uniqueId.js";
 
 /**
  * Tooltip shown in the map to indicate measurement results and deviance.
+ * @module modules/MeasureInMapTooltip
+ * @vue-data {String} currentTextPoint - The current text point.
  */
 export default {
     name: "MeasureInMapTooltip",
