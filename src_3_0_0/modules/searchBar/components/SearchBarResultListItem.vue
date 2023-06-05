@@ -1,6 +1,10 @@
 <script>
 import {mapGetters} from "vuex";
 
+/**
+ * Search Bar Result List Item
+ * @module modules/SearchBarResultListItem
+ */
 export default {
     name: "SearchBarResultListItem",
     computed: {

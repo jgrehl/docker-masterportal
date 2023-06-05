@@ -4,14 +4,18 @@ import LayerPreview from "../../../shared/modules/layerPreview/components/LayerP
 
 /**
  * Representation of a layer in layerTree.
+ * @module modules/LayerCheckBox
+ * @vue-prop {Object} conf - The current layer configuration.
+ * @vue-prop {Boolean} isLayerTree - Shows if parent is layer tree.
+ * @vue-computed {Boolean} isLayerVisible - Returns the value of layerConf's attribute visibility.
  */
 export default {
     name: "LayerCheckBox",
     components: {
         LayerPreview
     },
-    /** current layer configuration */
     props: {
+        /** current layer configuration */
         conf: {
             type: Object,
             required: true

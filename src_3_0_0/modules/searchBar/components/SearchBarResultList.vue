@@ -2,6 +2,10 @@
 import {mapGetters} from "vuex";
 import SearchBarResultListItem from "./SearchBarResultListItem.vue";
 
+/**
+ * Search Bar Result List
+ * @module modules/SearchBarResultList
+ */
 export default {
     name: "SearchBarResultList",
     components: {

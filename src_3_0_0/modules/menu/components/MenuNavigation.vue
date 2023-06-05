@@ -1,6 +1,13 @@
 <script>
 import {mapActions, mapGetters} from "vuex";
 
+/**
+ * Menu Navigation
+ * @module modules/MenuNavigation
+ * @vue-prop {String} side - Defines in which menu the component is being rendered.
+ * @vue-computed {String} previousNavigation - The previous navigation entry.
+ * @vue-computed {String} currentTitle - The current components name.
+ */
 export default {
     name: "MenuNavigation",
     props: {
