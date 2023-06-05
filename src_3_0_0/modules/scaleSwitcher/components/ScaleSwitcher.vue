@@ -4,6 +4,8 @@ import mutations from "../store/mutationsScaleSwitcher";
 
 /**
  * Module to switch the scale of the map. Listens to changes of the map's scale and sets the scale to this value.
+ * @module modules/ScaleSwitcher
+ * @vue-computed {Number} scale - The current scale that is set in the drop down.
  */
 export default {
     name: "ScaleSwitcher",

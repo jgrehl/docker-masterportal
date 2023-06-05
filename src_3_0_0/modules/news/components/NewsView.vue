@@ -5,6 +5,7 @@ import sortBy from "../../../shared/js/utils/sortBy";
 
 /**
  * Shows the news as history.
+ * @module modules/NewsView
  */
 export default {
     name: "NewsView",

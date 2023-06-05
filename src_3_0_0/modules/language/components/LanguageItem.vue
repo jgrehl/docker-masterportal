@@ -2,6 +2,11 @@
 import {mapGetters, mapMutations} from "vuex";
 import getters from "../store/gettersLanguage";
 
+/**
+ * Language Item
+ * @module modules/LanguageItem
+ * @vue-data {Boolean} showWindow - Shows if the window is visible.
+ */
 export default {
     name: "LanguageItem",
     data () {

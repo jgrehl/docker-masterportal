@@ -5,6 +5,11 @@ import MenuContainerBodyRootLogo from "./MenuContainerBodyRootLogo.vue";
 import SearchBar from "../../searchBar/components/SearchBar.vue";
 import {mapGetters} from "vuex";
 
+/**
+ * @module modules/MenuContainerBodyRoot
+ * @vue-prop {String} side - The side in which the menu component is being rendered.
+ * @vue-computed {Object} menu - The menu configuration for the given menu.
+ */
 export default {
     name: "MenuContainerBodyRoot",
     components: {

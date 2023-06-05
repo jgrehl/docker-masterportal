@@ -3,13 +3,20 @@ import {mapActions} from "vuex";
 import LightButton from "../../../shared/modules/buttons/components/LightButton.vue";
 import layerFactory from "../../../core/layers/js/layerFactory";
 
+/**
+ * Layer Component Sub Menu
+ * @module modules/LayerComponentSubMenu
+ * @vue-prop {Object} layerConf - The current layer configuration.
+ * @vue-computed {Number} transparency - Returns the transparency of the layer config.
+ * @vue-computed {Number} supportedTransparency - Indicates if the layer type supports transparency settings.
+ */
 export default {
     name: "LayerComponentSubMenu",
     components: {
         LightButton
     },
-    /** current layer configuration */
     props: {
+        /** current layer configuration */
         layerConf: {
             type: Object,
             required: true
