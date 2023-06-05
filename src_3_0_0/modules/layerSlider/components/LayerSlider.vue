@@ -4,6 +4,10 @@ import LayerSliderHandle from "./LayerSliderHandle.vue";
 import LayerSliderPlayer from "./LayerSliderPlayer.vue";
 import NavTab from "../../../shared/modules/tabs/components/NavTab.vue";
 
+/**
+ * Layer Slider
+ * @module modules/LayerSlider
+ */
 export default {
     name: "LayerSlider",
     components: {

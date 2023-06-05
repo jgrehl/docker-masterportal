@@ -3,6 +3,11 @@ import {mapGetters, mapActions, mapMutations} from "vuex";
 import SearchBarSuggestionList from "./SearchBarSuggestionList.vue";
 import SearchBarResultList from "./SearchBarResultList.vue";
 
+/**
+ * Search Bar
+ * @module modules/SearchBar
+ * @vue-computed {String} searchInputValue - The v-bind of search input value.
+ */
 export default {
     name: "SearchBar",
     components: {

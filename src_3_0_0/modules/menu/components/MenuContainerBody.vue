@@ -4,6 +4,12 @@ import MenuNavigation from "./MenuNavigation.vue";
 import {mapActions, mapGetters} from "vuex";
 import GetFeatureInfo from "../../getFeatureInfo/components/GetFeatureInfo.vue";
 
+/**
+ * @module modules/MenuContainerBody
+ * @vue-prop {String} side - The side in which the menu component is being rendered.
+ * @vue-computed {Object} menu - The menu configuration for the given menu.
+ * @vue-computed {Object} currentComponent - Returns the currently visible component.
+ */
 export default {
     name: "MenuContainerBody",
     components: {

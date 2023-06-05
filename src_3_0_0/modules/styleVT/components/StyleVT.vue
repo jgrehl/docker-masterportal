@@ -1,6 +1,10 @@
 <script>
 import {mapActions, mapGetters, mapMutations} from "vuex";
 
+/**
+ * StyleVT
+ * @module modules/StyleVT
+ */
 export default {
     name: "StyleVT",
     computed: {

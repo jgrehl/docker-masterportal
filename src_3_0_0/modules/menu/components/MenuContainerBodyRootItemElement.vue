@@ -3,6 +3,20 @@ import {mapActions, mapGetters} from "vuex";
 import visibilityChecker from "../../../shared/js/utils/visibilityChecker";
 import LightButton from "../../../shared/modules/buttons/components/LightButton.vue";
 
+/**
+ * Menu Container Body Root Item Element
+ * @module modules/MenuContainerBodyRootItemElement
+ * @vue-prop {String} name - The text displayed inside the element.
+ * @vue-prop {String} description - The description used as it's name and aria-label.
+ * @vue-prop {String} icon - The icon displayed inside the element.
+ * @vue-prop {Boolean} showDescription - Shows whether the description should be displayed alongside the element.
+ * @vue-prop {Array} path - The path to find the element inside the store structure.
+ * @vue-prop {Object} properties - All properties of the module to show in menu.
+ * @vue-computed {Object} menu - The menu configuration for the given menu.
+ * @vue-computed {Boolean} showIcon - Shows wether icon will be displayed.
+ * @vue-computed {String} side - The menu side.
+ * @vue-computed {String} type - The type of the component.
+ */
 export default {
     name: "MenuContainerBodyRootItemElement",
     components: {LightButton},
@@ -18,7 +32,7 @@ export default {
             type: String,
             default: ""
         },
-        /** Icon displayed inside the element*/
+        /** Icon displayed inside the element. */
         icon: {
             type: String,
             default: "",
