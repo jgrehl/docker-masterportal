@@ -1,6 +1,7 @@
 import Layer2dRasterStaticImage from "./layer2dRasterStaticImage";
 import Layer2dRasterWms from "./layer2dRasterWms";
 import Layer2dRasterWmts from "./layer2dRasterWmts";
+import Layer2dVector from "./layer2dVector";
 import Layer2dVectorGeojson from "./layer2dVectorGeojson";
 import Layer2dVectorOaf from "./layer2dVectorOaf";
 import Layer2dVectorSensorThings from "./layer2dVectorSensorThings";
@@ -49,14 +50,31 @@ function createLayer (layerConf, mapMode) {
 }
 
 /**
- * Return 3D layer names
- * @returns {Array} The 3D layer names as an array.
+ * Return 3D layer types
+ * @returns {Array} The 3D layer types as an array.
  */
 function getLayerTypes3d () {
     return Object.keys(layerTypes3d);
 }
 
+/**
+ * Return vector layer types
+ * @returns {Array} The vectorLayer types as an array.
+ */
+function getVectorLayerTypes () {
+    const vectorLayerTypes = [];
+
+    Object.keys(layerTypes2d).forEach(layerTyp => {
+        if (layerTypes2d[layerTyp].prototype instanceof Layer2dVector) {
+            vectorLayerTypes.push(layerTyp);
+        }
+    });
+
+    return vectorLayerTypes;
+}
+
 export default {
     createLayer,
-    getLayerTypes3d
+    getLayerTypes3d,
+    getVectorLayerTypes
 };
