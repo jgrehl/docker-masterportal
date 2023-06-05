@@ -1,6 +1,10 @@
 <script>
 import {mapGetters} from "vuex";
 
+/**
+ * Search Bar Suggestion List Item
+ * @module modules/SearchBarSuggestionListItem
+ */
 export default {
     name: "SearchBarSuggestionListItem",
     props: {

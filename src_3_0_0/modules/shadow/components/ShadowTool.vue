@@ -11,6 +11,24 @@ import SwitchInput from "../../../shared/modules/checkboxes/components/SwitchInp
 
 dayjs.extend(dayOfYear);
 
+/**
+ * Shadow Tool
+ * @module modules/ShadowTool
+ * @vue-data {Number} currentDay - The current day.
+ * @vue-data {Number} currentHour - The current hpur.
+ * @vue-data {Number} currentMinute - The current minute.
+ * @vue-data {Number} currentMonth - The current month.
+ * @vue-data {Number} currentYear - The current year.
+ * @vue-data {Number} date - The current date.
+ * @vue-data {Number} dateSliderValue - The current date slider value.
+ * @vue-data {Date} displayedShadowTime - The current date slider value.
+ * @vue-data {String} pickDateFormat - The date format.
+ * @vue-data {Date} pickDates - The picked date.
+ * @vue-data {Boolean} shadowActivated - Shows if the shadow is activated.
+ * @vue-data {Date} showDate - The date.
+ * @vue-data {Time} showTime - The time.
+ * @vue-data {Number} timeSliderValue - The curent time slider value.
+ */
 export default {
     name: "ShadowTool",
     components: {
