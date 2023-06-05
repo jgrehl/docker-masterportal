@@ -3,6 +3,7 @@ import {mapActions, mapGetters} from "vuex";
 
 /**
  * Module to load a config.json to runtime.
+ * @module modules/OpenConfig
  */
 export default {
     name: "OpenConfig",

@@ -1,13 +1,16 @@
 <script>
 import IconButton from "../../../shared/modules/buttons/components/IconButton.vue";
+
 /**
  * Represents an sub menu button for a layer in the layertree.
+ * @module modules/LayerComponentIconSubMenu
+ * @vue-prop {Object} layerConf - The current layer configuration.
  */
 export default {
     name: "LayerComponentIconSubMenu",
     components: {IconButton},
-    /** current layer configuration */
     props: {
+        /** current layer configuration */
         layerConf: {
             type: Object,
             required: true
