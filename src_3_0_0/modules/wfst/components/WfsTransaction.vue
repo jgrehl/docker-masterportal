@@ -3,7 +3,10 @@ import {mapActions, mapGetters, mapMutations} from "vuex";
 import LightButton from "../../../shared/modules/buttons/components/LightButton.vue";
 import ModalItem from "../../../shared/modules/modals/components/ModalItem.vue";
 
-
+/**
+ * Wfs Transaction
+ * @module modules/WfsTransaction
+ */
 export default {
     name: "WfsTransaction",
     components: {LightButton, ModalItem},

@@ -7,7 +7,7 @@ import omit from "../../../shared/js/utils/omit";
 import IconButton from "../../../shared/modules/buttons/components/IconButton.vue";
 
 /**
- * GetFeatureInfo
+ * Get Feature Info
  * @module modules/GetFeatureInfo
  * @vue-data {Number} pagerIndex - The current index of the pagination.
  * @vue-data {String} componentKey - The key for re-render child component.
