@@ -9,7 +9,7 @@ import {search, setGazetteerUrl, setShowGeographicIdentifier} from "@masterporta
  * @param {String} serviceId Search service id. Resolved using the rest-services.json file.
  *
  * @param {Object} [resultEvents] Actions that are executed when an interaction, such as hover or click, is performed with a result list item.
- * @param {String[]} [resultEvents.onClick=["setMarker", "zoomToFeature"]] Actions that are fired when clicking on a result list item.
+ * @param {String[]} [resultEvents.onClick=["setMarker", "zoomToResult"]] Actions that are fired when clicking on a result list item.
  * @param {String[]} [resultEvents.onHover=["setMarker"]] Actions that are fired when hovering on a result list item.
  * @param {Boolean} [searchDistricts=false] Defines whether district search is active.
  * @param {String} [searchInterfaceId="gazetteer"] The id of the service interface.
@@ -26,7 +26,7 @@ export default function SearchInterfaceGazetteer ({serviceId, resultEvents, sear
         "client",
         searchInterfaceId || "gazetteer",
         resultEvents || {
-            onClick: ["setMarker", "zoomToFeature"],
+            onClick: ["setMarker", "zoomToResult"],
             onHover: ["setMarker"]
         });
 
@@ -147,7 +147,7 @@ SearchInterfaceGazetteer.prototype.createPossibleActions = function (searchResul
             coordinates: searchResult.geometry.coordinates,
             closeResults: true
         },
-        zoomToFeature: {
+        zoomToResult: {
             coordinates: searchResult.geometry.coordinates,
             closeResults: true
         }
