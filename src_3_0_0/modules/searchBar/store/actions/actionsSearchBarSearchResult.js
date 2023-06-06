@@ -1,3 +1,4 @@
+import layerCollection from "../../../core/layers/js/layerCollection";
 /**
  * Contains actions that communicate with other components after an interaction, such as onClick or onHover, with a search result.
  */
@@ -30,10 +31,25 @@ export default {
 
     /**
      * Highlight feature of the search result.
+     * @param {Object} param.dispatch the commit
+     * @param {Object} payload The payload.
+     * @param {String} payload.featureId id of the feature
+     * @param {String} payload.layerId id of the layer
      * @returns {void}
      */
-    highligtFeature: () => {
-        // Do someThing
+    highligtFeature: ({dispatch},   {featureId, layerId}) => {
+        const layer = layerCollection.getLayerById(layerId);
+        let layerSource = null,
+        feature = null;
+
+        if(!layer){
+            //load layer? activateLayerInTopicTree?
+        }
+        if(layer){
+            layerSource = layer.getLayerSource() instanceof Cluster ? layer.getLayerSource().getSource() : layer.getLayerSource();
+            feature = layerSource.getFeatures().filter(feat => feat.ol_uid === featureId);
+            dispatch("MapMarker/placingPolygonMarker", feature, {root: true});
+        }
 
         /* used in:
             specialWFS
