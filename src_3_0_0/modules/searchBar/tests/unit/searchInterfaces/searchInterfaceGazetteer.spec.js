@@ -49,7 +49,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceGazetteer.
                                 closeResults: true,
                                 coordinates: [10, 20]
                             },
-                            zoomToFeature: {
+                            zoomToResult: {
                                 closeResults: true,
                                 coordinates: [10, 20]
                             }
@@ -94,7 +94,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceGazetteer.
     describe("normalizeResultEvents", () => {
         it("should normalize result events", () => {
             const resultEvents = {
-                    onClick: ["setMarker", "zoomToFeature"],
+                    onClick: ["setMarker", "zoomToResult"],
                     onHover: ["setMarker"]
                 },
                 searchResult = {
@@ -112,7 +112,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceGazetteer.
                             closeResults: true,
                             coordinates: [10, 20]
                         },
-                        zoomToFeature: {
+                        zoomToResult: {
                             closeResults: true,
                             coordinates: [10, 20]
                         }
@@ -144,7 +144,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceGazetteer.
                         closeResults: true,
                         coordinates: [10, 20]
                     },
-                    zoomToFeature: {
+                    zoomToResult: {
                         closeResults: true,
                         coordinates: [10, 20]
                     }

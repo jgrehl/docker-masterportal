@@ -9,14 +9,22 @@ const {
     highligtFeature,
     openGetFeatureInfo,
     openTopicTree,
-    setMarker
+    setMarker,
+    zoomToResult
 } = actions;
 
 describe("src/modules/searchBar/store/actions/actionsSearchBarSearchResult.spec.js", () => {
-    let dispatch;
+    let dispatch,
+        getters,
+        zoomLevel;
 
     beforeEach(() => {
+        zoomLevel = 5;
+
         dispatch = sinon.spy();
+        getters = {
+            zoomLevel: zoomLevel
+        };
     });
 
     after(() => {
