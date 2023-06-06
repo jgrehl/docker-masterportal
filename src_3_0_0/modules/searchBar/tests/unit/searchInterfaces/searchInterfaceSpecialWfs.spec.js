@@ -14,7 +14,7 @@ describe("src/modules/searchBar/searchInterfaces/searchInterfaceSpecialWfs.js", 
     });
 
     describe("prototype", () => {
-        it("SearchInterfaceSpecialWfs should have the prototype SearchInterface", () => {
+        it("SearchInterfaceSpecialWfs should has the prototype SearchInterface", () => {
             expect(SearchInterface1).to.be.an.instanceof(SearchInterface);
         });
     });
