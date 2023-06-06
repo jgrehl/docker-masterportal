@@ -4,12 +4,11 @@
 
 export default {
     /**
-     * Overwrite default values in search interface.
-     * @param {Object} param.state the state
+     * Returns configJson values.
+     * @param {Object} rootState the rootState
      * @returns {void}
      */
     getconf: async ({rootState}) =>{
-
         return rootState.configJson;
     }
 };
