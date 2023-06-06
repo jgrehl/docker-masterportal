@@ -470,7 +470,7 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
             expect(wrapper.vm.containerWidth).to.be.equals(amount * 158 + 70);
         });
 
-        it("containerWidth if not mobile", () => {
+        it("containerWidth if mobile", () => {
             const amount = 3;
 
             mobile = true;
