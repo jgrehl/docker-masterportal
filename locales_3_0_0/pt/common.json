@@ -670,6 +670,11 @@
       "name": "Modificar escala"
     },
     "searchBar": {
+      "locationFinder": {
+        "errorMsg": "A pesquisa através do LocationFinder falhou",
+        "serverError": "Erro durante o processamento do pedido do lado do servidor",
+        "unknownProjection": "Resultados em sistema de coordenadas desconhecidas"
+      },
       "placeholder": {
         "address": "Pesquisa por endereço"
       },

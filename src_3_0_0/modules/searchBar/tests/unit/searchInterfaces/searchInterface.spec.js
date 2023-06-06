@@ -97,9 +97,9 @@ describe("src/modules/searchBar/searchInterfaces/searchInterface.js", () => {
                     status: 200
                 },
                 axiosStub = sinon.stub(axios, "get").resolves(responseMock),
-                resultWithHits = await SearchInterface1.requestSearch(urlMock, type);
+                resultData = await SearchInterface1.requestSearch(urlMock, type);
 
-            expect(resultWithHits).to.deep.equals(["hit1", "hit2"]);
+            expect(resultData.hits).to.deep.equals(["hit1", "hit2"]);
             expect(axiosStub.calledOnce).to.be.true;
             expect(axiosStub.firstCall.args[0]).to.equals(urlMock);
             expect(axiosStub.firstCall.args[1]).to.have.nested.include({
