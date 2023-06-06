@@ -670,6 +670,11 @@
       "name": "Scale switcher"
     },
     "searchBar": {
+      "locationFinder": {
+        "errorMsg": "Searching with LocationFinder failed",
+        "serverError": "Server error",
+        "unknownProjection": "Result provided within a unknown coordinate system"
+      },
       "placeholder": {
         "address": "Search for Address"
       },
