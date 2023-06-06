@@ -18,7 +18,7 @@ import {uniqueId} from "../../../shared/js/utils/uniqueId";
  * @param {Number} [lon] Longtitude of the center for the search.
  * @param {String} [osmTag] Filtering of OSM Tags.
  * @param {Object} [resultEvents] Actions that are executed when an interaction, such as hover or click, is performed with a result list item.
- * @param {String[]} [resultEvents.onClick=["setMarker", "zoomToFeature"]] Actions that are fired when clicking on a result list item.
+ * @param {String[]} [resultEvents.onClick=["setMarker", "zoomToResult"]] Actions that are fired when clicking on a result list item.
  * @param {String[]} [resultEvents.onHover=["setMarker"]] Actions that are fired when hovering on a result list item.
  * @param {String} [searchInterfaceId="komootPhoton"] The id of the service interface.
  * @returns {void}
@@ -28,7 +28,7 @@ export default function SearchInterfaceKomootPhoton ({serviceId, bbox, limit, la
         "client",
         searchInterfaceId || "komootPhoton",
         resultEvents || {
-            onClick: ["setMarker", "zoomToFeature"],
+            onClick: ["setMarker", "zoomToResult"],
             onHover: ["setMarker"]
         });
 

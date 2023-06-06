@@ -14,7 +14,7 @@ import SearchInterface from "./searchInterface";
  * @param {Number} [maxscore] Maximum score value that the results must have.
  * @param {Number} [minscore] Minimum score value that the results must have
  * @param {Object} [resultEvents] Actions that are executed when an interaction, such as hover or click, is performed with a result list item.
- * @param {String[]} [resultEvents.onClick=["setMarker", "zoomToFeature"]] Actions that are fired when clicking on a result list item.
+ * @param {String[]} [resultEvents.onClick=["setMarker", "zoomToResult"]] Actions that are fired when clicking on a result list item.
  * @param {String[]} [resultEvents.onHover=["setMarker"]] Actions that are fired when hovering on a result list item.
  * @param {String} [searchInterfaceId="bkg"] The id of the service interface.
  * @param {Number} [suggestCount=20] Suggestion amount.
@@ -25,7 +25,7 @@ export default function SearchInterfaceBkg ({geoSearchServiceId, suggestServiceI
         "request",
         searchInterfaceId || "bkg",
         resultEvents || {
-            onClick: ["setMarker", "zoomToFeature"],
+            onClick: ["setMarker", "zoomToResult"],
             onHover: ["setMarker"]
         });
 
