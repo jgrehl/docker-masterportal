@@ -55,16 +55,6 @@ SearchInterface.prototype.createPossibleActions = function () {
 };
 
 /**
- * Normalizes the search results to display them in a SearchResult.
- * This function must be overridden by each sub search interface.
- * @abstract
- * @returns {void}
- */
-SearchInterface.prototype.normalizeResults = function () {
-    throw new Error("This function must be overridden by the sub search interface!");
-};
-
-/**
  * Search function that is triggered by the search bar.
  * This function must be overridden by each sub search interface.
  * @abstract

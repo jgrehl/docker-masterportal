@@ -50,7 +50,7 @@ export default {
     },
     mounted () {
         this.overwriteDefaultValues();
-        this.instantiateSearchInterfaces();
+        this.instantiateSearchInterfaces(this.$searchInterfaceAddons);
     },
     methods: {
         ...mapActions("Modules/SearchBar", ["instantiateSearchInterfaces", "overwriteDefaultValues", "search"]),

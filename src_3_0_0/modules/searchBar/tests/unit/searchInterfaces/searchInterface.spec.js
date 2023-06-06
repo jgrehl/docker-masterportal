@@ -21,12 +21,6 @@ describe("src/modules/searchBar/searchInterfaces/searchInterface.js", () => {
         });
     });
 
-    describe("normalizeResults", () => {
-        it("should throw an error if function 'normalizeResults' is uses in SearchInterface", () => {
-            expect(SearchInterface1.search).to.throw();
-        });
-    });
-
     describe("createPossibleActions", () => {
         it("should throw an error if function 'createPossibleActions' is uses in SearchInterface", () => {
             expect(SearchInterface1.search).to.throw();

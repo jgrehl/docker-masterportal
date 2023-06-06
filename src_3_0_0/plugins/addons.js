@@ -11,23 +11,28 @@ const allAddons = typeof VUE_ADDONS !== "undefined" ? VUE_ADDONS : {};
  * @returns {void}
  */
 async function loadAddons (config) {
-    main.getApp().config.globalProperties.$toolAddons = [];
-    main.getApp().config.globalProperties.$gfiThemeAddons = [];
     main.getApp().config.globalProperties.$controlAddons = [];
+    main.getApp().config.globalProperties.$gfiThemeAddons = [];
+    main.getApp().config.globalProperties.$searchInterfaceAddons = [];
+    main.getApp().config.globalProperties.$toolAddons = [];
+
     if (config) {
         const addons = config.map(async addonKey => {
             try {
                 const addonConf = allAddons[addonKey];
 
                 if (addonConf && Object.prototype.hasOwnProperty.call(addonConf, "type")) {
-                    if (addonConf.type === "tool") {
-                        await loadToolAddons(addonKey);
+                    if (addonConf.type === "control") {
+                        await loadControls(addonKey);
                     }
                     else if (addonConf.type === "gfiTheme") {
                         await loadGfiThemes(addonKey);
                     }
-                    else if (addonConf.type === "control") {
-                        await loadControl(addonKey);
+                    else if (addonConf.type === "searchInterface") {
+                        await loadSearchInterfaces(addonKey);
+                    }
+                    else if (addonConf.type === "tool") {
+                        await loadToolAddons(addonKey);
                     }
                 }
             }
@@ -45,7 +50,7 @@ async function loadAddons (config) {
  * @param {String} addonKey specified in config.js
  * @returns {void}
  */
-async function loadControl (addonKey) {
+async function loadControls (addonKey) {
     const addon = await loadAddon(addonKey),
         name = addon.component.name.charAt(0).toLowerCase() + addon.component.name.slice(1);
 
@@ -69,6 +74,17 @@ async function loadGfiThemes (addonKey) {
     Vue.component(addon.component.name, addon.component);
     // Add the componentName to a global array on vue instance called $gfiThemeAddons
     main.getApp().config.globalProperties.$gfiThemeAddons.push(addon.component.name);
+}
+
+/**
+ * Load searchInterface and register store when it exists.
+ * @param {String} addonKey specified in config.js
+ * @returns {void}
+ */
+async function loadSearchInterfaces (addonKey) {
+    const addon = await loadAddon(addonKey);
+
+    main.getApp().config.globalProperties.$searchInterfaceAddons.push(addon);
 }
 
 /**
@@ -112,9 +128,10 @@ async function loadAddon (addonKey) {
 
 export default {
     loadAddons,
-    loadToolAddons,
+    loadControls,
     loadGfiThemes,
-    loadControl,
+    loadSearchInterfaces,
+    loadToolAddons,
     loadAddon
 };
 
