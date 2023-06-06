@@ -14,7 +14,7 @@ describe("src/modules/searchBar/searchInterfaces/searchInterfaceOsmNominatim.js"
     });
 
     describe("prototype", () => {
-        it("SearchInterfaceOsmNominatim should have the prototype SearchInterface", () => {
+        it("SearchInterfaceOsmNominatim should has the prototype SearchInterface", () => {
             expect(SearchInterface1).to.be.an.instanceof(SearchInterface);
         });
     });

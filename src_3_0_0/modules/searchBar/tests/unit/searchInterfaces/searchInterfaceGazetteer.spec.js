@@ -25,7 +25,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceGazetteer.
     });
 
     describe("prototype", () => {
-        it("SearchInterfaceGazetteer should have the prototype SearchInterface", () => {
+        it("SearchInterfaceGazetteer should has the prototype SearchInterface", () => {
             expect(SearchInterface1).to.be.an.instanceof(SearchInterface);
         });
     });
