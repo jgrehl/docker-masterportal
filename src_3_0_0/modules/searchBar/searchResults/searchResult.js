@@ -18,7 +18,7 @@
  * @param {Object} [events..openGetFeatureInfo] Specifies that the openGetFeatureInfo action is executed on an interaction with the search result.
  * @param {Object} [events..openTopicTree] Specifies that the openTopicTree action is executed on an interaction with the search result.
  * @param {Object} [events..setMarker] Specifies that the setMarker action is executed on an interaction with the search result.
- * @param {Object} [events..zoomToFeature] Specifies that the zoomToFeature action is executed on an interaction with the search result.
+ * @param {Object} [events..zoomToResult] Specifies that the zoomToResult action is executed on an interaction with the search result.
  * @param {Boolean} [events...closeResults] Defines if the search results should be hidden.
  * @param {String[]} [events...coordinates] The coordinates of the search result.
  * @param {String} [events...featureId] The ol feature id the search result.
@@ -58,7 +58,7 @@
                 coordinates: [],
                 closeResults: false
             },
-            zoomToFeature: {
+            zoomToResult: {
                 coordinates: [],
                 closeResults: true
             }
