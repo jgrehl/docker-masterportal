@@ -91,11 +91,11 @@ export default {
     },
 
     /**
-     * Zoom to the feature of the search result.
+     * Zoom to the coordinates of the search result.
      * @returns {void}
      */
-    zoomToFeature: () => {
-        // Do someThing
+    zoomToResult: ({dispatch, getters}, {coordinates}) => {
+        dispatch("Maps/zoomToCoordinates", {coordinates, zoom: getters.zoomLevel}, {root: true});
 
         /* used in:
             bkg

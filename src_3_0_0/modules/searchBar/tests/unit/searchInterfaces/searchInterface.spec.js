@@ -175,14 +175,14 @@ describe("src/modules/searchBar/searchInterfaces/searchInterface.js", () => {
     describe("resultEventsToObject", () => {
         it("should convert result events to an object structure", () => {
             const resultEvents = {
-                onClick: ["setMarker", "zoomToFeature"],
+                onClick: ["setMarker", "zoomToResult"],
                 onHover: ["setMarker"]
             };
 
             expect(SearchInterface1.resultEventsToObject(resultEvents)).to.deep.equals({
                 onClick: {
                     setMarker: {},
-                    zoomToFeature: {}
+                    zoomToResult: {}
                 },
                 onHover: {
                     setMarker: {}

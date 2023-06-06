@@ -41,6 +41,25 @@ export default {
         }
     },
 
+
+    /**
+     * Zooms to the given coordinates.
+     * @param {Object} param store context
+     * @param {Object} param.dispatch the dispatch
+     * @param {Object} payload parameter object
+     * @param {Number[]} payload.coordinates coordinates center zoom to
+     * @param {Number} payload.zoom zoom of the view
+     * @returns {void}
+     */
+    zoomToCoordinates ({dispatch}, {coordinates, zoom}) {
+        if (coordinates) {
+            dispatch("setCenter", coordinates);
+        }
+        if (typeof zoom === "number") {
+            dispatch("setZoom", zoom);
+        }
+    },
+
     /**
      * Zoom to a given extent
      * @param {Object} _ store context.

@@ -16,7 +16,7 @@ import {uniqueId} from "../../../shared/js/utils/uniqueId";
  * @param {String[]} [countryCodes=["de"]] Countries to search in.
  * @param {Number} [limit = 5] Maximum amount of requested unfiltered results.
  * @param {Object} [resultEvents] Actions that are executed when an interaction, such as hover or click, is performed with a result list item.
- * @param {String[]} [resultEvents.onClick=["setMarker", "zoomToFeature"]] Actions that are fired when clicking on a result list item.
+ * @param {String[]} [resultEvents.onClick=["setMarker", "zoomToResult"]] Actions that are fired when clicking on a result list item.
  * @param {String[]} [resultEvents.onHover=["setMarker"]] Actions that are fired when hovering on a result list item.
  * @param {String} [searchInterfaceId="osmNominatim"] The id of the service interface.
  * @param {String} [states=""] May contain federal state names with arbitrary separators.
@@ -27,7 +27,7 @@ export default function SearchInterfaceOsmNominatim ({serviceId, classes, countr
         "client",
         searchInterfaceId || "osmNominatim",
         resultEvents || {
-            onClick: ["setMarker", "zoomToFeature"],
+            onClick: ["setMarker", "zoomToResult"],
             onHover: ["setMarker"]
         });
 
