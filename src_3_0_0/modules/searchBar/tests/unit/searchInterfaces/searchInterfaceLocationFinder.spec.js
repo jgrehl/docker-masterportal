@@ -48,7 +48,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceLocationFi
     });
 
     describe("prototype", () => {
-        it("SearchInterfaceLocationFinder should have the prototype SearchInterface", () => {
+        it("SearchInterfaceLocationFinder should has the prototype SearchInterface", () => {
             expect(SearchInterface1).to.be.an.instanceof(SearchInterface);
         });
     });
