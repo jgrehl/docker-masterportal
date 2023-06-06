@@ -1267,10 +1267,10 @@
                 // "address": "Suche nach Adresse"
             },
             "locationFinder": {
-                "unknownProjection": "Ergebnisse in unbekanntem Koordinatensystem",
-                "serverError": "Fehler während der serverseitigen Verarbeitung der Anfrage",
+                // "unknownProjection": "Ergebnisse in unbekanntem Koordinatensystem",
+                // "serverError": "Fehler während der serverseitigen Verarbeitung der Anfrage",
                 "invalidServiceId": "Fehler während der Initialisierung des LocationFinder-Suchmoduls: Ungültige Service-ID",
-                "errorMsg": "Suche per LocationFinder fehlgeschlagen",
+                // "errorMsg": "Suche per LocationFinder fehlgeschlagen",
                 "notFound": "Dienst nicht erreichbar"
             },
             "showAllResults": "alle Ergebnisse anzeigen",

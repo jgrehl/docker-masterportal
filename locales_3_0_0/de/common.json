@@ -670,6 +670,11 @@
       "name": "Maßstab umschalten"
     },
     "searchBar": {
+      "locationFinder": {
+        "errorMsg": "Suche per LocationFinder fehlgeschlagen",
+        "serverError": "Fehler während der serverseitigen Verarbeitung der Anfrage",
+        "unknownProjection": "Ergebnisse in unbekanntem Koordinatensystem"
+      },
       "placeholder": {
         "address": "Suche nach Adresse"
       },
