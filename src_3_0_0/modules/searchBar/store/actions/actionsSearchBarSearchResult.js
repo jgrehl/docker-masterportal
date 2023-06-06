@@ -92,6 +92,10 @@ export default {
 
     /**
      * Zoom to the coordinates of the search result.
+     * @param {Object} param.dispatch the dispatch
+     * @param {Object} param.getters the getters
+     * @param {Object} payload The payload.
+     * @param {Object} payload.coordinates The coordinates to zoom to.
      * @returns {void}
      */
     zoomToResult: ({dispatch, getters}, {coordinates}) => {
