@@ -64,7 +64,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceVisibleVec
     });
 
     describe("prototype", () => {
-        it("SearchInterfaceVisibleVector should have the prototype SearchInterface", () => {
+        it("SearchInterfaceVisibleVector should has the prototype SearchInterface", () => {
             expect(SearchInterface1).to.be.an.instanceof(SearchInterface);
         });
     });
