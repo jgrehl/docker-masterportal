@@ -58,6 +58,15 @@ export default {
             }
         });
         this.setBackgroundLayerIds(backgroundLayerConfigIds);
+
+        document.addEventListener("click", event => {
+            const backroundSwitcher = document.getElementById("basemap-switcher"),
+                isClickInside = backroundSwitcher.contains(event.target);
+
+            if (!isClickInside) {
+                this.setActivatedExpandable(false);
+            }
+        });
     },
     methods: {
         ...mapMutations("Modules/BasemapSwitcher", [
