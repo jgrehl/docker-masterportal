@@ -11,6 +11,7 @@
  *
  * @property {String} [searchInput=""] The search input.
  * @property {Object[]} [searchInterfaceInstances=[]] The configured searchInterfaces.
+ * @property {Object[]} [searchSuggestions=[]] The suggestions of the configured searchInterfaces.
  * @property {Object[]} [searchResults=[]] The results of the configured searchInterfaces.
  */
 const state = {
@@ -24,6 +25,7 @@ const state = {
 
     searchInput: "",
     searchInterfaceInstances: [],
+    searchSuggestions: [],
     searchResults: []
 };
 
