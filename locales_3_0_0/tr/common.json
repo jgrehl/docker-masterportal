@@ -670,6 +670,11 @@
       "name": "ölçek değiştirmek"
     },
     "searchBar": {
+      "locationFinder": {
+        "errorMsg": "LocationFinder aracılığıyla arama başarısız oldu",
+        "serverError": "İstek işlenirken sunucu da (server da) hata oluştu",
+        "unknownProjection": "Sonuçlar bilinmeyen koordinat sisteminde"
+      },
       "placeholder": {
         "address": "Adrese göre ara"
       },
