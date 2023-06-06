@@ -98,12 +98,12 @@ SearchInterface.prototype.clearSearchResults = function () {
  * Normalizes and fills the result events to use them in the search result.
  * @param {Object} resultEvents The configured result events.
  * @param {Object} searchResult The search result of gazetter.
- * @param {Object} [layer] The layer that contains extend values.
+ * @param {Object} extendedData Extended data for searchInterface.
  * @returns {Object} The normalized actions for SearchResult.
  */
-SearchInterface.prototype.normalizeResultEvents = function (resultEvents, searchResult, layer) {
+SearchInterface.prototype.normalizeResultEvents = function (resultEvents, searchResult, extendedData) {
     const resultEventsAsObject = this.resultEventsToObject(resultEvents),
-        possibleActions = this.createPossibleActions(searchResult, layer);
+        possibleActions = this.createPossibleActions(searchResult, extendedData);
 
     Object.keys(resultEventsAsObject).forEach(event => {
         Object.keys(resultEventsAsObject[event]).forEach(action => {
@@ -150,7 +150,7 @@ SearchInterface.prototype.pushHitToSearchResults = function (searchResult = {}) 
  */
 SearchInterface.prototype.requestSearch = async function (searchUrl, type, payload) {
     let response = {},
-        resultWithHits = {};
+        resultData = {};
 
     this.searchState = "running";
     this.abortRequest();
@@ -165,16 +165,15 @@ SearchInterface.prototype.requestSearch = async function (searchUrl, type, paylo
 
     if (response.status === 200) {
         this.searchState = "finished";
-        resultWithHits = response.data.hits;
+        resultData = response.data;
     }
     else {
         this.searchState = "failed";
-        resultWithHits.status = "error";
-        resultWithHits.message = "error occured in xhr Request!" + response.statusText;
-        resultWithHits.hits = [];
+        resultData.status = "error";
+        resultData.message = "error occured in xhr Request!" + response.statusText;
     }
 
-    return resultWithHits;
+    return resultData;
 };
 
 /**
