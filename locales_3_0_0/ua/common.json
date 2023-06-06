@@ -670,6 +670,11 @@
       "name": "Перемикач масштабу"
     },
     "searchBar": {
+      "locationFinder": {
+        "errorMsg": "Не вдалося виконати пошук за допомогою LocationFinder",
+        "serverError": "Помилка під час обробки запиту на стороні сервера",
+        "unknownProjection": "Результати в невідомій системі координат"
+      },
       "placeholder": {
         "address": "Пошук за адресою"
       },
