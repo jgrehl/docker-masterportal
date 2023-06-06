@@ -3,7 +3,8 @@ import {expect} from "chai";
 
 const {
     addSearchInterfaceInstances,
-    addSearchResults
+    addSearchResults,
+    addSuggestionItem
 } = mutations;
 
 describe("src/modules/searchBar/store/mutationsSearchBar.spec.js", () => {
@@ -40,6 +41,20 @@ describe("src/modules/searchBar/store/mutationsSearchBar.spec.js", () => {
                 id: "The first search hit",
                 searchInterfaceId: "The first instance"
             }]);
+        });
+    });
+
+    describe("addSearchItem", () => {
+        const item = {"id": "test"};
+
+        it("Should add item to state searchSuggestion", () => {
+            const state = {
+                searchSuggestions: []
+            };
+
+            addSuggestionItem(state, item);
+
+            expect(state.searchSuggestions[0].id).to.deep.equal("test");
         });
     });
 });
