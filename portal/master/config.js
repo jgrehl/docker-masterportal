@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 const Config = {
-    addons: ["populationRequest"],
+    addons: ["exampleSearch", "populationRequest"],
     ignoredKeys: ["BOUNDEDBY", "SHAPE", "SHAPE_LENGTH", "SHAPE_AREA", "OBJECTID", "GLOBALID", "GEOMETRY", "SHP", "SHP_AREA", "SHP_LENGTH", "GEOM"],
     namedProjections: [
         // ETRS89 UTM
