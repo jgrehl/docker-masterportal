@@ -327,11 +327,10 @@ Search configuration to use a *ESRI CH LocationFinder*.
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
-|incrementalSearch|no|Boolean|true|Defines whether autocomplete is enabled. If `incrementalSearch` is set to `false`, searches will only start on clicking the search icon or pressing enter, since there's a quota on requests.|false|
 |serviceId|yes|String||Service id. Resolved using the **[rest-services.json](rest-services.json.md)** file.|false|
 |classes|no|**[LocationFinderClass](#markdown-header-portalconfigsearchbarlocationfinderLocationFinderClass)**||May contain classes (with properties) to use in searches. If nothing is specified, all classes are considered valid.|false|
 |useProxy|no|Boolean|false|_Deprecated in the next major release. [GDI-DE](https://www.gdi-de.org/en) recommends setting CORS headers on the required services instead of using proxies._ Defines whether a service URL should be requested via proxy. For this, dots in the URL are replaced with underscores.|false|
-|spatialReference|no|String||Coordinate reference system to use for requests. By default, the value in `Portalconfig.mapView.epsg` is used.|false|
+|epsg|no|String||Coordinate reference system (EPSG-Code) to use for requests. By default, the value in `Portalconfig.mapView.epsg` is used.|false|
 
 ##### Portalconfig.searchBar.locationFinder.LocationFinderClass
 
@@ -342,7 +341,6 @@ Definition of classes to be taken into account for results.
 |name|yes|String||Class name|false|
 |icon|no|String|"bi-signpost-2-fill"|Class visualization by a icon|false|
 |zoom|no|String|"center"|Defines how to zoom to a hit on selection. If `center` is chosen, the center coordinate (`cx`, `cy`) is zoomed to and a marker is placed. If `bbox` is chosen, the LocationFinder's given BoundingBox (`xmin`, `ymin`, `xmax`, `ymax`) is zoomed to, and no marker is shown.|false|
-|zoomLevel|no|Integer||Zoom level which is applied to the result view|false|
 
 **Example**
 
@@ -357,8 +355,7 @@ Definition of classes to be taken into account for results.
             },
             {
                 "name": "address",
-                "icon": "bi-house-door-fill",
-                "zoomLevel": 5
+                "icon": "bi-house-door-fill"
             },
             {
                 "name": "streetname",
