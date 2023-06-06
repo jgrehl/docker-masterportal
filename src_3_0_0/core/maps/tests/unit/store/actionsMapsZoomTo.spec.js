@@ -49,8 +49,7 @@ describe("src_3_0_0/core/maps/store/actionsMapsZoomTo.js", () => {
             sinon.restore();
             rawLayerList.getLayerList().length = 0;
         });
-
-        it("should should resolve with a reason if a config is given but no url parameter", () => {
+        it("should resolve with a reason if a config is given but no url parameter", () => {
             sinon.stub(axios, "get").callsFake(axiosFake);
             rootGetters.configJs.zoomTo = [{id: "zoomToFeatureId"}];
             actions.zoomToFeatures({dispatch, rootGetters}, param)
