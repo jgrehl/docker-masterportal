@@ -21,14 +21,14 @@ describe("src_3_0_0/modules/searchBar/store/actions/actionsSearchBarSearchInterf
         it("should instantiate the gazetteer search interface", () => {
             const state = {
                 searchInterfaces: {
-                    "gazetteer": {
-                        "serviceId": "8",
-                        "searchAddress": true,
-                        "searchStreets": true,
-                        "searchHouseNumbers": true,
-                        "searchDistricts": true,
-                        "searchParcels": true,
-                        "searchStreetKey": true
+                    gazetteer: {
+                        serviceId: "8",
+                        searchAddress: true,
+                        searchStreets: true,
+                        searchHouseNumbers: true,
+                        searchDistricts: true,
+                        searchParcels: true,
+                        searchStreetKey: true
                     }
                 }
             };
@@ -36,6 +36,34 @@ describe("src_3_0_0/modules/searchBar/store/actions/actionsSearchBarSearchInterf
             instantiateSearchInterfaces({state, commit});
 
             expect(commit.calledOnce).to.be.true;
+            expect(commit.args[0]).includes("addSearchInterfaceInstances");
+        });
+
+        it("should instantiate the gazetter and addons search interfaces", () => {
+            const state = {
+                    searchInterfaces: {
+                        abc: {
+                            serviceid: "100"
+                        },
+                        gazetteer: {
+                            serviceId: "8",
+                            searchAddress: true,
+                            searchStreets: true,
+                            searchHouseNumbers: true,
+                            searchDistricts: true,
+                            searchParcels: true,
+                            searchStreetKey: true
+                        }
+                    }
+                },
+                searchInterfaceAddons = [{
+                    abc: sinon.stub()
+                }];
+
+            instantiateSearchInterfaces({state, commit}, searchInterfaceAddons);
+
+            expect(commit.calledTwice).to.be.true;
+            expect(commit.args[0]).includes("addSearchInterfaceInstances");
             expect(commit.args[0]).includes("addSearchInterfaceInstances");
         });
     });
