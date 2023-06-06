@@ -306,11 +306,10 @@ Konfiguration zur Suche unter Verwendung eines ESRI CH LocationFinders.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
-|incrementalSearch|nein|Boolean|true|Gibt an ob eine Suchverfollständigung (Autocomplete) stattfinden soll. Wenn `incrementalSearch` auf `false` gesetzt wird, so wird eine Surche nur durch einen Klick auf die Lupe bzw. durch Enter gestartet. Dies ist sinvoll, wenn die Anzahl erlaubter Anfragen an den eingebundenen Dienst kontigentiert ist.|false|
 |serviceId|ja|String||Gibt die ID für die URL in der **[rest-services.json](rest-services.json.de.md)** vor.|false|
 |classes|nein|**[LocationFinderClass](#markdown-header-portalconfigsearchbarlocationfinderLocationFinderClass)**||Kann Klassen (mit Eigenschaften) enthalten die berücksichtigt werden sollen. Wenn hier nichts angegeben wird, so werden alle Klassen berücksichtigt.|false|
 |useProxy|nein|Boolean|false|Deprecated im nächsten Major-Release, da von der GDI-DE empfohlen wird einen CORS-Header einzurichten. Gibt an, ob die URL des Dienstes über einen Proxy angefragt werden soll, dabei werden die Punkte in der URL durch Unterstriche ersetzt.|false|
-|spatialReference|nein|String||Koordinatensystem, in dem das Ergebnis angefragt werden soll. Standardmäßig wird  hier der Wert von Portalconfig.mapView.epsg verwendet.|false|
+|epsg|nein|String||Koordinatensystem (EPSG-Code), in dem das Ergebnis angefragt werden soll. Standardmäßig wird  hier der Wert von Portalconfig.mapView.epsg verwendet.|false|
 
 ##### Portalconfig.searchBar.locationFinder.LocationFinderClass #####
 
@@ -321,13 +320,10 @@ Definition von Klassen, welche als Ergebnis berücksichtigt werden sollen.
 |name|ja|String||Name der Klasse|false|
 |icon|nein|String|"bi-signpost-2-fill"|Visualisierung der Klasse durch ein Icon|false|
 |zoom|nein|String|"center"|Legt fest wie auf einen ausgewählten Treffer gezoomt werden soll. Wenn `center` ausgewählt ist, so wird auf die Zentrumskoordinate (`cx` und `cy`) gezoomt und ein Marker angezeigt. Im Falle von `bbox` wird auf die durch den LocationFinder angegebene BoundingBox (`xmin`, `ymin`, `xmax` und `ymax`) gezoomt. Ein Marker wird in dem Fall nicht angezeigt.|false|
-|zoomLevel|nein|Integer||Bei der Ausgabe der Suchergebnisse (dieses Typs) zu verwendende Zoomstufe|false|
 
 **Beispiel**
 
-```
-#!json
-
+```json
 "locationFinder": {
     "serviceId": "10",
     "classes": [
@@ -337,8 +333,7 @@ Definition von Klassen, welche als Ergebnis berücksichtigt werden sollen.
 		},
 		{
 			"name": "Adresse",
-			"icon": "bi-house-door-fill",
-			"zoomLevel": 5
+			"icon": "bi-house-door-fill"
 		},
 		{
 			"name": "Straßenname",
