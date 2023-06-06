@@ -152,16 +152,16 @@ SearchInterfaceElasticSearch.prototype.sendRequest = async function (url, reques
         urlWithPayload = type === "GET" ? `${url}?source_content_type=application/json&source=${
             JSON.stringify(payload)
         }` : url;
-    let resultWithHits = result;
+    let resultData = result;
 
     if (type === "GET") {
-        resultWithHits = await this.requestSearch(urlWithPayload, "GET");
+        resultData = await this.requestSearch(urlWithPayload, "GET");
     }
     else if (type === "POST") {
-        resultWithHits = await this.requestSearch(url, "POST", payload);
+        resultData = await this.requestSearch(url, "POST", payload);
     }
 
-    return resultWithHits;
+    return resultData.hits;
 };
 
 /**
