@@ -74,7 +74,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceKomootPhot
     });
 
     describe("prototype", () => {
-        it("SearchInterfaceKomootPhoton should have the prototype SearchInterface", () => {
+        it("SearchInterfaceKomootPhoton should has the prototype SearchInterface", () => {
             expect(SearchInterface1).to.be.an.instanceof(SearchInterface);
         });
     });

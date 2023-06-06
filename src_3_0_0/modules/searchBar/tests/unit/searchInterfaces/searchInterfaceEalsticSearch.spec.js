@@ -31,7 +31,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceElasticSea
     });
 
     describe("prototype", () => {
-        it("SearchInterfaceElasticSearch should have the prototype SearchInterface", () => {
+        it("SearchInterfaceElasticSearch should has the prototype SearchInterface", () => {
             expect(SearchInterface1).to.be.an.instanceof(SearchInterface);
         });
     });
