@@ -92,7 +92,16 @@
           }
         },
         "topicTree": {},
-        "visibleVector": {}
+        "visibleVector": {},
+        "locationFinder": {
+          "serviceId": "locationFinder",
+          "classes": [
+            {
+              "name": "Haltestelle",
+              "icon": "bi-record-circle"
+            }
+          ]
+        }
       }
     },
     "mainMenu": {
@@ -485,7 +494,7 @@
           "shortname": "VectorTile",
           "typ": "VectorTile",
           "visibility": false,
-          "preview":{
+          "preview": {
             "src": "./resources/vectorTile.png"
           },
           "gfiAttributes": "showAll",
@@ -534,7 +543,7 @@
           "name": "Web Vektor",
           "typ": "VectorTile",
           "visibility": false,
-          "preview":{
+          "preview": {
             "src": "./resources/webVector.png"
           },
           "gfiAttributes": "showAll",

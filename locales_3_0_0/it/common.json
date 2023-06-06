@@ -670,6 +670,11 @@
       "name": "Cambia scala"
     },
     "searchBar": {
+      "locationFinder": {
+        "errorMsg": "Ricerca via LocationFinder fallita",
+        "serverError": "Errore del server dopo la richiesta",
+        "unknownProjection": "Risultati in un sistema di riferimento sconosciuto"
+      },
       "placeholder": {
         "address": "Cerca indirizzo"
       },
