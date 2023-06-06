@@ -12,7 +12,7 @@ import {Icon} from "ol/style.js";
  * @constructs
  * @extends SearchInterface
  * @param {Object} [resultEvents] Actions that are executed when an interaction, such as hover or click, is performed with a result list item.
- * @param {String[]} [resultEvents.onClick=["openGetFeatureInfo", "setMarker", "zoomToFeature"]] Actions that are fired when clicking on a result list item.
+ * @param {String[]} [resultEvents.onClick=["openGetFeatureInfo", "setMarker", "zoomToResult"]] Actions that are fired when clicking on a result list item.
  * @param {String[]} [resultEvents.onHover=["setMarker"]] Actions that are fired when hovering on a result list item.
  * @param {String} [searchInterfaceId="visibleVector"] The id of the service interface.
  * @returns {void}
@@ -22,7 +22,7 @@ export default function SearchInterfaceVisibleVector ({resultEvents, searchInter
         "client",
         searchInterfaceId || "visibleVector",
         resultEvents || {
-            onClick: ["openGetFeatureInfo", "setMarker", "zoomToFeature"],
+            onClick: ["openGetFeatureInfo", "setMarker", "zoomToResult"],
             onHover: ["setMarker"]
         });
 }
