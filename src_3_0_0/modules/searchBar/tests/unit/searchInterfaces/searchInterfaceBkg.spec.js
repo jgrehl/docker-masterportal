@@ -14,7 +14,7 @@ describe("src/modules/searchBar/searchInterfaces/searchInterfaceBkg.js", () => {
     });
 
     describe("prototype", () => {
-        it("SearchInterfaceBkg should have the prototype SearchInterface", () => {
+        it("SearchInterfaceBkg should has the prototype SearchInterface", () => {
             expect(SearchInterface1).to.be.an.instanceof(SearchInterface);
         });
     });

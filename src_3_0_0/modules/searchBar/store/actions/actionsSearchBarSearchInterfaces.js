@@ -14,9 +14,10 @@ export default {
      * and stores them in the state.
      * @param {Object} param.commit the commit
      * @param {Object} param.state the state
+     * @param {Object[]} [searchInterfaceAddons=[]] The search interface addons.
      * @returns {void}
      */
-    instantiateSearchInterfaces: ({commit, state}) => {
+    instantiateSearchInterfaces: ({commit, state}, searchInterfaceAddons = []) => {
         const searchInterfacesMapper = {
             elasticSearch: SearchInterfaceElasticSearch,
             gazetteer: SearchInterfaceGazetteer,
@@ -25,6 +26,8 @@ export default {
             topicTree: SearchInterfaceTopicTree,
             visibleVector: SearchInterfaceVisibleVector
         };
+
+        Object.assign(searchInterfacesMapper, ...searchInterfaceAddons);
 
         Object.keys(state.searchInterfaces).forEach(searchInterface => {
             if (searchInterfacesMapper[searchInterface]) {
