@@ -51,7 +51,7 @@ describe("src_3_0_0/modules/searchBar/components/SearchBarSuggestionList.vue", (
             }
         },
         minCharacters = 3,
-        searchInput = "1234";
+        searchInput = "Neuenfelder";
 
 
     beforeEach(() => {
@@ -94,9 +94,16 @@ describe("src_3_0_0/modules/searchBar/components/SearchBarSuggestionList.vue", (
                     plugins: [store]
                 }
             });
-
             expect(wrapper.find("#search-bar-suggestion-list").exists()).to.be.true;
-            expect(wrapper.findComponent({name: "SearchBarSuggestionListItem"}).exists()).to.be.true;
+            expect(wrapper.find(".showAllSection").exists()).to.be.true;
+        });
+        it("tests the computed property SearchBarSuggestionList", async () => {
+            wrapper = await mount(SearchBarSuggestionListComponent, {
+                global: {
+                    plugins: [store]
+                }
+            });
+            expect(wrapper.vm.limitedSortedSearchResults).to.deep.equal({availableCategories: ["Straße", "Adresse"], "StraßeCount": 1, AdresseCount: 1});
         });
     });
 });
