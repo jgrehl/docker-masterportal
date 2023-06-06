@@ -20,7 +20,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceTopicTree.
     });
 
     describe("prototype", () => {
-        it("SearchInterfaceTopicTree should have the prototype SearchInterface", () => {
+        it("SearchInterfaceTopicTree should has the prototype SearchInterface", () => {
             expect(SearchInterface1).to.be.an.instanceof(SearchInterface);
         });
     });
