@@ -161,7 +161,7 @@ SearchInterfaceVisibleVector.prototype.createPossibleActions = function (feature
             coordinates: centerCoordinate,
             closeResults: true
         },
-        zoomToFeature: {
+        zoomToResult: {
             coordinates: centerCoordinate,
             closeResults: true
         }
