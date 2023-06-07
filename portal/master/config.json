@@ -104,6 +104,15 @@
               "name": "Straßenname"
             }
           ]
+        },
+        "komootPhoton": {
+          "minChars": 3,
+          "serviceId": "11",
+          "limit": 10,
+          "lang": "de",
+          "lat": 53.6,
+          "lon": 10.0,
+          "bbox": "9.6,53.3,10.4,53.8"
         }
       }
     },
