@@ -49,9 +49,8 @@ describe("src_3_0_0/core/maps/js/mapUrlParams.js", () => {
                 tilt: undefined
             });
             expect(dispatchCalls["Maps/changeMapMode"]).to.equals("2D");
-            expect(dispatchCalls["Maps/setView"]).to.deep.equals({
+            expect(dispatchCalls["Maps/zoomToCoordinates"]).to.deep.equals({
                 center: [571278.4429867676, 5938534.397334521],
-                rotation: undefined,
                 zoom: 7
             });
         });
@@ -70,9 +69,8 @@ describe("src_3_0_0/core/maps/js/mapUrlParams.js", () => {
                 tilt: 45
             });
             expect(dispatchCalls["Maps/changeMapMode"]).to.equals("3D");
-            expect(dispatchCalls["Maps/setView"]).to.deep.equals({
+            expect(dispatchCalls["Maps/zoomToCoordinates"]).to.deep.equals({
                 center: [571278.4429867676, 5938534.397334521],
-                rotation: undefined,
                 zoom: 7
             });
         });
@@ -195,9 +193,8 @@ describe("src_3_0_0/core/maps/js/mapUrlParams.js", () => {
             mapUrlParams.processProjection(params);
 
             expect(Object.keys(dispatchCalls).length).to.equals(1);
-            expect(dispatchCalls["Maps/setView"]).to.deep.equals({
+            expect(dispatchCalls["Maps/zoomToCoordinates"]).to.deep.equals({
                 center: [1, 2],
-                rotation: undefined,
                 zoom: undefined
             });
         });
@@ -211,9 +208,8 @@ describe("src_3_0_0/core/maps/js/mapUrlParams.js", () => {
             mapUrlParams.processProjection(params);
 
             expect(Object.keys(dispatchCalls).length).to.equals(1);
-            expect(dispatchCalls["Maps/setView"]).to.deep.equals({
+            expect(dispatchCalls["Maps/zoomToCoordinates"]).to.deep.equals({
                 center: [1, 2],
-                rotation: undefined,
                 zoom: undefined
             });
         });
@@ -375,9 +371,8 @@ describe("src_3_0_0/core/maps/js/mapUrlParams.js", () => {
             mapUrlParams.setView(params);
 
             expect(Object.keys(dispatchCalls).length).to.equals(1);
-            expect(dispatchCalls["Maps/setView"]).to.deep.equals({
+            expect(dispatchCalls["Maps/zoomToCoordinates"]).to.deep.equals({
                 center: ["553925", "5931898"],
-                rotation: undefined,
                 zoom: 0
             });
         });
@@ -391,9 +386,8 @@ describe("src_3_0_0/core/maps/js/mapUrlParams.js", () => {
             mapUrlParams.setView(params);
 
             expect(Object.keys(dispatchCalls).length).to.equals(1);
-            expect(dispatchCalls["Maps/setView"]).to.deep.equals({
+            expect(dispatchCalls["Maps/zoomToCoordinates"]).to.deep.equals({
                 center: ["553925", "5931898"],
-                rotation: undefined,
                 zoom: 0
             });
         });
@@ -406,9 +400,8 @@ describe("src_3_0_0/core/maps/js/mapUrlParams.js", () => {
             mapUrlParams.setView(params);
 
             expect(Object.keys(dispatchCalls).length).to.equals(1);
-            expect(dispatchCalls["Maps/setView"]).to.deep.equals({
+            expect(dispatchCalls["Maps/zoomToCoordinates"]).to.deep.equals({
                 center: [553925, 5931898],
-                rotation: undefined,
                 zoom: undefined
             });
         });
@@ -421,9 +414,8 @@ describe("src_3_0_0/core/maps/js/mapUrlParams.js", () => {
             mapUrlParams.setView(params);
 
             expect(Object.keys(dispatchCalls).length).to.equals(1);
-            expect(dispatchCalls["Maps/setView"]).to.deep.equals({
+            expect(dispatchCalls["Maps/zoomToCoordinates"]).to.deep.equals({
                 center: [553925, 5931898],
-                rotation: undefined,
                 zoom: undefined
             });
         });
