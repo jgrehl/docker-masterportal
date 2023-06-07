@@ -99,6 +99,9 @@
             {
               "name": "Haltestelle",
               "icon": "bi-record-circle"
+            },
+            {
+              "name": "Straßenname"
             }
           ]
         }
