@@ -233,9 +233,8 @@ function setView (params) {
         }
     }
 
-    store.dispatch("Maps/setView", {
+    store.dispatch("Maps/zoomToCoordinates", {
         center: projection ? crs.transformToMapProjection(mapCollection.getMap("2D"), projection, center) : center,
-        rotation: params.ROTATION,
         zoom: params.ZOOM ?? params.ZOOMLEVEL ?? params["MAP/ZOOMLEVEL"]
     });
 }
