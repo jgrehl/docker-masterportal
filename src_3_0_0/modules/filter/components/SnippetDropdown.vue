@@ -821,6 +821,7 @@ export default {
                             type="checkbox"
                             :value="val"
                             tabindex="0"
+                            @click="setCurrentSource('dropdown')"
                         >
                         <input
                             v-else
@@ -832,6 +833,7 @@ export default {
                             type="radio"
                             :value="val"
                             tabindex="0"
+                            @click="setCurrentSource('dropdown')"
                         >
                     </span>
                     <span
