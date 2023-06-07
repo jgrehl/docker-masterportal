@@ -154,7 +154,7 @@ Configuration in addition to highlighting features. If features are highlighted 
 
 
 #### Portalconfig.tree.layerPills
-Configuration of LayerPills. 
+Configuration of LayerPills.
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
@@ -680,20 +680,16 @@ Visible vector layer search configuration. For all vector layers supposed to be 
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
-|minChars|no|Integer|3|Minimum amount of characters required to start a search.|false|
-|layerTypes|no|enum["WFS", "GeoJSON"]|["WFS"]|Vector layer types to be used.|true|
-|gfiOnClick|no|Boolean|false|Opens the GetFeatureInfo (gfi) window on clicking a search result.|false|
 
 **Example**
 
 ```json
 {
     "visibleVector": {
-        "minChars": 3,
-        "layerTypes": ["WFS", "GeoJSON"]
     }
 }
 ```
+
 ***
 
 #### Portalconfig.layerInformation
@@ -4456,7 +4452,7 @@ CustomMenuElement Module `execute` from `payload`. The appropriate payload for t
 ```
 #!json
 {
-    "title":"to all people", 
+    "title":"to all people",
     "content": "Hallo world"
 }
 ```
