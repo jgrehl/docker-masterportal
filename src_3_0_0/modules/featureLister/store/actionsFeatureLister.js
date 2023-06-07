@@ -45,10 +45,10 @@ export default {
             if (styleObj && styleObj.zoomLevel) {
                 if (featureGeometry && typeof featureGeometry.getType === "function") {
                     if (featureGeometry.getType() === "Point") {
-                        dispatch("Maps/setView", {center: featureGeometry.getCoordinates()}, {root: true});
+                        dispatch("Maps/zoomToCoordinates", {center: featureGeometry.getCoordinates()}, {root: true});
                     }
                     else {
-                        dispatch("Maps/setView", {center: getCenter(featureGeometry.getExtent())}, {root: true});
+                        dispatch("Maps/zoomToCoordinates", {center: getCenter(featureGeometry.getExtent())}, {root: true});
                     }
                     dispatch("Maps/setZoom", styleObj.zoomLevel, {root: true});
                 }
