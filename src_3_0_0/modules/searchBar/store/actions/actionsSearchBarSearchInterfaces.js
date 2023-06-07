@@ -3,6 +3,7 @@
  */
 import SearchInterfaceElasticSearch from "../../searchInterfaces/searchInterfaceElasticSearch";
 import SearchInterfaceGazetteer from "../../searchInterfaces/searchInterfaceGazetteer";
+import SearchInterfaceKomootPhoton from "../../searchInterfaces/searchInterfaceKomootPhoton";
 import SearchInterfaceLocationFinder from "../../searchInterfaces/searchInterfaceLocationFinder";
 import SearchInterfaceTopicTree from "../../searchInterfaces/searchInterfaceTopicTree";
 import SearchInterfaceVisibleVector from "../../searchInterfaces/searchInterfaceVisibleVector";
@@ -19,6 +20,7 @@ export default {
         const searchInterfacesMapper = {
             elasticSearch: SearchInterfaceElasticSearch,
             gazetteer: SearchInterfaceGazetteer,
+            komootPhoton: SearchInterfaceKomootPhoton,
             locationFinder: SearchInterfaceLocationFinder,
             topicTree: SearchInterfaceTopicTree,
             visibleVector: SearchInterfaceVisibleVector
