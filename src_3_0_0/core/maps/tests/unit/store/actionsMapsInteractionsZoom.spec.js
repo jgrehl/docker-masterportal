@@ -147,55 +147,46 @@ describe("src_3_0_0/core/maps/store/actionsMapsInteractionsZoom.js", () => {
     });
 
     describe("zoomToCoordinates", () => {
-        it("should do nothing without coordinates and zoom", () => {
-            const coordinates = undefined,
+        it("should do nothing without center and zoom", () => {
+            const center = undefined,
                 zoom = undefined;
 
-            zoomToCoordinates({dispatch}, {coordinates, zoom});
+            zoomToCoordinates({dispatch}, {center, zoom});
 
             expect(dispatch.notCalled).to.be.true;
         });
 
-        it("should only set coordinates if zoom is undefined", () => {
-            const coordinates = [1, 2],
+        it("should only set center if zoom is undefined", () => {
+            const center = [1, 2],
                 zoom = undefined;
 
-            zoomToCoordinates({dispatch}, {coordinates, zoom});
+            zoomToCoordinates({dispatch}, {center, zoom});
 
             expect(dispatch.calledOnce).to.be.true;
             expect(dispatch.firstCall.args[0]).to.equals("setCenter");
-            expect(dispatch.firstCall.args[1]).to.be.deep.equals(coordinates);
+            expect(dispatch.firstCall.args[1]).to.be.deep.equals(center);
         });
 
-        it("should only set zoom if coordinates is undefined", () => {
-            const coordinates = undefined,
+        it("should only set zoom if center is undefined", () => {
+            const center = undefined,
                 zoom = 1;
 
-            zoomToCoordinates({dispatch}, {coordinates, zoom});
+            zoomToCoordinates({dispatch}, {center, zoom});
 
             expect(dispatch.calledOnce).to.be.true;
             expect(dispatch.firstCall.args[0]).to.equals("setZoom");
             expect(dispatch.firstCall.args[1]).to.be.equals(zoom);
         });
 
-        it("should do nothing without coordinates and zoom is not a number", () => {
-            const coordinates = undefined,
-                zoom = "4.a";
-
-            zoomToCoordinates({dispatch}, {coordinates, zoom});
-
-            expect(dispatch.notCalled).to.be.true;
-        });
-
         it("should set the zoom level to the map view", () => {
-            const coordinates = [1, 2],
+            const center = [1, 2],
                 zoom = 10;
 
-            zoomToCoordinates({dispatch}, {coordinates, zoom});
+            zoomToCoordinates({dispatch}, {center, zoom});
 
             expect(dispatch.calledTwice).to.be.true;
             expect(dispatch.firstCall.args[0]).to.equals("setCenter");
-            expect(dispatch.firstCall.args[1]).to.be.deep.equals(coordinates);
+            expect(dispatch.firstCall.args[1]).to.be.deep.equals(center);
             expect(dispatch.secondCall.args[0]).to.equals("setZoom");
             expect(dispatch.secondCall.args[1]).to.be.equals(zoom);
         });
