@@ -20,7 +20,7 @@ These layer-types are supported:
 |checkable|no|Boolean|false|If true, preview is checkable.|
 |checked|no|Boolean|false|If true, preview is checked.|
 |customClass|no|String|""|Custom css-class to overwrite style, NOTICE: maybe `!important` must be used.|
-|currentlyVisible|no|Boolean|false|If `true`, preview is highlighted by a thick border.|
+|currentlyVisible|no|Boolean|false|If `true`, preview is highlighted by a thick border if the layer is currently visible.|
 
 ## emits
 
