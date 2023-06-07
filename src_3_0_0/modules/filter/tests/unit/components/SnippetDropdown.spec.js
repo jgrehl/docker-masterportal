@@ -229,6 +229,23 @@ describe("src/modules/tools/filter/components/SnippetDropdown.vue", () => {
             expect(wrapper.find(".snippetListContainer").exists()).to.be.true;
             expect(wrapper.find(".snippetListContainer .checkbox").exists()).to.be.true;
         });
+        it("should set the current source to 'dropdown' if clicked on a entry", async () => {
+            wrapper = shallowMount(SnippetDropdown, {
+                propsData: {
+                    "type": "dropdown",
+                    "attrName": "kapitelbezeichnung",
+                    "display": "list",
+                    "multiselect": true,
+                    "value": ["yek", "do"]
+                }
+            });
+            await wrapper.setData({source: "adjust"});
+            await wrapper.vm.$nextTick();
+            await wrapper.vm.$nextTick();
+
+            await wrapper.findAll(".checkbox").at(0).trigger("click");
+            expect(wrapper.vm.source).to.be.equal("dropdown");
+        });
     });
 
     describe("methods", () => {
