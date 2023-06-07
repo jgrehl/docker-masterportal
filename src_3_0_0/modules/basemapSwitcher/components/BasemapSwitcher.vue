@@ -42,15 +42,22 @@ export default {
         }
     },
     created () {
-        const backgroundLayerConfigIds = [];
+        const backgroundLayerConfigIds = [],
+            backgroundLayers = this.layerConfigsByAttributes({
+                backgroundLayer: true,
+                showInLayerTree: true
+            });
 
-        Math.max(this.layerConfigsByAttributes({
-            backgroundLayer: true,
-            showInLayerTree: true
-        }).map(layer => {
-            this.setTopBackgroundLayerId(layer.id);
-            return layer.zIndex;
-        }));
+        if (backgroundLayers.length > 1) {
+            const layerWithMaxZIndex = backgroundLayers.filter(layer => {
+                return Math.max(layer.zIndex);
+            });
+
+            this.setTopBackgroundLayerId(layerWithMaxZIndex[0]?.id);
+        }
+        else {
+            this.setTopBackgroundLayerId(backgroundLayers[0]?.id);
+        }
 
         Object.values(this.allBackgroundLayerConfigs).forEach(layer => {
             if (layer.id !== this.topBackgroundLayerId) {
@@ -116,6 +123,7 @@ export default {
             >
                 <button
                     v-if="activatedExpandable === true"
+                    id="bs-expanded"
                     class="btn btn-light"
                     @click="switchActiveBackgroundLayer(layer)"
                 >
@@ -123,16 +131,19 @@ export default {
                 </button>
             </li>
             <button
+                v-if="topBackgroundLayerId === undefined"
+                id="bs-placeholder"
+                class="btn btn-light"
+                @click="setActivatedExpandable(!activatedExpandable)"
+            >
+                Choose Map
+            </button>
+            <button
+                id="bs-topBackgroundLayer"
                 class="btn btn-light"
                 @click="setActivatedExpandable(!activatedExpandable)"
             >
                 {{ topBackgroundLayerId }}
-            </button>
-            <button
-                v-if="topBackgroundLayerId === undefined"
-                class="btn btn-light"
-            >
-                "Choose Map"
             </button>
         </ul>
     </div>
