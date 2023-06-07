@@ -167,7 +167,7 @@ Konfiguration der Searchbar
 |gdi|nein|**[gdi](#markdown-header-portalconfigsearchbargdi)**||Konfiguration des GDI (elastic) Suchdienstes. Deprecated in 3.0.0. Bitte **[elasticSearch](#markdown-header-portalconfigsearchbarelasticsearch)** verwenden.|false|
 |elasticSearch|nein|**[elasticSearch](#markdown-header-portalconfigsearchbarelasticsearch)**||Konfiguration des ElasticSearch Suchdienstes.|false|
 |osm|nein|**[osm](#markdown-header-portalconfigsearchbarosm)**||Konfiguration des OpenStreetMap (OSM) Suchdienstes.|false|
-|komoot|nein|**[komoot](#markdown-header-portalconfigsearchbarkomoot)**||Konfiguration des Komoot Photon Suchdienstes.|false|
+|komootPhoton|nein|**[komootPhoton](#markdown-header-portalconfigsearchbarkomootphoton)**||Konfiguration des Komoot Photon Suchdienstes.|false|
 |locationFinder|nein|**[locationFinder](#markdown-header-portalconfigsearchbarlocationfinder)**||Konfiguration des LocationFinder-Suchdienstes.|false|
 |placeholder|nein|String|"Suche"|Placeholder für das Freitextfeld.|false|
 |recommendedListLength|nein|Integer|5|Anzahl der Einträge in der Vorschlagsliste.|false|
@@ -268,28 +268,23 @@ Suche bei OpenStreetMap über Stadt, Strasse und Hausnummer. Wird nur durch Klic
 
 ***
 
-#### Portalconfig.searchBar.komoot ####
+#### Portalconfig.searchBar.komootPhoton ####
 Suche bei **[Komoot Photon](https://photon.komoot.io/)**.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
-|minChars|nein|Number|3|Mindestanzahl an Zeichen im Suchstring, bevor die Suche initiiert wird.|false|
 |serviceId|ja|String||Gibt die ID für die URL in der **[rest-services.json](https://bitbucket.org/geowerkstatt-hamburg/masterportal/src/0d136a44a59dd3b64ec986c258763ac08603bf15/doc/rest-services.json.md)** vor.|false|
-|limit|nein|Number|10|Gibt die maximale Zahl der gewünschten, ungefilterten Ergebnisse an.|false|
+|limit|nein|Number||Gibt die maximale Zahl der gewünschten, ungefilterten Ergebnisse an.|false|
 |lang|nein|string|"de"|Sprache für die Komoot Suche. Wirkt sich auf Sprachspezifische Ortsangaben (Zum Beispiel Ländernamen) aus.|false|
 |lat|nein|Number||Breitengrad für den Suchmittelpunkt.|false|
 |lon|nein|Number||Längengrad für den Suchmittelpunkt.|false|
 |bbox|nein|string||Begrenzungsrechteck für die Suche.|false|
 |osm_tag|nein|string||Filterung für OSM Tags (siehe https://github.com/komoot/photon#filter-results-by-tags-and-values).|false|
-|searchOnEnter|nein|Boolean|false|Wenn `searchOnEnter` auf `true` gesetzt wird, so wird eine Surche nur durch einen Klick auf die Lupe bzw. durch Enter gestartet.|false|
 
 **Beispiel**
 
-```
-#!json
-
-"komoot": {
-    "minChars": 3,
+```json
+"komootPhoton": {
     "serviceId": "10",
     "limit": 20,
     "lang": "de",
