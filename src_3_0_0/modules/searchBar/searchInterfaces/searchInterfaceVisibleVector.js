@@ -68,7 +68,7 @@ SearchInterfaceVisibleVector.prototype.findMatchingFeatures = function (visibleV
                 const upperSearchField = String(feature.get(searchField)).toUpperCase(),
                     upperSearchInput = searchInput.toUpperCase();
 
-                if (upperSearchField.indexOf(upperSearchInput) !== -1 && !searchField.includes(feature)) {
+                if (upperSearchField.indexOf(upperSearchInput) !== -1) {
                     foundFeatures.push(this.normalizeResult(feature, layer, searchField));
                 }
             });
