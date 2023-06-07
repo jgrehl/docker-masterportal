@@ -184,7 +184,7 @@ Search bar configuration.
 |gdi|no|**[gdi](#markdown-header-portalconfigsearchbargdi)**||GDI (elastic) search service configuration. _Deprecated in 3.0.0. Please use **[elasticSearch](#markdown-header-portalconfigsearchbarelasticsearch)** instead.|false|
 |elasticSearch|no|**[elasticSearch](#markdown-header-portalconfigsearchbarelasticsearch)**||Elastic search service configuration.|false|
 |osm|no|**[osm](#markdown-header-portalconfigsearchbarosm)**||OpenStreetMap (OSM) search service configuration.|false|
-|komoot|no|**[komoot](#markdown-header-portalconfigsearchbarkomoot)**||Komoot Photon search service configuration.|false|
+|komootPhoton|no|**[komootPhoton](#markdown-header-portalconfigsearchbarkomootphoton)**||Komoot Photon search service configuration.|false|
 |locationFinder|no|**[locationFinder](#markdown-header-portalconfigsearchbarlocationfinder)**||LocationFinder search service configuration.|false|
 |placeholder|no|String|"Suche"|Input text field placeholder shown when no input has been given yet.|false|
 |recommendedListLength|no|Integer|5|Maximum amount of entries in the suggestion list.|false|
@@ -288,28 +288,23 @@ OpenStreetMap search for city, street, and house number. Only executed on clicki
 
 ***
 
-#### Portalconfig.searchBar.komoot
+#### Portalconfig.searchBar.komootPhoton
 Search with **[Komoot Photon](https://photon.komoot.io/)**.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
-|minChars|no|Number|3|Minimum amount of characters required to start a search.|false|
 |serviceId|yes|String||Komoot search service id. Resolved using the **[rest-services.json](rest-services.json.md)** file.|false|
-|limit|no|Number|10|Maximum amount of requested unfiltered results.|false|
+|limit|no|Number||Maximum amount of requested unfiltered results.|false|
 |lang|no|string|"de"|Language of the Komoot Search. Effects language specific locationnames (e.g. Countrynames) aus.|false|
 |lat|no|Number||Latitude of the center for the search.|false|
 |lon|no|Number||Longtitude of the center for the search.|false|
 |bbox|no|string||Boundingbox of the search.|false|
 |osm_tag|no|string||Filtering of OSM Tags (see https://github.com/komoot/photon#filter-results-by-tags-and-values).|false|
-|searchOnEnter|no|Boolean|false|If `searchOnEnter` is set to `true`, searches will only start on clicking the search icon or pressing enter.|false|
 
 **Example**
 
-```
-#!json
-
-"komoot": {
-    "minChars": 3,
+```json
+"komootPhoton": {
     "serviceId": "10",
     "limit": 20,
     "lang": "de",
