@@ -8,7 +8,8 @@ import sinon from "sinon";
 config.global.mocks.$t = key => key;
 
 describe("src_3_0_0/modules/BasemapSwitcher.vue", () => {
-    let wrapper,
+    let store,
+        wrapper,
         layerConfigs,
         backgroundlayerConfigs,
         visibleBackgroundLayerConfigs;
@@ -31,39 +32,44 @@ describe("src_3_0_0/modules/BasemapSwitcher.vue", () => {
             {id: "VectorTile", name: "ArcGIS VectorTile", visibility: true, backgroundLayer: true, showInLayerTree: true},
             {id: "453", name: "Geobasiskarten (HamburgDE)", visibility: true, backgroundLayer: true, showInLayerTree: true}
         ];
-    });
-    const store = createStore({
-        namespaced: true,
-        modules: {
-            Modules: {
-                namespaced: true,
-                modules: {
-                    BasemapSwitcher
+
+        store = createStore({
+            namespaced: true,
+            modules: {
+                Modules: {
+                    namespaced: true,
+                    modules: {
+                        BasemapSwitcher
+                    }
+                }
+            },
+            getters: {
+                isMobile: () => false,
+                layerConfigsByAttributes: () => () => layerConfigs,
+                allBackgroundLayerConfigs: () => backgroundlayerConfigs,
+                visibleBackgroundLayerConfigs: () => visibleBackgroundLayerConfigs,
+                activatedExpandable: () => false
+            },
+            mutations: {
+                setLayerConfigsByAttributes: (state, layer) => {
+                    layerConfigs = layer;
+                },
+                setAllBackgroundLayerConfigs: (state, layer) => {
+                    backgroundlayerConfigs = layer;
+                },
+                setVisibleBackgroundLayerConfigs: (state, layer) => {
+                    visibleBackgroundLayerConfigs = layer;
                 }
             }
-        },
-        getters: {
-            isMobile: () => false,
-            layerConfigsByAttributes: () => (attributes = {}) => layerConfigs,
-            allBackgroundLayerConfigs: () => backgroundlayerConfigs,
-            visibleBackgroundLayerConfigs: () => visibleBackgroundLayerConfigs
-        },
-        mutations: {
-            setLayerConfigsByAttributes: (state, layer) => {
-                layerConfigs = layer;
-            },
-            setAllBackgroundLayerConfigs: (state, layer) => {
-                backgroundlayerConfigs = layer;
-            }
-        }
+        });
     });
 
     afterEach(() => {
         sinon.restore();
     });
 
-    describe("BasemapSwitcher DOM elements", () => {
-        it.skip("renders BasemapSwitcher", () => {
+    describe("basemapSwitcher DOM elements", () => {
+        it.only("renders BasemapSwitcher", () => {
             wrapper = shallowMount(BasemapSwitcherComponent, {
                 global: {
                     plugins: [store]
@@ -72,9 +78,7 @@ describe("src_3_0_0/modules/BasemapSwitcher.vue", () => {
             expect(wrapper.find("#basemap-switcher").exists()).to.be.true;
         });
 
-        it.skip("does not render BasemapSwitcher", () => {
-            // store.state.Modules.BasemapSwitcher.backgroundLayerIds = [];
-            // store.commit("setLayerConfigsByAttributes", []);
+        it.only("does not render basemapSwitcher", () => {
             store.commit("setAllBackgroundLayerConfigs", []);
 
             wrapper = shallowMount(BasemapSwitcherComponent, {
@@ -84,19 +88,94 @@ describe("src_3_0_0/modules/BasemapSwitcher.vue", () => {
 
             expect(wrapper.find("#basemap-switcher").exists()).to.be.false;
         });
-    });
 
-    describe("watcher", () => {
-        it.skip("visibleBackgroundLayerConfigs", () => {
+        it.only("basemapSwitcher is expanded", () => {
+            store.commit("Modules/BasemapSwitcher/setActivatedExpandable", true);
             wrapper = shallowMount(BasemapSwitcherComponent, {
                 global: {
                     plugins: [store]
                 }});
 
-            wrapper.vm.$options.watch.visibleBackgroundLayerConfigs.handler.call(wrapper.vm)
+            expect(wrapper.find("#basemap-switcher").exists()).to.be.true;
+            expect(wrapper.find("#bs-expanded").exists()).to.be.true;
+            expect(wrapper.findAll("#bs-expanded").length).to.equal(store.state.Modules.BasemapSwitcher.backgroundLayerIds.length);
+        });
 
-            expect.
-            // expect(Boris.actions.simulateLanduseSelect.calledOnce).to.equal(true);
+        it.only("backgroundLayerId of layer with highest zIndex is shown as preview", () => {
+            wrapper = shallowMount(BasemapSwitcherComponent, {
+                global: {
+                    plugins: [store]
+                }});
+
+            expect(wrapper.find("#basemap-switcher").exists()).to.be.true;
+            expect(wrapper.find("#bs-topBackgroundLayer").exists()).to.be.true;
+            expect(wrapper.find("#bs-topBackgroundLayer").text()).to.equal(store.state.Modules.BasemapSwitcher.topBackgroundLayerId);
+        });
+        it.only("placeholder is shown as preview", () => {
+            store.commit("setLayerConfigsByAttributes", [
+                {id: "WMTS", visibility: false, backgroundLayer: true, showInLayerTree: true, zIndex: 0},
+                {id: "VectorTile", visibility: false, backgroundLayer: true, showInLayerTree: true, zIndex: 0},
+                {id: "453", visibility: false, backgroundLayer: true, showInLayerTree: true, zIndex: 0}
+            ]);
+
+            wrapper = shallowMount(BasemapSwitcherComponent, {
+                global: {
+                    plugins: [store]
+                }});
+
+            expect(wrapper.find("#basemap-switcher").exists()).to.be.true;
+            expect(wrapper.find("#bs-placeholder").exists()).to.be.true;
+        });
+    });
+
+    describe("watcher", () => {
+        it.only("visibleBackgroundLayerConfigs with new backgroundLayer", () => {
+            const newValue = [{
+                id: "WMTS",
+                name: "EOC Basemap",
+                visibility: true,
+                backgroundLayer: true,
+                showInLayerTree: true,
+                zIndex: 1
+            }];
+
+            wrapper = shallowMount(BasemapSwitcherComponent, {
+                global: {
+                    plugins: [store]
+                }});
+
+            wrapper.vm.$options.watch.visibleBackgroundLayerConfigs.handler.call(wrapper.vm, newValue);
+            expect(store.state.Modules.BasemapSwitcher.topBackgroundLayerId).to.equal("WMTS");
+        });
+        it.only("visibleBackgroundLayerConfigs with no selected backgroundLayer", () => {
+            const newValue = [];
+
+            wrapper = shallowMount(BasemapSwitcherComponent, {
+                global: {
+                    plugins: [store]
+                }});
+
+            wrapper.vm.$options.watch.visibleBackgroundLayerConfigs.handler.call(wrapper.vm, newValue);
+            expect(store.state.Modules.BasemapSwitcher.topBackgroundLayerId).to.equal(undefined);
+        });
+    });
+
+    describe("created", () => {
+        it.skip("", () => {
+            wrapper = shallowMount(BasemapSwitcherComponent, {
+                global: {
+                    plugins: [store]
+                }});
+
+        });
+    });
+
+    describe("BasemapSwitcher methods", () => {
+        it.skip("switchActiveBackgroundLayer", () => {
+            wrapper = shallowMount(BasemapSwitcherComponent, {
+                global: {
+                    plugins: [store]
+                }});
         });
     });
 });
