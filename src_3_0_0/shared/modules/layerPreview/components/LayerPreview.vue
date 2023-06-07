@@ -44,7 +44,7 @@ export default {
             type: String,
             default: ""
         },
-        /** If true, preview is highlighted by a thick border. */
+        /** If true, preview is highlighted by a thick border if layer is currently visible. */
         currentlyVisible: {
             type: Boolean,
             default: false
