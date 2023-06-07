@@ -1,15 +1,18 @@
+import Cluster from "ol/source/Cluster";
 import {expect} from "chai";
 import Feature from "ol/Feature.js";
 import {Icon} from "ol/style.js";
 import Point from "ol/geom/Point.js";
 import sinon from "sinon";
+import VectorSource from "ol/source/Vector";
 
 import layerCollection from "../../../../../core/layers/js/layerCollection";
 import SearchInterface from "../../../searchInterfaces/searchInterface.js";
 import SearchInterfaceVisibleVector from "../../../searchInterfaces/searchInterfaceVisibleVector.js";
 
-describe("src/modules/searchBar/searchInterfaces/searchInterfaceVisibleVector.js", () => {
-    let feature1,
+describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceVisibleVector.js", () => {
+    let clusterLayer1,
+        feature1,
         feature2,
         layer1,
         SearchInterface1 = null;
@@ -53,8 +56,6 @@ describe("src/modules/searchBar/searchInterfaces/searchInterfaceVisibleVector.js
                 };
             }
         };
-
-        sinon.stub(layerCollection, "getLayerById").returns(layer1);
     });
 
     afterEach(() => {
@@ -69,60 +70,148 @@ describe("src/modules/searchBar/searchInterfaces/searchInterfaceVisibleVector.js
     });
 
     describe("findMatchingFeatures", () => {
-        it("should return one matched feature", () => {
-            const visibleVectorLayerConfigs = [{
-                    id: "123",
-                    name: "The layer",
-                    searchField: "name"
-                }],
-                searchInput = "hos";
+        describe("vectorLayer", () => {
+            beforeEach(() => {
+                sinon.stub(layerCollection, "getLayerById").returns(layer1);
+            });
 
-            expect(SearchInterface1.findMatchingFeatures(visibleVectorLayerConfigs, searchInput)).to.deep.equals([
-                {
-                    events: {
-                        onClick: {
-                            openGetFeatureInfo: {
-                                closeResults: true,
-                                featureId: "1",
-                                layerId: "123"
+            it("should return one matched feature", () => {
+                const visibleVectorLayerConfigs = [{
+                        id: "123",
+                        name: "The layer",
+                        searchField: "name"
+                    }],
+                    searchInput = "hos";
+
+                expect(SearchInterface1.findMatchingFeatures(visibleVectorLayerConfigs, searchInput)).to.deep.equals([
+                    {
+                        events: {
+                            onClick: {
+                                openGetFeatureInfo: {
+                                    closeResults: true,
+                                    featureId: "1",
+                                    layerId: "123"
+                                },
+                                setMarker: {
+                                    closeResults: true,
+                                    coordinates: [
+                                        10,
+                                        10
+                                    ]
+                                },
+                                zoomToFeature: {
+                                    closeResults: true,
+                                    coordinates: [
+                                        10,
+                                        10
+                                    ]
+                                }
                             },
-                            setMarker: {
-                                closeResults: true,
-                                coordinates: [
-                                    10,
-                                    10
-                                ]
-                            },
-                            zoomToFeature: {
-                                closeResults: true,
-                                coordinates: [
-                                    10,
-                                    10
-                                ]
+                            onHover: {
+                                setMarker: {
+                                    closeResults: true,
+                                    coordinates: [
+                                        10,
+                                        10
+                                    ]
+                                }
                             }
                         },
-                        onHover: {
-                            setMarker: {
-                                closeResults: true,
-                                coordinates: [
-                                    10,
-                                    10
-                                ]
-                            }
+                        category: "The layer",
+                        displayedInfo: "Example-Street 1",
+                        imagePath: "",
+                        id: feature1.ol_uid,
+                        name: "Hospital",
+                        toolTip: "Hospital"
+                    }
+                ]);
+            });
+        });
+
+        describe("clusterLayer", () => {
+            beforeEach(() => {
+                clusterLayer1 = {
+                    attributes: {
+                        id: "789",
+                        additionalInfoField: "street",
+                        name: "The layer",
+                        searchField: "name",
+                        style: () => {
+                            return {
+                                getImage: () => sinon.stub()
+                            };
                         }
                     },
-                    category: "The layer",
-                    displayedInfo: "Example-Street 1",
-                    imagePath: "",
-                    id: feature1.ol_uid,
-                    name: "Hospital",
-                    toolTip: "Hospital"
-                }
-            ]);
+                    getLayerSource: () => new Cluster({
+                        distance: 100,
+                        source: new VectorSource({
+                            features: [feature1, feature2]
+                        })
+                    })
+                };
+
+                sinon.stub(layerCollection, "getLayerById").returns(clusterLayer1);
+            });
+
+            it("should return one matched feature from cluster layer", () => {
+                const visibleVectorLayerConfigs = [{
+                        id: "789",
+                        name: "The layer",
+                        searchField: "name"
+                    }],
+                    searchInput = "scho";
+
+                expect(SearchInterface1.findMatchingFeatures(visibleVectorLayerConfigs, searchInput)).to.deep.equals([
+                    {
+                        events: {
+                            onClick: {
+                                openGetFeatureInfo: {
+                                    closeResults: true,
+                                    featureId: "2",
+                                    layerId: "789"
+                                },
+                                setMarker: {
+                                    closeResults: true,
+                                    coordinates: [
+                                        20,
+                                        20
+                                    ]
+                                },
+                                zoomToFeature: {
+                                    closeResults: true,
+                                    coordinates: [
+                                        20,
+                                        20
+                                    ]
+                                }
+                            },
+                            onHover: {
+                                setMarker: {
+                                    closeResults: true,
+                                    coordinates: [
+                                        20,
+                                        20
+                                    ]
+                                }
+                            }
+                        },
+                        category: "The layer",
+                        displayedInfo: "",
+                        imagePath: "",
+                        id: feature2.ol_uid,
+                        name: "School",
+                        toolTip: "School"
+                    }
+                ]);
+            });
         });
     });
 
     describe("normalizeLayerResult", () => {
+        beforeEach(() => {
+            sinon.stub(layerCollection, "getLayerById").returns(layer1);
+        });
+
         it("should normalize result", () => {
             const searchField = "name";
 
