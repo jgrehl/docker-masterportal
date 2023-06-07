@@ -43,19 +43,19 @@ export default {
 
 
     /**
-     * Zooms to the given coordinates.
+     * Zooms to the given coordinates. If rotation is given, view is rotated.
      * @param {Object} param store context
      * @param {Object} param.dispatch the dispatch
      * @param {Object} payload parameter object
-     * @param {Number[]} payload.coordinates coordinates center zoom to
+     * @param {Number[]} payload.center center of the view
      * @param {Number} payload.zoom zoom of the view
      * @returns {void}
      */
-    zoomToCoordinates ({dispatch}, {coordinates, zoom}) {
-        if (coordinates) {
-            dispatch("setCenter", coordinates);
+    zoomToCoordinates ({dispatch}, {center, zoom}) {
+        if (Array.isArray(center)) {
+            dispatch("setCenter", center);
         }
-        if (typeof zoom === "number") {
+        if (zoom !== undefined) {
             dispatch("setZoom", zoom);
         }
     },
