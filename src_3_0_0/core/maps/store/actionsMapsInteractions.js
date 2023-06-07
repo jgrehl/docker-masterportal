@@ -145,30 +145,6 @@ export default {
     },
 
     /**
-     * Sets center, rotation and zoom at the view.
-     * @param {Object} param store context
-     * @param {Object} param.dispatch the dispatch
-     * @param {Object} payload parameter object
-     * @param {Number[]} payload.center center of the view
-     * @param {Number} payload.rotation rotation of the view
-     * @param {Number} payload.zoom zoom of the view
-     * @returns {void}
-     */
-    setView ({dispatch}, {center, rotation, zoom}) {
-        const view = mapCollection.getMapView("2D");
-
-        if (center) {
-            dispatch("setCenter", center);
-        }
-        if (rotation) {
-            view.setRotation(rotation);
-        }
-        if (typeof parseInt(zoom, 10) === "number") {
-            dispatch("setZoom", zoom);
-        }
-    },
-
-    /**
      * Unsubscribes listener to certain events.
      * @param {Object} context store context
      * @param {Object} payload parameter object
