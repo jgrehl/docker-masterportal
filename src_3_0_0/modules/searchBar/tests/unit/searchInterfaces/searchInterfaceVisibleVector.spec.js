@@ -99,7 +99,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceVisibleVec
                                         10
                                     ]
                                 },
-                                zoomToFeature: {
+                                zoomToResult: {
                                     closeResults: true,
                                     coordinates: [
                                         10,
@@ -177,7 +177,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceVisibleVec
                                         20
                                     ]
                                 },
-                                zoomToFeature: {
+                                zoomToResult: {
                                     closeResults: true,
                                     coordinates: [
                                         20,
@@ -231,7 +231,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceVisibleVec
                                     10
                                 ]
                             },
-                            zoomToFeature: {
+                            zoomToResult: {
                                 closeResults: true,
                                 coordinates: [
                                     10,
@@ -312,7 +312,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceVisibleVec
                             10
                         ]
                     },
-                    zoomToFeature: {
+                    zoomToResult: {
                         closeResults: true,
                         coordinates: [
                             10,
