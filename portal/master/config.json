@@ -612,7 +612,7 @@
           "id": "22078",
           "name": "Bewohnerparkgebiete Hamburg",
           "typ": "WFS",
-          "visibility": true,
+          "visibility": false,
           "styleId": "22078",
           "styleField": "bewirtschaftungsart",
           "searchField": "bwp_name",
