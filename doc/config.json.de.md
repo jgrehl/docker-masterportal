@@ -138,7 +138,7 @@ Konfiguration zusätzlich zum Highlighting von Features. Wenn mit dem Werkzeug "
 
 
 #### Portalconfig.tree.layerPills
-Konfiguration der LayerPills. 
+Konfiguration der LayerPills.
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
@@ -644,18 +644,18 @@ Konfiguration der Suche über die sichtbaren VectorLayer. Bei der Layerdefinitio
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
-|minChars|nein|Integer|3|Minimale Anzahl an Buchstaben, ab der die Suche losläuft.|false|
-|layerTypes|nein|enum["WFS", "GeoJSON"]|["WFS"]|Vector Typen die verwendet werden sollen.|true|
-|gfiOnClick|nein|Boolean|false|Öffnet das GetFeatureInfo (gfi) bei Klick auf das Suchergebnis.|false|
+
 
 **Beispiel**
-```
-#!json
-"visibleVector": {
-    "minChars": 3,
-    "layerTypes": ["WFS", "GeoJSON"]
+
+```json
+{
+    "visibleVector": {
+    }
 }
 ```
+
+***
 
 #### Portalconfig.layerInformation
 Konfiguration der layerInformation.
@@ -4315,7 +4315,7 @@ Dieses Modul zeigt alle Meldungen aus der newsFeedPortalAlerts.json des aktuelle
 
 [inherits]: # (Portalconfig.menu.tool)
 
-Dieses Modul kann einen Link öffnen, HTML aus config.json oder einer externen Datei anzeigen oder eine Aktion ausführen. Diese Modul kann mehrfach in der config.json konfiguriert werden. Wenn `htmlContent`angegeben wird, dann wird `pathToContent` nicht ausgeführt und umgekehrt. 
+Dieses Modul kann einen Link öffnen, HTML aus config.json oder einer externen Datei anzeigen oder eine Aktion ausführen. Diese Modul kann mehrfach in der config.json konfiguriert werden. Wenn `htmlContent`angegeben wird, dann wird `pathToContent` nicht ausgeführt und umgekehrt.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
@@ -4384,7 +4384,7 @@ CustomMenuElement Module `execute` vom `payload`. Der passende payload zu der Ak
 ```
 #!json
 {
-    "title":"An alle Menschen", 
+    "title":"An alle Menschen",
     "content": "Hallo Welt"
 }
 ```
