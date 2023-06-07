@@ -43,7 +43,7 @@ export default {
 
 
     /**
-     * Zooms to the given coordinates. If rotation is given, view is rotated.
+     * Zooms to the given coordinates.
      * @param {Object} param store context
      * @param {Object} param.dispatch the dispatch
      * @param {Object} payload parameter object
