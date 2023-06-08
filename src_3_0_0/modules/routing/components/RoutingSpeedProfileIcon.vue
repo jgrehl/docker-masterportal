@@ -1,4 +1,13 @@
 <script>
+
+/**
+ * RoutingSpeedProfileIcon
+ * @module modules/RoutingSpeedProfileIcon
+ * @vue-prop {Function} interaction - The click function.
+ * @vue-prop {String} speedProfileId - The id.
+ * @vue-prop {String} fillColor - The color.
+ * @vue-prop {String} tooltip - The tooltip.
+ */
 export default {
     name: "RoutingSpeedProfileIcon",
     props: {

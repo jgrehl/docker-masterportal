@@ -8,6 +8,39 @@ import SnippetInfo from "./SnippetInfo.vue";
 
 dayjs.extend(customParseFormat);
 
+/**
+* Snippet Date Range
+* @module modules/SnippetDateRange
+* @vue-prop {Array} adjustment - The changes made by other snippets that change settings in this snippet. E.g. one snippet changes to "Grundschulen" and other snippets change their min value as a result of the adjustment.
+* @vue-prop {Object} api - The api.
+* @vue-prop {String} attrName - The title and aria label.
+* @vue-prop {Boolean} disabled - Shows if snippet is disabled.
+* @vue-prop {String} display - Sets which dates should be displayed.
+* @vue-prop {Number} filterId - The filter's id.
+* @vue-prop {Array} fixedRules - List of fixed rules.
+* @vue-prop {String} format - The date format.
+* @vue-prop {Array} info - The information for the SnippetInfo.
+* @vue-prop {Boolean} isParent - Shows if element is a parent element.
+* @vue-prop {String} operator - (???).
+* @vue-prop {String} prechecked - (???).
+* @vue-prop {Number} snippetId - The snippet's id.
+* @vue-prop {Array} subTitles - The subtitles for the from and until date.
+* @vue-prop {Number} timeoutSlider - The timeout for the slider.
+* @vue-prop {Array} title - The label.
+* @vue-prop {String} value - The value for a date.
+* @vue-prop {Boolean} visible - Shows if snippet is visible.
+*
+* @vue-data {Number} sliderFrom - (???).
+* @vue-data {Number} sliderUntil - (???).
+* @vue-data {Number} currentSliderMin - The current slider minimum.
+* @vue-data {Number} currentSliderMax - The current slider maximum.
+*
+* @vue-event {Object} changeRule - Emits the current rule to whoever is listening.
+* @vue-event {Number} deleteRule - Emits the delete rule function to whoever is listening.
+* @vue-event {Number} disableFilterButton - Emits disable filter button function to whoever is listening.
+* @vue-event {Number} enableFilterButton - Emits enable filter button function to whoever is listening.
+* @vue-event {*} setSnippetPrechecked - Emits the setSnippetPrechecked event.
+*/
 export default {
     name: "SnippetDateRange",
     components: {
