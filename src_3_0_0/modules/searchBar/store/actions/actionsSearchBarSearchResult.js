@@ -73,11 +73,12 @@ export default {
 
     /**
      * Sets the marker to the feature of the search result.
+     * @param {Object} context actions context object.
+     * @param {Event} coordinates - the position
      * @returns {void}
      */
-    setMarker: () => {
-        // Do someThing
-
+    setMarker: ({dispatch}, coordinates) => {
+        dispatch("Maps/placingPointMarker", [parseFloat(coordinates[0]), parseFloat(coordinates[1])], {root: true});
         /* used in:
             bkg
             gazetter
