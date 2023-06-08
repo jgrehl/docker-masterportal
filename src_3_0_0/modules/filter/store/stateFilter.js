@@ -16,12 +16,14 @@
  * @property {Array} layerGroups - configuration of the related layers to be filtered
  * @property {Array} rulesOfFilters - contains rules for each filter
  * @property {String} serializedString -contains the serialized state (includes rules, filterHits, selectedAccordions)
- * @property {Array} selectedAccordions - contains the selected accordinons
+ * @property {Array} selectedAccordions - contains the selected accordions
+ * @property {Array} selectedGroups - contains the selected groups
  * @property {Array} filtersHits - contains the filter hits
  * @property {Object/Boolean} filterGeometry - contains geometry/area to filter in
  * @property {Boolean} geometryFeature - the geometry feature
  * @property {Number} jumpToId - contains the filterId to jump
  * @property {Boolean} hasMouseMapInteractions ff this attribute is true, then all other modules will be deactivated when this attribute is also true. Only one module with this attribute true may be open at the same time, since conflicts can arise in the card interactions.
+  * @property {Array} neededUrlParams - contains the required URL params
 
  */
 
@@ -42,11 +44,13 @@ const state = {
     rulesOfFilters: [],
     serializedString: "",
     selectedAccordions: [],
+    selectedGroups: [],
     filtersHits: [],
     filterGeometry: false,
     geometryFeature: undefined,
     jumpToId: undefined,
-    hasMouseMapInteractions: false
+    hasMouseMapInteractions: false,
+    neededUrlParams: ["rulesOfFilters", "selectedAccordions", "selectedGroups"]
 };
 
 export default state;
