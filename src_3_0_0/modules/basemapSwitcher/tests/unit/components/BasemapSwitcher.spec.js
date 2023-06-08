@@ -12,7 +12,8 @@ describe("src_3_0_0/modules/BasemapSwitcher.vue", () => {
         wrapper,
         layerConfigs,
         backgroundlayerConfigs,
-        visibleBackgroundLayerConfigs;
+        visibleBackgroundLayerConfigs,
+        originalUpdateLayerVisibilityAndZIndex;
 
     beforeEach(() => {
         layerConfigs = [
@@ -32,6 +33,9 @@ describe("src_3_0_0/modules/BasemapSwitcher.vue", () => {
             {id: "VectorTile", name: "ArcGIS VectorTile", visibility: true, backgroundLayer: true, showInLayerTree: true},
             {id: "453", name: "Geobasiskarten (HamburgDE)", visibility: true, backgroundLayer: true, showInLayerTree: true}
         ];
+
+        originalUpdateLayerVisibilityAndZIndex = BasemapSwitcher.actions.updateLayerVisibilityAndZIndex;
+        BasemapSwitcher.actions.updateLayerVisibilityAndZIndex = sinon.spy();
 
         store = createStore({
             namespaced: true,
@@ -65,53 +69,59 @@ describe("src_3_0_0/modules/BasemapSwitcher.vue", () => {
     });
 
     afterEach(() => {
+        BasemapSwitcher.actions.updateLayerVisibilityAndZIndex = originalUpdateLayerVisibilityAndZIndex;
+
         sinon.restore();
     });
 
     describe("basemapSwitcher DOM elements", () => {
-        it.only("renders BasemapSwitcher", () => {
+        it("renders BasemapSwitcher", () => {
             wrapper = shallowMount(BasemapSwitcherComponent, {
                 global: {
                     plugins: [store]
-                }});
+                }
+            });
 
             expect(wrapper.find("#basemap-switcher").exists()).to.be.true;
         });
 
-        it.only("does not render basemapSwitcher", () => {
+        it("does not render basemapSwitcher", () => {
             store.commit("setAllBackgroundLayerConfigs", []);
 
             wrapper = shallowMount(BasemapSwitcherComponent, {
                 global: {
                     plugins: [store]
-                }});
+                }
+            });
 
             expect(wrapper.find("#basemap-switcher").exists()).to.be.false;
         });
 
-        it.only("basemapSwitcher is expanded", () => {
+        it("basemapSwitcher is expanded", () => {
             store.commit("Modules/BasemapSwitcher/setActivatedExpandable", true);
             wrapper = shallowMount(BasemapSwitcherComponent, {
                 global: {
                     plugins: [store]
-                }});
+                }
+            });
 
             expect(wrapper.find("#basemap-switcher").exists()).to.be.true;
             expect(wrapper.find("#bs-expanded").exists()).to.be.true;
             expect(wrapper.findAll("#bs-expanded").length).to.equal(store.state.Modules.BasemapSwitcher.backgroundLayerIds.length);
         });
 
-        it.only("backgroundLayerId of layer with highest zIndex is shown as preview", () => {
+        it("backgroundLayerId of layer with highest zIndex is shown as preview", () => {
             wrapper = shallowMount(BasemapSwitcherComponent, {
                 global: {
                     plugins: [store]
-                }});
+                }
+            });
 
             expect(wrapper.find("#basemap-switcher").exists()).to.be.true;
             expect(wrapper.find("#bs-topBackgroundLayer").exists()).to.be.true;
             expect(wrapper.find("#bs-topBackgroundLayer").text()).to.equal(store.state.Modules.BasemapSwitcher.topBackgroundLayerId);
         });
-        it.only("placeholder is shown as preview", () => {
+        it("placeholder is shown as preview", () => {
             store.commit("setLayerConfigsByAttributes", [
                 {id: "WMTS", visibility: false, backgroundLayer: true, showInLayerTree: true, zIndex: 0},
                 {id: "VectorTile", visibility: false, backgroundLayer: true, showInLayerTree: true, zIndex: 0},
@@ -121,7 +131,8 @@ describe("src_3_0_0/modules/BasemapSwitcher.vue", () => {
             wrapper = shallowMount(BasemapSwitcherComponent, {
                 global: {
                     plugins: [store]
-                }});
+                }
+            });
 
             expect(wrapper.find("#basemap-switcher").exists()).to.be.true;
             expect(wrapper.find("#bs-placeholder").exists()).to.be.true;
@@ -129,7 +140,7 @@ describe("src_3_0_0/modules/BasemapSwitcher.vue", () => {
     });
 
     describe("watcher", () => {
-        it.only("visibleBackgroundLayerConfigs with new backgroundLayer", () => {
+        it("visibleBackgroundLayerConfigs with new backgroundLayer", () => {
             const newValue = [{
                 id: "WMTS",
                 name: "EOC Basemap",
@@ -147,13 +158,14 @@ describe("src_3_0_0/modules/BasemapSwitcher.vue", () => {
             wrapper.vm.$options.watch.visibleBackgroundLayerConfigs.handler.call(wrapper.vm, newValue);
             expect(store.state.Modules.BasemapSwitcher.topBackgroundLayerId).to.equal("WMTS");
         });
-        it.only("visibleBackgroundLayerConfigs with no selected backgroundLayer", () => {
+        it("visibleBackgroundLayerConfigs with no selected backgroundLayer", () => {
             const newValue = [];
 
             wrapper = shallowMount(BasemapSwitcherComponent, {
                 global: {
                     plugins: [store]
-                }});
+                }
+            });
 
             wrapper.vm.$options.watch.visibleBackgroundLayerConfigs.handler.call(wrapper.vm, newValue);
             expect(store.state.Modules.BasemapSwitcher.topBackgroundLayerId).to.equal(undefined);
@@ -161,21 +173,48 @@ describe("src_3_0_0/modules/BasemapSwitcher.vue", () => {
     });
 
     describe("created", () => {
-        it.skip("", () => {
+        it("backgroundLayerIds and topBackgroundLayer", () => {
+            layerConfigs = [
+                {id: "Karte1", visibility: false, backgroundLayer: true, showInLayerTree: true, zIndex: 0},
+                {id: "Karte2", visibility: false, backgroundLayer: true, showInLayerTree: true, zIndex: 0},
+                {id: "Karte3", visibility: true, backgroundLayer: true, showInLayerTree: true, zIndex: 1},
+                {id: "Karte4", visibility: false, backgroundLayer: true, showInLayerTree: true, zIndex: 0},
+                {id: "KeineKarte", visibility: false, backgroundLayer: false, showInLayerTree: true, zIndex: 0}
+            ];
+            backgroundlayerConfigs = [
+                {id: "Karte1", name: "EOC Basemap", visibility: false, backgroundLayer: true, showInLayerTree: true},
+                {id: "Karte2", name: "ArcGIS VectorTile", visibility: false, backgroundLayer: true, showInLayerTree: true},
+                {id: "Karte3", name: "Geobasiskarten (HamburgDE)", visibility: true, backgroundLayer: true, showInLayerTree: true},
+                {id: "Karte4", name: "Digitale Orthophotos (belaubt) Hamburg", visibility: false, backgroundLayer: true, showInLayerTree: true}
+            ];
             wrapper = shallowMount(BasemapSwitcherComponent, {
                 global: {
                     plugins: [store]
-                }});
+                }
+            });
+
+            expect(store.state.Modules.BasemapSwitcher.backgroundLayerIds).to.deep.equal(["Karte1", "Karte2", "Karte4"]);
+            expect(store.state.Modules.BasemapSwitcher.topBackgroundLayerId).to.deep.equal("Karte3");
 
         });
     });
 
     describe("BasemapSwitcher methods", () => {
-        it.skip("switchActiveBackgroundLayer", () => {
+        it("switchActiveBackgroundLaye to new layerId", () => {
+            const layerId = "VectorTile";
+
             wrapper = shallowMount(BasemapSwitcherComponent, {
                 global: {
                     plugins: [store]
-                }});
+                }
+            });
+
+            wrapper.vm.switchActiveBackgroundLayer(layerId);
+
+            expect(BasemapSwitcher.actions.updateLayerVisibilityAndZIndex.calledOnce).to.equal(true);
+            expect(store.state.Modules.BasemapSwitcher.topBackgroundLayerId).to.deep.equal(layerId);
+            expect(store.state.Modules.BasemapSwitcher.activatedExpandable).to.equal(false);
         });
+
     });
 });
