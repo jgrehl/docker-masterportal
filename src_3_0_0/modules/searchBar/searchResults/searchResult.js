@@ -43,7 +43,7 @@
                 closeResults: true
             },
             highligtFeature: {
-                coordinates: [],
+                hit: {},
                 closeResults: false
             },
             openGetFeatureInfo: {
