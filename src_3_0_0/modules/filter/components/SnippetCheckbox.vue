@@ -3,6 +3,15 @@ import {translateKeyWithPlausibilityCheck} from "../../../shared/js/utils/transl
 import {getDefaultOperatorBySnippetType} from "../utils/getDefaultOperatorBySnippetType.js";
 import SnippetInfo from "./SnippetInfo.vue";
 
+/**
+* Snippet Checkbox
+* @module modules/SnippetCheckbox
+* @vue-prop {String} attrName - The attribute's name.
+* @vue-prop {Array} adjustment - A list of adjustments.
+* @vue-prop {Boolean} disabled - Shows if the checkbox is disabled.
+* @vue-prop {Array} info - The snippet info.
+* @vue-prop {Array} title - The snippet title.
+*/
 export default {
     name: "SnippetCheckbox",
     components: {
