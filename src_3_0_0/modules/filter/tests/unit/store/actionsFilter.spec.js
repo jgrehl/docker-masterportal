@@ -87,11 +87,13 @@ describe("tools/filter/store/actionsFilter", () => {
         it("serialize the state", done => {
             const rulesOfFilters = state.rulesOfFilters,
                 selectedAccordions = state.selectedAccordions,
+                selectedGroups = state.selectedGroups,
                 geometryFeature = {},
                 geometrySelectorOptions = state.geometrySelectorOptions,
                 result = {
                     rulesOfFilters,
                     selectedAccordions,
+                    selectedGroups,
                     geometryFeature,
                     geometrySelectorOptions
                 },
@@ -124,6 +126,7 @@ describe("tools/filter/store/actionsFilter", () => {
             testAction(deserializeState, payload, state, {}, [
                 {type: "setRulesArray", payload: {rulesOfFilters}, dispatch: true},
                 {type: "setSelectedAccordions", payload: selectedAccordions, commit: true},
+                {type: "setSelectedGroups", payload: [], commit: true},
                 {type: "setGeometryFilterByFeature", payload: {jsonFeature: geometryFeature, invert: true}, dispatch: true},
                 {type: "setGeometrySelectorOptions", payload: geometrySelectorOptions, commit: true},
                 {type: "setAdditionalGeometries", payload: {additionalGeometries}, commit: true}
