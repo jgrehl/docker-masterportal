@@ -1,4 +1,16 @@
 <script>
+
+/**
+* Snippet Tag
+* @module modules/SnippetTag
+* @vue-prop {Boolean} isResetAll - Shows if reset all should be activated.
+* @vue-prop {Number} snippetId - The snippet id.
+* @vue-prop {String} value - Shows if the checkbox is disabled.
+* @vue-event {String} deleteAllRules - Emits delete all rules.
+* @vue-event {Number} deleteRule - Emits rule to delete by id.
+* @vue-event {String} resetAllSnippets - Emits reset.
+* @vue-event {Number} resetSnippet - Emits reset snippet vy id.
+*/
 export default {
     name: "SnippetTag",
     props: {
