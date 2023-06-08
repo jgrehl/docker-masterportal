@@ -27,15 +27,6 @@ export default {
                 @click="interaction"
                 @keydown.enter="interaction"
             >
-                <img
-                    v-if="searchResult.imgPath"
-                    alt="search result image"
-                    src="searchResult.imgPath"
-                >
-                <i
-                    v-if="!searchResult.imgPath"
-                    :class="searchResult.icon"
-                />
                 <span class="btn-title">
                     {{ searchResult.name }}
                 </span>

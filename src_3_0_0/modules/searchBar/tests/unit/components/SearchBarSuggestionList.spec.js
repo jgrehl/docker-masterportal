@@ -103,7 +103,7 @@ describe("src_3_0_0/modules/searchBar/components/SearchBarSuggestionList.vue", (
                     plugins: [store]
                 }
             });
-            expect(wrapper.vm.limitedSortedSearchResults).to.deep.equal({availableCategories: ["Straße", "Adresse"], "StraßeCount": 1, AdresseCount: 1});
+            expect(wrapper.vm.limitedSortedSearchResults).to.deep.equal({availableCategories: ["Straße", "Adresse"], "StraßeCount": 1, "AdresseCount": 1, "AdresseIcon": "bi-signpost", "StraßeIcon": "bi-signpost"});
         });
     });
 });
