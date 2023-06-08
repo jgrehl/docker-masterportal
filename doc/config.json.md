@@ -183,8 +183,8 @@ Search bar configuration.
 |gazetteer|no|**[gazetteer](#markdown-header-portalconfigsearchbargazetteer)**||Gazetteer search service configuration.|false|
 |gdi|no|**[gdi](#markdown-header-portalconfigsearchbargdi)**||GDI (elastic) search service configuration. _Deprecated in 3.0.0. Please use **[elasticSearch](#markdown-header-portalconfigsearchbarelasticsearch)** instead.|false|
 |elasticSearch|no|**[elasticSearch](#markdown-header-portalconfigsearchbarelasticsearch)**||Elastic search service configuration.|false|
-|osm|no|**[osm](#markdown-header-portalconfigsearchbarosm)**||OpenStreetMap (OSM) search service configuration.|false|
 |komootPhoton|no|**[komootPhoton](#markdown-header-portalconfigsearchbarkomootphoton)**||Komoot Photon search service configuration.|false|
+|osmNominatim|no|**[osmNominatim](#markdown-header-portalconfigsearchbarosmnominatim)**||OpenStreetMap (OSM) search service configuration.|false|
 |locationFinder|no|**[locationFinder](#markdown-header-portalconfigsearchbarlocationfinder)**||LocationFinder search service configuration.|false|
 |placeholder|no|String|"Suche"|Input text field placeholder shown when no input has been given yet.|false|
 |recommendedListLength|no|Integer|5|Maximum amount of entries in the suggestion list.|false|
@@ -260,13 +260,12 @@ ProxyPass /bkg_suggest http://sg.geodatenzentrum.de/gdz_geokodierung__[UUID]/sug
 
 ***
 
-#### Portalconfig.searchBar.osm
+#### Portalconfig.searchBar.osmNominatim
 
 OpenStreetMap search for city, street, and house number. Only executed on clicking the search icon or pressing enter since the amount of requests to the OSM search service is limited.
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
-|minChars|no|Number|3|Minimum amount of characters required to start a search.|false|
 |serviceId|yes|String||OSM search service id. Resolved using the **[rest-services.json](rest-services.json.md)** file.|false|
 |limit|no|Number|50|Maximum amount of requested unfiltered results.|false|
 |states|no|string|""|May contain federal state names with arbitrary separators. Names may also be used in English depending on whether the data has been added to the free open source project **[OpenStreetMap](https://www.openstreetmap.org)**.|false|
