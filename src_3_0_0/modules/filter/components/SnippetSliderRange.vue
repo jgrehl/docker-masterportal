@@ -5,6 +5,44 @@ import {translateKeyWithPlausibilityCheck} from "../../../shared/js/utils/transl
 import {getDefaultOperatorBySnippetType} from "../utils/getDefaultOperatorBySnippetType.js";
 import SnippetInfo from "./SnippetInfo.vue";
 
+/**
+* Snippet Slider Range
+* @module modules/SnippetSliderRange
+* @vue-prop {Array} adjustment - The changes made by other snippets that change settings in this snippet. E.g. one snippet changes to "Grundschulen" and other snippets change their min value as a result of the adjustment.
+* @vue-prop {Object} api - The api.
+* @vue-prop {String} attrName - The title and aria label.
+* @vue-prop {Number} decimalPlaces - The amount of decimal places for the slider steps.
+* @vue-prop {Boolean} disabled - Shows if snippet is disabled.
+* @vue-prop {Number} filterId - The filter's id.
+* @vue-prop {Array} fixedRules - The list of foxed rules.
+* @vue-prop {Array} info - The information for the SnippetInfo.
+* @vue-prop {Boolean} isParent - Shows if element is the parent element.
+* @vue-prop {String} operator - (???).
+* @vue-prop {String} prechecked - (???).
+* @vue-prop {Number} snippetId - The snippet id.
+* @vue-prop {Number} timeoutInput - The timeout for the input.
+* @vue-prop {Number} timeoutSlider - The timeout for the slider.
+* @vue-prop {Array} title - The label.
+* @vue-prop {Array} value - The value for the input.
+* @vue-prop {Boolean} visible - Shows if snippet is visible.
+
+* @vue-prop {Number} minValue - The min value for the slider.
+* @vue-prop {Number} maxValue - The max value for the slider.
+* @vue-prop {Number} snippetId - The snippet's id.
+*
+* @vue-data {Number} inputFrom - The from input number.
+* @vue-data {Number} inputUntil - The until input number.
+* @vue-data {Number} sliderFrom - The until slider number.
+* @vue-data {Number} sliderUntil - The until slider number.
+* @vue-data {Number} currentSliderMin - The current slider minimum.
+* @vue-data {Number} currentSliderMax - The current slider maximum.
+*
+* @vue-event {Object} changeRule - Emits the current rule to whoever is listening.
+* @vue-event {Number} deleteRule - Emits the delete rule function to whoever is listening.
+* @vue-event {Number} disableFilterButton - Emits disable filter button function to whoever is listening.
+* @vue-event {Number} enableFilterButton - Emits enable filter button function to whoever is listening.
+* @vue-event {*} setSnippetPrechecked - Emits the setSnippetPrechecked event.
+*/
 export default {
     name: "SnippetSliderRange",
     components: {

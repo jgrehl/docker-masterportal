@@ -1,4 +1,17 @@
 <script>
+
+/**
+ * RoutingSliderInput
+ * @module modules/RoutingSliderInput
+ * @vue-prop {String} label - The label for the input.
+ * @vue-prop {String} value - The value for the input.
+ * @vue-prop {Number} min - The min value for the inputrange.
+ * @vue-prop {Number} max - The max value for the inputrange.
+ * @vue-prop {Number} step - The steps for the inputrange.
+ * @vue-prop {String} unit - The unit for the inputrange label.
+ * @vue-prop {Boolean} disabled - Shows wether the input is disabled.
+ * @vue-event {Number} input - Emits the @input change event.
+ */
 export default {
     name: "RoutingSliderInput",
     props: {

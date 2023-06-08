@@ -1,4 +1,13 @@
 <script>
+
+/**
+ * RoutingDurationDisplay
+ * @module modules/RoutingDurationDisplay
+ * @vue-prop {Number} duration - The duration of the trip.
+ * @vue-computed {Number} minutes - The duration as minutes.
+ * @vue-computed {Number} hours - The duration as hours.
+ * @vue-computed {Number} minutesMinusHours - The remaining minutes in the hour.
+ */
 export default {
     name: "RoutingDurationDisplay",
     props: {
