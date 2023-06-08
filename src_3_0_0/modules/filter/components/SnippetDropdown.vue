@@ -13,6 +13,54 @@ import openlayerFunctions from "../utils/openlayerFunctions.js";
 import layerFactory from "../../../core/layers/js/layerFactory";
 import layerCollection from "../../../core/layers/js/layerCollection";
 
+/**
+* Snippet Dropdown
+* @module modules/SnippetDropdown
+* @vue-prop {Object} api - The api.
+* @vue-prop {String} attrName - The title and aria label.
+* @vue-prop {Array} addSelectAll - (??).
+* @vue-prop {Array} adjustment - The changes made by other snippets that change settings in this snippet. E.g. one snippet changes to "Grundschulen" and other snippets change their min value as a result of the adjustment.
+* @vue-prop {Boolean} autoInit - Shows if automatic initilization is enabled.
+* @vue-prop {Array} localeCompareParams - (???).
+* @vue-prop {String} delimitor - (???).
+* @vue-prop {Boolean} disabled - Shows if snippet is disabled.
+* @vue-prop {String} display - Sets which dates should be displayed.
+* @vue-prop {Number} filterId - The filter's id.
+* @vue-prop {Array} info - The information for the SnippetInfo.
+* @vue-prop {Boolean} isChild - Shows if element is child element.
+* @vue-prop {Boolean} isParent - Shows if element is parent element.
+* @vue-prop {Array} title - The label.
+* @vue-prop {String} layerId - The layer's id.
+* @vue-prop {Boolean} multiselect - Shows if multiselect is enabled.
+* @vue-prop {String} operator - (???).
+* @vue-prop {Number} optionsLimit - The limit for multiselect options.
+* @vue-prop {String} placeholder - The placeholder for the multiselect.
+* @vue-prop {String} prechecked - (???).
+* @vue-prop {Array} renderIcons - The icons to be rendered from the legend.
+* @vue-prop {Array} fixedRules - List of fixed rules.
+* @vue-prop {Number} snippetId - The snippet's id.
+* @vue-prop {Boolean} showAllValues - Shows if all values should be displayed.
+* @vue-prop {String} value - The value for a date.
+* @vue-prop {Boolean} visible - Shows if snippet is visible.
+*
+* @vue-data {Boolean} disable - Shows if snippet is disabled.
+* @vue-data {Boolean} isInitializing - Shows if snippet is initializing.
+* @vue-data {Boolean} isAdjusting - Shows if snippet is adjusting.
+* @vue-data {Array} dropdownValue - The list of values for the dropdown.
+* @vue-data {Array} dropdownSelected - The list of values selected.
+* @vue-data {Object} styleModel - The style model.
+* @vue-data {Array} legendsInfo - The list of information from the legend.
+* @vue-data {Object} iconList - The icons from the legend.
+* @vue-data {Boolean} allSelected - Shows if everything is selected.
+* @vue-data {String} translationKey - The translation key.
+* @vue-data {Array} operatorWhitelist - The operator white list.
+* @vue-data {String} source - The source for the input data.
+* @vue-data {Boolean} allValues - (???)
+*
+* @vue-event {Object} changeRule - Emits the current rule to whoever is listening.
+* @vue-event {Number} deleteRule - Emits the delete rule function to whoever is listening.
+* @vue-event {*} setSnippetPrechecked - Emits the setSnippetPrechecked event.
+*/
 export default {
     name: "SnippetDropdown",
     components: {

@@ -4,6 +4,39 @@ import {translateKeyWithPlausibilityCheck} from "../../../shared/js/utils/transl
 import {getDefaultOperatorBySnippetType} from "../utils/getDefaultOperatorBySnippetType.js";
 import SnippetInfo from "./SnippetInfo.vue";
 
+/**
+* Snippet Slider
+* @module modules/SnippetSlider
+* @vue-prop {Object} api - The api.
+* @vue-prop {String} attrName - The title and aria label.
+* @vue-prop {Array} adjustment - The changes made by other snippets that change settings in this snippet. E.g. one snippet changes to "Grundschulen" and other snippets change their min value as a result of the adjustment.
+* @vue-prop {Number} decimalPlaces - The amount of decimal places for the slider steps.
+* @vue-prop {Boolean} disabled - Shows if snippet is disabled.
+* @vue-prop {Number} filterId - The filter's id.
+* @vue-prop {Array} info - The information for the SnippetInfo.
+* @vue-prop {Boolean} isParent - Shows if element is the parent element.
+* @vue-prop {Array} title - The label.
+* @vue-prop {Number} minValue - The min value for the slider.
+* @vue-prop {Number} maxValue - The max value for the slider.
+* @vue-prop {String} operator - (???).
+* @vue-prop {String} prechecked - (???).
+* @vue-prop {Array} fixedRules - The list of foxed rules.
+* @vue-prop {Number} snippetId - The snippet's id.
+* @vue-prop {Boolean} visible - Shows if snippet is visible.
+*
+* @vue-data {Boolean} disable - Shows if snippet is disabled.
+* @vue-data {Boolean} isInitializing - Shows if snippet is initializing.
+* @vue-data {Boolean} isAdjusting - Shows if snippet is adjusting.
+* @vue-data {Number} minimumValue - The minimum value for the slider.
+* @vue-data {Number} minimumValue - The maximum value for the slider.
+* @vue-data {Number} value - The value for the slider.
+* @vue-data {String} translationKey - The translation key.
+* @vue-data {Array} operatorWhitelist - The operator white list.
+*
+* @vue-event {Object} changeRule - Emits the current rule to whoever is listening.
+* @vue-event {Number} deleteRule - Emits the delete rule function to whoever is listening.
+* @vue-event {*} setSnippetPrechecked - Emits the setSnippetPrechecked event.
+*/
 export default {
     name: "SnippetSlider",
     components: {
