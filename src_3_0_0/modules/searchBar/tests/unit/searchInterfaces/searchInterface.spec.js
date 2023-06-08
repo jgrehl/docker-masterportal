@@ -45,6 +45,15 @@ describe("src/modules/searchBar/searchInterfaces/searchInterface.js", () => {
         });
     });
 
+    describe("abortRequest", () => {
+        it("should abort the AbortController and set currentController to null", () => {
+            SearchInterface1.currentController = new AbortController();
+            SearchInterface1.abortRequest();
+
+            expect(SearchInterface1.currentController).to.be.null;
+        });
+    });
+
     describe("clearSearchResults", () => {
         it("should clear the searchResults array", () => {
             SearchInterface1.searchResults.push("abc");
