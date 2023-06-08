@@ -1,6 +1,18 @@
 <script>
 import SnippetInfo from "./SnippetInfo.vue";
 
+/**
+* Snippet Checkbox Filter In Map Extent
+* @module modules/SnippetCheckboxFilterInMapExtent
+* @vue-prop {Number} filterId - The filter's id.
+* @vue-prop {Array} info - The info for the SnippetInfo.
+* @vue-prop {Boolean} preselected - Shows if checkbox is pre-checked.
+*
+* @vue-data {Boolean} checked - Shows if checkbox is checked.
+* @vue-data {String} translationKey - The translation key for the SnippetInfo.
+*
+* @vue-event {*} commandChanged - Emits the changed command with a value.
+*/
 export default {
     name: "SnippetCheckboxFilterInMapExtent",
     components: {

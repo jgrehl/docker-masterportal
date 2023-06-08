@@ -5,6 +5,13 @@ import * as constantsRouting from "../store/constantsRouting";
 import RoutingLoadingSpinner from "./RoutingLoadingSpinner.vue";
 import store from "../../../app-store/index";
 
+/**
+ * RoutingTemplate
+ * @module modules/RoutingTemplate
+ * @vue-data {*} constantsRouting - The constants.
+ *
+ * @vue-computed {Object} activeRoutingToolOptionComponent - The current component for the active tab.
+ */
 export default {
     name: "RoutingTemplate",
     components: {

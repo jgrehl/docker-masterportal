@@ -1,4 +1,10 @@
 <script>
+/**
+ * Routing Batch Processing Checkbox
+ * @module modules/RoutingBatchProcessingCheckbox
+ * @vue-prop {Object} batchProcessing - The batch processing status.
+ * @vue-event {Boolean} input - Emits checked value on changed input.
+ */
 export default {
     name: "RoutingBatchProcessingCheckbox",
     props: {
