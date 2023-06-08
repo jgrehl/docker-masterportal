@@ -134,7 +134,10 @@ SearchInterfaceKomootPhoton.prototype.createDisplayName = function (searchResult
     let displayName = "";
 
     for (const [key, value] of Object.entries(displayAttributes)) {
-        if (typeof properties[key] !== "undefined") {
+        if (key === "street" && typeof properties.name === "undefined") {
+            displayName = displayName + properties[key];
+        }
+        else if (typeof properties[key] !== "undefined") {
             displayName = displayName + value + properties[key];
         }
         else if (key === "city" && typeof properties.county !== "undefined") {
