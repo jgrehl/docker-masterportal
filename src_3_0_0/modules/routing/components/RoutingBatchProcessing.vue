@@ -1,4 +1,21 @@
 <script>
+
+/**
+ * Routing Batch Processing
+ * @module modules/RoutingBatchProcessing
+ * @vue-prop {Object} settings - The settings for the element.
+ * @vue-prop {Number} progress - The progress for the progress bar.
+ * @vue-prop {Boolean} isProcessing - Shows if processing is active.
+ * @vue-prop {String} structureText - The structure text.
+ * @vue-prop {String} exampleText - The example text.
+ *
+ * @vue-data {Boolean} dzIsDropHovering - Shows if hovering over the dropzone is active.
+ *
+ * @vue-computed {String} dropZoneAdditionalClass - The additional class for the drop zone.
+ *
+ * @vue-event {String} cancelProcess - Emits function to cancel the process.
+ * @vue-event {File[]} filesadded - Emits function to add files.
+ */
 export default {
     name: "RoutingBatchProcessing",
     props: {
