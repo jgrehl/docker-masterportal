@@ -121,6 +121,7 @@ export default {
             result = {
                 rulesOfFilters,
                 selectedAccordions,
+                selectedGroups,
                 geometryFeature,
                 geometrySelectorOptions
             };
