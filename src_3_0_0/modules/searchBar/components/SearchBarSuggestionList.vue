@@ -29,12 +29,19 @@ export default {
                 for (const [index, value] of Object.entries(this.searchResults)) {
                     if (value.searchInterfaceId === key) {
                         results[value.category + "Count"] = results[value.category + "Count"] === undefined ? 1 : ++results[value.category + "Count"];
+
                         if (results.availableCategories.includes(value.category) === false) {
                             results.availableCategories.push(value.category);
                         }
                         if (results[value.category + "Count"] <= this.suggestionListLength) {
                             results[index] = value;
                             this.addSuggestionItem(value);
+                        }
+                        if (value.imgPath) {
+                            results[value.category + "ImgPath"] = value.imgPath;
+                        }
+                        if (value.icon) {
+                            results[value.category + "Icon"] = value.icon;
                         }
                     }
                 }
@@ -61,6 +68,16 @@ export default {
                 id="search-bar-suggestion-heading"
                 class="bold mb-4 mt-4"
             >
+                <img
+                    v-if="limitedSortedSearchResults[category+'ImgPath']"
+                    alt="search result image"
+                    src="searchResult.imgPath"
+                >
+                <i
+                    v-if="!limitedSortedSearchResults[category+'ImgPath']"
+                    :class="limitedSortedSearchResults[category+'Icon']"
+                />
+
                 {{ category +": " + limitedSortedSearchResults[category+"Count"] + "    " + $t("common:modules.searchbar.searchResults") }}
             </h5>
             <div
