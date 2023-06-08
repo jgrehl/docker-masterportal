@@ -1,5 +1,17 @@
 <script>
 import * as constantsRouting from "../store/constantsRouting";
+
+/**
+ * Routing Avoid Features
+ * @module modules/RoutingAvoidFeatures
+ * @vue-prop {Array} activeAvoidFeaturesOptions - Th elist of the options.
+ * @vue-prop {Object} settings - The settings for the element.
+ * @vue-prop {Boolean} disabled - Shows if element is disabled.
+ * @vue-data {Boolean} showAvoidFeatures - Shows if avoid features are visible.
+ * @vue-computed {Object} avoidSpeedProfileOptions - The options to display with the current active speed profile.
+ * @vue-event {Number} addAvoidOption - Emits function to add avoid option.
+ * @vue-event {Number} removeAvoidOption - Emits function to remove avoid option.
+ */
 export default {
     name: "RoutingAvoidFeatures",
     props: {
