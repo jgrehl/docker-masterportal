@@ -6,6 +6,16 @@ import convertFeaturesToKml from "../../../shared/js/utils/convertFeaturesToKml.
 import directionsRouteStyle from "../js/map/directions/route/directionsRouteStyle";
 import Feature from "ol/Feature";
 
+/**
+ * RoutingDownload
+ * @module modules/RoutingDownload
+ * @vue-prop {Boolean} hideGpx - Shows if GPW format is hidden.
+ *
+ * @vue-data {*} constants - The constants.
+ *
+ * @vue-computed {Boolean} isDisabled - Shows if download button should be disabled.
+ * @vue-computed {String[]} downloadFormatOptions - The format options.
+ */
 export default {
     name: "RoutingDownload",
     props: {

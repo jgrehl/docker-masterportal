@@ -12,6 +12,41 @@ dayjs.extend(isSameOrAfter);
 dayjs.extend(isSameOrBefore);
 dayjs.extend(customParseFormat);
 
+/**
+* Snippet Date
+* @module modules/SnippetDate
+* @vue-prop {Object} api - The api.
+* @vue-prop {String} attrName - The title and aria label.
+* @vue-prop {Array} adjustment - The changes made by other snippets that change settings in this snippet. E.g. one snippet changes to "Grundschulen" and other snippets change their min value as a result of the adjustment.
+* @vue-prop {Boolean} disabled - Shows if snippet is disabled.
+* @vue-prop {Array} info - The information for the SnippetInfo.
+* @vue-prop {Boolean} isParent - Shows if element is a parent element.
+* @vue-prop {String} format - The date format.
+* @vue-prop {Number} filterId - The filter's id.
+* @vue-prop {Array} title - The label.
+* @vue-prop {String} maxValue - The max value for a date.
+* @vue-prop {String} minValue - The min value for a date.
+* @vue-prop {String} operator - (???).
+* @vue-prop {String} prechecked - (???).
+* @vue-prop {Array} fixedRules - List of fixed rules.
+* @vue-prop {Number} snippetId - The snippet's id.
+* @vue-prop {Boolean} visible - Shows if snippet is visible.
+*
+* @vue-data {Boolean} disable - Shows if snippet is disabled.
+* @vue-data {String} internalFormat - The internal date format.
+* @vue-data {Boolean} isInitializing - Shows if snippet is initializing.
+* @vue-data {Boolean} isAdjusting - Shows if snippet is adjusting.
+* @vue-data {String} minimumValue - The minimum value for the date.
+* @vue-data {String} maximumValue - The maximum value for the date.
+* @vue-data {String} value - The value for the date.
+* @vue-data {Boolean} precheckedIsValid - Shows if prechecked key is valid.
+* @vue-data {String} translationKey - The translation key.
+* @vue-data {Array} operatorWhitelist - The operator white list.
+*
+* @vue-event {Object} changeRule - Emits the current rule to whoever is listening.
+* @vue-event {Number} deleteRule - Emits the delete rule function to whoever is listening.
+* @vue-event {*} setSnippetPrechecked - Emits the setSnippetPrechecked event.
+*/
 export default {
     name: "SnippetDate",
     components: {
