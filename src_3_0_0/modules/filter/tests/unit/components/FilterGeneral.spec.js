@@ -7,7 +7,7 @@ import sinon from "sinon";
 
 config.global.mocks.$t = key => key;
 
-describe.only("src/modules/filter/components/FilterGeneral.vue", () => {
+describe("src/modules/filter/components/FilterGeneral.vue", () => {
     let wrapper, store;
 
     const layers = [
