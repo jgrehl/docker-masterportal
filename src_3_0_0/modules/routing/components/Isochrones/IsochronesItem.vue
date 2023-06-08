@@ -12,6 +12,15 @@ import RoutingBatchProcessingCheckbox from "../RoutingBatchProcessingCheckbox.vu
 import RoutingSpeedProfileIcon from "../RoutingSpeedProfileIcon.vue";
 import RoutingAvoidFeatures from "../RoutingAvoidFeatures.vue";
 
+/**
+ * DirectionsItemBatchProcessing
+ * @module modules/DirectionsItemBatchProcessing
+ * @vue-data {*} constants - The constants isochrones.
+ * @vue-data {*} constantsRouting - The constants routing.
+ * @vue-computed {Number} currentValue - The distance/time value for the current active slider.
+ * @vue-computed {Number} maxIntervalValue - The maximum value for the interval slider.
+ * @vue-computed {Number} minIntervalValue - The minimum value for the interval slider.
+ */
 export default {
     name: "IsochronesItem",
     components: {
