@@ -290,7 +290,7 @@ Suche bei **[Komoot Photon](https://photon.komoot.io/)**.
     "lang": "de",
     "lat": 52.5,
     "lon": 13.4,
-    "bbox": "12.5,52.05,14.05,52.75",
+    "bbox": "12.5,52.05,14.05,52.75"
 }
 ```
 
