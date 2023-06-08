@@ -6,6 +6,19 @@ import isObject from "../../../shared/js/utils/isObject";
 import {GeoJSON} from "ol/format.js";
 import Feature from "ol/Feature";
 
+/**
+* Snippet Download
+* @module modules/SnippetDownload
+* @vue-prop {Array} filteredItems - The lost of filtered items.
+* @vue-prop {String} layerId - The layer id.
+*
+* @vue-data {Boolean} enableFileDownload - Shows if file download is enabled.
+* @vue-data {Boolean} showDownload - Shows if download is visible.
+* @vue-data {Array} formats - List of availabe formats.
+* @vue-data {String} selectedFormat - The selected format.
+* @vue-data {String} filename - The chosen filename.
+* @vue-data {String} json - The json data for the geoJSON export.
+*/
 export default {
     name: "SnippetDownload",
     components: {
