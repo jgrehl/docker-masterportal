@@ -122,6 +122,12 @@
             "lon": 10.0,
             "bbox": "9.6,53.3,10.4,53.8"
           },
+          "osmNominatim": {
+            "serviceId": "10",
+            "limit": 60,
+            "states": "Hamburg",
+            "classes": "place,highway,building,shop,historic,leisure,city,county"
+          },
           "exampleSearch": {}
         }
       },
