@@ -3,6 +3,14 @@ import {mapActions, mapGetters, mapMutations} from "vuex";
 import RoutingBatchProcessing from "../RoutingBatchProcessing.vue";
 import {RoutingTaskHandler} from "../../js/classes/routing-task-handler";
 
+
+/**
+ * DirectionsItemBatchProcessing
+ * @module modules/DirectionsItemBatchProcessing
+ * @vue-prop {Object} settings - The settings.
+ * @vue-data {Boolean} isProcessing - Shows if files are being processed.
+ * @vue-data {Number} countFailed - The failed attempts fo get directions.
+ */
 export default {
     name: "DirectionsItemBatchProcessing",
     components: {
