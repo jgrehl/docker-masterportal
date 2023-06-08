@@ -79,7 +79,7 @@ SearchInterface.prototype.search = function () {
  * @returns {void}
  */
 SearchInterface.prototype.abortRequest = function () {
-    if (typeof this.currentController === AbortController) {
+    if (this.currentController instanceof AbortController) {
         this.searchState = "aborted";
         this.currentController.abort();
         this.currentController = null;
