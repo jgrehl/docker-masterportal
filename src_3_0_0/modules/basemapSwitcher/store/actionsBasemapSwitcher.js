@@ -18,8 +18,8 @@ const actions = {
                 showInLayerTree: true
             }).map(layer => layer.zIndex));
         let backgroundLayerZIndex = maxBackgroundLayerZIndex + 1,
-            addToZIndex = 0,
-            zIndex = rootGetters.determineZIndex(layerId) + addToZIndex;
+            zIndex = rootGetters.determineZIndex(layerId);
+
 
         if (rootGetters.isBackgroundLayer(layerId)) {
             dispatch("updateLayerConfigZIndex", {
@@ -27,9 +27,6 @@ const actions = {
                 maxZIndex: maxBackgroundLayerZIndex
             }, {root: true});
             zIndex = backgroundLayerZIndex++;
-        }
-        else {
-            addToZIndex++;
         }
 
         layerConfigs.push({
