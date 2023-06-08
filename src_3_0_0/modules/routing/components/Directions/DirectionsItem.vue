@@ -14,6 +14,15 @@ import RoutingAvoidFeatures from "../RoutingAvoidFeatures.vue";
 import * as constants from "../../store/directions/constantsDirections";
 import * as constantsRouting from "../../store/constantsRouting";
 
+
+/**
+ * DirectionsItem
+ * @module modules/DirectionsItem
+ * @vue-data {*} constants - The constants direction.
+ * @vue-data {*} constantsRouting - The constants routing.
+ * @vue-computed {Boolean} isMapInteractionModeAvoidAreasEdit - Shows if current map mode is "AVOID_AREAS".
+ * @vue-computed {Boolean} isMapInteractionModeAvoidAreasDelete - Shows if current map mode is "DELETE_AVOID_AREAS".
+ */
 export default {
     name: "DirectionsItem",
     components: {
