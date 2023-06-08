@@ -2,6 +2,25 @@
 import {mapActions} from "vuex";
 import {RoutingGeosearchResult} from "../js/classes/routing-geosearch-result";
 
+/**
+ * RoutingCoordinateInput
+ * @module modules/RoutingCoordinateInput
+ * @vue-prop {Object} waypoint - The waypoints.
+ * @vue-prop {Number} countWaypoints - The number of waypoints.
+ *
+ * @vue-data {String} search - The waypoints display name.
+ * @vue-data {Boolean} awaitingSearch - Shows if search is awaited.
+ * @vue-data {Array} searchResults - The list of search results.
+ * @vue-data {Boolean} ignoreNextSearchChange - Shows if the next change of the search should be ignored.
+ * @vue-data {Boolean} isFocused - Shows if input is focused.
+ *
+ * @vue-computed {String} waypointDisplayName - The waypoint display name.
+ *
+ * @vue-event {String} moveWaypointDown - Emits function to move waypoint down.
+ * @vue-event {String} moveWaypointUp - Emits function to move waypoint up.
+ * @vue-event {String} searchResultSelected - Emits function to select search result.
+ * @vue-event {Boolean} removeWaypoint - Emits function to remove waypoint.
+ */
 export default {
     name: "RoutingCoordinateInput",
     props: {

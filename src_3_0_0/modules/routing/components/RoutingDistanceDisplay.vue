@@ -1,5 +1,17 @@
 <script>
 import thousandsSeparator from "../../../shared/js/utils/thousandsSeparator";
+
+/**
+ * RoutingDistanceDisplay
+ * @module modules/RoutingDistanceDisplay
+ * @vue-prop {Number} distance - The distance.
+ *
+ * @vue-data {String} mText - The unit text for meter.
+ * @vue-data {String} kmText - The unit text for kilometer.
+ *
+ * @vue-computed {Number} roundedDistance - The rounded distance.
+ * @vue-computed {Number} kmDistance - The distance in km.
+ */
 export default {
     name: "RoutingDistanceDisplay",
     props: {
