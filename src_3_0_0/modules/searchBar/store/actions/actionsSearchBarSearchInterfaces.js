@@ -5,6 +5,7 @@ import SearchInterfaceElasticSearch from "../../searchInterfaces/searchInterface
 import SearchInterfaceGazetteer from "../../searchInterfaces/searchInterfaceGazetteer";
 import SearchInterfaceKomootPhoton from "../../searchInterfaces/searchInterfaceKomootPhoton";
 import SearchInterfaceLocationFinder from "../../searchInterfaces/searchInterfaceLocationFinder";
+import SearchInterfaceOsmNominatim from "../../searchInterfaces/searchInterfaceOsmNominatim";
 import SearchInterfaceTopicTree from "../../searchInterfaces/searchInterfaceTopicTree";
 import SearchInterfaceVisibleVector from "../../searchInterfaces/searchInterfaceVisibleVector";
 
@@ -23,6 +24,7 @@ export default {
             gazetteer: SearchInterfaceGazetteer,
             komootPhoton: SearchInterfaceKomootPhoton,
             locationFinder: SearchInterfaceLocationFinder,
+            osmNominatim: SearchInterfaceOsmNominatim,
             topicTree: SearchInterfaceTopicTree,
             visibleVector: SearchInterfaceVisibleVector
         };
