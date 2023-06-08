@@ -1,4 +1,8 @@
 <script>
+/**
+ * RoutingLoadingSpinner
+ * @module modules/RoutingLoadingSpinner.
+ */
 export default {
     name: "RoutingLoadingSpinner"
 };

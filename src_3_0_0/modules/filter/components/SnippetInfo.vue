@@ -1,6 +1,13 @@
 <script>
 import {translateKeyWithPlausibilityCheck} from "../../../shared/js/utils/translateKeyWithPlausibilityCheck.js";
 
+/**
+* Snippet Info
+* @module modules/SnippetInfo
+* @vue-prop {Array} info - The information to display.
+* @vue-prop {String} translationKey - The translation key.
+* @vue-data {Boolean} showInfo - Shows if the info should be displayed.
+*/
 export default {
     name: "SnippetInfo",
     props: {
