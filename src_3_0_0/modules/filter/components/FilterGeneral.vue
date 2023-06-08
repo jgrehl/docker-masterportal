@@ -35,7 +35,6 @@ export default {
                 getLayers: openlayerFunctions.getLayers
             }),
             layerConfigs: [],
-            selectedLayerGroups: [],
             preparedLayerGroups: [],
             flattenPreparedLayerGroups: [],
             layerLoaded: {},
@@ -99,7 +98,6 @@ export default {
             "updateFilterHits"
         ]),
 
-
         /**
          * Gets the features of the additional geometries by the given layer id.
          * @param {Object[]} additionalGeometries - The additional geometries.
@@ -125,14 +123,16 @@ export default {
          * @returns {void}
          */
         updateSelectedLayerGroups (layerGroupIndex) {
-            const index = this.selectedLayerGroups.indexOf(layerGroupIndex);
+            const selectedGroups = JSON.parse(JSON.stringify(this.selectedGroups)),
+                index = selectedGroups.indexOf(layerGroupIndex);
 
             if (index >= 0) {
-                this.selectedLayerGroups.splice(index, 1);
+                selectedGroups.splice(index, 1);
             }
             else {
-                this.selectedLayerGroups.push(layerGroupIndex);
+                selectedGroups.push(layerGroupIndex);
             }
+            this.setSelectedGroups(selectedGroups);
         },
         /**
          * Update selectedAccordions array in groups.
@@ -140,7 +140,10 @@ export default {
          * @returns {void|undefined} returns undefinied, if filterIds is not an array and not a number.
          */
         updateSelectedAccordions (filterId) {
-            let selectedFilterIds = [];
+            const selectedGroups = JSON.parse(JSON.stringify(this.selectedGroups)),
+                filterIdsOfAccordions = [];
+            let selectedFilterIds = [],
+                selectedAccordionIndex = -1;
 
             if (!this.multiLayerSelector) {
                 selectedFilterIds = this.selectedAccordions.some(accordion => accordion.filterId === filterId) ? [] : [filterId];
@@ -148,17 +151,16 @@ export default {
                 return;
             }
             this.preparedLayerGroups.forEach((layerGroup, groupIdx) => {
-                if (layerGroup.layers.some(layer => layer.filterId === filterId) && !this.selectedLayerGroups.includes(groupIdx)) {
-                    this.selectedLayerGroups.push(groupIdx);
+                if (layerGroup.layers.some(layer => layer.filterId === filterId) && !this.selectedGroups.includes(groupIdx)) {
+                    selectedGroups.push(groupIdx);
                 }
             });
 
-            const filterIdsOfAccordions = [],
-                index = this.selectedAccordions.findIndex(accordion => accordion.filterId === filterId);
+            selectedAccordionIndex = this.selectedAccordions.findIndex(accordion => accordion.filterId === filterId);
 
             this.selectedAccordions.forEach(accordion => filterIdsOfAccordions.push(accordion.filterId));
-            if (index >= 0) {
-                filterIdsOfAccordions.splice(index, 1);
+            if (selectedAccordionIndex >= 0) {
+                filterIdsOfAccordions.splice(selectedAccordionIndex, 1);
             }
             else {
                 filterIdsOfAccordions.push(filterId);
@@ -297,12 +299,12 @@ export default {
                                 data-toggle="collapse"
                                 data-parent="#accordion"
                                 tabindex="0"
-                                @click="updateSelectedLayerGroups(layerGroups.indexOf(layerGroup))"
-                                @keydown.enter="updateSelectedLayerGroups(layerGroups.indexOf(layerGroup))"
+                                @click="updateSelectedGroups(layerGroups.indexOf(layerGroup))"
+                                @keydown.enter="updateSelectedGroups(layerGroups.indexOf(layerGroup))"
                             >
                                 {{ layerGroup.title ? layerGroup.title : key }}
                                 <span
-                                    v-if="!selectedLayerGroups.includes(layerGroups.indexOf(layerGroup))"
+                                    v-if="!selectedGroups.includes(layerGroups.indexOf(layerGroup))"
                                     class="bi bi-chevron-down float-end"
                                 />
                                 <span
@@ -313,7 +315,7 @@ export default {
                         </h2>
                         <div
                             role="tabpanel"
-                            :class="['accordion-collapse', 'collapse', selectedLayerGroups.includes(layerGroups.indexOf(layerGroup)) ? 'show' : '']"
+                            :class="['accordion-collapse', 'collapse', selectedGroups.includes(layerGroups.indexOf(layerGroup)) ? 'show' : '']"
                         >
                             <FilterList
                                 v-if="Array.isArray(preparedLayerGroups) && preparedLayerGroups.length && layerSelectorVisible"
