@@ -7,7 +7,7 @@ import sinon from "sinon";
 
 config.global.mocks.$t = key => key;
 
-describe("src/modules/filter/components/FilterGeneral.vue", () => {
+describe.only("src/modules/filter/components/FilterGeneral.vue", () => {
     let wrapper, store;
 
     const layers = [
@@ -75,11 +75,26 @@ describe("src/modules/filter/components/FilterGeneral.vue", () => {
     it("should render and open one accordion if its selected", async () => {
         wrapper.vm.setLayerGroups(groups);
         wrapper.vm.setLayerSelectorVisible(true);
-        await wrapper.setData({
-            selectedLayerGroups: [0]
-        });
+        wrapper.vm.setSelectedGroups([0]);
+        await wrapper.vm.$nextTick();
 
         expect(wrapper.find(".show").exists()).to.be.true;
         expect(wrapper.findAll(".show")).to.have.lengthOf(1);
+    });
+    describe("updateSelectedGroups", () => {
+        it("should remove given index from selectedGroups if found in array", async () => {
+            wrapper.vm.setSelectedGroups([0, 1]);
+            await wrapper.vm.$nextTick();
+            wrapper.vm.updateSelectedLayerGroups(0);
+            await wrapper.vm.$nextTick();
+            expect(wrapper.vm.selectedGroups).to.deep.equal([1]);
+        });
+        it("should add given index to selectedGroups if not found in array", async () => {
+            wrapper.vm.setSelectedGroups([0]);
+            await wrapper.vm.$nextTick();
+            wrapper.vm.updateSelectedLayerGroups(1);
+            await wrapper.vm.$nextTick();
+            expect(wrapper.vm.selectedGroups).to.deep.equal([0, 1]);
+        });
     });
 });
