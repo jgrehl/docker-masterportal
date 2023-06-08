@@ -36,6 +36,8 @@ SearchInterfaceVisibleVector.prototype = Object.create(SearchInterface.prototype
  * @returns {void}
  */
 SearchInterfaceVisibleVector.prototype.search = async function (searchInput) {
+    this.searchState = "running";
+
     const vectorLayerTypes = layerFactory.getVectorLayerTypes(),
         visibleVectorLayerConfigs = store.getters.visibleLayerConfigs.filter(layerConfig => {
             return vectorLayerTypes.includes(layerConfig.typ) && layerConfig.searchField && layerConfig.searchField !== "";
@@ -44,6 +46,7 @@ SearchInterfaceVisibleVector.prototype.search = async function (searchInput) {
 
     this.pushHitsToSearchResults(foundFeatures);
 
+    this.searchState = "finished";
     return this.searchResults;
 };
 
