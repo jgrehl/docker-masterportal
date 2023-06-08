@@ -76,6 +76,17 @@ describe("src/modules/searchBar/store/actions/actionsSearchBarSearchResult.spec.
     describe("setMarker", () => {
         it("setMarker", () => {
             setMarker();
+        it("sets the MapMarker with coordinates as string", done => {
+            // action, payload, state, rootState, expectedMutationsAndActions, getters = {}, done, rootGetters
+            testAction(setMarker, ["1234", "65432"], {}, {}, [
+                {type: "Maps/placingPointMarker", payload: [1234, 65432], dispatch: true}
+            ], {}, done);
+        });
+        it("sets the MapMarker with coordinates as number", done => {
+            // action, payload, state, rootState, expectedMutationsAndActions, getters = {}, done, rootGetters
+            testAction(setMarker, [1234, 65432], {}, {}, [
+                {type: "Maps/placingPointMarker", payload: [1234, 65432], dispatch: true}
+            ], {}, done);
         });
     });
 });
