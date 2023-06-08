@@ -195,6 +195,31 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceKomootPhot
 
             expect(SearchInterface1.createDisplayName(searchResults[0])).to.equals("ABC-Straße, 20354 Hamburg - Neustadt");
         });
+
+        it("should create the display name for search result with city, if name is undefined", () => {
+            const searchResult = {
+                geometry: {
+                    coordinates: [9.9862834, 53.55527],
+                    type: "Point"
+                },
+                properties: {
+                    city: "Hamburg",
+                    country: "Deutschland",
+                    countrycode: "DE",
+                    district: "Neustadt",
+                    housenumber: "10",
+                    osm_id: 3169287750,
+                    osm_key: "place",
+                    osm_type: "N",
+                    osm_value: "house",
+                    postcode: "20354",
+                    street: "Neue ABC-Straße",
+                    type: "house"
+                }
+            };
+
+            expect(SearchInterface1.createDisplayName(searchResult)).to.equals("Neue ABC-Straße 10, 20354 Hamburg - Neustadt");
+        });
     });
 
     describe("createToolTipName", () => {
