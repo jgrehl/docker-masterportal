@@ -29,12 +29,15 @@ SearchInterfaceTopicTree.prototype = Object.create(SearchInterface.prototype);
  * @returns {void}
  */
 SearchInterfaceTopicTree.prototype.search = async function (searchInput) {
+    this.searchState = "running";
+
     const searchInputRegExp = this.createRegExp(searchInput),
         foundLayers = this.searchInLayers(store.getters.allLayerConfigs, searchInputRegExp),
         foundFolders = this.searchInFolders(store.getters.layerConfig, searchInputRegExp);
 
     this.pushHitsToSearchResults(foundLayers.concat(foundFolders));
 
+    this.searchState = "finished";
     return this.searchResults;
 };
 
