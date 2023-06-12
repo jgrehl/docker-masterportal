@@ -670,14 +670,14 @@
       "name": "Переключить масштаб"
     },
     "searchBar": {
-      "locationFinder": {
-        "errorMsg": "Поиск через LocationFinder не удался",
-        "serverError": "Ошибка во время обработки запроса на стороне сервера",
-        "unknownProjection": "Результаты в неизвестной системе координат"
-      },
       "placeholder": {
+        "addressHospitalBplan": "Поиск по адресу/больнице/плану",
+        "addressTopicParcel": "Поиск адрес, район, субъект, земельный участок",
+        "addressTopic": "Поиск адрес, район, темы",
         "address": "Поиск по адресу"
       },
+      "showAllResults": "Показать все результаты",
+      "searchResults": "результаты поиска",
       "type": {
         "address": "Адрес",
         "district": "Район",
@@ -686,7 +686,9 @@
         "street": "Улица",
         "subject": "Тема (внешние тематические данные)",
         "topic": "Тема (тематические данные)"
-      }
+      },
+      "noInitialResults": "Первоначальный поиск не дал результатов.",
+      "showAll": "Показать все"
     },
     "selectFeatures": {
       "name": "Выбор объектов",
