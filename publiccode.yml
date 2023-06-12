@@ -2,7 +2,7 @@
 # metadata file that makes public software easily discoverable.
 # More info at https://github.com/italia/publiccode.yml
 
-publiccodeYmlVersion: '0.2'
+publiccodeYmlVersion: '0.3'
 categories:
   - geographic-information-systems
 description:
@@ -82,8 +82,8 @@ maintenance:
 name: Masterportal
 platforms:
   - web
-releaseDate: '2023-06-07'
+releaseDate: '2023-06-12'
 roadmap: 'https://www.masterportal.org/features.html'
 softwareType: standalone/web
-softwareVersion: 2.34.0
+softwareVersion: 2.34.1
 url: 'https://bitbucket.org/geowerkstatt-hamburg/masterportal.git'
