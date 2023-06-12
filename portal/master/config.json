@@ -743,6 +743,7 @@
           "loadingStrategy": "bbox",
           "typ": "WFS",
           "visibility": true,
+          "gfiTheme" : "schulinfo",
           "showInLayerTree": true,
           "mouseHoverField": [
             "schulname",
