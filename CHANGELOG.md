@@ -3,6 +3,16 @@
 
 [Semantic versioning](https://semver.org/spec/v2.0.0.html) is used.
 
+## v2.34.1 - 2023-06-12
+### Changed
+- The following NPM packages have been updated:
+  - dependencies:
+    - @masterportal/masterportalapi: 2.19.0 to 2.19.2
+### Fixed
+- VectorStyle of multiple geometries with styling rules does not fail on not existing style. (fix within masterportalapi)
+
+---
+
 ## v2.34.0 - 2023-06-07
 ### __Breaking Changes__
 - The Virtual City Planner tool (virtualcityPLANNER) has been removed
