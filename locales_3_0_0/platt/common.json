@@ -694,6 +694,27 @@
       "propertylessFeature": "Element ohne Attribute",
       "zoomToFeature": "Auf dieses Feature zoomen"
     },
+    "searchbar": {
+      "placeholder": {
+          "addressHospitalBplan": "Suche nach Adresse/Krankenhaus/B-Plan",
+          "addressTopicParcel": "Sök Adress, Stadtdeel, Themen, Flurstück",
+          "addressTopic": "Sök Adress, Stadtdeel, Themen",
+          "address": "Sök na Adress"
+      },
+      "showAllResults": "alle Ergebnisse anzeigen",
+      "searchResults": "Suchergebnisse",
+      "type": {
+          "street": "Stroat",
+          "district": "Stadtdeel",
+          "parcel": "Flurstück",
+          "address": "Adress",
+          "location": "Ort",
+          "subject": "Thema (externe Fachdaten)",
+          "topic": "Thema (Fachdaten)"
+      },
+      "noInitialResults": "Die initiale Suche ergab keine Treffer.",
+      "showAll": "Alle anzeigen"
+    },
     "shadow": {
       "name": "Scheem",
       "pickDate": "",
