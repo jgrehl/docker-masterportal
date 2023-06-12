@@ -670,11 +670,6 @@
       "name": "Modificar escala"
     },
     "searchBar": {
-      "locationFinder": {
-        "errorMsg": "A pesquisa através do LocationFinder falhou",
-        "serverError": "Erro durante o processamento do pedido do lado do servidor",
-        "unknownProjection": "Resultados em sistema de coordenadas desconhecidas"
-      },
       "placeholder": {
         "address": "Pesquisa por endereço"
       },
@@ -693,6 +688,27 @@
       "noFeatureChosen": "Nenhuma funcionalidade seleccionada. Seleccione as funcionalidades segurando Ctrl e arrastando uma caixa em torno das funcionalidades.",
       "propertylessFeature": "Elemento sem atributos",
       "zoomToFeature": "Zoom a esta funcionalidade"
+    },
+    "searchbar": {
+      "placeholder": {
+          "addressHospitalBplan": "Pesquisa por endereço/hospital/B-Plan(Plano de desenvolvimento)",
+          "addressTopicParcel": "Pesquisa endereço, bairro, tópicos, parcela",
+          "address": "Pesquisa por endereço"
+      },
+      "showAllResults": "mostrar todos os resultados",
+      "searchResults": "Procurar Resultados",
+      "type": {
+          "street": "Rua",
+          "district": "Bairro",
+          "parcel": "Parcela",
+          "address": "Endereço",
+          "location": "Localização",
+          "subject": "Assunto",
+          "topic": "Tópico",
+          "general": "Tópico"
+      },
+      "noInitialResults": "A pesquisa inicial não resultou em nenhum acerto.",
+      "showAll": "Mostre tudo"
     },
     "shadow": {
       "name": "Sombra",
