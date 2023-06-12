@@ -694,6 +694,28 @@
       "propertylessFeature": "Özniteliksiz ögeler",
       "zoomToFeature": "Lütfen bu özelliği büyütün"
     },
+    "searchbar": {
+      "placeholder": {
+          "addressHospitalBplan": "Adres/Hastane/B-Planı ile arama yapın",
+          "addressTopicParcel": "Adres,Bölge,Konu,Parsel ara",
+          "addressTopic": "Adres, semt, konu ara",
+          "address": "Adrese göre ara"
+      },
+      "showAllResults": "Tüm sonuçları göster",
+      "searchResults": "Arama Sonuçları",
+      "type": {
+          "street": "Sokak",
+          "district": "Semt",
+          "parcel": "Parsel alan",
+          "address": "Adres",
+          "location": "Yer",
+          "subject": "Teknik konu",
+          "topic": "Konu",
+          "general": "Konu"
+      },
+      "noInitialResults": "İlk arama sonuç vermedi.",
+      "showAll": "Hepsini Göster"
+    },
     "shadow": {
       "name": "gölge",
       "pickDate": "",
