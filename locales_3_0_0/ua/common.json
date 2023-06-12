@@ -694,6 +694,28 @@
       "propertylessFeature": "Елемент без атрибутів",
       "zoomToFeature": "збільшити зображення об'єкта (Feature) "
     },
+    "searchbar": {
+      "placeholder": {
+          "addressHospitalBplan": "Пошук адреси/лікарні/B-Plan",
+          "addressTopicParcel": "Пошук адреси, району, теми, ділянки",
+          "addressTopic": "Пошук адреси, району,теми",
+          "address": "Пошук за адресою"
+      },
+      "showAllResults": "Показати всі результати",
+      "searchResults": "Результати пошуку",
+      "type": {
+          "street": "Вулиця",
+          "district": "Район",
+          "parcel": "Земельна ділянка",
+          "address": "Адреса",
+          "location": "Місце",
+          "subject": "Тема (зовнішні спеціалізовані дані)",
+          "topic": "Тема (спеціалізовані дані)",
+          "general": "Спеціалізовані дані"
+      },
+      "noInitialResults": "Початковий пошук не виявив збігів.",
+      "showAll": "Покажи все"
+    },
     "shadow": {
       "name": "Тінь",
       "pickDate": "",
