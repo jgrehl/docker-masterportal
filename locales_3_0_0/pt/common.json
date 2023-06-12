@@ -669,20 +669,6 @@
       "label": "Escala",
       "name": "Modificar escala"
     },
-    "searchBar": {
-      "placeholder": {
-        "address": "Pesquisa por endereço"
-      },
-      "type": {
-        "address": "Endereço",
-        "district": "Bairro",
-        "parcel": "Parcela",
-        "folder": "",
-        "street": "Rua",
-        "subject": "Assunto",
-        "topic": "Tópico"
-      }
-    },
     "selectFeatures": {
       "name": "Selecione recursos",
       "noFeatureChosen": "Nenhuma funcionalidade seleccionada. Seleccione as funcionalidades segurando Ctrl e arrastando uma caixa em torno das funcionalidades.",
