@@ -15,10 +15,12 @@ const {
 
 describe("src_3_0_0/core/maps/store/actionsMapsInteractionsZoom.js", () => {
     let dispatch,
-        map2d;
+        map2d,
+        setRotationSpy;
 
     beforeEach(() => {
         dispatch = sinon.spy();
+        setRotationSpy = sinon.spy();
 
         mapCollection.clear();
         map2d = new Map({
@@ -31,6 +33,7 @@ describe("src_3_0_0/core/maps/store/actionsMapsInteractionsZoom.js", () => {
             })
         });
 
+        map2d.getView().setRotation = setRotationSpy;
         mapCollection.addMap(map2d, "2D");
     });
 
@@ -154,6 +157,7 @@ describe("src_3_0_0/core/maps/store/actionsMapsInteractionsZoom.js", () => {
             zoomToCoordinates({dispatch}, {center, zoom});
 
             expect(dispatch.notCalled).to.be.true;
+            expect(setRotationSpy.notCalled).to.be.true;
         });
 
         it("should only set center if zoom is undefined", () => {
@@ -165,6 +169,7 @@ describe("src_3_0_0/core/maps/store/actionsMapsInteractionsZoom.js", () => {
             expect(dispatch.calledOnce).to.be.true;
             expect(dispatch.firstCall.args[0]).to.equals("setCenter");
             expect(dispatch.firstCall.args[1]).to.be.deep.equals(center);
+            expect(setRotationSpy.notCalled).to.be.true;
         });
 
         it("should only set zoom if center is undefined", () => {
@@ -176,6 +181,7 @@ describe("src_3_0_0/core/maps/store/actionsMapsInteractionsZoom.js", () => {
             expect(dispatch.calledOnce).to.be.true;
             expect(dispatch.firstCall.args[0]).to.equals("setZoom");
             expect(dispatch.firstCall.args[1]).to.be.equals(zoom);
+            expect(setRotationSpy.notCalled).to.be.true;
         });
 
         it("should set the zoom level to the map view", () => {
@@ -189,6 +195,23 @@ describe("src_3_0_0/core/maps/store/actionsMapsInteractionsZoom.js", () => {
             expect(dispatch.firstCall.args[1]).to.be.deep.equals(center);
             expect(dispatch.secondCall.args[0]).to.equals("setZoom");
             expect(dispatch.secondCall.args[1]).to.be.equals(zoom);
+            expect(setRotationSpy.notCalled).to.be.true;
+        });
+
+        it("should set the zoom level to the map view and rotate", () => {
+            const center = [1, 2],
+                zoom = 10,
+                rotation = 1;
+
+            zoomToCoordinates({dispatch}, {center, zoom, rotation});
+
+            expect(dispatch.calledTwice).to.be.true;
+            expect(dispatch.firstCall.args[0]).to.equals("setCenter");
+            expect(dispatch.firstCall.args[1]).to.be.deep.equals(center);
+            expect(dispatch.secondCall.args[0]).to.equals("setZoom");
+            expect(dispatch.secondCall.args[1]).to.be.equals(zoom);
+            expect(setRotationSpy.calledOnce).to.be.true;
+            expect(setRotationSpy.firstCall.args[0]).to.equals(rotation);
         });
     });
 
