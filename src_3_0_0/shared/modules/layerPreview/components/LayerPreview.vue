@@ -67,25 +67,13 @@ export default {
         ...mapGetters("Modules/LayerPreview", ["previewCenter", "previewZoomLevel"])
 
     },
+    watch: {
+        layerId () {
+            this.generatePreviewUrlByConfigType();
+        }
+    },
     mounted () {
-        const layerConfig = this.layerConfigById(this.layerId);
-
-        if (layerConfig && this.supportedLayerTyps.includes(layerConfig.typ)) {
-            this.initialize({id: this.layerId, center: this.center, zoomLevel: this.zoomLevel});
-            this.layerName = layerConfig.name;
-            if (layerConfig.typ === "WMS") {
-                this.buildWMSUrl(layerConfig);
-            }
-            else if (layerConfig.typ === "WMTS") {
-                this.buildWMTSUrl(layerConfig);
-            }
-            else if (layerConfig.typ === "VectorTile") {
-                this.buildVectorTileUrl(layerConfig);
-            }
-        }
-        else {
-            console.warn("Layer for preview cannot be found:", this.layerId);
-        }
+        this.generatePreviewUrlByConfigType();
     },
     methods: {
         ...mapActions("Modules/LayerPreview", [
@@ -123,6 +111,7 @@ export default {
                     url += `&${key}=${encodeURIComponent(value)}`;
                 }
             });
+
             this.previewUrl = url;
         },
 
@@ -196,8 +185,30 @@ export default {
          * @returns {void}
          */
         clicked () {
-            if (this.checkable) {
-                this.$emit("previewClicked");
+            this.$emit("previewClicked");
+        },
+
+        /*
+         * Generates the previewUrl depending on layerConfig type
+         */
+        generatePreviewUrlByConfigType () {
+            const layerConfig = this.layerConfigById(this.layerId);
+
+            if (layerConfig && this.supportedLayerTyps.includes(layerConfig.typ)) {
+                this.initialize({id: this.layerId, center: this.center, zoomLevel: this.zoomLevel});
+                this.layerName = layerConfig.name;
+                if (layerConfig.typ === "WMS") {
+                    this.buildWMSUrl(layerConfig);
+                }
+                else if (layerConfig.typ === "WMTS") {
+                    this.buildWMTSUrl(layerConfig);
+                }
+                else if (layerConfig.typ === "VectorTile") {
+                    this.buildVectorTileUrl(layerConfig);
+                }
+            }
+            else {
+                console.warn("Layer for preview cannot be found:", this.layerId);
             }
         }
     }

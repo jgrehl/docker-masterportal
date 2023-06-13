@@ -248,4 +248,23 @@ describe("src_3_0_0/modules/layerPreview/components/LayerPreview.vue", () => {
         expect(wrapper.findAll(".customCSSClass").length).to.be.equals(3);
     });
 
+    it("generates new previewUrl if layerId changes", () => {
+        const props = {
+                layerId: "VectorTile"
+            },
+            generatePreviewUrlByConfigTypeSpy = sinon.spy(LayerPreviewComponent.methods, "generatePreviewUrlByConfigType");
+
+
+        wrapper = shallowMount(LayerPreviewComponent, {
+            global: {
+                plugins: [store]
+            },
+            props: props
+        });
+        wrapper.vm.$options.watch.layerId.call(wrapper.vm, props.layerId);
+
+        // called Twice: once in mounted and then in this watcher
+        expect(generatePreviewUrlByConfigTypeSpy.calledTwice).to.equal(true);
+    });
+
 });
