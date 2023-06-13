@@ -1,8 +1,12 @@
 <script>
 import {mapActions, mapGetters, mapMutations} from "vuex";
+import LayerPreview from "../../../shared/modules/layerPreview/components/LayerPreview.vue";
 
 export default {
     name: "BasemapSwitcher",
+    components: {
+        LayerPreview
+    },
     computed: {
         ...mapGetters([
             "isMobile",
@@ -18,10 +22,18 @@ export default {
     },
     watch: {
         visibleBackgroundLayerConfigs: {
-            handler (newVal) {
-                const zIndex = [];
+            handler (newVal, oldVal) {
+                const allBackgroundLayerIds = this.backgroundLayerIds,
+                    zIndex = [];
                 let maxZIndex = null,
                     topLayer = null;
+
+                if (newVal.length === 0) {
+                    if (!allBackgroundLayerIds.includes(oldVal[0].id)) {
+                        allBackgroundLayerIds.push(oldVal[0].id);
+                    }
+                    this.setBackgroundLayerIds(allBackgroundLayerIds);
+                }
 
                 newVal.forEach((val) => {
                     zIndex.push(val.zIndex);
@@ -118,32 +130,39 @@ export default {
     >
         <ul>
             <li
-                v-for="(layer) in backgroundLayerIds"
-                :key="layer"
+                v-for="(layerId) in backgroundLayerIds"
+                :key="layerId"
             >
                 <button
                     v-if="activatedExpandable === true"
                     id="bs-expanded"
-                    class="btn btn-light"
-                    @click="switchActiveBackgroundLayer(layer)"
+                    class="btn btn-light preview"
+                    @click="switchActiveBackgroundLayer(layerId)"
                 >
-                    {{ layer }}
+                    <LayerPreview
+                        :id="'layer-tree-layer-preview-' + layerId"
+                        :layer-id="layerId"
+                    />
                 </button>
             </li>
             <button
                 v-if="topBackgroundLayerId === undefined"
                 id="bs-placeholder"
-                class="btn btn-light"
+                class="btn btn-light preview"
                 @click="setActivatedExpandable(!activatedExpandable)"
             >
                 Choose Map
             </button>
             <button
+                v-else
                 id="bs-topBackgroundLayer"
-                class="btn btn-light"
+                class="btn btn-light preview"
                 @click="setActivatedExpandable(!activatedExpandable)"
             >
-                {{ topBackgroundLayerId }}
+                <LayerPreview
+                    :id="'layer-tree-layer-preview-' + topBackgroundLayerId"
+                    :layer-id="topBackgroundLayerId"
+                />
             </button>
         </ul>
     </div>
@@ -168,5 +187,9 @@ export default {
         list-style-type: none;
         padding: 0;
         margin: 0;
+    }
+    .preview {
+        padding: 0px;
+        margin: 5px;
     }
 </style>
