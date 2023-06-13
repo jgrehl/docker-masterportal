@@ -189,4 +189,106 @@ describe("src/modules/tools/filter/components/LayerFilterSnippet.vue", () => {
             expect(wrapper.findComponent(SnippetDownload).exists()).to.be.true;
         });
     });
+
+    describe("labelFilterButton", () => {
+        it("should render correct name for label filter button", async () => {
+            await wrapper.setData({
+                layerConfig: {
+                    labelFilterButton: "common:modules.filter.filterButton"
+                }
+            });
+            await wrapper.vm.$nextTick();
+            expect(wrapper.find("button").text()).to.equal("common:modules.filter.filterButton");
+        });
+    });
+    it("should render SnippetTags if rules are given", async () => {
+        const rules = [
+            {
+                snippetId: 1,
+                startup: false,
+                fixed: false,
+                attrName: "test",
+                operator: "EQ"
+            },
+            {
+                snippetId: 2,
+                startup: false,
+                fixed: false,
+                attrName: "testing",
+                operator: "EQ"
+            }
+        ];
+
+        await wrapper.setProps({
+            filterRules: rules
+        });
+        expect(wrapper.find(".snippetTagsWrapper").exists()).to.be.true;
+        expect(wrapper.findAll(".snippetTagsWrapper")).to.have.lengthOf(3);
+    });
+    it("should render amount of filtered items", async () => {
+        await wrapper.setData({
+            amountOfFilteredItems: 3
+        });
+        await wrapper.vm.$nextTick();
+        expect(wrapper.find(".filter-result").exists()).to.be.true;
+        expect(wrapper.find(".filter-result").text()).contain("common:modules.filter.filterResult.unit");
+    });
+    describe("setSnippetValueByState", async () => {
+        await wrapper.setData({
+            snippets
+        });
+        const filterRules = [
+                {
+                    snippetId: 0,
+                    startup: false,
+                    fixed: false,
+                    attrName: "test",
+                    operator: "EQ",
+                    value: ["Altona"]
+                }
+            ],
+            snippets = [
+                {
+                    operator: "EQ",
+                    snippetId: 0,
+                    title: "Bezirk",
+                    type: "dropdown",
+                    value: ["Altona"]
+                }],
+            precheckedSnippets = [{
+                operator: "EQ",
+                snippetId: 0,
+                title: "Bezirk",
+                type: "dropdown",
+                value: ["Altona"],
+                prechecked: ["Altona"]
+            }];
+
+        it("should not set prechecked value if param is not an array", () => {
+            wrapper.vm.setSnippetValueByState(undefined);
+            wrapper.vm.setSnippetValueByState(null);
+            wrapper.vm.setSnippetValueByState(123456);
+            wrapper.vm.setSnippetValueByState("string");
+            wrapper.vm.setSnippetValueByState(true);
+            wrapper.vm.setSnippetValueByState({});
+            expect(wrapper.vm.snippets).to.deep.equal(snippets);
+        });
+        it("should not set prechecked value if given structure is not a rule", () => {
+            const isRuleStub = sinon.stub(LayerFilterSnippet, "isRule").returns(false),
+                noRule = [
+                    {
+                        something: "something"
+                    }
+                ];
+
+            wrapper.vm.setSnippetValueByState(noRule);
+            expect(wrapper.vm.snippets).to.deep.equal(snippets);
+            expect(isRuleStub.called).to.be.true;
+            sinon.restore();
+        });
+        it("should set prechecked value if correct filter rule is given", () => {
+            wrapper.vm.setSnippetValueByState(filterRules);
+            expect(wrapper.vm.snippets).to.deep.equal(precheckedSnippets);
+        });
+    });
 });
