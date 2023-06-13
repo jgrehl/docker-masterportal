@@ -6,6 +6,12 @@ import LightButton from "../../../shared/modules/buttons/components/LightButton.
 
 /**
  * Representation of a node in layertree containing folders or layers.
+ * @module modules/LayerSelectionTreeNode
+ * @vue-prop {Object} conf - The current configuration.
+ * @vue-prop {Boolean} showSelectAllCheckBox - Shows if SelectAllCheckBox is rendered.
+ * @vue-prop {Array} selectAllConfigs - The layer-configurations controlled by SelectAllCheckBox.
+ * @vue-computed {Boolean} isFolder - Shows if configurated type is folder.
+ * @vue-computed {Boolean} isLayer - Shows if configurated type is layer.
  */
 export default {
     name: "LayerSelectionTreeNode",
