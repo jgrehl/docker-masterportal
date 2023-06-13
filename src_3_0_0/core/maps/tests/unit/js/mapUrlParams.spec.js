@@ -51,7 +51,8 @@ describe("src_3_0_0/core/maps/js/mapUrlParams.js", () => {
             expect(dispatchCalls["Maps/changeMapMode"]).to.equals("2D");
             expect(dispatchCalls["Maps/zoomToCoordinates"]).to.deep.equals({
                 center: [571278.4429867676, 5938534.397334521],
-                zoom: 7
+                zoom: 7,
+                rotation: undefined
             });
         });
 
@@ -71,7 +72,8 @@ describe("src_3_0_0/core/maps/js/mapUrlParams.js", () => {
             expect(dispatchCalls["Maps/changeMapMode"]).to.equals("3D");
             expect(dispatchCalls["Maps/zoomToCoordinates"]).to.deep.equals({
                 center: [571278.4429867676, 5938534.397334521],
-                zoom: 7
+                zoom: 7,
+                rotation: undefined
             });
         });
     });
@@ -195,7 +197,8 @@ describe("src_3_0_0/core/maps/js/mapUrlParams.js", () => {
             expect(Object.keys(dispatchCalls).length).to.equals(1);
             expect(dispatchCalls["Maps/zoomToCoordinates"]).to.deep.equals({
                 center: [1, 2],
-                zoom: undefined
+                zoom: undefined,
+                rotation: undefined
             });
         });
 
@@ -210,7 +213,8 @@ describe("src_3_0_0/core/maps/js/mapUrlParams.js", () => {
             expect(Object.keys(dispatchCalls).length).to.equals(1);
             expect(dispatchCalls["Maps/zoomToCoordinates"]).to.deep.equals({
                 center: [1, 2],
-                zoom: undefined
+                zoom: undefined,
+                rotation: undefined
             });
         });
 
@@ -361,19 +365,20 @@ describe("src_3_0_0/core/maps/js/mapUrlParams.js", () => {
         });
     });
 
-    describe("setView", () => {
+    describe("zoomToCoordinates", () => {
         it("set ZOOMLEVEL and CENTER to map view", () => {
             const params = {
                 CENTER: "553925,5931898",
                 ZOOMLEVEL: 0
             };
 
-            mapUrlParams.setView(params);
+            mapUrlParams.zoomToCoordinates(params);
 
             expect(Object.keys(dispatchCalls).length).to.equals(1);
             expect(dispatchCalls["Maps/zoomToCoordinates"]).to.deep.equals({
                 center: ["553925", "5931898"],
-                zoom: 0
+                zoom: 0,
+                rotation: undefined
             });
         });
 
@@ -383,12 +388,13 @@ describe("src_3_0_0/core/maps/js/mapUrlParams.js", () => {
                 "MAP/ZOOMLEVEL": 0
             };
 
-            mapUrlParams.setView(params);
+            mapUrlParams.zoomToCoordinates(params);
 
             expect(Object.keys(dispatchCalls).length).to.equals(1);
             expect(dispatchCalls["Maps/zoomToCoordinates"]).to.deep.equals({
                 center: ["553925", "5931898"],
-                zoom: 0
+                zoom: 0,
+                rotation: undefined
             });
         });
 
@@ -397,12 +403,13 @@ describe("src_3_0_0/core/maps/js/mapUrlParams.js", () => {
                 "MAP/CENTER": "[553925,5931898]"
             };
 
-            mapUrlParams.setView(params);
+            mapUrlParams.zoomToCoordinates(params);
 
             expect(Object.keys(dispatchCalls).length).to.equals(1);
             expect(dispatchCalls["Maps/zoomToCoordinates"]).to.deep.equals({
                 center: [553925, 5931898],
-                zoom: undefined
+                zoom: undefined,
+                rotation: undefined
             });
         });
 
@@ -411,12 +418,13 @@ describe("src_3_0_0/core/maps/js/mapUrlParams.js", () => {
                 CENTER: "[553925,5931898]"
             };
 
-            mapUrlParams.setView(params);
+            mapUrlParams.zoomToCoordinates(params);
 
             expect(Object.keys(dispatchCalls).length).to.equals(1);
             expect(dispatchCalls["Maps/zoomToCoordinates"]).to.deep.equals({
                 center: [553925, 5931898],
-                zoom: undefined
+                zoom: undefined,
+                rotation: undefined
             });
         });
     });
