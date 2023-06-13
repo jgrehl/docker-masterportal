@@ -3,6 +3,9 @@ import {mapGetters, mapMutations} from "vuex";
 
 /**
  * A Checkbox to select all layers at one time.
+ * @module modules/SelectAllCheckBox
+ * @vue-prop {Array} confs - The current layer configurations controlled by this checkbox.
+ * @vue-data {Boolean} checked - Shows if checkbox is checked.
  */
 export default {
     name: "SelectAllCheckBox",
