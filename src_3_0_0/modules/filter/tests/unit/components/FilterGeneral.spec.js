@@ -12,13 +12,16 @@ describe("src/modules/filter/components/FilterGeneral.vue", () => {
 
     const layers = [
             {
-                title: "layerOne"
+                title: "layerOne",
+                layerId: "1234"
             },
             {
-                title: "layerTwo"
+                title: "layerTwo",
+                layerId: "4321"
             },
             {
-                title: "layerThree"
+                title: "layerThree",
+                layerId: "5678"
             }
         ],
         groups = [{layers, title: "groupOne"}, {layers, title: "groupTwo"}];
@@ -95,6 +98,58 @@ describe("src/modules/filter/components/FilterGeneral.vue", () => {
             wrapper.vm.updateSelectedLayerGroups(1);
             await wrapper.vm.$nextTick();
             expect(wrapper.vm.selectedGroups).to.deep.equal([0, 1]);
+        });
+    });
+    describe("updateSelectedAccordions", () => {
+        it("should add filterIds to selectedAccordion if multiLayerSelector is false", async () => {
+            await wrapper.setData({
+                layerConfigs: {
+                    multiLayerSelector: false
+                }
+            });
+            const expected = [
+                {
+                    filterId: 0,
+                    layerId: "1234"
+                }
+            ];
+
+            wrapper.vm.updateSelectedAccordions(0);
+            expect(wrapper.vm.selectedAccordions).to.deep.equal(expected);
+        });
+        it("should remove filterIds from selectedAccordion if multiLayerSelector is false", async () => {
+            await wrapper.setData({
+                layerConfigs: {
+                    multiLayerSelector: false
+                }
+            });
+            wrapper.vm.updateSelectedAccordions(0);
+            expect(wrapper.vm.selectedAccordions).to.deep.equal([]);
+        });
+        it("should not change the rule when adding and removing the filterId of selectedAccordion", async () => {
+            await wrapper.setData({
+                layerConfigs: {
+                    multiLayerSelector: true
+                }
+            });
+            const rule = [
+                {
+                    snippetId: 0,
+                    startup: false,
+                    fixed: false,
+                    attrName: "test",
+                    operator: "EQ",
+                    value: ["Altona"]
+                }
+            ];
+
+            wrapper.vm.setRulesOfFilters({
+                rulesOfFilters: rule
+            });
+            wrapper.vm.updateSelectedAccordions(0);
+            expect(wrapper.vm.rulesOfFilters).to.deep.equal(rule);
+            wrapper.vm.updateSelectedAccordions(0);
+            expect(wrapper.vm.rulesOfFilters).to.deep.equal(rule);
         });
     });
 });
