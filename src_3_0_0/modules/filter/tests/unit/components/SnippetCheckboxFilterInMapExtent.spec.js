@@ -19,4 +19,13 @@ describe("src/modules/tools/filter/components/SnippetCheckboxFilterInMapExtent.v
         expect(wrapper.find("input").classes("snippetCheckbox")).to.be.true;
         expect(wrapper.find(".snippetCheckbox").element.checked).to.be.equal(false);
     });
+
+    it("should emit the correct function after click on the checkbox", async () => {
+        const checkbox = wrapper.find(".snippetCheckbox");
+
+        checkbox.trigger("click");
+        await wrapper.vm.$nextTick();
+
+        expect(wrapper.emitted()).to.have.key("click");
+    });
 });
