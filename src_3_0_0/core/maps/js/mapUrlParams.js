@@ -53,24 +53,24 @@ const mapUrlParams = {
         ATTRIBUTEQUERY: highlightFeaturesByAttributes,
         ATTRIBUTEVALUE: highlightFeaturesByAttributes,
         BEZIRK: zoomToFeatures,
-        CENTER: setView,
+        CENTER: zoomToCoordinates,
         FEATUREID: zoomToFeatures,
         HEADING: setCamera,
         MAP: setMode,
         MAPMARKER: setMapMarker,
         MAPMODE: setMode,
-        "MAP/CENTER": setView,
+        "MAP/CENTER": zoomToCoordinates,
         "MAP/HIGHLIGHTFEATURE": highlightFeature,
         "MAP/MAPMODE": setMode,
         "MAP/PROJECTION": processProjection,
-        "MAP/ZOOMLEVEL": setView,
+        "MAP/ZOOMLEVEL": zoomToCoordinates,
         "MAP/ZOOMTOEXTENT": zoomToProjExtent,
         "MAP/ZOOMTOFEATUREID": zoomToFeatures,
         "MAP/ZOOMTOGEOMETRY": zoomToFeatures,
         PROJECTION: processProjection,
         TILT: setCamera,
         WFSID: highlightFeaturesByAttributes,
-        ZOOMLEVEL: setView
+        ZOOMLEVEL: zoomToCoordinates
     };
 
 /**
@@ -93,7 +93,7 @@ function setMapAttributes (params) {
 
     setCamera(mapsParams);
     setMode(mapsParams);
-    setView(mapsParams);
+    zoomToCoordinates(mapsParams);
 }
 
 /**
@@ -160,7 +160,7 @@ function highlightFeaturesByAttributes (params) {
  */
 function processProjection (params) {
     if (params.CENTER || params["MAP/CENTER"]) {
-        setView(params);
+        zoomToCoordinates(params);
     }
     if (params.MARKER || params.MAPMARKER) {
         setMapMarker(params);
@@ -216,11 +216,11 @@ function setMode (params) {
 }
 
 /**
- * Sets the view params.
+ * Sets the view params zoom, center and rotation.
  * @param {Object} params The found params.
  * @returns {void}
  */
-function setView (params) {
+function zoomToCoordinates (params) {
     const projection = params.PROJECTION || params["MAP/PROJECTION"];
     let center = params.CENTER || params["MAP/CENTER"];
 
@@ -235,7 +235,8 @@ function setView (params) {
 
     store.dispatch("Maps/zoomToCoordinates", {
         center: projection ? crs.transformToMapProjection(mapCollection.getMap("2D"), projection, center) : center,
-        zoom: params.ZOOM ?? params.ZOOMLEVEL ?? params["MAP/ZOOMLEVEL"]
+        zoom: params.ZOOM ?? params.ZOOMLEVEL ?? params["MAP/ZOOMLEVEL"],
+        rotation: params.ROTATION
     });
 }
 
@@ -274,7 +275,7 @@ export default {
     setMapMarker,
     setCamera,
     setMode,
-    setView,
+    zoomToCoordinates,
     zoomToFeatures,
     zoomToProjExtent
 };
