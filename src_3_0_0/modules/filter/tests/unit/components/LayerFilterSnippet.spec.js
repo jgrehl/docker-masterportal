@@ -1,6 +1,7 @@
 import {config, shallowMount} from "@vue/test-utils";
 import LayerFilterSnippet from "../../../components/LayerFilterSnippet.vue";
 import SnippetDownload from "../../../components/SnippetDownload.vue";
+import SnippetCheckboxFilterInMapExtent from "../../../components/SnippetCheckboxFilterInMapExtent.vue";
 import {expect} from "chai";
 import MapHandler from "../../../utils/mapHandler.js";
 import openlayerFunctions from "../../../utils/openlayerFunctions.js";
@@ -53,6 +54,24 @@ describe("src/modules/tools/filter/components/LayerFilterSnippet.vue", () => {
             expect(wrapper.vm.searchInMapExtent).to.be.false;
             wrapper.vm.setSearchInMapExtent(true);
             expect(wrapper.vm.searchInMapExtent).to.be.true;
+        });
+    });
+    describe("renderCheckboxSearchInMapExtent", () => {
+        it("Should render the checkbox component correctly", () => {
+            wrapper = shallowMount(LayerFilterSnippet, {
+                propsData: {
+                    layerConfig: {
+                        service: {
+                            type: "something external"
+                        },
+                        searchInMapExtent: true
+                    },
+                    mapHandler: new MapHandler({
+                        isLayerActivated: () => false
+                    })
+                }
+            });
+            expect(wrapper.findComponent(SnippetCheckboxFilterInMapExtent).exists()).to.be.true;
         });
     });
     it("should call handleActiveStrategy if strategy is active", async () => {
