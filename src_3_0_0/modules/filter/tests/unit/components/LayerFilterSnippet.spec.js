@@ -251,6 +251,97 @@ describe("src/modules/tools/filter/components/LayerFilterSnippet.vue", () => {
         await wrapper.vm.$nextTick();
         expect(wrapper.find(".filter-result").exists()).to.be.true;
         expect(wrapper.find(".filter-result").text()).contain("common:modules.filter.filterResult.unit");
+
+        it("should not render amount of filtered items if showHits is false", async () => {
+            await wrapper.setData({
+                amountOfFilteredItems: 3,
+                layerConfig: {
+                    showHits: false
+                }
+            });
+            await wrapper.vm.$nextTick();
+            expect(wrapper.find(".filter-result").exists()).to.be.false;
+        });
+        it("should render amount of filtered items if showHits is true", async () => {
+            await wrapper.setData({
+                amountOfFilteredItems: 3,
+                layerConfig: {
+                    showHits: true
+                }
+            });
+            await wrapper.vm.$nextTick();
+            expect(wrapper.find(".filter-result").exists()).to.be.true;
+            expect(wrapper.find(".filter-result").text()).contain("modules.tools.filter.filterResult.unit", "3");
+        });
+        it("should render amount of filtered items if showHits is undefined", async () => {
+            await wrapper.setData({
+                amountOfFilteredItems: 3,
+                layerConfig: {
+                    showHits: undefined
+                }
+            });
+            await wrapper.vm.$nextTick();
+            expect(wrapper.find(".filter-result").exists()).to.be.true;
+            expect(wrapper.find(".filter-result").text()).contain("modules.tools.filter.filterResult.unit", "3");
+        });
+        describe("setSnippetValueByState", async () => {
+            await wrapper.setData({
+                snippets
+            });
+            const filterRules = [
+                    {
+                        snippetId: 0,
+                        startup: false,
+                        fixed: false,
+                        attrName: "test",
+                        operator: "EQ",
+                        value: ["Altona"]
+                    }
+                ],
+                snippets = [
+                    {
+                        operator: "EQ",
+                        snippetId: 0,
+                        title: "Bezirk",
+                        type: "dropdown",
+                        value: ["Altona"]
+                    }],
+                precheckedSnippets = [{
+                    operator: "EQ",
+                    snippetId: 0,
+                    title: "Bezirk",
+                    type: "dropdown",
+                    value: ["Altona"],
+                    prechecked: ["Altona"]
+                }];
+
+            it("should not set prechecked value if param is not an array", () => {
+                wrapper.vm.setSnippetValueByState(undefined);
+                wrapper.vm.setSnippetValueByState(null);
+                wrapper.vm.setSnippetValueByState(123456);
+                wrapper.vm.setSnippetValueByState("string");
+                wrapper.vm.setSnippetValueByState(true);
+                wrapper.vm.setSnippetValueByState({});
+                expect(wrapper.vm.snippets).to.deep.equal(snippets);
+            });
+            it("should not set prechecked value if given structure is not a rule", () => {
+                const isRuleStub = sinon.stub(LayerFilterSnippet, "isRule").returns(false),
+                    noRule = [
+                        {
+                            something: "something"
+                        }
+                    ];
+
+                wrapper.vm.setSnippetValueByState(noRule);
+                expect(wrapper.vm.snippets).to.deep.equal(snippets);
+                expect(isRuleStub.called).to.be.true;
+                sinon.restore();
+            });
+            it("should set prechecked value if correct filter rule is given", () => {
+                wrapper.vm.setSnippetValueByState(filterRules);
+                expect(wrapper.vm.snippets).to.deep.equal(precheckedSnippets);
+            });
+        });
     });
     describe("setSnippetValueByState", async () => {
         await wrapper.setData({
