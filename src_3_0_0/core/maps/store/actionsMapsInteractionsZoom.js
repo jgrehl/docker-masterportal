@@ -43,17 +43,21 @@ export default {
 
 
     /**
-     * Zooms to the given coordinates.
+     * Zooms to the given coordinates and rotates view if rotation is given.
      * @param {Object} param store context
      * @param {Object} param.dispatch the dispatch
      * @param {Object} payload parameter object
      * @param {Number[]} payload.center center of the view
      * @param {Number} payload.zoom zoom of the view
+     * @param {Number} payload.rotation rotation of the view
      * @returns {void}
      */
-    zoomToCoordinates ({dispatch}, {center, zoom}) {
+    zoomToCoordinates ({dispatch}, {center, zoom, rotation}) {
         if (Array.isArray(center)) {
             dispatch("setCenter", center);
+        }
+        if (rotation !== undefined) {
+            mapCollection.getMapView("2D").setRotation(rotation);
         }
         if (zoom !== undefined) {
             dispatch("setZoom", zoom);
