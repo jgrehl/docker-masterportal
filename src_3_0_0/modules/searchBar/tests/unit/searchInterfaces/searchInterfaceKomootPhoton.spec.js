@@ -112,7 +112,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceKomootPhot
                                     2
                                 ]
                             },
-                            zoomToFeature: {
+                            zoomToResult: {
                                 closeResults: true,
                                 coordinates: [
                                     1,
@@ -152,7 +152,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceKomootPhot
                                 2
                             ]
                         },
-                        zoomToFeature: {
+                        zoomToResult: {
                             closeResults: true,
                             coordinates: [
                                 1,
@@ -239,7 +239,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceKomootPhot
                         closeResults: true,
                         coordinates: [1, 2]
                     },
-                    zoomToFeature: {
+                    zoomToResult: {
                         closeResults: true,
                         coordinates: [1, 2]
                     }
