@@ -118,8 +118,7 @@ describe("src_3_0_0/modules/BasemapSwitcher.vue", () => {
             });
 
             expect(wrapper.find("#basemap-switcher").exists()).to.be.true;
-            expect(wrapper.find("#bs-topBackgroundLayer").exists()).to.be.true;
-            expect(wrapper.find("#bs-topBackgroundLayer").text()).to.equal(store.state.Modules.BasemapSwitcher.topBackgroundLayerId);
+            expect(wrapper.find("#layer-tree-layer-preview-" + store.state.Modules.BasemapSwitcher.topBackgroundLayerId).exists()).to.be.true;
         });
         it("placeholder is shown as preview", () => {
             store.commit("setLayerConfigsByAttributes", [
@@ -159,7 +158,8 @@ describe("src_3_0_0/modules/BasemapSwitcher.vue", () => {
             expect(store.state.Modules.BasemapSwitcher.topBackgroundLayerId).to.equal("WMTS");
         });
         it("visibleBackgroundLayerConfigs with no selected backgroundLayer", () => {
-            const newValue = [];
+            const newValue = [],
+                oldValue = [{id: "453", visibility: true, backgroundLayer: true, showInLayerTree: true, zIndex: 1}];
 
             wrapper = shallowMount(BasemapSwitcherComponent, {
                 global: {
@@ -167,7 +167,7 @@ describe("src_3_0_0/modules/BasemapSwitcher.vue", () => {
                 }
             });
 
-            wrapper.vm.$options.watch.visibleBackgroundLayerConfigs.handler.call(wrapper.vm, newValue);
+            wrapper.vm.$options.watch.visibleBackgroundLayerConfigs.handler.call(wrapper.vm, newValue, oldValue);
             expect(store.state.Modules.BasemapSwitcher.topBackgroundLayerId).to.equal(undefined);
         });
     });
