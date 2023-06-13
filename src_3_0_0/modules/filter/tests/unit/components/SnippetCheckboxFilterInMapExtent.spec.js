@@ -28,4 +28,18 @@ describe("src/modules/tools/filter/components/SnippetCheckboxFilterInMapExtent.v
 
         expect(wrapper.emitted()).to.have.key("click");
     });
+    it("should not render SnippetInfo if info is false", async () => {
+        await wrapper.setProps({
+            info: false
+        });
+        await wrapper.vm.$nextTick();
+
+        expect(wrapper.find(".right").exists()).to.be.false;
+    });
+    it("should render SnippetInfo if info text is given", async () => {
+        await wrapper.setProps({
+            info: "Test"
+        });
+        expect(wrapper.find(".right").exists()).to.be.true;
+    });
 });
