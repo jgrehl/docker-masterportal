@@ -3,10 +3,10 @@ import {mapActions, mapGetters, mapMutations} from "vuex";
 import LayerPreview from "../../../shared/modules/layerPreview/components/LayerPreview.vue";
 
 /**
- * Representation of a layer in layerTree.
+ * Displays a checkbox to select a layer in layertree.
  * @module modules/LayerCheckBox
  * @vue-prop {Object} conf - The current layer configuration.
- * @vue-prop {Boolean} isLayerTree - Shows if parent is layer tree.
+ * @vue-prop {Boolean} isLayerTree - Shows if parent is layer tree (true) or layer selection (false).
  * @vue-computed {Boolean} isLayerVisible - Returns the value of layerConf's attribute visibility.
  */
 export default {
