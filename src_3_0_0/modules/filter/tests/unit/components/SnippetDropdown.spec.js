@@ -105,6 +105,20 @@ describe("src/modules/tools/filter/components/SnippetDropdown.vue", () => {
 
             expect(wrapper.vm.securedOperator).to.not.be.equal("operator");
         });
+        it("should only set the dropdown values based on the given values", async () => {
+            wrapper = shallowMount(SnippetDropdown, {
+                propsData: {
+                    value: ["Altona", "Eimsbüttel", "Bergedorf"],
+                    dropdownValue: []
+                }
+            });
+            await wrapper.vm.$nextTick();
+            await wrapper.vm.$nextTick();
+            await wrapper.vm.$nextTick();
+            await wrapper.vm.$nextTick();
+            await wrapper.vm.$nextTick();
+            expect(wrapper.vm.dropdownValue).to.deep.equal(["Altona", "Eimsbüttel", "Bergedorf"]);
+        });
     });
 
     describe("emitCurrentRule", () => {
