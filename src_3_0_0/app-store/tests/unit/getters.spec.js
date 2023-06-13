@@ -194,7 +194,7 @@ describe("src_3_0_0/app-store/getters.js", () => {
     });
 
     describe("visibleBackgroundLayerConfigs", () => {
-        it.only("should return all visible backgroundLayers", () => {
+        it("should return all visible backgroundLayers", () => {
             const greenLayer = {
                     id: "1132",
                     name: "100 Jahre Stadtgruen POIs",
