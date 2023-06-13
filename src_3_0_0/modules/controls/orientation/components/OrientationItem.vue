@@ -80,7 +80,7 @@ export default {
     },
     methods: {
         ...mapMutations("Controls/Orientation", Object.keys(mutations)),
-        ...mapActions("Maps", ["setView"]),
+        ...mapActions("Maps", ["zoomToCoordinates"]),
         ...mapActions("Alerting", ["addSingleAlert"]),
 
         setIsGeoLocationPossible () {
@@ -235,7 +235,7 @@ export default {
          * @returns {void}
          */
         zoomAndCenter (position) {
-            this.setView({center: position, rotation: null, zoom: 6});
+            this.zoomToCoordinates({center: position, zoom: 6});
         },
 
         /**
