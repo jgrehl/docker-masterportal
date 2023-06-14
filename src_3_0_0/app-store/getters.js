@@ -132,17 +132,6 @@ const getters = {
     },
 
     /**
-     * Returns the restConfig which matches the id.
-     * @param {Object} state state of the app-store.
-     * @returns {Object} the restConfig layer that matches the given id.
-     */
-    getRestConfigById: (state) => (id) => {
-        const matchingLayer = state.restConfig.filter(layer => layer.id === id);
-
-        return matchingLayer[0];
-    },
-
-    /**
      * Gets the value to an url parameter.
      * @param {Object} state state of the app-store.
      * @param {String} param The url parameter.
@@ -243,7 +232,7 @@ const getters = {
     },
 
     /**
-     * Returns the mainmenu of portalConfig.
+     * Returns the menu of portalConfig by side.
      * @param {Object} state state of the app-store.
      * @returns {Object} Main menu.
      */
@@ -282,15 +271,6 @@ const getters = {
      */
     restServiceById: state => id => {
         return state?.restConfig?.find(service => service.id === id);
-    },
-
-    /**
-     * Returns the secondaryMenu of portalConfig.
-     * @param {Object} state state of the app-store.
-     * @returns {Object} Secondary menu.
-     */
-    secondaryMenuFromConfig: state => {
-        return state.portalConfig.secondaryMenu || {};
     },
 
     /**
