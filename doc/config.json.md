@@ -227,33 +227,19 @@ ProxyPass /bkg_suggest http://sg.geodatenzentrum.de/gdz_geokodierung__[UUID]/sug
 |----|--------|----|-------|-----------|------|
 |epsg|no|String|"EPSG:25832"|EPSG code of the coordinate reference system to use.|false|
 |extent|no|**[Extent](#markdown-header-datatypesextent)**|[454591, 5809000, 700000, 6075769]|Coordinate extent in which search algorithms should return.|false|
-|filter|no|String|"filter=(typ:*)"|Filter string sent to the BKG interface.|false|
-|geosearchServiceId|yes|String||Search service id. Resolved using the **[rest-services.json](rest-services.json.md)** file.|false|
-|minChars|no|Integer|3|_Deprecated in 3.0.0. Please use "minCharacters"._|false|
-|minCharacters|no|Integer|3|Minimum amount of characters required to start a search.|false|
-|score|no|Number|0.6|Score defining the minimum quality of search results.|false|
-|suggestCount|no|Integer|20|Suggestion amount.|false|
-|suggestServiceId|yes|String||Suggestion service id. Resolved using the **[rest-services.json](rest-services.json.md)** file.|false|
-|zoomToResult|no|Boolean|false|_Deprecated in 3.0.0. Please use "zoomToResultOnHover" or "zoomToResultOnClick"._ Defines whether a feature is zoomed to when hovering a result list entry.|false|
-|zoomToResultOnHover|no|Boolean|false|Defines whether an address is zoomed to when hovering a result list entry.|false|
-|zoomToResultOnClick|no|Boolean|true|Defines whether an address is zoomed to when clicking a result list entry.|false|
-|zoomLevel|no|Number|7|Defines the zoom level to use on zooming to a result.|false|
+|geoSearchServiceId|yes|String||Search service id. Resolved using the **[rest-services.json](rest-services.json.md)** file.|false|
+|minScore|no|Number|0.6|Score defining the minimum quality of search results.|false|
+|resultCount|no|Integer|20|Maximum number of search hits returned by the service.|false|
 
 **Example**
 ```json
 {
     "bkg": {
-        "minCharacters": 3,
-        "suggestServiceId": "4",
-        "geosearchServiceId": "5",
+        "geoSearchServiceId": "5",
         "extent": [454591, 5809000, 700000, 6075769],
-        "suggestCount": 10,
+        "resultCount": 10,
         "epsg": "EPSG:25832",
-        "filter": "filter=(typ:*)",
-        "score": 0.6,
-        "zoomToResultOnHover": false,
-        "zoomToResultOnClick": true,
-        "zoomLevel": 10
+        "minScore": 0.6
     }
 }
 ```
