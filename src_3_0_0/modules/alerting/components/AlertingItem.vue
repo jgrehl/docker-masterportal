@@ -13,18 +13,17 @@ export default {
         };
     },
     computed: {
-        ...mapGetters([
-            "configJs"
-        ]),
         ...mapGetters("Alerting", [
+            "alerts",
+            "alertWindowTitle",
+            "configPaths",
             "displayedAlerts",
             "fetchBroadcastUrl",
-            "localStorageDisplayedAlertsKey",
             "initialClosed",
+            "localStorageDisplayedAlertsKey",
             "showTheModal",
-            "alertWindowTitle",
-            "alerts",
-            "sortedAlerts"
+            "sortedAlerts",
+            "type"
         ]),
         /**
          * Console mapping to be able to debug in template.
@@ -46,24 +45,25 @@ export default {
             this.availableLocalStorage = false;
             console.error("Spelling localestorage is not available in this application. Please allow third party cookies in your browser!");
         }
-        this.setFetchBroadcastUrl(this.configJs?.alerting?.fetchBroadcastUrl);
     },
     /**
      * Mounted hook: Initially fetches BroadcastConfig.
      * @returns {void}
      */
     mounted () {
+        this.initializeModule({configPaths: this.configPaths, type: this.type});
+
         if (this.fetchBroadcastUrl !== undefined && this.fetchBroadcastUrl !== false) {
             this.fetchBroadcast(this.fetchBroadcastUrl);
         }
     },
 
     methods: {
+        ...mapActions(["initializeModule"]),
         ...mapActions("Alerting", [
             "addSingleAlert",
             "alertHasBeenRead",
-            "cleanup",
-            "initialize"
+            "cleanup"
         ]),
         ...mapMutations("Alerting", [
             "removeFromAlerts",

@@ -1,9 +1,12 @@
 import axios from "axios";
 import {rawLayerList} from "@masterportal/masterportalapi/src";
 import styleList from "@masterportal/masterportalapi/src/vectorStyle/styleList";
-import {portalConfigKey, treeTopicConfigKey} from "../shared/js/utils/constants";
+
 import actionsLayerConfig from "./actionsLayerConfig";
+import {fetchFirstModuleConfig} from "../shared/js/utils/fetchFirstModuleConfig";
+import {portalConfigKey, treeTopicConfigKey} from "../shared/js/utils/constants";
 import {updateProxyUrl} from "./js/getProxyUrl";
+import {upperFirst} from "../shared/js/utils/changeCase";
 
 export default {
     ...actionsLayerConfig,
@@ -88,6 +91,16 @@ export default {
             }
         });
     },
+
+    /**
+     * Sets the config-params of this module into state.
+     * @param {Object} context the context Vue instance
+     * @returns {Boolean} false, if config does not contain the module
+     */
+    initializeModule: (context, {configPaths, type}) => {
+        return fetchFirstModuleConfig(context, configPaths, upperFirst(type));
+    },
+
     /**
      * Initializes the style list of vector styling.
      * @param {Object} param.state the state
@@ -122,6 +135,7 @@ export default {
                 return initializedStyleList;
             });
     },
+
     /**
      * Loops trough defined alerts from config json and add it to the alerting module
      * @param {Object} param.dispatch the commit

@@ -1,6 +1,7 @@
 /**
  * User type definition
  * @typedef {Object} AlertingItemState
+ * * @property {Object[]} configPaths Path array of possible config locations. First one found will be used
  * @property {Object} alertProto Blueprint of an alert
  * @property {String} alertProto.title Title of an alert
  * @property {String} alertProto.category Category of an alert
@@ -23,8 +24,10 @@
  * @property {String[]} availableCategories available alert categories
  * @property {String} localStorageDisplayedAlertsKey key name for localStorage
  * @property {Boolean} showTheModal flag to control if modal is shown or not
+ * @property {String} type The type of the alerting component.
 */
 export default {
+    configPaths: ["configJs.alerting"],
     alertProto: {
         title: "",
         category: "info",
@@ -46,5 +49,6 @@ export default {
     initialClosed: false,
     availableCategories: ["news", "success", "warning", "error", "info"],
     localStorageDisplayedAlertsKey: "displayedAlerts",
-    showTheModal: false
+    showTheModal: false,
+    type: "alerting"
 };
