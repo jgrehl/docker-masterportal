@@ -38,7 +38,7 @@ function getByArraySyntax (obj, pathArray) {
     }
     const step = pathArray.shift();
 
-    if (!(obj instanceof Object) || typeof obj[step] === "undefined") {
+    if (!(obj instanceof Object || Array.isArray(obj)) || typeof obj[step] === "undefined") {
         return undefined;
     }
 
@@ -103,10 +103,9 @@ function createKeyPathArray (path, separator = ".") {
  * @param {Object} context - The store's context
  * @param {String[]} configPaths - Array of paths to search for in root state
  * @param {String} moduleName - Name of the module
- * @param {Boolean} [recursiveFallback=true] - (optional) determines whether the fallbackOption is executed
  * @returns {Boolean} true, if successfully merged
  */
-function fetchFirstModuleConfig (context, configPaths, moduleName, recursiveFallback = true) {
+function fetchFirstModuleConfig (context, configPaths, moduleName) {
     if (!(context?.state instanceof Object)) {
         console.warn("fetchFirstModuleConfig: The given context is missing a state:", context);
         return false;
@@ -115,11 +114,12 @@ function fetchFirstModuleConfig (context, configPaths, moduleName, recursiveFall
         console.warn("fetchFirstModuleConfig: The given configPaths must be an array, but none is given:", configPaths);
         return false;
     }
+
     const missingSources = [],
         missingDefaultValue = [],
         // no real config-params, e.g. added during parsing: must not be in state as default
         defaultsNotInState = ["i18nextTranslate", "useConfigName", "type", "parentId", "onlyDesktop"],
-        state = context.state[moduleName] || context.state;
+        state = context.state[moduleName] || context.state.Modules[moduleName];
     let source,
         success = false;
 
@@ -154,13 +154,13 @@ function fetchFirstModuleConfig (context, configPaths, moduleName, recursiveFall
         break;
     }
 
-    if (!source && recursiveFallback) {
-        // todo: old source = context.rootGetters.toolConfig(moduleName); do we need a replacment?
-        success = false;
-    }
-
     if (source) {
-        context.state = deepMerge(source, state);
+        if (context.state[moduleName]) {
+            context.state[moduleName] = deepMerge(source, state);
+        }
+        else if (context.state.Modules[moduleName]) {
+            context.state.Modules[moduleName] = deepMerge(source, state);
+        }
         success = true;
     }
 
