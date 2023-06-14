@@ -676,45 +676,31 @@
         "unknownProjection": "Resultados en sistema de coordenadas desconocido"
       },
       "placeholder": {
+        "addressHospitalBplan": "Búsqueda por dirección/hospital/plan territorial",
+        "addressTopicParcel": "Buscar dirección, distrito, temas, unidad catastral",
+        "addressTopic": "Buscar dirección, distrito, temas",
         "address": "Buscar por dirección"
-      },
-      "type": {
-        "address": "Buscar por dirección",
-        "district": "Distrito",
-        "folder": "",
-        "parcel": "Unidad territorial",
+    },
+    "showAllResults": "mostrar todos los resultados",
+    "searchResults": "Resultados de la búsqueda",
+    "type": {
         "street": "Calle",
+        "district": "Distrito",
+        "parcel": "Unidad territorial",
+        "address": "Dirección",
+        "location": "Lugar",
         "subject": "Tema específico",
-        "topic": "Tema"
-      }
+        "topic": "Tema",
+        "general": "Tema"
+    },
+    "noInitialResults": "La búsqueda inicial no dio ningún resultado.",
+    "showAll": "Ver todo"
     },
     "selectFeatures": {
       "name": "Seleccionar entidad",
       "noFeatureChosen": "Ninguna entidad esta seleccionada. Seleccione las entidades manteniendo pulsada la tecla Ctrl y arrastrando un cuadro alrededor de las entidades a seleccionar.",
       "propertylessFeature": "Elemento sin atributos",
       "zoomToFeature": "Acercar el zomm a esta entidad"
-    },
-    "searchbar": {
-      "placeholder": {
-          "addressHospitalBplan": "Búsqueda por dirección/hospital/plan territorial",
-          "addressTopicParcel": "Buscar dirección, distrito, temas, unidad catastral",
-          "addressTopic": "Buscar dirección, distrito, temas",
-          "address": "Buscar por dirección"
-      },
-      "showAllResults": "mostrar todos los resultados",
-      "searchResults": "Resultados de la búsqueda",
-      "type": {
-          "street": "Calle",
-          "district": "Distrito",
-          "parcel": "Unidad territorial",
-          "address": "Dirección",
-          "location": "Lugar",
-          "subject": "Tema específico",
-          "topic": "Tema",
-          "general": "Tema"
-      },
-      "noInitialResults": "La búsqueda inicial no dio ningún resultado.",
-      "showAll": "Ver todo"
     },
     "shadow": {
       "name": "Sombras",
