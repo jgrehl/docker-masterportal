@@ -1,7 +1,7 @@
 /**
  * User type definition
  * @typedef {Object} GetFeatureInfoState
- * @property {Object[]} configPaths Path array of possible config locations. First one found will be used
+ * @property {String[]} configPaths Path array of possible config locations. First one found will be used
  * @property {Boolean} hasMouseMapInteractions If this attribute is true, then all other modules will be deactivated when this attribute is also true. Only one module with this attribute true may be open at the same time, since conflicts can arise in the card interactions.
  * @property {String} icon Icon next to title (config-param).
  * @property {String} menuSide Specifies in which menu the GFI should be rendered

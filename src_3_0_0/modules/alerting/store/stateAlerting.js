@@ -1,7 +1,7 @@
 /**
  * User type definition
  * @typedef {Object} AlertingItemState
- * * @property {Object[]} configPaths Path array of possible config locations. First one found will be used
+ * @property {String[]} configPaths Path array of possible config locations. First one found will be used
  * @property {Object} alertProto Blueprint of an alert
  * @property {String} alertProto.title Title of an alert
  * @property {String} alertProto.category Category of an alert
