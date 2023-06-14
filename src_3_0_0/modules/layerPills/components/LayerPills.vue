@@ -13,11 +13,13 @@ export default {
         };
     },
     computed: {
-        ...mapGetters(["isMobile", "visibleSubjectDataLayerConfigs", "portalConfig"]),
+        ...mapGetters(["isMobile", "visibleSubjectDataLayerConfigs"]),
         ...mapGetters("Modules/LayerPills", [
-            "visibleSubjectDataLayers",
             "active",
-            "amount"
+            "amount",
+            "configPaths",
+            "type",
+            "visibleSubjectDataLayers"
         ]),
         ...mapGetters("Maps", ["mode"]),
         containerWidth () {
@@ -51,14 +53,13 @@ export default {
         }
     },
     created () {
-        this.setAmount(typeof this.portalConfig?.tree?.layerPills?.amount !== "undefined" ? this.portalConfig?.tree?.layerPills?.amount : this.amount);
-        this.setActive(this.portalConfig?.tree?.layerPills?.active ? this.portalConfig?.tree?.layerPills?.active : this.active);
+        this.initializeModule({configPaths: this.configPaths, type: this.type});
         this.setVisibleLayers(this.visibleSubjectDataLayerConfigs, this.mode);
     },
     methods: {
         ...mapMutations("Modules/LayerPills", ["setVisibleSubjectDataLayers", "setAmount", "setActive"]),
         ...mapMutations(["setVisibleSubjectDataLayerConfigs"]),
-        ...mapActions(["replaceByIdInLayerConfig"]),
+        ...mapActions(["initializeModule", "replaceByIdInLayerConfig"]),
         ...mapActions("Modules/LayerInformation", ["startLayerInformation"]),
 
         setVisibleLayers (visibleLayers, mapMode, newValues = []) {
