@@ -128,6 +128,10 @@
             "states": "Hamburg",
             "classes": "place,highway,building,shop,historic,leisure,city,county"
           },
+          "bkg": {
+            "geoSearchServiceId": "5",
+            "epsg": "EPSG:25832"
+          },
           "exampleSearch": {}
         }
       },
