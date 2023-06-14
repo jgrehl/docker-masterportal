@@ -22,18 +22,17 @@ export default {
     },
     watch: {
         visibleBackgroundLayerConfigs: {
-            handler (newVal, oldVal) {
-                const allBackgroundLayerIds = this.backgroundLayerIds,
+            handler (newVal) {
+                const backgroundLayerConfigIds = [],
                     zIndex = [];
                 let maxZIndex = null,
                     topLayer = null;
 
-                if (newVal.length === 0) {
-                    if (!allBackgroundLayerIds.includes(oldVal[0].id)) {
-                        allBackgroundLayerIds.push(oldVal[0].id);
-                    }
-                    this.setBackgroundLayerIds(allBackgroundLayerIds);
-                }
+
+                Object.values(this.allBackgroundLayerConfigs).forEach(layer => {
+                    backgroundLayerConfigIds.push(layer.id);
+
+                });
 
                 newVal.forEach((val) => {
                     zIndex.push(val.zIndex);
@@ -43,10 +42,19 @@ export default {
                 topLayer = newVal.filter(layer =>layer.zIndex === maxZIndex);
 
                 if (topLayer[0]?.id !== undefined) {
+                    const backgroundLayerIds = [];
+
+                    backgroundLayerConfigIds.forEach((layerId) => {
+                        if (layerId !== topLayer[0]?.id) {
+                            backgroundLayerIds.push(layerId);
+                        }
+                    });
                     this.setTopBackgroundLayerId(topLayer[0]?.id);
+                    this.setBackgroundLayerIds(backgroundLayerIds);
                 }
                 else {
                     this.setTopBackgroundLayerId();
+                    this.setBackgroundLayerIds(backgroundLayerConfigIds);
                 }
                 this.setActivatedExpandable(false);
             },
