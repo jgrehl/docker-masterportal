@@ -4,13 +4,21 @@ import {mapActions, mapGetters} from "vuex";
 export default {
     name: "MouseHover",
     computed: {
-        ...mapGetters("Modules/MouseHover", ["infoBox", "infoText", "pleaseZoom"])
+        ...mapGetters("Modules/MouseHover", [
+            "configPaths",
+            "infoBox",
+            "infoText",
+            "pleaseZoom",
+            "type"
+        ])
     },
     mounted () {
+        this.initializeModule({configPaths: this.configPaths, type: this.type});
         this.initialize();
     },
     methods: {
-        ...mapActions("Modules/MouseHover", ["initialize"])
+        ...mapActions("Modules/MouseHover", ["initialize"]),
+        ...mapActions(["initializeModule"])
     }
 };
 </script>

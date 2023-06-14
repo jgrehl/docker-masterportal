@@ -28,6 +28,7 @@ export default {
             "ignoredKeys"
         ]),
         ...mapGetters("Modules/GetFeatureInfo", [
+            "configPaths",
             "currentFeature",
             "highlightVectorRules",
             "menuSide",
@@ -172,6 +173,9 @@ export default {
             deep: true
         }
     },
+    mounted () {
+        this.initializeModule({configPaths: this.configPaths, type: this.type});
+    },
     beforeUpdate () {
         this.createMappedProperties(this.feature);
     },
@@ -181,6 +185,7 @@ export default {
             "setCurrentFeature",
             "setVisible"
         ]),
+        ...mapActions(["initializeModule"]),
         ...mapActions("Modules/GetFeatureInfo", [
             "updateClick"
         ]),
