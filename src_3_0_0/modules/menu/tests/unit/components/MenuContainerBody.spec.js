@@ -45,6 +45,15 @@ describe("src_3_0_0/modules/menu/MenuContainerBody.vue", () => {
                 },
                 Modules: {
                     namespaced: true,
+                    modules: {
+                        namespaced: true,
+                        GetFeatureInfo: {
+                            namespaced: true,
+                            getters: {
+                                menuSide: () => "secondaryMenu"
+                            }
+                        }
+                    },
                     getters: {
                         componentMap: () => {
                             return {
