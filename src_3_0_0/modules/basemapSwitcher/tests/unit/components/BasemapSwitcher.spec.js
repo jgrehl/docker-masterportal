@@ -141,20 +141,21 @@ describe("src_3_0_0/modules/BasemapSwitcher.vue", () => {
     describe("watcher", () => {
         it("visibleBackgroundLayerConfigs with new backgroundLayer", () => {
             const newValue = [{
-                id: "WMTS",
-                name: "EOC Basemap",
-                visibility: true,
-                backgroundLayer: true,
-                showInLayerTree: true,
-                zIndex: 1
-            }];
+                    id: "WMTS",
+                    name: "EOC Basemap",
+                    visibility: true,
+                    backgroundLayer: true,
+                    showInLayerTree: true,
+                    zIndex: 1
+                }],
+                oldValue = [];
 
             wrapper = shallowMount(BasemapSwitcherComponent, {
                 global: {
                     plugins: [store]
                 }});
 
-            wrapper.vm.$options.watch.visibleBackgroundLayerConfigs.handler.call(wrapper.vm, newValue);
+            wrapper.vm.$options.watch.visibleBackgroundLayerConfigs.handler.call(wrapper.vm, newValue, oldValue);
             expect(store.state.Modules.BasemapSwitcher.topBackgroundLayerId).to.equal("WMTS");
         });
         it("visibleBackgroundLayerConfigs with no selected backgroundLayer", () => {
