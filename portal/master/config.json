@@ -484,9 +484,9 @@
           "typ": "WMS",
           "visibility": false,
           "transparency": 30,
-          "preview":{
+          "preview": {
             "zoomLevel": 6,
-            "center":"566245.97,5938894.79",
+            "center": "566245.97,5938894.79",
             "radius": 500
           }
         },
@@ -629,14 +629,14 @@
           "name": "ek pv",
           "url": "https://geodienste.hamburg.de/HH_WMS_Solaratlas",
           "typ": "WMS",
-          "gfiTheme" : "solaratlas",
+          "gfiTheme": "solaratlas",
           "visibility": true
         },
         {
-          "id" : "11612",
-          "name" : "Anlagen nach Industrieemissions- Richtlinie",
-          "url" : "https://geodienste.hamburg.de/HH_WMS_IED_Anlagen",
-          "typ" : "WMS",
+          "id": "11612",
+          "name": "Anlagen nach Industrieemissions- Richtlinie",
+          "url": "https://geodienste.hamburg.de/HH_WMS_IED_Anlagen",
+          "typ": "WMS",
           "gfiTheme": "dataTable",
           "visibility": true
         },
@@ -652,10 +652,10 @@
           "visibility": true
         },
         {
-          "id" : "8730",
-          "name" : "Durchschnittliche tägliche Verkehrsstärken (Mo-So)",
-          "typ" : "WMS",
-          "gfiTheme" : "verkehrsstaerken",
+          "id": "8730",
+          "name": "Durchschnittliche tägliche Verkehrsstärken (Mo-So)",
+          "typ": "WMS",
+          "gfiTheme": "verkehrsstaerken",
           "visibility": false
         },
         {
@@ -770,7 +770,7 @@
           "loadingStrategy": "bbox",
           "typ": "WFS",
           "visibility": true,
-          "gfiTheme" : "schulinfo",
+          "gfiTheme": "schulinfo",
           "showInLayerTree": true,
           "mouseHoverField": [
             "schulname",
@@ -851,6 +851,37 @@
             "anzahl_schueler": ">1000"
           },
           "legend": true
+        },
+        {
+          "id": "20625.90024",
+          "styleId": "200_300_400_600_anzahl_sus_primarstufe",
+          "name": "Schüler*innen nach Sozialräumen (1 bis 4)",
+          "typ": "WFS",
+          "visibility": false,
+          "gfiAttributes": "showAll",
+          "propertyNames": [
+            "bezirk_id",
+            "bezirk_name",
+            "stadtteil_id",
+            "stadtteil_name",
+            "sozialraum_id",
+            "sozialraum_name",
+            "anzahl_sus_primarstufe",
+            "geom"
+          ],
+          "gfiTheme": {
+            "name": "bildungsatlas",
+            "params": {
+              "subTheme": "BildungsatlasThemeBalkendiagramm",
+              "chartOptions": {
+                "anzahl_sus_primarstufe": {
+                  "suggestedMin": 0,
+                  "suggestedMax": 3000,
+                  "stepSize": 500
+                }
+              }
+            }
+          }
         },
         {
           "id": "753",
