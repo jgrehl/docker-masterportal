@@ -1,6 +1,3 @@
-import {generateSimpleGetters} from "../../shared/js/utils/generators";
-import stateModules from "./stateModules";
-
 import AddWMS from "../addWMS/components/AddWMS.vue";
 import BufferAnalysis from "../bufferAnalysis/components/BufferAnalysis.vue";
 import Contact from "../contact/components/ContactFormular.vue";
@@ -40,8 +37,6 @@ import Wfst from "../wfst/components/WfsTransaction.vue";
 
 
 const getters = {
-    ...generateSimpleGetters(stateModules),
-
     componentMap: () => {
         const coreModules = {
             addWMS: AddWMS,

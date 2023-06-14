@@ -36,7 +36,6 @@ export default {
         }
     },
     methods: {
-
         /**
          * Returns the path for a section inside the menu this component is rendered in.
          * @param {Number} sectionIndex Index inside of a section of a menu.
@@ -58,7 +57,7 @@ export default {
             class="mb-2"
             v-bind="titleBySide(side)"
         />
-        <SearchBar v-if="side === 'mainMenu'" />
+        <SearchBar v-if="typeof menu.searchBar !== 'undefined'" />
         <LayerTree v-if="side === 'mainMenu'" />
         <template
             v-for="(_, key) in menu.sections"

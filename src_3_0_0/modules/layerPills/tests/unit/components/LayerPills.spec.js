@@ -1,7 +1,6 @@
 import {createStore} from "vuex";
 import {config, shallowMount, mount} from "@vue/test-utils";
 import LayerPillsComponent from "../../../components/LayerPills.vue";
-import LayerPills from "../../../store/indexLayerPills";
 import {expect} from "chai";
 import sinon from "sinon";
 
@@ -12,14 +11,25 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
     let store,
         wrapper,
         visibleLayers,
-        mockConfigJson,
+        active,
+        amount,
+        visibleSubjectDataLayers,
         mobile,
+        initializeModuleSpy,
         replaceByIdInLayerConfigSpy,
+        setVisibleSubjectDataLayersSpy,
         startLayerInformationSpy;
 
     beforeEach(() => {
+        active = true;
+        amount = 3;
+        visibleSubjectDataLayers = [{
+            name: "layer1"
+        }];
         mobile = false;
+        initializeModuleSpy = sinon.spy();
         replaceByIdInLayerConfigSpy = sinon.spy();
+        setVisibleSubjectDataLayersSpy = sinon.spy();
         startLayerInformationSpy = sinon.spy();
         visibleLayers = [
             {id: 0, name: "layer1", typ: "WMS"},
@@ -27,21 +37,27 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
             {id: 2, name: "layer3", typ: "WFS"},
             {id: 3, name: "layer4", typ: "WFS"}
         ];
-        mockConfigJson = {
-            tree: {
-                layerPills: {
-                    "active": true,
-                    "amount": 2
-                }
-            }
-        };
         store = createStore({
             namespaced: true,
             modules: {
                 Modules: {
                     namespaced: true,
                     modules: {
-                        LayerPills,
+                        LayerPills: {
+                            namespaced: true,
+                            getters: {
+                                active: () => active,
+                                amount: () => amount,
+                                configPaths: () => ["portalConfig.tree.layerPills"],
+                                type: () => "layerPills",
+                                visibleSubjectDataLayers: () => visibleSubjectDataLayers
+                            },
+                            mutations: {
+                                setActive: sinon.stub(),
+                                setAmount: sinon.stub(),
+                                setVisibleSubjectDataLayers: setVisibleSubjectDataLayersSpy
+                            }
+                        },
                         LayerInformation: {
                             namespaced: true,
                             actions: {
@@ -59,22 +75,18 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
             },
             getters: {
                 isMobile: () => mobile,
-                visibleSubjectDataLayerConfigs: () => visibleLayers,
-                portalConfig: () => mockConfigJson
+                visibleSubjectDataLayerConfigs: () => visibleLayers
             },
             mutations: {
                 setVisibleSubjectDataLayerConfigs: (state, layer) => {
                     visibleLayers = layer;
-                },
-                setPortalConfig: (state, configJson) => {
-                    mockConfigJson = configJson;
                 }
             },
             actions: {
-                replaceByIdInLayerConfig: replaceByIdInLayerConfigSpy
+                replaceByIdInLayerConfig: replaceByIdInLayerConfigSpy,
+                initializeModule: initializeModuleSpy
             }
         });
-        store.commit("Modules/LayerPills/setActive", true);
     });
 
     afterEach(() => {
@@ -97,7 +109,8 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
         });
 
         it("no visibleSubjectDataLayers", () => {
-            store.commit("setVisibleSubjectDataLayerConfigs", []);
+            visibleSubjectDataLayers = [];
+
             wrapper = shallowMount(LayerPillsComponent, {
                 components: {
                     IconButton: {
@@ -113,15 +126,8 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
         });
 
         it("should not exist if active false", () => {
-            store.commit("setPortalConfig", {
-                tree: {
-                    layerPills: {
-                        active: false,
-                        amount: 5
-                    }
-                }
-            });
-            store.commit("Modules/LayerPills/setActive", false);
+            active = false;
+
             wrapper = shallowMount(LayerPillsComponent, {
                 components: {
                     IconButton: {
@@ -136,36 +142,8 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
         });
 
         it("should not exist if layerPillsAmount is 0", () => {
-            store.commit("setPortalConfig", {
-                tree: {
-                    layerPills: {
-                        active: true,
-                        amount: 0
-                    }
-                }
-            });
-            wrapper = shallowMount(LayerPillsComponent, {
-                components: {
-                    IconButton: {
-                        name: "IconButton",
-                        template: "<button>Hier</button>"
-                    }
-                },
-                global: {
-                    plugins: [store]
-                }});
+            amount = 0;
 
-            expect(wrapper.find("#layer-pills").exists()).to.be.false;
-        });
-
-        it("should not exist if layerPills are not configured in config.json", () => {
-            store.commit("setPortalConfig", {
-                tree: {
-                    layerPills: {
-
-                    }
-                }
-            });
             wrapper = shallowMount(LayerPillsComponent, {
                 components: {
                     IconButton: {
@@ -227,7 +205,7 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
                     plugins: [store]
                 }});
 
-            expect(wrapper.findAll(".close-button").length).to.equals(store.state.Modules.LayerPills.visibleSubjectDataLayers.length);
+            expect(wrapper.findAll(".close-button").length).to.equals(visibleSubjectDataLayers.length);
         });
     });
 
@@ -243,9 +221,9 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
                 global: {
                     plugins: [store]
                 }});
-            wrapper.vm.setVisibleLayers(visibleLayers, "2D");
 
-            expect(store.state.Modules.LayerPills.visibleSubjectDataLayers).to.deep.equal(visibleLayers);
+            expect(setVisibleSubjectDataLayersSpy.calledOnce).to.be.true;
+            expect(setVisibleSubjectDataLayersSpy.firstCall.args[1]).to.deep.equal(visibleLayers);
         });
         it("setVisibleLayers only sets 2D layers if 2D mode is selected", () => {
             const visibleLayers3D2D = [
@@ -267,7 +245,8 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
                 }});
             wrapper.vm.setVisibleLayers(visibleLayers3D2D, "2D");
 
-            expect(store.state.Modules.LayerPills.visibleSubjectDataLayers).to.deep.equal([
+            expect(setVisibleSubjectDataLayersSpy.calledTwice).to.be.true;
+            expect(setVisibleSubjectDataLayersSpy.secondCall.args[1]).to.deep.equal([
                 {id: 2, name: "layer3", typ: "WFS"},
                 {id: 3, name: "layer4", typ: "WFS"}]
             );
@@ -368,6 +347,8 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
         it("setScrollEnd amount is less than layer count", () => {
             const layers = [{id: "1"}, {id: "2"}, {id: "3"}];
 
+            amount = 0;
+
             wrapper = shallowMount(LayerPillsComponent, {
                 components: {
                     IconButton: {
@@ -453,7 +434,7 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
 
     describe("computed", () => {
         it("containerWidth if not mobile", () => {
-            const amount = 5;
+            amount = 5;
 
             wrapper = shallowMount(LayerPillsComponent, {
                 components: {
@@ -465,13 +446,12 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
                 global: {
                     plugins: [store]
                 }});
-            store.commit("Modules/LayerPills/setAmount", amount);
 
             expect(wrapper.vm.containerWidth).to.be.equals(amount * 158 + 70);
         });
 
         it("containerWidth if mobile", () => {
-            const amount = 3;
+            amount = 3;
 
             mobile = true;
             wrapper = shallowMount(LayerPillsComponent, {
@@ -484,7 +464,6 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
                 global: {
                     plugins: [store]
                 }});
-            store.commit("Modules/LayerPills/setAmount", amount);
 
             expect(wrapper.vm.containerWidth).to.be.equals(320);
         });
