@@ -11,12 +11,24 @@ config.global.mocks.$t = key => key;
 
 describe("src_3_0_0/modules/menu/MenuContainerBodyRoot.vue", () => {
     let store,
-        menu,
+        mainMenu,
         mainMenuTitle,
+        secondaryMenu,
         secondaryMenuTitle;
 
     beforeEach(() => {
-        menu = {
+        mainMenu = {
+            sections: [
+                {
+                    type: "section1"
+                },
+                {
+                    type: "section1"
+                }
+            ],
+            searchBar: {}
+        };
+        secondaryMenu = {
             sections: [
                 {
                     type: "section1"
@@ -49,8 +61,8 @@ describe("src_3_0_0/modules/menu/MenuContainerBodyRoot.vue", () => {
                             }
                             return null;
                         },
-                        mainMenu: () => menu,
-                        secondaryMenu: () => menu
+                        mainMenu: () => mainMenu,
+                        secondaryMenu: () => secondaryMenu
 
                     }
                 }
@@ -59,7 +71,7 @@ describe("src_3_0_0/modules/menu/MenuContainerBodyRoot.vue", () => {
     });
 
     it("renders the component in mainMenu with no sections", () => {
-        menu.sections = [];
+        mainMenu.sections = [];
         const wrapper = shallowMount(MenuContainerBodyRoot, {
                 global: {
                     plugins: [store]
@@ -76,7 +88,7 @@ describe("src_3_0_0/modules/menu/MenuContainerBodyRoot.vue", () => {
     });
 
     it("renders the component in secondaryMenu with no sections", () => {
-        menu.sections = [];
+        secondaryMenu.sections = [];
         const wrapper = shallowMount(MenuContainerBodyRoot, {
                 global: {
                     plugins: [store]
@@ -93,7 +105,7 @@ describe("src_3_0_0/modules/menu/MenuContainerBodyRoot.vue", () => {
     });
 
     it("renders the component in secondaryMenu with no sections and no logo", () => {
-        menu.sections = [];
+        secondaryMenu.sections = [];
         secondaryMenuTitle = null;
         const wrapper = shallowMount(MenuContainerBodyRoot, {
                 global: {
