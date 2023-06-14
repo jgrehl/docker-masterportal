@@ -11,11 +11,13 @@ export default {
     },
     computed: {
         ...mapGetters("Modules/SearchBar", [
+            "configPaths",
             "minCharacters",
             "placeholder",
             "searchInput",
             "searchInterfaceInstances",
-            "searchResults"
+            "searchResults",
+            "type"
         ]),
 
         /**
@@ -49,10 +51,12 @@ export default {
         }
     },
     mounted () {
+        this.initializeModule({configPaths: this.configPaths, type: this.type});
         this.overwriteDefaultValues();
         this.instantiateSearchInterfaces(this.$searchInterfaceAddons);
     },
     methods: {
+        ...mapActions(["initializeModule"]),
         ...mapActions("Modules/SearchBar", ["instantiateSearchInterfaces", "overwriteDefaultValues", "search"]),
         ...mapMutations("Modules/SearchBar", ["setSearchInput"]),
 
