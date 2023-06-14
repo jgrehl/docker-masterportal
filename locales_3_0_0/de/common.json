@@ -676,47 +676,33 @@
         "unknownProjection": "Ergebnisse in unbekanntem Koordinatensystem"
       },
       "placeholder": {
+        "addressHospitalBplan": "Suche nach Adresse/Krankenhaus/B-Plan",
+        "addressTopicParcel": "Suche Adresse, Stadtteil, Themen, Flurstück",
+        "addressTopic": "Suche Adresse, Stadtteil, Themen",
+        "addressDistrict": "Suche Adresse, Stadtteil",
         "address": "Suche nach Adresse"
-      },
-      "type": {
-        "address": "Adresse",
-        "district": "Stadtteil",
-        "folder": "Ordner (Fachdaten)",
-        "parcel": "Flurstück",
+    },
+    "showAllResults": "alle Ergebnisse anzeigen",
+    "searchResults": "Suchergebnisse",
+    "type": {
         "street": "Straße",
+        "district": "Stadtteil",
+        "parcel": "Flurstück",
+        "address": "Adresse",
+        "location": "Ort",
         "subject": "Thema (externe Fachdaten)",
-        "topic": "Thema (Fachdaten)"
-      }
+        "topic": "Thema (Fachdaten)",
+        "general": "Fachdaten",
+        "folder": "Ordner (Fachdaten)"
+    },
+    "noInitialResults": "Die initiale Suche ergab keine Treffer.",
+    "showAll": "Alle anzeigen"
     },
     "selectFeatures": {
       "name": "Features auswählen",
       "noFeatureChosen": "Keine Features ausgewählt. Wählen Sie Features durch Ziehen einer Box um die auszuwählenden Features bzw. Halten von Strg und Ziehen.",
       "propertylessFeature": "Element ohne Attribute",
       "zoomToFeature": "Auf dieses Feature zoomen"
-    },
-    "searchbar": {
-      "placeholder": {
-          "addressHospitalBplan": "Suche nach Adresse/Krankenhaus/B-Plan",
-          "addressTopicParcel": "Suche Adresse, Stadtteil, Themen, Flurstück",
-          "addressTopic": "Suche Adresse, Stadtteil, Themen",
-          "addressDistrict": "Suche Adresse, Stadtteil",
-          "address": "Suche nach Adresse"
-      },
-      "showAllResults": "alle Ergebnisse anzeigen",
-      "searchResults": "Suchergebnisse",
-      "type": {
-          "street": "Straße",
-          "district": "Stadtteil",
-          "parcel": "Flurstück",
-          "address": "Adresse",
-          "location": "Ort",
-          "subject": "Thema (externe Fachdaten)",
-          "topic": "Thema (Fachdaten)",
-          "general": "Fachdaten",
-          "folder": "Ordner (Fachdaten)"
-      },
-      "noInitialResults": "Die initiale Suche ergab keine Treffer.",
-      "showAll": "Alle anzeigen"
     },
     "shadow": {
       "name": "Schatten",
