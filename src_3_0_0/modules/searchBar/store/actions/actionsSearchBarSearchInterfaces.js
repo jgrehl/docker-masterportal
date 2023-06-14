@@ -1,6 +1,7 @@
 /**
  * Contains actions that communicate with the search interfaces.
  */
+import SearchInterfaceBkg from "../../searchInterfaces/searchInterfaceBkg";
 import SearchInterfaceElasticSearch from "../../searchInterfaces/searchInterfaceElasticSearch";
 import SearchInterfaceGazetteer from "../../searchInterfaces/searchInterfaceGazetteer";
 import SearchInterfaceKomootPhoton from "../../searchInterfaces/searchInterfaceKomootPhoton";
@@ -20,6 +21,7 @@ export default {
      */
     instantiateSearchInterfaces: ({commit, state}, searchInterfaceAddons = []) => {
         const searchInterfacesMapper = {
+            bkg: SearchInterfaceBkg,
             elasticSearch: SearchInterfaceElasticSearch,
             gazetteer: SearchInterfaceGazetteer,
             komootPhoton: SearchInterfaceKomootPhoton,
