@@ -1,7 +1,7 @@
 /**
  * User type definition
  * @typedef {Object} FooterState
-* @property {Object[]} configPaths Path array of possible config locations. First one found will be used
+ * @property {String[]} configPaths Path array of possible config locations. First one found will be used
  * @property {Boolean} scaleLine Show scale line.
  * @property {Boolean} scaleLineWidth The scale line width in cm.
  * @property {String} seperator The seperator between urls.
