@@ -82,7 +82,7 @@ export default {
                     :class="limitedSortedSearchResults[category+'Icon']"
                 />
 
-                {{ category +": " + limitedSortedSearchResults[category+"Count"] + "    " + $t("common:modules.searchbar.searchResults") }}
+                {{ category +": " + limitedSortedSearchResults[category+"Count"] + "    " + $t("common:modules.searchBar.searchResults") }}
             </h5>
             <div
                 v-for="item in limitedSortedSearchResults"
@@ -104,7 +104,7 @@ export default {
                     type="button"
                     class="btn btn-light d-flex text-left"
                 >
-                    {{ $t("common:modules.searchbar.showAll") }}
+                    {{ $t("common:modules.searchBar.showAll") }}
                     <span class="bi-chevron-right" />
                 </button>
             </div>
