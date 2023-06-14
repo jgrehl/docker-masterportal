@@ -209,33 +209,19 @@ ProxyPass /bkg_suggest http://sg.geodatenzentrum.de/gdz_geokodierung__[UUID]/sug
 |----|-------------|---|-------|------------|------|
 |epsg|nein|String|"EPSG:25832"|EPSG-Code des zu verwendenden Koordinatensystems.|false|
 |extent|nein|**[Extent](#markdown-header-datatypesextent)**|[454591, 5809000, 700000, 6075769]|Koordinaten-Ausdehnung innerhalb dieser der Suchalgorithmus suchen soll.|false|
-|filter|nein|String|"filter=(typ:*)"|Filter string der an die BKG-Schnittstelle geschickt wird.|false|
-|geosearchServiceId|ja|String||Id des Suchdienstes. Wird aufgelöst in der **[rest-services.json](rest-services.json.de.md)**.|false|
-|minChars|nein|Integer|3|Deprecated in 3.0.0. Bitte "minCharacters" verwenden.|false|
-|minCharacters|nein|Integer|3|Minimale Anzahl an Buchstaben, ab der die Suche losläuft.|false|
-|score|nein|Number|0.6|Score der die Qualität der Suchergebnisse definiert.|false|
-|suggestCount|nein|Integer|20|Anzahl der Vorschläge.|false|
-|suggestServiceId|ja|String||Id des Vorschlagsdienstes. Wird aufgelöst in der **[rest-services.json](rest-services.json.de.md)**.|false|
-|zoomToResult|nein|Boolean|false|Deprecated in 3.0.0. Bitte "zoomToResultOnHover" oder "zoomToResultOnClick" verwenden. Gibt an, ob auf das Feature beim Mousehover auf die Adresse gezoomt werden soll.|false|
-|zoomToResultOnHover|nein|Boolean|false|Gibt an, ob auf das Feature beim Mousehover auf die Adresse gezoomt werden soll.|false|
-|zoomToResultOnClick|nein|Boolean|true|Gibt an, ob auf das Feature beim Klick auf die Adresse gezoomt werden soll.|false|
-|zoomLevel|nein|Number|7|Gibt an, auf welches ZoomLevel gezoomt werden soll.|false|
+|geoSearchServiceId|ja|String||Id des Suchdienstes. Wird aufgelöst in der **[rest-services.json](rest-services.json.de.md)**.|false|
+|minScore|nein|Number|0.6|Score der die Qualität der Suchergebnisse definiert.|false|
+|resultCount|nein|Integer|20|Maximale Anzahl der Suchtreffer die vom Dienst geliefert werden.|false|
 
 **Beispiel**
-```
-#!json
+```json
+
 "bkg": {
-    "minCharacters": 3,
-    "suggestServiceId": "4",
-    "geosearchServiceId": "5",
+    "geoSearchServiceId": "5",
     "extent": [454591, 5809000, 700000, 6075769],
-    "suggestCount": 10,
+    "resultCount": 10,
     "epsg": "EPSG:25832",
-    "filter": "filter=(typ:*)",
-    "score": 0.6,
-    "zoomToResultOnHover": false,
-    "zoomToResultOnClick": true,
-    "zoomLevel": 10
+    "minScore": 0.6
 }
 ```
 

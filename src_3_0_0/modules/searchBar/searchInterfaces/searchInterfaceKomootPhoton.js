@@ -72,7 +72,7 @@ SearchInterfaceKomootPhoton.prototype.createSearchUrl = function (searchInput) {
             lon: this.lon,
             osm_tag: this.osm_tag
         };
-    let extendedSearchUrl = `${searchUrl}lang=${this.lang}&q=${searchInput}`;
+    let extendedSearchUrl = `${searchUrl}lang=${this.lang}&q=${encodeURIComponent(searchInput)}`;
 
     for (const [key, value] of Object.entries(params)) {
         if (typeof value !== "undefined") {
