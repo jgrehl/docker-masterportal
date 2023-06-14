@@ -49,7 +49,6 @@ export default {
         async allConfigsLoaded (value) {
             if (value) {
                 await addonsPlugin.loadAddons(Config.addons);
-                await this.mergeModulesState(this.portalConfig);
                 this.addonsLoaded = true;
                 LoaderOverlay.hide();
                 this.extendLayers();
@@ -81,9 +80,6 @@ export default {
             "loadConfigJson",
             "loadRestServicesJson",
             "loadServicesJson"
-        ]),
-        ...mapActions("Modules", [
-            "mergeModulesState"
         ]),
 
         /**
