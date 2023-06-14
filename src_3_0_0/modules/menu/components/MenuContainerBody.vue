@@ -1,7 +1,7 @@
 <script>
 import MenuContainerBodyRoot from "./MenuContainerBodyRoot.vue";
 import MenuNavigation from "./MenuNavigation.vue";
-import {mapGetters} from "vuex";
+import {mapActions, mapGetters} from "vuex";
 import GetFeatureInfo from "../../getFeatureInfo/components/GetFeatureInfo.vue";
 
 export default {
@@ -28,6 +28,9 @@ export default {
             "secondaryExpanded"
         ]),
         ...mapGetters("Modules", ["componentMap"]),
+        ...mapGetters("Modules/GetFeatureInfo", {
+            gfiMenuSide: "menuSide"
+        }),
 
         /**
          * @returns {Object} Menu configuration for the given menu.
@@ -47,6 +50,35 @@ export default {
             }
             return current;
         }
+    },
+    mounted () {
+        this.menu?.sections?.forEach((elements, indexElements) => {
+            const configPath = `${this.menu.configPaths}.${indexElements}`;
+
+            this.initializeModuleConfig(elements, configPath);
+        });
+    },
+    methods: {
+        ...mapActions(["initializeModule"]),
+
+        /**
+         * Starts initializeModule for every configured module in menu.
+         * @param {Object[]} elements The menu elements.
+         * @param {String} configPath The path to elements
+         * @returns {void}
+         */
+        initializeModuleConfig (elements, configPath) {
+            elements.forEach((module, indexModule) => {
+                const path = `${configPath}.${indexModule}`;
+
+                if (module.type === "folder") {
+                    this.initializeModuleConfig(module.elements, `${path}.elements`);
+                }
+                else if (module.type !== "customMenuElement") {
+                    this.initializeModule({configPaths: [path], type: module.type});
+                }
+            });
+        }
     }
 };
 </script>
@@ -61,7 +93,7 @@ export default {
     >
         <MenuNavigation :side="side" />
         <GetFeatureInfo
-            v-if="side === 'secondaryMenu'"
+            v-if="side === gfiMenuSide"
             v-show="currentComponent === 'getFeatureInfo'"
         />
 
