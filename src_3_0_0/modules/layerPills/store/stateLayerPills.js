@@ -1,6 +1,6 @@
 /**
  * User type definition
- * @property {Object[]} configPaths Path array of possible config locations. First one found will be used
+ * @property {String[]} configPaths Path array of possible config locations. First one found will be used
  * @property {String[]} supportedDevices devices on which the module is displayed.
  * @property {String[]} supportedMapModes map mode in which this module can be used.
  * @property {Object} visibleSubjectDataLayer contains all visible subjectdata layers.
