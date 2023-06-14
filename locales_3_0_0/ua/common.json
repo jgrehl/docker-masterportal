@@ -676,26 +676,6 @@
         "unknownProjection": "Результати в невідомій системі координат"
       },
       "placeholder": {
-        "address": "Пошук за адресою"
-      },
-      "type": {
-        "address": "Адреса",
-        "district": "Район",
-        "folder": "",
-        "parcel": "Земельна ділянка",
-        "street": "Вулиця",
-        "subject": "Тема (зовнішні спеціалізовані дані)",
-        "topic": "Тема (спеціалізовані дані)"
-      }
-    },
-    "selectFeatures": {
-      "name": "Виберіть функції",
-      "noFeatureChosen": "Об'єкти (Feature) не вибрані. Виберіть об'єкти, утримуючи клавішу Ctrl і перетягуючи поле навколо об'єктів для вибору.",
-      "propertylessFeature": "Елемент без атрибутів",
-      "zoomToFeature": "збільшити зображення об'єкта (Feature) "
-    },
-    "searchbar": {
-      "placeholder": {
           "addressHospitalBplan": "Пошук адреси/лікарні/B-Plan",
           "addressTopicParcel": "Пошук адреси, району, теми, ділянки",
           "addressTopic": "Пошук адреси, району,теми",
@@ -715,6 +695,12 @@
       },
       "noInitialResults": "Початковий пошук не виявив збігів.",
       "showAll": "Покажи все"
+    },
+    "selectFeatures": {
+      "name": "Виберіть функції",
+      "noFeatureChosen": "Об'єкти (Feature) не вибрані. Виберіть об'єкти, утримуючи клавішу Ctrl і перетягуючи поле навколо об'єктів для вибору.",
+      "propertylessFeature": "Елемент без атрибутів",
+      "zoomToFeature": "збільшити зображення об'єкта (Feature) "
     },
     "shadow": {
       "name": "Тінь",
