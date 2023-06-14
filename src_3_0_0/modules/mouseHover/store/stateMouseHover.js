@@ -2,7 +2,7 @@ import Overlay from "ol/Overlay.js";
 /**
  * User type definition
  * @typedef {Object} MouseHoverStates
- * @property {Object[]} configPaths Path array of possible config locations. First one found will be used
+ * @property {String[]} configPaths Path array of possible config locations. First one found will be used
  * @property {Object} overlay =new Overlay({}) mouseHover overlay (tooltip) - paramaters get set during initialization.
  * @property {Number} numFeaturesToShow The number of features that will be shown in the popup.
  * @property {String} infoText The text that will be shown in the popup.
