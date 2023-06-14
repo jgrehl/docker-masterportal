@@ -676,46 +676,32 @@
         "unknownProjection": "Risultati in un sistema di riferimento sconosciuto"
       },
       "placeholder": {
+        "addressHospitalBplan": "Cerca indirizzo/ospedale/piano regolatore",
+        "addressTopicParcel": "Cerca indirizzo, distretto, livello, parcella catastale",
+        "addressTopic": "Ricerca indirizzo, distretto, argomenti",
         "address": "Cerca indirizzo"
-      },
-      "type": {
-        "address": "indirizzo",
-        "district": "distretto",
-        "folder": "Cartella (dati soggettivi)",
-        "parcel": "parcella catastale",
+    },
+    "showAllResults": "mostra tutto i risultati",
+    "searchResults": "Risultati di ricerca",
+    "type": {
         "street": "strada",
+        "district": "distretto",
+        "parcel": "parcella catastale",
+        "address": "indirizzo",
+        "location": "comune",
         "subject": "dati specialistici",
-        "topic": "oggetto"
-      }
+        "topic": "oggetto",
+        "general": "oggetto",
+        "folder": "Cartella (dati soggettivi)"
+    },
+    "noInitialResults": "La ricerca iniziale non ha portato risultati.",
+    "showAll": "Mostra tutto"
     },
     "selectFeatures": {
       "name": "Seleziona",
       "noFeatureChosen": "Nessuna voce selezionata. Selezionare le voci tenendo premuto il tasto Ctrl e trascinando una casella attorno alle voci da selezionare.",
       "propertylessFeature": "Voce senza attributi",
       "zoomToFeature": "Zoom su questa voce"
-    },
-    "searchbar": {
-      "placeholder": {
-          "addressHospitalBplan": "Cerca indirizzo/ospedale/piano regolatore",
-          "addressTopicParcel": "Cerca indirizzo, distretto, livello, parcella catastale",
-          "addressTopic": "Ricerca indirizzo, distretto, argomenti",
-          "address": "Cerca indirizzo"
-      },
-      "showAllResults": "mostra tutto i risultati",
-      "searchResults": "Risultati di ricerca",
-      "type": {
-          "street": "strada",
-          "district": "distretto",
-          "parcel": "parcella catastale",
-          "address": "indirizzo",
-          "location": "comune",
-          "subject": "dati specialistici",
-          "topic": "oggetto",
-          "general": "oggetto",
-          "folder": "Cartella (dati soggettivi)"
-      },
-      "noInitialResults": "La ricerca iniziale non ha portato risultati.",
-      "showAll": "Mostra tutto"
     },
     "shadow": {
       "name": "Ombre",
