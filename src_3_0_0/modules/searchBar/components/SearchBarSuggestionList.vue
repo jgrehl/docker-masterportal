@@ -19,7 +19,11 @@ export default {
     computed: {
         ...mapGetters("Modules/SearchBar", ["searchInterfaces", "searchResults", "suggestionListLength", "searchInput", "minCharacters", "searchSuggestions"]),
 
-        // sorts the results according the configured search providers and prepare the suggestionlist with the limit of suggestionListLength, updates searchSuggestions
+        /**
+         * Sorts the results according the configured search providers and prepare the suggestionlist with the limit of suggestionListLength, updates searchSuggestions
+         * @param {Object} results the limited and sorted results.
+         * @returns {void}
+         */
         limitedSortedSearchResults () {
             const results = {};
 
