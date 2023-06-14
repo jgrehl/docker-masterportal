@@ -93,9 +93,12 @@ export default {
     },
 
     /**
-     * Sets the config-params of this module into state.
+     * Sets the config-params of a module into state.
      * @param {Object} context the context Vue instance
-     * @returns {Boolean} false, if config does not contain the module
+     * @param {Object} payload The payload.
+     * @param {String[]} payload.configPaths The path to configuration of the module in the config file.
+     * @param {String} payload.type The type of the module.
+     * @returns {void}
      */
     initializeModule: (context, {configPaths, type}) => {
         return fetchFirstModuleConfig(context, configPaths, upperFirst(type));
