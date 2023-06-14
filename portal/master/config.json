@@ -627,29 +627,26 @@
         {
           "id": "4538",
           "name": "ek pv",
-          "url": "https://geodienste.hamburg.de/HH_WMS_Solaratlas",
           "typ": "WMS",
           "gfiTheme": "solaratlas",
-          "visibility": true
+          "visibility": false
         },
         {
-          "id": "11612",
-          "name": "Anlagen nach Industrieemissions- Richtlinie",
-          "url": "https://geodienste.hamburg.de/HH_WMS_IED_Anlagen",
+          "id": "4905",
+          "name": "Schwermetallmessungen",
           "typ": "WMS",
-          "gfiTheme": "dataTable",
-          "visibility": true
+          "visibility": false
         },
         {
           "id": "1420",
           "gfiTheme": "sturmflut",
-          "visibility": true
+          "visibility": false
         },
         {
           "id": "3302",
           "name": "Trinkwasser",
           "typ": "WMS",
-          "visibility": true
+          "visibility": false
         },
         {
           "id": "8730",
