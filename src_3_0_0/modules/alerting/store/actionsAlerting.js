@@ -1,15 +1,8 @@
 import dayjs from "dayjs";
 import duration from "dayjs/plugin/duration";
 import store from "../../../app-store";
-import {fetchFirstModuleConfig} from "../../../shared/js/utils/fetchFirstModuleConfig.js";
 
 dayjs.extend(duration);
-
-/** @const {String} [Path array of possible config locations. First one found will be used] */
-/** @const {Object} [vue actions] */
-const configPaths = [
-    "configJs.alerting"
-];
 
 /**
  * Finds an alert by hash value
@@ -63,15 +56,6 @@ function checkAlertViewRestriction (displayedAlerts, alertToCheck) {
 }
 
 export default {
-    /**
-     * Initially read given configs
-     * @param {object} context context
-     * @returns {void}
-     */
-    initialize: function (context) {
-        fetchFirstModuleConfig(context, configPaths, "Alerting");
-
-    },
     /**
      * Updates localStorage with read and once:true alerts, set displayed alerts as displayed and hide modal.
      * @param {Object} state state

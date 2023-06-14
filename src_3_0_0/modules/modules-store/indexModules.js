@@ -1,6 +1,4 @@
-import actions from "./actionsModules";
 import getters from "./gettersModules";
-import state from "./stateModules";
 
 import AddWMS from "../addWMS/store/indexAddWMS";
 import BufferAnalysis from "../bufferAnalysis/store/indexBufferAnalysis";
@@ -40,9 +38,7 @@ import Wfst from "../wfst/store/indexWfst";
 
 export default {
     namespaced: true,
-    actions,
     getters,
-    state: {...state},
     modules: {
         // modules must be copied, else tests fail in watch mode
         AddWMS: {...AddWMS},

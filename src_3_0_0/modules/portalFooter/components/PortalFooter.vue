@@ -1,5 +1,5 @@
 <script>
-import {mapGetters} from "vuex";
+import {mapActions, mapGetters} from "vuex";
 import ScaleLine from "./ScaleLine.vue";
 
 /**
@@ -13,8 +13,10 @@ export default {
     computed: {
         ...mapGetters(["isMobile"]),
         ...mapGetters("Modules/PortalFooter", [
+            "configPaths",
             "scaleLine",
             "seperator",
+            "type",
             "urls"
         ]),
         /**
@@ -28,6 +30,12 @@ export default {
 
             return this.urls.filter(url => url.alias).length;
         }
+    },
+    mounted () {
+        this.initializeModule({configPaths: this.configPaths, type: this.type});
+    },
+    methods: {
+        ...mapActions(["initializeModule"])
     }
 };
 </script>

@@ -58,65 +58,6 @@
         "active": true
       }
     },
-    "searchBar": {
-      "searchInterfaces": {
-        "gazetteer": {
-          "serviceId": "6",
-          "searchAddress": true,
-          "searchStreets": true,
-          "searchHouseNumbers": true,
-          "searchDistricts": true,
-          "searchParcels": true,
-          "searchStreetKey": true
-        },
-        "elasticSearch": {
-          "serviceId": "elastic_prod",
-          "type": "GET",
-          "payload": {
-            "id": "query",
-            "params": {
-              "query_string": "",
-              "typ": [
-                "sensorthings",
-                "wms"
-              ],
-              "size": 30
-            }
-          },
-          "searchStringAttribute": "query_string",
-          "responseEntryPath": "hits.hits",
-          "hitMap": {
-            "name": "_source.name",
-            "id": "_source.id",
-            "source": "_source"
-          }
-        },
-        "topicTree": {},
-        "visibleVector": {},
-        "locationFinder": {
-          "serviceId": "locationFinder",
-          "classes": [
-            {
-              "name": "Haltestelle",
-              "icon": "bi-record-circle"
-            },
-            {
-              "name": "Straßenname"
-            }
-          ]
-        },
-        "komootPhoton": {
-          "minChars": 3,
-          "serviceId": "11",
-          "limit": 10,
-          "lang": "de",
-          "lat": 53.6,
-          "lon": 10.0,
-          "bbox": "9.6,53.3,10.4,53.8"
-        },
-        "exampleSearch": {}
-      }
-    },
     "mainMenu": {
       "expanded": true,
       "title": {
@@ -124,6 +65,65 @@
         "logo": "https://geodienste.hamburg.de/lgv-config/img/hh-logo.png",
         "link": "https://geoinfo.hamburg.de",
         "toolTip": "Landesbetrieb Geoinformation und Vermessung"
+      },
+      "searchBar": {
+        "searchInterfaces": {
+          "gazetteer": {
+            "serviceId": "6",
+            "searchAddress": true,
+            "searchStreets": true,
+            "searchHouseNumbers": true,
+            "searchDistricts": true,
+            "searchParcels": true,
+            "searchStreetKey": true
+          },
+          "elasticSearch": {
+            "serviceId": "elastic_prod",
+            "type": "GET",
+            "payload": {
+              "id": "query",
+              "params": {
+                "query_string": "",
+                "typ": [
+                  "sensorthings",
+                  "wms"
+                ],
+                "size": 30
+              }
+            },
+            "searchStringAttribute": "query_string",
+            "responseEntryPath": "hits.hits",
+            "hitMap": {
+              "name": "_source.name",
+              "id": "_source.id",
+              "source": "_source"
+            }
+          },
+          "topicTree": {},
+          "visibleVector": {},
+          "locationFinder": {
+            "serviceId": "locationFinder",
+            "classes": [
+              {
+                "name": "Haltestelle",
+                "icon": "bi-record-circle"
+              },
+              {
+                "name": "Straßenname"
+              }
+            ]
+          },
+          "komootPhoton": {
+            "minChars": 3,
+            "serviceId": "11",
+            "limit": 10,
+            "lang": "de",
+            "lat": 53.6,
+            "lon": 10.0,
+            "bbox": "9.6,53.3,10.4,53.8"
+          },
+          "exampleSearch": {}
+        }
       },
       "sections": [
         [
@@ -275,10 +275,9 @@
                     "type": "folder",
                     "elements": [
                       {
-                        "type": "fileImport"
-                      },
-                      {
-                        "type": "bufferAnalysis"
+                        "type": "bufferAnalysis",
+                        "showDescription": true,
+                        "description": "Finde heraus, was sich in einem Umkreis um ein Feature befindet."
                       }
                     ]
                   },
