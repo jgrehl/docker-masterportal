@@ -1,4 +1,6 @@
 import WKTUtil from "../../../../shared/js/utils/getWKTGeom";
+import {createGfiFeature} from "../../../../shared/js/utils/getWmsFeaturesByMimeType";
+
 /**
  * Contains actions that communicate with other components after an interaction, such as onClick or onHover, with a search result.
  */
@@ -50,8 +52,14 @@ export default {
      * Opens the get feature info of the search result.
      * @returns {void}
      */
-    openGetFeatureInfo: () => {
-        // Do someThing
+    openGetFeatureInfo: ({commit}, {feature, layer}) => {
+        const gfiFeature = createGfiFeature(
+            layer,
+            "",
+            feature
+        );
+        
+        commit("Modules/GetFeatureInfo/setGfiFeatures", [gfiFeature], {root: true});
 
         /* used in:
             visibleVector
