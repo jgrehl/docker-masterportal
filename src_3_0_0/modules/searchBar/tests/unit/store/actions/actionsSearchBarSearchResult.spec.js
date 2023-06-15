@@ -82,21 +82,11 @@ describe("src/modules/searchBar/store/actions/actionsSearchBarSearchResult.spec.
     });
 
     describe("setMarker", () => {
-        it("sets the MapMarker with coordinates as string", () => {
-            const coordinates = ["1234", "65432"],
-                payload = [1234, 65432];
-
-            setMarker({dispatch}, coordinates);
-
-            expect(dispatch.calledOnce).to.be.true;
-            expect(dispatch.firstCall.args[0]).to.equals("Maps/placingPointMarker");
-            expect(dispatch.firstCall.args[1]).to.be.deep.equals(payload);
-        });
-        it("sets the MapMarker with coordinates as number", () => {
+        it("sets the MapMarker with coordinates", () => {
             const coordinates = [1234, 65432],
                 payload = [1234, 65432];
 
-            setMarker({dispatch}, coordinates);
+            setMarker({dispatch}, {coordinates});
 
             expect(dispatch.calledOnce).to.be.true;
             expect(dispatch.firstCall.args[0]).to.equals("Maps/placingPointMarker");
