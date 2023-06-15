@@ -75,11 +75,11 @@ export default {
      * Sets the marker to the feature of the search result.
      * @param {Object} context actions context object.
      * @param {Object} payload The payload.
-     * @param {Object} payload.coordinates The coordinates to show marker at.
+     * @param {Array} payload.coordinates The coordinates to show marker at.
      * @returns {void}
      */
     setMarker: ({dispatch}, {coordinates}) => {
-        dispatch("Maps/placingPointMarker", [parseFloat(coordinates[0]), parseFloat(coordinates[1])], {root: true});
+        dispatch("Maps/placingPointMarker", coordinates, {root: true});
         /* used in:
             bkg
             gazetter
@@ -96,7 +96,7 @@ export default {
      * @param {Object} param.dispatch the dispatch
      * @param {Object} param.getters the getters
      * @param {Object} payload The payload.
-     * @param {Object} payload.coordinates The coordinates to zoom to.
+     * @param {Array} payload.coordinates The coordinates to zoom to.
      * @returns {void}
      */
     zoomToResult: ({dispatch, getters}, {coordinates}) => {
