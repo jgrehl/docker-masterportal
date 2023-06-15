@@ -83,6 +83,7 @@ const actions = {
         let spec = BuildSpec,
             printJob = {};
 
+        Object.assign(attr.attributes, print.layoutAttributes);
         spec.setAttributes(attr);
 
         if (state.isMetadataAvailable) {

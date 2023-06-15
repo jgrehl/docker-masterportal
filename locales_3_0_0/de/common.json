@@ -558,6 +558,8 @@
       "printLabel": "Datei erstellen",
       "scaleLabel": "Druckmaßstab",
       "titleLabel": "Titel",
+      "subtitleLabel": "Untertitel",
+      "textFieldLabel": "Freitextfeld",
       "validationWarning": "Der Dateiname darf nur Buchstaben und die Sonderzeichen '-' und '_' enthalten.",
       "vtlWarning": "Da MapFish 3 keine Vector Tile Layer unterstützt, werden die folgenden aktiven Layer nicht in der Printansicht erscheinen:",
       "waitForPrintErrorMessage": "Die Erstellung des Ausdrucks ist fehlgeschlagen.<br>Bitte versuchen Sie es zu einem späteren Zeitpunkt erneut oder wenden Sie sich an den Betreiber des Portal.",
