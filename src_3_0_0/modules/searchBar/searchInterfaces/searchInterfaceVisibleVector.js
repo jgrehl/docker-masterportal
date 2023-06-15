@@ -153,8 +153,8 @@ SearchInterfaceVisibleVector.prototype.createPossibleActions = function (feature
 
     return {
         openGetFeatureInfo: {
-            featureId: feature.getId(),
-            layerId: layer.attributes.id,
+            feature: feature,
+            layer: layer,
             closeResults: true
         },
         setMarker: {
