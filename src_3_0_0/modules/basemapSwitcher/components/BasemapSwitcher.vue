@@ -156,15 +156,15 @@ export default {
             <button
                 v-if="topBackgroundLayerId === undefined"
                 id="bs-placeholder"
-                class="btn btn-light preview"
+                class="btn btn-light preview top placeholder-button"
                 @click="setActivatedExpandable(!activatedExpandable)"
             >
-                Choose Map
+                <i class="bi-map" />
             </button>
             <button
                 v-else
                 id="bs-topBackgroundLayer"
-                class="btn btn-light preview"
+                class="btn btn-light preview top"
                 @click="setActivatedExpandable(!activatedExpandable)"
             >
                 <LayerPreview
@@ -185,7 +185,7 @@ export default {
     .btn-group-background-switcher {
         background-color: $white;
         border: solid $white 1px;
-        border-radius: 25px;
+        border-radius: 35px;
         position: absolute;
         bottom: 0;
         align-self: start;
@@ -199,5 +199,24 @@ export default {
     .preview {
         padding: 0px;
         margin: 5px;
+        border: 2px solid rgba(66, 66, 66, 0);
+        min-width: 52px;
+        min-height: 52px;
     }
+
+    .preview:hover{
+        border: 2px solid rgba(66, 66, 66, 0.8);
+    }
+
+    .placeholder-button {
+        color: $black;
+        padding-top: 6px;
+        font-size: 30px;
+    }
+
+    .top {
+        border: 2px solid rgba(66, 66, 66, 0.8);
+    }
+
+
 </style>
