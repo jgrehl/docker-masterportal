@@ -1,6 +1,7 @@
 import sinon from "sinon";
 import {expect} from "chai";
 import WKTUtil from "../../../../../../shared/js/utils/getWKTGeom";
+import wmsGFIUtil from "../../../../../../shared/js/utils/getWmsFeaturesByMimeType";
 import actions from "../../../../store/actions/actionsSearchBarSearchResult";
 
 const {
@@ -15,6 +16,7 @@ const {
 
 describe("src/modules/searchBar/store/actions/actionsSearchBarSearchResult.spec.js", () => {
     let dispatch,
+        commit,
         getters,
         zoomLevel;
 
@@ -22,6 +24,7 @@ describe("src/modules/searchBar/store/actions/actionsSearchBarSearchResult.spec.
         zoomLevel = 5;
 
         dispatch = sinon.spy();
+        commit = sinon.spy();
         getters = {
             zoomLevel: zoomLevel
         };
@@ -70,8 +73,27 @@ describe("src/modules/searchBar/store/actions/actionsSearchBarSearchResult.spec.
     });
 
     describe("openGetFeatureInfo", () => {
-        it("openGetFeatureInfo", () => {
-            openGetFeatureInfo();
+        it("openGetFeatureInfo shall commit 'setGfiFeatures'", () => {
+            const feature = {
+                    id: "feature"
+                },
+                layer = {
+                    id: "layer"
+                },
+                gfiFeature = {
+                    getId: () => feature.id,
+                    getLayerId: () => layer.id
+                },
+                stubCreateGfiFeature = sinon.stub(wmsGFIUtil, "createGfiFeature").returns(gfiFeature);
+
+            openGetFeatureInfo({commit}, {feature, layer});
+            expect(commit.calledOnce).to.be.true;
+            expect(commit.firstCall.args[0]).to.equals("Modules/GetFeatureInfo/setGfiFeatures");
+            expect(commit.firstCall.args[1]).to.be.deep.equals([gfiFeature]);
+            expect(stubCreateGfiFeature.calledOnce).to.be.true;
+            expect(stubCreateGfiFeature.firstCall.args[0]).to.be.deep.equals(layer);
+            expect(stubCreateGfiFeature.firstCall.args[1]).to.be.equals("");
+            expect(stubCreateGfiFeature.firstCall.args[2]).to.be.deep.equals(feature);
         });
     });
 

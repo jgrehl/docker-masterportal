@@ -38,9 +38,6 @@ export default {
                 /* eslint-disable no-console */
                 console.log("SearchResults:");
                 console.log(searchResults);
-                if(searchResults.length > 0){
-                    this.openGetFeatureInfo(searchResults[0].events.onClick.openGetFeatureInfo);
-                }
             },
             deep: true
         }
@@ -79,7 +76,7 @@ export default {
                 class="form-control"
                 :placeholder="$t(placeholder)"
                 :aria-label="$t(placeholder)"
-                @xinput="startSearch"
+                @input="startSearch"
                 @keydown.enter="startSearch"
             >
         </div>
