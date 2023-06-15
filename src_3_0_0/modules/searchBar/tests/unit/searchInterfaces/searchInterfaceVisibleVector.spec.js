@@ -89,8 +89,8 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceVisibleVec
                             onClick: {
                                 openGetFeatureInfo: {
                                     closeResults: true,
-                                    featureId: "1",
-                                    layerId: "123"
+                                    feature:feature1,
+                                    layer: layer1
                                 },
                                 setMarker: {
                                     closeResults: true,
@@ -167,8 +167,8 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceVisibleVec
                             onClick: {
                                 openGetFeatureInfo: {
                                     closeResults: true,
-                                    featureId: "2",
-                                    layerId: "789"
+                                    feature: feature2,
+                                    layerId: clusterLayer1
                                 },
                                 setMarker: {
                                     closeResults: true,
@@ -221,8 +221,8 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceVisibleVec
                         onClick: {
                             openGetFeatureInfo: {
                                 closeResults: true,
-                                featureId: "1",
-                                layerId: "123"
+                                featureId: feature1,
+                                layerId:layer1
                             },
                             setMarker: {
                                 closeResults: true,
