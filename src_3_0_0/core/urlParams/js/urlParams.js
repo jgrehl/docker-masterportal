@@ -4,6 +4,7 @@ import globalUrlParams from "./globalUrlParams";
 import layerUrlParams from "../../../core/layers/js/layerUrlParams";
 import mapUrlParams from "../../../core/maps/js/mapUrlParams";
 import menuUrlParams from "../../../modules/menu/js/menuUrlParams";
+import searchBarUrlParams from "../../../modules/searchBar/js/searchBarUrlParams";
 
 /**
  * Sets the url params ro the app-store state.
@@ -28,5 +29,6 @@ export function startProcessUrlParams () {
         layerUrlParams.processLayerUrlParams();
         mapUrlParams.processMapUrlParams();
         menuUrlParams.processMenuUrlParams();
+        searchBarUrlParams.processSearchBarUrlParams();
     });
 }
