@@ -120,7 +120,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceLocationFi
                                     2
                                 ]
                             },
-                            zoomToFeature: {
+                            zoomToResult: {
                                 closeResults: true,
                                 coordinates: [
                                     1,
@@ -176,7 +176,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceLocationFi
                                     2
                                 ]
                             },
-                            zoomToFeature: {
+                            zoomToResult: {
                                 closeResults: true,
                                 coordinates: [
                                     1,
@@ -227,7 +227,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceLocationFi
                                     2
                                 ]
                             },
-                            zoomToFeature: {
+                            zoomToResult: {
                                 closeResults: true,
                                 coordinates: [
                                     1,
@@ -280,7 +280,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceLocationFi
                                     2
                                 ]
                             },
-                            zoomToFeature: {
+                            zoomToResult: {
                                 closeResults: true,
                                 coordinates: [
                                     1,
@@ -326,7 +326,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceLocationFi
                         closeResults: true,
                         coordinates: [1, 2]
                     },
-                    zoomToFeature: {
+                    zoomToResult: {
                         closeResults: true,
                         coordinates: [1, 2]
                     }
