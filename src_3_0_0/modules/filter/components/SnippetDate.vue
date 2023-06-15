@@ -58,6 +58,16 @@ export default {
             required: false,
             default: 0
         },
+        filterGeometry: {
+            type: [Object, Boolean],
+            required: false,
+            default: false
+        },
+        filterGeometryName: {
+            type: [String, Boolean],
+            required: false,
+            default: false
+        },
         title: {
             type: [String, Boolean],
             required: false,
@@ -242,7 +252,10 @@ export default {
                     this.emitSnippetPrechecked();
                     console.warn(err);
                 }, typeof this.minValue === "undefined" && typeof this.maxValue !== "undefined", typeof this.minValue !== "undefined" && typeof this.maxValue === "undefined", true,
-                {rules: this.fixedRules, filterId: this.filterId, format: this.format});
+                {rules: this.fixedRules, filterId: this.filterId, format: this.format, commands: {
+                    filterGeometry: this.filterGeometry,
+                    geometryName: this.filterGeometryName
+                }});
             }
             else {
                 this.value = this.precheckedIsValid ? momentPrechecked.format(this.internalFormat) : "";
