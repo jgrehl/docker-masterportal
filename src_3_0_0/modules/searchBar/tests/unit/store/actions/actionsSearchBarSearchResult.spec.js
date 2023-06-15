@@ -103,4 +103,20 @@ describe("src/modules/searchBar/store/actions/actionsSearchBarSearchResult.spec.
             expect(dispatch.firstCall.args[1]).to.be.deep.equals(payload);
         });
     });
+
+    describe("zoomToResult", () => {
+        it("zoomToResult with coordinates ", () => {
+            const coordinates = [1234, 65432],
+                payload = {
+                    coordinates,
+                    zoom: getters.zoomLevel
+                };
+
+            zoomToResult({dispatch, getters}, {coordinates});
+
+            expect(dispatch.calledOnce).to.be.true;
+            expect(dispatch.firstCall.args[0]).to.equals("Maps/zoomToCoordinates");
+            expect(dispatch.firstCall.args[1]).to.be.deep.equals(payload);
+        });
+    });
 });
