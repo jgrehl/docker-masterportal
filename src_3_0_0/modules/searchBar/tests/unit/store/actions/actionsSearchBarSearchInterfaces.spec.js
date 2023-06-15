@@ -5,6 +5,7 @@ import sinon from "sinon";
 const {
     cleanSearchResults,
     instantiateSearchInterfaces,
+    startSearch,
     search
 } = actions;
 
@@ -65,6 +66,23 @@ describe("src_3_0_0/modules/searchBar/store/actions/actionsSearchBarSearchInterf
             expect(commit.calledTwice).to.be.true;
             expect(commit.args[0]).includes("addSearchInterfaceInstances");
             expect(commit.args[0]).includes("addSearchInterfaceInstances");
+        });
+    });
+
+    describe("startSearch", () => {
+        it("should start search to abc-straße", () => {
+            const state = {
+                searchInput: "abc-straße",
+                minCharacters: 3
+            };
+
+            startSearch({dispatch, state});
+
+            expect(dispatch.calledOnce).to.be.true;
+            expect(dispatch.firstCall.args[0]).to.equals("search");
+            expect(dispatch.firstCall.args[1]).to.deep.equals({
+                searchInput: "abc-straße"
+            });
         });
     });
 
