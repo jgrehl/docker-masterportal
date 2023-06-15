@@ -181,7 +181,7 @@ SearchInterfaceOsmNominatim.prototype.createPossibleActions = function (searchRe
             coordinates: coordinates,
             closeResults: true
         },
-        zoomToFeature: {
+        zoomToResult: {
             coordinates: coordinates,
             closeResults: true
         }
