@@ -18,6 +18,7 @@ import {
     or as orFilter
 } from "ol/format/filter";
 import dayjs from "dayjs";
+import GeometryCollection from "ol/geom/GeometryCollection.js";
 
 /**
  * InterfaceWfsExtern is the filter interface for WFS services
@@ -70,7 +71,7 @@ export default class InterfaceWfsExtern {
      * @returns {void}
      */
     getMinMax (service, attrName, onsuccess, onerror, minOnly = false, maxOnly = false, isDate = false, filterQuestion = false, axiosMock = false) {
-        if (Array.isArray(filterQuestion?.rules) && filterQuestion.rules.length) {
+        if (Array.isArray(filterQuestion?.rules) && filterQuestion.rules.length || filterQuestion.commands?.filterGeometry) {
             this.getMinMaxPOST(service, attrName, onsuccess, onerror, minOnly, maxOnly, isDate, filterQuestion);
         }
         else {
@@ -93,11 +94,12 @@ export default class InterfaceWfsExtern {
      * @param {String} filterQuestion.format the date format - only needed if isDate is true
      * @returns {void}
      */
-    getMinMaxPOST (service, attrName, onsuccess, onerror, minOnly, maxOnly, isDate, {rules, filterId, format}) {
+    getMinMaxPOST (service, attrName, onsuccess, onerror, minOnly, maxOnly, isDate, {rules, filterId, format, commands}) {
         const filterQuestion = {
             filterId,
             service,
-            rules
+            rules,
+            commands
         };
 
         if (!Array.isArray(this.waitingListForRequests[filterId])) {
@@ -277,7 +279,7 @@ export default class InterfaceWfsExtern {
      * @returns {void}
      */
     getUniqueValues (service, attrName, onsuccess, onerror, filterQuestion, axiosMock = false) {
-        if (Array.isArray(filterQuestion?.rules) && filterQuestion.rules.length > 0) {
+        if (Array.isArray(filterQuestion?.rules) && filterQuestion.rules.length > 0 || filterQuestion.commands?.filterGeometry) {
             this.getUniqueValueByPOST(service, attrName, onsuccess, onerror, filterQuestion);
         }
         else {
@@ -295,11 +297,12 @@ export default class InterfaceWfsExtern {
      * @param {Number} filterQuestion.filterId the filterId
      * @returns {void}
      */
-    getUniqueValueByPOST (service, attrName, onsuccess, onerror, {rules, filterId}) {
+    getUniqueValueByPOST (service, attrName, onsuccess, onerror, {rules, filterId, commands}) {
         const filterQuestion = {
             filterId,
             service,
-            rules
+            rules,
+            commands
         };
 
         if (typeof attrName !== "string"
@@ -648,7 +651,7 @@ export default class InterfaceWfsExtern {
      * @param {Object[]} rules the rules to parse through
      * @param {Boolean} searchInMapExtent a flag if the filter should apply only in current browser extent
      * @param {String} geometryName the attrName of the geometry
-     * @param {Function} filterGeometry a geometry in which to filter
+     * @param {Object} filterGeometry a geometry in which to filter
      * @returns {Object} an ol filter object to use with writeGetFeature method
      */
     getFilter (rules, searchInMapExtent, geometryName, filterGeometry) {
@@ -668,7 +671,7 @@ export default class InterfaceWfsExtern {
         });
 
         if (typeof geometryName === "string" && isObject(filterGeometry)) {
-            args.push(intersectsFilter(geometryName, filterGeometry));
+            args.push(this.intersectsGeometryFilter(geometryName, filterGeometry));
         }
         else if (searchInMapExtent && typeof geometryName === "string" && typeof this.getCurrentExtent === "function") {
             args.push(bboxFilter(geometryName, this.getCurrentExtent()));
@@ -809,5 +812,27 @@ export default class InterfaceWfsExtern {
             },
             items: []
         });
+    }
+    /**
+     * Intersercts given filter geometry.
+     * @param {String} geometryName The name of the geometry key.
+     * @param {ol/geom/Geometry|ol/geom/GeometryCollection} filterGeometry The geometry.
+     * @returns {ol/format/filter/Intersects} the intersects object
+     */
+    intersectsGeometryFilter (geometryName, filterGeometry) {
+        if (!(filterGeometry instanceof GeometryCollection)) {
+            return intersectsFilter(geometryName, filterGeometry);
+        }
+        const geometries = filterGeometry.getGeometries();
+
+        if (geometries.length > 1) {
+            const orArgs = [];
+
+            geometries.forEach(geometry => {
+                orArgs.push(intersectsFilter(geometryName, geometry));
+            });
+            return orFilter(...orArgs);
+        }
+        return intersectsFilter(geometryName, geometries[0]);
     }
 }

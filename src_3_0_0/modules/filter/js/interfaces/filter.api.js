@@ -197,7 +197,7 @@ export default class FilterApi {
      * @param {Number} filterId the filterId
      * @returns {void}
      */
-    getMinMax (attrName, onsuccess, onerror, minOnly, maxOnly, isDate, {rules, filterId, format}) {
+    getMinMax (attrName, onsuccess, onerror, minOnly, maxOnly, isDate, {rules, filterId, format, commands}) {
         if (!isObject(this.service)) {
             if (typeof onerror === "function") {
                 onerror(new Error("FilterApi.getMinMax: You have to set a default service first before using this function."));
@@ -233,7 +233,7 @@ export default class FilterApi {
                         obj.onerror(error);
                     }
                 });
-            }, minOnly, maxOnly, isDate, {rules, filterId, format});
+            }, minOnly, maxOnly, isDate, {rules, filterId, format, commands});
         }
         else {
             FilterApi.waitingList[cacheKey].push({onsuccess, onerror});
@@ -248,7 +248,7 @@ export default class FilterApi {
      * @param {Number} filterId the filterId
      * @returns {void}
      */
-    getUniqueValues (attrName, onsuccess, onerror, {rules, filterId}) {
+    getUniqueValues (attrName, onsuccess, onerror, {rules, filterId, commands}) {
         if (!isObject(this.service)) {
             if (typeof onerror === "function") {
                 onerror(new Error("FilterApi.getUniqueValues: You have to set a default service first before using this function."));
@@ -287,7 +287,7 @@ export default class FilterApi {
                         obj.onerror(error);
                     }
                 });
-            }, {rules, filterId});
+            }, {rules, filterId, commands});
         }
         else {
             FilterApi.waitingList[cacheKey].push({onsuccess, onerror});
