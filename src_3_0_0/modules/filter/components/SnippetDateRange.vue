@@ -44,6 +44,16 @@ export default {
             required: false,
             default: 0
         },
+        filterGeometry: {
+            type: [Object, Boolean],
+            required: false,
+            default: false
+        },
+        filterGeometryName: {
+            type: [String, Boolean],
+            required: false,
+            default: false
+        },
         fixedRules: {
             type: Array,
             required: false,
@@ -406,7 +416,10 @@ export default {
                 if (typeof onsuccess === "function") {
                     onsuccess(value);
                 }
-            }, onerror, {rules: this.fixedRules, filterId: this.filterId});
+            }, onerror, {rules: this.fixedRules, filterId: this.filterId, commands: {
+                filterGeometry: this.filterGeometry,
+                geometryName: this.filterGeometryName
+            }});
         },
         /**
          * Merges given lists into one, sorted by time, removes doublings.
