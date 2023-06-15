@@ -23,17 +23,22 @@ describe("src_3_0_0/modules/searchBar/components/SearchBar.vue", () => {
                             actions: {
                                 instantiateSearchInterfaces: sinon.stub(),
                                 overwriteDefaultValues: sinon.stub(),
-                                search: sinon.stub()
+                                startSearch: sinon.stub()
                             },
                             getters: {
+                                configPaths: () => [],
                                 minCharacters: () => 3,
                                 placeholder: () => "ABC",
                                 searchInput: () => "abc-straße",
-                                searchResults: () => []
+                                searchResults: () => [],
+                                type: () => "searchBar"
                             }
                         }
                     }
                 }
+            },
+            actions: {
+                initializeModule: sinon.stub()
             }
         });
     });
@@ -56,29 +61,13 @@ describe("src_3_0_0/modules/searchBar/components/SearchBar.vue", () => {
         });
     });
 
-    describe("startSearch", () => {
-        it("should start search to abc-straße", () => {
-            const searchSpy = sinon.spy(wrapper.vm, "search");
-
-            wrapper.vm.startSearch();
-
-            expect(searchSpy.calledOnce).to.be.true;
-            expect(searchSpy.firstCall.args[0]).to.deep.equals({
-                searchInput: "abc-straße"
-            });
-        });
-    });
-
     describe("click button", () => {
         it("should start search to abc-straße, if button is clicked", async () => {
-            const searchSpy = sinon.spy(wrapper.vm, "search");
+            const startSearchSpy = sinon.spy(wrapper.vm, "startSearch");
 
             await wrapper.find("#search-button").trigger("click");
 
-            expect(searchSpy.calledOnce).to.be.true;
-            expect(searchSpy.firstCall.args[0]).to.deep.equals({
-                searchInput: "abc-straße"
-            });
+            expect(startSearchSpy.calledOnce).to.be.true;
         });
     });
 });
