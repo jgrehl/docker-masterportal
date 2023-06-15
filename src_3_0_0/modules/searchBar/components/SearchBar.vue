@@ -49,18 +49,8 @@ export default {
     },
     methods: {
         ...mapActions(["initializeModule"]),
-        ...mapActions("Modules/SearchBar", ["instantiateSearchInterfaces", "overwriteDefaultValues", "search"]),
-        ...mapMutations("Modules/SearchBar", ["setSearchInput"]),
-
-        /**
-         * Starts the search in searchInterfaces, if min characters are introduced.
-         * @returns {void}
-         */
-        startSearch () {
-            if (this.searchInputValue.length >= parseInt(this.minCharacters, 10)) {
-                this.search({searchInput: this.searchInputValue});
-            }
-        }
+        ...mapActions("Modules/SearchBar", ["instantiateSearchInterfaces", "overwriteDefaultValues", "startSearch"]),
+        ...mapMutations("Modules/SearchBar", ["setSearchInput"])
     }
 };
 </script>
@@ -86,6 +76,7 @@ export default {
                 class="form-control"
                 :placeholder="$t(placeholder)"
                 :aria-label="$t(placeholder)"
+                :name="searchInput"
                 @input="startSearch"
                 @keydown.enter="startSearch"
             >
