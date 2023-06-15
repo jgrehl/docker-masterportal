@@ -4,6 +4,7 @@ import Cluster from "ol/source/Cluster";
 import {mapGetters, mapMutations, mapActions} from "vuex";
 import {Vector} from "ol/layer.js";
 
+import isObject from "../../../shared/js/utils/isObject";
 import mutations from "../store/mutationsPrint";
 import thousandsSeparator from "../../../shared/js/utils/thousandsSeparator";
 import getVisibleLayer from "../js/getVisibleLayer";
@@ -22,7 +23,9 @@ export default {
             printIcon: "bi-printer",
             downloadIcon: "bi-download",
             docTitleId: "docTitle",
-            outputFileTitleId: "outputFileTitle"
+            outputFileTitleId: "outputFileTitle",
+            subtitle: "",
+            textField: ""
         };
     },
     computed: {
@@ -30,6 +33,7 @@ export default {
             "autoAdjustScale",
             "capabilitiesFilter",
             "currentFormat",
+            "currentLayout",
             "currentLayoutName",
             "currentMapScale",
             "defaultCapabilitiesFilter",
@@ -278,7 +282,8 @@ export default {
             const currentPrintLength = this.fileDownloads.filter(file => file.finishState === false).length;
 
             if (currentPrintLength <= 10) {
-                const index = this.fileDownloads.length;
+                const index = this.fileDownloads.length,
+                    layoutAttributes = this.getLayoutAttributes(this.currentLayout, ["subtitle", "textField"]);
 
                 this.addFileDownload({
                     index: index,
@@ -294,7 +299,8 @@ export default {
                     index,
                     getResponse: async (url, payload) => {
                         return axios.post(url, payload);
-                    }
+                    },
+                    layoutAttributes
                 });
             }
             else {
@@ -346,6 +352,45 @@ export default {
                 document.getElementById("outputFileTitle").classList.remove("danger");
                 document.getElementById("printBtn").disabled = false;
             }
+        },
+
+        /**
+         * Checks if the layout has a certain attribute by its name.
+         * @param {Object} layout - The selected layout.
+         * @param {String} attributeName - The name of the attribute to be checked.
+         * @returns {Boolean} True if it has otherwise false.
+         */
+        hasLayoutAttribute (layout, attributeName) {
+            if (isObject(layout) && typeof attributeName === "string") {
+                return layout.attributes.some(attribute => {
+                    return attribute.name === attributeName;
+                });
+            }
+            return false;
+        },
+
+        /**
+         * Gets the layout attributes by the given names.
+         * @param {Object} layout - The selected layout.
+         * @param {String[]} nameList - A list of attribute names.
+         * @returns {Object} The layout attributes or an empty object.
+         */
+        getLayoutAttributes (layout, nameList) {
+            const layoutAttributes = {};
+
+            if (!isObject(layout) || !Array.isArray(nameList)) {
+                return layoutAttributes;
+            }
+            nameList.forEach(name => {
+                if (this.hasLayoutAttribute(layout, name)) {
+                    layoutAttributes[name] = this[name];
+                }
+            });
+            return layoutAttributes;
+        },
+
+        setSubtitle (subtitle) {
+            this.subtitle = subtitle;
         }
     }
 };
@@ -365,6 +410,19 @@ export default {
                     :value="title"
                     :input="setTitle"
                 />
+            </div>
+            <div
+                v-if="hasLayoutAttribute(currentLayout, 'subtitle')"
+            >
+                <div>
+                    <InputText
+                        :id="subtitle"
+                        :label="$t('common:modules.print.subtitleLabel')"
+                        :placeholder="$t('common:modules.print.subtitleLabel')"
+                        :value="subtitle"
+                        :input="setSubtitle"
+                    />
+                </div>
             </div>
             <div class="form-floating mb-3">
                 <select
