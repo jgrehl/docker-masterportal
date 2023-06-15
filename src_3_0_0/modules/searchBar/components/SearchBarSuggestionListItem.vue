@@ -22,8 +22,8 @@ export default {
             <button
                 type="button"
                 class="btn btn-light d-flex"
-                :title="searchResult.name"
-                :aria-label="searchResult.name"
+                :title="searchResult.toolTip"
+                :aria-label="searchResult.toolTip"
                 @click="interaction"
                 @keydown.enter="interaction"
             >
