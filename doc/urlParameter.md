@@ -22,6 +22,7 @@ List of URL parameters with examples.
 |MARKER|Sets a point marker to the given coordinate. If `PROJECTION` is given as parameter, the marker coordinates are to be expected in that coordinate reference system and are translated before application. Else, the given coordinates must match the map's coordinate reference system. See **[config.namedProjections.epsg](config.js.md)**.|`&MARKER=565874,5934140`|
 |MDID|Activates all layers with the specified metadata ID. In addition, the background map configured at the top in config.json is displayed.|`&MDID=F35EAC11-C236-429F-B1BF-751C0C18E8B7`|
 |MENU|Sets modules that should be opened initially. For the mainMenu and secondaryMenu one module each can be specified. The specification of attributes is possible depending on the respective module.|`&MENU={"main":{"currentComponent":"print","attributes":{"currentScale":5000,"dpiForPdf":"120"}},"secondary":{"currentComponent":"coordToolkit"}}`|
+|QUERY|Starts the search via the search bar with any string given.|`&QUERY=Neuenfelder Straße 19`||
 |UISTYLE|Activates a special UI variant. E.g. `simple` may be set to hide all UI elements in an iFrame scenario.|`&UISTYLE=simple`|
 |ZOOMTOEXTENT|Zooms to an extent. May be combined with projection.|`&ZOOMTOEXTENT=510000,5850000,625000,6000000`|
 |ZOOMTOFEATUREID|Zooms to the features of a WFS configured via **[config.zoomTo](config.js.md)**.|`&ZOOMTOFEATUREID=18,26`|
@@ -60,6 +61,7 @@ List of obsolete URL parameters with examples. Current URL parameters are given 
 |MAP/ZOOMTOFEATUREID|Zooms to the features of a WFS configured via **[config.zoomTo](config.js.md)**.|`&MAP/ZOOMTOFEATUREID=18,26`|`&ZOOMTOFEATUREID=18,26`|
 |MAP/ZOOMTOGEOMETRY|Zooms to a feature requested from a WFS. Allowed parameters depend on **[config.zoomTo](config.js.md)**. As an alternative to the feature name, features may also be addressed by their `geometries` array index, starting at 1.|`&MAP/ZOOMTOGEOMETRY=bergedorf`|`&ZOOMTOGEOMETRY=bergedorf`|
 |PROJECTION|Coordinate reference system EPSG code. Only works when used in combination with `CENTER`, `MARKER` or `ZOOMTOEXTENT`. The coordinates of the parameters are transformed to the projection. If not set, projection of the map is used. Does not set the projection of the map.|`&PROJECTION=EPSG:31467&CENTER=[3565836,5945355]` `&PROJECTION=EPSG:31467&MARKER=3565836,5945355` `&PROJECTION=EPSG:4326&ZOOMTOEXTENT=10.0822,53.6458,10.1781,53.8003`|
+|SEARCH/QUERY|Starts the search via the search bar with any string given|`&SEARCH/QUERY=Neuenfelder Straße 19`|`&QUERY=Neuenfelder Straße 19`|
 |STARTUPMODUL|The module with the specified ID is opened initially in the menu.|`&STARTUPMODUL=Draw`|`&MENU={"secondary":{"currentComponent":"draw"}}`|
 |STYLE|Activates a special UI variant. E.g. `simple` may be set to hide all UI elements in an iFrame scenario.|`&STYLE=simple`|`&UISTYLE=simple`|
 |TILT|Only works when used in combination with `MAP`, `MAPMODE` or `MAP/MAPMODE`. Sets the tilt in 3D mode.|`&MAP/MAPMODE=3D&TILT=45`|`&MAPS={"mode":"3D","tilt":45}`|
@@ -69,11 +71,3 @@ List of obsolete URL parameters with examples. Current URL parameters are given 
 |ZOOMLEVEL|Sets the initial zoom level.|`&ZOOMLEVEL=2`|`MAPS={"zoom":0}`|
 
 ***
-
-## Not yet implemented parameter list
-List of URL parameters that are not yet implemented.
-
-|Name|Description|Example|Alternative|
-|----|-----------|-------|-----------|
-|QUERY|Starts an address search via the search slot with any string given. House numbers must be given separated with a blank.|`&QUERY=Neuenfelder Straße 19`||
-|SEARCH/QUERY|Starts an address search via the search slot with any string given. House numbers must be given separated with a blank.|`&SEARCH/QUERY=Neuenfelder Straße 19`||
