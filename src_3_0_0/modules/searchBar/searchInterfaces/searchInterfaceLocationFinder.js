@@ -12,7 +12,7 @@ import store from "../../../app-store";
  * @param {String[]} [classes] May contain classes (with properties) to use in searches.
  * @param {String} [epsg] Coordinate reference system to use for requests. By default, the value in `Portalconfig.mapView.epsg` is used.
  * @param {Object} [resultEvents] Actions that are executed when an interaction, such as hover or click, is performed with a result list item.
- * @param {String[]} [resultEvents.onClick=["setMarker", "zoomToFeature"]] Actions that are fired when clicking on a result list item.
+ * @param {String[]} [resultEvents.onClick=["setMarker", "zoomToResult"]] Actions that are fired when clicking on a result list item.
  * @param {String[]} [resultEvents.onHover=["setMarker"]] Actions that are fired when hovering on a result list item.
  * @param {String} [searchInterfaceId="locationFinder"] The id of the service interface.
  * @returns {void}
@@ -22,7 +22,7 @@ export default function SearchInterfaceLocationFinder ({serviceId, classes, epsg
         "client",
         searchInterfaceId || "locationFinder",
         resultEvents || {
-            onClick: ["setMarker", "zoomToFeature"],
+            onClick: ["setMarker", "zoomToResult"],
             onHover: ["setMarker"]
         });
 
@@ -146,7 +146,7 @@ SearchInterfaceLocationFinder.prototype.createPossibleActions = function (search
             coordinates: coordinates,
             closeResults: true
         },
-        zoomToFeature: {
+        zoomToResult: {
             coordinates: coordinates,
             closeResults: true
         }
