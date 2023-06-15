@@ -1,6 +1,9 @@
 import {expect} from "chai";
 import InterfaceWfsExtern from "../../../../js/interfaces/interface.wfs.extern.js";
 import responseXML from "../../../resources/rawSources.js";
+import GeometryCollection from "ol/geom/GeometryCollection.js";
+import Polygon from "ol/geom/Polygon.js";
+
 
 describe("src/modules/tools/filter/interfaces/utils/interface.wfs.extern.js", () => {
     let interfaceWfsExtern = null;
@@ -310,6 +313,44 @@ describe("src/modules/tools/filter/interfaces/utils/interface.wfs.extern.js", ()
             const node = interfaceWfsExtern.getNodeByTagname(undefined, "Pele");
 
             expect(node).to.be.undefined;
+        });
+    });
+    describe("intersectsGeometryFilter", () => {
+        it("should return an 'Or filter' if the given geometry collection has more than one geometry", () => {
+            const polygonFirst = new Polygon([
+                    [
+                        [2, 2],
+                        [78, 2],
+                        [2, 78],
+                        [2, 2]
+                    ]
+                ]),
+                polygonSecond = new Polygon([
+                    [
+                        [2, 2],
+                        [78, 2],
+                        [2, 78],
+                        [2, 2]
+                    ]
+                ]),
+                geometryCollection = new GeometryCollection([polygonFirst, polygonSecond]),
+                node = interfaceWfsExtern.intersectsGeometryFilter("foreverYoung", geometryCollection);
+
+            expect(node.tagName_).to.equal("Or");
+        });
+        it("should return an 'Intersect filter' if the given geometry collection has one geometry", () => {
+            const polygonFirst = new Polygon([
+                    [
+                        [2, 2],
+                        [78, 2],
+                        [2, 78],
+                        [2, 2]
+                    ]
+                ]),
+                geometryCollection = new GeometryCollection([polygonFirst]),
+                node = interfaceWfsExtern.intersectsGeometryFilter("foreverYoung", geometryCollection);
+
+            expect(node.tagName_).to.equal("Intersects");
         });
     });
 });
