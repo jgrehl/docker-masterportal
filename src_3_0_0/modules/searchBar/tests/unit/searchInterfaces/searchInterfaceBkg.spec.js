@@ -102,7 +102,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceBkg.js", (
                                 closeResults: true,
                                 coordinates: [9.988176, 53.55481]
                             },
-                            zoomToFeature: {
+                            zoomToResult: {
                                 closeResults: true,
                                 coordinates: [9.988176, 53.55481]
                             }
@@ -139,7 +139,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceBkg.js", (
                             closeResults: true,
                             coordinates: [9.988176, 53.55481]
                         },
-                        zoomToFeature: {
+                        zoomToResult: {
                             closeResults: true,
                             coordinates: [9.988176, 53.55481]
                         }
@@ -168,7 +168,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceBkg.js", (
                         closeResults: true,
                         coordinates: [9.988176, 53.55481]
                     },
-                    zoomToFeature: {
+                    zoomToResult: {
                         closeResults: true,
                         coordinates: [9.988176, 53.55481]
                     }
