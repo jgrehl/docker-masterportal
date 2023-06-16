@@ -76,7 +76,6 @@ export default {
                 class="form-control"
                 :placeholder="$t(placeholder)"
                 :aria-label="$t(placeholder)"
-                :name="searchInput"
                 @input="startSearch"
                 @keydown.enter="startSearch"
             >
