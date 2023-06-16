@@ -1017,15 +1017,20 @@ const SearchbarView = Backbone.View.extend(/** @lends SearchbarView.prototype */
     showMarker: async function (evt) {
         const isEvent = evt instanceof $.Event,
             hitId = isEvent ? evt.currentTarget.id : null,
-            hit = isEvent ? this.model.get("finalHitList").find(obj => obj.id === hitId) : null,
+            hit = isEvent ? this.model.get("finalHitList").find(obj => obj.id.toString() === hitId) : null,
             hitName = isEvent ? hit?.name : "undefined";
 
+        console.log("HIT!", this.model.get("finalHitList"));
         // with gdi-search no action on mousehover or on GFI onClick
         if (hit && hit?.triggerEvent && hit.type !== i18next.t("common:modules.searchbar.type.subject") && hit.type !== i18next.t("common:modules.searchbar.type.general") && hit.type !== i18next.t("common:modules.searchbar.type.folder") && hit.triggerEvent.event !== "gfiOnClick") {
             Radio.trigger(hit.triggerEvent.channel, hit.triggerEvent.event, hit, true, evt.handleObj.type);
             return;
         }
         else if (hit && hit?.coordinate) {
+            console.log("coordinates", hit.coordinate);
+            // wenn hier Koordinaten hart gecodede werden, funktioniert setMarker
+            // let coordinate = [566610.464, 5928085.662];
+
             store.dispatch("MapMarker/removePolygonMarker");
             await store.dispatch("MapMarker/removePointMarker");
 
