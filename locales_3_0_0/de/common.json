@@ -469,12 +469,12 @@
       "remove": "Layer entfernen"
     },
     "layerSelection": {
-      "addSelectedSubjectsToMap": "Ausgewählte Themen der Karte hinzufügen",
       "addSubject": "Thema hinzufügen",
       "backgrounds": "Hintergründe",
       "selectAll": "alle auswählen",
-      "selectedSubjectsCount_one": "Sie haben {{count}} zusätzliches Thema ausgewählt",
-      "selectedSubjectsCount_other": "Sie haben {{count}} zusätzliche Themen ausgewählt"
+      "selectedSubjectsCount_other": "Bitte wählen sie ein Thema aus",
+      "addSelectedSubjectsToMap_one": "Ausgewähltes Thema der Karte hinzufügen",
+      "addSelectedSubjectsToMap_other": "{{count}} ausgewählte Themen der Karte hinzufügen"
     },
     "layerSlider": {
       "displayLayers": "Anzeige diverser Layer.",
