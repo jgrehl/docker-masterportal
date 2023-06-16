@@ -108,56 +108,58 @@ export default {
         class="w-100 layer-selection"
         aria-label=""
     >
-        <div class="row align-items-center justify-content-center">
-            <a
-                v-if="lastFolderName !== 'root'"
-                id="layer-selection-navigation"
-                class="p-2 mp-menu-navigation"
-                href="#"
-                @click="navigate('back')"
-                @keypress="navigate('back')"
-            >
-                <h6 class="mp-menu-navigation-link mb-3"><p class="bi-chevron-left" />{{ lastFolderName }}</h6>
-            </a>
+        <div class="layer-selection-navigation">
             <h6 v-if="backgroundLayerConfs.length > 0">
                 {{ $t("common:modules.layerSelection.backgrounds") }}
             </h6>
-            <div class="d-flex flex-row overflow-scroll">
+            <div class="d-flex justify-content-center layer-selection-navigation-backgroundLayer">
+                <a
+                    v-if="lastFolderName !== 'root'"
+                    id="layer-selection-navigation"
+                    class="p-2 mp-menu-navigation"
+                    href="#"
+                    @click="navigate('back')"
+                    @keypress="navigate('back')"
+                >
+                    <h6 class="mp-menu-navigation-link mb-3"><p class="bi-chevron-left" />{{ lastFolderName }}</h6>
+                </a>
                 <template
                     v-for="(bgConf, index) in backgroundLayerConfs"
                     :key="index"
                 >
-                    <LayerCheckBox
-                        :conf="bgConf"
-                        :is-layer-tree="false"
-                    />
+                    <div class="col">
+                        <LayerCheckBox
+                            :conf="bgConf"
+                            :is-layer-tree="false"
+                        />
+                    </div>
                 </template>
             </div>
             <hr
                 v-if="backgroundLayerConfs.length > 0"
                 class="m-2"
             >
-            <template
-                v-for="(conf, index) in subjectDataLayerConfs"
-                :key="index"
-            >
-                <LayerSelectionTreeNode
-                    :conf="conf"
-                    :show-select-all-check-box="selectAllConfId === conf.id"
-                    :select-all-configs="selectAllConfigs"
-                    @show-node="folderClicked"
-                />
-            </template>
+            <div class="align-items-left justify-content-center layer-selection-navigation-dataLayer">
+                <template
+                    v-for="(conf, index) in subjectDataLayerConfs"
+                    :key="index"
+                >
+                    <LayerSelectionTreeNode
+                        :conf="conf"
+                        :show-select-all-check-box="selectAllConfId === conf.id"
+                        :select-all-configs="selectAllConfigs"
+                        @show-node="folderClicked"
+                    />
+                </template>
+            </div>
         </div>
-        <div class="mt-3">
-            <span>{{ $t("common:modules.layerSelection.selectedSubjectsCount", {count: layersToAdd.length}) }}</span>
+        <div class="mt-5 d-flex justify-content-center sticky layer-selection-add-layer-btn">
             <FlatButton
                 id="layer-selection-add-layer-btn"
-                class="mt-2  w-100"
-                aria-label="$t('common:modules.layerSelection.addSelectedSubjectsToMap')"
+                aria-label="$t('common:modules.layerSelection.addSelectedSubjectsToMap', {count: layersToAdd.length})"
                 :disabled="layersToAdd.length === 0"
                 :interaction="updateLayerTree"
-                :text="$t('common:modules.layerSelection.addSelectedSubjectsToMap')"
+                :text="layersToAdd.length === 0 ? $t('common:modules.layerSelection.selectedSubjectsCount', {count: layersToAdd.length}) : $t('common:modules.layerSelection.addSelectedSubjectsToMap', {count: layersToAdd.length})"
                 :icon="'bi-plus-circle'"
             />
         </div>
@@ -173,12 +175,27 @@ export default {
     position: absolute;
     padding: $padding;
     padding-top: 0;
+    height: 84vh;
+}
+.layer-selection-navigation {
+    height: 90%;
+}
+.layer-selection-navigation-backgroundLayer {
+    overflow-x: scroll;
+}
+.layer-selection-navigation-dataLayer {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    max-height: 78%;
+}
+.layer-selection-add-layer-btn {
+    position: sticky;
+    bottom: 0px;
 }
 .mp-menu-navigation{
     color: $black;
     display: flex;
 }
-
 .mp-menu-navigation-link{
     display: flex;
 }
