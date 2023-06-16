@@ -1,3 +1,4 @@
+// todo: reset bei neuer Suche
 <script>
 import {mapGetters, mapMutations} from "vuex";
 import SearchBarSuggestionListItem from "./SearchBarSuggestionListItem.vue";
@@ -19,7 +20,8 @@ export default {
         return {
             configuredSearchProvider: [],
             showAllResults: false,
-            currentShowAllList: {}
+            currentShowAllList: [],
+            currentAvailableCategories: []
         };
     },
     computed: {
@@ -27,12 +29,13 @@ export default {
 
         /**
          * Sorts the results according the configured search providers and prepare the suggestionlist with the limit of suggestionListLength, updates searchSuggestions
-         * @param {Object} results the limited and sorted results.
-         * @returns {void}
+         * Prepares currentShowAllList (used to show all results of a category).
+         * @returns {Object} results the limited and sorted results.
          */
         limitedSortedSearchResults () {
             const results = {};
 
+            this.currentShowAllList = [];
             this.setSearchSuggestions([]);
             results.availableCategories = [];
             for (const [key] of Object.entries(this.searchInterfaces)) {
@@ -40,9 +43,10 @@ export default {
                     if (value.searchInterfaceId === key) {
                         results[value.category + "Count"] = results[value.category + "Count"] === undefined ? 1 : ++results[value.category + "Count"];
 
-                        if (results.availableCategories.includes(value.category) === false) {
-                            results.availableCategories.push(value.category);
+                        if (this.checkObjectExists(results.availableCategories, value.category,value.searchInterfaceId)) {
+                            results.availableCategories.push({"category": value.category, "searchInterfaceId": value.searchInterfaceId});
                         }
+                        this.currentShowAllList.push(value);
                         if (results[value.category + "Count"] <= this.suggestionListLength) {
                             results[index] = value;
                             this.addSuggestionItem(value);
@@ -56,24 +60,9 @@ export default {
                     }
                 }
             }
+            console.log("limitedSortedSearchResults", results);
+            console.log("limitedSortedSearchResults", this.currentShowAllList);
             return results;
-        }
-    },
-    watch: {
-        /**
-         * Check if the suggestionlist with different categories should be displayed or all results of one category should be displayed.
-         * @returns {void}
-         */
-        checkDisplayResults: {
-            handler (value) {
-                if (this.showAllResults === true) {
-                    this.obliqueView(value);
-                }
-                if (this.showAllResults === true) {
-                    this.prepareShowAllResults();
-                }
-            },
-            deep: true
         }
     },
     methods: {
@@ -82,9 +71,25 @@ export default {
          * Prepares the all results list of one category
          * @returns {void}
          */
-        prepareShowAllResults () {
+        prepareShowAllResults (categoryItem) {
+            this.currentAvailableCategories = [categoryItem];
+            this.currentShowAllList = this.currentShowAllList.filter(function(value) {
+                return (value.category === categoryItem.category  && value.searchInterfaceId === categoryItem.searchInterfaceId);
+            })
             this.showAllResults = true;
 
+        },
+        /**
+         * Checks if the object already exists in the availableCategories array.
+         * @returns {void}
+         */
+        checkObjectExists (availableCategories, category,searchInterfaceId) {
+            for (const value of Object.entries(availableCategories)) {
+                if (value.category === category && value.searchInterfaceId === searchInterfaceId) {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 };
@@ -92,35 +97,35 @@ export default {
 
 <template lang="html">
     <div
-        v-if="searchInput.length>=minCharacters&&showAllResults===false"
+        v-if="searchInput.length>=minCharacters"
     >
         <div
-            v-for="category in limitedSortedSearchResults.availableCategories"
+            v-for="categoryItem in showAllResults===false ? limitedSortedSearchResults.availableCategories : currentAvailableCategories"
             id="search-bar-suggestion-list"
-            :key="category"
+            :key="categoryItem.category"
         >
             <h5
                 id="search-bar-suggestion-heading"
                 class="bold mb-4 mt-4"
             >
                 <img
-                    v-if="limitedSortedSearchResults[category+'ImgPath']"
+                    v-if="limitedSortedSearchResults[categoryItem.category+'ImgPath']"
                     alt="search result image"
                     src="searchResult.imgPath"
                 >
                 <i
-                    v-if="!limitedSortedSearchResults[category+'ImgPath']"
-                    :class="limitedSortedSearchResults[category+'Icon']"
+                    v-if="!limitedSortedSearchResults[categoryItem.category+'ImgPath']"
+                    :class="limitedSortedSearchResults[categoryItem.category+'Icon']"
                 />
 
-                {{ category +": " + limitedSortedSearchResults[category+"Count"] + "    " + $t("common:modules.searchBar.searchResults") }}
+                {{ categoryItem.category +": " + limitedSortedSearchResults[categoryItem.category+"Count"] + "    " + $t("common:modules.searchBar.searchResults") }}
             </h5>
             <div
-                v-for="(item, index) in limitedSortedSearchResults"
+                v-for="(item) in showAllResults===false ? limitedSortedSearchResults : currentShowAllList"
                 :key="item.name"
             >
                 <p
-                    v-if="item.category===category && index <= 1"
+                    v-if="item.category===categoryItem.category"
                     id="searchInputLi"
                 >
                     <SearchBarSuggestionListItem
@@ -134,7 +139,7 @@ export default {
                 <button
                     type="button"
                     class="btn btn-light d-flex text-left"
-                    @click="prepareShowAllResults()"
+                    @click="prepareShowAllResults(categoryItem)"
                 >
                     {{ $t("common:modules.searchBar.showAll") }}
                     <span class="bi-chevron-right" />
