@@ -469,12 +469,12 @@
       "remove": "Remove layer"
     },
     "layerSelection": {
-      "addSelectedSubjectsToMap": "Add selected topics to the map",
       "addSubject": "Add subject",
       "backgrounds": "Baselayers",
       "selectAll": "select all",
-      "selectedSubjectsCount_one": "You have a selected {{count}} additional topic",
-      "selectedSubjectsCount_other": "You have selected {{count}} additional topics"
+      "selectedSubjectsCount_other": "Please select a topic",
+      "addSelectedSubjectsToMap_one": "Add selected topic to the map",
+      "addSelectedSubjectsToMap_other": "{{count}} add selected topics to the map"
     },
     "layerSlider": {
       "displayLayers": "Display of various layers.",
