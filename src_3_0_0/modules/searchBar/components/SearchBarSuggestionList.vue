@@ -17,7 +17,9 @@ export default {
     },
     data () {
         return {
-            configuredSearchProvider: []
+            configuredSearchProvider: [],
+            showAllResults: false,
+            currentShowAllList: {}
         };
     },
     computed: {
@@ -57,15 +59,40 @@ export default {
             return results;
         }
     },
+    watch: {
+        /**
+         * Check if the suggestionlist with different categories should be displayed or all results of one category should be displayed.
+         * @returns {void}
+         */
+        checkDisplayResults: {
+            handler (value) {
+                if (this.showAllResults === true) {
+                    this.obliqueView(value);
+                }
+                if (this.showAllResults === true) {
+                    this.prepareShowAllResults();
+                }
+            },
+            deep: true
+        }
+    },
     methods: {
-        ...mapMutations("Modules/SearchBar", ["setSearchSuggestions", "addSuggestionItem"])
+        ...mapMutations("Modules/SearchBar", ["setSearchSuggestions", "addSuggestionItem"]),
+        /**
+         * Prepares the all results list of one category
+         * @returns {void}
+         */
+        prepareShowAllResults () {
+            this.showAllResults = true;
+
+        }
     }
 };
 </script>
 
 <template lang="html">
     <div
-        v-if="searchInput.length>=minCharacters"
+        v-if="searchInput.length>=minCharacters&&showAllResults===false"
     >
         <div
             v-for="category in limitedSortedSearchResults.availableCategories"
@@ -89,11 +116,11 @@ export default {
                 {{ category +": " + limitedSortedSearchResults[category+"Count"] + "    " + $t("common:modules.searchBar.searchResults") }}
             </h5>
             <div
-                v-for="item in limitedSortedSearchResults"
+                v-for="(item, index) in limitedSortedSearchResults"
                 :key="item.name"
             >
                 <p
-                    v-if="item.category===category"
+                    v-if="item.category===category && index <= 1"
                     id="searchInputLi"
                 >
                     <SearchBarSuggestionListItem
@@ -107,6 +134,7 @@ export default {
                 <button
                     type="button"
                     class="btn btn-light d-flex text-left"
+                    @click="prepareShowAllResults()"
                 >
                     {{ $t("common:modules.searchBar.showAll") }}
                     <span class="bi-chevron-right" />
