@@ -4,7 +4,7 @@ import processUrlParams from "../../../shared/js/utils/processUrlParams";
 const searchBarUrlParams = {
         QUERY: setQueryToSearchInput
     },
-    legacysearchBarUrlParams = {
+    legacySearchBarUrlParams = {
         "SEARCH/QUERY": setQueryToSearchInput
     };
 
@@ -13,7 +13,7 @@ const searchBarUrlParams = {
  * @returns {void}
  */
 function processSearchBarUrlParams () {
-    processUrlParams(searchBarUrlParams, legacysearchBarUrlParams);
+    processUrlParams(searchBarUrlParams, legacySearchBarUrlParams);
 }
 
 /**
