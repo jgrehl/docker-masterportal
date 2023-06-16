@@ -189,6 +189,10 @@ export default {
         position: absolute;
         bottom: 0;
         align-self: start;
+
+        @media (max-width: 767px) {
+            left: 20px;
+        }
     }
 
     ul {
