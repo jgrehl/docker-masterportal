@@ -117,7 +117,7 @@ SearchInterfaceBkg.prototype.createPossibleActions = function (searchResult) {
             coordinates: coordinates,
             closeResults: true
         },
-        zoomToFeature: {
+        zoomToResult: {
             coordinates: coordinates,
             closeResults: true
         }
