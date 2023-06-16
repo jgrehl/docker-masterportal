@@ -2,16 +2,8 @@ import SearchbarTemplate from "text-loader!./template.html";
 import TemplateTable from "text-loader!./templateTable.html";
 import SearchbarRecommendedListTemplate from "text-loader!./templateRecommendedList.html";
 import SearchbarHitListTemplate from "text-loader!./templateHitList.html";
-import GAZModel from "./gaz/model";
 import SpecialWFSModel from "./specialWFS/model";
-import VisibleVectorModel from "./visibleVector/model";
-import BKGModel from "./bkg/model";
-import TreeModel from "./tree/model";
-import OSMModel from "./osm/model";
-import LocationFinderModel from "./locationFinder/model";
 import GdiModel from "./gdi/model";
-import ElasticSearchModel from "./elasticSearch/model";
-import KomootModel from "./komoot/model";
 import Searchbar from "./model";
 import "./RadioBridge.js";
 import store from "../../src/app-store/index";
@@ -132,40 +124,11 @@ const SearchbarView = Backbone.View.extend(/** @lends SearchbarView.prototype */
         // Manage search algorithms for initial search.
         this.model.setInitialSearchTasks(config);
 
-        // On-demand loading of the search algorithms.
-        if (Object.prototype.hasOwnProperty.call(config, "gazetteer")) {
-            new GAZModel(config.gazetteer);
-        }
         if (Object.prototype.hasOwnProperty.call(config, "specialWFS")) {
             new SpecialWFSModel(config.specialWFS);
         }
-        if (Object.prototype.hasOwnProperty.call(config, "visibleVector")) {
-            new VisibleVectorModel(config.visibleVector);
-        }
-        else if (Object.prototype.hasOwnProperty.call(config, "visibleWFS")) {
-            // Deprecated in new stable
-            new VisibleVectorModel(config.visibleWFS);
-        }
-        if (Object.prototype.hasOwnProperty.call(config, "bkg")) {
-            new BKGModel(config.bkg);
-        }
-        if (Object.prototype.hasOwnProperty.call(config, "tree")) {
-            new TreeModel(config.tree);
-        }
-        if (Object.prototype.hasOwnProperty.call(config, "osm")) {
-            new OSMModel(config.osm);
-        }
-        if (Object.prototype.hasOwnProperty.call(config, "locationFinder")) {
-            new LocationFinderModel(config.locationFinder);
-        }
         if (Object.prototype.hasOwnProperty.call(config, "gdi")) {
             new GdiModel(config.gdi);
-        }
-        if (Object.prototype.hasOwnProperty.call(config, "elasticSearch")) {
-            new ElasticSearchModel(config.elasticSearch);
-        }
-        if (Object.prototype.hasOwnProperty.call(config, "komoot")) {
-            new KomootModel(config.komoot);
         }
 
         this.model.setHitIsClick(false);
