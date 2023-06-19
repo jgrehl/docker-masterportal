@@ -15,7 +15,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters("Modules/SearchBar", [])
+        ...mapGetters("Modules/SearchBar", ["featureButtonsMap"])
     }
 };
 </script>
@@ -26,8 +26,8 @@ export default {
             <button
                 type="button"
                 class="btn btn-light d-flex"
-                :title="searchResult.toolTip"
-                :aria-label="searchResult.toolTip"
+                :title="searchResult.toolTip ? searchResult.toolTip : searchResult.name"
+                :aria-label="searchResult.toolTip ? searchResult.toolTip : searchResult.name"
                 @click="interaction"
                 @keydown.enter="interaction"
             >
@@ -49,6 +49,15 @@ export default {
                 />
                 <i
                     class="bi-geo mr-2"
+                />
+            </div>
+            <div
+                v-if="searchResult.searchInterfaceId==='elasticSearch'"
+                title="placeholder"
+                class="ms-auto mt-1 p-2"
+            >
+                <component
+                    :is="featureButtonsMap[searchResult.featureButtons[0].charAt(0).toUpperCase()+searchResult.featureButtons[0].slice(1)]"
                 />
             </div>
         </div>
