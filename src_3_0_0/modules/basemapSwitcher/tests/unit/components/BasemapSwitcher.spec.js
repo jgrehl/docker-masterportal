@@ -10,19 +10,11 @@ config.global.mocks.$t = key => key;
 describe("src_3_0_0/modules/BasemapSwitcher.vue", () => {
     let store,
         wrapper,
-        layerConfigs,
         backgroundlayerConfigs,
         visibleBackgroundLayerConfigs,
         originalUpdateLayerVisibilityAndZIndex;
 
     beforeEach(() => {
-        layerConfigs = [
-            {id: "WMTS", visibility: false, backgroundLayer: true, showInLayerTree: true, zIndex: 0},
-            {id: "VectorTile", visibility: false, backgroundLayer: true, showInLayerTree: true, zIndex: 0},
-            {id: "453", visibility: true, backgroundLayer: true, showInLayerTree: true, zIndex: 1},
-            {id: "452", visibility: false, backgroundLayer: true, showInLayerTree: true, zIndex: 0},
-            {id: "12883", visibility: false, backgroundLayer: false, showInLayerTree: true, zIndex: 0}
-        ];
         backgroundlayerConfigs = [
             {id: "WMTS", name: "EOC Basemap", visibility: false, backgroundLayer: true, showInLayerTree: true},
             {id: "VectorTile", name: "ArcGIS VectorTile", visibility: false, backgroundLayer: true, showInLayerTree: true},
@@ -49,14 +41,14 @@ describe("src_3_0_0/modules/BasemapSwitcher.vue", () => {
             },
             getters: {
                 isMobile: () => false,
-                layerConfigsByAttributes: () => () => layerConfigs,
+                layerConfigsByAttributes: () => () => visibleBackgroundLayerConfigs,
                 allBackgroundLayerConfigs: () => backgroundlayerConfigs,
                 visibleBackgroundLayerConfigs: () => visibleBackgroundLayerConfigs,
                 activatedExpandable: () => false
             },
             mutations: {
                 setLayerConfigsByAttributes: (state, layer) => {
-                    layerConfigs = layer;
+                    return layer;
                 },
                 setAllBackgroundLayerConfigs: (state, layer) => {
                     backgroundlayerConfigs = layer;
@@ -121,11 +113,7 @@ describe("src_3_0_0/modules/BasemapSwitcher.vue", () => {
             expect(wrapper.find("#layer-tree-layer-preview-" + store.state.Modules.BasemapSwitcher.topBackgroundLayerId).exists()).to.be.true;
         });
         it("placeholder is shown as preview", () => {
-            store.commit("setLayerConfigsByAttributes", [
-                {id: "WMTS", visibility: false, backgroundLayer: true, showInLayerTree: true, zIndex: 0},
-                {id: "VectorTile", visibility: false, backgroundLayer: true, showInLayerTree: true, zIndex: 0},
-                {id: "453", visibility: false, backgroundLayer: true, showInLayerTree: true, zIndex: 0}
-            ]);
+            store.commit("setVisibleBackgroundLayerConfigs", []);
 
             wrapper = shallowMount(BasemapSwitcherComponent, {
                 global: {
@@ -169,7 +157,7 @@ describe("src_3_0_0/modules/BasemapSwitcher.vue", () => {
             });
 
             wrapper.vm.$options.watch.visibleBackgroundLayerConfigs.handler.call(wrapper.vm, newValue, oldValue);
-            expect(store.state.Modules.BasemapSwitcher.topBackgroundLayerId).to.equal(undefined);
+            expect(store.state.Modules.BasemapSwitcher.topBackgroundLayerId).to.equal(null);
         });
     });
 
@@ -187,6 +175,9 @@ describe("src_3_0_0/modules/BasemapSwitcher.vue", () => {
                 {id: "Karte2", name: "ArcGIS VectorTile", visibility: false, backgroundLayer: true, showInLayerTree: true},
                 {id: "Karte3", name: "Geobasiskarten (HamburgDE)", visibility: true, backgroundLayer: true, showInLayerTree: true},
                 {id: "Karte4", name: "Digitale Orthophotos (belaubt) Hamburg", visibility: false, backgroundLayer: true, showInLayerTree: true}
+            ];
+            visibleBackgroundLayerConfigs = [
+                {id: "Karte3", name: "Geobasiskarten (HamburgDE)", visibility: true, backgroundLayer: true, showInLayerTree: true}
             ];
             wrapper = shallowMount(BasemapSwitcherComponent, {
                 global: {
