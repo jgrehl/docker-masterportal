@@ -163,13 +163,6 @@ describe("src_3_0_0/modules/BasemapSwitcher.vue", () => {
 
     describe("created", () => {
         it("backgroundLayerIds and topBackgroundLayer", () => {
-            layerConfigs = [
-                {id: "Karte1", visibility: false, backgroundLayer: true, showInLayerTree: true, zIndex: 0},
-                {id: "Karte2", visibility: false, backgroundLayer: true, showInLayerTree: true, zIndex: 0},
-                {id: "Karte3", visibility: true, backgroundLayer: true, showInLayerTree: true, zIndex: 1},
-                {id: "Karte4", visibility: false, backgroundLayer: true, showInLayerTree: true, zIndex: 0},
-                {id: "KeineKarte", visibility: false, backgroundLayer: false, showInLayerTree: true, zIndex: 0}
-            ];
             backgroundlayerConfigs = [
                 {id: "Karte1", name: "EOC Basemap", visibility: false, backgroundLayer: true, showInLayerTree: true},
                 {id: "Karte2", name: "ArcGIS VectorTile", visibility: false, backgroundLayer: true, showInLayerTree: true},
