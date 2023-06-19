@@ -31,14 +31,6 @@ export default {
                 plugins: {
                     legend: {
                         align: "start"
-                    },
-                    tooltip: {
-                        callbacks: {
-                        // use label callback to return the desired label
-                            label: (tooltipItem, data) => {
-                                return data.datasets[tooltipItem.datasetIndex].label + ": " + thousandsSeparator(tooltipItem.value);
-                            }
-                        }
                     }
                 },
                 scales: {
@@ -49,6 +41,14 @@ export default {
                             callback: (value) => {
                                 return thousandsSeparator(value);
                             }
+                        }
+                    }
+                },
+                tooltips: {
+                    callbacks: {
+                    // use label callback to return the desired label
+                        label: (tooltipItem, data) => {
+                            return data.datasets[tooltipItem.datasetIndex].label + ": " + thousandsSeparator(tooltipItem.value);
                         }
                     }
                 }
@@ -67,9 +67,9 @@ export default {
              * @see afterFit https://www.chartjs.org/docs/latest/axes/?h=afterfit
              * @returns {void}  -
              */
-            ChartJs.Legend.prototype.afterFit = function () {
-                this.height += 10;
-            };
+            // ChartJs.Legend.prototype.afterFit = function () {
+            //     this.height += 10;
+            // };
 
             this.resetChart(this.data);
         });
