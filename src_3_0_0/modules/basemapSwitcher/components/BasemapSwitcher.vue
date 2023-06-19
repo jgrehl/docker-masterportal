@@ -23,16 +23,10 @@ export default {
     watch: {
         visibleBackgroundLayerConfigs: {
             handler (newVal) {
-                const backgroundLayerConfigIds = [],
+                const backgroundLayerConfigIds = Object.values(this.allBackgroundLayerConfigs).map(layer => layer.id),
                     zIndex = [];
                 let maxZIndex = null,
                     topLayer = null;
-
-
-                Object.values(this.allBackgroundLayerConfigs).forEach(layer => {
-                    backgroundLayerConfigIds.push(layer.id);
-
-                });
 
                 newVal.forEach((val) => {
                     zIndex.push(val.zIndex);
@@ -45,7 +39,7 @@ export default {
                     const backgroundLayerIds = [];
 
                     backgroundLayerConfigIds.forEach((layerId) => {
-                        if (layerId !== topLayer[0]?.id) {
+                        if (layerId !== topLayer[0].id) {
                             backgroundLayerIds.push(layerId);
                         }
                     });
@@ -53,7 +47,7 @@ export default {
                     this.setBackgroundLayerIds(backgroundLayerIds);
                 }
                 else {
-                    this.setTopBackgroundLayerId();
+                    this.setTopBackgroundLayerId(null);
                     this.setBackgroundLayerIds(backgroundLayerConfigIds);
                 }
                 this.setActivatedExpandable(false);
@@ -69,9 +63,16 @@ export default {
             });
 
         if (backgroundLayers.length > 1) {
-            const layerWithMaxZIndex = backgroundLayers.filter(layer => {
-                return Math.max(layer.zIndex);
+            const zIndex = [];
+            let max = null,
+                layerWithMaxZIndex = null;
+
+            backgroundLayers.forEach((layer) => {
+                zIndex.push(layer.zIndex);
             });
+
+            max = Math.max(...zIndex);
+            layerWithMaxZIndex = backgroundLayers.filter(layer => layer.zIndex === max);
 
             this.setTopBackgroundLayerId(layerWithMaxZIndex[0]?.id);
         }
@@ -115,12 +116,11 @@ export default {
                 }).indexOf(layerId);
 
             selectableBackroundLayerIds.splice(index, 1);
-            if (this.topBackgroundLayerId !== undefined) {
+            if (this.topBackgroundLayerId !== null) {
                 selectableBackroundLayerIds.push(this.topBackgroundLayerId);
             }
             this.setBackgroundLayerIds(selectableBackroundLayerIds);
 
-            this.setTopBackgroundLayerId([]);
             this.setTopBackgroundLayerId(layerId);
             this.setActivatedExpandable(false);
         }
@@ -154,7 +154,7 @@ export default {
                 </button>
             </li>
             <button
-                v-if="topBackgroundLayerId === undefined"
+                v-if="topBackgroundLayerId === null"
                 id="bs-placeholder"
                 class="btn btn-light preview top placeholder-button"
                 @click="setActivatedExpandable(!activatedExpandable)"
