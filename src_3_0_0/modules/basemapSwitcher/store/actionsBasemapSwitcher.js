@@ -4,9 +4,7 @@ const actions = {
      * Sets 'visibility' and 'showInLayerTree' to true at each layer.
      * Clears state.layersToAdd and redirects to main menu.
      * Note: Background layer will be set on top of the background layer with the highest zIndex.
-     * @param {Object} param.commit the commit
      * @param {Object} param.dispatch the dispatch
-     * @param {Object} param.getters the getters
      * @param {Object} param.rootGetters the rootGetters
      * @param {Object} layerId id of the layer to add
      * @returns {void}
