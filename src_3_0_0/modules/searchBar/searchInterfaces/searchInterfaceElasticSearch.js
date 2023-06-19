@@ -18,12 +18,13 @@ import store from "../../../app-store";
  * @param {String[]} [resultEvents.onClick=["activateLayerInTopicTree", "addLayerToTopicTree", "openTopicTree"]] Actions that are fired when clicking on a result list item.
  * @param {String} [searchInterfaceId="elasticSearch"] The id of the service interface.
  * @param {String} [searchStringAttribute="searchString"] Search string attribute name for `payload` object.
+ * @param {String[]} [featureButtons=["addLayer"]] Feature buttons to be shown next to a single search result.
  * @param {String} [type="POST"] Request type.
  * @constructs
  * @extends SearchInterface
  * @returns {void}
  */
-export default function SearchInterfaceElasticSearch ({hitMap, serviceId, hitIcon, hitType, payload, responseEntryPath, resultEvents, searchInterfaceId, searchStringAttribute, type} = {}) {
+export default function SearchInterfaceElasticSearch ({hitMap, serviceId, hitIcon, hitType, payload, responseEntryPath, resultEvents, searchInterfaceId, featureButtons, searchStringAttribute, type} = {}) {
     SearchInterface.call(this,
         "request",
         searchInterfaceId || "elasticSearch",
@@ -33,12 +34,12 @@ export default function SearchInterfaceElasticSearch ({hitMap, serviceId, hitIco
 
     this.hitMap = hitMap;
     this.serviceId = serviceId;
-
     this.hitIcon = hitIcon || "bi-list-ul";
     this.hitType = hitType || "common:modules.searchBar.type.subject";
     this.payload = payload || {};
     this.responseEntryPath = responseEntryPath || "";
     this.searchStringAttribute = searchStringAttribute || "searchString";
+    this.featureButtons = featureButtons || ["addLayer"];
     this.type = type || "POST";
 }
 
@@ -177,6 +178,7 @@ SearchInterfaceElasticSearch.prototype.normalizeResults = function (searchResult
         normalizedResults.push({
             events: this.normalizeResultEvents(this.resultEvents, searchResult),
             category: i18next.t(this.hitType),
+            featureButtons: this.featureButtons,
             icon: this.hitIcon,
             id: searchResult._id,
             name: searchResult._source.name,
