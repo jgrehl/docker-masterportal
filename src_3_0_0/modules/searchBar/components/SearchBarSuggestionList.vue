@@ -60,8 +60,7 @@ export default {
                     }
                 }
             }
-            console.log("limitedSortedSearchResults", results);
-            console.log("limitedSortedSearchResults", this.currentShowAllList);
+
             return results;
         }
     },
@@ -121,7 +120,7 @@ export default {
                 {{ categoryItem.category +": " + limitedSortedSearchResults[categoryItem.category+"Count"] + "    " + $t("common:modules.searchBar.searchResults") }}
             </h5>
             <div
-                v-for="(item) in showAllResults===false ? limitedSortedSearchResults : currentShowAllList"
+                v-for="item in showAllResults===false ? limitedSortedSearchResults : currentShowAllList"
                 :key="item.name"
             >
                 <p
