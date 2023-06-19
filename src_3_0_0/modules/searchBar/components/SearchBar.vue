@@ -37,16 +37,6 @@ export default {
             }
         }
     },
-    watch: {
-        searchResults: {
-            handler (searchResults) {
-                /* eslint-disable no-console */
-                console.log("SearchResults:");
-                console.log(searchResults);
-            },
-            deep: true
-        }
-    },
     mounted () {
         this.initializeModule({configPaths: this.configPaths, type: this.type});
         this.overwriteDefaultValues();
@@ -54,8 +44,20 @@ export default {
     },
     methods: {
         ...mapActions(["initializeModule"]),
-        ...mapActions("Modules/SearchBar", ["instantiateSearchInterfaces", "overwriteDefaultValues", "startSearch"]),
-        ...mapMutations("Modules/SearchBar", ["setSearchInput"])
+        ...mapActions("Modules/SearchBar", ["instantiateSearchInterfaces", "overwriteDefaultValues", "search"]),
+        ...mapMutations("Modules/SearchBar", ["setSearchInput", "setShowAllResults"]),
+
+        /**
+         * Starts the search in searchInterfaces, if min characters are introduced.
+         * @returns {void}
+         */
+        startSearch () {
+            if (this.searchInputValue.length >= parseInt(this.minCharacters, 10)) {
+                this.setShowAllResults(false);
+                this.search({searchInput: this.searchInputValue});
+
+            }
+        }
     }
 };
 </script>
