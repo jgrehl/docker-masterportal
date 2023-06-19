@@ -76,6 +76,9 @@ export default {
 
             this.setTopBackgroundLayerId(layerWithMaxZIndex[0]?.id);
         }
+        else if (backgroundLayers.length === 0) {
+            this.setTopBackgroundLayerId(null);
+        }
         else {
             this.setTopBackgroundLayerId(backgroundLayers[0]?.id);
         }
