@@ -7,7 +7,7 @@
 const state = {
     activatedExpandable: false,
     backgroundLayerIds: [],
-    topBackgroundLayerId: []
+    topBackgroundLayerId: null
 };
 
 export default state;
