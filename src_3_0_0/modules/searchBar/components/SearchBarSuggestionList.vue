@@ -1,4 +1,9 @@
 // todo: reset bei neuer Suche
+// ergebnissliste scrollable
+// title übersetzen
+// rename files and variables
+
+
 <script>
 import {mapGetters, mapMutations} from "vuex";
 import SearchBarSuggestionListItem from "./SearchBarSuggestionListItem.vue";
@@ -19,13 +24,12 @@ export default {
     data () {
         return {
             configuredSearchProvider: [],
-            showAllResults: false,
             currentShowAllList: [],
             currentAvailableCategories: []
         };
     },
     computed: {
-        ...mapGetters("Modules/SearchBar", ["searchInterfaces", "searchResults", "suggestionListLength", "searchInput", "minCharacters", "searchSuggestions"]),
+        ...mapGetters("Modules/SearchBar", ["searchInterfaces", "searchResults", "suggestionListLength", "searchInput", "minCharacters", "searchSuggestions", "showAllResults"]),
 
         /**
          * Sorts the results according the configured search providers and prepare the suggestionlist with the limit of suggestionListLength, updates searchSuggestions
@@ -33,9 +37,10 @@ export default {
          * @returns {Object} results the limited and sorted results.
          */
         limitedSortedSearchResults () {
-            const results = {};
+            const results = {},
+                currentShowAllList = [];
 
-            this.currentShowAllList = [];
+            results.categoryProvider = {};
             this.setSearchSuggestions([]);
             results.availableCategories = [];
             for (const [key] of Object.entries(this.searchInterfaces)) {
@@ -43,10 +48,14 @@ export default {
                     if (value.searchInterfaceId === key) {
                         results[value.category + "Count"] = results[value.category + "Count"] === undefined ? 1 : ++results[value.category + "Count"];
 
-                        if (this.checkObjectExists(results.availableCategories, value.category,value.searchInterfaceId)) {
-                            results.availableCategories.push({"category": value.category, "searchInterfaceId": value.searchInterfaceId});
+
+                        if (results.availableCategories.includes(value.category) === false) {
+                            results.availableCategories.push(value.category);
+                            results.categoryProvider[value.category] = value.searchInterfaceId;
                         }
-                        this.currentShowAllList.push(value);
+
+                        currentShowAllList.push(value);
+
                         if (results[value.category + "Count"] <= this.suggestionListLength) {
                             results[index] = value;
                             this.addSuggestionItem(value);
@@ -60,35 +69,22 @@ export default {
                     }
                 }
             }
-
-            return results;
+            return {results: results, currentShowAllList: currentShowAllList};
         }
     },
     methods: {
-        ...mapMutations("Modules/SearchBar", ["setSearchSuggestions", "addSuggestionItem"]),
+        ...mapMutations("Modules/SearchBar", ["setSearchSuggestions", "addSuggestionItem", "setShowAllResults"]),
         /**
          * Prepares the all results list of one category
          * @returns {void}
          */
         prepareShowAllResults (categoryItem) {
             this.currentAvailableCategories = [categoryItem];
-            this.currentShowAllList = this.currentShowAllList.filter(function(value) {
-                return (value.category === categoryItem.category  && value.searchInterfaceId === categoryItem.searchInterfaceId);
-            })
-            this.showAllResults = true;
+            this.currentShowAllList = this.limitedSortedSearchResults.currentShowAllList.filter(function (value) {
+                return value.category === categoryItem;
+            });
+            this.setShowAllResults(true);
 
-        },
-        /**
-         * Checks if the object already exists in the availableCategories array.
-         * @returns {void}
-         */
-        checkObjectExists (availableCategories, category,searchInterfaceId) {
-            for (const value of Object.entries(availableCategories)) {
-                if (value.category === category && value.searchInterfaceId === searchInterfaceId) {
-                    return false;
-                }
-            }
-            return true;
         }
     }
 };
@@ -99,32 +95,33 @@ export default {
         v-if="searchInput.length>=minCharacters"
     >
         <div
-            v-for="categoryItem in showAllResults===false ? limitedSortedSearchResults.availableCategories : currentAvailableCategories"
+            v-for="categoryItem in showAllResults===false ? limitedSortedSearchResults.results.availableCategories : currentAvailableCategories"
             id="search-bar-suggestion-list"
-            :key="categoryItem.category"
+            :key="categoryItem"
         >
             <h5
                 id="search-bar-suggestion-heading"
                 class="bold mb-4 mt-4"
+                :title="'results from '+limitedSortedSearchResults.results.categoryProvider[categoryItem]+'-search'"
             >
                 <img
-                    v-if="limitedSortedSearchResults[categoryItem.category+'ImgPath']"
+                    v-if="limitedSortedSearchResults.results[categoryItem+'ImgPath']"
                     alt="search result image"
                     src="searchResult.imgPath"
                 >
                 <i
-                    v-if="!limitedSortedSearchResults[categoryItem.category+'ImgPath']"
-                    :class="limitedSortedSearchResults[categoryItem.category+'Icon']"
+                    v-if="!limitedSortedSearchResults.results[categoryItem+'ImgPath']"
+                    :class="limitedSortedSearchResults.results[categoryItem+'Icon']"
                 />
 
-                {{ categoryItem.category +": " + limitedSortedSearchResults[categoryItem.category+"Count"] + "    " + $t("common:modules.searchBar.searchResults") }}
+                {{ categoryItem +": " + limitedSortedSearchResults.results[categoryItem+"Count"] + "    " + $t("common:modules.searchBar.searchResults") }}
             </h5>
             <div
-                v-for="item in showAllResults===false ? limitedSortedSearchResults : currentShowAllList"
+                v-for="item in showAllResults===false ? limitedSortedSearchResults.results : limitedSortedSearchResults.currentShowAllList"
                 :key="item.name"
             >
                 <p
-                    v-if="item.category===categoryItem.category"
+                    v-if="item.category===categoryItem"
                     id="searchInputLi"
                 >
                     <SearchBarSuggestionListItem
@@ -133,6 +130,7 @@ export default {
                 </p>
             </div>
             <div
+                v-if="showAllResults===false"
                 class="showAllSection"
             >
                 <button
