@@ -9,6 +9,10 @@
  * @property {String[]} supportedDevices Devices on which the module is displayed.
  * @property {String[]} supportedMapModes Map mode in which this module can be used.
  * @property {String} type The type of the module.
+ *
+ * @property {Number} circleInnerRadius The inner radius for feature of drawType: "circle and doubelCircle".
+ * @property {Number} circleOuterRadius The outer radius for feature of drawType: "doubleCircle".
+ * @property {Boolean} interactiveCircle The circle or doubleCircle is drawn interactively or not.
  */
 const state = {
     description: "",
@@ -18,7 +22,12 @@ const state = {
     showDescription: false,
     supportedDevices: ["Desktop", "Mobile", "Table"],
     supportedMapModes: ["2D", "3D"],
-    type: "draw"
+    type: "draw",
+
+    circleInnerRadius: 100,
+    circleOuterRadius: 500,
+    interactiveCircle: false
+
 };
 
 export default state;
