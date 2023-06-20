@@ -195,7 +195,7 @@ export default {
             <Alerting />
             <component :is="componentMap.mouseHover" />
             <ControlBar class="controls" />
-            <BasemapSwitcher class="basemap-switcher" />
+            <BasemapSwitcher />
             <component :is="componentMap.layerPills" />
             <component :is="componentMap.portalFooter" />
         </div>

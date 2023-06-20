@@ -43,7 +43,7 @@ export default {
                             backgroundLayerIds.push(layerId);
                         }
                     });
-                    this.setTopBackgroundLayerId(topLayer[0]?.id);
+                    this.setTopBackgroundLayerId(topLayer[0].id);
                     this.setBackgroundLayerIds(backgroundLayerIds);
                 }
                 else {
