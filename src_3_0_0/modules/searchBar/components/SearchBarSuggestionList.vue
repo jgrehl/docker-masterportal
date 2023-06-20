@@ -5,7 +5,7 @@
 
 
 <script>
-import {mapGetters, mapMutations} from "vuex";
+import {mapGetters, mapMutations, mapActions} from "vuex";
 import SearchBarSuggestionListItem from "./SearchBarSuggestionListItem.vue";
 
 /**
@@ -29,7 +29,7 @@ export default {
         };
     },
     computed: {
-        ...mapGetters("Modules/SearchBar", ["searchInterfaces", "searchResults", "suggestionListLength", "searchInput", "minCharacters", "searchSuggestions", "showAllResults"]),
+        ...mapGetters("Modules/SearchBar", ["searchInterfaces", "searchResults", "suggestionListLength", "searchInput", "minCharacters", "searchSuggestions", "showAllResults", "searchResultsActive"]),
 
         /**
          * Sorts the results according the configured search providers and prepare the suggestionlist with the limit of suggestionListLength, updates searchSuggestions
@@ -73,9 +73,10 @@ export default {
         }
     },
     methods: {
-        ...mapMutations("Modules/SearchBar", ["setSearchSuggestions", "addSuggestionItem", "setShowAllResults"]),
+        ...mapMutations("Modules/SearchBar", ["setSearchSuggestions", "addSuggestionItem", "setShowAllResults", "setSearchResultsActive"]),
         /**
          * Prepares the all results list of one category
+         * @param {String} categoryItem the category of the results
          * @returns {void}
          */
         prepareShowAllResults (categoryItem) {
@@ -92,8 +93,17 @@ export default {
 
 <template lang="html">
     <div
-        v-if="searchInput.length>=minCharacters"
+        v-if="searchInput.length>=minCharacters && searchResultsActive && searchResults.length>0"
     >
+    <a
+                :id="'mp-navigation-' + side"
+                class="pb-2 pt-2 mp-menu-navigation-link"
+                href="#"
+                @click="setSearchResultsActive(false)"
+                @keypress="setSearchResultsActive(false)"
+            >
+            <h6 class="mp-menu-navigation-link-text mb-3"><p class="bi-chevron-left me-2">{{ $t("common:modules.menu.name") }}</p></h6>
+            </a>
         <div
             v-for="categoryItem in showAllResults===false ? limitedSortedSearchResults.results.availableCategories : currentAvailableCategories"
             id="search-bar-suggestion-list"
