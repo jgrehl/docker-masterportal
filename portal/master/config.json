@@ -150,6 +150,11 @@
             "type": "openConfig"
           },
           {
+            "type": "draw",
+            "showDescription": true,
+            "description": "Zeichnen / Schreiben auf der Karte."
+          },
+          {
             "type": "print",
             "printServiceId": "mapfish",
             "printAppId": "master",
@@ -425,11 +430,6 @@
                 "DE_DHDN_3GK3, EPSG 31467: Bezugssystem DHDN, Abbildungsvorschrift Gauß-Krüger, 3. Meridianstreifen"
               ]
             }
-          },
-          {
-            "type": "draw",
-            "showDescription": true,
-            "description": "Zeichnen / Schreiben auf der Karte."
           },
           {
             "type": "draw_old",
