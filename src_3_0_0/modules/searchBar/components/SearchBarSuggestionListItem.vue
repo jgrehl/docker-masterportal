@@ -1,5 +1,5 @@
 <script>
-import {mapGetters} from "vuex";
+import {mapGetters, mapActions, mapMutations} from "vuex";
 
 /**
  * Search Bar Suggestion List Item
@@ -16,6 +16,21 @@ export default {
     },
     computed: {
         ...mapGetters("Modules/SearchBar", ["featureButtonsMap"])
+    },
+    methods: {
+        ...mapActions(["addLayerToLayerConfig"]),
+        ...mapActions("Modules/SearchBar", ["addLayerToTopicTree"]),
+        ...mapMutations("Modules/SearchBar", ["setSearchResultsActive"]),
+
+        /**
+         * Adds a layer to the topic tree and closes the search
+         * @param {Object} searchResult a single search result
+         * @returns {void}
+         */
+        addLayer (searchResult) {
+            this.addLayerToTopicTree(searchResult);
+            this.setSearchResultsActive(false);
+        }
     }
 };
 </script>
@@ -28,37 +43,27 @@ export default {
                 class="btn btn-light d-flex"
                 :title="searchResult.toolTip ? searchResult.toolTip : searchResult.name"
                 :aria-label="searchResult.toolTip ? searchResult.toolTip : searchResult.name"
-                @click="interaction"
-                @keydown.enter="interaction"
+                @click="addLayer(searchResult)"
+                @keydown.enter="addLayer(searchResult)"
             >
                 <span class="btn-title">
                     {{ searchResult.name }}
                 </span>
             </button>
-            <!-- todo: replace placeholder with buttons-->
             <div
-                v-if="searchResult.searchInterfaceId==='gazetteer'"
+                v-if="searchResult.featureButtons[0]"
                 title="placeholder"
                 class="ms-auto mt-1 p-2"
             >
-                <i
-                    class="bi-sign-turn-right mr-2"
-                />
-                <i
-                    class="bi-house mr-2"
-                />
-                <i
-                    class="bi-geo mr-2"
-                />
-            </div>
-            <div
-                v-if="searchResult.searchInterfaceId==='elasticSearch'"
-                title="placeholder"
-                class="ms-auto mt-1 p-2"
-            >
-                <component
-                    :is="featureButtonsMap[searchResult.featureButtons[0].charAt(0).toUpperCase()+searchResult.featureButtons[0].slice(1)]"
-                />
+                <div
+                    v-for="featureButton in searchResult.featureButtons"
+                    :key="featureButton"
+                >
+                    <component
+                        :is="featureButtonsMap[featureButton.charAt(0).toUpperCase()+featureButton.slice(1)]"
+                        :search-result="searchResult"
+                    />
+                </div>
             </div>
         </div>
     </div>
