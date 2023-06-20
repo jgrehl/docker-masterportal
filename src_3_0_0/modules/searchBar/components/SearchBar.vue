@@ -45,15 +45,16 @@ export default {
     methods: {
         ...mapActions(["initializeModule"]),
         ...mapActions("Modules/SearchBar", ["instantiateSearchInterfaces", "overwriteDefaultValues", "search"]),
-        ...mapMutations("Modules/SearchBar", ["setSearchInput", "setShowAllResults"]),
+        ...mapMutations("Modules/SearchBar", ["setSearchInput", "setShowAllResults", "setSearchResultsActive"]),
 
         /**
-         * Starts the search in searchInterfaces, if min characters are introduced.
+         * Starts the search in searchInterfaces, if min characters are introduced, updates the result list.
          * @returns {void}
          */
         startSearch () {
             if (this.searchInputValue.length >= parseInt(this.minCharacters, 10)) {
                 this.setShowAllResults(false);
+                this.setSearchResultsActive(true);
                 this.search({searchInput: this.searchInputValue});
 
             }
