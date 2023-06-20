@@ -15,6 +15,7 @@
  * @property {Object[]} [searchSuggestions=[]] The suggestions of the configured searchInterfaces.
  * @property {Object[]} [searchResults=[]] The results of the configured searchInterfaces.
  * @property {Boolean} [showAllResults=false] Flag if all results should be shown.
+ * @property {Boolean} [searchResultsActive=true] Flag if the search results are active.
  */
 const state = {
     configPaths: ["portalConfig.mainMenu.searchBar", "portalConfig.secondaryMenu.searchBar"],
@@ -30,7 +31,8 @@ const state = {
     searchInterfaceInstances: [],
     searchSuggestions: [],
     searchResults: [],
-    showAllResults: false
+    showAllResults: false,
+    searchResultsActive: true
 };
 
 export default state;
