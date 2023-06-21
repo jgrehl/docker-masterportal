@@ -5,6 +5,7 @@ import {wms, wmts} from "@masterportal/masterportalapi";
 import {optionsFromCapabilities} from "ol/source/WMTS";
 import proj4 from "proj4";
 import {Point} from "ol/geom";
+import {Tooltip} from "bootstrap";
 
 export default {
     name: "LayerPreview",
@@ -186,6 +187,7 @@ export default {
          */
         clicked () {
             this.$emit("previewClicked");
+            Tooltip.getInstance(this.$el)?.hide();
         },
 
         /*
