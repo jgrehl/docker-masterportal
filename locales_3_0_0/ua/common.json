@@ -180,6 +180,9 @@
       "supply": "Запит координат"
     },
     "draw": {
+      "name": "Малювати / писати"
+    },
+    "draw_old": {
       "attributeSelect": {
         "attributeDuplicatedKeyError": "",
         "attributeKeyError": "",
@@ -825,6 +828,19 @@
         "download": "Завантажити",
         "error": {
           "download": "Сталася помилка при завантаженні потрібних даних."
+        }
+      },
+      "draw": {
+        "drawTypes": {
+          "box": "",
+          "circle": "Коло",
+          "doubleCircle": "Подвійне коло",
+          "geometries": "",
+          "line": "Лінія",
+          "pen": "",
+          "point": "",
+          "polygon": "Поверхня",
+          "symbols": "Символ"
         }
       },
       "graphicalSelect": {
