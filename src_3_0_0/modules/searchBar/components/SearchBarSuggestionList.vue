@@ -1,11 +1,11 @@
-// todo: reset bei neuer Suche
 // ergebnissliste scrollable
-// title übersetzen
+// title übersetzen suchanbieter
 // rename files and variables
+// Sonderverhalten bei Einzelnen Layer hinzufügen
 
 
 <script>
-import {mapGetters, mapMutations, mapActions} from "vuex";
+import {mapGetters, mapMutations} from "vuex";
 import SearchBarSuggestionListItem from "./SearchBarSuggestionListItem.vue";
 
 /**
@@ -95,15 +95,15 @@ export default {
     <div
         v-if="searchInput.length>=minCharacters && searchResultsActive && searchResults.length>0"
     >
-    <a
-                :id="'mp-navigation-' + side"
-                class="pb-2 pt-2 mp-menu-navigation-link"
-                href="#"
-                @click="setSearchResultsActive(false)"
-                @keypress="setSearchResultsActive(false)"
-            >
+        <a
+            :id="'mp-navigation-' + side"
+            class="pb-2 pt-2 mp-menu-navigation-link"
+            href="#"
+            @click="setSearchResultsActive(false)"
+            @keypress="setSearchResultsActive(false)"
+        >
             <h6 class="mp-menu-navigation-link-text mb-3"><p class="bi-chevron-left me-2">{{ $t("common:modules.menu.name") }}</p></h6>
-            </a>
+        </a>
         <div
             v-for="categoryItem in showAllResults===false ? limitedSortedSearchResults.results.availableCategories : currentAvailableCategories"
             id="search-bar-suggestion-list"
