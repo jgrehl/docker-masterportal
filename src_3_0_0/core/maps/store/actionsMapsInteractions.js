@@ -23,7 +23,9 @@ export default {
     addInteraction (context, interaction) {
         const map = mapCollection.getMap("2D");
 
-        map.addInteraction(toRaw(interaction));
+        if (interaction) {
+            map.addInteraction(toRaw(interaction));
+        }
     },
 
     /**
@@ -67,7 +69,7 @@ export default {
     removeInteraction (context, interaction) {
         const map = mapCollection.getMap("2D");
 
-        if (map.removeInteraction(interaction) === undefined) {
+        if (interaction && map.removeInteraction(interaction) === undefined) {
             const interactions = map.getInteractions().getArray(),
                 index = interactions.findIndex((anInteraction) => {
                     return anInteraction.ol_uid === interaction.ol_uid;
