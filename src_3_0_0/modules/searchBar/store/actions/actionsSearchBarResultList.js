@@ -6,22 +6,20 @@ import {treeSubjectsKey} from "../../../../../src_3_0_0/shared/js/utils/constant
 
 export default {
     /**
-     * Adds a layer to the topic tree and closes the search
+     * Adds a layer to the topic tree and triggers to close the search
      * @param {Object} searchResult a single search result
      * @returns {void}
      */
-    addLayerToTopicTree: ({dispatch, mutation}, searchResult) => {
-       //this.$store.dispatch
-       console.log('--------------------------');
-        const rawLayer = rawLayerList.getLayerWhere({id: searchResult.events.onClick.addLayerToTopicTree.layerId});
+    addSearchResultToTopicTree: ({dispatch, commit}, searchResult) => {
+        const rawLayer = rawLayerList.getLayerWhere({id: searchResult.id});
 
         if (rawLayer) {
             rawLayer.visibility = true;
             rawLayer.type = "layer";
             rawLayer.showInLayerTree = true;
-            dispatch("addLayerToLayerConfig", {layerConfig: rawLayer, parentKey: treeSubjectsKey});
+            dispatch("addLayerToLayerConfig", {layerConfig: rawLayer, parentKey: treeSubjectsKey}, {root: true});
         }
 
-        mutation("searchResultsActive", false);
+        commit("setSearchResultsActive", false, {root: true});
     }
 };

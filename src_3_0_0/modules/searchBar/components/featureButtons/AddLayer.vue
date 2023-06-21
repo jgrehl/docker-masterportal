@@ -1,5 +1,5 @@
 <script>
-import {mapGetters} from "vuex";
+import {mapGetters, mapActions, mapMutations} from "vuex";
 import IconButton from "../../../../shared/modules/buttons/components/IconButton.vue";
 
 export default {
@@ -16,6 +16,19 @@ export default {
     },
     computed: {
         ...mapGetters("Modules/SearchBar", [])
+    },
+    methods: {
+        ...mapActions("Modules/SearchBar", ["addSearchResultToTopicTree"]),
+        ...mapMutations("Modules/SearchBar", ["setSearchResultsActive"]),
+        /**
+         * Adds a layer to the topic tree
+         * @param {Object} searchResult a single search result
+         * @returns {void}
+         */
+        async addLayerFromOverview (searchResult) {
+            await this.addSearchResultToTopicTree(searchResult);
+            this.setSearchResultsActive(false);
+        }
     }
 };
 </script>
@@ -24,7 +37,7 @@ export default {
     <IconButton
         :aria="$t('common:modules.contact.removeAttachment')"
         :icon="'bi-plus-circle'"
-        :interaction="() => removeAttachment(image)"
+        :interaction="() => addLayerFromOverview (searchResult)"
         class="remove-btn col-3"
     />
 </template>
