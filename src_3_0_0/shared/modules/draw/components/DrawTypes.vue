@@ -1,6 +1,7 @@
 <script>
-import drawInteractions from "@masterportal/masterportalapi/src/maps/ol/drawInteractions";
+import drawInteractions from "@masterportal/masterportalapi/src/maps/interactions/drawInteractions";
 import {Popover} from "bootstrap";
+import {mapActions} from "vuex";
 
 import DrawTypesPopover from "./DrawTypesPopover.vue";
 import IconButton from "../../buttons/components/IconButton.vue";
@@ -76,6 +77,8 @@ export default {
         this.hidePopovers();
     },
     methods: {
+        ...mapActions("Maps", ["addInteraction", "removeInteraction"]),
+
         /**
          * Creates a popover with content.
          * @param {HTMLElement} popoverElement The popover element.
@@ -148,7 +151,9 @@ export default {
                 };
 
             this.hidePopovers();
-            drawInteractions.changeDrawInteraction(drawType, this.source, map2d, options);
+            this.removeInteraction(this.drawInteraction);
+            this.drawInteraction = drawInteractions.changeDrawInteraction(drawType, this.source, map2d, options);
+            this.addInteraction(this.drawInteraction);
         }
     }
 };
@@ -161,7 +166,7 @@ export default {
             :id="'draw-' + drawType"
             :ref="'draw-' + drawType"
             :key="drawType"
-            :aria="drawType"
+            :aria="$t('common:shared.modules.draw.drawTypes.' + drawType)"
             :class-array="['btn-primary']"
             :interaction="() => regulateInteraction(drawType)"
             :icon="mappingIcons[drawType]"
