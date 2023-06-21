@@ -500,7 +500,7 @@ describe("src_3_0_0/app-store/getters.js", () => {
         });
     });
 
-    describe.only("invisibleBackgroundLayerConfigs", () => {
+    describe("invisibleBackgroundLayerConfigs", () => {
         it("should return all invisible background layers", () => {
             const layerConfig = {
                     [treeBackgroundsKey]: {
