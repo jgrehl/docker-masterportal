@@ -2,7 +2,6 @@ import {createStore} from "vuex";
 import {config, shallowMount, mount} from "@vue/test-utils";
 import {expect} from "chai";
 import sinon from "sinon";
-import {treeBackgroundsKey} from "../../../../../shared/js/utils/constants";
 import LayerSelectionComponent from "../../../components/LayerSelection.vue";
 import LayerSelection from "../../../store/indexLayerSelection";
 
@@ -96,12 +95,7 @@ describe("src_3_0_0/modules/layerSelection/components/LayerSelection.vue", () =>
                 }
             },
             getters: {
-                allLayerConfigsStructured: () => (key) =>{
-                    if (key === treeBackgroundsKey) {
-                        return layersBG;
-                    }
-                    return subjectDataLayers;
-                }
+                invisibleBackgroundLayerConfigs: sinon.stub()
             }
         });
         LayerSelection.getters.layersToAdd = () => layersToAdd;
@@ -207,5 +201,27 @@ describe("src_3_0_0/modules/layerSelection/components/LayerSelection.vue", () =>
         expect(sorted[0].type).to.be.equals("folder");
         expect(sorted[1].type).to.be.equals("layer");
         expect(sorted[2].type).to.be.equals("layer");
+    });
+
+    describe("watcher", () => {
+        it("invisibleBackgroundLayerConfigs changed", () => {
+            const newValue = [{
+                id: "WMTS",
+                name: "EOC Basemap",
+                visibility: false,
+                backgroundLayer: true,
+                showInLayerTree: false
+            }];
+
+            wrapper = shallowMount(LayerSelectionComponent, {
+                global: {
+                    plugins: [store]
+                }});
+
+            wrapper.vm.$options.watch.invisibleBackgroundLayerConfigs.handler.call(wrapper.vm, newValue);
+            expect(store.state.Modules.LayerSelection.backgroundLayerConfs).to.be.an("Array");
+            expect(store.state.Modules.LayerSelection.backgroundLayerConfs.length).to.be.equals(1);
+            expect(store.state.Modules.LayerSelection.backgroundLayerConfs).to.be.deep.equals(newValue);
+        });
     });
 });
