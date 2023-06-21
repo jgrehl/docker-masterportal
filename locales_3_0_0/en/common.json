@@ -180,6 +180,9 @@
       "supply": "Query Coordinates / Height"
     },
     "draw": {
+      "name": "Drawing / Writing"
+    },
+    "draw_old": {
       "attributeSelect": {
         "attributeDuplicatedKeyError": "Key already exists!",
         "attributeKeyError": "Attribute key must be set!",
@@ -830,6 +833,19 @@
         "download": "Download",
         "error": {
           "download": "An error occured on trying to download the data."
+        }
+      },
+      "draw": {
+        "drawTypes": {
+          "box": "Box",
+          "circle": "Circle",
+          "doubleCircle": "Double circle",
+          "geometries": "Geometrien",
+          "line": "Line",
+          "pen": "Stift",
+          "point": "Point",
+          "polygon": "Area",
+          "symbols": "Symbol"
         }
       },
       "graphicalSelect": {
