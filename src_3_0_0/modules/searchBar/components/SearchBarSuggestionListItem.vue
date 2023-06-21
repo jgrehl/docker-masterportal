@@ -19,7 +19,7 @@ export default {
     },
     methods: {
         ...mapActions(["addLayerToLayerConfig"]),
-        ...mapActions("Modules/SearchBar", ["addLayerToTopicTree"]),
+        ...mapActions("Modules/SearchBar", ["addSearchResultToTopicTree"]),
         ...mapMutations("Modules/SearchBar", ["setSearchResultsActive"]),
 
         /**
@@ -27,8 +27,8 @@ export default {
          * @param {Object} searchResult a single search result
          * @returns {void}
          */
-        addLayer (searchResult) {
-            this.addLayerToTopicTree(searchResult);
+        async addLayer (searchResult) {
+            await this.addSearchResultToTopicTree(searchResult);
             this.setSearchResultsActive(false);
         }
     }
