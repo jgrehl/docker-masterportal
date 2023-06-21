@@ -1,7 +1,7 @@
 <script>
 import drawInteractions from "@masterportal/masterportalapi/src/maps/interactions/drawInteractions";
 import {Popover} from "bootstrap";
-import {mapActions} from "vuex";
+import {mapActions, mapGetters} from "vuex";
 
 import DrawTypesPopover from "./DrawTypesPopover.vue";
 import IconButton from "../../buttons/components/IconButton.vue";
@@ -69,12 +69,16 @@ export default {
             popovers: []
         };
     },
+    computed: {
+        ...mapGetters("Maps", ["projection"])
+    },
     mounted () {
         this.processPopover(document.getElementById("draw-geometries"), "draw-types-geometries");
         this.processPopover(document.getElementById("draw-symbols"), "draw-types-symbols");
     },
     unmounted () {
         this.hidePopovers();
+        this.removeInteraction(this.drawInteraction);
     },
     methods: {
         ...mapActions("Maps", ["addInteraction", "removeInteraction"]),
@@ -143,16 +147,15 @@ export default {
          * @returns {void}
          */
         regulateInteraction (drawType) {
-            const map2d = mapCollection.getMap("2D"),
-                options = {
-                    circleInnerRadius: this.circleInnerRadius,
-                    circleOuterRadius: this.circleOuterRadius,
-                    interactiveCircle: this.interactiveCircle
-                };
+            const options = {
+                circleInnerRadius: this.circleInnerRadius,
+                circleOuterRadius: this.circleOuterRadius,
+                interactiveCircle: this.interactiveCircle
+            };
 
             this.hidePopovers();
             this.removeInteraction(this.drawInteraction);
-            this.drawInteraction = drawInteractions.changeDrawInteraction(drawType, this.source, map2d, options);
+            this.drawInteraction = drawInteractions.changeDrawInteraction(drawType, this.source, this.projection, options);
             this.addInteraction(this.drawInteraction);
         }
     }
@@ -173,6 +176,7 @@ export default {
         />
         <div
             v-show="false"
+            class="draw-types-popovers"
         >
             <DrawTypesPopover
                 id="draw-types-geometries"
