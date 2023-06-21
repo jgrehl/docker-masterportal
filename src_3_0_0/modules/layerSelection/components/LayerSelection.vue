@@ -22,9 +22,18 @@ export default {
     },
     computed: {
         ...mapGetters("Maps", ["mode"]),
+        ...mapGetters(["invisibleBackgroundLayerConfigs"]),
         ...mapGetters("Modules/LayerSelection", ["visible", "subjectDataLayerConfs", "backgroundLayerConfs", "layersToAdd", "lastFolderNames", "layerInfoVisible"]),
         lastFolderName () {
             return this.lastFolderNames[this.lastFolderNames.length - 1];
+        }
+    },
+    watch: {
+        invisibleBackgroundLayerConfigs: {
+            handler (newVal) {
+                this.setBackgroundLayerConfs(newVal);
+            },
+            deep: true
         }
     },
     unmounted () {
@@ -38,7 +47,7 @@ export default {
     },
     methods: {
         ...mapActions("Modules/LayerSelection", ["updateLayerTree", "navigateBack", "navigateForward", "reset"]),
-        ...mapMutations("Modules/LayerSelection", ["setLayerInfoVisible"]),
+        ...mapMutations("Modules/LayerSelection", ["setLayerInfoVisible", "setBackgroundLayerConfs"]),
 
         /**
          * Sorts the configs by type: first folder, then layer.
