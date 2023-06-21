@@ -179,7 +179,7 @@ function transformCoordinates ({dispatch, rootGetters}, geometry) {
         type = geometry.getType(),
         alert = {
             category: "error",
-            content: i18next.t("common:modules.draw.download.unknownGeometry", {geometry: type}),
+            content: i18next.t("common:modules.draw_old.download.unknownGeometry", {geometry: type}),
             displayClass: "error",
             multipleAlert: true
         };
