@@ -42,7 +42,7 @@ export default {
     <div>
         <hr>
         <p class="bold">
-            {{ $t("common:modules.draw.button.download") }}
+            {{ $t("common:modules.draw_old.button.download") }}
         </p>
         <form
             id="tool-draw-download"
@@ -55,7 +55,7 @@ export default {
                     class="col-md-5 col-form-label"
                     for="tool-draw-download-format"
                 >
-                    {{ $t("common:modules.draw.download.format") }}
+                    {{ $t("common:modules.draw_old.download.format") }}
                 </label>
                 <div class="col-md-7">
                     <select
@@ -64,7 +64,7 @@ export default {
                         @change="setDownloadSelectedFormat($event.target.value)"
                     >
                         <option value="none">
-                            {{ $t("common:modules.draw.download.pleaseChoose") }}
+                            {{ $t("common:modules.draw_old.download.pleaseChoose") }}
                         </option>
                         <option
                             v-for="format in download.formats"
@@ -82,14 +82,14 @@ export default {
                     class="col-md-5 col-form-label"
                     for="tool-draw-download-filename"
                 >
-                    {{ $t("common:modules.draw.download.filename") }}
+                    {{ $t("common:modules.draw_old.download.filename") }}
                 </label>
                 <div class="col-md-7">
                     <input
                         id="tool-draw-download-filename"
                         type="text"
                         class="form-control form-control-sm"
-                        :placeholder="$t('common:modules.draw.download.enterFilename')"
+                        :placeholder="$t('common:modules.draw_old.download.enterFilename')"
                         @keyup="setDownloadFileName"
                     >
                 </div>
@@ -107,7 +107,7 @@ export default {
                         <span class="bootstrap-icon">
                             <i class="bi-save-fill" />
                         </span>
-                        {{ $t("common:modules.draw.button.saveDrawing") }}
+                        {{ $t("common:modules.draw_old.button.saveDrawing") }}
                     </a>
                 </div>
             </div>
