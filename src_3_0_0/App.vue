@@ -68,7 +68,8 @@ export default {
         this.checkVueObservation();
         this.regulateDeviceMode();
         new Tooltip(document.body, {
-            selector: "[data-bs-toggle='tooltip']"
+            selector: "[data-bs-toggle='tooltip']",
+            trigger: "hover"
         });
     },
     methods: {
