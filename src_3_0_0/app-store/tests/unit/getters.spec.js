@@ -499,4 +499,42 @@ describe("src_3_0_0/app-store/getters.js", () => {
             expect(getters.determineZIndex(state)("453")).to.be.equals(100);
         });
     });
+
+    describe.only("invisibleBackgroundLayerConfigs", () => {
+        it("should return all invisible background layers", () => {
+            const layerConfig = {
+                    [treeBackgroundsKey]: {
+                        elements: [
+                            {
+                                id: "453",
+                                visibility: true
+                            },
+                            {
+                                id: "452"
+                            },
+                            {
+                                id: "1132",
+                                name: "Luftbild",
+                                visibility: false
+                            }
+                        ]
+                    },
+                    [treeSubjectsKey]: {
+                        elements: [
+                            {
+                                id: "10220"
+                            }
+                        ]
+                    }
+                },
+                state = {
+                    layerConfig: layerConfig
+                };
+
+            expect(getters.invisibleBackgroundLayerConfigs(state)).to.be.an("array");
+            expect(getters.invisibleBackgroundLayerConfigs(state).length).to.be.equals(2);
+            expect(getters.invisibleBackgroundLayerConfigs(state)[0].id).to.be.equals("452");
+            expect(getters.invisibleBackgroundLayerConfigs(state)[1].id).to.be.equals("1132");
+        });
+    });
 });
