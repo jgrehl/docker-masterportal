@@ -180,6 +180,9 @@
       "supply": "Koordinaten affragen"
     },
     "draw": {
+      "name": "Teken / Schrieven"
+    },
+    "draw_old": {
       "attributeSelect": {
         "attributeDuplicatedKeyError": "",
         "attributeKeyError": "",
@@ -824,6 +827,19 @@
         "download": "Rünner loaden",
         "error": {
           "download": "Beim Herunterladen der gewünschten Daten ist ein Fehler aufgetreten."
+        }
+      },
+      "draw": {
+        "drawTypes": {
+          "box": "Box",
+          "circle": "Kreis",
+          "doubleCircle": "Doppelkreis",
+          "geometries": "Geometrien",
+          "line": "Linie",
+          "pen": "Stift",
+          "point": "Punkt",
+          "polygon": "Fläche",
+          "symbols": "Symbole"
         }
       },
       "graphicalSelect": {

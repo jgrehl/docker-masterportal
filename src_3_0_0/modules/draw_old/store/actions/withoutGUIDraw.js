@@ -262,7 +262,7 @@ async function initializeWithoutGUI ({state, commit, dispatch, getters, rootStat
                 // The given JSON was invalid
                 const alert = {
                     category: "error",
-                    content: i18next.t("common:modules.draw.geometryDrawFailed"),
+                    content: i18next.t("common:modules.draw_old.geometryDrawFailed"),
                     displayClass: "error",
                     multipleAlert: true
                 };

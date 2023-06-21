@@ -180,6 +180,9 @@
       "supply": "Koordinaten / Höhe abfragen"
     },
     "draw": {
+      "name": "Zeichnen / Schreiben"
+    },
+    "draw_old": {
       "attributeSelect": {
         "attributeDuplicatedKeyError": "Der Attribut-Schlüssel existiert bereits.",
         "attributeKeyError": "Bitte einen Schlüssel fürs Attribut angeben.",
@@ -830,6 +833,19 @@
         "download": "Herunterladen",
         "error": {
           "download": "Beim Herunterladen der gewünschten Daten ist ein Fehler aufgetreten."
+        }
+      },
+      "draw": {
+        "drawTypes": {
+          "box": "Box",
+          "circle": "Kreis",
+          "doubleCircle": "Doppelkreis",
+          "geometries": "Geometrien",
+          "line": "Linie",
+          "pen": "Stift",
+          "point": "Punkt",
+          "polygon": "Fläche",
+          "symbols": "Symbole"
         }
       },
       "graphicalSelect": {
