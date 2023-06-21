@@ -155,7 +155,7 @@ export default {
 
             this.hidePopovers();
             this.removeInteraction(this.drawInteraction);
-            this.drawInteraction = drawInteractions.changeDrawInteraction(drawType, this.source, this.projection, options);
+            this.drawInteraction = drawInteractions.createInteractiveOrStaticDrawInteraction(drawType, this.source, this.projection, options);
             this.addInteraction(this.drawInteraction);
         }
     }
