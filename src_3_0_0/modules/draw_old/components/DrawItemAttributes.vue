@@ -191,14 +191,14 @@ export default {
             if (!this.attributeKey) {
                 this.addKey = {
                     valid: false,
-                    message: this.$t("common:modules.draw.attributeSelect.attributeKeyError")
+                    message: this.$t("common:modules.draw_old.attributeSelect.attributeKeyError")
                 };
                 return;
             }
             if (this.attributes.some(attr => attr?.key === this.attributeKey)) {
                 this.addKey = {
                     valid: false,
-                    message: this.$t("common:modules.draw.attributeSelect.attributeDuplicatedKeyError")
+                    message: this.$t("common:modules.draw_old.attributeSelect.attributeDuplicatedKeyError")
                 };
                 return;
             }
@@ -293,7 +293,7 @@ export default {
                     keyStatus[attribute.key] = {valid: true};
                     if (!attribute.key) {
                         keyStatus[attribute.key].valid = false;
-                        keyStatus[attribute.key].message = this.$t("common:modules.draw.attributeSelect.attributeKeyError");
+                        keyStatus[attribute.key].message = this.$t("common:modules.draw_old.attributeSelect.attributeKeyError");
                         success = false;
                     }
                 }
@@ -302,7 +302,7 @@ export default {
                         keyStatus[attribute.key] = {};
                     }
                     keyStatus[attribute.key].valid = false;
-                    keyStatus[attribute.key].message = this.$t("common:modules.draw.attributeSelect.attributeDuplicatedKeyError");
+                    keyStatus[attribute.key].message = this.$t("common:modules.draw_old.attributeSelect.attributeDuplicatedKeyError");
                     success = false;
                 }
             });
@@ -356,7 +356,7 @@ export default {
                 </div>
                 <div class="col-1">
                     <i
-                        :title="$t('common:modules.draw.attributeSelect.remove')"
+                        :title="$t('common:modules.draw_old.attributeSelect.remove')"
                         class="bi bi-trash"
                         @click="removeAttribute(idx)"
                         @keypress.enter="removeAttribute(idx) "
@@ -374,7 +374,7 @@ export default {
                             type="text"
                             :title="addKey.valid === null ? addKey.message : null"
                             :class="[addKey.valid === false ? 'is-invalid' : '', 'form-control']"
-                            :placeholder="$t('common:modules.draw.attributeSelect.input.key')"
+                            :placeholder="$t('common:modules.draw_old.attributeSelect.input.key')"
                             @input="addKey.valid = true"
                             @keyup.enter="switchToRef('attributeValue')"
                         >
@@ -390,7 +390,7 @@ export default {
                         aria-label="attribute"
                         type="text"
                         class="form-control"
-                        :placeholder="$t('common:modules.draw.attributeSelect.input.value')"
+                        :placeholder="$t('common:modules.draw_old.attributeSelect.input.value')"
                         @keyup.enter="addAttributesToFeature(), switchToRef('attributeKey')"
                     >
                 </div>
@@ -401,14 +401,14 @@ export default {
                     @keypress.enter="addAttributesToFeature()"
                 >
                     <i
-                        :title="$t('common:modules.draw.attributeSelect.save')"
+                        :title="$t('common:modules.draw_old.attributeSelect.save')"
                         class="bi bi-save"
                     />
                 </div>
             </div>
         </div>
         <div v-else>
-            <span>{{ $t("common:modules.draw.attributeSelect.noFeatureSelected") }}</span>
+            <span>{{ $t("common:modules.draw_old.attributeSelect.noFeatureSelected") }}</span>
         </div>
     </form>
 </template>

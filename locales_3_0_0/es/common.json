@@ -180,6 +180,9 @@
       "supply": ""
     },
     "draw": {
+      "name": "Dibujar / Escribir"
+    },
+    "draw_old": {
       "attributeSelect": {
         "attributeDuplicatedKeyError": "",
         "attributeKeyError": "",
@@ -825,6 +828,19 @@
         "download": "Descargar",
         "error": {
           "download": ""
+        }
+      },
+      "draw": {
+        "drawTypes": {
+          "box": "",
+          "circle": "Círculo",
+          "doubleCircle": "Círculo doble",
+          "geometries": "",
+          "line": "Líneas",
+          "pen": "",
+          "point": "",
+          "polygon": "Área",
+          "symbols": "Simbolo"
         }
       },
       "graphicalSelect": {
