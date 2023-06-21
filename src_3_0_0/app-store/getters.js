@@ -323,12 +323,23 @@ const getters = {
     /**
      * Returns all visible background layer configurations.
      * @param {Object} state state of the app-store.
-     * @returns {Object[]} The layers.
+     * @returns {Object[]} The layers with property 'visibility' is not true.
      */
     visibleBackgroundLayerConfigs: (state) => {
         const layerContainer = getters.allBackgroundLayerConfigs(state);
 
         return layerContainer.filter(layerConf => layerConf.visibility === true);
+    },
+
+    /**
+     * Returns all not visible background layer configurations.
+     * @param {Object} state state of the app-store.
+     * @returns {Object[]} The layers.
+     */
+    invisibleBackgroundLayerConfigs: (state) => {
+        const layerContainer = getters.allBackgroundLayerConfigs(state);
+
+        return layerContainer.filter(layerConf => layerConf.visibility !== true);
     }
 };
 
