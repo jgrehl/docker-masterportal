@@ -180,6 +180,9 @@
       "supply": "Richiedi coordinate"
     },
     "draw": {
+      "name": "Disegna / Scrivi"
+    },
+    "draw_old": {
       "attributeSelect": {
         "attributeDuplicatedKeyError": "La chiave dell'attributo esiste già.",
         "attributeKeyError": "Inserire una chiave per l'attributo.",
@@ -826,6 +829,19 @@
         "download": "Scarica",
         "error": {
           "download": "Si è verificato un errore durante il download dei dati desiderati."
+        }
+      },
+      "draw": {
+        "drawTypes": {
+          "box": "",
+          "circle": "Cerchio",
+          "doubleCircle": "Cerchio doppio",
+          "geometries": "",
+          "line": "Linea",
+          "pen": "",
+          "point": "",
+          "polygon": "Area",
+          "symbols": "Simbolo"
         }
       },
       "graphicalSelect": {

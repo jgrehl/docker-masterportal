@@ -180,6 +180,9 @@
       "supply": ""
     },
     "draw": {
+      "name": "Desenhar / Escrever"
+    },
+    "draw_old": {
       "attributeSelect": {
         "attributeDuplicatedKeyError": "",
         "attributeKeyError": "",
@@ -824,6 +827,19 @@
         "download": "Descarregar",
         "error": {
           "download": ""
+        }
+      },
+      "draw": {
+        "drawTypes": {
+          "box": "",
+          "circle": "Círculo",
+          "doubleCircle": "Círculo duplo",
+          "geometries": "",
+          "line": "Líneas",
+          "pen": "",
+          "point": "",
+          "polygon": "Área",
+          "symbols": "Simbolo"
         }
       },
       "graphicalSelect": {
