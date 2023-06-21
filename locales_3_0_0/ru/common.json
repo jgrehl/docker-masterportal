@@ -180,6 +180,9 @@
       "supply": "Запрос координат"
     },
     "draw": {
+      "name": "Чертить / писать"
+    },
+    "draw_old": {
       "attributeSelect": {
         "attributeDuplicatedKeyError": "",
         "attributeKeyError": "",
@@ -824,6 +827,19 @@
         "download": "скачать",
         "error": {
           "download": ""
+        }
+      },
+      "draw": {
+        "drawTypes": {
+          "box": "",
+          "circle": "Круг",
+          "doubleCircle": "Двойной круг",
+          "geometries": "",
+          "line": "Линии",
+          "pen": "",
+          "point": "",
+          "polygon": "Площадь",
+          "symbols": "Символ"
         }
       },
       "graphicalSelect": {
