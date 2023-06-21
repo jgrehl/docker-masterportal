@@ -48,7 +48,7 @@ export default {
             v-for="element in elements"
             :id="'draw-types-' + element"
             :key="element"
-            :aria="element"
+            :aria="$t('common:shared.modules.draw.drawTypes.' + element)"
             :class-array="['btn-primary', 'mx-1']"
             :interaction="() => emitElementToParent(element)"
             :icon="mappingIcons[element]"

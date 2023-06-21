@@ -180,6 +180,9 @@
       "supply": "Koordinatları sorgula"
     },
     "draw": {
+      "name": "çizmek / yazmak"
+    },
+    "draw_old": {
       "attributeSelect": {
         "attributeDuplicatedKeyError": "",
         "attributeKeyError": "",
@@ -825,6 +828,19 @@
         "download": "indir",
         "error": {
           "download": "İstenen veriler indirilirken bir hata oluştu."
+        }
+      },
+      "draw": {
+        "drawTypes": {
+          "box": "",
+          "circle": "Círculo",
+          "doubleCircle": "Çift ​​çember",
+          "geometries": "",
+          "line": "çizgiler",
+          "pen": "",
+          "point": "",
+          "polygon": "Alan",
+          "symbols": "Sembol"
         }
       },
       "graphicalSelect": {
