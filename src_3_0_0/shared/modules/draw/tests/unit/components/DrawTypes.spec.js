@@ -1,3 +1,4 @@
+import {createStore} from "vuex";
 import {config, shallowMount} from "@vue/test-utils";
 import {expect} from "chai";
 import {Popover} from "bootstrap";
@@ -9,11 +10,32 @@ import DrawTypesComponent from "../../../components/DrawTypes.vue";
 config.global.mocks.$t = key => key;
 
 describe("src_3_0_0/shared/modules/draw/components/DrawTypes.vue", () => {
-    let source,
+    let addInteractionSpy,
+        removeInteractionSpy,
+        source,
+        store,
         wrapper;
 
     beforeEach(() => {
+        addInteractionSpy = sinon.spy();
+        removeInteractionSpy = sinon.spy();
         source = new VectorSource();
+
+        store = createStore({
+            namespaces: true,
+            modules: {
+                Maps: {
+                    namespaced: true,
+                    actions: {
+                        addInteraction: addInteractionSpy,
+                        removeInteraction: removeInteractionSpy
+                    },
+                    getters: {
+                        projection: () => sinon.stub()
+                    }
+                }
+            }
+        });
     });
 
     afterEach(() => {
@@ -119,6 +141,46 @@ describe("src_3_0_0/shared/modules/draw/components/DrawTypes.vue", () => {
                 pen: "bi-pencil-fill",
                 symbols: "bi-circle-square"
             });
+        });
+    });
+
+    describe("regulateInteraction", () => {
+        it("should remove current interaction and add new interaction", () => {
+            const drawType = "pen";
+
+            wrapper = shallowMount(DrawTypesComponent, {
+                propsData: {
+                    source: source
+                },
+                global: {
+                    plugins: [store]
+                }
+            });
+
+            wrapper.vm.regulateInteraction(drawType);
+
+            expect(removeInteractionSpy.calledOnce).to.be.true;
+            expect(addInteractionSpy.calledOnce).to.be.true;
+        });
+    });
+
+    describe("regulateInteraction", () => {
+        it("should remove current interaction and don't add interaction, if drawType is missing", () => {
+            const drawType = "abc";
+
+            wrapper = shallowMount(DrawTypesComponent, {
+                propsData: {
+                    source: source
+                },
+                global: {
+                    plugins: [store]
+                }
+            });
+
+            wrapper.vm.regulateInteraction(drawType);
+
+            expect(removeInteractionSpy.calledOnce).to.be.true;
+            expect(addInteractionSpy.notCalled).to.be.true;
         });
     });
 });
