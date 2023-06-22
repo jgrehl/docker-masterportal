@@ -15,7 +15,6 @@ const state = {
     supportedMapModes: ["2D", "3D"],
     visibleSubjectDataLayers: [],
     active: false,
-    amount: 3,
     type: "layerPills"
 };
 
