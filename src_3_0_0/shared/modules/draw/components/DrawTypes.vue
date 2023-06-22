@@ -143,19 +143,32 @@ export default {
          * @returns {void}
          */
         regulateInteraction (drawType) {
+            this.hidePopovers();
+            this.removeInteraction(this.drawInteraction);
+            this.drawInteraction = drawInteractions.createDrawInteraction(drawType, this.source);
+
+            if (this.drawInteraction !== null) {
+                if (drawType === "circle" || drawType === "doubleCircle") {
+                    this.regulateStaticCircleInteraction(drawType);
+                }
+
+                this.addInteraction(this.drawInteraction);
+            }
+        },
+
+        /**
+         * Regulate the draw interactions fro static circles.
+         * @param {String} drawType The current draw type.
+         * @returns {void}
+         */
+        regulateStaticCircleInteraction (drawType) {
             const options = {
                 circleInnerRadius: this.circleInnerRadius,
                 circleOuterRadius: this.circleOuterRadius,
                 interactiveCircle: this.interactiveCircle
             };
 
-            this.hidePopovers();
-            this.removeInteraction(this.drawInteraction);
-            this.drawInteraction = drawInteractions.createInteractiveOrStaticDrawInteraction(drawType, this.source, this.projection, options);
-
-            if (this.drawInteraction !== null) {
-                this.addInteraction(this.drawInteraction);
-            }
+            drawInteractions.drawCircle(this.drawInteraction, drawType, this.projection, this.source, options);
         }
     }
 };
