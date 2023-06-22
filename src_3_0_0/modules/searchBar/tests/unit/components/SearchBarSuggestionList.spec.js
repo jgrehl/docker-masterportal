@@ -73,8 +73,11 @@ describe("src_3_0_0/modules/searchBar/components/SearchBarSuggestionList.vue", (
                                 searchInput: () => searchInput,
                                 searchResults: () => searchResults,
                                 searchSuggestions: () => [],
-                                searchInterfaces: () => searchInterfaces
-
+                                searchInterfaces: () => searchInterfaces,
+                                suggestionListLength: () => sinon.stub()
+                            },
+                            mutations: {
+                                setSearchSuggestions: sinon.stub()
                             }
                         }
                     }
