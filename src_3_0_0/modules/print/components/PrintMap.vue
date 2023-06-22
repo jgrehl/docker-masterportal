@@ -11,6 +11,9 @@ import getVisibleLayer from "../js/getVisibleLayer";
 import FlatButton from "../../../shared/modules/buttons/components/FlatButton.vue";
 import InputText from "../../../shared/modules/inputs/components/InputText.vue";
 import SwitchInput from "../../../shared/modules/checkboxes/components/SwitchInput.vue";
+import rawLayerList from "@masterportal/masterportalapi/src/rawLayerList";
+import BuildSpec from "../js/buildSpec";
+import layerCollection from "../../../core/layers/js/layerCollection";
 
 /**
  * Tool to print a part of the map
@@ -25,7 +28,8 @@ export default {
             docTitleId: "docTitle",
             outputFileTitleId: "outputFileTitle",
             subtitle: "",
-            textField: ""
+            textField: "",
+            author: ""
         };
     },
     computed: {
@@ -282,8 +286,7 @@ export default {
             const currentPrintLength = this.fileDownloads.filter(file => file.finishState === false).length;
 
             if (currentPrintLength <= 10) {
-                const index = this.fileDownloads.length,
-                    layoutAttributes = this.getLayoutAttributes(this.currentLayout, ["subtitle", "textField"]);
+                const index = this.fileDownloads.length;
 
                 this.addFileDownload({
                     index: index,
@@ -300,7 +303,7 @@ export default {
                     getResponse: async (url, payload) => {
                         return axios.post(url, payload);
                     },
-                    layoutAttributes
+                    layoutAttributes: this.getLayoutAttributes(this.currentLayout, ["subtitle", "textField", "author", "overviewMap", "source"])
                 });
             }
             else {
@@ -383,14 +386,56 @@ export default {
             }
             nameList.forEach(name => {
                 if (this.hasLayoutAttribute(layout, name)) {
-                    layoutAttributes[name] = this[name];
+                    if (name === "overviewMap") {
+                        layoutAttributes[name] = {
+                            // NOTICE hier gibt es ein Ticket bei dev1: feste LayerId wird konfigurierbar
+                            "layers": [BuildSpec.buildTileWms(layerCollection.getLayerById("453").getLayer(), this.dpiForPdf)]
+                        };
+                    }
+                    else if (name === "source") {
+                        layoutAttributes[name] = [];
+                        this.visibleLayerList.forEach(layer => {
+                            const foundRawLayer = rawLayerList.getLayerWhere({id: layer.get("id")});
+
+                            if (foundRawLayer) {
+                                layoutAttributes[name].push(foundRawLayer?.datasets[0].show_doc_url + foundRawLayer.datasets[0].md_id);
+                            }
+                        });
+                        layoutAttributes[name] = layoutAttributes[name].join("\n");
+                    }
+                    else {
+                        layoutAttributes[name] = this[name];
+                    }
                 }
             });
             return layoutAttributes;
         },
 
+        /**
+         * Sets the subtitle to data's subtitle.
+         * @param {String} subtitle the subtitle diplayed in print under title
+         * @returns {void}
+         */
         setSubtitle (subtitle) {
             this.subtitle = subtitle;
+        },
+
+        /**
+         * Sets the author to data's author.
+         * @param {String} author the author diplayed in print footer
+         * @returns {void}
+         */
+        setAuthor (author) {
+            this.author = author;
+        },
+
+        /**
+         * Sets the textField to data's textField.
+         * @param {String} textField the textField diplayed in print under the map
+         * @returns {void}
+         */
+        setTextField (textField) {
+            this.textField = textField;
         }
     }
 };
@@ -414,15 +459,44 @@ export default {
             <div
                 v-if="hasLayoutAttribute(currentLayout, 'subtitle')"
             >
-                <div>
-                    <InputText
-                        :id="subtitle"
-                        :label="$t('common:modules.print.subtitleLabel')"
-                        :placeholder="$t('common:modules.print.subtitleLabel')"
-                        :value="subtitle"
-                        :input="setSubtitle"
+                <InputText
+                    :id="subtitle"
+                    :label="$t('common:modules.print.subtitleLabel')"
+                    :placeholder="$t('common:modules.print.subtitleLabel')"
+                    :value="subtitle"
+                    :input="setSubtitle"
+                    :max-length="'60'"
+                />
+            </div>
+            <div
+                v-if="hasLayoutAttribute(currentLayout, 'textField')"
+                class="form-floating"
+            >
+                <div
+                    class="form-floating mb-3"
+                >
+                    <textarea
+                        id="textField"
+                        type="text"
+                        class="form-control"
+                        maxLength="550"
+                        :placeholder="$t('common:modules.print.textFieldLabel')"
+                        @input="event => setTextField(event.target.value)"
                     />
+                    <label for="textField">{{ $t("common:modules.print.textFieldLabel") }}</label>
                 </div>
+            </div>
+            <div
+                v-if="hasLayoutAttribute(currentLayout, 'author')"
+            >
+                <InputText
+                    :id="author"
+                    :label="$t('common:modules.print.authorLabel')"
+                    :placeholder="$t('common:modules.print.authorLabel')"
+                    :value="author"
+                    :input="setAuthor"
+                    :max-length="'60'"
+                />
             </div>
             <div class="form-floating mb-3">
                 <select
@@ -644,6 +718,10 @@ export default {
         .info-text {
             font-size: $font-size-sm;
         }
+    }
+
+    .form-control:focus ~ label {
+        color: $secondary;
     }
 
     #outputFileTitle.danger {
