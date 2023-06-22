@@ -4,7 +4,7 @@ import coordState from "./stateCoordToolkit";
 /**
  * @module modules/CoordToolkit/mutations
  */
-const mutations = {
+export default {
     /**
      * Creates from every state-key a setter.
      * For example, given a state object {key: value}, an object
@@ -101,5 +101,3 @@ const mutations = {
         state.selectedCoordinates.push(payload);
     }
 };
-
-export default mutations;
