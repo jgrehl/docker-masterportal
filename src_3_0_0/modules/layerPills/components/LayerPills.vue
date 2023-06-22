@@ -142,7 +142,6 @@ export default {
         v-if="visibleSubjectDataLayers.length > 0 && active && amount > 0"
         id="layer-pills"
         class="layer-pills-container"
-        :style="'width:' + containerWidth + 'px'"
     >
         <IconButton
             v-if="!isMobile"
@@ -211,7 +210,7 @@ export default {
 
     .nav-pills {
         display: flex;
-        flex-wrap: nowrap;
+        flex: none;
     }
 
     .nav-item {
@@ -241,7 +240,7 @@ export default {
       transition: width 0.3s ease;
     }
     .list-enter-to, .list-leave-from {
-        width: 100%;
+        width: 148px;
         transition: width 0.3s ease;
     }
     .list-enter-from, .list-leave-to{
