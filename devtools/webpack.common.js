@@ -4,15 +4,14 @@ const webpack = require("webpack"),
     path = require("path"),
     fse = require("fs-extra"),
     VueLoaderPlugin = require("vue-loader/lib/plugin"),
+    cesiumSource = "node_modules/@cesium/engine/Source",
+    cesiumWorkers = "../Build/Workers",
+    CopyWebpackPlugin = require("copy-webpack-plugin"),
 
     rootPath = path.resolve(__dirname, "../"),
     addonBasePath = path.resolve(rootPath, "addons"),
     addonConfigPath = path.resolve(addonBasePath, "addonsConf.json"),
-    entryPoints = {masterportal: path.resolve(rootPath, "js/main.js")},
-
-    cesiumSource = 'node_modules/cesium',
-    CopyWebpackPlugin = require('copy-webpack-plugin'),
-    cesiumWorkers = '../Build/Cesium/Workers';
+    entryPoints = {masterportal: path.resolve(rootPath, "js/main.js")};
 
 let addonEntryPoints = {};
 
@@ -93,23 +92,16 @@ module.exports = function () {
         output: {
             path: path.resolve(__dirname, "../build/"),
             filename: "js/[name].js",
-            publicPath: "../../build/",
-            // Needed to compile multiline strings in Cesium
-            sourcePrefix: ""
+            publicPath: "../../build/"
         },
-      /*   amd: {
-            // Enable webpack-friendly use of require in Cesium
-            toUrlUndefined: true
-        }, */
         resolve: {
             alias: {
                 text: "text-loader",
-                cesium: path.resolve(__dirname, cesiumSource),
                 "variables": path.resolve(__dirname, "..", "css", "variables.scss")
-            },
-            mainFiles: ["Cesium"]
+            }
         },
         module: {
+            unknownContextCritical: false,
             rules: [
                 // ignore all files ending with ".test.js".
                 {
@@ -195,20 +187,16 @@ module.exports = function () {
             // create global constant at compile time
             new webpack.DefinePlugin({
                 ADDONS: JSON.stringify(addonsRelPaths),
-                VUE_ADDONS: JSON.stringify(vueAddonsRelPaths)
+                VUE_ADDONS: JSON.stringify(vueAddonsRelPaths),
+                CESIUM_BASE_URL: JSON.stringify("https://geoportal-hamburg.de/mastercode/cesium/1_95/")
             }),
-            // Copy Cesium Assets, Widgets, and Workers to a static directory
+            // Copy Cesium Assets and Workers to a static directory
             new CopyWebpackPlugin({
                 patterns: [
-                    {from: path.join(cesiumSource, cesiumWorkers), to: 'Workers' },
-                    {from: path.join(cesiumSource, 'Assets'), to: 'Assets' },
-                    {from: path.join(cesiumSource, 'Widgets'), to: 'Widgets' }
+                    {from: path.join(cesiumSource, cesiumWorkers), to: "Workers"},
+                    {from: path.join(cesiumSource, "Assets"), to: "Assets"},
+                    {from: path.join(cesiumSource, "ThirdParty"), to: "ThirdParty"}
                 ]
-
-            }),
-            new webpack.DefinePlugin({
-                // Define relative base path in cesium for loading assets
-                CESIUM_BASE_URL: JSON.stringify('')
             })
         ]
     };

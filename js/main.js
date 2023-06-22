@@ -9,6 +9,7 @@ import "../css/bootstrap.scss";
 // CSS-Handling: Importieren von Css damit Webpack das verarbeitet.
 import "../css/style.css";
 import HttpApi from "i18next-http-backend";
+import * as Cesium from "@cesium/engine";
 import i18nextBrowserLanguageDetector from "i18next-browser-languagedetector";
 
 const scriptTags = document.getElementsByTagName("script"),
@@ -18,6 +19,7 @@ let strippedLocation = null,
     context = null,
     configPath = window.location.pathname.substring(0, window.location.pathname.lastIndexOf("/") + 1) + "config.js";
 
+global.Cesium = Cesium;
 // wenn Config.js nicht in der index.html als Script-Tag eingebunden ist, muss sie zunächst zugefügt und geladen werden
 if (!("Config" in window)) {
 
