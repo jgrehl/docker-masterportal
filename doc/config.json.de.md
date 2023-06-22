@@ -143,12 +143,14 @@ Konfiguration der LayerPills.
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
 |active|no|Boolean|false|Gibt an, ob dieses Feature aktiv ist.|false|
+|mobileOnly|no|Boolean|false|Gibt an, ob dieses Feature nur auf kleinen Bildschirmen aktiv ist.|false|
 
 **Example**
 ```
 #!json
 layerPills": {
-    "active": true
+    "active": true,
+    "mobileOnly": true
     }
 ```
 
