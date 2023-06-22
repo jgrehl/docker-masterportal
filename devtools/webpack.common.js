@@ -94,7 +94,7 @@ module.exports = function () {
         resolve: {
             alias: {
                 text: "text-loader",
-                vue: "@vue/compat",
+                // vue: "@vue/compat",
                 "mixins": path.resolve(__dirname, "..", "src_3_0_0", "assets", "css", "mixins.scss"),
                 "variables": path.resolve(__dirname, "..", "src_3_0_0", "assets", "css", "variables.scss")
             },
