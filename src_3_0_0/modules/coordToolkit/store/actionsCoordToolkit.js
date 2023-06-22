@@ -12,8 +12,9 @@ import layerFactory from "../../../core/layers/js/layerFactory";
 export default {
     /**
      * Copies the coordinates to clipboard, delimited by limiter from state.
-     * @param {Object} param.state the state
-     * @param {Object} param.dispatch the dispatch
+     * @param {Object} context the vuex context
+     * @param {Object} context.state the state
+     * @param {Object} context.dispatch the dispatch
      * @param {Array} coords coordinates to copy
      * @returns {void}
      */
@@ -49,7 +50,11 @@ export default {
     },
     /**
      * Remembers the projection and shows mapmarker at the given position.
-     * @param {Event} event - pointerdown-event, to get the position from
+     * @param {Object} context the vuex context
+     * @param {Object} context.commit the commit
+     * @param {Object} context.dispatch the dispatch
+     * @param {Object} context.state the state
+     * @param {Object} context.rootGetters the rootGetters
      * @returns {void}
      */
     positionClicked: function ({commit, dispatch, state, rootGetters}) {
@@ -82,6 +87,10 @@ export default {
     },
     /**
      * Creates a new WMSLayer to get the height from with id stored in state.heightLayerId and sets the layer to state.
+     * @param {Object} context the vuex context
+     * @param {Object} context.commit the commit
+     * @param {Object} context.state the state
+     * @param {Object} context.rootGetters the rootGetters
      * @returns {void}
      */
     initHeightLayer ({commit, state, rootGetters}) {
@@ -102,6 +111,10 @@ export default {
     /**
      * Requests the layer with id state.heightLayerId and parses the xml-response for the height.
      * Sets the height to the state.
+     * @param {Object} context the vuex context
+     * @param {Object} context.dispatch the dispatch
+     * @param {Object} context.rootGetters the rootGetters
+     * @param {Object} context.state the state
      * @param {Number[]} position position of the projection in the map
      * @returns {void}
      */
@@ -117,6 +130,9 @@ export default {
     },
     /**
      * Reads the height value from feature and sets it to state.
+     * @param {Object} context the vuex context
+     * @param {Object} context.commit the commit
+     * @param {Object} context.state the state
      * @param {Array} features to get the height value from
      * @returns {void}
      */
@@ -144,6 +160,11 @@ export default {
     /**
      * Reacts on new selected projection. Sets the current projection and its name to state,
      * changes position if mode is 'supply' and sets transformed coordinates to input fields.
+     * @param {Object} context the vuex context
+     * @param {Object} context.dispatch the dispatch
+     * @param {Object} context.commit the commit
+     * @param {Object} context.state the state
+     * @param {Object} context.getters the getters
      * @param {String} value id of the new selected projection
      * @returns {void}
      */
@@ -158,6 +179,10 @@ export default {
     },
     /**
      * Delegates the calculation and transformation of the position according to the projection
+     * @param {Object} context the vuex context
+     * @param {Object} context.dispatch the dispatch
+     * @param {Object} context.state the state
+     * @param {Object} context.getters the getters
      * @returns {void}
      */
     changedPosition ({dispatch, state, getters}) {
@@ -172,6 +197,12 @@ export default {
     },
     /**
      * Sets the position to map's center, if coordinates are  not set.
+     * @param {Object} context the vuex context
+     * @param {Object} context.dispatch the dispatch
+     * @param {Object} context.commit the commit
+     * @param {Object} context.state the state
+     * @param {Object} context.rootState the rootState
+     * @param {Object} context.getters the getters
      * @returns {void}
      */
     setFirstSearchPosition ({dispatch, commit, state, rootState, getters}) {
@@ -189,6 +220,9 @@ export default {
 
     /**
      * Calculates the clicked position and writes the coordinate-values into the textfields.
+     * @param {Object} context the vuex context
+     * @param {Object} context.commit the commit
+     * @param {Object} context.rootGetters the rootGetters
      * @param {Number[]} position transformed coordinates
      * @param {Object} targetProjection selected projection
      * @returns {void}
@@ -235,7 +269,11 @@ export default {
     },
     /**
      * Checks the position for update and shows the marker at updated position
-     * @param {Number[]} position contains coordinates of mouse position
+     * @param {Object} context the vuex context
+     * @param {Object} context.state the state
+     * @param {Object} context.commit the commit
+     * @param {Object} context.dispatch the dispatch
+     * @param {Object} context.rootGetters the rootGetters
      * @returns {void}
      */
     checkPosition ({state, commit, dispatch, rootGetters}) {
@@ -256,7 +294,10 @@ export default {
     /**
      * Resets the error messages, calls the validation function with the entered coordinates
      * and calls the transformCoordinates function.
-     * @param {Object} context actions context object.
+     * @param {Object} context the vuex context
+     * @param {Object} context.dispatch the dispatch
+     * @param {Object} context.commit the commit
+     * @param {Object} context.state the state
      * @param {String} context.state.coordinatesEasting the coordinates user entered
      * @param {String} context.state.coordinatesNorthing the coordinates user entered
      * @returns {void}
@@ -270,7 +311,8 @@ export default {
     },
     /**
      * Removes the marker from selected position.
-     * @param {Object} context actions context object.
+     * @param {Object} context the vuex context
+     * @param {Object} context.dispatch the dispatch
      * @returns {void}
      */
     removeMarker: function ({dispatch}) {
@@ -278,7 +320,8 @@ export default {
     },
     /**
      * Remembers the projection and shows mapmarker at the given position.
-     * @param {Object} context actions context object.
+     * @param {Object} context the vuex context
+     * @param {Object} context.dispatch the dispatch
      * @param {Event} coordinates - the position
      * @returns {void}
      */
@@ -287,7 +330,9 @@ export default {
     },
     /**
      * Validates the user-input depending on the selected projection and sets the error messages.
-     * @param {Object} context actions context object.
+     * @param {Object} context the vuex context
+     * @param {Object} context.state the state
+     * @param {Object} context.commit the commit
      * @param {Object} coord the coordinate the user entered
      * @returns {void}
      */
@@ -332,7 +377,10 @@ export default {
     },
     /**
      * Pushes the formatted coordinates in the selectedCoordinates String[].
-     * @param {Object} context actions context object.
+     * @param {Object} context the vuex context
+     * @param {Object} context.state the state
+     * @param {Object} context.commit the commit
+     * @param {Object} context.getters the getters
      * @param {String[]} coords the coordinates the user entered
      * @returns {void}
      */
@@ -361,7 +409,9 @@ export default {
     },
     /**
      * Transforms the selected coordinates from the current projection to the target projection and sets them to state.
-     * @param {Object} context actions context object.
+     * @param {Object} context the vuex context
+     * @param {Object} context.state the state
+     * @param {Object} context.commit the commit
      * @param {*} targetProjection the target projection
      * @returns {void}
      */
@@ -403,7 +453,9 @@ export default {
 
     /**
      * Transforms the selected and validated coordinates to their given coordinate system and calls the moveToCoordinates function.
-     * @param {Object} context actions context object.
+     * @param {Object} context the vuex context
+     * @param {Object} context.state the state
+     * @param {Object} context.dispatch the dispatch
      * @returns {void}
      */
     transformCoordinates ({state, dispatch}) {
@@ -462,7 +514,8 @@ export default {
     },
     /**
      * Transforms the selected and validated coordinates to their given coordinate system and calls the moveToCoordinates function.
-     * @param {Object} context actions context object.
+     * @param {Object} context the vuex context
+     * @param {Object} context.dispatch the dispatch
      * @param {String[]} coordinates from the validated coordinates
      * @returns {void}
      */
@@ -472,7 +525,8 @@ export default {
     },
     /**
      * Sets the zoom level to the map.
-     * @param {Object} context actions context object.
+     * @param {Object} context the vuex context
+     * @param {Object} context.dispatch the dispatch
      * @param {Number} zoomLevel - Zoomlevel to zoom to
      * @returns {void}
      */
@@ -481,7 +535,8 @@ export default {
     },
     /**
      * Takes the selected coordinates and centers the map to the new position.
-     * @param {Object} context actions context object.
+     * @param {Object} context the vuex context
+     * @param {Object} context.commit the commit
      * @param {String[]} coordinates - coordinates for new center position
      * @returns {void}
      */
