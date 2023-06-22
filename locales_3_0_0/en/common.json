@@ -560,6 +560,7 @@
       "titleLabel": "Title",
       "subtitleLabel": "Subtitle",
       "textFieldLabel": "Free text box",
+      "authorLabel": "Author",
       "validationWarning": "The file name may only contain letters and the special characters '-' and '_'.",
       "vtlWarning": "Since MapFish 3 does not support Vector Tile Layers, the following active layers will not appear in the print view:",
       "waitForPrintErrorMessage": "Printout creation has failed.<br>Please try again at a later time or contact the portal operator.",
