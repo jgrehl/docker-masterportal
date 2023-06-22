@@ -73,6 +73,9 @@ function getGfiStore (mobile, uiStyle, gfiFeatures, mapSize) {
             gfiWindow: () => "",
             uiStyle: () => uiStyle ? uiStyle : sinon.stub(),
             ignoredKeys: () => sinon.stub()
+        },
+        actions: {
+            initializeModule: sinon.stub()
         }
     });
 }
@@ -93,7 +96,8 @@ beforeEach(() => {
         menuSide: () => false,
         showMarker: () => sinon.stub(),
         visible: () => true,
-        type: () => "getFeatureInfo"
+        type: () => "getFeatureInfo",
+        configPaths: () => sinon.stub()
     };
     menuExpanded = true;
     toggleMenuSpy = sinon.spy();
