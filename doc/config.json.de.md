@@ -143,14 +143,12 @@ Konfiguration der LayerPills.
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
 |active|no|Boolean|false|Gibt an, ob dieses Feature aktiv ist.|false|
-|amount|no|Number|3|Anzahl der Pills der in der Desktop-Ansicht angezeigt wird, bevor gescrolled werden muss.|false|
 
 **Example**
 ```
 #!json
 layerPills": {
-    "active": true,
-    "amount": 5
+    "active": true
     }
 ```
 
