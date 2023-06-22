@@ -159,14 +159,12 @@ Configuration of LayerPills.
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
 |active|no|Boolean|false|Indicates whether this feature is active.|false|
-|amount|no|Number|3|Amount of Pills shown on Desktop before scrolling needed.|false|
 
 **Example**
 ```
 #!json
 layerPills": {
-    "active": true,
-    "amount": 5
+    "active": true
     }
 ```
 
