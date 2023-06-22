@@ -29,6 +29,11 @@ export default {
             default: null,
             required: false
         },
+        maxLength: {
+            type: String,
+            default: null,
+            required: false
+        },
         input: {
             type: Function,
             default: null,
@@ -59,6 +64,7 @@ export default {
             :placeholder="placeholder"
             :value="value"
             :readonly="readonly"
+            :maxLength="maxLength"
             @input="event => input(event.target.value)"
         >
         <label :for="id">{{ $t(label) }}</label>
