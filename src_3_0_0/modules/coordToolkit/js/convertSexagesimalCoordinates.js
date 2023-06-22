@@ -1,4 +1,8 @@
 /**
+ * Helper File to convert coordinates.
+ * @module modules/CoordToolkit/js/convertSexagesimalCoordinates
+ */
+/**
  * Converts geographic coordinates to decimal.
  * @param {string} coord geographic (geocentric) lat/long coordinates like 53° 32′ 24″ N 9° 54′ 56″ E
  * @returns {object} containing easting and northing as decimal value
