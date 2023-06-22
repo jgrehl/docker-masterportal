@@ -77,7 +77,7 @@ async function loadGfiThemes (addonKey) {
     main.getApp().config.globalProperties.$gfiThemeAddons.push(addon.component.name);
     // register the vuex store module
     if (addon.store) {
-        store.registerModule(["Modules/GfiThemes", addon.component.name], addon.store);
+        store.registerModule(["Modules", addon.component.name], addon.store);
         // register the component
         moduleCollection[addonName] = addon.component;
     }
