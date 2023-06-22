@@ -175,7 +175,17 @@ export default {
                 // Radio.trigger("Parser", "addFolder", object.Title, this.getParsedTitle(object.Title), parentId, level, false, false, object.invertLayerOrder);
             }
             else {
-                const layerObject = {
+                const datasets = [];
+                let layerObject = {};
+
+                if (object?.MetadataURL?.[0].OnlineResource) {
+                    datasets.push({
+                        customMetadata: true,
+                        csw_url: object.MetadataURL[0].OnlineResource,
+                        attributes: {}
+                    });
+                }
+                layerObject = {
                     id: this.getParsedTitle(object.Title),
                     name: object.Title,
                     typ: "WMS",
@@ -186,7 +196,9 @@ export default {
                     type: "layer",
                     showInLayerTree: true,
                     maxScale: object?.MaxScaleDenominator?.toString(),
-                    minScale: object?.MinScaleDenominator?.toString()
+                    minScale: object?.MinScaleDenominator?.toString(),
+                    legendURL: object?.Style?.[0].LegendURL?.[0].OnlineResource?.toString(),
+                    datasets
                 };
 
                 this.addLayerToLayerConfig({layerConfig: layerObject, parentKey: treeSubjectsKey}).then((addedLayer) => {
