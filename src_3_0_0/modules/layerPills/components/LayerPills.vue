@@ -24,10 +24,7 @@ export default {
             "type",
             "visibleSubjectDataLayers"
         ]),
-        ...mapGetters("Maps", ["mode"]),
-        containerWidth () {
-            return this.isMobile ? 320 : this.amount * 158 + 70;
-        }
+        ...mapGetters("Maps", ["mode"])
     },
     watch: {
         visibleSubjectDataLayerConfigs: {
@@ -277,8 +274,10 @@ export default {
         .nav-pills {
         display: flex;
         flex-wrap: nowrap;
+        flex: unset;
         overflow-x: auto;
         scrollbar-width: none; /* for firefox */
+        width: 320px;
     }
     .nav-pills::-webkit-scrollbar {
         display: none; /* for chrome */
