@@ -20,7 +20,6 @@ export default {
         ...mapGetters(["isMobile", "visibleSubjectDataLayerConfigs"]),
         ...mapGetters("Modules/LayerPills", [
             "active",
-            "amount",
             "configPaths",
             "type",
             "visibleSubjectDataLayers"
@@ -61,7 +60,7 @@ export default {
         this.setVisibleLayers(this.visibleSubjectDataLayerConfigs, this.mode);
     },
     methods: {
-        ...mapMutations("Modules/LayerPills", ["setVisibleSubjectDataLayers", "setAmount", "setActive"]),
+        ...mapMutations("Modules/LayerPills", ["setVisibleSubjectDataLayers", "setActive"]),
         ...mapMutations(["setVisibleSubjectDataLayerConfigs"]),
         ...mapActions(["initializeModule", "replaceByIdInLayerConfig"]),
         ...mapActions("Modules/LayerInformation", ["startLayerInformation"]),
@@ -139,7 +138,7 @@ export default {
 
 <template>
     <div
-        v-if="visibleSubjectDataLayers.length > 0 && active && amount > 0"
+        v-if="visibleSubjectDataLayers.length > 0 && active > 0"
         id="layer-pills"
         class="layer-pills-container"
     >
