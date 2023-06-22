@@ -1,3 +1,4 @@
+import {createStore} from "vuex";
 import {config, shallowMount} from "@vue/test-utils";
 import LayerFilterSnippet from "../../../components/LayerFilterSnippet.vue";
 import SnippetDownload from "../../../components/SnippetDownload.vue";
@@ -11,10 +12,25 @@ import sinon from "sinon";
 config.global.mocks.$t = key => key;
 
 describe("src/modules/tools/filter/components/LayerFilterSnippet.vue", () => {
-    let wrapper = null;
+    let wrapper = null,
+        store;
 
     beforeEach(() => {
+        store = createStore({
+            namespaced: true,
+            modules: {
+                Maps: {
+                    namespaced: true,
+                    getters: {
+                        scale: sinon.stub()
+                    }
+                }
+            }
+        });
         wrapper = shallowMount(LayerFilterSnippet, {
+            global: {
+                plugins: [store]
+            },
             propsData: {
                 layerConfig: {
                     service: {
@@ -59,11 +75,15 @@ describe("src/modules/tools/filter/components/LayerFilterSnippet.vue", () => {
     describe("renderCheckboxSearchInMapExtent", () => {
         it("Should render the checkbox component correctly", () => {
             wrapper = shallowMount(LayerFilterSnippet, {
+                global: {
+                    plugins: [store]
+                },
                 propsData: {
                     layerConfig: {
                         service: {
                             type: "something external"
                         },
+                        filterId: 1,
                         searchInMapExtent: true
                     },
                     mapHandler: new MapHandler({
@@ -193,6 +213,7 @@ describe("src/modules/tools/filter/components/LayerFilterSnippet.vue", () => {
         it("should render SnippetDownload component if download is true and filteredItems are given", async () => {
             await wrapper.setProps({
                 layerConfig: {
+                    layerId: "layerId",
                     download: true
                 }
             });
@@ -399,6 +420,13 @@ describe("src/modules/tools/filter/components/LayerFilterSnippet.vue", () => {
         it("should set prechecked value if correct filter rule is given", () => {
             wrapper.vm.setSnippetValueByState(filterRules);
             expect(wrapper.vm.snippets).to.deep.equal(precheckedSnippets);
+        });
+    });
+
+    describe.skip("watcher", () => {
+        it("scale ", () => {
+            wrapper.vm.$options.watch.scale.call(wrapper.vm, 1000);
+            // Function to test should be implemented later
         });
     });
 });
