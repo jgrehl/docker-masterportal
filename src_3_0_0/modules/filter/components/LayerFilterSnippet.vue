@@ -1,5 +1,5 @@
 <script>
-import {mapActions} from "vuex";
+import {mapGetters} from "vuex";
 import ProgressBar from "./ProgressBar.vue";
 import SnippetCheckbox from "./SnippetCheckbox.vue";
 import SnippetCheckboxFilterInMapExtent from "./SnippetCheckboxFilterInMapExtent.vue";
@@ -140,6 +140,7 @@ export default {
         };
     },
     computed: {
+        ...mapGetters("Maps", ["scale"]),
         labelFilterButton () {
             if (typeof this.layerConfig.labelFilterButton === "string") {
                 return translateKeyWithPlausibilityCheck(this.layerConfig.labelFilterButton, key => this.$t(key));
@@ -154,6 +155,11 @@ export default {
         }
     },
     watch: {
+        scale () {
+            if (this.layerConfig.filterOnZoom === true) {
+                // Function should be implemented later
+            }
+        },
         filterRules: {
             handler (rules) {
                 if (this.isStrategyActive()) {
