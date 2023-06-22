@@ -25,10 +25,6 @@ export default {
                 return 0;
             }
         },
-        customclass: {
-            type: String,
-            default: null
-        },
         drawTypes: {
             type: Array,
             default () {
@@ -156,7 +152,10 @@ export default {
             this.hidePopovers();
             this.removeInteraction(this.drawInteraction);
             this.drawInteraction = drawInteractions.createInteractiveOrStaticDrawInteraction(drawType, this.source, this.projection, options);
-            this.addInteraction(this.drawInteraction);
+
+            if (this.drawInteraction !== null) {
+                this.addInteraction(this.drawInteraction);
+            }
         }
     }
 };
