@@ -21,6 +21,7 @@ export default {
         ...mapGetters("Modules/LayerPills", [
             "active",
             "configPaths",
+            "mobileOnly",
             "type",
             "visibleSubjectDataLayers"
         ]),
@@ -153,9 +154,12 @@ export default {
 
 <template>
     <div
-        v-if="visibleSubjectDataLayers.length > 0 && active > 0"
+        v-if="visibleSubjectDataLayers.length > 0 && active"
         id="layer-pills"
         class="layer-pills-container"
+        :class="[
+            {'mobileOnly': mobileOnly}
+        ]"
     >
         <IconButton
             v-if="!isMobile"
@@ -284,8 +288,8 @@ export default {
         left: 0px;
     }
 
-    .visibility {
-        visibility: hidden;
+    .mobileOnly {
+        display: none;
     }
 
     @media (max-width: 767px) {
@@ -297,9 +301,13 @@ export default {
         scrollbar-width: none; /* for firefox */
         width: 320px;
     }
-    .nav-pills::-webkit-scrollbar {
-        display: none; /* for chrome */
-    }
+        .nav-pills::-webkit-scrollbar {
+            display: none; /* for chrome */
+        }
+
+        .mobileOnly { 
+            display: flex;
+        }
 
     }
 
