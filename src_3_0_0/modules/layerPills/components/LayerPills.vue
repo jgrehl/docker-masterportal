@@ -13,7 +13,7 @@ export default {
     data () {
         return {
             scrolled: 0,
-            scrollEnd: false
+            showRightbutton: false
         };
     },
     computed: {
@@ -56,6 +56,9 @@ export default {
         this.initializeModule({configPaths: this.configPaths, type: this.type});
         this.setVisibleLayers(this.visibleSubjectDataLayerConfigs, this.mode);
     },
+    mounted () {
+        this.setResizeObserver();
+    },
     methods: {
         ...mapMutations("Modules/LayerPills", ["setVisibleSubjectDataLayers", "setActive"]),
         ...mapMutations(["setVisibleSubjectDataLayerConfigs"]),
@@ -78,16 +81,13 @@ export default {
                         });
 
                         this.setVisibleSubjectDataLayers(layers);
-                        this.setScrollEnd(layers);
                     }
                     else {
                         this.setVisibleSubjectDataLayers(visible2DLayers);
-                        this.setScrollEnd(visible2DLayers);
                     }
                 }
                 else {
                     this.setVisibleSubjectDataLayers(visibleLayers);
-                    this.setScrollEnd(visibleLayers);
                 }
             }
         },
@@ -113,15 +113,33 @@ export default {
                 });
 
                 this.scrolled = this.scrolled + value < 0 ? 0 : this.scrolled + value;
-                this.scrollEnd = this.$el.scrollWidth - this.containerWidth <= this.scrolled;
+
+                // await transition...
+                setTimeout(() => {
+                    this.setRightButton();
+                }, 310);
             }
 
         },
-        setScrollEnd (layers) {
-            if (this.amount >= layers.length) {
-                this.scrolled = 0;
+        setRightButton () {
+            const containerWidth = this.$el.offsetWidth,
+                scrollWidth = this.$el.scrollWidth;
+
+            if (containerWidth && scrollWidth) {
+                if (containerWidth >= scrollWidth) {
+                    this.showRightbutton = false;
+                }
+                else {
+                    this.showRightbutton = true;
+                }
+                this.showRightbutton = !(scrollWidth - this.$el.scrollLeft === containerWidth);
+
             }
-            this.scrollEnd = this.amount >= layers.length;
+        },
+        setResizeObserver () {
+            const resizeObserver = new ResizeObserver(this.setRightButton);
+
+            resizeObserver.observe(this.$el);
         },
         showLayerInformationInMenu (layerConf) {
             if (layerConf.datasets) {
@@ -185,7 +203,7 @@ export default {
             :aria="$t('modules.layerPill.next')"
             :class-array="['btn-primary', 'layerpills-right-button', 'shadow']"
             :icon="'bi-chevron-right'"
-            :style="scrollEnd ? 'visibility:hidden' : ''"
+            :style="showRightbutton ? '' : 'visibility:hidden'"
             :interaction="() => moveLayerPills('right')"
         />
     </div>
