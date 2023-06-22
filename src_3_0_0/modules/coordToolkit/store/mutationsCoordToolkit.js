@@ -1,6 +1,9 @@
 import {generateSimpleMutations} from "../../../shared/js/utils/generators";
 import coordState from "./stateCoordToolkit";
 
+/**
+ * @module modules/CoordToolkit/mutations
+ */
 const mutations = {
     /**
      * Creates from every state-key a setter.
