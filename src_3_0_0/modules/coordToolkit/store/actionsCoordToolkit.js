@@ -5,6 +5,10 @@ import {convertSexagesimalFromString, convertSexagesimalToDecimal, convertSexage
 import {requestGfi} from "../../../shared/js/api/wmsGetFeatureInfo";
 import layerFactory from "../../../core/layers/js/layerFactory";
 
+/**
+ * The actions for the CoordToolkit
+ * @module modules/CoordToolkit/actions
+ */
 export default {
     /**
      * Copies the coordinates to clipboard, delimited by limiter from state.
