@@ -5,6 +5,7 @@ import store from "../../../app-store";
 
 /**
  * The search interface to the location finder.
+ * @name SearchInterfaceLocationFinder
  * @constructs
  * @extends SearchInterface
  * @param {String} serviceId Service id. Resolved using the rest-services.json file.
