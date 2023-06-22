@@ -22,8 +22,7 @@ config.global.mocks.$i18n = {
 };
 
 describe("src_3_0_0/modules/alerting/components/AlertingItem.vue", function () {
-    let
-        wrapper,
+    let wrapper,
         store;
 
     const mockConfigJson = {
@@ -140,7 +139,8 @@ describe("src_3_0_0/modules/alerting/components/AlertingItem.vue", function () {
                 }
             },
             actions: {
-                replaceByIdInLayerConfig: sinon.stub()
+                replaceByIdInLayerConfig: sinon.stub(),
+                initializeModule: sinon.stub()
             },
             getters: {
                 allLayerConfigs: () => [],
