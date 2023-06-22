@@ -32,6 +32,9 @@ describe("src_3_0_0/modules/mouseHover/components/MouseHover.vue", () => {
             },
             getters: {
                 mobile: () => false
+            },
+            actions: {
+                initializeModule: sinon.stub()
             }
         });
     });
