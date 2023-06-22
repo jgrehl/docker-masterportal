@@ -159,12 +159,14 @@ Configuration of LayerPills.
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
 |active|no|Boolean|false|Indicates whether this feature is active.|false|
+|mobileOnly|no|Boolean|false|Indicates whether this feature is active on small Screens only.|false|
 
 **Example**
 ```
 #!json
 layerPills": {
-    "active": true
+    "active": true,
+    "mobileOnly": true
     }
 ```
 
