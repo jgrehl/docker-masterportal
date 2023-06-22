@@ -7,7 +7,7 @@ import coordState from "./stateCoordToolkit";
  * The getters for the CoodToolkit
  * @module modules/CoordToolkit/getters
  */
-const getters = {
+export default {
     ...generateSimpleGetters(coordState),
 
     // NOTE overwrite getters here if you need a special behaviour in a getter
@@ -72,5 +72,3 @@ const getters = {
         return "common:modules.coordToolkit." + type + "." + key;
     }
 };
-
-export default getters;
