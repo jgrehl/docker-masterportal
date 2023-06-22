@@ -23,9 +23,7 @@ export default {
     addInteraction (context, interaction) {
         const map = mapCollection.getMap("2D");
 
-        if (interaction) {
-            map.addInteraction(toRaw(interaction));
-        }
+        map.addInteraction(toRaw(interaction));
     },
 
     /**
