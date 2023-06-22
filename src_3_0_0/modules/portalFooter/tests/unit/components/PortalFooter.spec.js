@@ -30,7 +30,9 @@ describe("src_3_0_0/modules/portalFooter/components/PortalFooter.vue", () => {
                             getters: {
                                 scaleLine: () => true,
                                 seperator: () => true,
-                                urls: () => urls
+                                urls: () => urls,
+                                type: () => sinon.stub(),
+                                configPaths: () => sinon.stub()
                             }
                         }
                     }
@@ -38,6 +40,9 @@ describe("src_3_0_0/modules/portalFooter/components/PortalFooter.vue", () => {
             },
             getters: {
                 isMobile: () => isMobile
+            },
+            actions: {
+                initializeModule: sinon.stub()
             }
         });
     });
