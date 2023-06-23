@@ -9,7 +9,7 @@ import "../css/bootstrap.scss";
 // CSS-Handling: Importieren von Css damit Webpack das verarbeitet.
 import "../css/style.css";
 import HttpApi from "i18next-http-backend";
-import * as Cesium from "@cesium/engine";
+// import * as Cesium from "@cesium/engine";
 import i18nextBrowserLanguageDetector from "i18next-browser-languagedetector";
 
 const scriptTags = document.getElementsByTagName("script"),

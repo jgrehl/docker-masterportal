@@ -4,9 +4,9 @@ const webpack = require("webpack"),
     path = require("path"),
     fse = require("fs-extra"),
     VueLoaderPlugin = require("vue-loader/lib/plugin"),
-    cesiumSource = "node_modules/@cesium/engine/Source",
+   /*  cesiumSource = "node_modules/@cesium/engine/Source",
     cesiumWorkers = "../Build/Workers",
-    CopyWebpackPlugin = require("copy-webpack-plugin"),
+    CopyWebpackPlugin = require("copy-webpack-plugin"), */
 
     rootPath = path.resolve(__dirname, "../"),
     addonBasePath = path.resolve(rootPath, "addons"),
@@ -176,6 +176,7 @@ module.exports = function () {
                 $: "jquery",
                 Backbone: "backbone",
                 Radio: "backbone.radio",
+                Cesium: ["@cesium/engine/"],
                 i18next: ["i18next/dist/cjs/i18next.js"],
                 _: "underscore"
             }),
@@ -190,14 +191,14 @@ module.exports = function () {
                 VUE_ADDONS: JSON.stringify(vueAddonsRelPaths),
                 CESIUM_BASE_URL: JSON.stringify("https://geoportal-hamburg.de/mastercode/cesium/1_95/")
             }),
-            // Copy Cesium Assets and Workers to a static directory
-            new CopyWebpackPlugin({
+            //Didnt work
+           /*  new CopyWebpackPlugin({
                 patterns: [
                     {from: path.join(cesiumSource, cesiumWorkers), to: "Workers"},
-                    {from: path.join(cesiumSource, "Assets"), to: "Assets"},
-                    {from: path.join(cesiumSource, "ThirdParty"), to: "ThirdParty"}
+                    {from: path.join(cesiumSource, "/Assets"), to: "Assets"},
+                    {from: path.join(cesiumSource, "/ThirdParty"), to: "ThirdParty"}
                 ]
-            })
+            }) */
         ]
     };
 };

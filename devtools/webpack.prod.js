@@ -34,7 +34,7 @@ module.exports = function () {
                         loader: "esbuild-loader",
                         options: {
                             loader: "js",
-                            target: "es2015",
+                            target: "es2018",
                             format: "cjs", // commonjs
                             platform: "node"
                         }
