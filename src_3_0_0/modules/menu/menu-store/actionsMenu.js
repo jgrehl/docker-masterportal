@@ -139,7 +139,6 @@ export default {
      * @returns {void}
      */
     navigateBack ({commit, dispatch, getters, state}, side) {
-        console.log('side', side);
         nextTick(() => {
             if (getters.currentComponent(side).type === state.currentMouseMapInteractionsComponent && getters.currentComponent(side).type !== state.defaultComponent) {
                 dispatch("changeCurrentMouseMapInteractionsComponent", {type: state.defaultComponent, side});
