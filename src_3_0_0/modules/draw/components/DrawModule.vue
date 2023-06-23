@@ -19,8 +19,23 @@ export default {
         ...mapGetters("Modules/Draw", [
             "circleInnerRadius",
             "circleOuterRadius",
-            "interactiveCircle"
+            "interactiveCircle",
+            "name"
+        ]),
+        ...mapGetters("Menu", [
+            "currentComponentName",
+            "mainExpanded",
+            "secondaryExpanded"
         ])
+    },
+    watch: {
+        mainExpanded (mainExpanded) {
+            this.hidePopovers(mainExpanded, "mainMenu");
+
+        },
+        secondaryExpanded (secondaryExpanded) {
+            this.hidePopovers(secondaryExpanded, "secondaryMenu");
+        }
     },
     mounted () {
         const map2d = mapCollection.getMap("2D");
@@ -30,6 +45,19 @@ export default {
             source: this.source,
             zIndex: 0
         }));
+    },
+    methods: {
+        /**
+         * Hides the popovers when menu is collapsed
+         * @param {Boolean} isExpanded Is menu expanded.
+         * @param {String} side The menu side
+         * @returns {void}
+         */
+        hidePopovers (isExpanded, side) {
+            if (!isExpanded && this.currentComponentName(side) === this.$t(this.name)) {
+                this.$refs.drawTypes.hidePopovers();
+            }
+        }
     }
 };
 </script>
@@ -37,6 +65,7 @@ export default {
 <template lang="html">
     <div id="modules-draw-module">
         <DrawTypes
+            ref="drawTypes"
             :source="source"
             :draw-types-symbols="['point']"
             :circle-inner-radius="circleInnerRadius"
