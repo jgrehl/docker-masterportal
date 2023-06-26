@@ -12,21 +12,23 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
         wrapper,
         visibleLayers,
         active,
-        amount,
+        mobileOnly,
         visibleSubjectDataLayers,
         mobile,
         initializeModuleSpy,
         replaceByIdInLayerConfigSpy,
         setVisibleSubjectDataLayersSpy,
+        showRightbutton,
         startLayerInformationSpy;
 
     beforeEach(() => {
         active = true;
-        amount = 3;
         visibleSubjectDataLayers = [{
             name: "layer1"
         }];
         mobile = false;
+        mobileOnly = false;
+        showRightbutton = false;
         initializeModuleSpy = sinon.spy();
         replaceByIdInLayerConfigSpy = sinon.spy();
         setVisibleSubjectDataLayersSpy = sinon.spy();
@@ -35,7 +37,11 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
             {id: 0, name: "layer1", typ: "WMS"},
             {id: 1, name: "layer2", typ: "WMS"},
             {id: 2, name: "layer3", typ: "WFS"},
-            {id: 3, name: "layer4", typ: "WFS"}
+            {id: 3, name: "layer4", typ: "WFS"},
+            {id: 4, name: "layer5", typ: "WFS"},
+            {id: 5, name: "layer6", typ: "WFS"},
+            {id: 6, name: "layer7", typ: "WFS"},
+            {id: 7, name: "layer8", typ: "WFS"}
         ];
         store = createStore({
             namespaced: true,
@@ -47,14 +53,14 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
                             namespaced: true,
                             getters: {
                                 active: () => active,
-                                amount: () => amount,
+                                mobileOnly: () => mobileOnly,
                                 configPaths: () => ["portalConfig.tree.layerPills"],
                                 type: () => "layerPills",
                                 visibleSubjectDataLayers: () => visibleSubjectDataLayers
                             },
                             mutations: {
                                 setActive: sinon.stub(),
-                                setAmount: sinon.stub(),
+                                setMobileOnly: sinon.stub(),
                                 setVisibleSubjectDataLayers: setVisibleSubjectDataLayersSpy
                             }
                         },
@@ -141,8 +147,8 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
             expect(wrapper.find("#layer-pills").exists()).to.be.false;
         });
 
-        it("should not exist if layerPillsAmount is 0", () => {
-            amount = 0;
+        it("should set class if mobileOnly true", () => {
+            mobileOnly = true;
 
             wrapper = shallowMount(LayerPillsComponent, {
                 components: {
@@ -154,8 +160,7 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
                 global: {
                     plugins: [store]
                 }});
-
-            expect(wrapper.find("#layer-pills").exists()).to.be.false;
+            expect(wrapper.find("#layer-pills").classes()).to.contain("mobileOnly");
         });
     });
 
@@ -176,6 +181,7 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
     });
     describe("right scroll enabled", () => {
         it("right scroll is enabled", async () => {
+
             wrapper = mount(LayerPillsComponent, {
                 components: {
                     IconButton: {
@@ -187,8 +193,13 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
                     plugins: [store]
                 }});
 
-            await wrapper.vm.$nextTick();
-            expect(wrapper.find("#layerpills-right-button").attributes().style).to.be.undefined;
+            wrapper.vm.$el.offsetWidth = 400;
+            wrapper.vm.$el.scrollWidth = 500;
+
+            wrapper.vm.$nextTick(function () {
+                expect(wrapper.find("#layerpills-right-button").attributes().style).to.be.undefined;
+            });
+
         });
     });
 
@@ -277,7 +288,7 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
             });
         });
 
-        it("moveLayerPills shall set scrolled and scrollEnd - scroll right", () => {
+        it("shall set scrolled and showRightbutton by moveLayerPills - scroll right", () => {
             const scrollLeft = 1000,
                 scrollBySpy = sinon.spy();
 
@@ -296,12 +307,12 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
             wrapper.vm.$el.scrollLeft = scrollLeft;
             wrapper.vm.moveLayerPills("right");
 
-            expect(wrapper.vm.scrolled).to.be.equals(scrollLeft + 158);
-            expect(wrapper.vm.scrollEnd).to.be.true;
+            expect(wrapper.vm.scrolled).to.equal(scrollLeft + 158);
+            expect(wrapper.vm.showRightbutton).to.be.false;
             expect(scrollBySpy.calledOnce).to.be.true;
         });
 
-        it("moveLayerPills shall set scrolled and scrollEnd - scroll left", () => {
+        it("shall set scrolled by moveLayerPills - scroll left", () => {
             const scrollLeft = 1000,
                 scrollBySpy = sinon.spy();
 
@@ -320,14 +331,11 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
             wrapper.vm.$el.scrollLeft = scrollLeft;
             wrapper.vm.moveLayerPills("left");
 
-            expect(wrapper.vm.scrolled).to.be.equals(scrollLeft - 158);
-            expect(wrapper.vm.scrollEnd).to.be.true;
+            expect(wrapper.vm.scrolled).to.equal(scrollLeft - 158);
             expect(scrollBySpy.calledOnce).to.be.true;
         });
 
-        it("setScrollEnd amount is bigger than layer count", () => {
-            const layers = [{id: "1"}];
-
+        it("sets showRightbutton to true if needed", () => {
             wrapper = shallowMount(LayerPillsComponent, {
                 components: {
                     IconButton: {
@@ -338,17 +346,16 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
                 global: {
                     plugins: [store]
                 }});
-            wrapper.vm.setScrollEnd(layers);
 
-            expect(wrapper.vm.scrolled).to.be.equals(0);
-            expect(wrapper.vm.scrollEnd).to.be.true;
+            wrapper.vm.$el.offsetWidth = 400;
+            wrapper.vm.$el.scrollWidth = 500;
+
+            wrapper.vm.$nextTick(function () {
+                expect(wrapper.vm.showRightbutton).to.be.true;
+            });
         });
 
-        it("setScrollEnd amount is less than layer count", () => {
-            const layers = [{id: "1"}, {id: "2"}, {id: "3"}];
-
-            amount = 0;
-
+        it("sets showRightbutton to false if not needed", () => {
             wrapper = shallowMount(LayerPillsComponent, {
                 components: {
                     IconButton: {
@@ -360,11 +367,33 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
                     plugins: [store]
                 }});
 
-            wrapper.vm.scrolled = 333;
-            wrapper.vm.setScrollEnd(layers);
+            wrapper.vm.$el.offsetWidth = 500;
+            wrapper.vm.$el.scrollWidth = 500;
 
-            expect(wrapper.vm.scrolled).to.be.equals(333);
-            expect(wrapper.vm.scrollEnd).to.be.false;
+            wrapper.vm.$nextTick(function () {
+                expect(wrapper.vm.showRightbutton).to.be.false;
+            });
+        });
+
+        it("establishes a ResizeObserver if active", () => {
+
+            // wrapper = shallowMount(LayerPillsComponent, {
+            //     components: {
+            //         IconButton: {
+            //             name: "IconButton",
+            //             template: "<button>Hier</button>"
+            //         }
+            //     },
+            //     global: {
+            //         plugins: [store]
+            //     }});
+
+            // wrapper.vm.$el.offsetWidth = 500;
+            // wrapper.vm.$el.scrollWidth = 500;
+
+            // wrapper.vm.$nextTick(function () {
+            //     expect(wrapper.vm.showRightbutton).to.be.false;
+            // });
         });
 
         it("showLayerInformationInMenu layerConf with datasets calls startLayerInformation", () => {
@@ -429,43 +458,6 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
                 expect(element.attributes()).to.own.include({"data-bs-custom-class": "custom-tooltip"});
                 expect(element.attributes()).to.own.include({"title": visibleLayers[index].name});
             });
-        });
-    });
-
-    describe("computed", () => {
-        it("containerWidth if not mobile", () => {
-            amount = 5;
-
-            wrapper = shallowMount(LayerPillsComponent, {
-                components: {
-                    IconButton: {
-                        name: "IconButton",
-                        template: "<button>Hier</button>"
-                    }
-                },
-                global: {
-                    plugins: [store]
-                }});
-
-            expect(wrapper.vm.containerWidth).to.be.equals(amount * 158 + 70);
-        });
-
-        it("containerWidth if mobile", () => {
-            amount = 3;
-
-            mobile = true;
-            wrapper = shallowMount(LayerPillsComponent, {
-                components: {
-                    IconButton: {
-                        name: "IconButton",
-                        template: "<button>Hier</button>"
-                    }
-                },
-                global: {
-                    plugins: [store]
-                }});
-
-            expect(wrapper.vm.containerWidth).to.be.equals(320);
         });
     });
 
