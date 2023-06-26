@@ -95,6 +95,7 @@ describe("src_3_0_0/core/js/layers/layer2dVectorWfs.js", () => {
         beforeEach(() => {
             localAttributes = {
                 clusterDistance: 10,
+                crs: "EPSG:25832",
                 featureNS: "featureNS",
                 featureType: "featureType",
                 id: "1234",
@@ -108,6 +109,7 @@ describe("src_3_0_0/core/js/layers/layer2dVectorWfs.js", () => {
 
             expect(wfsLayer.getRawLayerAttributes(localAttributes)).to.deep.equals({
                 clusterDistance: 10,
+                crs: "EPSG:25832",
                 featureNS: "featureNS",
                 featureType: "featureType",
                 id: "1234",
