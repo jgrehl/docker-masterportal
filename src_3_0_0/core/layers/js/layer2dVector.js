@@ -39,6 +39,21 @@ export default function Layer2dVector (attributes) {
 Layer2dVector.prototype = Object.create(Layer2d.prototype);
 
 /**
+ * Sets values to the ol layer.
+ * @param {Object} attributes The new attributes.
+ * @returns {void}
+ */
+Layer2d.prototype.updateLayerValues = function (attributes) {
+    this.getLayer()?.setOpacity((100 - attributes.transparency) / 100);
+    this.getLayer()?.setVisible(attributes.visibility);
+    this.getLayer()?.setZIndex(attributes.zIndex);
+    this.controlAutoRefresh(attributes);
+    if (this.get("typ") === "WFS" && store.getters["Maps/mode"] === "3D" && this.layerSource.getFeatures().length === 0) {
+        this.loadFeaturesManually(attributes);
+    }
+};
+
+/**
  * Gets the cluster feature geometry.
  * Note: Do not cluster invisible features;
  * can't rely on style since it will be null initially.
