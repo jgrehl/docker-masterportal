@@ -45,6 +45,7 @@ Layer2dVectorWfs.prototype.createLayer = function (attributes) {
 Layer2dVectorWfs.prototype.getRawLayerAttributes = function (attributes) {
     return {
         clusterDistance: attributes.clusterDistance,
+        crs: attributes.crs,
         featureNS: attributes.featureNS,
         featureType: attributes.featureType,
         id: attributes.id,
@@ -71,4 +72,12 @@ Layer2dVectorWfs.prototype.getOptions = function (attributes) {
     };
 
     return options;
+};
+/**
+ * Load the features manually.
+ * @param {Object} attributes The new attributes.
+ * @returns {void}
+ */
+Layer2dVectorWfs.prototype.loadFeaturesManually = function (attributes) {
+    wfs.loadFeaturesManually(this.getRawLayerAttributes(attributes), this.layer.getSource());
 };
