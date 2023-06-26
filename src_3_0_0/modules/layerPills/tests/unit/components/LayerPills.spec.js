@@ -37,11 +37,7 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
             {id: 0, name: "layer1", typ: "WMS"},
             {id: 1, name: "layer2", typ: "WMS"},
             {id: 2, name: "layer3", typ: "WFS"},
-            {id: 3, name: "layer4", typ: "WFS"},
-            {id: 4, name: "layer5", typ: "WFS"},
-            {id: 5, name: "layer6", typ: "WFS"},
-            {id: 6, name: "layer7", typ: "WFS"},
-            {id: 7, name: "layer8", typ: "WFS"}
+            {id: 3, name: "layer4", typ: "WFS"}
         ];
         store = createStore({
             namespaced: true,
@@ -376,24 +372,7 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
         });
 
         it("establishes a ResizeObserver if active", () => {
-
-            // wrapper = shallowMount(LayerPillsComponent, {
-            //     components: {
-            //         IconButton: {
-            //             name: "IconButton",
-            //             template: "<button>Hier</button>"
-            //         }
-            //     },
-            //     global: {
-            //         plugins: [store]
-            //     }});
-
-            // wrapper.vm.$el.offsetWidth = 500;
-            // wrapper.vm.$el.scrollWidth = 500;
-
-            // wrapper.vm.$nextTick(function () {
-            //     expect(wrapper.vm.showRightbutton).to.be.false;
-            // });
+            //todo...
         });
 
         it("showLayerInformationInMenu layerConf with datasets calls startLayerInformation", () => {
