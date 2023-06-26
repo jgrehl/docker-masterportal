@@ -775,7 +775,7 @@
           "styleId": "8712",
           "loadingStrategy": "bbox",
           "typ": "WFS",
-          "visibility": true,
+          "visibility": false,
           "gfiTheme": "schulinfo",
           "showInLayerTree": true,
           "mouseHoverField": [
