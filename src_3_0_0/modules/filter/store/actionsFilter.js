@@ -11,7 +11,7 @@ export default {
      * Sets the rulesOfFilters array with the given payload.
      * @param {Object} context the context Vue instance
      * @param {Object} payload the payload
-     * @param {Oject[]} payload.rulesOfFilters the array of rules for each filter
+     * @param {Object[]} payload.rulesOfFilters the array of rules for each filter
      * @returns {void}
      */
     setRulesArray: (context, {rulesOfFilters}) => {
