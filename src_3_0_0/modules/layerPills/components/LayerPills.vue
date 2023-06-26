@@ -307,7 +307,7 @@ export default {
             display: none; /* for chrome */
         }
 
-        .mobileOnly { 
+        .mobileOnly {
             display: flex;
         }
 
