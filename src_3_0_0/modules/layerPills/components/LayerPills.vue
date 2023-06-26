@@ -140,7 +140,9 @@ export default {
         setResizeObserver () {
             const resizeObserver = new ResizeObserver(this.setRightButton);
 
-            resizeObserver.observe(this.$el);
+            if (this.active && this.visibleSubjectDataLayers.length > 0) {
+                resizeObserver.observe(this.$el);
+            }
         },
         showLayerInformationInMenu (layerConf) {
             if (layerConf.datasets) {
