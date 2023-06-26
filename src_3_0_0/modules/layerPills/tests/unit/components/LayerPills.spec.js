@@ -18,7 +18,6 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
         initializeModuleSpy,
         replaceByIdInLayerConfigSpy,
         setVisibleSubjectDataLayersSpy,
-        showRightbutton,
         startLayerInformationSpy;
 
     beforeEach(() => {
@@ -28,7 +27,6 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
         }];
         mobile = false;
         mobileOnly = false;
-        showRightbutton = false;
         initializeModuleSpy = sinon.spy();
         replaceByIdInLayerConfigSpy = sinon.spy();
         setVisibleSubjectDataLayersSpy = sinon.spy();
@@ -372,7 +370,7 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
         });
 
         it("establishes a ResizeObserver if active", () => {
-            //todo...
+            // todo...
         });
 
         it("showLayerInformationInMenu layerConf with datasets calls startLayerInformation", () => {
