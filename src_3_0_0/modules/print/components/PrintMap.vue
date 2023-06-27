@@ -54,6 +54,7 @@ export default {
             "isScaleSelectedManually",
             "layoutMapInfo",
             "layoutList",
+            "overviewmapLayerId",
             "printMapMarker",
             "printService",
             "printServiceId",
@@ -391,8 +392,7 @@ export default {
                 if (this.hasLayoutAttribute(layout, name)) {
                     if (name === "overviewMap") {
                         layoutAttributes[name] = {
-                            // NOTICE hier gibt es ein Ticket bei dev1: feste LayerId wird konfigurierbar
-                            "layers": [BuildSpec.buildTileWms(layerCollection.getLayerById("453").getLayer(), this.dpiForPdf)]
+                            "layers": [BuildSpec.buildTileWms(layerCollection.getLayerById(this.getOverviewmapLayerId()).getLayer(), this.dpiForPdf)]
                         };
                     }
                     else if (name === "source") {
@@ -412,6 +412,20 @@ export default {
                 }
             });
             return layoutAttributes;
+        },
+
+        /**
+         * Gets a layer id depending on its layer visibility.
+         * @returns {String} The layer id for overviewMap.
+         */
+        getOverviewmapLayerId () {
+            const defaultLayerId = this.visibleLayerList[0].values_.id,
+                visibleLayerId = this.visibleLayerList.filter(id => id.values_.id === this.overviewmapLayerId).map(val => val.values_.id).toString();
+
+            if (this.overviewmapLayerId !== undefined && visibleLayerId !== "") {
+                return visibleLayerId;
+            }
+            return defaultLayerId;
         },
 
         /**
