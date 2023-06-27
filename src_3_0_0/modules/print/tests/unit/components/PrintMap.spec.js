@@ -341,4 +341,57 @@ describe("src_3_0_0/modules/Print/components/PrintMap.vue", () => {
             expect(wrapper.vm.getLayoutAttributes({}, true)).to.be.empty;
         });
     });
+    describe("getOverviewmapLayerId", () => {
+        it("should return the layer id that was configured and whose visibility is set to true", async () => {
+            wrapper = mount(PrintComponent, {
+                global: {
+                    plugins: [store]
+                }});
+            const layerVisible = [{
+                values_: {
+                    id: "19968"
+                }
+            }];
+
+            store.commit("Modules/Print/setOverviewmapLayerId", "19968");
+            await wrapper.vm.$nextTick();
+            wrapper.vm.setVisibleLayerList(layerVisible);
+            await wrapper.vm.$nextTick();
+            expect(wrapper.vm.getOverviewmapLayerId()).to.be.equals("19968");
+        });
+        it("should not return the configured invisible layer id, but the default layer id ", async () => {
+            wrapper = mount(PrintComponent, {
+                global: {
+                    plugins: [store]
+                }});
+            const layerVisible = [{
+                values_: {
+                    id: "19969"
+                }
+            }];
+
+            store.commit("Modules/Print/setOverviewmapLayerId", "19968");
+            await wrapper.vm.$nextTick();
+            wrapper.vm.setVisibleLayerList(layerVisible);
+            await wrapper.vm.$nextTick();
+            expect(wrapper.vm.getOverviewmapLayerId()).to.be.equals("19969");
+        });
+        it("should return the default layer id", async () => {
+            wrapper = mount(PrintComponent, {
+                global: {
+                    plugins: [store]
+                }});
+            const layerVisible = [{
+                values_: {
+                    id: "19969"
+                }
+            }];
+
+            store.commit("Modules/Print/setOverviewmapLayerId", undefined);
+            await wrapper.vm.$nextTick();
+            wrapper.vm.setVisibleLayerList(layerVisible);
+            await wrapper.vm.$nextTick();
+            expect(wrapper.vm.getOverviewmapLayerId()).to.be.equals("19969");
+        });
+    });
 });
