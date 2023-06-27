@@ -78,19 +78,6 @@ export default {
             return false;
         },
         /**
-         * Gets a layer id depending on its layer visibility.
-         * @returns {String} The layer id for overviewMap.
-         */
-        getOverviewmapLayerId () {
-            const defaultLayerId = this.visibleLayerList[0].values_.id,
-                visibleLayerId = this.visibleLayerList.filter(id => id.values_.id === this.overviewmapLayerId).map(val => val.values_.id).toString();
-
-            if (this.overviewmapLayerId !== undefined && visibleLayerId !== "") {
-                return visibleLayerId;
-            }
-            return defaultLayerId;
-        },
-        /**
          * Gets the layout attributes by the given names.
          * @param {Object} layout - The selected layout.
          * @param {String[]} nameList - A list of attribute names.
