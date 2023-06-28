@@ -368,7 +368,7 @@ export default {
          * @returns {Boolean} True if it has otherwise false.
          */
         hasLayoutAttribute (layout, attributeName) {
-            if (isObject(layout) && typeof attributeName === "string") {
+            if (isObject(layout) && typeof attributeName === "string" && this.printService !== "plotservice") {
                 return layout.attributes.some(attribute => {
                     return attribute.name === attributeName;
                 });
