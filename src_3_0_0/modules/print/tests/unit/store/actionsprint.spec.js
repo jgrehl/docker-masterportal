@@ -76,28 +76,39 @@ describe("src_3_0_0/modules/print/store/actionsPrint", function () {
     });
     describe("migratePayload", function () {
         it("should migrate the for mapfish generated JSON to plotservice", done => {
-            const state = {
-                    outputFilename: "",
-                    outputFormat: ""
+            const payload = {
+                    attributes: {
+                        title: "Mein Titel",
+                        map: {
+                            dpi: 120,
+                            projection: "EPSG:25832",
+                            center: [561210, 5932600],
+                            scale: 100000,
+                            layers: []
+                        },
+                        legend: {},
+                        showLegend: false
+                    },
+                    layout: "Default A4 hoch",
+                    outputFilename: "Ausdruck",
+                    outputFormat: "pdf",
+                    uniqueIdList: [],
+                    visibleLayerIds: ["453"]
                 },
-                payload = {
-                    "layout": "Default A4 hoch",
-                    "attributes": {
-                        "title": "Mein Titel",
-                        "map": {
-                            "dpi": 120,
-                            "projection": "EPSG:25832",
-                            "center": [
-                                562010,
-                                5562814
-                            ],
-                            "scale": 500000,
-                            "layers": []
-                        }
+                state = {
+                    outputFilename: "",
+                    outputFormat: "",
+                    layoutMapInfo: [504, 640]
+                },
+                rootState = {
+                    Maps: {
+                        projection: {code_: "EPSG:25832"},
+                        scale: 100000,
+                        resolution: 26.458319045841044
                     }
                 };
 
-            testAction(migratePayload, encodeURIComponent(JSON.stringify(payload)), state, {}, [], {}, done);
+            testAction(migratePayload, payload, state, rootState, [], {}, done);
         });
     });
     describe("waitForPrintJob", function () {
