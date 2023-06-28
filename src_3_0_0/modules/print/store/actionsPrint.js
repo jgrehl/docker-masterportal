@@ -253,35 +253,32 @@ const actions = {
      * @param {Object} payload object to migrate
      * @returns {Object} object for High Resolution Plot Service to start the printing
      */
-    migratePayload: function ({state, rootGetters}, payload) {
-        const plotservicePayload = {};
-        let decodePayload = JSON.parse(decodeURIComponent(payload.replace(/imageFormat/g, "format"))),
-            halfWidth, halfHeight;
-
-        if (state.printService === "plotservice") {
-            const payloadString = decodeURIComponent(payload).replace(/imageFormat/g, "format").replace(/image\/[^"]*/g, "image/png").replace(/"TRANSPARENT":"false"/gi, "\"TRANSPARENT\":\"true\""),
-                resolution = rootGetters["Maps/resolution"],
-                scale = rootGetters["Maps/scale"],
-                // calculate width and height of print page in pixel
-                mapInfo = state.layoutMapInfo,
-                boundWidth = mapInfo[0] / state.DOTS_PER_INCH / state.INCHES_PER_METER * scale / resolution * DEVICE_PIXEL_RATIO,
-                boundHeight = mapInfo[1] / state.DOTS_PER_INCH / state.INCHES_PER_METER * scale / resolution * DEVICE_PIXEL_RATIO;
-
-            decodePayload = JSON.parse(payloadString);
+    migratePayload: function ({state, rootState}, payload) {
+        const plotservicePayload = {},
+            encodedPayload = encodeURIComponent(JSON.stringify(payload)),
+            payloadString = decodeURIComponent(encodedPayload).replace(/imageFormat/g, "format").replace(/image\/[^"]*/g, "image/png").replace(/"TRANSPARENT":"false"/gi, "\"TRANSPARENT\":\"true\""),
+            decodePayload = JSON.parse(payloadString),
+            scale = rootState?.Maps?.scale,
+            resolution = rootState?.Maps?.resolution,
+            center = decodePayload.attributes.map.center,
+            // calculate width and height of print page in pixel
+            mapInfo = state.layoutMapInfo,
+            boundWidth = mapInfo[0] / state.DOTS_PER_INCH / state.INCHES_PER_METER * scale / resolution * DEVICE_PIXEL_RATIO,
+            boundHeight = mapInfo[1] / state.DOTS_PER_INCH / state.INCHES_PER_METER * scale / resolution * DEVICE_PIXEL_RATIO,
             // half of width and height of the print page transformed to coordinates
-            halfWidth = (boundWidth * resolution) / 2;
-            halfHeight = (boundHeight * resolution) / 2;
-        }
+            halfWidth = (boundWidth * resolution) / 2,
+            halfHeight = (boundHeight * resolution) / 2,
+            layout = decodePayload.layout,
+            epsgCode = rootState.Maps.projection.code_;
 
-
-        plotservicePayload.layout = decodePayload.layout;
+        plotservicePayload.layout = layout;
         plotservicePayload.srs = decodePayload.attributes.map.projection;
         plotservicePayload.layers = decodePayload.attributes.map.layers;
         plotservicePayload.layers.forEach((key) => {
             key.styles = [""];
         });
         plotservicePayload.pages = [{
-            center: decodePayload.attributes.map.center,
+            center: center,
             scale: String(decodePayload.attributes.map.scale),
             scaleText: "Ca. 1 : " + decodePayload.attributes.map.scale,
             geodetic: true,
@@ -291,23 +288,19 @@ const actions = {
         plotservicePayload.outputFilename = state.filename + "_";
         plotservicePayload.outputFormat = state.outputFormat;
 
-        if (state.printService === "plotservice") {
-            const center = decodePayload.attributes.map.center,
-                epsgCode = mapCollection.getMapView("2D").getProjection().getCode();
-
-            if (decodePayload.layout.indexOf("Legende") > 0) {
-                plotservicePayload.legend = true;
-            }
-            if (plotservicePayload.addparam === undefined) {
-                plotservicePayload.addparam = {};
-            }
-            plotservicePayload.addparamtype = "default";
-            // calculate outer west, south, east and north coordinates of print page
-            plotservicePayload.addparam.bboxwest = String(Math.round((center[0] - halfWidth) * 10) / 10.0) + " (" + epsgCode + ")";
-            plotservicePayload.addparam.bboxsouth = String(Math.round((center[1] - halfHeight) * 10) / 10.0) + " (" + epsgCode + ")";
-            plotservicePayload.addparam.bboxeast = String(Math.round((center[0] + halfWidth) * 10) / 10.0);
-            plotservicePayload.addparam.bboxnorth = String(Math.round((center[1] + halfHeight) * 10) / 10.0);
+        if (layout.indexOf("Legende") > 0) {
+            plotservicePayload.legend = true;
         }
+        if (plotservicePayload.addparam === undefined) {
+            plotservicePayload.addparam = {};
+        }
+        plotservicePayload.addparamtype = "default";
+        // calculate outer west, south, east and north coordinates of print page
+        plotservicePayload.addparam.bboxwest = String(Math.round((center[0] - halfWidth) * 10) / 10.0) + " (" + epsgCode + ")";
+        plotservicePayload.addparam.bboxsouth = String(Math.round((center[1] - halfHeight) * 10) / 10.0) + " (" + epsgCode + ")";
+        plotservicePayload.addparam.bboxeast = String(Math.round((center[0] + halfWidth) * 10) / 10.0);
+        plotservicePayload.addparam.bboxnorth = String(Math.round((center[1] + halfHeight) * 10) / 10.0);
+        plotservicePayload.geometries = state.geometries;
 
         return JSON.stringify(plotservicePayload);
     },
