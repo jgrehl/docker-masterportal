@@ -285,7 +285,7 @@ Layer2dVector.prototype.createLegend = async function () {
                             return geometryTypes;
                         });
                 }
-                if (rules && rules[0]?.conditions !== undefined) {
+                if (rules && rules[0]?.conditions !== undefined && this.layer.getSource().getFeatures()) {
                     legend = this.filterUniqueLegendInfo(this.layer.getSource().getFeatures(), rules, legendInfos);
                 }
                 else {
