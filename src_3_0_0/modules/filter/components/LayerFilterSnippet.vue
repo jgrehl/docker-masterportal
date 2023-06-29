@@ -156,8 +156,8 @@ export default {
     },
     watch: {
         scale () {
-            if (this.layerConfig.filterOnZoom === true) {
-                // Function should be implemented later
+            if (this.layerConfig.filterOnZoom === true && this.layerConfig.strategy === "active") {
+                this.filter();
             }
         },
         filterRules: {
