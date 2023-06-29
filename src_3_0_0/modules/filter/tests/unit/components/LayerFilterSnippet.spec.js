@@ -423,10 +423,30 @@ describe("src/modules/tools/filter/components/LayerFilterSnippet.vue", () => {
         });
     });
 
-    describe.skip("watcher", () => {
-        it("scale ", () => {
+    describe("watcher", () => {
+        it("scale shall call filterOnZoom", () => {
+            const filterSpy = sinon.spy(LayerFilterSnippet.methods, "filter");
+
+            wrapper = shallowMount(LayerFilterSnippet, {
+                global: {
+                    plugins: [store]
+                },
+                propsData: {
+                    layerConfig: {
+                        service: {
+                            type: "something external"
+                        },
+                        filterOnZoom: true,
+                        strategy: "active"
+                    },
+                    mapHandler: new MapHandler({
+                        isLayerActivated: () => false
+                    })
+                }
+            });
+
             wrapper.vm.$options.watch.scale.call(wrapper.vm, 1000);
-            // Function to test should be implemented later
+            expect(filterSpy.called).to.be.true;
         });
     });
 });
