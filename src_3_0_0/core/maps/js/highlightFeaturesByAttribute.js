@@ -173,7 +173,7 @@ export default {
         if (features.length === 0) {
             const parser = new DOMParser(),
                 xmlDoc = parser.parseFromString(response.data, "text/xml"),
-                exceptionText = xmlDoc.getElementsByTagName("ExceptionText")[0].childNodes[0].nodeValue;
+                exceptionText = xmlDoc.getElementsByTagNameNS("*", "ExceptionText").length > 0 ? xmlDoc.getElementsByTagNameNS("*", "ExceptionText")[0].childNodes[0].nodeValue : "";
 
             if (exceptionText) {
                 console.error("highlightFeaturesByAttribute: service exception: " + exceptionText);
@@ -199,17 +199,18 @@ export default {
      * @returns {String} query snippet
     */
     getOGCFilterSnippet: function (isEqual, wildCard, singleChar, escapeChar, propPrefix, propName, propValue) {
+        const propertyPrefix = propPrefix === undefined ? "" : propPrefix;
         let result = "";
 
         if (isEqual) {
             result = `<ogc:PropertyIsEqualTo matchCase='false' wildCard='${wildCard}' singleChar='${singleChar}' escapeChar='${escapeChar}'>
-                <ogc:PropertyName>${propPrefix}${propName}</ogc:PropertyName>
+                <ogc:PropertyName>${propertyPrefix}${propName}</ogc:PropertyName>
                 <ogc:Literal>${propValue}</ogc:Literal>
             </ogc:PropertyIsEqualTo>`;
         }
         else {
             result = `<ogc:PropertyIsLike matchCase='false' wildCard='${wildCard}' singleChar='${singleChar}' escapeChar='${escapeChar}'>
-                <ogc:PropertyName>${propPrefix}${propName}</ogc:PropertyName>
+                <ogc:PropertyName>${propertyPrefix}${propName}</ogc:PropertyName>
                 <ogc:Literal>${wildCard}${propValue}${wildCard}</ogc:Literal>
             </ogc:PropertyIsLike>`;
         }
@@ -235,14 +236,15 @@ export default {
         if (valueDelimiter !== undefined && valueDelimiter.length === 1) {
             delimiter = valueDelimiter;
         }
-        const valueItems = propValue.split(delimiter);
+        const propertyPrefix = propPrefix === undefined ? "" : propPrefix,
+            valueItems = propValue.split(delimiter);
 
         if (valueItems.length >= 2) {
             result += "<ogc:Or>";
         }
         for (value of valueItems) {
             result += `<ogc:PropertyIsEqualTo matchCase='false' wildCard='${wildCard}' singleChar='${singleChar}' escapeChar='${escapeChar}'>
-                <ogc:PropertyName>${propPrefix}${propName}</ogc:PropertyName>
+                <ogc:PropertyName>${propertyPrefix}${propName}</ogc:PropertyName>
                 <ogc:Literal>${value}</ogc:Literal>
             </ogc:PropertyIsEqualTo>`;
         }
