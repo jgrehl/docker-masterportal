@@ -6,6 +6,7 @@ import SnippetDownload from "../../../components/SnippetDownload.vue";
 import {expect} from "chai";
 import MapHandler from "../../../utils/mapHandler.js";
 import sinon from "sinon";
+import axios from "axios";
 
 const localVue = createLocalVue();
 
@@ -552,6 +553,157 @@ describe("src/modules/tools/filter/components/LayerFilterSnippet.vue", () => {
 
             await wrapper.vm.$nextTick();
             expect(registerZoomListener.called).to.be.true;
+        });
+    });
+    describe("checkOutOfZoomLevel", () => {
+        it("should set the variable outOfZoom false", () => {
+            wrapper.setData({outOfZoom: false});
+
+            wrapper.vm.checkOutOfZoomLevel(undefined, undefined, 17);
+            expect(wrapper.vm.outOfZoom).to.be.false;
+            wrapper.vm.checkOutOfZoomLevel(undefined, 18, 17);
+            expect(wrapper.vm.outOfZoom).to.be.false;
+            wrapper.vm.checkOutOfZoomLevel(10, undefined, 17);
+            expect(wrapper.vm.outOfZoom).to.be.false;
+            wrapper.vm.checkOutOfZoomLevel(10, 18, 17);
+            expect(wrapper.vm.outOfZoom).to.be.false;
+        });
+
+        it("should set the variable outOfZoom true", () => {
+            wrapper.setData({outOfZoom: false});
+
+            wrapper.vm.checkOutOfZoomLevel(10, 16, 17);
+            expect(wrapper.vm.outOfZoom).to.be.true;
+            wrapper.vm.checkOutOfZoomLevel(10, 18, 7);
+            expect(wrapper.vm.outOfZoom).to.be.true;
+            wrapper.vm.checkOutOfZoomLevel(10, undefined, 7);
+            expect(wrapper.vm.outOfZoom).to.be.true;
+            wrapper.vm.checkOutOfZoomLevel(undefined, 16, 17);
+            expect(wrapper.vm.outOfZoom).to.be.true;
+        });
+    });
+    describe("getVtStyleAttribute", () => {
+        it("should return undefined if attr is not string", async () => {
+            expect(await wrapper.vm.getVtStyleAttribute(null, undefined, [], [])).to.be.undefined;
+            expect(await wrapper.vm.getVtStyleAttribute(undefined, 0, [], [])).to.be.undefined;
+            expect(await wrapper.vm.getVtStyleAttribute(0, null, undefined, [])).to.be.undefined;
+            expect(await wrapper.vm.getVtStyleAttribute(true, true, [], undefined)).to.be.undefined;
+            expect(await wrapper.vm.getVtStyleAttribute([], [], [], undefined)).to.be.undefined;
+            expect(await wrapper.vm.getVtStyleAttribute({}, {}, [], undefined)).to.be.undefined;
+        });
+
+        it("should return undefined if collection is not string", async () => {
+            expect(await wrapper.vm.getVtStyleAttribute("", undefined, [], [])).to.be.undefined;
+            expect(await wrapper.vm.getVtStyleAttribute(undefined, 0, [], [])).to.be.undefined;
+            expect(await wrapper.vm.getVtStyleAttribute("", null, undefined, [])).to.be.undefined;
+            expect(await wrapper.vm.getVtStyleAttribute("", true, [], undefined)).to.be.undefined;
+            expect(await wrapper.vm.getVtStyleAttribute("", [], [], undefined)).to.be.undefined;
+            expect(await wrapper.vm.getVtStyleAttribute("", {}, [], undefined)).to.be.undefined;
+        });
+
+        it("should return undefined if there are wrong styles", async () => {
+            expect(await wrapper.vm.getVtStyleAttribute("", "", [], undefined)).to.be.undefined;
+            expect(await wrapper.vm.getVtStyleAttribute("", "", [], null)).to.be.undefined;
+            expect(await wrapper.vm.getVtStyleAttribute("", "", [], 0)).to.be.undefined;
+            expect(await wrapper.vm.getVtStyleAttribute("", "", [], true)).to.be.undefined;
+            expect(await wrapper.vm.getVtStyleAttribute("", "", [], {})).to.be.undefined;
+            expect(await wrapper.vm.getVtStyleAttribute("", "", [], [])).to.be.undefined;
+        });
+
+        it("should return value of minzoom if there is only one style", async () => {
+            const styles = [
+                {
+                    "id": "bplan",
+                    "name": "bplan",
+                    "url": "url",
+                    "defaultStyle": true
+                }
+            ];
+
+            sinon.stub(axios, "get").returns(
+                new Promise(resolve => {
+                    resolve({
+                        status: 200,
+                        data: {
+                            layers: [
+                                {
+                                    "source-layer": "bp_plan",
+                                    minzoom: 10
+                                }
+                            ]
+                        }
+                    });
+                })
+            );
+
+            expect(await wrapper.vm.getVtStyleAttribute("minzoom", "bp_plan", "default", styles)).to.be.equal(10);
+        });
+
+        it("should return value of minzoom from the default style", async () => {
+            const styles = [
+                {
+                    "id": "bplan",
+                    "name": "bplan",
+                    "url": "url"
+                },
+                {
+                    "id": "xplan",
+                    "name": "xplan",
+                    "url": "url",
+                    "defaultStyle": true
+                }
+            ];
+
+            sinon.stub(axios, "get").returns(
+                new Promise(resolve => {
+                    resolve({
+                        status: 200,
+                        data: {
+                            layers: [
+                                {
+                                    "source-layer": "bp_plan",
+                                    minzoom: 10
+                                }
+                            ]
+                        }
+                    });
+                })
+            );
+
+            expect(await wrapper.vm.getVtStyleAttribute("minzoom", "bp_plan", "default", styles)).to.be.equal(10);
+        });
+
+        it("should return value of minzoom from the defined style", async () => {
+            const styles = [
+                {
+                    "id": "bplan",
+                    "name": "bplan",
+                    "url": "url"
+                },
+                {
+                    "id": "xplan",
+                    "name": "xplan",
+                    "url": "url"
+                }
+            ];
+
+            sinon.stub(axios, "get").returns(
+                new Promise(resolve => {
+                    resolve({
+                        status: 200,
+                        data: {
+                            layers: [
+                                {
+                                    "source-layer": "bp_plan",
+                                    minzoom: 10
+                                }
+                            ]
+                        }
+                    });
+                })
+            );
+
+            expect(await wrapper.vm.getVtStyleAttribute("minzoom", "bp_plan", "bplan", styles)).to.be.equal(10);
         });
     });
 });

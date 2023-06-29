@@ -18,9 +18,9 @@ import {compileSnippets} from "../utils/compileSnippets.js";
 import {translateKeyWithPlausibilityCheck} from "../../../../utils/translateKeyWithPlausibilityCheck.js";
 import {getSnippetAdjustments} from "../utils/getSnippetAdjustments.js";
 import openlayerFunctions from "../utils/openlayerFunctions";
-
 import {isRule} from "../utils/isRule.js";
 import store from "../../../../app-store";
+import axios from "axios";
 
 export default {
     name: "LayerFilterSnippet",
@@ -101,7 +101,8 @@ export default {
             precheckedSnippets: [],
             filteredItems: [],
             isLockedHandleActiveStrategy: false,
-            filterButtonDisabled: false
+            filterButtonDisabled: false,
+            outOfZoom: false
         };
     },
     computed: {
@@ -683,9 +684,34 @@ export default {
          * Registering a zoom listener.
          * @returns {void}
          */
-        registerZoomListener () {
-            store.watch((state, getters) => getters["Maps/scale"], () => {
-                this.filter();
+        async registerZoomListener () {
+            const styles = openlayerFunctions.getLayerByLayerId(this.layerConfig.layerId).get("vtStyles"),
+                styleId = openlayerFunctions.getLayerByLayerId(this.layerConfig.layerId).get("styleId"),
+                collection = this.layerConfig?.collection,
+                minZoomLevel = await this.getVtStyleAttribute("minzoom", collection, styleId, styles),
+                maxZoomLevel = await this.getVtStyleAttribute("maxzoom", collection, styleId, styles);
+
+            let currentScale = store.getters["Maps/scale"],
+                zoomLevel = store.getters["Maps/getView"].getZoom();
+
+            store.watch((state, getters) => getters["Maps/scale"], scale => {
+                if (scale > currentScale) {
+                    zoomLevel = zoomLevel - 1;
+                }
+                else {
+                    zoomLevel = zoomLevel + 1;
+                }
+
+                currentScale = scale;
+
+                this.checkOutOfZoomLevel(minZoomLevel, maxZoomLevel, zoomLevel);
+                this.setFormDisable(this.outOfZoom);
+                if (!this.outOfZoom) {
+                    this.filter();
+                }
+                else {
+                    this.amountOfFilteredItems = 0;
+                }
             });
         },
         /**
@@ -811,6 +837,69 @@ export default {
         },
         enableFilterButton () {
             this.filterButtonDisabled = false;
+        },
+        /**
+         * Gets the attribute value of style according to key.
+         * @param {String} attr The attribute key
+         * @param {String} collection The collection of layer
+         * @param {String} styleId The style Id of layer
+         * @param {module:ol/style/Style} styles The vectorTile style
+         * @returns {Number|String} the attribute value
+         */
+        async getVtStyleAttribute (attr, collection, styleId, styles) {
+            if (typeof attr !== "string") {
+                return undefined;
+            }
+
+            if (typeof collection !== "string") {
+                return undefined;
+            }
+
+            if (!Array.isArray(styles) || !styles.length) {
+                return undefined;
+            }
+
+            let result;
+
+            for (const style of styles) {
+                if (!isObject(style)) {
+                    continue;
+                }
+
+                if (styles.length === 1 || styleId === style.id || style.defaultStyle === true) {
+                    const layers = await axios.get(style.url).then(response => response.data).then(data => data.layers);
+
+                    if (!Array.isArray(layers)) {
+                        continue;
+                    }
+
+                    for (const layer of layers) {
+                        if (collection === layer["source-layer"]) {
+                            result = layer[attr];
+                        }
+                    }
+                }
+            }
+
+            return result;
+        },
+        /**
+         * Check if the current zoom level is out of zoom level.
+         * @param {Number} minZoomLevel The min zoom level of the layer
+         * @param {Number} maxZoomLevel The max zoom level of the layer
+         * @param {Number} zoomLevel The current zoom level of the layer
+         * @returns {void}
+         */
+        checkOutOfZoomLevel (minZoomLevel, maxZoomLevel, zoomLevel) {
+            if (typeof minZoomLevel === "number" && typeof maxZoomLevel === "number") {
+                this.outOfZoom = zoomLevel < minZoomLevel || zoomLevel > maxZoomLevel;
+            }
+            else if (typeof minZoomLevel === "number" && typeof maxZoomLevel !== "number") {
+                this.outOfZoom = zoomLevel < minZoomLevel;
+            }
+            else if (typeof minZoomLevel !== "number" && typeof maxZoomLevel === "number") {
+                this.outOfZoom = zoomLevel > maxZoomLevel;
+            }
         }
     }
 };
