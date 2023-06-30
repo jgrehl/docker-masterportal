@@ -264,7 +264,7 @@ export default {
         transition: width 0.3s ease;
     }
     .list-enter-from, .list-leave-to{
-        width: 0%;
+        width: 0;
     }
 
     .custom-tooltip {
