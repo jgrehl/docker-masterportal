@@ -547,6 +547,7 @@
     },
     "print": {
       "alertMessage": "È stato superato il numero massimo di stampe parallele.<br>Riprovate non appena la creazione di altre stampe è stata completata.",
+      "authorLabel": "",
       "autoAdjustScale": "Regolazione automatica della scala di stampa",
       "createDownloadFile": "Verrà creato...",
       "downloadFile": "Scaricare",
@@ -560,6 +561,8 @@
       "outputfileTitleLabel": "",
       "printLabel": "Stampa",
       "scaleLabel": "Scala di stampa",
+      "subtitleLabel": "",
+      "textFieldLabel": "",
       "titleLabel": "Titolo",
       "validationWarning": "",
       "vtlWarning": "Poiché MapFish 3 non supporta i livelli Vector Tile, i seguenti livelli attivi non appariranno nella vista di stampa:",
@@ -679,23 +682,24 @@
         "unknownProjection": "Risultati in un sistema di riferimento sconosciuto"
       },
       "placeholder": {
+        "address": "Cerca indirizzo",
+        "addressDistrict": "",
         "addressHospitalBplan": "Cerca indirizzo/ospedale/piano regolatore",
-        "addressTopicParcel": "Cerca indirizzo, distretto, livello, parcella catastale",
         "addressTopic": "Ricerca indirizzo, distretto, argomenti",
-        "address": "Cerca indirizzo"
+        "addressTopicParcel": "Cerca indirizzo, distretto, livello, parcella catastale"
     },
     "showAllResults": "mostra tutto i risultati",
     "searchResults": "Risultati di ricerca",
     "type": {
-        "street": "strada",
-        "district": "distretto",
-        "parcel": "parcella catastale",
         "address": "indirizzo",
-        "location": "comune",
-        "subject": "dati specialistici",
-        "topic": "oggetto",
+        "district": "distretto",
+        "folder": "Cartella (dati soggettivi)",
         "general": "oggetto",
-        "folder": "Cartella (dati soggettivi)"
+        "location": "comune",
+        "parcel": "parcella catastale",
+        "street": "strada",
+        "subject": "dati specialistici",
+        "topic": "oggetto"
     },
     "noInitialResults": "La ricerca iniziale non ha portato risultati.",
     "showAll": "Mostra tutto"
@@ -832,6 +836,12 @@
         }
       },
       "draw": {
+        "drawLayout": {
+          "fillColor": "Colore interno",
+          "fillTransparency": "Trasparenza",
+          "strokeColor": "Colore contorno",
+          "strokeWidth": "Larghezza linea"
+        },
         "drawTypes": {
           "box": "",
           "circle": "Cerchio",
