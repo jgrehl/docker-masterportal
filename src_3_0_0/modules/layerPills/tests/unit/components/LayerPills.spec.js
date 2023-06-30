@@ -370,7 +370,74 @@ describe("src_3_0_0/modules/LayerPills.vue", () => {
         });
 
         it("establishes a ResizeObserver if active", () => {
-            // todo...
+            const observer = global.ResizeObserver;
+            let observed = false;
+
+            /**
+             * sets observed value to be tested
+             * @returns {void}
+             */
+            class ResizeObserver {
+                /**
+                 * sets observed value if observed
+                 * @returns {void}
+                 */
+                observe () {
+                    observed = true;
+                }
+            }
+
+            global.ResizeObserver = ResizeObserver;
+
+            wrapper = shallowMount(LayerPillsComponent, {
+                components: {
+                    IconButton: {
+                        name: "IconButton",
+                        template: "<button>Hier</button>"
+                    }
+                },
+                global: {
+                    plugins: [store]
+                }});
+
+            expect(observed).to.be.true;
+            global.ResizeObserver = observer;
+        });
+
+        it("doesn't establish a ResizeObserver if not active", () => {
+            const observer = global.ResizeObserver;
+            let observed = false;
+
+            active = false;
+            /**
+             * sets observed value to be tested
+             * @returns {void}
+             */
+            class ResizeObserver {
+                /**
+                 * sets observed value if observed
+                 * @returns {void}
+                 */
+                observe () {
+                    observed = true;
+                }
+            }
+
+            global.ResizeObserver = ResizeObserver;
+
+            wrapper = shallowMount(LayerPillsComponent, {
+                components: {
+                    IconButton: {
+                        name: "IconButton",
+                        template: "<button>Hier</button>"
+                    }
+                },
+                global: {
+                    plugins: [store]
+                }});
+
+            expect(observed).to.be.false;
+            global.ResizeObserver = observer;
         });
 
         it("showLayerInformationInMenu layerConf with datasets calls startLayerInformation", () => {
