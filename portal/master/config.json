@@ -738,7 +738,7 @@
           "styleId": "1711",
           "name": "Krankenhäuser",
           "typ": "WFS",
-          "visibility": true,
+          "visibility": false,
           "loadingStrategy": "all",
           "searchField": "name",
           "mouseHoverField": [
