@@ -547,6 +547,7 @@
     },
     "print": {
       "alertMessage": "",
+      "authorLabel": "",
       "autoAdjustScale": "",
       "createDownloadFile": "",
       "downloadFile": "",
@@ -560,6 +561,8 @@
       "outputfileTitleLabel": "",
       "printLabel": "Drucken",
       "scaleLabel": "Druckmaßstab",
+      "subtitleLabel": "",
+      "textFieldLabel": "",
       "titleLabel": "Titel",
       "validationWarning": "",
       "vtlWarning": "Da MapFish 3 keine Vector Tile Layer unterstützt, werden die folgenden aktiven Layer nicht in der Printansicht erscheinen:",
@@ -679,19 +682,22 @@
         "unknownProjection": "Ergebnisse in unbekanntem Koordinatensystem"
       },
       "placeholder": {
-        "addressHospitalBplan": "Suche nach Adresse/Krankenhaus/B-Plan",
-        "addressTopicParcel": "Sök Adress, Stadtdeel, Themen, Flurstück",
+        "address": "Sök na Adress",
+        "addressDistrict": "Sök Adresse, Stadtteil",
+        "addressHospitalBplan": "Sök na Adresse/Krankenhaus/B-Plan",
         "addressTopic": "Sök Adress, Stadtdeel, Themen",
-        "address": "Sök na Adress"
+        "addressTopicParcel": "Sök Adress, Stadtdeel, Themen, Flurstück"
     },
     "showAllResults": "alle Ergebnisse anzeigen",
     "searchResults": "Suchergebnisse",
     "type": {
-        "street": "Stroat",
-        "district": "Stadtdeel",
-        "parcel": "Flurstück",
         "address": "Adress",
+        "district": "Stadtdeel",
+        "folder": "",
+        "general": "",
         "location": "Ort",
+        "parcel": "Flurstück",
+        "street": "Stroat",
         "subject": "Thema (externe Fachdaten)",
         "topic": "Thema (Fachdaten)"
     },
@@ -830,6 +836,12 @@
         }
       },
       "draw": {
+        "drawLayout": {
+          "fillColor": "Füllfarbe",
+          "fillTransparency": "Transparenz",
+          "strokeColor": "Umrissfarbe",
+          "strokeWidth": "Strichstärke"
+        },
         "drawTypes": {
           "box": "Box",
           "circle": "Kreis",

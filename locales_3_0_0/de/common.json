@@ -547,6 +547,7 @@
     },
     "print": {
       "alertMessage": "Die maximale Anzahl an parallel ausgeführten Ausdrucken ist überschritten.<br>Bitte versuchen Sie es erneut sobald die Erstellung anderer Ausdrucke abgeschlossen ist.",
+      "authorLabel": "Ersteller",
       "autoAdjustScale": "Druckmaßstab automatisch anpassen",
       "createDownloadFile": "Wird erstellt...",
       "downloadFile": "Herunterladen",
@@ -560,10 +561,9 @@
       "outputfileTitleLabel": "Dateiname",
       "printLabel": "Datei erstellen",
       "scaleLabel": "Druckmaßstab",
-      "titleLabel": "Titel",
       "subtitleLabel": "Untertitel",
       "textFieldLabel": "Freitextfeld",
-      "authorLabel": "Ersteller",
+      "titleLabel": "Titel",
       "validationWarning": "Der Dateiname darf nur Buchstaben und die Sonderzeichen '-' und '_' enthalten.",
       "vtlWarning": "Da MapFish 3 keine Vector Tile Layer unterstützt, werden die folgenden aktiven Layer nicht in der Printansicht erscheinen:",
       "waitForPrintErrorMessage": "Die Erstellung des Ausdrucks ist fehlgeschlagen.<br>Bitte versuchen Sie es zu einem späteren Zeitpunkt erneut oder wenden Sie sich an den Betreiber des Portal.",
@@ -682,24 +682,24 @@
         "unknownProjection": "Ergebnisse in unbekanntem Koordinatensystem"
       },
       "placeholder": {
-        "addressHospitalBplan": "Suche nach Adresse/Krankenhaus/B-Plan",
-        "addressTopicParcel": "Suche Adresse, Stadtteil, Themen, Flurstück",
-        "addressTopic": "Suche Adresse, Stadtteil, Themen",
+        "address": "Suche nach Adresse",
         "addressDistrict": "Suche Adresse, Stadtteil",
-        "address": "Suche nach Adresse"
+        "addressHospitalBplan": "Suche nach Adresse/Krankenhaus/B-Plan",
+        "addressTopic": "Suche Adresse, Stadtteil, Themen",
+        "addressTopicParcel": "Suche Adresse, Stadtteil, Themen, Flurstück"
     },
     "showAllResults": "alle Ergebnisse anzeigen",
     "searchResults": "Suchergebnisse",
     "type": {
-        "street": "Straße",
-        "district": "Stadtteil",
-        "parcel": "Flurstück",
         "address": "Adresse",
-        "location": "Ort",
-        "subject": "Thema (externe Fachdaten)",
-        "topic": "Thema (Fachdaten)",
+        "district": "Stadtteil",
+        "folder": "Ordner (Fachdaten)",
         "general": "Fachdaten",
-        "folder": "Ordner (Fachdaten)"
+        "location": "Ort",
+        "parcel": "Flurstück",
+        "street": "Straße",
+        "subject": "Thema (externe Fachdaten)",
+        "topic": "Thema (Fachdaten)"
     },
     "noInitialResults": "Die initiale Suche ergab keine Treffer.",
     "showAll": "Alle anzeigen"
@@ -836,6 +836,12 @@
         }
       },
       "draw": {
+        "drawLayout": {
+          "fillColor": "Füllfarbe",
+          "fillTransparency": "Transparenz",
+          "strokeColor": "Umrissfarbe",
+          "strokeWidth": "Strichstärke"
+        },
         "drawTypes": {
           "box": "Box",
           "circle": "Kreis",
