@@ -4,8 +4,10 @@ import layerFactory from "../../../core/layers/js/layerFactory";
 import IconButton from "../../../shared/modules/buttons/components/IconButton.vue";
 
 /**
- * Layer Pills
+ * Layer Pills: show enabled toplayers as Buttons on top of the map. Adds Ability to remove Layers and call Layerinformation without using Layertree or open Menu.
  * @module modules/LayerPills
+ * @vue-data {Object} scrolled - the horizontal Scrollposition of the Element.
+ * @vue-data {Object} showRightButton - indicates if Button on the right to scroll horizontally is to be shown.
  */
 export default {
     name: "LayerPills",
@@ -28,6 +30,10 @@ export default {
         ...mapGetters("Maps", ["mode"])
     },
     watch: {
+        /**
+         * Detects changes in visible Layers
+         * @returns {void}
+         */
         visibleSubjectDataLayerConfigs: {
             handler (newVal, oldVal) {
                 let newValue = {},
@@ -49,6 +55,11 @@ export default {
             },
             deep: true
         },
+        /**
+        * Detects changes in mapMode
+        * @param {String} value 2D or 3D Map mode.
+        * @returns {void}
+        */
         mode (value) {
             this.setVisibleLayers(this.visibleSubjectDataLayerConfigs, value);
         }
@@ -66,6 +77,13 @@ export default {
         ...mapActions(["initializeModule", "replaceByIdInLayerConfig"]),
         ...mapActions("Modules/LayerInformation", ["startLayerInformation"]),
 
+        /**
+         * Sets the Layers to be shown as Buttons
+         * @param {Array} visibleLayers list of visibleLayers.
+         * @param {String} mapMode 2D or 3D Map mode.
+         * @param {Object} newValues added Layers.
+         * @returns {void}
+         */
         setVisibleLayers (visibleLayers, mapMode, newValues = []) {
             if (visibleLayers) {
                 if (mapMode === "2D") {
@@ -92,6 +110,11 @@ export default {
                 }
             }
         },
+        /**
+         * Removes Layer from List of Buttons
+         * @param {String} layer Layer to be removed.
+         * @returns {void}
+         */
         removeLayerFromVisibleLayers (layer) {
             this.replaceByIdInLayerConfig({
                 layerConfigs: [{
@@ -103,6 +126,11 @@ export default {
                 }]
             });
         },
+        /**
+         * Scrolls Element horizontally the width of one Button to the given direction
+         * @param {String} direction Direction to be scrolled to.
+         * @returns {void}
+         */
         moveLayerPills (direction) {
             const value = direction === "right" ? 158 : -158;
 
@@ -122,6 +150,10 @@ export default {
             }
 
         },
+        /**
+         * sets the showRightbutton-value depending on available width and width of element.
+         * @returns {void}
+         */
         setRightButton () {
             const containerWidth = this.$el.offsetWidth,
                 scrollWidth = this.$el.scrollWidth;
@@ -137,6 +169,10 @@ export default {
 
             }
         },
+        /**
+         * sets an Observer to the width of the element to react on resizing.
+         * @returns {void}
+         */
         setResizeObserver () {
             const resizeObserver = new ResizeObserver(this.setRightButton);
 
@@ -144,6 +180,11 @@ export default {
                 resizeObserver.observe(this.$el);
             }
         },
+        /**
+         * starts the Module layerInformation for given Layer
+         * @param {Object} layerConf Configuration-Object of the layer.
+         * @returns {void}
+         */
         showLayerInformationInMenu (layerConf) {
             if (layerConf.datasets) {
                 this.startLayerInformation(layerConf);
