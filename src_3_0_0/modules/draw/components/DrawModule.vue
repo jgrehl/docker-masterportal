@@ -1,13 +1,15 @@
 <script>
-import {mapGetters} from "vuex";
+import {mapGetters, mapMutations} from "vuex";
 import VectorLayer from "ol/layer/Vector.js";
 import VectorSource from "ol/source/Vector";
 
+import DrawLayout from "../../../shared/modules/draw/components/DrawLayout.vue";
 import DrawTypes from "../../../shared/modules/draw/components/DrawTypes.vue";
 
 export default {
     name: "DrawModule",
     components: {
+        DrawLayout,
         DrawTypes
     },
     data () {
@@ -19,8 +21,16 @@ export default {
         ...mapGetters("Modules/Draw", [
             "circleInnerRadius",
             "circleOuterRadius",
+            "currentLayout",
+            "currentLayoutOuterCircle",
+            "drawTypes",
+            "drawTypesGeometrie",
+            "drawTypesSelected",
+            "drawTypesSymbols",
             "interactiveCircle",
-            "name"
+            "name",
+            "selectedDrawType",
+            "strokeRange"
         ]),
         ...mapGetters("Menu", [
             "currentComponentName",
@@ -43,10 +53,16 @@ export default {
         map2d.addLayer(new VectorLayer({
             name: "importDrawLayer",
             source: this.source,
-            zIndex: 0
+            zIndex: 99999999999
         }));
     },
     methods: {
+        ...mapMutations("Modules/Draw", [
+            "setCurrentLayout",
+            "setCurrentLayoutOuterCircle",
+            "setSelectedDrawType"
+        ]),
+
         /**
          * Hides the popovers when menu is collapsed
          * @param {Boolean} isExpanded Is menu expanded.
@@ -63,18 +79,38 @@ export default {
 </script>
 
 <template lang="html">
-    <div id="modules-draw-module">
+    <div
+        id="modules-draw-module"
+        class="d-flex flex-column"
+    >
         <DrawTypes
             ref="drawTypes"
-            :source="source"
-            :draw-types-symbols="['point']"
+            class="mb-5"
             :circle-inner-radius="circleInnerRadius"
             :circle-outer-radius="circleOuterRadius"
+            :current-layout="currentLayout"
+            :current-layout-outer-circle="currentLayoutOuterCircle"
+            :draw-types="drawTypes"
+            :draw-types-geometrie="drawTypesGeometrie"
+            :draw-types-symbols="drawTypesSymbols"
             :interactive-circle="interactiveCircle"
+            :selected-draw-type="selectedDrawType"
+            :set-selected-draw-type="setSelectedDrawType"
+            :source="source"
+        />
+        <DrawLayout
+            :current-layout="currentLayout"
+            :selected-draw-type="selectedDrawType"
+            :set-current-layout="setCurrentLayout"
+            :stroke-range="strokeRange"
+        />
+        <DrawLayout
+            v-if="selectedDrawType === 'doubleCircle'"
+            :circle-type="'outerCircle'"
+            :current-layout="currentLayoutOuterCircle"
+            :selected-draw-type="selectedDrawType"
+            :set-current-layout="setCurrentLayoutOuterCircle"
+            :stroke-range="strokeRange"
         />
     </div>
 </template>
-
-<style lang="scss" scoped>
-</style>
-

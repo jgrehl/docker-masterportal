@@ -547,6 +547,7 @@
     },
     "print": {
       "alertMessage": "",
+      "authorLabel": "",
       "autoAdjustScale": "",
       "createDownloadFile": "",
       "downloadFile": "",
@@ -560,6 +561,8 @@
       "outputfileTitleLabel": "",
       "printLabel": "Imprimir",
       "scaleLabel": "Escala de impressão",
+      "subtitleLabel": "",
+      "textFieldLabel": "",
       "titleLabel": "Título",
       "validationWarning": "",
       "vtlWarning": "Uma vez que o MapFish 3 não suporta camadas \"Vector Tile Layer\", as seguintes camadas activas não aparecerão na vista de impressão:",
@@ -672,12 +675,6 @@
       "label": "Escala",
       "name": "Modificar escala"
     },
-    "selectFeatures": {
-      "name": "Selecione recursos",
-      "noFeatureChosen": "Nenhuma funcionalidade seleccionada. Seleccione as funcionalidades segurando Ctrl e arrastando uma caixa em torno das funcionalidades.",
-      "propertylessFeature": "Elemento sem atributos",
-      "zoomToFeature": "Zoom a esta funcionalidade"
-    },
     "searchBar": {
       "locationFinder": {
         "errorMsg": "A pesquisa através do LocationFinder falhou",
@@ -685,24 +682,33 @@
         "unknownProjection": "Resultados em sistema de coordenadas desconhecidas"
       },
       "placeholder": {
+          "address": "Pesquisa por endereço",
+          "addressDistrict": "",
           "addressHospitalBplan": "Pesquisa por endereço/hospital/B-Plan(Plano de desenvolvimento)",
+          "addressTopic": "",
           "addressTopicParcel": "Pesquisa endereço, bairro, tópicos, parcela",
-          "address": "Pesquisa por endereço"
       },
       "showAllResults": "mostrar todos os resultados",
       "searchResults": "Procurar Resultados",
       "type": {
-          "street": "Rua",
-          "district": "Bairro",
-          "parcel": "Parcela",
           "address": "Endereço",
+          "district": "Bairro",
+          "folder": "",
+          "general": "Tópico",
           "location": "Localização",
+          "parcel": "Parcela",
+          "street": "Rua",
           "subject": "Assunto",
-          "topic": "Tópico",
-          "general": "Tópico"
+          "topic": "Tópico"
       },
       "noInitialResults": "A pesquisa inicial não resultou em nenhum acerto.",
       "showAll": "Mostre tudo"
+    },
+    "selectFeatures": {
+      "name": "Selecione recursos",
+      "noFeatureChosen": "Nenhuma funcionalidade seleccionada. Seleccione as funcionalidades segurando Ctrl e arrastando uma caixa em torno das funcionalidades.",
+      "propertylessFeature": "Elemento sem atributos",
+      "zoomToFeature": "Zoom a esta funcionalidade"
     },
     "shadow": {
       "name": "Sombra",
@@ -830,6 +836,12 @@
         }
       },
       "draw": {
+        "drawLayout": {
+          "fillColor": "Cor de preenchimento",
+          "fillTransparency": "Transparência",
+          "strokeColor": "Cor dos contornos",
+          "strokeWidth": "Largura de linha"
+        },
         "drawTypes": {
           "box": "",
           "circle": "Círculo",
