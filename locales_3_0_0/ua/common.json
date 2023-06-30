@@ -547,6 +547,7 @@
     },
     "print": {
       "alertMessage": "Перевищено максимальну кількість паралельних роздруківок.<br>Будь ласка, повторіть спробу, як тільки створення інших роздруківок буде завершено.",
+      "authorLabel": "",
       "autoAdjustScale": "Автоматичне налаштування масштабу друку",
       "createDownloadFile": "Буде створено...",
       "downloadFile": "Завантажити файл",
@@ -560,6 +561,8 @@
       "outputfileTitleLabel": "",
       "printLabel": "Створити файл",
       "scaleLabel": "Масштаб друку",
+      "subtitleLabel": "",
+      "textFieldLabel": "",
       "titleLabel": "Назва",
       "validationWarning": "",
       "vtlWarning": "Оскільки MapFish 3 не підтримує Vector Tile Layers, наступні активні шари не відображатимуться в режимі друку.:",
@@ -679,22 +682,24 @@
         "unknownProjection": "Результати в невідомій системі координат"
       },
       "placeholder": {
+          "address": "Пошук за адресою",
+          "addressDistrict": "",
           "addressHospitalBplan": "Пошук адреси/лікарні/B-Plan",
-          "addressTopicParcel": "Пошук адреси, району, теми, ділянки",
           "addressTopic": "Пошук адреси, району,теми",
-          "address": "Пошук за адресою"
+          "addressTopicParcel": "Пошук адреси, району, теми, ділянки"
       },
       "showAllResults": "Показати всі результати",
       "searchResults": "Результати пошуку",
       "type": {
-          "street": "Вулиця",
-          "district": "Район",
-          "parcel": "Земельна ділянка",
           "address": "Адреса",
+          "district": "Район",
+          "folder": "",
+          "general": "Спеціалізовані дані",
           "location": "Місце",
+          "parcel": "Земельна ділянка",
+          "street": "Вулиця",
           "subject": "Тема (зовнішні спеціалізовані дані)",
-          "topic": "Тема (спеціалізовані дані)",
-          "general": "Спеціалізовані дані"
+          "topic": "Тема (спеціалізовані дані)"
       },
       "noInitialResults": "Початковий пошук не виявив збігів.",
       "showAll": "Покажи все"
@@ -831,6 +836,12 @@
         }
       },
       "draw": {
+        "drawLayout": {
+          "fillColor": "Колір заливки",
+          "fillTransparency": "Прозорість",
+          "strokeColor": "Колір контуру",
+          "strokeWidth": "Товщина лінії"
+        },
         "drawTypes": {
           "box": "",
           "circle": "Коло",
