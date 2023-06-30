@@ -25,6 +25,16 @@ export default {
                 return 0;
             }
         },
+        currentLayout: {
+            type: Object,
+            required: true
+        },
+        currentLayoutOuterCircle: {
+            type: Object,
+            default () {
+                return {};
+            }
+        },
         drawTypes: {
             type: Array,
             default () {
@@ -49,6 +59,16 @@ export default {
                 return true;
             }
         },
+        selectedDrawType: {
+            type: String,
+            default () {
+                return "";
+            }
+        },
+        setSelectedDrawType: {
+            type: Function,
+            required: true
+        },
         source: {
             type: Object,
             required: true
@@ -68,9 +88,21 @@ export default {
     computed: {
         ...mapGetters("Maps", ["projection"])
     },
+    watch: {
+        currentLayout (currentLayout) {
+            drawInteractions.setStyleObject(currentLayout);
+        },
+        currentLayoutOuterCircle (currentLayoutOuterCircle) {
+            drawInteractions.setStyleObject(currentLayoutOuterCircle, true);
+        }
+    },
     mounted () {
+        drawInteractions.setStyleObject(this.currentLayout);
+        drawInteractions.setStyleObject(this.currentLayoutOuterCircle, true);
         this.processPopover(document.getElementById("draw-geometries"), "draw-types-geometries");
         this.processPopover(document.getElementById("draw-symbols"), "draw-types-symbols");
+
+        this.regulateInteraction(this.selectedDrawType);
     },
     unmounted () {
         this.hidePopovers();
@@ -153,6 +185,7 @@ export default {
                 }
 
                 this.addInteraction(this.drawInteraction);
+                this.setSelectedDrawType(drawType);
             }
         },
 
