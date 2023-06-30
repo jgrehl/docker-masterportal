@@ -547,6 +547,7 @@
     },
     "print": {
       "alertMessage": "",
+      "authorLabel": "",
       "autoAdjustScale": "",
       "createDownloadFile": "",
       "downloadFile": "",
@@ -560,6 +561,8 @@
       "outputfileTitleLabel": "",
       "printLabel": "Imprimir",
       "scaleLabel": "Escala para imprimir",
+      "subtitleLabel": "",
+      "textFieldLabel": "",
       "titleLabel": "Título",
       "validationWarning": "",
       "vtlWarning": "Dado que MapFish 3 no admite capas de mosaico vectorial, las siguientes capas activas no aparecerán en la vista ‚imprimir‘ :",
@@ -679,22 +682,24 @@
         "unknownProjection": "Resultados en sistema de coordenadas desconocido"
       },
       "placeholder": {
+        "address": "Buscar por dirección",
+        "addressDistrict": "",
         "addressHospitalBplan": "Búsqueda por dirección/hospital/plan territorial",
-        "addressTopicParcel": "Buscar dirección, distrito, temas, unidad catastral",
         "addressTopic": "Buscar dirección, distrito, temas",
-        "address": "Buscar por dirección"
+        "addressTopicParcel": "Buscar dirección, distrito, temas, unidad catastral"
     },
     "showAllResults": "mostrar todos los resultados",
     "searchResults": "Resultados de la búsqueda",
     "type": {
-        "street": "Calle",
-        "district": "Distrito",
-        "parcel": "Unidad territorial",
         "address": "Dirección",
+        "district": "Distrito",
+        "folder": "",
+        "general": "Tema",
         "location": "Lugar",
+        "parcel": "Unidad territorial",
+        "street": "Calle",
         "subject": "Tema específico",
-        "topic": "Tema",
-        "general": "Tema"
+        "topic": "Tema"
     },
     "noInitialResults": "La búsqueda inicial no dio ningún resultado.",
     "showAll": "Ver todo"
@@ -831,6 +836,12 @@
         }
       },
       "draw": {
+        "drawLayout": {
+          "fillColor": "Color del relleno",
+          "fillTransparency": "Transparencia",
+          "strokeColor": "Color del contorno",
+          "strokeWidth": "Ancho de línea"
+        },
         "drawTypes": {
           "box": "",
           "circle": "Círculo",
