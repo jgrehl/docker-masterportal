@@ -682,11 +682,11 @@
         "unknownProjection": "Result provided within a unknown coordinate system"
       },
       "placeholder": {
-        "addressHospitalBplan": "Search for Address/Hospital/B-Plan",
-        "addressTopicParcel": "Search address, district, topics, parcel",
-        "addressTopic": "Search address, district, topics",
+        "address": "Search for Address",
         "addressDistrict": "Search address, district",
-        "address": "Search for Address"
+        "addressHospitalBplan": "Search for Address/Hospital/B-Plan",
+        "addressTopic": "Search address, district, topics",
+        "addressTopicParcel": "Search address, district, topics, parcel"
     },
     "showAllResults": "Show all results",
     "searchResults": "search results",
@@ -836,6 +836,12 @@
         }
       },
       "draw": {
+        "drawLayout": {
+          "fillColor": "Fill color",
+          "fillTransparency": "Transparency",
+          "strokeColor": "Outline color",
+          "strokeWidth": "Stroke width"
+        },
         "drawTypes": {
           "box": "Box",
           "circle": "Circle",
