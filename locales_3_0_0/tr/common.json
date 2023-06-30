@@ -547,6 +547,7 @@
     },
     "print": {
       "alertMessage": "",
+      "authorLabel": "",
       "autoAdjustScale": "",
       "createDownloadFile": "",
       "downloadFile": "",
@@ -560,6 +561,8 @@
       "outputfileTitleLabel": "",
       "printLabel": "Basmak",
       "scaleLabel": "Baskı ölçeği",
+      "subtitleLabel": "",
+      "textFieldLabel": "",
       "titleLabel": "Başlık",
       "validationWarning": "",
       "vtlWarning": "MapFish 3 vektör döşeme katmanlarını desteklemediğinden, aşağıdaki aktif katmanlar baskı görünümünde görünmez:",
@@ -679,22 +682,24 @@
         "unknownProjection": "Sonuçlar bilinmeyen koordinat sisteminde"
       },
       "placeholder": {
+          "address": "Adrese göre ara",
+          "addressDistrict": "",
           "addressHospitalBplan": "Adres/Hastane/B-Planı ile arama yapın",
-          "addressTopicParcel": "Adres,Bölge,Konu,Parsel ara",
           "addressTopic": "Adres, semt, konu ara",
-          "address": "Adrese göre ara"
+          "addressTopicParcel": "Adres,Bölge,Konu,Parsel ara"
       },
       "showAllResults": "Tüm sonuçları göster",
       "searchResults": "Arama Sonuçları",
       "type": {
-          "street": "Sokak",
-          "district": "Semt",
-          "parcel": "Parsel alan",
           "address": "Adres",
+          "district": "Semt",
+          "folder": "",
+          "general": "Konu",
           "location": "Yer",
+          "parcel": "Parsel alan",
+          "street": "Sokak",
           "subject": "Teknik konu",
-          "topic": "Konu",
-          "general": "Konu"
+          "topic": "Konu"
       },
       "noInitialResults": "İlk arama sonuç vermedi.",
       "showAll": "Hepsini Göster"
@@ -831,6 +836,12 @@
         }
       },
       "draw": {
+        "drawLayout": {
+          "fillColor": "Dolgu rengi",
+          "fillTransparency": "Şeffaf",
+          "strokeColor": "Anahat rengi",
+          "strokeWidth": "Çizgi genişliği"
+        },
         "drawTypes": {
           "box": "",
           "circle": "Círculo",
