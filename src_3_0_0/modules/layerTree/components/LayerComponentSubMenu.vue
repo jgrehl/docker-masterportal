@@ -111,6 +111,7 @@ export default {
 
             .transparency-input {
                 accent-color: $secondary;
+                width: 100%;
             }
         }
     }
