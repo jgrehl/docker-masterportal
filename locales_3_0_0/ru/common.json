@@ -547,6 +547,7 @@
     },
     "print": {
       "alertMessage": "Превышено максимальное количество параллельных распечаток.<br>Попробуйте еще раз, как только создание других распечаток будет завершено.",
+      "authorLabel": "",
       "autoAdjustScale": "Автоматическая настройка масштаба печати",
       "createDownloadFile": "Будет создано...",
       "downloadFile": "Скачать",
@@ -560,6 +561,8 @@
       "outputfileTitleLabel": "",
       "printLabel": "Создать файл",
       "scaleLabel": "Масштаб печати",
+      "subtitleLabel": "",
+      "textFieldLabel": "",
       "titleLabel": "Заголовок",
       "validationWarning": "",
       "vtlWarning": "Поскольку MapFish 3 не поддерживает слои Vector Tile, следующие активные слои не будут отображаться в представлении печати:",
@@ -679,10 +682,11 @@
         "unknownProjection": "Результаты в неизвестной системе координат",
       },
       "placeholder": {
+        "address": "Поиск по адресу",
+        "addressDistrict": "",
         "addressHospitalBplan": "Поиск по адресу/больнице/плану",
-        "addressTopicParcel": "Поиск адрес, район, субъект, земельный участок",
         "addressTopic": "Поиск адрес, район, темы",
-        "address": "Поиск по адресу"
+        "addressTopicParcel": "Поиск адрес, район, субъект, земельный участок"
       },
       "showAllResults": "Показать все результаты",
       "searchResults": "результаты поиска",
@@ -690,6 +694,8 @@
         "address": "Адрес",
         "district": "Район",
         "folder": "",
+        "general": "",
+        "location": "",
         "parcel": "Земельный участок",
         "street": "Улица",
         "subject": "Тема (внешние тематические данные)",
@@ -830,6 +836,12 @@
         }
       },
       "draw": {
+        "drawLayout": {
+          "fillColor": "Цвет заполнения",
+          "fillTransparency": "Прозрачность",
+          "strokeColor": "Цвет контура",
+          "strokeWidth": "Толщина линии"
+        },
         "drawTypes": {
           "box": "",
           "circle": "Круг",
