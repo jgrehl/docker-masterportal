@@ -210,6 +210,21 @@ describe("src/module/tools/filter/utils/mapHandler.js", () => {
             map.filteredIds.filterId = [1, 2, 3];
             expect(map.getAmountOfFilteredItemsByFilterId("filterId")).to.equal(3);
         });
+        it("should return the number of features without duplicates", () => {
+            const map = new MapHandler({
+                getLayerByLayerId: () => false,
+                showFeaturesByIds: () => false,
+                createLayerIfNotExists: () => false,
+                zoomToFilteredFeatures: () => false,
+                zoomToExtent: () => false,
+                addLayerByLayerId: () => false,
+                getLayers: () => false,
+                setParserAttributeByLayerId: () => false
+            }, onerror.call);
+
+            map.filteredIds.filterId = [1, 2, 3, 2, 1];
+            expect(map.getAmountOfFilteredItemsByFilterId("filterId")).to.equal(3);
+        });
     });
     describe("isLayerActivated", () => {
         it("should return true if the layer is visible", () => {
