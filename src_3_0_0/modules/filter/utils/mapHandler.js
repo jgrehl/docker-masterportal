@@ -140,7 +140,7 @@ export default class MapHandler {
         const ids = this.getFilteredIdsByFilterId(filterId);
 
         if (Array.isArray(ids)) {
-            return ids.length;
+            return new Set(ids).size;
         }
         return 0;
     }
