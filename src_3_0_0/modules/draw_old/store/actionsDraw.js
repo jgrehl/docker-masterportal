@@ -32,7 +32,8 @@ const initialState = JSON.parse(JSON.stringify(stateDraw)),
                 return;
             }
             const {styleSettings} = getters,
-                // use clones of drawType and symbol
+                // use clones to avoid side effects
+                styleSettingsCopy = JSON.parse(JSON.stringify(styleSettings)),
                 symbol = JSON.parse(JSON.stringify(getters.symbol)),
                 zIndex = JSON.parse(JSON.stringify(getters.zIndex)),
                 imgPath = getters.imgPath ? JSON.parse(JSON.stringify(getters.imgPath)) : "",
@@ -45,24 +46,23 @@ const initialState = JSON.parse(JSON.stringify(stateDraw)),
             }
 
             feature.set("drawState", {
-                // copies
-                strokeWidth: styleSettings.strokeWidth,
-                opacity: styleSettings.opacity,
-                opacityContour: styleSettings.opacityContour,
-                font: styleSettings.font,
-                fontSize: parseInt(styleSettings.fontSize, 10),
-                text: styleSettings.text,
-                circleMethod: styleSettings.circleMethod,
-                circleRadius: styleSettings.circleRadius,
-                circleOuterRadius: styleSettings.circleOuterRadius,
+                strokeWidth: styleSettingsCopy.strokeWidth,
+                opacity: styleSettingsCopy.opacity,
+                opacityContour: styleSettingsCopy.opacityContour,
+                font: styleSettingsCopy.font,
+                fontSize: parseInt(styleSettingsCopy.fontSize, 10),
+                text: styleSettingsCopy.text,
+                circleMethod: styleSettingsCopy.circleMethod,
+                circleRadius: styleSettingsCopy.circleRadius,
+                circleOuterRadius: styleSettingsCopy.circleOuterRadius,
                 drawType,
                 symbol,
                 zIndex,
                 imgPath,
                 pointSize,
-                color: styleSettings.color,
-                colorContour: styleSettings.colorContour,
-                outerColorContour: styleSettings.outerColorContour
+                color: styleSettingsCopy.color,
+                colorContour: styleSettingsCopy.colorContour,
+                outerColorContour: styleSettingsCopy.outerColorContour
             }, false);
         },
         /**
