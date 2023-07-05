@@ -10,7 +10,8 @@ export default {
      * @param {Object} searchResult a single search result
      * @returns {void}
      */
-    addSearchResultToTopicTree: ({dispatch, commit}, searchResult) => {
+    addSingleSearchResult: ({dispatch}, searchResult) => {
+        console.log("---", searchResult)
         const rawLayer = rawLayerList.getLayerWhere({id: searchResult.id});
 
         if (rawLayer) {
@@ -20,6 +21,31 @@ export default {
             dispatch("addLayerToLayerConfig", {layerConfig: rawLayer, parentKey: treeSubjectsKey}, {root: true});
         }
 
-        commit("setSearchResultsActive", false, {root: true});
+    },
+    /**
+     * Adds a layer to the topic tree and triggers to close the search
+     * @param {Object} searchResult a single search result
+     * @returns {void}
+     */
+    addSingleSearchResultToTopicTree: ({dispatch, commit}, searchResult) => {
+        dispatch("addSingleSearchResult", searchResult);
+        commit("setSearchResultsActive", false);
+    },
+    /**
+     * Loop the selected layers and add it to the topic tree and triggers to close the search
+     * @param {Object} searchResult a single search result
+     * @returns {void}
+     */
+    addSelectedSearchResultToTopicTree: ({getters, dispatch, commit}) => {
+        console.log("exe")
+        const selectedSearchResults = getters.selectedSearchResults;
+
+        if (selectedSearchResults && selectedSearchResults.length > 0) {
+            for (const i in selectedSearchResults) {
+                dispatch("addSingleSearchResult", selectedSearchResults[i]);
+            }
+
+            //commit("setSearchResultsActive", false);
+        }
     }
 };
