@@ -477,7 +477,7 @@
       "selectAll": "select all",
       "selectedSubjectsCount_other": "Please select a topic",
       "addSelectedSubjectsToMap_one": "Add selected topic to the map",
-      "addSelectedSubjectsToMap_other": "{{count}} add selected topics to the map"
+      "addSelectedSubjectsToMap_other": "Add {{count}} selected topics to the map"
     },
     "layerSlider": {
       "displayLayers": "Display of various layers.",
