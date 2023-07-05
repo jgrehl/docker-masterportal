@@ -32,6 +32,24 @@ const mutations = {
      */
     addSuggestionItem (state, item) {
         state.searchSuggestions.push(item);
+    },
+    /**
+     * Adds a search result to the selectedSearchResults to add the layer later.
+     * @param {Object} state The state of search bar.
+     * @param {Object} searchResult to add.
+     * @returns {void}
+     */
+    addSelectedSearchResults (state, searchResult) {
+        state.selectedSearchResults.push(searchResult);
+    },
+    /**
+     * Removes a search result from the selectedSearchResults to add just the current selected layers later.
+     * @param {Object} state The state of search bar.
+     * @param {Object} searchResult to remove.
+     * @returns {void}
+     */
+    removeSelectedSearchResults (state, searchResult) {
+        state.selectedSearchResults = state.selectedSearchResults.filter(item => searchResult.id !== item.id);
     }
 };
 
