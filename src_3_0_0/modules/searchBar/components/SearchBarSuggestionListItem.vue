@@ -14,22 +14,57 @@ export default {
             default: undefined
         }
     },
+    data () {
+        return {
+            clickStatus: false
+        };
+    },
     computed: {
-        ...mapGetters("Modules/SearchBar", ["featureButtonsMap"])
+        ...mapGetters("Modules/SearchBar", ["featureButtonsMap", "showAllResults"])
     },
     methods: {
         ...mapActions(["addLayerToLayerConfig"]),
-        ...mapActions("Modules/SearchBar", ["addSearchResultToTopicTree"]),
-        ...mapMutations("Modules/SearchBar", ["setSearchResultsActive"]),
+        ...mapActions("Modules/SearchBar", ["addSingleSearchResultToTopicTree"]),
+        ...mapMutations("Modules/SearchBar", ["setSearchResultsActive", "addSelectedSearchResults", "removeSelectedSearchResults"]),
 
         /**
          * Adds a layer to the topic tree and closes the search
-         * @param {Object} searchResult a single search result
+         * @param {Object} searchResult A single search result
          * @returns {void}
          */
         async addLayer (searchResult) {
-            await this.addSearchResultToTopicTree(searchResult);
+            await this.addSingleSearchResultToTopicTree(searchResult);
             this.setSearchResultsActive(false);
+        },
+        /**
+         * Updates the clickStatus
+         * @param {Boolean} value True if selected
+         * @returns {void}
+         */
+        updateClickStatus (value) {
+            if (value !== undefined) {
+                this.clickStatus = value;
+            }
+        },
+        /**
+         * Checks the behaviour for click action in the result overview and the 'show all' view.
+         * @param {Object} searchResult A single search result
+         * @param {Boolean} value True if selected
+         * @returns {void}
+         */
+        checkClickBehaviour (searchResult, value) {
+            this.clickStatus = value;
+            if (this.showAllResults === true) {
+                if (value === true) {
+                    this.addSelectedSearchResults(searchResult);
+                }
+                else {
+                    this.removeSelectedSearchResults(searchResult);
+                }
+            }
+            else {
+                this.addSingleSearchResultToTopicTree(searchResult);
+            }
         }
     }
 };
@@ -43,8 +78,8 @@ export default {
                 class="btn btn-light d-flex"
                 :title="searchResult.toolTip ? searchResult.toolTip : searchResult.name"
                 :aria-label="searchResult.toolTip ? searchResult.toolTip : searchResult.name"
-                @click="addLayer(searchResult)"
-                @keydown.enter="addLayer(searchResult)"
+                @click="checkClickBehaviour(searchResult, !clickStatus);"
+                @keydown.enter="checkClickBehaviour(searchResult, !clickStatus);"
             >
                 <span class="btn-title">
                     {{ searchResult.name }}
@@ -62,6 +97,8 @@ export default {
                     <component
                         :is="featureButtonsMap[featureButton.charAt(0).toUpperCase()+featureButton.slice(1)]"
                         :search-result="searchResult"
+                        :click-status="clickStatus"
+                        @update-click-status="updateClickStatus($event)"
                     />
                 </div>
             </div>
