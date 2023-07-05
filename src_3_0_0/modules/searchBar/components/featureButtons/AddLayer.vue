@@ -12,22 +12,65 @@ export default {
             type: Object,
             required: false,
             default: undefined
+        },
+        clickStatus: {
+            type: Boolean,
+            required: false,
+            default: false
         }
     },
+    emits: ["updateClickStatus"],
+    data () {
+        return {
+            localClickStatus: false,
+            icon: "bi-plus-circle"
+        };
+    },
     computed: {
-        ...mapGetters("Modules/SearchBar", [])
+        ...mapGetters("Modules/SearchBar", ["showAllResults"])
+    },
+    watch: {
+        /**
+         * Syncs the localClickstatus with the clickStatus of the parent element.
+         * @param {Boolean} value click status of parent element
+         * @returns {void}
+        */
+        clickStatus: {
+            handler (value) {
+                if (value === true) {
+                    this.localClickStatus = true;
+                }
+                else {
+                    this.localClickStatus = false;
+                }
+            },
+            immediate: true
+        }
     },
     methods: {
-        ...mapActions("Modules/SearchBar", ["addSearchResultToTopicTree"]),
-        ...mapMutations("Modules/SearchBar", ["setSearchResultsActive"]),
+        ...mapActions("Modules/SearchBar", ["addSingleSearchResultToTopicTree"]),
+        ...mapMutations("Modules/SearchBar", ["setSearchResultsActive", "addSelectedSearchResults", "removeSelectedSearchResults"]),
         /**
-         * Adds a layer to the topic tree
+         * Adds a layer to the topic tree if clicked from the result overview or collects the layer for later adding by the main add button
+         * @param {Boolean} value true if selected
          * @param {Object} searchResult a single search result
          * @returns {void}
          */
-        async addLayerFromOverview (searchResult) {
-            await this.addSearchResultToTopicTree(searchResult);
-            this.setSearchResultsActive(false);
+        addOrCollectLayer (value, searchResult) {
+            console.log(this.showAllResults)
+            if (this.showAllResults === true) {
+                this.localClickStatus = value;
+                this.$emit("updateClickStatus", value);
+                if (value === true) {
+                    this.addSelectedSearchResults(searchResult);
+                }
+                else {
+                    this.removeSelectedSearchResults(searchResult);
+                }
+            }
+            else {
+                this.addSingleSearchResultToTopicTree(searchResult);
+            }
         }
     }
 };
@@ -36,8 +79,8 @@ export default {
 <template lang="html">
     <IconButton
         :aria="$t('common:modules.contact.removeAttachment')"
-        :icon="'bi-plus-circle'"
-        :interaction="() => addLayerFromOverview (searchResult)"
+        :icon="localClickStatus === false ? 'bi-plus-circle' : 'bi-plus-circle-fill'"
+        :interaction="() => (addOrCollectLayer (!localClickStatus, searchResult))"
         class="remove-btn col-3"
     />
 </template>
