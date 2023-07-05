@@ -13,6 +13,7 @@
  * @property {String} [searchInput=""] The search input.
  * @property {Object[]} [searchInterfaceInstances=[]] The configured searchInterfaces.
  * @property {Object[]} [searchSuggestions=[]] The suggestions of the configured searchInterfaces.
+ * @property {Object[]} [selectedSearchResults=[]] The selected single results by the user in the "show all" view.
  * @property {Object[]} [searchResults=[]] The results of the configured searchInterfaces.
  * @property {Boolean} [showAllResults=false] Flag if all results should be shown.
  * @property {Boolean} [searchResultsActive=true] Flag if the search results are active.
@@ -31,8 +32,9 @@ const state = {
     searchInterfaceInstances: [],
     searchSuggestions: [],
     searchResults: [],
+    selectedSearchResults: [],
     showAllResults: false,
-    searchResultsActive: true
+    searchResultsActive: true // still needed?
 };
 
 export default state;
