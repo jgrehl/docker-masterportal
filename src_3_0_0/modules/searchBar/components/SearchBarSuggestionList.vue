@@ -1,12 +1,12 @@
 // ergebnissliste scrollable
 // title übersetzen suchanbieter
 // rename files and variables
-// Sonderverhalten bei Einzelnen Layer hinzufügen
 
 
 <script>
-import {mapGetters, mapMutations} from "vuex";
+import {mapGetters, mapActions, mapMutations} from "vuex";
 import SearchBarSuggestionListItem from "./SearchBarSuggestionListItem.vue";
+import ElevatedButton from "../../../shared/modules/buttons/components/ElevatedButton.vue";
 
 /**
  * Search Bar Suggestion List
@@ -15,8 +15,8 @@ import SearchBarSuggestionListItem from "./SearchBarSuggestionListItem.vue";
 export default {
     name: "SearchBarSuggestionList",
     components: {
-        SearchBarSuggestionListItem
-        // todo SearchBarResultList
+        SearchBarSuggestionListItem,
+        ElevatedButton
     },
     props: {
 
@@ -29,7 +29,7 @@ export default {
         };
     },
     computed: {
-        ...mapGetters("Modules/SearchBar", ["searchInterfaces", "searchResults", "suggestionListLength", "searchInput", "minCharacters", "searchSuggestions", "showAllResults", "searchResultsActive"]),
+        ...mapGetters("Modules/SearchBar", ["searchInterfaces", "searchResults", "suggestionListLength", "searchInput", "minCharacters", "searchSuggestions", "showAllResults", "searchResultsActive", "selectedSearchResults"]),
 
         /**
          * Sorts the results according the configured search providers and prepare the suggestionlist with the limit of suggestionListLength, updates searchSuggestions
@@ -73,6 +73,7 @@ export default {
         }
     },
     methods: {
+        ...mapActions("Modules/SearchBar", ["addSelectedSearchResultToTopicTree"]),
         ...mapMutations("Modules/SearchBar", ["setSearchSuggestions", "addSuggestionItem", "setShowAllResults", "setSearchResultsActive"]),
         /**
          * Prepares the all results list of one category
@@ -128,7 +129,7 @@ export default {
             </h5>
             <div
                 v-for="item in showAllResults===false ? limitedSortedSearchResults.results : limitedSortedSearchResults.currentShowAllList"
-                :key="item.name"
+                :key="item.id"
             >
                 <p
                     v-if="item.category===categoryItem"
@@ -154,6 +155,19 @@ export default {
             </div>
         </div>
     </div>
+     <div
+            v-if="showAllResults===true"
+            class="mt-4 d-flex justify-content-center sticky"
+        >
+            <ElevatedButton
+                id="add-layerSelection-btn"
+                aria-label="$t('common:modules.layerSelection.addSelectedSubjectsToMap', {count: selectedSearchResults.length})"
+                :interaction="addSelectedSearchResultToTopicTree()"
+                :text="selectedSearchResults.length === 0 ? $t('common:modules.layerSelection.selectedSubjectsCount', {count: selectedSearchResults.length}) : $t('common:modules.layerSelection.addSelectedSubjectsToMap', {count: selectedSearchResults.length})"
+                :icon="'bi-plus-circle'"
+                :disabled="selectedSearchResults.length === 0"
+            />
+        </div>
 </template>
 
 <style lang="scss" scoped>
