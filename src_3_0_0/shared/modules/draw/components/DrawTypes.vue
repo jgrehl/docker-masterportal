@@ -1,28 +1,23 @@
 <script>
 import drawInteractions from "@masterportal/masterportalapi/src/maps/interactions/drawInteractions";
-import {Popover} from "bootstrap";
 import {mapActions, mapGetters} from "vuex";
 
-import DrawTypesPopover from "./DrawTypesPopover.vue";
 import IconButton from "../../buttons/components/IconButton.vue";
 
 export default {
     name: "DrawTypes",
     components: {
-        DrawTypesPopover,
         IconButton
     },
     props: {
-        circleInnerRadius: {
-            type: Number,
+        circleOptions: {
+            type: Object,
             default () {
-                return 0;
-            }
-        },
-        circleOuterRadius: {
-            type: Number,
-            default () {
-                return 0;
+                return {
+                    innerRadius: 0,
+                    interactive: true,
+                    outerRadius: 0
+                };
             }
         },
         currentLayout: {
@@ -35,31 +30,35 @@ export default {
                 return {};
             }
         },
+        drawIcons: {
+            type: Object,
+            default () {
+                return {
+                    box: "bi-square",
+                    circle: "bi-circle",
+                    doubleCircle: "bi-record-circle",
+                    geometries: "bi-hexagon-fill",
+                    line: "bi-slash-lg",
+                    pen: "bi-pencil-fill",
+                    point: "bi-circle-fill",
+                    polygon: "bi-octagon",
+                    symbols: "bi-circle-square"
+                };
+            }
+        },
         drawTypes: {
             type: Array,
             default () {
                 return ["pen", "geometries", "symbols"];
             }
         },
-        drawTypesGeometrie: {
-            type: Array,
-            default () {
-                return ["line", "box", "polygon", "circle", "doubleCircle"];
-            }
-        },
-        drawTypesSymbols: {
-            type: Array,
-            default () {
-                return ["point"];
-            }
-        },
-        interactiveCircle: {
-            type: Boolean,
-            default () {
-                return true;
-            }
-        },
         selectedDrawType: {
+            type: String,
+            default () {
+                return "";
+            }
+        },
+        selectedDrawTypeMain: {
             type: String,
             default () {
                 return "";
@@ -69,6 +68,12 @@ export default {
             type: Function,
             required: true
         },
+        setSelectedDrawTypeMain: {
+            type: Function,
+            default () {
+                return null;
+            }
+        },
         source: {
             type: Object,
             required: true
@@ -76,13 +81,7 @@ export default {
     },
     data () {
         return {
-            drawInteraction: null,
-            mappingIcons: {
-                geometries: "bi-heptagon",
-                pen: "bi-pencil-fill",
-                symbols: "bi-circle-square"
-            },
-            popovers: []
+            drawInteraction: null
         };
     },
     computed: {
@@ -98,85 +97,44 @@ export default {
     },
     mounted () {
         drawInteractions.setStyleObject(this.currentLayout);
-        drawInteractions.setStyleObject(this.currentLayoutOuterCircle, true);
-        this.processPopover(document.getElementById("draw-geometries"), "draw-types-geometries");
-        this.processPopover(document.getElementById("draw-symbols"), "draw-types-symbols");
+        if (Object.keys(this.currentLayoutOuterCircle).length > 0) {
+            drawInteractions.setStyleObject(this.currentLayoutOuterCircle, true);
+        }
 
         this.regulateInteraction(this.selectedDrawType);
     },
     unmounted () {
-        this.hidePopovers();
         this.removeInteraction(this.drawInteraction);
     },
     methods: {
         ...mapActions("Maps", ["addInteraction", "removeInteraction"]),
 
         /**
-         * Creates a popover with content.
-         * @param {HTMLElement} popoverElement The popover element.
-         * @param {HTMLElement} contentElementId The content element id for popover element.
-         * @returns {void}
-         */
-        processPopover (popoverElement, contentElementId) {
-            if (popoverElement) {
-                const geometriesPopover = this.createPopover(popoverElement);
-
-                this.setPopoverContent(geometriesPopover, document.getElementById(contentElementId));
-                this.popovers.push(geometriesPopover);
-            }
-        },
-
-        /**
-         * Creates a bootstrap popover.
-         * @param {HTMLElement} element The html element.
-         * @returns {Object} the popover.
-         */
-        createPopover (element) {
-            return new Popover(element, {
-                html: true,
-                placement: "bottom"
-            });
-        },
-
-        /**
-         * Sets the popover content.
-         * @param {Object} popover The popover.
-         * @param {HTMLElement} element The html element which set to body.
-         * @returns {void}
-         */
-        setPopoverContent (popover, element) {
-            popover.setContent({
-                ".popover-header": "",
-                ".popover-body": element
-            });
-        },
-
-        /**
-         * Hide the popovers.
-         * @returns {void}
-         */
-        hidePopovers () {
-            this.popovers.forEach(popover => popover.hide());
-        },
-
-        /**
-         * Updates the mappingIcon to current icon.
-         * @param {String} icon The current icon
-         * @param {String} type  The type in the mappingIcon.
-         * @returns {void}
-         */
-        updateIcon (icon, type) {
-            this.mappingIcons[type] = icon;
-        },
-
-        /**
-         * Regulate the draw interactions.
+         * Regulate the interaction.
          * @param {String} drawType The current draw type.
          * @returns {void}
          */
         regulateInteraction (drawType) {
-            this.hidePopovers();
+            if (typeof this.setSelectedDrawTypeMain === "function") {
+                this.setSelectedDrawTypeMain(this.selectedDrawTypeMain !== drawType ? drawType : "");
+            }
+
             this.removeInteraction(this.drawInteraction);
+
+            if (this.selectedDrawType === drawType) {
+                this.setSelectedDrawType("");
+            }
+            else {
+                this.regulateDrawInteraction(drawType);
+            }
+        },
+
+        /**
+         * Regulate the draw interaction for valid draw types.
+         * @param {String} drawType The current draw type.
+         * @returns {void}
+         */
+        regulateDrawInteraction (drawType) {
             this.drawInteraction = drawInteractions.createDrawInteraction(drawType, this.source);
 
             if (this.drawInteraction !== null) {
@@ -190,60 +148,30 @@ export default {
         },
 
         /**
-         * Regulate the draw interactions fro static circles.
+         * Regulate the draw interactions for static circles.
          * @param {String} drawType The current draw type.
          * @returns {void}
          */
         regulateStaticCircleInteraction (drawType) {
-            const options = {
-                circleInnerRadius: this.circleInnerRadius,
-                circleOuterRadius: this.circleOuterRadius,
-                interactiveCircle: this.interactiveCircle
-            };
-
-            drawInteractions.drawCircle(this.drawInteraction, drawType, this.projection, this.source, options);
+            drawInteractions.drawCircle(this.drawInteraction, drawType, this.projection, this.source, this.circleOptions);
         }
     }
 };
 </script>
 
 <template>
-    <div class="d-flex align-items-center justify-content-around">
+    <div class="d-flex mb-5 align-items-center justify-content-around">
         <IconButton
             v-for="drawType in drawTypes"
             :id="'draw-' + drawType"
-            :ref="'draw-' + drawType"
             :key="drawType"
             :aria="$t('common:shared.modules.draw.drawTypes.' + drawType)"
-            :class-array="['btn-primary']"
+            :class-array="[
+                'btn-primary',
+                selectedDrawType === drawType || selectedDrawTypeMain === drawType ? 'active': ''
+            ]"
             :interaction="() => regulateInteraction(drawType)"
-            :icon="mappingIcons[drawType]"
+            :icon="drawIcons[drawType]"
         />
-        <div
-            v-show="false"
-            class="draw-types-popovers"
-        >
-            <DrawTypesPopover
-                id="draw-types-geometries"
-                :elements="drawTypesGeometrie"
-                @regulate-interaction="regulateInteraction"
-                @update-icon="(icon) => updateIcon(icon, 'geometries')"
-            />
-            <DrawTypesPopover
-                id="draw-types-symbols"
-                :elements="drawTypesSymbols"
-                @regulate-interaction="regulateInteraction"
-                @update-icon="(icon) => updateIcon(icon, 'symbols')"
-            />
-        </div>
     </div>
 </template>
-
-<style lang="scss">
-    @import "~variables";
-
-    .popover-body {
-        padding: 0.5rem;
-        background-color: $primary;
-    }
-</style>
