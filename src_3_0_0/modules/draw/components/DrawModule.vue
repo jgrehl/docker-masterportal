@@ -19,17 +19,16 @@ export default {
     },
     computed: {
         ...mapGetters("Modules/Draw", [
-            "circleInnerRadius",
-            "circleOuterRadius",
+            "circleOptions",
             "currentLayout",
             "currentLayoutOuterCircle",
-            "drawTypes",
+            "drawIcons",
             "drawTypesGeometrie",
-            "drawTypesSelected",
+            "drawTypesMain",
             "drawTypesSymbols",
-            "interactiveCircle",
             "name",
             "selectedDrawType",
+            "selectedDrawTypeMain",
             "strokeRange"
         ]),
         ...mapGetters("Menu", [
@@ -37,15 +36,6 @@ export default {
             "mainExpanded",
             "secondaryExpanded"
         ])
-    },
-    watch: {
-        mainExpanded (mainExpanded) {
-            this.hidePopovers(mainExpanded, "mainMenu");
-
-        },
-        secondaryExpanded (secondaryExpanded) {
-            this.hidePopovers(secondaryExpanded, "secondaryMenu");
-        }
     },
     mounted () {
         const map2d = mapCollection.getMap("2D");
@@ -60,20 +50,9 @@ export default {
         ...mapMutations("Modules/Draw", [
             "setCurrentLayout",
             "setCurrentLayoutOuterCircle",
-            "setSelectedDrawType"
-        ]),
-
-        /**
-         * Hides the popovers when menu is collapsed
-         * @param {Boolean} isExpanded Is menu expanded.
-         * @param {String} side The menu side
-         * @returns {void}
-         */
-        hidePopovers (isExpanded, side) {
-            if (!isExpanded && this.currentComponentName(side) === this.$t(this.name)) {
-                this.$refs.drawTypes.hidePopovers();
-            }
-        }
+            "setSelectedDrawType",
+            "setSelectedDrawTypeMain"
+        ])
     }
 };
 </script>
@@ -83,34 +62,56 @@ export default {
         id="modules-draw-module"
         class="d-flex flex-column"
     >
-        <DrawTypes
-            ref="drawTypes"
-            class="mb-5"
-            :circle-inner-radius="circleInnerRadius"
-            :circle-outer-radius="circleOuterRadius"
-            :current-layout="currentLayout"
-            :current-layout-outer-circle="currentLayoutOuterCircle"
-            :draw-types="drawTypes"
-            :draw-types-geometrie="drawTypesGeometrie"
-            :draw-types-symbols="drawTypesSymbols"
-            :interactive-circle="interactiveCircle"
-            :selected-draw-type="selectedDrawType"
-            :set-selected-draw-type="setSelectedDrawType"
-            :source="source"
-        />
-        <DrawLayout
-            :current-layout="currentLayout"
-            :selected-draw-type="selectedDrawType"
-            :set-current-layout="setCurrentLayout"
-            :stroke-range="strokeRange"
-        />
-        <DrawLayout
-            v-if="selectedDrawType === 'doubleCircle'"
-            :circle-type="'outerCircle'"
-            :current-layout="currentLayoutOuterCircle"
-            :selected-draw-type="selectedDrawType"
-            :set-current-layout="setCurrentLayoutOuterCircle"
-            :stroke-range="strokeRange"
-        />
+        <div id="draw-types">
+            <DrawTypes
+                :circle-options="circleOptions"
+                :current-layout="currentLayout"
+                :current-layout-outer-circle="currentLayoutOuterCircle"
+                :draw-icons="drawIcons"
+                :draw-types="drawTypesMain"
+                :selected-draw-type="selectedDrawType"
+                :selected-draw-type-main="selectedDrawTypeMain"
+                :set-selected-draw-type="setSelectedDrawType"
+                :set-selected-draw-type-main="setSelectedDrawTypeMain"
+                :source="source"
+            />
+            <DrawTypes
+                v-if="selectedDrawTypeMain === 'geometries'"
+                :circle-options="circleOptions"
+                :current-layout="currentLayout"
+                :current-layout-outer-circle="currentLayoutOuterCircle"
+                :draw-icons="drawIcons"
+                :draw-types="drawTypesGeometrie"
+                :selected-draw-type="selectedDrawType"
+                :set-selected-draw-type="setSelectedDrawType"
+                :source="source"
+            />
+            <DrawTypes
+                v-else-if="selectedDrawTypeMain === 'symbols'"
+                :current-layout="currentLayout"
+                :draw-icons="drawIcons"
+                :draw-types="drawTypesSymbols"
+                :selected-draw-type="selectedDrawType"
+                :set-selected-draw-type="setSelectedDrawType"
+                :source="source"
+            />
+        </div>
+        <div id="draw-layouts">
+            <DrawLayout
+                v-if="selectedDrawType !== ''"
+                :current-layout="currentLayout"
+                :selected-draw-type="selectedDrawType"
+                :set-current-layout="setCurrentLayout"
+                :stroke-range="strokeRange"
+            />
+            <DrawLayout
+                v-if="selectedDrawType === 'doubleCircle'"
+                :circle-type="'outerCircle'"
+                :current-layout="currentLayoutOuterCircle"
+                :selected-draw-type="selectedDrawType"
+                :set-current-layout="setCurrentLayoutOuterCircle"
+                :stroke-range="strokeRange"
+            />
+        </div>
     </div>
 </template>
