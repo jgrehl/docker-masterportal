@@ -1,7 +1,7 @@
 import {createStore} from "vuex";
 import {config, shallowMount} from "@vue/test-utils";
+import drawInteractions from "@masterportal/masterportalapi/src/maps/interactions/drawInteractions";
 import {expect} from "chai";
-import {Popover} from "bootstrap";
 import sinon from "sinon";
 import VectorSource from "ol/source/Vector";
 
@@ -11,15 +11,29 @@ config.global.mocks.$t = key => key;
 
 describe("src_3_0_0/shared/modules/draw/components/DrawTypes.vue", () => {
     let addInteractionSpy,
+        createDrawInteractionSpy,
+        currentLayout,
+        drawCircleSpy,
         removeInteractionSpy,
+        setSelectedDrawType,
         source,
         store,
         wrapper;
 
     beforeEach(() => {
         addInteractionSpy = sinon.spy();
+        createDrawInteractionSpy = sinon.spy(drawInteractions, "createDrawInteraction");
+        currentLayout = {
+            fillColor: [55, 126, 184],
+            fillTransparency: 0,
+            strokeColor: [0, 0, 0],
+            strokeWidth: 1
+        };
+        drawCircleSpy = sinon.spy(drawInteractions, "drawCircle");
         removeInteractionSpy = sinon.spy();
+        setSelectedDrawType = sinon.stub();
         source = new VectorSource();
+
 
         store = createStore({
             namespaces: true,
@@ -31,7 +45,7 @@ describe("src_3_0_0/shared/modules/draw/components/DrawTypes.vue", () => {
                         removeInteraction: removeInteractionSpy
                     },
                     getters: {
-                        projection: () => sinon.stub()
+                        projection: () => "EPSG:4326"
                     }
                 }
             }
@@ -42,10 +56,15 @@ describe("src_3_0_0/shared/modules/draw/components/DrawTypes.vue", () => {
         sinon.restore();
     });
 
-    it("renders the drawTypes with popovers", () => {
+    it("renders the drawTypes", () => {
         wrapper = shallowMount(DrawTypesComponent, {
             propsData: {
-                source: source
+                currentLayout,
+                setSelectedDrawType,
+                source
+            },
+            global: {
+                plugins: [store]
             }
         });
 
@@ -57,91 +76,6 @@ describe("src_3_0_0/shared/modules/draw/components/DrawTypes.vue", () => {
 
         expect(wrapper.find("#draw-symbols").exists()).to.be.true;
         expect(wrapper.find("#draw-symbols").attributes().aria).to.equals("common:shared.modules.draw.drawTypes.symbols");
-
-        expect(wrapper.find("div.draw-types-popovers").exists()).to.be.true;
-        expect(wrapper.find("div.draw-types-popovers").attributes()).to.deep.equals({
-            class: "draw-types-popovers",
-            style: "display: none;"
-        });
-        expect(wrapper.find("#draw-types-geometries").exists()).to.be.true;
-        expect(wrapper.find("#draw-types-symbols").exists()).to.be.true;
-    });
-
-    describe("processPopover", () => {
-        it("should create a popover and add its to data popovers", () => {
-            const element = document.createElement("div"),
-                contentElementId = "contentId";
-
-            wrapper = shallowMount(DrawTypesComponent, {
-                propsData: {
-                    source: source
-                }
-            });
-
-            wrapper.vm.processPopover(element, contentElementId);
-            expect(wrapper.vm.popovers.length).to.equals(1);
-        });
-    });
-
-    describe("createPopover", () => {
-        it("should create a popover element", () => {
-            const element = document.createElement("div");
-
-            wrapper = shallowMount(DrawTypesComponent, {
-                propsData: {
-                    source: source
-                }
-            });
-
-            expect(wrapper.vm.createPopover(element)).to.be.not.undefined;
-            expect(wrapper.vm.createPopover(element)).to.be.not.null;
-            expect(wrapper.vm.createPopover(element) instanceof Popover).to.be.true;
-        });
-    });
-
-    describe("setPopoverContent", () => {
-        it("should set popover content", () => {
-            const popoverElement = document.createElement("div"),
-                bodyElement = document.createElement("p");
-            let popover = null;
-
-            bodyElement.innerHTML = "This is a paragraph.";
-
-            wrapper = shallowMount(DrawTypesComponent, {
-                propsData: {
-                    source: source
-                }
-            });
-
-            popover = wrapper.vm.createPopover(popoverElement);
-            wrapper.vm.setPopoverContent(popover, bodyElement);
-
-            expect(popover._newContent).to.deep.equals({
-                ".popover-header": "",
-                ".popover-body": bodyElement
-            });
-        });
-    });
-
-    describe("updateIcon", () => {
-        it("should update the icon in mappingIcons", () => {
-            const type = "geometries",
-                icon = "bi-record-circle";
-
-            wrapper = shallowMount(DrawTypesComponent, {
-                propsData: {
-                    source: source
-                }
-            });
-
-            wrapper.vm.updateIcon(icon, type);
-
-            expect(wrapper.vm.mappingIcons).to.deep.equals({
-                geometries: "bi-record-circle",
-                pen: "bi-pencil-fill",
-                symbols: "bi-circle-square"
-            });
-        });
     });
 
     describe("regulateInteraction", () => {
@@ -150,7 +84,9 @@ describe("src_3_0_0/shared/modules/draw/components/DrawTypes.vue", () => {
 
             wrapper = shallowMount(DrawTypesComponent, {
                 propsData: {
-                    source: source
+                    currentLayout,
+                    setSelectedDrawType,
+                    source
                 },
                 global: {
                     plugins: [store]
@@ -159,7 +95,7 @@ describe("src_3_0_0/shared/modules/draw/components/DrawTypes.vue", () => {
 
             wrapper.vm.regulateInteraction(drawType);
 
-            expect(removeInteractionSpy.calledOnce).to.be.true;
+            expect(removeInteractionSpy.calledTwice).to.be.true;
             expect(addInteractionSpy.calledOnce).to.be.true;
         });
     });
@@ -170,7 +106,9 @@ describe("src_3_0_0/shared/modules/draw/components/DrawTypes.vue", () => {
 
             wrapper = shallowMount(DrawTypesComponent, {
                 propsData: {
-                    source: source
+                    currentLayout,
+                    setSelectedDrawType,
+                    source
                 },
                 global: {
                     plugins: [store]
@@ -179,8 +117,94 @@ describe("src_3_0_0/shared/modules/draw/components/DrawTypes.vue", () => {
 
             wrapper.vm.regulateInteraction(drawType);
 
-            expect(removeInteractionSpy.calledOnce).to.be.true;
+            expect(removeInteractionSpy.calledTwice).to.be.true;
             expect(addInteractionSpy.notCalled).to.be.true;
+        });
+    });
+
+    describe("regulateDrawInteraction", () => {
+        it("should create 'box' draw interaction and add interaction ", () => {
+            const drawType = "box";
+
+            wrapper = shallowMount(DrawTypesComponent, {
+                propsData: {
+                    currentLayout,
+                    setSelectedDrawType,
+                    source
+                },
+                global: {
+                    plugins: [store]
+                }
+            });
+
+            wrapper.vm.regulateDrawInteraction(drawType);
+
+            expect(createDrawInteractionSpy.calledOnce).to.be.true;
+            expect(createDrawInteractionSpy.firstCall.args[0]).to.equals(drawType);
+            expect(createDrawInteractionSpy.firstCall.args[1]).to.deep.equals(source);
+            expect(addInteractionSpy.calledOnce).to.be.true;
+        });
+
+        it("should create 'circle' draw interaction and add interaction ", () => {
+            const drawType = "circle";
+
+            wrapper = shallowMount(DrawTypesComponent, {
+                propsData: {
+                    currentLayout,
+                    setSelectedDrawType,
+                    source
+                },
+                global: {
+                    plugins: [store]
+                }
+            });
+
+            wrapper.vm.regulateDrawInteraction(drawType);
+
+            expect(createDrawInteractionSpy.calledOnce).to.be.true;
+            expect(createDrawInteractionSpy.firstCall.args[0]).to.equals(drawType);
+            expect(createDrawInteractionSpy.firstCall.args[1]).to.deep.equals(source);
+            expect(drawCircleSpy.calledOnce).to.be.true;
+            expect(drawCircleSpy.firstCall.args[0]).to.deep.equals(wrapper.vm.drawInteraction);
+            expect(drawCircleSpy.firstCall.args[1]).to.equals(drawType);
+            expect(drawCircleSpy.firstCall.args[2]).to.equals("EPSG:4326");
+            expect(drawCircleSpy.firstCall.args[3]).to.deep.equals(source);
+            expect(drawCircleSpy.firstCall.args[4]).to.deep.equals({
+                innerRadius: 0,
+                interactive: true,
+                outerRadius: 0
+            });
+            expect(addInteractionSpy.calledOnce).to.be.true;
+        });
+    });
+
+    describe("regulateStaticCircleInteraction", () => {
+        it("should start drawCircle", () => {
+            const drawType = "circle";
+
+            wrapper = shallowMount(DrawTypesComponent, {
+                propsData: {
+                    currentLayout,
+                    setSelectedDrawType,
+                    source
+                },
+                global: {
+                    plugins: [store]
+                }
+            });
+
+            wrapper.vm.regulateStaticCircleInteraction(drawType);
+
+            expect(drawCircleSpy.calledOnce).to.be.true;
+            expect(drawCircleSpy.firstCall.args[0]).to.deep.equals(wrapper.vm.drawInteraction);
+            expect(drawCircleSpy.firstCall.args[1]).to.equals(drawType);
+            expect(drawCircleSpy.firstCall.args[2]).to.equals("EPSG:4326");
+            expect(drawCircleSpy.firstCall.args[3]).to.deep.equals(source);
+            expect(drawCircleSpy.firstCall.args[4]).to.deep.equals({
+                innerRadius: 0,
+                interactive: true,
+                outerRadius: 0
+            });
         });
     });
 });
