@@ -49,7 +49,7 @@ export default {
                     icon: "bi-droplet-half"
                 }
             },
-            activeLayoutKey: null
+            activeLayoutKey: ""
         };
     },
     computed: {
@@ -69,6 +69,11 @@ export default {
             return filteredMappingLayout;
         }
     },
+    watch: {
+        selectedDrawType () {
+            this.activeLayoutKey = "";
+        }
+    },
     methods: {
         convertColor,
 
@@ -78,7 +83,7 @@ export default {
          * @returns {void}
          */
         setActiveLayoutKey (layoutKey) {
-            this.activeLayoutKey = this.activeLayoutKey !== layoutKey ? layoutKey : null;
+            this.activeLayoutKey = this.activeLayoutKey !== layoutKey ? layoutKey : "";
         },
 
         /**
@@ -105,11 +110,11 @@ export default {
 
 <template>
     <div class="d-flex flex-column justify-content-around">
-        <div class="d-flex flex-row align-items-center justify-content-around mb-4">
+        <div class="d-flex flex-row align-items-center justify-content-around mb-5">
             <button
                 v-if="selectedDrawType === 'doubleCircle'"
                 :id="'draw-layout-' + circleType"
-                class="btn btn-light"
+                class="btn btn-primary"
                 type="button"
                 disabled="true"
             >
@@ -120,10 +125,14 @@ export default {
             </button>
             <button
                 v-for="layoutKey in Object.keys(mappingLayoutBySelectedDrawType)"
-                :id="'draw-layout' + circleType + '-' + layoutKey"
+                :id="'draw-layout-' + circleType + '-' + layoutKey"
                 :key="layoutKey"
                 tabindex="0"
-                class="btn btn-light"
+                :class="[
+                    'btn',
+                    'btn-primary',
+                    activeLayoutKey === layoutKey ? 'active' : ''
+                ]"
                 type="button"
                 :aria-label="$t('common:shared.modules.draw.drawLayout.' + layoutKey)"
                 :title="$t('common:shared.modules.draw.drawLayout.' + layoutKey)"
@@ -182,7 +191,7 @@ export default {
         </div>
         <div
             v-if="activeLayoutKey === 'strokeWidth'"
-            class="d-flex mb-4"
+            class="d-flex mb-5"
         >
             <input
                 :id="'slider-stroke-width-' + circleType"
@@ -203,7 +212,7 @@ export default {
         </div>
         <div
             v-else-if="activeLayoutKey === 'fillTransparency'"
-            class="d-flex mb-4"
+            class="d-flex mb-5"
         >
             <input
                 :id="'slider-fill-transparency-' + circleType"
@@ -235,7 +244,7 @@ export default {
     position: sticky;
     text-align: center;
     top: auto;
-    font-size: 1.5rem;
+    font-size: 1.143rem;
     border-radius: 50%;
     border: solid $white 1px;
     /* position label in center of button */
@@ -245,12 +254,36 @@ export default {
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        line-height: 1.5rem;
+        line-height: 0.5rem;
+
+        > input:hover{
+            color: $white;
+        }
+
+        input[type="text"] {
+            font-size: $font_size_sm;
+            width: 3rem;
+            text-align: center;
+        }
+
+        input[type="color"] {
+            height: 0.75rem;
+            width: 2rem;
+        }
+    }
+}
+
+.btn.active {
+    > label {
+        > input {
+            color: $white;
+        }
     }
 }
 
 .btn:disabled {
     opacity: 1;
+    background: $white;
 
     > i {
         position: absolute;
@@ -258,6 +291,7 @@ export default {
         left: 50%;
         transform: translate(-50%, -50%);
     }
+
     > i.innerCircle {
         font-size: 1.2rem;
     }
@@ -266,17 +300,6 @@ export default {
 input {
     cursor: pointer;
     border: none;
-}
-
-input[type="text"] {
-    font-size: 1rem;
-    width: 3rem;
-    text-align: center;
-}
-
-input[type="color"] {
-    height: 0.75rem;
-    width: 2.7rem;
 }
 
 input[type="range"] {
