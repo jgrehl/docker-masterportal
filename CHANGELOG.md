@@ -28,6 +28,7 @@
 ### Deprecated
 
 ### Removed
+- The loader start screen has been removed.
 
 ### Fixed
 - Print: The portal is no longer reloaded after pressing the Enter key in the title field. Instead, the print is sent.
