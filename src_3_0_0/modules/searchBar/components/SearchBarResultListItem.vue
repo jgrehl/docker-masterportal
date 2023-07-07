@@ -4,8 +4,8 @@ import {mapGetters, mapActions, mapMutations} from "vuex";
 /**
  * Searchbar - single item of a search result
  * @module modules/SearchBar
- * @vue-props {Object} searchResult.
- * @vue-data {Boolean} clickStatus - click status by title or button.
+ * @vue-props {Object} searchResult - A single search result.
+ * @vue-data {Boolean} clickStatus - Click status by title or button.
  * @vue-computed {String} searchInputValue - The v-bind of search input value.
  */
 export default {

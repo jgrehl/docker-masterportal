@@ -692,6 +692,8 @@
       "searchResults": "Результати пошуку",
       "search": "шукати",
       "searchResultsFrom": "Результати пошуку з: ",
+      "mark": "Позначте тему",
+      "add": "Додати тему",
       "type": {
           "address": "Адреса",
           "district": "Район",

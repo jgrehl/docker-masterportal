@@ -692,6 +692,8 @@
     "searchResults": "Suchergebnisse",
     "search": "Suche",
     "searchResultsFrom": "Suchergebnisse von: ",
+    "mark": "Wähle das Thema aus",
+    "add": "Thema hinzufügen",
     "type": {
         "address": "Adresse",
         "district": "Stadtteil",
