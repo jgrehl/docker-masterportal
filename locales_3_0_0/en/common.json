@@ -690,6 +690,8 @@
     },
     "showAllResults": "Show all results",
     "searchResults": "search results",
+    "search": "search",
+    "searchResultsFrom": "search results from: ",
     "type": {
         "street": "street",
         "district": "district",

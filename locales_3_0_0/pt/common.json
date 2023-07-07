@@ -690,6 +690,8 @@
       },
       "showAllResults": "mostrar todos os resultados",
       "searchResults": "Procurar Resultados",
+      "search": "procurar",
+      "searchResultsFrom": "Resultados da pesquisa de: ",
       "type": {
           "address": "Endereço",
           "district": "Bairro",
