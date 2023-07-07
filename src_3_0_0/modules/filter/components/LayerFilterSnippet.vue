@@ -1,5 +1,5 @@
 <script>
-import {mapGetters} from "vuex";
+import {mapGetters, mapActions} from "vuex";
 import ProgressBar from "./ProgressBar.vue";
 import SnippetCheckbox from "./SnippetCheckbox.vue";
 import SnippetCheckboxFilterInMapExtent from "./SnippetCheckboxFilterInMapExtent.vue";
