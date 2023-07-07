@@ -94,7 +94,7 @@ export default {
         class="overflow-auto results-container"
     >
         <a
-            :id="'mp-navigation-' + side"
+            :id="'mp-navigation'"
             class="pb-2 pt-2 mp-menu-navigation-link"
             href="#"
             @click="setSearchResultsActive(false)"
@@ -144,6 +144,7 @@ export default {
                 <button
                     type="button"
                     class="btn btn-light d-flex text-left"
+                    :title="$t('common:modules.searchBar.showAllResults')"
                     @click="prepareShowAllResults(categoryItem)"
                 >
                     {{ $t("common:modules.searchBar.showAll") }}
