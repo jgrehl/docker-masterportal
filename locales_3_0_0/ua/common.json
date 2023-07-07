@@ -690,6 +690,8 @@
       },
       "showAllResults": "Показати всі результати",
       "searchResults": "Результати пошуку",
+      "search": "шукати",
+      "searchResultsFrom": "Результати пошуку з: ",
       "type": {
           "address": "Адреса",
           "district": "Район",
