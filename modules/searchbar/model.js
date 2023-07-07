@@ -334,6 +334,12 @@ const SearchbarModel = Backbone.Model.extend(/** @lends SearchbarModel.prototype
             typeList = this.prepareTypeList(finalHitList);
         let recommendedList = [];
 
+        finalHitList.forEach(hit => {
+            if (typeof hit.id === "number") {
+                hit.id = hit.id.toString();
+            }
+        });
+
         this.setFinalHitList(finalHitList);
         this.setTypeList(typeList);
 

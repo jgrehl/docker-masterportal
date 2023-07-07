@@ -1017,7 +1017,12 @@ const SearchbarView = Backbone.View.extend(/** @lends SearchbarView.prototype */
     showMarker: async function (evt) {
         const isEvent = evt instanceof $.Event,
             hitId = isEvent ? evt.currentTarget.id : null,
-            hit = isEvent ? this.model.get("finalHitList").find(obj => obj.id.toString() === hitId) : null,
+            hit = isEvent ? this.model.get("finalHitList").find((obj) => {
+                if (typeof obj.id === "number") {
+                    return obj.id.toString() === hitId;
+                }
+                return obj.id === hitId;
+            }) : null,
             hitName = isEvent ? hit?.name : "undefined";
 
         console.log("HIT!", this.model.get("finalHitList"));

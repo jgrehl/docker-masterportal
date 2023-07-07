@@ -1,6 +1,7 @@
 
 import {initializeSearch} from "../../../src/api/elasticsearch";
 import store from "../../../src/app-store";
+import crs from "@masterportal/masterportalapi/src/crs";
 
 const ElasticSearchModel = Backbone.Model.extend(/** @lends ElasticSearchModel.prototype */{
     defaults: {
@@ -168,6 +169,9 @@ const ElasticSearchModel = Backbone.Model.extend(/** @lends ElasticSearchModel.p
 
         Object.keys(hitMap).forEach(key => {
             hit[key] = this.findAttributeByPath(result, hitMap[key]);
+            if (key === "coordinate") {
+                hit.coordinate = crs.transformToMapProjection(mapCollection.getMap("2D"), "WGS84", hit.coordinate);
+            }
         });
         hit.type = hitType;
         hit.icon = hitIcon;
