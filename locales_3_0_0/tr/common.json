@@ -690,6 +690,8 @@
       },
       "showAllResults": "Tüm sonuçları göster",
       "searchResults": "Arama Sonuçları",
+      "search": "aramak",
+      "searchResultsFrom": "Arama sonuçları: ",
       "type": {
           "address": "Adres",
           "district": "Semt",
