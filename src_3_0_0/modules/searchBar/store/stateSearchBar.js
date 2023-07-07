@@ -1,6 +1,7 @@
 /**
  * User type definition
- * @typedef {Object} SearchBarState
+ * @module modules/SearchBar/state
+ *
  * @property {String[]} configPaths Path array of possible config locations. First one found will be used
  * @property {String} [minCharacters=3] Minimum amount of characters required to start a search.
  * @property {String} [placeholder="common:modules.searchBar.placeholder.address"] Input text field placeholder shown when no input has been given yet.
