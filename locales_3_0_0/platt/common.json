@@ -690,6 +690,8 @@
     },
     "showAllResults": "alle Ergebnisse anzeigen",
     "searchResults": "Suchergebnisse",
+    "search": "Sök",
+    "searchResultsFrom": "Sök Ergebnisse: ",
     "type": {
         "address": "Adress",
         "district": "Stadtdeel",

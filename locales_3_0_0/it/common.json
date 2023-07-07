@@ -690,6 +690,8 @@
     },
     "showAllResults": "mostra tutto i risultati",
     "searchResults": "Risultati di ricerca",
+    "search": "vercare",
+    "searchResultsFrom": "Risultati di ricerca da: ",
     "type": {
         "address": "indirizzo",
         "district": "distretto",
