@@ -1,8 +1,10 @@
 import {generateSimpleMutations} from "../../../shared/js/utils/generators";
 import stateDraw from "./stateDraw";
 
-const mutations = {
+/**
+ * The mutations for the draw module.
+ * @module modules/draw/store/mutations
+ */
+export default {
     ...generateSimpleMutations(stateDraw)
 };
-
-export default mutations;
