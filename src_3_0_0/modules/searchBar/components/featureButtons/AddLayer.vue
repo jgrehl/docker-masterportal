@@ -83,7 +83,7 @@ export default {
 
 <template lang="html">
     <IconButton
-        :aria="$t('common:modules.contact.removeAttachment')"
+        :aria="showAllResults===true?$t('common:modules.searchBar.mark'):$t('common:modules.searchBar.add')"
         :icon="localClickStatus === false ? 'bi-plus-circle' : 'bi-plus-circle-fill'"
         :interaction="() => (addOrCollectLayer (!localClickStatus, searchResult))"
         class="remove-btn col-3"

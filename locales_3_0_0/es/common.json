@@ -692,6 +692,8 @@
     "searchResults": "Resultados de la búsqueda",
     "search": "buscar",
     "searchResultsFrom": "Buscar resultados de: ",
+    "mark": "Elegir el tema",
+    "add": "Agregar tema",
     "type": {
         "address": "Dirección",
         "district": "Distrito",

@@ -692,6 +692,8 @@
     "searchResults": "search results",
     "search": "search",
     "searchResultsFrom": "search results from: ",
+    "mark": "Select the topic",
+    "add": "Add Topic",
     "type": {
         "street": "street",
         "district": "district",
