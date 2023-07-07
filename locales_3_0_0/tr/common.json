@@ -692,6 +692,8 @@
       "searchResults": "Arama Sonuçları",
       "search": "aramak",
       "searchResultsFrom": "Arama sonuçları: ",
+      "mark": "Konuyu işaretle",
+      "add": "Konu Ekle",
       "type": {
           "address": "Adres",
           "district": "Semt",
