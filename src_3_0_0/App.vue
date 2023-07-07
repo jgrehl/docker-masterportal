@@ -8,7 +8,6 @@ import initializeLayers from "./core/layers/js/layerProcessor";
 import {initializeMaps} from "./core/maps/js/maps";
 import {initializeUrlParams, startProcessUrlParams} from "./core/urlParams/js/urlParams";
 import isMobile from "./shared/js/utils/isMobile";
-import LoaderOverlay from "./app-store/js/loaderOverlay";
 import mapCollection from "./core/maps/js/mapCollection";
 import MenuContainer from "./modules/menu/components/MenuContainer.vue";
 import MenuToggleButton from "./modules/menu/components/MenuToggleButton.vue";
@@ -52,7 +51,6 @@ export default {
             if (value) {
                 await addonsPlugin.loadAddons(Config.addons);
                 this.addonsLoaded = true;
-                LoaderOverlay.hide();
                 this.extendLayers();
                 this.initializeVectorStyle();
                 initializeMaps(this.portalConfig, this.configJs);
