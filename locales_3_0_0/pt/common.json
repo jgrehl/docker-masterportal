@@ -692,6 +692,8 @@
       "searchResults": "Procurar Resultados",
       "search": "procurar",
       "searchResultsFrom": "Resultados da pesquisa de: ",
+      "mark": "Marcar o tópico",
+      "add": "Adicionar tópico",
       "type": {
           "address": "Endereço",
           "district": "Bairro",
