@@ -6,6 +6,11 @@ import VectorSource from "ol/source/Vector";
 import DrawLayout from "../../../shared/modules/draw/components/DrawLayout.vue";
 import DrawTypes from "../../../shared/modules/draw/components/DrawTypes.vue";
 
+/**
+ * Modules to make drawings.
+ * @module modules/draw/components/DrawModule
+ * @vue-data {ol/source/Vector} [source=new VectorSource()] - The vector source for drawings.
+ */
 export default {
     name: "DrawModule",
     components: {
