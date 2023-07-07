@@ -690,6 +690,8 @@
       },
       "showAllResults": "Показать все результаты",
       "searchResults": "результаты поиска",
+      "search": "Искать",
+      "searchResultsFrom": "Результаты поиска из: ",
       "type": {
         "address": "Адрес",
         "district": "Район",

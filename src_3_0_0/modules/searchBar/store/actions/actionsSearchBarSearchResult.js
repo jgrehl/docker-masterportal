@@ -7,31 +7,6 @@ import wmsGFIUtil from "../../../../shared/js/utils/getWmsFeaturesByMimeType";
 
 export default {
     /**
-     * Activate the layer of the search result in topic tree.
-     * @returns {void}
-     */
-    activateLayerInTopicTree: () => {
-        // Do someThing
-
-        /* used in:
-            elasticSearch
-            topicTree
-        */
-    },
-
-    /**
-     * Adds the layer from the search result to topic tree.
-     * @returns {void}
-     */
-    addLayerToTopicTree: () => {
-        // Do someThing
-
-        /* used in:
-            elasticSearch
-        */
-    },
-
-    /**
      * Highlight feature of the search result.
      * @param {Object} param.dispatch the dispatch
      * @param {Object} payload The payload.

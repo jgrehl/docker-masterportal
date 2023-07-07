@@ -2,6 +2,13 @@
 import {mapGetters, mapActions, mapMutations} from "vuex";
 import IconButton from "../../../../shared/modules/buttons/components/IconButton.vue";
 
+/**
+ * Add layer feature button.
+ * @module modules/SearchBar
+ * @vue-prop {Object} searchResult - A single search result.
+ * @vue-prop {Boolean} localClickStatus - Click status by button.
+ * @vue-event {Function} addOrCollectLayer - Adds a layer to the topic tree if clicked from the result overview or collects the layer for later adding by the main add button.
+ */
 export default {
     name: "AddLayer",
     components: {
@@ -22,8 +29,7 @@ export default {
     emits: ["updateClickStatus"],
     data () {
         return {
-            localClickStatus: false,
-            icon: "bi-plus-circle"
+            localClickStatus: false
         };
     },
     computed: {
@@ -57,7 +63,6 @@ export default {
          * @returns {void}
          */
         addOrCollectLayer (value, searchResult) {
-            console.log(this.showAllResults)
             if (this.showAllResults === true) {
                 this.localClickStatus = value;
                 this.$emit("updateClickStatus", value);
