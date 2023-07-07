@@ -679,7 +679,7 @@
       "locationFinder": {
         "errorMsg": "Поиск через LocationFinder не удался",
         "serverError": "Ошибка во время обработки запроса на стороне сервера",
-        "unknownProjection": "Результаты в неизвестной системе координат",
+        "unknownProjection": "Результаты в неизвестной системе координат"
       },
       "placeholder": {
         "address": "Поиск по адресу",
@@ -692,6 +692,8 @@
       "searchResults": "результаты поиска",
       "search": "Искать",
       "searchResultsFrom": "Результаты поиска из: ",
+      "mark": "Отметить тему",
+      "add": "Добавить тему",
       "type": {
         "address": "Адрес",
         "district": "Район",
