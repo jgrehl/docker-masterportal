@@ -1,6 +1,16 @@
 <script>
 import {convertColor} from "../../../js/utils/convertColor";
 
+/**
+ * Shared component that provides buttons for setting the layout of drawings.
+ * @module shared/modules/draw/DrawLayout
+ * @vue-prop {String} [circleType="innerCircle"] - The circle type "innerCircle" or "outerCircle".
+ * @vue-prop {Object} currentLayout - The current layout for the styling.
+ * @vue-prop {String} selectedDrawType - The selected draw type.
+ * @vue-prop {Function} setCurrentLayout - Setter for current layout.
+ * @vue-prop {Number[]} [strokeRange=[1, 32]] - The stroke range in the unit pixel.
+ * @vue-data {Object} mappingLayout - The mapping object for layout.
+ */
 export default {
     name: "DrawLayout",
     props: {
