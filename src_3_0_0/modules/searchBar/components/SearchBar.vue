@@ -1,17 +1,19 @@
 <script>
 import {mapGetters, mapActions, mapMutations} from "vuex";
-import SearchBarSuggestionList from "./SearchBarSuggestionList.vue";
 import SearchBarResultList from "./SearchBarResultList.vue";
 
+
 /**
- * Search Bar
+ * Searchbar to access search results.
  * @module modules/SearchBar
  * @vue-computed {String} searchInputValue - The v-bind of search input value.
+ * @vue-computed {String} northingNoCoordMessage - Error message for missing north coordinate.
+ * @vue-computed {String} northingNoMatchMessage - Error message for not matching north coordinate.
+ * @vue-computed {String} eastingNoMatchMessage - Error message for not matching east coordinate.
  */
 export default {
     name: "SearchBar",
     components: {
-        SearchBarSuggestionList,
         SearchBarResultList
     },
     computed: {
@@ -88,7 +90,6 @@ export default {
                 @keydown.enter="startSearch"
             >
         </div>
-        <SearchBarSuggestionList />
         <SearchBarResultList />
     </div>
 </template>
