@@ -1,8 +1,10 @@
 import {generateSimpleGetters} from "../../../shared/js/utils/generators";
 import stateDraw from "./stateDraw";
 
-const getters = {
+/**
+ * The getters for the draw module.
+ * @module modules/draw/store/getters
+ */
+export default {
     ...generateSimpleGetters(stateDraw)
 };
-
-export default getters;
