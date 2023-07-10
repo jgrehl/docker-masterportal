@@ -542,7 +542,7 @@ const ModelList = Backbone.Collection.extend(/** @lends ModelList.prototype */{
     },
 
     /**
-     * Sets Layer indeces initially. Background layers are treatet seperatly from normal layers to ensure
+     * Sets Layer indeces initially. Baselayers are treatet seperatly from normal layers to ensure
      * they will be put into background, if they haven't been defined in the URL Parameters array.
      * @param  {array} paramLayers The Layer Array according the URL Parameters
      * @return {void}
@@ -618,7 +618,7 @@ const ModelList = Backbone.Collection.extend(/** @lends ModelList.prototype */{
     },
 
     /**
-     * Sets Layer indeces initially. Background layers are treatet seperatly from normal layers to ensure
+     * Sets Layer indeces initially. Baselayers are treatet seperatly from normal layers to ensure
      * they will be put into background.
      * @param  {array} layers Array of layers to have their indeces reset
      * @return {array} Layers with fresh new indeces
@@ -691,13 +691,13 @@ const ModelList = Backbone.Collection.extend(/** @lends ModelList.prototype */{
                     currentLayers.push(newLayer);
                 }
             });
-            // 2: now find the index, at which background layers should be inserted
+            // 2: now find the index, at which baselayers should be inserted
             currentLayers.forEach((currentLayer, currentIndex) => {
                 if (currentLayer.get("isBaseLayer")) {
                     firstBaseLayerIndex = currentIndex;
                 }
             });
-            // 3: push all new background layers
+            // 3: push all new baselayers
             newLayers.forEach(newLayer => {
                 if (newLayer.get("isBaseLayer")) {
                     currentLayers.splice(firstBaseLayerIndex + 1, 0, newLayer);

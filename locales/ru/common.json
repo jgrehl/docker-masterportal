@@ -87,7 +87,7 @@
         "showAllTopics": "Показать все темы",
         "securedAllTopics": "Защищенные темы",
         "category": "Категории",
-        "backgroundMaps": "Карты заднего плана/ фоновые карты",
+        "baselayers": "Карты заднего плана/ фоновые карты",
         "subjectData": "Тематические данные",
         "subjectData3D": "3D- файлы",
         "subjectDataTime": "Временные ряды",
