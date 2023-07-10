@@ -95,7 +95,7 @@ export default {
 
 <template lang="html">
     <div
-        v-if="conf.backgroundLayer && !conf.showInLayerTree"
+        v-if="conf.baselayer && !conf.showInLayerTree"
         class="w-100 pe-2 p-1"
     >
         <LayerPreview

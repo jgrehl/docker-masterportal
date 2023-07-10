@@ -96,7 +96,7 @@ describe("src_3_0_0/modules/layerTree/components/LayerCheckBox.vue", () => {
     });
 
     it("renders background-layer as simple preview", () => {
-        layer.backgroundLayer = true;
+        layer.baselayer = true;
         layer.showInLayerTree = false;
 
         wrapper = shallowMount(LayerCheckBox, {
@@ -113,7 +113,7 @@ describe("src_3_0_0/modules/layerTree/components/LayerCheckBox.vue", () => {
     });
 
     it("renders background-layer with preview in config", () => {
-        layer.backgroundLayer = true;
+        layer.baselayer = true;
         layer.showInLayerTree = false;
         layer.shortname = "shortname";
         layer.preview = {

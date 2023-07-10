@@ -36,7 +36,7 @@ const Parser = Backbone.Model.extend(/** @lends Parser.prototype */{
      * @constructs
      * @property {Array} itemList=[] lightModels
      * @property {Array} overlayer=[] Themenconfig.Fachdaten
-     * @property {Array} baselayer=[] Themenconfig.Hintergrundkarten
+     * @property {Array} baselayer=[] Themenconfig.Baselayer
      * @property {Object} portalConfig={} Portalconfig
      * @property {String} treeType="" the attribute Baumtyp
      * @property {String[]} categories=["Opendata", "Inspire", "Behörde"] categories for Fachdaten in DefaultTree
@@ -684,7 +684,7 @@ const Parser = Backbone.Model.extend(/** @lends Parser.prototype */{
             overLayers = this.get("overlayer"),
             baseLayersName = baseLayers?.name ? baseLayers.name : null,
             overLayersName = overLayers?.name ? overLayers.name : null,
-            baseLayersDefaultKey = "common:tree.backgroundMaps",
+            baseLayersDefaultKey = "common:tree.baselayers",
             overLayersDefaultKey = "common:tree.subjectData";
         let baseLayerI18nextTranslate = null,
             overLayerI18nextTranslate = null,
@@ -830,7 +830,7 @@ const Parser = Backbone.Model.extend(/** @lends Parser.prototype */{
     getPreviousFolderName (id) {
         switch (id) {
             case "3d_daten":
-                return "Hintergrundkarten";
+                return "Baselayer";
             case "TimeLayer":
                 return "Fachdaten";
             default:
