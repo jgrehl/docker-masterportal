@@ -54,7 +54,7 @@ describe("src_3_0_0/modules/searchBar/components/SearchBarResultListItem.vue", (
     });
 
 
-    describe.only("test the result item", () => {
+    describe("test the result item", () => {
         it("shows toolTip if available", async () => {
             wrapper = await mount(SearchBarSuggestionListItemComponent, {
                 global: {
