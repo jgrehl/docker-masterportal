@@ -267,6 +267,7 @@
     - 'metaIDsToIgnore'
     - 'layerIDsToStyle'
 - The Control-Bar Design changed
+- different terms for baselayer (basemap, backgroundlayer, basemap, hintergrundkarte) have been unified to baselayer
 
 ### Fixed
 - Tool Coordinates: no errors occur on mobile devices.
@@ -434,7 +435,7 @@
 - Issue #894 : FeatureLister displays the name of GFI attributes whose value is defined as an object as a table header.
 - If the gfiTheme dataTable is as object in config.json, the feature data will also be loaded.
 - The standard data format in ExportButtonCSV is array or boolean, not object.
-- The zoomToFeature layer now gets added on top, otherwise it would be hidden underneath the basemap.
+- The zoomToFeature layer now gets added on top, otherwise it would be hidden underneath the baselayer.
 - The `getProxy` attribute now works again for layers of type wfs.
 - Text imports from previously exported geojson files get displayed again.
 - Filter: icons are displayed, if "renderIcons": "fromLegend" is configured at filter.
@@ -515,7 +516,7 @@
 ### Fixed
 - Issue #839: Accordeon is now open initially if `active: true` is configured. Bug which triggers the error message is now fixed.
 - Issue #856: Providing version parameter for print services.
-- Issue #861: Initial order of the background maps after using "Save selection" tool was corrected.
+- Issue #861: Initial order of the baselayers after using "Save selection" tool was corrected.
 - uiStyle: Set uiStyle from config.js
 - 3D Tiles can now be hidden again with the hiddenFeatures/hiddenObjects attribute.
 - Time-Layer: False recognition of time layer was corrected.
@@ -1195,8 +1196,8 @@ Issue #764: Using parameters in WfsSearch as defined in [Filter Encoding Impleme
   - WMS-T now works with all ISO 8601 timestamps (i.e. "2022", "2022-01-26T00:00:00.000Z", and all precision grades in between) as specified by OGC.
   - WMS-T now dynamically finds a layer's Extent/Dimension in GetCapabilities Response (position was hard-wired previously).
 - Tool Routing: Exported routes now inherit the style from route view.
-- Folder expand/collapse works in background maps, if treetype is 'custom'.
-- Issue #637, Issue #656: If background maps are configured in folder structures, then when such a background map is activated, no more subject data are overlaid.
+- Folder expand/collapse works in baselayers, if treetype is 'custom'.
+- Issue #637, Issue #656: If baselayers are configured in folder structures, then when such a baselayer is activated, no more subject data are overlaid.
 - Tool print: printing of the measurement result is fixed.
 - Tools Draw and File import: Exported and re-imported drawn circles are now editable with the expected behaviour.
 - Newsfeed:
@@ -1281,7 +1282,7 @@ Issue #764: Using parameters in WfsSearch as defined in [Filter Encoding Impleme
 - Tool CoordToolkit: Labeling of longitude and latitude corrected if long/lat is selected as projection system.
 - Fixed issue #672: layerAttribution not working correctly if layer is not initially visible
 - Issue #673: LayerSlider: The progress bar is now displayed correctly with more than 10 configured layers.
-- 3D: terrain and background layer are displayed correctly. Loading portal in 3D by url parameters was fixed.
+- 3D: terrain and baselayer are displayed correctly. Loading portal in 3D by url parameters was fixed.
 - Issue #655: Only first namespace in WfsSearch was interpreted. Now, all configured namespaces are used.
 
 ---
@@ -1587,7 +1588,7 @@ Issue #764: Using parameters in WfsSearch as defined in [Filter Encoding Impleme
 - Coordinates tool: WGS 84(long/lat) coordinate system: there is no "E" at the end of the Latitude field.
 - When starting the 3D map, all tools that do not support 3D mode are closed.
 - 3D map: Tools that do not support 3D mode are no longer displayed in the footer.
-- Issue #637: Background maps in folder structure no longer overlay subject topics when background map is activated later. Occurred only with treetype custom.
+- Issue #637: Baselayers in folder structure no longer overlay subject topics when baselayer is activated later. Occurred only with treetype custom.
 - Coordinates tool: Validation was corrected
 - Coordinates tool: EPSG code for coordinate system ETRS89/UTM 32N is shown correct in selectbox
 - Opening a tool by footer-link will close a visible tool in sidebar.
@@ -2667,7 +2668,7 @@ Issue #764: Using parameters in WfsSearch as defined in [Filter Encoding Impleme
   - 0b65b2f Portal wird nicht geladen, wenn LayerID in JSON nicht definiert
   - 8d721c8 Layerinformationen von Hintergrundlayern wurden  nicht angezeigt und Title war nicht Datensatzname
   - 3da16b7 GFI wird beim drucken immer mit ausgegeben, auch wenn GFI wieder geschlossen
-  - 22811e5 Fehler beim Suchen von Baselayern in Suchschlitz behoben
+  - 22811e5 Fehler beim Suchen von Baselayer in Suchschlitz behoben
 
 ---
 
@@ -2724,7 +2725,7 @@ Issue #764: Using parameters in WfsSearch as defined in [Filter Encoding Impleme
   - 95ff542 Breite des GFI-Popup von 50% auf 25% der Bildschirmhälfte gesetzt
   - 1f2f810 Beim Messen wird wieder das Tooltip angezeigt
   - f90f787 Suche springt während des Tippens nicht mehr automatisch auf eine gefundene Adresse oder Thema
-  - ea888a8 hintergrundkarten werden bei themensuche immer eingeklappt, auch wenn sie ausgeklappt waren
+  - ea888a8 baselayer werden bei themensuche immer eingeklappt, auch wenn sie ausgeklappt waren
   - 4b135db controls in config.json werden auch auf true/false geprüft
   - 32f0022 Routenplaner verwendet den richtigen Routing-Dienst
   - b6ea8d3 "in meiner Nähe" - Attribute nicht mehr doppelt

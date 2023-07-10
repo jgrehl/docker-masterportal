@@ -12,7 +12,7 @@ const mutations = {
         state.layersToAdd = [];
         state.lastFolderNames = [];
         state.lastSubjectDataLayerConfs = [];
-        state.lastBackgroundLayerConfs = [];
+        state.lastBaselayerConfs = [];
     },
     /**
      * Adds the layer id to state.layersToAdd.
@@ -48,7 +48,7 @@ const mutations = {
     reduceToPreviousLayerSelection (state) {
         state.lastFolderNames.pop();
         state.lastSubjectDataLayerConfs.pop();
-        state.lastBackgroundLayerConfs.pop();
+        state.lastBaselayerConfs.pop();
     },
     /**
      * Adds payload to navigation state.
@@ -56,13 +56,13 @@ const mutations = {
      * @param {Object} payload the payload
      * @param {String} payload.lastFolderName name of the previous folder configuration name
      * @param {Array} payload.subjectDataLayerConfs subject data layer configurations to show in layerSelection
-     * @param {Array} payload.backgroundLayerConfs background layer configurations to show in layerSelection
+     * @param {Array} payload.baselayerConfs baselayer configurations to show in layerSelection
      * @returns {void}
      */
-    addToLayerSelection (state, {lastFolderName, subjectDataLayerConfs, backgroundLayerConfs}) {
+    addToLayerSelection (state, {lastFolderName, subjectDataLayerConfs, baselayerConfs}) {
         state.lastFolderNames.push(lastFolderName);
         state.lastSubjectDataLayerConfs.push(subjectDataLayerConfs);
-        state.lastBackgroundLayerConfs.push(backgroundLayerConfs);
+        state.lastBaselayerConfs.push(baselayerConfs);
     }
 };
 

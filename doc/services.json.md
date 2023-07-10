@@ -41,7 +41,7 @@ All layer information the portal needs to use the services is stored here. Confi
 |authenticationUrl|no|String||Additional url called to trigger basic authentication in the browser.|"https://geodienste.hamburg.de/HH_WMS_DOP10?VERSION=1.3.0&SERVICE=WMS&REQUEST=GetCapabilities"|
 |layerSequence|no|Number||Number to determine the sequence of selected layers in tree.type 'custom'. A Layer with sequence number 1 is always the top layer, etc. By default, Baselayer get a sequence number > 1000 and Fachdaten layer get a sequence number < 1000.|`1`|
 |crs|yes|String||Layer's coordinate reference system|`"EPSG:3857"`|
-|preview|no|**[preview](#markdown-header-wms_wmts_vectortile_preview)**||Shows a preview of a background layer in layer-selection and background-switcher, even if not configured here. For WMS and WMTS layers, the image is fetched as a GetMap request. For VectorTile layers, an image is stored in the file system.||
+|preview|no|**[preview](#markdown-header-wms_wmts_vectortile_preview)**||Shows a preview of a baselayer in layer-selection and baselayer-switcher, even if not configured here. For WMS and WMTS layers, the image is fetched as a GetMap request. For VectorTile layers, an image is stored in the file system.||
 
 **WMS example:**
 
@@ -162,7 +162,7 @@ WMTS layers can be added by
 |urls|yes|String[]/String||WMTS service URL. If only a single URL is given, it's internally transformed to an array.|`["https://maps1.wien.gv.at/basemap/geolandbasemap/{Style}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.png", "https://maps2.wien.gv.at/basemap/geolandbasemap/{Style}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.png", "https://maps3.wien.gv.at/basemap/geolandbasemap/{Style}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.png", "https://maps4.wien.gv.at/basemap/geolandbasemap/{Style}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.png", "https://maps.wien.gv.at/basemap/geolandbasemap/{Style}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.png"]`|
 |version|yes|String||Service version used for *GetMap* requests.|`"1.0.0"`|
 |wrapX|no|Boolean|`false`|Whether world should be wrapped horizontally.|`true`|
-|preview|no|**[preview](#markdown-header-wms_wmts_vectortile_preview)**||Shows a preview of a background layer in layer-selection and background-switcher, even if not configured here. For WMS and WMTS layers, the image is fetched as a GetMap request. For VectorTile layers, an image is stored in the file system.||
+|preview|no|**[preview](#markdown-header-wms_wmts_vectortile_preview)**||Shows a preview of a baselayer in layer-selection and background-switcher, even if not configured here. For WMS and WMTS layers, the image is fetched as a GetMap request. For VectorTile layers, an image is stored in the file system.||
 
 **WMTS example 1:**
 

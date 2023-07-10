@@ -79,7 +79,7 @@
         "showAllTopics": "Activar todas las capas de datos",
         "securedAllTopics": "Capas de datos archivadas",
         "category": "Categorías",
-        "backgroundMaps": "Mapa base",
+        "baselayers": "Mapa base",
         "subjectData": "Datos temáticos",
         "subjectData3D": "Datos 3D",
         "selectedTopics": "Capas de datos seleccionadas",

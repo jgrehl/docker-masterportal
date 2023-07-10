@@ -2,7 +2,7 @@ import {generateSimpleGetters} from "../shared/js/utils/generators";
 import getNestedValues from "../shared/js/utils/getNestedValues";
 import {sortObjects} from "../shared/js/utils/sortObjects";
 import stateAppStore from "./state";
-import {treeBackgroundsKey, treeSubjectsKey} from "../shared/js/utils/constants";
+import {treeBaselayersKey, treeSubjectsKey} from "../shared/js/utils/constants";
 
 const getters = {
     ...generateSimpleGetters(stateAppStore),
@@ -86,12 +86,12 @@ const getters = {
         return getters.allLayerConfigsByParentKey(state)(treeSubjectsKey);
     },
     /**
-     * Returns all background layers of layerConfig.
+     * Returns all baselayers of layerConfig.
      * @param {Object} state state of the app-store.
      * @returns {Object[]} The layers.
      */
-    allBackgroundLayerConfigs: state => {
-        return getters.allLayerConfigsByParentKey(state)(treeBackgroundsKey);
+    allBaselayerConfigs: state => {
+        return getters.allLayerConfigsByParentKey(state)(treeBaselayersKey);
     },
 
     /**
@@ -126,7 +126,7 @@ const getters = {
                 return layerConf.zIndex;
             }
             let maxZIndex = -1;
-            const parentKey = Object.prototype.hasOwnProperty.call(layerConf, "backgroundLayer") && layerConf.backgroundLayer ? treeBackgroundsKey : treeSubjectsKey,
+            const parentKey = Object.prototype.hasOwnProperty.call(layerConf, "baselayer") && layerConf.baselayer ? treeBaselayersKey : treeSubjectsKey,
                 configsByParentKey = getters.allLayerConfigsByParentKey(state)(parentKey).filter(config => Object.prototype.hasOwnProperty.call(config, "zIndex") && typeof config.zIndex === "number");
 
             if (configsByParentKey.length > 0) {
@@ -158,14 +158,14 @@ const getters = {
     },
 
     /**
-     * Returns the layer is a background layer or not
+     * Returns the layer is a baselayer or not
      * @param {Object} state state of the app-store.
-     * @returns {Boolean} Is background layer.
+     * @returns {Boolean} Is baselayer.
      */
-    isBackgroundLayer: state => layerId => {
+    isBaselayer: state => layerId => {
         const layerConfig = getters.allLayerConfigs(state).find(layerConf => layerConf.id === layerId);
 
-        return Boolean(layerConfig.backgroundLayer);
+        return Boolean(layerConfig.baselayer);
     },
 
     /**
@@ -321,23 +321,23 @@ const getters = {
     },
 
     /**
-     * Returns all visible background layer configurations.
+     * Returns all visible baselayer configurations.
      * @param {Object} state state of the app-store.
      * @returns {Object[]} The layers with property 'visibility' is not true.
      */
-    visibleBackgroundLayerConfigs: (state) => {
-        const layerContainer = getters.allBackgroundLayerConfigs(state);
+    visibleBaselayerConfigs: (state) => {
+        const layerContainer = getters.allBaselayerConfigs(state);
 
         return layerContainer.filter(layerConf => layerConf.visibility === true);
     },
 
     /**
-     * Returns all not visible background layer configurations.
+     * Returns all not visible baselayer configurations.
      * @param {Object} state state of the app-store.
      * @returns {Object[]} The layers.
      */
-    invisibleBackgroundLayerConfigs: (state) => {
-        const layerContainer = getters.allBackgroundLayerConfigs(state);
+    invisibleBaselayerConfigs: (state) => {
+        const layerContainer = getters.allBaselayerConfigs(state);
 
         return layerContainer.filter(layerConf => layerConf.visibility !== true);
     }

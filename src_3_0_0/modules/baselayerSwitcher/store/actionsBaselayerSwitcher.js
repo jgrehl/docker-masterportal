@@ -3,7 +3,7 @@ const actions = {
      * Updates the layerTree with all configs added to state.layersToAdd.
      * Sets 'visibility' and 'showInLayerTree' to true at each layer.
      * Clears state.layersToAdd and redirects to main menu.
-     * Note: Background layer will be set on top of the background layer with the highest zIndex.
+     * Note: Baselayer will be set on top of the baselayer with the highest zIndex.
      * @param {Object} param.dispatch the dispatch
      * @param {Object} param.rootGetters the rootGetters
      * @param {Object} layerId id of the layer to add
@@ -11,20 +11,20 @@ const actions = {
      */
     updateLayerVisibilityAndZIndex ({dispatch, rootGetters}, layerId) {
         const layerConfigs = [],
-            maxBackgroundLayerZIndex = Math.max(...rootGetters.layerConfigsByAttributes({
-                backgroundLayer: true,
+            maxBaselayerZIndex = Math.max(...rootGetters.layerConfigsByAttributes({
+                baselayer: true,
                 showInLayerTree: true
             }).map(layer => layer.zIndex));
-        let backgroundLayerZIndex = maxBackgroundLayerZIndex + 1,
+        let baselayerZIndex = maxBaselayerZIndex + 1,
             zIndex = rootGetters.determineZIndex(layerId);
 
 
-        if (rootGetters.isBackgroundLayer(layerId)) {
+        if (rootGetters.isBaselayer(layerId)) {
             dispatch("updateLayerConfigZIndex", {
                 layerContainer: rootGetters.layerConfigsByAttributes({showInLayerTree: true}),
-                maxZIndex: maxBackgroundLayerZIndex
+                maxZIndex: maxBaselayerZIndex
             }, {root: true});
-            zIndex = backgroundLayerZIndex++;
+            zIndex = baselayerZIndex++;
         }
 
         layerConfigs.push({

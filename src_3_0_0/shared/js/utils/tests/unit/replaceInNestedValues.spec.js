@@ -1,4 +1,4 @@
-import {treeBackgroundsKey, treeSubjectsKey} from "../../../../../shared/js/utils/constants";
+import {treeBaselayersKey, treeSubjectsKey} from "../../../../../shared/js/utils/constants";
 import replaceInNestedValues from "../../replaceInNestedValues.js";
 import {expect} from "chai";
 
@@ -11,7 +11,7 @@ describe("src_3_0_0/shared/js/utils/replaceInNestedValues.js", () => {
 
     beforeEach(() => {
         layerConfig = {
-            [treeBackgroundsKey]: {
+            [treeBaselayersKey]: {
                 elements: [
                     {
                         id: "453",
@@ -65,8 +65,8 @@ describe("src_3_0_0/shared/js/utils/replaceInNestedValues.js", () => {
         expect(result).to.be.an("array");
         expect(result.length).to.be.equals(1);
         expect(result[0]).to.be.deep.equals(replacement);
-        expect(layerConfig[treeBackgroundsKey].elements[0]).to.be.deep.equals(replacement);
-        expect(layerConfig[treeBackgroundsKey].elements[1]).to.be.deep.equals(backGroundLayer);
+        expect(layerConfig[treeBaselayersKey].elements[0]).to.be.deep.equals(replacement);
+        expect(layerConfig[treeBaselayersKey].elements[1]).to.be.deep.equals(backGroundLayer);
     });
 
     it("should replace one element twice", () => {
@@ -81,16 +81,16 @@ describe("src_3_0_0/shared/js/utils/replaceInNestedValues.js", () => {
                 list: [{a: 1, b: 2}, {c: 3}]
             };
 
-        layerConfig[treeBackgroundsKey].elements.push(layer);
+        layerConfig[treeBaselayersKey].elements.push(layer);
         result = replaceInNestedValues(layerConfig, "elements", replacement, {key: "id", value: replacement.id});
 
         expect(result).to.be.an("array");
         expect(result.length).to.be.equals(2);
         expect(result[0]).to.be.deep.equals(replacement);
         expect(result[1]).to.be.deep.equals(replacement);
-        expect(layerConfig[treeBackgroundsKey].elements[0]).to.be.deep.equals(replacement);
-        expect(layerConfig[treeBackgroundsKey].elements[2]).to.be.deep.equals(replacement);
-        expect(layerConfig[treeBackgroundsKey].elements[1]).to.be.deep.equals(backGroundLayer);
+        expect(layerConfig[treeBaselayersKey].elements[0]).to.be.deep.equals(replacement);
+        expect(layerConfig[treeBaselayersKey].elements[2]).to.be.deep.equals(replacement);
+        expect(layerConfig[treeBaselayersKey].elements[1]).to.be.deep.equals(backGroundLayer);
     });
 
     it("should replace no element, obj must be unchanged", () => {
