@@ -1,8 +1,8 @@
 import {generateSimpleMutations} from "../../../shared/js/utils/generators";
-import stateBasemapSwitcher from "./stateBasemapSwitcher";
+import stateBaselayerSwitcher from "./stateBaselayerSwitcher";
 
 const mutations = {
-    ...generateSimpleMutations(stateBasemapSwitcher)
+    ...generateSimpleMutations(stateBaselayerSwitcher)
 };
 
 export default mutations;
