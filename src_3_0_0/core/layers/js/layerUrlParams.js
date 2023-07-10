@@ -71,9 +71,9 @@ function setLayerIds (params) {
  */
 function setLayersByMetadataId (params) {
     const layerMetadataIds = (params.MDID || params["MAP/MDID"]).split(","),
-        backgroundLayer = store.getters.layerConfigsByAttributes({backgroundLayer: true})?.at(-1),
+        baselayer = store.getters.layerConfigsByAttributes({baselayer: true})?.at(-1),
         layers = [{
-            id: backgroundLayer.id
+            id: baselayer.id
         }];
 
     store.getters.allLayerConfigs.forEach(layerConfig => {

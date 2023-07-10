@@ -90,7 +90,7 @@
         "showAllTopics": "Mostra tutti i livelli",
         "securedAllTopics": "Livelli protetti",
         "category": "Categorie",
-        "backgroundMaps": "Mappe di sfondo",
+        "baselayers": "Mappe di sfondo",
         "subjectData": "Dati specialistici",
         "subjectData3D": "Dati 3D",
         "subjectDataTime": "Serie temporale",
