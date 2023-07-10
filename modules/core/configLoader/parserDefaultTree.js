@@ -114,7 +114,7 @@ const DefaultTreeParser = Parser.extend(/** @lends DefaultTreeParser.prototype *
             overlayList = overlayList.concat(typeGroup.timeLayer);
         }
 
-        // Models für die Hintergrundkarten erzeugen
+        // Models für die Baselayer erzeugen
         this.createBaselayer(layerList);
         // Models für die ZeitreihenLayer erzeugen
         if (store.state.configJson?.Themenconfig) {

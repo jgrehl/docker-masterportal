@@ -476,7 +476,7 @@
     }
   },
   "Themenconfig": {
-    "Hintergrundkarten": {
+    "Baselayer": {
       "elements": [
         {
           "id": "453",

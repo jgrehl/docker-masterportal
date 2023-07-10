@@ -61,7 +61,7 @@
         "hideAllTopics": "Remover todos os temas",
         "showAllTopics": "Visualizar todos os temas",
         "category": "Categoria",
-        "backgroundMaps": "Mapas de fundo",
+        "baselayers": "Mapas de fundo",
         "subjectData": "Dados temáticos",
         "subjectData3D": "Dados 3D",
         "selectedTopics": "Temas selecionados",
