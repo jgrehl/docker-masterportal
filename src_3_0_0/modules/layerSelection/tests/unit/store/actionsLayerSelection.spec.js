@@ -20,7 +20,7 @@ describe("src_3_0_0/modules/layerSelection/store/actionsLayerSelection", () => {
         };
         rootGetters = {
             determineZIndex: () => 0,
-            isBackgroundLayer: (id) => id === "100",
+            isBaselayer: (id) => id === "100",
             layerConfigsByAttributes: () => []
         };
     });
@@ -65,7 +65,7 @@ describe("src_3_0_0/modules/layerSelection/store/actionsLayerSelection", () => {
             expect(dispatch.firstCall.args[1]).to.deep.equals(expectedArg);
         });
 
-        it("updateLayerTree for one layer and one background layer", () => {
+        it("updateLayerTree for one layer and one baselayer", () => {
             getters = {
                 layersToAdd: ["100", "2"],
                 menuSide: "mainMenu"
@@ -74,7 +74,7 @@ describe("src_3_0_0/modules/layerSelection/store/actionsLayerSelection", () => {
             rootGetters.layerConfigsByAttributes = () => [
                 {
                     id: "100",
-                    backgroundLayer: true,
+                    baselayer: true,
                     visibility: true,
                     showInLayerTree: true,
                     zIndex: 1
@@ -101,7 +101,7 @@ describe("src_3_0_0/modules/layerSelection/store/actionsLayerSelection", () => {
                 layerContainer: [
                     {
                         id: "100",
-                        backgroundLayer: true,
+                        baselayer: true,
                         visibility: true,
                         showInLayerTree: true,
                         zIndex: 1
@@ -160,7 +160,7 @@ describe("src_3_0_0/modules/layerSelection/store/actionsLayerSelection", () => {
                         name: "name3"
                     }
                 ],
-                backgroundLayerConfs = [
+                baselayerConfs = [
                     {
                         id: "bg1",
                         type: "layer",
@@ -174,13 +174,13 @@ describe("src_3_0_0/modules/layerSelection/store/actionsLayerSelection", () => {
                 ],
                 lastFolderName = "lastFolderName";
 
-            navigateForward({commit}, {lastFolderName, subjectDataLayerConfs, backgroundLayerConfs});
+            navigateForward({commit}, {lastFolderName, subjectDataLayerConfs, baselayerConfs});
 
             expect(commit.callCount).to.be.equals(3);
             expect(commit.firstCall.args[0]).to.be.equals("addToLayerSelection");
-            expect(commit.firstCall.args[1]).to.be.deep.equals({lastFolderName, subjectDataLayerConfs, backgroundLayerConfs});
-            expect(commit.secondCall.args[0]).to.be.equals("setBackgroundLayerConfs");
-            expect(commit.secondCall.args[1]).to.be.deep.equals(backgroundLayerConfs);
+            expect(commit.firstCall.args[1]).to.be.deep.equals({lastFolderName, subjectDataLayerConfs, baselayerConfs});
+            expect(commit.secondCall.args[0]).to.be.equals("setBaselayerConfs");
+            expect(commit.secondCall.args[1]).to.be.deep.equals(baselayerConfs);
             expect(commit.thirdCall.args[0]).to.be.equals("setSubjectDataLayerConfs");
             expect(commit.thirdCall.args[1]).to.be.deep.equals(subjectDataLayerConfs);
         });
@@ -200,14 +200,14 @@ describe("src_3_0_0/modules/layerSelection/store/actionsLayerSelection", () => {
                         name: "name00"
                     }
                 ],
-                lastBackgroundLayerConfs = [
+                lastBaselayerConfs = [
                     {
                         id: "bg0",
                         type: "layer",
                         name: "name-bg0"
                     }
                 ],
-                firstBackgroundLayerConfs = [
+                firstBaselayerConfs = [
                     {
                         id: "bg00",
                         type: "layer",
@@ -219,8 +219,8 @@ describe("src_3_0_0/modules/layerSelection/store/actionsLayerSelection", () => {
 
             getters = {
                 lastFolderNames: [firstFolderName, secondFolderName],
-                lastSubjectDataLayerConfs: [firstBackgroundLayerConfs, lastSubjectDataLayerConfs],
-                lastBackgroundLayerConfs: [firstSubjectDataLayerConfs, lastBackgroundLayerConfs]
+                lastSubjectDataLayerConfs: [firstBaselayerConfs, lastSubjectDataLayerConfs],
+                lastBaselayerConfs: [firstSubjectDataLayerConfs, lastBaselayerConfs]
             };
 
             navigateBack({commit, getters});
@@ -229,8 +229,8 @@ describe("src_3_0_0/modules/layerSelection/store/actionsLayerSelection", () => {
             expect(commit.firstCall.args[0]).to.be.equals("reduceToPreviousLayerSelection");
             expect(commit.secondCall.args[0]).to.be.equals("setSubjectDataLayerConfs");
             expect(commit.secondCall.args[1]).to.be.deep.equals(lastSubjectDataLayerConfs);
-            expect(commit.thirdCall.args[0]).to.be.equals("setBackgroundLayerConfs");
-            expect(commit.thirdCall.args[1]).to.be.deep.equals(lastBackgroundLayerConfs);
+            expect(commit.thirdCall.args[0]).to.be.equals("setBaselayerConfs");
+            expect(commit.thirdCall.args[1]).to.be.deep.equals(lastBaselayerConfs);
         });
 
         it("reset", () => {
@@ -240,7 +240,7 @@ describe("src_3_0_0/modules/layerSelection/store/actionsLayerSelection", () => {
             expect(commit.firstCall.args[0]).to.be.equals("clearLayerSelection");
             expect(commit.secondCall.args[0]).to.be.equals("setSubjectDataLayerConfs");
             expect(commit.secondCall.args[1]).to.be.deep.equals([]);
-            expect(commit.thirdCall.args[0]).to.be.equals("setBackgroundLayerConfs");
+            expect(commit.thirdCall.args[0]).to.be.equals("setBaselayerConfs");
             expect(commit.thirdCall.args[1]).to.be.deep.equals([]);
         });
     });
