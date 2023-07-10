@@ -1,5 +1,5 @@
 import {expect} from "chai";
-import {treeBackgroundsKey, treeSubjectsKey} from "../../../shared/js/utils/constants";
+import {treeBaselayersKey, treeSubjectsKey} from "../../../shared/js/utils/constants";
 import getters from "../../getters";
 import stateAppStore from "../../state";
 import sinon from "sinon";
@@ -46,7 +46,7 @@ describe("src_3_0_0/app-store/getters.js", () => {
                             }
                         ]
                     },
-                    [treeBackgroundsKey]: {
+                    [treeBaselayersKey]: {
                         elements: [
                             {
                                 id: 100,
@@ -88,7 +88,7 @@ describe("src_3_0_0/app-store/getters.js", () => {
                     visibility: true
                 },
                 layerConfig = {
-                    [treeBackgroundsKey]: {
+                    [treeBaselayersKey]: {
                         elements: [
                             {
                                 id: "453",
@@ -137,7 +137,7 @@ describe("src_3_0_0/app-store/getters.js", () => {
                     name: "Geobasiskarten (farbig)"
                 },
                 layerConfig = {
-                    [treeBackgroundsKey]: {
+                    [treeBaselayersKey]: {
                         elements: [
                             layer,
                             {
@@ -193,15 +193,15 @@ describe("src_3_0_0/app-store/getters.js", () => {
         });
     });
 
-    describe("visibleBackgroundLayerConfigs", () => {
-        it("should return all visible backgroundLayers", () => {
+    describe("visibleBaselayerConfigs", () => {
+        it("should return all visible baselayers", () => {
             const greenLayer = {
                     id: "1132",
                     name: "100 Jahre Stadtgruen POIs",
                     visibility: true
                 },
                 layerConfig = {
-                    [treeBackgroundsKey]: {
+                    [treeBaselayersKey]: {
                         elements: [
                             {
                                 id: "453",
@@ -226,8 +226,8 @@ describe("src_3_0_0/app-store/getters.js", () => {
                     layerConfig: layerConfig
                 };
 
-            expect(getters.visibleBackgroundLayerConfigs(state)[0]).to.deep.equal(layerConfig[treeBackgroundsKey].elements[0]);
-            expect(getters.visibleBackgroundLayerConfigs(state)[0].id).to.deep.equal("453");
+            expect(getters.visibleBaselayerConfigs(state)[0]).to.deep.equal(layerConfig[treeBaselayersKey].elements[0]);
+            expect(getters.visibleBaselayerConfigs(state)[0].id).to.deep.equal("453");
         });
     });
 
@@ -262,7 +262,7 @@ describe("src_3_0_0/app-store/getters.js", () => {
                     ]
                 }];
             layerConfig = {
-                [treeBackgroundsKey]: {
+                [treeBaselayersKey]: {
                     elements: [
                         {
                             id: "453",
@@ -304,8 +304,8 @@ describe("src_3_0_0/app-store/getters.js", () => {
             expect(configs[0].elements.length).to.be.equals(1);
             expect(configs[0].elements).to.be.deep.equals(layersWithFolder[0].elements);
         });
-        it("should return all layerConfigs of first level by key 'Hintergrundkarten'", () => {
-            const configs = getters.allLayerConfigsStructured(state)(treeBackgroundsKey);
+        it("should return all layerConfigs of first level by key 'Baselayer'", () => {
+            const configs = getters.allLayerConfigsStructured(state)(treeBaselayersKey);
 
             expect(configs).to.be.an("array");
             expect(configs.length).to.be.equals(2);
@@ -313,8 +313,8 @@ describe("src_3_0_0/app-store/getters.js", () => {
             expect(configs[1].id).to.be.equals("452");
         });
 
-        it("allLayerConfigsByParentKey should return all layerConfigs key 'Hintergrundkarten'", () => {
-            const configs = getters.allLayerConfigsByParentKey(state)(treeBackgroundsKey);
+        it("allLayerConfigsByParentKey should return all layerConfigs key 'Baselayer'", () => {
+            const configs = getters.allLayerConfigsByParentKey(state)(treeBaselayersKey);
 
             expect(configs).to.be.an("array");
             expect(configs.length).to.be.equals(2);
@@ -349,7 +349,7 @@ describe("src_3_0_0/app-store/getters.js", () => {
                     visibility: true
                 },
                 layerConfig = {
-                    [treeBackgroundsKey]: {
+                    [treeBaselayersKey]: {
                         elements: [
                             bgLayer,
                             {
@@ -410,7 +410,7 @@ describe("src_3_0_0/app-store/getters.js", () => {
                             }
                         ]
                     },
-                    Hintergrundkarten: {
+                    Baselayer: {
                         elements: [
                             {
                                 id: "100",
@@ -446,20 +446,20 @@ describe("src_3_0_0/app-store/getters.js", () => {
 
         beforeEach(() => {
             layerConfig = {
-                [treeBackgroundsKey]: {
+                [treeBaselayersKey]: {
                     elements: [
                         {
                             id: "453",
-                            backgroundLayer: true,
+                            baselayer: true,
                             zIndex: 0
                         },
                         {
                             id: "452",
-                            backgroundLayer: true
+                            baselayer: true
                         },
                         {
                             id: "451",
-                            backgroundLayer: true
+                            baselayer: true
                         }
                     ]
                 },
@@ -472,7 +472,7 @@ describe("src_3_0_0/app-store/getters.js", () => {
                         },
                         {
                             id: "10220",
-                            backgroundLayer: false
+                            baselayer: false
                         }
                     ]
                 }
@@ -491,19 +491,19 @@ describe("src_3_0_0/app-store/getters.js", () => {
             expect(getters.determineZIndex(state)("452")).to.be.equals(1);
         });
         it("determineZIndex for third layer with zIndex under parentKey", () => {
-            layerConfig[treeBackgroundsKey].elements[1].zIndex = 1;
+            layerConfig[treeBaselayersKey].elements[1].zIndex = 1;
             expect(getters.determineZIndex(state)("451")).to.be.equals(2);
         });
         it("determineZIndex for layer with existing zIndex", () => {
-            layerConfig[treeBackgroundsKey].elements[0].zIndex = 100;
+            layerConfig[treeBaselayersKey].elements[0].zIndex = 100;
             expect(getters.determineZIndex(state)("453")).to.be.equals(100);
         });
     });
 
-    describe("invisibleBackgroundLayerConfigs", () => {
-        it("should return all invisible background layers", () => {
+    describe("invisibleBaselayerConfigs", () => {
+        it("should return all invisible baselayers", () => {
             const layerConfig = {
-                    [treeBackgroundsKey]: {
+                    [treeBaselayersKey]: {
                         elements: [
                             {
                                 id: "453",
@@ -531,10 +531,10 @@ describe("src_3_0_0/app-store/getters.js", () => {
                     layerConfig: layerConfig
                 };
 
-            expect(getters.invisibleBackgroundLayerConfigs(state)).to.be.an("array");
-            expect(getters.invisibleBackgroundLayerConfigs(state).length).to.be.equals(2);
-            expect(getters.invisibleBackgroundLayerConfigs(state)[0].id).to.be.equals("452");
-            expect(getters.invisibleBackgroundLayerConfigs(state)[1].id).to.be.equals("1132");
+            expect(getters.invisibleBaselayerConfigs(state)).to.be.an("array");
+            expect(getters.invisibleBaselayerConfigs(state).length).to.be.equals(2);
+            expect(getters.invisibleBaselayerConfigs(state)[0].id).to.be.equals("452");
+            expect(getters.invisibleBaselayerConfigs(state)[1].id).to.be.equals("1132");
         });
     });
 });

@@ -11,14 +11,14 @@ describe("src_3_0_0/modules/layerSelection/store/mutationsLayerSelection", funct
                 layersToAdd: ["1", "2"],
                 lastFolderNames: ["1", "2"],
                 lastSubjectDataLayerConfs: [{id: "1"}, {id: "2"}],
-                lastBackgroundLayerConfs: [{id: "1"}, {id: "2"}]
+                lastBaselayerConfs: [{id: "1"}, {id: "2"}]
             };
 
             clearLayerSelection(state);
             expect(state.layersToAdd).to.be.deep.equals([]);
             expect(state.lastFolderNames).to.be.deep.equals([]);
             expect(state.lastSubjectDataLayerConfs).to.be.deep.equals([]);
-            expect(state.lastBackgroundLayerConfs).to.be.deep.equals([]);
+            expect(state.lastBaselayerConfs).to.be.deep.equals([]);
         });
     });
 
@@ -56,20 +56,20 @@ describe("src_3_0_0/modules/layerSelection/store/mutationsLayerSelection", funct
             const state = {
                 lastFolderNames: [],
                 lastSubjectDataLayerConfs: [],
-                lastBackgroundLayerConfs: []
+                lastBaselayerConfs: []
             };
 
             reduceToPreviousLayerSelection(state);
             expect(state.lastFolderNames.length).to.be.equals(0);
             expect(state.lastSubjectDataLayerConfs.length).to.be.equals(0);
-            expect(state.lastBackgroundLayerConfs.length).to.be.equals(0);
+            expect(state.lastBaselayerConfs.length).to.be.equals(0);
         });
 
         it("removes last entry from navigation arrays", function () {
             const state = {
                 lastFolderNames: ["1", "2"],
                 lastSubjectDataLayerConfs: [{id: "1"}, {id: "2"}],
-                lastBackgroundLayerConfs: [{id: "bg1"}, {id: "bg2"}]
+                lastBaselayerConfs: [{id: "bg1"}, {id: "bg2"}]
             };
 
             reduceToPreviousLayerSelection(state);
@@ -77,8 +77,8 @@ describe("src_3_0_0/modules/layerSelection/store/mutationsLayerSelection", funct
             expect(state.lastFolderNames[0]).to.be.equals("1");
             expect(state.lastSubjectDataLayerConfs.length).to.be.equals(1);
             expect(state.lastSubjectDataLayerConfs[0]).to.be.deep.equals({id: "1"});
-            expect(state.lastBackgroundLayerConfs.length).to.be.equals(1);
-            expect(state.lastBackgroundLayerConfs[0]).to.be.deep.equals({id: "bg1"});
+            expect(state.lastBaselayerConfs.length).to.be.equals(1);
+            expect(state.lastBaselayerConfs[0]).to.be.deep.equals({id: "bg1"});
         });
     });
 
@@ -87,19 +87,19 @@ describe("src_3_0_0/modules/layerSelection/store/mutationsLayerSelection", funct
             const state = {
                     lastFolderNames: [],
                     lastSubjectDataLayerConfs: [],
-                    lastBackgroundLayerConfs: []
+                    lastBaselayerConfs: []
                 },
                 lastFolderName = "lastFolderName",
                 subjectDataLayerConfs = [{id: "1"}, {id: "2"}],
-                backgroundLayerConfs = [{id: "bg1"}, {id: "bg2"}];
+                baselayerConfs = [{id: "bg1"}, {id: "bg2"}];
 
-            addToLayerSelection(state, {lastFolderName, subjectDataLayerConfs, backgroundLayerConfs});
+            addToLayerSelection(state, {lastFolderName, subjectDataLayerConfs, baselayerConfs});
             expect(state.lastFolderNames.length).to.be.equals(1);
             expect(state.lastFolderNames[0]).to.be.equals(lastFolderName);
             expect(state.lastSubjectDataLayerConfs.length).to.be.equals(1);
             expect(state.lastSubjectDataLayerConfs[0]).to.be.deep.equals(subjectDataLayerConfs);
-            expect(state.lastBackgroundLayerConfs.length).to.be.equals(1);
-            expect(state.lastBackgroundLayerConfs[0]).to.be.deep.equals(backgroundLayerConfs);
+            expect(state.lastBaselayerConfs.length).to.be.equals(1);
+            expect(state.lastBaselayerConfs[0]).to.be.deep.equals(baselayerConfs);
         });
     });
 
