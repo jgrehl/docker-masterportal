@@ -1,6 +1,6 @@
 import rawLayerList from "@masterportal/masterportalapi/src/rawLayerList";
 import {addAdditional, getAndMergeAllRawLayers, getAndMergeRawLayer, resetZIndex} from "../../../js/getAndMergeRawLayer.js";
-import {treeBackgroundsKey, treeSubjectsKey} from "../../../../shared/js/utils/constants";
+import {treeBaselayersKey, treeSubjectsKey} from "../../../../shared/js/utils/constants";
 import {expect} from "chai";
 import sinon from "sinon";
 
@@ -41,7 +41,7 @@ describe("src_3_0_0/app-store/js/getAndMergeRawLayer.js", () => {
             let result = null;
 
             layerConfig = {
-                [treeBackgroundsKey]: {
+                [treeBaselayersKey]: {
                     elements: [
                         {
                             id: "453",
@@ -56,7 +56,7 @@ describe("src_3_0_0/app-store/js/getAndMergeRawLayer.js", () => {
             });
             sinon.stub(rawLayerList, "getLayerList").returns(simpleLayerList);
 
-            result = getAndMergeRawLayer(layerConfig[treeBackgroundsKey].elements[0]);
+            result = getAndMergeRawLayer(layerConfig[treeBaselayersKey].elements[0]);
 
             expect(result).not.to.be.null;
             expect(result.id).to.be.equals("453");
@@ -66,7 +66,7 @@ describe("src_3_0_0/app-store/js/getAndMergeRawLayer.js", () => {
 
         it("should return a merged raw layer, if ids are in an array", () => {
             layerConfig = {
-                [treeBackgroundsKey]: {
+                [treeBaselayersKey]: {
                     elements: [
                         {
                             id: [
@@ -115,7 +115,7 @@ describe("src_3_0_0/app-store/js/getAndMergeRawLayer.js", () => {
             });
             sinon.stub(rawLayerList, "getLayerList").returns(simpleLayerList);
 
-            result = getAndMergeRawLayer(layerConfig[treeBackgroundsKey].elements[0]);
+            result = getAndMergeRawLayer(layerConfig[treeBaselayersKey].elements[0]);
 
             expect(result).not.to.be.null;
             expect(result.id).to.be.equals("717");
