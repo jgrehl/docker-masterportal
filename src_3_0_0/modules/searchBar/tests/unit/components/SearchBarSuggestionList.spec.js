@@ -3,13 +3,15 @@ import {config, mount} from "@vue/test-utils";
 import {expect} from "chai";
 import sinon from "sinon";
 
-import SearchBarSuggestionListComponent from "../../../components/SearchBarSuggestionList.vue";
+import SearchBarSuggestionListComponent from "../../../components/SearchBarResultList.vue";
 
 config.global.mocks.$t = key => key;
 
-describe("src_3_0_0/modules/searchBar/components/SearchBarSuggestionList.vue", () => {
+describe("src_3_0_0/modules/searchBar/components/SearchBarResultList.vue", () => {
     let store,
-        wrapper;
+        wrapper,
+        showAllResults = false;
+
     const searchResults = [
             {
                 "category": "Straße",
@@ -56,7 +58,7 @@ describe("src_3_0_0/modules/searchBar/components/SearchBarSuggestionList.vue", (
 
     beforeEach(() => {
         store = createStore({
-            namespaced: true,
+            namespaces: true,
             modules: {
                 Modules: {
                     namespaced: true,
@@ -72,7 +74,12 @@ describe("src_3_0_0/modules/searchBar/components/SearchBarSuggestionList.vue", (
                                 minCharacters: () => minCharacters,
                                 searchInput: () => searchInput,
                                 searchResults: () => searchResults,
+                                searchResultsActive: () => {
+                                    return true;
+                                },
+                                showAllResults: () => showAllResults,
                                 searchSuggestions: () => [],
+                                selectedSearchResults: () => [],
                                 searchInterfaces: () => searchInterfaces,
                                 suggestionListLength: () => sinon.stub()
                             },
@@ -90,23 +97,69 @@ describe("src_3_0_0/modules/searchBar/components/SearchBarSuggestionList.vue", (
         sinon.restore();
     });
 
-    describe("startSearch", () => {
-        it("renders the SearchBarSuggestionList", async () => {
+    describe("test the rendering with different parameters", () => {
+        it("renders the SearchBarResultList", async () => {
             wrapper = await mount(SearchBarSuggestionListComponent, {
                 global: {
                     plugins: [store]
                 }
             });
-            expect(wrapper.find("#search-bar-suggestion-list").exists()).to.be.true;
+            expect(wrapper.find("#search-bar-result-list").exists()).to.be.true;
+            expect(wrapper.find(".showAllSection").exists()).to.be.true;
+            expect(wrapper.find(".btn.btn-light.d-flex.text-left").exists()).to.be.true;
+        });
+        it("renders the SearchBarResultList", async () => {
+            wrapper = await mount(SearchBarSuggestionListComponent, {
+                global: {
+                    plugins: [store]
+                }
+            });
+            expect(wrapper.find("#search-bar-result-list").exists()).to.be.true;
             expect(wrapper.find(".showAllSection").exists()).to.be.true;
         });
+        it("shows the showAll button", async () => {
+            wrapper = await mount(SearchBarSuggestionListComponent, {
+                global: {
+                    plugins: [store]
+                }
+            });
+            await wrapper.vm.$nextTick();
+            expect(wrapper.find(".showAllSection").exists()).to.be.true;
+            expect(wrapper.find(".btn.btn-light.d-flex.text-left").exists()).to.be.true;
+        });
+        it("if showAllSection is true layerSelection Button ist available", async () => {
+            showAllResults = true;
+
+            wrapper = await mount(SearchBarSuggestionListComponent, {
+                global: {
+                    plugins: [store]
+                }
+            });
+
+            expect(wrapper.find(".btn.btn-light.d-flex.text-left").exists()).to.be.false;
+            expect(wrapper.find("#add-layerSelection-btn").exists()).to.be.true;
+        });
+    });
+    describe("test the outcome of limitedSortedSearchResults", () => {
         it("tests the computed property SearchBarSuggestionList", async () => {
             wrapper = await mount(SearchBarSuggestionListComponent, {
                 global: {
                     plugins: [store]
                 }
             });
-            expect(wrapper.vm.limitedSortedSearchResults).to.deep.equal({availableCategories: ["Straße", "Adresse"], "StraßeCount": 1, "AdresseCount": 1, "AdresseIcon": "bi-signpost", "StraßeIcon": "bi-signpost"});
+            expect(wrapper.vm.limitedSortedSearchResults.results).to.deep.equal({categoryProvider: {"Straße": "gazetteer", "Adresse": "gazetteer"}, availableCategories: ["Straße", "Adresse"], "StraßeCount": 1, "AdresseCount": 1, "AdresseIcon": "bi-signpost", "StraßeIcon": "bi-signpost"});
+        });
+    });
+    describe("test the method prepareShowAllResults", () => {
+        it("test the method prepareShowAllResults", async () => {
+            wrapper = await mount(SearchBarSuggestionListComponent, {
+                global: {
+                    plugins: [store]
+                }
+            });
+            wrapper.vm.prepareShowAllResults("Straße");
+            expect(wrapper.vm.currentAvailableCategories[0]).to.be.equal("Straße");
+            expect(wrapper.vm.currentShowAllList[0]).to.deep.equal(searchResults[0]);
         });
     });
 });
