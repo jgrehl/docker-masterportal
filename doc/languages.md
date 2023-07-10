@@ -119,7 +119,7 @@ If the tree.type is `"default"` or `"custom"`, folder names can be specified. In
 
 Default translations:
 
-* Baselayer: "Background maps" (de: "Hintergrundkarten")
+* Baselayer: "Baselayers" (de: "Baselayer")
 * Overlay: "Subject data" (de: "Fachthemen")
 * 3d-layer: "3D data" (de: "3D Daten")
 
