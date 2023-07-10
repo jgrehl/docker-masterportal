@@ -2,7 +2,7 @@ import {createStore} from "vuex";
 import {config, mount} from "@vue/test-utils";
 import {expect} from "chai";
 import sinon from "sinon";
-import {treeBackgroundsKey, treeSubjectsKey} from "../../../../../shared/js/utils/constants";
+import {treeBaselayersKey, treeSubjectsKey} from "../../../../../shared/js/utils/constants";
 import LayerTreeNode from "../../../components/LayerTreeNode.vue";
 
 config.global.mocks.$t = key => key;
@@ -145,7 +145,7 @@ describe("src_3_0_0/modules/layerTree/components/LayerTreeNode.vue", () => {
                         [treeSubjectsKey]: {
                             elements: subjectDataLayers
                         },
-                        [treeBackgroundsKey]: {
+                        [treeBaselayersKey]: {
                             elements: layersBG
                         }
                     };

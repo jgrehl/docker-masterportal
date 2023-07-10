@@ -3,7 +3,7 @@ import getNestedValues from "../shared/js/utils/getNestedValues";
 import replaceInNestedValues from "../shared/js/utils/replaceInNestedValues";
 import {getAndMergeAllRawLayers, getAndMergeRawLayer} from "./js/getAndMergeRawLayer";
 import {sortObjects} from "../shared/js/utils/sortObjects";
-import {treeOrder, treeBackgroundsKey, treeSubjectsKey} from "../shared/js/utils/constants";
+import {treeOrder, treeBaselayersKey, treeSubjectsKey} from "../shared/js/utils/constants";
 import layerCollection from "../core/layers/js/layerCollection";
 
 export default {
@@ -27,7 +27,7 @@ export default {
         if (matchingLayer === undefined) {
             layerConfig.zIndex = maxZIndex + 1;
             state.layerConfig[parentKey].elements.push(layerConfig);
-            dispatch("addBackgroundLayerAttribute");
+            dispatch("addBaselayerAttribute");
 
             return true;
         }
@@ -121,7 +121,7 @@ export default {
         let layerContainer = [];
         const orderedLayerConfigKeys = Object.keys(state.layerConfig).sort((a, b) => treeOrder.indexOf(a) - treeOrder.indexOf(b));
 
-        dispatch("addBackgroundLayerAttribute");
+        dispatch("addBaselayerAttribute");
 
         orderedLayerConfigKeys.forEach(layerConfigKey => {
             state.layerConfig[layerConfigKey]?.elements?.reverse();
@@ -135,13 +135,13 @@ export default {
     },
 
     /**
-     * Adds the attribute backgroundLayer to layers configured as background layers.
+     * Adds the attribute baselayer to layers configured as baselayers.
      * @param {Object} param.state the state
      * @returns {void}
      */
-    addBackgroundLayerAttribute ({getters}) {
-        getters.allLayerConfigsByParentKey(treeBackgroundsKey).map(attributes => {
-            return Object.assign(attributes, {backgroundLayer: true});
+    addBaselayerAttribute ({getters}) {
+        getters.allLayerConfigsByParentKey(treeBaselayersKey).map(attributes => {
+            return Object.assign(attributes, {baselayer: true});
         });
     },
 
