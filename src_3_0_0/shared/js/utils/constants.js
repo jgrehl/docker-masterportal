@@ -1,14 +1,14 @@
 const
     portalConfigKey = "Portalconfig",
     treeTopicConfigKey = "Themenconfig",
-    treeBackgroundsKey = "Hintergrundkarten",
+    treeBaselayersKey = "Baselayer",
     treeSubjectsKey = "Fachdaten",
-    treeOrder = [treeBackgroundsKey, treeSubjectsKey];
+    treeOrder = [treeBaselayersKey, treeSubjectsKey];
 
 export {
     portalConfigKey,
     treeTopicConfigKey,
-    treeBackgroundsKey,
+    treeBaselayersKey,
     treeSubjectsKey,
     treeOrder
 };
