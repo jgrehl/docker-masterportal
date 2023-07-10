@@ -2,7 +2,7 @@ import rawLayerList from "@masterportal/masterportalapi/src/rawLayerList";
 import {buildTreeStructure} from "../../../js/buildTreeStructure.js";
 import {getAndMergeRawLayer, getAndMergeAllRawLayers} from "../../../js/getAndMergeRawLayer.js";
 import getNestedValues from "../../../../shared/js/utils/getNestedValues";
-import {treeBackgroundsKey, treeSubjectsKey} from "../../../../shared/js/utils/constants";
+import {treeBaselayersKey, treeSubjectsKey} from "../../../../shared/js/utils/constants";
 import {expect} from "chai";
 import sinon from "sinon";
 
@@ -23,7 +23,7 @@ describe("src_3_0_0/app-store/js/buildTreeStructure.js", () => {
             }
         ],
         layerConfig = {
-            [treeBackgroundsKey]: {
+            [treeBaselayersKey]: {
                 elements: [
                     {
                         "id": "452",

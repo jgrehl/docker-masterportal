@@ -1,7 +1,7 @@
 import rawLayerList from "@masterportal/masterportalapi/src/rawLayerList";
 import sinon from "sinon";
 import {expect} from "chai";
-import {treeTopicConfigKey, treeBackgroundsKey, treeSubjectsKey} from "../../../shared/js/utils/constants";
+import {treeTopicConfigKey, treeBaselayersKey, treeSubjectsKey} from "../../../shared/js/utils/constants";
 import actions from "../../actionsLayerConfig";
 
 describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
@@ -102,7 +102,7 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
             }
         ];
         layerConfig = {};
-        layerConfig[treeBackgroundsKey] =
+        layerConfig[treeBaselayersKey] =
         {
             elements: [
                 {
@@ -127,7 +127,7 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
             ]
         };
         layerConfigCustom = {};
-        layerConfigCustom[treeBackgroundsKey] = {
+        layerConfigCustom[treeBaselayersKey] = {
             elements: [
                 {
                     id: [
@@ -236,7 +236,7 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
                 layerContainer: [],
                 maxZIndex: -Infinity
             });
-            expect(dispatch.secondCall.args[0]).to.equals("addBackgroundLayerAttribute");
+            expect(dispatch.secondCall.args[0]).to.equals("addBaselayerAttribute");
             expect(dispatch.secondCall.args[1]).to.be.undefined;
             expect(state.layerConfig[treeSubjectsKey]?.elements.length).to.equal(1);
             expect(state.layerConfig[treeSubjectsKey]?.elements[0]).to.deep.equal(layerToAdd);
@@ -263,7 +263,7 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
             actions.extendLayers({dispatch, state});
 
             expect(dispatch.callCount).to.equals(2);
-            expect(dispatch.firstCall.args[0]).to.equals("addBackgroundLayerAttribute");
+            expect(dispatch.firstCall.args[0]).to.equals("addBaselayerAttribute");
             expect(dispatch.firstCall.args[1]).to.be.undefined;
             expect(dispatch.secondCall.args[0]).to.equals("updateLayerConfigs");
             expect(dispatch.secondCall.args[1]).to.deep.equals([
@@ -290,7 +290,7 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
             actions.extendLayers({dispatch, state});
 
             expect(dispatch.callCount).to.be.equals(2);
-            expect(dispatch.firstCall.args[0]).to.equals("addBackgroundLayerAttribute");
+            expect(dispatch.firstCall.args[0]).to.equals("addBaselayerAttribute");
             expect(dispatch.firstCall.args[1]).to.be.undefined;
             expect(dispatch.secondCall.args[0]).to.equals("updateLayerConfigs");
             expect(dispatch.secondCall.args[1]).to.deep.equals([
@@ -370,7 +370,7 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
 
             actions.extendLayers({dispatch, state});
             expect(dispatch.callCount).to.be.equals(2);
-            expect(dispatch.firstCall.args[0]).to.equals("addBackgroundLayerAttribute");
+            expect(dispatch.firstCall.args[0]).to.equals("addBaselayerAttribute");
             expect(dispatch.firstCall.args[1]).to.be.undefined;
             expect(dispatch.secondCall.args[0]).to.equals("updateLayerConfigs");
             expect(dispatch.secondCall.args[1]).to.deep.equals([
@@ -400,23 +400,23 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
             ]);
         });
 
-        describe("addBackgroundLayerAttribute", () => {
-            it("add the attribute background to Hintergrundkarten", () => {
+        describe("addBaselayerAttribute", () => {
+            it("add the attribute background to Baselayer", () => {
                 const getters = {
-                    allLayerConfigsByParentKey: () => layerConfig[treeBackgroundsKey].elements
+                    allLayerConfigsByParentKey: () => layerConfig[treeBaselayersKey].elements
                 };
 
-                actions.addBackgroundLayerAttribute({getters});
+                actions.addBaselayerAttribute({getters});
 
-                expect(layerConfig[treeBackgroundsKey].elements).to.deep.equals([
+                expect(layerConfig[treeBaselayersKey].elements).to.deep.equals([
                     {
                         id: "453",
                         visibility: true,
-                        backgroundLayer: true
+                        baselayer: true
                     },
                     {
                         id: "452",
-                        backgroundLayer: true
+                        baselayer: true
                     }
                 ]);
             });
@@ -447,7 +447,7 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
                 layerList.splice(3, 2);
                 layerList.splice(4, 3);
 
-                actions.processTreeTypeAuto({commit, getters, state}, layerConfig[treeBackgroundsKey].elements);
+                actions.processTreeTypeAuto({commit, getters, state}, layerConfig[treeBaselayersKey].elements);
 
                 expect(commit.calledOnce).to.be.true;
                 expect(commit.firstCall.args[0]).to.equals("setLayerConfigByParentKey");
@@ -479,15 +479,15 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
 
                 actions.replaceByIdInLayerConfig({state, getters}, {layerConfigs: [{layer: toReplace, id: "453"}]});
 
-                expect(state.layerConfig[treeBackgroundsKey].elements).to.be.an("array");
-                expect(state.layerConfig[treeBackgroundsKey].elements.length).to.be.equals(2);
-                expect(Object.keys(state.layerConfig[treeBackgroundsKey]?.elements[0]).length).to.be.equals(4);
-                expect(state.layerConfig[treeBackgroundsKey]?.elements[0].id).to.be.equals("453");
-                expect(state.layerConfig[treeBackgroundsKey]?.elements[0].visibility).to.be.true;
-                expect(state.layerConfig[treeBackgroundsKey]?.elements[0].att1).to.be.equals("bla");
-                expect(state.layerConfig[treeBackgroundsKey]?.elements[0].att2).to.be.deep.equals(toReplace.att2);
-                expect(state.layerConfig[treeBackgroundsKey]?.elements[1].id).to.be.equals("452");
-                expect(Object.keys(state.layerConfig[treeBackgroundsKey]?.elements[1]).length).to.be.equals(1);
+                expect(state.layerConfig[treeBaselayersKey].elements).to.be.an("array");
+                expect(state.layerConfig[treeBaselayersKey].elements.length).to.be.equals(2);
+                expect(Object.keys(state.layerConfig[treeBaselayersKey]?.elements[0]).length).to.be.equals(4);
+                expect(state.layerConfig[treeBaselayersKey]?.elements[0].id).to.be.equals("453");
+                expect(state.layerConfig[treeBaselayersKey]?.elements[0].visibility).to.be.true;
+                expect(state.layerConfig[treeBaselayersKey]?.elements[0].att1).to.be.equals("bla");
+                expect(state.layerConfig[treeBaselayersKey]?.elements[0].att2).to.be.deep.equals(toReplace.att2);
+                expect(state.layerConfig[treeBaselayersKey]?.elements[1].id).to.be.equals("452");
+                expect(Object.keys(state.layerConfig[treeBaselayersKey]?.elements[1]).length).to.be.equals(1);
 
                 expect(state.layerConfig[treeSubjectsKey]?.elements).to.be.an("array");
                 expect(state.layerConfig[treeSubjectsKey]?.elements.length).to.be.equals(2);
@@ -537,16 +537,16 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
             it("updateAllZIndexes does not set zIndexes, if no zIndexes are set before", () => {
                 const getters = {
                     allLayerConfigsByParentKey: (key) => {
-                        if (key === treeBackgroundsKey) {
-                            return layerConfig[treeBackgroundsKey].elements;
+                        if (key === treeBaselayersKey) {
+                            return layerConfig[treeBaselayersKey].elements;
                         }
                         return layerConfig[treeSubjectsKey].elements;
                     }
                 };
 
                 actions.updateAllZIndexes({dispatch, getters});
-                expect(layerConfig[treeBackgroundsKey].elements[0].zIndex).to.be.undefined;
-                expect(layerConfig[treeBackgroundsKey].elements[1].zIndex).to.be.undefined;
+                expect(layerConfig[treeBaselayersKey].elements[0].zIndex).to.be.undefined;
+                expect(layerConfig[treeBaselayersKey].elements[1].zIndex).to.be.undefined;
                 expect(layerConfig[treeSubjectsKey].elements[0].zIndex).to.be.undefined;
                 expect(layerConfig[treeSubjectsKey].elements[1].zIndex).to.be.undefined;
             });
@@ -554,21 +554,21 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
             it("updateAllZIndexes with all zIndexes are set before", () => {
                 const getters = {
                     allLayerConfigsByParentKey: (key) => {
-                        if (key === treeBackgroundsKey) {
-                            return layerConfig[treeBackgroundsKey].elements;
+                        if (key === treeBaselayersKey) {
+                            return layerConfig[treeBaselayersKey].elements;
                         }
                         return layerConfig[treeSubjectsKey].elements;
                     }
                 };
 
-                layerConfig[treeBackgroundsKey].elements[0].zIndex = 0;
-                layerConfig[treeBackgroundsKey].elements[1].zIndex = 1;
+                layerConfig[treeBaselayersKey].elements[0].zIndex = 0;
+                layerConfig[treeBaselayersKey].elements[1].zIndex = 1;
                 layerConfig[treeSubjectsKey].elements[0].zIndex = 5;
                 layerConfig[treeSubjectsKey].elements[1].zIndex = 6;
                 actions.updateAllZIndexes({getters});
 
-                expect(layerConfig[treeBackgroundsKey].elements[0].zIndex).to.be.equals(0);
-                expect(layerConfig[treeBackgroundsKey].elements[1].zIndex).to.be.equals(1);
+                expect(layerConfig[treeBaselayersKey].elements[0].zIndex).to.be.equals(0);
+                expect(layerConfig[treeBaselayersKey].elements[1].zIndex).to.be.equals(1);
                 expect(layerConfig[treeSubjectsKey].elements[0].zIndex).to.be.equals(2);
                 expect(layerConfig[treeSubjectsKey].elements[1].zIndex).to.be.equals(3);
             });
@@ -576,20 +576,20 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
             it("updateAllZIndexes with some zIndexes are set before", () => {
                 const getters = {
                     allLayerConfigsByParentKey: (key) => {
-                        if (key === treeBackgroundsKey) {
-                            return layerConfig[treeBackgroundsKey].elements;
+                        if (key === treeBaselayersKey) {
+                            return layerConfig[treeBaselayersKey].elements;
                         }
                         return layerConfig[treeSubjectsKey].elements;
                     }
                 };
 
-                layerConfig[treeBackgroundsKey].elements[0].zIndex = 0;
+                layerConfig[treeBaselayersKey].elements[0].zIndex = 0;
                 layerConfig[treeSubjectsKey].elements[0].zIndex = 5;
                 layerConfig[treeSubjectsKey].elements[1].zIndex = 6;
                 actions.updateAllZIndexes({getters});
 
-                expect(layerConfig[treeBackgroundsKey].elements[0].zIndex).to.be.equals(0);
-                expect(layerConfig[treeBackgroundsKey].elements[1].zIndex).to.be.equals(undefined);
+                expect(layerConfig[treeBaselayersKey].elements[0].zIndex).to.be.equals(0);
+                expect(layerConfig[treeBaselayersKey].elements[1].zIndex).to.be.equals(undefined);
                 expect(layerConfig[treeSubjectsKey].elements[0].zIndex).to.be.equals(1);
                 expect(layerConfig[treeSubjectsKey].elements[1].zIndex).to.be.equals(2);
             });

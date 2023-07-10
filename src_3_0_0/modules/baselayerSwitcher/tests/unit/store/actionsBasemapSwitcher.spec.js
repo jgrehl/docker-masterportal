@@ -1,9 +1,9 @@
 import {expect} from "chai";
 import sinon from "sinon";
-import actions from "../../../store/actionsBasemapSwitcher";
+import actions from "../../../store/actionsBaselayerSwitcher";
 
 
-describe("basemapSwitcher/store/actionsBasemapSwitcher", () => {
+describe("baselayerSwitcher/store/actionsBaselayerSwitcher", () => {
 
     let layerConfigs,
         dispatch,
@@ -12,14 +12,14 @@ describe("basemapSwitcher/store/actionsBasemapSwitcher", () => {
     beforeEach(() => {
 
         layerConfigs = [
-            {id: "453", visibility: true, backgroundLayer: true, showInLayerTree: true, zIndex: 1}
+            {id: "453", visibility: true, baselayer: true, showInLayerTree: true, zIndex: 1}
         ];
 
         dispatch = sinon.spy();
         rootGetters = {
             layerConfigsByAttributes: () => layerConfigs,
             determineZIndex: () => layerConfigs[0].zIndex,
-            isBackgroundLayer: () => layerConfigs[0].backgroundLayer
+            isBaselayer: () => layerConfigs[0].baselayer
         };
     });
 

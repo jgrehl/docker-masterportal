@@ -231,7 +231,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceTopicTree.
                             }
                         ]
                     },
-                    Hintergrundkarten: {
+                    Baselayer: {
                         elements: [
                             {
                                 id: "500",
