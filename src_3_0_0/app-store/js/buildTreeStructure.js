@@ -1,7 +1,7 @@
 import rawLayerList from "@masterportal/masterportalapi/src/rawLayerList";
 import getNestedValues from "../../shared/js/utils/getNestedValues";
 import {sortObjects} from "../../shared/js/utils/sortObjects";
-import {treeBackgroundsKey} from "../../shared/js/utils/constants";
+import {treeBaselayersKey} from "../../shared/js/utils/constants";
 
 
 /**
@@ -26,7 +26,7 @@ export function buildTreeStructure (layerConfig, category, shownLayerConfs = [])
         return layerList;
     }
     if (layerConfig) {
-        bgLayers = getNestedValues(layerConfig[treeBackgroundsKey], "elements", true).flat(Infinity);
+        bgLayers = getNestedValues(layerConfig[treeBaselayersKey], "elements", true).flat(Infinity);
         bgLayerIds = getIdsOfLayers(bgLayers);
     }
     folder.elements = [];
