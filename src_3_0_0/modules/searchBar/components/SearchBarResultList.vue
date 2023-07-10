@@ -104,11 +104,11 @@ export default {
         </a>
         <div
             v-for="categoryItem in showAllResults===false ? limitedSortedSearchResults.results.availableCategories : currentAvailableCategories"
-            id="search-bar-suggestion-list"
+            id="search-bar-result-list"
             :key="categoryItem"
         >
             <h5
-                id="search-bar-suggestion-heading"
+                id="search-bar-result-heading"
                 class="bold mb-4 mt-4"
                 :title="$t('common:modules.searchBar.searchResultsFrom')+limitedSortedSearchResults.results.categoryProvider[categoryItem]+'-'+$t('common:modules.searchBar.search')"
             >
