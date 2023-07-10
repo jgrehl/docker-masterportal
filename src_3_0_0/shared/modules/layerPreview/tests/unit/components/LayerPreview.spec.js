@@ -35,7 +35,7 @@ describe("src_3_0_0/modules/layerPreview/components/LayerPreview.vue", () => {
             typ: "WMTS",
             type: "layer",
             capabilitiesUrl: "https://tiles.geoservice.dlr.de/service/wmts?SERVICE=WMTS&REQUEST=GetCapabilities",
-            layers: "eoc:basemap",
+            layers: "eoc:baselayer",
             optionsFromCapabilities: true
         };
         layerWMS = {
