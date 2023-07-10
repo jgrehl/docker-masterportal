@@ -3,27 +3,27 @@ import {mapActions, mapGetters, mapMutations} from "vuex";
 import LayerPreview from "../../../shared/modules/layerPreview/components/LayerPreview.vue";
 
 export default {
-    name: "BasemapSwitcher",
+    name: "BaselayerSwitcher",
     components: {
         LayerPreview
     },
     computed: {
         ...mapGetters([
             "isMobile",
-            "visibleBackgroundLayerConfigs",
-            "allBackgroundLayerConfigs",
+            "visibleBaselayerConfigs",
+            "allBaselayerConfigs",
             "layerConfigsByAttributes"
         ]),
-        ...mapGetters("Modules/BasemapSwitcher", [
+        ...mapGetters("Modules/BaselayerSwitcher", [
             "activatedExpandable",
-            "backgroundLayerIds",
-            "topBackgroundLayerId"
+            "baselayerIds",
+            "topBaselayerId"
         ])
     },
     watch: {
-        visibleBackgroundLayerConfigs: {
+        visibleBaselayerConfigs: {
             handler (newVal) {
-                const backgroundLayerConfigIds = Object.values(this.allBackgroundLayerConfigs).map(layer => layer.id),
+                const baselayerConfigIds = Object.values(this.allBaselayerConfigs).map(layer => layer.id),
                     zIndex = [];
                 let maxZIndex = null,
                     topLayer = null;
@@ -36,19 +36,19 @@ export default {
                 topLayer = newVal.filter(layer =>layer.zIndex === maxZIndex);
 
                 if (topLayer[0]?.id !== undefined) {
-                    const backgroundLayerIds = [];
+                    const baselayerIds = [];
 
-                    backgroundLayerConfigIds.forEach((layerId) => {
+                    baselayerConfigIds.forEach((layerId) => {
                         if (layerId !== topLayer[0].id) {
-                            backgroundLayerIds.push(layerId);
+                            baselayerIds.push(layerId);
                         }
                     });
-                    this.setTopBackgroundLayerId(topLayer[0].id);
-                    this.setBackgroundLayerIds(backgroundLayerIds);
+                    this.setTopBaselayerId(topLayer[0].id);
+                    this.setBaselayerIds(baselayerIds);
                 }
                 else {
-                    this.setTopBackgroundLayerId(null);
-                    this.setBackgroundLayerIds(backgroundLayerConfigIds);
+                    this.setTopBaselayerId(null);
+                    this.setBaselayerIds(baselayerConfigIds);
                 }
                 this.setActivatedExpandable(false);
             },
@@ -56,43 +56,43 @@ export default {
         }
     },
     created () {
-        const backgroundLayerConfigIds = [],
-            backgroundLayers = this.layerConfigsByAttributes({
-                backgroundLayer: true,
+        const baselayerConfigIds = [],
+            baselayers = this.layerConfigsByAttributes({
+                baselayer: true,
                 showInLayerTree: true
             });
 
-        if (backgroundLayers.length > 1) {
+        if (baselayers.length > 1) {
             const zIndex = [];
             let max = null,
                 layerWithMaxZIndex = null;
 
-            backgroundLayers.forEach((layer) => {
+            baselayers.forEach((layer) => {
                 zIndex.push(layer.zIndex);
             });
 
             max = Math.max(...zIndex);
-            layerWithMaxZIndex = backgroundLayers.filter(layer => layer.zIndex === max);
+            layerWithMaxZIndex = baselayers.filter(layer => layer.zIndex === max);
 
-            this.setTopBackgroundLayerId(layerWithMaxZIndex[0]?.id);
+            this.setTopBaselayerId(layerWithMaxZIndex[0]?.id);
         }
-        else if (backgroundLayers.length === 0) {
-            this.setTopBackgroundLayerId(null);
+        else if (baselayers.length === 0) {
+            this.setTopBaselayerId(null);
         }
         else {
-            this.setTopBackgroundLayerId(backgroundLayers[0]?.id);
+            this.setTopBaselayerId(baselayers[0]?.id);
         }
 
-        Object.values(this.allBackgroundLayerConfigs).forEach(layer => {
-            if (layer.id !== this.topBackgroundLayerId) {
-                backgroundLayerConfigIds.push(layer.id);
+        Object.values(this.allBaselayerConfigs).forEach(layer => {
+            if (layer.id !== this.topBaselayerId) {
+                baselayerConfigIds.push(layer.id);
             }
         });
-        this.setBackgroundLayerIds(backgroundLayerConfigIds);
+        this.setBaselayerIds(baselayerConfigIds);
 
         document.addEventListener("click", event => {
-            const backroundSwitcher = document.getElementById("basemap-switcher"),
-                isClickInside = backroundSwitcher ? backroundSwitcher.contains(event.target) : false;
+            const backroundSwitcher = document.getElementById("baselayer-switcher"),
+                isClickInside = backroundSwitcher.contains(event.target);
 
             if (!isClickInside) {
                 this.setActivatedExpandable(false);
@@ -100,31 +100,31 @@ export default {
         });
     },
     methods: {
-        ...mapMutations("Modules/BasemapSwitcher", [
+        ...mapMutations("Modules/BaselayerSwitcher", [
             "setActivatedExpandable",
-            "setBackgroundLayerIds",
-            "setTopBackgroundLayerId"
+            "setBaselayerIds",
+            "setTopBaselayerId"
         ]),
-        ...mapMutations(["setBackgroundLayerVisibility"]),
+        ...mapMutations(["setBaselayerVisibility"]),
         ...mapActions(["replaceByIdInLayerConfig"]),
-        ...mapActions("Modules/BasemapSwitcher", ["updateLayerVisibilityAndZIndex"]),
+        ...mapActions("Modules/BaselayerSwitcher", ["updateLayerVisibilityAndZIndex"]),
 
 
-        switchActiveBackgroundLayer (layerId) {
+        switchActiveBaselayer (layerId) {
             this.updateLayerVisibilityAndZIndex(layerId);
 
-            const selectableBackroundLayerIds = this.backgroundLayerIds,
+            const selectableBackroundLayerIds = this.baselayerIds,
                 index = selectableBackroundLayerIds.map(id => {
                     return id;
                 }).indexOf(layerId);
 
             selectableBackroundLayerIds.splice(index, 1);
-            if (this.topBackgroundLayerId !== null) {
-                selectableBackroundLayerIds.push(this.topBackgroundLayerId);
+            if (this.topBaselayerId !== null) {
+                selectableBackroundLayerIds.push(this.topBaselayerId);
             }
-            this.setBackgroundLayerIds(selectableBackroundLayerIds);
+            this.setBaselayerIds(selectableBackroundLayerIds);
 
-            this.setTopBackgroundLayerId(layerId);
+            this.setTopBaselayerId(layerId);
             this.setActivatedExpandable(false);
         }
     }
@@ -134,21 +134,21 @@ export default {
 
 <template>
     <div
-        v-if="backgroundLayerIds.length > 1"
-        id="basemap-switcher"
+        v-if="baselayerIds.length > 1"
+        id="baselayer-switcher"
         class="btn-group-vertical my-5 btn-group-background-switcher shadow"
         role="group"
     >
         <ul>
             <li
-                v-for="(layerId) in backgroundLayerIds"
+                v-for="(layerId) in baselayerIds"
                 :key="layerId"
             >
                 <button
                     v-if="activatedExpandable === true"
                     id="bs-expanded"
                     class="btn btn-light preview"
-                    @click="switchActiveBackgroundLayer(layerId)"
+                    @click="switchActiveBaselayer(layerId)"
                 >
                     <LayerPreview
                         :id="'layer-tree-layer-preview-' + layerId"
@@ -157,7 +157,7 @@ export default {
                 </button>
             </li>
             <button
-                v-if="topBackgroundLayerId === null"
+                v-if="topBaselayerId === null"
                 id="bs-placeholder"
                 class="btn btn-light preview top placeholder-button"
                 @click="setActivatedExpandable(!activatedExpandable)"
@@ -166,13 +166,13 @@ export default {
             </button>
             <button
                 v-else
-                id="bs-topBackgroundLayer"
+                id="bs-topBaselayer"
                 class="btn btn-light preview top"
                 @click="setActivatedExpandable(!activatedExpandable)"
             >
                 <LayerPreview
-                    :id="'layer-tree-layer-preview-' + topBackgroundLayerId"
-                    :layer-id="topBackgroundLayerId"
+                    :id="'layer-tree-layer-preview-' + topBaselayerId"
+                    :layer-id="topBaselayerId"
                 />
             </button>
         </ul>
@@ -182,7 +182,7 @@ export default {
 <style lang="scss" scoped>
     @import "~variables";
 
-    #basemap-switcher {
+    #baselayer-switcher {
         pointer-events: all;
     }
     .btn-group-background-switcher {

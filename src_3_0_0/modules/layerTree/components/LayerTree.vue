@@ -1,7 +1,7 @@
 <script>
 import {mapActions, mapMutations, mapGetters} from "vuex";
 import LayerTreeNode from "./LayerTreeNode.vue";
-import {treeBackgroundsKey, treeSubjectsKey} from "../../../shared/js/utils/constants";
+import {treeBaselayersKey, treeSubjectsKey} from "../../../shared/js/utils/constants";
 import sortBy from "../../../shared/js/utils/sortBy";
 import ElevatedButton from "../../../shared/modules/buttons/components/ElevatedButton.vue";
 
@@ -46,11 +46,11 @@ export default {
          */
         showLayerSelection () {
             const subjectDataLayerConfs = this.sort(this.allLayerConfigsStructured(treeSubjectsKey)),
-                allBackgroundLayerConfs = this.allLayerConfigsStructured(treeBackgroundsKey),
-                backgroundLayerConfs = allBackgroundLayerConfs.filter(config => !config.showInLayerTree);
+                allBaselayerConfs = this.allLayerConfigsStructured(treeBaselayersKey),
+                baselayerConfs = allBaselayerConfs.filter(config => !config.showInLayerTree);
 
             this.changeCurrentComponent({type: this.layerSelectionType, side: this.menuSide, props: {name: this.layerSelectionName}});
-            this.navigateForward({lastFolderName: "root", subjectDataLayerConfs, backgroundLayerConfs});
+            this.navigateForward({lastFolderName: "root", subjectDataLayerConfs, baselayerConfs});
             this.setLayerSelectionVisible(true);
         }
     }

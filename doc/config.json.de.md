@@ -5099,7 +5099,7 @@ Die Themenconfig definiert, welche Inhalte an welcher Stelle im Themenbaum vorko
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
-|Hintergrundkarten|ja|**[Hintergrundkarten](#markdown-header-themenconfighintergrundkarten)**||Definition der Hintergrundkarten.|false|
+|Baselayer|ja|**[Baselayer](#markdown-header-themenconfigbaselayer)**||Definition der Baselayer.|false|
 |Fachdaten|nein|**[Fachdaten](#markdown-header-themenconfigfachdaten)**||Definition der Fachdaten.|false|
 |Fachdaten_3D|nein|**[Fachdaten_3D](#markdown-header-themenconfigfachdaten_3d)**||Definition der Fachdaten für den 3D-Modus.|false|
 |Fachdaten_Zeit|nein|**[Fachdaten_Zeit](#markdown-header-themenconfigfachdaten_zeit)**||Definition der WMS-T Layer in einem eigenen Ordner.|false|
@@ -5109,7 +5109,7 @@ Die Themenconfig definiert, welche Inhalte an welcher Stelle im Themenbaum vorko
 ```json
 {
     "Themenconfig": {
-        "Hintergrundkarten": {},
+        "Baselayer": {},
         "Fachdaten": {},
         "Fachdaten_3D": {},
         "Fachdaten_Zeit": {}
@@ -5119,25 +5119,25 @@ Die Themenconfig definiert, welche Inhalte an welcher Stelle im Themenbaum vorko
 
 ***
 
-### Themenconfig.Hintergrundkarten
+### Themenconfig.Baselayer
 
 [type:Layer]: # (Themenconfig.Layer)
 [type:GroupLayer]: # (Themenconfig.GroupLayer)
 [type:Ordner]: # (Themenconfig.Ordner)
 
-Hier werden die Hintergrundkarten definiert
+Hier werden die Baselayer definiert
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
-|name|nein|String|"Hintergrundkarten"| Name der Schaltfläche für Hintergrundkarten im custom tree und default tree.|false|
+|name|nein|String|"Baselayer"| Name der Schaltfläche für Baselayer im custom tree und default tree.|false|
 |Layer|ja|**[Layer](#markdown-header-themenconfiglayer)**/**[GroupLayer](#markdown-header-themenconfiggrouplayer)**[]||Definition der Layer.|false|
 |Ordner|nein|**[Ordner](#markdown-header-themenconfigordner)**[]||Definition der Ordner.|false|
 
 **Beispiel**
 ```
 #!json
-"Hintergrundkarten": {
-    "name": "Meine Hintergrundkarten",
+"Baselayer": {
+    "name": "Meine Baselayer",
     "Layer": [
         {
             "id": "123"
@@ -5239,7 +5239,7 @@ Definition für WMS-T Layer für den `tree.type` `custom` und `default`. Die Lay
 [type:GroupLayer]: # (Themenconfig.GroupLayer)
 [type:Ordner]: # (Themenconfig.Ordner)
 
-Hier werden die Ordner definiert. Ordner können auch verschachtelt konfiguriert werden. Ordner können unterhalb der Fachdaten und der Hintergrundkarten konfiguriert werden. Beim treeType 'default' können die 3D-Daten unter 'Fachdaten_3D' auch als Ordner konfiguriert werden.
+Hier werden die Ordner definiert. Ordner können auch verschachtelt konfiguriert werden. Ordner können unterhalb der Fachdaten und der Baselayer konfiguriert werden. Beim treeType 'default' können die 3D-Daten unter 'Fachdaten_3D' auch als Ordner konfiguriert werden.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
@@ -5265,11 +5265,11 @@ Hier werden die Ordner definiert. Ordner können auch verschachtelt konfiguriert
     ]
 }
 ```
-**Beispiel Hintergrundkarten-Ordner mit 2 Layern**
+**Beispiel Baselayer-Ordner mit 2 Layern**
 
 ```json
 {
-    "Hintergrundkarten": {
+    "Baselayer": {
         "Ordner": [{
             "Titel": "Karten",
             "isFolderSelectable": false,
@@ -5288,11 +5288,11 @@ Hier werden die Ordner definiert. Ordner können auch verschachtelt konfiguriert
     }
 }
 ```
-**Beispiel Hintergrundkarten-Ordner, daneben sind Layer konfiguriert**
+**Beispiel Baselayer-Ordner, daneben sind Layer konfiguriert**
 
 ```json
 {
-    "Hintergrundkarten":{
+    "Baselayer":{
         "Ordner": [{
             "Titel": "Karten",
             "isFolderSelectable": false,
