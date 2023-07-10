@@ -5176,7 +5176,7 @@ The `Themenconfig` entry defines the contents and their order in the topic selec
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
-|Hintergrundkarten|yes|**[Hintergrundkarten](#markdown-header-themenconfighintergrundkarten)**||Background map definition.|false|
+|Baselayer|yes|**[Baselayer](#markdown-header-themenconfigbaselayer)**||Baselayer definition.|false|
 |Fachdaten|no|**[Fachdaten](#markdown-header-themenconfigfachdaten)**||Technical data definition.|false|
 |Fachdaten_3D|no|**[Fachdaten_3D](#markdown-header-themenconfigfachdaten_3d)**||Technical data definition used in 3D mode.|false|
 |Fachdaten_Zeit|no|**[Fachdaten_Zeit](#markdown-header-themenconfigfachdaten_zeit)**||Definition of WMS-T layers in their own folder.|false|
@@ -5186,7 +5186,7 @@ The `Themenconfig` entry defines the contents and their order in the topic selec
 ```json
 {
     "Themenconfig": {
-        "Hintergrundkarten": {},
+        "Baselayer": {},
         "Fachdaten": {},
         "Fachdaten_3D": {},
         "Fachdaten_Zeit": {}
@@ -5196,17 +5196,17 @@ The `Themenconfig` entry defines the contents and their order in the topic selec
 
 ***
 
-### Themenconfig.Hintergrundkarten
+### Themenconfig.Baselayer
 
 [type:Layer]: # (Themenconfig.Layer)
 [type:GroupLayer]: # (Themenconfig.GroupLayer)
 [type:Ordner]: # (Themenconfig.Ordner)
 
-Background map definition.
+Baselayer definition.
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
-|name|no|String|"Hintergrundkarten"|For `tree.type` `default` and `custom`, name of the background map button area.|false|
+|name|no|String|"Baselayer"|For `tree.type` `default` and `custom`, name of the baselayer button area.|false|
 |Layer|yes|**[Layer](#markdown-header-themenconfiglayer)**/**[GroupLayer](#markdown-header-themenconfiggrouplayer)**[]||Layer definition.|false|
 |Ordner|no|**[Ordner](#markdown-header-themenconfigordner)**[]||Folder definition.|false|
 
@@ -5214,8 +5214,8 @@ Background map definition.
 
 ```json
 {
-    "Hintergrundkarten": {
-        "name": "My background maps",
+    "Baselayer": {
+        "name": "My baselayers",
         "Layer": [
             {
                 "id": "123"
@@ -5320,7 +5320,7 @@ Definition for WMS-T layers `tree.type` `custom` and `default`. The layers can a
 [type:GroupLayer]: # (Themenconfig.GroupLayer)
 [type:Ordner]: # (Themenconfig.Ordner)
 
-Folder definition. Folders may also be nested. Folders can be configured below the "Fachdaten" and "Hintergrundkarten". With treeType 'default' the 3D data can also be configured as a folder under 'Fachdaten_3D'.
+Folder definition. Folders may also be nested. Folders can be configured below the "Fachdaten" and "Baselayer". With treeType 'default' the 3D data can also be configured as a folder under 'Fachdaten_3D'.
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
@@ -5348,11 +5348,11 @@ Folder definition. Folders may also be nested. Folders can be configured below t
     }
 }
 ```
-**Example Hintergrundkarten-folder with 2 layers**
+**Example Baselayer-folder with 2 layers**
 
 ```json
 {
-    "Hintergrundkarten":{
+    "Baselayer":{
         "Ordner": [{
             "Titel": "Maps",
             "isFolderSelectable": false,
@@ -5372,11 +5372,11 @@ Folder definition. Folders may also be nested. Folders can be configured below t
 }
 ```
 
-**Example Hintergrundkarten-folder, next to it are configured layers**
+**Example Baselayer-folder, next to it are configured layers**
 
 ```json
 {
-    "Hintergrundkarten":{
+    "Baselayer":{
         "Ordner": [{
             "Titel": "Maps",
             "isFolderSelectable": false,

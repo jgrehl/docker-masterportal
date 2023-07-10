@@ -95,13 +95,13 @@ describe("src_3_0_0/modules/layerSelection/components/LayerSelection.vue", () =>
                 }
             },
             getters: {
-                invisibleBackgroundLayerConfigs: sinon.stub()
+                invisibleBaselayerConfigs: sinon.stub()
             }
         });
         LayerSelection.getters.layersToAdd = () => layersToAdd;
         LayerSelection.state.visible = true;
         store.commit("Modules/LayerSelection/setSubjectDataLayerConfs", subjectDataLayers);
-        store.commit("Modules/LayerSelection/setBackgroundLayerConfs", layersBG);
+        store.commit("Modules/LayerSelection/setBaselayerConfs", layersBG);
     });
 
     afterEach(() => {
@@ -119,7 +119,7 @@ describe("src_3_0_0/modules/layerSelection/components/LayerSelection.vue", () =>
     });
     it("renders the LayerSelection without layers", () => {
         store.commit("Modules/LayerSelection/setSubjectDataLayerConfs", []);
-        store.commit("Modules/LayerSelection/setBackgroundLayerConfs", []);
+        store.commit("Modules/LayerSelection/setBaselayerConfs", []);
         wrapper = shallowMount(LayerSelectionComponent, {
             global: {
                 plugins: [store]
@@ -204,12 +204,12 @@ describe("src_3_0_0/modules/layerSelection/components/LayerSelection.vue", () =>
     });
 
     describe("watcher", () => {
-        it("invisibleBackgroundLayerConfigs changed", () => {
+        it("invisibleBaselayerConfigs changed", () => {
             const newValue = [{
                 id: "WMTS",
                 name: "EOC Basemap",
                 visibility: false,
-                backgroundLayer: true,
+                baselayer: true,
                 showInLayerTree: false
             }];
 
@@ -218,10 +218,10 @@ describe("src_3_0_0/modules/layerSelection/components/LayerSelection.vue", () =>
                     plugins: [store]
                 }});
 
-            wrapper.vm.$options.watch.invisibleBackgroundLayerConfigs.handler.call(wrapper.vm, newValue);
-            expect(store.state.Modules.LayerSelection.backgroundLayerConfs).to.be.an("Array");
-            expect(store.state.Modules.LayerSelection.backgroundLayerConfs.length).to.be.equals(1);
-            expect(store.state.Modules.LayerSelection.backgroundLayerConfs).to.be.deep.equals(newValue);
+            wrapper.vm.$options.watch.invisibleBaselayerConfigs.handler.call(wrapper.vm, newValue);
+            expect(store.state.Modules.LayerSelection.baselayerConfs).to.be.an("Array");
+            expect(store.state.Modules.LayerSelection.baselayerConfs.length).to.be.equals(1);
+            expect(store.state.Modules.LayerSelection.baselayerConfs).to.be.deep.equals(newValue);
         });
     });
 });

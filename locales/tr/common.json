@@ -71,7 +71,7 @@
         "showAllTopics": "tüm konular göster",
         "securedAllTopics": "güvenli konular",
         "category": "kategori",
-        "backgroundMaps": "arka plan haritası",
+        "baselayers": "arka plan haritası",
         "subjectData": "teknik veriler",
         "subjectData3D": "3D veriler",
         "subjectDataTime": "Zaman serisi",
