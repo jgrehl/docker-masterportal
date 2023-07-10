@@ -4,7 +4,11 @@ import {expect} from "chai";
 const {
     addSearchInterfaceInstances,
     addSearchResults,
-    addSuggestionItem
+    addSuggestionItem,
+    addSelectedSearchResults,
+    removeSelectedSearchResults
+
+
 } = mutations;
 
 describe("src/modules/searchBar/store/mutationsSearchBar.spec.js", () => {
