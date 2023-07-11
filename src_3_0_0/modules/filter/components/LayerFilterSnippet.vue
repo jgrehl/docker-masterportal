@@ -240,7 +240,7 @@ export default {
                 console.warn(error);
             });
             this.$nextTick(() => {
-                this.api.setServiceByLayerModel(layerId, this.mapHandler.getLayerModelByFilterId(filterId), this.isExtern(), error => {
+                this.api.setServiceByLayerModel(layerId, this.mapHandler.getLayerModelByFilterId(filterId), this.isExtern(), this.layerConfig?.collection, error => {
                     console.warn(error);
                 });
             });
