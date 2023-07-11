@@ -3,6 +3,7 @@ import crs from "@masterportal/masterportalapi/src/crs";
 import {expect} from "chai";
 import sinon from "sinon";
 import {stylefunction} from "ol-mapbox-style";
+import Collection from "ol/Collection";
 
 import Layer2dVectorTile from "../../../js/layer2dVectorTile";
 
@@ -43,20 +44,28 @@ describe("src_3_0_0/core/js/layers/layer2dVectorTile.js", () => {
         sinon.stub(console, "error").callsFake(error);
         warn = sinon.spy();
         sinon.stub(console, "warn").callsFake(warn);
-
         mapCollection.clear();
+
         const map = {
             id: "ol",
             mode: "2D",
+            addInteraction: sinon.stub(),
+            removeInteraction: sinon.stub(),
+            addLayer: () => sinon.stub(),
             getView: () => {
                 return {
                     getProjection: () => {
                         return {
                             getCode: () => "EPSG:25832"
                         };
-                    }
+                    },
+                    getResolutions: () => [2000, 1000]
                 };
-            }
+            },
+            getLayers: () => {
+                return new Collection();
+            },
+            on: () => sinon.stub()
         };
 
         mapCollection.addMap(map, "2D");
@@ -524,6 +533,30 @@ describe("src_3_0_0/core/js/layers/layer2dVectorTile.js", () => {
             expect(returnedFont2).to.equal("MasterPortalFont");
             expect(returnedFont3).to.equal("MasterPortalFont");
         });
+    });
+
+    describe("showFeaturesByIds", function () {
+        // it("should do nothing if first param is not an array", () => {
+        //     let vtLayer = null,
+        //         tileLoadFunction = null,
+        //         source = null;
+        //     vtLayer =  new Layer2dVectorTile(attrs);
+        //     source = vtLayer.getLayerSource();
+        //     tileLoadFunction = source.getTileLoadFunction();
+        //     vtLayer.showFeaturesByIds();
+        //     expect(source.getTileLoadFunction()).to.deep.equal(tileLoadFunction);
+        // });
+        // it("should set tileLoadFunction", () => {
+        //     let vtLayer = null,
+        //         tileLoadFunction = null,
+        //         source = null;
+        //     vtLayer = new Layer2dVectorTile(attrs);
+        //     source = vtLayer.getLayerSource();
+        //     tileLoadFunction = source.getTileLoadFunction();
+        //     expect(tileLoadFunction.name).to.be.equal("defaultLoadFunction");
+        //     vtLayer.showFeaturesByIds([]);
+        //     expect(source.getTileLoadFunction()).to.not.be.equal("defaultLoadFunction");
+        // });
     });
 
     describe("fetchSpriteData", () => {
