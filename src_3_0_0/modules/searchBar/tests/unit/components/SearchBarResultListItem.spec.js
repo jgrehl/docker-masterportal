@@ -55,8 +55,8 @@ describe("src_3_0_0/modules/searchBar/components/SearchBarResultListItem.vue", (
 
 
     describe("test the result item", () => {
-        it("shows toolTip if available", async () => {
-            wrapper = await mount(SearchBarSuggestionListItemComponent, {
+        it("shows toolTip if available", () => {
+            wrapper = mount(SearchBarSuggestionListItemComponent, {
                 global: {
                     plugins: [store]
                 },
@@ -64,11 +64,11 @@ describe("src_3_0_0/modules/searchBar/components/SearchBarResultListItem.vue", (
                     searchResult: searchResults[0]
                 }
             });
-            await wrapper.vm.$nextTick();
+            wrapper.vm.$nextTick();
             expect(wrapper.find("button").html()).to.contain("toolTipAvailable");
         });
-        it("shows name if tooltip is undefined", async () => {
-            wrapper = await mount(SearchBarSuggestionListItemComponent, {
+        it("shows name if tooltip is undefined", () => {
+            wrapper = mount(SearchBarSuggestionListItemComponent, {
                 global: {
                     plugins: [store]
                 },
@@ -76,11 +76,11 @@ describe("src_3_0_0/modules/searchBar/components/SearchBarResultListItem.vue", (
                     searchResult: searchResults[1]
                 }
             });
-            await wrapper.vm.$nextTick();
+            wrapper.vm.$nextTick();
             expect(wrapper.find("button").html()).to.contain("Bei dem Neuen Krahn 2");
         });
-        it("updates the clickStatus of a single search result item", async () => {
-            wrapper = await mount(SearchBarSuggestionListItemComponent, {
+        it("updates the clickStatus of a single search result item", () => {
+            wrapper = mount(SearchBarSuggestionListItemComponent, {
                 global: {
                     plugins: [store]
                 },
@@ -88,7 +88,7 @@ describe("src_3_0_0/modules/searchBar/components/SearchBarResultListItem.vue", (
                     searchResult: searchResults[1]
                 }
             });
-            await wrapper.vm.updateClickStatus(true);
+            wrapper.vm.updateClickStatus(true);
             expect(wrapper.vm.clickStatus).to.be.true;
         });
     });
