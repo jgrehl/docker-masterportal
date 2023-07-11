@@ -4,6 +4,7 @@ import layerCollection from "../../../../../core/layers/js/layerCollection";
 import store from "../../../../../app-store";
 import {nextTick} from "vue";
 import MapHandler from "../../../utils/mapHandler.js";
+import Layer2dVectorTile from "../../../../../core/layers/js/layer2dVectorTile";
 
 describe("src/module/tools/filter/utils/mapHandler.js", () => {
     let lastError = false,
@@ -621,6 +622,41 @@ describe("src/module/tools/filter/utils/mapHandler.js", () => {
             map.addItemsToLayer("filterId", []);
 
             expect(called_showFeaturesByIds).to.be.false;
+        });
+        it("should push items to filteredIds but with the unique id of the feature and not the ol feature id", () => {
+            let called_showFeaturesByIds = false;
+            const map = new MapHandler({
+                getLayerByLayerId: () => false,
+                showFeaturesByIds: (layerId, ids) => {
+                    called_showFeaturesByIds = ids;
+                },
+                createLayerIfNotExists: () => false,
+                zoomToFilteredFeatures: () => false,
+                zoomToExtent: () => false,
+                addLayerByLayerId: () => false,
+                getLayers: () => false,
+                setParserAttributeByLayerId: () => false
+            }, onerror.call);
+
+            sinon.stub(layerCollection, "getLayerById").returns(
+                sinon.createStubInstance(Layer2dVectorTile)
+            );
+            map.getLayerModelByFilterId = () => {
+                return {
+                    typ: "VectorTile"
+                };
+            };
+            map.layers.filterId = {
+                get: () => false
+            };
+            map.filteredIds.filterId = [];
+            map.addItemsToLayer("filterId", [
+                {get: () => 10},
+                {get: () => 20},
+                {get: () => 30}
+            ], false);
+            expect(map.filteredIds.filterId).to.deep.equal([10, 20, 30]);
+            expect(called_showFeaturesByIds).to.deep.equal([10, 20, 30]);
         });
         it("should push items to filteredIds and try to set them on the map if extern is false", () => {
             let called_showFeaturesByIds = false;
