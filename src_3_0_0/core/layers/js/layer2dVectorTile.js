@@ -1,6 +1,8 @@
 import axios from "axios";
 import {vectorTile} from "@masterportal/masterportalapi";
+import Cluster from "ol/source/Cluster";
 
+import store from "../../../app-store";
 import Layer2d from "./layer2d";
 
 /**
@@ -36,6 +38,8 @@ Layer2dVectorTile.prototype = Object.create(Layer2d.prototype);
 /**
  * Creates a layer of type WFS by using wfs-layer of the masterportalapi.
  * Sets all needed attributes at the layer and the layer source.
+ * Also register a listener on the map which is triggert if all feauters
+ * in current extent are loaded. This will fire a 'featuresloadend' event.
  * @param {Object} attributes The attributes of the layer configuration.
  * @returns {void}
  */
@@ -43,7 +47,17 @@ Layer2dVectorTile.prototype.createLayer = function (attributes) {
     const rawLayerAttributes = this.getRawLayerAttributes(attributes),
         layerParams = this.getLayerParams(attributes);
 
+
     this.setLayer(vectorTile.createLayer(rawLayerAttributes, {layerParams}));
+    store.dispatch("Maps/registerListener", {type: "loadend", listener: () => {
+        if (typeof this.layer.getSource !== "function" || typeof this.layer.getSource()?.getFeaturesInExtent !== "function") {
+            return;
+        }
+        this.layer.getSource().dispatchEvent({
+            type: "featuresloadend",
+            features: this.layer.getSource().getFeaturesInExtent(store.getters["Maps/getCurrentExtent"])
+        });
+    }});
 };
 
 /**
@@ -223,4 +237,39 @@ Layer2dVectorTile.prototype.isStyleValid = function (style) {
 Layer2dVectorTile.prototype.fetchSpriteData = function (spriteUrl) {
     return axios.get(spriteUrl)
         .then(resp => resp.data);
+};
+
+/**
+ * Shows the features by given feature id's or load features hidden if second param is true.
+ * @param {String[]} featureIdList The feature id's of the rendered features.
+ * @param {Boolean} loadHidden true if all features should be hidden, false otherwise. Default is false.
+ * @returns {void}
+ */
+Layer2dVectorTile.prototype.showFeaturesByIds = function (featureIdList, loadHidden = false) {
+    const source = this.getLayerSource() instanceof Cluster ? this.getLayerSource().getSource() : this.getLayerSource();
+
+    if (!source || !Array.isArray(featureIdList)) {
+        return;
+    }
+    source.setTileLoadFunction((tile, url) => {
+        tile.setLoader((extent, resolution, projection) => {
+            fetch(url).then((response) => {
+                response.arrayBuffer().then((data) => {
+                    const format = tile.getFormat(),
+                        features = format.readFeatures(data, {
+                            extent: extent,
+                            featureProjection: projection
+                        });
+
+                    tile.setFeatures(loadHidden ? features : features.filter(feature => featureIdList.includes(feature.get("id"))));
+                });
+            });
+        });
+    });
+    if (!loadHidden && this.getLayer().getOpacity() === 0) {
+        source.once("featuresloadend", () => {
+            this.getLayer().setOpacity(1);
+        });
+    }
+    source.refresh();
 };
