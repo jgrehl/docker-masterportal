@@ -1987,6 +1987,7 @@ An object to define a layer to filter with.
 |filterOnMove|no|Boolean||If it is `true`, the layer will be filtered dynamically after the map moves. Only works with `multiLayerSelector`: `false`. With this combination the filter is triggerd when the accordeon will be opened.|false|
 |minZoom|no|Number||The minimum zoom level for current filter, if current zoom level is smaller than the minimum zoom level, the current filter will be deactivated.|false|
 |maxZoom|no|Number||The maximum zoom level for current filter, if current zoom level is bigger than the maximum zoom level, the current filter will be deactivated.|false|
+|collection|no|String||ONLY VectorTiles: The collection to filter. If it is set, the layer needs a `baseOAFUrl` to start the api requests|false|
 
 **Example**
 
