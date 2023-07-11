@@ -158,7 +158,7 @@ describe("src_3_0_0/modules/searchBar/components/SearchBarResultList.vue", () =>
                 }
             });
             wrapper.vm.prepareShowAllResults("Straße");
-            expect(wrapper.vm.getter.searchResultsActive).to.be.true;
+            expect(wrapper.vm.searchResultsActive).to.be.true;
             expect(wrapper.vm.currentShowAllList[0]).to.deep.equal(searchResults[0]);
         });
     });
