@@ -190,11 +190,45 @@ function getLayers () {
     return store.getters.allLayerConfigs;
 }
 
+/**
+ * Calls successs-function on loaded features of a vector tile layer by layer id and the collection.
+ * @param {Number} layerId The layerId to get the model by.
+ * @param {String} collection The collection which the features are wanted for.
+ * @param {Function} onsuccess The callback function to call on success - returns {ol/render/Feature[]}.
+ * @returns {void}
+ */
+function getVectorTileFeaturesByLayerId (layerId, collection, onsuccess) {
+    if (!collection || typeof layerId === "undefined") {
+        return;
+    }
+    const layerModel = layerCollection.getLayerById(layerId);
+
+    if (layerModel) {
+        layerModel.getLayerSource().once("featuresloadend", event => {
+            const renderedFeatures = event.features;
+
+            onsuccess(renderedFeatures.filter(feature => {
+                if (typeof feature?.getProperties !== "function" || feature.getProperties()?.layer !== collection) {
+                    return false;
+                }
+                return true;
+            }));
+        });
+        layerModel.getLayer().setOpacity(0);
+        layerModel.showFeaturesByIds([], true);
+    }
+    else {
+        console.warn("VectorTile-Layer with id " + layerId + " not found in layerCollection.");
+    }
+
+}
+
 export default {
     getMapProjection,
     getFeaturesByLayerId,
     getLayerByLayerId,
     getCurrentExtent,
+    getVectorTileFeaturesByLayerId,
     isFeatureInMapExtent,
     isFeatureInGeometry,
     zoomToFilteredFeatures,

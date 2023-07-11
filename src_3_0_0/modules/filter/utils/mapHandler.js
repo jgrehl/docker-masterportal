@@ -321,8 +321,13 @@ export default class MapHandler {
         }
 
         items.forEach(item => {
-            if (isObject(item) && typeof item.getId === "function") {
-                this.filteredIds[filterId].push(item.getId());
+            if (isObject(item)) {
+                if (layerConfig.typ === "VectorTile") {
+                    this.filteredIds[filterId].push(item.get("id"));
+                }
+                else if (typeof item.getId === "function") {
+                    this.filteredIds[filterId].push(item.getId());
+                }
             }
         });
 
