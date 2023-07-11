@@ -258,6 +258,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceElasticSea
                     },
                     category: "modules.searchBar.type.subject",
                     id: "100",
+                    featureButtons: ["addLayer"],
                     icon: "bi-list-ul",
                     name: "Test abc",
                     toolTip: "Test abc (md name)"
