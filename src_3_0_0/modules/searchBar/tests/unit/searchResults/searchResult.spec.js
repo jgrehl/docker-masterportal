@@ -17,6 +17,7 @@ describe("src_3_0_0/modules/searchBar/searchHits/searchResult.js", () => {
                 index: undefined,
                 name: undefined,
                 searchInterfaceId: undefined,
+                featureButtons: [],
                 displayedInfo: "",
                 icon: "",
                 imagePath: "",
@@ -33,6 +34,7 @@ describe("src_3_0_0/modules/searchBar/searchHits/searchResult.js", () => {
                     name: "ghi",
                     searchInterfaceId: "gaz",
                     displayedInfo: "jkl",
+                    featureButtons: [],
                     icon: "pqr",
                     imagePath: "stu",
                     toolTip: "xyz"
