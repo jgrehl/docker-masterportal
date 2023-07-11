@@ -463,6 +463,7 @@ Please note the [VTL specification](https://docs.mapbox.com/vector-tiles/specifi
 |url|yes|String||Service URL|`"https://example.com/3857/tile/{z}/{y}/{x}.pbf"`|
 |useProxy|no|Boolean|`false`|_Deprecated in the next major release. *[GDI-DE](https://www.gdi-de.org/en)* recommends setting CORS headers on the required services instead._ Only used for GFI requests. The request will contain the requested URL as path, with dots replaced by underscores.|`false`|
 |gfiTheme|yes|String/Object||Display style of GFI information for this layer. Unless `"default"` is chosen, custom templates may be used to show GFI information in another format than the default table style.|`"default"`|
+|baseOAFUrl|no|String||The base url which points to the oaf api. Is only needed if a Filter for this layer is configured. If not specified, the Filter won't work.|`"https://base.url.example/rest/services/xplansyn"`|
 
 **VectorTile example:**
 
