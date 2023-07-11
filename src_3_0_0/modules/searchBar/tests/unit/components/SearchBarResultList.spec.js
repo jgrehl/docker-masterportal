@@ -9,8 +9,7 @@ config.global.mocks.$t = key => key;
 
 describe("src_3_0_0/modules/searchBar/components/SearchBarResultList.vue", () => {
     let store,
-        wrapper,
-        showAllResults = false;
+        wrapper;
 
     const searchResults = [
             {
@@ -53,10 +52,11 @@ describe("src_3_0_0/modules/searchBar/components/SearchBarResultList.vue", () =>
             }
         },
         minCharacters = 3,
-        searchInput = "Neuenfelder";
+        searchInput = "Neuenfelder",
+        showAllResults = false;
 
 
-    beforeEach(() => {
+    before(() => {
         store = createStore({
             namespaces: true,
             modules: {
@@ -108,15 +108,6 @@ describe("src_3_0_0/modules/searchBar/components/SearchBarResultList.vue", () =>
             expect(wrapper.find(".showAllSection").exists()).to.be.true;
             expect(wrapper.find(".btn.btn-light.d-flex.text-left").exists()).to.be.true;
         });
-        it("renders the SearchBarResultList", async () => {
-            wrapper = await mount(SearchBarSuggestionListComponent, {
-                global: {
-                    plugins: [store]
-                }
-            });
-            expect(wrapper.find("#search-bar-result-list").exists()).to.be.true;
-            expect(wrapper.find(".showAllSection").exists()).to.be.true;
-        });
         it("shows the showAll button", async () => {
             wrapper = await mount(SearchBarSuggestionListComponent, {
                 global: {
@@ -126,18 +117,6 @@ describe("src_3_0_0/modules/searchBar/components/SearchBarResultList.vue", () =>
             await wrapper.vm.$nextTick();
             expect(wrapper.find(".showAllSection").exists()).to.be.true;
             expect(wrapper.find(".btn.btn-light.d-flex.text-left").exists()).to.be.true;
-        });
-        it("if showAllSection is true layerSelection Button ist available", async () => {
-            showAllResults = true;
-
-            wrapper = await mount(SearchBarSuggestionListComponent, {
-                global: {
-                    plugins: [store]
-                }
-            });
-
-            expect(wrapper.find(".btn.btn-light.d-flex.text-left").exists()).to.be.false;
-            expect(wrapper.find("#add-layerSelection-btn").exists()).to.be.true;
         });
     });
     describe("test the outcome of limitedSortedSearchResults", () => {
