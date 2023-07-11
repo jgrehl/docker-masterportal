@@ -10,6 +10,7 @@ import InterfaceGeojsonIntern from "./interface.geojson.intern.js";
 import InterfaceGeojsonExtern from "./interface.geojson.extern.js";
 import InterfaceStaIntern from "./interface.sta.intern.js";
 import InterfaceStaExtern from "./interface.sta.extern.js";
+import InterfaceVectorTilesIntern from "./interface.vectortiles.intern";
 /**
  * FilterApi is the api to use in vue environment. It encapsulates the filter interfaces.
  * @class
@@ -47,7 +48,11 @@ export default class FilterApi {
                     getFeaturesByLayerId: openlayerFunctions.getFeaturesByLayerId,
                     isFeatureInMapExtent: openlayerFunctions.isFeatureInMapExtent,
                     isFeatureInGeometry: openlayerFunctions.isFeatureInGeometry}),
-                staExtern: new InterfaceStaExtern()
+                staExtern: new InterfaceStaExtern(),
+                vectortilesIntern: new InterfaceVectorTilesIntern(FilterApi.intervalRegister, {
+                    getFeaturesByLayerId: openlayerFunctions.getVectorTileFeaturesByLayerId,
+                    isFeatureInMapExtent: openlayerFunctions.isFeatureInMapExtent,
+                    isFeatureInGeometry: openlayerFunctions.isFeatureInGeometry})
             };
         }
     }
@@ -66,16 +71,18 @@ export default class FilterApi {
      * @param {String} layerId the layer id
      * @param {ol/Layer} layerModel the layer model
      * @param {Boolean} extern if true, the type given by layerModel is used, otherwise "tree" is used
+     * @param {String} collection the collection - needed for vectortiles
      * @param {Function} onerror a function(Error)
      * @returns {void}
      */
-    setServiceByLayerModel (layerId, layerModel, extern, onerror) {
+    setServiceByLayerModel (layerId, layerModel, extern, collection, onerror) {
         if (!isObject(layerModel)) {
             return;
         }
         const type = layerModel.typ.toLowerCase(),
             featureNS = layerModel.featureNS,
             url = layerModel.url,
+            vectorTilesBaseUrl = layerModel.baseOAFUrl,
             featureType = layerModel.featureType;
 
         if (type === "wfs") {
@@ -131,6 +138,26 @@ export default class FilterApi {
             }
             else {
                 onerror(new Error("FilterApi.setServiceByLayerModel: Filtering sta extern is not supported."));
+            }
+        }
+        else if (type === "vectortile") {
+            if (!extern) {
+                if (!vectorTilesBaseUrl) {
+                    onerror(new Error("FilterApi.setServiceByLayerModel: VectorTiles layer must have set the 'baseOAFUrl' param."));
+                    return;
+                }
+                this.service = {
+                    type,
+                    extern,
+                    layerId,
+                    url: vectorTilesBaseUrl,
+                    collection,
+                    namespace: featureNS,
+                    limit: typeof layerModel.limit === "undefined" ? 400 : layerModel.limit
+                };
+            }
+            else {
+                onerror(new Error("FilterApi.setServiceByLayerModel: Filtering vectortiles extern is not supported."));
             }
         }
         else if (typeof onerror === "function") {
@@ -368,6 +395,12 @@ export default class FilterApi {
         }
         else if (type === "sensorthings" && service.extern) {
             return FilterApi.interfaces.staExtern;
+        }
+        else if (type === "vectortile" && !service.extern) {
+            return FilterApi.interfaces.vectortilesIntern;
+        }
+        else if (type === "vectortile" && service.extern) {
+            return FilterApi.interfaces.oafExtern;
         }
         else if (typeof onerror === "function") {
             onerror(new Error("FilterApi.getInterfaceByService: Unknown service type " + type));

@@ -1911,6 +1911,7 @@ Die Konfiguration eines Layers.
 |filterOnMove|nein|Boolean||Wenn auf `true` eingestellt, wird der Layer bei Kartenbewergung dynamisch gefilteret. Funktioniert nur in Verbindung mit `multiLayerSelector`: `false`. Löst in dieser Verbindung beim Öffnen des Akkordeons die Filterung aus.|false|
 |minZoom|nein|Number||Die minimale Zoomstufe. Wenn die aktuelle Zoomstufe kleiner als “minZoom” ist, wird der aktuelle Filter deaktiviert.|false|
 |maxZoom|nein|Number||Die maximale Zoomstufe. Wenn die aktuelle Zoomstufe größer als “maxZoom” ist, wird der aktuelle Filter deaktiviert.|false|
+|collection|no|String||NUR FÜR VectorTiles: Die collection auf die gefiltert werden soll. Wenn es gesetzt ist, muss der parameter `baseOAFUrl` an dem layer gesetzt sein um die API Anfragen zu starten.|false|
 
 **Beispiel**
 
