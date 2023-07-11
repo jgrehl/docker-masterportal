@@ -5,8 +5,6 @@ import wmsGFIUtil from "../../../../../../shared/js/utils/getWmsFeaturesByMimeTy
 import actions from "../../../../store/actions/actionsSearchBarSearchResult";
 
 const {
-    activateLayerInTopicTree,
-    addLayerToTopicTree,
     highligtFeature,
     openGetFeatureInfo,
     openTopicTree,
@@ -32,18 +30,6 @@ describe("src/modules/searchBar/store/actions/actionsSearchBarSearchResult.spec.
 
     after(() => {
         sinon.restore();
-    });
-
-    describe("activateLayerInTopicTree", () => {
-        it("activateLayerInTopicTree", () => {
-            activateLayerInTopicTree();
-        });
-    });
-
-    describe("addLayerToTopicTree", () => {
-        it("addLayerToTopicTree", () => {
-            addLayerToTopicTree();
-        });
     });
 
     describe("highligtFeature", () => {
