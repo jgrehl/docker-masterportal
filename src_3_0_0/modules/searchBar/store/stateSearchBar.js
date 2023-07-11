@@ -35,7 +35,7 @@ const state = {
     searchResults: [],
     selectedSearchResults: [],
     showAllResults: false,
-    searchResultsActive: true // still needed?
+    searchResultsActive: true
 };
 
 export default state;
