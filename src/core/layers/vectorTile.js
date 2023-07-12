@@ -24,7 +24,7 @@ export default function VectorTileLayer (attrs) {
     Layer.call(this, Object.assign(defaults, attrs), this.layer, !attrs.isChildLayer);
 
     // set the style only at the first selection of the layer
-    if (attrs.visibility) {
+    if (attrs.isSelected) {
         this.setConfiguredLayerStyle();
     }
     else {
