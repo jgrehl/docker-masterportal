@@ -251,7 +251,7 @@ export default class InterfaceVectorTilesIntern {
             searchInMapExtent = commands?.searchInMapExtent,
             paging = commands?.paging > 0 ? commands.paging : 1000;
 
-        this.getFeaturesByLayerId(service?.layerId, service?.collection, features => {
+        this.getFeaturesByLayerId(service?.layerId, features => {
             this.filterGivenFeatures(features, filterId, snippetId, service, rules, filterGeometry, searchInMapExtent, paging, onsuccess);
         });
     }

@@ -196,48 +196,23 @@ describe("src/modules/tools/filter/interfaces/filter.api.js", () => {
                 const filterApi = new FilterApi(0),
                     layerModel = {
                         typ: "VectorTile",
-                        featureNS: "foob/boof",
-                        baseOAFUrl: "foo",
-                        featureType: "bar",
-                        limit: 400
+                        featureType: "bar"
                     },
                     expected = {
                         type: "vectortile",
                         extern: false,
-                        layerId: 0,
-                        url: "foo",
-                        collection: "wooo",
-                        namespace: "foob/boof",
-                        limit: 400
+                        layerId: 0
                     };
 
                 filterApi.setServiceByLayerModel(0, layerModel, false, "wooo");
                 expect(filterApi.service).to.deep.equal(expected);
             });
-            it("should call error functoin in vectortiles if no baseOAFUrl is given", () => {
-                const filterApi = new FilterApi(0),
-                    layerModel = {
-                        typ: "VectorTile",
-                        featureNS: "foob/boof",
-                        baseOAFUrl: "foo",
-                        featureType: "bar",
-                        limit: 400
-                    },
-                    expected = new Error("FilterApi.setServiceByLayerModel: VectorTiles layer must have set the 'baseOAFUrl' param.");
-
-                filterApi.setServiceByLayerModel(0, layerModel, false, undefined, error => {
-                    expect(error).to.deep.equal(expected);
-                });
-            });
             it("should call error function in vectortiles if extern is true", () => {
                 const filterApi = new FilterApi(0),
                     layerModel = {
                         typ: "VectorTile",
-                        featureNS: "foob/boof",
                         url: "foo/tiles/xyz",
-                        baseOAFUrl: "foo",
-                        featureType: "bar",
-                        limit: 400
+                        featureType: "bar"
                     },
                     expected = new Error("FilterApi.setServiceByLayerModel: Filtering vectortiles extern is not supported.");
 
