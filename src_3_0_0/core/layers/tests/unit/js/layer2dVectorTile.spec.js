@@ -536,27 +536,29 @@ describe("src_3_0_0/core/js/layers/layer2dVectorTile.js", () => {
     });
 
     describe("showFeaturesByIds", function () {
-        // it("should do nothing if first param is not an array", () => {
-        //     let vtLayer = null,
-        //         tileLoadFunction = null,
-        //         source = null;
-        //     vtLayer =  new Layer2dVectorTile(attrs);
-        //     source = vtLayer.getLayerSource();
-        //     tileLoadFunction = source.getTileLoadFunction();
-        //     vtLayer.showFeaturesByIds();
-        //     expect(source.getTileLoadFunction()).to.deep.equal(tileLoadFunction);
-        // });
-        // it("should set tileLoadFunction", () => {
-        //     let vtLayer = null,
-        //         tileLoadFunction = null,
-        //         source = null;
-        //     vtLayer = new Layer2dVectorTile(attrs);
-        //     source = vtLayer.getLayerSource();
-        //     tileLoadFunction = source.getTileLoadFunction();
-        //     expect(tileLoadFunction.name).to.be.equal("defaultLoadFunction");
-        //     vtLayer.showFeaturesByIds([]);
-        //     expect(source.getTileLoadFunction()).to.not.be.equal("defaultLoadFunction");
-        // });
+        it("should do nothing if first param is not an array", () => {
+            let vtLayer = null,
+                tileLoadFunction = null,
+                source = null;
+
+            vtLayer = new Layer2dVectorTile(attrs);
+            source = vtLayer.getLayerSource();
+            tileLoadFunction = source.getTileLoadFunction();
+            vtLayer.showFeaturesByIds();
+            expect(source.getTileLoadFunction()).to.deep.equal(tileLoadFunction);
+        });
+        it("should set tileLoadFunction", () => {
+            let vtLayer = null,
+                tileLoadFunction = null,
+                source = null;
+
+            vtLayer = new Layer2dVectorTile(attrs);
+            source = vtLayer.getLayerSource();
+            tileLoadFunction = source.getTileLoadFunction();
+            expect(tileLoadFunction.name).to.be.equal("defaultLoadFunction");
+            vtLayer.showFeaturesByIds([]);
+            expect(source.getTileLoadFunction()).to.not.be.equal("defaultLoadFunction");
+        });
     });
 
     describe("fetchSpriteData", () => {
