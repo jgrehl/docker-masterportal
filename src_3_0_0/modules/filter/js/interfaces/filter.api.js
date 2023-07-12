@@ -71,11 +71,10 @@ export default class FilterApi {
      * @param {String} layerId the layer id
      * @param {ol/Layer} layerModel the layer model
      * @param {Boolean} extern if true, the type given by layerModel is used, otherwise "tree" is used
-     * @param {String} collection the collection - needed for vectortiles
      * @param {Function} onerror a function(Error)
      * @returns {void}
      */
-    setServiceByLayerModel (layerId, layerModel, extern, collection, onerror) {
+    setServiceByLayerModel (layerId, layerModel, extern, onerror) {
         if (!isObject(layerModel)) {
             return;
         }
