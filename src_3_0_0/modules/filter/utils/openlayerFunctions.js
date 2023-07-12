@@ -191,14 +191,13 @@ function getLayers () {
 }
 
 /**
- * Calls successs-function on loaded features of a vector tile layer by layer id and the collection.
+ * Calls success-function on loaded features of a vector tile layer by layer id.
  * @param {Number} layerId The layerId to get the model by.
- * @param {String} collection The collection which the features are wanted for.
  * @param {Function} onsuccess The callback function to call on success - returns {ol/render/Feature[]}.
  * @returns {void}
  */
-function getVectorTileFeaturesByLayerId (layerId, collection, onsuccess) {
-    if (!collection || typeof layerId === "undefined") {
+function getVectorTileFeaturesByLayerId (layerId, onsuccess) {
+    if (typeof layerId === "undefined") {
         return;
     }
     const layerModel = layerCollection.getLayerById(layerId);
@@ -207,12 +206,9 @@ function getVectorTileFeaturesByLayerId (layerId, collection, onsuccess) {
         layerModel.getLayerSource().once("featuresloadend", event => {
             const renderedFeatures = event.features;
 
-            onsuccess(renderedFeatures.filter(feature => {
-                if (typeof feature?.getProperties !== "function" || feature.getProperties()?.layer !== collection) {
-                    return false;
-                }
-                return true;
-            }));
+            if (typeof onsuccess === "function") {
+                onsuccess(renderedFeatures);
+            }
         });
         layerModel.getLayer().setOpacity(0);
         layerModel.showFeaturesByIds([], true);
@@ -220,7 +216,6 @@ function getVectorTileFeaturesByLayerId (layerId, collection, onsuccess) {
     else {
         console.warn("VectorTile-Layer with id " + layerId + " not found in layerCollection.");
     }
-
 }
 
 export default {
