@@ -156,11 +156,6 @@ export default {
         }
     },
     watch: {
-        scale () {
-            if (this.layerConfig.filterOnZoom === true && this.layerConfig.strategy === "active") {
-                this.filter();
-            }
-        },
         filterRules: {
             handler (rules) {
                 if (this.isStrategyActive()) {
@@ -264,9 +259,7 @@ export default {
                 this.mapHandler.activateLayer(filterId, this.onMounted);
             }
             else {
-
                 this.onMounted();
-
             }
         });
     },
