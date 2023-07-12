@@ -10,8 +10,7 @@ export default function VectorTileLayer (attrs) {
     const defaults = {
             selectedStyleID: undefined,
             useMpFonts: true,
-            useProxy: false,
-            sourceUpdate: false
+            useProxy: false
         },
         mapEPSG = store.getters["Maps/projection"].getCode(),
         vtEPSG = attrs.epsg || mapEPSG;
