@@ -47,15 +47,16 @@ Layer2dVectorTile.prototype.createLayer = function (attributes) {
     const rawLayerAttributes = this.getRawLayerAttributes(attributes),
         layerParams = this.getLayerParams(attributes);
 
-
     this.setLayer(vectorTile.createLayer(rawLayerAttributes, {layerParams}));
     store.dispatch("Maps/registerListener", {type: "loadend", listener: () => {
         if (typeof this.layer.getSource !== "function" || typeof this.layer.getSource()?.getFeaturesInExtent !== "function") {
             return;
         }
+        const features = this.layer.getSource().getFeaturesInExtent(store.getters["Maps/extent"]);
+
         this.layer.getSource().dispatchEvent({
             type: "featuresloadend",
-            features: this.layer.getSource().getFeaturesInExtent(store.getters["Maps/getCurrentExtent"])
+            features: features
         });
     }});
 };
