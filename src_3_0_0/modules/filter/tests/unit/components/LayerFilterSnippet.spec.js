@@ -463,28 +463,36 @@ describe("src/modules/tools/filter/components/LayerFilterSnippet.vue", () => {
         });
     });
 
-    describe("watcher", () => {
-        it("scale shall call filterOnZoom", () => {
-            const filterSpy = sinon.spy(LayerFilterSnippet.methods, "filter");
+
+    describe("registerMapMoveListener", () => {
+        it("should not call the function registerMapMoveListener", () => {
+            const registerMapMoveListener = sinon.spy(LayerFilterSnippet.methods, "registerMapMoveListener");
+
+            expect(registerMapMoveListener.notCalled).to.be.true;
+        });
+
+        it("should call the function registerMapMoveListener", async () => {
+            const registerMapMoveListener = sinon.spy(LayerFilterSnippet.methods, "registerMapMoveListener"),
+                layerConfig = {
+                    filterOnMove: true,
+                    strategy: "active",
+                    service: {
+                        type: "something external"
+                    }
+                };
 
             wrapper = shallowMount(LayerFilterSnippet, {
                 global: {
                     plugins: [store]
                 },
                 propsData: {
-                    layerConfig: {
-                        service: {
-                            type: "something external"
-                        },
-                        filterOnZoom: true,
-                        strategy: "active"
-                    },
+                    layerConfig,
                     mapHandler
                 }
             });
 
-            wrapper.vm.$options.watch.scale.call(wrapper.vm, 1000);
-            expect(filterSpy.called).to.be.true;
+            await wrapper.vm.$nextTick();
+            expect(registerMapMoveListener.called).to.be.true;
         });
     });
 });
