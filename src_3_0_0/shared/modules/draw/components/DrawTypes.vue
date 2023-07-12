@@ -175,7 +175,7 @@ export default {
 </script>
 
 <template>
-    <div class="d-flex mb-5 align-items-center justify-content-around">
+    <div class="d-flex mb-5 align-items-center">
         <IconButton
             v-for="drawType in drawTypes"
             :id="'draw-' + drawType"
@@ -183,6 +183,7 @@ export default {
             :aria="$t('common:shared.modules.draw.drawTypes.' + drawType)"
             :class-array="[
                 'btn-primary',
+                'me-3',
                 selectedDrawType === drawType || selectedDrawTypeMain === drawType ? 'active': ''
             ]"
             :interaction="() => regulateInteraction(drawType)"
