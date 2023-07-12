@@ -40,7 +40,7 @@ describe.skip("src/modules/tools/filter/interfaces/utils/interface.wfs.intern.js
             });
 
             store.getters = {
-                "Maps/getCurrentExtent": () => sinon.stub()
+                "Maps/extent": () => sinon.stub()
             };
             interfaceVectorTilesIntern.getAttrTypes({}, attrTypes => {
                 expect(attrTypes).to.deep.equal({});
@@ -62,7 +62,7 @@ describe.skip("src/modules/tools/filter/interfaces/utils/interface.wfs.intern.js
                 }
             });
             store.getters = {
-                "Maps/getCurrentExtent": () => sinon.stub()
+                "Maps/extent": () => sinon.stub()
             };
             const expected = {
                 foo: "number",
@@ -105,7 +105,7 @@ describe.skip("src/modules/tools/filter/interfaces/utils/interface.wfs.intern.js
             });
 
             store.getters = {
-                "Maps/getCurrentExtent": () => sinon.stub()
+                "Maps/extent": () => sinon.stub()
             };
 
             const service = {layerId: 1},
@@ -135,7 +135,7 @@ describe.skip("src/modules/tools/filter/interfaces/utils/interface.wfs.intern.js
             });
 
             store.getters = {
-                "Maps/getCurrentExtent": () => sinon.stub()
+                "Maps/extent": () => sinon.stub()
             };
 
             const service = {layerId: 1},
@@ -175,7 +175,7 @@ describe.skip("src/modules/tools/filter/interfaces/utils/interface.wfs.intern.js
             });
 
             store.getters = {
-                "Maps/getCurrentExtent": () => sinon.stub()
+                "Maps/extent": () => sinon.stub()
             };
 
             const service = {layerId: 1},
@@ -203,7 +203,7 @@ describe.skip("src/modules/tools/filter/interfaces/utils/interface.wfs.intern.js
                 }
             });
             store.getters = {
-                "Maps/getCurrentExtent": () => sinon.stub()
+                "Maps/extent": () => sinon.stub()
             };
 
             const service = {layerId: 1},
