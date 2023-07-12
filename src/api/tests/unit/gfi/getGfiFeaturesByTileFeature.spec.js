@@ -164,31 +164,31 @@ describe("src/api/gfi/getGfiFeaturesByTileFeature.js", () => {
             expect(getGfiFeatureByCesium3DTileFeature("string")).to.be.undefined;
             expect(getGfiFeatureByCesium3DTileFeature(true)).to.be.undefined;
         });
-        it("should return undefined if tileFeature has no functions getPropertyNames or getProperty", () => {
+        it("should return undefined if tileFeature has no functions getPropertyIds or getProperty", () => {
             expect(getGfiFeatureByCesium3DTileFeature({})).to.be.undefined;
             expect(getGfiFeatureByCesium3DTileFeature([])).to.be.undefined;
-            expect(getGfiFeatureByCesium3DTileFeature({getPropertyNames: () => {
+            expect(getGfiFeatureByCesium3DTileFeature({getPropertyIds: () => {
                 return false;
             }})).to.be.undefined;
             expect(getGfiFeatureByCesium3DTileFeature({getProperty: () => {
                 return false;
             }})).to.be.undefined;
         });
-        it("should return undefined if tileFeature.getPropertyNames() does not return an array", () => {
-            expect(getGfiFeatureByCesium3DTileFeature({getPropertyNames: () => {
+        it("should return undefined if tileFeature.getPropertyIds() does not return an array", () => {
+            expect(getGfiFeatureByCesium3DTileFeature({getPropertyIds: () => {
                 return false;
             }, getProperty: () => {
                 return false;
             }})).to.be.undefined;
         });
 
-        it("should create properties using tileFeature getPropertyNames function and getProperty function", () => {
+        it("should create properties using tileFeature getPropertyIds function and getProperty function", () => {
             const props = {
                     key1: "value1",
                     key2: "value2"
                 },
                 tileFeature = {
-                    getPropertyNames: () => {
+                    getPropertyIds: () => {
                         return Object.keys(props);
                     },
                     getProperty: (key) => {
@@ -203,7 +203,7 @@ describe("src/api/gfi/getGfiFeaturesByTileFeature.js", () => {
         });
         it("should pass through attributes", () => {
             const tileFeature = {
-                getPropertyNames: () => {
+                getPropertyIds: () => {
                     return [];
                 },
                 getProperty: () => {
@@ -222,7 +222,7 @@ describe("src/api/gfi/getGfiFeaturesByTileFeature.js", () => {
                     attributes: {}
                 },
                 tileFeature = {
-                    getPropertyNames: () => {
+                    getPropertyIds: () => {
                         return Object.keys(props);
                     },
                     getProperty: (key) => {
