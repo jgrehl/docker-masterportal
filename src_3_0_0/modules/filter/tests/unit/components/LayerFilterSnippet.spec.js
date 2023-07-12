@@ -13,9 +13,21 @@ config.global.mocks.$t = key => key;
 
 describe("src/modules/tools/filter/components/LayerFilterSnippet.vue", () => {
     let wrapper = null,
-        store;
+        store,
+        mapHandler = null;
 
     beforeEach(() => {
+        mapHandler = new MapHandler();
+        mapHandler.getLayerModelByFilterId = sinon.stub().returns({
+            get: (val) => {
+                if (val === "isSelected") {
+                    return false;
+                }
+                return "TEST";
+            }
+        });
+        mapHandler.activateLayer = sinon.stub();
+
         store = createStore({
             namespaced: true,
             modules: {
@@ -37,9 +49,7 @@ describe("src/modules/tools/filter/components/LayerFilterSnippet.vue", () => {
                         type: "something external"
                     }
                 },
-                mapHandler: new MapHandler({
-                    isLayerActivated: () => false
-                })
+                mapHandler
             }
         });
     });
@@ -86,9 +96,7 @@ describe("src/modules/tools/filter/components/LayerFilterSnippet.vue", () => {
                         filterId: 1,
                         searchInMapExtent: true
                     },
-                    mapHandler: new MapHandler({
-                        isLayerActivated: () => false
-                    })
+                    mapHandler
                 }
             });
             expect(wrapper.findComponent(SnippetCheckboxFilterInMapExtent).exists()).to.be.true;
@@ -283,6 +291,38 @@ describe("src/modules/tools/filter/components/LayerFilterSnippet.vue", () => {
             await wrapper.vm.$nextTick();
             expect(wrapper.find(".filter-result").exists()).to.be.false;
         });
+        it("should render a spinner", async () => {
+            await wrapper.setData({
+                isLoading: true,
+                layerConfig: {
+                    filterId: 1
+                }
+            });
+            expect(wrapper.find(".spinner-border").exists()).to.be.true;
+        });
+        it("should call 'activateLayer' if filter layer type is VectorTile and the layer is not yet loaded", () => {
+            mapHandler.getLayerModelByFilterId = sinon.stub().returns({
+                get: (val) => {
+                    if (val === "isSelected") {
+                        return false;
+                    }
+                    return "VectorTile";
+                }
+            });
+            mapHandler.activateLayer = sinon.stub();
+            wrapper = shallowMount(LayerFilterSnippet, {
+                propsData: {
+                    layerConfig: {
+                        service: {
+                            type: "something external"
+                        },
+                        searchInMapExtent: true
+                    },
+                    mapHandler
+                }
+            });
+            expect(mapHandler.activateLayer.calledOnce).to.be.true;
+        });
         it("should render amount of filtered items if showHits is true", async () => {
             await wrapper.setData({
                 amountOfFilteredItems: 3,
@@ -439,9 +479,7 @@ describe("src/modules/tools/filter/components/LayerFilterSnippet.vue", () => {
                         filterOnZoom: true,
                         strategy: "active"
                     },
-                    mapHandler: new MapHandler({
-                        isLayerActivated: () => false
-                    })
+                    mapHandler
                 }
             });
 
