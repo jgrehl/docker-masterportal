@@ -302,8 +302,8 @@ export default {
         transform: translate(-50%, -50%);
     }
 
-    > i.innerCircle {
-        font-size: 1.2rem;
+    > i.outerCircle {
+        font-size: 1.5rem;
     }
 }
 
