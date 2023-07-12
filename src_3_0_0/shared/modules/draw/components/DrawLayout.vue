@@ -119,12 +119,12 @@ export default {
 </script>
 
 <template>
-    <div class="d-flex flex-column justify-content-around">
-        <div class="d-flex flex-row align-items-center justify-content-around mb-5">
+    <div class="d-flex flex-column">
+        <div class="d-flex flex-row align-items-center mb-5">
             <button
                 v-if="selectedDrawType === 'doubleCircle'"
                 :id="'draw-layout-' + circleType"
-                class="btn btn-primary"
+                class="btn btn-primary me-3"
                 type="button"
                 disabled="true"
             >
@@ -141,6 +141,7 @@ export default {
                 :class="[
                     'btn',
                     'btn-primary',
+                    'me-3',
                     activeLayoutKey === layoutKey ? 'active' : ''
                 ]"
                 type="button"
@@ -205,7 +206,7 @@ export default {
         >
             <input
                 :id="'slider-stroke-width-' + circleType"
-                class="mx-3"
+                class="me-3"
                 type="range"
                 :title="`${currentLayout.strokeWidth}px`"
                 :value="currentLayout.strokeWidth"
@@ -226,7 +227,7 @@ export default {
         >
             <input
                 :id="'slider-fill-transparency-' + circleType"
-                class="mx-3"
+                class="me-3"
                 type="range"
                 :title="`${currentLayout.fillTransparency}%`"
                 :value="currentLayout.fillTransparency"
