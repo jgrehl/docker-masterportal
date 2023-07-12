@@ -10,8 +10,7 @@ export default function VectorTileLayer (attrs) {
     const defaults = {
             selectedStyleID: undefined,
             useMpFonts: true,
-            useProxy: false,
-            sourceUpdate: false
+            useProxy: false
         },
         mapEPSG = store.getters["Maps/projection"].getCode(),
         vtEPSG = attrs.epsg || mapEPSG;
@@ -23,7 +22,6 @@ export default function VectorTileLayer (attrs) {
     this.createLayer(Object.assign(defaults, attrs));
     // call the super-layer
     Layer.call(this, Object.assign(defaults, attrs), this.layer, !attrs.isChildLayer);
-    this.setConfiguredLayerStyle();
 }
 
 // Link prototypes and add prototype methods, means VTL uses all methods and properties of Layer
