@@ -2,9 +2,9 @@ import store from "../../../../app-store";
 import isObject from "../../../../shared/js/utils/isObject";
 import isNumber from "../../../../shared/js/utils/isNumber";
 import {getMinMaxFromFetchedFeatures, getUniqueValuesFromFetchedFeatures} from "../../utils/fetchAllOafProperties";
-import openlayerFunctions from "../../utils/openlayerFunctions";
 import InterfaceOafExtern from "./interface.oaf.extern";
 import InterfaceWfsIntern from "./interface.wfs.intern";
+import layerCollection from "../../../../core/layers/js/layerCollection";
 /**
  * InterfaceVectorTilesIntern is the filter interface for VectorTiles filtered by OpenLayers.
  * It uses the the OAF Extern interface under the hood for api requests like getUniqueValues.
@@ -35,7 +35,7 @@ export default class InterfaceVectorTilesIntern {
      */
     getAttrTypes (service, onsuccess, onerror) {
         const layerId = service?.layerId,
-            layerModel = openlayerFunctions.getLayerByLayerId(layerId),
+            layerModel = layerCollection.getLayerById(layerId),
             listOfAllAttributes = {},
             result = {};
         let featuresInCurrentExtent = null;
@@ -47,7 +47,7 @@ export default class InterfaceVectorTilesIntern {
             return;
         }
 
-        featuresInCurrentExtent = layerModel.layer.getSource().getFeaturesInExtent(store.getters["Maps/getCurrentExtent"]);
+        featuresInCurrentExtent = layerModel.getLayerSource().getFeaturesInExtent(store.getters["Maps/extent"]);
 
         featuresInCurrentExtent.forEach(feature => {
             if (typeof feature?.getProperties !== "function") {
@@ -104,7 +104,7 @@ export default class InterfaceVectorTilesIntern {
      */
     getMinMax (service, attrName, onsuccess, onerror, minOnly, maxOnly) {
         const layerId = service?.layerId,
-            layerModel = openlayerFunctions.getLayerByLayerId(layerId),
+            layerModel = layerCollection.getLayerById(layerId),
             allFetchedProperties = [];
         let minMaxValues = null,
             featuresInCurrentExtent = null;
@@ -115,7 +115,7 @@ export default class InterfaceVectorTilesIntern {
             }
             return;
         }
-        featuresInCurrentExtent = layerModel.layer.getSource().getFeaturesInExtent(store.getters["Maps/getCurrentExtent"]);
+        featuresInCurrentExtent = layerModel.getLayerSource().getFeaturesInExtent(store.getters["Maps/extent"]);
 
         featuresInCurrentExtent.forEach(feature => {
             if (typeof feature.getProperties !== "function") {
@@ -147,7 +147,7 @@ export default class InterfaceVectorTilesIntern {
      */
     getUniqueValues (service, attrName, onsuccess, onerror) {
         const layerId = service?.layerId,
-            layerModel = openlayerFunctions.getLayerByLayerId(layerId),
+            layerModel = layerCollection.getLayerById(layerId),
             allFetchedProperties = [];
 
         let featuresInCurrentExtent = null,
@@ -160,7 +160,7 @@ export default class InterfaceVectorTilesIntern {
             return;
         }
 
-        featuresInCurrentExtent = layerModel.layer.getSource().getFeaturesInExtent(store.getters["Maps/getCurrentExtent"]);
+        featuresInCurrentExtent = layerModel.getLayerSource().getFeaturesInExtent(store.getters["Maps/extent"]);
 
         featuresInCurrentExtent.forEach(feature => {
             if (typeof feature.getProperties !== "function") {
@@ -251,7 +251,7 @@ export default class InterfaceVectorTilesIntern {
             searchInMapExtent = commands?.searchInMapExtent,
             paging = commands?.paging > 0 ? commands.paging : 1000;
 
-        this.getFeaturesByLayerId(service?.layerId, features => {
+        this.getFeaturesByLayerId(service?.layerId, service?.collection, features => {
             this.filterGivenFeatures(features, filterId, snippetId, service, rules, filterGeometry, searchInMapExtent, paging, onsuccess);
         });
     }
