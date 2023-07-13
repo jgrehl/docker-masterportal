@@ -19,8 +19,6 @@ export default {
             "minCharacters",
             "placeholder",
             "searchInput",
-            "searchInterfaceInstances",
-            "searchResults",
             "type"
         ]),
 
