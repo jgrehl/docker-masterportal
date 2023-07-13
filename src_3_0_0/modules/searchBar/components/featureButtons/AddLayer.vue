@@ -55,7 +55,7 @@ export default {
     },
     methods: {
         ...mapActions("Modules/SearchBar", ["addSingleSearchResultToTopicTree"]),
-        ...mapMutations("Modules/SearchBar", ["setSearchResultsActive", "addSelectedSearchResults", "removeSelectedSearchResults"]),
+        ...mapMutations("Modules/SearchBar", ["addSelectedSearchResults", "removeSelectedSearchResults"]),
         /**
          * Adds a layer to the topic tree if clicked from the result overview or collects the layer for later adding by the main add button
          * @param {Boolean} value true if selected
