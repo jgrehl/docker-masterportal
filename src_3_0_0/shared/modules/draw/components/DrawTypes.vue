@@ -79,11 +79,23 @@ export default {
                 return "";
             }
         },
+        selectedInteraction: {
+            type: String,
+            default () {
+                return "draw";
+            }
+        },
         setSelectedDrawType: {
             type: Function,
             required: true
         },
         setSelectedDrawTypeMain: {
+            type: Function,
+            default () {
+                return null;
+            }
+        },
+        setSelectedInteraction: {
             type: Function,
             default () {
                 return null;
@@ -108,6 +120,16 @@ export default {
         },
         currentLayoutOuterCircle (currentLayoutOuterCircle) {
             drawInteractions.setStyleObject(currentLayoutOuterCircle, true);
+        },
+        selectedInteraction (selectedInteraction) {
+            if (selectedInteraction !== "draw") {
+                if (typeof this.setSelectedDrawTypeMain === "function") {
+                    this.setSelectedDrawTypeMain("");
+                    this.setSelectedDrawType("");
+                    this.removeInteraction(this.drawInteraction);
+                    this.drawInteraction = null;
+                }
+            }
         }
     },
     mounted () {
@@ -130,6 +152,10 @@ export default {
          * @returns {void}
          */
         regulateInteraction (drawType) {
+            if (typeof this.setSelectedInteraction === "function") {
+                this.setSelectedInteraction("draw");
+            }
+
             if (typeof this.setSelectedDrawTypeMain === "function") {
                 this.setSelectedDrawTypeMain(this.selectedDrawTypeMain !== drawType ? drawType : "");
             }
