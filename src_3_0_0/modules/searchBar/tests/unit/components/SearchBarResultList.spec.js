@@ -105,8 +105,6 @@ describe("src_3_0_0/modules/searchBar/components/SearchBarResultList.vue", () =>
                 }
             });
             expect(wrapper.find("#search-bar-result-list").exists()).to.be.true;
-            expect(wrapper.find(".showAllSection").exists()).to.be.true;
-            expect(wrapper.find(".btn.btn-light.d-flex.text-left").exists()).to.be.true;
         });
         it("shows the showAll button", async () => {
             wrapper = await mount(SearchBarSuggestionListComponent, {
