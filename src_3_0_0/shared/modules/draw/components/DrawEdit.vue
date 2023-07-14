@@ -50,7 +50,10 @@ export default {
     data () {
         return {
             currentSelectInteractions: [],
-            currentModifyInteraction: null
+            currentModifyInteraction: null,
+            undoFeatures: [],
+            redoFeatures: [],
+            mode: ""
         };
     },
     watch: {
@@ -65,6 +68,23 @@ export default {
             }
         }
     },
+    mounted () {
+        this.layer.getSource().on("addfeature", event => {
+            this.changeUndoRedoFeatures(event.feature, "draw");
+        });
+
+        this.layer.getSource().on("removefeature", event => {
+            this.changeUndoRedoFeatures(event.feature, "delete");
+        });
+
+        this.layer.getSource().on("clear", () => {
+            this.mode = "";
+        });
+    },
+    unmounted () {
+        this.currentSelectInteractions.forEach(selectInteraction => this.removeInteraction(selectInteraction));
+        this.removeInteraction(this.currentModifyInteraction);
+    },
     methods: {
         ...mapActions("Maps", ["addInteraction", "removeInteraction"]),
 
@@ -77,7 +97,9 @@ export default {
             const mappingEditInteractions = {
                 delete: this.regulateDelete,
                 deleteAll: this.regulateDeleteAll,
-                modify: this.regulateModify
+                modify: this.regulateModify,
+                redo: this.regulateRedo,
+                undo: this.regulateUndo
             };
 
             mappingEditInteractions[drawEdit]();
@@ -106,7 +128,9 @@ export default {
          * @returns {void}
          */
         regulateDeleteAll () {
-            this.activeEdit = "";
+            this.mode = "deleteAll";
+
+            this.undoFeatures.push(this.layer.getSource().getFeatures());
             this.layer.getSource().clear();
         },
 
@@ -122,6 +146,98 @@ export default {
             this.removeInteraction(this.currentModifyInteraction);
             this.currentModifyInteraction = modifyInteractions.createModifyInteraction(this.layer.getSource());
             this.addInteraction(this.currentModifyInteraction);
+        },
+
+        /**
+         * Regulate the draw edit undo.
+         * @returns {void}
+         */
+        regulateUndo () {
+            this.undoRedoFeatures(this.undoFeatures, "undo");
+        },
+
+        /**
+         * Regulate the draw edit redo.
+         * @returns {void}
+         */
+        regulateRedo () {
+            this.undoRedoFeatures(this.redoFeatures, "redo");
+        },
+
+        /**
+         * Regulates the undo or redo features.
+         * @param {ol/feature[]} features The undo or redo features.
+         * @param {String} mode The undo or redo mode.
+         * @returns {void}
+         */
+        undoRedoFeatures (features, mode) {
+            if (features.length > 0) {
+                const source = this.layer.getSource(),
+                    feature = features[features.length - 1];
+
+                this.mode = mode;
+
+                if (Array.isArray(feature)) {
+                    this.undoRedoFeatureArray(mode, features, source);
+                }
+                else if (feature.mode === "draw") {
+                    source.removeFeature(feature.feature);
+                }
+                else if (feature.mode === "delete") {
+                    source.addFeature(feature.feature);
+                }
+            }
+        },
+
+        /**
+         * Regulates the undo redo features if delete all was used.
+         * @param {String} mode The undo or redo mode.
+         * @param {ol/feature[]} features The undo or redo features.
+         * @param {ol/source} source The vector layer.
+         * @returns {void}
+         */
+        undoRedoFeatureArray (mode, features, source) {
+            const featureArray = features.pop();
+
+            this.mode = "deleteAll";
+
+            if (mode === "undo") {
+                source.addFeatures(featureArray);
+                this.redoFeatures.push(featureArray);
+            }
+            else if (mode === "redo") {
+                featureArray.forEach(feat => source.removeFeature(feat));
+                this.undoFeatures.push(featureArray);
+            }
+            this.mode = "";
+        },
+
+        /**
+         * Change the position of features in undo and redo feature collections.
+         * @param {ol/feature} feature The ol feature.
+         * @param {String} mode The draw or delete mode .
+         * @returns {void}
+         */
+        changeUndoRedoFeatures (feature, mode) {
+            const undoRedoFeature = {
+                feature: feature,
+                mode: mode
+            };
+
+            if (this.mode === "undo") {
+                this.mode = "";
+                this.undoFeatures.pop();
+                this.redoFeatures.push(undoRedoFeature);
+            }
+            else if (this.mode === "redo") {
+                this.mode = "";
+                this.redoFeatures.pop();
+                this.undoFeatures.push(undoRedoFeature);
+            }
+            else if (this.mode === "") {
+                this.undoFeatures.push(undoRedoFeature);
+                this.redoFeatures = [];
+            }
         }
     }
 };
@@ -138,7 +254,10 @@ export default {
                 :class-array="[
                     'btn-light',
                     'me-3',
-                    selectedInteraction === drawEdit ? 'active': ''
+                    selectedInteraction === drawEdit ? 'active': '',
+                    drawEdit === 'redo' && redoFeatures.length === 0 ? 'disabled' : '',
+                    drawEdit === 'undo' && undoFeatures.length === 0 ? 'disabled' : '',
+                    drawEdit !== 'redo' && drawEdit !== 'undo' && layer?.getSource()?.getFeatures()?.length === 0 ? 'disabled' : ''
                 ]"
                 :interaction="() => regulateEditInteraction(drawEdit)"
                 :icon="drawIcons[drawEdit]"
