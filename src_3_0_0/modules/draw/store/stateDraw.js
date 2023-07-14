@@ -60,16 +60,22 @@ const state = {
         strokeWidth: 1
     },
     description: "",
+    drawEdits: ["deleteAll", "delete", "modify", "undo", "redo"],
     drawIcons: {
         box: "bi-square",
         circle: "bi-circle",
+        delete: "bi-eraser-fill",
+        deleteAll: "bi-trash",
         doubleCircle: "bi-record-circle",
         geometries: "bi-hexagon-fill",
         line: "bi-slash-lg",
+        modify: "bi-tools",
         pen: "bi-pencil-fill",
         point: "bi-circle-fill",
         polygon: "bi-octagon",
-        symbols: "bi-circle-square"
+        redo: "bi-arrow-right",
+        symbols: "bi-circle-square",
+        undo: "bi-arrow-left"
     },
     drawTypesGeometrie: ["line", "box", "polygon", "circle", "doubleCircle"],
     drawTypesMain: ["pen", "geometries", "symbols"],
@@ -79,6 +85,7 @@ const state = {
     name: "common:modules.draw.name",
     selectedDrawType: "",
     selectedDrawTypeMain: "",
+    selectedInteraction: "draw",
     showDescription: false,
     strokeRange: [1, 16],
     supportedDevices: ["Desktop", "Mobile", "Table"],
