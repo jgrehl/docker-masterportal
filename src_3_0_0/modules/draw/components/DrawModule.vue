@@ -3,6 +3,7 @@ import {mapGetters, mapMutations} from "vuex";
 import VectorLayer from "ol/layer/Vector.js";
 import VectorSource from "ol/source/Vector";
 
+import DrawEdit from "../../../shared/modules/draw/components/DrawEdit.vue";
 import DrawLayout from "../../../shared/modules/draw/components/DrawLayout.vue";
 import DrawTypes from "../../../shared/modules/draw/components/DrawTypes.vue";
 
@@ -14,11 +15,13 @@ import DrawTypes from "../../../shared/modules/draw/components/DrawTypes.vue";
 export default {
     name: "DrawModule",
     components: {
+        DrawEdit,
         DrawLayout,
         DrawTypes
     },
     data () {
         return {
+            layer: null,
             source: new VectorSource()
         };
     },
@@ -27,6 +30,7 @@ export default {
             "circleOptions",
             "currentLayout",
             "currentLayoutOuterCircle",
+            "drawEdits",
             "drawIcons",
             "drawTypesGeometrie",
             "drawTypesMain",
@@ -34,6 +38,7 @@ export default {
             "name",
             "selectedDrawType",
             "selectedDrawTypeMain",
+            "selectedInteraction",
             "strokeRange"
         ]),
         ...mapGetters("Menu", [
@@ -45,18 +50,21 @@ export default {
     mounted () {
         const map2d = mapCollection.getMap("2D");
 
-        map2d.addLayer(new VectorLayer({
+        this.layer = new VectorLayer({
             name: "importDrawLayer",
             source: this.source,
             zIndex: 99999999999
-        }));
+        });
+
+        map2d.addLayer(this.layer);
     },
     methods: {
         ...mapMutations("Modules/Draw", [
             "setCurrentLayout",
             "setCurrentLayoutOuterCircle",
             "setSelectedDrawType",
-            "setSelectedDrawTypeMain"
+            "setSelectedDrawTypeMain",
+            "setSelectedInteraction"
         ])
     }
 };
@@ -67,6 +75,17 @@ export default {
         id="modules-draw-module"
         class="d-flex flex-column"
     >
+        <div id="draw-edit">
+            <!-- v-if="layer !== null && source.getFeatures().length > 0" -->
+            <DrawEdit
+                v-if="layer !== null"
+                :draw-edits="drawEdits"
+                :draw-icons="drawIcons"
+                :layer="layer"
+                :selected-interaction="selectedInteraction"
+                :set-selected-interaction="setSelectedInteraction"
+            />
+        </div>
         <div id="draw-types">
             <DrawTypes
                 :circle-options="circleOptions"
@@ -76,8 +95,10 @@ export default {
                 :draw-types="drawTypesMain"
                 :selected-draw-type="selectedDrawType"
                 :selected-draw-type-main="selectedDrawTypeMain"
+                :selected-interaction="selectedInteraction"
                 :set-selected-draw-type="setSelectedDrawType"
                 :set-selected-draw-type-main="setSelectedDrawTypeMain"
+                :set-selected-interaction="setSelectedInteraction"
                 :source="source"
             />
             <DrawTypes
@@ -103,14 +124,14 @@ export default {
         </div>
         <div id="draw-layouts">
             <DrawLayout
-                v-if="selectedDrawType !== ''"
+                v-if="selectedDrawType !== '' && selectedDrawTypeMain !== ''"
                 :current-layout="currentLayout"
                 :selected-draw-type="selectedDrawType"
                 :set-current-layout="setCurrentLayout"
                 :stroke-range="strokeRange"
             />
             <DrawLayout
-                v-if="selectedDrawType === 'doubleCircle'"
+                v-if="selectedDrawType === 'doubleCircle' && selectedDrawTypeMain !== ''"
                 :circle-type="'outerCircle'"
                 :current-layout="currentLayoutOuterCircle"
                 :selected-draw-type="selectedDrawType"
