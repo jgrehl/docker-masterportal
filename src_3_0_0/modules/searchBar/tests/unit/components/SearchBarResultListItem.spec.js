@@ -4,7 +4,7 @@ import {expect} from "chai";
 import sinon from "sinon";
 
 
-import SearchBarSuggestionListItemComponent from "../../../components/SearchBarResultListItem.vue";
+import SearchBarResultListItemComponent from "../../../components/SearchBarResultListItem.vue";
 
 config.global.mocks.$t = key => key;
 
@@ -56,7 +56,7 @@ describe("src_3_0_0/modules/searchBar/components/SearchBarResultListItem.vue", (
 
     describe("test the result item", () => {
         it("shows toolTip if available", () => {
-            wrapper = mount(SearchBarSuggestionListItemComponent, {
+            wrapper = mount(SearchBarResultListItemComponent, {
                 global: {
                     plugins: [store]
                 },
@@ -68,7 +68,7 @@ describe("src_3_0_0/modules/searchBar/components/SearchBarResultListItem.vue", (
             expect(wrapper.find("button").html()).to.contain("toolTipAvailable");
         });
         it("shows name if tooltip is undefined", () => {
-            wrapper = mount(SearchBarSuggestionListItemComponent, {
+            wrapper = mount(SearchBarResultListItemComponent, {
                 global: {
                     plugins: [store]
                 },
@@ -80,7 +80,7 @@ describe("src_3_0_0/modules/searchBar/components/SearchBarResultListItem.vue", (
             expect(wrapper.find("button").html()).to.contain("Bei dem Neuen Krahn 2");
         });
         it("updates the clickStatus of a single search result item", () => {
-            wrapper = mount(SearchBarSuggestionListItemComponent, {
+            wrapper = mount(SearchBarResultListItemComponent, {
                 global: {
                     plugins: [store]
                 },
