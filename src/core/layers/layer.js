@@ -12,64 +12,64 @@ import Cluster from "ol/source/Cluster";
  * @returns {void}
  */
 export default function Layer (attrs, layer, initialize = true) {
-    const defaults = {
-        hitTolerance: 0,
-        isNeverVisibleInTree: false,
-        isRemovable: false,
-        isSelected: false,
-        isSettingVisible: false,
-        isVisibleInMap: false,
-        layerInfoClicked: false,
-        singleBaselayer: false,
-        // legend: true,
-        maxScale: "1000000000",
-        minScale: "0",
-        selectionIDX: 0,
-        showSettings: true,
-        styleable: false,
-        supported: ["2D"],
-        isOutOfRange: undefined,
-        isSecured: false,
-        domId: "layer-list-group-item-" + attrs.id,
-        showTopicText: i18next.t("common:tree.showTopic"),
-        removeTopicText: i18next.t("common:tree.removeTopicText"),
-        changeClassDivisionText: i18next.t("common:tree.changeClassDivision"),
-        transparencyText: i18next.t("common:tree.transparency"),
-        increaseTransparencyText: i18next.t("common:tree.increaseTransparency"),
-        reduceTransparencyText: i18next.t("common:tree.reduceTransparency"),
-        removeLayerText: i18next.t("common:tree.removeLayer"),
-        levelUpText: i18next.t("common:tree.levelUp"),
-        levelDownText: i18next.t("common:tree.levelDown"),
-        settingsText: i18next.t("common:tree.settings"),
-        infosAndLegendText: i18next.t("common:tree.infosAndLegend"),
-        filterIconText: i18next.t("common:tree.filterIconText"),
-        isAutoRefreshing: false,
-        intervalAutoRefresh: -1,
-        isClustered: false,
-        filterRefId: undefined,
-        scaleText: "",
-        renderer: "default"
-    };
+    // const defaults = {
+    //     hitTolerance: 0,
+    //     isNeverVisibleInTree: false,
+    //     isRemovable: false,
+    //     isSelected: false,
+    //     isSettingVisible: false,
+    //     isVisibleInMap: false,
+    //     layerInfoClicked: false,
+    //     singleBaselayer: false,
+    //     // legend: true,
+    //     maxScale: "1000000000",
+    //     minScale: "0",
+    //     selectionIDX: 0,
+    //     showSettings: true,
+    //     styleable: false,
+    //     supported: ["2D"],
+    //     isOutOfRange: undefined,
+    //     isSecured: false,
+    //     domId: "layer-list-group-item-" + attrs.id,
+    //     showTopicText: i18next.t("common:tree.showTopic"),
+    //     removeTopicText: i18next.t("common:tree.removeTopicText"),
+    //     changeClassDivisionText: i18next.t("common:tree.changeClassDivision"),
+    //     transparencyText: i18next.t("common:tree.transparency"),
+    //     increaseTransparencyText: i18next.t("common:tree.increaseTransparency"),
+    //     reduceTransparencyText: i18next.t("common:tree.reduceTransparency"),
+    //     removeLayerText: i18next.t("common:tree.removeLayer"),
+    //     levelUpText: i18next.t("common:tree.levelUp"),
+    //     levelDownText: i18next.t("common:tree.levelDown"),
+    //     settingsText: i18next.t("common:tree.settings"),
+    //     infosAndLegendText: i18next.t("common:tree.infosAndLegend"),
+    //     filterIconText: i18next.t("common:tree.filterIconText"),
+    //     isAutoRefreshing: false,
+    //     intervalAutoRefresh: -1,
+    //     isClustered: false,
+    //     filterRefId: undefined,
+    //     scaleText: "",
+    //     renderer: "default"
+    // };
 
-    this.layer = layer;
-    this.observersAutoRefresh = [];
-    this.attributes = {...Object.assign({}, this.layer.values_, defaults, attrs)};
-    this.id = attrs.id;
+    // this.layer = layer;
+    // this.observersAutoRefresh = [];
+    // this.attributes = {...Object.assign({}, this.layer.values_, defaults, attrs)};
+    // this.id = attrs.id;
 
-    delete this.attributes.source;
-    if (initialize) {
-        this.initialize(attrs);
-    }
-    else if (attrs.isSelected === true || store.getters.treeType === "light") {
-        this.setIsVisibleInMap(attrs.isSelected);
-    }
-    this.setMinMaxResolutions();
-    this.checkForScale({scale: store.getters["Maps/scale"]});
-    this.registerInteractionMapViewListeners();
-    this.onMapModeChanged(this);
-    this.handleScaleRange();
-    bridge.onLanguageChanged(this);
-    this.changeLang();
+    // delete this.attributes.source;
+    // if (initialize) {
+    //     this.initialize(attrs);
+    // }
+    // else if (attrs.isSelected === true || store.getters.treeType === "light") {
+    //     this.setIsVisibleInMap(attrs.isSelected);
+    // }
+    // this.setMinMaxResolutions();
+    // this.checkForScale({scale: store.getters["Maps/scale"]});
+    // this.registerInteractionMapViewListeners();
+    // this.onMapModeChanged(this);
+    // this.handleScaleRange();
+    // bridge.onLanguageChanged(this);
+    // this.changeLang();
 
     // if (typeof this.layer.getSource === "function") {
     //     this.layer.getSource()?.on("featuresloaderror", async function () {
@@ -105,56 +105,29 @@ export default function Layer (attrs, layer, initialize = true) {
  * @returns {void}
  */
 Layer.prototype.initialize = function (attrs) {
-    if (store.state.configJson?.Portalconfig.singleBaselayer !== undefined) {
-        this.set("singleBaselayer", store.state.configJson?.Portalconfig.singleBaselayer);
-    }
-    if (attrs.clusterDistance) {
-        this.set("isClustered", true);
-    }
+    // if (store.state.configJson?.Portalconfig.singleBaselayer !== undefined) {
+    //     this.set("singleBaselayer", store.state.configJson?.Portalconfig.singleBaselayer);
+    // }
+    // if (attrs.clusterDistance) {
+    //     this.set("isClustered", true);
+    // }
 
-    this.updateLayerTransparency();
+    // this.updateLayerTransparency();
 
-    if (attrs.isSelected === true || store.getters.treeType === "light") {
-        this.setIsVisibleInMap(attrs.isSelected);
-        if (attrs.isSelected) {
-            this.setIsSelected(attrs.isSelected);
-            bridge.layerVisibilityChanged(this, attrs.isSelected);
-        }
+    // if (attrs.isSelected === true || store.getters.treeType === "light") {
+    //     this.setIsVisibleInMap(attrs.isSelected);
+    //     if (attrs.isSelected) {
+    //         this.setIsSelected(attrs.isSelected);
+    //         bridge.layerVisibilityChanged(this, attrs.isSelected);
+    //     }
 
-        this.set("isRemovable", store.state.configJson?.Portalconfig.layersRemovable);
-    }
-    else {
-        this.layer.setVisible(false);
-    }
+    //     this.set("isRemovable", store.state.configJson?.Portalconfig.layersRemovable);
+    // }
+    // else {
+    //     this.layer.setVisible(false);
+    // }
 };
 
-/**
- * Error handling for secure services when error 403 is thrown .
- * @param {Number} errorCode Error Number of the request
- * @param {String} layerName Name of the layer
- * @returns {void}
- */
-// Layer.prototype.errorHandling = function (errorCode, layerName) {
-//     let linkMetadata = "",
-//         alertingContent = "";
-
-//     if (this.get("datasets") && this.get("datasets")[0]) {
-//         linkMetadata = i18next.t("common:modules:core:modelList:layer.errorHandling:LinkMetadata",
-//             {linkMetadata: this.get("datasets")[0].show_doc_url + this.get("datasets")[0].md_id
-//             });
-//     }
-//     if (errorCode === 403) {
-//         alertingContent = i18next.t("common:modules.core.modelList.layer.errorHandling.403",
-//             {
-//                 layerName: layerName
-//             })
-//             + linkMetadata;
-
-//         store.dispatch("Alerting/addSingleAlert", {content: alertingContent, multipleAlert: true});
-//     }
-//     store.watch((state, getters) => getters["Alerting/showTheModal"], showTheModal => {
-//         this.setIsSelected(showTheModal);
-//     });
 
 
 // };
@@ -172,25 +145,14 @@ Layer.prototype.createLayer = function () {
 * @returns {void}
 */
 Layer.prototype.registerInteractionMapViewListeners = function () {
-    store.watch((state, getters) => getters["Maps/scale"], scale => {
-        this.checkForScale({scale: scale});
-    });
+ 
 };
 /**
  * Sets this layers to visible, if it supports the map mode else sets the visibility to false.
  * @returns {void}
  */
 Layer.prototype.onMapModeChanged = function () {
-    store.watch((state, getters) => getters["Maps/mode"], mode => {
-        if (this.get("supported").indexOf(mode) >= 0) {
-            if (this.get("isVisibleInMap")) {
-                this.get("layer").setVisible(true);
-            }
-        }
-        else {
-            this.get("layer").setVisible(false);
-        }
-    });
+   
 };
 /**
  * Setter for ol/layer.setMaxResolution
@@ -198,7 +160,7 @@ Layer.prototype.onMapModeChanged = function () {
  * @returns {void}
  */
 Layer.prototype.setMaxResolution = function (value) {
-    this.layer.setMaxResolution(value);
+    
 };
 /**
  * Setter for ol/layer.setMinResolution
@@ -206,27 +168,21 @@ Layer.prototype.setMaxResolution = function (value) {
  * @returns {void}
  */
 Layer.prototype.setMinResolution = function (value) {
-    this.layer.setMinResolution(value);
+   
 };
 /**
  * Removes the layer from the map and the collection
  * @returns {void}
  */
 Layer.prototype.removeLayer = function () {
-    this.setIsVisibleInMap(false);
-    bridge.removeLayerByIdFromModelList(this.get("id"));
-    mapCollection.getMap("2D").removeLayer(this.layer);
+  
 };
 /**
  * Toggles the attribute isSelected. Calls Function setIsSelected.
  * @returns {void}
  */
 Layer.prototype.toggleIsSelected = function () {
-    const newValue = this.attributes.isSelected === undefined ? true : !this.attributes.isSelected;
-
-    this.setIsSelected(newValue);
-    handleSingleBaseLayer(newValue, this);
-    handleSingleTimeLayer(newValue, this);
+  
 };
 
 
@@ -261,9 +217,43 @@ Layer.prototype.checkForScale = function (options) {
 Layer.prototype.setIsOutOfRange = function (value) {
     this.set("isOutOfRange", value);
 };
+/**
+ * Setter for isVisibleInMap and setter for layer.setVisible
+ * @param {Boolean} newValue Flag if layer is visible in map
+ * @returns {void}
+ */
+Layer.prototype.setIsVisibleInMap = function (newValue) {
+ 
+};
+/**
+ * Setter for transparency and setter for opacitiy of the layer.
+ * @param {Number} newValue Tranparency in percent
+ * @returns {void}
+ */
+Layer.prototype.setTransparency = function (newValue) {
+  
+};
+/**
+ * Decreases layer transparency by 10 percent
+ * @return {void}
+ */
+Layer.prototype.decTransparency = function () {
+  
+};
+/**
+ * Increases layer transparency by 10 percent.
+ * @return {void}
+ */
+Layer.prototype.incTransparency = function () {
 
-
-
+};
+/**
+ * Transforms transparency into opacity and sets opacity on layer.
+ * @return {void}
+ */
+Layer.prototype.updateLayerTransparency = function () {
+   
+};
 /**
  * Setter for isVisibleInTree
  * @param {Boolean} newValue flag if layer is visible in tree
@@ -305,7 +295,55 @@ Layer.prototype.setIsSettingVisible = function (newValue) {
 Layer.prototype.setLayerInfoChecked = function (newValue) {
     this.set("layerInfoChecked", newValue);
 };
+/**
+ * Toggles the attribute isSettingVisible. Sets the settings of all other layers to invisible.
+ * @return {void}
+ */
+Layer.prototype.toggleIsSettingVisible = function () {
+   
+};
+/**
+ * Sets the attribute isSelected and sets the layers visibility. If newValue is false, the layer is removed from map.
+ * If configured and the layer is a baseLayer, the other selected baseLayers are deselected.
+ * @param {Boolean} newValue true, if layer is selected
+ * @returns {void}
+ */
+Layer.prototype.setIsSelected = function (newValue) {
+    
+};
+/**
+* Toggles the attribute isVisibleInMap. If is true, the layer is set visible.
+* @return {void}
+*/
+Layer.prototype.toggleIsVisibleInMap = function () {
 
+};
+/**
+ * Refresh layerSource when updated,
+ * e.g. needed because wmts source is created asynchronously.
+ * @returns {void}
+ */
+Layer.prototype.updateLayerSource = function () {
+  
+};
+/**
+ * Creates and starts an interval to refresh the layer and clears running interval.
+ * @param {Boolean} isLayerSelected param to check if layer is selected
+ * @param {Number} autoRefresh the interval in ms
+ * @returns {void}
+ */
+Layer.prototype.activateAutoRefresh = function (isLayerSelected, autoRefresh) {
+   
+};
+/**
+ * Sets the once event for 'featuresloadend'.
+ * Calls existing observers and passes the features of the given layer.
+ * @param {Layer} layer the layer
+ * @returns {void}
+ */
+Layer.prototype.setAutoRefreshEvent = function (layer) {
+  
+};
 
 /**
  * creates the text for the scale part in the layer tooltip
@@ -329,20 +367,7 @@ Layer.prototype.handleScaleRange = function () {
  * @returns {void}
  */
 Layer.prototype.changeLang = function () {
-    this.attributes.selectedTopicsText = i18next.t("common:tree.removeSelection");
-    this.attributes.infosAndLegendText = i18next.t("common:tree.infosAndLegend");
-    this.attributes.removeTopicText = i18next.t("common:tree.removeTopic");
-    this.attributes.showTopicText = i18next.t("common:tree.showTopic");
-    this.attributes.securedTopicText = i18next.t("common:tree.securedTopic");
-    this.attributes.changeClassDivisionText = i18next.t("common:tree.changeClassDivision");
-    this.attributes.settingsText = i18next.t("common:tree.settings");
-    this.attributes.increaseTransparencyText = i18next.t("common:tree.increaseTransparency");
-    this.attributes.reduceTransparencyText = i18next.t("common:tree.reduceTransparency");
-    this.attributes.removeLayerText = i18next.t("common:tree.removeLayer");
-    this.attributes.levelUpText = i18next.t("common:tree.levelUp");
-    this.attributes.levelDownText = i18next.t("common:tree.levelDown");
-    this.attributes.transparencyText = i18next.t("common:tree.transparency");
-    this.attributes.filterIconText = i18next.t("common:tree.filterIconText");
+  
 };
 /**
  * Calls Collection function moveModelDown
@@ -356,7 +381,7 @@ Layer.prototype.moveDown = function () {
  * @return {void}
  */
 Layer.prototype.moveUp = function () {
-    bridge.moveModelInTree(this, 1);
+  
 };
 /**
  * Called from setSelected, handles singleBaseLayer.
@@ -471,40 +496,12 @@ Layer.prototype.toggleFilter = function () {
     }
 };
 
-
-    if (this.get("datasets") && Array.isArray(this.get("datasets")) && this.get("datasets")[0] !== null && typeof this.get("datasets")[0] === "object") {
-        cswUrl = this.get("datasets")[0]?.csw_url ? this.get("datasets")[0].csw_url : null;
-        customMetadata = this.get("datasets")[0]?.customMetadata ? this.get("datasets")[0].customMetadata : false;
-        attributes = this.get("datasets")[0]?.attributes ? this.get("datasets")[0].attributes : null;
-        showDocUrl = this.get("datasets")[0]?.show_doc_url ? this.get("datasets")[0].show_doc_url : null;
-        layerMetaId = this.get("datasets")[0]?.md_id ? this.get("datasets")[0].md_id : null;
-    }
-    const metaID = [],
-        name = this.get("name");
-
-    metaID.push(layerMetaId);
-
-    store.dispatch("LayerInformation/layerInfo", {
-        "id": this.get("id"),
-        "metaID": layerMetaId,
-        "metaIdArray": metaID,
-        "layername": name,
-        "url": this.get("url"),
-        "legendURL": this.get("legendURL"),
-        "typ": this.get("typ"),
-        "cswUrl": cswUrl,
-        "customMetadata": customMetadata,
-        "attributes": attributes,
-        "showDocUrl": showDocUrl,
-        "urlIsVisible": this.get("urlIsVisible")
-    });
-
-    store.dispatch("LayerInformation/activate", true);
-    store.dispatch("LayerInformation/additionalSingleLayerInfo");
-    store.dispatch("LayerInformation/setMetadataURL", layerMetaId);
-    store.dispatch("Legend/setLayerIdForLayerInfo", this.get("id"));
-    store.dispatch("Legend/setLayerCounterIdForLayerInfo", Date.now());
-    this.setLayerInfoChecked(true);
+/**
+ * Initiates the presentation of layer information.
+ * @returns {void}
+ */
+Layer.prototype.showLayerInformation = function () {
+  
 };
 
 /**
@@ -529,11 +526,7 @@ Layer.prototype.setObserverAutoInterval = function (handler) {
  * @returns {void}
  */
 Layer.prototype.setMinMaxResolutions = function () {
-    const resoByMaxScale = bridge.getResolutionByScale(this.get("maxScale"), "max"),
-        resoByMinScale = bridge.getResolutionByScale(this.get("minScale"), "min");
-
-    this.get("layer").setMaxResolution(resoByMaxScale + (resoByMaxScale / 100));
-    this.get("layer").setMinResolution(resoByMinScale);
+   
 };
 /**
  * Triggers event if vector features are loaded
@@ -543,8 +536,7 @@ Layer.prototype.setMinMaxResolutions = function () {
  * @return {void}
  */
 Layer.prototype.featuresLoaded = function (layerId, features) {
-    this.features = features;
-    bridge.featuresLoaded(layerId, features);
+  
 };
 
 /**
