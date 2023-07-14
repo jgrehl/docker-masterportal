@@ -7,7 +7,7 @@ import {treeSubjectsKey} from "../../../../../src_3_0_0/shared/js/utils/constant
 
 export default {
     /**
-     * Adds a layer to the topic tree and triggers to close the search
+     * Changes layer attributes to show in layertree
      * @param {Object} param.dispatch the dispatch
      * @param {Object} searchResult a single search result
      * @returns {void}
