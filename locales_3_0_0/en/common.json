@@ -473,7 +473,7 @@
     },
     "layerSelection": {
       "addSubject": "Add subject",
-      "backgrounds": "Baselayers",
+      "baselayers": "Baselayers",
       "selectAll": "select all",
       "selectedSubjectsCount_other": "Please select a topic",
       "addSelectedSubjectsToMap_one": "Add selected topic to the map",
