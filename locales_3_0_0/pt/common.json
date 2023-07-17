@@ -474,7 +474,7 @@
     "layerSelection": {
       "addSelectedSubjectsToMap": "",
       "addSubject": "",
-      "backgrounds": "",
+      "baselayers": "",
       "selectAll": "",
       "selectedSubjectsCount_one": "",
       "selectedSubjectsCount_other": ""
