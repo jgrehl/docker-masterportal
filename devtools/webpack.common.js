@@ -4,7 +4,7 @@ const webpack = require("webpack"),
     path = require("path"),
     fse = require("fs-extra"),
     VueLoaderPlugin = require("vue-loader/lib/plugin"),
-   /*  cesiumSource = "node_modules/@cesium/engine/Source",
+    /*  cesiumSource = "node_modules/@cesium/engine/Source",
     cesiumWorkers = "../Build/Workers",
     CopyWebpackPlugin = require("copy-webpack-plugin"), */
 
@@ -190,9 +190,9 @@ module.exports = function () {
                 ADDONS: JSON.stringify(addonsRelPaths),
                 VUE_ADDONS: JSON.stringify(vueAddonsRelPaths),
                 CESIUM_BASE_URL: JSON.stringify("https://geoportal-hamburg.de/mastercode/cesium/1_95/")
-            }),
-            //Didnt work
-           /*  new CopyWebpackPlugin({
+            })
+            // Didnt work
+            /*  new CopyWebpackPlugin({
                 patterns: [
                     {from: path.join(cesiumSource, cesiumWorkers), to: "Workers"},
                     {from: path.join(cesiumSource, "/Assets"), to: "Assets"},
