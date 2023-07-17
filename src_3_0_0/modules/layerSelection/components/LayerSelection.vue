@@ -200,7 +200,7 @@ export default {
 .layer-selection-navigation-dataLayer {
     overflow-y: scroll;
     overflow-x: hidden;
-    max-height: 78%;
+    max-height: 75%;
 }
 .layer-selection-add-layer-btn {
     position: sticky;
