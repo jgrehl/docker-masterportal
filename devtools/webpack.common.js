@@ -73,6 +73,17 @@ module.exports = function () {
     }
 
     return {
+        optimization: {
+            splitChunks: {
+                cacheGroups: {
+                    commons: {
+                        test: /[\\/]node_modules[\\/]@cesium[\\/]engine/,
+                        name: "Cesium",
+                        chunks: "all"
+                    }
+                }
+            }
+        },
         entry: entryPoints,
         stats: {
             all: false,
