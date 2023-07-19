@@ -29,7 +29,7 @@ export default function Layer2dVectorTile (attributes) {
         this.setConfiguredLayerStyle();
     }
     else {
-        this.layer.once("change:visible", () => this.setConfiguredLayerStyle());
+        this.layer?.once("change:visible", () => this.setConfiguredLayerStyle());
     }
 }
 
