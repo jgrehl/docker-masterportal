@@ -495,4 +495,65 @@ describe("src/modules/tools/filter/components/LayerFilterSnippet.vue", () => {
             expect(registerMapMoveListener.called).to.be.true;
         });
     });
+    describe("checkZoomLevel", () => {
+        it("should not call the function checkZoomLevel", async () => {
+            const checkZoomLevel = sinon.stub(wrapper.vm, "checkZoomLevel");
+
+            LayerFilterSnippet.methods.checkZoomLevel = checkZoomLevel;
+            wrapper = shallowMount(LayerFilterSnippet, {
+                propsData: {
+                    global: {
+                        plugins: [store]
+                    },
+                    layerConfig: {
+                        service: {
+                            type: "something external"
+                        }
+                    },
+                    mapHandler
+                }
+            });
+            await wrapper.vm.$nextTick();
+
+            expect(wrapper.vm.checkZoomLevel).to.be.a("function");
+            expect(checkZoomLevel.notCalled).to.be.true;
+        });
+        it("should call the function checkZoomLevel", async () => {
+            const checkZoomLevel = sinon.stub(wrapper.vm, "checkZoomLevel");
+
+            LayerFilterSnippet.methods.checkZoomLevel = checkZoomLevel;
+            wrapper = shallowMount(LayerFilterSnippet, {
+                global: {
+                    plugins: [store]
+                },
+                propsData: {
+                    layerConfig: {
+                        service: {
+                            type: "something external"
+                        },
+                        "minZoom": 15,
+                        "maxZoom": 18
+                    },
+                    mapHandler
+                }
+            });
+            await wrapper.vm.$nextTick();
+            expect(checkZoomLevel.called).to.be.true;
+        });
+    });
+    describe("checkOutOfZoomLevel", () => {
+        it("should set the variable outOfZoom false", () => {
+            expect(wrapper.vm.checkOutOfZoomLevel(undefined, undefined, undefined)).to.be.false;
+            expect(wrapper.vm.checkOutOfZoomLevel(undefined, undefined, 17)).to.be.false;
+            expect(wrapper.vm.checkOutOfZoomLevel(undefined, 18, 17)).to.be.false;
+            expect(wrapper.vm.checkOutOfZoomLevel(10, undefined, 17)).to.be.false;
+            expect(wrapper.vm.checkOutOfZoomLevel(10, 18, 17)).to.be.false;
+        });
+        it("should set the variable outOfZoom true", () => {
+            expect(wrapper.vm.checkOutOfZoomLevel(10, 16, 17)).to.be.true;
+            expect(wrapper.vm.checkOutOfZoomLevel(10, 18, 7)).to.be.true;
+            expect(wrapper.vm.checkOutOfZoomLevel(10, undefined, 7)).to.be.true;
+            expect(wrapper.vm.checkOutOfZoomLevel(undefined, 16, 17)).to.be.true;
+        });
+    });
 });
