@@ -348,7 +348,8 @@
       "filterButton": "Filter",
       "filterResult": {
         "label": "All filtered Counts",
-        "unit": "{{amountOfFilteredItems}} Results"
+        "unit": "{{amountOfFilteredItems}} Results",
+        "disabledInfo": "The filter is disabled in current zoom level"
       },
       "geometryFilter": {
         "activate": "Set area for filtering",
