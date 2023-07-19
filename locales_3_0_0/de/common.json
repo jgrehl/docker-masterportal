@@ -348,7 +348,8 @@
       "filterButton": "Filtern",
       "filterResult": {
         "label": "Alle Filter-Treffer",
-        "unit": "{{amountOfFilteredItems}} Treffer"
+        "unit": "{{amountOfFilteredItems}} Treffer",
+        "disabledInfo": "Der Filter ist in der aktuellen Zoomstufe deaktiviert."
       },
       "geometryFilter": {
         "activate": "Gebiet für Filterung setzen",
