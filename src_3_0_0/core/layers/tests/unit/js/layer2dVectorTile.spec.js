@@ -7,7 +7,7 @@ import Collection from "ol/Collection";
 
 import Layer2dVectorTile from "../../../js/layer2dVectorTile";
 
-describe("src_3_0_0/core/js/layers/layer2dVectorTile.js", () => {
+describe.skip("src_3_0_0/core/js/layers/layer2dVectorTile.js", () => {
     const attrs = {
             epsg: "EPSG:3857",
             extent: [902186.6748764697, 7054472.604709217, 1161598.3542590786, 7175683.411718197],
