@@ -319,9 +319,6 @@
       "sections": [
         [
           {
-            "type": "addWMS"
-          },
-          {
             "type": "featureLister",
             "description": "Listet alle Features eines Vektorlayers auf",
             "showDescription": true,
