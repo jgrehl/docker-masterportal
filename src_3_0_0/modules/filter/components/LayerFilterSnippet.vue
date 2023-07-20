@@ -1,6 +1,5 @@
 <script>
 import {mapGetters, mapActions} from "vuex";
-import store from "../../../app-store";
 import ProgressBar from "./ProgressBar.vue";
 import SnippetCheckbox from "./SnippetCheckbox.vue";
 import SnippetCheckboxFilterInMapExtent from "./SnippetCheckboxFilterInMapExtent.vue";
@@ -143,7 +142,7 @@ export default {
         };
     },
     computed: {
-        ...mapGetters("Maps", ["scale"]),
+        ...mapGetters("Maps", ["scale", "getView"]),
         labelFilterButton () {
             if (typeof this.layerConfig.labelFilterButton === "string") {
                 return translateKeyWithPlausibilityCheck(this.layerConfig.labelFilterButton, key => this.$t(key));
@@ -230,6 +229,7 @@ export default {
         }
     },
     created () {
+        console.log(this.$store)
         const filterId = this.layerConfig.filterId,
             layerId = this.getLayerId(filterId, this.layerConfig?.layerId, this.layerConfig?.service?.layerId);
 
@@ -775,11 +775,11 @@ export default {
          * @returns {void}
          */
         checkZoomLevel (minZoom, maxZoom) {
-            let currentScale = store.getters["Maps/scale"],
-                zoomLevel = store.getters["Maps/getView"].getZoom();
+            let currentScale = this.scale,
+                zoomLevel = this.getView.getZoom();
 
             this.outOfZoom = this.checkOutOfZoomLevel(minZoom, maxZoom, zoomLevel);
-            store.watch((state, getters) => getters["Maps/scale"], scale => {
+            this.$store.watch((state, getters) => getters["Maps/scale"], scale => {
                 if (scale > currentScale) {
                     zoomLevel = zoomLevel - 1;
                 }
