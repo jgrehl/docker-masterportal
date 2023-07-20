@@ -24,13 +24,7 @@ export default function Layer2dVectorTile (attributes) {
 
     this.checkProjection();
 
-    // set the style only at the first selection of the layer
-    if (attributes.visibility) {
-        this.setConfiguredLayerStyle();
-    }
-    else {
-        this.layer?.once("change:visible", () => this.setConfiguredLayerStyle());
-    }
+    this.setConfiguredLayerStyle();
 }
 
 Layer2dVectorTile.prototype = Object.create(Layer2d.prototype);
@@ -79,8 +73,7 @@ Layer2dVectorTile.prototype.getLayerParams = function (attributes) {
     return {
         gfiAttributes: attributes.gfiAttributes,
         opacity: (100 - attributes.transparency) / 100,
-        zIndex: attributes.zIndex,
-        visible: attributes.visibility
+        zIndex: attributes.zIndex
     };
 };
 
