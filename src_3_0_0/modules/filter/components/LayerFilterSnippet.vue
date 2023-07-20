@@ -229,7 +229,6 @@ export default {
         }
     },
     created () {
-        console.log(this.$store)
         const filterId = this.layerConfig.filterId,
             layerId = this.getLayerId(filterId, this.layerConfig?.layerId, this.layerConfig?.service?.layerId);
 
