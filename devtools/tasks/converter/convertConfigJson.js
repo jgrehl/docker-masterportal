@@ -120,10 +120,10 @@ function convertSubjectData (oldData) {
         elements: []
     };
 
-    if (JSON.stringify(oldData).includes("Ordner")) {
+    if (oldData && JSON.stringify(oldData).includes("Ordner")) {
         console.warn("Converting folder strucure ist not implemented yet!");
     }
-    else if (oldData.Layer) {
+    else if (oldData?.Layer) {
         subjectData.elements = oldData.Layer;
     }
     return subjectData;
@@ -229,7 +229,6 @@ module.exports = function convert (answers) {
             checkConfigJS(sourceFolder, configJsFile);
             configJS = require(path.resolve(sourceFolder, configJsFile));
 
-            convertIndexHtml(sourceFolder, destFolder, indexFile);
             fs.readFile(srcFile, "utf8")
                 .then(data => {
                     // console.warn("data", data);
@@ -254,6 +253,7 @@ module.exports = function convert (answers) {
                                     .then(() => {
                                         replaceInFile(destFile);
                                         convertConfigJS(destFolder, configJsFile, configJS);
+                                        convertIndexHtml(sourceFolder, destFolder, indexFile);
                                         console.warn(destFile + " was saved!");
                                     })
                                     .catch(err => {
@@ -278,4 +278,3 @@ module.exports = function convert (answers) {
 
 };
 
-// convert();
