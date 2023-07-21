@@ -253,7 +253,8 @@ function replaceInFile (file) {
         "menu.tools.print": "modules.print.name",
         "modules.searchbar": "modules.searchBar",
         "translate#common": "common",
-        "translate#additional": "additional"
+        "translate#additional": "additional",
+        "\"iconFor\":": "\"iconForward\":"
     };
 
     Object.entries(replacements).forEach(([key, value]) => {
