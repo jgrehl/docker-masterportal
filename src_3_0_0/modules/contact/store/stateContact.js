@@ -33,7 +33,7 @@
 const state = {
     description: "",
     name: "common:modules.contact.name",
-    icon: "bi-envelope-fill",
+    icon: "bi-envelope",
     from: [],
     serviceId: null,
     to: [],
