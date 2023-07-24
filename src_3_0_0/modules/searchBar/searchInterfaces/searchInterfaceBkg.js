@@ -98,7 +98,7 @@ SearchInterfaceBkg.prototype.normalizeResult = function (searchResult) {
         events: this.normalizeResultEvents(this.resultEvents, searchResult),
         category: searchResult.properties.typ,
         id: uniqueId("BkgGeoSearch"),
-        icon: "bi-signpost-2-fill",
+        icon: "bi-signpost-2",
         name: searchResult.properties.text,
         toolTip: searchResult.properties.text
     };
