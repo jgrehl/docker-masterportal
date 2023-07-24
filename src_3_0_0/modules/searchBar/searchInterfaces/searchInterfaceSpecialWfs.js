@@ -18,7 +18,7 @@ import {uniqueId} from "../../../shared/js/utils/uniqueId";
  * @param {String} definitions.url The WFS URL.
  *
  * @param {String} [hitTemplate="default"] The template for rendering the hits.
- * @param {String} [icon="bi-house-fill"] Default icon used in the result list.
+ * @param {String} [icon="bi-house"] Default icon used in the result list.
  * @param {String} [geometryName="app:geom"] Geometry attribute name required for zoom functionality.
  * @param {Number} [maxFeatures=20] Maximum amount of features returned.
  * @param {String} [namespaces="xmlns:wfs='http://www.opengis.net/wfs' xmlns:ogc='http://www.opengis.net/ogc' xmlns:gml='http://www.opengis.net/gml'"] XML name spaces to request `propertyNames` or `geometryName`.
@@ -41,7 +41,7 @@ export default function SearchInterfaceSpecialWfs ({definitions, hitTemplate, ic
 
     this.definitions = definitions;
 
-    this.icon = icon || "bi-house-fill";
+    this.icon = icon || "bi-house";
     this.geometryName = geometryName || "app:geom";
     this.maxFeatures = maxFeatures || 20;
     this.namespaces = namespaces || "xmlns:wfs='http://www.opengis.net/wfs' xmlns:ogc='http://www.opengis.net/ogc' xmlns:gml='http://www.opengis.net/gml'";

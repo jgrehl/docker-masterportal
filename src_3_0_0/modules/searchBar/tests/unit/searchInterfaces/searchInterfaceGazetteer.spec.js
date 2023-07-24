@@ -66,7 +66,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceGazetteer.
                     },
                     category: "modules.searchBar.type.street",
                     id: "ResultName1modules.searchBar.type.street",
-                    icon: "bi-signpost-split-fill",
+                    icon: "bi-signpost-split",
                     name: "Result Name1"
                 }
             ]);
