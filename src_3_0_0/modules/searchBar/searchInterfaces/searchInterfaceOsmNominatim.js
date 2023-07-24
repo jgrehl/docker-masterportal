@@ -125,7 +125,7 @@ SearchInterfaceOsmNominatim.prototype.normalizeResult = function (searchResult) 
     return {
         events: this.normalizeResultEvents(this.resultEvents, searchResult),
         category: "OpenStreetMap",
-        icon: "bi-signpost-2-fill",
+        icon: "bi-signpost-2",
         id: uniqueId("OSMNominatim"),
         name: displayName,
         toolTip: this.createToolTipName(searchResult, displayName)
