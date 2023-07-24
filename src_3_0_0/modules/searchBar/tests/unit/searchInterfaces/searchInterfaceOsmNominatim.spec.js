@@ -131,7 +131,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceOsmNominat
                         }
                     },
                     id: "OSMNominatim1",
-                    icon: "bi-signpost-2-fill",
+                    icon: "bi-signpost-2",
                     name: "Bremerhaven, Pferdebade 1a",
                     toolTip: "Bremerhaven, Pferdebade 1a, 27580 Bremen (Lehe)"
                 }
@@ -186,7 +186,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceOsmNominat
                     }
                 },
                 id: "OSMNominatim1",
-                icon: "bi-signpost-2-fill",
+                icon: "bi-signpost-2",
                 name: "Bremerhaven, Pferdebade 1a",
                 toolTip: "Bremerhaven, Pferdebade 1a, 27580 Bremen (Lehe)"
             });

@@ -115,7 +115,7 @@ SearchInterfaceKomootPhoton.prototype.normalizeResult = function (searchResult) 
         events: this.normalizeResultEvents(this.resultEvents, searchResult),
         category: "Komoot",
         id: uniqueId("KomootPhoton"),
-        icon: "bi-signpost-2-fill",
+        icon: "bi-signpost-2",
         name: displayName,
         toolTip: this.createToolTipName(searchResult, displayName)
     };

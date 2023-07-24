@@ -115,7 +115,7 @@ SearchInterfaceGazetteer.prototype.normalizeResults = function (searchResults) {
             events: this.normalizeResultEvents(this.resultEvents, searchResult),
             category: translatedType,
             id: searchResult.name.replace(/ /g, "") + translatedType,
-            icon: "bi-signpost-split-fill",
+            icon: "bi-signpost-split",
             name: searchResult.name
         });
     });

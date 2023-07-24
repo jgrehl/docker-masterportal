@@ -118,7 +118,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceBkg.js", (
                         }
                     },
                     id: "BkgGeoSearch1",
-                    icon: "bi-signpost-2-fill",
+                    icon: "bi-signpost-2",
                     name: "ABC-Straße 1, 20354 Hamburg - Neustadt",
                     toolTip: "ABC-Straße 1, 20354 Hamburg - Neustadt"
                 }
@@ -158,7 +158,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceBkg.js", (
                     }
                 },
                 id: "BkgGeoSearch1",
-                icon: "bi-signpost-2-fill",
+                icon: "bi-signpost-2",
                 name: "ABC-Straße 1, 20354 Hamburg - Neustadt",
                 toolTip: "ABC-Straße 1, 20354 Hamburg - Neustadt"
             });
