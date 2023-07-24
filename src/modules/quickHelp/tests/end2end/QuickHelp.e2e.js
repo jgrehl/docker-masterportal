@@ -75,7 +75,7 @@ async function QuickHelpTests ({builder, url, resolution, capability}) {
                 await navBarIcon.click();
                 quickHelp = await driver.wait(until.elementLocated(By.css("#quickHelp")), 1000);
                 await driver.wait(until.elementIsVisible(quickHelp), 5000);
-                const print = await driver.findElement(By.css("#quickHelp span.bootstrap-icon > .bi-printer-fill")),
+                const print = await driver.findElement(By.css("#quickHelp span.bootstrap-icon > .bi-printer")),
                     originalWindow = await driver.getWindowHandle();
 
                 if ((await driver.getAllWindowHandles()).length !== 1) {

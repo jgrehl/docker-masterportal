@@ -52,7 +52,7 @@
 const state = {
     description: "",
     filename: "report",
-    icon: "bi-printer-fill",
+    icon: "bi-printer",
     name: "common:modules.print.name",
     showDescription: false,
     supportedDevices: ["Desktop", "Table"],
