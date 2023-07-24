@@ -152,7 +152,7 @@ export default {
                     @click="print"
                     @keydown.enter="print"
                 >
-                    <i class="bi-printer-fill" />
+                    <i class="bi-printer" />
                 </span>
             </div>
         </template>
@@ -218,7 +218,7 @@ export default {
     z-index: 2000;
 }
 
-.bi-printer-fill {
+.bi-printer {
     cursor: pointer;
     font-size: $font_size_icon_lg;
 }
