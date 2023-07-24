@@ -3322,7 +3322,7 @@ Werkzeug, wodurch der Nutzer/die Nutzerin mit einem definierten Postfach Kontakt
 {
     "contact": {
         "name": "common:menu.contact",
-        "icon": "bi-envelope-fill",
+        "icon": "bi-envelope",
         "serviceId": "123",
         "from": [
             {

@@ -3394,7 +3394,7 @@ The contact form allows users to send messages to a configured mail address.
 {
     "contact": {
         "name": "common:menu.contact",
-        "icon": "bi-envelope-fill",
+        "icon": "bi-envelope",
         "serviceId": "123",
         "from": [
             {
