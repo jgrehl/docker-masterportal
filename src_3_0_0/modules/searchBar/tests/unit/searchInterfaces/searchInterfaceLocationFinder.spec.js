@@ -143,7 +143,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceLocationFi
                     },
                     category: "abc",
                     id: "locationFinder_1",
-                    icon: "bi-signpost-2-fill",
+                    icon: "bi-signpost-2",
                     name: "First result"
                 }
             ]);
@@ -256,7 +256,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceLocationFi
                     },
                     category: "abc",
                     id: "locationFinder_1",
-                    icon: "bi-signpost-2-fill",
+                    icon: "bi-signpost-2",
                     name: "First result"
                 }
             );
