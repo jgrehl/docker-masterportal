@@ -268,7 +268,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceTopicTree.
                         },
                         buttons: {}
                     },
-                    icon: "bi-folder-fill",
+                    icon: "bi-folder",
                     id: "folder_Überschwemmungsgebiete",
                     name: "Überschwemmungsgebiete"
                 }
@@ -343,7 +343,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceTopicTree.
                         buttons: {
                         }
                     },
-                    icon: "bi-folder-fill",
+                    icon: "bi-folder",
                     id: "folder_Überschwemmungsgebiete",
                     name: "Überschwemmungsgebiete"
                 }
