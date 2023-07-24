@@ -37,6 +37,7 @@ import ShareView from "../shareView/store/indexShareView";
 import StyleVT from "../styleVT/store/indexStyleVT";
 import WfsSearch from "../wfsSearch/store/indexWfsSearch";
 import Wfst from "../wfst/store/indexWfst";
+import WmsTime from "../wmsTime/store/indexWmsTime";
 
 export default {
     namespaced: true,
@@ -79,6 +80,7 @@ export default {
         ShareView: {...ShareView},
         StyleVT: {...StyleVT},
         WfsSearch: {...WfsSearch},
-        Wfst: {...Wfst}
+        Wfst: {...Wfst},
+        WmsTime: {...WmsTime}
     }
 };
