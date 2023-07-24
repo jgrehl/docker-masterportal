@@ -1,6 +1,7 @@
 import Layer2dRasterStaticImage from "./layer2dRasterStaticImage";
 import Layer2dRasterWms from "./layer2dRasterWms";
 import Layer2dRasterWmts from "./layer2dRasterWmts";
+import Layer2dRasterWmsTime from "./Layer2dRasterWmsTime";
 import Layer2dVector from "./layer2dVector";
 import Layer2dVectorGeojson from "./layer2dVectorGeojson";
 import Layer2dVectorOaf from "./layer2dVectorOaf";
@@ -21,7 +22,8 @@ const layerTypes2d = {
         VECTORTILE: Layer2dVectorTile,
         WFS: Layer2dVectorWfs,
         WMS: Layer2dRasterWms,
-        WMTS: Layer2dRasterWmts
+        WMTS: Layer2dRasterWmts,
+        WMSTime: Layer2dRasterWmsTime
     },
     layerTypes3d = {
         ENTITIES3D: Layer3dEntities,
