@@ -37,6 +37,7 @@ import ShareView from "../shareView/components/ShareView.vue";
 import StyleVT from "../styleVT/components/StyleVT.vue";
 import WfsSearch from "../wfsSearch/components/WfsSearch.vue";
 import Wfst from "../wfst/components/WfsTransaction.vue";
+import WmsTime from "../wmsTime/components/WmsTime.vue";
 
 
 const getters = {
@@ -80,7 +81,8 @@ const getters = {
             shareView: ShareView,
             styleVT: StyleVT,
             wfsSearch: WfsSearch,
-            wfst: Wfst
+            wfst: Wfst,
+            wmsTime: WmsTime
         };
 
         moduleCollection = {...coreModules, ...moduleCollection};
