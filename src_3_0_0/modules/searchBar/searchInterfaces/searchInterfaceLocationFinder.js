@@ -130,7 +130,7 @@ SearchInterfaceLocationFinder.prototype.normalizeResult = function (searchResult
         events: this.normalizeResultEvents(this.resultEvents, searchResult, extendedData),
         category: searchResult.type,
         id: "locationFinder_" + searchResult.id,
-        icon: extendedData?.classDefinition?.icon || "bi-signpost-2-fill",
+        icon: extendedData?.classDefinition?.icon || "bi-signpost-2",
         name: searchResult.name
     };
 };
