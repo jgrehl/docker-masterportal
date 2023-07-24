@@ -772,6 +772,13 @@
           "visibility": true
         },
         {
+          "id" : "23555",
+          "name" : "Satellitenbilder Sentinel-2 CIR",
+          "url" : "https://geodienste.hamburg.de/HH_WMS-T_Satellitenbilder_Sentinel-2",
+          "typ" : "WMS",
+          "visibility": true
+        },
+        {
           "id": "4538",
           "name": "ek pv",
           "typ": "WMS",
