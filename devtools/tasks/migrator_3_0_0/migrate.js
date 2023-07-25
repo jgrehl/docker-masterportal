@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 const inquirer = require("inquirer"),
-    migrateConfigJson = require("./migrateConfigJson.js"),
+    migrateConfigFiles = require("./migrateConfigFiles.js"),
     infoMessage = "The paths to the portal or folder with portals must start from \"[...]/masterportal/\")!",
     sourceMessage = "source path to the portal or folder with portals to migrate",
     destMessage = "destination path to store the migrated portal(s)",
@@ -41,7 +41,7 @@ if (process.argv.length > 2 && (sourcePath === null || destPath === null)) {
     printUsage();
 }
 else if (sourcePath && destPath) {
-    migrateConfigJson({
+    migrateConfigFiles({
         sourcePath, destPath
     });
 }
@@ -49,7 +49,7 @@ else if (!usagePrinted) {
     console.info(infoMessage);
     inquirer.prompt(questions)
         .then(function (answers) {
-            migrateConfigJson(answers);
+            migrateConfigFiles(answers);
         })
         .catch((error) => {
             if (error.isTtyError) {
