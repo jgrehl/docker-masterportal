@@ -6,6 +6,19 @@ import {mapActions} from "vuex";
 
 import IconButton from "../../buttons/components/IconButton.vue";
 
+/**
+ * Shared component that provides buttons to edit drawn features.
+ * @module shared/modules/draw/DrawEdit
+ * @vue-prop {Object} [drawIcons={delete: "bi-eraser-fill", deleteAll: "bi-trash", modify: "bi-tools", redo: "bi-arrow-right", undo: "bi-arrow-left"}] - The icons for edit buttons.
+ * @vue-prop {ol/layer/Vector} layer - The vector layer for drawings.
+ * @vue-prop {String} [selectedInteraction="draw"] - The selected interaction.
+ * @vue-prop {Function} [setSelectedInteraction=null] - Setter for selected interaction.
+ * @vue-data {ol/interaction/Select} currentSelectInteractions=[] - The current select interactions.
+ * @vue-data {ol/interaction/Modify} currentModifyInteraction=null - The current modify interaction.
+ * @vue-data {String} mode="" - The current mode.
+ * @vue-data {ol/feature[]} redoFeatures=null - Contains the redo features.
+ * @vue-data {ol/feature[]} undoFeatures=null - Contains the undo features.
+ */
 export default {
     name: "DrawEdit",
     components: {
@@ -51,10 +64,15 @@ export default {
         return {
             currentSelectInteractions: [],
             currentModifyInteraction: null,
-            undoFeatures: [],
+            mode: "",
             redoFeatures: [],
-            mode: ""
+            undoFeatures: []
         };
+    },
+    computed: {
+        source () {
+            return this.layer?.getSource();
+        }
     },
     watch: {
         selectedInteraction (selectedInteraction) {
@@ -69,15 +87,15 @@ export default {
         }
     },
     mounted () {
-        this.layer.getSource().on("addfeature", event => {
+        this.source.on("addfeature", event => {
             this.changeUndoRedoFeatures(event.feature, "draw");
         });
 
-        this.layer.getSource().on("removefeature", event => {
+        this.source.on("removefeature", event => {
             this.changeUndoRedoFeatures(event.feature, "delete");
         });
 
-        this.layer.getSource().on("clear", () => {
+        this.source.on("clear", () => {
             this.mode = "";
         });
     },
@@ -119,7 +137,7 @@ export default {
 
             this.currentSelectInteractions.push(selectInteractions.createSelectInteraction(this.layer));
             this.currentSelectInteractions.push(selectInteractions.createSelectInteraction(this.layer, pointerMove));
-            selectInteractions.removeSelectedFeature(this.currentSelectInteractions[0], this.layer.getSource());
+            selectInteractions.removeSelectedFeature(this.currentSelectInteractions[0], this.source);
             this.currentSelectInteractions.forEach(selectInteraction => this.addInteraction(selectInteraction));
         },
 
@@ -130,8 +148,8 @@ export default {
         regulateDeleteAll () {
             this.mode = "deleteAll";
 
-            this.undoFeatures.push(this.layer.getSource().getFeatures());
-            this.layer.getSource().clear();
+            this.undoFeatures.push(this.source.getFeatures());
+            this.source.clear();
         },
 
         /**
@@ -144,7 +162,7 @@ export default {
             }
 
             this.removeInteraction(this.currentModifyInteraction);
-            this.currentModifyInteraction = modifyInteractions.createModifyInteraction(this.layer.getSource());
+            this.currentModifyInteraction = modifyInteractions.createModifyInteraction(this.source);
             this.addInteraction(this.currentModifyInteraction);
         },
 
@@ -172,7 +190,7 @@ export default {
          */
         undoRedoFeatures (features, mode) {
             if (features.length > 0) {
-                const source = this.layer.getSource(),
+                const source = this.source,
                     feature = features[features.length - 1];
 
                 this.mode = mode;
@@ -215,7 +233,7 @@ export default {
         /**
          * Change the position of features in undo and redo feature collections.
          * @param {ol/feature} feature The ol feature.
-         * @param {String} mode The draw or delete mode .
+         * @param {String} mode The draw or delete mode.
          * @returns {void}
          */
         changeUndoRedoFeatures (feature, mode) {
@@ -244,7 +262,10 @@ export default {
 </script>
 
 <template>
-    <div class="mb-4">
+    <div
+        v-if="undoFeatures.length > 0 || redoFeatures.length > 0"
+        class="mb-4"
+    >
         <div class="d-flex">
             <IconButton
                 v-for="drawEdit in drawEdits"
@@ -257,7 +278,7 @@ export default {
                     selectedInteraction === drawEdit ? 'active': '',
                     drawEdit === 'redo' && redoFeatures.length === 0 ? 'disabled' : '',
                     drawEdit === 'undo' && undoFeatures.length === 0 ? 'disabled' : '',
-                    drawEdit !== 'redo' && drawEdit !== 'undo' && layer?.getSource()?.getFeatures()?.length === 0 ? 'disabled' : ''
+                    drawEdit !== 'redo' && drawEdit !== 'undo' && source?.getFeatures()?.length === 0 ? 'disabled' : ''
                 ]"
                 :interaction="() => regulateEditInteraction(drawEdit)"
                 :icon="drawIcons[drawEdit]"
