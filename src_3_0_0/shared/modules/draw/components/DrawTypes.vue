@@ -14,8 +14,10 @@ import IconButton from "../../buttons/components/IconButton.vue";
  * @vue-prop {String[]} [drawTypes=["pen", "geometries", "symbols"]] - The drawing types.
  * @vue-prop {String} [selectedDrawType=""] - The selected draw type.
  * @vue-prop {String} [selectedDrawTypeMain=""] - The selected draw type main.
+ * @vue-prop {String} [selectedInteraction="draw"] - The selected interaction.
  * @vue-prop {Function} setSelectedDrawType - Setter for selected draw type.
  * @vue-prop {Function} [setSelectedDrawTypeMain=null] - Setter for selected draw type main.
+ * @vue-prop {Function} [setSelectedInteraction=null] - Setter for selected interaction.
  * @vue-prop {ol/source/Vector} source - The vector source for drawings.
  * @vue-data {ol/interaction/Draw} drawInteraction=null - The current draw interaction.
  */
