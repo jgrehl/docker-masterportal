@@ -39,6 +39,8 @@ function fillSections (data, secondaryMenu, migratedTools) {
                 delete tool.renderToWindow;
                 delete tool.active;
                 delete tool.isVisibleInMenu;
+                delete tool.resizableWindow;
+                delete tool.initialWidth;
                 section.push(tool);
                 migratedTools.push(toolName);
             }
