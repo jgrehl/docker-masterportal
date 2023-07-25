@@ -19,7 +19,6 @@
     - new parameter: hideMapMarkerOnVectorHighlight
 - WFST:
     - further input type "short" and "float"
-- Added documentation file doc\jsdoc.md for jsdoc in vue-components and vuex-files.
 
 ### Changed
 - The following packages have been updated:
@@ -124,6 +123,8 @@
 - LayerIds can no longer be configured as Object in the layer configuration (config.json). Instead the suffix `#` should be used to use a LayerId more than once.
 - The `mapMarker` is now a part of `map`.
 - You can configure the posiibility to add attachments to the `contact` form.
+- Added documentation file doc\jsdoc.md for jsdoc in vue-components and vuex-files.
+- Script to migrate masterportal configuration files to version 3.0.0
 
 ### Added
 - GFI: nested object values can now be addressed from "gfiAttributes" by dot notation. See [services.json](https://bitbucket.org/geowerkstatt-hamburg/masterportal/src/dev/doc/services.json.md#markdown-header-gfi_attributes) .
