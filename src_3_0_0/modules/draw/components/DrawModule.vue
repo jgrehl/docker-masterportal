@@ -10,6 +10,7 @@ import DrawTypes from "../../../shared/modules/draw/components/DrawTypes.vue";
 /**
  * Modules to make drawings.
  * @module modules/draw/components/DrawModule
+ * @vue-data {ol/layer/Vector} [layer=null] - The vector layer for drawings.
  * @vue-data {ol/source/Vector} [source=new VectorSource()] - The vector source for drawings.
  */
 export default {
@@ -47,16 +48,15 @@ export default {
             "secondaryExpanded"
         ])
     },
-    mounted () {
-        const map2d = mapCollection.getMap("2D");
-
+    created () {
         this.layer = new VectorLayer({
             name: "importDrawLayer",
             source: this.source,
             zIndex: 99999999999
         });
-
-        map2d.addLayer(this.layer);
+    },
+    mounted () {
+        mapCollection.getMap("2D").addLayer(this.layer);
     },
     methods: {
         ...mapMutations("Modules/Draw", [
@@ -76,7 +76,6 @@ export default {
         class="d-flex flex-column"
     >
         <div id="draw-edit">
-            <!-- v-if="layer !== null && source.getFeatures().length > 0" -->
             <DrawEdit
                 v-if="layer !== null"
                 :draw-edits="drawEdits"
