@@ -62,6 +62,7 @@ describe("src_3_0_0/modules/draw/components/DrawModule.vue", () => {
                                         strokeWidth: 1
                                     };
                                 },
+                                drawEdits: () => ["deleteAll", "delete", "modify", "undo", "redo"],
                                 drawIcons: () => {
                                     return {
                                         box: "bi-square",
@@ -80,6 +81,7 @@ describe("src_3_0_0/modules/draw/components/DrawModule.vue", () => {
                                 drawTypesSymbols: () => ["point"],
                                 selectedDrawType: () => selectedDrawType,
                                 selectedDrawTypeMain: () => selectedDrawTypeMain,
+                                selectedInteraction: () => "draw",
                                 strokeRange: () => [1, 16]
                             }
                         }
@@ -93,76 +95,93 @@ describe("src_3_0_0/modules/draw/components/DrawModule.vue", () => {
         sinon.restore();
     });
 
-    it("renders the draw module component", () => {
-        wrapper = shallowMount(DrawModuleComponent, {
-            global: {
-                plugins: [store]
-            }
-        });
+    describe("DrawModule", () => {
+        it("renders the draw module component", () => {
+            wrapper = shallowMount(DrawModuleComponent, {
+                global: {
+                    plugins: [store]
+                }
+            });
 
-        expect(wrapper.find("#modules-draw-module").exists()).to.be.true;
+            expect(wrapper.find("#modules-draw-module").exists()).to.be.true;
+        });
     });
 
-    it("renders the shared module drawTypes", () => {
-        wrapper = shallowMount(DrawModuleComponent, {
-            global: {
-                plugins: [store]
-            }
-        });
+    describe("DrawEdit", () => {
+        it("renders the shared module drawEdit", () => {
+            wrapper = shallowMount(DrawModuleComponent, {
+                global: {
+                    plugins: [store]
+                }
+            });
 
-        expect(wrapper.find("#draw-types >draw-types-stub").exists()).to.be.true;
+            expect(wrapper.find("#draw-edit >draw-edit-stub").exists()).to.be.true;
+            expect(wrapper.findAll("draw-edit-stub").length).to.equals(1);
+        });
     });
 
-    it("renders the shared module drawTypes for selectedDrawTypeMain - geometries", () => {
-        selectedDrawTypeMain = "geometries";
+    describe("DrawTypes and DrawLayout", () => {
+        it("renders the shared module drawTypes", () => {
+            wrapper = shallowMount(DrawModuleComponent, {
+                global: {
+                    plugins: [store]
+                }
+            });
 
-        wrapper = shallowMount(DrawModuleComponent, {
-            global: {
-                plugins: [store]
-            }
+            expect(wrapper.find("#draw-types >draw-types-stub").exists()).to.be.true;
         });
 
-        expect(wrapper.findAll("draw-types-stub").length).to.equals(2);
-    });
+        it("renders the shared module drawTypes for selectedDrawTypeMain - geometries", () => {
+            selectedDrawTypeMain = "geometries";
 
-    it("renders the shared module drawTypes for selectedDrawTypeMain - symbols", () => {
-        selectedDrawTypeMain = "symbols";
+            wrapper = shallowMount(DrawModuleComponent, {
+                global: {
+                    plugins: [store]
+                }
+            });
 
-        wrapper = shallowMount(DrawModuleComponent, {
-            global: {
-                plugins: [store]
-            }
+            expect(wrapper.findAll("draw-types-stub").length).to.equals(2);
         });
 
-        expect(wrapper.findAll("draw-types-stub").length).to.equals(2);
-    });
+        it("renders the shared module drawTypes for selectedDrawTypeMain - symbols", () => {
+            selectedDrawTypeMain = "symbols";
 
-    it("renders the shared module drawTypes and draw layouts for selectedDrawTypeMain - symbols and selectedDrawType - circle", () => {
-        selectedDrawTypeMain = "geometries";
-        selectedDrawType = "circle";
+            wrapper = shallowMount(DrawModuleComponent, {
+                global: {
+                    plugins: [store]
+                }
+            });
 
-        wrapper = shallowMount(DrawModuleComponent, {
-            global: {
-                plugins: [store]
-            }
+            expect(wrapper.findAll("draw-types-stub").length).to.equals(2);
         });
 
-        expect(wrapper.findAll("draw-types-stub").length).to.equals(2);
-        expect(wrapper.findAll("draw-layout-stub").length).to.equals(1);
-        expect(wrapper.find("#draw-layouts > draw-layout-stub").exists()).to.be.true;
-    });
+        it("renders the shared module drawTypes and draw layouts for selectedDrawTypeMain - symbols and selectedDrawType - circle", () => {
+            selectedDrawTypeMain = "geometries";
+            selectedDrawType = "circle";
 
-    it("renders the shared module drawTypes and draw layouts for selectedDrawTypeMain - symbols and selectedDrawType - doubleCircle", () => {
-        selectedDrawTypeMain = "geometries";
-        selectedDrawType = "doubleCircle";
+            wrapper = shallowMount(DrawModuleComponent, {
+                global: {
+                    plugins: [store]
+                }
+            });
 
-        wrapper = shallowMount(DrawModuleComponent, {
-            global: {
-                plugins: [store]
-            }
+            expect(wrapper.findAll("draw-types-stub").length).to.equals(2);
+            expect(wrapper.findAll("draw-layout-stub").length).to.equals(1);
+            expect(wrapper.find("#draw-layouts > draw-layout-stub").exists()).to.be.true;
         });
 
-        expect(wrapper.findAll("draw-types-stub").length).to.equals(2);
-        expect(wrapper.findAll("draw-layout-stub").length).to.equals(2);
+        it("renders the shared module drawTypes and draw layouts for selectedDrawTypeMain - symbols and selectedDrawType - doubleCircle", () => {
+            selectedDrawTypeMain = "geometries";
+            selectedDrawType = "doubleCircle";
+
+            wrapper = shallowMount(DrawModuleComponent, {
+                global: {
+                    plugins: [store]
+                }
+            });
+
+            expect(wrapper.findAll("draw-types-stub").length).to.equals(2);
+            expect(wrapper.findAll("draw-layout-stub").length).to.equals(2);
+        });
     });
 });
