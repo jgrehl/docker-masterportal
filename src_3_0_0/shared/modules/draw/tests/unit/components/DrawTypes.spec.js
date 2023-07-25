@@ -15,7 +15,9 @@ describe("src_3_0_0/shared/modules/draw/components/DrawTypes.vue", () => {
         currentLayout,
         drawCircleSpy,
         removeInteractionSpy,
+        selectedInteraction,
         setSelectedDrawType,
+        setSelectedDrawTypeMain,
         source,
         store,
         wrapper;
@@ -31,7 +33,9 @@ describe("src_3_0_0/shared/modules/draw/components/DrawTypes.vue", () => {
         };
         drawCircleSpy = sinon.spy(drawInteractions, "drawCircle");
         removeInteractionSpy = sinon.spy();
-        setSelectedDrawType = sinon.stub();
+        selectedInteraction = "draw";
+        setSelectedDrawType = sinon.spy();
+        setSelectedDrawTypeMain = sinon.spy();
         source = new VectorSource();
 
 
@@ -76,6 +80,36 @@ describe("src_3_0_0/shared/modules/draw/components/DrawTypes.vue", () => {
 
         expect(wrapper.find("#draw-symbols").exists()).to.be.true;
         expect(wrapper.find("#draw-symbols").attributes().aria).to.equals("common:shared.modules.draw.drawTypes.symbols");
+    });
+
+    describe("selectedInteraction", () => {
+        beforeEach(() => {
+            selectedInteraction = "delete";
+        });
+
+        it("should set selectedDrawType and selectedDrawTypeMain to empty string, if selectedInteraction is not 'draw'", () => {
+            wrapper = shallowMount(DrawTypesComponent, {
+                propsData: {
+                    currentLayout,
+                    selectedInteraction,
+                    setSelectedDrawType,
+                    setSelectedDrawTypeMain,
+                    source
+                },
+                global: {
+                    plugins: [store]
+                }
+            });
+
+            wrapper.vm.$options.watch.selectedInteraction.call(wrapper.vm, selectedInteraction);
+
+            expect(setSelectedDrawType.calledTwice).to.be.true;
+            expect(setSelectedDrawType.firstCall.args[0]).to.equals("");
+            expect(setSelectedDrawType.secondCall.args[0]).to.equals("");
+            expect(setSelectedDrawTypeMain.called).to.be.true;
+            expect(setSelectedDrawTypeMain.firstCall.args[0]).to.equals("");
+            expect(setSelectedDrawTypeMain.secondCall.args[0]).to.equals("");
+        });
     });
 
     describe("regulateInteraction", () => {
