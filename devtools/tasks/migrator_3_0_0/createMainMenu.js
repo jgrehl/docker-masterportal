@@ -48,6 +48,9 @@ function fillMainSections (data, configJS, mainMenu, migratedTools) {
             const config = {...menuConfig};
 
             config.type = menuName;
+            if(menuName === "contact"){
+                config.fileUpload = true;
+            }
             section.push(config);
             migratedTools.push(menuName);
         }
