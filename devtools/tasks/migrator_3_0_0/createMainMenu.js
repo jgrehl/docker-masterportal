@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 const {PORTALCONFIG} = require("./constants");
 
-module.exports = function createMainMenu (data, configJS, migratedTools, migratedMenuEntries) {
+module.exports = function createMainMenu (data, configJS, migratedTools) {
     console.info("mainMenu");
     const mainMenu = {
         expanded: true,
@@ -10,7 +10,7 @@ module.exports = function createMainMenu (data, configJS, migratedTools, migrate
 
     addTitle(data, mainMenu);
     addSearchbar(data, mainMenu);
-    fillMainSections(data, configJS, mainMenu, migratedTools, migratedMenuEntries);
+    fillMainSections(data, configJS, mainMenu, migratedTools);
 
     return mainMenu;
 };
@@ -21,16 +21,15 @@ module.exports = function createMainMenu (data, configJS, migratedTools, migrate
  * @param {Object} configJS content of the config.js file
  * @param {Object} mainMenu v3 main menu object
  * @param {Array} migratedTools already migrated v2 tools
- * @param {Array} migratedMenuEntries already migrated v2 menu entries
  * @returns {void}
  */
-function fillMainSections (data, configJS, mainMenu, migratedTools, migratedMenuEntries) {
+function fillMainSections (data, configJS, mainMenu, migratedTools) {
     console.info("   tools");
     const menu = data[PORTALCONFIG].menu,
-        tools = menu.tools.children,
+        tools = menu.tools?.children,
         section = mainMenu.sections[0];
 
-    if (tools.print) {
+    if (tools?.print) {
         console.info("       print");
         const print = {...tools.print};
 
@@ -42,25 +41,22 @@ function fillMainSections (data, configJS, mainMenu, migratedTools, migratedMenu
     section.push({
         type: "openConfig"
     });
-    if (menu.legend) {
-        console.info("       legend");
-        section.push({
-            type: "legend"
-        });
-        migratedMenuEntries.push("contact");
-    }
+
+    Object.entries(menu).forEach(([menuName, menuConfig]) => {
+        if (!["info", "tree", "ansichten", "tools"].includes(menuName)) {
+            console.info("       " + menuName);
+            const config = {...menuConfig};
+
+            config.type = menuName;
+            section.push(config);
+            migratedTools.push(menuName);
+        }
+    });
+
     console.info("       shareView");
     section.push({
         type: "shareView"
     });
-    if (menu.contact) {
-        console.info("       contact");
-        const contact = {...menu.contact};
-
-        contact.type = "contact";
-        section.push(contact);
-        migratedMenuEntries.push("contact");
-    }
     console.info("       news");
     section.push({
         type: "news"
