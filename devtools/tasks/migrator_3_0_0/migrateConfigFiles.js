@@ -8,8 +8,7 @@ const fs = require("fs-extra"),
     rootPath = path.resolve(__dirname, "../../../"),
     deprecated = ["searchByCoord", "supplyCoord", "parcelSearch", "extendedFilter"],
     notToMigrate = ["gfi", "compareFeatures", "saveSelection"],
-    migratedTools = notToMigrate.concat(deprecated),
-    migratedMenuEntries = [];
+    migratedTools = notToMigrate.concat(deprecated);
 
 /**
  * Migrates the mapView.
@@ -307,8 +306,8 @@ function migrateFiles (sourcePath, destPath) {
                         migrated[PORTALCONFIG].portalFooter = migrateFooter(configJS);
                         migrated[PORTALCONFIG].controls = migrateControls(parsed);
                         migrated[PORTALCONFIG].tree = migrateTree(parsed, configJS);
-                        migrated[PORTALCONFIG].mainMenu = createMainMenu(parsed, configJS, migratedTools, migratedMenuEntries);
-                        migrated[PORTALCONFIG].secondaryMenu = createSecondaryMenu(parsed, migratedTools, migratedMenuEntries);
+                        migrated[PORTALCONFIG].mainMenu = createMainMenu(parsed, configJS, migratedTools);
+                        migrated[PORTALCONFIG].secondaryMenu = createSecondaryMenu(parsed, migratedTools);
                         migrated[TOPICS] = migrateTopics(parsed);
 
                         fs.ensureDir(destPath)
@@ -329,7 +328,7 @@ function migrateFiles (sourcePath, destPath) {
                             });
                     }
                     else {
-                        console.warn("IS ALREADY IN V3.0.0: ", destFolder);
+                        console.warn("IS ALREADY IN V3.0.0 - NOT MIGRATED: ", srcFile);
                     }
                 })
                 .catch(err => {
