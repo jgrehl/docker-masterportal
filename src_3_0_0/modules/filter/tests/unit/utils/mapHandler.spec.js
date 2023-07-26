@@ -651,12 +651,12 @@ describe("src/module/tools/filter/utils/mapHandler.js", () => {
             };
             map.filteredIds.filterId = [];
             map.addItemsToLayer("filterId", [
-                {get: () => 10},
-                {get: () => 20},
-                {get: () => 30}
+                {getProperties: () => 10},
+                {getProperties: () => 20},
+                {getProperties: () => 30}
             ], false);
-            expect(map.filteredIds.filterId).to.deep.equal([10, 20, 30]);
-            expect(called_showFeaturesByIds).to.deep.equal([10, 20, 30]);
+            expect(map.filteredIds.filterId).to.deep.equal({"10": true, "20": true, "30": true});
+            expect(called_showFeaturesByIds).to.deep.equal({"10": true, "20": true, "30": true});
         });
         it("should push items to filteredIds and try to set them on the map if extern is false", () => {
             let called_showFeaturesByIds = false;

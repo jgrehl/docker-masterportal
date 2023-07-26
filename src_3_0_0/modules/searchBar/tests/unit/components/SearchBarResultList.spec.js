@@ -84,7 +84,8 @@ describe("src_3_0_0/modules/searchBar/components/SearchBarResultList.vue", () =>
                                 suggestionListLength: () => sinon.stub()
                             },
                             mutations: {
-                                setSearchSuggestions: sinon.stub()
+                                setSearchSuggestions: sinon.stub(),
+                                setShowAllResults: sinon.stub()
                             }
                         }
                     }
