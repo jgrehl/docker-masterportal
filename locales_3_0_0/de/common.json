@@ -347,9 +347,9 @@
       },
       "filterButton": "Filtern",
       "filterResult": {
+        "disabledInfo": "Der Filter ist in der aktuellen Zoomstufe deaktiviert.",
         "label": "Alle Filter-Treffer",
-        "unit": "{{amountOfFilteredItems}} Treffer",
-        "disabledInfo": "Der Filter ist in der aktuellen Zoomstufe deaktiviert."
+        "unit": "{{amountOfFilteredItems}} Treffer"
       },
       "geometryFilter": {
         "activate": "Gebiet für Filterung setzen",
@@ -841,6 +841,13 @@
         }
       },
       "draw": {
+        "drawEdit": {
+          "delete": "Geometrie / Text löschen",
+          "deleteAll": "Alles löschen",
+          "modify": "Geometrie bearbeiten",
+          "redo": "Wiederholen",
+          "undo": "Rückgängig machen"
+        },
         "drawLayout": {
           "fillColor": "Füllfarbe",
           "fillTransparency": "Transparenz",
