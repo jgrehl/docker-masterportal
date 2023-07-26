@@ -613,7 +613,8 @@
         "editRestrictedAreas": "Sperrflächen zeichnen/bearbeiten",
         "preference": {
           "RECOMMENDED": "Empfohlene Route",
-          "SHORTEST": "Kürzeste Route"
+          "SHORTEST": "Kürzeste Route",
+          "GREEN": "Grüne Route"
         },
         "preferenceLabel": "Präferenz",
         "restrictedAreas": "Sperrflächen"
