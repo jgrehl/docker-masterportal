@@ -347,6 +347,7 @@
       },
       "filterButton": "Filtro",
       "filterResult": {
+        "disabledInfo": "",
         "label": "Tutti i risultati del filtro",
         "unit": "{{amountOfFilteredItems}} Treffer"
       },
@@ -840,6 +841,13 @@
         }
       },
       "draw": {
+        "drawEdit": {
+          "delete": "Cancella geometria / testo",
+          "deleteAll": "Cancella tutto",
+          "modify": "Modifica geometria",
+          "redo": "Ripeti",
+          "undo": "Annulla"
+        },
         "drawLayout": {
           "fillColor": "Colore interno",
           "fillTransparency": "Trasparenza",
