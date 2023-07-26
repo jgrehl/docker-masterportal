@@ -381,6 +381,25 @@ describe("src_3_0_0/modules/alerting/components/AlertingItem.vue", () => {
             wrapper = shallowMount(AlertingItemComponent, settings);
 
             expect(wrapper.findAll(".singleAlertContainer").length).to.equal(1);
+            expect(wrapper.find(".creation-date").exists()).to.be.false;
+        });
+
+        it("show an alert with creationDate", () => {
+            alerts = [{
+                category: "info",
+                content: "with creation date",
+                creationDate: "26/07/23"
+            }];
+
+            sortedAlerts = [{
+                category: "error",
+                content: alerts
+            }];
+
+            wrapper = shallowMount(AlertingItemComponent, settings);
+
+            expect(wrapper.find(".singleAlertContainer").html().indexOf("with creation date")).not.to.equal(-1);
+            expect(wrapper.find(".creation-date").exists()).to.be.true;
         });
     });
 
