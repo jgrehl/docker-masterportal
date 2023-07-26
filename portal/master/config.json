@@ -766,7 +766,8 @@
           "featurePrefix": "de.hh.up:",
           "wildCard": "%",
           "singleChar": "#",
-          "escapeChar": "!"
+          "escapeChar": "!",
+          "layerAttribution": "<span>Test: LayerAttribution für Krankenhäuser</span>"
         },
         {
           "id": "2003",
@@ -804,7 +805,8 @@
           "featurePrefix": "de.hh.up:",
           "wildCard": "%",
           "singleChar": "#",
-          "escapeChar": "!"
+          "escapeChar": "!",
+          "layerAttribution": "<span>Test: LayerAttribution für Schulen</span>"
         },
         {
           "id": "19173",

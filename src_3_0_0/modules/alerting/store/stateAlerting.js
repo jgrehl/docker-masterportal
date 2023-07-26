@@ -15,6 +15,7 @@
  * @property {Boolean} alertProto.multipleAlert flag to show multiple alerts or a single alert
  * @property {Boolean} alertProto.mustBeConfirmed flag if an alert can be marked to show not again
  * @property {Boolean/Object} alertProto.once flag if alert is shown once or not.
+ * @property {Boolean} alertProto.onceInSession flag if alert is shown once in the current session or not.
 
  * @property {String} alertWindowTitle shown title of the main alert/modal window
  * @property {Object[]} alerts array of current loaded alerts
@@ -40,7 +41,8 @@ export default {
         hash: "",
         multipleAlert: false,
         mustBeConfirmed: false,
-        once: false
+        once: false,
+        onceInSession: false
     },
     alerts: [],
     alertWindowTitle: "common:modules.alerting.alertWindowTitle",
