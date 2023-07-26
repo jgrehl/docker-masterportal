@@ -235,7 +235,7 @@ export default {
                                 class="singleAlertContainer row"
                             >
                                 <hr
-                                    v-if="singleAlertIndex>0 || categoryIndex>0"
+                                    v-if="singleAlertIndex > 0 || categoryIndex > 0"
                                 >
                                 <h3
                                     class="mt-1 ms-2 col-8"
@@ -270,8 +270,9 @@ export default {
                                     class="d-flex justify-content-between small"
                                 >
                                     <div
-                                        class="mt-2"
-                                        v-html="$t(`common:modules.alerting.created`)+singleAlert.creationDate"
+                                        v-if="singleAlert.creationDate"
+                                        class="mt-2 creation-date"
+                                        v-html="$t(`common:modules.alerting.created`) + singleAlert.creationDate"
                                     />
                                     <div
                                         v-if="singleAlert.initialConfirmed && availableLocalStorage"

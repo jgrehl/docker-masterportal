@@ -30,6 +30,7 @@ export default {
 
             return sortingArr.indexOf(b.category) - sortingArr.indexOf(a.category);
         });
+
         return results;
     }
 };
