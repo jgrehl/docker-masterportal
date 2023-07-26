@@ -38,7 +38,8 @@ export default {
     data () {
         return {
             constants,
-            constantsRouting
+            constantsRouting,
+            preferencesFromConfig: null
         };
     },
     computed: {
@@ -61,6 +62,7 @@ export default {
     },
     async created () {
         this.initDirections();
+        this.preferencesFromConfig = this.directionsSettings?.customPreferences;
     },
     beforeUnmount () {
         this.closeDirections();
@@ -378,7 +380,7 @@ export default {
             @change="changePreference($event.target.value)"
         >
             <option
-                v-for="option in constants.preferenceOptions"
+                v-for="option in preferencesFromConfig?.hasOwnProperty(settings.speedProfile) ? preferencesFromConfig[settings.speedProfile] : constants.preferenceOptions"
                 :id="option"
                 :key="'routing-directions-preference-' + option"
                 :value="option"

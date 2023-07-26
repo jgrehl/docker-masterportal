@@ -616,7 +616,8 @@
           "SHORTEST": "Shortest"
         },
         "preferenceLabel": "Preference",
-        "restrictedAreas": "Barrier areas"
+        "restrictedAreas": "Barrier areas",
+        "GREEN": "Green"
       },
       "download": {
         "filename": "Filenname",
