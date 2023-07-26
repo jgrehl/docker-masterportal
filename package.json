@@ -124,7 +124,6 @@
     "resize-observer-polyfill": "^1.5.1",
     "sass": "1.59.3",
     "sass-loader": "^10",
-    "selenium-webdriver": "^4.6.1",
     "shelljs": "^0.8.5",
     "sinon": "^15.0.2",
     "sinon-chai": "^3.7.0",
