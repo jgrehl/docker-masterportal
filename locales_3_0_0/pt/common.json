@@ -347,6 +347,7 @@
       },
       "filterButton": "",
       "filterResult": {
+        "disabledInfo": "",
         "label": "",
         "unit": ""
       },
@@ -840,6 +841,13 @@
         }
       },
       "draw": {
+        "drawEdit": {
+          "delete": "Geometria / Apagar texto",
+          "deleteAll": "Remover tudo",
+          "modify": "Editar geometria",
+          "redo": "Repetir",
+          "undo": "Desfazer"
+        },
         "drawLayout": {
           "fillColor": "Cor de preenchimento",
           "fillTransparency": "Transparência",
