@@ -48,15 +48,24 @@ export default {
             "secondaryExpanded"
         ])
     },
-    created () {
-        this.layer = new VectorLayer({
-            name: "importDrawLayer",
-            source: this.source,
-            zIndex: 99999999999
-        });
-    },
     mounted () {
-        mapCollection.getMap("2D").addLayer(this.layer);
+        // Note: the layer handling still needs to be revised!
+        const drawLayer = mapCollection.getMap("2D").getLayers().getArray().find(layer => layer.get("id") === "importDrawLayer");
+
+        if (typeof drawLayer === "undefined") {
+            this.layer = new VectorLayer({
+                id: "importDrawLayer",
+                name: "importDrawLayer",
+                source: this.source,
+                zIndex: 99999999999
+            });
+
+            mapCollection.getMap("2D").addLayer(this.layer);
+        }
+        else {
+            this.layer = drawLayer;
+            this.source = drawLayer.getSource();
+        }
     },
     methods: {
         ...mapMutations("Modules/Draw", [
