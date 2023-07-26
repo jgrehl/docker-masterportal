@@ -347,6 +347,7 @@
       },
       "filterButton": "Фильтровать",
       "filterResult": {
+        "disabledInfo": "",
         "label": "Все попадания в фильтр",
         "unit": "{{amountOfFilteredItems}} попаданиe"
       },
@@ -840,6 +841,13 @@
         }
       },
       "draw": {
+        "drawEdit": {
+          "delete": "Удалить геометрию / текст",
+          "deleteAll": "Удалить всё",
+          "modify": "Редактировать геометрию",
+          "redo": "Повторить",
+          "undo": "Вернуть обратно"
+        },
         "drawLayout": {
           "fillColor": "Цвет заполнения",
           "fillTransparency": "Прозрачность",

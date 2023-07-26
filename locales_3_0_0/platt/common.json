@@ -347,6 +347,7 @@
       },
       "filterButton": "",
       "filterResult": {
+        "disabledInfo": "",
         "label": "",
         "unit": ""
       },
@@ -840,6 +841,13 @@
         }
       },
       "draw": {
+        "drawEdit": {
+          "delete": "Geometrie / Text löschen",
+          "deleteAll": "Alles löschen",
+          "modify": "Geometrie bearbeiten",
+          "redo": "Wiederholen",
+          "undo": "Rückgängig machen"
+        },
         "drawLayout": {
           "fillColor": "Füllfarbe",
           "fillTransparency": "Transparenz",
