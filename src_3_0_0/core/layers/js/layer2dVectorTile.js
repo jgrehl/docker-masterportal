@@ -1,6 +1,5 @@
 import axios from "axios";
 import {vectorTile} from "@masterportal/masterportalapi";
-import Cluster from "ol/source/Cluster";
 
 import store from "../../../app-store";
 import Layer2d from "./layer2d";
@@ -234,36 +233,28 @@ Layer2dVectorTile.prototype.fetchSpriteData = function (spriteUrl) {
 };
 
 /**
- * Shows the features by given feature id's or load features hidden if second param is true.
- * @param {String[]} featureIdList The feature id's of the rendered features.
- * @param {Boolean} loadHidden true if all features should be hidden, false otherwise. Default is false.
+ * Shows the features by given features properties.
+ * @param {[]|Object} properties - The keys of the object are the properties (as json string) of the features to be displayed.
  * @returns {void}
  */
-Layer2dVectorTile.prototype.showFeaturesByIds = function (featureIdList, loadHidden = false) {
-    const source = this.getLayerSource() instanceof Cluster ? this.getLayerSource().getSource() : this.getLayerSource();
-
-    if (!source || !Array.isArray(featureIdList)) {
+Layer2dVectorTile.prototype.showFeaturesByIds = function (properties) {
+    if (Array.isArray(properties)) {
+        if (this.getLayer().get("basicInitialStyle")) {
+            this.getLayer().setStyle(this.getLayer().get("basicInitialStyle"));
+        }
         return;
     }
-    source.setTileLoadFunction((tile, url) => {
-        tile.setLoader((extent, resolution, projection) => {
-            fetch(url).then((response) => {
-                response.arrayBuffer().then((data) => {
-                    const format = tile.getFormat(),
-                        features = format.readFeatures(data, {
-                            extent: extent,
-                            featureProjection: projection
-                        });
 
-                    tile.setFeatures(loadHidden ? features : features.filter(feature => featureIdList.includes(feature.get("id"))));
-                });
-            });
-        });
-    });
-    if (!loadHidden && this.getLayer().getOpacity() === 0) {
-        source.once("featuresloadend", () => {
-            this.getLayer().setOpacity(1);
-        });
+    if (!this.getLayer().get("basicInitialStyle")) {
+        this.getLayer().set("basicInitialStyle", this.getLayer().getStyle());
     }
-    source.refresh();
+
+    const defaultStyle = this.getLayer().getStyle();
+
+    this.getLayer().setStyle((feature, resolution) => {
+        if (properties[JSON.stringify(feature.getProperties())]) {
+            return defaultStyle(feature, resolution);
+        }
+        return null;
+    });
 };
