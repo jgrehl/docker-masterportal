@@ -10,9 +10,15 @@ import routingOrsAvoidOption from "../avoidoptions/routing-ors-avoidoptions";
 /**
  * Translates the Preference in the corresponding value for the service
  * @param {String} preference set by the user
+ * @param {String} speedProfile set by the user
  * @returns {String} translated service value
  */
-function routingOrsPreference (preference) {
+function routingOrsPreference (preference, speedProfile) {
+    const preferenceConfigs = store.getters["Modules/Routing/directionsSettings"]?.customPreferences;
+
+    if (preferenceConfigs && preferenceConfigs[speedProfile]?.includes(preference)) {
+        return preference.toLowerCase();
+    }
     switch (preference) {
         case "RECOMMENDED": return "recommended";
         case "SHORTEST": return "shortest";
@@ -61,7 +67,7 @@ async function fetchRoutingOrsDirections ({
                 ...avoidSpeedProfileOptions.length > 0 && {avoid_features: avoidSpeedProfileOptions.map(o => routingOrsAvoidOption(o.id))},
                 avoid_polygons: avoidPolygons
             },
-            preference: routingOrsPreference(preference),
+            preference: routingOrsPreference(preference, speedProfile),
             units: "m",
             geometry: true,
             instructions: instructions
@@ -129,4 +135,4 @@ async function fetchRoutingOrsDirections ({
     return direction;
 }
 
-export {fetchRoutingOrsDirections};
+export {fetchRoutingOrsDirections, routingOrsPreference};
