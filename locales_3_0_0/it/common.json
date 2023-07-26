@@ -616,7 +616,8 @@
           "SHORTEST": "Percorso più breve"
         },
         "preferenceLabel": "Preferenza",
-        "restrictedAreas": "Superfici di barriera"
+        "restrictedAreas": "Superfici di barriera",
+        "GREEN": "Percorso Verde"
       },
       "download": {
         "filename": "Nome del file",
