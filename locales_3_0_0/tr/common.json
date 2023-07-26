@@ -347,6 +347,7 @@
       },
       "filterButton": "",
       "filterResult": {
+        "disabledInfo": "",
         "label": "",
         "unit": ""
       },
@@ -840,6 +841,13 @@
         }
       },
       "draw": {
+        "drawEdit": {
+          "delete": "Geometriyi / metni sil",
+          "deleteAll": "Hepsini sil",
+          "modify": "Geometriyi düzenle",
+          "redo": "Tekrar",
+          "undo": "İptal"
+        },
         "drawLayout": {
           "fillColor": "Dolgu rengi",
           "fillTransparency": "Şeffaf",
