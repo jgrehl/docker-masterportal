@@ -74,7 +74,9 @@ export default {
             max = Math.max(...zIndex);
             layerWithMaxZIndex = baselayers.filter(layer => layer.zIndex === max);
 
-            this.setTopBaselayerId(layerWithMaxZIndex[0]?.id);
+            if (layerWithMaxZIndex[0]?.id) {
+                this.setTopBaselayerId(layerWithMaxZIndex[0]?.id);
+            }
         }
         else if (baselayers.length === 0) {
             this.setTopBaselayerId(null);
@@ -92,7 +94,7 @@ export default {
 
         document.addEventListener("click", event => {
             const backroundSwitcher = document.getElementById("baselayer-switcher"),
-                isClickInside = backroundSwitcher.contains(event.target);
+                isClickInside = backroundSwitcher?.contains(event.target);
 
             if (!isClickInside) {
                 this.setActivatedExpandable(false);

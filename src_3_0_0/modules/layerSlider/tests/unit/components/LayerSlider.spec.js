@@ -5,6 +5,7 @@ import sinon from "sinon";
 
 import LayerSliderComponent from "../../../components/LayerSlider.vue";
 import LayerSlider from "../../../store/indexLayerSlider";
+import NavTab from "../../../../../shared/modules/tabs/components/NavTab.vue";
 
 config.global.mocks.$t = key => key;
 
@@ -52,7 +53,10 @@ describe("src_3_0_0/modules/layerSlider/components/LayerSlider.vue", () => {
     it("renders the layerSlider with LayerSliderPlayer and LayerSliderHandle", () => {
         wrapper = shallowMount(LayerSliderComponent, {
             global: {
-                plugins: [store]
+                plugins: [store],
+                components: {
+                    "NavTab": NavTab
+                }
             },
             components: {
                 LayerSliderPlayer: layerSliderPlayerComponentMock,
