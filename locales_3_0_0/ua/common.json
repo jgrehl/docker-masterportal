@@ -616,7 +616,8 @@
           "SHORTEST": "Найкоротший маршрут"
         },
         "preferenceLabel": "",
-        "restrictedAreas": "бар'єрні зони"
+        "restrictedAreas": "бар'єрні зони",
+        "GREEN": "Зелений маршрут"
       },
       "download": {
         "filename": "Ім'я файлу",
