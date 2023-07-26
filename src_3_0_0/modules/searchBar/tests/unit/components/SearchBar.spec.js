@@ -23,7 +23,7 @@ describe("src_3_0_0/modules/searchBar/components/SearchBar.vue", () => {
                             actions: {
                                 instantiateSearchInterfaces: sinon.stub(),
                                 overwriteDefaultValues: sinon.stub(),
-                                startSearch: sinon.stub()
+                                search: sinon.stub()
                             },
                             getters: {
                                 configPaths: () => [],
@@ -32,6 +32,10 @@ describe("src_3_0_0/modules/searchBar/components/SearchBar.vue", () => {
                                 searchInput: () => "abc-straße",
                                 searchResults: () => [],
                                 type: () => "searchBar"
+                            },
+                            mutations: {
+                                setShowAllResults: sinon.stub(),
+                                setSearchResultsActive: sinon.stub()
                             }
                         }
                     }

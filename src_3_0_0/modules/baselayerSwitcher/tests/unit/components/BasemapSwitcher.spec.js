@@ -13,17 +13,19 @@ describe("src_3_0_0/modules/BaselayerSwitcher.vue", () => {
         baselayerConfigs,
         visibleBaselayerConfigs,
         originalUpdateLayerVisibilityAndZIndex;
+    const vectorTileLayer = {id: "VectorTile", name: "ArcGIS VectorTile", visibility: false, baselayer: true, showInLayerTree: true, zIndex: 1},
+        layer_453 = {id: "453", name: "Geobasiskarten (HamburgDE)", visibility: true, baselayer: true, showInLayerTree: true};
 
     beforeEach(() => {
         baselayerConfigs = [
             {id: "WMTS", name: "EOC Basemap", visibility: false, baselayer: true, showInLayerTree: true},
-            {id: "VectorTile", name: "ArcGIS VectorTile", visibility: false, baselayer: true, showInLayerTree: true},
-            {id: "453", name: "Geobasiskarten (HamburgDE)", visibility: true, baselayer: true, showInLayerTree: true},
+            vectorTileLayer,
+            layer_453,
             {id: "452", name: "Digitale Orthophotos (belaubt) Hamburg", visibility: false, baselayer: true, showInLayerTree: true}
         ];
         visibleBaselayerConfigs = [
-            {id: "VectorTile", name: "ArcGIS VectorTile", visibility: true, baselayer: true, showInLayerTree: true},
-            {id: "453", name: "Geobasiskarten (HamburgDE)", visibility: true, baselayer: true, showInLayerTree: true}
+            vectorTileLayer,
+            layer_453
         ];
 
         originalUpdateLayerVisibilityAndZIndex = BaselayerSwitcher.actions.updateLayerVisibilityAndZIndex;
@@ -103,6 +105,7 @@ describe("src_3_0_0/modules/BaselayerSwitcher.vue", () => {
         });
 
         it("baselayerId of layer with highest zIndex is shown as preview", () => {
+            layer_453.zIndex = 1;
             wrapper = shallowMount(BaselayerSwitcherComponent, {
                 global: {
                     plugins: [store]

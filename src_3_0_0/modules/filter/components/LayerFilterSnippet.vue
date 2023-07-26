@@ -256,7 +256,7 @@ export default {
                 layerConfig = this.mapHandler.getLayerModelByFilterId(filterId);
 
             if (layerConfig.typ === "VectorTile" && this.mapHandler.isLayerActivated(filterId) === false) {
-                this.isLoading = true;
+                this.setIsLoading(true);
                 this.mapHandler.activateLayer(filterId, this.onMounted);
             }
             else {
@@ -278,7 +278,7 @@ export default {
          * @returns {void}
          */
         onMounted () {
-            this.isLoading = false;
+            this.setIsLoading(false);
             compileSnippets(this.layerConfig.snippets, this.api, FilterApi, snippets => {
                 this.snippets = snippets;
                 this.setSnippetValueByState(this.filterRules);
@@ -753,20 +753,34 @@ export default {
             }
         },
         /**
-         * Update the snippets with adjustment
-         * Registering a map moveend listener.
+         * Update the snippets with adjustment and shows loading after loadstart.
+         * Registering a map moveend, loadend and loadstart listener.
          * @returns {void}
          */
         registerMapMoveListener () {
+            this.registerListener({type: "loadend", listener: this.updateSnippets()});
+            this.registerListener({type: "loadstart", listener: this.setIsLoading()});
             this.registerListener({type: "moveend", listener: this.updateSnippets()});
         },
         /**
-         * Unregistering this map moveend listener.
+         * Unregistering this moveend, loadend and loadstart listener.
          * @returns {void}
          */
         unregisterMapMoveListener () {
+            this.unregisterListener({type: "loadend", listener: this.updateSnippets()});
+            this.unregisterListener({type: "loadstart", listener: this.setIsLoading()});
             this.unregisterListener({type: "moveend", listener: this.updateSnippets()});
         },
+
+        /**
+         * Setter for isLoading.
+         * @param {Boolean} [value = true] - The value for isLoading.
+         * @returns {void}
+         */
+        setIsLoading (value = true) {
+            this.isLoading = value;
+        },
+
         /**
          * Registering a zoom listener.
          * @param {Number} minZoom The min zoom level of the layer
@@ -810,11 +824,18 @@ export default {
         },
         /**
          * Update the snippets with adjustment
+         * @param {Object} evt - Openlayers MapEvent.
          * @returns {void}
          */
-        updateSnippets () {
+        updateSnippets (evt) {
             const snippetIds = [];
 
+            if (evt.type === "moveend" && !evt.map.loaded_) {
+                return;
+            }
+            if (evt.type === "loadend") {
+                this.setIsLoading(false);
+            }
             this.snippets.forEach(snippet => {
                 snippetIds.push(snippet.snippetId);
             });

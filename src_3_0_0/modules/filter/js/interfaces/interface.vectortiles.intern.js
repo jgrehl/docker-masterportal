@@ -249,11 +249,10 @@ export default class InterfaceVectorTilesIntern {
             rules = clonedQuestion?.rules,
             filterGeometry = filterQuestion?.commands?.filterGeometry,
             searchInMapExtent = commands?.searchInMapExtent,
-            paging = commands?.paging > 0 ? commands.paging : 1000;
+            paging = commands?.paging > 0 ? commands.paging : 1000,
+            features = this.getFeaturesByLayerId(service?.layerId);
 
-        this.getFeaturesByLayerId(service?.layerId, features => {
-            this.filterGivenFeatures(features, filterId, snippetId, service, rules, filterGeometry, searchInMapExtent, paging, onsuccess);
-        });
+        this.filterGivenFeatures(features, filterId, snippetId, service, rules, filterGeometry, searchInMapExtent, paging, onsuccess);
     }
 
     /* private */
