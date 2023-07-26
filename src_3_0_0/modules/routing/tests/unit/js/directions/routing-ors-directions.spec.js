@@ -5,7 +5,7 @@ import sinon from "sinon";
 import {RoutingDirections} from "../../../../js/classes/routing-directions";
 import {RoutingDirectionsSegment} from "../../../../js/classes/routing-directions-segment";
 import {RoutingDirectionsStep} from "../../../../js/classes/routing-directions-step";
-import {fetchRoutingOrsDirections} from "../../../../js/directions/routing-ors-directions";
+import {fetchRoutingOrsDirections, routingOrsPreference} from "../../../../js/directions/routing-ors-directions";
 
 describe("src_3_0_0/modules/routing/js/directions/routing-ors-directions.js", () => {
     beforeEach(() => {
@@ -268,6 +268,23 @@ describe("src_3_0_0/modules/routing/js/directions/routing-ors-directions.js", ()
             catch (error) {
                 expect(error.message).equal("common:modules.routing.errors.errorRouteFetch");
             }
+        });
+    });
+    describe("should routingOrsPreference", () => {
+        it("should lowercase preferences from configJson", async () => {
+            store.getters["Modules/Routing/directionsSettings"] = {
+                customPreferences: {
+                    CYCLING: ["GREEN", "RECOMMENDED"]
+                }
+            };
+            const result = routingOrsPreference("GREEN", "CYCLING");
+
+            expect(result).to.eql("green");
+        });
+        it("should lowercase preferences without configJson", async () => {
+            const result = routingOrsPreference("RECOMMENDED", "CYCLING");
+
+            expect(result).to.eql("recommended");
         });
     });
 });
