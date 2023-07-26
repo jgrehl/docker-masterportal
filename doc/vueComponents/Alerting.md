@@ -47,6 +47,7 @@ store.dispatch("Alerting/addSingleAlert", {
 |mustBeConfirmed|no|Boolean|false|Flag indicating whether the alert requires a manual read confirmation.|
 |multipleAlert|no|Boolean|false|Flag indicating whether the alert should be added to the current alert list (true) or is shown as a single alert (false)|
 |once|no|Boolean|false|If `false`, this alert may be shown on each visit. If `true`, it's only shown once.|
+|onceInSession|no|Boolean|false|If `false`, this alert may be shown on each visit. If `true`, it's only shown once in the current session.|
 
 ## Initially loading an *Alerting* configuration
 
