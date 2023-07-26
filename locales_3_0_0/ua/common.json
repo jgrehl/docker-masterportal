@@ -347,6 +347,7 @@
       },
       "filterButton": "Фільтрувати",
       "filterResult": {
+        "disabledInfo": "",
         "label": "Все результати фільтрації",
         "unit": "{{amountOfFilteredItems}} Результати"
       },
@@ -840,6 +841,13 @@
         }
       },
       "draw": {
+        "drawEdit": {
+          "delete": "Видалення геометрії / тексту",
+          "deleteAll": "видалити всі",
+          "modify": "Редагування геометрії",
+          "redo": "повторити",
+          "undo": "відмінити"
+        },
         "drawLayout": {
           "fillColor": "Колір заливки",
           "fillTransparency": "Прозорість",
