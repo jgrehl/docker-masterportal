@@ -1,7 +1,7 @@
 <script>
 import {pointerMove} from "ol/events/condition.js";
-import selectInteractions from "@masterportal/masterportalapi/src/maps/interactions/selectInteractions";
-import modifyInteractions from "@masterportal/masterportalapi/src/maps/interactions/modifyInteractions";
+import selectInteraction from "@masterportal/masterportalapi/src/maps/interactions/selectInteraction";
+import modifyInteraction from "@masterportal/masterportalapi/src/maps/interactions/modifyInteraction";
 import {mapActions} from "vuex";
 
 import IconButton from "../../buttons/components/IconButton.vue";
@@ -86,7 +86,7 @@ export default {
     watch: {
         selectedInteraction (selectedInteraction) {
             if (selectedInteraction !== "delete") {
-                this.currentSelectInteractions.forEach(selectInteraction => this.removeInteraction(selectInteraction));
+                this.currentSelectInteractions.forEach(currentSelectInteraction => this.removeInteraction(currentSelectInteraction));
                 this.currentSelectInteractions = [];
             }
             if (selectedInteraction !== "modify") {
@@ -109,7 +109,7 @@ export default {
         });
     },
     unmounted () {
-        this.currentSelectInteractions.forEach(selectInteraction => this.removeInteraction(selectInteraction));
+        this.currentSelectInteractions.forEach(currentSelectInteraction => this.removeInteraction(currentSelectInteraction));
         this.removeInteraction(this.currentModifyInteraction);
     },
     methods: {
@@ -134,10 +134,10 @@ export default {
                 this.setSelectedInteraction("delete");
             }
 
-            this.currentSelectInteractions.forEach(selectInteraction => this.removeInteraction(selectInteraction));
+            this.currentSelectInteractions.forEach(currentSelectInteraction => this.removeInteraction(currentSelectInteraction));
             this.currentSelectInteractions = this.createSelectInteractions(this.layer);
-            selectInteractions.removeSelectedFeature(this.currentSelectInteractions[0], this.source);
-            this.currentSelectInteractions.forEach(selectInteraction => this.addInteraction(selectInteraction));
+            selectInteraction.removeSelectedFeature(this.currentSelectInteractions[0], this.source);
+            this.currentSelectInteractions.forEach(currentSelectInteraction => this.addInteraction(currentSelectInteraction));
         },
 
         /**
@@ -149,8 +149,8 @@ export default {
          */
         createSelectInteractions (layer) {
             return [
-                selectInteractions.createSelectInteraction(layer),
-                selectInteractions.createSelectInteraction(layer, pointerMove)
+                selectInteraction.createSelectInteraction(layer),
+                selectInteraction.createSelectInteraction(layer, pointerMove)
             ];
         },
 
@@ -177,7 +177,7 @@ export default {
             }
 
             this.removeInteraction(this.currentModifyInteraction);
-            this.currentModifyInteraction = modifyInteractions.createModifyInteraction(this.source);
+            this.currentModifyInteraction = modifyInteraction.createModifyInteraction(this.source);
             this.addInteraction(this.currentModifyInteraction);
         },
 
