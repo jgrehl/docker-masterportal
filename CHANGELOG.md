@@ -16,6 +16,8 @@
 - GFI:
     - highlightFeature also works for line geometries
     - new parameter: hideMapMarkerOnVectorHighlight
+- Added documentation file doc\jsdoc.md for jsdoc in vue-components and vuex-files.
+
 ### Changed
 - The following packages have been updated:
     - dependencies:
