@@ -1,6 +1,9 @@
 <script>
+import IconButton from "../../buttons/components/IconButton.vue";
+
 export default {
     name: "ModalItem",
+    components: {IconButton},
 
     props: {
         showModal: {
@@ -98,18 +101,17 @@ export default {
         >
             <div
                 id="modal-1-inner-wrapper"
+                ref="discard"
+                tabindex="0"
                 :style="modalInnerWrapperStyle"
             >
-                <span
-                    ref="discard"
-                    class="bootstrap-icon"
-                    title="Discard"
-                    tabindex="0"
-                    @click="discardByClickX"
-                    @keydown.enter="discardByClickX"
-                >
-                    <i class="bi-x-lg" />
-                </span>
+                <IconButton
+                    :class-array="['btn-light', 'bootstrap-icon']"
+                    titel="discard"
+                    :aria="$t('modules.modalItem.close')"
+                    :icon="'bi-x-lg'"
+                    :interaction="() => discardByClickX()"
+                />
                 <div
                     id="modal-1-header-container"
                 >
