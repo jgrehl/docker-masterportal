@@ -1,14 +1,13 @@
 /* eslint-disable no-console */
 const fs = require("fs-extra"),
     path = require("path"),
-    replace = require("replace-in-file"),
     createMainMenu = require("./createMainMenu"),
     createSecondaryMenu = require("./createSecondaryMenu"),
+    {copyDir, replaceInFile, removeAttributesFromTools} = require("./utils"),
     {PORTALCONFIG, TOPICS, BASEMAPS, BASEMAPS_OLD, SUBJECTDATA} = require("./constants"),
     rootPath = path.resolve(__dirname, "../../../"),
-    deprecated = ["searchByCoord", "supplyCoord", "parcelSearch", "extendedFilter"],
-    notToMigrate = ["gfi", "compareFeatures", "saveSelection"],
-    migratedTools = notToMigrate.concat(deprecated);
+    {deprecated, toolsNotToMigrate, toRemoveFromTools} = require("./configuration"),
+    migratedTools = toolsNotToMigrate.concat(deprecated);
 
 /**
  * Migrates the mapView.
@@ -33,6 +32,27 @@ function migrateControls (data) {
     console.info("--- HINT: fill controls into expandable, to expand and collapse controlbar.");
     console.info("--- HINT: use control 'startModule' to start tool by control-icon.");
     return controls;
+}
+
+/**
+ * Migrates the gfi to getFeatureInfo.
+ * @param {Object} data content of v2 config.json
+ * @returns {Object} the migrated getFeatureInfo
+ */
+function migrateGFI (data) {
+    const gfi = data[PORTALCONFIG].menu.tools?.children?.gfi || data[PORTALCONFIG].menu.gfi;
+    let getFeatureInfo = null;
+
+    if (gfi) {
+        console.info("getFeatureInfo");
+        getFeatureInfo = {...gfi};
+
+        getFeatureInfo.type = "getFeatureInfo";
+        removeAttributesFromTools(toRemoveFromTools, getFeatureInfo);
+        migratedTools.push("gfi");
+    }
+
+    return getFeatureInfo;
 }
 
 /**
@@ -157,7 +177,7 @@ function migrateSubjectData (oldData) {
     };
 
     if (oldData && JSON.stringify(oldData).includes("Ordner")) {
-        console.warn("migrating folder strucure ist not implemented yet!");
+        console.warn("NOTICE --- migrating layers in folder strucure ist not implemented yet!");
     }
     else if (oldData?.Layer) {
         subjectData.elements = oldData.Layer;
@@ -176,6 +196,7 @@ function migrateIndexHtml (sourceFolder, destFolder, indexFile) {
     fs.readFile(path.resolve(sourceFolder, indexFile), "utf8")
         .then(data => {
             const regex = /<div id="loader" [\s\S]*loaders.js"><\/script>/g,
+                // removes <div id="loader"... and load of special_loaders.js from index.html - loader is no longer provided.
                 result = data.replace(regex, "");
 
             fs.writeFile(path.resolve(destFolder, indexFile), result, "utf8");
@@ -191,7 +212,7 @@ function migrateIndexHtml (sourceFolder, destFolder, indexFile) {
  * @param {Object} configJsFile the config.js file
  * @returns {void}
  */
-function checkConfigJS (sourceFolder, configJsFile) {
+async function checkConfigJS (sourceFolder, configJsFile) {
     if (Object.keys(require(path.resolve(sourceFolder, configJsFile))).length === 0) {
         fs.readFile(path.resolve(sourceFolder, configJsFile), "utf8")
             .then((data) => {
@@ -212,10 +233,11 @@ function checkConfigJS (sourceFolder, configJsFile) {
  * @param {Object} config the javascript configJs content
  * @returns {void}
  */
-function migrateConfigJS (destFolder, configJsFile, config) {
+async function migrateConfigJS (destFolder, configJsFile, config) {
     const configJS = {...config};
     let result = null,
-        unquoted = null;
+        unquoted = null,
+        destPath = null;
 
     delete configJS.footer;
     delete configJS.defaultToolId;
@@ -227,45 +249,13 @@ function migrateConfigJS (destFolder, configJsFile, config) {
         delete configJS.tree.metaIDsToIgnore;
     }
     result = "const Config = " + JSON.stringify(configJS, null, " ") + ";";
+    // JSON.stringify produces keys with quotes -  now replace all keys with quotes with keys without quotes
     unquoted = result.replace(/"([^"]+)":/g, "$1:");
-
-    fs.writeFile(path.resolve(destFolder, configJsFile), unquoted, "utf8")
+    destPath = path.resolve(destFolder, configJsFile);
+    fs.writeFile(destPath, unquoted, "utf8")
         .catch(err => {
             console.error(err);
         });
-}
-
-/**
- * Replaces strings in file.
- * @param {Object} file the file to replace in
- * @returns {void}
- */
-function replaceInFile (file) {
-    const replacements = {
-        "menu.tools.parcelSearch": "modules.wfsSearch.parcelSearch",
-        "modules.tools.wfsSearch": "modules.wfsSearch",
-        "modules.tools.gfi": "modules.getFeatureInfo",
-        "modules.footer": "modules.portalFooter",
-        "modules.tools.layerSlider": "modules.layerSlider",
-        "menu.filter": "modules.filter.name",
-        "menu.contact": "modules.contact.name",
-        "menu.tools.print": "modules.print.name",
-        "modules.searchbar": "modules.searchBar",
-        "translate#common": "common",
-        "translate#additional": "additional",
-        "\"iconFor\":": "\"iconForward\":"
-    };
-
-    Object.entries(replacements).forEach(([key, value]) => {
-        // to replace all occurrences of key in file, use regex with g flag
-        const regex = new RegExp(key, "g");
-
-        replace.sync({
-            files: file,
-            from: regex,
-            to: value
-        });
-    });
 }
 
 /**
@@ -288,49 +278,66 @@ function migrateFiles (sourcePath, destPath) {
                 srcFile = path.resolve(sourceFolder, configJsonFile),
                 destFile = path.resolve(destFolder, configJsonFile);
 
-            checkConfigJS(sourceFolder, configJsFile);
-            configJS = require(path.resolve(sourceFolder, configJsFile));
+            checkConfigJS(sourceFolder, configJsFile).then(() => {
+                configJS = require(path.resolve(sourceFolder, configJsFile));
 
-            fs.readFile(srcFile, "utf8")
-                .then(data => {
-                    // console.warn("data", data);
-                    const migrated = {},
-                        parsed = JSON.parse(data);
+                copyDir(sourcePath, destPath).then(() => {
+                    fs.readFile(srcFile, "utf8")
+                        .then(data => {
+                            const migrated = {},
+                                parsed = JSON.parse(data);
 
-                    if (!parsed[PORTALCONFIG].mainMenu) {
-                        console.info("\n#############################     migrate     #############################\n");
-                        console.info("source: ", srcFile, "\ndestination: ", destFile, "\n");
+                            if (!parsed[PORTALCONFIG].mainMenu) {
+                                console.info("\n#############################     migrate     #############################\n");
+                                console.info("ATTENTION --- the following tools are not migrated: ", toolsNotToMigrate.join(", ") + "\n");
+                                console.info("source: ", srcFile, "\ndestination: ", destFile, "\n");
+                                const gfi = migrateGFI(parsed);
 
-                        migrated[PORTALCONFIG] = {};
-                        migrated[PORTALCONFIG].mapView = readMapView(parsed);
-                        migrated[PORTALCONFIG].portalFooter = migrateFooter(configJS);
-                        migrated[PORTALCONFIG].controls = migrateControls(parsed);
-                        migrated[PORTALCONFIG].tree = migrateTree(parsed, configJS);
-                        migrated[PORTALCONFIG].mainMenu = createMainMenu(parsed, configJS, migratedTools);
-                        migrated[PORTALCONFIG].secondaryMenu = createSecondaryMenu(parsed, migratedTools);
-                        migrated[TOPICS] = migrateTopics(parsed);
+                                migrated[PORTALCONFIG] = {};
+                                migrated[PORTALCONFIG].mapView = readMapView(parsed);
+                                migrated[PORTALCONFIG].portalFooter = migrateFooter(configJS);
+                                migrated[PORTALCONFIG].controls = migrateControls(parsed);
+                                if (gfi) {
+                                    migrated[PORTALCONFIG].getFeatureInfo = gfi;
+                                }
+                                migrated[PORTALCONFIG].tree = migrateTree(parsed, configJS);
+                                migrated[PORTALCONFIG].mainMenu = createMainMenu(parsed, configJS, migratedTools, toRemoveFromTools);
+                                migrated[PORTALCONFIG].secondaryMenu = createSecondaryMenu(parsed, migratedTools, toRemoveFromTools);
+                                migrated[TOPICS] = migrateTopics(parsed);
 
-                        fs.ensureDir(destPath)
-                            .then(() => {
-                                fs.writeFile(destFile, JSON.stringify(migrated, null, 4), "utf8")
+                                fs.ensureDir(destPath)
                                     .then(() => {
-                                        replaceInFile(destFile);
-                                        migrateConfigJS(destFolder, configJsFile, configJS);
-                                        migrateIndexHtml(sourceFolder, destFolder, indexFile);
-                                        console.info("SUCCESSFULL MIGRATED: ", destFolder);
+                                        fs.writeFile(destFile, JSON.stringify(migrated, null, 4), "utf8")
+                                            .then(() => {
+                                                replaceInFile(destFile);
+                                                migrateConfigJS(destFolder, configJsFile, configJS).then(() => {
+                                                    migrateIndexHtml(sourceFolder, destFolder, indexFile);
+                                                    console.info("SUCCESSFULL MIGRATED: ", destFolder);
+                                                })
+                                                    .catch(err => {
+                                                        console.error(err);
+                                                    });
+                                            })
+                                            .catch(err => {
+                                                console.error(err);
+                                            });
                                     })
                                     .catch(err => {
                                         console.error(err);
                                     });
-                            })
-                            .catch(err => {
-                                console.error(err);
-                            });
-                    }
-                    else {
-                        console.warn("IS ALREADY IN V3.0.0 - NOT MIGRATED: ", srcFile);
-                    }
+                            }
+                            else {
+                                console.warn("IS ALREADY IN V3.0.0 - NOT MIGRATED: ", srcFile);
+                            }
+                        })
+                        .catch(err => {
+                            console.error(err);
+                        });
                 })
+                    .catch(err => {
+                        console.error(err);
+                    });
+            })
                 .catch(err => {
                     console.error(err);
                 });
