@@ -527,6 +527,9 @@
       "ariaLabelOpen": "$t(menu.name) öffnen",
       "name": "Menü"
     },
+    "modalItem": {
+      "close": "Fenster schließen"
+    },
     "mouseHover": {
       "infoText": "(weitere Objekte. Bitte zoomen.)"
     },
