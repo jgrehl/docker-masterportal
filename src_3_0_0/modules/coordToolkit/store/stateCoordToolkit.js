@@ -1,15 +1,15 @@
 /**
- * User type definition
+ * state of the CoordToolkit
  * @module modules/CoordToolkit/state
  *
- * @property {String} icon icon next to title (config-param)
+ * @property {String} [icon="bi-globe"] icon next to title (config-param)
  * @property {String} description The description that should be shown in the button in the right menu.
- * @property {Boolean} [hasMouseMapInteractions="true"] If this attribute is true, then all other modules will be deactivated when this attribute is also true. Only one module with this attribute true may be open at the same time, since conflicts can arise in the card interactions.
- * @property {String} name displayed as title (config-param)
- * @property {Boolean} showDescription If true, description will be shown.
- * @property {String[]} supportedDevices Devices on which the module is displayed.
- * @property {String[]} supportedMapModes Map mode in which this module can be used.
- * @property {String} type the type of the component
+ * @property {Boolean} [hasMouseMapInteractions=true] If this attribute is true, then all other modules will be deactivated when this attribute is also true. Only one module with this attribute true may be open at the same time, since conflicts can arise in the card interactions.
+ * @property {String} [name="common:modules.coordToolkit.name"] displayed as title (config-param)
+ * @property {Boolean} [showDescription=false] If true, description will be shown.
+ * @property {String[]} [supportedDevices=["Desktop", "Mobile", "Table"]] Devices on which the module is displayed.
+ * @property {String[]} [supportedMapModes=["2D", "3D"]] Map mode in which this module can be used.
+ * @property {String} [type= "coordToolkit"] the type of the component
  *
  * @property {Object} [coordinatesEasting="{id: "easting", value: ""}"] contains id and value of the easting input field
  * @property {String} coordinatesEastingExample contains the example for easting coordinates
