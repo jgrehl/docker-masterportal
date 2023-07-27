@@ -9,6 +9,7 @@ import {convertColor} from "../../../js/utils/convertColor";
  * @vue-prop {String} selectedDrawType - The selected draw type.
  * @vue-prop {Function} setCurrentLayout - Setter for current layout.
  * @vue-prop {Number[]} [strokeRange=[1, 32]] - The stroke range in the unit pixel.
+ * @vue-data {String} activeLayoutKey - The currently activated layout.
  * @vue-data {Object} mappingLayout - The mapping object for layout.
  */
 export default {
@@ -41,6 +42,7 @@ export default {
     },
     data () {
         return {
+            activeLayoutKey: "",
             mappingLayout: {
                 fillColor: {
                     drawTypes: ["box", "circle", "doubleCircle", "point", "polygon"],
@@ -58,8 +60,7 @@ export default {
                     drawTypes: ["box", "circle", "doubleCircle", "point", "polygon"],
                     icon: "bi-droplet-half"
                 }
-            },
-            activeLayoutKey: ""
+            }
         };
     },
     computed: {
