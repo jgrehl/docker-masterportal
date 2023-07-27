@@ -373,6 +373,7 @@ export default {
             }, 400);
         },
         startResizing (event) {
+            event.preventDefault();
             if (this.handleElement === null) {
                 return;
             }
@@ -387,14 +388,14 @@ export default {
 </script>
 
 <template>
-    <div
-        class="resize-handle"
+    <button
+        id="resize-handle"
+        class="btn resize-handle"
         :class="[
             {'resize-handle-is-resizing': isResizing},
             'resize-handle-type-' + handlePosition,
             'resize-handle-cursor-' + cursorClass
         ]"
-        tabindex="0"
         @focus="moveHandle"
         @keydown="moveHandle($event.key)"
         @mousedown="onMouseDown"
@@ -403,7 +404,7 @@ export default {
     >
         <!-- TODO @focus with info element? -->
         <slot />
-    </div>
+    </button>
 </template>
 
 <style lang="scss">
@@ -416,6 +417,8 @@ $handle_size: 6px;
     width: $handle_size;
     height: $handle_size;
     background-color: $white;
+    padding: 3px;
+    border: none;
 
     &-is-resizing * {
         -webkit-touch-callout: none;
@@ -424,20 +427,6 @@ $handle_size: 6px;
         -ms-user-select: none !important;
         transition: unset !important;
         user-select: none;
-    }
-    &-cursor {
-        &-nwse-resize {
-            cursor: nwse-resize;
-        }
-        &-ns-resize {
-            cursor: ns-resize;
-        }
-        &-nesw-resize {
-            cursor: nesw-resize;
-        }
-        &-ew-resize {
-            cursor: ew-resize;
-        }
     }
     &-type {
         &-topLeft {
@@ -474,4 +463,26 @@ $handle_size: 6px;
         }
     }
 }
+
+.resize-handle:focus, .resize-handle:hover, .resize-handle:active {
+    background-color: $gray-400 !important;
+        padding: 3px;
+        border: none !important
+    }
+
+button:not(:disabled).resize-handle-cursor {
+    &-nwse-resize {
+            cursor: nwse-resize;
+        }
+        &-ns-resize {
+            cursor: ns-resize;
+        }
+        &-nesw-resize {
+            cursor: nesw-resize;
+        }
+        &-ew-resize {
+            cursor: ew-resize;
+        }
+}
+
 </style>

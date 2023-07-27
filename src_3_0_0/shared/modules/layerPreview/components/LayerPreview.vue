@@ -221,6 +221,8 @@ export default {
 <template>
     <div
         v-if="previewUrl"
+        role="button"
+        tabindex="0"
         :class="[
             customClass,
             'layerPreview'
