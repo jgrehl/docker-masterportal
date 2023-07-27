@@ -213,7 +213,7 @@ export default {
         min-height: 52px;
     }
 
-    .preview:hover{
+    .preview:hover, .preview:focus{
         border: 2px solid rgba(66, 66, 66, 0.8);
     }
 
