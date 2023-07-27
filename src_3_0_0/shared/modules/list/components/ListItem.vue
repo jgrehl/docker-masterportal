@@ -295,9 +295,10 @@ export default {
             class="mt-2"
         >
             <ul class="pagination justify-content-center flex-wrap">
-                <li
+                <button
                     v-for="(_, index) of Array.from({length: pageCount})"
                     :key="index"
+                    class="btn-accessible"
                     :class="{
                         'page-item': true,
                         'active': visiblePage === index
@@ -311,7 +312,7 @@ export default {
                     >
                         {{ index + 1 }}
                     </a>
-                </li>
+                </button>
             </ul>
         </nav>
     </div>
@@ -322,6 +323,14 @@ export default {
 
 .btn {
     white-space: nowrap;
+}
+
+.btn-accessible {
+    border: none;
+    box-shadow: none;
+}
+.btn-accessible:focus {
+    border: 1px solid $dark_grey;
 }
 
 tbody.multiSelect > tr:hover {
