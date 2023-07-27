@@ -9,9 +9,9 @@ import DrawTypes from "../../../shared/modules/draw/components/DrawTypes.vue";
 
 /**
  * Modules to make drawings.
- * @module modules/draw/components/DrawModule
- * @vue-data {ol/layer/Vector} [layer=null] - The vector layer for drawings.
- * @vue-data {ol/source/Vector} [source=new VectorSource()] - The vector source for drawings.
+ * @module modules/Draw/components/DrawModule
+ * @vue-data {ol/layer/Vector} layer - The vector layer for drawings.
+ * @vue-data {ol/source/Vector} source - The vector source for drawings.
  */
 export default {
     name: "DrawModule",
