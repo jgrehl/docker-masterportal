@@ -1,5 +1,5 @@
 /**
- * User type definition
+ * State of module draw.
  * @module modules/draw/store/state
  *
  * @property {Object} [circleOptions={innerRadius: 100, interactive: true, outerRadius: 500}] The circle Options
@@ -31,9 +31,9 @@
  * @property {String[]} [drawTypesGeometrie=["line", "box", "polygon", "circle", "doubleCircle"]] The drawing types in geometries.
  * @property {String[]} [drawTypesMain=["pen", "geometries", "symbols"]] The top level (main) drawing types.
  * @property {String[]} [drawTypesSymbols=["point"]] The drawing types in symbols.
- * @property {Boolean} hasMouseMapInteractions=true If this attribute is true, then all other modules will be deactivated when this attribute is also true. Only one module with this attribute true may be open at the same time, since conflicts can arise in the card interactions.
- * @property {String} icon="bi-pencil" Icon next to title (config-param)
- * @property {String} name="common:modules.draw.name" Displayed as title (config-param)
+ * @property {Boolean} [hasMouseMapInteractions=true] If this attribute is true, then all other modules will be deactivated when this attribute is also true. Only one module with this attribute true may be open at the same time, since conflicts can arise in the card interactions.
+ * @property {String} [icon="bi-pencil"] Icon next to title (config-param)
+ * @property {String} [name="common:modules.draw.name"] Displayed as title (config-param)
  * @property {String} [selectedDrawType=""] The selected draw type.
  * @property {String} [selectedDrawTypeMain=""] The selected draw type main.
  * @property {String} [selectedInteraction="draw"] The selected interaction.
@@ -41,7 +41,7 @@
  * @property {Number[]} [strokeRange=[1, 16]] The stroke range in the unit pixel.
  * @property {String[]} [supportedDevices=["Desktop", "Mobile", "Table"]] Devices on which the module is displayed.
  * @property {String[]} [supportedMapModes=["2D", "3D"]] Map mode in which this module can be used.
- * @property {String} type="draw" The type of the module.
+ * @property {String} [type="draw"] The type of the module.
  */
 const state = {
     circleOptions: {
