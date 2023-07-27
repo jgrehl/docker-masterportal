@@ -263,7 +263,7 @@ export default {
 
 <template>
     <div
-        v-if="undoFeatures.length > 0 || redoFeatures.length > 0"
+        v-if="source?.getFeatures()?.length > 0 || undoFeatures.length > 0 || redoFeatures.length > 0"
         class="mb-4"
     >
         <div class="d-flex">
