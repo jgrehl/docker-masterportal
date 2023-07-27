@@ -19,6 +19,8 @@
     - new parameter: hideMapMarkerOnVectorHighlight
 - WFST:
     - further input type "short" and "float"
+- Added documentation file doc\jsdoc.md for jsdoc in vue-components and vuex-files.
+
 ### Changed
 - The following packages have been updated:
     - dependencies:
