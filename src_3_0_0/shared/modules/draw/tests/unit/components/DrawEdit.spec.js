@@ -2,10 +2,10 @@ import {createStore} from "vuex";
 import {config, shallowMount} from "@vue/test-utils";
 import {expect} from "chai";
 import Feature from "ol/Feature.js";
-import modifyInteractions from "@masterportal/masterportalapi/src/maps/interactions/modifyInteractions";
+import modifyInteraction from "@masterportal/masterportalapi/src/maps/interactions/modifyInteraction";
 import {pointerMove} from "ol/events/condition.js";
 import {Select} from "ol/interaction.js";
-import selectInteractions from "@masterportal/masterportalapi/src/maps/interactions/selectInteractions";
+import selectInteraction from "@masterportal/masterportalapi/src/maps/interactions/selectInteraction";
 import sinon from "sinon";
 import VectorLayer from "ol/layer/Vector.js";
 import VectorSource from "ol/source/Vector";
@@ -26,10 +26,10 @@ describe("src_3_0_0/shared/modules/draw/components/DrawEdit.vue", () => {
 
     beforeEach(() => {
         addInteractionSpy = sinon.spy();
-        createModifyInteractionSpy = sinon.spy(modifyInteractions, "createModifyInteraction");
-        createSelectInteractionSpy = sinon.spy(selectInteractions, "createSelectInteraction");
+        createModifyInteractionSpy = sinon.spy(modifyInteraction, "createModifyInteraction");
+        createSelectInteractionSpy = sinon.spy(selectInteraction, "createSelectInteraction");
         layer = new VectorLayer({source: new VectorSource()});
-        removeSelectedFeatureSpy = sinon.spy(selectInteractions, "removeSelectedFeature");
+        removeSelectedFeatureSpy = sinon.spy(selectInteraction, "removeSelectedFeature");
         removeInteractionSpy = sinon.spy();
 
 
