@@ -3,7 +3,7 @@ import stateDraw from "./stateDraw";
 
 /**
  * The mutations for the draw module.
- * @module modules/draw/store/mutations
+ * @module modules/Draw/store/mutations
  */
 export default {
     ...generateSimpleMutations(stateDraw)
