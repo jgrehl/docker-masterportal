@@ -1,16 +1,17 @@
 /* eslint-disable no-console */
-const {PORTALCONFIG} = require("./constants");
+const {PORTALCONFIG} = require("./constants"),
+    {removeAttributesFromTools} = require("./utils");
 
-module.exports = function createMainMenu (data, configJS, migratedTools) {
+module.exports = function createMainMenu (data, configJS, migratedTools, toRemoveFromTools) {
     console.info("mainMenu");
     const mainMenu = {
         expanded: true,
-        sections: [[]]
+        sections: [[], []]
     };
 
     addTitle(data, mainMenu);
     addSearchbar(data, mainMenu);
-    fillMainSections(data, configJS, mainMenu, migratedTools);
+    fillMainSections(data, configJS, mainMenu, migratedTools, toRemoveFromTools);
 
     return mainMenu;
 };
@@ -21,54 +22,66 @@ module.exports = function createMainMenu (data, configJS, migratedTools) {
  * @param {Object} configJS content of the config.js file
  * @param {Object} mainMenu v3 main menu object
  * @param {Array} migratedTools already migrated v2 tools
+ * @param {Object} toRemoveFromTools attributes to remove from tools by type
  * @returns {void}
  */
-function fillMainSections (data, configJS, mainMenu, migratedTools) {
+function fillMainSections (data, configJS, mainMenu, migratedTools, toRemoveFromTools) {
     console.info("   tools");
     const menu = data[PORTALCONFIG].menu,
         tools = menu.tools?.children,
-        section = mainMenu.sections[0];
+        firstSection = mainMenu.sections[0],
+        secondSection = mainMenu.sections[1];
+    let contact = null;
 
     if (tools?.print) {
         console.info("       print");
         const print = {...tools.print};
 
         print.type = "print";
-        section.push(print);
+        removeAttributesFromTools(toRemoveFromTools, print);
+        firstSection.push(print);
         migratedTools.push("print");
     }
-    console.info("       openConfig");
-    section.push({
-        type: "openConfig"
-    });
 
     Object.entries(menu).forEach(([menuName, menuConfig]) => {
-        if (!["info", "tree", "ansichten", "tools"].includes(menuName)) {
-            console.info("       " + menuName);
+        if (!["info", "tree", "ansichten", "tools"].includes(menuName) && !migratedTools.includes(menuName)) {
             const config = {...menuConfig};
 
             config.type = menuName;
+            removeAttributesFromTools(toRemoveFromTools, config);
             if (menuName === "contact") {
                 config.fileUpload = true;
+                contact = config;
             }
-            section.push(config);
-            migratedTools.push(menuName);
+            else if (menuName !== "filter") {
+                console.info("       " + menuName);
+                firstSection.push(config);
+                migratedTools.push(menuName);
+            }
         }
     });
 
     console.info("       shareView");
-    section.push({
+    firstSection.push({
         type: "shareView"
     });
+
+    // second section
+    if (contact) {
+        console.info("       contact");
+        secondSection.push(contact);
+        migratedTools.push("contact");
+    }
     console.info("       news");
-    section.push({
+    secondSection.push({
         type: "news"
     });
     if (configJS.portalLanguage?.enabled) {
         console.info("       language");
-        section.push({
+        secondSection.push({
             type: "language"
         });
+        migratedTools.push("language");
     }
     console.info("--- HINT: add nested folders to menu containing menu entries by using type 'folder'.");
     console.info("--- HINT: display HTML or excute action or open url by using type 'customMenuElement'.");
@@ -89,11 +102,16 @@ function addSearchbar (data, mainMenu) {
 
         Object.entries(oldSearchbar).forEach(([searchName, searchConfig]) => {
             if (typeof searchConfig === "object") {
-                console.info("   searchbar entry " + searchName);
+                let searchKey = searchName;
+
                 if (searchConfig.minchars === 3) {
                     delete searchConfig.minchars;
                 }
-                newSearchbar.searchInterfaces[searchName] = searchConfig;
+                if (searchName === "tree") {
+                    searchKey = "topicTree";
+                }
+                console.info("   searchbar entry " + searchKey);
+                newSearchbar.searchInterfaces[searchKey] = searchConfig;
             }
         });
         mainMenu.searchBar = newSearchbar;
