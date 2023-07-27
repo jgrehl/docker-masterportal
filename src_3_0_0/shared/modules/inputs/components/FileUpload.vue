@@ -90,6 +90,7 @@ export default {
             <!-- eslint-disable-next-line vuejs-accessibility/mouse-events-have-key-events -->
             <div
                 class="drop-area"
+                role="presentation"
                 @drop.prevent="onDrop"
                 @dragover.prevent
                 @dragenter.prevent="onDZDragenter"
@@ -102,6 +103,9 @@ export default {
                 be considered correct by the linting rule set. Since it's a drop-area for file
                 dropping by mouse, the concept does not apply. Keyboard users may use the
                 matching input fields.
+                For the same reason this element has the 'role=none' assigned as well as to avoid
+                the linter error: 'Visible, non-interactive elements should not have an interactive handler'
+            -->
             -->
         </div>
     </div>
