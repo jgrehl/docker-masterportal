@@ -22,7 +22,7 @@ let sourcePath = null,
     destPath = null,
     usagePrinted = false;
 
-process.argv.forEach(function (val) {
+process.argv.forEach((val) => {
     const splitted = val.split("=");
 
     if (splitted.length === 2) {
@@ -48,7 +48,7 @@ else if (sourcePath && destPath) {
 else if (!usagePrinted) {
     console.info(infoMessage);
     inquirer.prompt(questions)
-        .then(function (answers) {
+        .then((answers) => {
             migrateConfigFiles(answers);
         })
         .catch((error) => {
@@ -74,7 +74,7 @@ function printUsage () {
     console.info("dest=" + destMessage);
     console.info("\n");
     console.info(infoMessage);
-    console.info("If no parameters are given, the user is asked to enter the paths.\nThis script only copies config.json, config.js and index.html. All other files in portal must be copied by hand.");
+    console.info("If no parameters are given, the user is asked to enter the paths.");
     console.info("\n");
     console.info("example: npm run migrateConfig source=portal/master dest=portal/master_3_0_0");
 }
