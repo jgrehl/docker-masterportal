@@ -19,7 +19,7 @@ import IconButton from "../../buttons/components/IconButton.vue";
  * @vue-prop {Function} [setSelectedDrawTypeMain=null] - Setter for selected draw type main.
  * @vue-prop {Function} [setSelectedInteraction=null] - Setter for selected interaction.
  * @vue-prop {ol/source/Vector} source - The vector source for drawings.
- * @vue-data {ol/interaction/Draw} drawInteraction=null - The current draw interaction.
+ * @vue-data {ol/interaction/Draw} drawInteraction - The current draw interaction.
  */
 export default {
     name: "DrawTypes",
