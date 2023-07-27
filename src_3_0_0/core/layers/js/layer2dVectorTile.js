@@ -234,7 +234,7 @@ Layer2dVectorTile.prototype.fetchSpriteData = function (spriteUrl) {
 
 /**
  * Shows the features by given features properties.
- * @param {[]|Object} properties - The keys of the object are the properties (as json string) of the features to be displayed.
+ * @param {Array|Object} properties - The keys of the object are the properties (as json string) of the features to be displayed.
  * @returns {void}
  */
 Layer2dVectorTile.prototype.showFeaturesByIds = function (properties) {
