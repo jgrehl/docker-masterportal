@@ -1,5 +1,5 @@
 <script>
-import drawInteractions from "@masterportal/masterportalapi/src/maps/interactions/drawInteractions";
+import drawInteraction from "@masterportal/masterportalapi/src/maps/interactions/drawInteraction";
 import {mapActions, mapGetters} from "vuex";
 
 import IconButton from "../../buttons/components/IconButton.vue";
@@ -19,7 +19,7 @@ import IconButton from "../../buttons/components/IconButton.vue";
  * @vue-prop {Function} [setSelectedDrawTypeMain=null] - Setter for selected draw type main.
  * @vue-prop {Function} [setSelectedInteraction=null] - Setter for selected interaction.
  * @vue-prop {ol/source/Vector} source - The vector source for drawings.
- * @vue-data {ol/interaction/Draw} drawInteraction - The current draw interaction.
+ * @vue-data {ol/interaction/Draw} currentDrawInteraction - The current draw interaction.
  */
 export default {
     name: "DrawTypes",
@@ -110,7 +110,7 @@ export default {
     },
     data () {
         return {
-            drawInteraction: null
+            currentDrawInteraction: null
         };
     },
     computed: {
@@ -118,32 +118,32 @@ export default {
     },
     watch: {
         currentLayout (currentLayout) {
-            drawInteractions.setStyleObject(currentLayout);
+            drawInteraction.setStyleObject(currentLayout);
         },
         currentLayoutOuterCircle (currentLayoutOuterCircle) {
-            drawInteractions.setStyleObject(currentLayoutOuterCircle, true);
+            drawInteraction.setStyleObject(currentLayoutOuterCircle, true);
         },
         selectedInteraction (selectedInteraction) {
             if (selectedInteraction !== "draw") {
                 if (typeof this.setSelectedDrawTypeMain === "function") {
                     this.setSelectedDrawTypeMain("");
                     this.setSelectedDrawType("");
-                    this.removeInteraction(this.drawInteraction);
-                    this.drawInteraction = null;
+                    this.removeInteraction(this.currentDrawInteraction);
+                    this.currentDrawInteraction = null;
                 }
             }
         }
     },
     mounted () {
-        drawInteractions.setStyleObject(this.currentLayout);
+        drawInteraction.setStyleObject(this.currentLayout);
         if (Object.keys(this.currentLayoutOuterCircle).length > 0) {
-            drawInteractions.setStyleObject(this.currentLayoutOuterCircle, true);
+            drawInteraction.setStyleObject(this.currentLayoutOuterCircle, true);
         }
 
         this.regulateInteraction(this.selectedDrawType);
     },
     unmounted () {
-        this.removeInteraction(this.drawInteraction);
+        this.removeInteraction(this.currentDrawInteraction);
     },
     methods: {
         ...mapActions("Maps", ["addInteraction", "removeInteraction"]),
@@ -162,7 +162,7 @@ export default {
                 this.setSelectedDrawTypeMain(this.selectedDrawTypeMain !== drawType ? drawType : "");
             }
 
-            this.removeInteraction(this.drawInteraction);
+            this.removeInteraction(this.currentDrawInteraction);
 
             if (this.selectedDrawType === drawType) {
                 this.setSelectedDrawType("");
@@ -178,14 +178,14 @@ export default {
          * @returns {void}
          */
         regulateDrawInteraction (drawType) {
-            this.drawInteraction = drawInteractions.createDrawInteraction(drawType, this.source);
+            this.currentDrawInteraction = drawInteraction.createDrawInteraction(drawType, this.source);
 
-            if (this.drawInteraction !== null) {
+            if (this.currentDrawInteraction !== null) {
                 if (drawType === "circle" || drawType === "doubleCircle") {
                     this.regulateStaticCircleInteraction(drawType);
                 }
 
-                this.addInteraction(this.drawInteraction);
+                this.addInteraction(this.currentDrawInteraction);
                 this.setSelectedDrawType(drawType);
             }
         },
@@ -196,7 +196,7 @@ export default {
          * @returns {void}
          */
         regulateStaticCircleInteraction (drawType) {
-            drawInteractions.drawCircle(this.drawInteraction, drawType, this.projection, this.source, this.circleOptions);
+            drawInteraction.drawCircle(this.currentDrawInteraction, drawType, this.projection, this.source, this.circleOptions);
         }
     }
 };
