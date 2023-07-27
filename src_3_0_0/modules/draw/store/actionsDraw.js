@@ -1,6 +1,6 @@
 /**
  * The actions for the draw module.
- * @module modules/draw/store/actions
+ * @module modules/Draw/store/actions
  */
 export default {
 };

@@ -1,6 +1,6 @@
 /**
  * User type definition
- * @module modules/draw/store/state
+ * @module modules/Draw/store/state
  *
  * @property {Object} [circleOptions={innerRadius: 100, interactive: true, outerRadius: 500}] The circle Options
  * @property {Number} [circleOptions.innerRadius=100] The inner radius for feature of drawType: "circle and doubelCircle".
