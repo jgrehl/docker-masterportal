@@ -18,7 +18,12 @@ describe("src_3_0_0/modules/draw/components/DrawModule.vue", () => {
         const map = {
             id: "ol",
             mode: "2D",
-            addLayer: sinon.spy()
+            addLayer: sinon.spy(),
+            getLayers: () => {
+                return {
+                    getArray: () => []
+                };
+            }
         };
 
         mapCollection.addMap(map, "2D");
@@ -108,12 +113,14 @@ describe("src_3_0_0/modules/draw/components/DrawModule.vue", () => {
     });
 
     describe("DrawEdit", () => {
-        it("renders the shared module drawEdit", () => {
+        it("renders the shared module drawEdit", async () => {
             wrapper = shallowMount(DrawModuleComponent, {
                 global: {
                     plugins: [store]
                 }
             });
+
+            await wrapper.vm.$nextTick();
 
             expect(wrapper.find("#draw-edit >draw-edit-stub").exists()).to.be.true;
             expect(wrapper.findAll("draw-edit-stub").length).to.equals(1);
