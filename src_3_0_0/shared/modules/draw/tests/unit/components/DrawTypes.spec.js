@@ -1,6 +1,6 @@
 import {createStore} from "vuex";
 import {config, shallowMount} from "@vue/test-utils";
-import drawInteractions from "@masterportal/masterportalapi/src/maps/interactions/drawInteractions";
+import drawInteraction from "@masterportal/masterportalapi/src/maps/interactions/drawInteraction";
 import {expect} from "chai";
 import sinon from "sinon";
 import VectorSource from "ol/source/Vector";
@@ -24,14 +24,14 @@ describe("src_3_0_0/shared/modules/draw/components/DrawTypes.vue", () => {
 
     beforeEach(() => {
         addInteractionSpy = sinon.spy();
-        createDrawInteractionSpy = sinon.spy(drawInteractions, "createDrawInteraction");
+        createDrawInteractionSpy = sinon.spy(drawInteraction, "createDrawInteraction");
         currentLayout = {
             fillColor: [55, 126, 184],
             fillTransparency: 0,
             strokeColor: [0, 0, 0],
             strokeWidth: 1
         };
-        drawCircleSpy = sinon.spy(drawInteractions, "drawCircle");
+        drawCircleSpy = sinon.spy(drawInteraction, "drawCircle");
         removeInteractionSpy = sinon.spy();
         selectedInteraction = "draw";
         setSelectedDrawType = sinon.spy();
@@ -199,7 +199,7 @@ describe("src_3_0_0/shared/modules/draw/components/DrawTypes.vue", () => {
             expect(createDrawInteractionSpy.firstCall.args[0]).to.equals(drawType);
             expect(createDrawInteractionSpy.firstCall.args[1]).to.deep.equals(source);
             expect(drawCircleSpy.calledOnce).to.be.true;
-            expect(drawCircleSpy.firstCall.args[0]).to.deep.equals(wrapper.vm.drawInteraction);
+            expect(drawCircleSpy.firstCall.args[0]).to.deep.equals(wrapper.vm.currentDrawInteraction);
             expect(drawCircleSpy.firstCall.args[1]).to.equals(drawType);
             expect(drawCircleSpy.firstCall.args[2]).to.equals("EPSG:4326");
             expect(drawCircleSpy.firstCall.args[3]).to.deep.equals(source);
@@ -230,7 +230,7 @@ describe("src_3_0_0/shared/modules/draw/components/DrawTypes.vue", () => {
             wrapper.vm.regulateStaticCircleInteraction(drawType);
 
             expect(drawCircleSpy.calledOnce).to.be.true;
-            expect(drawCircleSpy.firstCall.args[0]).to.deep.equals(wrapper.vm.drawInteraction);
+            expect(drawCircleSpy.firstCall.args[0]).to.deep.equals(wrapper.vm.currentDrawInteraction);
             expect(drawCircleSpy.firstCall.args[1]).to.equals(drawType);
             expect(drawCircleSpy.firstCall.args[2]).to.equals("EPSG:4326");
             expect(drawCircleSpy.firstCall.args[3]).to.deep.equals(source);
