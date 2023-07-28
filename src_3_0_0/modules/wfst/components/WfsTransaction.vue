@@ -127,7 +127,6 @@ export default {
                     </p>
                     <form
                         id="tool-wfsTransaction-form"
-                        @submit.prevent="() => {}"
                     >
                         <template v-for="property of featureProperties">
                             <template v-if="property.type !== 'geometry'">
@@ -157,7 +156,7 @@ export default {
                             <LightButton
                                 :interaction="save"
                                 text="common:modules.wfst.form.save"
-                                type="submit"
+                                type="button"
                             />
                         </div>
                     </form>
@@ -194,14 +193,14 @@ export default {
                         class="btn btn-secondary"
                         @click="sendTransaction(); setShowConfirmModal(false)"
                     >
-                        {{ $t("common:button.delete") }}
+                        {{ $t("common:modules.button.confirm") }}
                     </button>
                     <button
                         id="modal-button-right"
                         class="btn btn-secondary"
                         @click="setShowConfirmModal(false)"
                     >
-                        {{ $t("common:button.cancel") }}
+                        {{ $t("common:modules.button.stop") }}
                     </button>
                 </div>
             </div>
