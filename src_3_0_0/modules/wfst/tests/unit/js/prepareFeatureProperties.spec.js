@@ -1,7 +1,7 @@
 import {expect} from "chai";
 import sinon from "sinon";
 import prepareFeatureProperties from "../../../js/prepareFeatureProperties";
-import receivePossiblePropertiesModule from "../../../js/receivePossibleProperties";
+import wfs from "@masterportal/masterportalapi/src/layer/wfs";
 
 const exampleLayerInformation = {
         id: "wfst-layer",
@@ -54,11 +54,11 @@ const exampleLayerInformation = {
         }
     ];
 
-describe.skip("src_3_0_0/modules/wfst/js/prepareFeatureProperties.js", () => {
+describe("src_3_0_0/modules/wfst/js/prepareFeatureProperties.js", () => {
+    let receivePossiblePropertiesStub;
+
     beforeEach(() => {
-        sinon.stub(receivePossiblePropertiesModule, "receivePossibleProperties").callsFake(() => {
-            return exampleProperties;
-        });
+        receivePossiblePropertiesStub = sinon.stub(wfs, "receivePossibleProperties");
     });
     afterEach(sinon.restore);
 
@@ -72,25 +72,39 @@ describe.skip("src_3_0_0/modules/wfst/js/prepareFeatureProperties.js", () => {
     });
     it("should hand through the array returned from receivePossibleProperties if the parameter gfiAttributes is set to showAll", async () => {
         exampleLayerInformation.gfiAttributes = "showAll";
+        receivePossiblePropertiesStub.resolves(exampleProperties);
 
-        const properties = await prepareFeatureProperties.prepareFeatureProperties(exampleLayerInformation);
+        const properties = await prepareFeatureProperties.prepareFeatureProperties(exampleLayerInformation, false);
 
         expect(Array.isArray(properties)).to.be.true;
-        expect(properties.length).to.equal(5);
-        expect(properties).to.eql(exampleProperties);
+        expect(properties).to.deep.equal(exampleProperties);
     });
     it("should filter the properties depending on gfiAttributes including its label if gfiAttributes is set to an object", async () => {
         exampleLayerInformation.gfiAttributes = {
             name: "Name",
             datum: "Datum"
         };
+        receivePossiblePropertiesStub.resolves(exampleProperties);
 
-        const properties = await prepareFeatureProperties.prepareFeatureProperties(exampleLayerInformation);
+        const properties = await prepareFeatureProperties.prepareFeatureProperties(exampleLayerInformation, false);
 
         expect(Array.isArray(properties)).to.be.true;
         expect(properties.length).to.equal(3);
         expect(properties.find(({key}) => key === "name").label).to.equal("Name");
         expect(properties.find(({key}) => key === "datum").label).to.equal("Datum");
         expect(properties.find(({type}) => type === "geometry")).to.exist;
+    });
+    it("should throw an Error if the masterportalapi call receivePossibleProperties fails", async () => {
+        const expectedError = new Error("Error");
+        let consoleErrorStub = null,
+            properties = null;
+
+        receivePossiblePropertiesStub.rejects(expectedError);
+
+        consoleErrorStub = sinon.stub(console, "error");
+        properties = await prepareFeatureProperties.prepareFeatureProperties(exampleLayerInformation, false);
+
+        expect(properties).to.be.an("array").that.is.empty;
+        expect(consoleErrorStub).to.have.been.calledOnceWithExactly(expectedError);
     });
 });
