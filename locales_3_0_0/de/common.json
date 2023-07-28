@@ -809,7 +809,7 @@
           "baseSuccess": "Das {{transaction}} der Geometrie und ihrer Parameter war erfolgreich.",
           "delete": "Löschen",
           "insert": "Speichern",
-          "update": "Bearbeiten"
+          "selectedUpdate ": "Bearbeiten"
         }
       }
     }
