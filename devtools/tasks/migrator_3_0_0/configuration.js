@@ -34,6 +34,7 @@ const toolsNotToMigrate = [
         "legend": ["showCollapseAllButton"],
         "getFeatureInfo": ["name", "centerMapToClickPoint", "desktopType"]
     },
+    toRemoveFromConfigJs = ["footer", "defaultToolId", "scaleLine", "tree.layerIDsToIgnore", "tree.layerIDsToStyle", "tree.metaIDsToMerge", "tree.metaIDsToIgnore"],
     replacementsInConfigJson = {
         "menu.tools.parcelSearch": "modules.wfsSearch.parcelSearch",
         "modules.tools.wfsSearch": "modules.wfsSearch",
@@ -55,5 +56,6 @@ module.exports = {
     deprecated,
     replacementsInConfigJson,
     toolsNotToMigrate,
+    toRemoveFromConfigJs,
     toRemoveFromTools
 };
