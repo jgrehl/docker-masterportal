@@ -1,12 +1,12 @@
 /* eslint-disable no-console */
-const fs = require("fs-extra"),
+const fs = require("fs").promises,
     path = require("path"),
     createMainMenu = require("./createMainMenu"),
     createSecondaryMenu = require("./createSecondaryMenu"),
     {copyDir, replaceInFile, removeAttributesFromTools} = require("./utils"),
     {PORTALCONFIG, TOPICS, BASEMAPS, BASEMAPS_OLD, SUBJECTDATA} = require("./constants"),
     rootPath = path.resolve(__dirname, "../../../"),
-    {deprecated, toolsNotToMigrate, toRemoveFromTools} = require("./configuration"),
+    {deprecated, toolsNotToMigrate, toRemoveFromConfigJs, toRemoveFromTools} = require("./configuration"),
     migratedTools = toolsNotToMigrate.concat(deprecated);
 
 /**
@@ -213,49 +213,14 @@ function migrateIndexHtml (sourceFolder, destFolder, indexFile) {
  * @returns {void}
  */
 async function checkConfigJS (sourceFolder, configJsFile) {
-    if (Object.keys(require(path.resolve(sourceFolder, configJsFile))).length === 0) {
-        fs.readFile(path.resolve(sourceFolder, configJsFile), "utf8")
-            .then((data) => {
-                const dataToWrite = data + "\n  if (typeof module !== \"undefined\") { module.exports = Config; }";
+    const configJsPath = path.resolve(sourceFolder, configJsFile);
 
-                fs.writeFile(path.resolve(sourceFolder, configJsFile), dataToWrite, "utf8");
-            })
-            .catch(err => {
-                console.error(err);
-            });
+    if (Object.keys(require(configJsPath)).length === 0) {
+        const data = await fs.readFile(configJsPath, "utf8"),
+            dataToWrite = data + "\n  if (typeof module !== \"undefined\") { module.exports = Config; }";
+
+        await fs.writeFile(configJsPath, dataToWrite, "utf8");
     }
-}
-
-/**
- * Migrates config.js file to destFolder.
- * @param {String} destFolder the destination folder
- * @param {Object} configJsFile the config.js file
- * @param {Object} config the javascript configJs content
- * @returns {void}
- */
-async function migrateConfigJS (destFolder, configJsFile, config) {
-    const configJS = {...config};
-    let result = null,
-        unquoted = null,
-        destPath = null;
-
-    delete configJS.footer;
-    delete configJS.defaultToolId;
-    delete configJS.scaleLine;
-    if (configJS.tree) {
-        delete configJS.tree.layerIDsToIgnore;
-        delete configJS.tree.layerIDsToStyle;
-        delete configJS.tree.metaIDsToMerge;
-        delete configJS.tree.metaIDsToIgnore;
-    }
-    result = "const Config = " + JSON.stringify(configJS, null, " ") + ";";
-    // JSON.stringify produces keys with quotes -  now replace all keys with quotes with keys without quotes
-    unquoted = result.replace(/"([^"]+)":/g, "$1:");
-    destPath = path.resolve(destFolder, configJsFile);
-    fs.writeFile(destPath, unquoted, "utf8")
-        .catch(err => {
-            console.error(err);
-        });
 }
 
 /**
@@ -264,7 +229,7 @@ async function migrateConfigJS (destFolder, configJsFile, config) {
  * @param {String} destPath the destination path to store the portal
  * @returns {void}
  */
-function migrateFiles (sourcePath, destPath) {
+async function migrateFiles (sourcePath, destPath) {
     const
         sourceFolder = path.resolve(rootPath, sourcePath),
         destFolder = path.resolve(rootPath, destPath);
@@ -275,14 +240,16 @@ function migrateFiles (sourcePath, destPath) {
             const configJsonFile = files.find(fileName => fileName === "config.json"),
                 configJsFile = files.find(fileName => fileName === "config.js"),
                 indexFile = files.find(fileName => fileName === "index.html"),
-                srcFile = path.resolve(sourceFolder, configJsonFile),
-                destFile = path.resolve(destFolder, configJsonFile);
+                configJsonSrcFile = path.resolve(sourceFolder, configJsonFile),
+                configJsonDestFile = path.resolve(destFolder, configJsonFile),
+                configJsSrcFile = path.resolve(sourceFolder, configJsFile),
+                configJsDestFile = path.resolve(destFolder, configJsFile);
 
             checkConfigJS(sourceFolder, configJsFile).then(() => {
                 configJS = require(path.resolve(sourceFolder, configJsFile));
 
                 copyDir(sourcePath, destPath).then(() => {
-                    fs.readFile(srcFile, "utf8")
+                    fs.readFile(configJsonSrcFile, "utf8")
                         .then(data => {
                             const migrated = {},
                                 parsed = JSON.parse(data);
@@ -290,7 +257,8 @@ function migrateFiles (sourcePath, destPath) {
                             if (!parsed[PORTALCONFIG].mainMenu) {
                                 console.info("\n#############################     migrate     #############################\n");
                                 console.info("ATTENTION --- the following tools are not migrated: ", toolsNotToMigrate.join(", ") + "\n");
-                                console.info("source: ", srcFile, "\ndestination: ", destFile, "\n");
+                                console.info("ATTENTION --- remove from config.js by yourself: ", toRemoveFromConfigJs.join(", ") + "\n");
+                                console.info("source: ", configJsonSrcFile, "\ndestination: ", configJsonDestFile, "\n");
                                 const gfi = migrateGFI(parsed);
 
                                 migrated[PORTALCONFIG] = {};
@@ -305,18 +273,14 @@ function migrateFiles (sourcePath, destPath) {
                                 migrated[PORTALCONFIG].secondaryMenu = createSecondaryMenu(parsed, migratedTools, toRemoveFromTools);
                                 migrated[TOPICS] = migrateTopics(parsed);
 
-                                fs.ensureDir(destPath)
+                                fs.mkdir(destPath, {recursive: true})
                                     .then(() => {
-                                        fs.writeFile(destFile, JSON.stringify(migrated, null, 4), "utf8")
+                                        fs.writeFile(configJsonDestFile, JSON.stringify(migrated, null, 4), "utf8")
                                             .then(() => {
-                                                replaceInFile(destFile);
-                                                migrateConfigJS(destFolder, configJsFile, configJS).then(() => {
-                                                    migrateIndexHtml(sourceFolder, destFolder, indexFile);
-                                                    console.info("SUCCESSFULL MIGRATED: ", destFolder);
-                                                })
-                                                    .catch(err => {
-                                                        console.error(err);
-                                                    });
+                                                replaceInFile(configJsonDestFile);
+                                                fs.copyFile(configJsSrcFile, configJsDestFile);
+                                                migrateIndexHtml(sourceFolder, destFolder, indexFile);
+                                                console.info("SUCCESSFULL MIGRATED: ", destFolder);
                                             })
                                             .catch(err => {
                                                 console.error(err);
@@ -327,7 +291,7 @@ function migrateFiles (sourcePath, destPath) {
                                     });
                             }
                             else {
-                                console.warn("IS ALREADY IN V3.0.0 - NOT MIGRATED: ", srcFile);
+                                console.warn("IS ALREADY IN V3.0.0 - NOT MIGRATED: ", configJsonSrcFile);
                             }
                         })
                         .catch(err => {
