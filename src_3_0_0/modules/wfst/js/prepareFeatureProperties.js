@@ -1,4 +1,4 @@
-import receivePossibleProperties from "./receivePossibleProperties";
+import wfs from "@masterportal/masterportalapi/src/layer/wfs";
 
 /**
  * Prepares the possible feature properties to be set for
@@ -12,7 +12,18 @@ async function prepareFeatureProperties (layer) {
     if (layer.gfiAttributes === "ignore") {
         return [];
     }
-    const properties = await receivePossibleProperties.receivePossibleProperties(layer);
+    let properties;
+
+    try {
+        properties = await wfs.receivePossibleProperties(layer.url, layer.version, layer.featureType, layer.isSecured);
+    }
+    catch (e) {
+        console.error(e);
+    }
+
+    if (!properties) {
+        return [];
+    }
 
     return layer.gfiAttributes === "showAll"
         ? properties
