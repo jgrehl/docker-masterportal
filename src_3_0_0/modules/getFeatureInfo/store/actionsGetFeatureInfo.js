@@ -17,6 +17,18 @@ export default {
     },
 
     /**
+     * Function to remove highlighting of a 3D Tile and the event handler.
+     * @param {Object} param.dispatch the dispatch
+     * @returns {void}
+     */
+    removeHighlight3DTile ({dispatch}) {
+        dispatch("removeHighlightColor");
+        if (globeEventHandler !== undefined && globeEventHandler instanceof Cesium.ScreenSpaceEventHandler) {
+            globeEventHandler.destroy();
+        }
+    },
+
+    /**
      * collects features for the gfi.
      * @param {Object} param store context
      * @param {Object} param.getters the getter
