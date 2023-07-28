@@ -1,9 +1,11 @@
-import axios from "axios";
 import {expect} from "chai";
 import sinon from "sinon";
 import prepareFeaturePropertiesModule from "../../../js/prepareFeatureProperties";
-import writeTransactionModule from "../../../js/writeTransaction";
 import actionsWfst from "../../../store/actionsWfst";
+import wfs from "@masterportal/masterportalapi/src/layer/wfs";
+import Feature from "ol/Feature";
+import Polygon from "ol/geom/Polygon";
+import layerCollection from "../../../../../core/layers/js/layerCollection";
 
 
 describe("src_3_0_0/modules/wfst/store/actionsWfst.js", () => {
@@ -90,287 +92,128 @@ describe("src_3_0_0/modules/wfst/store/actionsWfst.js", () => {
     });
     describe("sendTransaction", () => {
         const layer = {
-                id: Symbol("layerId"),
+                id: "0",
                 url: "some.good.url",
-                isSecured: false
+                isSecured: false,
+                useProxy: false
             },
-            featureSymbol = Symbol("feature"),
-            axiosResponse = {
-                status: 200,
-                statusText: "Ok"
-            },
-            writeTransactionSymbol = Symbol("writeTransaction");
-        let axiosStub,
-            consoleSpy,
-            /* loaderHideSpy,
-            loaderShowSpy, */
-            refreshSpy;
+            feature = new Feature({
+                geometry: new Polygon([
+                    [
+                        [
+                            9.17782024967994,
+                            50.20836600730087
+                        ],
+                        [
+                            9.200676227149245,
+                            50.20836600730087
+                        ],
+                        [
+                            9.200676227149245,
+                            50.20873353776312
+                        ],
+                        [
+                            9.17782024967994,
+                            50.20873353776312
+                        ],
+                        [
+                            9.17782024967994,
+                            50.20836600730087
+                        ]
+                    ]]),
+                name: "My Polygon"
+            });
+
+        let fakeSendTransaction,
+            refreshSpy,
+            consoleSpy;
 
         beforeEach(() => {
             getters = {
                 currentLayerIndex: 0,
                 layerInformation: [layer],
-                selectedInteraction: "Point"
+                selectedInteraction: "insert"
             };
-            axiosStub = sinon.stub(axios, "post").returns(new Promise(resolve => resolve(axiosResponse)));
+            fakeSendTransaction = sinon.stub(wfs, "sendTransaction");
+            refreshSpy = sinon.spy();
+            // sinon.stub(Radio, "request").withArgs("ModelList", "getModelByAttributes", {id: layer.id}).returns({
+            //     layer: {
+            //         getSource: () => ({refresh: refreshSpy})
+            //     }
+            // });
+            layer.getLayerSource = () => ({refresh: refreshSpy});
+            sinon.stub(layerCollection, "getLayerById").returns(layer);
             consoleSpy = sinon.spy();
             sinon.stub(console, "error").callsFake(consoleSpy);
-            sinon.stub(writeTransactionModule, "writeTransaction").callsFake(() => writeTransactionSymbol);
-            refreshSpy = sinon.spy();
         });
-        it("should send an axios request and show an alert with a success message for an insert transaction", () => {
-            axiosResponse.data = "<?xml version='1.0' encoding='UTF-8'?>\n" +
-                "<wfs:TransactionResponse xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.opengis.net/wfs http://schemas.opengis.net/wfs/1.1.0/wfs.xsd\" xmlns:wfs=\"http://www.opengis.net/wfs\" xmlns:ogc=\"http://www.opengis.net/ogc\" version=\"1.1.0\">\n" +
-                "  <wfs:TransactionSummary>\n" +
-                "    <wfs:totalInserted>1</wfs:totalInserted>\n" +
-                "    <wfs:totalUpdated>0</wfs:totalUpdated>\n" +
-                "    <wfs:totalDeleted>0</wfs:totalDeleted>\n" +
-                "  </wfs:TransactionSummary>\n" +
-                "  <wfs:InsertResults>\n" +
-                "    <wfs:Feature>\n" +
-                "      <ogc:FeatureId fid=\"wfst.59\"/>\n" +
-                "    </wfs:Feature>\n" +
-                "  </wfs:InsertResults>\n" +
-                "</wfs:TransactionResponse>";
+        afterEach(() => {
+            sinon.restore();
+        });
+        it("should send a request to the api and it should return the inserted feature", async () => {
+            fakeSendTransaction.resolves(feature);
+            const response = await actionsWfst.sendTransaction({dispatch, getters, rootGetters}, feature);
 
-            actionsWfst.sendTransaction({dispatch, commit, getters, rootGetters}, featureSymbol)
-                .then(() => {
-                    expect(axiosStub.calledOnce).to.be.true;
-                    expect(axiosStub.firstCall.args.length).to.equal(3);
-                    expect(axiosStub.firstCall.args[0]).to.equal(layer.url);
-                    expect(axiosStub.firstCall.args[1]).to.equal(writeTransactionSymbol);
-                    expect(axiosStub.firstCall.args[2]).to.eql({
-                        withCredentials: layer.isSecured,
-                        headers: {"Content-Type": "text/xml"},
-                        responseType: "text/xml"
-                    });
-                    expect(consoleSpy.notCalled).to.be.true;
-                    /* expect(loaderShowSpy.calledOnce).to.be.true; TODO Stub only work with one method...
-                    expect(loaderShowSpy.firstCall.args.length).to.equal(0);
-                    expect(loaderHideSpy.calledOnce).to.be.true;
-                    expect(loaderHideSpy.firstCall.args.length).to.equal(0); */
-                    expect(refreshSpy.calledOnce).to.be.true;
-                    expect(refreshSpy.firstCall.args.length).to.equal(0);
-                    expect(dispatch.calledTwice).to.be.true;
-                    expect(dispatch.firstCall.args.length).to.equal(1);
-                    expect(dispatch.firstCall.args[0]).to.equal("reset");
-                    expect(dispatch.secondCall.args.length).to.equal(3);
-                    expect(dispatch.secondCall.args[0]).to.equal("Alerting/addSingleAlert");
-                    expect(dispatch.secondCall.args[1]).to.eql({
-                        category: "Info",
-                        displayClass: "info",
-                        content: "common:modules.wfst.transaction.success.insert",
-                        mustBeConfirmed: false
-                    });
-                    expect(dispatch.secondCall.args[2]).to.eql({root: true});
-                });
-        });
-        it("should send an axios request and show an alert with a success message for an update transaction", () => {
-            getters.selectedInteraction = "update";
-            axiosResponse.data = "<?xml version='1.0' encoding='UTF-8'?>\n" +
-                "<wfs:TransactionResponse xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.opengis.net/wfs http://schemas.opengis.net/wfs/1.1.0/wfs.xsd\" xmlns:wfs=\"http://www.opengis.net/wfs\" xmlns:ogc=\"http://www.opengis.net/ogc\" version=\"1.1.0\">\n" +
-                "  <wfs:TransactionSummary>\n" +
-                "    <wfs:totalInserted>0</wfs:totalInserted>\n" +
-                "    <wfs:totalUpdated>1</wfs:totalUpdated>\n" +
-                "    <wfs:totalDeleted>0</wfs:totalDeleted>\n" +
-                "  </wfs:TransactionSummary>\n" +
-                "</wfs:TransactionResponse>";
+            expect(fakeSendTransaction.calledOnce).to.be.true;
+            expect(response).to.deep.equal(feature);
 
-            actionsWfst.sendTransaction({dispatch, commit, getters, rootGetters}, featureSymbol)
-                .then(() => {
-                    expect(axiosStub.calledOnce).to.be.true;
-                    expect(axiosStub.firstCall.args.length).to.equal(3);
-                    expect(axiosStub.firstCall.args[0]).to.equal(layer.url);
-                    expect(axiosStub.firstCall.args[1]).to.equal(writeTransactionSymbol);
-                    expect(axiosStub.firstCall.args[2]).to.eql({
-                        withCredentials: layer.isSecured,
-                        headers: {"Content-Type": "text/xml"},
-                        responseType: "text/xml"
-                    });
-                    expect(consoleSpy.notCalled).to.be.true;
-                    /* expect(loaderShowSpy.calledOnce).to.be.true; TODO Stub only work with one method...
-                    expect(loaderShowSpy.firstCall.args.length).to.equal(0);
-                    expect(loaderHideSpy.calledOnce).to.be.true;
-                    expect(loaderHideSpy.firstCall.args.length).to.equal(0); */
-                    expect(refreshSpy.calledOnce).to.be.true;
-                    expect(refreshSpy.firstCall.args.length).to.equal(0);
-                    expect(dispatch.calledTwice).to.be.true;
-                    expect(dispatch.firstCall.args.length).to.equal(1);
-                    expect(dispatch.firstCall.args[0]).to.equal("reset");
-                    expect(dispatch.secondCall.args.length).to.equal(3);
-                    expect(dispatch.secondCall.args[0]).to.equal("Alerting/addSingleAlert");
-                    expect(dispatch.secondCall.args[1]).to.eql({
-                        category: "Info",
-                        displayClass: "info",
-                        content: "common:modules.wfst.transaction.success.update",
-                        mustBeConfirmed: false
-                    });
-                    expect(dispatch.secondCall.args[2]).to.eql({root: true});
-                });
+            expect(consoleSpy.notCalled).to.be.true;
+
+            expect(dispatch.calledOnce).to.be.true;
+            expect(dispatch.firstCall.args.length).to.equal(1);
+            expect(dispatch.firstCall.args[0]).to.equal("reset");
         });
-        it("should send an axios request and show an alert with a success message for a delete transaction", () => {
+        it("should send a request to the api and it should return the updated feature", async () => {
+            getters.selectedInteraction = "selectedUpdate";
+
+            fakeSendTransaction.resolves(feature);
+            const response = await actionsWfst.sendTransaction({dispatch, getters, rootGetters}, feature);
+
+            expect(fakeSendTransaction.calledOnce).to.be.true;
+            expect(response).to.deep.equal(feature);
+
+            expect(consoleSpy.notCalled).to.be.true;
+
+            expect(dispatch.calledOnce).to.be.true;
+            expect(dispatch.firstCall.args.length).to.equal(1);
+            expect(dispatch.firstCall.args[0]).to.equal("reset");
+        });
+        it("should send an request to the api and show an alert with a success message for a delete transaction", async () => {
             getters.selectedInteraction = "delete";
-            axiosResponse.data = "<?xml version='1.0' encoding='UTF-8'?>\n" +
-                "<wfs:TransactionResponse xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.opengis.net/wfs http://schemas.opengis.net/wfs/1.1.0/wfs.xsd\" xmlns:wfs=\"http://www.opengis.net/wfs\" xmlns:ogc=\"http://www.opengis.net/ogc\" version=\"1.1.0\">\n" +
-                "  <wfs:TransactionSummary>\n" +
-                "    <wfs:totalInserted>0</wfs:totalInserted>\n" +
-                "    <wfs:totalUpdated>0</wfs:totalUpdated>\n" +
-                "    <wfs:totalDeleted>1</wfs:totalDeleted>\n" +
-                "  </wfs:TransactionSummary>\n" +
-                "</wfs:TransactionResponse>";
 
-            actionsWfst.sendTransaction({dispatch, commit, getters, rootGetters}, featureSymbol)
-                .then(() => {
-                    expect(axiosStub.calledOnce).to.be.true;
-                    expect(axiosStub.firstCall.args.length).to.equal(3);
-                    expect(axiosStub.firstCall.args[0]).to.equal(layer.url);
-                    expect(axiosStub.firstCall.args[1]).to.equal(writeTransactionSymbol);
-                    expect(axiosStub.firstCall.args[2]).to.eql({
-                        withCredentials: layer.isSecured,
-                        headers: {"Content-Type": "text/xml"},
-                        responseType: "text/xml"
-                    });
-                    expect(consoleSpy.notCalled).to.be.true;
-                    /* expect(loaderShowSpy.calledOnce).to.be.true; TODO Stub only work with one method...
-                    expect(loaderShowSpy.firstCall.args.length).to.equal(0);
-                    expect(loaderHideSpy.calledOnce).to.be.true;
-                    expect(loaderHideSpy.firstCall.args.length).to.equal(0); */
-                    expect(refreshSpy.calledOnce).to.be.true;
-                    expect(refreshSpy.firstCall.args.length).to.equal(0);
-                    expect(dispatch.calledTwice).to.be.true;
-                    expect(dispatch.firstCall.args.length).to.equal(1);
-                    expect(dispatch.firstCall.args[0]).to.equal("reset");
-                    expect(dispatch.secondCall.args.length).to.equal(3);
-                    expect(dispatch.secondCall.args[0]).to.equal("Alerting/addSingleAlert");
-                    expect(dispatch.secondCall.args[1]).to.eql({
-                        category: "Info",
-                        displayClass: "info",
-                        content: "common:modules.wfst.transaction.success.delete",
-                        mustBeConfirmed: false
-                    });
-                    expect(dispatch.secondCall.args[2]).to.eql({root: true});
-                });
-        });
-        it("should send an axios request and show an alert with a generic error message if no transactionsSummary is present in the XML response", () => {
-            axiosResponse.data = "<?xml version='1.0' encoding='UTF-8'?>\n" +
-                "<ows:ExceptionReport xmlns:ows=\"http://www.opengis.net/ows\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.opengis.net/ows http://schemas.opengis.net/ows/1.0.0/owsExceptionReport.xsd\" version=\"1.0.0\">\n" +
-                "  <ows:Exception" +
-                "    <ows:ExceptionText>Cannot perform insert operation: Error in XML document (line: 1, column: 234, character offset: 233): Feature type \"{wrong}wfst\" is unknown.</ows:ExceptionText>\n" +
-                "  </ows:Exception>\n" +
-                "</ows:ExceptionReport>";
+            fakeSendTransaction.resolves(feature);
+            const response = await actionsWfst.sendTransaction({dispatch, getters, rootGetters}, feature);
 
-            actionsWfst.sendTransaction({dispatch, commit, getters, rootGetters}, featureSymbol)
-                .then(() => {
-                    expect(axiosStub.calledOnce).to.be.true;
-                    expect(axiosStub.firstCall.args.length).to.equal(3);
-                    expect(axiosStub.firstCall.args[0]).to.equal(layer.url);
-                    expect(axiosStub.firstCall.args[1]).to.equal(writeTransactionSymbol);
-                    expect(axiosStub.firstCall.args[2]).to.eql({
-                        withCredentials: layer.isSecured,
-                        headers: {"Content-Type": "text/xml"},
-                        responseType: "text/xml"
-                    });
-                    expect(consoleSpy.notCalled).to.be.true;
-                    /* expect(loaderShowSpy.calledOnce).to.be.true; TODO Stub only work with one method...
-                    expect(loaderShowSpy.firstCall.args.length).to.equal(0);
-                    expect(loaderHideSpy.calledOnce).to.be.true;
-                    expect(loaderHideSpy.firstCall.args.length).to.equal(0); */
-                    expect(refreshSpy.calledOnce).to.be.true;
-                    expect(refreshSpy.firstCall.args.length).to.equal(0);
-                    expect(dispatch.calledTwice).to.be.true;
-                    expect(dispatch.firstCall.args.length).to.equal(1);
-                    expect(dispatch.firstCall.args[0]).to.equal("reset");
-                    expect(dispatch.secondCall.args.length).to.equal(3);
-                    expect(dispatch.secondCall.args[0]).to.equal("Alerting/addSingleAlert");
-                    expect(dispatch.secondCall.args[1]).to.eql({
-                        category: "Info",
-                        displayClass: "info",
-                        content: "common:modules.wfst.transaction.error.genericFailedTransaction",
-                        mustBeConfirmed: false
-                    });
-                    expect(dispatch.secondCall.args[2]).to.eql({root: true});
-                });
-        });
-        it("should send an axios request, show an alert with a generic error message if no transactionsSummary is present in the XML response and log an error if an exceptionText is present in the XML response", () => {
-            axiosResponse.data = "<?xml version='1.0' encoding='UTF-8'?>\n" +
-                "<ows:ExceptionReport xmlns:ows=\"http://www.opengis.net/ows\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.opengis.net/ows http://schemas.opengis.net/ows/1.0.0/owsExceptionReport.xsd\" version=\"1.0.0\">\n" +
-                "  <ows:Exception>" +
-                "    <ows:ExceptionText>Cannot perform insert operation: Error in XML document (line: 1, column: 234, character offset: 233): Feature type \"{wrong}wfst\" is unknown.</ows:ExceptionText>\n" +
-                "  </ows:Exception>\n" +
-                "</ows:ExceptionReport>";
+            expect(fakeSendTransaction.calledOnce).to.be.true;
+            expect(response).to.deep.equal(feature);
 
-            actionsWfst.sendTransaction({dispatch, commit, getters, rootGetters}, featureSymbol)
-                .then(() => {
-                    expect(axiosStub.calledOnce).to.be.true;
-                    expect(axiosStub.firstCall.args.length).to.equal(3);
-                    expect(axiosStub.firstCall.args[0]).to.equal(layer.url);
-                    expect(axiosStub.firstCall.args[1]).to.equal(writeTransactionSymbol);
-                    expect(axiosStub.firstCall.args[2]).to.eql({
-                        withCredentials: layer.isSecured,
-                        headers: {"Content-Type": "text/xml"},
-                        responseType: "text/xml"
-                    });
-                    expect(consoleSpy.calledOnce).to.be.true;
-                    expect(consoleSpy.firstCall.args.length).to.equal(2);
-                    expect(consoleSpy.firstCall.args[0]).to.equal("WfsTransaction: An error occurred when sending the transaction to the service.");
-                    expect(consoleSpy.firstCall.args[1]).to.equal("Cannot perform insert operation: Error in XML document (line: 1, column: 234, character offset: 233): Feature type \"{wrong}wfst\" is unknown.");
-                    /* expect(loaderShowSpy.calledOnce).to.be.true; TODO Stub only work with one method...
-                    expect(loaderShowSpy.firstCall.args.length).to.equal(0);
-                    expect(loaderHideSpy.calledOnce).to.be.true;
-                    expect(loaderHideSpy.firstCall.args.length).to.equal(0); */
-                    expect(refreshSpy.calledOnce).to.be.true;
-                    expect(refreshSpy.firstCall.args.length).to.equal(0);
-                    expect(dispatch.calledTwice).to.be.true;
-                    expect(dispatch.firstCall.args.length).to.equal(1);
-                    expect(dispatch.firstCall.args[0]).to.equal("reset");
-                    expect(dispatch.secondCall.args.length).to.equal(3);
-                    expect(dispatch.secondCall.args[0]).to.equal("Alerting/addSingleAlert");
-                    expect(dispatch.secondCall.args[1]).to.eql({
-                        category: "Info",
-                        displayClass: "info",
-                        content: "common:modules.wfst.transaction.error.genericFailedTransaction",
-                        mustBeConfirmed: false
-                    });
-                    expect(dispatch.secondCall.args[2]).to.eql({root: true});
-                });
+            expect(consoleSpy.notCalled).to.be.true;
+
+            expect(dispatch.calledOnce).to.be.true;
+            expect(dispatch.firstCall.args.length).to.equal(1);
+            expect(dispatch.firstCall.args[0]).to.equal("reset");
         });
-        it("should send an axios request and show an alert with a specific error message parsed from the response if no transactionsSummary is present in the XML response and an exceptionCode is present in the response", () => {
-            axiosResponse.data = "<?xml version='1.0' encoding='UTF-8'?>\n" +
-                "<ows:ExceptionReport xmlns:ows=\"http://www.opengis.net/ows\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.opengis.net/ows http://schemas.opengis.net/ows/1.0.0/owsExceptionReport.xsd\" version=\"1.0.0\">\n" +
-                "  <ows:Exception exceptionCode=\"InvalidParameterValue\">\n" +
-                "  </ows:Exception>\n" +
-                "</ows:ExceptionReport>";
-            actionsWfst.sendTransaction({dispatch, commit, getters, rootGetters}, featureSymbol)
-                .then(() => {
-                    expect(axiosStub.calledOnce).to.be.true;
-                    expect(axiosStub.firstCall.args.length).to.equal(3);
-                    expect(axiosStub.firstCall.args[0]).to.equal(layer.url);
-                    expect(axiosStub.firstCall.args[1]).to.equal(writeTransactionSymbol);
-                    expect(axiosStub.firstCall.args[2]).to.eql({
-                        withCredentials: layer.isSecured,
-                        headers: {"Content-Type": "text/xml"},
-                        responseType: "text/xml"
-                    });
-                    expect(consoleSpy.notCalled).to.be.true;
-                    /* expect(loaderShowSpy.calledOnce).to.be.true; TODO Stub only work with one method...
-                    expect(loaderShowSpy.firstCall.args.length).to.equal(0);
-                    expect(loaderHideSpy.calledOnce).to.be.true;
-                    expect(loaderHideSpy.firstCall.args.length).to.equal(0); */
-                    expect(refreshSpy.calledOnce).to.be.true;
-                    expect(refreshSpy.firstCall.args.length).to.equal(0);
-                    expect(dispatch.calledTwice).to.be.true;
-                    expect(dispatch.firstCall.args.length).to.equal(1);
-                    expect(dispatch.firstCall.args[0]).to.equal("reset");
-                    expect(dispatch.secondCall.args.length).to.equal(3);
-                    expect(dispatch.secondCall.args[0]).to.equal("Alerting/addSingleAlert");
-                    expect(dispatch.secondCall.args[1]).to.eql({
-                        category: "Info",
-                        displayClass: "info",
-                        content: "common:modules.wfst.transaction.error.InvalidParameterValue",
-                        mustBeConfirmed: false
-                    });
-                    expect(dispatch.secondCall.args[2]).to.eql({root: true});
-                });
+        it("should show an error message and return null if wfs.sendTransaction fails", async () => {
+            const error = new Error("Transaction failed");
+            let response = null;
+
+            fakeSendTransaction.throws(error);
+            response = await actionsWfst.sendTransaction({dispatch, getters, rootGetters}, feature);
+
+            expect(fakeSendTransaction.calledOnce).to.be.true;
+            expect(response).to.equal(null);
+            expect(consoleSpy.notCalled).to.be.true;
+            expect(dispatch.calledTwice).to.be.true;
+            expect(dispatch.firstCall.args.length).to.equal(3);
+            expect(dispatch.firstCall.args[0]).to.equal("Alerting/addSingleAlert");
+            expect(dispatch.firstCall.args[1]).to.eql({
+                category: "Info",
+                displayClass: "info",
+                content: "Error: Transaction failed",
+                mustBeConfirmed: false
+            });
+            expect(dispatch.firstCall.args[2]).to.eql({root: true});
+            expect(dispatch.secondCall.args.length).to.equal(1);
+            expect(dispatch.secondCall.args[0]).to.equal("reset");
         });
     });
     describe("setFeatureProperty", () => {
