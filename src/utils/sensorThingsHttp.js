@@ -86,7 +86,7 @@ export class SensorThingsHttp {
      * Calls the given url to a SensorThings server, uses a call in extent, follows skip urls, response is given as callback onsuccess.
      * @param {String} url the url to call
      * @param {Object} extentObj data for the extent
-     * @param  {Boolean} intersect - if it is intersect or not
+     * @param {Boolean} intersect - if it is intersect or not
      * @param {Number[]} extentObj.extent the extent based on OpenLayers (e.g. [556925.7670922858, 5925584.829527992, 573934.2329077142, 5942355.170472008])
      * @param {String} extentObj.sourceProjection the projection of the extent
      * @param {String} extentObj.targetProjection the projection the broker expects
