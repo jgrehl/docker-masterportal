@@ -94,7 +94,7 @@ export default {
         role="alert"
     >
         <div id="modal-1-overlay" />
-        <div
+        <button
             id="modal-1-outer-wrapper"
             @mousedown="discardByClickOutside"
             @dragenter.prevent="discardByClickOutside"
@@ -129,7 +129,7 @@ export default {
                     <slot name="footer" />
                 </div>
             </div>
-        </div>
+        </button>
     </div>
 </template>
 
@@ -174,6 +174,9 @@ export default {
         bottom:0;
         text-align:center;
         z-index:10000;
+        background-color: rgb(1, 1, 1, 0);
+        border: none;
+        cursor: default;
 
         &:before {
             content:'';
@@ -183,6 +186,7 @@ export default {
             margin-right:-0.25rem;
         }
     }
+
     #modal-1-inner-wrapper {
         text-align:left;
         background-color: $white;
