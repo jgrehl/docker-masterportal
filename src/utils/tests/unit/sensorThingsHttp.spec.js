@@ -399,27 +399,27 @@ describe("src/utils/sensorThingsHttp", () => {
 
             it("should not process anything if the given resultRef is anything but an array", () => {
                 resultRef = null;
-                http.callNextLink("nextLink", "nextLinkFiFo", "onfinish", onerror, resultRef);
+                http.callNextLink("nextLink", undefined, "nextLinkFiFo", "onfinish", onerror, resultRef);
                 expect(lastError).to.be.a("string");
 
                 lastError = false;
                 resultRef = undefined;
-                http.callNextLink("nextLink", "nextLinkFiFo", "onfinish", onerror, resultRef);
+                http.callNextLink("nextLink", undefined, "nextLinkFiFo", "onfinish", onerror, resultRef);
                 expect(lastError).to.be.a("string");
 
                 lastError = false;
                 resultRef = 1234;
-                http.callNextLink("nextLink", "nextLinkFiFo", "onfinish", onerror, resultRef);
+                http.callNextLink("nextLink", undefined, "nextLinkFiFo", "onfinish", onerror, resultRef);
                 expect(lastError).to.be.a("string");
 
                 lastError = false;
                 resultRef = "string";
-                http.callNextLink("nextLink", "nextLinkFiFo", "onfinish", onerror, resultRef);
+                http.callNextLink("nextLink", undefined, "nextLinkFiFo", "onfinish", onerror, resultRef);
                 expect(lastError).to.be.a("string");
 
                 lastError = false;
                 resultRef = {};
-                http.callNextLink("nextLink", "nextLinkFiFo", "onfinish", onerror, resultRef);
+                http.callNextLink("nextLink", undefined, "nextLinkFiFo", "onfinish", onerror, resultRef);
                 expect(lastError).to.be.a("string");
             });
         });
@@ -428,38 +428,38 @@ describe("src/utils/sensorThingsHttp", () => {
             it("should not process anything if the response from httpClient is anything but an object and not null", () => {
                 const resultRef = [];
 
-                http.setHttpClient((url, onsuccess) => {
+                http.setHttpClient((url, auth, onsuccess) => {
                     onsuccess(null);
                 });
-                http.callNextLink("nextLink", "nextLinkFiFo", "onfinish", onerror, resultRef);
+                http.callNextLink("nextLink", undefined, "nextLinkFiFo", "onfinish", onerror, resultRef);
                 expect(lastError).to.be.a("string");
 
                 lastError = false;
-                http.setHttpClient((url, onsuccess) => {
+                http.setHttpClient((url, auth, onsuccess) => {
                     onsuccess(undefined);
                 });
-                http.callNextLink("nextLink", "nextLinkFiFo", "onfinish", onerror, resultRef);
+                http.callNextLink("nextLink", undefined, "nextLinkFiFo", "onfinish", onerror, resultRef);
                 expect(lastError).to.be.a("string");
 
                 lastError = false;
-                http.setHttpClient((url, onsuccess) => {
+                http.setHttpClient((url, auth, onsuccess) => {
                     onsuccess("string");
                 });
-                http.callNextLink("nextLink", "nextLinkFiFo", "onfinish", onerror, resultRef);
+                http.callNextLink("nextLink", undefined, "nextLinkFiFo", "onfinish", onerror, resultRef);
                 expect(lastError).to.be.a("string");
 
                 lastError = false;
-                http.setHttpClient((url, onsuccess) => {
+                http.setHttpClient((url, auth, onsuccess) => {
                     onsuccess(1234);
                 });
-                http.callNextLink("nextLink", "nextLinkFiFo", "onfinish", onerror, resultRef);
+                http.callNextLink("nextLink", undefined, "nextLinkFiFo", "onfinish", onerror, resultRef);
                 expect(lastError).to.be.a("string");
 
                 lastError = false;
-                http.setHttpClient((url, onsuccess) => {
+                http.setHttpClient((url, auth, onsuccess) => {
                     onsuccess([]);
                 });
-                http.callNextLink("nextLink", "nextLinkFiFo", "onfinish", onerror, resultRef);
+                http.callNextLink("nextLink", undefined, "nextLinkFiFo", "onfinish", onerror, resultRef);
                 expect(lastError).to.be.a("string");
             });
         });
@@ -473,10 +473,10 @@ describe("src/utils/sensorThingsHttp", () => {
                 },
                 resultRefExpected = [response];
 
-            http.setHttpClient((url, onsuccess) => {
+            http.setHttpClient((url, auth, onsuccess) => {
                 onsuccess(response);
             });
-            http.callNextLink("nextLink", "nextLinkFiFo", "onfinish", "onerror", resultRef);
+            http.callNextLink("nextLink", undefined, "nextLinkFiFo", "onfinish", "onerror", resultRef);
 
             expect(resultRef).to.deep.equal(resultRefExpected);
         });
@@ -487,10 +487,10 @@ describe("src/utils/sensorThingsHttp", () => {
                 },
                 resultRefExpected = [response];
 
-            http.setHttpClient((url, onsuccess) => {
+            http.setHttpClient((url, auth, onsuccess) => {
                 onsuccess(response);
             });
-            http.callNextLink("nextLink", "nextLinkFiFo", "onfinish", "onerror", resultRef);
+            http.callNextLink("nextLink", undefined, "nextLinkFiFo", "onfinish", "onerror", resultRef);
 
             expect(resultRef).to.deep.equal(resultRefExpected);
         });
@@ -501,10 +501,10 @@ describe("src/utils/sensorThingsHttp", () => {
                 },
                 resultRefExpected = response.value;
 
-            http.setHttpClient((url, onsuccess) => {
+            http.setHttpClient((url, auth, onsuccess) => {
                 onsuccess(response);
             });
-            http.callNextLink("nextLink", "nextLinkFiFo", "onfinish", "onerror", resultRef);
+            http.callNextLink("nextLink", undefined, "nextLinkFiFo", "onfinish", "onerror", resultRef);
 
             expect(resultRef).to.deep.equal(resultRefExpected);
         });
@@ -521,10 +521,10 @@ describe("src/utils/sensorThingsHttp", () => {
                     resultRef: [1, 2, 3, 4]
                 }];
 
-            http.setHttpClient((url, onsuccess) => {
+            http.setHttpClient((url, auth, onsuccess) => {
                 onsuccess(response);
             });
-            http.callNextLink("nextLink", nextLinkFiFo, "onfinish", "onerror", resultRef, () => {
+            http.callNextLink("nextLink", undefined, nextLinkFiFo, "onfinish", "onerror", resultRef, () => {
                 // stop recursion: do nothing
             });
 
@@ -539,10 +539,10 @@ describe("src/utils/sensorThingsHttp", () => {
                 },
                 nextLinkFiFoExpected = {};
 
-            http.setHttpClient((url, onsuccess) => {
+            http.setHttpClient((url, auth, onsuccess) => {
                 onsuccess(response);
             });
-            http.callNextLink("nextLink", nextLinkFiFo, "onfinish", "onerror", resultRef, () => {
+            http.callNextLink("nextLink", undefined, nextLinkFiFo, "onfinish", "onerror", resultRef, () => {
                 // stop recursion: do nothing
             });
 
@@ -560,10 +560,10 @@ describe("src/utils/sensorThingsHttp", () => {
             let lastResultRef = null,
                 lastNextLinkFiFo = null;
 
-            http.setHttpClient((url, onsuccess) => {
+            http.setHttpClient((url, auth, onsuccess) => {
                 onsuccess(response);
             });
-            http.callNextLink("nextLink", nextLinkFiFo, "onfinish", "onerror", resultRef, (resultRefShadow, nextLinkFiFoShadow) => {
+            http.callNextLink("nextLink", undefined, nextLinkFiFo, "onfinish", "onerror", resultRef, (resultRefShadow, nextLinkFiFoShadow) => {
                 lastResultRef = resultRefShadow;
                 lastNextLinkFiFo = nextLinkFiFoShadow;
             });
@@ -584,7 +584,7 @@ describe("src/utils/sensorThingsHttp", () => {
                 resultRefExpected = [1, 2, 3, 4, 5, 6, 7, 8];
             let hasFinished = false;
 
-            http.setHttpClient((url, onsuccess) => {
+            http.setHttpClient((url, auth, onsuccess) => {
                 if (url === "https://iot.hamburg.de/v1.0/Things") {
                     onsuccess(responseA);
                 }
@@ -593,7 +593,7 @@ describe("src/utils/sensorThingsHttp", () => {
                 }
             });
 
-            http.callNextLink("https://iot.hamburg.de/v1.0/Things", nextLinkFiFo, () => {
+            http.callNextLink("https://iot.hamburg.de/v1.0/Things", undefined, nextLinkFiFo, () => {
                 // onfinish
                 hasFinished = true;
             }, "onerror", resultRef);
@@ -615,7 +615,7 @@ describe("src/utils/sensorThingsHttp", () => {
                 lastResultRef = null,
                 lastNextLinkFiFo = null;
 
-            http.get("url", () => {
+            http.get("url", undefined, () => {
                 // onsuccess
                 onsuccessCalled = true;
             }, () => {
@@ -624,7 +624,7 @@ describe("src/utils/sensorThingsHttp", () => {
             }, () => {
                 // oncomplete
                 oncompleteCalled = true;
-            }, "onerror", (nextLink, nextLinkFiFo, onfinish, onerrorShadow, resultRef) => {
+            }, "onerror", (nextLink, auth, nextLinkFiFo, onfinish, onerrorShadow, resultRef) => {
                 lastNextLink = nextLink;
                 lastNextLinkFiFo = nextLinkFiFo;
                 lastResultRef = resultRef;
@@ -644,7 +644,7 @@ describe("src/utils/sensorThingsHttp", () => {
             http.get("url", "onsuccess", "onstart", () => {
                 // oncomplete
                 oncompleteCalled = true;
-            }, "onerror", (nextLink, nextLinkFiFo, onfinish, onerrorShadow) => {
+            }, "onerror", (nextLink, auth, nextLinkFiFo, onfinish, onerrorShadow) => {
                 onerrorShadow();
             });
 
@@ -663,7 +663,7 @@ describe("src/utils/sensorThingsHttp", () => {
                 lastUrlExpected = "https://iot.hamburg.de/v1.0/Things?%24filter=st_within(Locations%2Flocation%2Cgeography'POLYGON%20((9.869432803790303%2053.47946522163486%2C10.102382514144907%2053.47754336682167%2C10.10613018673993%2053.62149474831524%2C9.872388814958066%2053.623426671455626%2C9.869432803790303%2053.47946522163486))')";
             let lastUrl = null;
 
-            http.getInExtent(url, extentObj, false, "onsuccess", "onstart", "oncomplete", "onerror", urlShadow => {
+            http.getInExtent(url, undefined, extentObj, false, "onsuccess", "onstart", "oncomplete", "onerror", urlShadow => {
                 lastUrl = urlShadow;
             });
 

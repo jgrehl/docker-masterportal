@@ -48,6 +48,7 @@ export class SensorThingsHttp {
     /**
      * Calls the given url, targets only data in expand, walks through all @iot.nextLink.
      * @param {String} url the url to call
+     * @param {Object} auth Optional authentication object for basic auth.
      * @param {Function} [onsuccess] as function(result) with result as Object[] (result is always an array)
      * @param {Function} [onstart] as function called on start
      * @param {Function} [oncomplete] as function called at the end anyways
@@ -55,7 +56,7 @@ export class SensorThingsHttp {
      * @param {Function} [callNextLinkOpt] see this.callNextLink - a fake callNextLink function for testing
      * @returns {void}
      */
-    get (url, onsuccess, onstart, oncomplete, onerror, callNextLinkOpt) {
+    get (url, auth, onsuccess, onstart, oncomplete, onerror, callNextLinkOpt) {
         const nextLinkFiFo = [],
             result = [];
 
@@ -63,7 +64,7 @@ export class SensorThingsHttp {
             onstart();
         }
 
-        (typeof callNextLinkOpt === "function" ? callNextLinkOpt : this.callNextLink).bind(this)(url, nextLinkFiFo, () => {
+        (typeof callNextLinkOpt === "function" ? callNextLinkOpt : this.callNextLink).bind(this)(url, auth, nextLinkFiFo, () => {
             // onfinish
             if (typeof onsuccess === "function") {
                 onsuccess(result);
@@ -85,6 +86,7 @@ export class SensorThingsHttp {
     /**
      * Calls the given url to a SensorThings server, uses a call in extent, follows skip urls, response is given as callback onsuccess.
      * @param {String} url the url to call
+     * @param {Object} auth Optional authentication object for basic auth.
      * @param {Object} extentObj data for the extent
      * @param {Boolean} intersect - if it is intersect or not
      * @param {Number[]} extentObj.extent the extent based on OpenLayers (e.g. [556925.7670922858, 5925584.829527992, 573934.2329077142, 5942355.170472008])
@@ -97,7 +99,7 @@ export class SensorThingsHttp {
      * @param {Function} [getOpt] see this.get - a function for testing only
      * @returns {void}
      */
-    getInExtent (url, extentObj, intersect, onsuccess, onstart, oncomplete, onerror, getOpt) {
+    getInExtent (url, auth, extentObj, intersect, onsuccess, onstart, oncomplete, onerror, getOpt) {
         const extent = extentObj && extentObj.extent ? extentObj.extent : false,
             sourceProjection = extentObj && extentObj.sourceProjection ? extentObj.sourceProjection : false,
             targetProjection = extentObj && extentObj.targetProjection ? extentObj.targetProjection : false,
@@ -129,7 +131,7 @@ export class SensorThingsHttp {
             return;
         }
 
-        (typeof getOpt === "function" ? getOpt : this.get).bind(this)(requestUrl, onsuccess, onstart, oncomplete, onerror);
+        (typeof getOpt === "function" ? getOpt : this.get).bind(this)(requestUrl, auth, onsuccess, onstart, oncomplete, onerror);
     }
 
 
@@ -268,6 +270,7 @@ export class SensorThingsHttp {
     /**
      * Calls a nextLink for the recursion.
      * @param {String} nextLink the url to call
+     * @param {Object} auth Optional authentication object for basic auth.
      * @param {Object[]} nextLinkFiFo the fifo-List to walk through @iot.nextLink
      * @param {Function} onfinish as function to be called when finished
      * @param {Function} onerror as function(error)
@@ -275,7 +278,7 @@ export class SensorThingsHttp {
      * @param {Function} [collectNextLinksOpt] a collectNextLink function for testing only
      * @returns {void}
      */
-    callNextLink (nextLink, nextLinkFiFo, onfinish, onerror, resultRef, collectNextLinksOpt) {
+    callNextLink (nextLink, auth, nextLinkFiFo, onfinish, onerror, resultRef, collectNextLinksOpt) {
         if (!Array.isArray(resultRef)) {
             if (typeof onerror === "function") {
                 onerror("SensorThingsHttp - callNextLink: given resultRef is not an array - nextLink: " + nextLink + " - resultRef: " + resultRef);
@@ -283,7 +286,7 @@ export class SensorThingsHttp {
             return;
         }
 
-        this.callHttpClient(nextLink, response => {
+        this.callHttpClient(nextLink, auth, response => {
             if (response === null || typeof response !== "object" || Array.isArray(response)) {
                 // the response is represented as a JSON object (no array)
                 // https://docs.opengeospatial.org/is/15-078r6/15-078r6.html#36
@@ -323,7 +326,7 @@ export class SensorThingsHttp {
                     return;
                 }
 
-                this.callNextLink(obj.nextLink, nextLinkFiFo, onfinish, onerror, obj.resultRef, collectNextLinksOpt);
+                this.callNextLink(obj.nextLink, auth, nextLinkFiFo, onfinish, onerror, obj.resultRef, collectNextLinksOpt);
             });
         }, onerror);
     }
@@ -454,19 +457,21 @@ export class SensorThingsHttp {
     /**
      * Calls the httpClient as async function to call an url and to receive data from.
      * @param {String} url the url to call
+     * @param {Object} auth Optional authentication object for basic auth.
      * @param {Function} onsuccess a function (response) with the response of the call
      * @param {Function} onerror a function (error) with the error of the call if any
      * @returns {void}
      */
-    callHttpClient (url, onsuccess, onerror) {
+    callHttpClient (url, auth, onsuccess, onerror) {
         if (typeof this.httpClient === "function") {
-            this.httpClient(url, onsuccess, onerror);
+            this.httpClient(url, auth, onsuccess, onerror);
             return;
         }
 
         axios({
             method: "get",
-            url: url
+            url,
+            auth
         }).then(function (response) {
             if (response !== undefined && typeof onsuccess === "function") {
                 onsuccess(response.data);

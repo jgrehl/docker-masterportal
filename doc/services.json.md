@@ -522,6 +522,8 @@ For more details, consider reading the [extensive SensorThings-API documentation
 |urlParameter|no|**[urlParameter](#markdown-header-sensorlayerurlparameter)**||Query options specification. These modify the request to sensor data, e.g. with `"filter"` or `"expand"`.||
 |useProxy|no|Boolean|`false`|_Deprecated in the next major release. *[GDI-DE](https://www.gdi-de.org/en)* recommends setting CORS headers on the required services instead._ Only used for GFI requests. The request will contain the requested URL as path, with dots replaced by underscores.|`false`|
 |version|no|String|"1.1"|Service version used to request data.|`"1.0"`|
+|authenticationUsername|no|String||Username for basic authentication to access the layer|`"admin"`|
+|authenticationPassword|no|String||Password for basic authentication to access the layer|`"password"`|
 |intersect|no|Boolean|true|Setting if the sensor data is in intersect range or within range |`true`|
 |observeLocation|no|Boolean|false|Enable to subscribe to locations|`true`|
 |rotationUnit|no|String|""|Defines the rotation unit for feature|`degree`|

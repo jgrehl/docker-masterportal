@@ -18,6 +18,8 @@
     - new parameter: hideMapMarkerOnVectorHighlight
 - WFST:
     - further input type "short" and "float"
+- Issue #1059: SensorThings layers may use basic authentication now
+
 ### Changed
 - The following packages have been updated:
     - dependencies:

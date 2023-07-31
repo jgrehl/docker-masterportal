@@ -168,6 +168,9 @@ STALayer.prototype.createLayer = function (attrs) {
 
     this.layer = this.createVectorLayer(rawLayerAttributes, {layerParams, options});
     this.options = options;
+    if (attrs.authenticationUsername) {
+        this.auth = {username: attrs.authenticationUsername, password: attrs.authenticationPassword};
+    }
 };
 
 /**
@@ -579,6 +582,7 @@ STALayer.prototype.initializeConnection = function (onsuccess, updateOnly = fals
      * getProxyUrl()
      */
     const url = this.get("useProxy") ? getProxyUrl(this.get("url")) : this.get("url"),
+        auth = this.auth,
         version = this.get("version"),
         urlParams = this.get("urlParameter"),
         currentExtent = {
@@ -594,7 +598,7 @@ STALayer.prototype.initializeConnection = function (onsuccess, updateOnly = fals
         isClustered = this.has("clusterDistance"),
         datastreamIds = this.getDatastreamIdsInCurrentExtent(this.get("layer").getSource().getFeatures(), store.getters["Maps/getCurrentExtent"]);
 
-    this.callSensorThingsAPI(url, version, urlParams, currentExtent, intersect, sensorData => {
+    this.callSensorThingsAPI(url, auth, version, urlParams, currentExtent, intersect, sensorData => {
         const filteredSensorData = !updateOnly ? sensorData : sensorData.filter(data => !datastreamIds.includes(data?.properties?.dataStreamId)),
             features = this.createFeaturesFromSensorData(filteredSensorData, mapProjection, epsg, gfiTheme, utc),
             layerSource = this.get("layerSource") instanceof Cluster ? this.get("layerSource").getSource() : this.get("layerSource"),
@@ -665,6 +669,7 @@ STALayer.prototype.initializeConnection = function (onsuccess, updateOnly = fals
 /**
  * Calls the SensorThings-API via http.
  * @param {String} url The url to service
+ * @param {Object} auth Optional authentication object for basic auth.
  * @param {String} version The version from service
  * @param {Object} urlParams The url parameters
  * @param {Object} currentExtent the extent coordinates
@@ -673,21 +678,21 @@ STALayer.prototype.initializeConnection = function (onsuccess, updateOnly = fals
  * @param {Function} onerror a callback function (err) to pass errors with
  * @returns {void}
  */
-STALayer.prototype.callSensorThingsAPI = function (url, version, urlParams, currentExtent, intersect, onsuccess, onerror) {
+STALayer.prototype.callSensorThingsAPI = function (url, auth, version, urlParams, currentExtent, intersect, onsuccess, onerror) {
     const requestUrl = this.buildSensorThingsUrl(url, version, urlParams),
         http = new SensorThingsHttp({
             rootNode: urlParams?.root
         });
 
     if (!this.get("loadThingsOnlyInCurrentExtent")) {
-        http.get(requestUrl, result => {
+        http.get(requestUrl, auth, result => {
             if (typeof onsuccess === "function") {
                 onsuccess(this.getAllThings(result, urlParams, url, version));
             }
         }, null, null, onerror);
     }
     else {
-        http.getInExtent(requestUrl, currentExtent, intersect, result => {
+        http.getInExtent(requestUrl, auth, currentExtent, intersect, result => {
             if (typeof onsuccess === "function") {
                 onsuccess(this.getAllThings(result, urlParams, url, version));
             }
