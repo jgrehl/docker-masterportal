@@ -34,7 +34,7 @@ All methods must provide jsdoc, it is shown also in created jsdoc-files.
  * @vue-computed {String} message - Error message for missing something.
  */
  export default {
-     name: "CoordToolkit",
+     name: "DrawModule",
 ```
 
 ## store actions, getters, mutations
