@@ -93,8 +93,8 @@ export default {
         this.setBaselayerIds(baselayerConfigIds);
 
         document.addEventListener("click", event => {
-            const backroundSwitcher = document.getElementById("baselayer-switcher"),
-                isClickInside = backroundSwitcher ? backroundSwitcher.contains(event.target) : false;
+            const baselayerSwitcher = document.getElementById("baselayer-switcher"),
+                isClickInside = baselayerSwitcher ? baselayerSwitcher.contains(event.target) : false;
 
             if (!isClickInside) {
                 this.setActivatedExpandable(false);
