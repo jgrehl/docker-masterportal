@@ -195,9 +195,17 @@ function migrateSubjectData (oldData) {
 function migrateIndexHtml (sourceFolder, destFolder, indexFile) {
     fs.readFile(path.resolve(sourceFolder, indexFile), "utf8")
         .then(data => {
+            let result;
+
+            // removes <div id="loader"... and load of special_loaders.js from index.html - loader is no longer provided.
             const regex = /<div id="loader" [\s\S]*loaders.js"><\/script>/g,
-                // removes <div id="loader"... and load of special_loaders.js from index.html - loader is no longer provided.
-                result = data.replace(regex, "");
+                // removes the Cesium.js script-tag
+                regexCesium = /<script [\s\S]*Cesium.js"><\/script>/g;
+
+            result = data.replace(regex, "");
+            if (result.includes("Cesium.js")) {
+                result = result.replace(regexCesium, "");
+            }
 
             fs.writeFile(path.resolve(destFolder, indexFile), result, "utf8");
         })
@@ -257,7 +265,6 @@ async function migrateFiles (sourcePath, destPath) {
                             if (!parsed[PORTALCONFIG].mainMenu) {
                                 console.info("\n#############################     migrate     #############################\n");
                                 console.info("ATTENTION --- the following tools are not migrated: ", toolsNotToMigrate.join(", ") + "\n");
-                                console.info("ATTENTION --- remove from config.js by yourself: ", toRemoveFromConfigJs.join(", ") + "\n");
                                 console.info("source: ", configJsonSrcFile, "\ndestination: ", configJsonDestFile, "\n");
                                 const gfi = migrateGFI(parsed);
 
@@ -280,6 +287,7 @@ async function migrateFiles (sourcePath, destPath) {
                                                 replaceInFile(configJsonDestFile);
                                                 fs.copyFile(configJsSrcFile, configJsDestFile);
                                                 migrateIndexHtml(sourceFolder, destFolder, indexFile);
+                                                console.info("ATTENTION - TODO for User --- remove from config.js by yourself: ", toRemoveFromConfigJs.join(", ") + "\n");
                                                 console.info("SUCCESSFULL MIGRATED: ", destFolder);
                                             })
                                             .catch(err => {
