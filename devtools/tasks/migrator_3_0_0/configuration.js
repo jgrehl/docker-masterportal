@@ -32,6 +32,7 @@ const toolsNotToMigrate = [
         "all": ["icon", "renderToWindow", "active", "isVisibleInMenu", "resizableWindow", "initialWidth", "glyphicon"],
         "draw": ["enableAttributesSelector", "iconList", "addIconsOfActiveLayers"],
         "legend": ["showCollapseAllButton"],
+        "filter": ["deactivateGFI", "isInitOpen"],
         "getFeatureInfo": ["name", "centerMapToClickPoint", "desktopType"]
     },
     toRemoveFromConfigJs = ["footer", "defaultToolId", "scaleLine", "tree.layerIDsToIgnore", "tree.layerIDsToStyle", "tree.metaIDsToMerge", "tree.metaIDsToIgnore"],
