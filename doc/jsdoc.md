@@ -2,20 +2,20 @@
 
 # JsDoc
 
-Create the jsdoc with ```npm run buildJsDoc``` and open file .../jsdoc/index.html.
+Create the jsdoc with `npm run buildJsDoc` and open file .../jsdoc/index.html.
 
 ## vue component
 
-The jsdoc should have a module path corresponding to the path in the folder structure: ```@module modules/draw/components/DrawModule``` and must be located directly above ```export default {```.
+The jsdoc should have a module path corresponding to the path in the folder structure: `@module modules/draw/components/DrawModule` and must be located directly above `export default {`.
 
-```@vue-data``` to describe data
+`@vue-data` to describe data
 
-```@vue-prop``` to desctibe props
+`@vue-prop` to describe props
 
-```@vue-computed```  to describe computed üproperties
+`@vue-computed`  to describe computed properties
 
 To provide default values in jsdoc, do it like this:
-```
+```js
 * @vue-prop {String} [selectedInteraction="draw"] - The selected interaction.
 ```
 
@@ -23,7 +23,7 @@ All methods must provide jsdoc, it is shown also in created jsdoc-files.
 
 ## Example 
 
-```
+```js
 /**
  * Modules to make drawings.
  * @module modules/draw/components/DrawModule
@@ -39,19 +39,20 @@ All methods must provide jsdoc, it is shown also in created jsdoc-files.
 
 ## store actions, getters, mutations
 
-The jsdoc should have a module path corresponding to the path in the folder structure: ``` @module modules/draw/store/actions``` and must be located directly above ```export default {```.
+The jsdoc should have a module path corresponding to the path in the folder structure: ` @module modules/draw/store/actions` and must be located directly above `export default {`.
 
 All functions must provide jsdoc, it is shown also in created jsdoc-files.
 
 ## Examples 
-```
+```js
 /**
  * The actions for the draw module.
  * @module modules/draw/store/actions
  */
 export default {
 ```
-```
+
+```js
 /**
  * The getters for the draw module.
  * @module modules/draw/store/getters
@@ -59,21 +60,21 @@ export default {
 export default {
 ```
 
-```
+```js
 /**
  * The mutations for the draw module.
  * @module modules/draw/store/mutations
  */
 ```
 
-## state
+## store state
 
-The jsdoc should have a module path corresponding to the path in the folder structure: ```@module modules/draw/store/state```.
+The jsdoc should have a module path corresponding to the path in the folder structure: `@module modules/draw/store/state`.
 
 All properties must provide jsdoc.
 
 ## Example 
-```
+```js
 /**
  * State of module draw.
  * @module modules/draw/store/state
@@ -92,12 +93,12 @@ All properties must provide jsdoc.
 
 ## other javascript files
 
-The jsdoc should have a module path corresponding to the path in the folder structure, e.g. : ```@module modules/draw/js/interaction```.
+The jsdoc should have a module path corresponding to the path in the folder structure, e.g. : `@module modules/draw/js/interaction`.
 
 All functions must provide jsdoc.
 
 ## Example 
-```
+```js
 /**
  * Handling of interactions.
  * @module modules/draw/js/interaction
