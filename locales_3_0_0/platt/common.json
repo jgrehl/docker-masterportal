@@ -854,6 +854,19 @@
           "strokeColor": "Umrissfarbe",
           "strokeWidth": "Strichstärke"
         },
+        "drawSettingsCircle": {
+          "interactive": "Interaktiv",
+          "radii": {
+            "innerRadius": "Innerer Radius",
+            "outerRadius": "Äußerer Radius",
+            "radius": "Radius"
+          },
+          "settings": {
+            "circle": "Einstellungen Kreis:",
+            "doubleCircle": "Einstellungen Doppelkreis:"
+          },
+          "unit": "Einheit"
+        },
         "drawTypes": {
           "box": "Box",
           "circle": "Kreis",
