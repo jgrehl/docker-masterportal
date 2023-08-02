@@ -569,6 +569,7 @@ describe("src/modules/tools/filter/components/LayerFilterSnippet.vue", () => {
         });
         it("should call handleActiveStrategy if strategy is active", async () => {
             const spyHandleActiveStrategy = sinon.spy(wrapper.vm, "handleActiveStrategy");
+
             await wrapper.setProps({layerConfig: {strategy: "active"}});
             wrapper.vm.deleteAllRules();
             await wrapper.vm.$nextTick();
