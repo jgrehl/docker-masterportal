@@ -3,11 +3,12 @@ import drawInteraction from "@masterportal/masterportalapi/src/maps/interactions
 import {mapActions, mapGetters} from "vuex";
 
 import IconButton from "../../buttons/components/IconButton.vue";
+import {nextTick} from "vue";
 
 /**
  * Shared component that provides buttons for two-level selection of geometries and symbols.
  * @module shared/modules/draw/DrawTypes
- * @vue-prop {Object} [circleOptions={innerRadius: 100, interactive: true, outerRadius: 500}] - The circle Options.
+ * @vue-prop {Object} [circleOptions={innerRadius: 100, interactive: true, outerRadius: 500, unit: "m"}] - The circle Options.
  * @vue-prop {Object} currentLayout - The current layout for the styling.
  * @vue-prop {Object} [currentLayoutOuterCircle={}] - The current layout for styling the outer circle. Only used for double circle.
  * @vue-prop {Object} [drawIcons={box: "bi-square", circle: "bi-circle", doubleCircle: "bi-record-circle", geometries: "bi-hexagon-fill", line: "bi-slash-lg", pen: "bi-pencil-fill", point: "bi-circle-fill", polygon: "bi-octagon", symbols: "bi-circle-square"}] - The icons for draw buttons.
@@ -33,7 +34,8 @@ export default {
                 return {
                     innerRadius: 0,
                     interactive: true,
-                    outerRadius: 0
+                    outerRadius: 0,
+                    unit: "m"
                 };
             }
         },
@@ -117,6 +119,14 @@ export default {
         ...mapGetters("Maps", ["projection"])
     },
     watch: {
+        "circleOptions.interactive" () {
+            if (this.selectedDrawType === "circle" || this.selectedDrawType === "doubleCircle") {
+                if (this.currentDrawInteraction !== null) {
+                    this.removeInteraction(this.currentDrawInteraction);
+                    this.regulateDrawInteraction(this.selectedDrawType);
+                }
+            }
+        },
         currentLayout (currentLayout) {
             drawInteraction.setStyleObject(currentLayout);
         },
@@ -140,13 +150,34 @@ export default {
             drawInteraction.setStyleObject(this.currentLayoutOuterCircle, true);
         }
 
-        this.regulateInteraction(this.selectedDrawType);
+        this.startDrawingInitial();
     },
     unmounted () {
         this.removeInteraction(this.currentDrawInteraction);
     },
     methods: {
         ...mapActions("Maps", ["addInteraction", "removeInteraction"]),
+
+        /**
+         * Start drawing initial, if a selectedDrawType is specified.
+         * @returns {void}
+         */
+        startDrawingInitial () {
+            if (this.selectedDrawType !== "") {
+                if (this.selectedDrawTypeMain === "") {
+                    const selectedDrawType = this.selectedDrawType;
+
+                    this.setSelectedDrawType("");
+
+                    nextTick(() => {
+                        this.regulateInteraction(selectedDrawType);
+                    });
+                }
+                else if (this.selectedDrawType === this.selectedDrawTypeMain) {
+                    this.regulateDrawInteraction(this.selectedDrawType);
+                }
+            }
+        },
 
         /**
          * Regulate the interaction.
@@ -158,8 +189,9 @@ export default {
                 this.setSelectedInteraction("draw");
             }
 
-            if (typeof this.setSelectedDrawTypeMain === "function") {
+            if (typeof this.setSelectedDrawTypeMain === "function" && this.drawTypes.includes(drawType)) {
                 this.setSelectedDrawTypeMain(this.selectedDrawTypeMain !== drawType ? drawType : "");
+                this.setSelectedDrawType("");
             }
 
             this.removeInteraction(this.currentDrawInteraction);
@@ -203,7 +235,7 @@ export default {
 </script>
 
 <template>
-    <div class="d-flex mb-5 align-items-center">
+    <div class="d-flex align-items-center">
         <IconButton
             v-for="drawType in drawTypes"
             :id="'draw-' + drawType"
@@ -214,7 +246,7 @@ export default {
                 'me-3',
                 selectedDrawType === drawType || selectedDrawTypeMain === drawType ? 'active': ''
             ]"
-            :interaction="() => regulateInteraction(drawType)"
+            :interaction="(event) => regulateInteraction(drawType)"
             :icon="drawIcons[drawType]"
         />
     </div>
