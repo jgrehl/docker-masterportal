@@ -105,6 +105,7 @@ describe("src_3_0_0/modules/wfst/js/prepareFeatureProperties.js", () => {
         properties = await prepareFeatureProperties.prepareFeatureProperties(exampleLayerInformation, false);
 
         expect(properties).to.be.an("array").that.is.empty;
-        expect(consoleErrorStub).to.have.been.calledOnceWithExactly(expectedError);
+        expect(consoleErrorStub.calledOnce).to.be.true;
+        expect(consoleErrorStub.calledWith(expectedError)).to.be.true;
     });
 });
