@@ -83,7 +83,7 @@ describe("src/modules/tools/filter/components/LayerFilterSnippet.vue", () => {
         });
     });
     describe("renderCheckboxSearchInMapExtent", () => {
-        it("Should render the checkbox component correctly", () => {
+        it("Should render the checkbox component correctly", async () => {
             wrapper = shallowMount(LayerFilterSnippet, {
                 global: {
                     plugins: [store]
@@ -99,6 +99,10 @@ describe("src/modules/tools/filter/components/LayerFilterSnippet.vue", () => {
                     mapHandler
                 }
             });
+            wrapper.setData({outOfZoom: false});
+            await wrapper.vm.$nextTick();
+            await wrapper.vm.$nextTick();
+
             expect(wrapper.findComponent(SnippetCheckboxFilterInMapExtent).exists()).to.be.true;
         });
     });
@@ -270,6 +274,7 @@ describe("src/modules/tools/filter/components/LayerFilterSnippet.vue", () => {
         await wrapper.setProps({
             filterRules: rules
         });
+        await wrapper.vm.$nextTick();
         expect(wrapper.find(".snippetTagsWrapper").exists()).to.be.true;
         expect(wrapper.findAll(".snippetTagsWrapper")).to.have.lengthOf(3);
     });
