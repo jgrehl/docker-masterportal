@@ -65,7 +65,7 @@ export default {
         <div
             class="d-flex"
         >
-            <div
+            <button
                 v-for="routingToolOption of filteredRoutingToolOptions"
                 :key="routingToolOption.id"
                 :style="{
@@ -86,7 +86,7 @@ export default {
                     v-if="(routingToolOption.id === 'DIRECTIONS' && isLoadingDirections) || (routingToolOption.id === 'ISOCHRONES' && isLoadingIsochrones)"
                     class="ms-2"
                 />
-            </div>
+            </button>
         </div>
 
         <hr>
@@ -101,6 +101,12 @@ export default {
     .pointer {
         cursor: pointer;
     }
+
+    .routingtooltab {
+        border: none;
+        background-color: $white;
+    }
+
     .routingtooltab.active {
         background: #dbdbdb;
     }
