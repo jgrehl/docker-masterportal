@@ -136,11 +136,6 @@ describe("src_3_0_0/modules/wfst/store/actionsWfst.js", () => {
             };
             fakeSendTransaction = sinon.stub(wfs, "sendTransaction");
             refreshSpy = sinon.spy();
-            // sinon.stub(Radio, "request").withArgs("ModelList", "getModelByAttributes", {id: layer.id}).returns({
-            //     layer: {
-            //         getSource: () => ({refresh: refreshSpy})
-            //     }
-            // });
             layer.getLayerSource = () => ({refresh: refreshSpy});
             sinon.stub(layerCollection, "getLayerById").returns(layer);
             consoleSpy = sinon.spy();
@@ -158,9 +153,11 @@ describe("src_3_0_0/modules/wfst/store/actionsWfst.js", () => {
 
             expect(consoleSpy.notCalled).to.be.true;
 
-            expect(dispatch.calledOnce).to.be.true;
+            expect(dispatch.calledTwice).to.be.true;
             expect(dispatch.firstCall.args.length).to.equal(1);
             expect(dispatch.firstCall.args[0]).to.equal("reset");
+            expect(dispatch.secondCall.args.length).to.equal(3);
+            expect(dispatch.secondCall.args[0]).to.equal("Alerting/addSingleAlert");
         });
         it("should send a request to the api and it should return the updated feature", async () => {
             getters.selectedInteraction = "selectedUpdate";
@@ -173,9 +170,11 @@ describe("src_3_0_0/modules/wfst/store/actionsWfst.js", () => {
 
             expect(consoleSpy.notCalled).to.be.true;
 
-            expect(dispatch.calledOnce).to.be.true;
+            expect(dispatch.calledTwice).to.be.true;
             expect(dispatch.firstCall.args.length).to.equal(1);
             expect(dispatch.firstCall.args[0]).to.equal("reset");
+            expect(dispatch.secondCall.args.length).to.equal(3);
+            expect(dispatch.secondCall.args[0]).to.equal("Alerting/addSingleAlert");
         });
         it("should send an request to the api and show an alert with a success message for a delete transaction", async () => {
             getters.selectedInteraction = "delete";
@@ -188,9 +187,11 @@ describe("src_3_0_0/modules/wfst/store/actionsWfst.js", () => {
 
             expect(consoleSpy.notCalled).to.be.true;
 
-            expect(dispatch.calledOnce).to.be.true;
+            expect(dispatch.calledTwice).to.be.true;
             expect(dispatch.firstCall.args.length).to.equal(1);
             expect(dispatch.firstCall.args[0]).to.equal("reset");
+            expect(dispatch.secondCall.args.length).to.equal(3);
+            expect(dispatch.secondCall.args[0]).to.equal("Alerting/addSingleAlert");
         });
         it("should show an error message and return null if wfs.sendTransaction fails", async () => {
             const error = new Error("Transaction failed");
