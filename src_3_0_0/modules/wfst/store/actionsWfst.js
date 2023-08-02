@@ -262,11 +262,13 @@ const actions = {
             const transaction = i18next.t("common:modules.wfst.transaction." + messageKey);
 
             await dispatch("reset");
-            layerCollection.getLayerById(layer.id).layer.getSource().refresh();
-            dispatch("Alerting/addSingleAlert", {
-                category: "success",
-                content: i18next.t("common:modules.wfst.transaction.success.baseSuccess", {transaction: transaction})
-            }, {root: true});
+            layerCollection.getLayerById(layer.id).getLayerSource().refresh();
+            if (response !== null) {
+                dispatch("Alerting/addSingleAlert", {
+                    category: "success",
+                    content: i18next.t("common:modules.wfst.transaction.success.baseSuccess", {transaction: transaction})
+                }, {root: true});
+            }
         }
         return response;
     },
