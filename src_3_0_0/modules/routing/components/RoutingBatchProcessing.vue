@@ -1,5 +1,5 @@
 <script>
-
+import IconButton from "../../../shared/modules/buttons/components/IconButton.vue";
 /**
  * Routing Batch Processing
  * @module modules/RoutingBatchProcessing
@@ -18,6 +18,7 @@
  */
 export default {
     name: "RoutingBatchProcessing",
+    components: {IconButton},
     props: {
         settings: {
             type: Object,
@@ -140,14 +141,12 @@ export default {
                     id="routing-batch-processing-isprocessing-progresstext"
                     class="col-3"
                 >{{ progress }} %</span>
-                <span
-                    class="col-1 bootstrap-icon pointer"
-                    :title="$t('common:modules.routing.batchProcessing.cancel')"
-                    @click="$emit('cancelProcess')"
-                    @keydown.enter="$emit('cancelProcess')"
-                >
-                    <i class="bi-x-lg" />
-                </span>
+                <IconButton
+                    :aria="$t('common:modules.routing.batchProcessing.cancel')"
+                    :class-array="['btn-light']"
+                    :icon="'bi-x'"
+                    :interaction="() => $emit('cancelProcess')"
+                />
             </div>
         </div>
 
@@ -183,6 +182,7 @@ export default {
 
                 <div
                     class="drop-area"
+                    role="presentation"
                     @drop.prevent="onDrop($event)"
                     @dragover.prevent
                     @dragenter.prevent="onDZDragenter()"
@@ -217,6 +217,7 @@ export default {
 
 <style lang="scss" scoped>
 @import "~variables";
+
 .bg-light-pink {
     background: #e8c9c9;
 }
