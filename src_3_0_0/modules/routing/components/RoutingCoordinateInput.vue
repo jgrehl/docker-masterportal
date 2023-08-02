@@ -177,7 +177,7 @@ export default {
             <label
                 :id="'routingCoordinateInput_' + waypoint.index"
                 :for="'routingCoordinateInput_' + waypoint.index"
-                class="col-md-11 d-flex pr-0 pl-0"
+                class="d-flex flex-row pr-0 pl-0"
             >
                 <input
                     :id="'routingCoordinateInput_' + waypoint.index"
@@ -189,48 +189,48 @@ export default {
                     @focus="isFocused = true"
                     @blur="isFocused = false"
                 >
-                <span
+                <button
                     v-if="search.length > 0 && search !== waypointDisplayName"
-                    class="bootstrap-icon pointer form-control-feedback"
+                    class="btn-icon input-icon"
                     @click="resetInput()"
                     @keydown.enter="resetInput()"
                 >
                     <i class="bi-x-lg" />
-                </span>
+                </button>
             </label>
             <div class="d-flex">
                 <div class="justify-content-between">
                     <div class="h-50">
-                        <span
+                        <button
                             v-show="waypoint.index !== 0"
-                            class="bootstrap-icon pointer"
+                            class="btn-icon"
                             :title="$t('common:modules.routing.moveWaypointUp')"
                             @click="$emit('moveWaypointUp')"
                             @keydown.enter="$emit('moveWaypointUp')"
                         >
                             <i class="bi-chevron-up" />
-                        </span>
+                        </button>
                     </div>
                     <div class="h-50">
-                        <span
+                        <button
                             v-show="waypoint.index !== countWaypoints - 1"
-                            class="bootstrap-icon pointer"
+                            class="btn-icon"
                             :title="$t('common:modules.routing.moveWaypointDown')"
                             @click="$emit('moveWaypointDown')"
                             @keydown.enter="$emit('moveWaypointDown')"
                         >
                             <i class="bi-chevron-down" />
-                        </span>
+                        </button>
                     </div>
                 </div>
-                <span
-                    class="m-2 bootstrap-icon pointer"
+                <button
+                    class="m-2 btn-icon"
                     :title="$t('common:modules.routing.deleteWaypoint')"
                     @click="$emit('removeWaypoint')"
                     @keydown.enter="$emit('removeWaypoint')"
                 >
                     <i class="bi-x-lg" />
-                </span>
+                </button>
             </div>
         </div>
         <ul
@@ -241,9 +241,13 @@ export default {
                 v-for="(searchResult, index) of searchResults"
                 :key="index"
                 class="list-group-item"
-                @mousedown="selectSearchResult(searchResult)"
             >
-                {{ searchResult.displayName }}
+                <button
+                    class="btn-icon"
+                    @mousedown="selectSearchResult(searchResult)"
+                >
+                    {{ searchResult.displayName }}
+                </button>
             </li>
         </ul>
     </div>
@@ -252,16 +256,19 @@ export default {
 <style lang="scss" scoped>
 @import "~variables";
 
+.btn-icon {
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+    padding: 5px 0 0 10px;
+}
+
+.input-icon {
+    margin-left:-37px;
+}
 
 label {
     width: 300px;
-  margin-bottom: 0;
-}
-.bootstrap-icon.form-control-feedback {
-    color: $dark_grey;
-    pointer-events: all;
-    margin-left: -20px;
-    margin-top: 8px;
+    margin-bottom: 0;
 }
 .pointer {
     cursor: pointer;
