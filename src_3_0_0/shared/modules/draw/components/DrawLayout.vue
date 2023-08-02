@@ -121,7 +121,7 @@ export default {
 
 <template>
     <div class="d-flex flex-column">
-        <div class="d-flex flex-row align-items-center mb-5">
+        <div class="d-flex flex-row align-items-center">
             <button
                 v-if="selectedDrawType === 'doubleCircle'"
                 :id="'draw-layout-' + circleType"
@@ -203,7 +203,7 @@ export default {
         </div>
         <div
             v-if="activeLayoutKey === 'strokeWidth'"
-            class="d-flex mb-5"
+            class="d-flex mt-4"
         >
             <input
                 :id="'slider-stroke-width-' + circleType"
@@ -224,7 +224,7 @@ export default {
         </div>
         <div
             v-else-if="activeLayoutKey === 'fillTransparency'"
-            class="d-flex mb-5"
+            class="d-flex"
         >
             <input
                 :id="'slider-fill-transparency-' + circleType"
