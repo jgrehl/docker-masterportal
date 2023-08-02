@@ -78,8 +78,8 @@ function highlightLine (commit, dispatch, highlightObject) {
         if (originalStyle) {
             const clonedStyle = Array.isArray(originalStyle) ? originalStyle[0].clone() : originalStyle.clone();
 
-            commit("Maps/addHighlightedFeature", feature, {root: true});
-            commit("Maps/addHighlightedFeatureStyle", feature.getStyle(), {root: true});
+            commit("Maps/setHighlightedFeatures", [feature], {root: true});
+            commit("Maps/setHighlightedFeatureStyles", [feature.getStyle()], {root: true});
 
             if (newStyle.stroke?.width) {
                 clonedStyle.getStroke().setWidth(newStyle.stroke.width);
