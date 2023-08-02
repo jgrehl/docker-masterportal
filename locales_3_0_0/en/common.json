@@ -581,7 +581,8 @@
         "header": "Avoid traffic routes",
         "HIGHWAYS": "Highways",
         "STEPS": "Steps",
-        "TOLLWAYS": "Tollways"
+        "TOLLWAYS": "Tollways",
+        "UNPAVEDROADS": "Unpaved roads"
       },
       "batchProcessing": {
         "cancel": "Cancel batch processing",
