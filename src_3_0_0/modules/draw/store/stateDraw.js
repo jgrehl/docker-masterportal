@@ -2,10 +2,11 @@
  * State of module draw.
  * @module modules/draw/store/state
  *
- * @property {Object} [circleOptions={innerRadius: 100, interactive: true, outerRadius: 500}] The circle Options
+ * @property {Object} [circleOptions={innerRadius: 100, interactive: true, outerRadius: 500, unit: "m"}] The circle Options
  * @property {Number} [circleOptions.innerRadius=100] The inner radius for feature of drawType: "circle and doubelCircle".
  * @property {Boolean} [circleOptions.interactive=true] The circle or doubleCircle is drawn interactively or not.
  * @property {Number} [circleOptions.outerRadius=500] The outer radius for feature of drawType: "doubleCircle".
+ * @property {String} [circleOptions.unit="m"] The unit for the circle or doubleCircle.
  * @property {Object} [currentLayout={fillColor: [55, 126, 184], fillTransparency: 0, strokeColor: [0, 0, 0], strokeWidth: 1}] The current layout for the styling.
  * @property {Number[]} [currentLayout.fillColor=[55, 126, 184]] The fill color in rgb.
  * @property {Number} [currentLayout.fillTransparency=0] The fill transparency in percent.
@@ -41,13 +42,15 @@
  * @property {Number[]} [strokeRange=[1, 16]] The stroke range in the unit pixel.
  * @property {String[]} [supportedDevices=["Desktop", "Mobile", "Table"]] Devices on which the module is displayed.
  * @property {String[]} [supportedMapModes=["2D", "3D"]] Map mode in which this module can be used.
- * @property {String} [type="draw"] The type of the module.
+ * @property {String} type="draw" The type of the module.
+ * @property {String[]} units=["m", "km"] The possible units for the circle or doubleCircle.
  */
 const state = {
     circleOptions: {
         innerRadius: 100,
         interactive: true,
-        outerRadius: 500
+        outerRadius: 500,
+        unit: "m"
     },
     currentLayout: {
         fillColor: [55, 126, 184],
@@ -92,7 +95,8 @@ const state = {
     strokeRange: [1, 16],
     supportedDevices: ["Desktop", "Mobile", "Table"],
     supportedMapModes: ["2D", "3D"],
-    type: "draw"
+    type: "draw",
+    units: ["m", "km"]
 };
 
 export default state;

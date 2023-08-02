@@ -5,6 +5,7 @@ import VectorSource from "ol/source/Vector";
 
 import DrawEdit from "../../../shared/modules/draw/components/DrawEdit.vue";
 import DrawLayout from "../../../shared/modules/draw/components/DrawLayout.vue";
+import DrawSettingsCircle from "../../../shared/modules/draw/components/DrawSettingsCircle.vue";
 import DrawTypes from "../../../shared/modules/draw/components/DrawTypes.vue";
 
 /**
@@ -18,6 +19,7 @@ export default {
     components: {
         DrawEdit,
         DrawLayout,
+        DrawSettingsCircle,
         DrawTypes
     },
     data () {
@@ -40,7 +42,8 @@ export default {
             "selectedDrawType",
             "selectedDrawTypeMain",
             "selectedInteraction",
-            "strokeRange"
+            "strokeRange",
+            "units"
         ]),
         ...mapGetters("Menu", [
             "currentComponentName",
@@ -69,6 +72,7 @@ export default {
     },
     methods: {
         ...mapMutations("Modules/Draw", [
+            "setCircleOptions",
             "setCurrentLayout",
             "setCurrentLayoutOuterCircle",
             "setSelectedDrawType",
@@ -84,7 +88,9 @@ export default {
         id="modules-draw-module"
         class="d-flex flex-column"
     >
-        <div id="draw-edit">
+        <div
+            id="draw-edit"
+        >
             <DrawEdit
                 v-if="layer !== null"
                 :draw-edits="drawEdits"
@@ -94,7 +100,10 @@ export default {
                 :set-selected-interaction="setSelectedInteraction"
             />
         </div>
-        <div id="draw-types">
+        <div
+            id="draw-types"
+            class="mb-5"
+        >
             <DrawTypes
                 :circle-options="circleOptions"
                 :current-layout="currentLayout"
@@ -111,6 +120,7 @@ export default {
             />
             <DrawTypes
                 v-if="selectedDrawTypeMain === 'geometries'"
+                class="mt-4"
                 :circle-options="circleOptions"
                 :current-layout="currentLayout"
                 :current-layout-outer-circle="currentLayoutOuterCircle"
@@ -122,6 +132,7 @@ export default {
             />
             <DrawTypes
                 v-else-if="selectedDrawTypeMain === 'symbols'"
+                class="mt-4"
                 :current-layout="currentLayout"
                 :draw-icons="drawIcons"
                 :draw-types="drawTypesSymbols"
@@ -130,7 +141,10 @@ export default {
                 :source="source"
             />
         </div>
-        <div id="draw-layouts">
+        <div
+            id="draw-layouts"
+            class="mb-5"
+        >
             <DrawLayout
                 v-if="selectedDrawType !== '' && selectedDrawTypeMain !== ''"
                 :current-layout="currentLayout"
@@ -140,11 +154,23 @@ export default {
             />
             <DrawLayout
                 v-if="selectedDrawType === 'doubleCircle' && selectedDrawTypeMain !== ''"
+                class="mt-4"
                 :circle-type="'outerCircle'"
                 :current-layout="currentLayoutOuterCircle"
                 :selected-draw-type="selectedDrawType"
                 :set-current-layout="setCurrentLayoutOuterCircle"
                 :stroke-range="strokeRange"
+            />
+        </div>
+        <div
+            id="draw-settings"
+        >
+            <DrawSettingsCircle
+                v-if="(selectedDrawType === 'circle' || selectedDrawType === 'doubleCircle') && selectedDrawTypeMain !== ''"
+                :circle-options="circleOptions"
+                :selected-draw-type="selectedDrawType"
+                :set-circle-options="setCircleOptions"
+                :units="units"
             />
         </div>
     </div>
