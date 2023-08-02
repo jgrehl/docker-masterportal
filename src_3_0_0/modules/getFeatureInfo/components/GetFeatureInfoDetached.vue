@@ -3,6 +3,7 @@ import DefaultTheme from "../themes/default/components/DefaultTheme.vue";
 import SensorTheme from "../themes/sensor/components/SensorTheme.vue";
 import getTheme from "../js/getTheme";
 import {mapActions, mapGetters, mapMutations} from "vuex";
+import layerCollection from "../../../core/layers/js/layerCollection";
 
 /**
  * Get Feature Info Detached
@@ -33,7 +34,8 @@ export default {
     emits: ["updateFeatureDone"],
     data () {
         return {
-            isContentHtml: false
+            isContentHtml: false,
+            lastFeature: null
         };
     },
     computed: {
@@ -43,7 +45,8 @@ export default {
             "currentFeature",
             "highlightVectorRules",
             "menuSide",
-            "showMarker"
+            "showMarker",
+            "hideMapMarkerOnVectorHighlight"
         ]),
 
         /**
@@ -67,12 +70,9 @@ export default {
         if (this.feature?.getMimeType() === "text/html") {
             this.isContentHtml = true;
         }
-        // @todo aktivieren und nach Vue3 portieren, wenn noetig. Unklar, wann das event "hidemarker" geworfen wird
-        // this.$on("hidemarker", () => {
-        //     this.hideMarker();
-        // });
     },
     mounted () {
+        this.highlightVectorFeature();
         this.setMarker();
     },
     updated: function () {
@@ -85,12 +85,15 @@ export default {
     },
     beforeUnmount: function () {
         this.removePointMarker();
+        this.removeHighlighting();
     },
     methods: {
         ...mapMutations("Modules/GetFeatureInfo", ["setShowMarker"]),
         ...mapActions("Maps", [
             "placingPointMarker",
             "removePointMarker",
+            "highlightFeature",
+            "removeHighlightFeature",
             "setCenter"
         ]),
 
@@ -104,9 +107,8 @@ export default {
                 if (this.centerMapToClickPoint) {
                     this.setCenter(this.clickCoordinate);
                 }
+                this.placingPointMarker(this.clickCoordinate);
             }
-
-            this.placingPointMarker(this.clickCoordinate);
         },
 
         /**
@@ -116,6 +118,69 @@ export default {
         hideMarker () {
             this.setShowMarker(false);
         },
+
+        /**
+         * Highlights a vector feature if highlightVectorRules is configured in config.json.
+         * @returns {void}
+         */
+        highlightVectorFeature () {
+            if (this.highlightVectorRules) {
+                const layer = layerCollection.getLayerById(this.feature.getLayerId()),
+                    styleId = layer?.get("styleId"),
+                    highlightObject = {
+                        feature: this.feature.getOlFeature(),
+                        layer: {id: this.feature.getLayerId()},
+                        styleId
+                    };
+
+                if (this.hideMapMarkerOnVectorHighlight) {
+                    this.hideMarker();
+                    this.removePointMarker();
+                }
+
+                switch (this.feature.getOlFeature()?.getGeometry()?.getType()) {
+                    case "Point":
+                    {
+                        highlightObject.type = "increase";
+                        highlightObject.scale = this.highlightVectorRules.image.scale;
+                        break;
+                    }
+                    case "Polygon":
+                    {
+                        highlightObject.type = "highlightPolygon";
+                        highlightObject.highlightStyle = {
+                            fill: this.highlightVectorRules.fill,
+                            stroke: this.highlightVectorRules.stroke
+                        };
+                        break;
+                    }
+                    case "LineString":
+                    {
+                        highlightObject.type = "highlightLine";
+                        highlightObject.highlightStyle = {
+                            stroke: this.highlightVectorRules.stroke
+                        };
+                        break;
+                    }
+                    default:
+                        break;
+                }
+                if (highlightObject.type) {
+                    this.highlightFeature(highlightObject);
+                }
+                this.lastFeature = this.feature;
+            }
+        },
+        /**
+         * Removes the feature highlighting
+         * @returns {void}
+         */
+        removeHighlighting: function () {
+            if (this.lastFeature) {
+                this.removeHighlightFeature(this.lastFeature.getOlFeature());
+            }
+        },
+
 
         /**
          * In case they key exists, returns its translation. In case the key doesn't exist returns the key.
