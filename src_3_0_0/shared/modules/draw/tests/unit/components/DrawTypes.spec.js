@@ -82,6 +82,59 @@ describe("src_3_0_0/shared/modules/draw/components/DrawTypes.vue", () => {
         expect(wrapper.find("#draw-symbols").attributes().aria).to.equals("common:shared.modules.draw.drawTypes.symbols");
     });
 
+    describe("startDrawingInitial", () => {
+        it("should start drawing initial, if selectedDrawTypeMain === 'pen' and selectedDrawType === 'pen'", () => {
+            wrapper = shallowMount(DrawTypesComponent, {
+                propsData: {
+                    currentLayout,
+                    selectedDrawType: "pen",
+                    selectedDrawTypeMain: "pen",
+                    selectedInteraction,
+                    setSelectedDrawType,
+                    setSelectedDrawTypeMain,
+                    source
+                },
+                global: {
+                    plugins: [store]
+                }
+            });
+
+            const regulateDrawInteractionSpy = sinon.spy(wrapper.vm, "regulateDrawInteraction");
+
+            wrapper.vm.startDrawingInitial();
+
+            expect(regulateDrawInteractionSpy.calledOnce).to.be.true;
+            expect(regulateDrawInteractionSpy.firstCall.args[0]).to.equals("pen");
+        });
+
+        it("should start drawing initial, if selectedDrawTypeMain === '' and selectedDrawType === 'circle'", async () => {
+            wrapper = shallowMount(DrawTypesComponent, {
+                propsData: {
+                    currentLayout,
+                    selectedDrawType: "circle",
+                    selectedDrawTypeMain: "",
+                    selectedInteraction,
+                    setSelectedDrawType,
+                    setSelectedDrawTypeMain,
+                    source
+                },
+                global: {
+                    plugins: [store]
+                }
+            });
+
+            const regulateInteractionSpy = sinon.spy(wrapper.vm, "regulateInteraction");
+
+            expect(setSelectedDrawType.calledOnce).to.be.true;
+            expect(setSelectedDrawType.firstCall.args[0]).to.equals("");
+
+            await wrapper.vm.$nextTick();
+
+            expect(regulateInteractionSpy.calledOnce).to.be.true;
+            expect(regulateInteractionSpy.firstCall.args[0]).to.equals("circle");
+        });
+    });
+
     describe("selectedInteraction", () => {
         beforeEach(() => {
             selectedInteraction = "delete";
@@ -103,12 +156,10 @@ describe("src_3_0_0/shared/modules/draw/components/DrawTypes.vue", () => {
 
             wrapper.vm.$options.watch.selectedInteraction.call(wrapper.vm, selectedInteraction);
 
-            expect(setSelectedDrawType.calledTwice).to.be.true;
+            expect(setSelectedDrawType.calledOnce).to.be.true;
             expect(setSelectedDrawType.firstCall.args[0]).to.equals("");
-            expect(setSelectedDrawType.secondCall.args[0]).to.equals("");
-            expect(setSelectedDrawTypeMain.called).to.be.true;
+            expect(setSelectedDrawTypeMain.calledOnce).to.be.true;
             expect(setSelectedDrawTypeMain.firstCall.args[0]).to.equals("");
-            expect(setSelectedDrawTypeMain.secondCall.args[0]).to.equals("");
         });
     });
 
@@ -129,7 +180,7 @@ describe("src_3_0_0/shared/modules/draw/components/DrawTypes.vue", () => {
 
             wrapper.vm.regulateInteraction(drawType);
 
-            expect(removeInteractionSpy.calledTwice).to.be.true;
+            expect(removeInteractionSpy.calledOnce).to.be.true;
             expect(addInteractionSpy.calledOnce).to.be.true;
         });
     });
@@ -151,7 +202,7 @@ describe("src_3_0_0/shared/modules/draw/components/DrawTypes.vue", () => {
 
             wrapper.vm.regulateInteraction(drawType);
 
-            expect(removeInteractionSpy.calledTwice).to.be.true;
+            expect(removeInteractionSpy.calledOnce).to.be.true;
             expect(addInteractionSpy.notCalled).to.be.true;
         });
     });
@@ -206,7 +257,8 @@ describe("src_3_0_0/shared/modules/draw/components/DrawTypes.vue", () => {
             expect(drawCircleSpy.firstCall.args[4]).to.deep.equals({
                 innerRadius: 0,
                 interactive: true,
-                outerRadius: 0
+                outerRadius: 0,
+                unit: "m"
             });
             expect(addInteractionSpy.calledOnce).to.be.true;
         });
@@ -237,7 +289,8 @@ describe("src_3_0_0/shared/modules/draw/components/DrawTypes.vue", () => {
             expect(drawCircleSpy.firstCall.args[4]).to.deep.equals({
                 innerRadius: 0,
                 interactive: true,
-                outerRadius: 0
+                outerRadius: 0,
+                unit: "m"
             });
         });
     });
