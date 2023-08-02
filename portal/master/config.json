@@ -57,6 +57,24 @@
         "active": true
       }
     },
+    "getFeatureInfo":{
+      "highlightVectorRules": {
+          "fill": {
+              "color": [215, 102, 41, 0.9]
+          },
+          "image": {
+              "scale": 1.5
+          },
+          "stroke": {
+              "width": 4,
+              "color": [215, 102, 41, 0.9]
+          },
+          "text": {
+              "scale": 2
+          }
+      },
+      "hideMapMarkerOnVectorHighlight": true
+    },
     "mainMenu": {
       "expanded": true,
       "title": {
@@ -924,6 +942,7 @@
         },
         {
           "id": "2928",
+          "styleId": "4515",
           "name": "Linienhafte Biotope",
           "legend": true,
           "featurePrefix": "de.hh.up:",
