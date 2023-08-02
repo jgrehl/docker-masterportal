@@ -43,7 +43,6 @@ export default {
         ...mapGetters("Modules/GetFeatureInfo", [
             "configPaths",
             "currentFeature",
-            "highlightVectorRules",
             "menuSide",
             "name",
             "showMarker",
