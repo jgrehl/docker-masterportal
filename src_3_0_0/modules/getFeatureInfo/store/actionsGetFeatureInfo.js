@@ -1,6 +1,8 @@
 import {getWmsFeaturesByMimeType} from "../../../shared/js/utils/getWmsFeaturesByMimeType";
 import {getVisibleWmsLayersAtResolution} from "../js/getLayers";
 
+let globeEventHandler;
+
 export default {
     /**
      * Updates the click coordinate and the related pixel depending on the map mode.
