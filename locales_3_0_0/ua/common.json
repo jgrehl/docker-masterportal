@@ -578,7 +578,8 @@
         "header": "Уникати",
         "HIGHWAYS": "Автомагістралі",
         "STEPS": "Сходи",
-        "TOLLWAYS": "Платні дороги"
+        "TOLLWAYS": "Платні дороги",
+        "UNPAVEDROADS": "ґрунтові дороги"
       },
       "batchProcessing": {
         "cancel": "Скасування пакетної обробки",
