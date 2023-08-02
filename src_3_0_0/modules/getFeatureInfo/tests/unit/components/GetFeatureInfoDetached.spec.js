@@ -13,7 +13,7 @@ import DetachedTemplate from "../../../components/GetFeatureInfoDetached.vue";
 config.global.mocks.$t = key => key;
 config.global.mocks.$gfiThemeAddons = [];
 
-describe.only("src_3_0_0/modules/getFeatureInfo/components/GetFeatureInfoDetached.vue", () => {
+describe("src_3_0_0/modules/getFeatureInfo/components/GetFeatureInfoDetached.vue", () => {
     let store,
         removeHighlightFeatureSpy,
         highlightFeatureSpy,
