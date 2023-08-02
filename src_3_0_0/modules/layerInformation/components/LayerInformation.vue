@@ -70,7 +70,7 @@ export default {
             return this.downloadLinks && this.downloadLinks.length > 1;
         },
         layerUrl () {
-            return this.layerInfo.typ === "OAF" ? this.layerInfo.url : this.layerInfo.url + "?SERVICE=" + this.layerInfo.typ + "&REQUEST=GetCapabilities";
+            return Array.isArray(this.layerInfo.url) ? this.layerInfo.url.map((url, i) => ({url, typ: this.layerInfo.typ?.[i]})).map(this.getGetCapabilitiesUrl) : this.getGetCapabilitiesUrl({url: this.layerInfo.url, typ: this.layerInfo.typ});
         },
         legendURL  () {
             return this.layerInfo.legendURL;
@@ -124,6 +124,22 @@ export default {
          */
         getTabPaneClasses (tab) {
             return {active: this.isActiveTab(tab), show: this.isActiveTab(tab), "tab-pane": true, fade: true};
+        },
+        /**
+         * generates a GetCapabilities URL from a given service base address and type
+         * @param {Object} param payload
+         * @param {String} param.url service base URL
+         * @param {String} param.typ service type (e.g., WMS)
+         * @returns {String} GetCapabilities URL
+         */
+        getGetCapabilitiesUrl ({url, typ}) {
+            const urlObject = new URL(url);
+
+            if (typ !== "OAF") {
+                urlObject.searchParams.set("SERVICE", typ);
+                urlObject.searchParams.set("REQUEST", "GetCapabilities");
+            }
+            return urlObject.href;
         }
     }
 };

@@ -26,7 +26,7 @@ describe("src_3_0_0/modules/layerInformation/components/LayerInformation.vue", (
                             getters: {
                                 customText: () => sinon.stub(),
                                 title: () => "",
-                                layerInfo: () => ({"metaIdArray": []}),
+                                layerInfo: () => ({"metaIdArray": [], "url": ["https://wms.example.org/", "https://wfs.example.org/?evil=1"], "typ": ["WMS", "WFS"], "layerNames": ["X-WMS", "X-WFS"]}),
                                 datePublication: () => null,
                                 dateRevision: () => null,
                                 downloadLinks: () => null,
@@ -35,7 +35,7 @@ describe("src_3_0_0/modules/layerInformation/components/LayerInformation.vue", (
                                 noMetadataLoaded: () => "",
                                 metaURLs: () => [],
                                 currentLayerName: () => "",
-                                showUrlGlobal: () => false
+                                showUrlGlobal: () => true
                             },
                             actions: {
                                 setConfigParams: () => sinon.stub()
@@ -88,5 +88,20 @@ describe("src_3_0_0/modules/layerInformation/components/LayerInformation.vue", (
         });
 
         expect(wrapper.find("#changeLayerInfo").exists()).to.be.false;
+    });
+
+    it("should generate correct urls", async () => {
+        const wrapper = mount(LayerInformationComponent, {
+                global: {
+                    plugins: [store]
+                }
+            }),
+            links = wrapper.findAll("div > ul > li > a");
+
+        expect(links.length).to.be.equals(2);
+        links.forEach(link => {
+            expect(link.attributes("href")).to.include("https://wms.example.org/?SERVICE=WMS&REQUEST=GetCapabilities");
+            expect(link.attributes("href")).to.include("https://wfs.example.org/?evil=1&SERVICE=WFS&REQUEST=GetCapabilities");
+        });
     });
 });
