@@ -137,6 +137,7 @@ export default {
                     this.hideMarker();
                     this.removePointMarker();
                 }
+                this.removeHighlighting();
 
                 switch (this.feature.getOlFeature()?.getGeometry()?.getType()) {
                     case "Point":
