@@ -854,6 +854,19 @@
           "strokeColor": "Anahat rengi",
           "strokeWidth": "Çizgi genişliği"
         },
+        "drawSettingsCircle": {
+          "interactive": "interaktif",
+          "radii": {
+            "innerRadius": "İç yarıçap",
+            "outerRadius": "Dış yarıçap",
+            "radius": "Çap"
+          },
+          "settings": {
+            "circle": "",
+            "doubleCircle": ""
+          },
+          "unit": "Birim"
+        },
         "drawTypes": {
           "box": "",
           "circle": "Círculo",
