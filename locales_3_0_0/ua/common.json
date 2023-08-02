@@ -856,6 +856,19 @@
           "strokeColor": "Колір контуру",
           "strokeWidth": "Товщина лінії"
         },
+        "drawSettingsCircle": {
+          "interactive": "інтерактивний",
+          "radii": {
+            "innerRadius": "Внутрішній радіус",
+            "outerRadius": "Зовнішній радіус",
+            "radius": "Радіус"
+          },
+          "settings": {
+            "circle": "",
+            "doubleCircle": ""
+          },
+          "unit": "одиниця вимірювання"
+        },
         "drawTypes": {
           "box": "",
           "circle": "Коло",
