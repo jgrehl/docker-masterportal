@@ -856,6 +856,19 @@
           "strokeColor": "Цвет контура",
           "strokeWidth": "Толщина линии"
         },
+        "drawSettingsCircle": {
+          "interactive": "интерактивный",
+          "radii": {
+            "innerRadius": "Внутренний радиус",
+            "outerRadius": "Внешний радиус",
+            "radius": "Радиус"
+          },
+          "settings": {
+            "circle": "",
+            "doubleCircle": ""
+          },
+          "unit": "Единица"
+        },
         "drawTypes": {
           "box": "",
           "circle": "Круг",

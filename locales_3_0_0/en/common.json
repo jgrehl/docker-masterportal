@@ -859,6 +859,19 @@
           "strokeColor": "Outline color",
           "strokeWidth": "Stroke width"
         },
+        "drawSettingsCircle": {
+          "interactive": "Interactive",
+          "radii": {
+            "innerRadius": "Inner radius",
+            "outerRadius": "Outer radius",
+            "radius": "Radius"
+          },
+          "settings": {
+            "circle": "Settings Circle:",
+            "doubleCircle": "Settings double circle:"
+          },
+          "unit": "Unit"
+        },
         "drawTypes": {
           "box": "Box",
           "circle": "Circle",
