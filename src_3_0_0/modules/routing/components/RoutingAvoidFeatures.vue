@@ -139,25 +139,16 @@ export default {
         id="routing-avoid-features"
         class="d-flex flex-column"
     >
-        <b
-            class="pointer"
+        <button
+            class="d-flex btn-icon"
             @click="showAvoidFeatures = !showAvoidFeatures"
             @keydown.enter="showAvoidFeatures = !showAvoidFeatures"
         >
-            <span
-                v-if="showAvoidFeatures"
-                class="pointer bootstrap-icon"
-            >
-                <i class="bi-chevron-down" />
-            </span>
-            <span
-                v-else
-                class="pointer bootstrap-icon"
-            >
-                <i class="bi-chevron-right" />
-            </span>
-            {{ $t('common:modules.routing.avoidOptions.header') }}
-        </b>
+            <i
+                :class="showAvoidFeatures? 'bi-chevron-down' : 'bi-chevron-right'"
+            />
+            <b>{{ $t('common:modules.routing.avoidOptions.header') }}</b>
+        </button>
         <div
             v-if="showAvoidFeatures"
             id="routing-avoid-features-options"
@@ -181,3 +172,15 @@ export default {
         </div>
     </div>
 </template>
+
+<style lang="scss" scoped>
+@import "~variables";
+
+.btn-icon {
+    background-color: $white;
+    border: none;
+    width: 100%;
+    justify-content: flex-start;
+    padding: 5px 0;
+}
+</style>
