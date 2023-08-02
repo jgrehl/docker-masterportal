@@ -2,8 +2,22 @@
  All important changes in this project are stored in this file.
 
 [Semantic versioning](https://semver.org/spec/v2.0.0.html) is used.
+
 ## Unreleased - in development
 ### __Breaking Changes__
+
+### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+---
+## v2.36.0 - 2023-08-02
 
 ### Added
 - QuickHelp: A description of the route preference `recommended route` has been added.
@@ -29,10 +43,6 @@
     - dependencies:
         - @masterportal/masterportalapi: 2.20.0 to 2.23.0 (with cesium 1.106.0 to @cesium/engine 2.4.1)
 - WFS: Migrated writeTransaction and sendTransaction to masterportalAPI (2.22.0).
-
-### Deprecated
-
-### Removed
 
 ### Fixed
 - Print: The portal is no longer reloaded after pressing the Enter key in the title field. Instead, the print is sent.
