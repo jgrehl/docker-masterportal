@@ -217,131 +217,137 @@ export default {
                 <div class="d-flex">
                     <span> {{ $t('common:modules.routing.directions.restrictedAreas') }}:</span>
 
-                    <svg
-                        class="m-1 pointer"
-                        width="20px"
-                        height="20px"
-                        viewBox="0 0 30 30"
-                        version="1.1"
-                        xmlns="http://www.w3.org/2000/svg"
-                        xmlns:xlink="http://www.w3.org/1999/xlink"
-                        xml:space="preserve"
-                        xmlns:serif="http://www.serif.com/"
-                        fill-rule="evenodd"
+                    <button
+                        class="m-1 btn-icon"
                         @click="changeMapInteractionModeAvoidAreasEdit()"
                         @keydown.enter="changeMapInteractionModeAvoidAreasEdit()"
                     >
-                        <title>{{ $t('common:modules.routing.directions.editRestrictedAreas') }}</title>
-                        <path
-                            :fill="isMapInteractionModeAvoidAreasEdit ? '#f00' : '#000'"
-                            d="M3,0c1.656,0 3,1.344 3,3c0,1.656 -1.344,3 -3,3c-1.656,0 -3,-1.344 -3,-3c0,-1.656 1.344,-3 3,-3Zm0,1.5c0.828,0 1.5,0.672 1.5,1.5c0,0.828 -0.672,1.5 -1.5,1.5c-0.828,0 -1.5,-0.672 -1.5,-1.5c0,-0.828 0.672,-1.5 1.5,-1.5Z"
-                        />
-                        <path
-                            :fill="isMapInteractionModeAvoidAreasEdit ? '#f00' : '#000'"
-                            d="M27,4c1.656,0 3,1.344 3,3c0,1.656 -1.344,3 -3,3c-1.656,0 -3,-1.344 -3,-3c0,-1.656 1.344,-3 3,-3Zm0,1.5c0.828,0 1.5,0.672 1.5,1.5c0,0.828 -0.672,1.5 -1.5,1.5c-0.828,0 -1.5,-0.672 -1.5,-1.5c0,-0.828 0.672,-1.5 1.5,-1.5Z"
-                        />
-                        <path
-                            :fill="isMapInteractionModeAvoidAreasEdit ? '#f00' : '#000'"
-                            d="M27,20c1.656,0 3,1.344 3,3c0,1.656 -1.344,3 -3,3c-1.656,0 -3,-1.344 -3,-3c0,-1.656 1.344,-3 3,-3Zm0,1.5c0.828,0 1.5,0.672 1.5,1.5c0,0.828 -0.672,1.5 -1.5,1.5c-0.828,0 -1.5,-0.672 -1.5,-1.5c0,-0.828 0.672,-1.5 1.5,-1.5Z"
-                        />
-                        <path
-                            :fill="isMapInteractionModeAvoidAreasEdit ? '#f00' : '#000'"
-                            d="M3,24c1.656,0 3,1.344 3,3c0,1.656 -1.344,3 -3,3c-1.656,0 -3,-1.344 -3,-3c0,-1.656 1.344,-3 3,-3Zm0,1.5c0.828,0 1.5,0.672 1.5,1.5c0,0.828 -0.672,1.5 -1.5,1.5c-0.828,0 -1.5,-0.672 -1.5,-1.5c0,-0.828 0.672,-1.5 1.5,-1.5Z"
-                        />
-                        <path
-                            d="M3,6l0,18"
-                            fill="none"
-                            :stroke="isMapInteractionModeAvoidAreasEdit ? '#f00' : '#000'"
-                            stroke-width="1px"
-                        /><path
-                            d="M27,10l0,10"
-                            fill="none"
-                            :stroke="isMapInteractionModeAvoidAreasEdit ? '#f00' : '#000'"
-                            stroke-width="1px"
-                        /><path
-                            d="M24,23l-18,4"
-                            fill="none"
-                            :stroke="isMapInteractionModeAvoidAreasEdit ? '#f00' : '#000'"
-                            stroke-width="1px"
-                        /><path
-                            d="M24,7l-18,-4"
-                            fill="none"
-                            :stroke="isMapInteractionModeAvoidAreasEdit ? '#f00' : '#000'"
-                            stroke-width="1px"
-                        /></svg>
-
-
-                    <svg
-                        class="m-1 pointer"
-                        width="20px"
-                        height="20px"
-                        viewBox="0 0 30 30"
-                        version="1.1"
-                        xmlns="http://www.w3.org/2000/svg"
-                        xmlns:xlink="http://www.w3.org/1999/xlink"
-                        xml:space="preserve"
-                        xmlns:serif="http://www.serif.com/"
-                        fill-rule="evenodd"
+                        <svg
+                            width="20px"
+                            height="20px"
+                            viewBox="0 0 30 30"
+                            version="1.1"
+                            xmlns="http://www.w3.org/2000/svg"
+                            xmlns:xlink="http://www.w3.org/1999/xlink"
+                            xml:space="preserve"
+                            xmlns:serif="http://www.serif.com/"
+                            fill-rule="evenodd"
+                        >
+                            <title>{{ $t('common:modules.routing.directions.editRestrictedAreas') }}</title>
+                            <path
+                                :fill="isMapInteractionModeAvoidAreasEdit ? '#f00' : '#000'"
+                                d="M3,0c1.656,0 3,1.344 3,3c0,1.656 -1.344,3 -3,3c-1.656,0 -3,-1.344 -3,-3c0,-1.656 1.344,-3 3,-3Zm0,1.5c0.828,0 1.5,0.672 1.5,1.5c0,0.828 -0.672,1.5 -1.5,1.5c-0.828,0 -1.5,-0.672 -1.5,-1.5c0,-0.828 0.672,-1.5 1.5,-1.5Z"
+                            />
+                            <path
+                                :fill="isMapInteractionModeAvoidAreasEdit ? '#f00' : '#000'"
+                                d="M27,4c1.656,0 3,1.344 3,3c0,1.656 -1.344,3 -3,3c-1.656,0 -3,-1.344 -3,-3c0,-1.656 1.344,-3 3,-3Zm0,1.5c0.828,0 1.5,0.672 1.5,1.5c0,0.828 -0.672,1.5 -1.5,1.5c-0.828,0 -1.5,-0.672 -1.5,-1.5c0,-0.828 0.672,-1.5 1.5,-1.5Z"
+                            />
+                            <path
+                                :fill="isMapInteractionModeAvoidAreasEdit ? '#f00' : '#000'"
+                                d="M27,20c1.656,0 3,1.344 3,3c0,1.656 -1.344,3 -3,3c-1.656,0 -3,-1.344 -3,-3c0,-1.656 1.344,-3 3,-3Zm0,1.5c0.828,0 1.5,0.672 1.5,1.5c0,0.828 -0.672,1.5 -1.5,1.5c-0.828,0 -1.5,-0.672 -1.5,-1.5c0,-0.828 0.672,-1.5 1.5,-1.5Z"
+                            />
+                            <path
+                                :fill="isMapInteractionModeAvoidAreasEdit ? '#f00' : '#000'"
+                                d="M3,24c1.656,0 3,1.344 3,3c0,1.656 -1.344,3 -3,3c-1.656,0 -3,-1.344 -3,-3c0,-1.656 1.344,-3 3,-3Zm0,1.5c0.828,0 1.5,0.672 1.5,1.5c0,0.828 -0.672,1.5 -1.5,1.5c-0.828,0 -1.5,-0.672 -1.5,-1.5c0,-0.828 0.672,-1.5 1.5,-1.5Z"
+                            />
+                            <path
+                                d="M3,6l0,18"
+                                fill="none"
+                                :stroke="isMapInteractionModeAvoidAreasEdit ? '#f00' : '#000'"
+                                stroke-width="1px"
+                            /><path
+                                d="M27,10l0,10"
+                                fill="none"
+                                :stroke="isMapInteractionModeAvoidAreasEdit ? '#f00' : '#000'"
+                                stroke-width="1px"
+                            /><path
+                                d="M24,23l-18,4"
+                                fill="none"
+                                :stroke="isMapInteractionModeAvoidAreasEdit ? '#f00' : '#000'"
+                                stroke-width="1px"
+                            /><path
+                                d="M24,7l-18,-4"
+                                fill="none"
+                                :stroke="isMapInteractionModeAvoidAreasEdit ? '#f00' : '#000'"
+                                stroke-width="1px"
+                            />
+                        </svg>
+                    </button>
+                    <button
+                        class="m-1 btn-icon"
                         @click="changeMapInteractionModeAvoidAreasDelete()"
                         @keydown.enter="changeMapInteractionModeAvoidAreasDelete()"
                     >
-                        <title>{{ $t('common:modules.routing.directions.deleteRestrictedAreas') }}</title>
-                        <path
-                            :fill="isMapInteractionModeAvoidAreasDelete ? '#f00' : '#000'"
-                            d="M3,0c1.656,0 3,1.344 3,3c0,1.656 -1.344,3 -3,3c-1.656,0 -3,-1.344 -3,-3c0,-1.656 1.344,-3 3,-3Zm0,1.5c0.828,0 1.5,0.672 1.5,1.5c0,0.828 -0.672,1.5 -1.5,1.5c-0.828,0 -1.5,-0.672 -1.5,-1.5c0,-0.828 0.672,-1.5 1.5,-1.5Z"
-                        />
-                        <path
-                            :fill="isMapInteractionModeAvoidAreasDelete ? '#f00' : '#000'"
-                            d="M27,4c1.656,0 3,1.344 3,3c0,1.656 -1.344,3 -3,3c-1.656,0 -3,-1.344 -3,-3c0,-1.656 1.344,-3 3,-3Zm0,1.5c0.828,0 1.5,0.672 1.5,1.5c0,0.828 -0.672,1.5 -1.5,1.5c-0.828,0 -1.5,-0.672 -1.5,-1.5c0,-0.828 0.672,-1.5 1.5,-1.5Z"
-                        />
-                        <path
-                            :fill="isMapInteractionModeAvoidAreasDelete ? '#f00' : '#000'"
-                            d="M27,20c1.656,0 3,1.344 3,3c0,1.656 -1.344,3 -3,3c-1.656,0 -3,-1.344 -3,-3c0,-1.656 1.344,-3 3,-3Zm0,1.5c0.828,0 1.5,0.672 1.5,1.5c0,0.828 -0.672,1.5 -1.5,1.5c-0.828,0 -1.5,-0.672 -1.5,-1.5c0,-0.828 0.672,-1.5 1.5,-1.5Z"
-                        />
-                        <path
-                            :fill="isMapInteractionModeAvoidAreasDelete ? '#f00' : '#000'"
-                            d="M3,24c1.656,0 3,1.344 3,3c0,1.656 -1.344,3 -3,3c-1.656,0 -3,-1.344 -3,-3c0,-1.656 1.344,-3 3,-3Zm0,1.5c0.828,0 1.5,0.672 1.5,1.5c0,0.828 -0.672,1.5 -1.5,1.5c-0.828,0 -1.5,-0.672 -1.5,-1.5c0,-0.828 0.672,-1.5 1.5,-1.5Z"
-                        />
-                        <path
-                            d="M3,6l0,18"
-                            fill="none"
-                            :stroke="isMapInteractionModeAvoidAreasDelete ? '#f00' : '#000'"
-                            stroke-width="1px"
-                        /><path
-                            d="M27,10l0,10"
-                            fill="none"
-                            :stroke="isMapInteractionModeAvoidAreasDelete ? '#f00' : '#000'"
-                            stroke-width="1px"
-                        /><path
-                            d="M24,23l-18,4"
-                            fill="none"
-                            :stroke="isMapInteractionModeAvoidAreasDelete ? '#f00' : '#000'"
-                            stroke-width="1px"
-                        /><path
-                            d="M24,7l-18,-4"
-                            fill="none"
-                            :stroke="isMapInteractionModeAvoidAreasDelete ? '#f00' : '#000'"
-                            stroke-width="1px"
-                        /><path
-                            d="M23.044,19.067l-15.588,-9l-0.5,0.866l15.588,9l0.5,-0.866Z"
-                            fill="#f00"
-                        /><path
-                            d="M22.544,10.067l-15.588,9l0.5,0.866l15.588,-9l-0.5,-0.866Z"
-                            fill="#f00"
-                        /></svg>
+                        <svg
+                            width="20px"
+                            height="20px"
+                            viewBox="0 0 30 30"
+                            version="1.1"
+                            xmlns="http://www.w3.org/2000/svg"
+                            xmlns:xlink="http://www.w3.org/1999/xlink"
+                            xml:space="preserve"
+                            xmlns:serif="http://www.serif.com/"
+                            fill-rule="evenodd"
+                        >
+                            <title>{{ $t('common:modules.routing.directions.deleteRestrictedAreas') }}</title>
+                            <path
+                                :fill="isMapInteractionModeAvoidAreasDelete ? '#f00' : '#000'"
+                                d="M3,0c1.656,0 3,1.344 3,3c0,1.656 -1.344,3 -3,3c-1.656,0 -3,-1.344 -3,-3c0,-1.656 1.344,-3 3,-3Zm0,1.5c0.828,0 1.5,0.672 1.5,1.5c0,0.828 -0.672,1.5 -1.5,1.5c-0.828,0 -1.5,-0.672 -1.5,-1.5c0,-0.828 0.672,-1.5 1.5,-1.5Z"
+                            />
+                            <path
+                                :fill="isMapInteractionModeAvoidAreasDelete ? '#f00' : '#000'"
+                                d="M27,4c1.656,0 3,1.344 3,3c0,1.656 -1.344,3 -3,3c-1.656,0 -3,-1.344 -3,-3c0,-1.656 1.344,-3 3,-3Zm0,1.5c0.828,0 1.5,0.672 1.5,1.5c0,0.828 -0.672,1.5 -1.5,1.5c-0.828,0 -1.5,-0.672 -1.5,-1.5c0,-0.828 0.672,-1.5 1.5,-1.5Z"
+                            />
+                            <path
+                                :fill="isMapInteractionModeAvoidAreasDelete ? '#f00' : '#000'"
+                                d="M27,20c1.656,0 3,1.344 3,3c0,1.656 -1.344,3 -3,3c-1.656,0 -3,-1.344 -3,-3c0,-1.656 1.344,-3 3,-3Zm0,1.5c0.828,0 1.5,0.672 1.5,1.5c0,0.828 -0.672,1.5 -1.5,1.5c-0.828,0 -1.5,-0.672 -1.5,-1.5c0,-0.828 0.672,-1.5 1.5,-1.5Z"
+                            />
+                            <path
+                                :fill="isMapInteractionModeAvoidAreasDelete ? '#f00' : '#000'"
+                                d="M3,24c1.656,0 3,1.344 3,3c0,1.656 -1.344,3 -3,3c-1.656,0 -3,-1.344 -3,-3c0,-1.656 1.344,-3 3,-3Zm0,1.5c0.828,0 1.5,0.672 1.5,1.5c0,0.828 -0.672,1.5 -1.5,1.5c-0.828,0 -1.5,-0.672 -1.5,-1.5c0,-0.828 0.672,-1.5 1.5,-1.5Z"
+                            />
+                            <path
+                                d="M3,6l0,18"
+                                fill="none"
+                                :stroke="isMapInteractionModeAvoidAreasDelete ? '#f00' : '#000'"
+                                stroke-width="1px"
+                            /><path
+                                d="M27,10l0,10"
+                                fill="none"
+                                :stroke="isMapInteractionModeAvoidAreasDelete ? '#f00' : '#000'"
+                                stroke-width="1px"
+                            /><path
+                                d="M24,23l-18,4"
+                                fill="none"
+                                :stroke="isMapInteractionModeAvoidAreasDelete ? '#f00' : '#000'"
+                                stroke-width="1px"
+                            /><path
+                                d="M24,7l-18,-4"
+                                fill="none"
+                                :stroke="isMapInteractionModeAvoidAreasDelete ? '#f00' : '#000'"
+                                stroke-width="1px"
+                            /><path
+                                d="M23.044,19.067l-15.588,-9l-0.5,0.866l15.588,9l0.5,-0.866Z"
+                                fill="#f00"
+                            /><path
+                                d="M22.544,10.067l-15.588,9l0.5,0.866l15.588,-9l-0.5,-0.866Z"
+                                fill="#f00"
+                            />
+                        </svg>
+                    </button>
                 </div>
 
                 <div class="d-flex">
-                    <span
-                        class="bootstrap-icon pointer mt-2"
+                    <button
+                        class="bootstrap-icon mt-2 btn-icon"
                         :title="$t('common:modules.routing.resetSettings')"
                         @click="reset()"
                         @keydown.enter="reset()"
                     >
                         <i class="bi-trash" />
-                    </span>
-                    <span
-                        class="bootstrap-icon pointer m-2"
+                    </button>
+                    <button
+                        class="bootstrap-icon m-2 btn-icon"
                         :title="$t('common:modules.routing.addWaypoint')"
                         @click="addWaypoint({index: waypoints.length -1})"
                         @keydown.enter="addWaypoint({index: waypoints.length -1})"
@@ -361,7 +367,7 @@ export default {
                                 stroke-width="2"
                             />
                         </svg>
-                    </span>
+                    </button>
                 </div>
             </div>
         </template>
@@ -426,38 +432,32 @@ export default {
                     v-for="(segment, segmentIndex) of routingDirections.segments"
                     :key="'segment_header_' + segmentIndex"
                 >
-                    <div
-                        class="d-flex pointer step pl-2 py-4"
+                    <button
+                        class="d-flex step pl-2 py-4 btn-directions"
                         @mouseover="highlightRoute({fromWaypointIndex: segmentIndex, toWaypointIndex: segmentIndex + 1})"
                         @focus="highlightRoute({fromWaypointIndex: segmentIndex, toWaypointIndex: segmentIndex + 1})"
                         @mouseout="unHighlightRoute()"
                         @blur="unHighlightRoute()"
                     >
-                        <div
-                            class="d-flex"
+                        <button
+                            class="d-flex btn-icon"
                             @click="segment.displayDetails = !segment.displayDetails"
                             @keydown.enter="segment.displayDetails = !segment.displayDetails"
                         >
                             <span>{{ segmentIndex === 0 ? 'A' : segmentIndex }}</span>
 
                             <b>
-                                <span
-                                    v-if="segment.displayDetails"
-                                    class="pointer bootstrap-icon"
-                                >
+                                <span v-if="segment.displayDetails">
                                     <i class="bi-chevron-down" />
                                 </span>
-                                <span
-                                    v-else
-                                    class="pointer bootstrap-icon"
-                                >
+                                <span v-else>
                                     <i class="bi-chevron-right" />
                                 </span>
                             </b>
-                        </div>
+                        </button>
 
-                        <div
-                            class="d-flex flex-column ms-2 w-100"
+                        <button
+                            class="d-flex flex-column ms-2 w-100 btn-directions"
                             @click="zoomToRoute({fromWaypointIndex: segmentIndex, toWaypointIndex: segmentIndex + 1})"
                             @keydown.enter="zoomToRoute({fromWaypointIndex: segmentIndex, toWaypointIndex: segmentIndex + 1})"
                         >
@@ -468,8 +468,8 @@ export default {
                                 <RoutingDurationDisplay :duration="segment.duration" />
                                 <RoutingDistanceDisplay :distance="segment.distance" />
                             </div>
-                        </div>
-                    </div>
+                        </button>
+                    </button>
 
                     <hr
                         class="m-0"
@@ -482,10 +482,10 @@ export default {
                             v-for="(step, stepIndex) of segment.steps"
                             :key="stepIndex"
                         >
-                            <div
+                            <button
                                 v-if="stepIndex !== segment.steps.length - 1"
                                 v-bind="step"
-                                class="ms-4 d-flex flex-column"
+                                class="ms-4 d-flex flex-column btn-directions"
                                 @mouseover="highlightRoute({coordsIndex: step.getWaypoints()})"
                                 @focus="highlightRoute({coordsIndex: step.getWaypoints()})"
                                 @mouseout="unHighlightRoute()"
@@ -493,7 +493,7 @@ export default {
                                 @click="zoomToRoute({coordsIndex: step.getWaypoints()})"
                                 @keydown.enter="zoomToRoute({coordsIndex: step.getWaypoints()})"
                             >
-                                <div class="d-flex flex-column pointer step pl-2 py-4">
+                                <div class="ms-0 d-flex flex-column pl-2 py-4 step">
                                     <span>{{ step.instruction }}</span>
                                     <div
                                         class="d-flex justify-content-between"
@@ -503,13 +503,13 @@ export default {
                                     </div>
                                 </div>
                                 <hr class="w-100 m-0">
-                            </div>
+                            </button>
                         </template>
                     </div>
                 </template>
 
-                <div
-                    class="d-flex pointer step pl-2 py-4"
+                <button
+                    class="d-flex step pl-2 py-4 btn-directions"
                     @mouseover="highlightRoute({
                         coordsIndex: [
                             waypoints[waypoints.length - 1].getIndexDirectionsLineString() - 1,
@@ -539,7 +539,7 @@ export default {
                 >
                     <span>B</span>
                     <b class="ms-2">{{ waypoints[waypoints.length - 1].getDisplayName() }}</b>
-                </div>
+                </button>
 
                 <hr class="mt-0">
 
@@ -551,6 +551,30 @@ export default {
 
 <style lang="scss" scoped>
 @import "~variables";
+
+.test {
+    background-color: yellow;
+}
+.btn-icon {
+    border: none;
+    background-color: $white;
+}
+.btn-directions {
+    border: none;
+    padding-left: 0px;
+    margin-left: 0px;
+    background-color: $white;
+}
+
+.btn-directions:focus-visible {
+    outline: none;
+    border-left: 2px solid rgb(255, 44, 0);
+}
+
+.btn-directions:active {
+    border: none;
+}
+
 #routing-directions {
   min-width: 350px;
 }
