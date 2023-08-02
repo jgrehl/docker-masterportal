@@ -578,7 +578,8 @@
         "header": "Evitare le vie del traffico",
         "HIGHWAYS": "Autostrada",
         "STEPS": "Scale",
-        "TOLLWAYS": "Strade a pedaggio"
+        "TOLLWAYS": "Strade a pedaggio",
+        "UNPAVEDROADS": "Strade sterrate"
       },
       "batchProcessing": {
         "cancel": "Annullamento dell'elaborazione batch",
