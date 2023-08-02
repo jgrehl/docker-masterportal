@@ -1,4 +1,5 @@
 <script>
+import {mapGetters} from "vuex";
 import * as constantsRouting from "../store/constantsRouting";
 
 /**
@@ -31,28 +32,88 @@ export default {
     emits: ["addAvoidOption", "removeAvoidOption"],
     data () {
         return {
-            showAvoidFeatures: false
+            showAvoidFeatures: false,
+            avoidFeaturesFromConfig: undefined,
+            avoidSpeedProfileOptionsConstants: constantsRouting.avoidSpeedProfileOptions
         };
     },
     computed: {
+        ...mapGetters("Modules/Routing", ["directionsSettings"]),
         /**
          * Computed value for the options to display with the current active speed profile
          * @returns {Object[]} settings
          */
         avoidSpeedProfileOptions ({settings}) {
-            return constantsRouting.avoidSpeedProfileOptions.filter(
-                (option) => option.availableProfiles.includes(settings.speedProfile)
+            return this.avoidSpeedProfileOptionsConstants?.filter(
+                (option) => option.availableProfiles?.includes(settings.speedProfile)
             );
         }
     },
+    created () {
+        this.avoidFeaturesFromConfig = this.directionsSettings?.customAvoidFeatures;
+        if (this.avoidFeaturesFromConfig) {
+            this.syncAvoidFeatures(this.avoidFeaturesFromConfig);
+        }
+    },
     methods: {
+        /**
+         * Updates the avoidSpeedProfileOptions
+         * @param {Object} avoidFeaturesFromConfig The configured avoidFeatures
+          * @returns {void}
+         */
+        syncAvoidFeatures (avoidFeaturesFromConfig) {
+            for (const key in avoidFeaturesFromConfig) {
+                this.removeDefaultSetting(key);
+                for (const i in avoidFeaturesFromConfig[key]) {
+                    this.updateAvoidSpeedProfileOptions(avoidFeaturesFromConfig[key][i], key);
+                }
+            }
+        },
+        /**
+         * Removes the configured speedProfile from the default setting
+         * @param {String} speedProfile The Speed Profile
+         * @returns {Boolean} true if option is checked
+         */
+        removeDefaultSetting (speedProfile) {
+            const avoidSpeedProfileOptions = this.avoidSpeedProfileOptionsConstants;
+
+            for (const i in avoidSpeedProfileOptions) {
+                if (this.avoidSpeedProfileOptionsConstants[i].availableProfiles.includes(speedProfile)) {
+                    const index = this.avoidSpeedProfileOptionsConstants[i].availableProfiles.indexOf(speedProfile);
+
+                    this.avoidSpeedProfileOptionsConstants[i].availableProfiles.splice(index, 1);
+                }
+            }
+        },
+        /**
+         * Checks and updates the avoidSpeedProfileOptions
+         * @param {String} avoidFeature to add
+         * @param {String} speedProfile Related speedProfile to the avoidFeature
+         * @returns {void}
+         */
+        updateAvoidSpeedProfileOptions (avoidFeature, speedProfile) {
+            const avoidSpeedProfileOptions = this.avoidSpeedProfileOptionsConstants;
+            let avoidFeatureExists = false;
+
+            for (const i in avoidSpeedProfileOptions) {
+                if (avoidSpeedProfileOptions[i].id === avoidFeature) {
+                    if (!avoidSpeedProfileOptions[i].availableProfiles.includes(speedProfile)) {
+                        avoidSpeedProfileOptions[i].availableProfiles.push(speedProfile);
+                        avoidFeatureExists = true;
+                    }
+                }
+            }
+            if (avoidFeatureExists === false) {
+                avoidSpeedProfileOptions.push({"id": avoidFeature, "availableProfiles": [speedProfile]});
+            }
+        },
         /**
          * Checks if the option is checked
          * @param {String} option to check
          * @returns {Boolean} true if option is checked
          */
         getIsRoutingAvoidFeaturesOptionsChecked (option) {
-            return this.activeAvoidFeaturesOptions.includes(option.id);
+            return this.activeAvoidFeaturesOptions?.includes(option.id);
         },
         /**
          * Emits an event on user input
