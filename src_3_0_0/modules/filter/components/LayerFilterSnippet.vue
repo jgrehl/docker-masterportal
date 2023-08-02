@@ -226,6 +226,12 @@ export default {
             if (typeof this.isLayerFilterSelected === "function" && this.isLayerFilterSelected(this.layerConfig.filterId) || this.isLayerFilterSelected === true) {
                 this.handleActiveStrategy();
             }
+        },
+        outOfZoom: {
+            handler (val) {
+                this.setIsLoading(!val);
+            },
+            immediate: true
         }
     },
     created () {
@@ -759,7 +765,7 @@ export default {
          */
         registerMapMoveListener () {
             this.registerListener({type: "loadend", listener: this.updateSnippets()});
-            this.registerListener({type: "loadstart", listener: this.setIsLoading()});
+            this.registerListener({type: "loadstart", listener: this.updateSnippets()});
             this.registerListener({type: "moveend", listener: this.updateSnippets()});
         },
         /**
@@ -768,16 +774,16 @@ export default {
          */
         unregisterMapMoveListener () {
             this.unregisterListener({type: "loadend", listener: this.updateSnippets()});
-            this.unregisterListener({type: "loadstart", listener: this.setIsLoading()});
+            this.unregisterListener({type: "loadstart", listener: this.updateSnippets()});
             this.unregisterListener({type: "moveend", listener: this.updateSnippets()});
         },
 
         /**
          * Setter for isLoading.
-         * @param {Boolean} [value = true] - The value for isLoading.
+         * @param {Boolean} value - The value for isLoading.
          * @returns {void}
          */
-        setIsLoading (value = true) {
+        setIsLoading (value) {
             this.isLoading = value;
         },
 
@@ -831,6 +837,10 @@ export default {
             const snippetIds = [];
 
             if (evt.type === "moveend" && !evt.map.loaded_) {
+                return;
+            }
+            if (evt.type === "loadstart") {
+                this.setIsLoading(!this.outOfZoom);
                 return;
             }
             if (evt.type === "loadend") {
