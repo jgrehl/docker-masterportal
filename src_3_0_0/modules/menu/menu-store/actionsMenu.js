@@ -87,6 +87,7 @@ export default {
      * @returns {void}
      */
     clickedMenuElement ({dispatch, rootGetters}, {name, path, side, type, properties}) {
+        console.log(name,path,side,type);
         if (type) {
             if (type === "customMenuElement") {
                 if (properties.openURL !== undefined) {
