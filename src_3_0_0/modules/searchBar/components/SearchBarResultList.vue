@@ -124,7 +124,7 @@ export default {
         v-if="searchInput.length>=minCharacters && searchResultsActive && searchResults.length>0"
         class="overflow-auto results-container"
     >
-        <a
+        <!-- <a
             :id="'mp-navigation'"
             class="pb-2 pt-2 mp-menu-navigation-link"
             href="#"
@@ -132,7 +132,7 @@ export default {
             @keypress="setSearchResultsActive(false)"
         >
             <h6 class="mp-menu-navigation-link-text mb-3"><p class="bi-chevron-left me-2">{{ $t("common:modules.menu.name") }}</p></h6>
-        </a>
+        </a> -->
         <div
             v-for="categoryItem in showAllResults===false ? limitedSortedSearchResults.results.availableCategories : currentAvailableCategories"
             id="search-bar-result-list"
