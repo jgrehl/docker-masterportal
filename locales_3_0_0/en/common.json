@@ -856,6 +856,8 @@
         "drawLayout": {
           "fillColor": "Fill color",
           "fillTransparency": "Transparency",
+          "innerCircle": "Inner circle:",
+          "outerCircle": "Outer circle:",
           "strokeColor": "Outline color",
           "strokeWidth": "Stroke width"
         },
