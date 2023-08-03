@@ -121,19 +121,17 @@ export default {
 
 <template>
     <div class="d-flex flex-column">
-        <div class="d-flex flex-row align-items-center">
-            <button
-                v-if="selectedDrawType === 'doubleCircle'"
-                :id="'draw-layout-' + circleType"
-                class="btn btn-primary me-3"
-                type="button"
-                disabled="true"
-            >
-                <i
-                    :class="[circleType, 'bi-circle']"
-                    role="img"
-                />
-            </button>
+        <label
+            v-if="selectedDrawType === 'doubleCircle'"
+            :for="'draw-layout-buttons-' + circleType"
+            class="mb-2"
+        >
+            {{ $t("common:shared.modules.draw.drawLayout." + circleType) }}
+        </label>
+        <div
+            :id="'draw-layout-buttons-' + circleType"
+            class="draw-layout-buttons d-flex flex-row align-items-center"
+        >
             <button
                 v-for="layoutKey in Object.keys(mappingLayoutBySelectedDrawType)"
                 :id="'draw-layout-' + circleType + '-' + layoutKey"
@@ -290,22 +288,6 @@ export default {
         > input {
             color: $white;
         }
-    }
-}
-
-.btn:disabled {
-    opacity: 1;
-    background: $white;
-
-    > i {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-    }
-
-    > i.outerCircle {
-        font-size: 1.5rem;
     }
 }
 

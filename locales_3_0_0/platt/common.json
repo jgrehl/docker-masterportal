@@ -851,6 +851,8 @@
         "drawLayout": {
           "fillColor": "Füllfarbe",
           "fillTransparency": "Transparenz",
+          "innerCircle": "Innerer Kreis:",
+          "outerCircle": "Äußerer Kreis:",
           "strokeColor": "Umrissfarbe",
           "strokeWidth": "Strichstärke"
         },
