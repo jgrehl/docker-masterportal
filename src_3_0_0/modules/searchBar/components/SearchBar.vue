@@ -1,3 +1,5 @@
+// How control which side is configured?
+// Layout !
 <script>
 import {mapGetters, mapActions, mapMutations} from "vuex";
 import SearchBarResultList from "./SearchBarResultList.vue";
@@ -19,7 +21,8 @@ export default {
             "minCharacters",
             "placeholder",
             "searchInput",
-            "type"
+            "type",
+            "searchResultsActive"
         ]),
 
         /**
@@ -43,6 +46,7 @@ export default {
         ...mapActions(["initializeModule"]),
         ...mapActions("Modules/SearchBar", ["instantiateSearchInterfaces", "overwriteDefaultValues", "search"]),
         ...mapMutations("Modules/SearchBar", ["setSearchInput", "setShowAllResults", "setSearchResultsActive"]),
+        ...mapActions("Menu", ["clickedMenuElement", "navigateBack"]),
 
         /**
          * Starts the search in searchInterfaces, if min characters are introduced, updates the result list.
@@ -53,8 +57,19 @@ export default {
                 this.setShowAllResults(false);
                 this.setSearchResultsActive(true);
                 this.search({searchInput: this.searchInputValue});
-
+                this.clickedMenuElement({
+                    name: "common:modules.searchBar.search",
+                    side: "mainMenu",
+                    type: "searchbarresultlist"
+                });
             }
+            if (this.searchInputValue.length < parseInt(this.minCharacters, 10) && this.searchResultsActive === true) {
+                this.navigateBack("mainMenu");
+                    //this.$store.state.Menu["mainMenu"].navigation.history.push({type:"searchbarresultlist"})
+            }
+
+             console.log(this.$store.state.Menu);
+             console.log(this.$store.state.Menu["mainMenu"].navigation.history);
         }
     }
 };
@@ -85,7 +100,7 @@ export default {
                 @keydown.enter="startSearch"
             >
         </div>
-        <SearchBarResultList />
+       <!--  <SearchBarResultList /> -->
     </div>
 </template>
 
