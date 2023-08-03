@@ -57,12 +57,12 @@ export default {
     <div
         :id="'mp-body-root-'+side"
     >
-        <MenuContainerBodyRootLogo
+<!--         <MenuContainerBodyRootLogo
             v-if="titleBySide(side)"
             class="mb-2"
             v-bind="titleBySide(side)"
         />
-        <SearchBar v-if="typeof menu.searchBar !== 'undefined'" />
+        <SearchBar v-if="typeof menu.searchBar !== 'undefined'" /> -->
         <LayerTree v-if="side === 'mainMenu'" />
         <template
             v-for="(_, key) in menu.sections"
