@@ -853,6 +853,8 @@
         "drawLayout": {
           "fillColor": "Цвет заполнения",
           "fillTransparency": "Прозрачность",
+          "innerCircle": "",
+          "outerCircle": "",
           "strokeColor": "Цвет контура",
           "strokeWidth": "Толщина линии"
         },

@@ -853,6 +853,8 @@
         "drawLayout": {
           "fillColor": "Колір заливки",
           "fillTransparency": "Прозорість",
+          "innerCircle": "",
+          "outerCircle": "",
           "strokeColor": "Колір контуру",
           "strokeWidth": "Товщина лінії"
         },

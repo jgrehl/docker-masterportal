@@ -853,6 +853,8 @@
         "drawLayout": {
           "fillColor": "Colore interno",
           "fillTransparency": "Trasparenza",
+          "innerCircle": "Cerchio interno:",
+          "outerCircle": "Cerchio esterno:",
           "strokeColor": "Colore contorno",
           "strokeWidth": "Larghezza linea"
         },
