@@ -12,7 +12,7 @@ export default {
     components: {LightButton, ModalItem},
     computed: {
         ...mapGetters("Modules/Wfst", ["currentInteractionConfig", "currentLayerIndex", "featureProperties", "layerIds", "layerInformation", "layerSelectDisabled", "layerSelectLabel", "selectedInteraction", "showInteractionsButtons", "deactivateGFI", "icon", "name", "transactionProcessing", "showConfirmModal"]),
-        ...mapGetters(["visibleLayerConfigs", "allLayerConfigs"])
+        ...mapGetters(["allLayerConfigs"])
     },
     created () {
         const newLayerInformation = this.allLayerConfigs.filter(item => this.layerIds.includes(item.id)).reverse(),
@@ -52,7 +52,7 @@ export default {
             if (type === "string") {
                 return "text";
             }
-            if (["integer", "int", "decimal"].includes(type)) {
+            if (["integer", "int", "decimal", "short", "float"].includes(type)) {
                 return "number";
             }
             if (type === "boolean") {
@@ -138,6 +138,16 @@ export default {
                                     {{ $t(property.label) }}
                                 </label>
                                 <input
+                                    v-if="getInputType(property.type) ==='checkbox'"
+                                    :id="`tool-wfsTransaction-form-input-${property.key}`"
+                                    :key="`${property.key}-input-checkbox`"
+                                    :type="getInputType(property.type)"
+                                    :required="property.required"
+                                    :checked="['true', true].includes(property.value) ? true : false"
+                                    @input="event => setFeatureProperty({key: property.key, type: getInputType(property.type), value: event.target.checked})"
+                                >
+                                <input
+                                    v-else
                                     :id="`tool-wfsTransaction-form-input-${property.key}`"
                                     :key="`${property.key}-input`"
                                     class="form-control"
