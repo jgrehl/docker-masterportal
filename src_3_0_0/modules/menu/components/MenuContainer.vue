@@ -2,6 +2,8 @@
 import {mapActions, mapGetters, mapMutations} from "vuex";
 import MenuContainerBody from "./MenuContainerBody.vue";
 import ResizeHandle from "../../../shared/modules/resize/components/ResizeHandle.vue";
+import MenuContainerBodyRootLogo from "./MenuContainerBodyRootLogo.vue";
+import SearchBar from "../../searchBar/components/SearchBar.vue";
 
 /**
  * @module modules/MenuContainer
@@ -13,7 +15,9 @@ export default {
     name: "MenuContainer",
     components: {
         MenuContainerBody,
-        ResizeHandle
+        MenuContainerBodyRootLogo,
+        ResizeHandle,
+        SearchBar
     },
     props: {
         /** Defines in which menu the component is being rendered */
@@ -29,13 +33,36 @@ export default {
             "isMobile",
             "uiStyle"
         ]),
+        ...mapGetters("Modules", ["componentMap"]),
         ...mapGetters("Menu", [
+            "mainMenu",
+            "secondaryMenu",
             "currentMenuWidth",
             "mainExpanded",
             "secondaryExpanded",
-            "titleBySide"
+            "titleBySide",
+            "currentComponent",
+            "defaultComponent"
         ]),
+        /**
+         * @returns {Object} Menu configuration for the given menu.
+         */
+        menu () {
+            return this.side === "mainMenu" ? this.mainMenu : this.secondaryMenu;
+        },
 
+        /**
+         * @returns {Object} Returns the currently visible Component.
+         */
+        currentComponent () {
+            let current = this.menu.navigation.currentComponent.type;
+
+            if (current !== "root" && current !== this.defaultComponent) {
+                current = this.componentMap[current];
+            }
+
+            return current;
+        },
         /**
          * @returns {String} Defines whether the ResizeHandle should be displayed on the right or left side depending on the menu this component is rendered in.
          */
@@ -71,7 +98,6 @@ export default {
             this.collapseMenues();
             this.setCurrentMenuWidth({side: this.side, width: "100%"});
         }
-
     },
     methods: {
         ...mapMutations("Menu", [
@@ -79,6 +105,7 @@ export default {
             "mergeMenuState",
             "setCurrentMenuWidth"
         ]),
+        ...mapActions("Menu", ["clickedMenuElement"]),
         ...mapActions("Menu", [
             "toggleMenu",
             "closeMenu"
@@ -116,6 +143,21 @@ export default {
                 :aria-label="$t('common:modules.menu.ariaLabelClose')"
                 @click="closeMenu(side)"
             />
+        </div>
+        <div
+            v-if="true"
+            :id="'mp-subHeader-' + side"
+            class="mp-menu-subHeader"
+            :class="
+                {'mp-menu-header-collapsed': !mainExpanded && side === 'mainMenu' || !secondaryExpanded && side === 'secondaryMenu'}
+            "
+        >
+            <MenuContainerBodyRootLogo
+                v-if="titleBySide(side)"
+                class="mb-2"
+                v-bind="titleBySide(side)"
+            />
+            <SearchBar />
         </div>
 
         <MenuContainerBody
@@ -165,6 +207,21 @@ export default {
 
 .mp-menu-header{
     display: flex;
+    &-collapsed {
+        padding: 0;
+        display: none;
+    }
+}
+
+.mp-menu-subHeader{
+    padding: $padding;
+    font-size: $font-size-base;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: $padding;
+    font-size: $font-size-base;
+
     &-collapsed {
         padding: 0;
         display: none;
