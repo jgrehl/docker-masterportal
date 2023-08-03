@@ -851,6 +851,8 @@
         "drawLayout": {
           "fillColor": "Dolgu rengi",
           "fillTransparency": "Şeffaf",
+          "innerCircle": "",
+          "outerCircle": "",
           "strokeColor": "Anahat rengi",
           "strokeWidth": "Çizgi genişliği"
         },
