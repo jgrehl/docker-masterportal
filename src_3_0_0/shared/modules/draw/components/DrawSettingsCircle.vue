@@ -125,17 +125,6 @@ export default {
                 :key="radius"
                 class="d-flex flex-row mb-3"
             >
-                <button
-                    :id="'draw-circle-settings-' + radius"
-                    class="btn btn-primary me-2 cirlce-icon"
-                    type="button"
-                    disabled="true"
-                >
-                    <i
-                        :class="[radius, 'bi-circle']"
-                        role="img"
-                    />
-                </button>
                 <div class="form-floating input-radius">
                     <input
                         :id="'draw-circle-settings-' + radius"
@@ -158,24 +147,8 @@ export default {
 <style lang="scss" scoped>
 @import "~variables";
 
-.cirlce-icon {
-    opacity: 1;
-    background: $white;
-    border: solid $white 1px;
-    font-size: 1.143rem;
-
-    > i {
-        position: absolute;
-        transform: translate(-50%, -50%);
-        line-height: 0.5rem;
-    }
-}
-
 .input-radius {
     width: 100%;
-}
-.outerRadius {
-    font-size: 1.5rem;
 }
 
 </style>
