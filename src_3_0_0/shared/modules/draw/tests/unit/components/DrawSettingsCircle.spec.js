@@ -67,8 +67,6 @@ describe("src_3_0_0/shared/modules/draw/components/DrawSettingsCircle.vue", () =
             expect(wrapper.find("div:nth-of-type(3) > div.form-floating > label").text()).to.equals("common:shared.modules.draw.drawSettingsCircle.unit");
 
             expect(wrapper.find("div:nth-of-type(3) > div:nth-of-type(2)").exists()).to.be.true;
-            expect(wrapper.find("div:nth-of-type(3) > div:nth-of-type(2) > button").exists()).to.be.true;
-            expect(wrapper.find("div:nth-of-type(3) > div:nth-of-type(2) > button > i").exists()).to.be.true;
             expect(wrapper.find("div:nth-of-type(3) > div:nth-of-type(2) > div.form-floating").exists()).to.be.true;
             expect(wrapper.find("div:nth-of-type(3) > div:nth-of-type(2) > div.form-floating > input").exists()).to.be.true;
             expect(wrapper.find("div:nth-of-type(3) > div:nth-of-type(2) > div.form-floating > label").exists()).to.be.true;
@@ -97,15 +95,11 @@ describe("src_3_0_0/shared/modules/draw/components/DrawSettingsCircle.vue", () =
             expect(wrapper.find("div:nth-of-type(2) > div.form-floating > label").text()).to.equals("common:shared.modules.draw.drawSettingsCircle.unit");
 
             expect(wrapper.find("div:nth-of-type(2) > div:nth-of-type(2)").exists()).to.be.true;
-            expect(wrapper.find("div:nth-of-type(2) > div:nth-of-type(2) > button").exists()).to.be.true;
-            expect(wrapper.find("div:nth-of-type(2) > div:nth-of-type(2) > button > i").exists()).to.be.true;
             expect(wrapper.find("div:nth-of-type(2) > div:nth-of-type(2) > div.form-floating").exists()).to.be.true;
             expect(wrapper.find("div:nth-of-type(2) > div:nth-of-type(2) > div.form-floating > input").exists()).to.be.true;
             expect(wrapper.find("div:nth-of-type(2) > div:nth-of-type(2) > div.form-floating > label").exists()).to.be.true;
             expect(wrapper.find("div:nth-of-type(2) > div:nth-of-type(2) > div.form-floating > label").text()).to.equals("common:shared.modules.draw.drawSettingsCircle.radii.innerRadius");
 
-            expect(wrapper.find("div:nth-of-type(2) > div:nth-of-type(3) > button").exists()).to.be.true;
-            expect(wrapper.find("div:nth-of-type(2) > div:nth-of-type(3) > button > i").exists()).to.be.true;
             expect(wrapper.find("div:nth-of-type(2) > div:nth-of-type(3) > div.form-floating").exists()).to.be.true;
             expect(wrapper.find("div:nth-of-type(2) > div:nth-of-type(3) > div.form-floating > input").exists()).to.be.true;
             expect(wrapper.find("div:nth-of-type(2) > div:nth-of-type(3) > div.form-floating > label").exists()).to.be.true;
