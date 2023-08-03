@@ -106,7 +106,6 @@ export default {
                 For the same reason this element has the 'role=presentation' assigned to avoid
                 the linter error: 'Visible, non-interactive elements should not have an interactive handler'
             -->
-            -->
         </div>
     </div>
 </template>
