@@ -13,6 +13,7 @@ import IconButton from "../../../shared/modules/buttons/components/IconButton.vu
  * @vue-data {String} componentKey - The key for re-render child component.
  * @vue-data {String} leftIcon - The icon for button.
  * @vue-data {String} rightIcon - The icon for the Button.
+ * @vue-data {Boolean} updatedFeature - if true, feature is updated
  * @vue-computed {String} currentComponentType - The current component type of the menu navigation by side.
  * @vue-computed {String} currentViewType - The current view type.
  * @vue-computed {Object} feature - The feature depending on the pager index.
@@ -31,7 +32,8 @@ export default {
             componentKey: false,
             // icons for buttons
             leftIcon: "bi-chevron-left",
-            rightIcon: "bi-chevron-right"
+            rightIcon: "bi-chevron-right",
+            updatedFeature: false
         };
     },
     computed: {
@@ -104,14 +106,14 @@ export default {
             }
         },
         /**
-         * Whenever the map click coordinate changes updateClick action will call.
+         * Whenever the map click coordinate changes collectGfiFeatures action will call.
          * @returns {void}
          */
         clickCoordinate: {
             handler () {
                 if (this.currentMouseMapInteractionsComponent === this.type) {
                     this.pagerIndex = 0;
-                    this.updateClick();
+                    this.collectGfiFeatures();
                 }
             },
             deep: true
@@ -153,6 +155,9 @@ export default {
 
         /**
          * Whenever gfiFeatures changes, set this visible and expand menu.
+         * Set the updateFeature value to true if feature are given.
+         * @param {?Object} newFeatures - the current features
+         * @param {?Object} oldFeatures - the recent features
          * @returns {void}
          */
         gfiFeatures: {
@@ -179,6 +184,11 @@ export default {
                             this.toggleMenu(this.menuSide);
                         }
                     }
+                    this.setUpdatedFeature(true);
+                }
+                else if (newFeatures === null) {
+                    this.resetMenu(this.menuSide);
+                    this.setUpdatedFeature(false);
                 }
             },
             deep: true
@@ -198,12 +208,22 @@ export default {
         ]),
         ...mapActions(["initializeModule"]),
         ...mapActions("Modules/GetFeatureInfo", [
-            "updateClick"
+            "collectGfiFeatures"
         ]),
         ...mapActions("Menu", [
             "changeCurrentComponent",
+            "resetMenu",
             "toggleMenu"
         ]),
+
+        /**
+         * Set updatedFeature value.
+         * @param {Boolean} val - false if features have been updated or no features are given
+         * @returns {void}
+         */
+        setUpdatedFeature: function (val) {
+            this.updatedFeature = val;
+        },
 
         /**
          * Reset means to set the gfiFeatures to null.
@@ -276,6 +296,8 @@ export default {
             v-if="visible && feature !== null"
             :key="componentKey"
             :feature="feature"
+            :is-updated="updatedFeature"
+            @update-feature-done="setUpdatedFeature(true)"
             @close="reset"
         >
             <!-- Slot Content for Footer -->
