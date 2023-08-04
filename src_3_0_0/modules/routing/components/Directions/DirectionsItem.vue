@@ -3,6 +3,7 @@ import {mapGetters, mapActions, mapMutations} from "vuex";
 import getters from "../../store/directions/gettersDirections";
 import actions from "../../store/directions/actionsDirections";
 import mutations from "../../store/directions/mutationsDirections";
+import IconButton from "../../../../shared/modules/buttons/components/IconButton.vue";
 import RoutingCoordinateInput from "../RoutingCoordinateInput.vue";
 import RoutingDistanceDisplay from "../RoutingDistanceDisplay.vue";
 import RoutingDurationDisplay from "../RoutingDurationDisplay.vue";
@@ -26,6 +27,7 @@ import * as constantsRouting from "../../store/constantsRouting";
 export default {
     name: "DirectionsItem",
     components: {
+        IconButton,
         RoutingCoordinateInput,
         RoutingDistanceDisplay,
         RoutingDurationDisplay,
@@ -338,14 +340,13 @@ export default {
                 </div>
 
                 <div class="d-flex">
-                    <button
-                        class="bootstrap-icon mt-2 btn-icon"
-                        :title="$t('common:modules.routing.resetSettings')"
-                        @click="reset()"
-                        @keydown.enter="reset()"
-                    >
-                        <i class="bi-trash" />
-                    </button>
+                    <IconButton
+                        id="button-up"
+                        :aria="$t('common:modules.routing.resetSettings')"
+                        :class-array="['btn-light']"
+                        :icon="'bi-trash fs-6'"
+                        :interaction="() => reset()"
+                    />
                     <button
                         class="bootstrap-icon m-2 btn-icon"
                         :title="$t('common:modules.routing.addWaypoint')"
