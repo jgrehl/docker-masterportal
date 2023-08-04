@@ -1,6 +1,6 @@
 import {createStore} from "vuex";
 import {expect} from "chai";
-import {config, shallowMount} from "@vue/test-utils";
+import {config, shallowMount, mount} from "@vue/test-utils";
 import RoutingBatchProcessingComponent from "../../../components/RoutingBatchProcessing.vue";
 
 config.global.mocks.$t = key => key;
@@ -51,15 +51,16 @@ describe("src_3_0_0/modules/routing/components/RoutingBatchProcessing.vue", () =
     it("renders emits cancelProcess while processing", async () => {
         props.isProcessing = true;
         props.progress = 10.00;
-        wrapper = shallowMount(RoutingBatchProcessingComponent, {
+        wrapper = mount(RoutingBatchProcessingComponent, {
             global: {
                 plugins: [store]
             },
             props: props
         });
-        const input = wrapper.find(".bi-x-lg");
 
-        input.trigger("click");
+        const button = wrapper.find(".bi-x");
+
+        button.trigger("keydown.enter");
         await wrapper.vm.$nextTick();
         expect(wrapper.emitted().cancelProcess.length).equal(1);
     });
