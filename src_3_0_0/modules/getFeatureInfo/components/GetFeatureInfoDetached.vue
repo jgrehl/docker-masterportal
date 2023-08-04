@@ -77,8 +77,7 @@ export default {
     },
     updated: function () {
         if (this.isUpdated) {
-            // todo einkommentieren nach PR https://bitbucket.org/geowerkstatt-hamburg/masterportal/pull-requests/4353
-            // this.highlightVectorFeature();
+            this.highlightVectorFeature();
             this.setMarker();
             this.$emit("updateFeatureDone");
         }
