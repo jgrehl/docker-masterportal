@@ -79,8 +79,11 @@ export default {
      * @returns {void}
      */
     switchToPreviousComponent (state, side) {
-        state[side].navigation.currentComponent = {type: state[side].navigation.history.slice(-1)[0]?.type, props: state[side].navigation.history.slice(-1)[0]?.props};
-        state[side].currentComponent = state[side].navigation.history.slice(-1)[0].type;
+        console.log(state[side].navigation.history.slice(-1)[0]?.type)
+        if (state[side].navigation.history.slice(-1)[0]?.type) {
+            state[side].navigation.currentComponent = {type: state[side].navigation.history.slice(-1)[0].type, props: state[side].navigation.history.slice(-1)[0].props};
+            state[side].currentComponent = state[side].navigation.history.slice(-1)[0].type;
+        }
         state[side].navigation.history.pop();
     },
 
