@@ -36,7 +36,7 @@ function getGfiStore (mobile, uiStyle, gfiFeatures, mapSize) {
                         getters: mockGetters,
                         actions: {
                             addGfiToMenu: sinon.stub(),
-                            updateClick: sinon.stub()
+                            collectGfiFeatures: sinon.stub()
                         }
                     }
                 }
@@ -64,6 +64,7 @@ function getGfiStore (mobile, uiStyle, gfiFeatures, mapSize) {
                 },
                 actions: {
                     setMenuBackAndActivateItem: sinon.stub(),
+                    resetMenu: sinon.stub(),
                     toggleMenu: toggleMenuSpy
                 }
             }
@@ -222,6 +223,60 @@ describe("src_3_0_0/modules/getFeatureInfo/components/GetFeatureInfo.vue", () =>
 
         wrapper.vm.$options.watch.clickCoordinate.handler.call(wrapper.vm, null);
         expect(wrapper.vm.pagerIndex).to.equal(0);
+    });
+
+    it("should set updatedFeature to true if gfiFeatures changed and features are given", () => {
+        const gfiFeatures = [{
+                getGfiUrl: () => null,
+                getFeatures: () => sinon.stub(),
+                getProperties: () => {
+                    return {};
+                }
+            }],
+            store = getGfiStore(false, undefined, gfiFeatures, []),
+
+            wrapper = shallowMount(GfiComponent, {
+                global: {
+                    plugins: [store]
+                }
+            }),
+            features = [{
+                getTheme: () => "default",
+                getTitle: () => "Feature 1",
+                getGfiUrl: () => null,
+                getMimeType: () => "text/html",
+                getAttributesToShow: () => sinon.stub(),
+                getMappedProperties: () => null,
+                getProperties: () => {
+                    return {};
+                },
+                getFeatures: () => [],
+                getId: () => "id"
+            }
+            ];
+
+        wrapper.vm.$options.watch.gfiFeatures.handler.call(wrapper.vm, features, features);
+        expect(wrapper.vm.updatedFeature).to.equal(true);
+    });
+    it("should set updatedFeature to false if gfiFeatures changed and features are not given", () => {
+        const gfiFeatures = [{
+                getGfiUrl: () => null,
+                getFeatures: () => sinon.stub(),
+                getProperties: () => {
+                    return {};
+                }
+            }],
+            store = getGfiStore(false, undefined, gfiFeatures, []),
+            wrapper = shallowMount(GfiComponent, {
+                global: {
+                    plugins: [store]
+                }
+            });
+
+        wrapper.vm.$options.watch.gfiFeatures.handler.call(wrapper.vm, null);
+        expect(wrapper.vm.updatedFeature).to.equal(false);
+        wrapper.vm.$options.watch.gfiFeatures.handler.call(wrapper.vm, []);
+        expect(wrapper.vm.updatedFeature).to.equal(false);
     });
 
     it("should call reset if visible is false", () => {
