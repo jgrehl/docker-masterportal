@@ -1,6 +1,7 @@
 <script>
 import {mapActions} from "vuex";
 import {RoutingGeosearchResult} from "../js/classes/routing-geosearch-result";
+import IconButton from "../../../shared/modules/buttons/components/IconButton.vue";
 
 /**
  * RoutingCoordinateInput
@@ -23,6 +24,7 @@ import {RoutingGeosearchResult} from "../js/classes/routing-geosearch-result";
  */
 export default {
     name: "RoutingCoordinateInput",
+    components: {IconButton},
     props: {
         waypoint: {
             type: Object,
@@ -191,46 +193,46 @@ export default {
                 >
                 <button
                     v-if="search.length > 0 && search !== waypointDisplayName"
+                    id="reset-button"
                     class="btn-icon input-icon"
                     @click="resetInput()"
                     @keydown.enter="resetInput()"
                 >
-                    <i class="bi-x-lg" />
+                    <i class="bi-x-lg fs-6" />
                 </button>
             </label>
             <div class="d-flex">
                 <div class="justify-content-between">
-                    <div class="h-50">
-                        <button
-                            v-show="waypoint.index !== 0"
-                            class="btn-icon"
-                            :title="$t('common:modules.routing.moveWaypointUp')"
-                            @click="$emit('moveWaypointUp')"
-                            @keydown.enter="$emit('moveWaypointUp')"
-                        >
-                            <i class="bi-chevron-up" />
-                        </button>
+                    <div
+                        v-show="waypoint.index !== 0"
+                        class="h-50"
+                    >
+                        <IconButton
+                            id="button-up"
+                            :aria="$t('common:modules.routing.moveWaypointUp')"
+                            :class-array="['btn-light', 'btn-up-down']"
+                            :icon="'bi-chevron-up fs-6'"
+                            :interaction="() => $emit('moveWaypointUp')"
+                        />
                     </div>
-                    <div class="h-50">
-                        <button
-                            v-show="waypoint.index !== countWaypoints - 1"
-                            class="btn-icon"
-                            :title="$t('common:modules.routing.moveWaypointDown')"
-                            @click="$emit('moveWaypointDown')"
-                            @keydown.enter="$emit('moveWaypointDown')"
-                        >
-                            <i class="bi-chevron-down" />
-                        </button>
+                    <div
+                        v-show="waypoint.index !== countWaypoints - 1"
+                        class="h-50"
+                    >
+                        <IconButton
+                            :aria="$t('common:modules.routing.moveWaypointDown')"
+                            :class-array="['btn-light', 'btn-up-down']"
+                            :icon="'bi-chevron-down fs-6'"
+                            :interaction="() => $emit('moveWaypointDown')"
+                        />
                     </div>
                 </div>
-                <button
-                    class="m-2 btn-icon"
-                    :title="$t('common:modules.routing.deleteWaypoint')"
-                    @click="$emit('removeWaypoint')"
-                    @keydown.enter="$emit('removeWaypoint')"
-                >
-                    <i class="bi-x-lg" />
-                </button>
+                <IconButton
+                    :aria="$t('common:modules.routing.deleteWaypoint')"
+                    :class-array="['btn-light', 'm-1']"
+                    :icon="'bi-x-lg fs-6'"
+                    :interaction="() => $emit('removeWaypoint')"
+                />
             </div>
         </div>
         <ul
@@ -243,6 +245,7 @@ export default {
                 class="list-group-item"
             >
                 <button
+                    id="search-result-button"
                     class="btn-icon"
                     @mousedown="selectSearchResult(searchResult)"
                 >
@@ -256,12 +259,14 @@ export default {
 <style lang="scss" scoped>
 @import "~variables";
 
+.btn-up-down {
+    margin-left: 5px;
+}
 .btn-icon {
     background-color: rgba(0, 0, 0, 0);
     border: none;
     padding: 5px 0 0 10px;
 }
-
 .input-icon {
     margin-left:-37px;
 }
@@ -269,9 +274,6 @@ export default {
 label {
     width: 300px;
     margin-bottom: 0;
-}
-.pointer {
-    cursor: pointer;
 }
 
 li:hover {
