@@ -189,4 +189,35 @@ describe("src_3_0_0/modules/getFeatureInfo/components/GetFeatureInfoDetached.vue
         expect(wrapper.vm.isContentHtml).to.be.false;
     });
 
+    describe("Lifecycle Hooks", () => {
+        it("should emit 'updateFeatureDone' in updated hook if isUpdated is true", async () => {
+            const wrapper = mount(DetachedTemplate, {
+                props: {
+                    feature: {
+                        getTheme: () => "DefaultTheme",
+                        getTitle: () => "Hallo",
+                        getMimeType: () => "text/xml",
+                        getGfiUrl: () => "",
+                        getLayerId: () => sinon.stub(),
+                        getOlFeature: () => olFeature
+                    }
+                },
+                components: {
+                    DefaultTheme: {
+                        name: "DefaultTheme",
+                        template: "<span />"
+                    }
+                },
+                global: {
+                    plugins: [store]
+                }
+            });
+
+            await wrapper.setProps({isUpdated: true});
+            await wrapper.vm.$nextTick();
+            expect(wrapper.emitted()).to.have.property("updateFeatureDone");
+            expect(wrapper.emitted().updateFeatureDone).to.have.lengthOf(1);
+        });
+    });
+
 });

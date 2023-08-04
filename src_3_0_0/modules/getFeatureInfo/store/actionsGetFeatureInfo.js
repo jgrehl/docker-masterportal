@@ -5,20 +5,6 @@ let globeEventHandler;
 
 export default {
     /**
-     * Updates the click coordinate and the related pixel depending on the map mode.
-     * If Gfi Tool is active, the features of this coordinate/pixel are set.
-     * @param {Object} param store context
-     * @param {Object} param.commit the commit
-     * @param {Object} param.dispatch the dispatch
-     * @returns {void}
-     */
-    updateClick ({commit, dispatch}) {
-        commit("setGfiFeatures", null);
-        dispatch("Maps/removePolygonMarker", null, {root: true});
-        dispatch("collectGfiFeatures");
-    },
-
-    /**
      * Function to remove highlighting of a 3D Tile and the event handler.
      * @param {Object} param.dispatch the dispatch
      * @returns {void}
@@ -85,6 +71,9 @@ export default {
                 // only commit if features found
                 if (allGfiFeatures.length > 0) {
                     commit("setGfiFeatures", allGfiFeatures);
+                }
+                else {
+                    commit("setGfiFeatures", null);
                 }
             })
             .catch(error => {
