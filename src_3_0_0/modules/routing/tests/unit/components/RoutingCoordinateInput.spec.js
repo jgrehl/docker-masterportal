@@ -1,7 +1,7 @@
 import {createStore} from "vuex";
 import {expect} from "chai";
 import sinon from "sinon";
-import {config, shallowMount} from "@vue/test-utils";
+import {config, shallowMount, mount} from "@vue/test-utils";
 import RoutingCoordinateInputComponent from "../../../components/RoutingCoordinateInput.vue";
 import mutations from "../../../store/mutationsRouting";
 import actions from "../../../store/actionsRouting";
@@ -64,43 +64,44 @@ describe("src_3_0_0/modules/routing/components/RoutingCoordinateInput.vue", () =
     });
 
     it("emits moveWaypointUp", async () => {
-        wrapper = shallowMount(RoutingCoordinateInputComponent, {
+        wrapper = mount(RoutingCoordinateInputComponent, {
             global: {
                 plugins: [store]
             },
             props: props
         });
-        const input = wrapper.find(".bi-chevron-up");
+        const button = wrapper.find("#button-up");
 
-        input.element.click();
+        button.trigger("click");
         await wrapper.vm.$nextTick();
+
         expect(wrapper.emitted().moveWaypointUp.length).equal(1);
     });
 
     it("emits moveWaypointDown", async () => {
-        wrapper = shallowMount(RoutingCoordinateInputComponent, {
+        wrapper = mount(RoutingCoordinateInputComponent, {
             global: {
                 plugins: [store]
             },
             props: props
         });
-        const input = wrapper.find(".bi-chevron-down");
+        const button = wrapper.find(".bi-chevron-down");
 
-        input.element.click();
+        button.element.click();
         await wrapper.vm.$nextTick();
         expect(wrapper.emitted().moveWaypointDown.length).equal(1);
     });
 
     it("emits removeWaypoint", async () => {
-        wrapper = shallowMount(RoutingCoordinateInputComponent, {
+        wrapper = mount(RoutingCoordinateInputComponent, {
             global: {
                 plugins: [store]
             },
             props: props
         });
-        const input = wrapper.find(".bootstrap-icon.m-2 > .bi-x-lg");
+        const button = wrapper.find(".m-1");
 
-        input.element.click();
+        button.element.click();
         await wrapper.vm.$nextTick();
         expect(wrapper.emitted().removeWaypoint.length).equal(1);
     });
@@ -114,7 +115,7 @@ describe("src_3_0_0/modules/routing/components/RoutingCoordinateInput.vue", () =
         });
         wrapper.setData({search: "testsearch"});
         await wrapper.vm.$nextTick();
-        expect(wrapper.find(".bootstrap-icon.pointer.form-control-feedback > .bi-x-lg").exists()).to.be.true;
+        expect(wrapper.find("#reset-button").exists()).to.be.true;
     });
 
     it("renders searchResults", async () => {
@@ -133,8 +134,8 @@ describe("src_3_0_0/modules/routing/components/RoutingCoordinateInput.vue", () =
         await wrapper.vm.$nextTick();
 
         expect(wrapper.findAll("li").length).equal(2);
-        expect(wrapper.findAll("li").at(0).element.innerHTML.trim()).equal("test1");
-        expect(wrapper.findAll("li").at(1).element.innerHTML.trim()).equal("test2");
+        expect(wrapper.findAll("#search-result-button").at(0).element.innerHTML).equal("test1");
+        expect(wrapper.findAll("#search-result-button").at(1).element.innerHTML).equal("test2");
     });
 
     describe("tests isInputtextWgs84Coordinate", () => {
