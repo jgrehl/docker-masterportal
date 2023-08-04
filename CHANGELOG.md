@@ -3,18 +3,7 @@
 
 [Semantic versioning](https://semver.org/spec/v2.0.0.html) is used.
 
-## Unreleased - in development
-### Added
-
-### Changed
-- The following packages have been updated:
-    - dependencies:
-        - @masterportal/masterportalapi: 2.23.0 to 2.24.0 (This also raised olcs to version 2.15.0)
-
-### Deprecated
-
-### Removed
-
+## v2.36.1 - 2023-08-04
 ### Fixed
 - WFS: avoid createLegend undefined error
 
