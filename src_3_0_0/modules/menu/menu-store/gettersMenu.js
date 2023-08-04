@@ -112,10 +112,12 @@ const menuGetters = {
      * @returns {Boolean} Function returning false or the Text.
      */
     previousNavigationEntryText: (state) => side => {
+        console.log(state[side].navigation.history.slice(-1)[0])
         const previousEntry = state[side].navigation.history.length !== 0 ? state[side].navigation.history.slice(-1)[0] : "";
         let previousEntryText = false;
 
         if (previousEntry !== "") {
+            console.log(previousEntry)
             switch (previousEntry.type) {
                 case "root": {
                     previousEntryText = i18next.t("common:modules.menu.name");
@@ -127,7 +129,7 @@ const menuGetters = {
                 }
             }
         }
-
+        console.log(previousEntryText)
         return previousEntryText;
     },
 
