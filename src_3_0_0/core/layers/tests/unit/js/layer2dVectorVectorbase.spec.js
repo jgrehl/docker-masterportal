@@ -57,6 +57,22 @@ describe("src_3_0_0/core/js/layers/layer2dVectorVectorbase.js", () => {
             expect(warn.notCalled).to.be.true;
         });
     });
+    it("updateSource shall update source", function () {
+        const baseLayer = new Layer2dVectorVectorbase(attributes),
+            spy = sinon.spy(baseLayer.getLayerSource(), "refresh");
 
+        expect(baseLayer.sourceUpdated).to.be.false;
+        baseLayer.updateSource();
+        expect(spy.calledOnce).to.be.true;
+        expect(baseLayer.sourceUpdated).to.be.true;
+    });
+
+    it("createLegend shall set legend", function () {
+        attributes.legendURL = "https://legendUrl";
+        const layer = new Layer2dVectorVectorbase(attributes);
+
+        expect(layer.get("legend")).to.be.deep.equals([attributes.legendURL]);
+
+    });
 
 });
