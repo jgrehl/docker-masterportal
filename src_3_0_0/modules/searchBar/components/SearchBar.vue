@@ -55,8 +55,12 @@ export default {
         startSearch () {
             if (this.searchInputValue.length >= parseInt(this.minCharacters, 10)) {
                 this.setShowAllResults(false);
+                if (!this.searchResultsActive) {
+                    this.$store.state.Menu.mainMenu.navigation.history.push({0: {type: "root", props: []}});
+                }
                 this.setSearchResultsActive(true);
                 this.search({searchInput: this.searchInputValue});
+
                 this.clickedMenuElement({
                     name: "common:modules.searchBar.search",
                     side: "mainMenu",
@@ -65,11 +69,7 @@ export default {
             }
             if (this.searchInputValue.length < parseInt(this.minCharacters, 10) && this.searchResultsActive === true) {
                 this.navigateBack("mainMenu");
-                    //this.$store.state.Menu["mainMenu"].navigation.history.push({type:"searchbarresultlist"})
             }
-
-             console.log(this.$store.state.Menu);
-             console.log(this.$store.state.Menu["mainMenu"].navigation.history);
         }
     }
 };
