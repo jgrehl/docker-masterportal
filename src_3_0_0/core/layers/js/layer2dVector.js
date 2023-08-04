@@ -255,49 +255,46 @@ Layer2dVector.prototype.createLegend = async function () {
         isSecured = typeof this.attributes.isSecured === "boolean" ? this.attributes.isSecured : false;
     let legend = this.inspectLegendUrl();
 
-    if (!Array.isArray(legend)) {
-        if (styleObject && legend === true) {
-
-            const legendInfos = await createStyle.returnLegendByStyleId(styleObject.styleId);
-
-            if (styleObject.styleId === "default") {
-                const type = this.layer.getSource().getFeatures()[0].getGeometry().getType(),
-                    typeSpecificLegends = [];
-
-                if (type === "MultiLineString") {
-                    typeSpecificLegends.push(legendInfos.legendInformation?.find(element => element.geometryType === "LineString"));
-                    legend = typeSpecificLegends;
-                }
-                else {
-                    typeSpecificLegends.push(legendInfos.legendInformation?.find(element => element.geometryType === type));
-                    legend = typeSpecificLegends;
-                }
-            }
-            else {
-                if (!this.geometryTypeRequestLayers.includes(this.get("id"))) {
-                    this.geometryTypeRequestLayers.push(this.get("id"));
-                    getGeometryTypeFromService.getGeometryTypeFromWFS(rules, this.get("url"), this.get("version"), this.get("featureType"), this.get("styleGeometryType"), isSecured, Config.wfsImgPath,
-                        (geometryTypes, error) => {
-                            if (error) {
-                                store.dispatch("Alerting/addSingleAlert", "<strong>" + i18next.t("common:core.layers.errorHandling.getGeometryTypeFromWFSFetchfailed") + "</strong> <br>"
-                                    + "<small>" + i18next.t("common:core.layers.errorHandling.getGeometryTypeFromWFSFetchfailedMessage") + "</small>");
-                            }
-                            return geometryTypes;
-                        });
-                }
-                if (rules && rules[0]?.conditions !== undefined && this.layer.getSource().getFeatures()) {
-                    legend = this.filterUniqueLegendInfo(this.layer.getSource().getFeatures(), rules, legendInfos);
-                }
-                else {
-                    legend = legendInfos.legendInformation;
-                }
-            }
-        }
-        else if (typeof legend === "string") {
-            legend = [legend];
-        }
+    if (Array.isArray(legend)) {
+        this.set("legend", legend);
+        return legend;
     }
+    else if (styleObject && legend === true) {
+        getGeometryTypeFromService.getGeometryTypeFromWFS(rules, this.get("url"), this.get("version"), this.get("featureType"), this.get("styleGeometryType"), isSecured, Config.wfsImgPath,
+            (geometryTypes, error) => {
+                if (error) {
+                    store.dispatch("Alerting/addSingleAlert", "<strong>" + i18next.t("common:modules.vectorStyle.styleObject.getGeometryTypeFromWFSFetchfailed") + "</strong> <br>"
+                        + "<small>" + i18next.t("common:modules.vectorStyle.styleObject.getGeometryTypeFromWFSFetchfailedMessage") + "</small>");
+                }
+                return geometryTypes;
+            })
+            ?.then(legendInfos => {
+                if (styleObject.styleId === "default") {
+                    legend = legendInfos;
+                }
+                else {
+                    const source = this.getLayerSource(),
+                        features = source instanceof Cluster ? source.getSource().getFeatures() : source.getFeatures();
 
+                    if (!this.geometryTypeRequestLayers.includes(this.get("id"))) {
+                        this.geometryTypeRequestLayers.push(this.get("id"));
+                    }
+                    if (rules[0].conditions !== undefined && features) {
+                        const uniqueLegendInformation = this.filterUniqueLegendInfo(features, rules, legendInfos);
+
+                        legend = uniqueLegendInformation;
+                    }
+                    else {
+                        legend = legendInfos;
+                    }
+                }
+                this.set("legend", legend);
+            });
+    }
+    else if (typeof legend === "string") {
+        legend = [legend];
+    }
+    this.set("legend", legend);
     return legend;
 };
 
@@ -310,26 +307,25 @@ Layer2dVector.prototype.createLegend = async function () {
  */
 Layer2dVector.prototype.filterUniqueLegendInfo = function (features, rules, legendInfos) {
     const rulesKey = Object.keys(rules[0].conditions.properties)[0],
-        conditionProperties = [],
-        uniqueLegendInformation = [];
+        conditionProperties = [...new Set(features.map(feature => feature.get(rulesKey)))];
+    let uniqueLegendInformation = [];
 
-    for (let i = 0; i < features.length; i++) {
-        const rulesKeyUpperCase = rulesKey.charAt(0).toUpperCase() + rulesKey.slice(1);
+    rules.forEach(rule => {
+        const value = String(rule.conditions.properties[rulesKey]);
 
-        if (features[i].get(rulesKey) !== undefined && !conditionProperties.includes(features[i].get(rulesKey))) {
-            conditionProperties.push(features[i].get(rulesKey));
-        }
-        else if (features[i].get(rulesKeyUpperCase) !== undefined && !conditionProperties.includes(features[i].get(rulesKeyUpperCase))) {
-            conditionProperties.push(features[i].get(rulesKeyUpperCase));
-        }
-    }
-    legendInfos.legendInformation.forEach((info) => {
-        if (conditionProperties.includes(info.label)) {
-            if (!uniqueLegendInformation.includes(info)) {
-                uniqueLegendInformation.push(info);
+        if (conditionProperties.includes(value)) {
+            const legendInformation = legendInfos.find(legendInfo => legendInfo?.label === (rule.style?.legendValue || value));
+
+            if (typeof legendInformation !== "undefined") {
+                uniqueLegendInformation.push(legendInformation);
             }
         }
     });
+
+    if (uniqueLegendInformation.length === 0) {
+        uniqueLegendInformation = legendInfos;
+    }
+
     return uniqueLegendInformation;
 };
 

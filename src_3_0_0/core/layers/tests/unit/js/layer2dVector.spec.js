@@ -1,8 +1,6 @@
 import {expect} from "chai";
 import sinon from "sinon";
 import styleList from "@masterportal/masterportalapi/src/vectorStyle/styleList.js";
-import createStyle from "@masterportal/masterportalapi/src/vectorStyle/createStyle";
-import getGeometryTypeFromService from "@masterportal/masterportalapi/src/vectorStyle/lib/getGeometryTypeFromService";
 import Layer2dVector from "../../../js/layer2dVector";
 
 describe("src_3_0_0/core/js/layers/layer2dVector.js", () => {
@@ -283,19 +281,6 @@ describe("src_3_0_0/core/js/layers/layer2dVector.js", () => {
 
             expect(await layerWrapper.createLegend()).to.be.deep.equals(attributes.legendURL);
         });
-
-        it("createLegend with styleObject and legend true", async () => {
-            attributes.legend = true;
-            const layerWrapper = new Layer2dVector(attributes),
-                legendInformation = {
-                    "the": "legend Information"
-                };
-
-            sinon.stub(createStyle, "returnLegendByStyleId").returns({legendInformation});
-            sinon.stub(getGeometryTypeFromService, "getGeometryTypeFromWFS");
-
-            expect(await layerWrapper.createLegend()).to.deep.equals(legendInformation);
-        });
     });
 
     describe("filterUniqueLegendInfo", () => {
@@ -342,21 +327,18 @@ describe("src_3_0_0/core/js/layers/layer2dVector.js", () => {
                         imageName: "bruecke.png"
                     }
                 }],
-                legendInfos = {
-                    id: "mrh-industriekultur",
-                    legendInformation: [{
-                        geometryType: "Point",
-                        id: "Point%7B%22properties%22%3A%7B%22kategorie%22%3A%22Bew%C3%A4sserungsanlagen%22%7D%7D",
-                        label: "Bewässerungsanlagen",
-                        styleObject: {}
-                    },
-                    {
-                        geometryType: "Point",
-                        id: "Point%7B%22properties%22%3A%7B%22kategorie%22%3A%22Br%C3%BCcken%22%7D%7D",
-                        label: "Brücken",
-                        styleObject: {}
-                    }]
+                legendInfos = [{
+                    geometryType: "Point",
+                    id: "Point%7B%22properties%22%3A%7B%22kategorie%22%3A%22Bew%C3%A4sserungsanlagen%22%7D%7D",
+                    label: "Bewässerungsanlagen",
+                    styleObject: {}
                 },
+                {
+                    geometryType: "Point",
+                    id: "Point%7B%22properties%22%3A%7B%22kategorie%22%3A%22Br%C3%BCcken%22%7D%7D",
+                    label: "Brücken",
+                    styleObject: {}
+                }],
                 expectedUniqueLegendInfo = [{
                     geometryType: "Point",
                     id: "Point%7B%22properties%22%3A%7B%22kategorie%22%3A%22Bew%C3%A4sserungsanlagen%22%7D%7D",
@@ -446,39 +428,36 @@ describe("src_3_0_0/core/js/layers/layer2dVector.js", () => {
                         imageName: "bruecke.png"
                     }
                 }],
-                legendInfos = {
-                    id: "mrh-industriekultur",
-                    legendInformation: [{
-                        geometryType: "Point",
-                        id: "1",
-                        label: "Grundschule",
-                        styleObject: {}
-                    },
-                    {
-                        geometryType: "Point",
-                        id: "2",
-                        label: "Regionale Schule",
-                        styleObject: {}
-                    },
-                    {
-                        geometryType: "Point",
-                        id: "3",
-                        label: "Gymnasium",
-                        styleObject: {}
-                    },
-                    {
-                        geometryType: "Point",
-                        id: "4",
-                        label: "Förderschule",
-                        styleObject: {}
-                    },
-                    {
-                        geometryType: "Point",
-                        id: "5",
-                        label: "Waldorfschule",
-                        styleObject: {}
-                    }]
+                legendInfos = [{
+                    geometryType: "Point",
+                    id: "1",
+                    label: "Grundschule",
+                    styleObject: {}
                 },
+                {
+                    geometryType: "Point",
+                    id: "2",
+                    label: "Regionale Schule",
+                    styleObject: {}
+                },
+                {
+                    geometryType: "Point",
+                    id: "3",
+                    label: "Gymnasium",
+                    styleObject: {}
+                },
+                {
+                    geometryType: "Point",
+                    id: "4",
+                    label: "Förderschule",
+                    styleObject: {}
+                },
+                {
+                    geometryType: "Point",
+                    id: "5",
+                    label: "Waldorfschule",
+                    styleObject: {}
+                }],
                 expectedUniqueLegendInfo = [{
                     geometryType: "Point",
                     id: "1",
@@ -531,15 +510,12 @@ describe("src_3_0_0/core/js/layers/layer2dVector.js", () => {
                         imageName: "bruecke.png"
                     }
                 }],
-                legendInfos = {
-                    id: "mrh-industriekultur",
-                    legendInformation: [{
-                        geometryType: "Point",
-                        id: "Point%7B%22properties%22%3A%7B%22kategorie%22%3A%22Bew%C3%A4sserungsanlagen%22%7D%7D",
-                        label: "Bewässerungsanlagen",
-                        styleObject: {}
-                    }]
-                },
+                legendInfos = [{
+                    geometryType: "Point",
+                    id: "Point%7B%22properties%22%3A%7B%22kategorie%22%3A%22Bew%C3%A4sserungsanlagen%22%7D%7D",
+                    label: "Bewässerungsanlagen",
+                    styleObject: {}
+                }],
                 expectedUniqueLegendInfo = [{
                     geometryType: "Point",
                     id: "Point%7B%22properties%22%3A%7B%22kategorie%22%3A%22Bew%C3%A4sserungsanlagen%22%7D%7D",
