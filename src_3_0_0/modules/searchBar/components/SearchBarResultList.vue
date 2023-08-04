@@ -101,6 +101,7 @@ export default {
     },
     methods: {
         ...mapActions("Modules/SearchBar", ["addSelectedSearchResultToTopicTree"]),
+        ...mapActions("Menu", ["clickedMenuElement", "navigateBack"]),
         ...mapMutations("Modules/SearchBar", ["setSearchSuggestions", "addSuggestionItem", "setShowAllResults", "setSearchResultsActive"]),
         /**
          * Prepares the all results list of one category
@@ -108,6 +109,17 @@ export default {
          * @returns {void}
          */
         prepareShowAllResults (categoryItem) {
+            this.$store.state.Menu.mainMenu.navigation.currentComponent = {props: [{name:"test"}], type: "searchbarresultlist"};
+
+            this.$store.state.Menu.currentComponent = "searchbarresultlist";
+            this.$store.state.Menu.mainMenu.navigation.history = [];
+            this.$store.state.Menu.mainMenu.navigation.history.push({type: "root", props: []}, {type: "searchbarresultlist2", props: {name: "modules.searchBar.searchbarresultlist"}});
+             console.log(this.$store.state.Menu.mainMenu.navigation.history)
+            /* this.clickedMenuElement({
+                name: "common:modules.searchBar.search",
+                side: "mainMenu",
+                type: "searchbarresultlist"
+            }); */
             this.currentAvailableCategories = [categoryItem];
             this.currentShowAllList = this.limitedSortedSearchResults.currentShowAllList.filter(function (value) {
                 return value.category === categoryItem;
@@ -124,7 +136,8 @@ export default {
         v-if="searchInput.length>=minCharacters && searchResultsActive && searchResults.length>0"
         class="overflow-auto results-container"
     >
-        <!-- <a
+       <!--  <a
+            v-if="showAllResults===true"
             :id="'mp-navigation'"
             class="pb-2 pt-2 mp-menu-navigation-link"
             href="#"

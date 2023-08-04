@@ -36,6 +36,7 @@ export default {
      * @returns {void}
      */
     changeCurrentComponent ({commit, dispatch, state}, {type, side, props}) {
+        console.log(props)
         const currentType = state[side].navigation.currentComponent.type,
             currentProps = state[side].navigation.currentComponent.props;
 
