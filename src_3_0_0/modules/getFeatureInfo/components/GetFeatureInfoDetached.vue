@@ -8,6 +8,7 @@ import {mapActions, mapGetters, mapMutations} from "vuex";
  * Get Feature Info Detached
  * @module modules/GetFeatureInfoDetached
  * @vue-prop {Object} feature - The required feature.
+ * @vue-prop {Boolean} isUpdated - true, if feature was updated.
  * @vue-data {Boolean} isContentHtml - Shows if content is html.
  * @vue-computed {String} title - The title of the gfi.
  * @vue-computed {String} theme - The theme in which the feature should be displayed.
@@ -22,8 +23,14 @@ export default {
         feature: {
             type: Object,
             required: true
+        },
+        isUpdated: {
+            type: Boolean,
+            required: false,
+            default: false
         }
     },
+    emits: ["updateFeatureDone"],
     data () {
         return {
             isContentHtml: false
@@ -67,6 +74,14 @@ export default {
     },
     mounted () {
         this.setMarker();
+    },
+    updated: function () {
+        if (this.isUpdated) {
+            // todo einkommentieren nach PR https://bitbucket.org/geowerkstatt-hamburg/masterportal/pull-requests/4353
+            // this.highlightVectorFeature();
+            this.setMarker();
+            this.$emit("updateFeatureDone");
+        }
     },
     beforeUnmount: function () {
         this.removePointMarker();
