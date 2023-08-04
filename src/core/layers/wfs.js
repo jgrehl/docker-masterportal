@@ -232,7 +232,7 @@ WFSLayer.prototype.createLegend = function () {
                 }
                 return geometryTypes;
             })
-            .then(legendInfos => {
+            ?.then(legendInfos => {
                 if (styleObject.styleId === "default") {
                     this.setLegend(legendInfos);
                 }

@@ -3,16 +3,31 @@
 
 [Semantic versioning](https://semver.org/spec/v2.0.0.html) is used.
 
+## Unreleased - in development
+### Added
+
+### Changed
+- The following packages have been updated:
+    - dependencies:
+        - @masterportal/masterportalapi: 2.23.0 to 2.24.0 (This also raised olcs to version 2.15.0)
+
+### Deprecated
+
+### Removed
+
+### Fixed
+- WFS: avoid createLegend undefined error
+
+---
 
 ## v2.36.0 - 2023-08-02
-
 ### Added
 - QuickHelp: A description of the route preference `recommended route` has been added.
 - 3D:
-  - Colored highlighting for 3D Tiles has been added.
-  - GFI MapMarker appears now on top of elevations by click.
+    - Colored highlighting for 3D Tiles has been added.
+    - GFI MapMarker appears now on top of elevations by click.
 - Filter:
-  - Add: new parameter minZoom and maxZoom in layer configuration to make filter to react with zoom level. If the current zoom level if out of range, the filter will be deactivated.
+    - Add: new parameter minZoom and maxZoom in layer configuration to make filter to react with zoom level. If the current zoom level if out of range, the filter will be deactivated.
 - Routing:
     - Possibility to define additional preferences for the different speed profiles (additionally to the BKG service)  (requires own modified backend).
     - Possibility to define additional avoid features for the different speed profiles (additionally to the BKG service) (requires own modified backend).
@@ -22,14 +37,15 @@
 - WFST:
     - further input type "short" and "float"
 - MouseHover:
-  - Added highlighting Vector Layers on mouseHover as requested in Issue #836
-  - Configurable in config.js
+    - Added highlighting Vector Layers on mouseHover as requested in Issue #836
+    - Configurable in config.js
 
 ### Changed
 - The following packages have been updated:
     - dependencies:
         - @masterportal/masterportalapi: 2.20.0 to 2.23.0 (with cesium 1.106.0 to @cesium/engine 2.4.1)
 - WFS: Migrated writeTransaction and sendTransaction to masterportalAPI (2.22.0).
+- GFI: gfiFeatures are no longer set to null on every click, but only when there are no features or the gfi is closed
 
 ### Fixed
 - Print: The portal is no longer reloaded after pressing the Enter key in the title field. Instead, the print is sent.
@@ -44,17 +60,19 @@
 - Issue #1057: Filter: Checkbox Snippet does not response right in activation and deactivation.
 
 ---
+
 ## v2.35.1 - 2023-07-13
 ### Fixed
 - GFI: Fixed GFI for Cesium TileFeatures by updating Cesium function name.
 
 ---
+
 ## v2.35.0 - 2023-07-05
 ### Added
 - AddWMS Tool uses legendURL and MetadataURL from Capabilities.
 - Filter:
-  - Add: new parameter "filterOnMove" in layer configuration to enable if the layer should be filtered dynamically after the map moves.
-  - Add: interface for VectorTiles. Enables filtering for VectorTiles.
+    - Add: new parameter "filterOnMove" in layer configuration to enable if the layer should be filtered dynamically after the map moves.
+    - Add: interface for VectorTiles. Enables filtering for VectorTiles.
 - Documentation gitWorkflow:
     - A guide for rebasing feature branches with remote has been added. See [Branches and workflow](https://bitbucket.org/geowerkstatt-hamburg/masterportal/src/latest/dev/gitWorkflow.md)
 - ScaleLine: Added the possibility to select the map scale via a selection in the footer.
@@ -84,8 +102,8 @@
 ## v2.34.1 - 2023-06-12
 ### Changed
 - The following NPM packages have been updated:
-  - dependencies:
-    - @masterportal/masterportalapi: 2.19.0 to 2.19.2
+    - dependencies:
+      - @masterportal/masterportalapi: 2.19.0 to 2.19.2
 
 ### Fixed
 - VectorStyle of multiple geometries with styling rules does not fail on not existing style. (fix within masterportalapi)
@@ -99,22 +117,22 @@
 ### Added
 - GFI: nested object values can now be addressed from "gfiAttributes" by dot notation. See [services.json](https://bitbucket.org/geowerkstatt-hamburg/masterportal/src/dev/doc/services.json.md#markdown-header-gfi_attributes) .
 - PortalFooter
-  - configuration for mobileFooterInfoToggler has been implemented
-  - the icon (arrow) to toggle information is only visible if it is configured
+    - configuration for mobileFooterInfoToggler has been implemented
+    - the icon (arrow) to toggle information is only visible if it is configured
 
 ### Changed
 - The version of node was updated to `^16.13.2 || ^18.16.0`. If you use node 18, you must provide the environment variable `NODE_OPTIONS=--openssl-legacy-provider` or you can alter npm scripts using cross-env, e.g. `"start": "cross-env NODE_OPTIONS=--openssl-legacy-provider webpack-dev-server --config devtools/webpack.dev.js"` to avoid errors with webpack 4 (see https://github.com/webpack/webpack/issues/14532#issuecomment-947807590).
 - The version of npm was updated to `^8.1.2 || ^9.5.1`
 - The following NPM packages have been updated:
-  - dependencies:
-    - @masterportal/masterportalapi: 2.17.0 to 2.19.0
+    - dependencies:
+      - @masterportal/masterportalapi: 2.17.0 to 2.19.0
 
 ### Fixed
 - Tool Coordinates: no errors occur on mobile devices.
 - FileImport:
-  - Error fixed when importing KML file with polygon without label.
-  - KML exported from QGIS can now be loaded in the master portal.
-  - Handling of KML generated from the master portal has been improved.
+    - Error fixed when importing KML file with polygon without label.
+    - KML exported from QGIS can now be loaded in the master portal.
+    - Handling of KML generated from the master portal has been improved.
 - URLParam: multiple mdIds entries in the url result in added layers again.
 - Issue #1016: Draw: When creating a text, it is now prevented that a previous is changed.
 - Issue #1021: vectorStyle can now handle geometryCollections.
