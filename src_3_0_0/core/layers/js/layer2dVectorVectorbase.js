@@ -1,4 +1,5 @@
-import {vectorBase} from "@masterportal/masterportalapi/src";
+import VectorLayer from "ol/layer/Vector.js";
+import VectorSource from "ol/source/Vector.js";
 import Layer2dVector from "./layer2dVector";
 
 /**
@@ -13,6 +14,7 @@ export default function Layer2dVectorVectorbase (attributes) {
     const defaultAttributes = {
     };
 
+    this.sourceUpdated = false;
     this.attributes = Object.assign(defaultAttributes, attributes);
     Layer2dVector.call(this, this.attributes);
 }
@@ -25,6 +27,32 @@ Layer2dVectorVectorbase.prototype = Object.create(Layer2dVector.prototype);
  * @returns {void}
  */
 Layer2dVectorVectorbase.prototype.createLayer = function (attributes) {
-    this.layer = vectorBase.createLayer(attributes);
+    this.layer = this.createVectorLayer(attributes);
     this.features = attributes.features;
+};
+
+/**
+ * Creates an vector Base
+ * @param {Object} attrs  attributes of the layer
+ * @returns {Object} layer
+ */
+Layer2dVectorVectorbase.prototype.createVectorLayer = function (attrs) {
+    const source = new VectorSource({
+        features: attrs.features
+    });
+
+    return new VectorLayer({
+        source: source,
+        name: attrs.name,
+        typ: attrs.typ,
+        gfiAttributes: attrs.gfiAttributes,
+        id: attrs.id
+    });
+};
+
+Layer2dVectorVectorbase.prototype.updateSource = function () {
+    if (this.sourceUpdated === false) {
+        this.sourceUpdated = true;
+        this.layer.getSource().refresh();
+    }
 };
