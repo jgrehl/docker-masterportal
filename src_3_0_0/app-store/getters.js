@@ -310,7 +310,7 @@ const getters = {
     },
 
     /**
-     * Returns all visible layer configurations.
+     * Returns all visible subject data layer configurations.
      * @param {Object} state state of the app-store.
      * @returns {Object[]} Containing all layer configurations with property 'visibility' is true.
      */
