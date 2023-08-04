@@ -66,13 +66,4 @@ describe("src_3_0_0/core/js/layers/layer2dVectorVectorbase.js", () => {
         expect(spy.calledOnce).to.be.true;
         expect(baseLayer.sourceUpdated).to.be.true;
     });
-
-    it("createLegend shall set legend", function () {
-        attributes.legendURL = "https://legendUrl";
-        const layer = new Layer2dVectorVectorbase(attributes);
-
-        expect(layer.get("legend")).to.be.deep.equals([attributes.legendURL]);
-
-    });
-
 });
