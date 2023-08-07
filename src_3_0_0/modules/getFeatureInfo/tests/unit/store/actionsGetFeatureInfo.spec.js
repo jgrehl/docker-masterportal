@@ -1,6 +1,6 @@
 
 import sinon from "sinon";
-
+/* eslint-disable no-unused-vars */
 describe("src_3_0_0/modules/getFeatureInfo/store/actionsGetFeatureInfo.js", () => {
     let commit,
         getters,
