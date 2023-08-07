@@ -25,6 +25,7 @@ import Routing from "./routing/store/indexRouting";
 import SaveSelection from "./saveSelection/store/indexSaveSelection";
 import ScaleSwitcher from "./scaleSwitcher/store/indexScaleSwitcher";
 import SearchByCoord from "./searchByCoord/store/indexSearchByCoord";
+import SearchByCoord from "./searchByCoord/store/indexSearchByCoord";
 import SelectFeatures from "./selectFeatures/store/indexSelectFeatures";
 import Shadow from "./shadowTool/store/indexShadowTool";
 import StyleVT from "./styleVT/store/indexStyleVT";
