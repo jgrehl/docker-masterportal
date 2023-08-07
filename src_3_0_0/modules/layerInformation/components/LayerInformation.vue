@@ -347,7 +347,7 @@ export default {
     }
 
     .abstract > p {
-        font-size: 1rem;
+        font-size: $font-size-base;
     }
 
     .layerInformation {
