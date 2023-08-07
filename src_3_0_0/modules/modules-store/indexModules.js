@@ -1,5 +1,6 @@
 import getters from "./gettersModules";
 
+import About from "../about/store/indexAbout";
 import AddWMS from "../addWMS/store/indexAddWMS";
 import BaselayerSwitcher from "../baselayerSwitcher/store/indexBaselayerSwitcher";
 import BufferAnalysis from "../bufferAnalysis/store/indexBufferAnalysis";
@@ -42,6 +43,7 @@ export default {
     getters,
     modules: {
         // modules must be copied, else tests fail in watch mode
+        About: {...About},
         AddWMS: {...AddWMS},
         BaselayerSwitcher: {...BaselayerSwitcher},
         BufferAnalysis: {...BufferAnalysis},
