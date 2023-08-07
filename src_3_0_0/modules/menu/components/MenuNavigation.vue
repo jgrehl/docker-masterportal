@@ -23,7 +23,6 @@ export default {
         ...mapGetters(["isMobile"]),
 
         previousNavigation () {
-            console.log("---------------------------------------------", this.previousNavigationEntryText(this.side))
             return this.previousNavigationEntryText(this.side);
         },
 
