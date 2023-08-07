@@ -159,7 +159,6 @@ export default {
             />
             <SearchBar />
         </div>
-
         <MenuContainerBody
             :side="side"
         />
