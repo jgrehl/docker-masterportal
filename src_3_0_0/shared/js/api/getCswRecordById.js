@@ -14,7 +14,7 @@ import xml2json from "../utils/xml2json";
  * @param {String} [version="2.0.2"] - csw api version
  * @returns {Promise<Object|undefined>}  Promise object represents the GetFeatureInfo request
  */
-export function getRecordById (url, metadataId, outputSchema = "http://www.isotc211.org/2005/gmd", elementSetName = "full", version = "2.0.2") {
+function getRecordById (url, metadataId, outputSchema = "http://www.isotc211.org/2005/gmd", elementSetName = "full", version = "2.0.2") {
     return axios.get(url, {
         params: {
             service: "CSW",
@@ -35,7 +35,7 @@ export function getRecordById (url, metadataId, outputSchema = "http://www.isotc
  * @param {Object} json - the response of getRecordById as JSON
  * @returns {Object} metadata
  */
-export function getMetadata (json) {
+function getMetadata (json) {
     return {
         getTitle: () => parseTitle(json),
         getAbstract: () => parseAbstract(json),
@@ -44,7 +44,8 @@ export function getMetadata (json) {
         getCreationDate: () => parseDate(json, "creation"),
         getRevisionDate: () => parseDate(json, "revision"),
         getDownloadLinks: () => parseDownloadLinks(json),
-        getOwner: () => parseContactByRole(json, "owner")
+        getOwner: () => parseContactByRole(json, "owner"),
+        getContact: () => parseContactByRole(json, "pointOfContact")
     };
 }
 
@@ -56,7 +57,7 @@ export function getMetadata (json) {
  * @see {@link http://portal.opengeospatial.org/files/?artifact_id=6495}
  * @returns {Object|Object[]} todo
  */
-export function getMdIdentification (json) {
+function getMdIdentification (json) {
     return json.GetRecordByIdResponse?.MD_Metadata?.identificationInfo?.MD_DataIdentification
         ||
         json.GetRecordByIdResponse?.MD_Metadata?.identificationInfo?.SV_ServiceIdentification
@@ -69,7 +70,7 @@ export function getMdIdentification (json) {
  * @param {Object} json - the response
  * @returns {String} title
  */
-export function parseTitle (json) {
+function parseTitle (json) {
     return getMdIdentification(json)?.citation?.CI_Citation?.title?.CharacterString?.getValue();
 }
 
@@ -123,7 +124,7 @@ function parseFrequenzy (json) {
  * @param {String} dateType - the type of the date (e.g. publication)
  * @returns {String|undefined} formatted date
  */
-export function parseDate (json, dateType) {
+function parseDate (json, dateType) {
     const dates = getMdIdentification(json)?.citation?.CI_Citation?.date;
     let dateValue;
 
@@ -185,13 +186,15 @@ function parseContactByRole (json, role) {
             if (contact?.CI_ResponsibleParty?.role?.CI_RoleCode?.getAttributes()?.codeListValue === role) {
                 dateValue = {
                     name: contact.CI_ResponsibleParty?.organisationName?.CharacterString?.getValue(),
+                    positionName: contact.CI_ResponsibleParty?.positionName?.CharacterString?.getValue().split(",").reverse(),
                     street: contact.CI_ResponsibleParty?.contactInfo?.CI_Contact?.address?.CI_Address?.deliveryPoint?.CharacterString?.getValue(),
                     housenr: "",
                     postalCode: contact.CI_ResponsibleParty?.contactInfo?.CI_Contact?.address?.CI_Address?.postalCode?.CharacterString?.getValue(),
                     city: contact.CI_ResponsibleParty?.contactInfo?.CI_Contact?.address?.CI_Address?.city?.CharacterString?.getValue(),
                     email: contact.CI_ResponsibleParty?.contactInfo?.CI_Contact?.address?.CI_Address?.electronicMailAddress?.CharacterString?.getValue(),
                     phone: contact.CI_ResponsibleParty?.contactInfo?.CI_Contact?.phone?.CI_Telephone?.voice?.CharacterString?.getValue(),
-                    link: contact.CI_ResponsibleParty?.contactInfo?.CI_Contact?.onlineResource?.CI_OnlineResource?.linkage?.URL?.getValue()
+                    link: contact.CI_ResponsibleParty?.contactInfo?.CI_Contact?.onlineResource?.CI_OnlineResource?.linkage?.URL?.getValue(),
+                    country: contact.CI_ResponsibleParty?.contactInfo?.CI_Contact?.address?.CI_Address?.country?.CharacterString?.getValue()
                 };
             }
         });
@@ -199,15 +202,24 @@ function parseContactByRole (json, role) {
     else if (pointOfContacts?.CI_ResponsibleParty?.role?.CI_RoleCode?.getAttributes()?.codeListValue === role) {
         dateValue = {
             name: pointOfContacts.CI_ResponsibleParty?.organisationName?.CharacterString?.getValue(),
+            positionName: pointOfContacts.CI_ResponsibleParty?.positionName?.CharacterString?.getValue().split(",").reverse(),
             street: pointOfContacts.CI_ResponsibleParty?.contactInfo?.CI_Contact?.address?.CI_Address?.deliveryPoint?.CharacterString?.getValue(),
             housenr: "",
             postalCode: pointOfContacts.CI_ResponsibleParty?.contactInfo?.CI_Contact?.address?.CI_Address?.postalCode?.CharacterString?.getValue(),
             city: pointOfContacts.CI_ResponsibleParty?.contactInfo?.CI_Contact?.address?.CI_Address?.city?.CharacterString?.getValue(),
             email: pointOfContacts.CI_ResponsibleParty?.contactInfo?.CI_Contact?.address?.CI_Address?.electronicMailAddress?.CharacterString?.getValue(),
             phone: pointOfContacts.CI_ResponsibleParty?.contactInfo?.CI_Contact?.phone?.CI_Telephone?.voice?.CharacterString?.getValue(),
-            link: pointOfContacts.CI_ResponsibleParty?.contactInfo?.CI_Contact?.onlineResource?.CI_OnlineResource?.linkage?.URL?.getValue()
+            link: pointOfContacts.CI_ResponsibleParty?.contactInfo?.CI_Contact?.onlineResource?.CI_OnlineResource?.linkage?.URL?.getValue(),
+            country: pointOfContacts.CI_ResponsibleParty?.contactInfo?.CI_Contact?.address?.CI_Address?.country?.CharacterString?.getValue()
         };
     }
 
     return dateValue;
 }
+
+export default {
+    getRecordById,
+    getMdIdentification,
+    parseDate,
+    parseTitle
+};
