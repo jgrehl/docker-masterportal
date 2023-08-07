@@ -122,7 +122,7 @@ export default {
         display: flex;
         flex-direction: column;
         align-items: stretch;
-        padding: $padding;
+        padding: $padding $padding 0 $padding;
         font-size: $font-size-base;
         overflow-y: auto;
         height: 100%;
