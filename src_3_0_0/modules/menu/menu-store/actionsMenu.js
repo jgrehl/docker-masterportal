@@ -36,7 +36,6 @@ export default {
      * @returns {void}
      */
     changeCurrentComponent ({commit, dispatch, state}, {type, side, props}) {
-        console.log(props)
         const currentType = state[side].navigation.currentComponent.type,
             currentProps = state[side].navigation.currentComponent.props;
 
@@ -88,7 +87,6 @@ export default {
      * @returns {void}
      */
     clickedMenuElement ({dispatch, rootGetters}, {name, path, side, type, properties}) {
-        console.log(name,path,side,type);
         if (type) {
             if (type === "customMenuElement") {
                 if (properties.openURL !== undefined) {
@@ -131,7 +129,7 @@ export default {
 
     /**
      * Properly deactivates an element if it is not a folder
-     * and removes its entry from the navigation.
+     * removes its entry from the navigation and handles search navigation case.
      * @param {Object} param store context
      * @param {Object} param.commit the commit
      * @param {Object} param.dispatch the dispatch
@@ -140,13 +138,16 @@ export default {
      * @param {String} side Side on which the navigation action occurred.
      * @returns {void}
      */
-    navigateBack ({commit, dispatch, getters, state}, side) {
+    navigateBack ({commit, dispatch, getters, state, rootGetters}, side) {
         nextTick(() => {
             if (getters.currentComponent(side).type === state.currentMouseMapInteractionsComponent && getters.currentComponent(side).type !== state.defaultComponent) {
                 dispatch("changeCurrentMouseMapInteractionsComponent", {type: state.defaultComponent, side});
             }
+            if (rootGetters["Modules/SearchBar/showAllResults"] === false) {
+                commit("switchToPreviousComponent", side);
+            }
 
-            commit("switchToPreviousComponent", side);
+            dispatch("Modules/SearchBar/updateSearchNavigation", side, {root: true});
         });
     },
 
