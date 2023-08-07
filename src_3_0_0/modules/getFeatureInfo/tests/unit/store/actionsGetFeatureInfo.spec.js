@@ -1,6 +1,5 @@
-import {expect} from "chai";
+
 import sinon from "sinon";
-import actions from "../../../store/actionsGetFeatureInfo.js";
 
 describe("src_3_0_0/modules/getFeatureInfo/store/actionsGetFeatureInfo.js", () => {
     let commit,
