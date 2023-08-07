@@ -3,7 +3,7 @@ import {DEVICE_PIXEL_RATIO} from "ol/has.js";
 
 import actionsPrintInitialization from "./actionsPrintInitialization";
 import BuildSpec from "../js/buildSpec";
-import {getRecordById} from "../../../shared/js/api/getCswRecordById";
+import getCswRecordById from "../../../shared/js/api/getCswRecordById";
 import getVisibleLayer from "../js/getVisibleLayer";
 import omit from "../../../shared/js/utils/omit";
 import changeCase from "../../../shared/js/utils/changeCase";
@@ -143,10 +143,10 @@ const actions = {
         }
 
         if (rootGetters.metadata.useProxy.includes(cswObj.cswUrl)) {
-            metadata = await getRecordById(cswObj.cswUrl, cswObj.metaId);
+            metadata = await getCswRecordById.getRecordById(cswObj.cswUrl, cswObj.metaId);
         }
         else {
-            metadata = await getRecordById(cswObj.cswUrl, cswObj.metaId);
+            metadata = await getCswRecordById.getRecordById(cswObj.cswUrl, cswObj.metaId);
         }
 
         if (typeof metadata === "undefined") {

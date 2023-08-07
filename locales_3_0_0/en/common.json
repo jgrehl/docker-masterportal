@@ -35,6 +35,13 @@
     }
   },
   "modules": {
+    "about": {
+      "additionalMetadata": "additional metadata...",
+      "contact": "Contact:",
+      "name": "About this Portal",
+      "noMetadataLoaded": "No metadata could be loaded!",
+      "version": "Version: "
+    },
     "addWMS": {
       "alertTitleSuccess": "Layer added successfully",
       "alreadyAdded": "The layers of the requested WMS have already been added.",

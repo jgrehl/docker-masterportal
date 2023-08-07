@@ -1,3 +1,4 @@
+import About from "../about/components/AboutModule.vue";
 import AddWMS from "../addWMS/components/AddWMS.vue";
 import BaselayerSwitcher from "../baselayerSwitcher/components/BaselayerSwitcher.vue";
 import BufferAnalysis from "../bufferAnalysis/components/BufferAnalysis.vue";
@@ -40,6 +41,7 @@ import Wfst from "../wfst/components/WfsTransaction.vue";
 const getters = {
     componentMap: () => {
         const coreModules = {
+            about: About,
             addWMS: AddWMS,
             baselayerSwitcher: BaselayerSwitcher,
             bufferAnalysis: BufferAnalysis,

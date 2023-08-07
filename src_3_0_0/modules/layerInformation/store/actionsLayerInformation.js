@@ -1,4 +1,4 @@
-import {getMetadata, getRecordById} from "../../../shared/js/api/getCswRecordById";
+import getCswRecordById from "../../../shared/js/api/getCswRecordById";
 import sortBy from "../../../shared/js/utils/sortBy";
 import xml2json from "../../../shared/js/utils/xml2json";
 import axios from "axios";
@@ -63,7 +63,7 @@ const actions = {
         let metadata;
 
         if (metaInfo.cswUrl !== null && typeof metaInfo.metaId !== "undefined") {
-            metadata = await getRecordById(metaInfo.cswUrl, metaInfo.metaId);
+            metadata = await getCswRecordById.getRecordById(metaInfo.cswUrl, metaInfo.metaId);
         }
         // use default csw_url from rest-services.json if csw_url not stated in the specific service
         else if (Config.cswId !== null && typeof Config.cswId !== "undefined") {
@@ -79,14 +79,14 @@ const actions = {
             }
 
             if (metaURL !== "" && typeof metaInfo.metaId !== "undefined") {
-                metadata = await getRecordById(metaURL, metaInfo.metaId);
+                metadata = await getCswRecordById.getRecordById(metaURL, metaInfo.metaId);
             }
         }
         else if (metaInfo.customMetadata) {
             const metadataAsJson = await axios.get(metaInfo.cswUrl)
                 .then(response => xml2json(response.request.responseXML));
 
-            metadata = getMetadata(metadataAsJson);
+            metadata = getCswRecordById.getMetadata(metadataAsJson);
             dispatch("getCustomMetaData", {attributes: metaInfo.attributes, metadataAsJson});
         }
 
