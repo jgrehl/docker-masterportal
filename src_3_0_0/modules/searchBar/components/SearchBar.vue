@@ -1,8 +1,6 @@
-// How control which side is configured?
-// Layout !
+// Layout, commons, entryText test
 <script>
 import {mapGetters, mapActions, mapMutations} from "vuex";
-import SearchBarResultList from "./SearchBarResultList.vue";
 
 
 /**
@@ -12,9 +10,6 @@ import SearchBarResultList from "./SearchBarResultList.vue";
  */
 export default {
     name: "SearchBar",
-    components: {
-        SearchBarResultList
-    },
     computed: {
         ...mapGetters("Modules/SearchBar", [
             "configPaths",
@@ -24,7 +19,9 @@ export default {
             "type",
             "searchResultsActive"
         ]),
-
+        ...mapGetters([
+            "portalConfig"
+        ]),
         /**
          * v-bind of search input value.
          */
@@ -53,22 +50,24 @@ export default {
          * @returns {void}
          */
         startSearch () {
+            const side = this.portalConfig.mainMenu.searchBar !== undefined ? "mainMenu" : "secondaryMenu";
+
             if (this.searchInputValue.length >= parseInt(this.minCharacters, 10)) {
                 this.setShowAllResults(false);
                 if (!this.searchResultsActive) {
-                    this.$store.state.Menu.mainMenu.navigation.history.push({0: {type: "root", props: []}});
+                    this.$store.state.Menu[side].navigation.history.push({0: {type: "root", props: []}});
                 }
                 this.setSearchResultsActive(true);
                 this.search({searchInput: this.searchInputValue});
 
                 this.clickedMenuElement({
-                    name: "common:modules.searchBar.search",
-                    side: "mainMenu",
+                    name: "common:modules.searchBar.searchResultList",
+                    side: side,
                     type: "searchbarresultlist"
                 });
             }
             if (this.searchInputValue.length < parseInt(this.minCharacters, 10) && this.searchResultsActive === true) {
-                this.navigateBack("mainMenu");
+                this.navigateBack(side);
             }
         }
     }
@@ -100,7 +99,6 @@ export default {
                 @keydown.enter="startSearch"
             >
         </div>
-       <!--  <SearchBarResultList /> -->
     </div>
 </template>
 
