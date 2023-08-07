@@ -109,17 +109,14 @@ export default {
          * @returns {void}
          */
         prepareShowAllResults (categoryItem) {
-            this.$store.state.Menu.mainMenu.navigation.currentComponent = {props: [{name:"test"}], type: "searchbarresultlist"};
+            const side = this.portalConfig.mainMenu.searchBar !== undefined ? "mainMenu" : "secondaryMenu";
+
+            this.$store.state.Menu[side].navigation.currentComponent = {props: {name: "common:modules.searchBar.searchResults"}, type: "searchbarresultlist"};
 
             this.$store.state.Menu.currentComponent = "searchbarresultlist";
-            this.$store.state.Menu.mainMenu.navigation.history = [];
-            this.$store.state.Menu.mainMenu.navigation.history.push({type: "root", props: []}, {type: "searchbarresultlist2", props: {name: "modules.searchBar.searchbarresultlist"}});
-             console.log(this.$store.state.Menu.mainMenu.navigation.history)
-            /* this.clickedMenuElement({
-                name: "common:modules.searchBar.search",
-                side: "mainMenu",
-                type: "searchbarresultlist"
-            }); */
+            this.$store.state.Menu[side].navigation.history = [];
+            this.$store.state.Menu[side].navigation.history.push({type: "root", props: []}, {type: "searchResultList", props: {name: "modules.searchBar.searchResultList"}});
+
             this.currentAvailableCategories = [categoryItem];
             this.currentShowAllList = this.limitedSortedSearchResults.currentShowAllList.filter(function (value) {
                 return value.category === categoryItem;
@@ -136,16 +133,6 @@ export default {
         v-if="searchInput.length>=minCharacters && searchResultsActive && searchResults.length>0"
         class="overflow-auto results-container"
     >
-       <!--  <a
-            v-if="showAllResults===true"
-            :id="'mp-navigation'"
-            class="pb-2 pt-2 mp-menu-navigation-link"
-            href="#"
-            @click="setSearchResultsActive(false)"
-            @keypress="setSearchResultsActive(false)"
-        >
-            <h6 class="mp-menu-navigation-link-text mb-3"><p class="bi-chevron-left me-2">{{ $t("common:modules.menu.name") }}</p></h6>
-        </a> -->
         <div
             v-for="categoryItem in showAllResults===false ? limitedSortedSearchResults.results.availableCategories : currentAvailableCategories"
             id="search-bar-result-list"
