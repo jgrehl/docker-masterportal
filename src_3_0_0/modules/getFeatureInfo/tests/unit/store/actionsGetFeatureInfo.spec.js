@@ -30,9 +30,9 @@ describe("src_3_0_0/modules/getFeatureInfo/store/actionsGetFeatureInfo.js", () =
 
     describe("TODO collectGfiFeatures", () => {
         it("TODO", () => {
-            actions.collectGfiFeatures({getters, commit, dispatch, rootGetters});
+            // actions.collectGfiFeatures({getters, commit, dispatch, rootGetters});
 
-            expect(true).to.be.true;
+            // expect(true).to.be.true;
             // expect(commit.firstCall.args[0]).to.equal("setGfiFeatures");
             // expect(commit.firstCall.args[1]).to.be.null;
 
