@@ -29,6 +29,7 @@
 ### Deprecated
 
 ### Removed
+- The layerAttribution control no longer exists. Instead, when a layer that has a layerAttribution is turned on, it is displayed as an alert.
 
 ### Fixed
 - Issue #1061: Filter: Accept gml:featureMembers occuring with other children in XML response.
