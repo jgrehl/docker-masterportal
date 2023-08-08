@@ -23,10 +23,11 @@ export default {
         };
     },
     computed: {
-        ...mapGetters("Modules/SearchBar", ["featureButtonsMap", "showAllResults"])
+        ...mapGetters("Modules/SearchBar", ["featureButtonsMap", "showAllResults", "currentSide"])
     },
     methods: {
         ...mapActions(["addLayerToLayerConfig"]),
+        ...mapActions("Menu", ["resetMenu"]),
         ...mapActions("Modules/SearchBar", ["addSingleSearchResultToTopicTree"]),
         ...mapMutations("Modules/SearchBar", ["setSearchResultsActive", "addSelectedSearchResults", "removeSelectedSearchResults"]),
 
@@ -66,6 +67,7 @@ export default {
                 }
             }
             else {
+                this.resetMenu(this.currentSide);
                 this.addSingleSearchResultToTopicTree(searchResult);
             }
         }

@@ -57,7 +57,7 @@ export default {
                 v-if="!isMobile"
                 :id="'mp-menu-navigation-reset-button-' + side"
                 type="button"
-                class="btn-close p-2 mp-menu-navigation-reset-button"
+                class="btn-close p-3 mp-menu-navigation-reset-button"
                 :aria-label="$t('common:modules.menu.ariaLabelClose')"
                 @click="resetMenu(side)"
             />
