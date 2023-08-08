@@ -95,7 +95,7 @@ Layer.prototype.setLayer = function (value) {
  * @returns {String|Boolean} depending on content of 'legendUrl'
  */
 Layer.prototype.inspectLegendUrl = function () {
-    let legend = this.get("legend");
+    let legend = typeof this.get("legend") !== "undefined" ? this.get("legend") : true;
 
     if (typeof this.get("legendURL") !== "undefined") {
         if (this.get("legendURL") === "") {
