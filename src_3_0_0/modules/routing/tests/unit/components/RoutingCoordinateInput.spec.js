@@ -70,7 +70,7 @@ describe("src_3_0_0/modules/routing/components/RoutingCoordinateInput.vue", () =
             },
             props: props
         });
-        const button = wrapper.find("#button-up");
+        const button = wrapper.find(".button-up");
 
         button.trigger("click");
         await wrapper.vm.$nextTick();
@@ -115,7 +115,7 @@ describe("src_3_0_0/modules/routing/components/RoutingCoordinateInput.vue", () =
         });
         wrapper.setData({search: "testsearch"});
         await wrapper.vm.$nextTick();
-        expect(wrapper.find("#reset-button").exists()).to.be.true;
+        expect(wrapper.find(".reset-button").exists()).to.be.true;
     });
 
     it("renders searchResults", async () => {
@@ -134,8 +134,8 @@ describe("src_3_0_0/modules/routing/components/RoutingCoordinateInput.vue", () =
         await wrapper.vm.$nextTick();
 
         expect(wrapper.findAll("li").length).equal(2);
-        expect(wrapper.findAll("#search-result-button").at(0).element.innerHTML).equal("test1");
-        expect(wrapper.findAll("#search-result-button").at(1).element.innerHTML).equal("test2");
+        expect(wrapper.findAll(".search-result-button").at(0).element.innerHTML).equal("test1");
+        expect(wrapper.findAll(".search-result-button").at(1).element.innerHTML).equal("test2");
     });
 
     describe("tests isInputtextWgs84Coordinate", () => {
