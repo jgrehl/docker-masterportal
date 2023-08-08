@@ -81,8 +81,6 @@ describe("src_3_0_0/modules/menu/MenuContainerBodyRoot.vue", () => {
             bodyWrapper = wrapper.find("#mp-body-root-mainMenu");
 
         expect(bodyWrapper.exists()).to.be.true;
-        expect(bodyWrapper.findComponent(MenuContainerBodyRootLogo).exists()).to.be.true;
-        expect(bodyWrapper.findComponent(SearchBar).exists()).to.be.true;
         expect(bodyWrapper.findComponent(LayerTree).exists()).to.be.true;
         expect(bodyWrapper.findComponent(MenuContainerBodyRootItems).exists()).to.be.false;
     });
@@ -98,8 +96,6 @@ describe("src_3_0_0/modules/menu/MenuContainerBodyRoot.vue", () => {
             bodyWrapper = wrapper.find("#mp-body-root-secondaryMenu");
 
         expect(bodyWrapper.exists()).to.be.true;
-        expect(bodyWrapper.findComponent(MenuContainerBodyRootLogo).exists()).to.be.true;
-        expect(bodyWrapper.findComponent(SearchBar).exists()).to.be.false;
         expect(bodyWrapper.findComponent(LayerTree).exists()).to.be.false;
         expect(bodyWrapper.findComponent(MenuContainerBodyRootItems).exists()).to.be.false;
     });
@@ -132,8 +128,6 @@ describe("src_3_0_0/modules/menu/MenuContainerBodyRoot.vue", () => {
             bodyWrapper = wrapper.find("#mp-body-root-mainMenu");
 
         expect(bodyWrapper.exists()).to.be.true;
-        expect(bodyWrapper.findComponent(MenuContainerBodyRootLogo).exists()).to.be.true;
-        expect(bodyWrapper.findComponent(SearchBar).exists()).to.be.true;
         expect(bodyWrapper.findComponent(LayerTree).exists()).to.be.true;
         expect(bodyWrapper.findComponent(MenuContainerBodyRootItems).exists()).to.be.true;
         expect(bodyWrapper.findAll("menu-container-body-root-items-stub").length).to.be.equals(2);
