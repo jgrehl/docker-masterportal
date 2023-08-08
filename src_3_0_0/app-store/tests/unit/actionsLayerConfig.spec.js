@@ -222,7 +222,6 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
                     showInLayerTree: true,
                     maxScale: 2000,
                     minScale: 12
-
                 },
                 getters = {
                     allLayerConfigs: [],
@@ -477,7 +476,7 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
 
                 state.layerConfig = layerConfig;
 
-                actions.replaceByIdInLayerConfig({state, getters}, {layerConfigs: [{layer: toReplace, id: "453"}]});
+                actions.replaceByIdInLayerConfig({dispatch, getters, state}, {layerConfigs: [{layer: toReplace, id: "453"}]});
 
                 expect(state.layerConfig[treeBaselayersKey].elements).to.be.an("array");
                 expect(state.layerConfig[treeBaselayersKey].elements.length).to.be.equals(2);
@@ -515,7 +514,7 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
                 state.layerConfig = layerConfig;
                 stateCopy = {...state};
 
-                actions.replaceByIdInLayerConfig({state, getters}, {layerConfigs: [{layer: toReplace, id: "unknown"}]});
+                actions.replaceByIdInLayerConfig({dispatch, getters, state}, {layerConfigs: [{layer: toReplace, id: "unknown"}]});
                 expect(state).to.be.deep.equals(stateCopy);
             });
 
@@ -528,8 +527,75 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
                 state.layerConfig = layerConfig;
                 stateCopy = {...state};
 
-                actions.replaceByIdInLayerConfig({state, getters}, undefined);
+                actions.replaceByIdInLayerConfig({dispatch, getters, state}, undefined);
                 expect(state).to.be.deep.equals(stateCopy);
+            });
+        });
+
+        describe("showLayerAttributions", () => {
+            it("should throw an alert, if layer has a layerAttribution and visibility true", () => {
+                const layerAttributes = {
+                    id: "123",
+                    name: "The layer",
+                    typ: "WMS",
+                    visibility: true,
+                    showInLayerTree: true,
+                    layerAttribution: "This is the layer attribution!"
+                };
+
+                actions.showLayerAttributions({dispatch}, layerAttributes);
+
+                expect(dispatch.calledOnce).to.be.true;
+                expect(dispatch.firstCall.args[0]).to.equals("Alerting/addSingleAlert");
+                expect(dispatch.firstCall.args[1]).to.deep.equals({
+                    content: "This is the layer attribution!",
+                    category: "info",
+                    title: "The layer",
+                    onceInSession: true
+                });
+            });
+
+            it("should not throw an alert, if layer has no layerAttribution and visibility true", () => {
+                const layerAttributes = {
+                    id: "123",
+                    name: "The layer",
+                    typ: "WMS",
+                    visibility: true,
+                    showInLayerTree: true
+                };
+
+                actions.showLayerAttributions({dispatch}, layerAttributes);
+
+                expect(dispatch.notCalled).to.be.true;
+            });
+
+            it("should not throw an alert, if layer has no layerAttribution and visibility false", () => {
+                const layerAttributes = {
+                    id: "123",
+                    name: "The layer",
+                    typ: "WMS",
+                    visibility: false,
+                    showInLayerTree: true
+                };
+
+                actions.showLayerAttributions({dispatch}, layerAttributes);
+
+                expect(dispatch.notCalled).to.be.true;
+            });
+
+            it("should not throw an alert, if layer has layerAttribution and visibility false", () => {
+                const layerAttributes = {
+                    id: "123",
+                    name: "The layer",
+                    typ: "WMS",
+                    visibility: false,
+                    showInLayerTree: true,
+                    layerAttribution: "This is the layer attribution!"
+                };
+
+                actions.showLayerAttributions({dispatch}, layerAttributes);
+
+                expect(dispatch.notCalled).to.be.true;
             });
         });
 
