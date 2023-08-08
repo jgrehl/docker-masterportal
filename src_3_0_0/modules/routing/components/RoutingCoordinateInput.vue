@@ -193,8 +193,7 @@ export default {
                 >
                 <button
                     v-if="search.length > 0 && search !== waypointDisplayName"
-                    id="reset-button"
-                    class="btn-icon input-icon"
+                    class="btn-icon input-icon reset-button"
                     @click="resetInput()"
                     @keydown.enter="resetInput()"
                 >
@@ -208,7 +207,7 @@ export default {
                         class="h-50"
                     >
                         <IconButton
-                            id="button-up"
+                            class="button-up"
                             :aria="$t('common:modules.routing.moveWaypointUp')"
                             :class-array="['btn-light', 'btn-up-down']"
                             :icon="'bi-chevron-up fs-6'"
@@ -245,8 +244,7 @@ export default {
                 class="list-group-item"
             >
                 <button
-                    id="search-result-button"
-                    class="btn-icon"
+                    class="btn-icon search-result-button"
                     @mousedown="selectSearchResult(searchResult)"
                 >
                     {{ searchResult.displayName }}
