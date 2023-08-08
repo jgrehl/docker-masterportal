@@ -27,7 +27,6 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(["layerConfigById"]),
         ...mapGetters("Modules/LayerSelection", ["layersToAdd"]),
 
         /**
@@ -78,6 +77,7 @@ export default {
                     this.removeSelectedLayer({layerId: this.conf.id});
                 }
             }
+
         },
         /**
          * Returns true, if layer checkbox is checked.
