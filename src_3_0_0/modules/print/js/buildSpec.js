@@ -931,10 +931,10 @@ const BuildSpecModel = {
      * @returns {Object} - Point Style for mapfish print.
      */
     buildPointStyle: function (style, layer) {
-        if (style.getImage().constructor?.name === "CircleStyle") {
+        if (style.getImage()?.constructor?.name === "CircleStyle") {
             return this.buildPointStyleCircle(style.getImage());
         }
-        else if (style.getImage().constructor?.name === "Icon" && style.getImage().getScale() > 0) {
+        else if (style.getImage()?.constructor?.name === "Icon" && style.getImage().getScale() > 0) {
             return this.buildPointStyleIcon(style.getImage(), layer);
         }
         return this.buildTextStyle(style.getText());
