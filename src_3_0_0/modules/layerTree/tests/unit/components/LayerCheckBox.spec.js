@@ -41,12 +41,6 @@ describe("src_3_0_0/modules/layerTree/components/LayerCheckBox.vue", () => {
         store = createStore({
             namespaces: true,
             modules: {
-                Alerting: {
-                    namespaced: true,
-                    actions: {
-                        addSingleAlert: sinon.stub()
-                    }
-                },
                 Modules: {
                     namespaced: true,
                     modules: {
@@ -67,14 +61,6 @@ describe("src_3_0_0/modules/layerTree/components/LayerCheckBox.vue", () => {
             },
             actions: {
                 replaceByIdInLayerConfig: replaceByIdInLayerConfigSpy
-            },
-            getters: {
-                layerConfigById: () => () => {
-                    return {
-                        layerAttribution: "This is the layer attribution!",
-                        name: "The layer"
-                    };
-                }
             }
         });
     });
@@ -307,28 +293,5 @@ describe("src_3_0_0/modules/layerTree/components/LayerCheckBox.vue", () => {
 
         expect(removeSelectedLayerSpy.calledOnce).to.be.true;
         expect(removeSelectedLayerSpy.firstCall.args[1]).to.be.deep.equals(spyArg);
-    });
-
-    describe("showLayerAttributions", () => {
-        it("should throw an alert, if layer has a layerAttribution", () => {
-            wrapper = shallowMount(LayerCheckBox, {
-                global: {
-                    plugins: [store]
-                },
-                propsData
-            });
-
-            const addSingleAlertSpy = sinon.spy(wrapper.vm, "addSingleAlert");
-
-            wrapper.vm.showLayerAttributions(true);
-
-            expect(addSingleAlertSpy.calledOnce).to.be.true;
-            expect(addSingleAlertSpy.firstCall.args[0]).to.deep.equals({
-                content: "This is the layer attribution!",
-                category: "info",
-                title: "The layer",
-                onceInSession: true
-            });
-        });
     });
 });

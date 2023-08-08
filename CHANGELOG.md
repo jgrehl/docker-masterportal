@@ -23,6 +23,7 @@
 ### Deprecated
 
 ### Removed
+- The layerAttribution control no longer exists. Instead, when a layer that has a layerAttribution is turned on, it is displayed as an alert.
 
 ### Fixed
 
