@@ -40,7 +40,6 @@ export default {
     },
     methods: {
         ...mapActions(["replaceByIdInLayerConfig"]),
-        ...mapActions("Alerting", ["addSingleAlert"]),
         ...mapMutations("Modules/LayerSelection", ["addSelectedLayer", "removeSelectedLayer"]),
 
         /**
@@ -69,8 +68,6 @@ export default {
             if (!this.isLayerVisible || this.isLayerTree) {
                 const value = !this.isChecked();
 
-                this.showLayerAttributions(value);
-
                 if (this.isLayerTree) {
                     this.visibilityInLayerTreeChanged(value);
                 }
@@ -82,26 +79,6 @@ export default {
                 }
             }
         },
-
-        /**
-         * Show an alert that contains the layerAttributions, if these exist.
-         * @param {Boolean} isChecked Layer is checked in layerTree.
-         * @returns {void}
-         */
-        showLayerAttributions (isChecked) {
-            const attributes = this.layerConfigById(this.conf.id),
-                layerAttribution = attributes?.layerAttribution;
-
-            if (isChecked && typeof layerAttribution !== "undefined" && layerAttribution !== "nicht vorhanden") {
-                this.addSingleAlert({
-                    content: layerAttribution,
-                    category: "info",
-                    title: attributes?.name,
-                    onceInSession: true
-                });
-            }
-        },
-
         /**
          * Returns true, if layer checkbox is checked.
          * @returns {Boolean} true, if layer checkbox is checked
