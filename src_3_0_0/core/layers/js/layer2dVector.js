@@ -286,7 +286,7 @@ Layer2dVector.prototype.createLegend = async function () {
                         });
                 }
                 if (rules && rules[0]?.conditions !== undefined && this.layer.getSource().getFeatures()) {
-                    legend = this.filterUniqueLegendInfo(this.layer.getSource().getFeatures(), rules, legendInfos);
+                    legend = this.filterUniqueLegendInfo(this.layer.getSource().getFeatures(), rules, legendInfos.legendInformation);
                 }
                 else {
                     legend = legendInfos.legendInformation;
@@ -310,26 +310,25 @@ Layer2dVector.prototype.createLegend = async function () {
  */
 Layer2dVector.prototype.filterUniqueLegendInfo = function (features, rules, legendInfos) {
     const rulesKey = Object.keys(rules[0].conditions.properties)[0],
-        conditionProperties = [],
-        uniqueLegendInformation = [];
+        conditionProperties = [...new Set(features.map(feature => feature.get(rulesKey)))];
+    let uniqueLegendInformation = [];
 
-    for (let i = 0; i < features.length; i++) {
-        const rulesKeyUpperCase = rulesKey.charAt(0).toUpperCase() + rulesKey.slice(1);
+    rules.forEach(rule => {
+        const value = String(rule.conditions.properties[rulesKey]);
 
-        if (features[i].get(rulesKey) !== undefined && !conditionProperties.includes(features[i].get(rulesKey))) {
-            conditionProperties.push(features[i].get(rulesKey));
-        }
-        else if (features[i].get(rulesKeyUpperCase) !== undefined && !conditionProperties.includes(features[i].get(rulesKeyUpperCase))) {
-            conditionProperties.push(features[i].get(rulesKeyUpperCase));
-        }
-    }
-    legendInfos.legendInformation.forEach((info) => {
-        if (conditionProperties.includes(info.label)) {
-            if (!uniqueLegendInformation.includes(info)) {
-                uniqueLegendInformation.push(info);
+        if (conditionProperties.includes(value)) {
+            const legendInformation = legendInfos.find(legendInfo => legendInfo?.label === (rule.style?.legendValue || value));
+
+            if (typeof legendInformation !== "undefined") {
+                uniqueLegendInformation.push(legendInformation);
             }
         }
     });
+
+    if (uniqueLegendInformation.length === 0) {
+        uniqueLegendInformation = legendInfos;
+    }
+
     return uniqueLegendInformation;
 };
 
