@@ -145,11 +145,10 @@ export default {
             />
         </div>
         <div
-            v-if="true"
             :id="'mp-subHeader-' + side"
             class="mp-menu-subHeader"
             :class="
-                {'mp-menu-header-collapsed': !mainExpanded && side === 'mainMenu' || !secondaryExpanded && side === 'secondaryMenu'}
+                {'mp-menu-subHeader-collapsed': !mainExpanded && side === 'mainMenu' || !secondaryExpanded && side === 'secondaryMenu'}
             "
         >
             <MenuContainerBodyRootLogo
@@ -212,20 +211,6 @@ export default {
     }
 }
 
-.mp-menu-subHeader{
-    padding: $padding;
-    font-size: $font-size-base;
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    padding: $padding;
-    font-size: $font-size-base;
-
-    &-collapsed {
-        padding: 0;
-        display: none;
-    }
-}
 
 .mp-menu-header-close-button {
     display: block;
@@ -236,6 +221,18 @@ export default {
 
 
 @include media-breakpoint-up(sm)  {
+    .mp-menu-subHeader{
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        padding: $padding;
+        font-size: $font-size-base;
+
+        &-collapsed {
+            padding: 0;
+            display: none;
+        }
+    }
     .mp-menu {
         top: 0px;
         min-width: 0%;
