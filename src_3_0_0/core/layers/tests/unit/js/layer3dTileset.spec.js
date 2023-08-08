@@ -4,7 +4,7 @@ import Layer3dTileset from "../../../js/layer3dTileset";
 
 describe("src_3_0_0/core/js/layers/layer3dTileset.js", () => {
     let attributes,
-        cesium3DTilesetSpy,
+        fromUrlSpy,
         warn;
 
     before(() => {
@@ -28,9 +28,10 @@ describe("src_3_0_0/core/js/layers/layer3dTileset.js", () => {
         global.Cesium = {};
         global.Cesium.Cesium3DTileset = () => { /* no content*/ };
         global.Cesium.Cesium3DTileStyle = () => { /* no content*/ };
-
-        cesium3DTilesetSpy = sinon.spy(global.Cesium, "Cesium3DTileset");
+        global.Cesium.Cesium3DTileset.fromUrl = () => sinon.stub();
         sinon.spy(global.Cesium, "Cesium3DTileStyle");
+
+        fromUrlSpy = sinon.spy(global.Cesium.Cesium3DTileset, "fromUrl");
     });
 
     afterEach(() => {
@@ -54,7 +55,6 @@ describe("src_3_0_0/core/js/layers/layer3dTileset.js", () => {
                 expect(terrainLayer.get("name")).to.be.equals(attrs.name);
                 expect(terrainLayer.get("id")).to.be.equals(attrs.id);
                 expect(terrainLayer.get("typ")).to.be.equals(attrs.typ);
-                expect(layer.tileset.layerReferenceId).to.be.equals(attrs.id);
             };
         });
 
@@ -70,7 +70,7 @@ describe("src_3_0_0/core/js/layers/layer3dTileset.js", () => {
                 layer = layer3dTileset.getLayer();
 
             checkLayer(layer, layer3dTileset, attributes);
-            expect(cesium3DTilesetSpy.calledOnce).to.equal(true);
+            expect(fromUrlSpy.calledOnce).to.equal(true);
         });
 
         it("createLayer shall create a visible tileset layer", function () {
@@ -81,8 +81,8 @@ describe("src_3_0_0/core/js/layers/layer3dTileset.js", () => {
 
             checkLayer(layer, layer3dTileset, attributes);
             expect(layer3dTileset.get("visibility")).to.equal(true);
-            expect(cesium3DTilesetSpy.calledOnce).to.equal(true);
-            expect(cesium3DTilesetSpy.calledWithMatch({maximumScreenSpaceError: 6})).to.equal(true);
+            expect(fromUrlSpy.calledOnce).to.equal(true);
+            expect(fromUrlSpy.calledWithMatch("the_url", {maximumScreenSpaceError: 6})).to.equal(true);
         });
     });
 });
