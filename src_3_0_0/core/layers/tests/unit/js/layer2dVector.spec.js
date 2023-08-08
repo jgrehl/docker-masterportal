@@ -370,8 +370,8 @@ describe("src_3_0_0/core/js/layers/layer2dVector.js", () => {
                     styleObject: {}
                 }];
 
-            expect(wfsLayer.filterUniqueLegendInfo(features, rules, legendInfos)).to.deep.equal(expectedUniqueLegendInfo);
-            expect(wfsLayer.filterUniqueLegendInfo(features, rules, legendInfos).length).to.not.deep.equal(features.length);
+            expect(wfsLayer.filterUniqueLegendInfo(features, rules, legendInfos.legendInformation)).to.deep.equal(expectedUniqueLegendInfo);
+            expect(wfsLayer.filterUniqueLegendInfo(features, rules, legendInfos.legendInformation).length).to.not.deep.equal(features.length);
         });
         it("return uniqueLegendInfo for feature condition property that match legendinformation", () => {
             const wfsLayer = new Layer2dVector(attributes),
@@ -498,9 +498,9 @@ describe("src_3_0_0/core/js/layers/layer2dVector.js", () => {
                     styleObject: {}
                 }];
 
-            expect(wfsLayer.filterUniqueLegendInfo(features, rules, legendInfos)).to.deep.equal(expectedUniqueLegendInfo);
-            expect(wfsLayer.filterUniqueLegendInfo(features, rules, legendInfos).length).to.deep.equal(3);
-            expect(wfsLayer.filterUniqueLegendInfo(features, rules, legendInfos).length).to.deep.equal(features.length);
+            expect(wfsLayer.filterUniqueLegendInfo(features, rules, legendInfos.legendInformation)).to.deep.equal(expectedUniqueLegendInfo);
+            expect(wfsLayer.filterUniqueLegendInfo(features, rules, legendInfos.legendInformation).length).to.deep.equal(3);
+            expect(wfsLayer.filterUniqueLegendInfo(features, rules, legendInfos.legendInformation).length).to.deep.equal(features.length);
         });
         it("return uniqueLegendInfo for feature condition property (with first letter upper case) that match legendinformation (first letter lower case", () => {
             const wfsLayer = new Layer2dVector(attributes),
@@ -547,7 +547,7 @@ describe("src_3_0_0/core/js/layers/layer2dVector.js", () => {
                     styleObject: {}
                 }];
 
-            expect(wfsLayer.filterUniqueLegendInfo(features, rules, legendInfos)).to.deep.equal(expectedUniqueLegendInfo);
+            expect(wfsLayer.filterUniqueLegendInfo(features, rules, legendInfos.legendInformation)).to.deep.equal(expectedUniqueLegendInfo);
         });
     });
 });
