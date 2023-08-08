@@ -97,7 +97,8 @@ module.exports = function () {
                 vue: "@vue/compat",
                 "mixins": path.resolve(__dirname, "..", "src_3_0_0", "assets", "css", "mixins.scss"),
                 "variables": path.resolve(__dirname, "..", "src_3_0_0", "assets", "css", "variables.scss")
-            }
+            },
+            extensions: [".tsx", ".ts", ".js"]
         },
         module: {
             unknownContextCritical: false,
@@ -121,6 +122,12 @@ module.exports = function () {
                             format: "cjs",
                             platform: "node"
                         }
+                    }
+                },
+                {
+                    test: /\.[t]sx?$/,
+                    use: {
+                        loader: "esbuild-loader"
                     }
                 },
                 {

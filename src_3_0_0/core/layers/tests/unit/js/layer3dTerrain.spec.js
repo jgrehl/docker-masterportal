@@ -6,6 +6,7 @@ describe("src_3_0_0/core/js/layers/layer3dTerrain.js", () => {
     let attributes,
         cesiumEllipsoidTerrainProviderSpy,
         cesiumTerrainProviderSpy,
+        fromUrlSpy,
         map3d,
         warn;
 
@@ -33,15 +34,18 @@ describe("src_3_0_0/core/js/layers/layer3dTerrain.js", () => {
             typ: "Terrain3D",
             cesiumTerrainProviderOptions: {
                 requestVertexNormals: true
-            }
+            },
+            url: "https://example.com"
         };
 
         global.Cesium = {};
         global.Cesium.CesiumTerrainProvider = () => { /* no content*/ };
         global.Cesium.EllipsoidTerrainProvider = () => { /* no content*/ };
+        global.Cesium.CesiumTerrainProvider.fromUrl = () => sinon.stub();
 
         cesiumEllipsoidTerrainProviderSpy = sinon.spy(global.Cesium, "EllipsoidTerrainProvider");
         cesiumTerrainProviderSpy = sinon.spy(global.Cesium, "CesiumTerrainProvider");
+        fromUrlSpy = sinon.spy(global.Cesium.CesiumTerrainProvider, "fromUrl");
     });
 
     afterEach(() => {
@@ -91,8 +95,8 @@ describe("src_3_0_0/core/js/layers/layer3dTerrain.js", () => {
                 layer = layer3dTerrain.getLayer();
 
             checkLayer(layer, layer3dTerrain, attributes);
-            expect(cesiumTerrainProviderSpy.calledOnce).to.equal(true);
-            expect(cesiumTerrainProviderSpy.calledWithMatch({requestVertexNormals: true})).to.equal(true);
+            expect(fromUrlSpy.calledOnce).to.equal(true);
+            expect(fromUrlSpy.calledWithMatch("https://example.com", {})).to.equal(true);
             expect(cesiumEllipsoidTerrainProviderSpy.notCalled).to.equal(true);
         });
     });
