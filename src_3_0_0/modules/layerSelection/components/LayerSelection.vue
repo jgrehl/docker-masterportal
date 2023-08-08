@@ -185,7 +185,7 @@ export default {
 .layer-selection {
     background-color: $menu-background-color;
     left: 0px;
-    top: 16%;
+    top: 33%;
     position: absolute;
     padding: $padding;
     padding-top: 0;
