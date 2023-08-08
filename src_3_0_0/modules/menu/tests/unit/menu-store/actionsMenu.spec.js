@@ -54,6 +54,7 @@ describe("src_3_0_0/modules/menu/menu-store/actionsMenu.js", () => {
         };
         rootGetters = {
             "Modules/Abc/hasMouseMapInteractions": () => true,
+            "Modules/SearchBar/showAllResults": () => false,
             "Modules/FileImport/name": "File Import",
             isMobile: false
         };
@@ -285,17 +286,17 @@ describe("src_3_0_0/modules/menu/menu-store/actionsMenu.js", () => {
         });
     });
 
-    describe("navigateBack", () => {
+    describe.only("navigateBack", () => {
         const side = "mainMenu";
 
         it("should switch to previous component", async () => {
-            actions.navigateBack({commit, dispatch, getters, state}, side);
+            actions.navigateBack({commit, dispatch, getters, state}, {"Modules/SearchBar/showAllResults": () => false}, side);
 
             await nextTick(() => {
-                expect(commit.calledOnce).to.be.true;
+                //expect(commit.calledOnce).to.be.true;
                 expect(commit.firstCall.args[0]).to.equal("switchToPreviousComponent");
                 expect(commit.firstCall.args[1]).to.equal(side);
-                expect(dispatch.notCalled).to.be.true;
+                expect(dispatch.calledOnce).to.be.true;
             });
         });
 

@@ -1,8 +1,6 @@
 <script>
 import LayerTree from "../../layerTree/components/LayerTree.vue";
 import MenuContainerBodyRootItems from "./MenuContainerBodyRootItems.vue";
-import MenuContainerBodyRootLogo from "./MenuContainerBodyRootLogo.vue";
-import SearchBar from "../../searchBar/components/SearchBar.vue";
 import {mapGetters} from "vuex";
 
 /**
@@ -14,9 +12,7 @@ export default {
     name: "MenuContainerBodyRoot",
     components: {
         LayerTree,
-        MenuContainerBodyRootItems,
-        MenuContainerBodyRootLogo,
-        SearchBar
+        MenuContainerBodyRootItems
     },
     props: {
         /** Defines in which menu the component is being rendered */
@@ -57,12 +53,6 @@ export default {
     <div
         :id="'mp-body-root-'+side"
     >
-<!--         <MenuContainerBodyRootLogo
-            v-if="titleBySide(side)"
-            class="mb-2"
-            v-bind="titleBySide(side)"
-        />
-        <SearchBar v-if="typeof menu.searchBar !== 'undefined'" /> -->
         <LayerTree v-if="side === 'mainMenu'" />
         <template
             v-for="(_, key) in menu.sections"

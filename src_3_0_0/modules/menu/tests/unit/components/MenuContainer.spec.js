@@ -80,6 +80,7 @@ describe("src_3_0_0/modules/menu/MenuContainer.vue", () => {
 
             expect(mainMenuWrapper.exists()).to.be.true;
             expect(secondaryMenuWrapper.exists()).to.be.false;
+            expect(wrapper.find("#mp-subHeader-mainMenu").exists()).to.be.true;
             expect(wrapper.find("#mp-header-mainMenu").exists()).to.be.true;
             expect(wrapper.find("menu-container-body-stub").exists()).to.be.true;
             expect(wrapper.find("resize-handle-stub").exists()).to.be.true;
@@ -100,6 +101,7 @@ describe("src_3_0_0/modules/menu/MenuContainer.vue", () => {
 
             expect(mainMenuWrapper.exists()).to.be.true;
             expect(secondaryMenuWrapper.exists()).to.be.false;
+            expect(wrapper.find("#mp-subHeader-mainMenu").exists()).to.be.true;
             expect(wrapper.find("#mp-header-mainMenu").exists()).to.be.true;
             expect(wrapper.find("#mp-menu-header-close-button-mainMenu").exists()).to.be.true;
             expect(wrapper.find("menu-container-body-stub").exists()).to.be.true;
