@@ -1,4 +1,4 @@
-// Layout, commons, entryText test
+commons
 <script>
 import {mapGetters, mapActions, mapMutations} from "vuex";
 
@@ -17,7 +17,8 @@ export default {
             "placeholder",
             "searchInput",
             "type",
-            "searchResultsActive"
+            "searchResultsActive",
+            "currentSide"
         ]),
         ...mapGetters([
             "portalConfig"
@@ -38,11 +39,12 @@ export default {
         this.initializeModule({configPaths: this.configPaths, type: this.type});
         this.overwriteDefaultValues();
         this.instantiateSearchInterfaces(this.$searchInterfaceAddons);
+        this.setCurrentSide(this.portalConfig.mainMenu.searchBar !== undefined ? "mainMenu" : "secondaryMenu");
     },
     methods: {
         ...mapActions(["initializeModule"]),
         ...mapActions("Modules/SearchBar", ["instantiateSearchInterfaces", "overwriteDefaultValues", "search"]),
-        ...mapMutations("Modules/SearchBar", ["setSearchInput", "setShowAllResults", "setSearchResultsActive"]),
+        ...mapMutations("Modules/SearchBar", ["setSearchInput", "setShowAllResults", "setSearchResultsActive", "setCurrentSide"]),
         ...mapActions("Menu", ["clickedMenuElement", "navigateBack"]),
 
         /**
@@ -50,9 +52,9 @@ export default {
          * @returns {void}
          */
         startSearch () {
-            const side = this.portalConfig.mainMenu.searchBar !== undefined ? "mainMenu" : "secondaryMenu";
-
-            if (this.searchInputValue.length >= parseInt(this.minCharacters, 10)) {
+            const side = this.currentSide;
+            console.log("---", this.placeholder)
+            if (this.searchInputValue?.length >= parseInt(this.minCharacters, 10)) {
                 this.setShowAllResults(false);
                 if (!this.searchResultsActive) {
                     this.$store.state.Menu[side].navigation.history.push({0: {type: "root", props: []}});
@@ -66,7 +68,7 @@ export default {
                     type: "searchbarresultlist"
                 });
             }
-            if (this.searchInputValue.length < parseInt(this.minCharacters, 10) && this.searchResultsActive === true) {
+            if (this.searchInputValue?.length < parseInt(this.minCharacters, 10) && this.searchResultsActive === true) {
                 this.navigateBack(side);
             }
         }
