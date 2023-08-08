@@ -33,7 +33,7 @@ export default {
         };
     },
     computed: {
-        ...mapGetters("Modules/SearchBar", ["showAllResults"])
+        ...mapGetters("Modules/SearchBar", ["showAllResults", "currentSide"])
     },
     watch: {
         /**
@@ -55,6 +55,7 @@ export default {
     },
     methods: {
         ...mapActions("Modules/SearchBar", ["addSingleSearchResultToTopicTree"]),
+        ...mapActions("Menu", ["resetMenu"]),
         ...mapMutations("Modules/SearchBar", ["addSelectedSearchResults", "removeSelectedSearchResults"]),
         /**
          * Adds a layer to the topic tree if clicked from the result overview or collects the layer for later adding by the main add button
@@ -63,6 +64,7 @@ export default {
          * @returns {void}
          */
         addOrCollectLayer (value, searchResult) {
+            this.resetMenu(this.currentSide);
             if (this.showAllResults === true) {
                 this.localClickStatus = value;
                 this.$emit("updateClickStatus", value);
