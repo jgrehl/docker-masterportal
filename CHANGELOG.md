@@ -125,11 +125,6 @@
 - WFS: Migrated writeTransaction and sendTransaction to masterportalAPI (2.22.0).
 - GFI: gfiFeatures are no longer set to null on every click, but only when there are no features or the gfi is closed
 
-### Deprecated
-
-### Removed
-- The loader start screen has been removed.
-
 ### Fixed
 - Print: The portal is no longer reloaded after pressing the Enter key in the title field. Instead, the print is sent.
 - WFST-Tool:
