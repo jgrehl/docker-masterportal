@@ -38,8 +38,9 @@ export default {
     /**
      * Replaces the layer with the id of the layer toReplace in state's layerConfig.
      * Calls 'visibilityChanged' at layer.
-     * @param {Object} state store state
+     * @param {Object} dispatch store state
      * @param {Object} getters the getters
+     * @param {Object} state store state
      * @param {Object} [payload={}] the payload
      * @param {Object[]} [payload.layerConfigs=[]] Array of configs of layers to replace, and the id to match in state.layerConfigs
      * @param {Object} payload.layerConfigs.layer layerConfig
@@ -47,7 +48,7 @@ export default {
      * @param {Boolean} [payload.trigger=true] if true then getters are triggered
      * @returns {void}
      */
-    replaceByIdInLayerConfig ({state, getters}, {layerConfigs = [], trigger = true} = {}) {
+    replaceByIdInLayerConfig ({dispatch, getters, state}, {layerConfigs = [], trigger = true} = {}) {
         layerConfigs.forEach(config => {
             const replacement = config.layer,
                 id = config.id,
@@ -66,7 +67,28 @@ export default {
             if (typeof replacement.visibility === "boolean" && typeof lastVisibility === "boolean" && lastVisibility !== replacement.visibility) {
                 layerCollection.getLayerById(id)?.visibilityChanged(replacement.visibility);
             }
+
+            dispatch("showLayerAttributions", config.layer);
         });
+    },
+
+    /**
+     * Show an alert that contains the layerAttributions, if these exist.
+     * @param {Object} dispatch store state
+     * @param {Object} layerAttributes The layer attributes
+     * @returns {void}
+     */
+    showLayerAttributions ({dispatch}, layerAttributes) {
+        const layerAttribution = layerAttributes?.layerAttribution;
+
+        if (layerAttributes?.visibility && typeof layerAttribution !== "undefined" && layerAttribution !== "nicht vorhanden") {
+            dispatch("Alerting/addSingleAlert", {
+                content: layerAttribution,
+                category: "info",
+                title: layerAttributes?.name,
+                onceInSession: true
+            }, {root: true});
+        }
     },
 
     /**
