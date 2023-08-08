@@ -294,4 +294,6 @@ describe("src_3_0_0/modules/layerTree/components/LayerCheckBox.vue", () => {
         expect(removeSelectedLayerSpy.calledOnce).to.be.true;
         expect(removeSelectedLayerSpy.firstCall.args[1]).to.be.deep.equals(spyArg);
     });
+
+
 });
