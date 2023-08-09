@@ -21,8 +21,9 @@ describe("src_3_0_0/modules/searchBar/store/actions/actionsSearchBarSearchInterf
     describe("instantiateSearchInterfaces", () => {
         it("should instantiate the gazetteer search interface", () => {
             const state = {
-                searchInterfaces: {
-                    gazetteer: {
+                searchInterfaces: [
+                    {
+                        type: "gazetteer",
                         serviceId: "8",
                         searchAddress: true,
                         searchStreets: true,
@@ -31,7 +32,7 @@ describe("src_3_0_0/modules/searchBar/store/actions/actionsSearchBarSearchInterf
                         searchParcels: true,
                         searchStreetKey: true
                     }
-                }
+                ]
             };
 
             instantiateSearchInterfaces({state, commit});
@@ -42,11 +43,13 @@ describe("src_3_0_0/modules/searchBar/store/actions/actionsSearchBarSearchInterf
 
         it("should instantiate the gazetter and addons search interfaces", () => {
             const state = {
-                    searchInterfaces: {
-                        abc: {
+                    searchInterfaces: [
+                        {
+                            type: "abc",
                             serviceid: "100"
                         },
-                        gazetteer: {
+                        {
+                            type: "gazetteer",
                             serviceId: "8",
                             searchAddress: true,
                             searchStreets: true,
@@ -55,7 +58,7 @@ describe("src_3_0_0/modules/searchBar/store/actions/actionsSearchBarSearchInterf
                             searchParcels: true,
                             searchStreetKey: true
                         }
-                    }
+                    ]
                 },
                 searchInterfaceAddons = [{
                     abc: sinon.stub()
