@@ -149,7 +149,7 @@ SearchInterface.prototype.requestSearch = async function (searchUrl, type, paylo
     this.currentController = new AbortController();
 
     if (type === "GET") {
-        response = await this.sendGetRequest(searchUrl);
+        response = await this.sendGetRequest(searchUrl, contentType);
     }
     else if (type === "POST") {
         response = await this.sendPostRequest(searchUrl, payload, contentType);
@@ -171,12 +171,13 @@ SearchInterface.prototype.requestSearch = async function (searchUrl, type, paylo
 /**
  * Sends the GET request.
  * @param {String} searchUrl url to send request.
+ * @param {String} contentType The content type for the request, defaulting to json.
  * @returns {Promise} Result of GET request.
  */
-SearchInterface.prototype.sendGetRequest = function (searchUrl) {
+SearchInterface.prototype.sendGetRequest = function (searchUrl, contentType = "application/json;charset=UTF-8") {
     return axios.get(searchUrl, {
         headers: {
-            "Content-Type": "application/json;charset=UTF-8"
+            "Content-Type": contentType
         },
         signal: this.currentController.signal,
         timeout: this.timeout
