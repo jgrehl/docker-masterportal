@@ -73,9 +73,9 @@ export default {
             results.categoryProvider = {};
             this.setSearchSuggestions([]);
             results.availableCategories = [];
-            this.searchInterfaceInstances.forEach(searchInterfaceInstance => {
-                for (const [index, value] of Object.entries(this.searchResultsWithUniqueCategories)) {
-                    if (value.searchInterfaceId === searchInterfaceInstance.searchInterfaceId) {
+            this.searchInterfaces.forEach(searchInterface => {
+                for (const [index, value] of Object.entries(this.searchResults)) {
+                    if (value.searchInterfaceId === searchInterface.type) {
                         results[value.category + "Count"] = results[value.category + "Count"] === undefined ? 1 : ++results[value.category + "Count"];
 
                         if (results.availableCategories.includes(value.category) === false) {
@@ -98,7 +98,6 @@ export default {
                     }
                 }
             });
-
             return {results: results, currentShowAllList: currentShowAllList};
         }
     },
