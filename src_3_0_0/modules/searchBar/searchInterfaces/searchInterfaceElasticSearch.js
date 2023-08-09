@@ -7,7 +7,9 @@ import store from "../../../app-store";
  * @param {Object} hitMap Object mapping result object attributes to keys.
  * @param {String} hitMap.coordinate Attribute value will be mapped to the attribute key.
  * @param {String} hitMap.id Attribute value will be mapped to the attribute key.
+ * @param {String} hitMap.layerId Attribute value will be mapped to the attribute key.
  * @param {String} hitMap.name Attribute value will be mapped to the attribute key.
+ * @param {String} hitMap.toolTip Attribute value will be mapped to the attribute key.
  * @param {String} serviceId Search service id. Resolved using the **[rest-services.json](rest-services.json.md)** file.
  *
  * @param {String} [hitIcon="bi-list-ul"] CSS icon class of search results, shown before the result name.
@@ -19,12 +21,12 @@ import store from "../../../app-store";
  * @param {String} [searchInterfaceId="elasticSearch"] The id of the service interface.
  * @param {String} [searchStringAttribute="searchString"] Search string attribute name for `payload` object.
  * @param {String[]} [featureButtons=["addLayer"]] Feature buttons to be shown next to a single search result.
- * @param {String} [type="POST"] Request type.
+ * @param {String} [requestType="POST"] Request type.
  * @constructs
  * @extends SearchInterface
  * @returns {void}
  */
-export default function SearchInterfaceElasticSearch ({hitMap, serviceId, hitIcon, hitType, payload, responseEntryPath, resultEvents, searchInterfaceId, featureButtons, searchStringAttribute, type} = {}) {
+export default function SearchInterfaceElasticSearch ({hitMap, serviceId, hitIcon, hitType, payload, responseEntryPath, resultEvents, searchInterfaceId, featureButtons, searchStringAttribute, requestType} = {}) {
     SearchInterface.call(this,
         "request",
         searchInterfaceId || "elasticSearch",
@@ -40,7 +42,7 @@ export default function SearchInterfaceElasticSearch ({hitMap, serviceId, hitIco
     this.responseEntryPath = responseEntryPath || "";
     this.searchStringAttribute = searchStringAttribute || "searchString";
     this.featureButtons = featureButtons || ["addLayer"];
-    this.type = type || "POST";
+    this.requestType = requestType || "POST";
 }
 
 SearchInterfaceElasticSearch.prototype = Object.create(SearchInterface.prototype);
@@ -57,7 +59,7 @@ SearchInterfaceElasticSearch.prototype.search = async function (searchInput) {
         payloadWithIgnoreIds = this.addIgnoreIdsToPayload(payload, Config?.tree),
         requestConfig = {
             serviceId: this.serviceId,
-            type: this.type,
+            requestType: this.requestType,
             payload: payloadWithIgnoreIds,
             responseEntryPath: this.responseEntryPath
         },
@@ -149,17 +151,17 @@ SearchInterfaceElasticSearch.prototype.initializeSearch = async function (reques
  * @returns {Object} Parsed result of request.
  */
 SearchInterfaceElasticSearch.prototype.sendRequest = async function (url, requestConfig, result) {
-    const type = requestConfig.type || "POST",
+    const requestType = requestConfig.requestType || "POST",
         payload = requestConfig.payload || undefined,
-        urlWithPayload = type === "GET" ? `${url}?source_content_type=application/json&source=${
+        urlWithPayload = requestType === "GET" ? `${url}?source_content_type=application/json&source=${
             JSON.stringify(payload)
         }` : url;
     let resultData = result;
 
-    if (type === "GET") {
+    if (requestType === "GET") {
         resultData = await this.requestSearch(urlWithPayload, "GET");
     }
-    else if (type === "POST") {
+    else if (requestType === "POST") {
         resultData = await this.requestSearch(url, "POST", payload);
     }
 
@@ -177,12 +179,12 @@ SearchInterfaceElasticSearch.prototype.normalizeResults = function (searchResult
     searchResults.forEach(searchResult => {
         normalizedResults.push({
             events: this.normalizeResultEvents(this.resultEvents, searchResult),
-            category: i18next.t(this.hitType),
+            category: this.hitType.startsWith("common:") ? i18next.t(this.hitType) : this.getResultByPath(searchResult, this.hitType),
             featureButtons: this.featureButtons,
             icon: this.hitIcon,
-            id: searchResult._id,
-            name: searchResult._source.name,
-            toolTip: `${searchResult._source.name} (${searchResult._source.datasets[0].md_name})`
+            id: this.getResultByPath(searchResult, this.hitMap?.id),
+            name: this.getResultByPath(searchResult, this.hitMap?.name),
+            toolTip: this.getResultByPath(searchResult, this.hitMap?.toolTip)
         });
     });
 
@@ -197,16 +199,76 @@ SearchInterfaceElasticSearch.prototype.normalizeResults = function (searchResult
 SearchInterfaceElasticSearch.prototype.createPossibleActions = function (searchResult) {
     return {
         activateLayerInTopicTree: {
-            layerId: searchResult._source.id,
+            layerId: this.getResultByPath(searchResult, this.hitMap?.layerId),
             closeResults: true
         },
         addLayerToTopicTree: {
-            layerId: searchResult._source.id,
-            source: searchResult._source,
+            layerId: this.getResultByPath(searchResult, this.hitMap?.layerId),
+            source: this.getResultByPath(searchResult, this.hitMap?.source),
             closeResults: true
         },
         openTopicTree: {
             closeResults: true
+        },
+        setMarker: {
+            coordinates: this.getResultByPath(searchResult, this.hitMap?.coordinate),
+            closeResults: true
+        },
+        zoomToResult: {
+            coordinates: this.getResultByPath(searchResult, this.hitMap?.coordinate),
+            closeResults: true
         }
     };
+};
+
+/**
+ * Returns the found result in searchResult by path of mapping attribute.
+ * @param {Object} searchResult The search result of elastic search.
+ * @param {String|String[]} mappingAttribute The mapping attribute.
+ * @returns {String} The found result.
+ */
+SearchInterfaceElasticSearch.prototype.getResultByPath = function (searchResult, mappingAttribute) {
+    if (typeof mappingAttribute !== "undefined") {
+        let result = searchResult;
+
+        if (Array.isArray(mappingAttribute)) {
+            result = this.getResultByPathArray(searchResult, mappingAttribute);
+        }
+        else {
+            const splittedAttribute = mappingAttribute?.split(".") || [];
+
+            splittedAttribute.forEach(attribute => {
+                if (typeof result[attribute] !== "undefined") {
+                    result = result[attribute];
+                }
+            });
+        }
+
+        return result;
+    }
+
+    return "";
+};
+
+/**
+ * Returns the found result in searchResult by path of mapping attributes.
+ * @param {Object} searchResult The search result of elastic search.
+ * @param {String[]} mappingAttributes The mapping attributes.
+ * @returns {String} The found result.
+ */
+SearchInterfaceElasticSearch.prototype.getResultByPathArray = function (searchResult, mappingAttributes) {
+    let result;
+
+    mappingAttributes.forEach(singleAttribute => {
+        const splittedAttribute = singleAttribute?.split(".") || [];
+        let singleResult = searchResult;
+
+        splittedAttribute.forEach(attribute => {
+            singleResult = Array.isArray(singleResult[attribute]) ? singleResult[attribute][0] : singleResult[attribute];
+        });
+
+        result = typeof result !== "undefined" ? result + " - " + singleResult : singleResult;
+    });
+
+    return result;
 };
