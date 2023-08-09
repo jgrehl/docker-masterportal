@@ -137,9 +137,10 @@ SearchInterface.prototype.pushHitToSearchResults = function (searchResult = {}) 
  * @param {String} searchUrl The search URL.
  * @param {String} type The search type: GET or POST.
  * @param {Object} [payload] The payload for POST request.
+ * @param {String} contentType The content type for POST request defaulting to json.
  * @returns {Object[]} Parsed result with hits of request.
  */
-SearchInterface.prototype.requestSearch = async function (searchUrl, type, payload) {
+SearchInterface.prototype.requestSearch = async function (searchUrl, type, payload, contentType = "application/json;charset=UTF-8") {
     let response = {},
         resultData = {};
 
@@ -151,7 +152,7 @@ SearchInterface.prototype.requestSearch = async function (searchUrl, type, paylo
         response = await this.sendGetRequest(searchUrl);
     }
     else if (type === "POST") {
-        response = await this.sendPostRequest(searchUrl, payload);
+        response = await this.sendPostRequest(searchUrl, payload, contentType);
     }
 
     if (response.status === 200) {
@@ -186,12 +187,13 @@ SearchInterface.prototype.sendGetRequest = function (searchUrl) {
  * Sends the POST request.
  * @param {String} searchUrl url to send request.
  * @param {Object} payload The request payload.
+ * @param {String} contentType The content type for the request, defaulting to json.
  * @returns {Promise} Result of POST request.
  */
-SearchInterface.prototype.sendPostRequest = function (searchUrl, payload) {
+SearchInterface.prototype.sendPostRequest = function (searchUrl, payload, contentType = "application/json;charset=UTF-8") {
     return axios.post(searchUrl, payload, {
         headers: {
-            "Content-Type": "application/json;charset=UTF-8"
+            "Content-Type": contentType
         },
         signal: this.currentController.signal,
         timeout: this.timeout
@@ -201,7 +203,7 @@ SearchInterface.prototype.sendPostRequest = function (searchUrl, payload) {
 /**
  * Create an Object of resultEvents.
  * @param {Object} resultEvents The result events.
- * @returns {Object} The result evnets as object.
+ * @returns {Object} The result events as object.
  */
 SearchInterface.prototype.resultEventsToObject = function (resultEvents) {
     const resultEventsAsObject = {};

@@ -706,6 +706,13 @@
           "subject": "Teknik konu",
           "topic": "Konu"
       },
+      "specialWFS": {
+        "ongoing": "Prosedürde",
+        "terminated": "belirlendi",
+        "hazardous": "Arıza operasyonu",
+        "childcare": "Anaokulu",
+        "bplan": "B planı"
+      },
       "noInitialResults": "İlk arama sonuç vermedi.",
       "showAll": "Hepsini Göster"
     },
