@@ -687,11 +687,12 @@
           "addressDistrict": "",
           "addressHospitalBplan": "Pesquisa por endereço/hospital/B-Plan(Plano de desenvolvimento)",
           "addressTopic": "",
-          "addressTopicParcel": "Pesquisa endereço, bairro, tópicos, parcela",
+          "addressTopicParcel": "Pesquisa endereço, bairro, tópicos, parcela"
       },
       "showAllResults": "mostrar todos os resultados",
       "searchResults": "Procurar Resultados",
       "search": "procurar",
+      "searchResultList": "Visão geral da pesquisa",
       "searchResultsFrom": "Resultados da pesquisa de: ",
       "mark": "Marcar o tópico",
       "add": "Adicionar tópico",
