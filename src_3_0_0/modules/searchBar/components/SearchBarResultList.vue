@@ -125,8 +125,8 @@ export default {
                 {{ categoryItem +": " + limitedSortedSearchResults.results[categoryItem+"Count"] + "    " + $t("common:modules.searchBar.searchResults") }}
             </h5>
             <div
-                v-for="item in showAllResults===false ? limitedSortedSearchResults.results : limitedSortedSearchResults.currentShowAllList"
-                :key="item.id"
+                v-for="(item, index) in showAllResults===false ? limitedSortedSearchResults.results : limitedSortedSearchResults.currentShowAllList"
+                :key="item.id + '-' + index"
             >
                 <p
                     v-if="item.category===categoryItem"
