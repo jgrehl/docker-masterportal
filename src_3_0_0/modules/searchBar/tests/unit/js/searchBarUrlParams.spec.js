@@ -25,8 +25,8 @@ describe("src_3_0_0/modules/searchBar/js/searchBarUrlParams.js", () => {
 
             expect(Object.keys(commitCalls).length).to.equals(1);
             expect(Object.keys(dispatchCalls).length).to.equals(1);
-            expect(commitCalls["SearchBar/setSearchInput"]).to.equals("abc-straße");
-            expect(dispatchCalls["SearchBar/startSearch"]).to.equals("called");
+            expect(commitCalls["Modules/SearchBar/setSearchInput"]).to.equals("abc-straße");
+            expect(dispatchCalls["Modules/SearchBar/startSearch"]).to.equals("abc-straße");
         });
 
         it("should set query to searchInput and start search with SEARCH/QUERY", () => {
@@ -38,8 +38,8 @@ describe("src_3_0_0/modules/searchBar/js/searchBarUrlParams.js", () => {
 
             expect(Object.keys(commitCalls).length).to.equals(1);
             expect(Object.keys(dispatchCalls).length).to.equals(1);
-            expect(commitCalls["SearchBar/setSearchInput"]).to.equals("xyz-straße");
-            expect(dispatchCalls["SearchBar/startSearch"]).to.equals("called");
+            expect(commitCalls["Modules/SearchBar/setSearchInput"]).to.equals("xyz-straße");
+            expect(dispatchCalls["Modules/SearchBar/startSearch"]).to.equals("xyz-straße");
         });
     });
 });
