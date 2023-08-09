@@ -22,7 +22,7 @@ const menuGetters = {
      * @returns {object} Returns the Name of the currently visible Component.
      */
     currentComponentName: state => side => {
-        const currentComponent = state[side].navigation.currentComponent;
+        const currentComponent = state[side]?.navigation.currentComponent;
         let name = {};
 
         switch (currentComponent.type) {
