@@ -1,6 +1,5 @@
 import store from "../../../app-store";
 import processUrlParams from "../../../shared/js/utils/processUrlParams";
-import searchBarComponent from "../components/SearchBar.vue";
 
 const searchBarUrlParams = {
         QUERY: setQueryToSearchInput
@@ -23,8 +22,10 @@ function processSearchBarUrlParams () {
  * @returns {void}
  */
 function setQueryToSearchInput (params) {
-    store.commit("Modules/SearchBar/setSearchInput", params.QUERY || params["SEARCH/QUERY"]);
-    searchBarComponent.methods.startSearch();
+    const value = params.QUERY ? params.QUERY : params["SEARCH/QUERY"];
+
+    store.commit("Modules/SearchBar/setSearchInput", value);
+    store.dispatch("Modules/SearchBar/startSearch", value);
 }
 
 export default {

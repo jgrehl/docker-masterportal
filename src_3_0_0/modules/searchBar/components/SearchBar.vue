@@ -1,4 +1,4 @@
-commons
+//commons
 <script>
 import {mapGetters, mapActions, mapMutations} from "vuex";
 
@@ -39,39 +39,13 @@ export default {
         this.initializeModule({configPaths: this.configPaths, type: this.type});
         this.overwriteDefaultValues();
         this.instantiateSearchInterfaces(this.$searchInterfaceAddons);
-        this.setCurrentSide(this.portalConfig.mainMenu.searchBar !== undefined ? "mainMenu" : "secondaryMenu");
+        this.setCurrentSide(this.portalConfig?.mainMenu?.searchBar !== undefined ? "mainMenu" : "secondaryMenu");
     },
     methods: {
         ...mapActions(["initializeModule"]),
-        ...mapActions("Modules/SearchBar", ["instantiateSearchInterfaces", "overwriteDefaultValues", "search"]),
+        ...mapActions("Modules/SearchBar", ["instantiateSearchInterfaces", "overwriteDefaultValues", "search", "startSearch"]),
         ...mapMutations("Modules/SearchBar", ["setSearchInput", "setShowAllResults", "setSearchResultsActive", "setCurrentSide"]),
-        ...mapActions("Menu", ["clickedMenuElement", "navigateBack"]),
-
-        /**
-         * Starts the search in searchInterfaces, if min characters are introduced, updates the result list.
-         * @returns {void}
-         */
-        startSearch () {
-            const side = this.currentSide;
-            console.log("---", this.placeholder)
-            if (this.searchInputValue?.length >= parseInt(this.minCharacters, 10)) {
-                this.setShowAllResults(false);
-                if (!this.searchResultsActive) {
-                    this.$store.state.Menu[side].navigation.history.push({0: {type: "root", props: []}});
-                }
-                this.setSearchResultsActive(true);
-                this.search({searchInput: this.searchInputValue});
-
-                this.clickedMenuElement({
-                    name: "common:modules.searchBar.searchResultList",
-                    side: side,
-                    type: "searchbarresultlist"
-                });
-            }
-            if (this.searchInputValue?.length < parseInt(this.minCharacters, 10) && this.searchResultsActive === true) {
-                this.navigateBack(side);
-            }
-        }
+        ...mapActions("Menu", ["clickedMenuElement", "navigateBack", "resetMenu"])
     }
 };
 </script>
@@ -97,6 +71,7 @@ export default {
                 class="form-control"
                 :placeholder="$t(placeholder)"
                 :aria-label="$t(placeholder)"
+                @click="resetMenu(currentSide)"
                 @input="startSearch"
                 @keydown.enter="startSearch"
             >
