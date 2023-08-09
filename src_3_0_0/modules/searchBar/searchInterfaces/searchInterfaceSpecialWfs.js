@@ -4,6 +4,7 @@ import {uniqueId} from "../../../shared/js/utils/uniqueId";
 
 /**
  * The search interface to the special wfs.
+ * @module modules/searchInterfaceSpecialWfs
  * @constructs
  * @extends SearchInterface
  * @param {Object} definitions Special WFS search definitions.
