@@ -33,12 +33,14 @@ export default {
 
         Object.assign(searchInterfacesMapper, ...searchInterfaceAddons);
 
-        Object.keys(state.searchInterfaces).forEach(searchInterface => {
-            if (searchInterfacesMapper[searchInterface]) {
-                commit("addSearchInterfaceInstances", new searchInterfacesMapper[searchInterface](state.searchInterfaces[searchInterface]));
+        state.searchInterfaces.forEach(searchInterface => {
+            const type = searchInterface.type;
+
+            if (searchInterfacesMapper[type]) {
+                commit("addSearchInterfaceInstances", new searchInterfacesMapper[type](searchInterface));
             }
             else {
-                console.warn(`The searchInterface: "${searchInterface}" hasn't been implemented yet`);
+                console.warn(`The searchInterface: "${type}" hasn't been implemented yet`);
             }
         });
     },
