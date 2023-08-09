@@ -40,8 +40,9 @@ describe("src_3_0_0/modules/searchBar/components/SearchBarResultList.vue", () =>
                 }
             }
         ],
-        searchInterfaces = {
-            "gazetteer": {
+        searchInterfaces = [
+            {
+                "type": "gazetteer",
                 "serviceId": "6",
                 "searchAddress": true,
                 "searchStreets": true,
@@ -50,7 +51,7 @@ describe("src_3_0_0/modules/searchBar/components/SearchBarResultList.vue", () =>
                 "searchParcels": true,
                 "searchStreetKey": true
             }
-        },
+        ],
         minCharacters = 3,
         searchInput = "Neuenfelder",
         showAllResults = false;
