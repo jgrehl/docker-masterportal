@@ -706,6 +706,13 @@
         "subject": "Tema específico",
         "topic": "Tema"
     },
+    "specialWFS": {
+      "ongoing": "en proceso",
+      "terminated": "encontrado",
+      "hazardous": "Operación interrumpida",
+      "childcare": "Guardería",
+      "bplan": "Plan catastral"
+    },
     "noInitialResults": "La búsqueda inicial no dio ningún resultado.",
     "showAll": "Ver todo"
     },

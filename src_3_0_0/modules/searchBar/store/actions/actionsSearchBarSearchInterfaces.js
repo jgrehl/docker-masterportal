@@ -9,6 +9,7 @@ import SearchInterfaceLocationFinder from "../../searchInterfaces/searchInterfac
 import SearchInterfaceOsmNominatim from "../../searchInterfaces/searchInterfaceOsmNominatim";
 import SearchInterfaceTopicTree from "../../searchInterfaces/searchInterfaceTopicTree";
 import SearchInterfaceVisibleVector from "../../searchInterfaces/searchInterfaceVisibleVector";
+import SearchInterfaceSpecialWfs from "../../searchInterfaces/SearchInterfaceSpecialWfs";
 
 export default {
     /**
@@ -28,7 +29,8 @@ export default {
             locationFinder: SearchInterfaceLocationFinder,
             osmNominatim: SearchInterfaceOsmNominatim,
             topicTree: SearchInterfaceTopicTree,
-            visibleVector: SearchInterfaceVisibleVector
+            visibleVector: SearchInterfaceVisibleVector,
+            specialWfs: SearchInterfaceSpecialWfs
         };
 
         Object.assign(searchInterfacesMapper, ...searchInterfaceAddons);
