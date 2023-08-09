@@ -57,7 +57,22 @@ describe("src_3_0_0/modules/searchBar/components/SearchBarResultList.vue", () =>
                 "events": {
                 }
             }
-        ];
+        ],
+        searchInterfaces = [
+            {
+                "type": "gazetteer",
+                "serviceId": "6",
+                "searchAddress": true,
+                "searchStreets": true,
+                "searchHouseNumbers": true,
+                "searchDistricts": true,
+                "searchParcels": true,
+                "searchStreetKey": true
+            }
+        ],
+        minCharacters = 3,
+        searchInput = "Neuenfelder",
+        showAllResults = false;
 
         store = createStore({
             namespaces: true,
