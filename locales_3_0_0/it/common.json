@@ -708,6 +708,13 @@
         "subject": "dati specialistici",
         "topic": "oggetto"
     },
+    "specialWFS": {
+      "ongoing": "in corso",
+      "terminated": "fisso",
+      "hazardous": "Azienda pericolosa",
+      "childcare": "Asilo",
+      "bplan": "Piano regolatore"
+    },
     "noInitialResults": "La ricerca iniziale non ha portato risultati.",
     "showAll": "Mostra tutto"
     },
