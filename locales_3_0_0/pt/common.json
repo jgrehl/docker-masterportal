@@ -706,6 +706,13 @@
           "subject": "Assunto",
           "topic": "Tópico"
       },
+      "specialWFS": {
+        "ongoing": "em processo",
+        "terminated": "verificado",
+        "hazardous": "Operação de emergência",
+        "childcare": "Infantário",
+        "bplan": "Plano de desenvolvimento"
+      },
       "noInitialResults": "A pesquisa inicial não resultou em nenhum acerto.",
       "showAll": "Mostre tudo"
     },
