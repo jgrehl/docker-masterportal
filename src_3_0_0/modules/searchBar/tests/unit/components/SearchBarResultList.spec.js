@@ -92,6 +92,17 @@ describe("src_3_0_0/modules/searchBar/components/SearchBarResultList.vue", () =>
                         }
                     }
                 }
+            },
+            state: {
+                "Menu": {
+                    "currentComponent": "",
+                    "secondaryMenu": {
+                        "currentComponent": "",
+                        "navigation": {
+                            "history": []
+                        }
+                    }
+                }
             }
         });
     });

@@ -109,7 +109,7 @@ export default {
          * @returns {void}
          */
         prepareShowAllResults (categoryItem) {
-            const side = this.portalConfig.mainMenu.searchBar !== undefined ? "mainMenu" : "secondaryMenu";
+            const side = this.portalConfig?.mainMenu?.searchBar !== undefined ? "mainMenu" : "secondaryMenu";
 
             this.$store.state.Menu[side].navigation.currentComponent = {props: {name: "common:modules.searchBar.searchResults"}, type: "searchbarresultlist"};
 
