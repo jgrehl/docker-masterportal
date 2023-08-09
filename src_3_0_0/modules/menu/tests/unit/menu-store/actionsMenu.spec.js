@@ -286,14 +286,16 @@ describe("src_3_0_0/modules/menu/menu-store/actionsMenu.js", () => {
         });
     });
 
-    describe.only("navigateBack", () => {
+    describe("navigateBack", () => {
         const side = "mainMenu";
 
         it("should switch to previous component", async () => {
-            actions.navigateBack({commit, dispatch, getters, state}, {"Modules/SearchBar/showAllResults": () => false}, side);
+            rootGetters = {"Modules/SearchBar/showAllResults": false};
+
+            actions.navigateBack({commit, dispatch, getters, state, rootGetters}, side);
 
             await nextTick(() => {
-                //expect(commit.calledOnce).to.be.true;
+                expect(commit.calledOnce).to.be.true;
                 expect(commit.firstCall.args[0]).to.equal("switchToPreviousComponent");
                 expect(commit.firstCall.args[1]).to.equal(side);
                 expect(dispatch.calledOnce).to.be.true;
@@ -303,15 +305,19 @@ describe("src_3_0_0/modules/menu/menu-store/actionsMenu.js", () => {
         it("should switch to previous component and change current mouse map interactionscomponent'", async () => {
             Object.assign(state, {currentMouseMapInteractionsComponent: "abc"});
 
-            actions.navigateBack({commit, dispatch, getters, state}, side);
+            rootGetters = {"Modules/SearchBar/showAllResults": false};
+
+            actions.navigateBack({commit, dispatch, getters, state, rootGetters}, side);
 
             await nextTick(() => {
                 expect(commit.calledOnce).to.be.true;
                 expect(commit.firstCall.args[0]).to.equal("switchToPreviousComponent");
                 expect(commit.firstCall.args[1]).to.equal(side);
-                expect(dispatch.calledOnce).to.be.true;
+                expect(dispatch.calledTwice).to.be.true;
                 expect(dispatch.firstCall.args[0]).to.equal("changeCurrentMouseMapInteractionsComponent");
                 expect(dispatch.firstCall.args[1]).to.deep.equal({type: state.defaultComponent, side});
+                expect(dispatch.secondCall.args[0]).to.equal("Modules/SearchBar/updateSearchNavigation");
+                expect(dispatch.secondCall.args[1]).to.equal(side);
             });
         });
     });
