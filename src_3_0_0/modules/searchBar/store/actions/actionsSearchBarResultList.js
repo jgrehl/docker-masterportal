@@ -65,6 +65,7 @@ export default {
     updateSearchNavigation: ({getters, commit, rootState}, side) => {
         if (getters.showAllResults === true) {
             commit("setShowAllResults", false);
+
             rootState.Menu[side].navigation.currentComponent.props.name = "common:modules.searchBar.searchResultList";
             rootState.Menu[side].navigation.history = [];
             rootState.Menu[side].navigation.history.push({type: "root", props: []});

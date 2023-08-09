@@ -143,6 +143,7 @@ export default {
             if (getters.currentComponent(side).type === state.currentMouseMapInteractionsComponent && getters.currentComponent(side).type !== state.defaultComponent) {
                 dispatch("changeCurrentMouseMapInteractionsComponent", {type: state.defaultComponent, side});
             }
+
             if (rootGetters["Modules/SearchBar/showAllResults"] === false) {
                 commit("switchToPreviousComponent", side);
             }
