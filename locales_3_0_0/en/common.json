@@ -718,6 +718,13 @@
         "general": "topics",
         "folder": "folder (topics)"
     },
+    "specialWFS": {
+      "ongoing": "in process",
+      "terminated": "terminated",
+      "hazardous": "event of malfunction",
+      "childcare": "childcare",
+      "bplan": "b-plan"
+    },
     "noInitialResults": "Initial search found no hits.",
     "showAll": "Show all"
     },
