@@ -223,6 +223,7 @@
 - Added documentation file doc\jsdoc.md for jsdoc in vue-components and vuex-files.
 - Script to migrate masterportal configuration files to version 3.0.0
 - The layer attribution is now displayed in an alert when a layer is activated for the first time
+- It is now possible to configure a search interface more than once. For example `elasticSerch`.
 
 ### Added
 - GFI: nested object values can now be addressed from "gfiAttributes" by dot notation. See [services.json](https://bitbucket.org/geowerkstatt-hamburg/masterportal/src/dev/doc/services.json.md#markdown-header-gfi_attributes) .

@@ -17,7 +17,19 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceElasticSea
             }
         };
 
-        SearchInterface1 = new SearchInterfaceElasticSearch();
+        SearchInterface1 = new SearchInterfaceElasticSearch({
+            hitMap: {
+                name: "_source.name",
+                id: "_source.id",
+                source: "_source",
+                layerId: "_source.id",
+                toolTip: [
+                    "_source.name",
+                    "_source.datasets.md_name"
+                ],
+                coordinate: "_source.geometry.coordinates"
+            }
+        });
 
         i18next.init({
             lng: "cimode",
@@ -132,7 +144,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceElasticSea
                     },
                     responseEntryPath: "hits.hits",
                     serviceId: "elastic",
-                    type: "GET",
+                    requestType: "GET",
                     url: "https://geodienste.hamburg.de/"
                 },
                 axiosStub = sinon.stub(axios, "get").resolves(ret);
@@ -154,7 +166,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceElasticSea
                     },
                     responseEntryPath: "hits.hits",
                     serviceId: "elastic",
-                    type: "GET"
+                    requestType: "GET"
                 },
                 result = {
                     status: "success",
@@ -195,7 +207,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceElasticSea
                     },
                     responseEntryPath: "hits.hits",
                     serviceId: "elastic",
-                    type: "GET"
+                    requestType: "GET"
                 },
                 result = {
                     status: "success",
@@ -257,11 +269,11 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceElasticSea
                         }
                     },
                     category: "modules.searchBar.type.subject",
-                    id: "100",
+                    id: "123",
                     featureButtons: ["addLayer"],
                     icon: "bi-list-ul",
                     name: "Test abc",
-                    toolTip: "Test abc (md name)"
+                    toolTip: "Test abc - md name"
                 }
             ]);
         });
@@ -273,7 +285,10 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceElasticSea
                 _id: "100",
                 _source: {
                     id: "123",
-                    abc: "abc"
+                    abc: "abc",
+                    geometry: {
+                        coordinates: [10, 20]
+                    }
                 }
             };
 
@@ -290,9 +305,87 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceElasticSea
                     },
                     openTopicTree: {
                         closeResults: true
+                    },
+                    setMarker: {
+                        coordinates: [10, 20],
+                        closeResults: true
+                    },
+                    zoomToResult: {
+                        coordinates: [10, 20],
+                        closeResults: true
                     }
                 }
             );
+        });
+    });
+
+    describe("getResultByPath", () => {
+        it("should return the value from path for String mappingAttribute", () => {
+            const searchResult = {
+                    _id: "100",
+                    _source: {
+                        id: "123",
+                        abc: "abc",
+                        geometry: {
+                            coordinates: [10, 20]
+                        }
+                    }
+                },
+                mappingAttribute = "_source.geometry.coordinates";
+
+            expect(SearchInterface1.getResultByPath(searchResult, mappingAttribute)).to.deep.equals([10, 20]);
+        });
+
+        it("should return the value from path for String[] mappingAttribute", () => {
+            const searchResult = {
+                    _id: "100",
+                    _source: {
+                        id: "123",
+                        abc: "abc",
+                        geometry: {
+                            coordinates: [10, 20]
+                        },
+                        name: "name",
+                        datasets: [
+                            {
+                                md_name: "md_name"
+                            }
+                        ]
+                    }
+                },
+                mappingAttribute = [
+                    "_source.name",
+                    "_source.datasets.md_name"
+                ];
+
+            expect(SearchInterface1.getResultByPath(searchResult, mappingAttribute)).to.deep.equals("name - md_name");
+        });
+    });
+
+    describe("getResultByPathArray", () => {
+        it("should return the value from path", () => {
+            const searchResult = {
+                    _id: "100",
+                    _source: {
+                        id: "123",
+                        abc: "abc",
+                        geometry: {
+                            coordinates: [10, 20]
+                        },
+                        name: "name",
+                        datasets: [
+                            {
+                                md_name: "md_name"
+                            }
+                        ]
+                    }
+                },
+                mappingAttributes = [
+                    "_source.name",
+                    "_source.datasets.md_name"
+                ];
+
+            expect(SearchInterface1.getResultByPath(searchResult, mappingAttributes)).to.deep.equals("name - md_name");
         });
     });
 });

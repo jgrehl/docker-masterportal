@@ -57,21 +57,31 @@
         "active": true
       }
     },
-    "getFeatureInfo":{
+    "getFeatureInfo": {
       "highlightVectorRules": {
-          "fill": {
-              "color": [215, 102, 41, 0.9]
-          },
-          "image": {
-              "scale": 1.5
-          },
-          "stroke": {
-              "width": 4,
-              "color": [215, 102, 41, 0.9]
-          },
-          "text": {
-              "scale": 2
-          }
+        "fill": {
+          "color": [
+            215,
+            102,
+            41,
+            0.9
+          ]
+        },
+        "image": {
+          "scale": 1.5
+        },
+        "stroke": {
+          "width": 4,
+          "color": [
+            215,
+            102,
+            41,
+            0.9
+          ]
+        },
+        "text": {
+          "scale": 2
+        }
       },
       "hideMapMarkerOnVectorHighlight": true
     },
@@ -84,19 +94,11 @@
         "toolTip": "Landesbetrieb Geoinformation und Vermessung"
       },
       "searchBar": {
-        "searchInterfaces": {
-          "gazetteer": {
-            "serviceId": "6",
-            "searchAddress": true,
-            "searchStreets": true,
-            "searchHouseNumbers": true,
-            "searchDistricts": true,
-            "searchParcels": true,
-            "searchStreetKey": true
-          },
-          "elasticSearch": {
+        "searchInterfaces": [
+          {
+            "type": "elasticSearch",
             "serviceId": "elastic_prod",
-            "type": "GET",
+            "requestType": "GET",
             "payload": {
               "id": "query",
               "params": {
@@ -113,12 +115,54 @@
             "hitMap": {
               "name": "_source.name",
               "id": "_source.id",
-              "source": "_source"
+              "source": "_source",
+              "layerId": "_source.id",
+              "toolTip": [
+                "_source.name",
+                "_source.datasets.md_name"
+              ]
+            },
+            "featureButtons": ["addLayer"],
+            "resultEvents": {
+              "onClick": ["activateLayerInTopicTree", "addLayerToTopicTree", "openTopicTree"]
             }
           },
-          "topicTree": {},
-          "visibleVector": {},
-          "locationFinder": {
+          {
+            "type": "elasticSearch",
+            "serviceId": "elastic_address",
+            "requestType": "POST",
+            "minChars": 1,
+            "searchStringAttribute": "query_str",
+            "hitType": "_source.properties.type",
+            "payload": {
+              "id": "addr_search",
+              "params": {
+                "query_str": ""
+              }
+            },
+            "responseEntryPath": "hits.hits",
+            "hitMap": {
+              "name": "_source.properties.searchfield",
+              "id": "_source.id",
+              "coordinate": "_source.geometry.coordinates"
+            },
+            "featureButtons": [],
+            "resultEvents": {
+              "onClick": ["setMarker", "zoomToResult"]
+            }
+          },
+          {
+            "type": "gazetteer",
+            "serviceId": "6",
+            "searchAddress": true,
+            "searchStreets": true,
+            "searchHouseNumbers": true,
+            "searchDistricts": true,
+            "searchParcels": true,
+            "searchStreetKey": true
+          },
+          {
+            "type": "locationFinder",
             "serviceId": "locationFinder",
             "classes": [
               {
@@ -130,7 +174,8 @@
               }
             ]
           },
-          "komootPhoton": {
+          {
+            "type": "komootPhoton",
             "minChars": 3,
             "serviceId": "11",
             "limit": 10,
@@ -139,18 +184,23 @@
             "lon": 10.0,
             "bbox": "9.6,53.3,10.4,53.8"
           },
-          "osmNominatim": {
+          {
+            "type": "osmNominatim",
             "serviceId": "10",
             "limit": 60,
             "states": "Hamburg",
             "classes": "place,highway,building,shop,historic,leisure,city,county"
           },
-          "bkg": {
-            "geoSearchServiceId": "5",
-            "epsg": "EPSG:25832"
+          {
+            "type": "topicTree"
           },
-          "exampleSearch": {}
-        }
+          {
+            "type": "visibleVector"
+          },
+          {
+            "type": "exampleSearch"
+          }
+        ]
       },
       "sections": [
         [
