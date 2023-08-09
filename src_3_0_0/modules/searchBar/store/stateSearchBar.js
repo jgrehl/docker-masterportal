@@ -23,7 +23,7 @@ const state = {
     configPaths: ["portalConfig.mainMenu.searchBar", "portalConfig.secondaryMenu.searchBar"],
     minCharacters: 3,
     placeholder: "common:modules.searchBar.placeholder.address",
-    searchInterfaces: {},
+    searchInterfaces: [],
     suggestionListLength: 5,
     timeout: 5000,
     type: "searchBar",
