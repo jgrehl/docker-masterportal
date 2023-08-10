@@ -82,24 +82,27 @@ export default {
             id="open-config-input-button"
             class="d-flex justify-content-center"
         >
-            <label
-                ref="file-upload-label"
-                class="btn btn-secondary btn-icon"
-                tabindex="0"
+            <button
+                class="btn-transparent"
                 @keydown="triggerClickOnFileInput"
             >
-                <input
-                    ref="file-upload-input"
-                    type="file"
-                    @change="loadFile"
+                <label
+                    ref="file-upload-label"
+                    class="btn btn-secondary btn-icon"
                 >
-                <span
-                    aria-hidden="true"
-                >
-                    <i :class="icon" />
-                </span>
-                {{ $t("common:modules.openConfig.openFile") }}
-            </label>
+                    <input
+                        ref="file-upload-input"
+                        type="file"
+                        @change="loadFile"
+                    >
+                    <span
+                        aria-hidden="true"
+                    >
+                        <i :class="icon" />
+                    </span>
+                    {{ $t("common:modules.openConfig.openFile") }}
+                </label>
+            </button>
         </div>
     </div>
 </template>
@@ -114,6 +117,11 @@ export default {
 
     input[type="file"] {
         display: none;
+    }
+
+    .btn-transparent{
+        background-color: transparent;
+        border: none;
     }
 
 </style>
