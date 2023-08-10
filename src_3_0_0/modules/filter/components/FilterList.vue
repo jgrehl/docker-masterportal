@@ -130,32 +130,29 @@ export default {
             :ref="setItemRef"
             :key="filter.filterId"
             class="panel panel-default"
-            @click="setLayerLoaded(filter.filterId)"
-            @keydown.enter="setLayerLoaded(filter.filterId)"
         >
-            <h2
-                :class="['panel-title', disabled ? 'disabled' : '']"
-                @click="updateSelectedLayers(filter.filterId)"
-                @keydown.enter="updateSelectedLayers(filter.filterId)"
+            <button
+                :disabled="disabled"
+                data-toggle="collapse"
+                data-parent="#accordion"
+                class="d-flex justify-content-between w-100 btn-transparent"
+                @click="setLayerLoaded(filter.filterId), updateSelectedLayers(filter.filterId)"
+                @keydown.enter="setLayerLoaded(filter.filterId), updateSelectedLayers(filter.filterId)"
             >
-                <a
-                    :disabled="disabled"
-                    role="button"
-                    data-toggle="collapse"
-                    data-parent="#accordion"
-                    tabindex="0"
+                <h2
+                    :class="['panel-title', disabled ? 'disabled' : '']"
                 >
                     {{ filter.title ? filter.title : filter.layerId }}
-                    <span
-                        v-if="!selectedLayers.some(layers => layers.filterId === filter.filterId)"
-                        class="bi bi-chevron-down float-end"
-                    />
-                    <span
-                        v-else
-                        class="bi bi-chevron-up float-end"
-                    />
-                </a>
-            </h2>
+                </h2>
+                <span
+                    v-if="!selectedLayers.some(layers => layers.filterId === filter.filterId)"
+                    class="bi bi-chevron-down float-end"
+                />
+                <span
+                    v-else
+                    class="bi bi-chevron-up float-end"
+                />
+            </button>
             <div
                 v-if="filter.shortDescription && !selectedLayers.includes(filter.filterId)"
                 class="layerInfoText"
@@ -188,5 +185,11 @@ export default {
 }
 .panel-title {
     cursor: pointer;
+}
+
+.btn-transparent {
+    background-color: transparent;
+    border: none;
+    text-align:left;
 }
 </style>

@@ -55,9 +55,9 @@ export default {
 <template>
     <div v-if="info">
         <div class="info-icon">
-            <span
+            <button
                 :class="['bi bi-info-circle-fill', showInfo ? 'opened' : '']"
-                tabindex="0"
+                class="btn-info-icon"
                 @click="toggleInfo()"
                 @keydown.enter="toggleInfo()"
             />
@@ -66,13 +66,13 @@ export default {
             v-show="showInfo"
             class="bottom"
         >
-            <div
+            <button
                 class="info-text"
                 @click="toggleInfo()"
                 @keydown="toggleInfo()"
             >
                 <span>{{ infoText }}</span>
-            </div>
+            </button>
         </div>
     </div>
 </template>
@@ -85,7 +85,7 @@ export default {
         width: 340px;
         float: left;
         z-index: 1001;
-        background-color: rgb(241, 241, 241, 0.95);
+        justify-content: flex-end;
     }
     .info-icon {
         float: right;
@@ -102,8 +102,15 @@ export default {
     .info-text {
         border: 1px solid $light_grey;
         border-radius: 5px;
+        background-color: rgb(241, 241, 241, 0.95);
         font-size: $font-size-sm;
         padding: 15px 10px;
         cursor: pointer;
+        float: right;
+    }
+
+    .btn-info-icon{
+        background-color: transparent;
+        border: none;
     }
 </style>
