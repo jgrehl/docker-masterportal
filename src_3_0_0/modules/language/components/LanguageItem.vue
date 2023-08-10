@@ -50,11 +50,10 @@ export default {
                 class="form-check-input"
                 :checked="$i18next.language === key? true : false"
                 @click="translate(key)"
+                @keydown.enter="translate(key)"
             >
             <label
                 :for="'languageRadio-'+key"
-                @click="translate(key)"
-                @keydown.enter="translate(key)"
             > {{ language }}
             </label>
         </div>
@@ -65,4 +64,7 @@ export default {
     .form-check {
             margin-bottom: 1rem;
         }
+    label {
+        cursor: pointer;
+    }
 </style>
