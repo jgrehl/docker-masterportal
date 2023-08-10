@@ -63,7 +63,7 @@ export default {
 </script>
 
 <template lang="html">
-    <div
+    <LightButton
         :id="'select-all-layers-' + ids()"
         class="d-flex w-100 layer-tree-select-all pe-2 p-1"
         @click="clicked()"
@@ -91,13 +91,16 @@ export default {
                 {{ $t("common:modules.layerSelection.selectAll") }}
             </span>
         </label>
-    </div>
+    </LightButton>
 </template>
 
 <style lang="scss" scoped>
     @import "~variables";
     @import "~mixins";
 
+    .test {
+        background-color: yellow;
+    }
     .layer-tree-select-all {
         &:hover {
             @include primary_action_hover;

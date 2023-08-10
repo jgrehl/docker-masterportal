@@ -129,10 +129,10 @@ export default {
             </span>
         </label>
     </div>
-    <div
+    <Button
         v-else
         :id="'layer-checkbox-' + conf.id"
-        class="d-flex w-100 layer-tree-layer-title pe-2 p-1"
+        class="d-flex w-100 layer-tree-layer-title pe-2 p-1 btn-transparent"
         @click="clicked()"
         @keydown.enter="clicked()"
     >
@@ -165,13 +165,16 @@ export default {
                 {{ $t(conf.name) }}
             </span>
         </label>
-    </div>
+    </Button>
 </template>
 
 <style lang="scss" scoped>
     @import "~variables";
     @import "~mixins";
-
+    .btn-transparent {
+        background-color: transparent;
+        border: none;
+    }
     .layer-tree-layer-title, .layer-tree-layer-checkbox {
         border-radius: 15px;
         &:hover {
