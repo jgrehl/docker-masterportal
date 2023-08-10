@@ -223,7 +223,7 @@ export default {
                 :key="layer.id"
                 class="nav-item shadow"
             >
-                <a
+                <button
                     class="nav-link"
                     data-bs-toggle="tooltip"
                     data-bs-placement="bottom"
@@ -234,7 +234,7 @@ export default {
                     @keydown="showLayerInformationInMenu(layer)"
                 >
                     {{ layer.name }}
-                </a>
+                </button>
                 <IconButton
                     :aria="$t('common:modules.layerPills.remove')"
                     :class-array="['btn-light', 'layerpillsbutton']"
