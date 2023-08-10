@@ -1,6 +1,7 @@
 <script>
 import isObject from "../../../shared/js/utils/isObject";
 import {mapGetters, mapActions} from "vuex";
+import IconButton from "../../../shared/modules/buttons/components/IconButton.vue";
 
 /**
  * Draw Item Attributes
@@ -16,6 +17,7 @@ import {mapGetters, mapActions} from "vuex";
  */
 export default {
     name: "DrawItemAttributes",
+    components: {IconButton},
     props: {
         selectedFeature: {
             type: Object,
@@ -354,14 +356,12 @@ export default {
                         placeholder="Attribute value"
                     >
                 </div>
-                <div class="col-1">
-                    <i
-                        :title="$t('common:modules.draw_old.attributeSelect.remove')"
-                        class="bi bi-trash"
-                        @click="removeAttribute(idx)"
-                        @keypress.enter="removeAttribute(idx) "
-                    />
-                </div>
+                <IconButton
+                    :aria="$t('common:modules.draw_old.attributeSelect.remove')"
+                    :icon="'bi bi-trash'"
+                    :interaction="() => removeAttribute(idx)"
+                    :class-array="['btn-light']"
+                />
             </div>
             <div class="row align-items-center text-center justify-content-center">
                 <div class="col-5">
@@ -394,17 +394,12 @@ export default {
                         @keyup.enter="addAttributesToFeature(), switchToRef('attributeKey')"
                     >
                 </div>
-                <div
-                    class="col-1"
-                    tabindex="0"
-                    @click="addAttributesToFeature()"
-                    @keypress.enter="addAttributesToFeature()"
-                >
-                    <i
-                        :title="$t('common:modules.draw_old.attributeSelect.save')"
-                        class="bi bi-save"
-                    />
-                </div>
+                <IconButton
+                    :aria="$t('common:modules.draw_old.attributeSelect.save')"
+                    :icon="'bi bi-save'"
+                    :interaction="() => addAttributesToFeature()"
+                    :class-array="['btn-light']"
+                />
             </div>
         </div>
         <div v-else>
