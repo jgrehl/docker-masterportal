@@ -37,8 +37,9 @@ describe("src_3_0_0/modules/searchBar/store/actions/actionsSearchBarSearchInterf
 
             instantiateSearchInterfaces({state, commit});
 
-            expect(commit.calledOnce).to.be.true;
-            expect(commit.args[0]).includes("addSearchInterfaceInstances");
+            expect(commit.calledTwice).to.be.true;
+            expect(commit.firstCall.args[0]).includes("addMultipleSearchInterfaceIds");
+            expect(commit.secondCall.args[0]).includes("addSearchInterfaceInstances");
         });
 
         it("should instantiate the gazetter and addons search interfaces", () => {
@@ -66,9 +67,10 @@ describe("src_3_0_0/modules/searchBar/store/actions/actionsSearchBarSearchInterf
 
             instantiateSearchInterfaces({state, commit}, searchInterfaceAddons);
 
-            expect(commit.calledTwice).to.be.true;
-            expect(commit.args[0]).includes("addSearchInterfaceInstances");
-            expect(commit.args[0]).includes("addSearchInterfaceInstances");
+            expect(commit.calledThrice).to.be.true;
+            expect(commit.firstCall.args[0]).includes("addMultipleSearchInterfaceIds");
+            expect(commit.secondCall.args[0]).includes("addSearchInterfaceInstances");
+            expect(commit.thirdCall.args[0]).includes("addSearchInterfaceInstances");
         });
     });
 
