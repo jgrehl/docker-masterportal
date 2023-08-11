@@ -103,14 +103,12 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceOsmNominat
                     events: {
                         onClick: {
                             setMarker: {
-                                closeResults: true,
                                 coordinates: [
                                     1,
                                     2
                                 ]
                             },
                             zoomToResult: {
-                                closeResults: true,
                                 coordinates: [
                                     1,
                                     2
@@ -119,7 +117,6 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceOsmNominat
                         },
                         onHover: {
                             setMarker: {
-                                closeResults: true,
                                 coordinates: [
                                     1,
                                     2
@@ -155,14 +152,12 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceOsmNominat
                 events: {
                     onClick: {
                         setMarker: {
-                            closeResults: true,
                             coordinates: [
                                 1,
                                 2
                             ]
                         },
                         zoomToResult: {
-                            closeResults: true,
                             coordinates: [
                                 1,
                                 2
@@ -171,7 +166,6 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceOsmNominat
                     },
                     onHover: {
                         setMarker: {
-                            closeResults: true,
                             coordinates: [
                                 1,
                                 2
@@ -206,11 +200,9 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceOsmNominat
             expect(SearchInterface1.createPossibleActions(searchResults[0])).to.deep.equals(
                 {
                     setMarker: {
-                        closeResults: true,
                         coordinates: [1, 2]
                     },
                     zoomToResult: {
-                        closeResults: true,
                         coordinates: [1, 2]
                     }
                 }

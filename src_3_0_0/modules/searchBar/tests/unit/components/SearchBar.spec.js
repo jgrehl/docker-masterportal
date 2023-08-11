@@ -8,8 +8,43 @@ import SearchBarComponent from "../../../components/SearchBar.vue";
 config.global.mocks.$t = key => key;
 
 describe("src_3_0_0/modules/searchBar/components/SearchBar.vue", () => {
+    const searchResults = [
+            {
+                "category": "Straße",
+                "id": "BeidemNeuenKrahnStraße",
+                "index": 0,
+                "name": "Bei dem Neuen Krahn",
+                "searchInterfaceId": "gazetteer",
+                "displayedInfo": "",
+                "icon": "bi-signpost",
+                "imagePath": "",
+                "toolTip": "",
+                "events": {
+                }
+
+            },
+            {
+                "category": "Adresse",
+                "id": "BeidemNeuenKrahn2Adresse",
+                "index": 1,
+                "name": "Bei dem Neuen Krahn 2",
+                "searchInterfaceId": "gazetteer",
+                "displayedInfo": "",
+                "icon": "bi-signpost",
+                "imagePath": "",
+                "toolTip": "",
+                "events": {
+                }
+            }
+        ],
+        searchInterfaceInstances = [
+            {
+                "searchInterfaceId": "gazetteer"
+            }
+        ];
     let store,
         wrapper;
+
 
     beforeEach(() => {
         store = createStore({
@@ -30,12 +65,18 @@ describe("src_3_0_0/modules/searchBar/components/SearchBar.vue", () => {
                                 minCharacters: () => 3,
                                 placeholder: () => "ABC",
                                 searchInput: () => "abc-straße",
-                                searchResults: () => [],
+                                searchInterfaceInstances: () => searchInterfaceInstances,
+                                searchResults: () => searchResults,
+                                showAllResults: () => false,
+                                suggestionListLength: () => 0,
                                 type: () => "searchBar"
                             },
                             mutations: {
+                                addSuggestionItem: sinon.stub(),
+                                setSearchInput: sinon.stub(),
                                 setShowAllResults: sinon.stub(),
-                                setSearchResultsActive: sinon.stub()
+                                setSearchResultsActive: sinon.stub(),
+                                setSearchSuggestions: sinon.stub()
                             }
                         }
                     }
@@ -67,11 +108,39 @@ describe("src_3_0_0/modules/searchBar/components/SearchBar.vue", () => {
 
     describe("click button", () => {
         it("should start search to abc-straße, if button is clicked", async () => {
+            wrapper = shallowMount(SearchBarComponent, {
+                global: {
+                    plugins: [store]
+                }
+            });
+
             const startSearchSpy = sinon.spy(wrapper.vm, "startSearch");
 
             await wrapper.find("#search-button").trigger("click");
 
             expect(startSearchSpy.calledOnce).to.be.true;
+        });
+    });
+
+    describe("limitedSortedSearchResults", () => {
+        it("tests the computed property SearchBarSuggestionList", async () => {
+            wrapper = await shallowMount(SearchBarComponent, {
+                global: {
+                    plugins: [store]
+                }
+            });
+
+            expect(wrapper.vm.limitedSortedSearchResults.results).to.deep.equal({
+                categoryProvider: {
+                    Straße: "gazetteer",
+                    Adresse: "gazetteer"
+                },
+                availableCategories: ["Straße", "Adresse"],
+                StraßeCount: 1,
+                AdresseCount: 1,
+                AdresseIcon: "bi-signpost",
+                StraßeIcon: "bi-signpost"
+            });
         });
     });
 });

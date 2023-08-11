@@ -46,17 +46,14 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceGazetteer.
                     events: {
                         onClick: {
                             setMarker: {
-                                closeResults: true,
                                 coordinates: [10, 20]
                             },
                             zoomToResult: {
-                                closeResults: true,
                                 coordinates: [10, 20]
                             }
                         },
                         onHover: {
                             setMarker: {
-                                closeResults: true,
                                 coordinates: [10, 20]
                             }
                         }
@@ -109,17 +106,14 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceGazetteer.
                 {
                     onClick: {
                         setMarker: {
-                            closeResults: true,
                             coordinates: [10, 20]
                         },
                         zoomToResult: {
-                            closeResults: true,
                             coordinates: [10, 20]
                         }
                     },
                     onHover: {
                         setMarker: {
-                            closeResults: true,
                             coordinates: [10, 20]
                         }
                     }
@@ -141,11 +135,9 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceGazetteer.
             expect(SearchInterface1.createPossibleActions(searchResult)).to.deep.equals(
                 {
                     setMarker: {
-                        closeResults: true,
                         coordinates: [10, 20]
                     },
                     zoomToResult: {
-                        closeResults: true,
                         coordinates: [10, 20]
                     }
                 }

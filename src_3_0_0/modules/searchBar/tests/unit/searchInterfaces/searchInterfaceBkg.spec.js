@@ -99,17 +99,14 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceBkg.js", (
                     events: {
                         onClick: {
                             setMarker: {
-                                closeResults: true,
                                 coordinates: [9.988176, 53.55481]
                             },
                             zoomToResult: {
-                                closeResults: true,
                                 coordinates: [9.988176, 53.55481]
                             }
                         },
                         onHover: {
                             setMarker: {
-                                closeResults: true,
                                 coordinates: [9.988176, 53.55481]
                             }
                         }
@@ -136,17 +133,14 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceBkg.js", (
                 events: {
                     onClick: {
                         setMarker: {
-                            closeResults: true,
                             coordinates: [9.988176, 53.55481]
                         },
                         zoomToResult: {
-                            closeResults: true,
                             coordinates: [9.988176, 53.55481]
                         }
                     },
                     onHover: {
                         setMarker: {
-                            closeResults: true,
                             coordinates: [9.988176, 53.55481]
                         }
                     }
@@ -165,11 +159,9 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceBkg.js", (
             expect(SearchInterface1.createPossibleActions(searchResults[0])).to.deep.equals(
                 {
                     setMarker: {
-                        closeResults: true,
                         coordinates: [9.988176, 53.55481]
                     },
                     zoomToResult: {
-                        closeResults: true,
                         coordinates: [9.988176, 53.55481]
                     }
                 }
