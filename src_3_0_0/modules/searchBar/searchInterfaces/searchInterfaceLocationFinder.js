@@ -12,20 +12,23 @@ import store from "../../../app-store";
  *
  * @param {String[]} [classes] May contain classes (with properties) to use in searches.
  * @param {String} [epsg] Coordinate reference system to use for requests. By default, the value in `Portalconfig.mapView.epsg` is used.
+ * @param {String} [hitTemplate="default"] The template for rendering the hits.
  * @param {Object} [resultEvents] Actions that are executed when an interaction, such as hover or click, is performed with a result list item.
  * @param {String[]} [resultEvents.onClick=["setMarker", "zoomToResult"]] Actions that are fired when clicking on a result list item.
  * @param {String[]} [resultEvents.onHover=["setMarker"]] Actions that are fired when hovering on a result list item.
  * @param {String} [searchInterfaceId="locationFinder"] The id of the service interface.
  * @returns {void}
  */
-export default function SearchInterfaceLocationFinder ({serviceId, classes, epsg, resultEvents, searchInterfaceId} = {}) {
+export default function SearchInterfaceLocationFinder ({serviceId, classes, epsg, hitTemplate, resultEvents, searchInterfaceId} = {}) {
     SearchInterface.call(this,
         "client",
         searchInterfaceId || "locationFinder",
         resultEvents || {
             onClick: ["setMarker", "zoomToResult"],
             onHover: ["setMarker"]
-        });
+        },
+        hitTemplate
+    );
 
     this.serviceId = serviceId;
 
@@ -144,12 +147,10 @@ SearchInterfaceLocationFinder.prototype.createPossibleActions = function (search
 
     return {
         setMarker: {
-            coordinates: coordinates,
-            closeResults: true
+            coordinates: coordinates
         },
         zoomToResult: {
-            coordinates: coordinates,
-            closeResults: true
+            coordinates: coordinates
         }
     };
 };
