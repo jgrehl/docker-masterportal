@@ -25,7 +25,7 @@ export default {
         };
     },
     computed: {
-        ...mapGetters("Modules/SearchBar", ["searchInterfaces", "searchResults", "suggestionListLength", "searchInput", "minCharacters", "showAllResults", "searchResultsActive", "selectedSearchResults"]),
+        ...mapGetters("Modules/SearchBar", ["searchInterfaceInstances", "searchResults", "suggestionListLength", "searchInput", "minCharacters", "showAllResults", "searchResultsActive", "selectedSearchResults"]),
 
         /**
          * Sorts the results according the configured search providers and prepare the suggestionlist with the limit of suggestionListLength, updates searchSuggestions
@@ -39,9 +39,9 @@ export default {
             results.categoryProvider = {};
             this.setSearchSuggestions([]);
             results.availableCategories = [];
-            this.searchInterfaces.forEach(searchInterface => {
+            this.searchInterfaceInstances.forEach(searchInterfaceInstance => {
                 for (const [index, value] of Object.entries(this.searchResults)) {
-                    if (value.searchInterfaceId === searchInterface.type) {
+                    if (value.searchInterfaceId === searchInterfaceInstance.searchInterfaceId) {
                         results[value.category + "Count"] = results[value.category + "Count"] === undefined ? 1 : ++results[value.category + "Count"];
 
 
