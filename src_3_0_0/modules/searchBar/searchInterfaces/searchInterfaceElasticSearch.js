@@ -1,3 +1,5 @@
+import crs from "@masterportal/masterportalapi/src/crs";
+
 import SearchInterface from "./searchInterface";
 import store from "../../../app-store";
 
@@ -12,12 +14,14 @@ import store from "../../../app-store";
  * @param {String} hitMap.toolTip Attribute value will be mapped to the attribute key.
  * @param {String} serviceId Search service id. Resolved using the **[rest-services.json](rest-services.json.md)** file.
  *
+ * @param {String} [epsg="EPSG:25832"] The epsg code from the result coordinates.
  * @param {String} [hitIcon="bi-list-ul"] CSS icon class of search results, shown before the result name.
+ * @param {String} [hitTemplate="default"] The template for rendering the hits.
  * @param {Object} [hitType="common:modules.searchBar.type.subject"] Search result type shown in the result list after the result name.
  * @param {Object} [payload={}] Matches the customObject description.
  * @param {String} [responseEntryPath=""] Response JSON attribute path to found features.
  * @param {Object} [resultEvents] Actions that are executed when an interaction, such as hover or click, is performed with a result list item.
- * @param {String[]} [resultEvents.onClick=["activateLayerInTopicTree", "addLayerToTopicTree", "openTopicTree"]] Actions that are fired when clicking on a result list item.
+ * @param {String[]} [resultEvents.onClick=["addLayerToTopicTree"]] Actions that are fired when clicking on a result list item.
  * @param {String} [searchInterfaceId="elasticSearch"] The id of the service interface.
  * @param {String} [searchStringAttribute="searchString"] Search string attribute name for `payload` object.
  * @param {String[]} [featureButtons=["addLayer"]] Feature buttons to be shown next to a single search result.
@@ -26,16 +30,19 @@ import store from "../../../app-store";
  * @extends SearchInterface
  * @returns {void}
  */
-export default function SearchInterfaceElasticSearch ({hitMap, serviceId, hitIcon, hitType, payload, responseEntryPath, resultEvents, searchInterfaceId, featureButtons, searchStringAttribute, requestType} = {}) {
+export default function SearchInterfaceElasticSearch ({hitMap, serviceId, epsg, hitIcon, hitTemplate, hitType, payload, responseEntryPath, resultEvents, searchInterfaceId, featureButtons, searchStringAttribute, requestType} = {}) {
     SearchInterface.call(this,
         "request",
         searchInterfaceId || "elasticSearch",
         resultEvents || {
-            onClick: ["activateLayerInTopicTree", "addLayerToTopicTree", "openTopicTree"]
-        });
+            onClick: ["addLayerToTopicTree"]
+        },
+        hitTemplate
+    );
 
     this.hitMap = hitMap;
     this.serviceId = serviceId;
+    this.epsg = epsg || "EPSG:25832";
     this.hitIcon = hitIcon || "bi-list-ul";
     this.hitType = hitType || "common:modules.searchBar.type.subject";
     this.payload = payload || {};
@@ -197,26 +204,22 @@ SearchInterfaceElasticSearch.prototype.normalizeResults = function (searchResult
  * @returns {Object} The possible actions.
  */
 SearchInterfaceElasticSearch.prototype.createPossibleActions = function (searchResult) {
+    let coordinates = this.getResultByPath(searchResult, this.hitMap?.coordinate);
+
+    if (coordinates) {
+        coordinates = crs.transformToMapProjection(mapCollection.getMap("2D"), this.epsg, [parseFloat(coordinates[0]), parseFloat(coordinates[1])]);
+    }
+
     return {
-        activateLayerInTopicTree: {
-            layerId: this.getResultByPath(searchResult, this.hitMap?.layerId),
-            closeResults: true
-        },
         addLayerToTopicTree: {
             layerId: this.getResultByPath(searchResult, this.hitMap?.layerId),
-            source: this.getResultByPath(searchResult, this.hitMap?.source),
-            closeResults: true
-        },
-        openTopicTree: {
-            closeResults: true
+            source: this.getResultByPath(searchResult, this.hitMap?.source)
         },
         setMarker: {
-            coordinates: this.getResultByPath(searchResult, this.hitMap?.coordinate),
-            closeResults: true
+            coordinates: coordinates
         },
         zoomToResult: {
-            coordinates: this.getResultByPath(searchResult, this.hitMap?.coordinate),
-            closeResults: true
+            coordinates: coordinates
         }
     };
 };

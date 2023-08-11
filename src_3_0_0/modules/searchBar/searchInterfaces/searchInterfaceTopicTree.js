@@ -7,18 +7,21 @@ import layerFactory from "../../../core/layers/js/layerFactory";
  * @name SearchInterfaceTopicTree
  * @constructs
  * @extends SearchInterface
+ * @param {String} [hitTemplate="default"] The template for rendering the hits.
  * @param {Object} [resultEvents] Actions that are executed when an interaction, such as hover or click, is performed with a result list item.
- * @param {String[]} [resultEvents.onClick=["activateLayerInTopicTree", "openTopicTree"]] Actions that are fired when clicking on a result list item.
+ * @param {String[]} [resultEvents.onClick=["activateLayerInTopicTree"]] Actions that are fired when clicking on a result list item.
  * @param {String} [searchInterfaceId="topicTree"] The id of the service interface.
  * @returns {void}
  */
-export default function SearchInterfaceTopicTree ({resultEvents, searchInterfaceId} = {}) {
+export default function SearchInterfaceTopicTree ({hitTemplate, resultEvents, searchInterfaceId} = {}) {
     SearchInterface.call(this,
         "client",
         searchInterfaceId || "topicTree",
         resultEvents || {
-            onClick: ["activateLayerInTopicTree", "openTopicTree"]
-        });
+            onClick: ["activateLayerInTopicTree"]
+        },
+        hitTemplate
+    );
 }
 
 SearchInterfaceTopicTree.prototype = Object.create(SearchInterface.prototype);
@@ -169,17 +172,12 @@ SearchInterfaceTopicTree.prototype.normalizeFolderResult = function (folder) {
  * @returns {Object} The possible actions.
  */
 SearchInterfaceTopicTree.prototype.createPossibleActions = function (searchResult) {
-    const possibleActions = {
-        openTopicTree: {
-            closeResults: true
-        }
-    };
+    const possibleActions = {};
 
     if (searchResult.type !== "folder") {
         Object.assign(possibleActions, {
             activateLayerInTopicTree: {
-                layerId: searchResult.id,
-                closeResults: true
+                layerId: searchResult.id
             }
         });
     }

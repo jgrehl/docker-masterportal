@@ -1,27 +1,32 @@
 //commons
 <script>
 import {mapGetters, mapActions, mapMutations} from "vuex";
-
+import SearchBarSuggestionList from "./SearchBarSuggestionList.vue";
+import SearchBarResultList from "./SearchBarResultList.vue";
 
 /**
  * Searchbar to access search results.
  * @module modules/SearchBar
  * @vue-computed {String} searchInputValue - The v-bind of search input value.
+ * @vue-computed {Object} limitedSortedSearchResults - Results the limited and sorted search results.
  */
 export default {
     name: "SearchBar",
+    components: {
+        SearchBarResultList,
+        SearchBarSuggestionList
+    },
     computed: {
         ...mapGetters("Modules/SearchBar", [
             "configPaths",
             "minCharacters",
             "placeholder",
             "searchInput",
-            "type",
-            "searchResultsActive",
-            "currentSide"
-        ]),
-        ...mapGetters([
-            "portalConfig"
+            "searchInterfaceInstances",
+            "searchResults",
+            "showAllResults",
+            "suggestionListLength",
+            "type"
         ]),
         /**
          * v-bind of search input value.
@@ -33,6 +38,48 @@ export default {
             set (searchInput) {
                 this.setSearchInput(searchInput);
             }
+        },
+
+        /**
+         * Sorts the results according the configured search providers and prepare the suggestionlist with the limit of suggestionListLength, updates searchSuggestions
+         * Prepares currentShowAllList (used to show all results of a category).
+         * @returns {Object} results the limited and sorted search results.
+         */
+        limitedSortedSearchResults () {
+            const results = {},
+                currentShowAllList = [];
+
+            results.categoryProvider = {};
+            this.setSearchSuggestions([]);
+            results.availableCategories = [];
+            this.searchInterfaceInstances.forEach(searchInterfaceInstance => {
+                for (const [index, value] of Object.entries(this.searchResults)) {
+                    if (value.searchInterfaceId === searchInterfaceInstance.searchInterfaceId) {
+                        results[value.category + "Count"] = results[value.category + "Count"] === undefined ? 1 : ++results[value.category + "Count"];
+
+
+                        if (results.availableCategories.includes(value.category) === false) {
+                            results.availableCategories.push(value.category);
+                            results.categoryProvider[value.category] = value.searchInterfaceId;
+                        }
+
+                        currentShowAllList.push(value);
+
+                        if (results[value.category + "Count"] <= this.suggestionListLength) {
+                            results[index] = value;
+                            this.addSuggestionItem(value);
+                        }
+                        if (value.imgPath) {
+                            results[value.category + "ImgPath"] = value.imgPath;
+                        }
+                        if (value.icon) {
+                            results[value.category + "Icon"] = value.icon;
+                        }
+                    }
+                }
+            });
+
+            return {results: results, currentShowAllList: currentShowAllList};
         }
     },
     mounted () {
@@ -43,9 +90,31 @@ export default {
     },
     methods: {
         ...mapActions(["initializeModule"]),
-        ...mapActions("Modules/SearchBar", ["instantiateSearchInterfaces", "overwriteDefaultValues", "search", "startSearch"]),
-        ...mapMutations("Modules/SearchBar", ["setSearchInput", "setShowAllResults", "setSearchResultsActive", "setCurrentSide"]),
-        ...mapActions("Menu", ["clickedMenuElement", "navigateBack", "resetMenu"])
+        ...mapActions("Modules/SearchBar", [
+            "instantiateSearchInterfaces",
+            "overwriteDefaultValues",
+            "search"
+        ]),
+        ...mapMutations("Modules/SearchBar", [
+            "addSuggestionItem",
+            "setSearchInput",
+            "setShowAllResults",
+            "setSearchResultsActive",
+            "setSearchSuggestions"
+        ]),
+
+        /**
+         * Starts the search in searchInterfaces, if min characters are introduced, updates the result list.
+         * @returns {void}
+         */
+        startSearch () {
+            if (this.searchInputValue.length >= parseInt(this.minCharacters, 10)) {
+                this.setShowAllResults(false);
+                this.setSearchResultsActive(true);
+                this.search({searchInput: this.searchInputValue});
+
+            }
+        }
     }
 };
 </script>
@@ -77,6 +146,14 @@ export default {
                 @keydown.enter="startSearch"
             >
         </div>
+        <SearchBarSuggestionList
+            v-if="!showAllResults"
+            :limited-sorted-search-results="limitedSortedSearchResults"
+        />
+        <SearchBarResultList
+            v-else-if="showAllResults"
+            :limited-sorted-search-results="limitedSortedSearchResults"
+        />
     </div>
 </template>
 
