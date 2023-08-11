@@ -25,13 +25,11 @@ export default {
     /**
      * Adds a layer to the topic tree and triggers to close the search
      * @param {Object} param.dispatch the dispatch
-     * @param {Object} param.commit the commit
      * @param {Object} searchResult a single search result
      * @returns {void}
      */
-    addSingleSearchResultToTopicTree: ({dispatch, commit}, searchResult) => {
+    addSingleSearchResultToTopicTree: ({dispatch}, searchResult) => {
         dispatch("addSingleSearchResult", searchResult);
-        commit("setSearchResultsActive", false);
     },
     /**
      * Loops the selected layers and add it to the topic tree and triggers to close the search
@@ -49,10 +47,7 @@ export default {
                 dispatch("addSingleSearchResult", selectedSearchResults[i]);
             }
 
-            commit("setShowAllResults", false);
-            commit("setSearchResultsActive", false);
             commit("setSelectedSearchResults", []);
-
         }
     },
     /**

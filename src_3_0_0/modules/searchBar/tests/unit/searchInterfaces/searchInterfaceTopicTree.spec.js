@@ -72,11 +72,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceTopicTree.
                         events: {
                             onClick: {
                                 activateLayerInTopicTree: {
-                                    closeResults: true,
                                     layerId: "1"
-                                },
-                                openTopicTree: {
-                                    closeResults: true
                                 }
                             }
                         },
@@ -127,11 +123,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceTopicTree.
                         events: {
                             onClick: {
                                 activateLayerInTopicTree: {
-                                    closeResults: true,
                                     layerId: "1"
-                                },
-                                openTopicTree: {
-                                    closeResults: true
                                 }
                             }
                         },
@@ -145,11 +137,8 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceTopicTree.
                         events: {
                             onClick: {
                                 activateLayerInTopicTree: {
-                                    closeResults: true,
+
                                     layerId: "3"
-                                },
-                                openTopicTree: {
-                                    closeResults: true
                                 }
                             }
                         },
@@ -181,11 +170,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceTopicTree.
                     events: {
                         onClick: {
                             activateLayerInTopicTree: {
-                                closeResults: true,
                                 layerId: "1"
-                            },
-                            openTopicTree: {
-                                closeResults: true
                             }
                         }
                     },
@@ -248,9 +233,6 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceTopicTree.
                     category: "modules.searchBar.type.folder",
                     events: {
                         onClick: {
-                            openTopicTree: {
-                                closeResults: true
-                            }
                         }
                     },
                     icon: "bi-folder-fill",
@@ -324,9 +306,6 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceTopicTree.
                     category: "modules.searchBar.type.folder",
                     events: {
                         onClick: {
-                            openTopicTree: {
-                                closeResults: true
-                            }
                         }
                     },
                     icon: "bi-folder-fill",
@@ -351,11 +330,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceTopicTree.
             expect(SearchInterface1.createPossibleActions(searchResult)).to.deep.equals(
                 {
                     activateLayerInTopicTree: {
-                        layerId: "1",
-                        closeResults: true
-                    },
-                    openTopicTree: {
-                        closeResults: true
+                        layerId: "1"
                     }
                 }
             );
@@ -375,13 +350,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceTopicTree.
                 }]
             };
 
-            expect(SearchInterface1.createPossibleActions(searchResult)).to.deep.equals(
-                {
-                    openTopicTree: {
-                        closeResults: true
-                    }
-                }
-            );
+            expect(SearchInterface1.createPossibleActions(searchResult)).to.deep.equals({});
         });
     });
 });
