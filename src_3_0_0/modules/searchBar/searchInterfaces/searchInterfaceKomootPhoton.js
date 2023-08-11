@@ -13,6 +13,7 @@ import {uniqueId} from "../../../shared/js/utils/uniqueId";
  * @param {String} serviceId Search service id. Resolved using the rest-services.json file.
  *
  * @param {String} [bbox] Boundingbox of the search.
+ * @param {String} [hitTemplate="default"] The template for rendering the hits.
  * @param {String} [lang="de"] Language of the Komoot Search. Effects language specific locationnames (e.g. Countrynames) aus.
  * @param {Number} [lat] Latitude of the center for the search.
  * @param {Number} [limit] Maximum amount of requested unfiltered results.
@@ -24,14 +25,16 @@ import {uniqueId} from "../../../shared/js/utils/uniqueId";
  * @param {String} [searchInterfaceId="komootPhoton"] The id of the service interface.
  * @returns {void}
  */
-export default function SearchInterfaceKomootPhoton ({serviceId, bbox, limit, lang, lat, lon, osmTag, resultEvents, searchInterfaceId} = {}) {
+export default function SearchInterfaceKomootPhoton ({serviceId, bbox, hitTemplate, limit, lang, lat, lon, osmTag, resultEvents, searchInterfaceId} = {}) {
     SearchInterface.call(this,
         "client",
         searchInterfaceId || "komootPhoton",
         resultEvents || {
             onClick: ["setMarker", "zoomToResult"],
             onHover: ["setMarker"]
-        });
+        },
+        hitTemplate
+    );
 
     this.serviceId = serviceId;
 
@@ -183,12 +186,10 @@ SearchInterfaceKomootPhoton.prototype.createPossibleActions = function (searchRe
 
     return {
         setMarker: {
-            coordinates: coordinates,
-            closeResults: true
+            coordinates: coordinates
         },
         zoomToResult: {
-            coordinates: coordinates,
-            closeResults: true
+            coordinates: coordinates
         }
     };
 };
