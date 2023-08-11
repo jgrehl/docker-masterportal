@@ -73,9 +73,9 @@ export default {
             results.categoryProvider = {};
             this.setSearchSuggestions([]);
             results.availableCategories = [];
-            this.searchInterfaces.forEach(searchInterface => {
+            this.searchInterfaceInstances.forEach(searchInterfaceInstance => {
                 for (const [index, value] of Object.entries(this.searchResults)) {
-                    if (value.searchInterfaceId === searchInterface.type) {
+                    if (value.searchInterfaceId === searchInterfaceInstance.searchInterfaceId) {
                         results[value.category + "Count"] = results[value.category + "Count"] === undefined ? 1 : ++results[value.category + "Count"];
 
                         if (results.availableCategories.includes(value.category) === false) {
