@@ -2,6 +2,7 @@ import mutations from "../../../store/mutationsSearchBar";
 import {expect} from "chai";
 
 const {
+    addMultipleSearchInterfaceIds,
     addSearchInterfaceInstances,
     addSearchResults,
     addSuggestionItem,
@@ -9,7 +10,35 @@ const {
     removeSelectedSearchResults
 } = mutations;
 
-describe("src/modules/searchBar/store/mutationsSearchBar.spec.js", () => {
+describe("src_3_0_0/modules/searchBar/store/mutationsSearchBar.spec.js", () => {
+    describe("addMultipleSearchInterfaceIds", () => {
+        it("should add unique ids for duplicate searchInterfaces", () => {
+            const state = {
+                searchInterfaces: [
+                    {
+                        type: "komootPhoton"
+                    },
+                    {
+                        type: "komootPhoton"
+                    }
+                ]
+            };
+
+            addMultipleSearchInterfaceIds(state);
+
+            expect(state.searchInterfaces).to.deep.equals([
+                {
+                    type: "komootPhoton",
+                    searchInterfaceId: "komootPhoton_0"
+                },
+                {
+                    type: "komootPhoton",
+                    searchInterfaceId: "komootPhoton_1"
+                }
+            ]);
+        });
+    });
+
     describe("addSearchInterfaceInstances", () => {
         it("Should add a given SearchInterface to state", () => {
             const state = {
