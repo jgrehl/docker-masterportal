@@ -5,9 +5,10 @@ import wmsGFIUtil from "../../../../../../shared/js/utils/getWmsFeaturesByMimeTy
 import actions from "../../../../store/actions/actionsSearchBarSearchResult";
 
 const {
+    activateLayerInTopicTree,
+    addLayerToTopicTree,
     highligtFeature,
     openGetFeatureInfo,
-    openTopicTree,
     setMarker,
     zoomToResult
 } = actions;
@@ -30,6 +31,54 @@ describe("src/modules/searchBar/store/actions/actionsSearchBarSearchResult.spec.
 
     after(() => {
         sinon.restore();
+    });
+
+    describe("activateLayerInTopicTree", () => {
+        it("should activate a layer in topic tree", () => {
+            const layerId = "123";
+
+            activateLayerInTopicTree({dispatch}, {layerId});
+
+            expect(dispatch.calledOnce).to.be.true;
+            expect(dispatch.firstCall.args[0]).to.equals("replaceByIdInLayerConfig");
+            expect(dispatch.firstCall.args[1]).to.be.deep.equals({
+                layerConfigs: [{
+                    id: layerId,
+                    layer: {
+                        id: layerId,
+                        visibility: true,
+                        showInLayerTree: true
+                    }
+                }]
+            });
+        });
+    });
+
+    describe("addLayerToTopicTree", () => {
+        it("should add a layer to topic tree", () => {
+            const layerId = "123",
+                source = {
+                    id: layerId,
+                    abc: "abc",
+                    datasets: []
+                };
+
+            addLayerToTopicTree({dispatch}, {layerId, source});
+
+            expect(dispatch.calledOnce).to.be.true;
+            expect(dispatch.firstCall.args[0]).to.equals("addLayerToLayerConfig");
+            expect(dispatch.firstCall.args[1]).to.be.deep.equals({
+                layerConfig: {
+                    id: layerId,
+                    abc: "abc",
+                    datasets: [],
+                    showInLayerTree: true,
+                    type: "layer",
+                    visibility: true
+                },
+                parentKey: "Fachdaten"
+            });
+        });
     });
 
     describe("highligtFeature", () => {
@@ -83,12 +132,6 @@ describe("src/modules/searchBar/store/actions/actionsSearchBarSearchResult.spec.
         });
     });
 
-    describe("openTopicTree", () => {
-        it("openTopicTree", () => {
-            openTopicTree();
-        });
-    });
-
     describe("setMarker", () => {
         it("sets the MapMarker with coordinates", () => {
             const coordinates = [1234, 65432],
@@ -106,7 +149,7 @@ describe("src/modules/searchBar/store/actions/actionsSearchBarSearchResult.spec.
         it("zoomToResult with coordinates ", () => {
             const coordinates = [1234, 65432],
                 payload = {
-                    coordinates,
+                    center: coordinates,
                     zoom: getters.zoomLevel
                 };
 
