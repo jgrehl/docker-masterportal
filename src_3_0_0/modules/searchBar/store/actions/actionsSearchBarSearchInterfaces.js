@@ -33,6 +33,8 @@ export default {
 
         Object.assign(searchInterfacesMapper, ...searchInterfaceAddons);
 
+        commit("addMultipleSearchInterfaceIds");
+
         state.searchInterfaces.forEach(searchInterface => {
             const type = searchInterface.type;
 
