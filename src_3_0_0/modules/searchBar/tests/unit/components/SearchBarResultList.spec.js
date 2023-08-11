@@ -1,5 +1,5 @@
 import {createStore} from "vuex";
-import {config, mount} from "@vue/test-utils";
+import {config, mount, shallowMount} from "@vue/test-utils";
 import {expect} from "chai";
 import sinon from "sinon";
 
@@ -9,9 +9,27 @@ config.global.mocks.$t = key => key;
 
 describe("src_3_0_0/modules/searchBar/components/SearchBarResultList.vue", () => {
     let store,
-        wrapper;
+        wrapper,
+        searchResults;
 
-    const searchResults = [
+    const searchInterfaceInstances = [
+            {
+                "searchInterfaceId": "gazetteer"
+            },
+            {
+                "searchInterfaceId": "komootPhoton_0"
+            },
+            {
+                "searchInterfaceId": "komootPhoton_1"
+            }
+        ],
+        minCharacters = 3,
+        searchInput = "Neuenfelder",
+        showAllResults = false;
+
+
+    beforeEach(() => {
+        searchResults = [
             {
                 "category": "Straße",
                 "id": "BeidemNeuenKrahnStraße",
@@ -39,18 +57,8 @@ describe("src_3_0_0/modules/searchBar/components/SearchBarResultList.vue", () =>
                 "events": {
                 }
             }
-        ],
-        searchInterfaceInstances = [
-            {
-                "searchInterfaceId": "gazetteer"
-            }
-        ],
-        minCharacters = 3,
-        searchInput = "Neuenfelder",
-        showAllResults = false;
+        ];
 
-
-    before(() => {
         store = createStore({
             namespaces: true,
             modules: {
@@ -112,6 +120,75 @@ describe("src_3_0_0/modules/searchBar/components/SearchBarResultList.vue", () =>
             expect(wrapper.find(".btn.btn-light.d-flex.text-left").exists()).to.be.true;
         });
     });
+
+    describe("searchResultsWithUniqueCategories", () => {
+        it("should set the categories to unique categories", async () => {
+            searchResults = [
+                {
+                    "category": "komootPhoton",
+                    "id": "abc-straße 1",
+                    "index": 1,
+                    "name": "abc-straße 1",
+                    "searchInterfaceId": "komootPhoton_0",
+                    "displayedInfo": "",
+                    "icon": "bi-signpost",
+                    "imagePath": "",
+                    "toolTip": "",
+                    "events": {
+                    }
+                },
+                {
+                    "category": "komootPhoton",
+                    "id": "abc-straße 1",
+                    "index": 1,
+                    "name": "abc-straße 1",
+                    "searchInterfaceId": "komootPhoton_1",
+                    "displayedInfo": "",
+                    "icon": "bi-signpost",
+                    "imagePath": "",
+                    "toolTip": "",
+                    "events": {
+                    }
+                }
+            ];
+
+            wrapper = await shallowMount(SearchBarSuggestionListComponent, {
+                global: {
+                    plugins: [store]
+                }
+            });
+
+            expect(wrapper.vm.searchResultsWithUniqueCategories).to.deep.equal([
+                {
+                    "category": "komootPhoton_0",
+                    "id": "abc-straße 1",
+                    "index": 1,
+                    "name": "abc-straße 1",
+                    "searchInterfaceId": "komootPhoton_0",
+                    "displayedInfo": "",
+                    "icon": "bi-signpost",
+                    "imagePath": "",
+                    "toolTip": "",
+                    "events": {
+                    }
+                },
+                {
+                    "category": "komootPhoton_1",
+                    "id": "abc-straße 1",
+                    "index": 1,
+                    "name": "abc-straße 1",
+                    "searchInterfaceId": "komootPhoton_1",
+                    "displayedInfo": "",
+                    "icon": "bi-signpost",
+                    "imagePath": "",
+                    "toolTip": "",
+                    "events": {
+                    }
+                }
+            ]);
+        });
+    });
+
     describe("test the outcome of limitedSortedSearchResults", () => {
         it("tests the computed property SearchBarSuggestionList", async () => {
             wrapper = await mount(SearchBarSuggestionListComponent, {
@@ -122,6 +199,7 @@ describe("src_3_0_0/modules/searchBar/components/SearchBarResultList.vue", () =>
             expect(wrapper.vm.limitedSortedSearchResults.results).to.deep.equal({categoryProvider: {"Straße": "gazetteer", "Adresse": "gazetteer"}, availableCategories: ["Straße", "Adresse"], "StraßeCount": 1, "AdresseCount": 1, "AdresseIcon": "bi-signpost", "StraßeIcon": "bi-signpost"});
         });
     });
+
     describe("test the method prepareShowAllResults", () => {
         it("test the method prepareShowAllResults", async () => {
             wrapper = await mount(SearchBarSuggestionListComponent, {
