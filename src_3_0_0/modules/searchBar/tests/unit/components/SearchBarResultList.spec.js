@@ -58,16 +58,9 @@ describe("src_3_0_0/modules/searchBar/components/SearchBarResultList.vue", () =>
                 }
             }
         ],
-        searchInterfaces = [
+        searchInterfaceInstances = [
             {
-                "type": "gazetteer",
-                "serviceId": "6",
-                "searchAddress": true,
-                "searchStreets": true,
-                "searchHouseNumbers": true,
-                "searchDistricts": true,
-                "searchParcels": true,
-                "searchStreetKey": true
+                "searchInterfaceId": "gazetteer"
             }
         ],
         minCharacters = 3,
