@@ -17,6 +17,7 @@ import {uniqueId} from "../../../shared/js/utils/uniqueId";
  * @param {String} definitions.typeName The name of the WFS layer to be requested.
  * @param {String} definitions.url The WFS URL.
  *
+ * @param {String} [hitTemplate="default"] The template for rendering the hits.
  * @param {String} [icon="bi-house-fill"] Default icon used in the result list.
  * @param {String} [geometryName="app:geom"] Geometry attribute name required for zoom functionality.
  * @param {Number} [maxFeatures=20] Maximum amount of features returned.
@@ -27,14 +28,16 @@ import {uniqueId} from "../../../shared/js/utils/uniqueId";
  * @param {String} [searchInterfaceId="specialWfs"] The id of the service interface.
  * @returns {void}
  */
-export default function SearchInterfaceSpecialWfs ({definitions, icon, geometryName, maxFeatures, namespaces, resultEvents, searchInterfaceId} = {}) {
+export default function SearchInterfaceSpecialWfs ({definitions, hitTemplate, icon, geometryName, maxFeatures, namespaces, resultEvents, searchInterfaceId} = {}) {
     SearchInterface.call(this,
         "client",
         searchInterfaceId || "specialWfs",
         resultEvents || {
             onClick: ["highligtFeature", "setMarker", "zoomToResult"],
             onHover: ["highligtFeature", "setMarker"]
-        });
+        },
+        hitTemplate
+    );
 
     this.definitions = definitions;
 
