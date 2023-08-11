@@ -149,7 +149,8 @@
             },
             "resultEvents": {
                 "onClick": ["setMarker", "zoomToResult"],
-                "onHover": ["setMarker"]
+                "onHover": ["setMarker"],
+                "buttons": ["setMarker", "zoomToResult"]
             }
           },
           {
