@@ -11,7 +11,7 @@ const mutations = {
      */
     addMultipleSearchInterfaceIds (state) {
         const types = state.searchInterfaces.map(searchInterface => searchInterface.type),
-            duplicates = types.filter((searchInterfaces, index) => types.indexOf(searchInterfaces) !== index);
+            duplicates = [...new Set(types.filter((searchInterfaces, index) => types.indexOf(searchInterfaces) !== index))];
         let count = 0;
 
         duplicates.forEach(duplicate => {
