@@ -29,15 +29,16 @@ describe("src_3_0_0/modules/searchBar/store/actions/actionsSearchBarResultList.j
         expect(dispatch.calledOnce).to.be.true;
         expect(dispatch.args[0]).includes("addLayerToLayerConfig");
     });
-    it("addSingleSearchResultToTopicTree has a commit and dispatch", () => {
 
-        addSingleSearchResultToTopicTree({dispatch, commit}, {});
+    it("addSingleSearchResultToTopicTree has a commit and dipatch", () => {
+
+        addSingleSearchResultToTopicTree({dispatch}, {});
 
         expect(dispatch.calledOnce).to.be.true;
         expect(dispatch.args[0]).includes("addSingleSearchResult");
-        expect(commit.args[0]).includes("setSearchResultsActive");
     });
-    it("addSingleSearchResultToTopicTree has 3 commits and dispatch", () => {
+
+    it("addSingleSearchResultToTopicTree has 3 commits and dipatch", () => {
         getters = {
             selectedSearchResults: [{}]
         };
@@ -46,7 +47,7 @@ describe("src_3_0_0/modules/searchBar/store/actions/actionsSearchBarResultList.j
 
         expect(dispatch.calledOnce).to.be.true;
         expect(dispatch.args[0]).includes("addSingleSearchResult");
-        expect(commit.calledThrice).to.be.true;
+        expect(commit.calledOnce).to.be.true;
     });
     it("updates the search navigation", () => {
         getters = {

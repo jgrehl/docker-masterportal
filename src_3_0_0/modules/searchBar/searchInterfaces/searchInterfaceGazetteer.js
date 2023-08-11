@@ -9,6 +9,7 @@ import {search, setGazetteerUrl, setShowGeographicIdentifier} from "@masterporta
  * @extends SearchInterface
  * @param {String} serviceId Search service id. Resolved using the rest-services.json file.
  *
+ * @param {String} [hitTemplate="default"] The template for rendering the hits.
  * @param {Object} [resultEvents] Actions that are executed when an interaction, such as hover or click, is performed with a result list item.
  * @param {String[]} [resultEvents.onClick=["setMarker", "zoomToResult"]] Actions that are fired when clicking on a result list item.
  * @param {String[]} [resultEvents.onHover=["setMarker"]] Actions that are fired when hovering on a result list item.
@@ -22,14 +23,16 @@ import {search, setGazetteerUrl, setShowGeographicIdentifier} from "@masterporta
  * @param {Boolean} [showGeographicIdentifier=false] Defines whether GeographicIdentifier should be displayed in the search result.
  * @returns {void}
  */
-export default function SearchInterfaceGazetteer ({serviceId, resultEvents, searchAddress, searchDistricts, searchInterfaceId, searchHouseNumbers, searchParcels, searchStreetKey, searchStreets, showGeographicIdentifier} = {}) {
+export default function SearchInterfaceGazetteer ({serviceId, hitTemplate, resultEvents, searchAddress, searchDistricts, searchInterfaceId, searchHouseNumbers, searchParcels, searchStreetKey, searchStreets, showGeographicIdentifier} = {}) {
     SearchInterface.call(this,
         "client",
         searchInterfaceId || "gazetteer",
         resultEvents || {
             onClick: ["setMarker", "zoomToResult"],
             onHover: ["setMarker"]
-        });
+        },
+        hitTemplate
+    );
 
     this.serviceId = serviceId;
 
@@ -145,12 +148,10 @@ SearchInterfaceGazetteer.prototype.getTranslationByType = function (type) {
 SearchInterfaceGazetteer.prototype.createPossibleActions = function (searchResult) {
     return {
         setMarker: {
-            coordinates: searchResult.geometry.coordinates,
-            closeResults: true
+            coordinates: searchResult.geometry.coordinates
         },
         zoomToResult: {
-            coordinates: searchResult.geometry.coordinates,
-            closeResults: true
+            coordinates: searchResult.geometry.coordinates
         }
     };
 };
