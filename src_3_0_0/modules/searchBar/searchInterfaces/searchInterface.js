@@ -12,26 +12,32 @@ import axios from "axios";
  * @param {Object} [resultEvents={}] Actions that are executed when an interaction, such as hover or click, is performed with a result list item.
  * @param {String[]} [resultEvents.onClick] Actions that are fired when clicking on a result list item.
  * @param {String[]} [resultEvents.onHover] Actions that are fired when hovering on a result list item.
- * @param {Sting} [searchState="instantiated"] The search state. Can have the values: "aborted", "failed", "finished", "instantiated", "running".
+ * @param {String} [hitTemplate="default"] The template for rendering the hits.
  * @returns {void}
  */
-export default function SearchInterface (paging, searchInterfaceId, resultEvents = [], searchState = "instantiated") {
+export default function SearchInterface (paging, searchInterfaceId, resultEvents = [], hitTemplate = "default") {
     this.paging = paging;
     this.searchInterfaceId = searchInterfaceId;
     this.resultEvents = resultEvents;
-    this.searchState = searchState;
+    this.hitTemplate = hitTemplate;
 
     /**
      * The current abor controller.
      * @type {String}
-     */
+    */
     this.currentController = null;
 
     /**
-     * List with results of the search.
-     * @type {Object[]}
-     */
+    * List with results of the search.
+    * @type {Object[]}
+    */
     this.searchResults = [];
+
+    /**
+     * The search state. Can have the values: "aborted", "failed", "finished", "instantiated", "running".
+     *  @type {String}
+     */
+    this.searchState = "instantiated";
 
     /**
      * Timeout for request to a search interface.

@@ -1,14 +1,13 @@
 import {createStore} from "vuex";
-import {config, mount} from "@vue/test-utils";
+import {config, shallowMount} from "@vue/test-utils";
 import {expect} from "chai";
 import sinon from "sinon";
 
-
-import SearchBarResultListItemComponent from "../../../components/SearchBarResultListItem.vue";
+import SearchBarResultListGeneralItemComponent from "../../../components/SearchBarResultListGeneralItem.vue";
 
 config.global.mocks.$t = key => key;
 
-describe("src_3_0_0/modules/searchBar/components/SearchBarResultListItem.vue", () => {
+describe("src_3_0_0/modules/searchBar/components/SearchBarResultListGeneralItem.vue", () => {
     let store,
         wrapper;
 
@@ -44,7 +43,6 @@ describe("src_3_0_0/modules/searchBar/components/SearchBarResultListItem.vue", (
         }
     ];
 
-
     beforeEach(() => {
         store = createStore({});
     });
@@ -53,10 +51,9 @@ describe("src_3_0_0/modules/searchBar/components/SearchBarResultListItem.vue", (
         sinon.restore();
     });
 
-
     describe("test the result item", () => {
         it("shows toolTip if available", () => {
-            wrapper = mount(SearchBarResultListItemComponent, {
+            wrapper = shallowMount(SearchBarResultListGeneralItemComponent, {
                 global: {
                     plugins: [store]
                 },
@@ -64,11 +61,13 @@ describe("src_3_0_0/modules/searchBar/components/SearchBarResultListItem.vue", (
                     searchResult: searchResults[0]
                 }
             });
-            wrapper.vm.$nextTick();
+
+            expect(wrapper.find("#search-bar-result-list-general-item").exists()).to.be.true;
             expect(wrapper.find("button").html()).to.contain("toolTipAvailable");
         });
+
         it("shows name if tooltip is undefined", () => {
-            wrapper = mount(SearchBarResultListItemComponent, {
+            wrapper = shallowMount(SearchBarResultListGeneralItemComponent, {
                 global: {
                     plugins: [store]
                 },
@@ -76,20 +75,9 @@ describe("src_3_0_0/modules/searchBar/components/SearchBarResultListItem.vue", (
                     searchResult: searchResults[1]
                 }
             });
-            wrapper.vm.$nextTick();
+
+            expect(wrapper.find("#search-bar-result-list-general-item").exists()).to.be.true;
             expect(wrapper.find("button").html()).to.contain("Bei dem Neuen Krahn 2");
-        });
-        it("updates the clickStatus of a single search result item", () => {
-            wrapper = mount(SearchBarResultListItemComponent, {
-                global: {
-                    plugins: [store]
-                },
-                propsData: {
-                    searchResult: searchResults[1]
-                }
-            });
-            wrapper.vm.updateClickStatus(true);
-            expect(wrapper.vm.clickStatus).to.be.true;
         });
     });
 });
