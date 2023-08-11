@@ -9,12 +9,11 @@ import {mapGetters, mapActions, mapMutations} from "vuex";
  * @vue-computed {String} searchInputValue - The v-bind of search input value.
  */
 export default {
-    name: "SearchBarResultListItem",
+    name: "SearchBarResultListTopicTreeItem",
     props: {
         searchResult: {
             type: Object,
-            required: false,
-            default: undefined
+            required: true
         }
     },
     data () {
@@ -38,7 +37,6 @@ export default {
          */
         async addLayer (searchResult) {
             await this.addSingleSearchResultToTopicTree(searchResult);
-            this.setSearchResultsActive(false);
         },
         /**
          * Updates the clickStatus
@@ -76,8 +74,8 @@ export default {
 </script>
 
 <template lang="html">
-    <div id="search-bar-suggestion-list-item">
-        <div class="d-flex flex-row bd-highlight bold mb-2">
+    <div id="search-bar-result-list-topic-tree-item">
+        <div class="d-flex flex-row bd-highlight bold">
             <button
                 type="button"
                 class="btn btn-light d-flex"
@@ -93,7 +91,7 @@ export default {
             <div
                 v-if="searchResult.featureButtons[0]"
                 title="placeholder"
-                class="ms-auto mt-1 p-2"
+                class="ms-auto"
             >
                 <div
                     v-for="featureButton in searchResult.featureButtons"
@@ -114,7 +112,6 @@ export default {
 <style lang="scss" scoped>
 @import "~variables";
 .btn {
-    display: flex;
     align-items: center;
     justify-content: left;
     white-space: nowrap;
@@ -131,7 +128,6 @@ export default {
     }
     .btn-texts {
         text-align: left;
-
     }
     .btn-title {
         white-space: nowrap;

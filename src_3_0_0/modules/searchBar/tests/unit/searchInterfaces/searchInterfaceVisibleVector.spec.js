@@ -88,19 +88,16 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceVisibleVec
                         events: {
                             onClick: {
                                 openGetFeatureInfo: {
-                                    closeResults: true,
                                     feature: feature1,
                                     layer: layer1
                                 },
                                 setMarker: {
-                                    closeResults: true,
                                     coordinates: [
                                         10,
                                         10
                                     ]
                                 },
                                 zoomToResult: {
-                                    closeResults: true,
                                     coordinates: [
                                         10,
                                         10
@@ -109,7 +106,6 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceVisibleVec
                             },
                             onHover: {
                                 setMarker: {
-                                    closeResults: true,
                                     coordinates: [
                                         10,
                                         10
@@ -166,19 +162,16 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceVisibleVec
                         events: {
                             onClick: {
                                 openGetFeatureInfo: {
-                                    closeResults: true,
                                     feature: feature2,
                                     layer: clusterLayer1
                                 },
                                 setMarker: {
-                                    closeResults: true,
                                     coordinates: [
                                         20,
                                         20
                                     ]
                                 },
                                 zoomToResult: {
-                                    closeResults: true,
                                     coordinates: [
                                         20,
                                         20
@@ -187,7 +180,6 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceVisibleVec
                             },
                             onHover: {
                                 setMarker: {
-                                    closeResults: true,
                                     coordinates: [
                                         20,
                                         20
@@ -220,19 +212,16 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceVisibleVec
                     events: {
                         onClick: {
                             openGetFeatureInfo: {
-                                closeResults: true,
                                 feature: feature1,
                                 layer: layer1
                             },
                             setMarker: {
-                                closeResults: true,
                                 coordinates: [
                                     10,
                                     10
                                 ]
                             },
                             zoomToResult: {
-                                closeResults: true,
                                 coordinates: [
                                     10,
                                     10
@@ -241,7 +230,6 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceVisibleVec
                         },
                         onHover: {
                             setMarker: {
-                                closeResults: true,
                                 coordinates: [
                                     10,
                                     10
@@ -301,19 +289,16 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceVisibleVec
             expect(SearchInterface1.createPossibleActions(feature1, layer1)).to.deep.equals(
                 {
                     openGetFeatureInfo: {
-                        closeResults: true,
                         feature: feature1,
                         layer: layer1
                     },
                     setMarker: {
-                        closeResults: true,
                         coordinates: [
                             10,
                             10
                         ]
                     },
                     zoomToResult: {
-                        closeResults: true,
                         coordinates: [
                             10,
                             10
