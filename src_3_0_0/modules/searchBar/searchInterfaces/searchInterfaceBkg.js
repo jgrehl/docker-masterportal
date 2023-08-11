@@ -14,6 +14,7 @@ import {uniqueId} from "../../../shared/js/utils/uniqueId";
  *
  * @param {String} [epsg] EPSG code of the coordinate reference system to use. By default, the value in `Portalconfig.mapView.epsg` is used.
  * @param {Number[]} [extent=[454591, 5809000, 700000, 6075769]] Coordinate extent in which search algorithms should return.
+ * @param {String} [hitTemplate="default"] The template for rendering the hits.
  * @param {Number} [minscore=0.6] Minimum score value that the results must have.
  * @param {Object} [resultEvents] Actions that are executed when an interaction, such as hover or click, is performed with a result list item.
  * @param {String[]} [resultEvents.onClick=["setMarker", "zoomToResult"]] Actions that are fired when clicking on a result list item.
@@ -22,14 +23,16 @@ import {uniqueId} from "../../../shared/js/utils/uniqueId";
  * @param {Number} [resultCount=20] Result amount.
  * @returns {void}
  */
-export default function SearchInterfaceBkg ({geoSearchServiceId, epsg, extent, minScore, resultEvents, searchInterfaceId, resultCount} = {}) {
+export default function SearchInterfaceBkg ({geoSearchServiceId, epsg, extent, hitTemplate, minScore, resultEvents, searchInterfaceId, resultCount} = {}) {
     SearchInterface.call(this,
         "request",
         searchInterfaceId || "bkg",
         resultEvents || {
             onClick: ["setMarker", "zoomToResult"],
             onHover: ["setMarker"]
-        });
+        },
+        hitTemplate
+    );
 
     this.geoSearchServiceId = geoSearchServiceId;
 
@@ -115,12 +118,10 @@ SearchInterfaceBkg.prototype.createPossibleActions = function (searchResult) {
 
     return {
         setMarker: {
-            coordinates: coordinates,
-            closeResults: true
+            coordinates: coordinates
         },
         zoomToResult: {
-            coordinates: coordinates,
-            closeResults: true
+            coordinates: coordinates
         }
     };
 };
