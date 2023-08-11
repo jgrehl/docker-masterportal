@@ -1,11 +1,53 @@
+import {treeSubjectsKey} from "../../../../shared/js/utils/constants";
 import WKTUtil from "../../../../shared/js/utils/getWKTGeom";
 import wmsGFIUtil from "../../../../shared/js/utils/getWmsFeaturesByMimeType";
+
 
 /**
  * Contains actions that communicate with other components after an interaction, such as onClick or onHover, with a search result.
  */
 
 export default {
+    /**
+     * Activates a layer in the topic tree.
+     * @param {Object} param.dispatch the dispatch
+     * @param {Object} payload The payload.
+     * @param {String} payload.layerId The layer id.
+     * @returns {void}
+     */
+    activateLayerInTopicTree: ({dispatch}, {layerId}) => {
+        dispatch("replaceByIdInLayerConfig", {
+            layerConfigs: [{
+                id: layerId,
+                layer: {
+                    id: layerId,
+                    visibility: true,
+                    showInLayerTree: true
+                }
+            }]
+        }, {root: true});
+    },
+
+    /**
+     * Add and activates a layer to the topic tree.
+     * @param {Object} param.dispatch the dispatch
+     * @param {String} payload.layerId The layer id.
+     * @param {Object} payload.source The layer source.
+     * @param {Object} payload The payload.
+     * @returns {void}
+     */
+    addLayerToTopicTree: ({dispatch}, {layerId, source}) => {
+        dispatch("addLayerToLayerConfig", {
+            layerConfig: {...source, ...{
+                id: layerId,
+                showInLayerTree: true,
+                type: "layer",
+                visibility: true
+            }},
+            parentKey: treeSubjectsKey
+        }, {root: true});
+    },
+
     /**
      * Highlight feature of the search result.
      * @param {Object} param.dispatch the dispatch
@@ -17,10 +59,6 @@ export default {
         const feature = WKTUtil.getWKTGeom(hit);
 
         dispatch("MapMarker/placingPolygonMarker", feature, {root: true});
-
-        /* used in:
-            specialWFS
-        */
     },
 
     /**
@@ -38,23 +76,6 @@ export default {
         );
 
         commit("Modules/GetFeatureInfo/setGfiFeatures", [gfiFeature], {root: true});
-
-        /* used in:
-            visibleVector
-        */
-    },
-
-    /**
-     * Opens the topic tree and scroll to layer of the search result.
-     * @returns {void}
-     */
-    openTopicTree: () => {
-        // Do someThing
-
-        /* used in:
-            elasticSearch
-            topicTree
-        */
     },
 
     /**
@@ -65,16 +86,9 @@ export default {
      * @returns {void}
      */
     setMarker: ({dispatch}, {coordinates}) => {
-        dispatch("Maps/placingPointMarker", coordinates, {root: true});
-        /* used in:
-            bkg
-            gazetter
-            komootPhoton
-            locationFinder
-            osmNominatim
-            specialWFS
-            visibleVector
-        */
+        const numberCoordinates = coordinates?.map(coordinate => parseFloat(coordinate, 10));
+
+        dispatch("Maps/placingPointMarker", numberCoordinates, {root: true});
     },
 
     /**
@@ -86,16 +100,8 @@ export default {
      * @returns {void}
      */
     zoomToResult: ({dispatch, getters}, {coordinates}) => {
-        dispatch("Maps/zoomToCoordinates", {coordinates, zoom: getters.zoomLevel}, {root: true});
+        const numberCoordinates = coordinates?.map(coordinate => parseFloat(coordinate, 10));
 
-        /* used in:
-            bkg
-            gazetter
-            komootPhoton
-            locationFinder
-            osmNominatim
-            specialWFS
-            visibleVector
-        */
+        dispatch("Maps/zoomToCoordinates", {center: numberCoordinates, zoom: getters.zoomLevel}, {root: true});
     }
 };

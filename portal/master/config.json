@@ -99,6 +99,7 @@
             "type": "elasticSearch",
             "serviceId": "elastic_prod",
             "requestType": "GET",
+            "hitTemplate": "layer",
             "payload": {
               "id": "query",
               "params": {
@@ -124,14 +125,15 @@
             },
             "featureButtons": ["addLayer"],
             "resultEvents": {
-              "onClick": ["activateLayerInTopicTree", "addLayerToTopicTree", "openTopicTree"]
+              "onClick": ["addLayerToTopicTree"],
+              "buttons": ["addLayerToTopicTree"]
             }
           },
           {
             "type": "elasticSearch",
             "serviceId": "elastic_address",
             "requestType": "POST",
-            "minChars": 1,
+            "epsg": "EPSG:4326",
             "searchStringAttribute": "query_str",
             "hitType": "_source.properties.type",
             "payload": {
@@ -148,7 +150,9 @@
             },
             "featureButtons": [],
             "resultEvents": {
-              "onClick": ["setMarker", "zoomToResult"]
+                "onClick": ["setMarker", "zoomToResult"],
+                "onHover": ["setMarker"],
+                "buttons": ["setMarker", "zoomToResult"]
             }
           },
           {
@@ -192,7 +196,8 @@
             "classes": "place,highway,building,shop,historic,leisure,city,county"
           },
           {
-            "type": "topicTree"
+            "type": "topicTree",
+            "hitTemplate": "layer"
           },
           {
             "type": "visibleVector"

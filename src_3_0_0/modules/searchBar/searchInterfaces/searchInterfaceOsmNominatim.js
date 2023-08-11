@@ -15,6 +15,7 @@ import {uniqueId} from "../../../shared/js/utils/uniqueId";
  *
  * @param {String} [classes = "place,highway,building,shop,historic,leisure,city,county"] May contain the classes to search for.
  * @param {String[]} [countryCodes=["de"]] Countries to search in.
+ * @param {String} [hitTemplate="default"] The template for rendering the hits.
  * @param {Number} [limit = 5] Maximum amount of requested unfiltered results.
  * @param {Object} [resultEvents] Actions that are executed when an interaction, such as hover or click, is performed with a result list item.
  * @param {String[]} [resultEvents.onClick=["setMarker", "zoomToResult"]] Actions that are fired when clicking on a result list item.
@@ -23,14 +24,16 @@ import {uniqueId} from "../../../shared/js/utils/uniqueId";
  * @param {String} [states=""] May contain federal state names with arbitrary separators.
  * @returns {void}
  */
-export default function SearchInterfaceOsmNominatim ({serviceId, classes, countryCodes, limit, resultEvents, searchInterfaceId, states} = {}) {
+export default function SearchInterfaceOsmNominatim ({serviceId, classes, countryCodes, hitTemplate, limit, resultEvents, searchInterfaceId, states} = {}) {
     SearchInterface.call(this,
         "client",
         searchInterfaceId || "osmNominatim",
         resultEvents || {
             onClick: ["setMarker", "zoomToResult"],
             onHover: ["setMarker"]
-        });
+        },
+        hitTemplate
+    );
 
     this.serviceId = serviceId;
 
@@ -179,12 +182,10 @@ SearchInterfaceOsmNominatim.prototype.createPossibleActions = function (searchRe
 
     return {
         setMarker: {
-            coordinates: coordinates,
-            closeResults: true
+            coordinates: coordinates
         },
         zoomToResult: {
-            coordinates: coordinates,
-            closeResults: true
+            coordinates: coordinates
         }
     };
 };

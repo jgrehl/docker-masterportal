@@ -17,10 +17,8 @@
  * @param {Object} [events..addLayerToTopicTree] Specifies that the addLayerToTopicTree action is executed on an interaction with the search result.
  * @param {Object} [events..highligtFeature] Specifies that the highligtFeature action is executed on an interaction with the search result.
  * @param {Object} [events..openGetFeatureInfo] Specifies that the openGetFeatureInfo action is executed on an interaction with the search result.
- * @param {Object} [events..openTopicTree] Specifies that the openTopicTree action is executed on an interaction with the search result.
  * @param {Object} [events..setMarker] Specifies that the setMarker action is executed on an interaction with the search result.
  * @param {Object} [events..zoomToResult] Specifies that the zoomToResult action is executed on an interaction with the search result.
- * @param {Boolean} [events...closeResults] Defines if the search results should be hidden.
  * @param {String[]} [events...coordinates] The coordinates of the search result.
  * @param {String} [events...featureId] The ol feature id the search result.
  * @param {String} [events...layerId] The layer id of the search result.
@@ -36,33 +34,24 @@
     events = {
         onClick: {
             activateLayerInTopicTree: {
-                layerId: "",
-                closeResults: true
+                layerId: ""
             },
             addLayerToTopicTree: {
                 layerId: "",
-                source: {},
-                closeResults: true
+                source: {}
             },
             highligtFeature: {
-                hit: {},
-                closeResults: false
+                hit: {}
             },
             openGetFeatureInfo: {
                 featureId: "",
-                layerId: "",
-                closeResults: true
-            },
-            openTopicTree: {
-                closeResults: true
+                layerId: ""
             },
             setMarker: {
-                coordinates: [],
-                closeResults: false
+                coordinates: []
             },
             zoomToResult: {
-                coordinates: [],
-                closeResults: true
+                coordinates: []
             }
         }
     }
