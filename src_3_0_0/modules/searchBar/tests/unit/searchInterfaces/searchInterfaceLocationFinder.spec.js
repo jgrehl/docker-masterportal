@@ -114,14 +114,12 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceLocationFi
                     events: {
                         onClick: {
                             setMarker: {
-                                closeResults: true,
                                 coordinates: [
                                     1,
                                     2
                                 ]
                             },
                             zoomToResult: {
-                                closeResults: true,
                                 coordinates: [
                                     1,
                                     2
@@ -130,7 +128,6 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceLocationFi
                         },
                         onHover: {
                             setMarker: {
-                                closeResults: true,
                                 coordinates: [
                                     1,
                                     2
@@ -170,14 +167,12 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceLocationFi
                     events: {
                         onClick: {
                             setMarker: {
-                                closeResults: true,
                                 coordinates: [
                                     1,
                                     2
                                 ]
                             },
                             zoomToResult: {
-                                closeResults: true,
                                 coordinates: [
                                     1,
                                     2
@@ -186,7 +181,6 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceLocationFi
                         },
                         onHover: {
                             setMarker: {
-                                closeResults: true,
                                 coordinates: [
                                     1,
                                     2
@@ -221,14 +215,12 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceLocationFi
                     events: {
                         onClick: {
                             setMarker: {
-                                closeResults: true,
                                 coordinates: [
                                     1,
                                     2
                                 ]
                             },
                             zoomToResult: {
-                                closeResults: true,
                                 coordinates: [
                                     1,
                                     2
@@ -237,7 +229,6 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceLocationFi
                         },
                         onHover: {
                             setMarker: {
-                                closeResults: true,
                                 coordinates: [
                                     1,
                                     2
@@ -274,14 +265,12 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceLocationFi
                     events: {
                         onClick: {
                             setMarker: {
-                                closeResults: true,
                                 coordinates: [
                                     1,
                                     2
                                 ]
                             },
                             zoomToResult: {
-                                closeResults: true,
                                 coordinates: [
                                     1,
                                     2
@@ -290,7 +279,6 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceLocationFi
                         },
                         onHover: {
                             setMarker: {
-                                closeResults: true,
                                 coordinates: [
                                     1,
                                     2
@@ -323,11 +311,10 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceLocationFi
             expect(SearchInterface1.createPossibleActions(searchResult, extendedData)).to.deep.equals(
                 {
                     setMarker: {
-                        closeResults: true,
                         coordinates: [1, 2]
                     },
                     zoomToResult: {
-                        closeResults: true,
+
                         coordinates: [1, 2]
                     }
                 }
