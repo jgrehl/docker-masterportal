@@ -12,6 +12,7 @@
  * @property {String} [type="searchBar"] Id of the SearchBar component.
  * @property {Number} [zoomLevel=7] Defines the zoom level to use on zooming to a result.
  *
+ * @property {String} [currentAvailableCategories=""] The current available categories.
  * @property {String} [searchInput=""] The search input.
  * @property {Object[]} [searchInterfaceInstances=[]] The configured searchInterfaces.
  * @property {Object[]} [searchSuggestions=[]] The suggestions of the configured searchInterfaces.
@@ -31,6 +32,7 @@ const state = {
     type: "searchBar",
     zoomLevel: 7,
 
+    currentAvailableCategories: "",
     searchInput: "",
     searchInterfaceInstances: [],
     searchSuggestions: [],

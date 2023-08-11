@@ -12,20 +12,23 @@ import {Icon} from "ol/style.js";
  * @name SearchInterfaceVisibleVector
  * @constructs
  * @extends SearchInterface
+ * @param {String} [hitTemplate="default"] The template for rendering the hits.
  * @param {Object} [resultEvents] Actions that are executed when an interaction, such as hover or click, is performed with a result list item.
  * @param {String[]} [resultEvents.onClick=["openGetFeatureInfo", "setMarker", "zoomToResult"]] Actions that are fired when clicking on a result list item.
  * @param {String[]} [resultEvents.onHover=["setMarker"]] Actions that are fired when hovering on a result list item.
  * @param {String} [searchInterfaceId="visibleVector"] The id of the service interface.
  * @returns {void}
  */
-export default function SearchInterfaceVisibleVector ({resultEvents, searchInterfaceId} = {}) {
+export default function SearchInterfaceVisibleVector ({hitTemplate, resultEvents, searchInterfaceId} = {}) {
     SearchInterface.call(this,
         "client",
         searchInterfaceId || "visibleVector",
         resultEvents || {
             onClick: ["openGetFeatureInfo", "setMarker", "zoomToResult"],
             onHover: ["setMarker"]
-        });
+        },
+        hitTemplate
+    );
 }
 
 SearchInterfaceVisibleVector.prototype = Object.create(SearchInterface.prototype);
@@ -155,16 +158,13 @@ SearchInterfaceVisibleVector.prototype.createPossibleActions = function (feature
     return {
         openGetFeatureInfo: {
             feature: feature,
-            layer: layer,
-            closeResults: true
+            layer: layer
         },
         setMarker: {
-            coordinates: centerCoordinate,
-            closeResults: true
+            coordinates: centerCoordinate
         },
         zoomToResult: {
-            coordinates: centerCoordinate,
-            closeResults: true
+            coordinates: centerCoordinate
         }
     };
 };

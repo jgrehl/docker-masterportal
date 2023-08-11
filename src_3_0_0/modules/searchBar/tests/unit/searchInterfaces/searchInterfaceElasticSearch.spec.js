@@ -1,6 +1,8 @@
 import axios from "axios";
+import crs from "@masterportal/masterportalapi/src/crs";
 import {expect} from "chai";
 import sinon from "sinon";
+
 import SearchInterface from "../../../searchInterfaces/searchInterface.js";
 import SearchInterfaceElasticSearch from "../../../searchInterfaces/searchInterfaceElasticSearch.js";
 import store from "../../../../../app-store";
@@ -35,6 +37,10 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceElasticSea
             lng: "cimode",
             debug: false
         });
+    });
+
+    beforeEach(() => {
+        sinon.stub(crs, "transformToMapProjection").returns([10, 20]);
     });
 
     afterEach(() => {
@@ -246,10 +252,6 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceElasticSea
                 {
                     events: {
                         onClick: {
-                            activateLayerInTopicTree: {
-                                layerId: "123",
-                                closeResults: true
-                            },
                             addLayerToTopicTree: {
                                 layerId: "123",
                                 source: {
@@ -260,11 +262,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceElasticSea
                                             md_name: "md name"
                                         }
                                     ]
-                                },
-                                closeResults: true
-                            },
-                            openTopicTree: {
-                                closeResults: true
+                                }
                             }
                         }
                     },
@@ -294,25 +292,15 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceElasticSea
 
             expect(SearchInterface1.createPossibleActions(searchResult)).to.deep.equals(
                 {
-                    activateLayerInTopicTree: {
-                        layerId: searchResult._source.id,
-                        closeResults: true
-                    },
                     addLayerToTopicTree: {
                         layerId: searchResult._source.id,
-                        source: searchResult._source,
-                        closeResults: true
-                    },
-                    openTopicTree: {
-                        closeResults: true
+                        source: searchResult._source
                     },
                     setMarker: {
-                        coordinates: [10, 20],
-                        closeResults: true
+                        coordinates: [10, 20]
                     },
                     zoomToResult: {
-                        coordinates: [10, 20],
-                        closeResults: true
+                        coordinates: [10, 20]
                     }
                 }
             );
