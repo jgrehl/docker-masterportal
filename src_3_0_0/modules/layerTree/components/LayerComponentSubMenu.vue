@@ -56,7 +56,7 @@ export default {
         <div class="remove-layer-container">
             <LightButton
                 :interaction="() => removeLayer(layerConf)"
-                :text="$t('common:modules.layerTree.iconRemoveLayer')"
+                :text="'common:modules.layerTree.iconRemoveLayer'"
                 icon="bi-trash3"
                 customclass="light-button"
             />
