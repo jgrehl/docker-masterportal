@@ -706,6 +706,14 @@
         "addressTopic": "Search address, district, topics",
         "addressTopicParcel": "Search address, district, topics, parcel"
     },
+    "actions":{
+      "activateLayerInTopicTree":"Show layer in topic tree",
+      "addLayerToTopicTree":"Add layer to topic tree",
+      "highlightFeature":"Highlight feature",
+      "openGetFeatureInfo":"Show information",
+      "setMarker":"Set marker",
+      "zoomToResult":"Zoom to result"
+    },
     "showAllResults": "Show all results",
     "searchResults": "search results",
     "search": "search",
@@ -732,7 +740,8 @@
       "bplan": "b-plan"
     },
     "noInitialResults": "Initial search found no hits.",
-    "showAll": "Show all"
+    "showAll": "Show all",
+    "layerResultNotShown": "The found layer cannot be displayed."
     },
     "selectFeatures": {
       "name": "Select features",
