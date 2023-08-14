@@ -732,8 +732,17 @@
       "childcare": "Kita",
       "bplan": "B-Plan"
     },
+    "actions":{
+      "activateLayerInTopicTree":"Layer im Themenbaum anzeigen",
+      "addLayerToTopicTree":"Layer dem Themenbaum hinzufügen",
+      "highlightFeature":"Feature hervorheben",
+      "openGetFeatureInfo":"Informationen anzeigen",
+      "setMarker":"Marker setzen",
+      "zoomToResult":"Zum Ergebnis zoomen"
+    },
     "noInitialResults": "Die initiale Suche ergab keine Treffer.",
-    "showAll": "Alle anzeigen"
+    "showAll": "Alle anzeigen",
+    "layerResultNotShown": "Der gefundene Layer kann nicht angezeigt werden."
     },
     "selectFeatures": {
       "name": "Features auswählen",
