@@ -15,17 +15,23 @@ export default {
      * @param {String} payload.layerId The layer id.
      * @returns {void}
      */
-    activateLayerInTopicTree: ({dispatch}, {layerId}) => {
-        dispatch("replaceByIdInLayerConfig", {
-            layerConfigs: [{
-                id: layerId,
-                layer: {
+    activateLayerInTopicTree: ({dispatch, rootGetters}, {layerId, source}) => {
+        if (rootGetters.layerConfigById(layerId)) {
+            dispatch("replaceByIdInLayerConfig", {
+                layerConfigs: [{
                     id: layerId,
-                    visibility: true,
-                    showInLayerTree: true
-                }
-            }]
-        }, {root: true});
+                    layer: {
+                        id: layerId,
+                        visibility: true,
+                        showInLayerTree: true
+                    }
+                }]
+            }, {root: true});
+        }
+        else {
+            dispatch("addLayerToTopicTree", {layerId, source});
+        }
+
     },
 
     /**
@@ -45,7 +51,21 @@ export default {
                 visibility: true
             }},
             parentKey: treeSubjectsKey
-        }, {root: true});
+        }, {root: true}).then(added => {
+            if (!added) {
+                const content = i18next.t("common:modules.searchBar.layerResultNotShown");
+
+                console.log("###", content);
+
+                dispatch("Alerting/addSingleAlert", {
+                    category: "error",
+                    content
+                }, {root: true});
+            }
+            else {
+                console.log("layer " + layerId + " added:", added);
+            }
+        });
     },
 
     /**
@@ -55,7 +75,7 @@ export default {
      * @param {Object} payload.hit The search result, must contain properties 'coordinate' as Array and 'geometryType'.
      * @returns {void}
      */
-    highligtFeature: ({dispatch}, {hit}) => {
+    highlightFeature: ({dispatch}, {hit}) => {
         const feature = WKTUtil.getWKTGeom(hit);
 
         dispatch("MapMarker/placingPolygonMarker", feature, {root: true});

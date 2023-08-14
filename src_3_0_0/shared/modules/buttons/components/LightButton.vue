@@ -42,7 +42,7 @@ export default {
             customclass,
 
         ]"
-        :aria-label="text"
+        :aria-label=" $t(text)"
         @click="interaction"
         @keydown.enter="interaction"
     >
