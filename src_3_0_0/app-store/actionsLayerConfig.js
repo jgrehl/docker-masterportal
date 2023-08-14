@@ -8,13 +8,13 @@ import layerCollection from "../core/layers/js/layerCollection";
 
 export default {
     /**
-     * Adds one layer to states layerConfig under the given parentKey.
+     * Adds one layer to states layerConfig under the given parentKey, if not already contained.
      * @param {Object} dispatch store dispatch
      * @param {Object} state store state
      * @param {Object} payload the payload
      * @param {Object[]} payload.layerConfig layer to add to the layerConfigs
      * @param {String} payload.parentKey the key of the parent object
-     * @returns {Boolean} true or false
+     * @returns {Boolean} true, if layer was added and false, if layer was contained in layerConfig
      */
     addLayerToLayerConfig ({dispatch, getters, state}, {layerConfig, parentKey}) {
         const layerContainer = getters.allLayerConfigs.filter(config => Object.prototype.hasOwnProperty.call(config, "zIndex") && typeof config.zIndex === "number"),
