@@ -1,6 +1,6 @@
 /**
  * User type definition
- * @module modules/SearchBar/state
+ * @module modules/searchBar/store/stateSearchBar
  *
  * @property {String[]} configPaths Path array of possible config locations. First one found will be used
  * @property {String} [currentSide="mainMenu"] Current side of the searchBar.
@@ -16,8 +16,8 @@
  * @property {String} [searchInput=""] The search input.
  * @property {Object[]} [searchInterfaceInstances=[]] The configured searchInterfaces.
  * @property {Object[]} [searchSuggestions=[]] The suggestions of the configured searchInterfaces.
- * @property {Object[]} [selectedSearchResults=[]] The selected single results by the user in the "show all" view.
  * @property {Object[]} [searchResults=[]] The results of the configured searchInterfaces.
+ * @property {Object[]} [selectedSearchResults=[]] The selected single results by the user in the "show all" view.
  * @property {Boolean} [showAllResults=false] Flag if all results should be shown.
  * @property {Boolean} [searchResultsActive=true] Flag if the search results are active.
  */

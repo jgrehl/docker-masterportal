@@ -1,5 +1,5 @@
 <script>
-import {mapGetters, mapActions, mapMutations} from "vuex";
+import {mapGetters, mapMutations} from "vuex";
 import SearchBarSuggestionListItem from "./SearchBarSuggestionListItem.vue";
 
 /**
@@ -34,9 +34,6 @@ export default {
         ])
     },
     methods: {
-        ...mapActions("Modules/SearchBar", [
-            "addSelectedSearchResultToTopicTree"
-        ]),
         ...mapMutations("Modules/SearchBar", [
             "setCurrentAvailableCategories",
             "setSearchResultsActive",
