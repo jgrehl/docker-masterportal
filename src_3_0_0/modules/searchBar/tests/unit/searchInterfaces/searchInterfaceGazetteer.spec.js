@@ -56,6 +56,13 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceGazetteer.
                             setMarker: {
                                 coordinates: [10, 20]
                             }
+                        },
+                        buttons:{
+                            startRouting: {
+                                coordinates: [10, 20],
+                                name: searchResults[0].name,
+                                closeResults: true
+                            }
                         }
                     },
                     category: "modules.searchBar.type.street",
@@ -92,7 +99,8 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceGazetteer.
         it("should normalize result events", () => {
             const resultEvents = {
                     onClick: ["setMarker", "zoomToResult"],
-                    onHover: ["setMarker"]
+                    onHover: ["setMarker"],
+                    buttons: ["startRouting"]
                 },
                 searchResult = {
                     name: "Result Name1",
@@ -104,6 +112,13 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceGazetteer.
 
             expect(SearchInterface1.normalizeResultEvents(resultEvents, searchResult)).to.deep.equals(
                 {
+                    buttons:{
+                        startRouting: {
+                            coordinates: [10, 20],
+                            name: searchResult.name,
+                            closeResults: true
+                        }
+                    },
                     onClick: {
                         setMarker: {
                             coordinates: [10, 20]
@@ -139,6 +154,11 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceGazetteer.
                     },
                     zoomToResult: {
                         coordinates: [10, 20]
+                    },
+                    startRouting: {
+                        coordinates: [10, 20],
+                        name: searchResult.name,
+                        closeResults: true
                     }
                 }
             );
