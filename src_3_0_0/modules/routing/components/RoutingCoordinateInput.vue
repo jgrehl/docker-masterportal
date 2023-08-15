@@ -1,5 +1,5 @@
 <script>
-import {mapActions} from "vuex";
+import {mapActions, mapGetters} from "vuex";
 import {RoutingGeosearchResult} from "../js/classes/routing-geosearch-result";
 import IconButton from "../../../shared/modules/buttons/components/IconButton.vue";
 
@@ -35,7 +35,12 @@ export default {
             required: true
         }
     },
-    emits: ["moveWaypointDown", "moveWaypointUp", "searchResultSelected", "removeWaypoint"],
+    emits: [
+        "moveWaypointDown",
+        "moveWaypointUp",
+        "searchResultSelected",
+        "removeWaypoint"
+    ],
     data () {
         return {
             search: this.waypoint.getDisplayName()
@@ -48,6 +53,7 @@ export default {
         };
     },
     computed: {
+        ...mapGetters("Modules/Routing/Directions", ["waypoints"]),
         /**
          * Computed value for the waypoint display name to watch for changes
          * @returns {String} the display name for the waypoint
@@ -66,6 +72,29 @@ export default {
             this.ignoreNextSearchChange = true;
             this.search = !val ? "" : val;
         },
+
+        waypoints: {
+            /**
+             * If lastWaypoints are null, means first time waypoints are set
+             * and a waypoint from extern is found (property 'fromExtern' is true) the external waypoint is set as start point.
+             * @param {Array} waypoints new waypoints
+             * @param {Array} lastWaypoints last waypoints
+             * @returns {void}
+             */
+            handler (waypoints, lastWaypoints) {
+                if (lastWaypoints === null) {
+                    const externWayPoints = waypoints.filter(
+                        (waypoint) => waypoint.fromExtern === true
+                    );
+
+                    if (externWayPoints && externWayPoints.length > 0) {
+                        this.search = externWayPoints[0].displayName;
+                    }
+                }
+            },
+            deep: true
+        },
+
         /**
          * Starts a request if no new input comes after a short delay.
          * @returns {void}
@@ -78,7 +107,9 @@ export default {
             if (!this.awaitingSearch) {
                 setTimeout(async () => {
                     this.awaitingSearch = false;
-                    const isWgs84Coordinate = this.isInputtextWgs84Coordinate(this.search);
+                    const isWgs84Coordinate = this.isInputtextWgs84Coordinate(
+                        this.search
+                    );
 
                     if (isWgs84Coordinate) {
                         await this.selectWgs84Coordinate(isWgs84Coordinate);
@@ -94,7 +125,10 @@ export default {
         }
     },
     methods: {
-        ...mapActions("Modules/Routing", ["fetchCoordinatesByText", "transformCoordinatesWgs84ToLocalProjection"]),
+        ...mapActions("Modules/Routing", [
+            "fetchCoordinatesByText",
+            "transformCoordinatesWgs84ToLocalProjection"
+        ]),
         /**
          * Selects a result from the external service provider.
          * @param {RoutingGeosearchResult} searchResult which was selected by the user
@@ -116,7 +150,11 @@ export default {
          * @returns {void}
          */
         async selectWgs84Coordinate (wgs84Coordinate) {
-            this.waypoint.setCoordinates(await this.transformCoordinatesWgs84ToLocalProjection(wgs84Coordinate));
+            this.waypoint.setCoordinates(
+                await this.transformCoordinatesWgs84ToLocalProjection(
+                    wgs84Coordinate
+                )
+            );
             this.waypoint.setDisplayName(this.search);
             this.searchResults = [];
             this.$emit("searchResultSelected");
@@ -150,7 +188,12 @@ export default {
             if (!latString || !lngString) {
                 return false;
             }
-            if (!isFinite(lat) || Math.abs(lat) > 90 || !isFinite(lng) || Math.abs(lng) > 180) {
+            if (
+                !isFinite(lat) ||
+                Math.abs(lat) > 90 ||
+                !isFinite(lng) ||
+                Math.abs(lng) > 180
+            ) {
                 return false;
             }
 
@@ -219,7 +262,9 @@ export default {
                         class="h-50"
                     >
                         <IconButton
-                            :aria="$t('common:modules.routing.moveWaypointDown')"
+                            :aria="
+                                $t('common:modules.routing.moveWaypointDown')
+                            "
                             :class-array="['btn-light', 'btn-up-down']"
                             :icon="'bi-chevron-down fs-6'"
                             :interaction="() => $emit('moveWaypointDown')"
@@ -266,7 +311,7 @@ export default {
     padding: 5px 0 0 10px;
 }
 .input-icon {
-    margin-left:-37px;
+    margin-left: -37px;
 }
 
 label {
@@ -275,9 +320,9 @@ label {
 }
 
 li:hover {
-     cursor: pointer;
-     background: $light-grey;
-     font-size:$font-size-base;
+    cursor: pointer;
+    background: $light-grey;
+    font-size: $font-size-base;
 }
 
 .list-group {
