@@ -109,7 +109,14 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceBkg.js", (
                             setMarker: {
                                 coordinates: [9.988176, 53.55481]
                             }
+                        },
+                          buttons: {
+                        startRouting: {
+                            coordinates: [9.988176, 53.55481],
+                            name: searchResults[0].properties.text,
+                            closeResults: true
                         }
+                    }
                     },
                     id: "BkgGeoSearch1",
                     icon: "bi-signpost-2-fill",
@@ -143,6 +150,13 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceBkg.js", (
                         setMarker: {
                             coordinates: [9.988176, 53.55481]
                         }
+                    },
+                    buttons: {
+                        startRouting: {
+                            coordinates: [9.988176, 53.55481],
+                            name: searchResults[0].properties.text,
+                            closeResults: true
+                        }
                     }
                 },
                 id: "BkgGeoSearch1",
@@ -163,6 +177,11 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceBkg.js", (
                     },
                     zoomToResult: {
                         coordinates: [9.988176, 53.55481]
+                    },
+                    startRouting: {
+                        coordinates: [9.988176, 53.55481],
+                        name: searchResults[0].properties.text,
+                        closeResults: true
                     }
                 }
             );
