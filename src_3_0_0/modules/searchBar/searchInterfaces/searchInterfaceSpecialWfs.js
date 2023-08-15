@@ -191,15 +191,10 @@ SearchInterfaceSpecialWfs.prototype.fillHitList = function (xml, result, request
                     geometryType = "MultiPolygon";
                 }
                 else {
-                    geometry = new WFS()
-                        .readFeatures(xml)[i]
-                        .getGeometry()
-                        .getCoordinates()
-                        .map(entry => Array.isArray(entry[0])
-                            ? entry
-                                .map(coord => coord.slice(0, 2))
-                                .flat()
-                            : entry);
+                    const feature = new WFS().readFeatures(xml)[i];
+
+                    geometry = feature.getGeometry();
+
                     geometryType = geometry.getType();
                 }
 
