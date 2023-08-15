@@ -1,5 +1,7 @@
 import axios from "axios";
+import {createStore} from "vuex";
 import store from "../../../../../../app-store";
+import state from "./../../../../store/stateRouting";
 import {expect} from "chai";
 import sinon from "sinon";
 import {RoutingGeosearchResult} from "../../../../js/classes/routing-geosearch-result";
@@ -207,9 +209,8 @@ describe("src_3_0_0/modules/routing/js/geosearch/routing-bkg-geosearch.js", () =
 
             expect(result).to.be.false;
         });
-        it("should process result correct with given bbox", () => {
-            store.commit("Tools/Routing/setGeosearch", {bbox: {"CAR": "10,20,30,40"}});
-
+        it("should process result correctly with given bbox", () => {
+            state.geosearch = {bbox: {"CAR": "10,20,30,40"}};
             const result = checkConfiguredBbox();
 
             expect(result).to.eql("10,20,30,40");
