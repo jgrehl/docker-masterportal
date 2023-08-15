@@ -712,7 +712,8 @@
       "highlightFeature":"Highlight feature",
       "openGetFeatureInfo":"Show information",
       "setMarker":"Set marker",
-      "zoomToResult":"Zoom to result"
+      "zoomToResult":"Zoom to result",
+      "startRouting":"Start routing"
     },
     "showAllResults": "Show all results",
     "searchResults": "search results",

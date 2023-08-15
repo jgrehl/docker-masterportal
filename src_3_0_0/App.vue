@@ -149,6 +149,8 @@ export default {
 
         /**
          * Sets the device mode after resize and 250 ms.
+         * @param {String} mobile string for mobile
+         * @param {String} desktop string for desktop
          * @returns {void}
          */
         onResize (mobile, desktop) {
