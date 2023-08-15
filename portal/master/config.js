@@ -86,7 +86,7 @@ const Config = {
     ],
     portalLanguage: {
         enabled: true,
-        debug: true,
+        debug: false,
         languages: {
             de: "Deutsch",
             en: "English",
