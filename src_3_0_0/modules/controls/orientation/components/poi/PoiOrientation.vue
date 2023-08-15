@@ -253,7 +253,7 @@ export default {
 </script>
 
 <template>
-    <div
+    <button
         id="surrounding_vectorfeatures"
         class="modal fade in poi"
         @keydown.esc="hidePoi"
@@ -286,22 +286,22 @@ export default {
                             v-for="(feature, index) in poiFeatures"
                             :key="index"
                             class="nav-item"
-                            @click="changedCategory"
-                            @keydown.enter="changedCategory"
                         >
-                            <a
+                            <button
                                 class="nav-link"
                                 :class="feature.category === activeCategory ? 'active' : ''"
                                 :href="feature.category"
                                 :aria-controls="feature.category"
-                                role="button"
                                 data-bs-toggle="pill"
-                            >{{ feature.category + 'm' }}
+                                @click="changedCategory"
+                                @keydown.enter="changedCategory"
+                            >
+                                {{ feature.category + 'm' }}
                                 <span
                                     class="badge"
                                     :aria-controls="feature.category"
                                 >{{ feature.features.length }}</span>
-                            </a>
+                            </button>
                         </li>
                     </ul>
                     <div class="tab-content">
@@ -349,7 +349,7 @@ export default {
             </div>
         </div>
         <!-- eslint-disable-next-line vuejs-accessibility/click-events-have-key-events -->
-        <div
+        <button
             class="modal-backdrop fade show"
             @click="hidePoi"
         />
@@ -358,12 +358,22 @@ export default {
             has no semantic meaning, and other methods exist for keyboard users to leave
             the backdropped modal dialog.
         -->
-    </div>
+    </button>
 </template>
 
 <style lang="scss" scoped>
     @import "~variables";
 
+    #surrounding_vectorfeatures {
+        background-color: transparent;
+    }
+    .modal-backdrop{
+        pointer-events: all;
+        cursor: default;
+    }
+    .modal-backdrop:focus {
+       background-color: lighten($dark_grey, 5%);
+    }
     .poi {
         color: $dark_grey;
         font-size: $font_size_big;
