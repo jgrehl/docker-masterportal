@@ -40,6 +40,7 @@ const state = {
     geosearch: {
         minChars: 3,
         limit: 10,
+        bbox: "",
         type: null,
         serviceId: null
     },
