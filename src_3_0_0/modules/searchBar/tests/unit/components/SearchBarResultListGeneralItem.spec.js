@@ -13,32 +13,30 @@ describe("src_3_0_0/modules/searchBar/components/SearchBarResultListGeneralItem.
 
     const searchResults = [
         {
-            "category": "Straße",
-            "id": "BeidemNeuenKrahnStraße",
-            "index": 0,
-            "name": "Bei dem Neuen Krahn",
-            "searchInterfaceId": "gazetteer",
-            "displayedInfo": "",
-            "icon": "bi-signpost",
-            "imagePath": "",
-            "toolTip": "toolTipAvailable",
-            "featureButtons": [],
-            "events": {
+            category: "Straße",
+            id: "BeidemNeuenKrahnStraße",
+            index: 0,
+            name: "Bei dem Neuen Krahn",
+            searchInterfaceId: "gazetteer",
+            displayedInfo: "",
+            icon: "bi-signpost",
+            imagePath: "",
+            toolTip: "toolTipAvailable",
+            events: {
             }
 
         },
         {
-            "category": "Adresse",
-            "id": "BeidemNeuenKrahn2Adresse",
-            "index": 1,
-            "name": "Bei dem Neuen Krahn 2",
-            "searchInterfaceId": "gazetteer",
-            "displayedInfo": "",
-            "icon": "bi-signpost",
-            "imagePath": "",
-            "toolTip": undefined,
-            "featureButtons": [],
-            "events": {
+            category: "Adresse",
+            id: "BeidemNeuenKrahn2Adresse",
+            index: 1,
+            name: "Bei dem Neuen Krahn 2",
+            searchInterfaceId: "gazetteer",
+            displayedInfo: "",
+            icon: "bi-signpost",
+            imagePath: "",
+            toolTip: undefined,
+            events: {
             }
         }
     ];
