@@ -27,7 +27,6 @@ export default {
             "setSearchResultsActive"
         ]),
 
-
         /**
          * Activate click action(s) of searchSuggestion.
          * @param {Object} searchSuggestion The search suggestion.
