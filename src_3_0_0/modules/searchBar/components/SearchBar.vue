@@ -41,6 +41,37 @@ export default {
         },
 
         /**
+         * Updates the categroies to unique categories.
+         * @returns {Object} The searchresults with unique categories.
+         */
+        searchResultsWithUniqueCategories () {
+            if (this.searchInterfaceInstances.every(searchInterfaceInstance => searchInterfaceInstance.searchState !== "running")) {
+                const categories = [...new Set(this.searchResults.map(searchResult => searchResult.category))];
+
+                categories.forEach(category => {
+                    const searchResultsByCategory = this.searchResults.filter(searchResult => searchResult.category === category),
+                        searchInterfaceIds = [...new Set(searchResultsByCategory.map(searchResult => searchResult.searchInterfaceId))];
+
+                    if (searchInterfaceIds.length > 1) {
+                        let count = 0;
+
+                        searchInterfaceIds.forEach(searchInterfaceId => {
+                            searchResultsByCategory.forEach(searchResult => {
+                                if (searchResult.searchInterfaceId === searchInterfaceId) {
+                                    searchResult.category = searchResult.category + "_" + count;
+                                }
+                            });
+
+                            ++count;
+                        });
+                    }
+                });
+            }
+
+            return this.searchResults;
+        },
+
+        /**
          * Sorts the results according the configured search providers and prepare the suggestionlist with the limit of suggestionListLength, updates searchSuggestions
          * Prepares currentShowAllList (used to show all results of a category).
          * @returns {Object} results the limited and sorted search results.
@@ -53,7 +84,7 @@ export default {
             this.setSearchSuggestions([]);
             results.availableCategories = [];
             this.searchInterfaceInstances.forEach(searchInterfaceInstance => {
-                for (const [index, value] of Object.entries(this.searchResults)) {
+                for (const [index, value] of Object.entries(this.searchResultsWithUniqueCategories)) {
                     if (value.searchInterfaceId === searchInterfaceInstance.searchInterfaceId) {
                         results[value.category + "Count"] = results[value.category + "Count"] === undefined ? 1 : ++results[value.category + "Count"];
 
