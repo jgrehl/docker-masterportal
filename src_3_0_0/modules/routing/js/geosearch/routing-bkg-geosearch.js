@@ -9,8 +9,10 @@ import store from "../../../../app-store";
  */
 async function fetchRoutingBkgGeosearch (search) {
     const serviceUrl = store.getters.restServiceById(state.geosearch.serviceId).url,
+        checkConfiguredBboxValue = await checkConfiguredBbox(),
+        bBoxValue = await checkConfiguredBboxValue !== false ? `&bbox=${checkConfiguredBboxValue}` : "",
         url = `${serviceUrl}?count=${state.geosearch.limit}&properties=text`,
-        parameter = `&query=${encodeURIComponent(search)}`,
+        parameter = `&query=${encodeURIComponent(search)}${bBoxValue}`,
         response = await axios.get(url + parameter);
 
     if (response.status !== 200 && !response.data.success) {
@@ -59,4 +61,18 @@ function parseRoutingBkgGeosearchResult (geosearchResult) {
     );
 }
 
-export {fetchRoutingBkgGeosearch, fetchRoutingBkgGeosearchReverse};
+/**
+ * Checks if a bbox is configured with the current speed profile
+ * @returns {Boolean|String} false or current speed profile
+ */
+function checkConfiguredBbox () {
+    const currentSpeedProfile = state.directionsSettings.speedProfile;
+
+    if (state.geosearch.bbox !== "" && state.geosearch.bbox[currentSpeedProfile]) {
+        return state.geosearch.bbox[currentSpeedProfile];
+    }
+
+    return false;
+}
+
+export {checkConfiguredBbox, fetchRoutingBkgGeosearch, fetchRoutingBkgGeosearchReverse};
