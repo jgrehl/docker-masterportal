@@ -184,7 +184,7 @@ function deepMerge (source, target) {
         }
         return {...source};
     }
-    if (Array.isArray(target)) {
+    if (Array.isArray(target) && target.length > 0) {
         target.splice(0, target.length, ...source);
         return target;
     }
