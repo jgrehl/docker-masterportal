@@ -12,9 +12,9 @@ import {nextTick} from "vue";
  * @param {Object} highlightObject contains several parameters for feature highlighting
  * @returns {void}
  */
-function highlightFeature ({commit, dispatch, getters}, highlightObject) {
+function highlightFeature ({commit, dispatch}, highlightObject) {
     if (highlightObject.type === "increase") {
-        increaseFeature(commit, getters, highlightObject);
+        increaseFeature(commit, highlightObject);
     }
     else if (highlightObject.type === "viaLayerIdAndFeatureId") {
         highlightViaParametricUrl(dispatch, highlightObject.layerIdAndFeatureId);
@@ -150,11 +150,10 @@ function getHighlightFeature (layerId, featureId, dispatch) {
 /**
  * increases the icon of the feature
  * @param {Function} commit commit function
- * @param {Function} getters map getters
  * @param {Object} highlightObject contains several parameters for feature highlighting
  * @returns {void}
  */
-function increaseFeature (commit, getters, highlightObject) {
+function increaseFeature (commit, highlightObject) {
     const scaleFactor = highlightObject.scale ? highlightObject.scale : 1.5,
         feature = highlightObject.feature // given already
             ? highlightObject.feature
@@ -173,8 +172,8 @@ function increaseFeature (commit, getters, highlightObject) {
     clonedImage = clonedStyle && typeof clonedStyle.getImage === "function" ? clonedStyle.getImage() : undefined;
 
     if (clonedImage) {
-        commit("Maps/addHighlightedFeatures", [feature], {root: true});
-        commit("Maps/addHighlightedFeatureStyles", [feature.getStyle()], {root: true});
+        commit("Maps/addHighlightedFeature", feature, {root: true});
+        commit("Maps/addHighlightedFeatureStyle", feature.getStyle(), {root: true});
 
         if (clonedStyle.getText()) {
             clonedStyle.getText().setScale(scaleFactor);

@@ -53,17 +53,10 @@ export default {
             parentKey: treeSubjectsKey
         }, {root: true}).then(added => {
             if (!added) {
-                const content = i18next.t("common:modules.searchBar.layerResultNotShown");
-
-                console.log("###", content);
-
                 dispatch("Alerting/addSingleAlert", {
                     category: "error",
-                    content
+                    content: i18next.t("common:modules.searchBar.layerResultNotShown")
                 }, {root: true});
-            }
-            else {
-                console.log("layer " + layerId + " added:", added);
             }
         });
     },
@@ -79,6 +72,9 @@ export default {
         const feature = WKTUtil.getWKTGeom(hit);
 
         dispatch("MapMarker/placingPolygonMarker", feature, {root: true});
+        /* used in:
+            specialWFS
+        */
     },
 
     /**
@@ -96,6 +92,9 @@ export default {
         );
 
         commit("Modules/GetFeatureInfo/setGfiFeatures", [gfiFeature], {root: true});
+        /* used in:
+            visibleVector
+        */
     },
 
     /**
