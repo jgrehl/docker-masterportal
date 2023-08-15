@@ -56,13 +56,26 @@ const getters = {
                             (layer.get("hitTolerance") || 1) * Math.sqrt(mapCollection.getMapView("2D").getResolution())
                         );
 
-                        layer.getSource()?.forEachFeatureIntersectingExtent(hitBox, feature => {
-                            featuresAtPixel.push(createGfiFeature(
-                                layer,
-                                "",
-                                feature
-                            ));
-                        });
+                        if (layer.get("typ") === "VectorTile" && layer.get("renderer") === "webgl") {
+                            const features = layer.getSource()?.getFeaturesInExtent(hitBox);
+
+                            features.forEach(feature => {
+                                featuresAtPixel.push(createGfiFeature(
+                                    layer,
+                                    "",
+                                    feature
+                                ));
+                            });
+                        }
+                        else {
+                            layer.getSource()?.forEachFeatureIntersectingExtent(hitBox, feature => {
+                                featuresAtPixel.push(createGfiFeature(
+                                    layer,
+                                    "",
+                                    feature
+                                ));
+                            });
+                        }
                     }
                 });
         }
