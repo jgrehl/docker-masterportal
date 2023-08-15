@@ -440,7 +440,8 @@
             "description": "Routenplaner",
             "geosearch": {
               "type": "BKG",
-              "serviceId": "5"
+              "serviceId": "5",
+              "bbox": {"CYCLING": "9.6,53.40,10.4,53.84"}
             },
             "geosearchReverse": {
               "type": "BKG",
