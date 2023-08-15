@@ -6,7 +6,7 @@ import SearchBarResultList from "./SearchBarResultList.vue";
 
 /**
  * Searchbar to access search results.
- * @module modules/SearchBar
+ * @module modules/searchBar/components/SearchBar
  * @vue-computed {String} searchInputValue - The v-bind of search input value.
  * @vue-computed {Object} limitedSortedSearchResults - Results the limited and sorted search results.
  */

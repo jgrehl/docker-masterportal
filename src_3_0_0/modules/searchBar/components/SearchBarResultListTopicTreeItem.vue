@@ -1,12 +1,11 @@
 <script>
-import {mapGetters, mapActions, mapMutations} from "vuex";
+import {mapGetters, mapMutations} from "vuex";
 
 /**
- * Searchbar - single item of a search result
- * @module modules/SearchBar
+ * Searchbar - single item of a search result topic tree.
+ * @module modules/searchBar/components/SearchBarResultListTopicTreeItem
  * @vue-props {Object} searchResult - A single search result.
- * @vue-data {Boolean} clickStatus - Click status by title or button.
- * @vue-computed {String} searchInputValue - The v-bind of search input value.
+ * @vue-computed {Boolean} isChecked - Returns true, if layer checkbox is checked.
  */
 export default {
     name: "SearchBarResultListTopicTreeItem",
@@ -16,57 +15,35 @@ export default {
             required: true
         }
     },
-    data () {
-        return {
-            clickStatus: false
-        };
-    },
     computed: {
-        ...mapGetters("Modules/SearchBar", ["featureButtonsMap", "showAllResults", "currentSide"])
-    },
-    methods: {
-        ...mapActions(["addLayerToLayerConfig"]),
-        ...mapActions("Menu", ["resetMenu"]),
-        ...mapActions("Modules/SearchBar", ["addSingleSearchResultToTopicTree"]),
-        ...mapMutations("Modules/SearchBar", ["setSearchResultsActive", "addSelectedSearchResults", "removeSelectedSearchResults"]),
+        ...mapGetters("Modules/SearchBar", [
+            "selectedSearchResults"
+        ]),
 
         /**
-         * Adds a layer to the topic tree and closes the search
-         * @param {Object} searchResult A single search result
-         * @returns {void}
+         * Returns true, if layer checkbox is checked.
+         * @returns {Boolean} true, if layer checkbox is checked
          */
-        async addLayer (searchResult) {
-            await this.addSingleSearchResultToTopicTree(searchResult);
-        },
+        isChecked () {
+            return typeof this.selectedSearchResults.find(item => this.searchResult.id === item.id) !== "undefined";
+        }
+    },
+    methods: {
+        ...mapMutations("Modules/SearchBar", [
+            "addSelectedSearchResults",
+            "removeSelectedSearchResults"
+        ]),
+
         /**
-         * Updates the clickStatus
-         * @param {Boolean} value True if selected
+         * Add or remove the searchResult to or from the selectedSearchresults
          * @returns {void}
          */
-        updateClickStatus (value) {
-            if (value !== undefined) {
-                this.clickStatus = value;
-            }
-        },
-        /**
-         * Checks the behaviour for click action in the result overview and the 'show all' view.
-         * @param {Object} searchResult A single search result
-         * @param {Boolean} value True if selected
-         * @returns {void}
-         */
-        checkClickBehaviour (searchResult, value) {
-            this.clickStatus = value;
-            if (this.showAllResults === true) {
-                if (value === true) {
-                    this.addSelectedSearchResults(searchResult);
-                }
-                else {
-                    this.removeSelectedSearchResults(searchResult);
-                }
+        addOrRemoveLayer () {
+            if (!this.isChecked) {
+                this.addSelectedSearchResults(this.searchResult);
             }
             else {
-                this.resetMenu(this.currentSide);
-                this.addSingleSearchResultToTopicTree(searchResult);
+                this.removeSelectedSearchResults(this.searchResult);
             }
         }
     }
@@ -74,65 +51,50 @@ export default {
 </script>
 
 <template lang="html">
-    <div id="search-bar-result-list-topic-tree-item">
-        <div class="d-flex flex-row bd-highlight bold">
-            <button
-                type="button"
-                class="btn btn-light d-flex"
-                :title="searchResult.toolTip ? searchResult.toolTip : searchResult.name"
-                :aria-label="searchResult.toolTip ? searchResult.toolTip : searchResult.name"
-                @click="checkClickBehaviour(searchResult, !clickStatus);"
-                @keydown.enter="checkClickBehaviour(searchResult, !clickStatus);"
+    <div :id="'search-bar-result-list-topic-tree-item-' + searchResult.id">
+        <div
+            class="d-flex flex-row p-1 pb-2 search-bar-result-list-topic-tree-item-title"
+            @click="addOrRemoveLayer"
+            @keydown.enter="addOrRemoveLayer"
+        >
+            <span
+                :id="'search-bar-result-list-topic-tree-item-checkbox-' + searchResult.id"
+                :class="[
+                    'search-bar-result-list-topic-tree-item-checkbox ps-1 pe-3',
+                    {
+                        'bi-check-square': isChecked,
+                        'bi-square': !isChecked
+                    }
+                ]"
+            />
+            <label
+                :class="['search-bar-result-list-topic-tree-item-label', 'mt-0 d-flex flex-column align-self-start', isChecked ? 'bold' : '']"
+                :for="'search-bar-result-list-topic-tree-item-checkbox-' + searchResult.id"
+                tabindex="0"
+                :aria-label="$t(searchResult.name)"
             >
-                <span class="btn-title">
-                    {{ searchResult.name }}
+                <span>
+                    {{ $t(searchResult.name) }}
                 </span>
-            </button>
-            <div
-                v-if="searchResult.featureButtons[0]"
-                title="placeholder"
-                class="ms-auto"
-            >
-                <div
-                    v-for="featureButton in searchResult.featureButtons"
-                    :key="featureButton"
-                >
-                    <component
-                        :is="featureButtonsMap[featureButton.charAt(0).toUpperCase()+featureButton.slice(1)]"
-                        :search-result="searchResult"
-                        :click-status="clickStatus"
-                        @update-click-status="updateClickStatus($event)"
-                    />
-                </div>
-            </div>
+            </label>
         </div>
     </div>
 </template>
 
 <style lang="scss" scoped>
 @import "~variables";
-.btn {
-    align-items: center;
-    justify-content: left;
-    white-space: nowrap;
-    min-height: 2.5rem;
-    width: 80%;
+@import "~mixins";
 
-    i {
-        font-size: 1.3rem;
-        padding-right: 1rem;
+.search-bar-result-list-topic-tree-item-title, .search-bar-result-list-topic-tree-item-checkbox {
+    &:hover {
+        @include primary_action_hover;
     }
-    i:last-child {
-        padding-left: .5rem;
-        padding-right: 0;
+    &:focus {
+        @include primary_action_focus;
     }
-    .btn-texts {
-        text-align: left;
-    }
-    .btn-title {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
+}
+
+.search-bar-result-list-topic-tree-item-label {
+    cursor: pointer;
 }
 </style>
