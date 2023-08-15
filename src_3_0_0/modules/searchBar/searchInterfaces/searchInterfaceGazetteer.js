@@ -29,7 +29,8 @@ export default function SearchInterfaceGazetteer ({serviceId, hitTemplate, resul
         searchInterfaceId || "gazetteer",
         resultEvents || {
             onClick: ["setMarker", "zoomToResult"],
-            onHover: ["setMarker"]
+            onHover: ["setMarker"],
+            buttons: ["startRouting"]
         },
         hitTemplate
     );
@@ -152,6 +153,10 @@ SearchInterfaceGazetteer.prototype.createPossibleActions = function (searchResul
         },
         zoomToResult: {
             coordinates: searchResult.geometry.coordinates
+        },
+        startRouting: {
+            coordinates: searchResult.geometry.coordinates,
+            name: searchResult.name
         }
     };
 };

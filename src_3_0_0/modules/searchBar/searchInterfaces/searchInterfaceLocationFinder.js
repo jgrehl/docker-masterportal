@@ -25,7 +25,8 @@ export default function SearchInterfaceLocationFinder ({serviceId, classes, epsg
         searchInterfaceId || "locationFinder",
         resultEvents || {
             onClick: ["setMarker", "zoomToResult"],
-            onHover: ["setMarker"]
+            onHover: ["setMarker"],
+            buttons: ["startRouting"]
         },
         hitTemplate
     );
