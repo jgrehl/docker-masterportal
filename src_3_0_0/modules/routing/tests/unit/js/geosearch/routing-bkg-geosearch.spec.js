@@ -1,5 +1,4 @@
 import axios from "axios";
-import {createStore} from "vuex";
 import store from "../../../../../../app-store";
 import state from "./../../../../store/stateRouting";
 import {expect} from "chai";
