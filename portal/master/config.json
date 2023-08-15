@@ -123,7 +123,6 @@
                 "_source.datasets.md_name"
               ]
             },
-            "featureButtons": ["addLayer"],
             "resultEvents": {
               "onClick": ["addLayerToTopicTree"],
               "buttons": ["addLayerToTopicTree"]
@@ -148,11 +147,9 @@
               "id": "_source.id",
               "coordinate": "_source.geometry.coordinates"
             },
-            "featureButtons": [],
             "resultEvents": {
                 "onClick": ["setMarker", "zoomToResult"],
-                "onHover": ["setMarker"],
-                "buttons": ["setMarker", "zoomToResult"]
+                "onHover": ["setMarker"]
             }
           },
           {
