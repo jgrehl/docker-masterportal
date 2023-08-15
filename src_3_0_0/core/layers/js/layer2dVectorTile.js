@@ -2,6 +2,7 @@ import axios from "axios";
 import {vectorTile} from "@masterportal/masterportalapi";
 
 import store from "../../../app-store";
+import webgl from "./webglRenderer";
 import Layer2d from "./layer2d";
 
 /**
@@ -20,6 +21,11 @@ export default function Layer2dVectorTile (attributes) {
 
     this.attributes = Object.assign(defaultAttributes, attributes);
     Layer2d.call(this, this.attributes);
+    // override class methods for webgl rendering
+    // has to happen before setStyle
+    if (attributes.renderer === "webgl") {
+        webgl.setLayerProperties(this);
+    }
 
     this.checkProjection();
 
@@ -72,7 +78,12 @@ Layer2dVectorTile.prototype.getLayerParams = function (attributes) {
     return {
         gfiAttributes: attributes.gfiAttributes,
         opacity: (100 - attributes.transparency) / 100,
-        zIndex: attributes.zIndex
+        zIndex: attributes.zIndex,
+        renderer: attributes.renderer, // use "default" (canvas) or "webgl" renderer
+        styleId: attributes.styleId, // styleId to pass to masterportalapi
+        style: attributes.style, // style function to style the layer or WebGLPoints style syntax
+        excludeTypesFromParsing: attributes.excludeTypesFromParsing, // types that should not be parsed from strings, only necessary for webgl
+        isPointLayer: attributes.isPointLayer // whether the source will only hold point data, only necessary for webgl
     };
 };
 
@@ -137,7 +148,7 @@ Layer2dVectorTile.prototype.setConfiguredLayerStyle = function () {
 * @returns {Promise} resolves void after style was set; may reject if no style found or received style invalid
 */
 Layer2dVectorTile.prototype.setStyleById = function (styleID) {
-    const styleDefinition = this.get("vtStyles").find(({id}) => id === styleID);
+    const styleDefinition = this.get("vtStyles")?.find(({id}) => id === styleID);
 
     if (!styleDefinition) {
         return Promise.reject(`No style found with ID ${styleID} for layer ${this.get("name")}.`);
