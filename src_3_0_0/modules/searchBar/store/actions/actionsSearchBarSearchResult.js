@@ -78,6 +78,25 @@ export default {
     },
 
     /**
+     * Starts the routing module and sets the routing start point to search result.
+     * @param {Object} param.dispatch the dispatch
+     * @param {Object} payload The payload.
+     * @param {Array} payload.coordinates The coordinates to start the route from.
+     * @param {String} payload.name The name of the search result.
+     * @returns {void}
+     */
+    startRouting: ({dispatch, rootGetters}, {coordinates, name}) => {
+        const menuSide = "secondaryMenu",
+            menuExpanded = "Menu/expanded";
+
+        dispatch("Menu/changeCurrentComponent", {type: "routing", side: menuSide, props: {}}, {root: true});
+        if (!rootGetters[menuExpanded](menuSide)) {
+            dispatch("Menu/toggleMenu", menuSide, {root: true});
+        }
+        dispatch("Modules/Routing/setFirstWayPoint", {displayName: name, coordinates}, {root: true});
+    },
+
+    /**
      * Opens the get feature info of the search result.
      * @param {Object} payload The payload.
      * @param {Object} payload.feature The feature to show the info for.

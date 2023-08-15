@@ -3,9 +3,10 @@ import actionsRouting from "../../../store/actionsRouting";
 import {expect} from "chai";
 
 describe("src_3_0_0/modules/routing/store/actionsRouting.js", () => {
-    let state;
+    let state,dispatch;
 
     beforeEach(() => {
+        dispatch = sinon.spy();
         state = {
             type: "routing",
             geosearch: {
@@ -48,5 +49,15 @@ describe("src_3_0_0/modules/routing/store/actionsRouting.js", () => {
         state.isochronesSettings.type = "type";
         state.isochronesSettings.serviceId = "serviceId";
         actionsRouting.checkNonOptionalConfigFields({state});
+    });
+
+    it("setFirstWayPoint shall call reset and addWaypoint", () => {
+        const displayName = "displayName",
+        coordinates = [1,2];
+
+        actionsRouting.setFirstWayPoint({dispatch}, {displayName, coordinates});
+        expect(dispatch.callCount).to.equal(2);
+        expect(dispatch.firstCall.args).to.eql(["Directions/reset"]);
+        expect(dispatch.secondCall.args).to.eql(["Directions/addWaypoint", {index: 0, displayName, coordinates, fromExtern: true}]);
     });
 });
