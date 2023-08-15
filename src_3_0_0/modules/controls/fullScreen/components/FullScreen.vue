@@ -94,6 +94,12 @@ export default {
         document.addEventListener("webkitfullscreenchange", this.escapeHandler);
         document.addEventListener("fullscreenchange", this.escapeHandler);
     },
+    unmounted () {
+        document.removeEventListener("mozfullscreenchange", this.escapeHandler);
+        document.removeEventListener("MSFullscreenChange", this.escapeHandler);
+        document.removeEventListener("webkitfullscreenchange", this.escapeHandler);
+        document.removeEventListener("fullscreenchange", this.escapeHandler);
+    },
     methods: {
         /**
          * Defines the variable "active" depending on whether the fullscreenmode is activated or deactivated.
