@@ -105,10 +105,19 @@ export default {
                 .filter(layer => layer.get("visible") && layer.get("source") instanceof VectorSource)
                 .forEach(
                     layer => {
-                        layer.get("source").forEachFeatureIntersectingExtent(
-                            extent,
-                            feature => this.prepareFeature(layer, feature)
-                        );
+                        if (layer.get("typ") === "VectorTile" && layer.get("renderer") === "webgl") {
+                            const features = layer.get("source")?.getFeaturesInExtent(extent);
+
+                            features.forEach(feature => {
+                                this.prepareFeature(layer, feature);
+                            });
+                        }
+                        else {
+                            layer.get("source").forEachFeatureIntersectingExtent(
+                                extent,
+                                feature => this.prepareFeature(layer, feature)
+                            );
+                        }
                     }
                 );
         },
