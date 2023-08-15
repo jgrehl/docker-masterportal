@@ -24,13 +24,12 @@ import store from "../../../app-store";
  * @param {String[]} [resultEvents.onClick=["addLayerToTopicTree"]] Actions that are fired when clicking on a result list item.
  * @param {String} [searchInterfaceId="elasticSearch"] The id of the service interface.
  * @param {String} [searchStringAttribute="searchString"] Search string attribute name for `payload` object.
- * @param {String[]} [featureButtons=["addLayer"]] Feature buttons to be shown next to a single search result.
  * @param {String} [requestType="POST"] Request type.
  * @constructs
  * @extends SearchInterface
  * @returns {void}
  */
-export default function SearchInterfaceElasticSearch ({hitMap, serviceId, epsg, hitIcon, hitTemplate, hitType, payload, responseEntryPath, resultEvents, searchInterfaceId, featureButtons, searchStringAttribute, requestType} = {}) {
+export default function SearchInterfaceElasticSearch ({hitMap, serviceId, epsg, hitIcon, hitTemplate, hitType, payload, responseEntryPath, resultEvents, searchInterfaceId, searchStringAttribute, requestType} = {}) {
     SearchInterface.call(this,
         "request",
         searchInterfaceId || "elasticSearch",
@@ -48,7 +47,6 @@ export default function SearchInterfaceElasticSearch ({hitMap, serviceId, epsg, 
     this.payload = payload || {};
     this.responseEntryPath = responseEntryPath || "";
     this.searchStringAttribute = searchStringAttribute || "searchString";
-    this.featureButtons = featureButtons || ["addLayer"];
     this.requestType = requestType || "POST";
 }
 
@@ -187,7 +185,6 @@ SearchInterfaceElasticSearch.prototype.normalizeResults = function (searchResult
         normalizedResults.push({
             events: this.normalizeResultEvents(this.resultEvents, searchResult),
             category: this.hitType.startsWith("common:") ? i18next.t(this.hitType) : this.getResultByPath(searchResult, this.hitType),
-            featureButtons: this.featureButtons,
             icon: this.hitIcon,
             id: this.getResultByPath(searchResult, this.hitMap?.id),
             name: this.getResultByPath(searchResult, this.hitMap?.name),
