@@ -7,7 +7,7 @@ import actions from "../../../../store/actions/actionsSearchBarSearchResult";
 const {
     activateLayerInTopicTree,
     addLayerToTopicTree,
-    highligtFeature,
+    highlightFeature,
     openGetFeatureInfo,
     setMarker,
     zoomToResult
@@ -81,8 +81,8 @@ describe("src/modules/searchBar/store/actions/actionsSearchBarSearchResult.spec.
         });
     });
 
-    describe("highligtFeature", () => {
-        it("highligtFeature shall dispatch 'placingPolygonMarker'", () => {
+    describe("highlightFeature", () => {
+        it("highlightFeature shall dispatch 'placingPolygonMarker'", () => {
             const hit = {
                     geometryType: "MULTIPOLYGON",
                     coordinate: [
@@ -98,7 +98,7 @@ describe("src/modules/searchBar/store/actions/actionsSearchBarSearchResult.spec.
                 },
                 stubGetWKTGeom = sinon.stub(WKTUtil, "getWKTGeom").returns(feature);
 
-            highligtFeature({dispatch}, {hit});
+            highlightFeature({dispatch}, {hit});
             expect(dispatch.calledOnce).to.be.true;
             expect(dispatch.firstCall.args[0]).to.equals("MapMarker/placingPolygonMarker");
             expect(dispatch.firstCall.args[1]).to.be.deep.equals(feature);
@@ -160,4 +160,6 @@ describe("src/modules/searchBar/store/actions/actionsSearchBarSearchResult.spec.
             expect(dispatch.firstCall.args[1]).to.be.deep.equals(payload);
         });
     });
+
+    // todo addLayerToTopicTree activateLayerInTopicTree
 });
