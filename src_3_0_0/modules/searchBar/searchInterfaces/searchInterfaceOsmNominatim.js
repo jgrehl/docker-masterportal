@@ -30,7 +30,8 @@ export default function SearchInterfaceOsmNominatim ({serviceId, classes, countr
         searchInterfaceId || "osmNominatim",
         resultEvents || {
             onClick: ["setMarker", "zoomToResult"],
-            onHover: ["setMarker"]
+            onHover: ["setMarker"],
+            buttons: ["startRouting"]
         },
         hitTemplate
     );
@@ -186,6 +187,10 @@ SearchInterfaceOsmNominatim.prototype.createPossibleActions = function (searchRe
         },
         zoomToResult: {
             coordinates: coordinates
+        },
+        startRouting: {
+            coordinates: coordinates,
+            name: searchResult["display_name"]
         }
     };
 };

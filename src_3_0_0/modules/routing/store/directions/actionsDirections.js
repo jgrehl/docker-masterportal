@@ -273,6 +273,31 @@ export default {
     },
 
     /**
+     * Resets all waypoints, deletes external waypoints, removes coordinates from features,
+     * sets directions to null and clear avoid source.
+     * @param {Object} context the vuex context
+     * @param {Object} context.getters the getters
+     * @param {Object} context.commit the commit
+     * @param {Object} context.dispatch the dispatch
+     * @returns {void}
+     */
+    reset ({getters, commit, dispatch}) {
+        const {waypoints, directionsRouteSource, directionsAvoidSource} = getters;
+
+        if (waypoints.length > 0) {
+            for (let i = waypoints.length - 1; i >= 0; i--) {
+                dispatch("removeWaypoint", {index: waypoints[i].index});
+                if (waypoints[i].fromExtern === true) {
+                    waypoints.splice(i, 1);
+                }
+            }
+            directionsRouteSource.getFeatures().forEach(feature => feature.getGeometry().setCoordinates([]));
+            commit("setRoutingDirections", null);
+            directionsAvoidSource.clear();
+        }
+    },
+
+    /**
      * Creates the currently needed map interaction based on the user input
      * @param {Object} context actions context object.
      * @returns {void}
@@ -576,11 +601,17 @@ export default {
 
     /**
      * Initializes the waypoint array with the minimum waypoints (2) for start and end.
+     *
      * @param {Object} context actions context object.
      * @returns {void}
      */
     initWaypoints ({dispatch, state}) {
-        for (let i = state.waypoints.length; i < 2; i++) {
+        const externWayPoints = state.waypoints.filter(
+                (waypoint) => waypoint.fromExtern === true
+            ),
+            length = externWayPoints.length > 0 ? externWayPoints.length : state.waypoints.length;
+
+        for (let i = length; i < 2; i++) {
             dispatch("addWaypoint", {index: i});
         }
     },

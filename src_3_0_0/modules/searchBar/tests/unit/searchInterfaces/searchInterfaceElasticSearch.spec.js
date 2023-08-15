@@ -266,6 +266,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceElasticSea
                             }
                         }
                     },
+                    featureButtons: undefined,
                     category: "modules.searchBar.type.subject",
                     id: "123",
                     icon: "bi-list-ul",

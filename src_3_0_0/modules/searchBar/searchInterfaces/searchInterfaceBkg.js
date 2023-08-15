@@ -29,7 +29,8 @@ export default function SearchInterfaceBkg ({geoSearchServiceId, epsg, extent, h
         searchInterfaceId || "bkg",
         resultEvents || {
             onClick: ["setMarker", "zoomToResult"],
-            onHover: ["setMarker"]
+            onHover: ["setMarker"],
+            buttons: ["startRouting"]
         },
         hitTemplate
     );
@@ -122,6 +123,10 @@ SearchInterfaceBkg.prototype.createPossibleActions = function (searchResult) {
         },
         zoomToResult: {
             coordinates: coordinates
+        },
+        startRouting: {
+            coordinates: coordinates,
+            name: searchResult.properties?.text
         }
     };
 };
