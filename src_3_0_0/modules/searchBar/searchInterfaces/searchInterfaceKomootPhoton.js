@@ -31,7 +31,8 @@ export default function SearchInterfaceKomootPhoton ({serviceId, bbox, hitTempla
         searchInterfaceId || "komootPhoton",
         resultEvents || {
             onClick: ["setMarker", "zoomToResult"],
-            onHover: ["setMarker"]
+            onHover: ["setMarker"],
+            buttons: ["startRouting"]
         },
         hitTemplate
     );
@@ -190,6 +191,10 @@ SearchInterfaceKomootPhoton.prototype.createPossibleActions = function (searchRe
         },
         zoomToResult: {
             coordinates: coordinates
+        },
+        startRouting: {
+            coordinates: coordinates,
+            name: searchResult.properties?.name
         }
     };
 };
