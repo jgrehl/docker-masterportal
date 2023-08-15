@@ -176,7 +176,6 @@ export default {
         border: none;
     }
     .layer-tree-layer-title, .layer-tree-layer-checkbox {
-        border-radius: 15px;
         &:hover {
             @include primary_action_hover;
         }

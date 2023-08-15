@@ -4,7 +4,7 @@ import SearchBarResultListGeneralItem from "./SearchBarResultListGeneralItem.vue
 
 /**
  * Searchbar result list to show the categorized overview or single search results.
- * @module modules/SearchBar
+ * @module modules/searchBar/components/SearchBarResultListGeneral
  * @vue-computed {Object} limitedSortedSearchResults - Results the limited and sorted search results.
  */
 export default {
