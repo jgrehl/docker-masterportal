@@ -25,7 +25,6 @@
  * @param {Object} [events...source] Source information of the layer.
 
  * @param {String} [displayedInfo=""] Info text that is displayed in the search result.
- * @param {String[]} [featureButtons=[]] Feature buttons to be shown next to a single search result.
  * @param {String} [icon=""] The icon that can be displayed in the search result.Array
  * @param {String} [imagePath=""] The image that can be displayed in the search result.Array
  * @param {String} [toolTip=""] Text to be displayed on the search result when mousehovering.
@@ -57,7 +56,7 @@
     }
  * @returns {void}
  */
-export default function SearchResult ({category, events, id, index, name, searchInterfaceId, displayedInfo, featureButtons, icon, imagePath, toolTip} = {}) {
+export default function SearchResult ({category, events, id, index, name, searchInterfaceId, displayedInfo, icon, imagePath, toolTip} = {}) {
     this.category = category;
     this.id = id;
     this.index = index;
@@ -67,7 +66,6 @@ export default function SearchResult ({category, events, id, index, name, search
     this.events = events;
 
     this.displayedInfo = displayedInfo || "";
-    this.featureButtons = featureButtons || [];
     this.icon = icon || "";
     this.imagePath = imagePath || "";
     this.toolTip = toolTip || "";
