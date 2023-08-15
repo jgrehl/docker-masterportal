@@ -32,7 +32,8 @@ export default {
                 highlightFeature: "bi-lightbulb",
                 openGetFeatureInfo: "bi-info-circle",
                 setMarker: "bi-geo-alt-fill",
-                zoomToResult: "bi-zoom-in"
+                zoomToResult: "bi-zoom-in",
+                startRouting: "bi-signpost-2-fill"
             }
         };
     },
@@ -46,7 +47,8 @@ export default {
             "highlightFeature",
             "openGetFeatureInfo",
             "setMarker",
-            "zoomToResult"
+            "zoomToResult",
+            "startRouting"
         ]),
         ...mapMutations("Modules/SearchBar", ["setSearchResultsActive"]),
         /**
