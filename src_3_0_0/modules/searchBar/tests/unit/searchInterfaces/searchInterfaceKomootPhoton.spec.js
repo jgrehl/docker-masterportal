@@ -125,6 +125,13 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceKomootPhot
                                     2
                                 ]
                             }
+                        },
+                        buttons:{
+                            startRouting: {
+                                coordinates: [1, 2],
+                                name: searchResults[0].properties.name,
+                                closeResults: true
+                            }
                         }
                     },
                     id: "KomootPhoton1",
@@ -161,6 +168,13 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceKomootPhot
                                 1,
                                 2
                             ]
+                        }
+                    },
+                    buttons:{
+                        startRouting: {
+                            coordinates: [1, 2],
+                            name: searchResults[0].properties.name,
+                            closeResults: true
                         }
                     }
                 },
@@ -234,6 +248,11 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceKomootPhot
                     },
                     zoomToResult: {
                         coordinates: [1, 2]
+                    },
+                    startRouting: {
+                        coordinates: [1, 2],
+                        name: searchResults[0].properties.name,
+                        closeResults: true
                     }
                 }
             );
