@@ -69,6 +69,9 @@ export default {
             selector: "[data-bs-toggle='tooltip']"
         });
     },
+    unmounted () {
+        window.removeEventListener("resize", this.onResize());
+    },
     methods: {
         ...mapMutations([
             "setDeviceMode"
@@ -141,8 +144,15 @@ export default {
                 mobile = "Mobile";
 
             this.setDeviceMode(isMobile() ? mobile : desktop);
+            window.addEventListener("resize", this.onResize(mobile, desktop));
+        },
 
-            window.addEventListener("resize", this.debounce(() => {
+        /**
+         * Sets the device mode after resize and 250 ms.
+         * @returns {void}
+         */
+        onResize (mobile, desktop) {
+            this.debounce(() => {
                 const nextIsMobile = isMobile();
 
                 if (nextIsMobile && this.deviceMode !== mobile) {
@@ -151,7 +161,7 @@ export default {
                 else if (!nextIsMobile && this.deviceMode !== desktop) {
                     this.setDeviceMode(desktop);
                 }
-            }, 250));
+            }, 250);
         },
         /**
          * Debounce function
