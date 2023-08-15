@@ -21,6 +21,20 @@ export default {
     },
 
     /**
+     * Resets all directions and sets the first waypoint.
+     * @param {Object} context the vuex context
+     * @param {Object} context.dispatch the dispatch
+     * @param {Object} payload the vuex context
+     * @param {String} payload.displayName name to show at start routing input field
+     * @param {Array} payload.coordinates coordinates of the routing start waypoint
+     * @returns {void}
+     */
+    setFirstWayPoint ({dispatch}, {displayName, coordinates}) {
+        dispatch("Directions/reset");
+        dispatch("Directions/addWaypoint", {index: 0, displayName, coordinates, fromExtern: true});
+    },
+
+    /**
      * Checks all non optional config fileds in the config.json.
      * @param {Object} context actions context object.
      * @returns {void}

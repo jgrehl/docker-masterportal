@@ -133,6 +133,13 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceLocationFi
                                     2
                                 ]
                             }
+                        },
+                        buttons:{
+                            startRouting: {
+                                coordinates: [1, 2],
+                                name: searchResults[0].name,
+                                closeResults: true
+                            }
                         }
                     },
                     category: "abc",
@@ -186,6 +193,13 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceLocationFi
                                     2
                                 ]
                             }
+                        },
+                        buttons:{
+                            startRouting: {
+                                coordinates: [1, 2],
+                                name: searchResults[0].name,
+                                closeResults: true
+                            }
                         }
                     },
                     category: "abc",
@@ -233,6 +247,13 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceLocationFi
                                     1,
                                     2
                                 ]
+                            }
+                        },
+                        buttons:{
+                            startRouting: {
+                                coordinates: [1, 2],
+                                name: searchResult.name,
+                                closeResults: true
                             }
                         }
                     },
@@ -284,6 +305,13 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceLocationFi
                                     2
                                 ]
                             }
+                        },
+                        buttons:{
+                            startRouting: {
+                                coordinates: [1, 2],
+                                name: searchResult.name,
+                                closeResults: true
+                            }
                         }
                     },
                     category: "abc",
@@ -316,6 +344,11 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceLocationFi
                     zoomToResult: {
 
                         coordinates: [1, 2]
+                    },
+                    startRouting: {
+                        coordinates: [1, 2],
+                        name: searchResult.name,
+                        closeResults: true
                     }
                 }
             );

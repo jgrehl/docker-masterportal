@@ -485,6 +485,28 @@ describe("src_3_0_0/modules/routing/store/directions/actionsDirections.js", () =
         });
     });
 
+    describe("reset", () => {
+        //todo inka
+        it("should move third waypoint to second place", async () => {
+            const firstWaypoint = new RoutingWaypoint({index: 0, source: routingDirectionsWaypointSource}),
+                secondWaypoint = new RoutingWaypoint({index: 1, source: routingDirectionsWaypointSource}),
+                thirdWaypoint = new RoutingWaypoint({index: 2, source: routingDirectionsWaypointSource});
+
+            state.waypoints = [firstWaypoint, secondWaypoint, thirdWaypoint];
+            await actionsDirections.reset({state, getters, commit, dispatch, rootState}, 2);
+
+            expect(state.waypoints[1]).equal(thirdWaypoint);
+            expect(state.waypoints[1].getIndex()).equal(1);
+            expect(state.waypoints[2]).equal(secondWaypoint);
+            expect(state.waypoints[2].getIndex()).equal(2);
+
+            expect(dispatchSpy.args).to.deep.equal([
+                ["findDirections"]
+            ]);
+        });
+        });
+
+
 
     describe("should moveWaypointUp", () => {
         it("should move third waypoint to second place", async () => {

@@ -122,6 +122,13 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceOsmNominat
                                     2
                                 ]
                             }
+                        },
+                        buttons: {
+                            startRouting: {
+                                coordinates: [1, 2],
+                                name: searchResults[0].display_name,
+                                closeResults: true
+                            }
                         }
                     },
                     id: "OSMNominatim1",
@@ -171,6 +178,13 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceOsmNominat
                                 2
                             ]
                         }
+                    },
+                    buttons: {
+                        startRouting: {
+                            coordinates: [1, 2],
+                            name: searchResults[0].display_name,
+                            closeResults: true
+                        }
                     }
                 },
                 id: "OSMNominatim1",
@@ -204,6 +218,11 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceOsmNominat
                     },
                     zoomToResult: {
                         coordinates: [1, 2]
+                    },
+                    startRouting: {
+                        coordinates: [1, 2],
+                        name: searchResults[0].display_name,
+                        closeResults: true
                     }
                 }
             );
