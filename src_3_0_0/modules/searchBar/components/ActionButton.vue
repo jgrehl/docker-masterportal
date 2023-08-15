@@ -30,7 +30,7 @@ export default {
                 addLayerToTopicTree: "bi-plus-circle",
                 activateLayerInTopicTree: "bi-eye",
                 highlightFeature: "bi-lightbulb",
-                openGetFeatureInfo: "bi-info",
+                openGetFeatureInfo: "bi-info-circle",
                 setMarker: "bi-geo-alt-fill",
                 zoomToResult: "bi-zoom-in"
             }
