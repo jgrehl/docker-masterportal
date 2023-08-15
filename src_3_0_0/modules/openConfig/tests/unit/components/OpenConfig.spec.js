@@ -56,11 +56,11 @@ describe("src_3_0_0/modules/openConfig/components/OpenConfig.vue", () => {
         expect(wrapper.find("#open-config").exists()).to.be.true;
         expect(wrapper.find("p").exists()).to.be.true;
         expect(wrapper.find("#open-config-input-button").exists()).to.be.true;
-        expect(wrapper.find("#open-config-input-button > label").exists()).to.be.true;
-        expect(wrapper.find("#open-config-input-button > label").text()).to.equals("common:modules.openConfig.openFile");
-        expect(wrapper.find("#open-config-input-button > label > input").exists()).to.be.true;
-        expect(wrapper.find("#open-config-input-button > label > span").exists()).to.be.true;
-        expect(wrapper.find("#open-config-input-button > label > span > i").exists()).to.be.true;
+        expect(wrapper.find(".btn-transparent> label").exists()).to.be.true;
+        expect(wrapper.find(".btn-transparent> label").text()).to.equals("common:modules.openConfig.openFile");
+        expect(wrapper.find(".btn-transparent> label > input").exists()).to.be.true;
+        expect(wrapper.find(".btn-transparent> label > span").exists()).to.be.true;
+        expect(wrapper.find(".btn-transparent> label > span > i").exists()).to.be.true;
     });
 
     it("should trigger function triggerClickOnFileInput on keydown", async () => {
