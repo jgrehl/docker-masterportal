@@ -92,6 +92,4 @@ export default {
         position : sticky;
         bottom:0;
     }
-
-
 </style>
