@@ -4,6 +4,7 @@ import {expect} from "chai";
 import sinon from "sinon";
 import {stylefunction} from "ol-mapbox-style";
 import Collection from "ol/Collection";
+import webgl from "../../../js/webglRenderer";
 
 import Layer2dVectorTile from "../../../js/layer2dVectorTile";
 
@@ -132,7 +133,12 @@ describe("src_3_0_0/core/js/layers/layer2dVectorTile.js", () => {
             localAttributes = {
                 gfiAttributes: "The attributes",
                 transparency: 50,
-                zIndex: 10
+                zIndex: 10,
+                renderer: "canvas",
+                styleId: "styleId",
+                style: {},
+                excludeTypesFromParsing: true,
+                isPointLayer: false
             };
         });
 
@@ -142,7 +148,12 @@ describe("src_3_0_0/core/js/layers/layer2dVectorTile.js", () => {
             expect(vectorTileLayer.getLayerParams(localAttributes)).to.deep.equals({
                 gfiAttributes: "The attributes",
                 opacity: 0.5,
-                zIndex: 10
+                zIndex: 10,
+                renderer: "canvas",
+                styleId: "styleId",
+                style: {},
+                excludeTypesFromParsing: true,
+                isPointLayer: false
             });
         });
     });
@@ -575,6 +586,21 @@ describe("src_3_0_0/core/js/layers/layer2dVectorTile.js", () => {
 
             await Layer2dVectorTile.prototype.fetchSpriteData.call(context, url);
             expect(axiosMock.calledOnce).to.be.true;
+        });
+    });
+    describe("Use WebGL renderer", () => {
+        it("Should create the layer with WebGL methods, if renderer: \"webgl\" is set", function () {
+            const vectorLayer = new Layer2dVectorTile({...attributes, renderer: "webgl", isPointLayer: false}),
+                layer = vectorLayer.getLayer();
+
+            expect(vectorLayer.isDisposed).to.equal(webgl.isDisposed);
+            expect(vectorLayer.setIsSelected).to.equal(webgl.setIsSelected);
+            expect(vectorLayer.hideAllFeatures).to.equal(webgl.hideAllFeatures);
+            expect(vectorLayer.showAllFeatures).to.equal(webgl.showAllFeatures);
+            expect(vectorLayer.showFeaturesByIds).to.equal(webgl.showFeaturesByIds);
+            expect(vectorLayer.setStyle).to.equal(webgl.setStyle);
+            expect(vectorLayer.source).to.equal(layer.getSource());
+            expect(layer.get("isPointLayer")).to.not.be.undefined;
         });
     });
 });
