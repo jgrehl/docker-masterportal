@@ -372,6 +372,7 @@
         "selectGeometry": "Wählen Sie eine Geometrie aus."
       },
       "info": {
+        "infoIcon": "Durch Klicken auf das Info-Icon können weitere Informationen abgerufen werden",
         "snippetCheckbox": "Das Kontrollkästchen kann durch einen Mausklick aktiviert/deaktiviert werden.",
         "snippetDate": "Für die Eingabe eines Datums als Suchkriterium, klicken Sie im Datumseingabefeld und wählen Sie ein Datum aus dem geöffneten Kalender aus.",
         "snippetDateRange": "Für die Eingabe eines Datumsbereichs als Suchkriterium, klicken Sie in das Eingabefeld für das Start- bzw. End-Datum und wählen jeweils ein Start- bzw. End-Datum aus dem geöffneten Kalender aus.",
