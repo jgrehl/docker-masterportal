@@ -8,7 +8,18 @@ import SearchBarComponent from "../../../components/SearchBar.vue";
 config.global.mocks.$t = key => key;
 
 describe("src_3_0_0/modules/searchBar/components/SearchBar.vue", () => {
-    const searchResults = [
+    const searchInterfaceInstances = [
+        {
+            "searchInterfaceId": "gazetteer"
+        }
+    ];
+    let searchResults,
+        store,
+        wrapper;
+
+
+    beforeEach(() => {
+        searchResults = [
             {
                 "category": "Straße",
                 "id": "BeidemNeuenKrahnStraße",
@@ -36,17 +47,8 @@ describe("src_3_0_0/modules/searchBar/components/SearchBar.vue", () => {
                 "events": {
                 }
             }
-        ],
-        searchInterfaceInstances = [
-            {
-                "searchInterfaceId": "gazetteer"
-            }
         ];
-    let store,
-        wrapper;
 
-
-    beforeEach(() => {
         store = createStore({
             namespaced: true,
             modules: {
@@ -119,6 +121,72 @@ describe("src_3_0_0/modules/searchBar/components/SearchBar.vue", () => {
             await wrapper.find("#search-button").trigger("click");
 
             expect(startSearchSpy.calledOnce).to.be.true;
+        });
+    });
+
+    describe("searchResultsWithUniqueCategories", () => {
+        it("should set the categories to unique categories", async () => {
+            searchResults = [
+                {
+                    "category": "komootPhoton",
+                    "id": "abc-straße 1",
+                    "index": 1,
+                    "name": "abc-straße 1",
+                    "searchInterfaceId": "komootPhoton_0",
+                    "displayedInfo": "",
+                    "icon": "bi-signpost",
+                    "imagePath": "",
+                    "toolTip": "",
+                    "events": {
+                    }
+                },
+                {
+                    "category": "komootPhoton",
+                    "id": "abc-straße 1",
+                    "index": 1,
+                    "name": "abc-straße 1",
+                    "searchInterfaceId": "komootPhoton_1",
+                    "displayedInfo": "",
+                    "icon": "bi-signpost",
+                    "imagePath": "",
+                    "toolTip": "",
+                    "events": {
+                    }
+                }
+            ];
+            wrapper = await shallowMount(SearchBarComponent, {
+                global: {
+                    plugins: [store]
+                }
+            });
+            expect(wrapper.vm.searchResultsWithUniqueCategories).to.deep.equal([
+                {
+                    "category": "komootPhoton_0",
+                    "id": "abc-straße 1",
+                    "index": 1,
+                    "name": "abc-straße 1",
+                    "searchInterfaceId": "komootPhoton_0",
+                    "displayedInfo": "",
+                    "icon": "bi-signpost",
+                    "imagePath": "",
+                    "toolTip": "",
+                    "events": {
+                    }
+                },
+                {
+                    "category": "komootPhoton_1",
+                    "id": "abc-straße 1",
+                    "index": 1,
+                    "name": "abc-straße 1",
+                    "searchInterfaceId": "komootPhoton_1",
+                    "displayedInfo": "",
+                    "icon": "bi-signpost",
+                    "imagePath": "",
+                    "toolTip": "",
+                    "events": {
+                    }
+                }
+            ]);
         });
     });
 
