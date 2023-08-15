@@ -199,7 +199,52 @@
           },
           {
             "type": "exampleSearch"
-          }
+          },
+          {
+            "type": "specialWfs",
+            "minChars": 3,
+            "timeout": 10000,
+            "definitions": [
+                {
+                  "url": "https://geodienste.hamburg.de/HH_WFS_Bebauungsplaene",
+                  "typeName": "app:hh_hh_festgestellt",
+                  "propertyNames": [
+                    "app:geltendes_planrecht"
+                  ],
+                  "geometryName": "app:geom",
+                  "name": "common:modules.searchBar.specialWFS.terminated",
+                  "namespaces": "xmlns:app='http://www.deegree.org/app'"
+                },
+                {
+                  "url": "https://geodienste.hamburg.de/HH_WFS_Bebauungsplaene",
+                  "typeName": "app:prosin_imverfahren",
+                  "propertyNames": [
+                    "app:plan"
+                  ],
+                  "geometryName": "app:the_geom",
+                  "name": "common:modules.searchBar.specialWFS.ongoing",
+                  "namespaces": "xmlns:app='http://www.deegree.org/app'"
+                },
+                {
+                  "url": "https://geodienste.hamburg.de/HH_WFS_KitaEinrichtung",
+                  "typeName": "app:KitaEinrichtungen",
+                  "propertyNames": [
+                    "app:Name"
+                  ],
+                  "name": "common:modules.searchBar.specialWFS.childcare",
+                  "namespaces": "xmlns:app='http://www.deegree.org/app'"
+                },
+                {
+                  "url": "https://geodienste.hamburg.de/HH_WFS_Stoerfallbetriebe",
+                  "typeName": "app:stoerfallbetrieb",
+                  "propertyNames": [
+                    "app:standort"
+                  ],
+                  "name": "common:modules.searchBar.specialWFS.hazardous",
+                  "namespaces": "xmlns:app='http://www.deegree.org/app'"
+                }
+              ]
+            }
         ]
       },
       "sections": [
