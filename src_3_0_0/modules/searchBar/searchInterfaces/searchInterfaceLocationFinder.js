@@ -152,6 +152,10 @@ SearchInterfaceLocationFinder.prototype.createPossibleActions = function (search
         },
         zoomToResult: {
             coordinates: coordinates
+        },
+        startRouting: {
+            coordinates: coordinates,
+            name: searchResult.name
         }
     };
 };
