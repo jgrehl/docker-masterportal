@@ -32,7 +32,7 @@ export default {
          * Updates the categories to unique categories.
          * @returns {Object} The searchresults with unique categories.
          */
-      /*   searchResultsWithUniqueCategories () {
+        searchResultsWithUniqueCategories () {
             if (this.searchInterfaceInstances.every(searchInterfaceInstance => searchInterfaceInstance.searchState !== "running")) {
                 const categories = [...new Set(this.searchResults.map(searchResult => searchResult.category))];
 
@@ -57,7 +57,7 @@ export default {
             }
 
             return this.searchResults;
-        }, */
+        },
 
         /**
          * Sorts the results according the configured search providers and prepare the suggestionlist with the limit of suggestionListLength, updates searchSuggestions
@@ -119,6 +119,7 @@ export default {
             this.$store.state.Menu[side].navigation.history.push({type: "root", props: []}, {type: "searchResultList", props: {name: "modules.searchBar.searchResultList"}});
 
             this.currentAvailableCategories = [categoryItem];
+
             this.currentShowAllList = this.limitedSortedSearchResults.currentShowAllList.filter(function (value) {
                 return value.category === categoryItem;
             });
