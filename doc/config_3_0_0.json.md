@@ -274,7 +274,7 @@ Gazetteer search service configuration.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
-|resultEvents|no|**[resultEvents](#markdown-header-portalconfigmenusearchbarsearchInterfacesresultEvents)**|{onClick: ["setMarker", "zoomToResult"], onHover: ["setMarker"]}|Actions that are executed when an interaction, such as hover or click, is performed with a result list item.|false|
+|resultEvents|no|**[resultEvents](#markdown-header-portalconfigmenusearchbarsearchInterfacesresultEvents)**|{onClick: ["setMarker", "zoomToResult"], onHover: ["setMarker"]}|Actions that are executed when an interaction, such as hover or click, is performed with a result list item. The following events are possible: "setMarker", "zoomToResult".|false|
 |searchAddress|no|Boolean|false|Defines whether address search is active. For backward compatibility, if "searchAddress" is not configured, the "searchAddress" attribute is set to "true" when "searchStreets" and "searchHouseNumbers" are set to "true".|false|
 |searchDistricts|no|Boolean|false|Defines whether district search is active.|false|
 |searchHouseNumbers|no|Boolean|false|Defines whether house numbers should be searched for. Requires `searchStreets` to be set to `true`, too.|false|
@@ -303,6 +303,15 @@ Gazetteer search service configuration.
 
 ##### Portalconfig.menu.searchBar.searchInterfaces.resultEvents
 Actions that are executed when an interaction, such as hover or click, is performed with a result list item.
+
+The following events exist. Which events can be configured can be found in the descriptions of the respective search interface:
+
+- activateLayerInTopicTree: Activates the found layer in the topic tree and map.
+- addLayerToTopicTree: Adds the found layer to the topic tree and map.
+- highligtFeature: Highlights the search result on the map.
+- openGetFeatureInfo: Opens the GetFeatureInfo for the search hit in the menu.
+- setMarker: Places a marker on the map.
+- zoomToResult: Zooms to the search hit.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
