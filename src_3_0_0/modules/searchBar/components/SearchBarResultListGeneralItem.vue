@@ -1,5 +1,6 @@
 <script>
 import {mapActions} from "vuex";
+import ActionButton from "./ActionButton.vue";
 
 /**
  * Searchbar - single item of a search suggestion.
@@ -8,10 +9,22 @@ import {mapActions} from "vuex";
  */
 export default {
     name: "SearchBarResultListGeneralItem",
+    components: {
+        ActionButton
+    },
     props: {
         searchResult: {
             type: Object,
             required: true
+        }
+    },
+    computed: {
+        /**
+         * Returns all actions stored in 'searchResult.events.buttons'.
+         * @returns{Object} all actions to execute on click
+         */
+        actions () {
+            return this.searchResult.events.buttons ? this.searchResult.events.buttons : [];
         }
     },
     methods: {
@@ -39,6 +52,16 @@ export default {
                     {{ searchResult.name }}
                 </span>
             </button>
+            <div
+                v-for="action, i in Object.keys(actions)"
+                :key="i"
+                class="ms-auto mt-1 d-flex"
+            >
+                <ActionButton
+                    :action-name="action"
+                    :action-args="actions[action]"
+                />
+            </div>
         </div>
     </div>
 </template>
@@ -50,7 +73,7 @@ export default {
     justify-content: left;
     white-space: nowrap;
     min-height: 2.5rem;
-    width: 100%;
+    width: 80%;
 
     .btn-title {
         white-space: nowrap;
