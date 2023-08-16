@@ -126,7 +126,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceKomootPhot
                                 ]
                             }
                         },
-                        buttons:{
+                        buttons: {
                             startRouting: {
                                 coordinates: [1, 2],
                                 name: searchResults[0].properties.name,
@@ -170,7 +170,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceKomootPhot
                             ]
                         }
                     },
-                    buttons:{
+                    buttons: {
                         startRouting: {
                             coordinates: [1, 2],
                             name: searchResults[0].properties.name,

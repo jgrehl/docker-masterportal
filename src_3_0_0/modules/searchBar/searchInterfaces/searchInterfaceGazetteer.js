@@ -147,15 +147,17 @@ SearchInterfaceGazetteer.prototype.getTranslationByType = function (type) {
  * @returns {Object} The possible actions.
  */
 SearchInterfaceGazetteer.prototype.createPossibleActions = function (searchResult) {
+    const coords = [parseFloat(searchResult.geometry.coordinates[0]), parseFloat(searchResult.geometry.coordinates[1])];
+
     return {
         setMarker: {
-            coordinates: searchResult.geometry.coordinates
+            coordinates: coords
         },
         zoomToResult: {
-            coordinates: searchResult.geometry.coordinates
+            coordinates: coords
         },
         startRouting: {
-            coordinates: searchResult.geometry.coordinates,
+            coordinates: coords,
             name: searchResult.name
         }
     };
