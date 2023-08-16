@@ -31,8 +31,7 @@ export default {
     },
     methods: {
         ...mapActions("Modules/SearchBar", [
-            "activateLayerInTopicTree",
-            "addLayerToTopicTree"
+            "activateAction"
         ]),
         ...mapMutations("Modules/SearchBar", [
             "setSelectedSearchResults"
@@ -45,10 +44,9 @@ export default {
          */
         activateOnClickAction () {
             this.selectedSearchResults.forEach(selectedSearchResult => {
-                const events = selectedSearchResult.events.onClick;
-
-                Object.keys(events).forEach(event => {
-                    this[event](events[event]);
+                this.activateAction({
+                    searchResult: selectedSearchResult,
+                    actionType: "onClick"
                 });
             });
         }
