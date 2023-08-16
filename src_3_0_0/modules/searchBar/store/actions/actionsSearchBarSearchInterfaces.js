@@ -8,8 +8,8 @@ import SearchInterfaceKomootPhoton from "../../searchInterfaces/searchInterfaceK
 import SearchInterfaceLocationFinder from "../../searchInterfaces/searchInterfaceLocationFinder";
 import SearchInterfaceOsmNominatim from "../../searchInterfaces/searchInterfaceOsmNominatim";
 import SearchInterfaceTopicTree from "../../searchInterfaces/searchInterfaceTopicTree";
-import SearchInterfaceVisibleVector from "../../searchInterfaces/searchInterfaceVisibleVector";
 import SearchInterfaceSpecialWfs from "../../searchInterfaces/searchInterfaceSpecialWfs";
+import SearchInterfaceVisibleVector from "../../searchInterfaces/searchInterfaceVisibleVector";
 
 export default {
     /**
