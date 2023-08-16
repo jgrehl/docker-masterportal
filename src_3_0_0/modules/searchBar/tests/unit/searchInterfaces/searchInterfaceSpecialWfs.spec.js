@@ -4,6 +4,14 @@ import SearchInterfaceSpecialWfs from "../../../searchInterfaces/searchInterface
 
 describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceSpecialWfs.js", () => {
     let SearchInterface1 = null;
+    const searchResults = [
+        {
+            geometry: ["565931.982", "5935196.323", "565869.067", "5935016.323"],
+            geometryType: "MultiPolygon",
+            icon: "bi-house-fill",
+            identifier: "Rotherbaum37",
+            type: "common:modules.searchBar.specialWFS.ongoing"
+        }];
 
     before(() => {
         SearchInterface1 = new SearchInterfaceSpecialWfs();
@@ -26,15 +34,6 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceSpecialWfs
 
     describe("normalizeResults", () => {
         it("should normalize a search result", () => {
-            const searchResults = [
-                {
-                    geometry: ["565931.982", "5935196.323", "565869.067", "5935016.323"],
-                    geometryType: "MultiPolygon",
-                    icon: "bi-house-fill",
-                    identifier: "Rotherbaum37",
-                    type: "common:modules.searchBar.specialWFS.ongoing"
-                }];
-
             expect(SearchInterface1.normalizeResults(searchResults)).to.deep.equals([
                 {
                     category: "modules.searchBar.specialWFS.ongoing",
@@ -51,7 +50,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceSpecialWfs
                                 closeResults: true,
                                 coordinates: ["565931.982", "5935196.323", "565869.067", "5935016.323"]
                             },
-                            zoomToFeature: {
+                            zoomToResult: {
                                 coordinates: ["565931.982", "5935196.323", "565869.067", "5935016.323"],
                                 closeResults: true
                             }
@@ -103,6 +102,53 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceSpecialWfs
                 "<ogc:Filter>" +
                 "<ogc:PropertyIsLike matchCase='false' wildCard='*' singleChar='#' escapeChar='!'><ogc:PropertyName>app:geltendes_planrecht</ogc:PropertyName><ogc:Literal>*abc*</ogc:Literal></ogc:PropertyIsLike>" +
                 "</ogc:Filter></wfs:Query></wfs:GetFeature>"
+            );
+        });
+    });
+
+    describe("getInteriorAndExteriorPolygonMembers", () => {
+        it("should return correct coordinateArray", () => {
+            const polygonMembers = "<gml:Polygon xmlns:gml='http://www.opengis.net/gml' srsName='EPSG:25832'>" +
+                    "<gml:exterior>" +
+                        "<gml:LinearRing srsName='EPSG:25832'>" +
+                            "<gml:posList>565762.142 5936207.082 565898.316 5936207.367</gml:posList>" +
+                        "</gml:LinearRing>" +
+                    "</gml:exterior>" +
+                "</gml:Polygon>",
+                parser = new DOMParser(),
+                xmlData = parser.parseFromString(polygonMembers, "application/xml");
+
+            expect(SearchInterface1.getInteriorAndExteriorPolygonMembers(xmlData.getElementsByTagNameNS("*", "Polygon"))).to.deep.equals(
+                [
+                    [
+                        ["565762.142", "5936207.082", "565898.316", "5936207.367"]
+                    ]
+                ]
+            );
+        });
+    });
+
+    describe("createPossibleActions", () => {
+        it("should create possible events from search result", () => {
+
+            expect(SearchInterface1.createPossibleActions(searchResults[0])).to.deep.equals(
+                {
+                    highligtFeature: {
+                        hit: {
+                            coordinate: ["565931.982", "5935196.323", "565869.067", "5935016.323"],
+                            geometryType: "MultiPolygon"
+                        },
+                        closeResults: false
+                    },
+                    setMarker: {
+                        coordinates: ["565931.982", "5935196.323", "565869.067", "5935016.323"],
+                        closeResults: true
+                    },
+                    zoomToResult: {
+                        coordinates: ["565931.982", "5935196.323", "565869.067", "5935016.323"],
+                        closeResults: true
+                    }
+                }
             );
         });
     });
