@@ -10,7 +10,7 @@ const state = {
     iconIn: "bi-plus-lg",
     iconOut: "bi-dash-lg",
     supportedDevices: ["Desktop", "Mobile"],
-    supportedMapModes: ["2D"]
+    supportedMapModes: ["2D", "3D"]
 };
 
 export default state;
