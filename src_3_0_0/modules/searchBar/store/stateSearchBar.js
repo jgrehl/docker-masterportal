@@ -20,6 +20,7 @@
  * @property {Object[]} [selectedSearchResults=[]] The selected single results by the user in the "show all" view.
  * @property {Boolean} [showAllResults=false] Flag if all results should be shown.
  * @property {Boolean} [searchResultsActive=true] Flag if the search results are active.
+ * @property {Object} [iconsByActions= { addLayerToTopicTree: "bi-plus-circle", activateLayerInTopicTree: "bi-eye", highlightFeature: "bi-lightbulb", openGetFeatureInfo: "bi-info-circle", setMarker: "bi-geo-alt-fill", zoomToResult: "bi-zoom-in", startRouting: "bi-signpost-2-fill" }] - contains the icons by action names to display on button
  */
 const state = {
     configPaths: ["portalConfig.mainMenu.searchBar", "portalConfig.secondaryMenu.searchBar"],
@@ -39,7 +40,16 @@ const state = {
     searchResults: [],
     selectedSearchResults: [],
     showAllResults: false,
-    searchResultsActive: true
+    searchResultsActive: true,
+    iconsByActions: {
+        addLayerToTopicTree: "bi-plus-circle",
+        activateLayerInTopicTree: "bi-eye",
+        highlightFeature: "bi-lightbulb",
+        openGetFeatureInfo: "bi-info-circle",
+        setMarker: "bi-geo-alt-fill",
+        zoomToResult: "bi-zoom-in",
+        startRouting: "bi-signpost-2-fill"
+    }
 };
 
 export default state;
