@@ -124,8 +124,7 @@
               ]
             },
             "resultEvents": {
-              "onClick": ["addLayerToTopicTree"],
-              "buttons": ["addLayerToTopicTree"]
+              "onClick": ["addLayerToTopicTree"]
             }
           },
           {
@@ -149,7 +148,8 @@
             },
             "resultEvents": {
                 "onClick": ["setMarker", "zoomToResult"],
-                "onHover": ["setMarker"]
+                "onHover": ["setMarker"],
+                "buttons": ["startRouting","setMarker", "zoomToResult"]
             }
           },
           {
@@ -160,7 +160,12 @@
             "searchHouseNumbers": true,
             "searchDistricts": true,
             "searchParcels": true,
-            "searchStreetKey": true
+            "searchStreetKey": true,
+            "resultEvents": {
+              "onClick": ["setMarker", "zoomToResult"],
+              "onHover": ["setMarker"],
+              "buttons": ["startRouting"]
+          }
           },
           {
             "type": "locationFinder",
