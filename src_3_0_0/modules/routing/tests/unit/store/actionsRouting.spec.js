@@ -3,7 +3,7 @@ import actionsRouting from "../../../store/actionsRouting";
 import {expect} from "chai";
 
 describe("src_3_0_0/modules/routing/store/actionsRouting.js", () => {
-    let state,dispatch;
+    let state, dispatch;
 
     beforeEach(() => {
         dispatch = sinon.spy();
@@ -53,7 +53,7 @@ describe("src_3_0_0/modules/routing/store/actionsRouting.js", () => {
 
     it("setFirstWayPoint shall call reset and addWaypoint", () => {
         const displayName = "displayName",
-        coordinates = [1,2];
+            coordinates = [1, 2];
 
         actionsRouting.setFirstWayPoint({dispatch}, {displayName, coordinates});
         expect(dispatch.callCount).to.equal(2);

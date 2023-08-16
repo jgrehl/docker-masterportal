@@ -376,6 +376,21 @@ describe("src_3_0_0/modules/routing/store/directions/actionsDirections.js", () =
             expect(waypoints.length).equal(2);
             expect(waypoints[0]).equal(waypoint);
         });
+
+        it("with coordinates and fromExtern", async () => {
+            state.directionsWaypointsSource = {
+                addFeature: sinon.spy()
+            };
+            const waypoint = await actionsDirections.addWaypoint({state}, {
+                index: 2,
+                feature: null, displayName: "name", 
+                coordinates: [1,2],
+                fromExtern: true
+            });
+
+            expect(waypoints.length).equal(3);
+            expect(waypoints[2]).equal(waypoint);
+        });
     });
 
     describe("should removeWaypoint", () => {
@@ -486,26 +501,33 @@ describe("src_3_0_0/modules/routing/store/directions/actionsDirections.js", () =
     });
 
     describe("reset", () => {
-        //todo inka
-        it("should move third waypoint to second place", async () => {
+        it("should dispatch 'removeWaypoint' at every waypoint - delete waypoint fromExtern", async () => {
             const firstWaypoint = new RoutingWaypoint({index: 0, source: routingDirectionsWaypointSource}),
                 secondWaypoint = new RoutingWaypoint({index: 1, source: routingDirectionsWaypointSource}),
-                thirdWaypoint = new RoutingWaypoint({index: 2, source: routingDirectionsWaypointSource});
+                thirdWaypoint = new RoutingWaypoint({index: 2, source: routingDirectionsWaypointSource, fromExtern: true});
 
-            state.waypoints = [firstWaypoint, secondWaypoint, thirdWaypoint];
-            await actionsDirections.reset({state, getters, commit, dispatch, rootState}, 2);
-
-            expect(state.waypoints[1]).equal(thirdWaypoint);
-            expect(state.waypoints[1].getIndex()).equal(1);
-            expect(state.waypoints[2]).equal(secondWaypoint);
-            expect(state.waypoints[2].getIndex()).equal(2);
-
-            expect(dispatchSpy.args).to.deep.equal([
-                ["findDirections"]
-            ]);
+            getters.waypoints = [firstWaypoint, secondWaypoint, thirdWaypoint];
+            getters.directionsRouteSource = {
+                getFeatures: sinon.stub().returns([])
+            };
+            getters.directionsAvoidSource = {
+                clear: sinon.spy()
+            };
+            await actionsDirections.reset({getters, commit, dispatch});
+            expect(dispatchSpy.callCount).equal(3);
+            expect(dispatchSpy.firstCall.args[0]).to.be.equals("removeWaypoint");
+            expect(dispatchSpy.firstCall.args[1]).to.be.deep.equals({index: 2});
+            expect(dispatchSpy.secondCall.args[0]).to.be.equals("removeWaypoint");
+            expect(dispatchSpy.secondCall.args[1]).to.be.deep.equals({index: 1});
+            expect(dispatchSpy.thirdCall.args[0]).to.be.equals("removeWaypoint");
+            expect(dispatchSpy.thirdCall.args[1]).to.be.deep.equals({index: 0});
+            expect(commitSpy.callCount).equal(1);
+            expect(commitSpy.firstCall.args[0]).to.be.equals("setRoutingDirections");
+            expect(commitSpy.firstCall.args[1]).to.be.null;
+            expect(getters.directionsRouteSource.getFeatures.callCount).equal(1);
+            expect(getters.directionsAvoidSource.clear.callCount).equal(1);
         });
-        });
-
+    });
 
 
     describe("should moveWaypointUp", () => {

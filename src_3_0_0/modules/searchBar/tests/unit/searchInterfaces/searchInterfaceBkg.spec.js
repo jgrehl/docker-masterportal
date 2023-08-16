@@ -110,13 +110,13 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceBkg.js", (
                                 coordinates: [9.988176, 53.55481]
                             }
                         },
-                          buttons: {
-                        startRouting: {
-                            coordinates: [9.988176, 53.55481],
-                            name: searchResults[0].properties.text,
-                            closeResults: true
+                        buttons: {
+                            startRouting: {
+                                coordinates: [9.988176, 53.55481],
+                                name: searchResults[0].properties.text,
+                                closeResults: true
+                            }
                         }
-                    }
                     },
                     id: "BkgGeoSearch1",
                     icon: "bi-signpost-2-fill",
