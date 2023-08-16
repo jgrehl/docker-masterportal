@@ -8,8 +8,7 @@ import SearchBarResultListTopicTreeComponent from "../../../components/SearchBar
 config.global.mocks.$t = key => key;
 
 describe("src_3_0_0/modules/searchBar/components/SearchBarResultListTopicTree.vue", () => {
-    let activateLayerInTopicTreeSpy,
-        addLayerToTopicTreeSpy,
+    let activateActionSpy,
         store,
         wrapper;
 
@@ -66,8 +65,7 @@ describe("src_3_0_0/modules/searchBar/components/SearchBarResultListTopicTree.vu
         resultItems = searchResults;
 
     beforeEach(() => {
-        activateLayerInTopicTreeSpy = sinon.spy();
-        addLayerToTopicTreeSpy = sinon.spy();
+        activateActionSpy = sinon.spy();
 
         store = createStore({
             namespaces: true,
@@ -83,8 +81,7 @@ describe("src_3_0_0/modules/searchBar/components/SearchBarResultListTopicTree.vu
                                 selectedSearchResults: () => [searchResults[0]]
                             },
                             actions: {
-                                activateLayerInTopicTree: activateLayerInTopicTreeSpy,
-                                addLayerToTopicTree: addLayerToTopicTreeSpy
+                                activateAction: activateActionSpy
                             }
                         }
                     }
@@ -127,12 +124,30 @@ describe("src_3_0_0/modules/searchBar/components/SearchBarResultListTopicTree.vu
 
             wrapper.vm.activateOnClickAction();
 
-            expect(addLayerToTopicTreeSpy.calledOnce).to.be.true;
-            expect(addLayerToTopicTreeSpy.firstCall.args[1]).to.deep.equals({
-                layerid: "BeidemNeuenKrahnStraße",
-                source: {
-                    abc: "def"
-                }
+            expect(activateActionSpy.calledOnce).to.be.true;
+            expect(activateActionSpy.firstCall.args[1]).to.deep.equals({
+                searchResult: {
+                    category: "Straße",
+                    id: "BeidemNeuenKrahnStraße",
+                    index: 0,
+                    name: "Bei dem Neuen Krahn",
+                    searchInterfaceId: "gazetteer",
+                    displayedInfo: "",
+                    icon: "bi-signpost",
+                    imagePath: "",
+                    toolTip: "",
+                    events: {
+                        onClick: {
+                            addLayerToTopicTree: {
+                                layerid: "BeidemNeuenKrahnStraße",
+                                source: {
+                                    abc: "def"
+                                }
+                            }
+                        }
+                    }
+                },
+                actionType: "onClick"
             });
         });
     });

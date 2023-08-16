@@ -16,30 +16,11 @@ export default {
     },
     methods: {
         ...mapActions("Modules/SearchBar", [
-            "activateLayerInTopicTree",
-            "addLayerToTopicTree",
-            "highligtFeature",
-            "openGetFeatureInfo",
-            "setMarker",
-            "zoomToResult"
+            "activateAction"
         ]),
         ...mapMutations("Modules/SearchBar", [
             "setSearchResultsActive"
-        ]),
-
-        /**
-         * Activate click action(s) of searchSuggestion.
-         * @param {Object} searchSuggestion The search suggestion.
-         * @param {Object} actionType The action type onHover or onClick
-         * @returns {void}
-         */
-        activateAction (searchSuggestion, actionType) {
-            const events = searchSuggestion.events[actionType] || {};
-
-            Object.keys(events).forEach(event => {
-                this[event](events[event]);
-            });
-        }
+        ])
     }
 };
 </script>
@@ -52,10 +33,10 @@ export default {
                 class="btn btn-light d-flex"
                 :title="searchSuggestion.toolTip ? searchSuggestion.toolTip : searchSuggestion.name"
                 :aria-label="searchSuggestion.toolTip ? searchSuggestion.toolTip : searchSuggestion.name"
-                @click="activateAction(searchSuggestion, 'onClick')"
-                @keydown.enter="activateAction(searchSuggestion, 'onClick')"
-                @mouseover="activateAction(searchSuggestion, 'onHover')"
-                @focus="activateAction(searchSuggestion, 'onHover')"
+                @click="activateAction({searchResult: searchSuggestion, actionType: 'onClick'})"
+                @keydown.enter="activateAction({searchResult: searchSuggestion, actionType: 'onClick'})"
+                @mouseover="activateAction({searchResult: searchSuggestion, actionType: 'onHover'})"
+                @focus="activateAction({searchResult: searchSuggestion, actionType: 'onHover'})"
             >
                 <span class="btn-title">
                     {{ searchSuggestion.name }}
