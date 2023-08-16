@@ -248,6 +248,16 @@ const getters = {
     },
 
     /**
+     * Returns true, if moduleName is available in a menu.
+     * @param {Object} state state of the app-store.
+     * @param {String} moduleType type of the module
+     * @returns {Boolean} true, if moduleName is configured in a menu.
+     */
+    isModuleAvailable: state => moduleType =>{
+        return JSON.stringify(state.portalConfig).includes("\"type\":\"" + moduleType + "\"");
+    },
+
+    /**
      * Returns the mapView settings configuration of portalConfig.
      * @param {Object} state state of the app-store.
      * @returns {Object} The controls config.
