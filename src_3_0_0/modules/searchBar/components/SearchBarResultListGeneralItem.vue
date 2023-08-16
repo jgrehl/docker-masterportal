@@ -4,7 +4,7 @@ import {mapActions} from "vuex";
 /**
  * Searchbar - single item of a search suggestion.
  * @module modules/searchBar/components/SearchBarResultListGeneralItem
- * @vue-props {Object} searchSuggestion - A single search suggestion.
+ * @vue-props {Object} searchResult - A single search result.
  */
 export default {
     name: "SearchBarResultListGeneralItem",
@@ -23,7 +23,7 @@ export default {
 </script>
 
 <template lang="html">
-    <div id="search-bar-result-list-general-item">
+    <div :id="'search-bar-result-list-general-item' + searchResult.id">
         <div class="d-flex flex-row bd-highlight bold">
             <button
                 type="button"
