@@ -7,7 +7,6 @@ import IconButton from "../../../shared/modules/buttons/components/IconButton.vu
  * @module modules/SearchBar
  * @vue-prop {String} actionName - name of the action to call on click on button
  * @vue-prop {Object} actionArgs - to call the action with
- * @vue-data {Object} iconsByActions - contains the icons by action names to display on button
  */
 export default {
     name: "ActionButton",
@@ -24,21 +23,9 @@ export default {
             required: true
         }
     },
-    data () {
-        return {
-            iconsByActions: {
-                addLayerToTopicTree: "bi-plus-circle",
-                activateLayerInTopicTree: "bi-eye",
-                highlightFeature: "bi-lightbulb",
-                openGetFeatureInfo: "bi-info-circle",
-                setMarker: "bi-geo-alt-fill",
-                zoomToResult: "bi-zoom-in",
-                startRouting: "bi-signpost-2-fill"
-            }
-        };
-    },
     computed: {
-        ...mapGetters("Modules/SearchBar", ["showAllResults"])
+        ...mapGetters(["isModuleAvailable"]),
+        ...mapGetters("Modules/SearchBar", ["showAllResults", "iconsByActions"])
     },
     methods: {
         ...mapActions("Modules/SearchBar", [
@@ -57,9 +44,17 @@ export default {
          */
         callAction () {
             this[this.actionName](this.actionArgs);
-            if (this.actionArgs.closeResults) {
-                this.setSearchResultsActive(false);
+        },
+        /**
+         * Checks for special actions, if an icon for the action shall be displayed.
+         * Action 'startRouting': checks if routing module is available.
+         * @returns {Boolean} true, if an icon for the action shall be displayed
+         */
+        displayAction () {
+            if (this.actionName === "startRouting") {
+                return this.isModuleAvailable("routing");
             }
+            return true;
         }
     }
 };
@@ -67,6 +62,7 @@ export default {
 
 <template lang="html">
     <IconButton
+        v-if="displayAction()"
         :aria="$t('common:modules.searchBar.actions.'+actionName)"
         :icon="iconsByActions[actionName]"
         :interaction="callAction"
