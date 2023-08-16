@@ -190,7 +190,7 @@ SearchInterfaceOsmNominatim.prototype.createPossibleActions = function (searchRe
         },
         startRouting: {
             coordinates: coordinates,
-            name: searchResult["display_name"]
+            name: searchResult.display_name
         }
     };
 };
