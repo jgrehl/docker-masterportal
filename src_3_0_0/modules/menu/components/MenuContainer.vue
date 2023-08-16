@@ -156,7 +156,9 @@ export default {
                 class="mb-2"
                 v-bind="titleBySide(side)"
             />
-            <SearchBar />
+            <SearchBar
+                v-if="titleBySide(side)"
+            />
         </div>
         <MenuContainerBody
             :side="side"
