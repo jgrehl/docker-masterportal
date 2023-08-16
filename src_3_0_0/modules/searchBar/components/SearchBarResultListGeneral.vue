@@ -5,7 +5,7 @@ import SearchBarResultListGeneralItem from "./SearchBarResultListGeneralItem.vue
 /**
  * Searchbar result list to show the categorized overview or single search results.
  * @module modules/searchBar/components/SearchBarResultListGeneral
- * @vue-computed {Object} limitedSortedSearchResults - Results the limited and sorted search results.
+ * @vue-props {Object[]} resultItems - The result items.
  */
 export default {
     name: "SearchBarResultListGeneral",
@@ -36,7 +36,7 @@ export default {
             v-for="(item, index) in resultItems"
             :key="item.id + '-' + index"
         >
-            <p id="searchInputLi">
+            <p :id="'searchInputLi' + item.id">
                 <SearchBarResultListGeneralItem
                     :search-result="item"
                 />
@@ -44,12 +44,3 @@ export default {
         </div>
     </div>
 </template>
-
-<style lang="scss" scoped>
-button {
-    span {
-        margin-top: .1rem;
-        margin-left: .25rem;
-    }
-}
-</style>
