@@ -12,9 +12,9 @@ import {search, setGazetteerUrl, setShowGeographicIdentifier} from "@masterporta
  * @param {Object} [resultEvents] Actions that are executed when an interaction, such as hover or click, is performed with a result list item.
  * @param {String[]} [resultEvents.onClick=["setMarker", "zoomToResult"]] Actions that are fired when clicking on a result list item.
  * @param {String[]} [resultEvents.onHover=["setMarker"]] Actions that are fired when hovering on a result list item.
+ * @param {Boolean} [searchAddress=false] Defines whether address search is active.
  * @param {Boolean} [searchDistricts=false] Defines whether district search is active.
  * @param {String} [searchInterfaceId="gazetteer"] The id of the service interface.
- * @param {Boolean} [searchAddress=false] Defines whether address search is active.
  * @param {Boolean} [searchHouseNumbers=false] Defines whether house numbers should be searched for.
  * @param {Boolean} [searchParcels=false] Defines whether parcels search is active.
  * @param {Boolean} [searchStreetKey=false] Defines whether streets should be searched for by key.
