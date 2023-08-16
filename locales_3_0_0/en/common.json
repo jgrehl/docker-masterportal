@@ -445,6 +445,11 @@
         }
       }
     },
+    "gfiThemes": {
+      "dataTable": {
+        "sort": "Sort values"
+      }
+    },
     "language": {
       "de": "Deutsch",
       "en": "English",
