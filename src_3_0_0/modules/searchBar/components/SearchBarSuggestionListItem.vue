@@ -1,5 +1,5 @@
 <script>
-import {mapActions, mapMutations} from "vuex";
+import {mapActions} from "vuex";
 
 /**
  * Searchbar - single item of a search suggestion.
@@ -17,9 +17,6 @@ export default {
     methods: {
         ...mapActions("Modules/SearchBar", [
             "activateAction"
-        ]),
-        ...mapMutations("Modules/SearchBar", [
-            "setSearchResultsActive"
         ])
     }
 };
