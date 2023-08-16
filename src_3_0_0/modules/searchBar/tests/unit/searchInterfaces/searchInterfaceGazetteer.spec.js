@@ -57,7 +57,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceGazetteer.
                                 coordinates: [10, 20]
                             }
                         },
-                        buttons:{
+                        buttons: {
                             startRouting: {
                                 coordinates: [10, 20],
                                 name: searchResults[0].name,
@@ -112,7 +112,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceGazetteer.
 
             expect(SearchInterface1.normalizeResultEvents(resultEvents, searchResult)).to.deep.equals(
                 {
-                    buttons:{
+                    buttons: {
                         startRouting: {
                             coordinates: [10, 20],
                             name: searchResult.name,
