@@ -17,6 +17,7 @@ export default {
         SearchBarResultListItem,
         ElevatedButton
     },
+    inheritAttrs: false,
     data () {
         return {
             configuredSearchProvider: [],
@@ -28,10 +29,10 @@ export default {
         ...mapGetters("Modules/SearchBar", ["searchInterfaceInstances", "searchResults", "suggestionListLength", "searchInput", "minCharacters", "showAllResults", "searchResultsActive", "selectedSearchResults"]),
 
         /**
-         * Updates the categroies to unique categories.
+         * Updates the categories to unique categories.
          * @returns {Object} The searchresults with unique categories.
          */
-        searchResultsWithUniqueCategories () {
+      /*   searchResultsWithUniqueCategories () {
             if (this.searchInterfaceInstances.every(searchInterfaceInstance => searchInterfaceInstance.searchState !== "running")) {
                 const categories = [...new Set(this.searchResults.map(searchResult => searchResult.category))];
 
@@ -56,7 +57,7 @@ export default {
             }
 
             return this.searchResults;
-        },
+        }, */
 
         /**
          * Sorts the results according the configured search providers and prepare the suggestionlist with the limit of suggestionListLength, updates searchSuggestions
