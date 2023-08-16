@@ -45,7 +45,6 @@ export default function SearchInterfaceElasticSearch ({hitMap, serviceId, epsg, 
     this.hitIcon = hitIcon || "bi-list-ul";
     this.hitType = hitType || "common:modules.searchBar.type.subject";
     this.payload = payload || {};
-    this.featureButtons = featureButtons;
     this.responseEntryPath = responseEntryPath || "";
     this.searchStringAttribute = searchStringAttribute || "searchString";
     this.requestType = requestType || "POST";
@@ -218,6 +217,10 @@ SearchInterfaceElasticSearch.prototype.createPossibleActions = function (searchR
         },
         zoomToResult: {
             coordinates: coordinates
+        },
+        startRouting: {
+            coordinates: coordinates,
+            name: this.getResultByPath(searchResult, this.hitMap?.name)
         }
     };
 };

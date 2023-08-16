@@ -165,6 +165,10 @@ SearchInterfaceVisibleVector.prototype.createPossibleActions = function (feature
         },
         zoomToResult: {
             coordinates: centerCoordinate
+        },
+        startRouting: {
+            coordinates: centerCoordinate,
+            name: centerCoordinate.toString()
         }
     };
 };

@@ -486,7 +486,7 @@ export default {
      * @param {String} [payload.displayName] optional displayName for the waypoint
      * @returns {RoutingWaypoint} added waypoint
      */
-    addWaypoint ({state}, {index, feature, displayName}) {
+    addWaypoint ({state}, {index, feature, displayName, coordinates, fromExtern}) {
         let waypointIndex = index;
 
         if (typeof index !== "number") {
@@ -520,6 +520,13 @@ export default {
             displayName,
             source: state.directionsWaypointsSource
         });
+
+        if (fromExtern) {
+            waypoint.fromExtern = true;
+        }
+        if (coordinates) {
+            waypoint.setCoordinates(coordinates);
+        }
 
         state.waypoints.splice(waypointIndex, 0, waypoint);
         // Fix Index on Waypoints after new Waypoint

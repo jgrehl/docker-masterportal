@@ -134,7 +134,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceLocationFi
                                 ]
                             }
                         },
-                        buttons:{
+                        buttons: {
                             startRouting: {
                                 coordinates: [1, 2],
                                 name: searchResults[0].name,
@@ -194,7 +194,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceLocationFi
                                 ]
                             }
                         },
-                        buttons:{
+                        buttons: {
                             startRouting: {
                                 coordinates: [1, 2],
                                 name: searchResults[0].name,
@@ -249,7 +249,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceLocationFi
                                 ]
                             }
                         },
-                        buttons:{
+                        buttons: {
                             startRouting: {
                                 coordinates: [1, 2],
                                 name: searchResult.name,
@@ -306,7 +306,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceLocationFi
                                 ]
                             }
                         },
-                        buttons:{
+                        buttons: {
                             startRouting: {
                                 coordinates: [1, 2],
                                 name: searchResult.name,

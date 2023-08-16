@@ -1,5 +1,6 @@
 <script>
 import {mapGetters, mapMutations} from "vuex";
+import ActionButton from "./ActionButton.vue";
 
 /**
  * Searchbar - single item of a search result topic tree.
@@ -9,6 +10,9 @@ import {mapGetters, mapMutations} from "vuex";
  */
 export default {
     name: "SearchBarResultListTopicTreeItem",
+    components: {
+        ActionButton
+    },
     props: {
         searchResult: {
             type: Object,
@@ -33,6 +37,14 @@ export default {
             }
 
             return typeof this.selectedSearchResults.find(item => this.searchResult.id === item.id) !== "undefined";
+        },
+
+        /**
+         * Returns all actions stored in 'searchResult.events.buttons'.
+         * @returns{Object} all actions to execute on click
+         */
+        actions () {
+            return this.searchResult.events.buttons ? this.searchResult.events.buttons : [];
         }
     },
     methods: {
@@ -85,7 +97,17 @@ export default {
                 </span>
             </label>
         </button>
-    </div>
+            <div
+                v-for="action, i in Object.keys(actions)"
+                :key="i"
+                class="ms-auto mt-1 d-flex"
+            >
+                <ActionButton
+                    :action-name="action"
+                    :action-args="actions[action]"
+                />
+            </div>
+        </div>
 </template>
 
 <style lang="scss" scoped>
