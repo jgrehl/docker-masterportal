@@ -223,8 +223,6 @@ SearchInterfaceSpecialWfs.prototype.fillHitList = function (xml, result, request
  * @returns {Array[]} returns the coordinates of every polygon
  */
 SearchInterfaceSpecialWfs.prototype.getInteriorAndExteriorPolygonMembers = function (polygonMembers) {
-    console.log("getInteriorAndExteriorPolygonMembers:");
-    console.log(polygonMembers);
     const lengthIndex = polygonMembers.length,
         coordinateArray = [];
 
@@ -258,7 +256,6 @@ SearchInterfaceSpecialWfs.prototype.getInteriorAndExteriorPolygonMembers = funct
             coords.forEach(coordArray => coordinateArray.push(Object.values(coordArray.replace(/\s\s+/g, " ").split(" "))));
         }
     }
-    console.log(coordinateArray);
     return [coordinateArray];
 };
 
