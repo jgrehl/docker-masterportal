@@ -274,7 +274,7 @@ Konfiguration des Gazetteer Suchdienstes
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
-|resultEvents|nein|**[resultEvents](#markdown-header-portalconfigmenusearchbarsearchInterfacesresultEvents)**|{onClick: ["setMarker", "zoomToResult"], onHover: ["setMarker"]}|Aktionen, die ausgeführt werden, wenn eine Interaktion, z. B. ein Hover oder ein Klick, mit einem Element der Ergebnisliste erfolgt.|false|
+|resultEvents|nein|**[resultEvents](#markdown-header-portalconfigmenusearchbarsearchInterfacesresultEvents)**|{onClick: ["setMarker", "zoomToResult"], onHover: ["setMarker"]}|Aktionen, die ausgeführt werden, wenn eine Interaktion, z. B. ein Hover oder ein Klick, mit einem Element der Ergebnisliste erfolgt. Folgende events sind möglich: "setMarker", "zoomToResult".|false|
 |searchAddress|nein|Boolean||Gibt an, ob nach Adressen gesucht werden soll.|false|
 |searchDistricts|nein|Boolean||Gibt an, ob nach Bezirken gesucht werden soll.|false|
 |searchHouseNumbers|nein|Boolean||Gibt an, ob nach Straßen und Hausnummern gesucht werden soll. |false|
@@ -303,6 +303,15 @@ Konfiguration des Gazetteer Suchdienstes
 
 ##### Portalconfig.menu.searchBar.searchInterfaces.resultEvents
 Aktionen, die ausgeführt werden, wenn eine Interaktion, z. B. ein Hover oder ein Klick, mit einem Element der Ergebnisliste erfolgt.
+
+Folgende Events existieren. Welche Events konfiguriert werden können ist den Beschreibungen der jeweiligen Suchschnittstelle zu entnehmen:
+
+- activateLayerInTopicTree: Aktiviert den gefunden layer im Themenbaum und in der Karte.
+- addLayerToTopicTree: Fügt den gefundenen Layer zum Themenbaum und der Karte hinzu.
+- highligtFeature: Hebt das Scuhergebniss auf der Karte hervor.
+- openGetFeatureInfo: Öffnet die GetFeatureInfo zum Suchtreffer im Menü.
+- setMarker: Es wird ein Marker in der Karte platziert.
+- zoomToResult: Es wird zum Suchtreffer gezoomt.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
