@@ -60,7 +60,7 @@ describe("src_3_0_0/modules/searchBar/components/SearchBarResultListGeneralItem.
                 }
             });
 
-            expect(wrapper.find("#search-bar-result-list-general-item").exists()).to.be.true;
+            expect(wrapper.find("#search-bar-result-list-general-itemBeidemNeuenKrahnStraße").exists()).to.be.true;
             expect(wrapper.find("button").html()).to.contain("toolTipAvailable");
         });
 
@@ -74,7 +74,7 @@ describe("src_3_0_0/modules/searchBar/components/SearchBarResultListGeneralItem.
                 }
             });
 
-            expect(wrapper.find("#search-bar-result-list-general-item").exists()).to.be.true;
+            expect(wrapper.find("#search-bar-result-list-general-itemBeidemNeuenKrahn2Adresse").exists()).to.be.true;
             expect(wrapper.find("button").html()).to.contain("Bei dem Neuen Krahn 2");
         });
     });
