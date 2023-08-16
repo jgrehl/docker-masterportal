@@ -6,6 +6,7 @@ import ElevatedButton from "../../../shared/modules/buttons/components/ElevatedB
 /**
  * Searchbar result list to show search results for topic tree.
  * @module modules/searchBar/components/SearchBarResultListTopicTree
+ * @vue-props {Object[]} resultItems - The result items.
  */
 export default {
     name: "SearchBarResultListTopicTree",
