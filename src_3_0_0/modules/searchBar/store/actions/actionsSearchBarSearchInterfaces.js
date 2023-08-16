@@ -9,7 +9,7 @@ import SearchInterfaceLocationFinder from "../../searchInterfaces/searchInterfac
 import SearchInterfaceOsmNominatim from "../../searchInterfaces/searchInterfaceOsmNominatim";
 import SearchInterfaceTopicTree from "../../searchInterfaces/searchInterfaceTopicTree";
 import SearchInterfaceVisibleVector from "../../searchInterfaces/searchInterfaceVisibleVector";
-import SearchInterfaceSpecialWfs from "../../searchInterfaces/SearchInterfaceSpecialWfs";
+import SearchInterfaceSpecialWfs from "../../searchInterfaces/searchInterfaceSpecialWfs";
 
 export default {
     /**
