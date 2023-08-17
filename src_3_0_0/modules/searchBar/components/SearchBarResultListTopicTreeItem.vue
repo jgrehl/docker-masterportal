@@ -16,6 +16,7 @@ export default {
         }
     },
     computed: {
+        ...mapGetters(["visibleLayerConfigs"]),
         ...mapGetters("Modules/SearchBar", [
             "selectedSearchResults"
         ]),
@@ -25,6 +26,12 @@ export default {
          * @returns {Boolean} true, if layer checkbox is checked
          */
         isChecked () {
+            const layerId = this.searchResult.events?.onClick?.activateLayerInTopicTree?.layerId || this.searchResult.events?.onClick?.addLayerToTopicTree?.layerId;
+
+            if (this.visibleLayerConfigs?.find(layer => layer.id === layerId) !== undefined) {
+                return true;
+            }
+
             return typeof this.selectedSearchResults.find(item => this.searchResult.id === item.id) !== "undefined";
         }
     },
