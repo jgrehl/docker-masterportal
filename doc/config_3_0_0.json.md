@@ -448,7 +448,7 @@ This module allows to activate/load and deactivate layers in clusters simultaneo
 ##### Portalconfig.menu.sections.modules.layerSlider
 The layer slider module allows showing multiple layers in a row. This may e.g. be used to animate a time series of aerial imagery.
 
-The slider can switch between two modes in the interface. Layer slider type. `""player"` shows start, pause, and stop buttons, while `"handle"` uses a switch. In the latter case, layer transparency is adjusted additionally.
+The slider can switch between two modes in the interface. Layer slider type. `"player"` shows start, pause, and stop buttons, while `"handle"` uses a switch. In the latter case, layer transparency is adjusted additionally.
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
@@ -527,7 +527,7 @@ Defines a layer slider layer.
 ***
 
 ##### Portalconfig.menu.sections.modules.openConfig
-Mit diesem Modul lässt sich eine Konfigurationsdatei (config.json) zur Laufzeit neu laden. Die Module und Karte werden an die neue Konfiguration angepasst.
+With this module a configuration file (config.json) can be reloaded at runtime. The modules and map are adapted to the new configuration.
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
