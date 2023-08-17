@@ -12,6 +12,7 @@ describe("src_3_0_0/modules/searchBar/components/SearchBarResultListTopicTreeIte
         removeSelectedSearchResultsSpy,
         selectedSearchResults,
         store,
+        visibleLayerConfigs,
         wrapper;
 
     const searchResults = [
@@ -26,6 +27,11 @@ describe("src_3_0_0/modules/searchBar/components/SearchBarResultListTopicTreeIte
             imagePath: "",
             toolTip: "toolTipAvailable",
             events: {
+                onClick: {
+                    activateLayerInTopicTree: {
+                        layerId: "123"
+                    }
+                }
             }
 
         },
@@ -47,6 +53,7 @@ describe("src_3_0_0/modules/searchBar/components/SearchBarResultListTopicTreeIte
     beforeEach(() => {
         addSelectedSearchResultsSpy = sinon.spy();
         removeSelectedSearchResultsSpy = sinon.spy();
+        visibleLayerConfigs = [];
         selectedSearchResults = [];
 
         store = createStore({
@@ -67,6 +74,9 @@ describe("src_3_0_0/modules/searchBar/components/SearchBarResultListTopicTreeIte
                         }
                     }
                 }
+            },
+            getters: {
+                visibleLayerConfigs: () => visibleLayerConfigs
             }
         });
     });
@@ -91,6 +101,38 @@ describe("src_3_0_0/modules/searchBar/components/SearchBarResultListTopicTreeIte
             expect(wrapper.find("label.search-bar-result-list-topic-tree-item-label").exists()).to.be.true;
             expect(wrapper.find("label.search-bar-result-list-topic-tree-item-label > span").exists()).to.be.true;
             expect(wrapper.find("label.search-bar-result-list-topic-tree-item-label > span").text()).to.equals("Bei dem Neuen Krahn");
+        });
+    });
+
+    describe("isChecked", () => {
+        it("should return false, if no layer is visible", () => {
+            wrapper = shallowMount(SearchBarResultListTopicTreeItemComponent, {
+                global: {
+                    plugins: [store]
+                },
+                propsData: {
+                    searchResult: searchResults[0]
+                }
+            });
+
+            expect(wrapper.vm.isChecked).to.be.false;
+        });
+
+        it("should return true, if layer is visible", () => {
+            visibleLayerConfigs = [{
+                id: "123"
+            }];
+
+            wrapper = shallowMount(SearchBarResultListTopicTreeItemComponent, {
+                global: {
+                    plugins: [store]
+                },
+                propsData: {
+                    searchResult: searchResults[0]
+                }
+            });
+
+            expect(wrapper.vm.isChecked).to.be.true;
         });
     });
 
@@ -119,7 +161,13 @@ describe("src_3_0_0/modules/searchBar/components/SearchBarResultListTopicTreeIte
                 icon: "bi-signpost",
                 imagePath: "",
                 toolTip: "toolTipAvailable",
-                events: {}
+                events: {
+                    onClick: {
+                        activateLayerInTopicTree: {
+                            layerId: "123"
+                        }
+                    }
+                }
             });
             expect(removeSelectedSearchResultsSpy.notCalled).to.be.true;
         });
@@ -150,7 +198,13 @@ describe("src_3_0_0/modules/searchBar/components/SearchBarResultListTopicTreeIte
                 icon: "bi-signpost",
                 imagePath: "",
                 toolTip: "toolTipAvailable",
-                events: {}
+                events: {
+                    onClick: {
+                        activateLayerInTopicTree: {
+                            layerId: "123"
+                        }
+                    }
+                }
             });
             expect(addSelectedSearchResultsSpy.notCalled).to.be.true;
         });
