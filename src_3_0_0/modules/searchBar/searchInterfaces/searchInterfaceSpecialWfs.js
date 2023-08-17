@@ -171,7 +171,7 @@ SearchInterfaceSpecialWfs.prototype.fillHitList = function (xml, result, request
         elements = xmlData.getElementsByTagNameNS("*", typeName.split(":")[1]),
         resultData = result;
 
-    for (let i = 0; i < elements.length; i++) {
+    for (let i = 0; i < elements.length && i < this.maxFeatures; i++) {
         const element = elements[i];
 
         propertyNames.forEach(propertyName => {
