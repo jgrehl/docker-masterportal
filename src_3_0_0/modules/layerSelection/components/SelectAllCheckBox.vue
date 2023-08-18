@@ -63,9 +63,9 @@ export default {
 </script>
 
 <template lang="html">
-    <LightButton
+    <button
         :id="'select-all-layers-' + ids()"
-        class="d-flex w-100 layer-tree-select-all test pe-2 p-1"
+        class="d-flex w-100 layer-tree-select-all pe-2 p-1 btn-transparent"
         @click="clicked()"
         @keydown.enter="clicked()"
     >
@@ -91,12 +91,16 @@ export default {
                 {{ $t("common:modules.layerSelection.selectAll") }}
             </span>
         </label>
-    </LightButton>
+    </button>
 </template>
 
 <style lang="scss" scoped>
     @import "~variables";
     @import "~mixins";
+    .btn-transparent {
+        background-color: transparent;
+        border:none;
+    }
     .layer-tree-select-all {
         border-radius: 15px;
         &:hover {
