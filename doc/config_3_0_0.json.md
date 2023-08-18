@@ -399,6 +399,7 @@ Modules can be divided into sections. In the menu, sections are divided with a h
 |layerClusterToggler|no|**[layerClusterToggler](#markdown-header-portalconfigmenusectionsmoduleslayerClusterToggler)**||This module allows a cluster layers to be active and deactive together.|false|
 |layerSlider|no|**[layerSlider](#markdown-header-portalconfigmenutoollayerslider)**||The layerSlider module allows showing arbitrary services in order. This can e.g. be used to show aerial footage from multiple years in succession.|false|
 |openConfig|no|**[openConfig](#markdown-header-portalconfigmenusectionsopenConfig)**||ith this module a configuration file (config.json) can be reloaded at runtime. The modules and map are adapted to the new configuration.|false|
+|shadow|no|**[shadow](#markdown-header-portalconfigmenutoolshadow)**||Configuration object for the 3D mode shadow time.|false|
 
 ***
 
@@ -638,9 +639,51 @@ With this module a configuration file (config.json) can be reloaded at runtime. 
 ***
 
 ##### Portalconfig.menu.sections.modules.shadow
+The shadow tool provides a UI element to define a point in time by using sliders and date pickers. The chosen time allows rendering the shadows of all 3D objects in 3D mode by simulating the sun's position. By pulling the sliders or selecting a different date, a new sun position is calculated immediately. By default, the tool starts with the current time, which can be overwritten in the parameters.
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
+|icon|no|String|"bi-lamp-fill"|Icon that is shown in front of the module in the menu. For selection see **[Bootstrap Icons](https://icons.getbootstrap.com/)**.|false|
+|isShadowEnabled|no|Boolean|false|Default shadow value. `true` immediately renders shadows, `false` requires a manual confirmation.|
+|name|no|String|"common:modules.shadow.name"|Name of the module in the menu.|false|
+|shadowTime|no|**[shadowTime](#markdown-header-portalconfigmenusectionsmodulesshadowshadowtime)**||Default time the mdoule is started with. Recognizes "month", "day", "hour", and "minute".|
+|type|no|String|"shadow"|The type of the module. Defines which module is configured.|false|
+
+**Example**
+
+```json
+{
+    "isShadowEnabled": true,
+    "shadowTime": {
+        "month": "6",
+        "day": "20",
+        "hour": "13",
+        "minute": "0"
+    },
+    "type": "shadow"
+}
+```
+
+***
+
+###### Portalconfig.menu.sections.modules.shadow.shadowTime
+|Name|Required|Type|Default|Description|
+|----|--------|----|-------|-----------|
+|month|nein|String||month|
+|day|nein|String||day|
+|hour|nein|String||hour|
+|minute|nein|String||minute|
+
+**Example**
+
+```json
+{
+    "month": "6",
+    "day": "20",
+    "hour": "13",
+    "minute": "0"
+}
+```
 
 ***
 
