@@ -71,6 +71,7 @@ Controls can be configured to be expandable so they will not initially show up i
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
 |expandable|no|**[expandable](#markdown-header-portalconfigcontrols)**||With expandable, controls are hidden behind a button with three dots and can be expanded when needed.|false|
+|startModule|no|**[startModule](#markdown-header-portalconfigcontrolsstartModule)**|false|Displays buttons for the configured tools. These can be used to open and close the respective tools.|false|
 |totalView|no|Boolean/**[totalView](#markdown-header-portalconfigcontrolstotalView)**|false|Offers a button to return to the initial view.|false|
 |zoom|no|Boolean/**[zoom](#markdown-header-portalconfigcontrolszoom)**|false|Defines whether zoom buttons should be displayed.|false|
 
@@ -119,8 +120,69 @@ Controls can be configured to be expandable so they will not initially show up i
 ***
 
 #### Portalconfig.controls.startModule
+The startModule attribute must be of type Object. A button is displayed for each configured module, which can be used to open and close the respective module.
+
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
+|mainMenu|no|**[mainMenu](#markdown-header-portalconfigcontrolsstartModulemainMenu)**||Here you can configure the modules for which a button should be displayed. These will be displayed in the `mainMenu` when opened.|false|
+|secondaryMenu|no|**[secondaryMenu](#markdown-header-portalconfigcontrolsstartModulesecondaryMenu)**||Here you can configure the modules for which a button should be displayed. These will be displayed in the `secondaryMenu` when opened.|false|
+|supportedDevices|no|String|["Desktop", "Mobile", "Table"]|Devices on which the module can be used and is displayed in the menu.|false|
+|supportedMapModes|no|String|["2D", "3D"]|Map modes in which the module can be used and is displayed in the menu.|false|
+
+**Example**
+
+```json
+"startModule": {
+    "mainMenu": [
+        {
+            "type": "scaleSwitcher"
+        }
+    ],
+    "secondaryMenu": [
+        {
+            "type": "myModule"
+        }
+    ]
+}
+```
+
+***
+
+##### Portalconfig.controls.startModule.mainMenu
+Here you can configure the modules for which a button is to be displayed. These are displayed in the `mainMenu` when opened.
+
+|Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
+|----|-------------|---|-------|------------|------|
+|type|no|String||Type of the module that is to be displayed as a control and opened in the mainMenu when clicked.|false|
+
+**Example**
+
+```json
+"mainMenu": [
+    {
+        "type": "scaleSwitcher"
+    }
+]
+```
+
+***
+
+##### Portalconfig.controls.startModule.secondaryMenu
+Here you can configure the modules for which a button is to be displayed. These are displayed in the `secondaryMenu` when opened.
+
+|Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
+|----|-------------|---|-------|------------|------|
+|type|no|String||Type of the module that is to be displayed as a control and opened in the secondaryMenu when clicked.|false|
+
+**Example**
+
+```json
+"secondaryMenu": [
+    {
+        "type": "scaleSwitcher"
+    }
+]
+```
 
 ***
 
