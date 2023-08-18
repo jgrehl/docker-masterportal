@@ -100,7 +100,7 @@ const getters = {
      * @returns {String} The cesium library path.
      */
     cesiumLibrary: state => {
-        return state.configJs?.cesiumLibrary || "https://cesium.com/downloads/cesiumjs/releases/1.103/Build/Cesium/Cesium.js";
+        return state.configJs?.cesiumLibrary || "https://cesium.com/downloads/cesiumjs/releases/1.107/Build/Cesium/Cesium.js";
     },
 
     /**
