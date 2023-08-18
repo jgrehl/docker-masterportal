@@ -55,7 +55,7 @@ export default {
          * @returns {Object} Returns the currently visible Component.
          */
         currentComponent () {
-            let current = this.menu.navigation.currentComponent.type;
+            let current = this.menu?.navigation?.currentComponent?.type;
 
             if (current !== "root" && current !== this.defaultComponent) {
                 current = this.componentMap[current];
@@ -93,7 +93,6 @@ export default {
     },
     created () {
         this.mergeMenuState({menu: this.menuFromConfig(this.side), side: this.side});
-
         if (this.isMobile) {
             this.collapseMenues();
             this.setCurrentMenuWidth({side: this.side, width: "100%"});
@@ -143,22 +142,23 @@ export default {
                 :aria-label="$t('common:modules.menu.ariaLabelClose')"
                 @click="closeMenu(side)"
             />
-        </div>
-        <div
-            :id="'mp-subHeader-' + side"
-            class="mp-menu-subHeader"
-            :class="
-                {'mp-menu-subHeader-collapsed': !mainExpanded && side === 'mainMenu' || !secondaryExpanded && side === 'secondaryMenu'}
-            "
-        >
-            <MenuContainerBodyRootLogo
-                v-if="titleBySide(side)"
-                class="mb-2"
-                v-bind="titleBySide(side)"
-            />
-            <SearchBar
-                v-if="titleBySide(side)"
-            />
+            <div
+                v-if="currentComponent ==='root' && titleBySide(side)"
+                :id="'mp-subHeader-' + side"
+                class="mp-menu-subHeader"
+                :class="
+                    {'mp-menu-subHeader-collapsed': !mainExpanded && side === 'mainMenu' || !secondaryExpanded && side === 'secondaryMenu'}
+                "
+            >
+                <MenuContainerBodyRootLogo
+                    v-if="titleBySide(side)"
+                    class="mb-2"
+                    v-bind="titleBySide(side)"
+                />
+                <SearchBar
+                    v-if="titleBySide(side)"
+                />
+            </div>
         </div>
         <MenuContainerBody
             :side="side"
@@ -207,12 +207,25 @@ export default {
 
 .mp-menu-header{
     display: flex;
+    padding: $padding $padding 0 $padding;
     &-collapsed {
         padding: 0;
         display: none;
     }
-}
 
+    .mp-menu-subHeader{
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        font-size: $font-size-base;
+        width:100%;
+
+        &-collapsed {
+            padding: 0;
+            display: none;
+        }
+    }
+}
 
 .mp-menu-header-close-button {
     display: block;
@@ -223,18 +236,6 @@ export default {
 
 
 @include media-breakpoint-up(sm)  {
-    .mp-menu-subHeader{
-        display: flex;
-        flex-direction: column;
-        align-items: stretch;
-        padding: $padding;
-        font-size: $font-size-base;
-
-        &-collapsed {
-            padding: 0;
-            display: none;
-        }
-    }
     .mp-menu {
         top: 0px;
         min-width: 0%;
