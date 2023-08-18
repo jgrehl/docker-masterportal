@@ -399,6 +399,7 @@ Module lassen sich in Abschnitte (Sections) unterteilen. Im Menü werden Abschni
 |layerClusterToggler|nein|**[layerClusterToggler](#markdown-header-portalconfigmenusectionsmoduleslayerClusterToggler)**||Mit diesem Modul lassen sich Layer in Clustern gleichzeitig aktivieren/laden und deaktivieren.|false|
 |layerSlider|nein|**[layerSlider](#markdown-header-portalconfigmenusectionsmoduleslayerslider)**||Mit dem Layerslider lassen sich beliebige Dienste in einer Reihenfolge abspielen. Zum Beispiel geeignet für Luftbilder aus verschiedenen Jahrgängen.|false|
 |openConfig|nein|**[openConfig](#markdown-header-portalconfigmenusectionsopenConfig)**||Mit diesem Modul lässt sich eine Konfigurationsdatei (config.json) zur Laufzeit neu laden. Die Module und Karte werden an die neue Konfiguration angepasst.|false|
+|shadow|nein|**[shadow](#markdown-header-portalconfigmenusectionsshadow)**||Konfigurationsobjekt für die Schattenzeit im 3D-Modus.|false|
 
 ***
 
@@ -638,9 +639,51 @@ Mit diesem Modul lässt sich eine Konfigurationsdatei (config.json) zur Laufzeit
 ***
 
 ##### Portalconfig.menu.sections.modules.shadow
+Das ShadowTool bietet eine Oberfläche zur Definition einer Zeitangabe. Über Slider und Datepicker können Zeitangaben angegeben werden. Die ausgewählte Zeitangabe dient dem Rendern der Schatten aller 3D-Objekte im 3D-Modus, indem der Sonnenstand simuliert wird. Durch Ziehen des Sliders oder Auswahl eines neuen Datums wird unmittelbar ein neuer Sonnenstand simuliert. Per default startet das Tool mit der aktuellen Zeitangabe, die über Parameter überschrieben werden kann.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
+|icon|nein|String|"bi-lamp-fill"|Icon das im Menü vor dem Modul gezeigt wird. Zur Auswahl siehe **[Bootstrap Icons](https://icons.getbootstrap.com/)**|false|
+|isShadowEnabled|nein|Boolean|false|Default Shadow-Wert. True um unmittelbar Shadow einzuschalten. False zum manuellen Bestätigen.|
+|name|nein|String|"common:modules.shadow.name"|Name des Modules im Menü|false|
+|shadowTime|nein|**[shadowTime](#markdown-header-portalconfigmenusectionsmodulesshadowshadowtime)**||Default-Zeitangabe, mit der das Shadowmodule startet. Erkennt "month", "day", "hour", "minute"|
+|type|nein|String|"shadow"|Der type des Moduls. Definiert welches Modul konfiguriert ist.|false|
+
+**Beispiel**
+
+```json
+{
+    "isShadowEnabled": true,
+    "shadowTime": {
+        "month": "6",
+        "day": "20",
+        "hour": "13",
+        "minute": "0"
+    },
+    "type": "shadow"
+}
+```
+
+***
+
+###### Portalconfig.menu.sections.modules.shadow.shadowTime
+|Name|Required|Type|Default|Description|
+|----|--------|----|-------|-----------|
+|month|nein|String||Monat|
+|day|nein|String||Tag|
+|hour|nein|String||Stunde|
+|minute|nein|String||Minute|
+
+**Beispiel**
+
+```json
+{
+    "month": "6",
+    "day": "20",
+    "hour": "13",
+    "minute": "0"
+}
+```
 
 ***
 
