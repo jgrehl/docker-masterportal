@@ -181,7 +181,6 @@ export default {
                 </div>
             </div>
         </div>
-        <!-- eslint-disable-next-line vuejs-accessibility/click-events-have-key-events -->
         <button
             class="modal-backdrop fade in"
             @click="hidePoiChoice"
