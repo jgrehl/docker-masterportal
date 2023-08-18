@@ -65,7 +65,7 @@ export default {
 <template lang="html">
     <LightButton
         :id="'select-all-layers-' + ids()"
-        class="d-flex w-100 layer-tree-select-all pe-2 p-1"
+        class="d-flex w-100 layer-tree-select-all test pe-2 p-1"
         @click="clicked()"
         @keydown.enter="clicked()"
     >
@@ -97,11 +97,8 @@ export default {
 <style lang="scss" scoped>
     @import "~variables";
     @import "~mixins";
-
-    .test {
-        background-color: yellow;
-    }
     .layer-tree-select-all {
+        border-radius: 15px;
         &:hover {
             @include primary_action_hover;
         }
