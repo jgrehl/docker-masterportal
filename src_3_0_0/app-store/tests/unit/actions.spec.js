@@ -9,6 +9,7 @@ describe("src_3_0_0/app-store/actions.js", () => {
     let axiosMock,
         commit,
         dispatch,
+        fetch,
         state,
         initializeLayerListSpy,
         initializeStyleListSpy;
@@ -16,6 +17,8 @@ describe("src_3_0_0/app-store/actions.js", () => {
         layerConf = "./services.json";
 
     beforeEach(() => {
+        fetch = global.fetch;
+        global.fetch = sinon.spy(() => new Promise(r => r));
         commit = sinon.spy();
         dispatch = sinon.spy();
         state = {
@@ -37,6 +40,7 @@ describe("src_3_0_0/app-store/actions.js", () => {
     });
 
     afterEach(() => {
+        global.fetch = fetch;
         sinon.restore();
     });
 

@@ -66,6 +66,7 @@ export default {
                 />
             </button>
             <input
+                id="search-bar-input"
                 v-model="searchInputValue"
                 type="search"
                 class="form-control"
