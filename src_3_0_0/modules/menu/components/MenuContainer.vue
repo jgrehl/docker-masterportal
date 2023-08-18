@@ -143,7 +143,7 @@ export default {
                 @click="closeMenu(side)"
             />
             <div
-                v-if="(currentComponent ==='root' || currentComponent.name ==='SearchBarResultList') && titleBySide(side)"
+                v-if="(currentComponent ==='root' || currentComponent?.name ==='SearchBarResultList') && titleBySide(side)"
                 :id="'mp-subHeader-' + side"
                 class="mp-menu-subHeader"
                 :class="
