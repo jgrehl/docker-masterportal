@@ -11,16 +11,17 @@ describe("src_3_0_0/modules/menu/MenuContainer.vue", () => {
         currentMenuWidth,
         mainExpanded = false,
         secondaryExpanded = false,
-        titleBySide,
         uiStyle = "default",
         mergeMenuStateSpy,
+        mainMenu,
+        secondaryMenu,
+        defaultComponent,
         closeMenuSpy,
         collapseMenuesSpy,
         isMobile;
 
     beforeEach(() => {
         currentMenuWidth = sinon.stub();
-        titleBySide = sinon.stub();
         closeMenuSpy = sinon.spy();
         mergeMenuStateSpy = sinon.spy();
         collapseMenuesSpy = sinon.spy();
@@ -39,10 +40,14 @@ describe("src_3_0_0/modules/menu/MenuContainer.vue", () => {
                 Menu: {
                     namespaced: true,
                     getters: {
+                        defaultComponent: () => defaultComponent,
+                        secondaryMenu: () => secondaryMenu,
+                        mainMenu: () => mainMenu,
                         currentMenuWidth: () => currentMenuWidth,
                         mainExpanded: () => mainExpanded,
                         secondaryExpanded: () => secondaryExpanded,
-                        titleBySide: () => titleBySide
+                        titleBySide: () => () => true,
+                        currentComponent: () => () => "root"
                     },
                     mutations: {
                         collapseMenues: collapseMenuesSpy,
@@ -78,9 +83,9 @@ describe("src_3_0_0/modules/menu/MenuContainer.vue", () => {
                 mainMenuWrapper = wrapper.find("#mp-menu-mainMenu"),
                 secondaryMenuWrapper = wrapper.find("#mp-menu-secondaryMenu");
 
+
             expect(mainMenuWrapper.exists()).to.be.true;
             expect(secondaryMenuWrapper.exists()).to.be.false;
-            expect(wrapper.find("#mp-subHeader-mainMenu").exists()).to.be.true;
             expect(wrapper.find("#mp-header-mainMenu").exists()).to.be.true;
             expect(wrapper.find("menu-container-body-stub").exists()).to.be.true;
             expect(wrapper.find("resize-handle-stub").exists()).to.be.true;
@@ -101,7 +106,6 @@ describe("src_3_0_0/modules/menu/MenuContainer.vue", () => {
 
             expect(mainMenuWrapper.exists()).to.be.true;
             expect(secondaryMenuWrapper.exists()).to.be.false;
-            expect(wrapper.find("#mp-subHeader-mainMenu").exists()).to.be.true;
             expect(wrapper.find("#mp-header-mainMenu").exists()).to.be.true;
             expect(wrapper.find("#mp-menu-header-close-button-mainMenu").exists()).to.be.true;
             expect(wrapper.find("menu-container-body-stub").exists()).to.be.true;
