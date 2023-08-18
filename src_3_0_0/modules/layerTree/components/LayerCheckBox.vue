@@ -129,7 +129,7 @@ export default {
             </span>
         </label>
     </div>
-    <Button
+    <button
         v-else
         :id="'layer-checkbox-' + conf.id"
         class="d-flex w-100 layer-tree-layer-title pe-2 p-1 btn-transparent"
@@ -165,7 +165,7 @@ export default {
                 {{ $t(conf.name) }}
             </span>
         </label>
-    </Button>
+    </button>
 </template>
 
 <style lang="scss" scoped>
