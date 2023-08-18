@@ -244,7 +244,6 @@ export default {
     }
 }
 
-
 @include media-breakpoint-up(sm)  {
     .masterportal-container {
         overflow: hidden;
@@ -263,6 +262,22 @@ export default {
         flex-grow: 1;
     }
 }
+</style>
 
+<style lang="scss">
+// fix warning: Specifying overflow: visible on img, video and canvas tags may cause them to produce visual content outside of the element bounds.
+// See https://github.com/WICG/shared-element-transitions/blob/main/debugging_overflow_on_images.md .
+.ol-viewport {
+    > div > canvas {
+        overflow: clip;
+        overflow-clip-margin: content-box;
+    }
+}
 
+.ol-layer {
+    canvas {
+        overflow: clip;
+        overflow-clip-margin: content-box;
+    }
+}
 </style>
