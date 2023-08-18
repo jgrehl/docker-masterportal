@@ -27,6 +27,8 @@ export default {
     },
     computed: {
         ...mapGetters("Modules/SearchBar", ["searchInterfaceInstances", "searchResults", "suggestionListLength", "searchInput", "minCharacters", "showAllResults", "searchResultsActive", "selectedSearchResults"]),
+        ...mapGetters("Menu", ["titleBySide"]),
+        ...mapGetters(["portalConfig"]),
 
         /**
          * Updates the categories to unique categories.
