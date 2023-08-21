@@ -40,9 +40,13 @@ export default {
     },
     computed: {
         /**
-         * @returns {String} icon name with added prefix 'bi-' if it was missing
+         * @returns {String} icon url or classname with added prefix 'bi-' if it was missing
          */
-        iconClass () {
+        iconClassOrSrc () {
+            if (this.iconName.startsWith("http")) {
+                return this.iconName;
+            }
+
             return this.iconName === "" || this.iconName.startsWith("bi-") ? this.iconName : `bi-${this.iconName}`;
         }
     }
@@ -61,9 +65,14 @@ export default {
     >
         <!-- children should usually be placed absolutely in relation to ControlIcon -->
         <i
-            v-if="!iconClass.includes('masterportal')"
-            :class="iconClass"
+            v-if="!iconClassOrSrc.includes('masterportal') && !iconClassOrSrc.includes('http')"
+            :class="iconClassOrSrc"
         />
+        <img
+            v-else-if="iconClassOrSrc.includes('http')"
+            :src="iconClassOrSrc"
+            :alt="title"
+        >
         <p
             v-else-if="buttonTitle !== ''"
         >
