@@ -62,10 +62,14 @@ function betweenForArray (featValueA, featValueB, ruleValueA, ruleValueB, format
  * @param {String} featValueA the feature value a
  * @param {String[]} value the value
  * @param {String} format the date format
+ * @param {String} delimiter the delimiter from rule
  * @returns {Boolean} true if it matches the equals check
  */
-function equalsForArray (featValueA, value, format) {
+function equalsForArray (featValueA, value, format, delimiter) {
     if (!format || !dayjs(featValueA, format).isValid()) {
+        if (typeof delimiter === "string") {
+            return typeof value.find(v => typeof v === "string" && featValueA.split(delimiter).includes(v.toLowerCase())) !== "undefined";
+        }
         return typeof value.find(v => typeof v === "string" && featValueA === v.toLowerCase()) !== "undefined";
     }
     const featValA = dayjs(featValueA, format);
@@ -127,12 +131,16 @@ function between (featValueA, featValueB, ruleValueA, format) {
  * @param {String} featValueA the feature value a
  * @param {String} ruleValueA the rule value a
  * @param {String} format the date format
+ * @param {String} delimiter the delimiter from rule
  * @returns {Boolean} true if it matches the equals check
  */
-function equals (featValueA, ruleValueA, format) {
+function equals (featValueA, ruleValueA, format, delimiter) {
     const featValA = dayjs(featValueA, format);
 
     if (!format || !featValA.isValid()) {
+        if (typeof delimiter === "string") {
+            return featValueA.split(delimiter).includes(ruleValueA);
+        }
         return featValueA === ruleValueA;
     }
 
