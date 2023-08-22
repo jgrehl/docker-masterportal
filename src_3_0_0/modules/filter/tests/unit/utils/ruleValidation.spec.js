@@ -59,6 +59,12 @@ describe("src/modules/tools/filter/utils/ruleValidation.js", () => {
             expect(equalsForArray(-1, [0, 10])).to.be.false;
             expect(equalsForArray(10.000000001, [0, 10])).to.be.false;
         });
+        it("should return true if multi value is equal to one of the value split from delimiter", () => {
+            expect(equalsForArray("foo|bar", ["foo", "foo"], undefined, "|")).to.be.true;
+        });
+        it("should return false if multi value is equal to none of the value split from delimiter", () => {
+            expect(equalsForArray("bars|bar", ["foo", "foo"], undefined, "|")).to.be.false;
+        });
         it("should return true if dates are equal", () => {
             expect(equalsForArray("01.01.2022", ["01.01.2022", "10.01.2022"], "DD.MM.YYYY")).to.be.true;
         });
@@ -120,6 +126,12 @@ describe("src/modules/tools/filter/utils/ruleValidation.js", () => {
         });
         it("should return false if date is not equal", () => {
             expect(equals("31.12.2021", "10.01.2022", "DD.MM.YYYY")).to.be.false;
+        });
+        it("should return false if value is not equal to none of the value split with delimiter", () => {
+            expect(equals("foo|foos", "bar", undefined, "|")).to.be.false;
+        });
+        it("should return true if value is equal to one of the value split with delimiter", () => {
+            expect(equals("foo|bar", "bar", undefined, "|")).to.be.true;
         });
         it("should return true if date is equal", () => {
             expect(equals("01.01.2022", "01.01.2022", "DD.MM.YYYY")).to.be.true;

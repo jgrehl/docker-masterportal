@@ -164,13 +164,17 @@ export default {
                     rulesOfFiltersCopy[idx] = undefined;
                 }
             });
-            context.dispatch("setRulesArray", {rulesOfFilters: rulesOfFiltersCopy});
+            await context.dispatch("setRulesArray", {rulesOfFilters: rulesOfFiltersCopy});
             context.commit("setSelectedAccordions", selectedAccordions);
             context.commit("setSelectedGroups", selectedGroups);
-            context.dispatch("setGeometryFilterByFeature", {jsonFeature: payload?.geometryFeature, invert: payload?.geometrySelectorOptions?.invertGeometry});
-            context.commit("setGeometrySelectorOptions", payload?.geometrySelectorOptions);
-            additionalGeometries = await getFeaturesOfAdditionalGeometries(payload.geometrySelectorOptions.additionalGeometries);
-            context.commit("setAdditionalGeometries", {additionalGeometries});
+            await context.dispatch("setGeometryFilterByFeature", {jsonFeature: payload?.geometryFeature, invert: payload?.geometrySelectorOptions?.invertGeometry});
+            if (typeof payload?.geometrySelectorOptions !== "undefined") {
+                context.commit("setGeometrySelectorOptions", payload?.geometrySelectorOptions);
+            }
+            if (payload.geometrySelectorOptions) {
+                additionalGeometries = await getFeaturesOfAdditionalGeometries(payload.geometrySelectorOptions.additionalGeometries);
+                context.commit("setAdditionalGeometries", {additionalGeometries});
+            }
         }
     },
     /**
@@ -225,6 +229,15 @@ export default {
         if (typeof filterId === "number") {
             context.commit("setJumpToId", filterId);
         }
+    },
+    /**
+     * Sets the current state of the filter
+     * @param {Object} context.commit the commit
+     * @param {String} params The url filter params
+     * @returns {void}
+     */
+    urlParams ({commit}, params) {
+        commit("setUrlParams", params);
     }
 };
 /**
