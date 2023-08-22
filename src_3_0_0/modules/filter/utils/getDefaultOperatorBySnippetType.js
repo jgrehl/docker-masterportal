@@ -1,10 +1,10 @@
 /**
  * Returns the default operator for the given data type.
  * @param {String} snippetType the snippet type
- * @param {Boolean} [hasDelimitorSet=false] true if a delimitor is set in config, false if not
+ * @param {Boolean} [hasDelimiterSet=false] true if a delimiter is set in config, false if not
  * @returns {String} the operator to use as default for the given dataType
  */
-export function getDefaultOperatorBySnippetType (snippetType, hasDelimitorSet = false) {
+export function getDefaultOperatorBySnippetType (snippetType, hasDelimiterSet = false) {
     switch (snippetType) {
         case "checkbox":
             return "EQ";
@@ -13,7 +13,7 @@ export function getDefaultOperatorBySnippetType (snippetType, hasDelimitorSet = 
         case "dateRange":
             return "INTERSECTS";
         case "dropdown":
-            return hasDelimitorSet ? "IN" : "EQ";
+            return hasDelimiterSet ? "IN" : "EQ";
         case "text":
             return "IN";
         case "slider":
