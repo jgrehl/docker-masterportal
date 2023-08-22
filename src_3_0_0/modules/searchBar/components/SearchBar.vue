@@ -186,5 +186,11 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+    #search-bar {
+        #search-button {
+            border-top-left-radius: 5px;
+            border-bottom-left-radius: 5px;
+        }
+    }
 </style>
 

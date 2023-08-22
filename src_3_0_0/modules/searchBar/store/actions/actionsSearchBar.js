@@ -46,7 +46,9 @@ export default {
             }, {root: true});
         }
         if (getters.searchInput?.length < parseInt(getters.minCharacters, 10) && getters.searchResultsActive === true) {
-            dispatch("Menu/navigateBack", side, {root: true});
+            if (rootState.Menu[side].currentComponent !== "layerSelection") {
+                dispatch("Menu/navigateBack", side, {root: true});
+            }
         }
     }
 };

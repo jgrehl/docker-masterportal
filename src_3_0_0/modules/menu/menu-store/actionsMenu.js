@@ -161,11 +161,13 @@ export default {
      * @returns {void}
      */
     resetMenu ({commit, dispatch, getters, state}, side) {
-        if (getters.currentComponent(side).type === state.currentMouseMapInteractionsComponent && getters.currentComponent(side).type !== state.defaultComponent) {
-            dispatch("changeCurrentMouseMapInteractionsComponent", {type: state.defaultComponent, side});
-        }
+        if (getters.currentComponent(side).type !== "layerSelection") {
+            if (getters.currentComponent(side).type === state.currentMouseMapInteractionsComponent && getters.currentComponent(side).type !== state.defaultComponent) {
+                dispatch("changeCurrentMouseMapInteractionsComponent", {type: state.defaultComponent, side});
+            }
 
-        commit("switchToRoot", side);
+            commit("switchToRoot", side);
+        }
     },
 
     /**

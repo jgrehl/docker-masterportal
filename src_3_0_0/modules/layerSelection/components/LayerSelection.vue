@@ -4,6 +4,7 @@ import layerFactory from "../../../core/layers/js/layerFactory";
 import sortBy from "../../../shared/js/utils/sortBy";
 import FlatButton from "../../../shared/modules/buttons/components/FlatButton.vue";
 import LayerCheckBox from "../../layerTree/components/LayerCheckBox.vue";
+import SearchBar from "../../searchBar/components/SearchBar.vue";
 import LayerSelectionTreeNode from "./LayerSelectionTreeNode.vue";
 
 /**
@@ -17,7 +18,8 @@ export default {
     components: {
         FlatButton,
         LayerCheckBox,
-        LayerSelectionTreeNode
+        LayerSelectionTreeNode,
+        SearchBar
     },
     data () {
         return {
@@ -122,6 +124,7 @@ export default {
         class="w-100 layer-selection"
         aria-label=""
     >
+        <SearchBar />
         <div class="layer-selection-navigation">
             <h6 v-if="baselayerConfs.length > 0">
                 {{ $t("common:modules.layerSelection.backgrounds") }}

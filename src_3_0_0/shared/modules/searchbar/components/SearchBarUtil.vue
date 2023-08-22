@@ -30,7 +30,7 @@ export default {
             class="btn btn-primary"
             :aria-label="$t(placeholder)"
             type="button"
-            @click="startSearch"
+            @click="searchFunction"
         >
             <i
                 class="bi-search"
@@ -44,9 +44,9 @@ export default {
             class="form-control"
             :placeholder="$t(placeholder)"
             :aria-label="$t(placeholder)"
-            @click="startSearch"
-            @input="startSearch"
-            @keydown.enter="startSearch"
+            @click="searchFunction"
+            @input="searchFunction"
+            @keydown.enter="searchFunction"
         >
     </div>
 </template>
