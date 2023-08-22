@@ -5,7 +5,7 @@ import createStyle from "@masterportal/masterportalapi/src/vectorStyle/createSty
 import {translateKeyWithPlausibilityCheck} from "../../../shared/js/utils/translateKeyWithPlausibilityCheck.js";
 import getIconListFromLegendModule from "../utils/getIconListFromLegend.js";
 import {getDefaultOperatorBySnippetType} from "../utils/getDefaultOperatorBySnippetType.js";
-import splitListWithDelimitor from "../utils/splitListWithDelimitor.js";
+import splitListWithDelimiter from "../utils/splitListWithDelimiter.js";
 import isObject from "../../../shared/js/utils/isObject";
 import SnippetInfo from "./SnippetInfo.vue";
 import localeCompare from "../../../shared/js/utils/localeCompare";
@@ -22,7 +22,7 @@ import layerCollection from "../../../core/layers/js/layerCollection";
 * @vue-prop {Array} adjustment - The changes made by other snippets that change settings in this snippet. E.g. one snippet changes to "Grundschulen" and other snippets change their min value as a result of the adjustment.
 * @vue-prop {Boolean} autoInit - Shows if automatic initilization is enabled.
 * @vue-prop {Array} localeCompareParams - (???).
-* @vue-prop {String} delimitor - (???).
+* @vue-prop {String} delimiter - (???).
 * @vue-prop {Boolean} disabled - Shows if snippet is disabled.
 * @vue-prop {String} display - Sets which dates should be displayed.
 * @vue-prop {Number} filterId - The filter's id.
@@ -98,7 +98,7 @@ export default {
             required: false,
             default: undefined
         },
-        delimitor: {
+        delimiter: {
             type: String,
             required: false,
             default: undefined
@@ -299,7 +299,7 @@ export default {
         },
         securedOperator () {
             if (!this.operatorWhitelist.includes(this.operator)) {
-                return getDefaultOperatorBySnippetType("dropdown", typeof this.delimitor === "string" && this.delimitor);
+                return getDefaultOperatorBySnippetType("dropdown", typeof this.delimiter === "string" && this.delimiter);
             }
             return this.operator;
         }
@@ -343,7 +343,7 @@ export default {
                 this.isAdjusting = true;
             }
 
-            this.addDropdownValueForAdjustment(this.dropdownValue, this.value, adjusting?.adjust?.value, this.delimitor);
+            this.addDropdownValueForAdjustment(this.dropdownValue, this.value, adjusting?.adjust?.value, this.delimiter);
 
             if (adjusting?.finish) {
                 if (Array.isArray(this.allValues)) {
@@ -419,7 +419,7 @@ export default {
             else if (this.api && this.autoInit !== false) {
                 this.$nextTick(() => {
                     this.api.getUniqueValues(this.attrName, list => {
-                        this.dropdownValue = this.splitListWithDelimitor(list, this.delimitor);
+                        this.dropdownValue = this.splitListWithDelimiter(list, this.delimiter);
                         this.dropdownSelected = this.getInitialDropdownSelected(this.prechecked, this.dropdownValue, this.multiselect);
                         this.$nextTick(() => {
                             this.isInitializing = false;
@@ -457,7 +457,7 @@ export default {
     methods: {
         ...mapActions("Maps", ["areLayerFeaturesLoaded", "addLayer"]),
         translateKeyWithPlausibilityCheck,
-        splitListWithDelimitor,
+        splitListWithDelimiter,
 
         /**
          * Emits the setSnippetPrechecked event.
@@ -630,6 +630,7 @@ export default {
                 fixed: !this.visible,
                 attrName: this.attrName,
                 operator: this.securedOperator,
+                delimiter: this.delimiter,
                 value: result
             });
         },
@@ -674,10 +675,10 @@ export default {
          * @param {String[]} dropdownValue the current dropdownValue to adjust
          * @param {String[]} configValue the value set by configuration, if any
          * @param {String[]} adjustmentValue the value to adjust dropdownValue with
-         * @param {String} [delimitor=false] the delimitor to use, false if not set
+         * @param {String} [delimiter=false] the delimiter to use, false if not set
          * @returns {void}
          */
-        addDropdownValueForAdjustment (dropdownValue, configValue, adjustmentValue, delimitor = false) {
+        addDropdownValueForAdjustment (dropdownValue, configValue, adjustmentValue, delimiter = false) {
             if (!Array.isArray(dropdownValue) || !Array.isArray(adjustmentValue)) {
                 return;
             }
@@ -694,8 +695,8 @@ export default {
             }
 
             adjustmentValue.forEach(value => {
-                if (delimitor && typeof value === "string" && value.indexOf(delimitor)) {
-                    this.addDropdownValueForAdjustment(dropdownValue, configValue, value.split(delimitor), false);
+                if (delimiter && typeof value === "string" && value.indexOf(delimiter)) {
+                    this.addDropdownValueForAdjustment(dropdownValue, configValue, value.split(delimiter), false);
                 }
                 else if (!dropdownValueAssoc[value] && (!Array.isArray(configValue) || Array.isArray(configValue) && configValueAssoc[value])) {
                     dropdownValueAssoc[value] = true;

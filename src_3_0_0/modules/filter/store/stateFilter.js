@@ -12,6 +12,7 @@
  * @property {Boolean} liveZoomToFeatures - defines whether the filter immediately zooms to filter results
  * @property {Boolean} geometrySelectorOptions - options for an additional tool for filtering within a self-drawn area. If you use this tool in conjunction with external filtering
  * @property {Number} minScale - minimum zoom level the filter zooms in when displaying filter results
+ * @property {String} saveTo - parameters to write changes to the filter in the url
  * @property {Array}  layers - the layer configuration for filter
  * @property {Array} layerGroups - configuration of the related layers to be filtered
  * @property {Array} rulesOfFilters - contains rules for each filter
@@ -23,8 +24,8 @@
  * @property {Boolean} geometryFeature - the geometry feature
  * @property {Number} jumpToId - contains the filterId to jump
  * @property {Boolean} hasMouseMapInteractions ff this attribute is true, then all other modules will be deactivated when this attribute is also true. Only one module with this attribute true may be open at the same time, since conflicts can arise in the card interactions.
-  * @property {Array} neededUrlParams - contains the required URL params
-
+ * @property {Array} neededUrlParams - contains the required URL params
+ * @property {String} urlParams - current filter
  */
 
 const state = {
@@ -39,6 +40,7 @@ const state = {
     liveZoomToFeatures: true,
     geometrySelectorOptions: false,
     minScale: 5000,
+    saveTo: "void",
     layers: [],
     layerGroups: [],
     rulesOfFilters: [],
@@ -50,7 +52,8 @@ const state = {
     geometryFeature: undefined,
     jumpToId: undefined,
     hasMouseMapInteractions: false,
-    neededUrlParams: ["rulesOfFilters", "selectedAccordions", "selectedGroups"]
+    neededUrlParams: ["rulesOfFilters", "selectedAccordions", "selectedGroups"],
+    urlParams: ""
 };
 
 export default state;
