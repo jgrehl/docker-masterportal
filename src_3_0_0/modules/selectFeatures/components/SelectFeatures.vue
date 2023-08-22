@@ -240,6 +240,10 @@ export default {
          * @returns {String} beautified key
          */
         beautifyKey: function (str) {
+            if (typeof str !== "string") {
+                return "";
+            }
+
             return str
                 .split("_")
                 .map(item => item.substring(0, 1).toUpperCase() + item.substring(1))
@@ -252,6 +256,10 @@ export default {
          * @returns {String} beautified string
          */
         beautifyValue: function (str) {
+            if (typeof str !== "string") {
+                return "";
+            }
+
             return str
                 .split("|")
                 .map(item => item.trim())
