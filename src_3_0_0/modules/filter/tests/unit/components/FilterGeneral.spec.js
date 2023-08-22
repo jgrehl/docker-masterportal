@@ -4,6 +4,8 @@ import {expect} from "chai";
 import FilterGeneral from "../../../components/FilterGeneral.vue";
 import FilterStore from "../../../store/indexFilter";
 import sinon from "sinon";
+import openlayerFunctions from "../../../utils/openlayerFunctions";
+import layerCollection from "../../../../../core/layers/js/layerCollection";
 
 config.global.mocks.$t = key => key;
 
@@ -88,14 +90,14 @@ describe("src/modules/filter/components/FilterGeneral.vue", () => {
         it("should remove given index from selectedGroups if found in array", async () => {
             wrapper.vm.setSelectedGroups([0, 1]);
             await wrapper.vm.$nextTick();
-            wrapper.vm.updateSelectedLayerGroups(0);
+            wrapper.vm.updateSelectedGroups(0);
             await wrapper.vm.$nextTick();
             expect(wrapper.vm.selectedGroups).to.deep.equal([1]);
         });
         it("should add given index to selectedGroups if not found in array", async () => {
             wrapper.vm.setSelectedGroups([0]);
             await wrapper.vm.$nextTick();
-            wrapper.vm.updateSelectedLayerGroups(1);
+            wrapper.vm.updateSelectedGroups(1);
             await wrapper.vm.$nextTick();
             expect(wrapper.vm.selectedGroups).to.deep.equal([0, 1]);
         });
@@ -150,6 +152,122 @@ describe("src/modules/filter/components/FilterGeneral.vue", () => {
             expect(wrapper.vm.rulesOfFilters).to.deep.equal(rule);
             wrapper.vm.updateSelectedAccordions(0);
             expect(wrapper.vm.rulesOfFilters).to.deep.equal(rule);
+        });
+    });
+    describe("handleStateForAlreadyActiveLayers", () => {
+        it("should not do anything if if first param is not an object", () => {
+            let param = null;
+
+            param = undefined;
+            wrapper.vm.handleStateForAlreadyActiveLayers(param);
+            expect(param).to.be.undefined;
+            param = null;
+            wrapper.vm.handleStateForAlreadyActiveLayers(param);
+            expect(param).to.be.null;
+            param = "foo";
+            wrapper.vm.handleStateForAlreadyActiveLayers(param);
+            expect(param).to.be.equal("foo");
+            param = 1234;
+            wrapper.vm.handleStateForAlreadyActiveLayers(param);
+            expect(param).to.be.equal(1234);
+            param = [];
+            wrapper.vm.handleStateForAlreadyActiveLayers(param);
+            expect(param).to.be.an("array").and.to.be.empty;
+            param = undefined;
+            wrapper.vm.handleStateForAlreadyActiveLayers(param);
+            expect(param).to.be.undefined;
+        });
+        it("should not do anything if given param has no rulesOfFilters or selectedAccordions property", () => {
+            const param = {foo: "bar"};
+
+            wrapper.vm.handleStateForAlreadyActiveLayers(param);
+            expect(param).to.deep.equal({foo: "bar"});
+        });
+        it("should not remove rules of the given param if the matching layer is not activated", () => {
+            const param = {
+                rulesOfFilters: ["foo", "bar", "buz"],
+                selectedAccordions: [
+                    {
+                        layerId: 0,
+                        filterId: 0
+                    },
+                    {
+                        layerId: 1,
+                        filterId: 1
+                    }
+                ]
+            };
+
+            openlayerFunctions.getLayerByLayerId = (layerId) => {
+                if (layerId === 1) {
+                    return null;
+                }
+                return {
+                    visibility: false,
+                    typ: "foo"
+                };
+            };
+            sinon.stub(layerCollection, "getLayerById").returns(
+                {
+                    layer: {
+                        getSource: () => {
+                            return {
+                                once: (eventname, handler) => {
+                                    handler();
+                                },
+                                getFeatures: () => {
+                                    return [];
+                                }
+                            };
+                        }
+                    }
+                }
+            );
+            wrapper.vm.handleStateForAlreadyActiveLayers(param);
+            expect(param).to.deep.equal({rulesOfFilters: ["foo", "bar", "buz"], selectedAccordions: [{layerId: 0, filterId: 0}, {layerId: 1, filterId: 1}]});
+        });
+        it("should remove rules of the given param if the matching layer is already activated", () => {
+            const param = {
+                rulesOfFilters: ["foo", "bar", "buz"],
+                selectedAccordions: [
+                    {
+                        layerId: 0,
+                        filterId: 0
+                    },
+                    {
+                        layerId: 1,
+                        filterId: 1
+                    }
+                ]
+            };
+
+            openlayerFunctions.getLayerByLayerId = (layerId) => {
+                if (layerId === 1) {
+                    return null;
+                }
+                return {
+                    visibility: true,
+                    typ: "foo"
+                };
+            };
+            sinon.stub(layerCollection, "getLayerById").returns(
+                {
+                    layer: {
+                        getSource: () => {
+                            return {
+                                once: (eventname, handler) => {
+                                    handler();
+                                },
+                                getFeatures: () => {
+                                    return [];
+                                }
+                            };
+                        }
+                    }
+                }
+            );
+            wrapper.vm.handleStateForAlreadyActiveLayers(param);
+            expect(param).to.deep.equal({rulesOfFilters: [null, "bar", "buz"], selectedAccordions: [{layerId: 1, filterId: 1}]});
         });
     });
 });

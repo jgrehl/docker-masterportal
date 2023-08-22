@@ -14,6 +14,9 @@ import {getFeaturesOfAdditionalGeometries} from "../utils/getFeaturesOfAdditiona
 import rawLayerList from "@masterportal/masterportalapi/src/rawLayerList";
 import {getFeatureGET} from "../../../shared/js/api/wfs/getFeature";
 import {WFS} from "ol/format.js";
+import UrlHandler from "../utils/urlHandler.js";
+import Cluster from "ol/source/Cluster";
+import layerCollection from "../../../core/layers/js/layerCollection";
 
 /**
  * Filter General
@@ -50,7 +53,9 @@ export default {
             preparedLayerGroups: [],
             flattenPreparedLayerGroups: [],
             layerLoaded: {},
-            layerFilterSnippetPostKey: ""
+            layerFilterSnippetPostKey: "",
+            urlHandler: new UrlHandler(this.mapHandler),
+            alreadyWatching: null
         };
     },
     computed: {
@@ -100,6 +105,12 @@ export default {
                 this.setSelectedAccordions(this.transformLayerConfig(this.layerConfigs.layers, selectedFilterIds));
             }
         }
+        this.urlHandler.readFromUrlParams(this.urlParams, this.layerConfigs, this.mapHandler, params => {
+            this.handleStateForAlreadyActiveLayers(params);
+            this.deserializeState({...params, setLateActive: true});
+            this.addWatcherToWriteUrl();
+        });
+        this.addWatcherToWriteUrl();
     },
     methods: {
         ...mapMutations("Modules/Filter", Object.keys(mutations)),
@@ -107,9 +118,77 @@ export default {
             "initialize",
             "updateRules",
             "deleteAllRules",
-            "updateFilterHits"
+            "deserializeState",
+            "updateFilterHits",
+            "setRulesArray"
         ]),
+        /**
+         * Handles the state for already activated layers by given params.
+         * The given params are set for the matching layer if it is already active but has no features loaded yet.
+         * This function edits the given param and removes the rules and
+         * accordions out of the arrays for the matching layers and leaves only the others.
+         * @param {Object} params The params object. It will be edited if there is any matching layer.
+         * @param {Object[]} params.rulesOfFilters The rules array.
+         * @param {Object[]} params.selectedAccordions The selected accordions to find the layer for.
+         * @returns {void}
+         */
+        handleStateForAlreadyActiveLayers (params) {
+            if (!isObject(params) || !Object.prototype.hasOwnProperty.call(params, "selectedAccordions")
+                || !Object.prototype.hasOwnProperty.call(params, "rulesOfFilters")) {
+                return;
+            }
+            let selecetedAccordionsLen = Array.isArray(params?.selectedAccordions) ? params.selectedAccordions.length : 0;
 
+            while (selecetedAccordionsLen--) {
+                const accordion = params.selectedAccordions[selecetedAccordionsLen],
+                    rulesOfAccordeon = params.rulesOfFilters[accordion?.filterId];
+                let layerModel = null,
+                    layerConfig = null,
+                    layerSource = null;
+
+                layerModel = layerCollection.getLayerById(accordion?.layerId);
+                layerConfig = openlayerFunctions.getLayerByLayerId(accordion?.layerId);
+                if (!layerModel) {
+                    continue;
+                }
+                layerSource = layerModel.layer.getSource() instanceof Cluster ? layerModel.layer.getSource().getSource() : layerModel.layer.getSource();
+                if (!layerSource) {
+                    continue;
+                }
+                if (layerConfig?.visibility && ((
+                    typeof layerSource?.getFeatures === "function"
+                    && layerSource.getFeatures().length === 0)
+                    || (typeof layerModel?.getFeatures === "function"
+                    && layerModel.getFeatures().length === 0))) {
+                    (layerConfig?.typ === "SensorThings" ? layerModel : layerSource).once("featuresloadend", async () => {
+                        const rulesOfFiltersTmp = [...this.rulesOfFilters],
+                            selectedAccordionsTmp = [...this.selectedAccordions];
+
+                        rulesOfFiltersTmp[accordion.filterId] = rulesOfAccordeon;
+                        selectedAccordionsTmp.push(accordion);
+                        await this.setRulesArray({rulesOfFilters: rulesOfFiltersTmp});
+                        this.setSelectedAccordions(selectedAccordionsTmp);
+                    });
+                    params.selectedAccordions.splice(selecetedAccordionsLen, 1);
+                    params.rulesOfFilters[accordion.filterId] = null;
+                }
+            }
+        },
+        /**
+         * Adds a watcher on the Filter module and pass the 'writeUrlParams' function as handler.
+         * Only adds a watcher if there is no watcher set - checked by 'alreadyWatching' property.
+         * @returns {void}
+         */
+        addWatcherToWriteUrl () {
+            if (this.saveTo === "url") {
+                if (typeof this.alreadyWatching === "function") {
+                    return;
+                }
+                this.alreadyWatching = this.$watch("$store.state.Modules.Filter", this.writeUrlParams, {
+                    deep: true
+                });
+            }
+        },
         /**
          * Gets the features of the additional geometries by the given layer id.
          * @param {Object[]} additionalGeometries - The additional geometries.
@@ -128,13 +207,12 @@ export default {
                 }
             }
         },
-
         /**
          * Update selected layer group.
          * @param {Number} layerGroupIndex index of the layer group
          * @returns {void}
          */
-        updateSelectedLayerGroups (layerGroupIndex) {
+        updateSelectedGroups (layerGroupIndex) {
             const selectedGroups = JSON.parse(JSON.stringify(this.selectedGroups)),
                 index = selectedGroups.indexOf(layerGroupIndex);
 
@@ -269,6 +347,20 @@ export default {
          */
         resetJumpToId () {
             this.setJumpToId(undefined);
+        },
+        /**
+         * Writes the given state to the url.
+         * @calls urlHandler.getParamsFromState
+         * @param {Object} newState The state.
+         * @returns {void}
+         */
+        writeUrlParams (newState) {
+            const params = this.urlHandler.getParamsFromState(newState, this.neededUrlParams),
+                generatedParams = JSON.stringify(params);
+
+            this.setUrlParams(generatedParams);
+            // @todo steht im todiscuss Ticket um zu besprechen, ob die Funktionalität weiterhin bestehen soll.
+            // this.urlHandler.writeParamsToURL(generatedParams);
         }
     }
 };
