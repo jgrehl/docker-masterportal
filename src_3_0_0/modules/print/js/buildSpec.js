@@ -543,7 +543,7 @@ const BuildSpecModel = {
                         const coords = clonedFeature.getGeometry().getCoordinates(),
                             offsetStyle = styleObjectFromStyleList.rules?.find(({style: {imageOffsetX, imageOffsetY}}) => imageOffsetX || imageOffsetY)?.style,
                             [posX, posY] = mapCollection.getMap("2D").getPixelFromCoordinate(coords),
-                            [offsetX, offsetY] = [offsetStyle.imageOffsetX ?? 0, offsetStyle.imageOffsetY ?? 0],
+                            [offsetX, offsetY] = [offsetStyle?.imageOffsetX ?? 0, offsetStyle?.imageOffsetY ?? 0],
                             mapScaleFactor = store.state.Modules.Print.currentScale / store.state.Modules.Print.currentMapScale,
                             transformedCoords = mapCollection.getMap("2D").getCoordinateFromPixel([posX - offsetX * mapScaleFactor, posY - offsetY * mapScaleFactor, 0]);
 
@@ -560,7 +560,7 @@ const BuildSpecModel = {
                         }
                     }
                     stylingRules = this.getStylingRules(layer, clonedFeature, styleAttributes, style);
-                    if (styleFromStyleList !== undefined && styleFromStyleList.attributes.labelField && styleFromStyleList.attributes.labelField.length > 0) {
+                    if (styleFromStyleList !== undefined && styleFromStyleList.attributes?.labelField && styleFromStyleList.attributes?.labelField.length > 0) {
                         stylingRules = stylingRules.replaceAll(limiter, " AND ");
                         limiter = " AND ";
                     }
