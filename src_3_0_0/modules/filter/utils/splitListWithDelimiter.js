@@ -1,12 +1,12 @@
 /**
  * Splits all entries of the given list with the given limitor, creates a new array with unique single entries.
- * @info if no delimitor is given the list is returned as it is - in this instance no unique value list is created
+ * @info if no delimiter is given the list is returned as it is - in this instance no unique value list is created
  * @param {String[]} list a list of strings to be split
- * @param {String} delimitor the delimitor to split with or undefined if no split should be made
+ * @param {String} delimiter the delimiter to split with or undefined if no split should be made
  * @returns {String[]} a new list with unique value
  */
-export default function splitListWithDelimitor (list, delimitor) {
-    if (!Array.isArray(list) || typeof delimitor !== "string") {
+export default function splitListWithDelimiter (list, delimiter) {
+    if (!Array.isArray(list) || typeof delimiter !== "string") {
         return list;
     }
     const result = {};
@@ -16,7 +16,7 @@ export default function splitListWithDelimitor (list, delimitor) {
             result[entry] = true;
             return;
         }
-        const parts = entry.split(delimitor);
+        const parts = entry.split(delimiter);
 
         parts.forEach(part => {
             result[part] = true;

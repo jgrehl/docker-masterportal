@@ -1314,7 +1314,7 @@ export default {
                     class="btn btn-secondary btn-sm"
                     @click="stopFilter()"
                 >
-                    {{ $t("button.stop") }}
+                    {{ $t("common:modules.filter.button.stop") }}
                 </button>
                 <ProgressBar
                     :paging="paging"
