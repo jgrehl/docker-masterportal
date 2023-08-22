@@ -26,7 +26,7 @@ describe("src/modules/tools/filter/components/SnippetDropdown.vue", () => {
             expect(wrapper.vm.adjustment).to.be.false;
             expect(wrapper.vm.autoInit).to.be.true;
             expect(wrapper.vm.localeCompareParams).to.be.undefined;
-            expect(wrapper.vm.delimitor).to.be.undefined;
+            expect(wrapper.vm.delimiter).to.be.undefined;
             expect(wrapper.vm.disabled).to.be.false;
             expect(wrapper.vm.display).to.equal("default");
             expect(wrapper.vm.filterId).to.equal(0);
@@ -128,7 +128,8 @@ describe("src/modules/tools/filter/components/SnippetDropdown.vue", () => {
                     snippetId: 1234,
                     visible: false,
                     attrName: "attrName",
-                    operator: "EQ"
+                    operator: "EQ",
+                    delimiter: "|"
                 }
             });
 
@@ -141,6 +142,7 @@ describe("src/modules/tools/filter/components/SnippetDropdown.vue", () => {
                 fixed: true,
                 attrName: "attrName",
                 operator: "EQ",
+                delimiter: "|",
                 value: "value"
             });
         });
@@ -150,7 +152,8 @@ describe("src/modules/tools/filter/components/SnippetDropdown.vue", () => {
                     snippetId: 1234,
                     visible: false,
                     attrName: "attrName",
-                    operator: "EQ"
+                    operator: "EQ",
+                    delimiter: "|"
                 }
             });
 
@@ -169,6 +172,7 @@ describe("src/modules/tools/filter/components/SnippetDropdown.vue", () => {
                 fixed: true,
                 attrName: "attrName",
                 operator: "EQ",
+                delimiter: "|",
                 value: ["value"]
             });
         });
