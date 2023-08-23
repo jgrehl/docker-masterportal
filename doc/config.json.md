@@ -65,7 +65,7 @@ Configuration of the topic selection tree
 |layerIDsToIgnore|no|String[]||Array of `services.json` layer ids not to be shown in the layer tree. Only for tree-type `auto`.|false|
 |metaIDsToIgnore|no|String[]||All `services.json` layers listed will not be shown in the layer tree. Only for tree-type `auto`.|false|
 |metaIDsToMerge|no|String[]||All layers found in the `services.json` regarding these meta IDs are merged to a single layer of the layer tree. Only for tree-type `auto`.|true|
-|layerIDsToStyle|no|**[layerIDsToStyle](#markdown-header-portalconfigtreelayeridstostyle)**[]||Special implementation for a HVV (Hamburg public transportation) service. Contains objects to request various styles of a layer id. Only for tree-type `auto`.|true|
+|layerIDsToStyle|no|||Special implementation for a HVV (Hamburg public transportation) service. Contains objects to request various styles of a layer id. Only for tree-type `auto`.|true|
 |highlightedFeatures|no|**[highlightedFeatures](#markdown-header-portalconfigtreehighlightedfeatures)**||Configuration in addition to feature highlighting.|false|
 |layerPills|no|**[layerPills](#markdown-header-portalconfigtreelayerpills)**||Configuration of LayerPills.|false|
 
