@@ -60,7 +60,7 @@ Konfiguration der Themenbaumes
 |layerIDsToIgnore|nein|String[]||Liste von `services.json`-Layer-Ids, die nicht im Baum angezeigt werden sollen. Nur für den Baum-Typ `auto`.|false|
 |metaIDsToIgnore|nein|String[]||Alle in der `services.json` gefundenen Layer, die diesen Meta-IDs entsprechen, werden nicht im Baum angezeigt. Nur für den Baum-Typ `auto`.|false|
 |metaIDsToMerge|nein|String[]||Alle in der `services.json` gefundenen Layer, die diesen Meta-IDs entsprechen, werden zu einer einzigen Layer im Baum zusammengeführt. Nur für den Baum-Typ `auto`.|true|
-|layerIDsToStyle|nein|||Spezielle Implementierung für einen HVV-Dienst (Hamburger Verkehrsbetriebe). Enthält Objekte zur Abfrage verschiedener Stile einer Layer-ID. Nur für den Baum-Typ `auto`.|true|
+|layerIDsToStyle|nein|**[layerIDsToStyle](#markdown-header-portalconfigtreelayeridstostyle)**[]||Spezielle Implementierung für einen HVV-Dienst (Hamburger Verkehrsbetriebe). Enthält Objekte zur Abfrage verschiedener Stile einer Layer-ID. Nur für den Baum-Typ `auto`.|true|
 |highlightedFeatures|nein|**[highlightedFeatures](#markdown-header-portalconfigtreehighlightedfeatures)**||Konfiguration zusätzlich zum Highlighting von Features.|false|
 |layerPills|nein|**[layerPills](#markdown-header-portalconfigtreelayerpills)**||Konfiguration der LayerPills.|false|
 
@@ -89,6 +89,30 @@ Konfiguration der Themenbaumes
 }
 ```
 
+***
+### Portalconfig.tree.layerIDsToStyle
+
+|Name|Required|Type|Default|Description|
+|----|--------|----|-------|-----------|
+|id|nein|String||id des Layers in der `services.json`|
+|styles|nein|String/String[]||Zu verwendender Stil als String; wenn mehrere Stile verwendet werden sollen, werden sie in einem Array aufgeführt.|
+|name|nein|String/String[]||Zu verwendender Name als String; wenn mehrere Namen verwendet werden sollen, werden sie in einem Array aufgelistet.|
+|legendUrl|nein|String/String[]||URL des Legendenbildes, das als String verwendet werden soll; wenn mehrere Legendenbilder verwendet werden sollen, werden ihre URLs in einem Array aufgeführt.|
+
+**Beispiel**
+
+```json
+{
+    "layerIDsToStyle": [
+        {
+            "id": "1935",
+            "styles": ["geofox_Faehre", "geofox-bahn", "geofox-bus", "geofox_BusName"],
+            "name": ["Fährverbindungen", "Bahnlinien", "Buslinien", "Busliniennummern"],
+            "legendURL": ["http://geoportal.metropolregion.hamburg.de/legende_mrh/hvv-faehre.png", "http://geoportal.metropolregion.hamburg.de/legende_mrh/hvv-bahn.png", "http://geoportal.metropolregion.hamburg.de/legende_mrh/hvv-bus.png", "http://87.106.16.168/legende_mrh/hvv-bus.png"]
+        }
+    ]
+}
+```
 ***
 
 #### Portalconfig.tree.highlightedFeatures
