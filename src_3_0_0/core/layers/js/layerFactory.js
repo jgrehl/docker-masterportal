@@ -38,8 +38,15 @@ const layerTypes2d = {
  * @returns {Layer} The layer instance.
  */
 function createLayer (layerConf, mapMode) {
-    const typ = layerConf?.typ?.toUpperCase();
-    let layer;
+    let layer,
+        typ;
+
+    if (layerConf?.typ?.toUpperCase() === "WMS" && layerConf?.time) {
+        typ = "WMSTime";
+    }
+    else {
+        typ = layerConf?.typ?.toUpperCase();
+    }
 
     if (layerTypes2d[typ]) {
         layer = new layerTypes2d[typ](layerConf);
