@@ -383,8 +383,8 @@ describe("src_3_0_0/modules/routing/store/directions/actionsDirections.js", () =
             };
             const waypoint = await actionsDirections.addWaypoint({state}, {
                 index: 2,
-                feature: null, displayName: "name", 
-                coordinates: [1,2],
+                feature: null, displayName: "name",
+                coordinates: [1, 2],
                 fromExtern: true
             });
 
