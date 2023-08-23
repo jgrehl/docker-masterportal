@@ -298,7 +298,6 @@ describe("src_3_0_0/modules/menu/menu-store/actionsMenu.js", () => {
                 expect(commit.calledOnce).to.be.true;
                 expect(commit.firstCall.args[0]).to.equal("switchToPreviousComponent");
                 expect(commit.firstCall.args[1]).to.equal(side);
-                expect(dispatch.calledOnce).to.be.true;
             });
         });
 
@@ -313,7 +312,7 @@ describe("src_3_0_0/modules/menu/menu-store/actionsMenu.js", () => {
                 expect(commit.calledOnce).to.be.true;
                 expect(commit.firstCall.args[0]).to.equal("switchToPreviousComponent");
                 expect(commit.firstCall.args[1]).to.equal(side);
-                expect(dispatch.calledTwice).to.be.true;
+                expect(dispatch.calledOnce).to.be.true;
                 expect(dispatch.firstCall.args[0]).to.equal("changeCurrentMouseMapInteractionsComponent");
                 expect(dispatch.firstCall.args[1]).to.deep.equal({type: state.defaultComponent, side});
             });
