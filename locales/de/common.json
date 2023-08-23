@@ -1320,22 +1320,22 @@
                 // "getGeometryTypeFromOAFFetchfailedMessage": "Details: Die API antwortet nicht."
             // }
         // },
-        "wmsTime": {
-            "layerSwiper": {
-                "description": "Der Swiper kann mithilfe der Maus oder den Pfeiltasten der Tastatur bewegt werden. Bei der Nutzung der Pfeiltasten wird der Swiper {{amount}}px in die entsprechende Richtung bewegt.",
-                "title": "Layer vergleichen"
-            },
-            "timeSlider": {
-                "buttons": {
-                    "backward": "Einen Zeitpunkt zurück",
-                    "deactivateLayerSwiper": "Layer entfernen",
-                    "forward": "Einen Zeitpunkt voran",
-                    "layerSwiper": "Zeitpunkte vergleichen",
-                    "play": "Ein automatisches Abspielen aller Zeitpunkte, ausgehend vom aktuell ausgewählten Zeitpunkt"
-                },
-                "inputRangeLabel": "Einen Zeitpunkt auswählen"
-            }
-        },
+        // "wmsTime": {
+        //     "layerSwiper": {
+        //         "description": "Der Swiper kann mithilfe der Maus oder den Pfeiltasten der Tastatur bewegt werden. Bei der Nutzung der Pfeiltasten wird der Swiper {{amount}}px in die entsprechende Richtung bewegt.",
+        //         "title": "Layer vergleichen"
+        //     },
+        //     "timeSlider": {
+        //         "buttons": {
+        //             "backward": "Einen Zeitpunkt zurück",
+        //             "deactivateLayerSwiper": "Layer entfernen",
+        //             "forward": "Einen Zeitpunkt voran",
+        //             "layerSwiper": "Zeitpunkte vergleichen",
+        //             "play": "Ein automatisches Abspielen aller Zeitpunkte, ausgehend vom aktuell ausgewählten Zeitpunkt"
+        //         },
+        //         "inputRangeLabel": "Einen Zeitpunkt auswählen"
+        //     }
+        // },
         "legend": {
             "name": "Legende",
             // "linkToPdf": "Zur externen Legende (PDF)",
