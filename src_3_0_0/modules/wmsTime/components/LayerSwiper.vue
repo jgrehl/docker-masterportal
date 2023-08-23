@@ -53,6 +53,7 @@ export default {
 @import "~variables";
 
 button {
+    pointer-events: all;
     width: 50px;
     background-color: $light_grey;
     height: 30px;

@@ -12,6 +12,11 @@ export default {
     computed: {
         ...mapGetters("Modules/WmsTime", ["currentTimeSliderObject", "layerAppendix", "layerSwiper", "minWidth", "timeSlider", "visibility"])
     },
+    watch: {
+        currentTimeSliderObject () {
+            console.log(this.currentTimeSliderObject);
+        }
+    },
     created () {
         window.addEventListener("resize", this.windowWidthChanged);
     },
@@ -31,12 +36,12 @@ export default {
         <TimeSlider
             v-if="timeSlider.active"
             :class="{'moveLeft': layerSwiper.active && minWidth}"
-            :layer-id="currentTimeSliderObject.currentLayerId"
+            :layer-id="currentTimeSliderObject.layerId"
         />
         <TimeSlider
             v-if="timeSlider.active && layerSwiper.active && minWidth"
             :class="{'moveRight': layerSwiper.active}"
-            :layer-id="currentTimeSliderObject.currentLayerId + layerAppendix"
+            :layer-id="currentTimeSliderObject.layerId"
         />
         <LayerSwiper v-if="layerSwiper.active && minWidth" />
     </div>
