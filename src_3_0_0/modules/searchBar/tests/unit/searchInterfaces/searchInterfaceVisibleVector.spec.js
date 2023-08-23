@@ -303,6 +303,13 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceVisibleVec
                             10,
                             10
                         ]
+                    },
+                    startRouting: {
+                        coordinates: [
+                            10,
+                            10
+                        ],
+                        name: "10,10"
                     }
                 }
             );
