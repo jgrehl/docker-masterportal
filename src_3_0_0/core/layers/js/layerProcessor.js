@@ -141,7 +141,6 @@ function handleSingleTimeLayer (isSelected, layer) {
             //     }
             // });
 
-            debugger;
             store.commit("Modules/WmsTime/setTimeSliderActive", {
                 active: true,
                 currentLayerId: timeLayer.get("id"),

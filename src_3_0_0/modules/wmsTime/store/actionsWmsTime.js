@@ -1,5 +1,7 @@
 import getPosition from "../utils/getPosition";
 import {getRenderPixel} from "ol/render";
+import layerCollection from "../../../core/layers/js/layerCollection";
+import {treeSubjectsKey} from "../../../shared/js/utils/constants";
 
 const actions = {
     windowWidthChanged ({commit, dispatch, state, getters}) {
@@ -14,60 +16,57 @@ const actions = {
      * If the LayerSwiper is deactivated, the second layer is deactivated and removed from the ModelList.
      *
      * @param {String} id Id of the Layer that should be toggled.
-     * @fires Core#RadioTriggerUtilRefreshTree
-     * @fires Core.ModelList#RadioTriggerModelListAddModelsByAttributes
-     * @fires Core.ModelList#RadioRequestModelListGetModelByAttributes
-     * @fires Core.ModelList#RadioTriggerModelListRemoveModelsById
-     * @fires Core.ModelList#RadioTriggerModelListSetModelAttributesById
-     * @fires Core.ConfigLoader#RadioTriggerParserAddLayer
-     * @fires Core.ConfigLoader#RadioTriggerParserRemoveItem
      * @returns {void}
      */
-    toggleSwiper ({commit, state}, id) {
-        debugger;
+    async toggleSwiper ({commit, state, dispatch}, id) {
         commit("setLayerSwiperActive", !state.layerSwiper.active);
 
         const secondId = id.endsWith(state.layerAppendix) ? id : id + state.layerAppendix,
-            layerModel = Radio.request("ModelList", "getModelByAttributes", {id: state.layerSwiper.active ? id : secondId});
+            layerId = state.layerSwiper.active ? id : secondId,
+            layer = layerCollection.getLayerById(layerId);
 
         if (state.layerSwiper.active) {
-            const {name, parentId, transparent, level, layers, styles, url, version,
-                gfiAttributes, featureCount, time} = layerModel.attributes;
+            const {name, time, url, level, layers, version, parentId, gfiAttributes, featureCount} = layer.attributes;
 
-            commit("setLayerSwiperSourceLayer", layerModel.get("layer"));
+            commit("setLayerSwiperSourceLayer", layer);
 
-            Radio.trigger("Parser", "addLayer",
-                name + "_second", secondId, parentId,
-                level, layers, url, version,
-                {
-                    transparent,
-                    isSelected: true,
-                    styles: styles,
+            await dispatch("addLayerToLayerConfig", {
+                layerConfig: {
+                    id: secondId,
+                    name: name + "_second",
+                    showInLayerTree: true,
+                    typ: "WMS",
+                    type: "layer",
+                    visibility: true,
+                    time,
+                    url,
+                    level,
+                    layers,
+                    version,
+                    parentId,
                     legendURL: "ignore",
                     gfiAttributes: gfiAttributes,
-                    featureCount: featureCount,
-                    time
-                }
-            );
-            Radio.trigger("ModelList", "addModelsByAttributes", {id: secondId});
-            commit("setLayerSwiperTargetLayer", Radio.request("ModelList", "getModelByAttributes", {id: secondId}).get("layer"));
+                    featureCount: featureCount
+                },
+                parentKey: treeSubjectsKey
+            }, {root: true});
+
+            commit("setLayerSwiperTargetLayer", layerCollection.getLayerById(secondId));
         }
         else {
             // If the button of the "original" window is clicked, it is assumed, that the time value selected in the added window is desired to be further displayed.
             if (!id.endsWith(state.layerAppendix)) {
-                const {TIME} = layerModel.get("layerSource").params_,
-                    {transparency} = layerModel.attributes;
+                const {TIME} = layer.getLayerSource.params_,
+                    {transparency} = layer.attributes;
 
-                layerModel.updateTime(id, TIME);
-                Radio.trigger("ModelList", "setModelAttributesById", id, {transparency});
+                layer.updateTime(id, TIME);
+                // Radio.trigger("ModelList", "setModelAttributesById", id, {transparency});
                 commit("setTimeSliderDefaultValue", TIME);
             }
 
-            mapCollection.getMap("2D").removeLayer(layerModel.get("layer"));
-            Radio.trigger("ModelList", "removeModelsById", secondId);
-            Radio.trigger("Parser", "removeItem", secondId);
+            mapCollection.getMap("2D").removeLayer(layer.getLayer());
+            layerCollection.removeLayerById(id);
         }
-        Radio.trigger("Util", "refreshTree");
     },
     /**
      * Sets the postion of the layerSwiper to state according to the x-coordinate of the mousedown event
@@ -88,18 +87,18 @@ const actions = {
      *
      * @returns {void}
      */
-    updateMap ({state, rootGetters, dispatch}) {
+    async updateMap ({state, rootGetters, dispatch}) {
         if (!state.timeSlider.playing) {
-            mapCollection.getMap(rootGetters["Maps/mode"]).render();
+            await mapCollection.getMap(rootGetters["Maps/mode"]).render();
         }
 
-        state.layerSwiper.targetLayer?.once("prerender", renderEvent => dispatch("drawLayer", renderEvent));
-        state.layerSwiper.targetLayer?.once("postrender", ({context}) => {
+        state.layerSwiper.targetLayer?.getLayer().once("prerender", renderEvent => dispatch("drawLayer", renderEvent));
+        state.layerSwiper.targetLayer?.getLayer().once("postrender", ({context}) => {
             context.restore();
         });
 
-        state.layerSwiper.sourceLayer?.once("prerender", renderEvent => dispatch("drawLayer", renderEvent));
-        state.layerSwiper.sourceLayer?.once("postrender", ({context}) => {
+        state.layerSwiper.sourceLayer?.getLayer().once("prerender", renderEvent => dispatch("drawLayer", renderEvent));
+        state.layerSwiper.sourceLayer?.getLayer().once("postrender", ({context}) => {
             context.restore();
             if (!state.layerSwiper.active) {
                 mapCollection.getMap(rootGetters["Maps/mode"]).render();

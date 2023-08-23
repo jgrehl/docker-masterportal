@@ -1,5 +1,6 @@
 import Layer2dRaster from "./layer2dRaster";
 import WMSLayer from "./layer2dRasterWms";
+import layerCollection from "./layerCollection";
 import store from "../../../app-store";
 import handleAxiosResponse from "../../../shared/js/utils/handleAxiosResponse";
 import detectIso8601Precision from "../../../shared/js/utils/detectIso8601Precision";
@@ -279,10 +280,9 @@ Layer2dRasterWmsTimeLayer.prototype.prepareTime = function (attrs) {
             }
         })
         .catch(error => {
-            this.removeLayer();
+            this.removeLayer(attrs.id);
             // remove layer from project completely
-            Radio.trigger("Parser", "removeItem", attrs.id);
-            Radio.trigger("Util", "refreshTree");
+            layerCollection.removeLayerById(attrs.id);
 
             console.error(i18next.t("common:modules.core.modelList.layer.wms.errorTimeLayer", {error, id: attrs.id}));
         });
@@ -345,6 +345,6 @@ Layer2dRasterWmsTimeLayer.prototype.setIsVisibleInMap = function (newValue) {
  */
 Layer2dRasterWmsTimeLayer.prototype.updateTime = function (id, newValue) {
     if (id === this.get("id")) {
-        this.get("layerSource").updateParams({"TIME": newValue});
+        this.getLayerSource().updateParams({"TIME": newValue});
     }
 };
