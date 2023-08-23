@@ -10,16 +10,13 @@ describe("src_3_0_0/modules/searchBar/components/ActionButton.vue", () => {
     let store,
         wrapper,
         callActionSpy,
-        searchBarActions;
+        searchBarActions,
+        isModuleAvailable;
 
     beforeEach(() => {
+        isModuleAvailable = true;
         searchBarActions = {
-            activateLayerInTopicTree: sinon.spy(),
-            addLayerToTopicTree: sinon.spy(),
-            highlightFeature: sinon.spy(),
-            openGetFeatureInfo: sinon.spy(),
-            setMarker: sinon.spy(),
-            zoomToResult: sinon.spy()
+            activateAction: sinon.spy()
         };
         store = createStore({
             namespaced: true,
@@ -33,10 +30,26 @@ describe("src_3_0_0/modules/searchBar/components/ActionButton.vue", () => {
                             actions: searchBarActions,
                             mutations: {
                                 setSearchResultsActive: sinon.spy()
+                            },
+                            getters: {
+                                iconsByActions: sinon.stub().returns(
+                                    {
+                                        addLayerToTopicTree: "bi-plus-circle",
+                                        activateLayerInTopicTree: "bi-eye",
+                                        highlightFeature: "bi-lightbulb",
+                                        openGetFeatureInfo: "bi-info-circle",
+                                        setMarker: "bi-geo-alt-fill",
+                                        zoomToResult: "bi-zoom-in",
+                                        startRouting: "bi-signpost-2-fill"
+                                    }
+                                )
                             }
                         }
                     }
                 }
+            },
+            getters: {
+                isModuleAvailable: () => () => isModuleAvailable
             }
         });
         callActionSpy = sinon.spy(ActionButton.methods, "callAction");
@@ -51,8 +64,7 @@ describe("src_3_0_0/modules/searchBar/components/ActionButton.vue", () => {
             const props = {
                 actionName: "setMarker",
                 actionArgs: {
-                    coordinates: [1, 2],
-                    closeResults: true
+                    coordinates: [1, 2]
                 }
             };
 
@@ -68,16 +80,15 @@ describe("src_3_0_0/modules/searchBar/components/ActionButton.vue", () => {
             expect(wrapper.find("i").attributes("class")).to.be.equals(wrapper.vm.iconsByActions[props.actionName]);
             await wrapper.find("button").trigger("click");
             expect(callActionSpy.calledOnce).to.be.true;
-            expect(searchBarActions.setMarker.calledOnce).to.be.true;
-            expect(searchBarActions.setMarker.firstCall.args[1]).to.be.deep.equals(props.actionArgs);
+            expect(searchBarActions.activateAction.calledOnce).to.be.true;
+            expect(searchBarActions.activateAction.firstCall.args[1]).to.be.deep.equals(props);
         });
 
         it("should render button with 'zoomToResult' icon", async () => {
             const props = {
                 actionName: "zoomToResult",
                 actionArgs: {
-                    coordinates: [1, 2],
-                    closeResults: true
+                    coordinates: [1, 2]
                 }
             };
 
@@ -93,8 +104,8 @@ describe("src_3_0_0/modules/searchBar/components/ActionButton.vue", () => {
             expect(wrapper.find("i").attributes("class")).to.be.equals(wrapper.vm.iconsByActions[props.actionName]);
             await wrapper.find("button").trigger("click");
             expect(callActionSpy.calledOnce).to.be.true;
-            expect(searchBarActions.zoomToResult.calledOnce).to.be.true;
-            expect(searchBarActions.zoomToResult.firstCall.args[1]).to.be.deep.equals(props.actionArgs);
+            expect(searchBarActions.activateAction.calledOnce).to.be.true;
+            expect(searchBarActions.activateAction.firstCall.args[1]).to.be.deep.equals(props);
         });
 
         it("should render button with 'openGetFeatureInfo' icon", async () => {
@@ -106,8 +117,7 @@ describe("src_3_0_0/modules/searchBar/components/ActionButton.vue", () => {
                     },
                     layer: {
                         typ: "WMS"
-                    },
-                    closeResults: true
+                    }
                 }
             };
 
@@ -123,8 +133,8 @@ describe("src_3_0_0/modules/searchBar/components/ActionButton.vue", () => {
             expect(wrapper.find("i").attributes("class")).to.be.equals(wrapper.vm.iconsByActions[props.actionName]);
             await wrapper.find("button").trigger("click");
             expect(callActionSpy.calledOnce).to.be.true;
-            expect(searchBarActions.openGetFeatureInfo.calledOnce).to.be.true;
-            expect(searchBarActions.openGetFeatureInfo.firstCall.args[1]).to.be.deep.equals(props.actionArgs);
+            expect(searchBarActions.activateAction.calledOnce).to.be.true;
+            expect(searchBarActions.activateAction.firstCall.args[1]).to.be.deep.equals(props);
         });
 
         it("should render button with 'highlightFeature' icon", async () => {
@@ -136,8 +146,7 @@ describe("src_3_0_0/modules/searchBar/components/ActionButton.vue", () => {
                     },
                     layer: {
                         typ: "WMS"
-                    },
-                    closeResults: true
+                    }
                 }
             };
 
@@ -153,8 +162,8 @@ describe("src_3_0_0/modules/searchBar/components/ActionButton.vue", () => {
             expect(wrapper.find("i").attributes("class")).to.be.equals(wrapper.vm.iconsByActions[props.actionName]);
             await wrapper.find("button").trigger("click");
             expect(callActionSpy.calledOnce).to.be.true;
-            expect(searchBarActions.highlightFeature.calledOnce).to.be.true;
-            expect(searchBarActions.highlightFeature.firstCall.args[1]).to.be.deep.equals(props.actionArgs);
+            expect(searchBarActions.activateAction.calledOnce).to.be.true;
+            expect(searchBarActions.activateAction.firstCall.args[1]).to.be.deep.equals(props);
         });
 
         it("should render button with 'activateLayerInTopicTree' icon", async () => {
@@ -164,8 +173,7 @@ describe("src_3_0_0/modules/searchBar/components/ActionButton.vue", () => {
                     layerId: "layerId",
                     source: {
                         id: "layerId"
-                    },
-                    closeResults: true
+                    }
                 }
             };
 
@@ -181,8 +189,8 @@ describe("src_3_0_0/modules/searchBar/components/ActionButton.vue", () => {
             expect(wrapper.find("i").attributes("class")).to.be.equals(wrapper.vm.iconsByActions[props.actionName]);
             await wrapper.find("button").trigger("click");
             expect(callActionSpy.calledOnce).to.be.true;
-            expect(searchBarActions.activateLayerInTopicTree.calledOnce).to.be.true;
-            expect(searchBarActions.activateLayerInTopicTree.firstCall.args[1]).to.be.deep.equals(props.actionArgs);
+            expect(searchBarActions.activateAction.calledOnce).to.be.true;
+            expect(searchBarActions.activateAction.firstCall.args[1]).to.be.deep.equals(props);
         });
 
         it("should render button with 'addLayerToTopicTree' icon", async () => {
@@ -192,8 +200,7 @@ describe("src_3_0_0/modules/searchBar/components/ActionButton.vue", () => {
                     layerId: "layerId",
                     source: {
                         id: "layerId"
-                    },
-                    closeResults: true
+                    }
                 }
             };
 
@@ -209,10 +216,57 @@ describe("src_3_0_0/modules/searchBar/components/ActionButton.vue", () => {
             expect(wrapper.find("i").attributes("class")).to.be.equals(wrapper.vm.iconsByActions[props.actionName]);
             await wrapper.find("button").trigger("click");
             expect(callActionSpy.calledOnce).to.be.true;
-            expect(searchBarActions.addLayerToTopicTree.calledOnce).to.be.true;
-            expect(searchBarActions.addLayerToTopicTree.firstCall.args[1]).to.be.deep.equals(props.actionArgs);
+            expect(searchBarActions.activateAction.calledOnce).to.be.true;
+            expect(searchBarActions.activateAction.firstCall.args[1]).to.be.deep.equals(props);
         });
     });
+    describe("methods", () => {
+        it("displayAction shall return true if actionName is not 'startRouting'", () => {
+            const props = {
+                actionName: "addLayerToTopicTree",
+                actionArgs: { }
+            };
 
+            wrapper = mount(ActionButton, {
+                global: {
+                    plugins: [store]
+                },
+                props
+            });
+
+            expect(wrapper.vm.displayAction()).to.be.true;
+        });
+        it("displayAction shall return true if actionName is 'startRouting' and routing is available", () => {
+            const props = {
+                actionName: "startRouting",
+                actionArgs: { }
+            };
+
+            wrapper = mount(ActionButton, {
+                global: {
+                    plugins: [store]
+                },
+                props
+            });
+
+            expect(wrapper.vm.displayAction()).to.be.true;
+        });
+        it("displayAction shall return false if actionName is 'startRouting' and routing is not available", () => {
+            const props = {
+                actionName: "startRouting",
+                actionArgs: { }
+            };
+
+            isModuleAvailable = false;
+            wrapper = mount(ActionButton, {
+                global: {
+                    plugins: [store]
+                },
+                props
+            });
+
+            expect(wrapper.vm.displayAction()).to.be.false;
+        });
+    });
 
 });

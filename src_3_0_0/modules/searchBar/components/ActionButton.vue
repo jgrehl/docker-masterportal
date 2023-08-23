@@ -29,22 +29,9 @@ export default {
     },
     methods: {
         ...mapActions("Modules/SearchBar", [
-            "activateLayerInTopicTree",
-            "addLayerToTopicTree",
-            "highlightFeature",
-            "openGetFeatureInfo",
-            "setMarker",
-            "zoomToResult",
-            "startRouting"
+            "activateAction"
         ]),
         ...mapMutations("Modules/SearchBar", ["setSearchResultsActive"]),
-        /**
-         * Calls the event of this button.
-         * @returns {void}
-         */
-        callAction () {
-            this[this.actionName](this.actionArgs);
-        },
         /**
          * Checks for special actions, if an icon for the action shall be displayed.
          * Action 'startRouting': checks if routing module is available.
@@ -55,6 +42,14 @@ export default {
                 return this.isModuleAvailable("routing");
             }
             return true;
+        },
+        /**
+         * Calls the event of this button.
+         * @returns {void}
+         */
+        callAction () {
+            this.activateAction({actionName: this.actionName, actionArgs: this.actionArgs});
+
         }
     }
 };

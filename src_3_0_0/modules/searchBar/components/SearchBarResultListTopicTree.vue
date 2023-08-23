@@ -32,7 +32,7 @@ export default {
     },
     methods: {
         ...mapActions("Modules/SearchBar", [
-            "activateAction"
+            "activateActions"
         ]),
         ...mapMutations("Modules/SearchBar", [
             "setSelectedSearchResults"
@@ -45,7 +45,7 @@ export default {
          */
         activateOnClickAction () {
             this.selectedSearchResults.forEach(selectedSearchResult => {
-                this.activateAction({
+                this.activateActions({
                     searchResult: selectedSearchResult,
                     actionType: "onClick"
                 });

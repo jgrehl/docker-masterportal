@@ -60,8 +60,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceGazetteer.
                         buttons: {
                             startRouting: {
                                 coordinates: [10, 20],
-                                name: searchResults[0].name,
-                                closeResults: true
+                                name: searchResults[0].name
                             }
                         }
                     },
@@ -115,8 +114,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceGazetteer.
                     buttons: {
                         startRouting: {
                             coordinates: [10, 20],
-                            name: searchResult.name,
-                            closeResults: true
+                            name: searchResult.name
                         }
                     },
                     onClick: {
@@ -157,8 +155,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceGazetteer.
                     },
                     startRouting: {
                         coordinates: [10, 20],
-                        name: searchResult.name,
-                        closeResults: true
+                        name: searchResult.name
                     }
                 }
             );
