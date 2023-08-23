@@ -29,7 +29,7 @@ export default {
     },
     methods: {
         ...mapActions("Modules/SearchBar", [
-            "activateAction"
+            "activateActions"
         ])
     }
 };
@@ -43,10 +43,10 @@ export default {
                 class="btn btn-light d-flex"
                 :title="searchResult.toolTip ? searchResult.toolTip : searchResult.name"
                 :aria-label="searchResult.toolTip ? searchResult.toolTip : searchResult.name"
-                @click="activateAction({searchResult: searchResult, actionType: 'onClick'})"
-                @keydown.enter="activateAction({searchResult: searchResult, actionType: 'onClick'})"
-                @mouseover="activateAction({searchResult: searchResult, actionType: 'onHover'})"
-                @focus="activateAction({searchResult: searchResult, actionType: 'onHover'})"
+                @click="activateActions({searchResult: searchResult, actionType: 'onClick'})"
+                @keydown.enter="activateActions({searchResult: searchResult, actionType: 'onClick'})"
+                @mouseover="activateActions({searchResult: searchResult, actionType: 'onHover'})"
+                @focus="activateActions({searchResult: searchResult, actionType: 'onHover'})"
             >
                 <span class="btn-title">
                     {{ searchResult.name }}
