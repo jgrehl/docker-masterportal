@@ -3,7 +3,7 @@ import {expect} from "chai";
 import sinon from "sinon";
 
 const {
-    activateAction
+    activateActions
 } = actions;
 
 describe("src_3_0_0/modules/searchBar/store/actions/actionsSearchBarResultList.js", () => {
@@ -17,7 +17,7 @@ describe("src_3_0_0/modules/searchBar/store/actions/actionsSearchBarResultList.j
         sinon.restore();
     });
 
-    describe("activateAction", () => {
+    describe("activateActions", () => {
         it("should dispatch the onClick event", () => {
             const searchResult = {
                     category: "Thema (externe Fachdaten)",
@@ -42,7 +42,7 @@ describe("src_3_0_0/modules/searchBar/store/actions/actionsSearchBarResultList.j
                 },
                 actionType = "onClick";
 
-            activateAction({dispatch}, {searchResult, actionType});
+            activateActions({dispatch}, {searchResult, actionType});
 
             expect(dispatch.calledOnce).to.be.true;
             expect(dispatch.firstCall.args[0]).to.equals("addLayerToTopicTree");
