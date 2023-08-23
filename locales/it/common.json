@@ -1231,22 +1231,6 @@
                 "getGeometryTypeFromOAFFetchfailedMessage": "Dettagli: L'API non risponde."
             }
         },
-        "wmsTime": {
-            "layerSwiper": {
-                "description": "Lo swiper può essere spostato con il mouse o con i tasti freccia della tastiera. Quando si utilizzano i tasti freccia, il cursore viene spostato di {{amount}}px nella direzione corrispondente.",
-                "title": "Stratificatore"
-            },
-            "timeSlider": {
-                "buttons": {
-                    "backward": "Una volta indietro",
-                    "deactivateLayerSwiper": "Rimuovere layer",
-                    "forward": "Un punto di vantaggio",
-                    "layerSwiper": "Confronta i tempi",
-                    "play": "Riproduzione automatica di tutti i punti temporali, a partire dal punto temporale attualmente selezionato"
-                },
-                "inputRangeLabel": "Selezionare un orario"
-            }
-        },
         "legend": {
             "name": "Legenda",
             "linkToPdf": "Vai all legenda esterna (PDF)",

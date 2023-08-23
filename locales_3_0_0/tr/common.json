@@ -816,6 +816,22 @@
           "update": ""
         }
       }
+    },
+    "wmsTime": {
+      "layerSwiper": {
+          "description": "Kaydırıcı (Swiper i), fare (mouse) veya klavye ok tuşları kullanılarak hareket ettirilebilirsiniz. Ok tuşlarını kullanırken, {{amount}}px kaydırıcı ilgili yönde hareket eder.",
+          "title": "Katmanları karşılaştırın"
+      },
+      "timeSlider": {
+          "buttons": {
+              "backward": "Geriye doğru bir zaman",
+              "deactivateLayerSwiper": "Katmanı sil",
+              "forward": "Öne doğru bir zaman",
+              "layerSwiper": "Zamanları karşılaştır",
+              "play": "O anda seçili olan zaman noktasına göre zaman içindeki tüm noktaların otomatik olarak yeniden oynatılması"
+          },
+          "inputRangeLabel": "Bir zaman dilimi seçin"
+      }
     }
   },
   "shared": {
