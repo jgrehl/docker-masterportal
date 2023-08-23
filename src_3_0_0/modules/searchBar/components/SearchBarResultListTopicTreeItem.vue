@@ -59,8 +59,8 @@ export default {
 
 <template lang="html">
     <div :id="'search-bar-result-list-topic-tree-item-' + searchResult.id">
-        <div
-            class="d-flex flex-row p-1 pb-2 search-bar-result-list-topic-tree-item-title"
+        <button
+            class="d-flex flex-row p-1 pb-2 search-bar-result-list-topic-tree-item-title btn-transparent"
             @click="addOrRemoveLayer"
             @keydown.enter="addOrRemoveLayer"
         >
@@ -84,7 +84,7 @@ export default {
                     {{ $t(searchResult.name) }}
                 </span>
             </label>
-        </div>
+        </button>
     </div>
 </template>
 
@@ -103,5 +103,10 @@ export default {
 
 .search-bar-result-list-topic-tree-item-label {
     cursor: pointer;
+}
+.btn-transparent {
+    background-color: transparent;
+    border: none;
+    text-align:left;
 }
 </style>
