@@ -16,7 +16,6 @@ const mutations = {
         ];
     },
     setTimeSliderActive ({timeSlider}, {active, currentLayerId, playbackDelay}) {
-        debugger;
         timeSlider.active = active;
         timeSlider.currentLayerId = currentLayerId;
         timeSlider.playbackDelay = playbackDelay;
