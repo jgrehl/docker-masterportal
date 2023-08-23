@@ -8,7 +8,7 @@ import {WKT} from "ol/format.js";
  */
 function getWKTGeom (content, geometryType = "POLYGON") {
     const format = new WKT(),
-        type = content?.geometryType ? content.geometryType : geometryType, // the default value is POLYGON because for type street, there is no geometryType defined. But it should be polygon
+        type = content?.geometryType ? content.geometryType.toUpperCase() : geometryType, // the default value is POLYGON because for type street, there is no geometryType defined. But it should be polygon
         geometry = content?.coordinate ? content.coordinate : content;
     let wkt,
         regExp;
