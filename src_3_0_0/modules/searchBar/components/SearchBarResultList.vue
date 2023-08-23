@@ -21,7 +21,6 @@ export default {
             required: true
         }
     },
-    inheritAttrs: false,
     data () {
         return {
             currentShowAllList: []
