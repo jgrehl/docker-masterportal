@@ -17,7 +17,7 @@ export default {
     },
     data: () => ({playing: false, playbackHandle: null, sliderValue: 0}),
     computed: {
-        ...mapGetters("Modules/WmsTime", ["timeRange", "minWidth", "layerSwiper"]),
+        ...mapGetters("Modules/WmsTime", ["timeRange", "minWidth", "layerSwiper", "timeSlider"]),
         sliderOptionCount () {
             return this.timeRange.length - 1;
         },
@@ -52,8 +52,6 @@ export default {
     },
     created () {
         this.sliderValue = this.timeRange.indexOf(this.defaultValue);
-        debugger;
-        console.log(this.layerId);
     },
     methods: {
         ...mapActions("Modules/WmsTime", ["toggleSwiper", "updateMap"]),
@@ -163,7 +161,7 @@ export default {
             <input
                 :id="'timeSlider-input-range-' + layerId"
                 type="range"
-                class="timeSlider-input-range-label-input"
+                class="timeSlider-input-range-label-input form-range"
                 :value="sliderValue"
                 :min="0"
                 :max="sliderOptionCount"
@@ -208,7 +206,7 @@ export default {
     flex-direction: column;
     background: white;
     box-shadow: $tool_box_shadow;
-
+    pointer-events: all;
     .timeSlider-control-row {
         display: flex;
         flex-direction: row;
