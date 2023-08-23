@@ -1,4 +1,3 @@
-//commons
 <script>
 import {mapGetters, mapActions, mapMutations} from "vuex";
 import SearchBarSuggestionList from "./SearchBarSuggestionList.vue";
@@ -28,6 +27,7 @@ export default {
             "suggestionListLength",
             "type"
         ]),
+
         /**
          * v-bind of search input value.
          */
@@ -117,7 +117,6 @@ export default {
         this.initializeModule({configPaths: this.configPaths, type: this.type});
         this.overwriteDefaultValues();
         this.instantiateSearchInterfaces(this.$searchInterfaceAddons);
-        this.setCurrentSide(this.portalConfig?.mainMenu?.searchBar !== undefined ? "mainMenu" : "secondaryMenu");
     },
     methods: {
         ...mapActions(["initializeModule"]),
@@ -166,13 +165,11 @@ export default {
                 />
             </button>
             <input
-                id="search-bar-input"
                 v-model="searchInputValue"
                 type="search"
                 class="form-control"
                 :placeholder="$t(placeholder)"
                 :aria-label="$t(placeholder)"
-                @click="resetMenu(currentSide)"
                 @input="startSearch"
                 @keydown.enter="startSearch"
             >
