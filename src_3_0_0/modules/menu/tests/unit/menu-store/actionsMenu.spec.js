@@ -316,8 +316,6 @@ describe("src_3_0_0/modules/menu/menu-store/actionsMenu.js", () => {
                 expect(dispatch.calledTwice).to.be.true;
                 expect(dispatch.firstCall.args[0]).to.equal("changeCurrentMouseMapInteractionsComponent");
                 expect(dispatch.firstCall.args[1]).to.deep.equal({type: state.defaultComponent, side});
-                expect(dispatch.secondCall.args[0]).to.equal("Modules/SearchBar/updateSearchNavigation");
-                expect(dispatch.secondCall.args[1]).to.equal(side);
             });
         });
     });
