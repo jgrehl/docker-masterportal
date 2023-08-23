@@ -137,8 +137,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceLocationFi
                         buttons: {
                             startRouting: {
                                 coordinates: [1, 2],
-                                name: searchResults[0].name,
-                                closeResults: true
+                                name: searchResults[0].name
                             }
                         }
                     },
@@ -197,8 +196,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceLocationFi
                         buttons: {
                             startRouting: {
                                 coordinates: [1, 2],
-                                name: searchResults[0].name,
-                                closeResults: true
+                                name: searchResults[0].name
                             }
                         }
                     },
@@ -252,8 +250,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceLocationFi
                         buttons: {
                             startRouting: {
                                 coordinates: [1, 2],
-                                name: searchResult.name,
-                                closeResults: true
+                                name: searchResult.name
                             }
                         }
                     },
@@ -309,8 +306,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceLocationFi
                         buttons: {
                             startRouting: {
                                 coordinates: [1, 2],
-                                name: searchResult.name,
-                                closeResults: true
+                                name: searchResult.name
                             }
                         }
                     },
@@ -347,8 +343,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceLocationFi
                     },
                     startRouting: {
                         coordinates: [1, 2],
-                        name: searchResult.name,
-                        closeResults: true
+                        name: searchResult.name
                     }
                 }
             );
