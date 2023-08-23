@@ -658,29 +658,6 @@ export default {
                     />
                 </div>
             </div>
-            <div
-                v-if="isGfiAvailable"
-                class="form-group form-group-sm row"
-            >
-                <label
-                    class="col-md-5 col-form-label pt-0"
-                    for="printGfi"
-                >
-                    {{ $t("common:modules.tools.print.withInfoLabel") }}
-                </label>
-                <div class="col-md-7">
-                    <div class="form-check">
-                        <input
-                            id="printGfi"
-                            type="checkbox"
-                            class="form-check-input"
-                            :disabled="currentFeature === null"
-                            :checked="isGfiSelected"
-                            @change="setIsGfiSelected($event.target.checked)"
-                        >
-                    </div>
-                </div>
-            </div>
             <div class="form-group form-group-sm row">
                 <div class="col-md-12 d-flex justify-content-center">
                     <FlatButton
