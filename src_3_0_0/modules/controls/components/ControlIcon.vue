@@ -57,7 +57,7 @@ export default {
     <button
         type="button"
         :tabindex="disabled ? '-1' : '0'"
-        :class="['control-icon-controls', 'bootstrap-icon', 'btn', 'my-2', 'control-button-controls', 'btn-light']"
+        :class="['control-icon-controls', 'bootstrap-icon', 'btn', 'my-2', 'control-button-controls', 'btn-light', 'px-1']"
         :title="title"
         :disabled="disabled"
         @click.stop="onClick"
@@ -72,6 +72,7 @@ export default {
             v-else-if="iconClassOrSrc.includes('http')"
             :src="iconClassOrSrc"
             :alt="title"
+            class="icon-img"
         >
         <p
             v-else-if="buttonTitle !== ''"
@@ -118,5 +119,9 @@ export default {
             padding: .25rem 0 0 0
         }
 
+        .icon-img {
+            vertical-align: top;
+            height: 100%;
+        }
     }
 </style>
