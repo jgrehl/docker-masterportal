@@ -816,6 +816,11 @@
           "update": ""
         }
       }
+    },
+    "wmsTime": {
+      "layerSwiper": {
+          "title": "Confrontare gli strati"
+      }
     }
   },
   "shared": {
