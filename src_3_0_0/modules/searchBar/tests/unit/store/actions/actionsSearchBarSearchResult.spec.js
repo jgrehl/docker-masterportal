@@ -35,9 +35,12 @@ describe("src/modules/searchBar/store/actions/actionsSearchBarSearchResult.spec.
 
     describe("activateLayerInTopicTree", () => {
         it("should activate a layer in topic tree", () => {
-            const layerId = "123";
+            const layerId = "123",
+                rootGetters = {
+                    layerConfigById: () => sinon.stub().returns(true)
+                };
 
-            activateLayerInTopicTree({dispatch}, {layerId});
+            activateLayerInTopicTree({dispatch, rootGetters}, {layerId});
 
             expect(dispatch.calledOnce).to.be.true;
             expect(dispatch.firstCall.args[0]).to.equals("replaceByIdInLayerConfig");
@@ -61,8 +64,10 @@ describe("src/modules/searchBar/store/actions/actionsSearchBarSearchResult.spec.
                     id: layerId,
                     abc: "abc",
                     datasets: []
-                };
+                },
+                added = true;
 
+            dispatch = sinon.stub().resolves(added);
             addLayerToTopicTree({dispatch}, {layerId, source});
 
             expect(dispatch.calledOnce).to.be.true;

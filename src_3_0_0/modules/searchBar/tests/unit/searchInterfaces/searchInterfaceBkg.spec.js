@@ -113,8 +113,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceBkg.js", (
                         buttons: {
                             startRouting: {
                                 coordinates: [9.988176, 53.55481],
-                                name: searchResults[0].properties.text,
-                                closeResults: true
+                                name: searchResults[0].properties.text
                             }
                         }
                     },
@@ -154,8 +153,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceBkg.js", (
                     buttons: {
                         startRouting: {
                             coordinates: [9.988176, 53.55481],
-                            name: searchResults[0].properties.text,
-                            closeResults: true
+                            name: searchResults[0].properties.text
                         }
                     }
                 },
@@ -180,8 +178,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceBkg.js", (
                     },
                     startRouting: {
                         coordinates: [9.988176, 53.55481],
-                        name: searchResults[0].properties.text,
-                        closeResults: true
+                        name: searchResults[0].properties.text
                     }
                 }
             );
