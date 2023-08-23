@@ -266,7 +266,6 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceElasticSea
                             }
                         }
                     },
-                    featureButtons: undefined,
                     category: "modules.searchBar.type.subject",
                     id: "123",
                     icon: "bi-list-ul",
@@ -284,6 +283,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceElasticSea
                 _source: {
                     id: "123",
                     abc: "abc",
+                    name: "name",
                     geometry: {
                         coordinates: [10, 20]
                     }
@@ -301,6 +301,10 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceElasticSea
                     },
                     zoomToResult: {
                         coordinates: [10, 20]
+                    },
+                    startRouting: {
+                        coordinates: [10, 20],
+                        name: searchResult._source.name
                     }
                 }
             );
