@@ -4,7 +4,7 @@ import layerFactory from "../../../core/layers/js/layerFactory";
 import sortBy from "../../../shared/js/utils/sortBy";
 import FlatButton from "../../../shared/modules/buttons/components/FlatButton.vue";
 import LayerCheckBox from "../../layerTree/components/LayerCheckBox.vue";
-import SearchBar from "../../searchBar/components/SearchBar.vue";
+import SearchBar from "../../searchbar/components/SearchBar.vue";
 import LayerSelectionTreeNode from "./LayerSelectionTreeNode.vue";
 
 /**

@@ -3,7 +3,7 @@ import {mapActions, mapGetters, mapMutations} from "vuex";
 import MenuContainerBody from "./MenuContainerBody.vue";
 import ResizeHandle from "../../../shared/modules/resize/components/ResizeHandle.vue";
 import MenuContainerBodyRootLogo from "./MenuContainerBodyRootLogo.vue";
-import SearchBar from "../../searchBar/components/SearchBar.vue";
+import SearchBar from "../../searchbar/components/SearchBar.vue";
 
 /**
  * @module modules/MenuContainer
