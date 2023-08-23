@@ -90,30 +90,6 @@ Konfiguration der Themenbaumes
 ```
 
 ***
-### Portalconfig.tree.layerIDsToStyle
-
-|Name|Required|Type|Default|Description|
-|----|--------|----|-------|-----------|
-|id|nein|String||id des Layers in der `services.json`|
-|styles|nein|String/String[]||Zu verwendender Stil als String; wenn mehrere Stile verwendet werden sollen, werden sie in einem Array aufgeführt.|
-|name|nein|String/String[]||Zu verwendender Name als String; wenn mehrere Namen verwendet werden sollen, werden sie in einem Array aufgelistet.|
-|legendUrl|nein|String/String[]||URL des Legendenbildes, das als String verwendet werden soll; wenn mehrere Legendenbilder verwendet werden sollen, werden ihre URLs in einem Array aufgeführt.|
-
-**Beispiel**
-
-```json
-{
-    "layerIDsToStyle": [
-        {
-            "id": "1935",
-            "styles": ["geofox_Faehre", "geofox-bahn", "geofox-bus", "geofox_BusName"],
-            "name": ["Fährverbindungen", "Bahnlinien", "Buslinien", "Busliniennummern"],
-            "legendURL": ["http://geoportal.metropolregion.hamburg.de/legende_mrh/hvv-faehre.png", "http://geoportal.metropolregion.hamburg.de/legende_mrh/hvv-bahn.png", "http://geoportal.metropolregion.hamburg.de/legende_mrh/hvv-bus.png", "http://87.106.16.168/legende_mrh/hvv-bus.png"]
-        }
-    ]
-}
-```
-***
 
 #### Portalconfig.tree.highlightedFeatures
 Konfiguration zusätzlich zum Highlighting von Features. Wenn mit dem Werkzeug "Liste" oder "Features auswählen" mit "Auf dieses Feature zoomen" oder per Url-Parameter Features hervorgehoben werden, dann ist ein Layer mit diesen Features im Menü-Baum auswählbar.
