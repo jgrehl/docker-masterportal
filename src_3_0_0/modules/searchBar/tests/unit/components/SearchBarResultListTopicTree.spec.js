@@ -8,7 +8,7 @@ import SearchBarResultListTopicTreeComponent from "../../../components/SearchBar
 config.global.mocks.$t = key => key;
 
 describe("src_3_0_0/modules/searchBar/components/SearchBarResultListTopicTree.vue", () => {
-    let activateActionSpy,
+    let activateActionsSpy,
         store,
         wrapper;
 
@@ -65,7 +65,7 @@ describe("src_3_0_0/modules/searchBar/components/SearchBarResultListTopicTree.vu
         resultItems = searchResults;
 
     beforeEach(() => {
-        activateActionSpy = sinon.spy();
+        activateActionsSpy = sinon.spy();
 
         store = createStore({
             namespaces: true,
@@ -81,7 +81,7 @@ describe("src_3_0_0/modules/searchBar/components/SearchBarResultListTopicTree.vu
                                 selectedSearchResults: () => [searchResults[0]]
                             },
                             actions: {
-                                activateAction: activateActionSpy
+                                activateActions: activateActionsSpy
                             }
                         }
                     }
@@ -124,8 +124,8 @@ describe("src_3_0_0/modules/searchBar/components/SearchBarResultListTopicTree.vu
 
             wrapper.vm.activateOnClickAction();
 
-            expect(activateActionSpy.calledOnce).to.be.true;
-            expect(activateActionSpy.firstCall.args[1]).to.deep.equals({
+            expect(activateActionsSpy.calledOnce).to.be.true;
+            expect(activateActionsSpy.firstCall.args[1]).to.deep.equals({
                 searchResult: {
                     category: "Straße",
                     id: "BeidemNeuenKrahnStraße",
