@@ -108,6 +108,7 @@ SearchInterface.prototype.normalizeResultEvents = function (resultEvents, search
             resultEventsAsObject[event][action] = possibleActions[action];
         });
     });
+
     return resultEventsAsObject;
 };
 
