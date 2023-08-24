@@ -13,28 +13,34 @@ describe("src_3_0_0/modules/searchBar/components/SearchBarResultListTopicTreeIte
         selectedSearchResults,
         store,
         visibleLayerConfigs,
-        wrapper;
+        wrapper,
+        searchResults;
 
-    const searchResults = [
-        {
-            category: "Straße",
-            id: "BeidemNeuenKrahnStraße",
-            index: 0,
-            name: "Bei dem Neuen Krahn",
-            searchInterfaceId: "gazetteer",
-            displayedInfo: "",
-            icon: "bi-signpost",
-            imagePath: "",
-            toolTip: "toolTipAvailable",
-            events: {
-                onClick: {
-                    activateLayerInTopicTree: {
-                        layerId: "123"
-                    }
+    const resultOne =
+    {
+        category: "Straße",
+        id: "BeidemNeuenKrahnStraße",
+        index: 0,
+        name: "Bei dem Neuen Krahn",
+        searchInterfaceId: "gazetteer",
+        displayedInfo: "",
+        icon: "bi-signpost",
+        imagePath: "",
+        toolTip: "toolTipAvailable",
+        events: {
+            onClick: {
+                activateLayerInTopicTree: {
+                    layerId: "123"
+                }
+            },
+            buttons: {
+                activateLayerInTopicTree: {
+                    layerId: "123"
                 }
             }
-
-        },
+        }
+    },
+        resultTwo =
         {
             category: "Adresse",
             id: "BeidemNeuenKrahn2Adresse",
@@ -47,10 +53,10 @@ describe("src_3_0_0/modules/searchBar/components/SearchBarResultListTopicTreeIte
             toolTip: undefined,
             events: {
             }
-        }
-    ];
+        };
 
     beforeEach(() => {
+        searchResults = [resultOne, resultTwo];
         addSelectedSearchResultsSpy = sinon.spy();
         removeSelectedSearchResultsSpy = sinon.spy();
         visibleLayerConfigs = [];
@@ -86,7 +92,7 @@ describe("src_3_0_0/modules/searchBar/components/SearchBarResultListTopicTreeIte
     });
 
     describe("render elements", () => {
-        it("should render result list topic tree item", () => {
+        it("should render result list topic tree item and check actionButtons", () => {
             wrapper = shallowMount(SearchBarResultListTopicTreeItemComponent, {
                 global: {
                     plugins: [store]
@@ -101,6 +107,27 @@ describe("src_3_0_0/modules/searchBar/components/SearchBarResultListTopicTreeIte
             expect(wrapper.find("label.search-bar-result-list-topic-tree-item-label").exists()).to.be.true;
             expect(wrapper.find("label.search-bar-result-list-topic-tree-item-label > span").exists()).to.be.true;
             expect(wrapper.find("label.search-bar-result-list-topic-tree-item-label > span").text()).to.equals("Bei dem Neuen Krahn");
+            expect(wrapper.findAll("action-button-stub").length).to.be.equals(1);
+            expect(wrapper.find("action-button-stub").attributes("actionname")).to.be.equals("activateLayerInTopicTree");
+        });
+
+        it("should render result list topic tree item and no actionButtons", () => {
+            delete searchResults[0].events.buttons;
+            wrapper = shallowMount(SearchBarResultListTopicTreeItemComponent, {
+                global: {
+                    plugins: [store]
+                },
+                propsData: {
+                    searchResult: searchResults[0]
+                }
+            });
+
+            expect(wrapper.find("#search-bar-result-list-topic-tree-item-BeidemNeuenKrahnStraße").exists()).to.be.true;
+            expect(wrapper.find("span#search-bar-result-list-topic-tree-item-checkbox-BeidemNeuenKrahnStraße").exists()).to.be.true;
+            expect(wrapper.find("label.search-bar-result-list-topic-tree-item-label").exists()).to.be.true;
+            expect(wrapper.find("label.search-bar-result-list-topic-tree-item-label > span").exists()).to.be.true;
+            expect(wrapper.find("label.search-bar-result-list-topic-tree-item-label > span").text()).to.equals("Bei dem Neuen Krahn");
+            expect(wrapper.findAll("action-button-stub").length).to.be.equals(0);
         });
     });
 

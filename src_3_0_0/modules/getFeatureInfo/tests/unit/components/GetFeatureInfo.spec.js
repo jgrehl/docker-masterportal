@@ -386,10 +386,20 @@ describe("src_3_0_0/modules/getFeatureInfo/components/GetFeatureInfo.vue", () =>
 
         it("should call setVisible and not expand menu, if gfiFeatures changed", () => {
             const gfiFeaturesOld = [{
-                    getId: () => "old"
+                    getId: () => "old",
+                    getAttributesToShow: () => sinon.stub(),
+                    getProperties: () => {
+                        return {};
+                    },
+                    getFeatures: sinon.stub()
                 }],
                 gfiFeaturesNew = [{
-                    getId: () => "new"
+                    getId: () => "new",
+                    getAttributesToShow: () => sinon.stub(),
+                    getProperties: () => {
+                        return {};
+                    },
+                    getFeatures: sinon.stub()
                 }],
                 store = getGfiStore(false, undefined, gfiFeaturesNew.concat(gfiFeaturesOld), []);
             let wrapper = null;

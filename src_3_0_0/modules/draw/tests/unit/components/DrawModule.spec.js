@@ -87,7 +87,8 @@ describe("src_3_0_0/modules/draw/components/DrawModule.vue", () => {
                                 selectedDrawType: () => selectedDrawType,
                                 selectedDrawTypeMain: () => selectedDrawTypeMain,
                                 selectedInteraction: () => "draw",
-                                strokeRange: () => [1, 16]
+                                strokeRange: () => [1, 16],
+                                units: sinon.stub().returns(["m", "km"])
                             }
                         }
                     }
