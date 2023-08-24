@@ -202,7 +202,12 @@
             "hitTemplate": "layer"
           },
           {
-            "type": "visibleVector"
+            "type": "visibleVector",
+            "resultEvents": {
+              "onClick": ["openGetFeatureInfo", "setMarker", "zoomToResult"],
+              "onHover": ["setMarker"],
+              "buttons": ["startRouting"]
+          }
           },
           {
             "type": "exampleSearch"
