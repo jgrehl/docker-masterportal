@@ -713,7 +713,7 @@
       "openGetFeatureInfo":"Show information",
       "setMarker":"Set marker",
       "zoomToResult":"Zoom to result",
-      "startRouting":"Start routing"
+      "startRouting":"Start route"
     },
     "showAllResults": "Show all results",
     "searchResults": "search results",

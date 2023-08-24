@@ -594,6 +594,21 @@ describe("src_3_0_0/modules/routing/store/directions/actionsDirections.js", () =
         ]);
     });
 
+    it("should initWaypoints - if one extern waypoint exists make only one new waypoint", async () => {
+        state.waypoints = [{
+            index: 0,
+            feature: null,
+            displayName: "name",
+            coordinates: [1, 2],
+            fromExtern: true
+        }];
+        await actionsDirections.initWaypoints({state, getters, commit, dispatch, rootState});
+
+        expect(dispatchSpy.args).to.deep.equal([
+            ["addWaypoint", {index: 1}]
+        ]);
+    });
+
     it("should onDirectionsWaypointsDrawEnd", async () => {
         const featurePoint = new Feature({
             geometry: new Point([10, 10])
