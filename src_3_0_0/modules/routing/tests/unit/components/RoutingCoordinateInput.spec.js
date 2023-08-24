@@ -25,7 +25,15 @@ describe("src_3_0_0/modules/routing/components/RoutingCoordinateInput.vue", () =
                         Routing: {
                             namespaced: true,
                             mutations: mutations,
-                            actions: actions
+                            actions: actions,
+                            modules: {
+                                Directions: {
+                                    namespaced: true,
+                                    getters: {
+                                        waypoints: sinon.stub()
+                                    }
+                                }
+                            }
                         }
                     }
                 },
@@ -262,6 +270,73 @@ describe("src_3_0_0/modules/routing/components/RoutingCoordinateInput.vue", () =
             wrapper.vm.resetInput();
             expect(wrapper.vm.search).equal("waypointnametest");
             expect(wrapper.vm.searchResults.length).equal(0);
+        });
+    });
+    describe("test watcher", () => {
+        it("waypoints from extern shall set search to displayName if lastWaypoints are null", async () => {
+            const waypoints = [{
+                    index: 0,
+                    coordinates: [1, 2],
+                    fromExtern: true,
+                    displayName: "displayName"
+                }],
+                lastWaypoints = null;
+
+            wrapper = shallowMount(RoutingCoordinateInputComponent, {
+                global: {
+                    plugins: [store]
+                },
+                props: props
+            });
+
+            wrapper.vm.$options.watch.waypoints.handler.call(wrapper.vm, waypoints, lastWaypoints);
+            await wrapper.vm.$nextTick();
+            expect(wrapper.vm.search).equal("displayName");
+        });
+        it("watcher waypoints shall do nothing if waypoints are not extern", async () => {
+            const waypoints = [{
+                    index: 0,
+                    coordinates: [1, 2],
+                    fromExtern: false,
+                    displayName: "displayName"
+                }],
+                lastWaypoints = null;
+
+            wrapper = shallowMount(RoutingCoordinateInputComponent, {
+                global: {
+                    plugins: [store]
+                },
+                props: props
+            });
+
+            wrapper.vm.$options.watch.waypoints.handler.call(wrapper.vm, waypoints, lastWaypoints);
+            await wrapper.vm.$nextTick();
+            expect(wrapper.vm.search).equal("");
+        });
+        it("watcher waypoints shall do nothing if old waypoints are not empty", async () => {
+            const waypoints = [{
+                    index: 1,
+                    coordinates: [3, 4],
+                    fromExtern: true,
+                    displayName: "displayName 2"
+                }],
+                lastWaypoints = [{
+                    index: 0,
+                    coordinates: [1, 2],
+                    fromExtern: true,
+                    displayName: "displayName"
+                }];
+
+            wrapper = shallowMount(RoutingCoordinateInputComponent, {
+                global: {
+                    plugins: [store]
+                },
+                props: props
+            });
+
+            wrapper.vm.$options.watch.waypoints.handler.call(wrapper.vm, waypoints, lastWaypoints);
+            await wrapper.vm.$nextTick();
+            expect(wrapper.vm.search).equal("");
         });
     });
 });

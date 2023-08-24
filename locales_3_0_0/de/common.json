@@ -739,7 +739,7 @@
       "openGetFeatureInfo":"Informationen anzeigen",
       "setMarker":"Marker setzen",
       "zoomToResult":"Zum Ergebnis zoomen",
-      "startRouting":"Routing starten"
+      "startRouting":"Route starten"
     },
     "noInitialResults": "Die initiale Suche ergab keine Treffer.",
     "showAll": "Alle anzeigen",
