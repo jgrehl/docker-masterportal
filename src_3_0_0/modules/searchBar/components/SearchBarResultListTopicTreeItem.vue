@@ -97,17 +97,17 @@ export default {
                 </span>
             </label>
         </button>
-            <div
-                v-for="action, i in Object.keys(actions)"
-                :key="i"
-                class="ms-auto mt-1 d-flex"
-            >
-                <ActionButton
-                    :action-name="action"
-                    :action-args="actions[action]"
-                />
-            </div>
+        <div
+            v-for="action, i in Object.keys(actions)"
+            :key="i"
+            class="ms-auto mt-1 d-flex"
+        >
+            <ActionButton
+                :action-name="action"
+                :action-args="actions[action]"
+            />
         </div>
+    </div>
 </template>
 
 <style lang="scss" scoped>
