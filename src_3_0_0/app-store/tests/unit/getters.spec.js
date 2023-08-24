@@ -537,4 +537,54 @@ describe("src_3_0_0/app-store/getters.js", () => {
             expect(getters.invisibleBaselayerConfigs(state)[1].id).to.be.equals("1132");
         });
     });
+    describe("isModuleAvailable", () => {
+        it("should return true, if module is configured in config.json by type and false if not", () => {
+            const state = {
+                portalConfig: {
+                    mainMenu: {
+                        expanded: true,
+                        title: {
+                            text: "Basic 3 alpha"
+                        },
+                        sections: [
+                            [
+                                {
+                                    type: "fileImport"
+                                },
+                                {
+                                    type: "openConfig"
+                                },
+                                {
+                                    type: "contact",
+                                    serviceId: "80001",
+                                    includeSystemInfo: true,
+                                    from: [
+                                        {
+                                            email: "lgvgeoportal-hilfe@gv.hamburg.de",
+                                            name: "LGVGeoportalHilfe"
+                                        }
+                                    ],
+                                    to: [
+                                        {
+                                            email: "lgvgeoportal-hilfe@gv.hamburg.de",
+                                            name: "LGVGeoportalHilfe"
+                                        }
+                                    ]
+                                },
+                                {
+                                    type: "language"
+                                }
+                            ]
+                        ]
+                    }
+                }
+            };
+
+            expect(getters.isModuleAvailable(state)("language")).to.be.true;
+            expect(getters.isModuleAvailable(state)("contact")).to.be.true;
+            expect(getters.isModuleAvailable(state)("routing")).to.be.false;
+            expect(getters.isModuleAvailable(state)()).to.be.false;
+
+        });
+    });
 });
