@@ -25,6 +25,19 @@ describe("src_3_0_0/modules/routing/components/RoutingAvoidFeatures.vue", () => 
         store = createStore({
             namespaced: true,
             modules: {
+                Modules: {
+                    namespaced: true,
+                    modules: {
+                        Routing: {
+                            namespaced: true,
+                            mutations: {},
+                            actions: {},
+                            getters: {
+                                directionsSettings: sinon.stub()
+                            }
+                        }
+                    }
+                }
             },
             state: {
                 Map: {
@@ -228,7 +241,8 @@ describe("src_3_0_0/modules/routing/components/RoutingAvoidFeatures.vue", () => 
             props: {
                 settings: {
                     speedProfile: "CYCLING"
-                }
+                },
+                activeAvoidFeaturesOptions: []
             }
         });
         wrapper.vm.updateAvoidSpeedProfileOptions("HIGHWAYS", "CAR");
@@ -245,6 +259,7 @@ describe("src_3_0_0/modules/routing/components/RoutingAvoidFeatures.vue", () => 
                 showAvoidFeatures: true
             }),
             props: {
+                activeAvoidFeaturesOptions: [],
                 settings: {
                     speedProfile: "CYCLING"
                 }
@@ -264,6 +279,7 @@ describe("src_3_0_0/modules/routing/components/RoutingAvoidFeatures.vue", () => 
                 showAvoidFeatures: true
             }),
             props: {
+                activeAvoidFeaturesOptions: [],
                 settings: {
                     speedProfile: "CYCLING"
                 }
@@ -283,6 +299,7 @@ describe("src_3_0_0/modules/routing/components/RoutingAvoidFeatures.vue", () => 
                 showAvoidFeatures: true
             }),
             props: {
+                activeAvoidFeaturesOptions: [],
                 settings: {
                     speedProfile: "CYCLING"
                 }

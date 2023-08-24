@@ -23,6 +23,12 @@ describe("src_3_0_0/modules/searchBar/components/SearchBarResultListGeneralItem.
             imagePath: "",
             toolTip: "toolTipAvailable",
             events: {
+                buttons: {
+                    startRouting: {
+                        coordinates: [3, 4],
+                        name: "name"
+                    }
+                }
             }
 
         },
@@ -37,6 +43,15 @@ describe("src_3_0_0/modules/searchBar/components/SearchBarResultListGeneralItem.
             imagePath: "",
             toolTip: undefined,
             events: {
+                buttons: {
+                    setMarker: {
+                        coordinates: [1, 2]
+                    },
+                    startRouting: {
+                        coordinates: [3, 4],
+                        name: "name2"
+                    }
+                }
             }
         }
     ];
@@ -50,7 +65,7 @@ describe("src_3_0_0/modules/searchBar/components/SearchBarResultListGeneralItem.
     });
 
     describe("test the result item", () => {
-        it("shows toolTip if available", () => {
+        it("shows toolTip if available and check actionButtons", () => {
             wrapper = shallowMount(SearchBarResultListGeneralItemComponent, {
                 global: {
                     plugins: [store]
@@ -62,9 +77,11 @@ describe("src_3_0_0/modules/searchBar/components/SearchBarResultListGeneralItem.
 
             expect(wrapper.find("#search-bar-result-list-general-itemBeidemNeuenKrahnStraße").exists()).to.be.true;
             expect(wrapper.find("button").html()).to.contain("toolTipAvailable");
+            expect(wrapper.findAll("action-button-stub").length).to.be.equals(1);
+            expect(wrapper.find("action-button-stub").attributes("actionname")).to.be.equals("startRouting");
         });
 
-        it("shows name if tooltip is undefined", () => {
+        it("shows name if tooltip is undefined and check actionButtons", () => {
             wrapper = shallowMount(SearchBarResultListGeneralItemComponent, {
                 global: {
                     plugins: [store]
@@ -76,6 +93,25 @@ describe("src_3_0_0/modules/searchBar/components/SearchBarResultListGeneralItem.
 
             expect(wrapper.find("#search-bar-result-list-general-itemBeidemNeuenKrahn2Adresse").exists()).to.be.true;
             expect(wrapper.find("button").html()).to.contain("Bei dem Neuen Krahn 2");
+            expect(wrapper.findAll("action-button-stub").length).to.be.equals(2);
+            expect(wrapper.findAll("action-button-stub").at(0).attributes("actionname")).to.be.equals("setMarker");
+            expect(wrapper.findAll("action-button-stub").at(1).attributes("actionname")).to.be.equals("startRouting");
+        });
+
+        it("no actionButtons", () => {
+            searchResults[1].events = {};
+            wrapper = shallowMount(SearchBarResultListGeneralItemComponent, {
+                global: {
+                    plugins: [store]
+                },
+                propsData: {
+                    searchResult: searchResults[1]
+                }
+            });
+
+            expect(wrapper.find("#search-bar-result-list-general-itemBeidemNeuenKrahn2Adresse").exists()).to.be.true;
+            expect(wrapper.find("button").html()).to.contain("Bei dem Neuen Krahn 2");
+            expect(wrapper.findAll("action-button-stub").length).to.be.equals(0);
         });
     });
 });
