@@ -23,8 +23,8 @@ import {uniqueId} from "../../../shared/js/utils/uniqueId";
  * @param {Number} [maxFeatures=20] Maximum amount of features returned.
  * @param {String} [namespaces="xmlns:wfs='http://www.opengis.net/wfs' xmlns:ogc='http://www.opengis.net/ogc' xmlns:gml='http://www.opengis.net/gml'"] XML name spaces to request `propertyNames` or `geometryName`.
  * @param {Object} [resultEvents] Actions that are executed when an interaction, such as hover or click, is performed with a result list item.
- * @param {String[]} [resultEvents.onClick=["highligtFeature", "setMarker", "zoomToResult"]] Actions that are fired when clicking on a result list item.
- * @param {String[]} [resultEvents.onHover=["highligtFeature", "setMarker"]] Actions that are fired when hovering on a result list item.
+ * @param {String[]} [resultEvents.onClick=["highlightFeature", "setMarker", "zoomToResult"]] Actions that are fired when clicking on a result list item.
+ * @param {String[]} [resultEvents.onHover=["highlightFeature", "setMarker"]] Actions that are fired when hovering on a result list item.
  * @param {String} [searchInterfaceId="specialWfs"] The id of the service interface.
  * @returns {void}
  */
@@ -33,8 +33,8 @@ export default function SearchInterfaceSpecialWfs ({definitions, hitTemplate, ic
         "client",
         searchInterfaceId || "specialWfs",
         resultEvents || {
-            onClick: ["highligtFeature", "setMarker", "zoomToResult"],
-            onHover: ["highligtFeature", "setMarker"]
+            onClick: ["highlightFeature", "setMarker", "zoomToResult"],
+            onHover: ["highlightFeature", "setMarker"]
         },
         hitTemplate
     );
@@ -268,23 +268,24 @@ SearchInterfaceSpecialWfs.prototype.getInteriorAndExteriorPolygonMembers = funct
  * @returns {Object} The possible actions.
  */
 SearchInterfaceSpecialWfs.prototype.createPossibleActions = function (searchResult) {
-    const coordinates = searchResult.geometry;
+    const coordinates = [];
+
+    searchResult.geometry.forEach(coord => {
+        coordinates.push(parseFloat(coord));
+    });
 
     return {
-        highligtFeature: {
+        highlightFeature: {
             hit: {
                 coordinate: coordinates,
                 geometryType: searchResult.geometryType
-            },
-            closeResults: false
+            }
         },
         setMarker: {
-            coordinates: coordinates,
-            closeResults: true
+            coordinates: coordinates
         },
         zoomToResult: {
-            coordinates: coordinates,
-            closeResults: true
+            coordinates: coordinates
         }
     };
 };
