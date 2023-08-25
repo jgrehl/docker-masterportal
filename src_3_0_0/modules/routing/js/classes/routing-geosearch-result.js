@@ -5,47 +5,14 @@
 class RoutingGeosearchResult {
     /**
      * creates new RoutingGeosearchResult
-     * @param {Number} lat coordinate.
-     * @param {Number} lng coordinate.
+     * @param {Array} coordinates array of coordinates.
      * @param {String} displayName of coordinate.
+     * @param {String} epsg coordinate system.
      */
-    constructor (lat, lng, displayName) {
-        this.lat = lat;
-        this.lng = lng;
+    constructor (coordinates, displayName, epsg) {
+        this.coordinates = coordinates;
         this.displayName = displayName;
-        this.coordinates = [];
-    }
-
-    /**
-     * Lat coordinate.
-     * @returns {Number} lat coordinate.
-     */
-    getLat () {
-        return this.lat;
-    }
-    /**
-     * Lat coordinate.
-     * @param {Number} lat coordinate.
-     * @returns {void}
-     */
-    setLat (lat) {
-        this.lat = lat;
-    }
-
-    /**
-     * Lng coordinate.
-     * @returns {Number} lng coordinate.
-     */
-    getLng () {
-        return this.lng;
-    }
-    /**
-     * Lng coordinate.
-     * @param {Number} lng coordinate.
-     * @returns {void}
-     */
-    setLng (lng) {
-        this.lng = lng;
+        this.epsg = epsg;
     }
 
     /**
@@ -66,18 +33,33 @@ class RoutingGeosearchResult {
 
     /**
      * Coordinates in local projection.
-     * @returns {Array<{Number, Number}>} coordinates in local projection.
+     * @returns {[Number, Number]} coordinates in local projection.
      */
     getCoordinates () {
         return this.coordinates;
     }
     /**
      * Coordinates in local projection.
-     * @param {Array<{Number, Number}>} coordinates in local projection.
+     * @param {[Number, Number]} coordinates in local projection.
      * @returns {void}
      */
     setCoordinates (coordinates) {
         this.coordinates = coordinates;
+    }
+    /**
+     * Coordinate system.
+     * @returns {String} coordinate system.
+     */
+    getEpsg () {
+        return this.epsg;
+    }
+    /**
+     * Coordinate system.
+     * @param {String} epsg system.
+     * @returns {void}
+     */
+    setEpsg (epsg) {
+        this.epsg = epsg;
     }
 }
 

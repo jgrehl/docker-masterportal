@@ -680,7 +680,7 @@ export default {
     /**
      * Creates a new draw interaction depending on state to either draw
      * lines or polygons. The method will first remove any prior draw
-     * interaction created by this tool.
+     * interaction created by this module.
      * @param {Object} context actions context object.
      * @returns {void}
      */
