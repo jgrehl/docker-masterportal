@@ -148,12 +148,14 @@ describe("src_3_0_0/core/js/layers/layer2dVectorOaf.js", () => {
     });
 
     describe("getStyleFunction", () => {
-        it("getStyleFunction shall return a function", function () {
+        it("reateStyle and getStyleFunction shall return a function", function () {
             sinon.stub(styleList, "returnStyleObject").returns(true);
             attributes.styleId = "styleId";
+            let styleFunction = null;
+            const oafLayer = new Layer2dVectorOaf(attributes);
 
-            const oafLayer = new Layer2dVectorOaf(attributes),
-                styleFunction = oafLayer.getStyleFunction(attributes);
+            oafLayer.createStyle(attributes);
+            styleFunction = oafLayer.getStyleFunction();
 
             expect(styleFunction).not.to.be.null;
             expect(typeof styleFunction).to.be.equals("function");
