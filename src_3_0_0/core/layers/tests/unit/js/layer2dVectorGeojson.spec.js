@@ -143,7 +143,7 @@ describe("src_3_0_0/core/js/layers/layer2dVectorGeojson.js", () => {
     });
 
     describe("getStyleFunction", () => {
-        it("getStyleFunction shall return a function", function () {
+        it("createStyle and getStyleFunction shall return a function", function () {
             const styleObj = {
                 styleId: "styleId",
                 rules: []
@@ -154,7 +154,8 @@ describe("src_3_0_0/core/js/layers/layer2dVectorGeojson.js", () => {
             sinon.stub(styleList, "returnStyleObject").returns(styleObj);
             attributes.styleId = "styleId";
             geojsonLayer = new Layer2dVectorGeojson(attributes);
-            styleFunction = geojsonLayer.getStyleFunction(attributes);
+            geojsonLayer.createStyle(attributes);
+            styleFunction = geojsonLayer.getStyleFunction();
 
             expect(styleFunction).not.to.be.null;
             expect(typeof styleFunction).to.be.equals("function");
