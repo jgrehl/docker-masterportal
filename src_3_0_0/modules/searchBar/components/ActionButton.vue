@@ -59,6 +59,7 @@ export default {
     <IconButton
         v-if="displayAction()"
         :aria="$t('common:modules.searchBar.actions.'+actionName)"
+        :class-array="['btn-light']"
         :icon="iconsByActions[actionName]"
         :interaction="callAction"
         class="ms-2"
