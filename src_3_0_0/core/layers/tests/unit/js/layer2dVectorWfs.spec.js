@@ -142,11 +142,14 @@ describe("src_3_0_0/core/js/layers/layer2dVectorWfs.js", () => {
         });
     });
     describe("getStyleFunction", () => {
-        it("getStyleFunction shall return a function", function () {
+        it("createStyle and getStyleFunction shall return a function", function () {
             sinon.stub(styleList, "returnStyleObject").returns(true);
             attributes.styleId = "styleId";
-            const wfsLayer = new Layer2dVectorWfs(attributes),
-                styleFunction = wfsLayer.getStyleFunction(attributes);
+            const wfsLayer = new Layer2dVectorWfs(attributes);
+            let styleFunction = null;
+
+            wfsLayer.createStyle(attributes);
+            styleFunction = wfsLayer.getStyleFunction();
 
             expect(styleFunction).not.to.be.null;
             expect(typeof styleFunction).to.be.equals("function");
