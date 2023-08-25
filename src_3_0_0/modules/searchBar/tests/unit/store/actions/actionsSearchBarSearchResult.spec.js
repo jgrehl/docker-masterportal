@@ -105,7 +105,7 @@ describe("src/modules/searchBar/store/actions/actionsSearchBarSearchResult.spec.
 
             highlightFeature({dispatch}, {hit});
             expect(dispatch.calledOnce).to.be.true;
-            expect(dispatch.firstCall.args[0]).to.equals("MapMarker/placingPolygonMarker");
+            expect(dispatch.firstCall.args[0]).to.equals("Maps/placingPolygonMarker");
             expect(dispatch.firstCall.args[1]).to.be.deep.equals(feature);
             expect(stubGetWKTGeom.calledOnce).to.be.true;
             expect(stubGetWKTGeom.firstCall.args[0]).to.be.deep.equals(hit);
