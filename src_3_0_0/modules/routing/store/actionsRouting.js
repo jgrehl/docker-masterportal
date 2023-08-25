@@ -4,6 +4,11 @@ import {
 } from "../js/geosearch/routing-nominatim-geosearch";
 import crs from "@masterportal/masterportalapi/src/crs";
 import {fetchRoutingBkgGeosearch, fetchRoutingBkgGeosearchReverse} from "../js/geosearch/routing-bkg-geosearch";
+import {fetchRoutingLocationFinderGeosearch} from "../js/geosearch/routing-locationFinder-geosearch";
+import {fetchRoutingKomootGeosearch, fetchRoutingKomootGeosearchReverse} from "../js/geosearch/routing-komoot-geosearch";
+import {fetchRoutingElasticGeosearch} from "../js/geosearch/routing-elastic-geosearch";
+import {fetchRoutingSpecialWfsGeosearch} from "../js/geosearch/routing-specialWfs-geosearch";
+import {fetchRoutingGazetteerGeosearch} from "../js/geosearch/routing-gazetteer-geosearch";
 import * as constantsRouting from "./constantsRouting";
 
 /**
@@ -12,7 +17,7 @@ import * as constantsRouting from "./constantsRouting";
 
 export default {
     /**
-     * Called when the routing tool is created.
+     * Called when the routing module is created.
      * @param {Object} context actions context object.
      * @returns {void}
      */
@@ -50,7 +55,15 @@ export default {
             });
 
         if (missing.length > 0) {
-            throw new Error("Routing tool is not configured correctly. The following required fields are missing: " + missing.map(m => m.join(".")).join(", "));
+            throw new Error("Routing module is not configured correctly. The following required fields are missing: " + missing.map(m => m.join(".")).join(", "));
+        }
+        if (state.geosearch.type === "ELASTIC" && !state.geosearch.searchField) {
+            throw new Error("Routing module is not configured correctly. The following required fields for elastic search are missing: searchField");
+        }
+        if (state.geosearch.type === "SPECIALWFS") {
+            if (!state.geosearch.typeName || !state.geosearch.propertyNames || !state.geosearch.geometryName) {
+                throw new Error("Routing module is not configured correctly. One of the following required fields for specialWfs search are missing: typeName, propertyNames or geometryName");
+            }
         }
     },
     /**
@@ -74,15 +87,34 @@ export default {
                 else if (state.geosearch.type === "BKG") {
                     geosearchResults = await fetchRoutingBkgGeosearch(search);
                 }
+                else if (state.geosearch.type === "LOCATIONFINDER") {
+                    geosearchResults = await fetchRoutingLocationFinderGeosearch(search);
+                }
+                else if (state.geosearch.type === "KOMOOT") {
+                    geosearchResults = await fetchRoutingKomootGeosearch(search);
+                }
+                else if (state.geosearch.type === "ELASTIC") {
+                    geosearchResults = await fetchRoutingElasticGeosearch(search);
+                }
+                else if (state.geosearch.type === "SPECIALWFS") {
+                    geosearchResults = await fetchRoutingSpecialWfsGeosearch(search);
+                }
+                else if (state.geosearch.type === "GAZETTEER") {
+                    geosearchResults = await fetchRoutingGazetteerGeosearch(search);
+                }
                 else {
                     throw new Error("Geosearch is not configured correctly.");
                 }
 
-                // Transform WGS84 Coordinates to Local Projection
+                // Transform Coordinates to Local Projection
                 geosearchResults.forEach(async geosearchResult => {
+                    if (!geosearchResult.getEpsg()) {
+                        geosearchResult.setEpsg(state.geosearch.epsg);
+                    }
                     const coordinatesLocal = await dispatch(
-                        "Modules/Routing/transformCoordinatesWgs84ToLocalProjection",
-                        [geosearchResult.getLng(), geosearchResult.getLat()],
+                        "Modules/Routing/transformCoordinatesToLocalProjection",
+                        {coordinates: geosearchResult.getCoordinates(),
+                            epsg: geosearchResult.getEpsg()},
                         {root: true}
                     );
 
@@ -107,35 +139,54 @@ export default {
      * @returns {RoutingGeosearchResult} Returns parsed Array of RoutingGeosearchResults.
      */
     async fetchTextByCoordinates ({state, dispatch}, {coordinates}) {
-        let geosearchResult = null;
+        let geosearchResults = null;
 
         try {
             // Possible to change Geosearch by changing function depending on config
             if (state.geosearch.type === "NOMINATIM") {
-                geosearchResult = await fetchRoutingNominatimGeosearchReverse(
-                    coordinates
-                );
+                geosearchResults = await fetchRoutingNominatimGeosearchReverse(coordinates);
             }
             else if (state.geosearch.type === "BKG") {
-                geosearchResult = await fetchRoutingBkgGeosearchReverse(coordinates);
+                geosearchResults = await fetchRoutingBkgGeosearchReverse(coordinates);
+            }
+            else if (state.geosearch.type === "LOCATIONFINDER") {
+                geosearchResults = null;
+            }
+            else if (state.geosearch.type === "KOMOOT") {
+                geosearchResults = await fetchRoutingKomootGeosearchReverse(coordinates);
+            }
+            else if (state.geosearch.type === "ELASTIC") {
+                geosearchResults = null;
+            }
+            else if (state.geosearch.type === "SPECIALWFS") {
+                geosearchResults = null;
+            }
+            else if (state.geosearch.type === "GAZETTEER") {
+                geosearchResults = null;
             }
             else {
                 throw new Error("Geosearch is not configured correctly.");
             }
 
             // Transform WGS84 Coordinates to Local Projection
-            const coordinatesLocal = await dispatch(
-                "Modules/Routing/transformCoordinatesWgs84ToLocalProjection",
-                [geosearchResult.getLng(), geosearchResult.getLat()],
-                {root: true}
-            );
+            geosearchResults.forEach(async geosearchResult => {
+                if (!geosearchResult.getEpsg()) {
+                    geosearchResult.setEpsg("4326");
+                }
+                const coordinatesLocal = await dispatch(
+                    "Modules/Routing/transformCoordinatesToLocalProjection",
+                    {coordinates: geosearchResult.getCoordinates(),
+                        epsg: geosearchResult.getEpsg()},
+                    {root: true}
+                );
 
-            geosearchResult.setCoordinates(coordinatesLocal);
+                geosearchResult.setCoordinates(coordinatesLocal);
+            });
         }
         catch (err) {
             // fail silently, comment needed for linter
         }
-        return geosearchResult;
+        return geosearchResults;
     },
 
     /**
@@ -160,6 +211,21 @@ export default {
     transformCoordinatesWgs84ToLocalProjection ({rootState}, coordinates) {
         return crs.transform(
             "EPSG:4326",
+            crs.getMapProjection(mapCollection.getMap(rootState.Maps.mode)),
+            coordinates
+        );
+    },
+    /**
+     * Transforms the given coordinates from the wgs84 projection to the local projections
+     * @param {Object} context actions context object.
+     * @param {Object} payload parameter object.
+     * @param {[Number, Number]} payload.coordinates the coordinates to transform.
+     * @param {String} payload.epsg coordinate system.
+     * @returns {[Number, Number]} projected local coordinates
+     */
+    transformCoordinatesToLocalProjection ({rootState}, {coordinates, epsg}) {
+        return crs.transform(
+            `EPSG:${epsg}`,
             crs.getMapProjection(mapCollection.getMap(rootState.Maps.mode)),
             coordinates
         );
