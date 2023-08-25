@@ -130,8 +130,7 @@ Layer2dVectorSensorThings.prototype.getOptions = function (attributes) {
     const options = {
         clusterGeometryFunction: this.clusterGeometryFunction,
         featuresFilter: (features) => this.featuresFilter(attributes, features),
-        onLoadingError: this.onLoadingError,
-        style: this.getStyleFunction(attributes)
+        onLoadingError: this.onLoadingError
     };
 
     return options;
@@ -156,10 +155,7 @@ Layer2dVectorSensorThings.prototype.createVectorLayer = function (rawLayer = {},
             id: rawLayer.id
         }, layerParams));
 
-    if (options.style) {
-        layer.setStyle(options.style);
-    }
-    else if (rawLayer.style) {
+    if (rawLayer.style) {
         layer.setStyle(rawLayer.style);
     }
 
@@ -209,18 +205,35 @@ Layer2dVectorSensorThings.prototype.createLegend = async function () {
 };
 
 /**
- * Getter of style for layer.
- * @param {Object} attrs params of the raw layer
- * @returns {Function} a function to get the style with or null plus console warn if no style model was found
+ * Initializes the style and sets it at this. If styleId is set, this is done after vector styles are loaded.
+ * @param {Object} attrs attributes of the raw layer
+ * @returns {void}
  */
-Layer2dVectorSensorThings.prototype.getStyleFunction = function (attrs) {
-    const styleId = attrs?.styleId,
-        styleObject = styleList.returnStyleObject(styleId);
+Layer2dVectorSensorThings.prototype.initStyle = function (attrs) {
+    if (store.getters.styleListLoaded) {
+        this.createStyle(attrs);
+    }
+    else {
+        store.watch((state, getters) => getters.styleListLoaded, value => {
+            if (value) {
+                this.createStyle(attrs);
+            }
+        });
+    }
+};
 
+/**
+ * Creates the style function and sets it at layer.
+ * @param {Object} attrs  attributes of the raw layer
+ * @returns {void}
+ */
+Layer2dVectorSensorThings.prototype.createStyle = function (attrs) {
+    const styleObject = styleList.returnStyleObject(attrs?.styleId);
+    let styleFunction = null;
 
     if (typeof styleObject !== "undefined") {
         this.styleRule = styleObject.rules ? styleObject.rules : null;
-        return function (feature, resolution) {
+        styleFunction = function (feature, resolution) {
             const feat = typeof feature !== "undefined" ? feature : this,
                 isClusterFeature = typeof feat.get("features") === "function" || typeof feat.get("features") === "object" && Boolean(feat.get("features").length > 1),
                 style = createStyle.createStyle(styleObject, feat, isClusterFeature, Config.wfsImgPath),
@@ -234,10 +247,12 @@ Layer2dVectorSensorThings.prototype.getStyleFunction = function (attrs) {
             }
             return style;
         };
+        this.setStyle(styleFunction);
     }
-    console.warn(i18next.t("common:core.layers.errorHandling.wrongStyleId", {styleId}));
-
-    return null;
+    else {
+        this.setStyle(null);
+        console.warn(i18next.t("common:core.layers.errorHandling.wrongStyleId", {styleId: attrs?.styleId}));
+    }
 };
 
 /**
