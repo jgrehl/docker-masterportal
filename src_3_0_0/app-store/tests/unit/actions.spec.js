@@ -80,7 +80,7 @@ describe("src_3_0_0/app-store/actions.js", () => {
             const getters = {
                     menuFromConfig: () => {
                         return {
-                            sections: [[]]
+                            sections: [[{a: "b"}]]
                         };
                     },
                     allLayerConfigs: [{
@@ -112,15 +112,15 @@ describe("src_3_0_0/app-store/actions.js", () => {
                     zoomToFeatureId: "eventlotse"
                 };
 
-            actions.initializeVectorStyle({state, dispatch, getters});
+            actions.initializeVectorStyle({state, commit, dispatch, getters});
 
             expect(initializeStyleListSpy.calledOnce).to.be.true;
             expect(initializeStyleListSpy.firstCall.args[0]).to.be.deep.equals(firstCallArg);
             expect(initializeStyleListSpy.firstCall.args[1]).to.equals(state.configJs);
             expect(initializeStyleListSpy.firstCall.args[2]).to.be.deep.equals(getters.allLayerConfigs);
-            // todo https://www.jira.geoportal-hamburg.de/browse/BG-3825 sections testen
-            // expect(initializeStyleListSpy.firstCall.args[3]).to.be.deep.equals(getters.allLayerConfigs);
+            expect(initializeStyleListSpy.firstCall.args[3]).to.be.deep.equals([{a: "b"}, {a: "b"}]);
             expect(typeof initializeStyleListSpy.firstCall.args[4]).to.be.equals("function");
+
         });
         it("addAlertsFromConfigJson", () => {
             actions.addAlertsFromConfigJson({dispatch}, {testAlert: {"title": "testAlert"}, testAlert2: {"title": "testAlert2"}});
