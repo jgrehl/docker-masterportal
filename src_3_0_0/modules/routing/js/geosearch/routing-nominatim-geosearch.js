@@ -52,8 +52,7 @@ async function fetchRoutingNominatimGeosearchReverse (coordinates) {
  */
 function parseRoutingNominatimGeosearchResult (geosearchResult) {
     return new RoutingGeosearchResult(
-        Number(geosearchResult.lat),
-        Number(geosearchResult.lon),
+        [Number(geosearchResult.lat), Number(geosearchResult.lon)],
         geosearchResult.display_name
     );
 }
