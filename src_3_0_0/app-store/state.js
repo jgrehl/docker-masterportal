@@ -5,6 +5,7 @@
  * @property {Boolean} isMobile True is mobile device is indicated.
  * @property {Object[]} layerConfig The layer configuration.
  * @property {Object} loadedConfigs The loaded configs.
+ * @property {Boolean} styleListLoaded true, id list of vectorstyles is loaded.
  * @property {Object} portalConfig The portal configuration.
  * @property {Object} restConf The rest-services.json data.
  * @property {Object} urlParams The url params.
@@ -18,6 +19,7 @@ const state = {
         restServicesJson: false,
         servicesJson: false
     },
+    styleListLoaded: false,
     portalConfig: null,
     restConfig: null,
     urlParams: {}

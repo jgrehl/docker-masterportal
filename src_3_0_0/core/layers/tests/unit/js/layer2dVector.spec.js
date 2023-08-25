@@ -4,6 +4,7 @@ import styleList from "@masterportal/masterportalapi/src/vectorStyle/styleList.j
 import createStyle from "@masterportal/masterportalapi/src/vectorStyle/createStyle";
 import getGeometryTypeFromService from "@masterportal/masterportalapi/src/vectorStyle/lib/getGeometryTypeFromService";
 import Layer2dVector from "../../../js/layer2dVector";
+import store from "../../../../../app-store";
 
 describe("src_3_0_0/core/js/layers/layer2dVector.js", () => {
     let attributes,
@@ -230,13 +231,38 @@ describe("src_3_0_0/core/js/layers/layer2dVector.js", () => {
     });
 
     describe("style funtions", () => {
-        it("getStyleFunction shall return a function", function () {
+        it("initStyle shall be called on creation and call createStyle if styleListLoaded=true", function () {
+            const createStyleSpy = sinon.spy(Layer2dVector.prototype, "createStyle");
+
+            store.getters = {
+                styleListLoaded: true
+            };
+            attributes.styleId = "styleId";
+            new Layer2dVector(attributes);
+
+            expect(createStyleSpy.calledOnce).to.be.true;
+        });
+
+        it("initStyle shall be called on creation and not call createStyle if styleListLoaded=false", function () {
+            const createStyleSpy = sinon.spy(Layer2dVector.prototype, "createStyle");
+
+            store.getters = {
+                styleListLoaded: false
+            };
+            attributes.styleId = "styleId";
+            new Layer2dVector(attributes);
+
+            expect(createStyleSpy.notCalled).to.be.true;
+        });
+
+        it("createStyle shall return a function", function () {
             let layer2d = null,
                 styleFunction = null;
 
             attributes.styleId = "styleId";
             layer2d = new Layer2dVector(attributes);
-            styleFunction = layer2d.getStyleFunction(attributes);
+            layer2d.createStyle(attributes);
+            styleFunction = layer2d.getStyleFunction();
 
             expect(styleFunction).not.to.be.null;
             expect(typeof styleFunction).to.be.equals("function");
