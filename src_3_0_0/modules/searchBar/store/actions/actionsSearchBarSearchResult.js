@@ -71,7 +71,7 @@ export default {
     highlightFeature: ({dispatch}, {hit}) => {
         const feature = WKTUtil.getWKTGeom(hit);
 
-        dispatch("MapMarker/placingPolygonMarker", feature, {root: true});
+        dispatch("Maps/placingPolygonMarker", feature, {root: true});
         /* used in:
             specialWFS
         */
