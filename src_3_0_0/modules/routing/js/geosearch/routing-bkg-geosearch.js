@@ -55,8 +55,7 @@ async function fetchRoutingBkgGeosearchReverse (coordinates) {
  */
 function parseRoutingBkgGeosearchResult (geosearchResult) {
     return new RoutingGeosearchResult(
-        Number(geosearchResult.geometry.coordinates[1]),
-        Number(geosearchResult.geometry.coordinates[0]),
+        [Number(geosearchResult.geometry.coordinates[0]), Number(geosearchResult.geometry.coordinates[1])],
         geosearchResult.properties.text
     );
 }
