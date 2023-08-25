@@ -42,7 +42,13 @@ const state = {
         limit: 10,
         bbox: "",
         type: null,
-        serviceId: null
+        serviceId: null,
+        epsg: "4326",
+        searchField: null,
+        sortField: null,
+        typeName: null,
+        propertyNames: null,
+        geometryName: null
     },
     geosearchReverse: {
         type: null,
