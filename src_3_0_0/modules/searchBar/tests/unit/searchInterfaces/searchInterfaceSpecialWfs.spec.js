@@ -39,33 +39,28 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceSpecialWfs
                     category: "modules.searchBar.specialWFS.ongoing",
                     events: {
                         onClick: {
-                            highligtFeature: {
-                                closeResults: false,
+                            highlightFeature: {
                                 hit: {
-                                    coordinate: ["565931.982", "5935196.323", "565869.067", "5935016.323"],
+                                    coordinate: [565931.982, 5935196.323, 565869.067, 5935016.323],
                                     geometryType: "MultiPolygon"
                                 }
                             },
                             setMarker: {
-                                closeResults: true,
-                                coordinates: ["565931.982", "5935196.323", "565869.067", "5935016.323"]
+                                coordinates: [565931.982, 5935196.323, 565869.067, 5935016.323]
                             },
                             zoomToResult: {
-                                coordinates: ["565931.982", "5935196.323", "565869.067", "5935016.323"],
-                                closeResults: true
+                                coordinates: [565931.982, 5935196.323, 565869.067, 5935016.323]
                             }
                         },
                         onHover: {
-                            highligtFeature: {
+                            highlightFeature: {
                                 hit: {
-                                    coordinate: ["565931.982", "5935196.323", "565869.067", "5935016.323"],
+                                    coordinate: [565931.982, 5935196.323, 565869.067, 5935016.323],
                                     geometryType: "MultiPolygon"
-                                },
-                                closeResults: false
+                                }
                             },
                             setMarker: {
-                                coordinates: ["565931.982", "5935196.323", "565869.067", "5935016.323"],
-                                closeResults: true
+                                coordinates: [565931.982, 5935196.323, 565869.067, 5935016.323]
                             }
                         }
                     },
@@ -133,20 +128,17 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceSpecialWfs
 
             expect(SearchInterface1.createPossibleActions(searchResults[0])).to.deep.equals(
                 {
-                    highligtFeature: {
+                    highlightFeature: {
                         hit: {
-                            coordinate: ["565931.982", "5935196.323", "565869.067", "5935016.323"],
+                            coordinate: [565931.982, 5935196.323, 565869.067, 5935016.323],
                             geometryType: "MultiPolygon"
-                        },
-                        closeResults: false
+                        }
                     },
                     setMarker: {
-                        coordinates: ["565931.982", "5935196.323", "565869.067", "5935016.323"],
-                        closeResults: true
+                        coordinates: [565931.982, 5935196.323, 565869.067, 5935016.323]
                     },
                     zoomToResult: {
-                        coordinates: ["565931.982", "5935196.323", "565869.067", "5935016.323"],
-                        closeResults: true
+                        coordinates: [565931.982, 5935196.323, 565869.067, 5935016.323]
                     }
                 }
             );
