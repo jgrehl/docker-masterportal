@@ -135,8 +135,7 @@ describe("src_3_0_0/core/js/layers/layer2dVectorSensorThings.js", () => {
             options = [
                 "clusterGeometryFunction",
                 "featuresFilter",
-                "onLoadingError",
-                "style"
+                "onLoadingError"
             ];
         });
 
@@ -146,21 +145,52 @@ describe("src_3_0_0/core/js/layers/layer2dVectorSensorThings.js", () => {
     });
 
     describe("getStyleFunction", () => {
-        it("getStyleFunction shall return a function", () => {
-            const staLayer = new Layer2dVectorSensorThings(attributes),
-                styleFunction = staLayer.getStyleFunction(attributes);
+        it("createStyle shall return a function", () => {
+            const staLayer = new Layer2dVectorSensorThings(attributes);
+            let styleFunction = null;
+
+            staLayer.createStyle(attributes);
+            styleFunction = staLayer.getStyleFunction();
 
             expect(styleFunction).not.to.be.null;
             expect(typeof styleFunction).to.be.equals("function");
         });
-        it("getStyleFunction shall return null when style is null", async () => {
+        it("createStyle shall return null when style is null", async () => {
             await sinon.stub(createStyle, "createStyle").returns(null);
-            const staLayer = new Layer2dVectorSensorThings(attributes),
-                styleFunction = await staLayer.getStyleFunction(attributes);
+            const staLayer = new Layer2dVectorSensorThings(attributes);
+            let styleFunction = null;
+
+            staLayer.createStyle(attributes);
+            styleFunction = staLayer.getStyleFunction();
 
             expect(styleFunction).not.to.be.null;
             expect(typeof styleFunction).to.be.equals("function");
         });
+
+        it("initStyle shall be called on creation and call createStyle if styleListLoaded=true", function () {
+            const createStyleSpy = sinon.spy(Layer2dVectorSensorThings.prototype, "createStyle");
+
+            store.getters = {
+                styleListLoaded: true
+            };
+            attributes.styleId = "styleId";
+            new Layer2dVectorSensorThings(attributes);
+
+            expect(createStyleSpy.calledOnce).to.be.true;
+        });
+
+        it("initStyle shall be called on creation and not call createStyle if styleListLoaded=false", function () {
+            const createStyleSpy = sinon.spy(Layer2dVectorSensorThings.prototype, "createStyle");
+
+            store.getters = {
+                styleListLoaded: false
+            };
+            attributes.styleId = "styleId";
+            new Layer2dVectorSensorThings(attributes);
+
+            expect(createStyleSpy.notCalled).to.be.true;
+        });
+
     });
 
     describe("getMqttHostFromUrl", () => {
