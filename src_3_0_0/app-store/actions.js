@@ -105,13 +105,14 @@ export default {
     },
 
     /**
-     * Initializes the style list of vector styling.
+     * Initializes the style list of vector styling. Sets state variable 'StyleListLoaded' to true, if successful loaded.
      * @param {Object} param.state the state
+     * @param {Object} param.commit the commit
      * @param {Object} param.dispatch the dispatch
      * @param {Object} param.getters the getters
      * @returns {void}
      */
-    initializeVectorStyle ({state, dispatch, getters}) {
+    initializeVectorStyle ({state, commit, dispatch, getters}) {
         const styleGetters = {
                 mapMarkerPointStyleId: getters.configJs?.mapMarker?.pointStyleId,
                 mapMarkerPolygonStyleId: getters.configJs?.mapMarker?.polygonStyleId,
@@ -121,9 +122,6 @@ export default {
                 zoomToFeatureId: getters.configJs.zoomTo?.find(entry => entry.id === "zoomToFeatureId")?.styleId
             },
             layerConfigs = getters.allLayerConfigs,
-            // todo bei Implementierung von https://www.jira.geoportal-hamburg.de/browse/BG-3825 beachten:
-            // hier stand vorher: //Radio.request("Parser", "getItemsByAttributes", {type: "tool"})
-            // bin nicht sicher, ob das mit dem sectionsContent so richtig ist. Wenn ja dann brauchen wir dafür einen getter. Was ist mit "tools", die in foldern sind?
             secondaryMenuSections = getters.menuFromConfig("secondaryMenu").sections ? getters.menuFromConfig("secondaryMenu").sections[0] : [],
             sectionsContent = getters.menuFromConfig("mainMenu").sections[0].concat(secondaryMenuSections);
 
@@ -136,7 +134,9 @@ export default {
                     }, {root: true});
                 }
                 return initializedStyleList;
-            });
+            }).then(() => {
+            commit("setStyleListLoaded", true);
+        }).catch(error => console.error(error));
     },
 
     /**

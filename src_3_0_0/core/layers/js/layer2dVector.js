@@ -32,7 +32,7 @@ export default function Layer2dVector (attributes) {
     if (attributes.renderer === "webgl") {
         webgl.setLayerProperties(this);
     }
-    this.setStyle(this.getStyleFunction(attributes));
+    this.initStyle(attributes);
     this.prepareFeaturesFor3D(this.layer?.getSource().getFeatures());
 }
 
@@ -162,31 +162,58 @@ Layer2dVector.prototype.setStyle = function (value) {
 };
 
 /**
- * Sets Style for layer.
+ * Initializes the style for this layer. If styleId is set, this is done after vector styles are loaded.
  * @param {Object} attrs  params of the raw layer
  * @returns {void}
  */
-Layer2dVector.prototype.getStyleFunction = function (attrs) {
-    let style = null;
-
-    if (typeof attrs.styleId !== "undefined") {
-        const styleId = attrs.styleId,
-            styleObject = styleList.returnStyleObject(styleId);
-        let isClusterFeature = false;
-
-        if (styleObject !== undefined) {
-            style = (feature) => {
-                const feat = feature !== undefined ? feature : this;
-
-                isClusterFeature = typeof feat.get("features") === "function" || typeof feat.get("features") === "object" && Boolean(feat.get("features"));
-                return createStyle.createStyle(styleObject, feat, isClusterFeature, Config.wfsImgPath);
-            };
-        }
-        else {
-            console.warn(i18next.t("common:core.layers.errorHandling.wrongStyleId", {styleId}));
-        }
+Layer2dVector.prototype.initStyle = async function (attrs) {
+    if (store.getters.styleListLoaded) {
+        this.createStyle(attrs);
     }
-    return style;
+    else {
+        store.watch((state, getters) => getters.styleListLoaded, value => {
+            if (value) {
+                this.createStyle(attrs);
+            }
+        });
+    }
+};
+
+/**
+ * Creates the style function.
+ * @param {Object} attrs  params of the raw layer
+ * @returns {void}
+ */
+Layer2dVector.prototype.createStyle = async function (attrs) {
+    const styleId = attrs.styleId,
+        styleObject = styleList.returnStyleObject(styleId);
+
+    if (styleObject !== undefined) {
+        /**
+         * Returns style function to style fature.
+         * @param {ol.Feature} feature the feature to style
+         * @returns {Function} style function to style fature
+         */
+        const style = (feature) => {
+            const feat = feature !== undefined ? feature : this,
+                isClusterFeature = typeof feat.get("features") === "function" || typeof feat.get("features") === "object" && Boolean(feat.get("features"));
+
+            return createStyle.createStyle(styleObject, feat, isClusterFeature, Config.wfsImgPath);
+        };
+
+        this.setStyle(style);
+    }
+    else {
+        console.warn(i18next.t("common:core.layers.errorHandling.wrongStyleId", {styleId}));
+    }
+};
+
+/**
+ * Returns the style function of this layer to be called with feature.
+ * @returns {Object} the style function
+ */
+Layer2dVector.prototype.getStyleFunction = function () {
+    return this.get("style");
 };
 /**
  * Only shows features that match the given ids.
