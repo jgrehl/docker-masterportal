@@ -723,15 +723,16 @@
     "mark": "Select the topic",
     "add": "Add Topic",
     "type": {
-        "street": "street",
-        "district": "district",
-        "parcel": "parcel",
         "address": "address",
-        "location": "location",
-        "subject": "subject (external topics)",
-        "topic": "issues & topics",
+        "county": "county",
+        "district": "district",
+        "folder": "folder (topics)",
         "general": "topics",
-        "folder": "folder (topics)"
+        "location": "location",
+        "parcel": "parcel",
+        "street": "street",
+        "subject": "subject (external topics)",
+        "topic": "issues & topics"
     },
     "specialWFS": {
       "ongoing": "in process",
