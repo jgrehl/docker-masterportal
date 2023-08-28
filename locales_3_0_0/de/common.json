@@ -716,6 +716,7 @@
     "add": "Thema hinzufügen",
     "type": {
         "address": "Adresse",
+        "county": "Bezirk",
         "district": "Stadtteil",
         "folder": "Ordner (Fachdaten)",
         "general": "Fachdaten",
