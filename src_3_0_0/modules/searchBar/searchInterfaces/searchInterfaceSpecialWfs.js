@@ -240,48 +240,36 @@ SearchInterfaceSpecialWfs.prototype.getInteriorAndExteriorPolygonMembers = funct
     const lengthIndex = polygonMembers.length,
         coordinateArray = [];
 
-    console.log(polygonMembers);
-    for (let i = 0; i < 1; i++) {
-        const coords = [],
-            polygonsWithInteriors = [],
+    for (let i = 0; i < lengthIndex; i++) {
+        const polygonsWithInteriors = [],
             interiorCoords = [];
-        let posListPolygonMembers, exterior, interior, exteriorCoord;
+        let coords = [], posListPolygonMembers, exterior, interior, exteriorCoord;
 
         posListPolygonMembers = polygonMembers[i].getElementsByTagNameNS("*", "posList");
 
         // polygon with interior polygons
         // make sure that the exterior coordinates are always at the first position in the array
         if (posListPolygonMembers.length > 1) {
-            /*
             posListPolygonMembers = [];
             exterior = polygonMembers[i].getElementsByTagNameNS("*", "exterior");
             exteriorCoord = exterior[0].getElementsByTagNameNS("*", "posList")[0].textContent;
-            polygonsWithInteriors.push(parseFloat(Object.values(exteriorCoord.replace(/\s\s+/g, " ").split(" "))));
+            polygonsWithInteriors.push(Object.values(exteriorCoord.replace(/\s\s+/g, " ").split(" ")));
 
             interior = polygonMembers[i].getElementsByTagNameNS("*", "interior");
             for (const key in Object.keys(interior)) {
                 interiorCoords.push(interior[key].getElementsByTagNameNS("*", "posList")[0].textContent);
             }
-            interiorCoords.forEach(coord => polygonsWithInteriors.push(parseFloat(Object.values(coord.replace(/\s\s+/g, " ").split(" ")))));
+            interiorCoords.forEach(coord => polygonsWithInteriors.push(Object.values(coord.replace(/\s\s+/g, " ").split(" "))));
             coordinateArray.push(polygonsWithInteriors);
-            console.log("interior - exterior!");
-            */
         }
         else {
-            // console.log(coordinateArray.length);
-            // console.log(polygonMembers[i]);
             for (const key in Object.keys(posListPolygonMembers)) {
-                // console.log(key);
-                coords.push(posListPolygonMembers[key].textContent);
-                // console.log(posListPolygonMembers[key].textContent);
+                // coords.push(posListPolygonMembers[key].textContent);
+                const coordinatesText = posListPolygonMembers[key].getElementsByTagName("gml:pos")[0].textContent;
+
+                coords = coordinatesText.trim().split(" ").map(Number);
             }
-            const rawCoords = [];
-
-            coords.forEach(coordArray => coordArray.replace(/\s\s+/g, " ").split(" ").forEach(value => rawCoords.push(value)));
-            console.log(rawCoords.length);
-
-            rawCoords.forEach(rawCoord => coordinateArray.push(parseFloat(rawCoord, 10)));
-            console.log(coordinateArray.length);
+            coords.forEach(coordArray => coordinateArray.push(Object.values(coordArray.replace(/\s\s+/g, " ").split(" "))));
         }
     }
     console.log(coordinateArray);
