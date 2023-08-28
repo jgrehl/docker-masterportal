@@ -184,7 +184,7 @@ SearchInterfaceElasticSearch.prototype.normalizeResults = function (searchResult
     searchResults.forEach(searchResult => {
         normalizedResults.push({
             events: this.normalizeResultEvents(this.resultEvents, searchResult),
-            category: this.hitType.startsWith("common:") ? i18next.t(this.hitType) : this.getResultByPath(searchResult, this.hitType),
+            category: this.hitType.startsWith("common:") ? i18next.t(this.hitType) : i18next.t(this.getTranslationByType(this.getResultByPath(searchResult, this.hitType))),
             icon: this.hitIcon,
             id: this.getResultByPath(searchResult, this.hitMap?.id),
             name: this.getResultByPath(searchResult, this.hitMap?.name),
@@ -193,6 +193,23 @@ SearchInterfaceElasticSearch.prototype.normalizeResults = function (searchResult
     });
 
     return normalizedResults;
+};
+
+/**
+ * Returns the translation key to a search result type.
+ * @param {String} type The search result type.
+ * @returns {String} The translation key.
+ */
+SearchInterfaceElasticSearch.prototype.getTranslationByType = function (type) {
+    const keys = {
+        District: "common:modules.searchBar.type.district",
+        Address: "common:modules.searchBar.type.address",
+        parcel: "common:modules.searchBar.type.parcel",
+        Street: "common:modules.searchBar.type.street",
+        County: "common:modules.searchBar.type.county"
+    };
+
+    return i18next.t(keys[type]);
 };
 
 /**
