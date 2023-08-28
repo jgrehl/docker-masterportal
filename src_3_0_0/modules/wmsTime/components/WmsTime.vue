@@ -9,12 +9,15 @@ export default {
         LayerSwiper,
         TimeSlider
     },
+    data: () => ({activeLayers: []}),
     computed: {
         ...mapGetters("Modules/WmsTime", ["currentTimeSliderObject", "layerAppendix", "layerSwiper", "minWidth", "timeSlider", "visibility"])
     },
     watch: {
         currentTimeSliderObject () {
-            console.log(this.currentTimeSliderObject);
+            if (this.currentTimeSliderObject.layerId) {
+                this.activeLayers.push(this.currentTimeSliderObject.layerId);
+            }
         }
     },
     created () {
@@ -36,12 +39,12 @@ export default {
         <TimeSlider
             v-if="timeSlider.active"
             :class="{'moveLeft': layerSwiper.active && minWidth}"
-            :layer-id="currentTimeSliderObject.layerId"
+            :layer-id="activeLayers[0]"
         />
         <TimeSlider
             v-if="timeSlider.active && layerSwiper.active && minWidth"
             :class="{'moveRight': layerSwiper.active}"
-            :layer-id="currentTimeSliderObject.layerId"
+            :layer-id="activeLayers[1]"
         />
         <LayerSwiper v-if="layerSwiper.active && minWidth" />
     </div>
