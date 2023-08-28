@@ -54,18 +54,36 @@ const actions = {
             commit("setLayerSwiperTargetLayer", layerCollection.getLayerById(secondId));
         }
         else {
+            const layerConfigs = [];
+
             // If the button of the "original" window is clicked, it is assumed, that the time value selected in the added window is desired to be further displayed.
             if (!id.endsWith(state.layerAppendix)) {
-                const {TIME} = layer.getLayerSource.params_,
-                    {transparency} = layer.attributes;
+                const {TIME} = layer.getLayerSource().params_,
+                    {transparency} = layer.attributes,
+                    origLayer = layerCollection.getLayerById(id);
 
-                layer.updateTime(id, TIME);
-                // Radio.trigger("ModelList", "setModelAttributesById", id, {transparency});
+                layerConfigs.push({
+                    id: id,
+                    layer: {
+                        id: id,
+                        transparency: transparency
+                    }
+                });
+                origLayer.updateTime(id, TIME);
+                dispatch("replaceByIdInLayerConfig", {layerConfigs: layerConfigs}, {root: true});
                 commit("setTimeSliderDefaultValue", TIME);
             }
 
-            mapCollection.getMap("2D").removeLayer(layer.getLayer());
-            layerCollection.removeLayerById(id);
+            layerConfigs.push({
+                id: secondId,
+                layer: {
+                    id: secondId,
+                    visibility: false,
+                    showInLayerTree: false
+                }
+            });
+
+            dispatch("replaceByIdInLayerConfig", {layerConfigs: layerConfigs}, {root: true});
         }
     },
     /**
