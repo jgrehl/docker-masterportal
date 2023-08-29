@@ -5,7 +5,8 @@ import loadAddons from "../src/addons";
 import "../modules/restReader/RadioBridge";
 import Autostarter from "../modules/core/autostarter";
 import Util from "../modules/core/util";
-import styleList from "@masterportal/masterportalapi/src/vectorStyle/styleList";
+// import styleList from "@masterportal/masterportalapi/src/vectorStyle/styleList";
+import initializeStyleList from "../src/core/vectorStylesHelper";
 import Preparser from "../modules/core/configLoader/preparser";
 import RemoteInterface from "../modules/remoteInterface/model";
 import RadioMasterportalAPI from "../modules/remoteInterface/radioMasterportalAPI";
@@ -77,8 +78,8 @@ async function loadApp () {
 
     /* eslint-disable no-undef */
     let app = {},
-        searchbarAttributes = {},
-        styleGetters = {};
+        searchbarAttributes = {};
+        // styleGetters = {};
 
     if (Object.prototype.hasOwnProperty.call(Config, "uiStyle")) {
         utilConfig.uiStyle = Config.uiStyle.toUpperCase();
@@ -96,6 +97,8 @@ async function loadApp () {
         new RadioMasterportalAPI();
         Vue.use(RemoteInterfaceVue, Config.remoteInterface);
     }
+
+    await initializeStyleList();
 
     // import and register Vue addons according the config.js
     await loadAddons(Config.addons);
@@ -128,24 +131,24 @@ async function loadApp () {
     new Preparser(null, {url: Config.portalConf});
     handleUrlParamsBeforeVueMount(window.location.search);
 
-    styleGetters = {
-        mapMarkerPointStyleId: store.getters["MapMarker/pointStyleId"],
-        mapMarkerPolygonStyleId: store.getters["MapMarker/polygonStyleId"],
-        highlightFeaturesPointStyleId: store.getters["HighlightFeatures/pointStyleId"],
-        highlightFeaturesPolygonStyleId: store.getters["HighlightFeatures/polygonStyleId"],
-        highlightFeaturesLineStyleId: store.getters["HighlightFeatures/lineStyleId"]
-    };
+    // styleGetters = {
+    //     mapMarkerPointStyleId: store.getters["MapMarker/pointStyleId"],
+    //     mapMarkerPolygonStyleId: store.getters["MapMarker/polygonStyleId"],
+    //     highlightFeaturesPointStyleId: store.getters["HighlightFeatures/pointStyleId"],
+    //     highlightFeaturesPolygonStyleId: store.getters["HighlightFeatures/polygonStyleId"],
+    //     highlightFeaturesLineStyleId: store.getters["HighlightFeatures/lineStyleId"]
+    // };
 
-    await styleList.initializeStyleList(styleGetters, Config, Radio.request("Parser", "getItemsByAttributes", {type: "layer"}), Radio.request("Parser", "getItemsByAttributes", {type: "tool"}),
-        (initializedStyleList, error) => {
-            if (error) {
-                Radio.trigger("Alert", "alert", {
-                    text: "<strong>Die Datei '" + Config.styleConf + "' konnte nicht geladen werden!</strong>",
-                    kategorie: "alert-warning"
-                });
-            }
-            return initializedStyleList;
-        });
+    // styleList.initializeStyleList(styleGetters, Config, Radio.request("Parser", "getItemsByAttributes", {type: "layer"}), Radio.request("Parser", "getItemsByAttributes", {type: "tool"}),
+    //     (initializedStyleList, error) => {
+    //         if (error) {
+    //             Radio.trigger("Alert", "alert", {
+    //                 text: "<strong>Die Datei '" + Config.styleConf + "' konnte nicht geladen werden!</strong>",
+    //                 kategorie: "alert-warning"
+    //             });
+    //         }
+    //         return initializedStyleList;
+    //     });
     createMaps(Config, Radio.request("Parser", "getPortalConfig").mapView);
     new WindowView();
 
