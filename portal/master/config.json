@@ -58,6 +58,10 @@
       }
     },
     "getFeatureInfo": {
+      "coloredHighlighting3D": {
+        "enabled": true,
+        "color": "PURPLE"
+      },
       "highlightVectorRules": {
         "fill": {
           "color": [
@@ -83,7 +87,7 @@
           "scale": 2
         }
       },
-      "hideMapMarkerOnVectorHighlight": true
+      "hideMapMarkerOnVectorHighlight": false
     },
     "mainMenu": {
       "expanded": true,
