@@ -136,7 +136,7 @@ async function loadApp () {
         highlightFeaturesLineStyleId: store.getters["HighlightFeatures/lineStyleId"]
     };
 
-    styleList.initializeStyleList(styleGetters, Config, Radio.request("Parser", "getItemsByAttributes", {type: "layer"}), Radio.request("Parser", "getItemsByAttributes", {type: "tool"}),
+    await styleList.initializeStyleList(styleGetters, Config, Radio.request("Parser", "getItemsByAttributes", {type: "layer"}), Radio.request("Parser", "getItemsByAttributes", {type: "tool"}),
         (initializedStyleList, error) => {
             if (error) {
                 Radio.trigger("Alert", "alert", {
