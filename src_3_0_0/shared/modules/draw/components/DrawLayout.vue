@@ -139,7 +139,6 @@ export default {
                 tabindex="0"
                 :class="[
                     'btn',
-                    'btn-primary',
                     'me-3',
                     activeLayoutKey === layoutKey ? 'active' : ''
                 ]"
@@ -249,14 +248,17 @@ export default {
 @import "~mixins";
 
 .btn {
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 3.5rem;
+    height: 3.5rem;
     position: sticky;
     text-align: center;
     top: auto;
     font-size: 1.143rem;
     border-radius: 50%;
     border: solid $white 1px;
+    &:hover {
+        background-color: $primary;
+    }
     /* position label in center of button */
     > label {
         position: absolute;
@@ -266,27 +268,17 @@ export default {
         transform: translate(-50%, -50%);
         line-height: 0.5rem;
 
-        > input:hover{
-            color: $white;
-        }
-
         input[type="text"] {
             font-size: $font_size_sm;
             width: 3rem;
             text-align: center;
+            padding-top: .3rem;
         }
 
         input[type="color"] {
-            height: 0.75rem;
-            width: 2rem;
-        }
-    }
-}
-
-.btn.active {
-    > label {
-        > input {
-            color: $white;
+            height: 0.5rem;
+            width: 1.8rem;
+            margin-top: .3rem;
         }
     }
 }
