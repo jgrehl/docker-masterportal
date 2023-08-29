@@ -15,6 +15,7 @@
  * @property {Object[]} gfiFeatures temporary array for features at click has to be moved to gfi module.
  * @property {Object[]} path Path for menu navigation
  * @property {Boolean} [hideMapMarkerOnVectorHighlight=false] if true, mapmarker is hidden on vector highlighting.
+ * @property {Object} coloredHighlighting3D The Highlight Setting of 3D Tiles.
  */
 const state = {
     configPaths: ["portalConfig.getFeatureInfo"],
@@ -34,7 +35,8 @@ const state = {
     hideMapMarkerOnVectorHighlight: false,
     highlightVectorRules: null,
     path: [],
-    showMarker: true
+    showMarker: true,
+    coloredHighlighting3D: {}
 };
 
 export default state;
