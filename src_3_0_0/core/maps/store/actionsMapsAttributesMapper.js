@@ -96,10 +96,14 @@ export default {
      * @param {Object} param.dispatch the dispatch
      * @returns {void}
      */
-    registerCesiumListener ({dispatch}) {
+    registerCesiumListener ({dispatch, rootGetters}) {
         const map3d = mapCollection.getMap("3D"),
             scene3d = map3d.getCesiumScene(),
             eventHandler = new Cesium.ScreenSpaceEventHandler(scene3d.canvas);
+
+        if (rootGetters["Modules/GetFeatureInfo/coloredHighlighting3D"] && rootGetters["Modules/GetFeatureInfo/coloredHighlighting3D"]?.enabled !== false) {
+            dispatch("Modules/GetFeatureInfo/highlight3DTile", "", {root: true});
+        }
 
         api.map.olcsMap.handle3DEvents({
             scene: scene3d,

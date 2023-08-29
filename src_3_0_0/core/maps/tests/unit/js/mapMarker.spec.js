@@ -56,7 +56,7 @@ describe("src_3_0_0/core/js/maps/mapMarker.js", () => {
                 layer = mapMarker.createMapMarker(geometryType, styleId);
 
             expect(layer instanceof VectorLayer).to.be.true;
-            expect(layer.get("altitudeMode")).to.equals("clampToGround");
+            expect(layer.get("altitudeMode")).to.equals("absolute");
             expect(layer.get("alwaysOnTop")).to.be.true;
             expect(layer.get("id")).to.equals("marker_point_layer");
             expect(layer.get("name")).to.equals("markerPoint");
@@ -70,7 +70,7 @@ describe("src_3_0_0/core/js/maps/mapMarker.js", () => {
                 layer = mapMarker.createMapMarker(geometryType, styleId);
 
             expect(layer instanceof VectorLayer).to.be.true;
-            expect(layer.get("altitudeMode")).to.equals("clampToGround");
+            expect(layer.get("altitudeMode")).to.equals("relativeToGround");
             expect(layer.get("alwaysOnTop")).to.be.true;
             expect(layer.get("id")).to.equals("marker_polygon_layer");
             expect(layer.get("name")).to.equals("markerPolygon");
