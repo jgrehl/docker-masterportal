@@ -205,7 +205,7 @@ export default {
             "setCurrentFeature",
             "setVisible"
         ]),
-        ...mapActions(["initializeModule"]),
+        ...mapActions(["initializeModule", "highlight3DTile", "removeHighlight3DTile", "removeHighlightColor"]),
         ...mapActions("Modules/GetFeatureInfo", [
             "collectGfiFeatures"
         ]),
@@ -225,13 +225,16 @@ export default {
         },
 
         /**
-         * Reset means to set the gfiFeatures to null.
+         * Resets means to set the gfiFeatures to null and revert 3D Coloring..
          * This closes the gfi window/modal/popover.
          * @returns {void}
          */
         reset: function () {
             this.pagerIndex = 0;
             this.setGfiFeatures(null);
+            if (this.mapMode === "3D") {
+                this.removeHighlightColor();
+            }
         },
 
         /**
