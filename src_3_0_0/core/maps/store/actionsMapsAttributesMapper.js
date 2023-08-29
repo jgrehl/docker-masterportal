@@ -94,6 +94,7 @@ export default {
      * Register cesium (map 3D) listener.
      * @param {Object} param store context
      * @param {Object} param.dispatch the dispatch
+     * @param {Object} param.rootGetters the rootGetters
      * @returns {void}
      */
     registerCesiumListener ({dispatch, rootGetters}) {
