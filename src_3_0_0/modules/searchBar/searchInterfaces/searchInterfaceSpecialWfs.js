@@ -270,9 +270,21 @@ SearchInterfaceSpecialWfs.prototype.getInteriorAndExteriorPolygonMembers = funct
 SearchInterfaceSpecialWfs.prototype.createPossibleActions = function (searchResult) {
     const coordinates = [];
 
-    searchResult.geometry.forEach(coord => {
-        coordinates.push(parseFloat(coord));
-    });
+    if (Array.isArray(searchResult?.geometry)) {
+        searchResult.geometry.forEach(coord => {
+            if (Array.isArray(coord)) {
+                coord.forEach(coordinate => {
+                    coordinates.push(parseFloat(coordinate));
+                });
+            }
+            coordinates.push(parseFloat(coord));
+        });
+    }
+    else {
+        searchResult.geometry.flatCoordinates.forEach(coord => {
+            coordinates.push(parseFloat(coord));
+        });
+    }
 
     return {
         highlightFeature: {
