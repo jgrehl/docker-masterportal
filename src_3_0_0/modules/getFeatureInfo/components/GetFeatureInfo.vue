@@ -205,7 +205,7 @@ export default {
             "setCurrentFeature",
             "setVisible"
         ]),
-        ...mapActions(["initializeModule", "highlight3DTile", "removeHighlight3DTile", "removeHighlightColor"]),
+        ...mapActions(["initializeModule", "removeHighlightColor"]),
         ...mapActions("Modules/GetFeatureInfo", [
             "collectGfiFeatures"
         ]),
