@@ -30,10 +30,10 @@ export default {
             pagerIndex: 0,
             // key for re-render child(detached) component
             componentKey: false,
+            updatedFeature: false,
             // icons for buttons
             leftIcon: "bi-chevron-left",
-            rightIcon: "bi-chevron-right",
-            updatedFeature: false
+            rightIcon: "bi-chevron-right"
         };
     },
     computed: {
@@ -216,15 +216,6 @@ export default {
         ]),
 
         /**
-         * Set updatedFeature value.
-         * @param {Boolean} val - false if features have been updated or no features are given
-         * @returns {void}
-         */
-        setUpdatedFeature: function (val) {
-            this.updatedFeature = val;
-        },
-
-        /**
          * Resets means to set the gfiFeatures to null and revert 3D Coloring..
          * This closes the gfi window/modal/popover.
          * @returns {void}
@@ -235,6 +226,15 @@ export default {
             if (this.mapMode === "3D") {
                 this.removeHighlightColor();
             }
+        },
+
+        /**
+         * Set updatedFeature value.
+         * @param {Boolean} val - false if features have been updated or no features are given
+         * @returns {void}
+         */
+        setUpdatedFeature: function (val = false) {
+            this.updatedFeature = val;
         },
 
         /**
@@ -312,6 +312,7 @@ export default {
                         :aria="$t('common:modules.getFeatureInfo.buttonBack')"
                         :class-array="['pager-left', 'pager', 'btn-primary']"
                         :icon="leftIcon"
+                        role="button"
                         :interaction="decreasePagerIndex"
                     />
                     <IconButton
@@ -319,6 +320,7 @@ export default {
                         :aria="$t('common:modules.getFeatureInfo.buttonForward')"
                         :class-array="['pager-right', 'pager', 'btn-primary']"
                         :icon="rightIcon"
+                        role="button"
                         :interaction="increasePagerIndex"
                     />
                 </div>
