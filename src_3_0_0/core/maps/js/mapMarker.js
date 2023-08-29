@@ -48,7 +48,7 @@ function getCreateFunctionByType (geometryType) {
  */
 function createPointMarker (styleId = "defaultMapMarkerPoint") {
     return new VectorLayer({
-        altitudeMode: "clampToGround",
+        altitudeMode: "absolute",
         alwaysOnTop: true,
         id: "marker_point_layer",
         name: "markerPoint",
@@ -66,7 +66,7 @@ function createPointMarker (styleId = "defaultMapMarkerPoint") {
  */
 function createPolygonMarker (styleId = "defaultMapMarkerPolygon") {
     return new VectorLayer({
-        altitudeMode: "clampToGround",
+        altitudeMode: "relativeToGround",
         alwaysOnTop: true,
         id: "marker_polygon_layer",
         name: "markerPolygon",
