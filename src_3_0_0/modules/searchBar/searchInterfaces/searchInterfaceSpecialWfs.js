@@ -191,7 +191,6 @@ SearchInterfaceSpecialWfs.prototype.fillHitList = function (xml, result, request
                         geometryMembers = elementGeometryName.getElementsByTagNameNS("*", memberName);
 
                     coordinates = this.getInteriorAndExteriorPolygonMembers(geometryMembers);
-                    console.log(coordinates);
 
                     geometry = undefined;
                     geometryType = "MultiPolygon";
