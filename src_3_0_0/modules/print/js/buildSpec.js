@@ -794,7 +794,7 @@ const BuildSpecModel = {
             if ((style !== undefined && style?.getText()?.getText() !== undefined) || feature.get("features").length > 1) {
                 const value = feature.get("features")[0].get(styleAttr[0])
                     + "_"
-                    + style !== undefined && style.getText().getText() !== undefined ? style.getText().getText() : "cluster";
+                    + style !== undefined && style.getText()?.getText() !== undefined ? style.getText()?.getText() : "cluster";
 
                 feature.set(styleAttr[0], value);
                 return `[${styleAttr[0]}='${value}']`;
