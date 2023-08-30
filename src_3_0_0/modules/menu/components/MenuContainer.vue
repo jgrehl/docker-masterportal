@@ -108,7 +108,19 @@ export default {
         ...mapActions("Menu", [
             "toggleMenu",
             "closeMenu"
-        ])
+        ]),
+        /**
+         * Opens the searchbar module.
+         * @returns {void}
+         */
+        openSearchBar () {
+            this.$store.dispatch("Menu/clickedMenuElement", {
+                name: "common:modules.searchBar.searchResultList",
+                side: this.side,
+                type: "searchbar"
+            }, {root: true});
+
+        }
     }
 };
 </script>
@@ -143,7 +155,7 @@ export default {
                 @click="closeMenu(side)"
             />
             <div
-                v-if="(currentComponent ==='root' || currentComponent?.name ==='SearchBarResultList') && titleBySide(side)"
+                v-if="(currentComponent ==='root') && titleBySide(side)"
                 :id="'mp-subHeader-' + side"
                 class="mp-menu-subHeader"
                 :class="
@@ -157,6 +169,7 @@ export default {
                 />
                 <SearchBar
                     v-if="titleBySide(side)"
+                    :click-action="openSearchBar"
                 />
             </div>
         </div>
