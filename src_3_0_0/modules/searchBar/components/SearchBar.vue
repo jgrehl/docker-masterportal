@@ -15,6 +15,13 @@ export default {
         SearchBarResultList,
         SearchBarSuggestionList
     },
+    props: {
+        clickAction: {
+            type: Object,
+            default: undefined,
+            required: false
+        }
+    },
     computed: {
         ...mapGetters("Modules/SearchBar", [
             "configPaths",
@@ -170,6 +177,7 @@ export default {
                 class="form-control"
                 :placeholder="$t(placeholder)"
                 :aria-label="$t(placeholder)"
+                @click="clickAction"
                 @input="startSearch"
                 @keydown.enter="startSearch"
             >
