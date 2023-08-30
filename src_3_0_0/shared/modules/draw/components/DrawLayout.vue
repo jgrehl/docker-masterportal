@@ -139,6 +139,7 @@ export default {
                 tabindex="0"
                 :class="[
                     'btn',
+                    'btn-primary',
                     'me-3',
                     activeLayoutKey === layoutKey ? 'active' : ''
                 ]"
@@ -256,8 +257,13 @@ export default {
     font-size: 1.143rem;
     border-radius: 50%;
     border: solid $white 1px;
+
     &:hover {
-        background-color: $primary;
+        > label {
+            > input {
+                color: $white;
+            }
+        }
     }
     /* position label in center of button */
     > label {
@@ -268,17 +274,32 @@ export default {
         transform: translate(-50%, -50%);
         line-height: 0.5rem;
 
+        > input:hover{
+            color: $white;
+        }
+
         input[type="text"] {
             font-size: $font_size_sm;
             width: 3rem;
             text-align: center;
             padding-top: .3rem;
+            &:disabled {
+                background: none;
+            }
         }
 
         input[type="color"] {
             height: 0.5rem;
             width: 1.8rem;
             margin-top: .3rem;
+        }
+    }
+}
+
+.btn.active {
+    > label {
+        > input {
+            color: $white;
         }
     }
 }
