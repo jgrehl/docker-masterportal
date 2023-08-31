@@ -8,7 +8,7 @@ const allAddons = VUE_ADDONS || {};
 /**
  * Adds all addons based on config.js and addonsConf.json to the Vue Instance and store
  * @param {String[]} config The array of addonKeys specified in config.js
- * @returns {void}
+ * @returns {Promise<void>} returns a empty promise
  */
 export default async function (config) {
     Vue.prototype.$toolAddons = []; // add .$toolAddons to store tools in

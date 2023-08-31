@@ -5,8 +5,7 @@ import loadAddons from "../src/addons";
 import "../modules/restReader/RadioBridge";
 import Autostarter from "../modules/core/autostarter";
 import Util from "../modules/core/util";
-// import styleList from "@masterportal/masterportalapi/src/vectorStyle/styleList";
-import initializeStyleList from "../src/core/vectorStylesHelper";
+import styleList from "@masterportal/masterportalapi/src/vectorStyle/styleList";
 import Preparser from "../modules/core/configLoader/preparser";
 import RemoteInterface from "../modules/remoteInterface/model";
 import RadioMasterportalAPI from "../modules/remoteInterface/radioMasterportalAPI";
@@ -98,9 +97,19 @@ async function loadApp () {
         Vue.use(RemoteInterfaceVue, Config.remoteInterface);
     }
 
-    await initializeStyleList();
+    // fetch the stylelist according to config.js
+    await styleList.initializeStyleList(Config,
+        (initializedStyleList, error) => {
+            if (error) {
+                Radio.trigger("Alert", "alert", {
+                    text: "<strong>Die Datei '" + Config.styleConf + "' konnte nicht geladen werden!</strong>",
+                    kategorie: "alert-warning"
+                });
+            }
+            return initializedStyleList;
+        });
 
-    // import and register Vue addons according the config.js
+    // import and register Vue addons according to config.js
     await loadAddons(Config.addons);
 
     await store.dispatch("loadConfigJs", Config);
@@ -130,25 +139,6 @@ async function loadApp () {
     // Pass null to create an empty Collection with options
     new Preparser(null, {url: Config.portalConf});
     handleUrlParamsBeforeVueMount(window.location.search);
-
-    // styleGetters = {
-    //     mapMarkerPointStyleId: store.getters["MapMarker/pointStyleId"],
-    //     mapMarkerPolygonStyleId: store.getters["MapMarker/polygonStyleId"],
-    //     highlightFeaturesPointStyleId: store.getters["HighlightFeatures/pointStyleId"],
-    //     highlightFeaturesPolygonStyleId: store.getters["HighlightFeatures/polygonStyleId"],
-    //     highlightFeaturesLineStyleId: store.getters["HighlightFeatures/lineStyleId"]
-    // };
-
-    // styleList.initializeStyleList(styleGetters, Config, Radio.request("Parser", "getItemsByAttributes", {type: "layer"}), Radio.request("Parser", "getItemsByAttributes", {type: "tool"}),
-    //     (initializedStyleList, error) => {
-    //         if (error) {
-    //             Radio.trigger("Alert", "alert", {
-    //                 text: "<strong>Die Datei '" + Config.styleConf + "' konnte nicht geladen werden!</strong>",
-    //                 kategorie: "alert-warning"
-    //             });
-    //         }
-    //         return initializedStyleList;
-    //     });
     createMaps(Config, Radio.request("Parser", "getPortalConfig").mapView);
     new WindowView();
 
