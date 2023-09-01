@@ -149,12 +149,19 @@ function getSnippetAdjustments (snippets, items, page, total) {
             return;
         }
         if (snippet.type === "dropdown") {
+            if (Array.isArray(snippet.attrName)) {
+                result[snippet.snippetId] = {
+                    value: getMergedValuesByAttrNames(snippet.attrName, valueByAttrName)
+                };
+                return;
+            }
             result[snippet.snippetId] = {
                 value: valueByAttrName[snippet.attrName]
             };
         }
         else if (snippet.type === "slider" || snippet.type === "sliderRange") {
-            const mergedValue = typeof snippet.attrName === "string" ? valueByAttrName[snippet.attrName] : valueByAttrName[snippet.attrName[0]].concat(valueByAttrName[snippet.attrName[1]]),
+            const mergedValue = Array.isArray(snippet.attrName) ?
+                    getMergedValuesByAttrNames(snippet.attrName, valueByAttrName) : valueByAttrName[snippet.attrName],
                 len = mergedValue.length;
             let min = false,
                 max = false,
@@ -179,11 +186,10 @@ function getSnippetAdjustments (snippets, items, page, total) {
         }
         else if (snippet.type === "date" || snippet.type === "dateRange") {
             const format = typeof snippet.format === "string" ? snippet.format : "YYYY-MM-DD",
-                sortedValue = typeof snippet.attrName === "string" ? valueByAttrName[snippet.attrName].sort((a, b) => {
+                values = Array.isArray(snippet.attrName) ? getMergedValuesByAttrNames(snippet.attrName, valueByAttrName) : valueByAttrName[snippet.attrName],
+                sortedValue = Array.isArray(values) ? values.sort((a, b) => {
                     return snippetDateCompareFunction(a, b, format);
-                }) : valueByAttrName[snippet.attrName[0]].concat(valueByAttrName[snippet.attrName[1]]).sort((a, b) => {
-                    return snippetDateCompareFunction(a, b, format);
-                });
+                }) : [];
 
             result[snippet.snippetId] = {
                 min: sortedValue[0],
@@ -204,8 +210,30 @@ function getSnippetAdjustments (snippets, items, page, total) {
 
     return result;
 }
+/**
+ * Gets a merged array of values for given attrNames array.
+ * @param {String[]} attrNames The attrNames to get the values for.
+ * @param {Object} values The values object to get the values from.
+ * @returns {*[]} The values for all attrNames.
+ */
+function getMergedValuesByAttrNames (attrNames, values) {
+    const result = [];
+
+    attrNames.forEach(attributeName => {
+        if (typeof values[attributeName] === "undefined") {
+            return;
+        }
+        if (Array.isArray(values[attributeName])) {
+            result.push(...values[attributeName]);
+            return;
+        }
+        result.push(values[attributeName]);
+    });
+    return result;
+}
 
 export {
+    getMergedValuesByAttrNames,
     getListOfRelevantAttrNames,
     getAttrValuesOfItemsGroupedByAttrNames,
     snippetDateCompareFunction,

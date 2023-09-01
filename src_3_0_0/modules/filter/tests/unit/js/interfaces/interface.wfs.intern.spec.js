@@ -256,4 +256,157 @@ describe("src/modules/tools/filter/interfaces/utils/interface.wfs.intern.js", ()
             ])).to.be.false;
         });
     });
+    describe("checkRuleForAttributesORHandler", () => {
+        it("should return false if anything but a valid rule object is given", () => {
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler("undefined")).to.be.false;
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler("null")).to.be.false;
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler(1234)).to.be.false;
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler("string")).to.be.false;
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler(true)).to.be.false;
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler(false)).to.be.false;
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler([])).to.be.false;
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({})).to.be.false;
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "OR"})).to.be.false;
+        });
+        it("should check the operator BETWEEN for a single number value", () => {
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "BETWEEN", value: -0.00001}, 0)).to.be.false;
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "BETWEEN", value: 0}, 0)).to.be.true;
+        });
+        it("should check the operator BETWEEN for a single date value", () => {
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "BETWEEN", value: "02.01.2022", format: "DD.MM.YYYY"}, "01.01.2022")).to.be.false;
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "BETWEEN", value: "02.01.2022", format: "DD.MM.YYYY"}, "02.01.2022")).to.be.true;
+        });
+        it("should check the operator EQ for a single boolean value", () => {
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "EQ", value: true}, true)).to.be.true;
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "EQ", value: false}, false)).to.be.true;
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "EQ", value: true}, false)).to.be.false;
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "EQ", value: false}, true)).to.be.false;
+        });
+        it("should check the operator EQ for a single string value", () => {
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "EQ", value: "string"}, "string")).to.be.true;
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "EQ", value: "string"}, "!string")).to.be.false;
+        });
+        it("should check the operator EQ for a single date value", () => {
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "EQ", value: "01.01.2022", format: "DD.MM.YYYY"}, "01.01.2022")).to.be.true;
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "EQ", value: "01.02.2022", format: "DD.MM.YYYY"}, "01.01.2022")).to.be.false;
+        });
+        it("should check the operator NE for a single boolean value", () => {
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "NE", value: true}, true)).to.be.false;
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "NE", value: false}, false)).to.be.false;
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "NE", value: true}, false)).to.be.true;
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "NE", value: false}, true)).to.be.true;
+        });
+        it("should check the operator NE for a single string value", () => {
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "NE", value: "string"}, "string")).to.be.false;
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "NE", value: "string"}, "!string")).to.be.true;
+        });
+        it("should check the operator NE for a single date value", () => {
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "NE", value: "01.01.2022", format: "DD.MM.YYYY"}, "01.01.2022")).to.be.false;
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "NE", value: "01.02.2022", format: "DD.MM.YYYY"}, "01.01.2022")).to.be.true;
+        });
+        it("should check the operator GT for a single value", () => {
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "GT", value: 4.9999}, 5)).to.be.true;
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "GT", value: 5}, 5)).to.be.false;
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "GT", value: 5.0001}, 5)).to.be.false;
+        });
+        it("should check the operator GT for a single date value", () => {
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "GT", value: "01.01.2022", format: "DD.MM.YYYY"}, "02.01.2022")).to.be.true;
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "GT", value: "01.01.2022", format: "DD.MM.YYYY"}, "01.01.2022")).to.be.false;
+        });
+        it("should check the operator GE for a single value", () => {
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "GE", value: 4.9999}, 5)).to.be.true;
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "GE", value: 5}, 5)).to.be.true;
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "GE", value: 5.0001}, 5)).to.be.false;
+        });
+        it("should check the operator GE for a single date value", () => {
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "GE", value: "01.01.2022", format: "DD.MM.YYYY"}, "01.01.2022")).to.be.true;
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "GE", value: "01.01.2022", format: "DD.MM.YYYY"}, "02.01.2022")).to.be.true;
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "GE", value: "02.01.2022", format: "DD.MM.YYYY"}, "01.01.2022")).to.be.false;
+        });
+        it("should check the operator LT for a single value", () => {
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "LT", value: 4.9999}, 5)).to.be.false;
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "LT", value: 5}, 5)).to.be.false;
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "LT", value: 5.0001}, 5)).to.be.true;
+        });
+        it("should check the operator LT for a single date value", () => {
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "LT", value: "01.01.2022", format: "DD.MM.YYYY"}, "01.01.2022")).to.be.false;
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "LT", value: "02.01.2022", format: "DD.MM.YYYY"}, "01.01.2022")).to.be.true;
+        });
+        it("should check the operator LE for a single value", () => {
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "LE", value: 4.9999}, 5)).to.be.false;
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "LE", value: 5}, 5)).to.be.true;
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "LE", value: 5.0001}, 5)).to.be.true;
+        });
+        it("should check the operator LE for a single value", () => {
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "LE", value: "01.01.2022", format: "DD.MM.YYYY"}, "02.01.2022")).to.be.false;
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "LE", value: "01.01.2022", format: "DD.MM.YYYY"}, "01.01.2022")).to.be.true;
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "LE", value: "02.01.2022", format: "DD.MM.YYYY"}, "01.01.2022")).to.be.true;
+        });
+        it("should check the operator IN for a single value", () => {
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "IN", value: "bar"}, "foobarbaz")).to.be.true;
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "IN", value: "bar"}, "foobaz")).to.be.false;
+        });
+        it("should check the operator STARTSWITH for a single value", () => {
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "STARTSWITH", value: "foo"}, "foobarbaz")).to.be.true;
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "STARTSWITH", value: "foo"}, "bazbarfoo")).to.be.false;
+        });
+        it("should check the operator ENDSWITH for a single value", () => {
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "ENDSWITH", value: "foo"}, "foobarbaz")).to.be.false;
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "ENDSWITH", value: "foo"}, "bazbarfoo")).to.be.true;
+        });
+        it("should check the operator INTERSECTS for multi values", () => {
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "INTERSECTS", value: [0, 10]}, -1)).to.be.false;
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "INTERSECTS", value: [0, 10]}, 0)).to.be.true;
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "INTERSECTS", value: [0, 10]}, 10)).to.be.true;
+        });
+        it("should check the operator BETWEEN for multi values", () => {
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "BETWEEN", value: [0, 10]}, -1)).to.be.false;
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "BETWEEN", value: [0, 10]}, 0)).to.be.true;
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "BETWEEN", value: [0, 10]}, 10)).to.be.true;
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "BETWEEN", value: [0, 10]}, 9)).to.be.true;
+        });
+        it("should check the operator BETWEEN for multi date values", () => {
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "BETWEEN", value: ["01.01.2022", "10.01.2022"], format: "DD.MM.YYYY"}, "31.11.2021", "02.01.2022")).to.be.false;
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "BETWEEN", value: ["01.01.2022", "10.01.2022"], format: "DD.MM.YYYY"}, "02.01.2022", "05.01.2022")).to.be.true;
+        });
+        it("should check the operator EQ for multi values", () => {
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "EQ", value: ["foo", "bar", "baz"]}, "foobar")).to.be.false;
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "EQ", value: ["foo", "bar", "baz"]}, "foo")).to.be.true;
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "EQ", value: ["foo", "bar", "baz"]}, "bar")).to.be.true;
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "EQ", value: ["foo", "bar", "baz"]}, "baz")).to.be.true;
+        });
+        it("should check the operator EQ for multi date values", () => {
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "EQ", value: ["01.01.2022", "10.01.2022"], format: "DD.MM.YYYY"}, "31.11.2021", "02.01.2022")).to.be.false;
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "EQ", value: ["01.01.2022", "10.01.2022"], format: "DD.MM.YYYY"}, "31.11.2021", "10.01.2022")).to.be.false;
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "EQ", value: ["01.01.2022", "10.01.2022"], format: "DD.MM.YYYY"}, "01.01.2022", "10.01.2022")).to.be.true;
+        });
+        it("should check the operator IN for multi values", () => {
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "IN", value: ["foo", "bar", "baz"]}, "test qux test")).to.be.false;
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "IN", value: ["foo", "bar", "baz"]}, "test foo test")).to.be.true;
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "IN", value: ["foo", "bar", "baz"]}, "test bar test")).to.be.true;
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "IN", value: ["foo", "bar", "baz"]}, "test baz test")).to.be.true;
+        });
+        it("should check the operator STARTSWITH for multi values", () => {
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "STARTSWITH", value: ["foo", "bar", "baz"]}, "qux test")).to.be.false;
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "STARTSWITH", value: ["foo", "bar", "baz"]}, "foo test")).to.be.true;
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "STARTSWITH", value: ["foo", "bar", "baz"]}, "bar test")).to.be.true;
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "STARTSWITH", value: ["foo", "bar", "baz"]}, "baz test")).to.be.true;
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "STARTSWITH", value: ["foo", "bar", "baz"]}, "test foo")).to.be.false;
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "STARTSWITH", value: ["foo", "bar", "baz"]}, "test bar")).to.be.false;
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "STARTSWITH", value: ["foo", "bar", "baz"]}, "test baz")).to.be.false;
+        });
+        it("should check the operator ENDSWITH for multi values", () => {
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "ENDSWITH", value: ["foo", "bar", "baz"]}, "qux test")).to.be.false;
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "ENDSWITH", value: ["foo", "bar", "baz"]}, "foo test")).to.be.false;
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "ENDSWITH", value: ["foo", "bar", "baz"]}, "bar test")).to.be.false;
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "ENDSWITH", value: ["foo", "bar", "baz"]}, "baz test")).to.be.false;
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "ENDSWITH", value: ["foo", "bar", "baz"]}, "test foo")).to.be.true;
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "ENDSWITH", value: ["foo", "bar", "baz"]}, "test bar")).to.be.true;
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "ENDSWITH", value: ["foo", "bar", "baz"]}, "test baz")).to.be.true;
+        });
+        it("should be case insensitive", () => {
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "IN", value: "FOO"}, "foo")).to.be.true;
+            expect(interfaceWfsIntern.checkRuleForAttributesORHandler({operator: "IN", value: "bar"}, "BAR")).to.be.true;
+        });
+    });
 });

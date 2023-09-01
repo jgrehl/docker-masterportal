@@ -82,7 +82,7 @@ export default class InterfaceOafExtern {
             if (typeof onsuccess === "function") {
                 const uniqueValue = getUniqueValuesFromFetchedFeatures(this.allFetchedProperties, attrName);
 
-                onsuccess(Array.isArray(uniqueValue) ? uniqueValue : []);
+                onsuccess(isObject(uniqueValue) ? Object.keys(uniqueValue) : []);
             }
             return;
         }
@@ -101,7 +101,7 @@ export default class InterfaceOafExtern {
             if (typeof onsuccess === "function") {
                 const uniqueValue = getUniqueValuesFromFetchedFeatures(this.allFetchedProperties, attrName);
 
-                onsuccess(Array.isArray(uniqueValue) ? uniqueValue : []);
+                onsuccess(isObject(uniqueValue) ? Object.keys(uniqueValue) : []);
             }
         });
     }
