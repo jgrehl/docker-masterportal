@@ -62,11 +62,11 @@ function getWKTGeom (content, geometryType = "POLYGON") {
                 // element is a polygon with voids
                 if (Array.isArray(coord)) {
                     coord.forEach(function (coordinate, index3, list3) {
-                        if (index3 % 2 === 0) {
-                            wkt += coordinate + " ";
-                        }
-                        else if (index3 === list3.length - 1) {
+                        if (index3 === list3.length - 1) {
                             wkt += coordinate + ")";
+                        }
+                        else if (index3 % 2 === 0) {
+                            wkt += coordinate + " ";
                         }
                         else {
                             wkt += coordinate + ", ";
@@ -80,11 +80,11 @@ function getWKTGeom (content, geometryType = "POLYGON") {
                     }
                 }
                 // element is a simple polygon
+                if (index2 === list2.length - 1) {
+                    wkt += coord + "))";
+                }
                 else if (index2 % 2 === 0) {
                     wkt += coord + " ";
-                }
-                else if (index2 === list2.length - 1) {
-                    wkt += coord + "))";
                 }
                 else {
                     wkt += coord + ", ";
