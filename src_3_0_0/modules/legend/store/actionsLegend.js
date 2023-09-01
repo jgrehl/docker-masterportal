@@ -18,7 +18,7 @@ const actions = {
             if (typeof layer.layerSource?.getFeatures === "function" && layer.getLayerSource().getFeatures().length === 0) {
                 const layerSource = layer.getLayerSource() instanceof Cluster ? layer.getLayerSource().getSource() : layer.getLayerSource();
 
-                layerSource.on("featuresloadstart", () => {
+                layerSource.on("featuresloadend", () => {
                     dispatch("toggleLayerInLegend", {layer: layer, visibility: layer.get("visibility")});
                 });
             }
