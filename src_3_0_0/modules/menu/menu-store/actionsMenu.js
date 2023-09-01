@@ -147,6 +147,8 @@ export default {
             if (rootGetters["Modules/SearchBar/showAllResults"] === false) {
                 commit("switchToPreviousComponent", side);
             }
+
+            dispatch("Modules/SearchBar/updateSearchNavigation", side, {root: true});
         });
     },
 
