@@ -282,7 +282,7 @@ SearchInterfaceSpecialWfs.prototype.createPossibleActions = function (searchResu
                     coordinates.push(parseFloat(coordinate));
                 });
             }
-            coordinates.push(parseFloat(coord));
+            // coordinates.push(parseFloat(coord));
         });
     }
     else if (Array.isArray(searchResult?.geometry)) {
