@@ -1,5 +1,6 @@
 import {expect} from "chai";
 import {
+    getMergedValuesByAttrNames,
     getListOfRelevantAttrNames,
     getAttrValuesOfItemsGroupedByAttrNames,
     snippetDateCompareFunction,
@@ -7,6 +8,19 @@ import {
 } from "../../../utils/getSnippetAdjustments.js";
 
 describe("src/modules/tools/filter/utils/getSnippetAdjustments.js", () => {
+    describe("getMergedValuesByAttrNames", () => {
+        it("should return an empty array if first param is also an empty array", () => {
+            expect(getMergedValuesByAttrNames([])).to.be.an("array").and.to.be.empty;
+        });
+        it("should return an empty array if second param do not include values for first param", () => {
+            expect(getMergedValuesByAttrNames(["foo"], {bar: "buz"})).to.be.an("array").and.to.be.empty;
+        });
+        it("should return an expected array", () => {
+            const expected = ["woo", "boo", "loo"];
+
+            expect(getMergedValuesByAttrNames(["foo", "bar"], {foo: ["woo", "boo"], bar: "loo"})).to.deep.equal(expected);
+        });
+    });
     describe("getListOfRelevantAttrNames", () => {
         it("should return an empty array if anything but an array or empty array is given", () => {
             expect(getListOfRelevantAttrNames(undefined)).to.be.an("array").and.to.be.empty;
