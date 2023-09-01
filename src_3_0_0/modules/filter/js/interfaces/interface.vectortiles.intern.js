@@ -178,7 +178,7 @@ export default class InterfaceVectorTilesIntern {
             return;
         }
         if (typeof onsuccess === "function") {
-            onsuccess(uniqueValues);
+            onsuccess(isObject(uniqueValues) ? Object.keys(uniqueValues) : []);
         }
     }
 
@@ -325,19 +325,6 @@ export default class InterfaceVectorTilesIntern {
      */
     getPropertyFromFeature (feature, attrName) {
         return this.interfaceWFSIntern.getPropertyFromFeature(feature, attrName);
-    }
-
-    /**
-     * Checks if the given feature value match with the given rule.
-     * @param {Object} rule the rule object
-     * @param {String} rule.operator the operator to use
-     * @param {*} [rule.value] a single value
-     * @param {*} featureValue the value of the feature to check
-     * @param {*} [featureValue2] the second value to check for ranges with
-     * @returns {Boolean} true if the rule matches the given feature value, false if not
-     */
-    checkRule (rule, featureValue, featureValue2) {
-        return this.interfaceWFSIntern.checkRule(rule, featureValue, featureValue2);
     }
 
     /**
