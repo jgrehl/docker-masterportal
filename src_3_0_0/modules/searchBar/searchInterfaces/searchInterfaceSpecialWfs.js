@@ -191,10 +191,10 @@ SearchInterfaceSpecialWfs.prototype.fillHitList = function (xml, result, request
                         geometryMembers = elementGeometryName.getElementsByTagNameNS("*", memberName);
 
                     coordinates = this.getInteriorAndExteriorPolygonMembers(geometryMembers);
+                    console.log(coordinates);
 
-                    geometry = coordinates[0];
+                    geometry = undefined;
                     geometryType = "MultiPolygon";
-                    console.log("multi");
                 }
                 else {
                     const feature = new WFS().readFeatures(xml)[i];
@@ -241,38 +241,30 @@ SearchInterfaceSpecialWfs.prototype.getInteriorAndExteriorPolygonMembers = funct
         coordinateArray = [];
 
     for (let i = 0; i < lengthIndex; i++) {
-        const polygonsWithInteriors = [],
-            interiorCoords = [];
-        let coords = [], posListPolygonMembers, exterior, interior, exteriorCoord;
+        const posListPolygonMembers = polygonMembers[i].getElementsByTagNameNS("*", "posList");
 
-        posListPolygonMembers = polygonMembers[i].getElementsByTagNameNS("*", "posList");
+        for (const key in Object.keys(posListPolygonMembers)) {
+            const posPolygonMembers = posListPolygonMembers[key].getElementsByTagNameNS("*", "pos");
 
-        // polygon with interior polygons
-        // make sure that the exterior coordinates are always at the first position in the array
-        if (posListPolygonMembers.length > 1) {
-            posListPolygonMembers = [];
-            exterior = polygonMembers[i].getElementsByTagNameNS("*", "exterior");
-            exteriorCoord = exterior[0].getElementsByTagNameNS("*", "posList")[0].textContent;
-            polygonsWithInteriors.push(Object.values(exteriorCoord.replace(/\s\s+/g, " ").split(" ")));
+            if (posPolygonMembers.length > 0) {
+                Array.from(posPolygonMembers).forEach(posElement => {
 
-            interior = polygonMembers[i].getElementsByTagNameNS("*", "interior");
-            for (const key in Object.keys(interior)) {
-                interiorCoords.push(interior[key].getElementsByTagNameNS("*", "posList")[0].textContent);
+                    for (const posKey in Object.keys(posElement)) {
+                        const coordinatesText = posElement[posKey].textContent,
+                            coords = coordinatesText.trim().split(" ").map(Number);
+
+                        coords.forEach(coordArray => coordinateArray.push(coordArray));
+                    }
+                });
             }
-            interiorCoords.forEach(coord => polygonsWithInteriors.push(Object.values(coord.replace(/\s\s+/g, " ").split(" "))));
-            coordinateArray.push(polygonsWithInteriors);
-        }
-        else {
-            for (const key in Object.keys(posListPolygonMembers)) {
-                // coords.push(posListPolygonMembers[key].textContent);
-                const coordinatesText = posListPolygonMembers[key].getElementsByTagName("gml:pos")[0].textContent;
+            else {
+                const coordinatesText = posListPolygonMembers[key].textContent,
+                    coords = coordinatesText.trim().split(" ").map(Number);
 
-                coords = coordinatesText.trim().split(" ").map(Number);
+                coords.forEach(coordArray => coordinateArray.push(coordArray));
             }
-            coords.forEach(coordArray => coordinateArray.push(Object.values(coordArray.replace(/\s\s+/g, " ").split(" "))));
         }
     }
-    console.log(coordinateArray);
     return [coordinateArray];
 };
 
@@ -282,10 +274,19 @@ SearchInterfaceSpecialWfs.prototype.getInteriorAndExteriorPolygonMembers = funct
  * @returns {Object} The possible actions.
  */
 SearchInterfaceSpecialWfs.prototype.createPossibleActions = function (searchResult) {
-<<<<<<< HEAD
     const coordinates = [];
 
-    if (Array.isArray(searchResult?.geometry)) {
+    if (Array.isArray(searchResult?.coordinates)) {
+        searchResult.coordinates.forEach(coord => {
+            if (Array.isArray(coord)) {
+                coord.forEach(coordinate => {
+                    coordinates.push(parseFloat(coordinate));
+                });
+            }
+            coordinates.push(parseFloat(coord));
+        });
+    }
+    else if (Array.isArray(searchResult?.geometry)) {
         searchResult.geometry.forEach(coord => {
             if (Array.isArray(coord)) {
                 coord.forEach(coordinate => {
@@ -295,29 +296,26 @@ SearchInterfaceSpecialWfs.prototype.createPossibleActions = function (searchResu
             coordinates.push(parseFloat(coord));
         });
     }
-    else {
-        searchResult.geometry.flatCoordinates.forEach(coord => {
+    else if (searchResult?.geometry?.flatCoordinates) {
+        searchResult?.geometry?.flatCoordinates.forEach(coord => {
             coordinates.push(parseFloat(coord));
         });
     }
-=======
-    const coordinates = searchResult.coordinates.slice(0);
->>>>>>> 3ed42c439f (BG-4459: testing around with the datastructures)
 
     return {
         highlightFeature: {
             hit: {
-                coordinate: coordinates,
+                coordinate: [coordinates],
                 geometryType: searchResult.geometryType
             },
             closeResults: false
         },
         setMarker: {
-            coordinates: coordinates,
+            coordinates: [coordinates],
             closeResults: true
         },
         zoomToResult: {
-            coordinates: coordinates,
+            coordinates: [coordinates],
             closeResults: true
         }
     };
