@@ -30,26 +30,39 @@ export default {
             "searchInput",
             "searchResults",
             "searchResultsActive",
-            "showAllResults"
+            "showAllResults",
+            "currentSide"
+        ]),
+        ...mapGetters([
+            "portalConfig"
         ])
     },
     methods: {
         ...mapMutations("Modules/SearchBar", [
             "setCurrentAvailableCategories",
             "setSearchResultsActive",
-            "setShowAllResults"
+            "setShowAllResults",
+            "setshowAllResultsSearchInterfaceInstance"
         ]),
-
         /**
-         * Prepares the all results list of one category
+         * Prepares the all results list of one category and adapts the navigation history
          * @param {String} categoryItem the category of the results
          * @returns {void}
          */
         prepareShowAllResults (categoryItem) {
+            const side = this.currentSide;
+
+            this.setshowAllResultsSearchInterfaceInstance(this.limitedSortedSearchResults.results.categoryProvider[categoryItem]);
+            this.$store.state.Menu[side].navigation.currentComponent = {props: {name: "common:modules.searchBar.searchResults"}, type: "searchbar"};
+            this.$store.state.Menu.currentComponent = "searchbar";
+            this.$store.state.Menu[side].navigation.history = [];
+            this.$store.state.Menu[side].navigation.history.push({type: "root", props: []}, {type: "searchBar", props: {name: "modules.searchBar.searchBar"}}, {type: "searchBar", props: {name: "modules.searchBar.searchResultList"}});
+
             this.setCurrentAvailableCategories(categoryItem);
             this.currentShowAllList = this.limitedSortedSearchResults.currentShowAllList.filter(value => {
                 return value.category === categoryItem;
             });
+
             this.setShowAllResults(true);
         }
     }
@@ -61,15 +74,6 @@ export default {
         v-if="searchInput.length >= minCharacters && searchResultsActive && searchResults.length > 0"
         class="overflow-auto suggestions-container"
     >
-        <a
-            :id="'mp-navigation'"
-            class="pb-2 pt-2 mp-menu-navigation-link"
-            href="#"
-            @click="setSearchResultsActive(false)"
-            @keypress="setSearchResultsActive(false)"
-        >
-            <h6 class="mp-menu-navigation-link-text mb-3"><p class="bi-chevron-left me-2">{{ $t("common:modules.menu.name") }}</p></h6>
-        </a>
         <div
             v-for="categoryItem in limitedSortedSearchResults.results.availableCategories"
             id="search-bar-suggestion-list"
