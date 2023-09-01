@@ -62,6 +62,9 @@ function getWKTGeom (content, geometryType = "POLYGON") {
                 // element is a polygon with voids
                 if (Array.isArray(coord)) {
                     coord.forEach(function (coordinate, index3, list3) {
+                        if (Array.isArray(coordinate)) {
+                            console.warn("coordinates nested too deeply");
+                        }
                         if (index3 === list3.length - 1) {
                             wkt += coordinate + ")";
                         }
@@ -79,15 +82,17 @@ function getWKTGeom (content, geometryType = "POLYGON") {
                         wkt += ",(";
                     }
                 }
-                // element is a simple polygon
-                if (index2 === list2.length - 1) {
-                    wkt += coord + "))";
-                }
-                else if (index2 % 2 === 0) {
-                    wkt += coord + " ";
-                }
-                else {
-                    wkt += coord + ", ";
+                else if (!Array.isArray(coord)) {
+                    // element is a simple polygon
+                    if (index2 === list2.length - 1) {
+                        wkt += coord + "))";
+                    }
+                    else if (index2 % 2 === 0) {
+                        wkt += coord + " ";
+                    }
+                    else {
+                        wkt += coord + ", ";
+                    }
                 }
             });
             if (index === geometry.length - 1) {
