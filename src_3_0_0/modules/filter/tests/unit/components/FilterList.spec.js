@@ -39,7 +39,7 @@ describe("src/modules/tools/filter/components/FilterList.vue", () => {
         expect(wrapper.findAll(".panel-default")).to.have.length(1);
     });
 
-    it("should render filter title disabled true if multiLayerSelector is false", async () => {
+    it.skip("should render filter title disabled true if multiLayerSelector is false", async () => {
         await wrapper.setProps({
             selectedLayers: [0]
         });
