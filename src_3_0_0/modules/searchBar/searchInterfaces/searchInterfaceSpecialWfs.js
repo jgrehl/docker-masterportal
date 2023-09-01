@@ -1,6 +1,7 @@
 import SearchInterface from "./searchInterface";
 import WFS from "ol/format/WFS";
 import {uniqueId} from "../../../shared/js/utils/uniqueId";
+import SimpleGeometry from "ol/geom/SimpleGeometry";
 
 /**
  * The search interface to the special wfs.
@@ -23,8 +24,8 @@ import {uniqueId} from "../../../shared/js/utils/uniqueId";
  * @param {Number} [maxFeatures=20] Maximum amount of features returned.
  * @param {String} [namespaces="xmlns:wfs='http://www.opengis.net/wfs' xmlns:ogc='http://www.opengis.net/ogc' xmlns:gml='http://www.opengis.net/gml'"] XML name spaces to request `propertyNames` or `geometryName`.
  * @param {Object} [resultEvents] Actions that are executed when an interaction, such as hover or click, is performed with a result list item.
- * @param {String[]} [resultEvents.onClick=["highlightFeature", "setMarker", "zoomToResult"]] Actions that are fired when clicking on a result list item.
- * @param {String[]} [resultEvents.onHover=["highlightFeature", "setMarker"]] Actions that are fired when hovering on a result list item.
+ * @param {String[]} [resultEvents.onClick=["highligtFeature", "setMarker", "zoomToResult"]] Actions that are fired when clicking on a result list item.
+ * @param {String[]} [resultEvents.onHover=["highligtFeature", "setMarker"]] Actions that are fired when hovering on a result list item.
  * @param {String} [searchInterfaceId="specialWfs"] The id of the service interface.
  * @returns {void}
  */
@@ -183,20 +184,29 @@ SearchInterfaceSpecialWfs.prototype.fillHitList = function (xml, result, request
                     elementGeometryFirstChild = elementGeometryName.firstElementChild,
                     firstChildNameUpperCase = elementGeometryFirstChild.localName.toUpperCase(),
                     identifier = element.getElementsByTagName(propertyName)[0].textContent;
-                let geometry, geometryType;
+                let geometry, geometryType, coordinates;
 
                 if (multiGeometries.includes(firstChildNameUpperCase)) {
                     const memberName = elementGeometryFirstChild.firstElementChild.localName,
-                        geometryMembers = elementGeometryName.getElementsByTagNameNS("*", memberName),
-                        coordinates = this.getInteriorAndExteriorPolygonMembers(geometryMembers);
+                        geometryMembers = elementGeometryName.getElementsByTagNameNS("*", memberName);
+
+                    coordinates = this.getInteriorAndExteriorPolygonMembers(geometryMembers);
 
                     geometry = coordinates[0];
                     geometryType = "MultiPolygon";
+                    console.log("multi");
                 }
                 else {
                     const feature = new WFS().readFeatures(xml)[i];
 
                     geometry = feature.getGeometry();
+                    if (geometry instanceof SimpleGeometry) {
+                        coordinates = geometry.getCoordinates();
+                    }
+                    else {
+                        // Handle GeometryCollection or other types if needed
+                        coordinates = [];
+                    }
 
                     geometryType = geometry.getType();
                 }
@@ -207,6 +217,7 @@ SearchInterfaceSpecialWfs.prototype.fillHitList = function (xml, result, request
                         identifier,
                         geometryType,
                         geometry,
+                        coordinates,
                         icon
                     }
                 );
@@ -229,7 +240,8 @@ SearchInterfaceSpecialWfs.prototype.getInteriorAndExteriorPolygonMembers = funct
     const lengthIndex = polygonMembers.length,
         coordinateArray = [];
 
-    for (let i = 0; i < lengthIndex; i++) {
+    console.log(polygonMembers);
+    for (let i = 0; i < 1; i++) {
         const coords = [],
             polygonsWithInteriors = [],
             interiorCoords = [];
@@ -240,25 +252,39 @@ SearchInterfaceSpecialWfs.prototype.getInteriorAndExteriorPolygonMembers = funct
         // polygon with interior polygons
         // make sure that the exterior coordinates are always at the first position in the array
         if (posListPolygonMembers.length > 1) {
+            /*
             posListPolygonMembers = [];
             exterior = polygonMembers[i].getElementsByTagNameNS("*", "exterior");
             exteriorCoord = exterior[0].getElementsByTagNameNS("*", "posList")[0].textContent;
-            polygonsWithInteriors.push(Object.values(exteriorCoord.replace(/\s\s+/g, " ").split(" ")));
+            polygonsWithInteriors.push(parseFloat(Object.values(exteriorCoord.replace(/\s\s+/g, " ").split(" "))));
 
             interior = polygonMembers[i].getElementsByTagNameNS("*", "interior");
             for (const key in Object.keys(interior)) {
                 interiorCoords.push(interior[key].getElementsByTagNameNS("*", "posList")[0].textContent);
             }
-            interiorCoords.forEach(coord => polygonsWithInteriors.push(Object.values(coord.replace(/\s\s+/g, " ").split(" "))));
+            interiorCoords.forEach(coord => polygonsWithInteriors.push(parseFloat(Object.values(coord.replace(/\s\s+/g, " ").split(" ")))));
             coordinateArray.push(polygonsWithInteriors);
+            console.log("interior - exterior!");
+            */
         }
         else {
+            // console.log(coordinateArray.length);
+            // console.log(polygonMembers[i]);
             for (const key in Object.keys(posListPolygonMembers)) {
+                // console.log(key);
                 coords.push(posListPolygonMembers[key].textContent);
+                // console.log(posListPolygonMembers[key].textContent);
             }
-            coords.forEach(coordArray => coordinateArray.push(Object.values(coordArray.replace(/\s\s+/g, " ").split(" "))));
+            const rawCoords = [];
+
+            coords.forEach(coordArray => coordArray.replace(/\s\s+/g, " ").split(" ").forEach(value => rawCoords.push(value)));
+            console.log(rawCoords.length);
+
+            rawCoords.forEach(rawCoord => coordinateArray.push(parseFloat(rawCoord, 10)));
+            console.log(coordinateArray.length);
         }
     }
+    console.log(coordinateArray);
     return [coordinateArray];
 };
 
@@ -268,6 +294,7 @@ SearchInterfaceSpecialWfs.prototype.getInteriorAndExteriorPolygonMembers = funct
  * @returns {Object} The possible actions.
  */
 SearchInterfaceSpecialWfs.prototype.createPossibleActions = function (searchResult) {
+<<<<<<< HEAD
     const coordinates = [];
 
     if (Array.isArray(searchResult?.geometry)) {
@@ -285,19 +312,25 @@ SearchInterfaceSpecialWfs.prototype.createPossibleActions = function (searchResu
             coordinates.push(parseFloat(coord));
         });
     }
+=======
+    const coordinates = searchResult.coordinates.slice(0);
+>>>>>>> 3ed42c439f (BG-4459: testing around with the datastructures)
 
     return {
         highlightFeature: {
             hit: {
                 coordinate: coordinates,
                 geometryType: searchResult.geometryType
-            }
+            },
+            closeResults: false
         },
         setMarker: {
-            coordinates: coordinates
+            coordinates: coordinates,
+            closeResults: true
         },
         zoomToResult: {
-            coordinates: coordinates
+            coordinates: coordinates,
+            closeResults: true
         }
     };
 };
