@@ -28,10 +28,10 @@ export default {
      * @returns {void}
      */
     startSearch ({getters, dispatch, commit, rootState}) {
-        const side = getters.currentSide;
-
+    /*   const side = getters.currentSide;
+        console.log(getters.showAllResults)
         if (getters.searchInput?.length >= parseInt(getters.minCharacters, 10)) {
-            commit("setShowAllResults", false);
+            //commit("setShowAllResults", false);
             if (!getters.searchResultsActive) {
                 rootState.Menu[side].navigation.history.push({0: {type: "root", props: []}});
             }
@@ -39,14 +39,25 @@ export default {
             commit("setSearchResultsActive", true);
             dispatch("search", {searchInput: getters.searchInput});
 
-            dispatch("Menu/clickedMenuElement", {
-                name: "common:modules.searchBar.searchResultList",
-                side: side,
-                type: "searchbarresultlist"
-            }, {root: true});
         }
         if (getters.searchInput?.length < parseInt(getters.minCharacters, 10) && getters.searchResultsActive === true) {
             dispatch("Menu/navigateBack", side, {root: true});
+        } */
+    },
+    /**
+     * Handles the switch from the single result view to the search overview and updates the menu navigation values
+     * @param {Object} param.getters the getters
+     * @param {Object} param.rootState the rootState
+     * @param {Object} side the menu side of the search
+     * @returns {void}
+     */
+    updateSearchNavigation: ({getters, commit, rootState}, side) => {
+        if (getters.showAllResults === true) {
+            commit("setShowAllResults", false);
+
+            rootState.Menu[side].navigation.currentComponent.props.name = "common:modules.searchBar.searchResultList";
+            rootState.Menu[side].navigation.history = [];
+            rootState.Menu[side].navigation.history.push({type: "root", props: []});
         }
     }
 };
