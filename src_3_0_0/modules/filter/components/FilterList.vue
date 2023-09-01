@@ -53,7 +53,7 @@ export default {
          * @returns {Boolean} if button should be disabled
          */
         disabled (filterId) {
-            return !this.multiLayerSelector && this.selectedLayers.length > 0 && !this.selectedLayers.includes(filterId);
+            return !this.multiLayerSelector && this.selectedLayers.length > 0 && this.selectedLayers.some(accordion => accordion.filterId === filterId);
         }
     },
     watch: {

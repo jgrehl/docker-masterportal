@@ -303,6 +303,12 @@ describe("src/modules/tools/filter/interfaces/utils/interface.wfs.extern.js", ()
             expect(node.tagName).to.equal("tlvwa:WKA");
         });
 
+        it("should return a node by the given document, tagname and attrtibute name", () => {
+            const node = interfaceWfsExtern.getNodeByTagname(new DOMParser().parseFromString(responseXML[1], "text/xml"), "WKB", "Status");
+
+            expect(node.tagName).to.equal("tlvwa:WKB");
+        });
+
         it("should return the given document if no node with the given tagname is found", () => {
             const node = interfaceWfsExtern.getNodeByTagname(new DOMParser().parseFromString(responseXML[1], "text/xml"), "Pele");
 
