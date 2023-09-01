@@ -49,7 +49,7 @@ export default {
             default: null
         },
         attrName: {
-            type: String,
+            type: [String, Array],
             required: false,
             default: ""
         },
@@ -108,6 +108,11 @@ export default {
             required: false,
             default: undefined
         },
+        operatorForAttrName: {
+            type: String,
+            required: false,
+            default: "AND"
+        },
         operator: {
             type: String,
             required: false,
@@ -125,6 +130,16 @@ export default {
                 return [];
             }
         },
+        timeoutInput: {
+            type: Number,
+            required: false,
+            default: 1400
+        },
+        timeoutSlider: {
+            type: Number,
+            required: false,
+            default: 800
+        },
         snippetId: {
             type: Number,
             required: false,
@@ -136,16 +151,18 @@ export default {
             default: true
         }
     },
-    emits: ["changeRule", "deleteRule", "setSnippetPrechecked"],
+    emits: ["changeRule", "deleteRule", "disableFilterButton", "enableFilterButton", "setSnippetPrechecked"],
     data () {
         return {
             disable: true,
             isInitializing: true,
             isAdjusting: false,
-            minimumValue: 0,
-            maximumValue: 100,
             value: 0,
             translationKey: "snippetSlider",
+            currentSliderMin: 0,
+            currentSliderMax: 100,
+            slider: 0,
+            input: 0,
             operatorWhitelist: [
                 "EQ",
                 "GT",
@@ -168,16 +185,6 @@ export default {
             }
             return "";
         },
-        inRangeValue: {
-            get () {
-                const value = Math.min(this.maximumValue, Math.max(this.minimumValue, this.value));
-
-                return !isNaN(value) ? value : 0;
-            },
-            set (value) {
-                this.value = value;
-            }
-        },
         securedOperator () {
             if (!this.operatorWhitelist.includes(this.operator)) {
                 return getDefaultOperatorBySnippetType("slider");
@@ -186,84 +193,225 @@ export default {
         }
     },
     watch: {
-        value () {
-            if (!this.isAdjusting && (!this.isInitializing || typeof this.prechecked !== "undefined")) {
-                this.emitCurrentRule(this.inRangeValue, this.isInitializing);
-            }
-        },
         adjustment (adjusting) {
             if (!isObject(adjusting) || this.visible === false || this.isParent) {
                 return;
             }
 
-            if (adjusting?.start) {
-                this.isAdjusting = true;
+            if (adjusting.start) {
+                this.setCurrentSource("adjust");
+                this.setIsAdjusting(true);
+                this.resetMemoryAdjustMinMax();
             }
 
-            if (adjusting?.finish) {
+            if (typeof adjusting.adjust?.min !== "undefined" && adjusting.adjust?.min !== false && (typeof this.getMemoryAdjustMin() === "undefined" || adjusting.adjust.min < this.getMemoryAdjustMin())) {
+                this.setMemoryAdjustMin(adjusting.adjust.min);
+            }
+            if (typeof adjusting.adjust?.max !== "undefined" && adjusting.adjust?.max !== false && (typeof this.getMemoryAdjustMax() === "undefined" || adjusting.adjust.max > this.getMemoryAdjustMax())) {
+                this.setMemoryAdjustMax(adjusting.adjust.max);
+            }
+            if (adjusting.finish) {
+                if (!this.isSelfSnippetId(adjusting?.snippetId) || (this.isSelfSnippetId(adjusting?.snippetId) && !this.hasRuleSet)) {
+                    if (typeof this.getMemoryAdjustMin() !== "undefined") {
+                        this.currentSliderMin = this.getMemoryAdjustMin();
+                    }
+                    if (typeof this.getMemoryAdjustMax() !== "undefined") {
+                        this.currentSliderMax = this.getMemoryAdjustMax();
+                    }
+                    if (!this.hasRuleSet || isNaN(this.slider) || this.slider < this.currentSliderMin) {
+                        this.slider = this.currentSliderMin;
+                        this.input = this.currentSliderMin;
+                    }
+                    if (this.slider > this.currentSliderMax) {
+                        this.slider = this.currentSliderMax;
+                        this.input = this.currentSliderMax;
+                    }
+                }
                 this.$nextTick(() => {
-                    this.isAdjusting = false;
+                    this.setIsAdjusting(false);
                 });
             }
+        },
+        slider (val) {
+            const value = parseFloat(val);
+
+            if (!this.isInitializing && !this.isAdjusting && !this.isCurrentSource("adjust")) {
+                this.emitCurrentRule(value, this.isInitializing);
+            }
+            if (!this.isCurrentSource("input")) {
+                this.setInput(value);
+            }
+        },
+        input (val) {
+            if (this.isCurrentSource("slider") || this.isCurrentSource("init")) {
+                return;
+            }
+            const value = parseFloat(val);
+
+            if (isNaN(value)) {
+                return;
+            }
+            this.setInput(value);
         },
         disabled (value) {
             this.disable = typeof value === "boolean" ? value : true;
         }
     },
+    created () {
+        this.adjustMinMax = [];
+        this.intvInputReaction = -1;
+        this.intvEmitCurrentRule = -1;
+        this.hasRuleSet = false;
+        this.currentSource = "init";
+        this.sliderMouseDown = false;
+    },
     mounted () {
         this.$nextTick(() => {
             this.$nextTick(() => {
-                if (typeof this.minValue !== "undefined" && typeof this.maxValue !== "undefined") {
-                    this.minimumValue = this.minValue;
-                    this.maximumValue = this.maxValue;
-                    this.value = typeof this.prechecked !== "undefined" ? this.prechecked : this.minimumValue;
-                    this.$nextTick(() => {
-                        this.isInitializing = false;
-                        this.disable = false;
-                        this.emitSnippetPrechecked(this.prechecked, this.snippetId, this.visible);
-                    });
-                }
-                else if (this.api) {
-                    this.api.getMinMax(this.attrName, minMaxObj => {
-                        if (!isObject(minMaxObj)) {
-                            return;
-                        }
-                        this.minimumValue = Object.prototype.hasOwnProperty.call(minMaxObj, "min") ? minMaxObj.min : this.minValue;
-                        this.maximumValue = Object.prototype.hasOwnProperty.call(minMaxObj, "max") ? minMaxObj.max : this.maxValue;
-                        this.value = typeof this.prechecked !== "undefined" ? this.prechecked : this.minimumValue;
+                this.getInitialSliderMin(this.attrName, min => {
+                    this.getInitialSliderMax(this.attrName, max => {
+                        this.initSlider(parseFloat(min), parseFloat(max));
                         this.$nextTick(() => {
-                            this.isInitializing = false;
-                            this.disable = false;
-                            this.emitSnippetPrechecked(this.prechecked, this.snippetId, this.visible);
+                            if (this.isPrecheckedValid()) {
+                                this.emitCurrentRule([
+                                    this.isPrecheckedHigherThanMin() ? this.prechecked[0] : this.currentSliderMin,
+                                    this.isPrecheckedLowerThanMax() ? this.prechecked[1] : this.currentSliderMax], true);
+                                this.$emit("setSnippetPrechecked", this.visible ? this.snippetId : false);
+                            }
+                            else {
+                                this.$emit("setSnippetPrechecked", false);
+                            }
+                            this.setIsInitializing(false);
                         });
-                    }, err => {
-                        this.isInitializing = false;
-                        this.disable = false;
-                        this.emitSnippetPrechecked(this.prechecked, this.snippetId, this.visible);
-                        console.warn(err);
-                    }, typeof this.minValue === "undefined" && typeof this.maxValue !== "undefined", typeof this.minValue !== "undefined" && typeof this.maxValue === "undefined", false,
-                    {rules: this.fixedRules, filterId: this.filterId, commands: {
-                        filterGeometry: this.filterGeometry,
-                        geometryName: this.filterGeometryName
-                    }});
-                }
-                else {
-                    this.value = typeof this.prechecked !== "undefined" ? this.prechecked : 0;
-                    this.$nextTick(() => {
-                        this.isInitializing = false;
-                        this.disable = false;
-                        this.emitSnippetPrechecked(this.prechecked, this.snippetId, this.visible);
+                    }, error => {
+                        this.setIsInitializing(false);
+                        this.$emit("setSnippetPrechecked", false);
+                        console.error(error);
                     });
-                }
-                if (this.visible && typeof this.prechecked !== "undefined") {
-                    this.emitCurrentRule(this.prechecked, true);
-                }
+                }, error => {
+                    this.setIsInitializing(false);
+                    this.$emit("setSnippetPrechecked", false);
+                    console.error(error);
+                });
             });
         });
     },
     methods: {
         translateKeyWithPlausibilityCheck,
 
+        /**
+         * Receives the initial min and max by props or api.
+         * @param {String} attrName The attrName to get the value from.
+         * @param {Function} onsuccess A function(min) to receive the min value with.
+         * @param {Function} onerror A function(error) to call on error.
+         * @returns {void}
+         */
+        getInitialSliderMin (attrName, onsuccess, onerror) {
+            if (typeof this.minValue !== "undefined") {
+                if (typeof onsuccess === "function") {
+                    onsuccess(this.minValue);
+                }
+                return;
+            }
+            else if (typeof this.api?.getMinMax !== "function") {
+                onsuccess(this.currentSliderMin);
+                return;
+            }
+            this.api.getMinMax(
+                attrName,
+                minMaxObj => {
+                    if (!isObject(minMaxObj)) {
+                        return;
+                    }
+                    if (typeof onsuccess === "function") {
+                        onsuccess(minMaxObj.min);
+                    }
+                },
+                onerror,
+                true,
+                false,
+                false,
+                {rules: this.fixedRules, filterId: this.filterId, commands: {
+                    filterGeometry: this.filterGeometry,
+                    geometryName: this.filterGeometryName
+                }}
+            );
+        },
+        /**
+         * Receives the initial min and max by props or api.
+         * @param {String} attrName The attrName to get the value from.
+         * @param {Function} onsuccess A function(min) to receive the min value with.
+         * @param {Function} onerror A function(error) to call on error.
+         * @returns {void}
+         */
+        getInitialSliderMax (attrName, onsuccess, onerror) {
+            if (typeof this.maxValue !== "undefined") {
+                if (typeof onsuccess === "function") {
+                    onsuccess(this.maxValue);
+                }
+                return;
+            }
+            else if (typeof this.api?.getMinMax !== "function") {
+                onsuccess(this.currentSliderMin);
+                return;
+            }
+            this.api.getMinMax(
+                attrName,
+                minMaxObj => {
+                    if (!isObject(minMaxObj)) {
+                        return;
+                    }
+                    if (typeof onsuccess === "function") {
+                        onsuccess(minMaxObj.max);
+                    }
+                },
+                onerror,
+                false,
+                true,
+                false,
+                {rules: this.fixedRules, filterId: this.filterId, commands: {
+                    filterGeometry: this.filterGeometry,
+                    geometryName: this.filterGeometryName
+                }}
+            );
+        },
+        /**
+         * Initializes the slider with the given min/max value.
+         * @param {Number} min The min value.
+         * @param {Number} max The max value.
+         * @returns {void}
+         */
+        initSlider (min, max) {
+            this.currentSliderMin = min;
+            this.currentSliderMax = max;
+            if (this.isPrecheckedValid()) {
+                this.slider = this.isPrecheckedHigherThanMin() ? this.prechecked : this.currentSliderMin;
+            }
+            else {
+                this.slider = this.currentSliderMin;
+            }
+        },
+        /**
+         * Sets the initializing flag.
+         * @param {Boolean} value The flag to set.
+         * @returns {void}
+         */
+        setIsInitializing (value) {
+            this.isInitializing = value;
+        },
+        /**
+         * Checks if the prechecked value is valid.
+         * @returns {Boolean} true if the prechecked value is valid, false if not.
+         */
+        isPrecheckedValid () {
+            return !isNaN(parseFloat(this.prechecked));
+        },
+        isPrecheckedHigherThanMin () {
+            return this.prechecked >= this.currentSliderMin;
+        },
+        isPrecheckedLowerThanMax () {
+            return this.prechecked[1] <= this.currentSliderMax;
+        },
         /**
          * Emits the setSnippetPrechecked event.
          * @param {Number} prechecked The prechecked values.
@@ -281,11 +429,35 @@ export default {
          * @returns {void}
          */
         emitCurrentRule (value, startup = false) {
+            if (!this.isCurrentSource("slider")) {
+                this.changeRule(value, startup);
+                this.$nextTick(() => {
+                    this.$emit("enableFilterButton");
+                });
+                return;
+            }
+            this.$emit("disableFilterButton");
+            this.setIntervalEmitCurrentRule(() => {
+                if (!this.isSliderMouseDown()) {
+                    this.changeRule(value, startup);
+                    this.$emit("enableFilterButton");
+                }
+            }, this.timeoutSlider);
+        },
+        /**
+         * Emits the current rule to whoever is listening.
+         * @param {*} value the value to put into the rule
+         * @param {Boolean} [startup=false] true if the call comes on startup, false if a user actively changed a snippet
+         * @returns {void}
+         */
+        changeRule (value, startup) {
+            this.setHasRuleSet(true);
             this.$emit("changeRule", {
                 snippetId: this.snippetId,
                 startup,
                 fixed: !this.visible,
                 attrName: this.attrName,
+                operatorForAttrName: this.operatorForAttrName,
                 operator: this.securedOperator,
                 value
             });
@@ -295,6 +467,7 @@ export default {
          * @returns {void}
          */
         deleteCurrentRule () {
+            this.setHasRuleSet(false);
             this.$emit("deleteRule", this.snippetId);
         },
         /**
@@ -303,20 +476,17 @@ export default {
          * @returns {void}
          */
         resetSnippet (onsuccess) {
-            this.isAdjusting = true;
+            this.setIsAdjusting(true);
+            this.setCurrentSource("init");
             if (this.visible) {
-                if (typeof this.minimumValue === "number") {
-                    this.value = this.minimumValue;
-                }
-                else {
-                    this.value = 0;
-                }
+                this.setHasRuleSet(false);
+                this.slider = this.currentSliderMin;
             }
             this.$nextTick(() => {
                 if (typeof onsuccess === "function") {
                     onsuccess();
                 }
-                this.isAdjusting = false;
+                this.setIsAdjusting(false);
             });
         },
         /**
@@ -328,65 +498,163 @@ export default {
             return 1 / Math.pow(10, decimalPlaces);
         },
         /**
-         * Triggered once when changes are made at the slider to avoid set of rules during changes.
-         * @returns {void}
-         */
-        startSliderChange () {
-            if (!isObject(this.adjustment)) {
-                return;
-            }
-            this.isAdjusting = true;
-        },
-        /**
-         * Triggered once when end of changes are detected at the slider to start set of rules after changes.
-         * @param {Event} evt - input event
-         * @returns {void}
-         */
-        endSliderChange (evt) {
-            this.checkInput(evt);
-            if (!isObject(this.adjustment)) {
-                return;
-            }
-            this.$nextTick(() => {
-                this.isAdjusting = false;
-                this.emitCurrentRule(this.inRangeValue, this.isInitializing);
-            });
-        },
-        /**
-         * Checking if the input field is valid and reset to valid value
-         * @param {Event} evt - input event
-         * @returns {void}
-         */
-        checkInput (evt) {
-            if (evt?.target?.value === "") {
-                this.getAlertRangeText(undefined);
-                this.$refs.inputNumber.value = this.inRangeValue;
-            }
-            else {
-                const value = parseFloat(evt?.target?.value);
-
-                if (value < this.minimumValue || value > this.maximumValue) {
-                    this.getAlertRangeText(value);
-                    this.$refs.inputNumber.value = this.inRangeValue;
-                }
-            }
-        },
-        /**
          * Getting slider range error text in alerting box
          * @param {String} value the input value from input field
          * @returns {void}
          */
         getAlertRangeText (value) {
             if (value === undefined) {
-                this.$store.dispatch("Alerting/addSingleAlert", i18next.t("common:modules.filter.slider.valueEmptyErrorMessage"));
+                this.$store.dispatch("Alerting/addSingleAlert", i18next.t("common:snippets.slider.valueEmptyErrorMessage"));
             }
             else {
-                this.$store.dispatch("Alerting/addSingleAlert", i18next.t("common:modules.filter.slider.valueOutOfRangeErrorMessage", {
+                this.$store.dispatch("Alerting/addSingleAlert", i18next.t("common:snippets.slider.valueOutOfRangeErrorMessage", {
                     inputValue: value,
-                    minValueSlider: this.minimumValue,
-                    maxValueSlider: this.maximumValue
+                    minValueSlider: this.currentSliderMin,
+                    maxValueSlider: this.currentSliderMax
                 }));
             }
+        },
+        /**
+         * Sets the adjusting flag.
+         * @param {Boolean} value The adjusting flag.
+         * @returns {void}
+         */
+        setIsAdjusting (value) {
+            this.isAdjusting = value;
+        },
+        /**
+         * Resets the memory of min and max value for a new round of adjustment.
+         * @post The min and max value is set to an empty array.
+         * @returns {void}
+         */
+        resetMemoryAdjustMinMax () {
+            this.adjustMinMax = [];
+        },
+        /**
+         * Returns the min value memorized during adjustment.
+         * @returns {Number} The memorized min value.
+         */
+        getMemoryAdjustMin () {
+            return this.adjustMinMax[0];
+        },
+        /**
+         * Returns the max value memorized during adjustment.
+         * @returns {Number} The memorized max value.
+         */
+        getMemoryAdjustMax () {
+            return this.adjustMinMax[1];
+        },
+        /**
+         * Memorizes the given min value during adjustment.
+         * @param {Number} value The value to memorize.
+         * @returns {void}
+         */
+        setMemoryAdjustMin (value) {
+            this.adjustMinMax[0] = value;
+        },
+        /**
+         * Memorizes the given max value during adjustment.
+         * @param {Number} value The value to memorize.
+         * @returns {void}
+         */
+        setMemoryAdjustMax (value) {
+            this.adjustMinMax[1] = value;
+        },
+        /**
+         * Returns true if the given snippetId equals - or if an array, holds - the own snippetId.
+         * @param {Number|Number[]} snippetId The snippetId to check or an array of snippetIds to search through.
+         * @returns {Boolean} true if this is the own snippetId or param contains the own snippetId, false if not.
+         */
+        isSelfSnippetId (snippetId) {
+            if (Array.isArray(snippetId)) {
+                return snippetId.some(id => id === this.snippetId);
+            }
+            return snippetId === this.snippetId;
+        },
+        /**
+         * Sets flag if mouse is down on slider.
+         * @returns {void}
+         */
+        setSliderMouseDown () {
+            this.sliderMouseDown = true;
+        },
+        /**
+         * Sets flag if mouse is up after down on slider.
+         * @returns {void}
+         */
+        setSliderMouseUp () {
+            this.sliderMouseDown = false;
+            if (!this.isInitializing && !this.isAdjusting) {
+                this.emitCurrentRule(parseFloat(this.slider));
+            }
+        },
+        /**
+         * Starts the interval to delay reaction after input and cancels the running interval.
+         * @param {Function} callback The function to call once the timeout has passed.
+         * @param {Number} timeout The timeout after which the callback should be called.
+         * @post The interval has been set to be called once.
+         * @returns {void}
+         */
+        setIntervalInputReaction (callback, timeout) {
+            clearTimeout(this.intvInputReaction);
+            this.intvInputReaction = setTimeout(() => {
+                callback();
+            }, timeout);
+        },
+        /**
+         * Starts the interval to emit the current rule after a timeout and cancels the running interval.
+         * @param {Function} callback The function to call once the timeout has passed.
+         * @param {Number} timeout The timeout after which the callback should be called.
+         * @post The interval has been set to be called once.
+         * @returns {void}
+         */
+        setIntervalEmitCurrentRule (callback, timeout) {
+            clearTimeout(this.intvEmitCurrentRule);
+            this.intvEmitCurrentRule = setTimeout(() => {
+                callback();
+            }, timeout);
+        },
+        setInput (value) {
+            if (this.isCurrentSource("slider") || this.isCurrentSource("init") || this.isCurrentSource("adjust")) {
+                this.input = value;
+                return;
+            }
+            this.$emit("disableFilterButton");
+            this.setIntervalInputReaction(() => {
+                this.slider = value;
+            }, this.timeoutInput);
+        },
+        /**
+         * Checks the current source of input ('init', 'slider' or 'input').
+         * @param {String} value The value to check.
+         * @returns {Boolean} true if the given value matches the currentSource, false if not.
+         */
+        isCurrentSource (value) {
+            return this.currentSource === value;
+        },
+        /**
+         * Sets the current source for input data.
+         * @param {String} value The type of source 'init', 'slider' or 'input'.
+         * @returns {void}
+         */
+        setCurrentSource (value) {
+            this.currentSource = value;
+        },
+        /**
+         * Sets the flag to indicate if a rule has been set by this slider.
+         * @param {Boolean} value The flag to set.
+         * @returns {void}
+         */
+        setHasRuleSet (value) {
+            this.hasRuleSet = value;
+        },
+        /**
+         * Checks if the give value isNaN.
+         * @param {*} value The value.
+         * @returns {Boolean} true if isNaN false if not.
+         */
+        checkNaN (value) {
+            return isNaN(value);
         }
     }
 };
@@ -414,34 +682,32 @@ export default {
         <input
             :id="'snippetSlider-' + snippetId"
             ref="inputNumber"
-            v-model="inRangeValue"
+            v-model="input"
             :aria-label="ariaLabelSlider"
             class="input-single form-control"
             type="number"
-            :min="minimumValue"
-            :max="maximumValue"
+            :min="currentSliderMin"
+            :max="currentSliderMax"
             :name="title"
-            :disabled="disable"
-            @focus="startSliderChange()"
-            @blur="endSliderChange"
-            @keyup.enter="endSliderChange"
+            :disabled="disabled"
+            @input="setCurrentSource('input')"
         >
         <div class="slider-input-container">
             <input
-                v-model="inRangeValue"
+                v-model="slider"
                 class="slider-single"
                 type="range"
-                :class="disable ? 'disabled':''"
+                :class="disabled ? 'disabled':''"
                 :step="getSliderSteps(decimalPlaces)"
-                :disabled="disable"
-                :min="minimumValue"
-                :max="maximumValue"
-                @mousedown="startSliderChange()"
-                @mouseup="endSliderChange"
+                :disabled="disabled"
+                :min="currentSliderMin"
+                :max="currentSliderMax"
+                @mousedown="setSliderMouseDown"
+                @mouseup="setSliderMouseUp"
             >
         </div>
-        <span class="min">{{ minimumValue }}</span>
-        <span class="max">{{ maximumValue }}</span>
+        <span class="min">{{ checkNaN(currentSliderMin) ? 0 : currentSliderMin }}</span>
+        <span class="max">{{ checkNaN(currentSliderMax) ? 0 : currentSliderMax }}</span>
     </div>
 </template>
 
