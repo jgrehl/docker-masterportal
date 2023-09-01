@@ -60,7 +60,16 @@ export function processLayerConfig (layerConfig, mapMode) {
             processLayer(layer, mapMode);
         }
     });
-    store.dispatch("Modules/Legend/createLegend", {root: true});
+    if (store.getters.styleListLoaded) {
+        store.dispatch("Modules/Legend/createLegend", {root: true});
+    }
+    else {
+        store.watch((state, getters) => getters.styleListLoaded, value => {
+            if (value) {
+                store.dispatch("Modules/Legend/createLegend", {root: true});
+            }
+        });
+    }
 }
 
 /**
