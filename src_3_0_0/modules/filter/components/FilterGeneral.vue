@@ -238,6 +238,7 @@ export default {
             if (!this.multiLayerSelector) {
                 selectedFilterIds = this.selectedAccordions.some(accordion => accordion.filterId === filterId) ? [] : [filterId];
                 this.setSelectedAccordions(this.transformLayerConfig([...this.layerConfigs.layers, ...this.flattenPreparedLayerGroups], selectedFilterIds));
+
                 return;
             }
             this.preparedLayerGroups.forEach((layerGroup, groupIdx) => {
