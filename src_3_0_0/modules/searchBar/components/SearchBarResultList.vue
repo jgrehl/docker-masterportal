@@ -41,7 +41,7 @@ export default {
          * @returns {Object[]} The result items.
          */
         resultItems () {
-            return this.limitedSortedSearchResults.currentShowAllList.filter(item => item.category === this.currentAvailableCategories);
+            return this.limitedSortedSearchResults?.currentShowAllList.filter(item => item.category === this.currentAvailableCategories);
         },
 
         /**
@@ -49,7 +49,10 @@ export default {
          * @returns {String} The hit template name.
          */
         hitTemplate () {
-            return this.searchInterfaceInstances.find(instance => instance.searchInterfaceId === this.resultItems[0]?.searchInterfaceId)?.hitTemplate;
+            if (this.resultItems) {
+                return this.searchInterfaceInstances.find(instance => instance.searchInterfaceId === this.resultItems[0]?.searchInterfaceId)?.hitTemplate;
+            }
+            return undefined;
         }
     },
     methods: {
@@ -65,32 +68,23 @@ export default {
         v-if="searchInput.length >= minCharacters && searchResultsActive && searchResults.length > 0"
         class="overflow-auto results-container"
     >
-        <a
-            :id="'mp-navigation'"
-            class="pb-2 pt-2 mp-menu-navigation-link"
-            href="#"
-            @click="setSearchResultsActive(false)"
-            @keypress="setSearchResultsActive(false)"
-        >
-            <h6 class="mp-menu-navigation-link-text mb-3"><p class="bi-chevron-left me-2">{{ $t("common:modules.menu.name") }}</p></h6>
-        </a>
         <div id="search-bar-result-list">
             <h5
                 id="search-bar-result-heading"
                 class="bold mb-4 mt-4"
-                :title="$t('common:modules.searchBar.searchResultsFrom') + limitedSortedSearchResults.results.categoryProvider[currentAvailableCategories] + '-' + $t('common:modules.searchBar.search')"
+                :title="$t('common:modules.searchBar.searchResultsFrom') + limitedSortedSearchResults?.results.categoryProvider[currentAvailableCategories] + '-' + $t('common:modules.searchBar.search')"
             >
                 <img
-                    v-if="limitedSortedSearchResults.results[currentAvailableCategories + 'ImgPath']"
+                    v-if="limitedSortedSearchResults?.results[currentAvailableCategories + 'ImgPath']"
                     alt="search result image"
                     src="searchResult.imgPath"
                 >
                 <i
-                    v-if="!limitedSortedSearchResults.results[currentAvailableCategories + 'ImgPath']"
-                    :class="limitedSortedSearchResults.results[currentAvailableCategories + 'Icon']"
+                    v-if="!limitedSortedSearchResults?.results[currentAvailableCategories + 'ImgPath']"
+                    :class="limitedSortedSearchResults?.results[currentAvailableCategories + 'Icon']"
                 />
 
-                {{ currentAvailableCategories + ": " + limitedSortedSearchResults.results[currentAvailableCategories + "Count"] + "    " + $t("common:modules.searchBar.searchResults") }}
+                {{ currentAvailableCategories + ": " + limitedSortedSearchResults?.results[currentAvailableCategories + "Count"] + "    " + $t("common:modules.searchBar.searchResults") }}
             </h5>
             <SearchBarResultListTopicTree
                 v-if="hitTemplate === 'layer'"
