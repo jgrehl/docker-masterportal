@@ -17,10 +17,16 @@ export default {
     },
     props: {
         clickAction: {
-            type: Object,
+            type: Function,
             default: undefined,
             required: false
         }
+    },
+    data: function () {
+        return {
+            side: undefined,
+            currentComponentSide: undefined
+        };
     },
     computed: {
         ...mapGetters("Modules/SearchBar", [
@@ -32,9 +38,15 @@ export default {
             "searchResults",
             "showAllResults",
             "suggestionListLength",
-            "type"
+            "type",
+            "currentSide"
         ]),
-
+        ...mapGetters("Menu", [
+            "currentComponent"
+        ]),
+        ...mapGetters([
+            "portalConfig"
+        ]),
         /**
          * v-bind of search input value.
          */
@@ -46,9 +58,15 @@ export default {
                 this.setSearchInput(searchInput);
             }
         },
-
         /**
-         * Updates the categroies to unique categories.
+         * Check if searchShould be activated.
+         * @returns {Boolean} True if search should be executed.
+         */
+        searchActivated () {
+            return this.searchInputValue.length >= parseInt(this.minCharacters, 10);
+        },
+        /**
+         * Updates the categories to unique categories.
          * @returns {Object} The searchresults with unique categories.
          */
         searchResultsWithUniqueCategories () {
@@ -120,10 +138,24 @@ export default {
             return {results: results, currentShowAllList: currentShowAllList};
         }
     },
+    watch: {
+        currentComponentSide: {
+            handler (newVal) {
+                if (newVal === "root") {
+                    this.searchInputValue = "";
+                    this.$refs.searchInput.blur();
+                }
+            },
+            deep: true
+        }
+    },
     mounted () {
+        this.setCurrentSide(this.portalConfig?.mainMenu?.searchBar !== undefined ? "mainMenu" : "secondaryMenu");
+        this.currentComponentSide = this.currentComponent(this.currentSide).type;
         this.initializeModule({configPaths: this.configPaths, type: this.type});
         this.overwriteDefaultValues();
         this.instantiateSearchInterfaces(this.$searchInterfaceAddons);
+        this.focusInput();
     },
     methods: {
         ...mapActions(["initializeModule"]),
@@ -137,19 +169,39 @@ export default {
             "setSearchInput",
             "setShowAllResults",
             "setSearchResultsActive",
-            "setSearchSuggestions"
+            "setSearchSuggestions",
+            "setCurrentSide"
         ]),
-
         /**
          * Starts the search in searchInterfaces, if min characters are introduced, updates the result list.
          * @returns {void}
          */
         startSearch () {
-            if (this.searchInputValue.length >= parseInt(this.minCharacters, 10)) {
-                this.setShowAllResults(false);
+            if (this.searchActivated) {
+                // Changes?
+                //this.setShowAllResults(false);
                 this.setSearchResultsActive(true);
                 this.search({searchInput: this.searchInputValue});
-
+            }
+        },
+        /**
+         * Sets the focus to the searchbar input.
+         * @returns {void}
+         */
+        focusInput () {
+            this.$refs.searchInput.focus();
+        },
+        /**
+         * Handles the input action behavior of the search
+         * @param {String} currentComponentSide Current component type
+         * @returns {void}
+         */
+        checkCurrentComponent (currentComponentSide) {
+            if (currentComponentSide === "root") {
+                this.clickAction();
+            }
+            else {
+                this.startSearch();
             }
         }
     }
@@ -162,9 +214,10 @@ export default {
             <button
                 id="search-button"
                 class="btn btn-primary"
+                :disabled="!searchActivated"
                 :aria-label="$t(placeholder)"
                 type="button"
-                @click="startSearch"
+                @click="checkCurrentComponent(currentComponentSide)"
             >
                 <i
                     class="bi-search"
@@ -172,14 +225,15 @@ export default {
                 />
             </button>
             <input
+                ref="searchInput"
                 v-model="searchInputValue"
                 type="search"
                 class="form-control"
                 :placeholder="$t(placeholder)"
                 :aria-label="$t(placeholder)"
                 @click="clickAction"
-                @input="startSearch"
-                @keydown.enter="startSearch"
+                @input="checkCurrentComponent(currentComponentSide)"
+                @keydown.enter="checkCurrentComponent(currentComponentSide)"
             >
         </div>
         <SearchBarSuggestionList
