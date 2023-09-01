@@ -142,7 +142,7 @@ export default {
         };
     },
     computed: {
-        ...mapGetters("Maps", ["scale", "getView"]),
+        ...mapGetters("Maps", ["scale"]),
         labelFilterButton () {
             if (typeof this.layerConfig.labelFilterButton === "string") {
                 return translateKeyWithPlausibilityCheck(this.layerConfig.labelFilterButton, key => this.$t(key));
@@ -276,7 +276,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions("Maps", ["registerListener", "unRegisterListener"]),
+        ...mapActions("Maps", ["registerListener", "unregisterListener"]),
         isRule,
         translateKeyWithPlausibilityCheck,
         /**
@@ -764,18 +764,18 @@ export default {
          * @returns {void}
          */
         registerMapMoveListener () {
-            this.registerListener({type: "loadend", listener: this.updateSnippets()});
-            this.registerListener({type: "loadstart", listener: this.updateSnippets()});
-            this.registerListener({type: "moveend", listener: this.updateSnippets()});
+            this.registerListener({type: "loadend", listener: this.updateSnippets});
+            this.registerListener({type: "loadstart", listener: this.updateSnippets});
+            this.registerListener({type: "moveend", listener: this.updateSnippets});
         },
         /**
          * Unregistering this moveend, loadend and loadstart listener.
          * @returns {void}
          */
         unregisterMapMoveListener () {
-            this.unregisterListener({type: "loadend", listener: this.updateSnippets()});
-            this.unregisterListener({type: "loadstart", listener: this.updateSnippets()});
-            this.unregisterListener({type: "moveend", listener: this.updateSnippets()});
+            this.unregisterListener({type: "loadend", listener: this.updateSnippets});
+            this.unregisterListener({type: "loadstart", listener: this.updateSnippets});
+            this.unregisterListener({type: "moveend", listener: this.updateSnippets});
         },
 
         /**
@@ -795,7 +795,7 @@ export default {
          */
         checkZoomLevel (minZoom, maxZoom) {
             let currentScale = this.scale,
-                zoomLevel = this.getView.getZoom();
+                zoomLevel = mapCollection.getMapView("2D").getZoom();
 
             this.outOfZoom = this.checkOutOfZoomLevel(minZoom, maxZoom, zoomLevel);
             this.$store.watch((state, getters) => getters["Maps/scale"], scale => {
@@ -999,7 +999,7 @@ export default {
             <div class="info">
                 <span>
                     <i class="bi bi-exclamation-circle-fill" />
-                    {{ $t("modules.tools.filter.filterResult.disabledInfo") }}
+                    {{ $t("common:modules.filter.filterResult.disabledInfo") }}
                 </span>
             </div>
         </div>
@@ -1091,6 +1091,7 @@ export default {
                         :disabled="disabled"
                         :info="snippet.info"
                         :title="getTitle(snippet, layerConfig.layerId)"
+                        :operator-for-attr-name="snippet.operatorForAttrName"
                         :operator="snippet.operator"
                         :prechecked="snippet.prechecked"
                         :snippet-id="snippet.snippetId"
@@ -1122,6 +1123,7 @@ export default {
                         :title="getTitle(snippet, layerConfig.layerId)"
                         :layer-id="layerConfig.layerId"
                         :multiselect="snippet.multiselect"
+                        :operator-for-attr-name="snippet.operatorForAttrName"
                         :operator="snippet.operator"
                         :placeholder="snippet.placeholder"
                         :prechecked="snippet.prechecked"
@@ -1150,6 +1152,7 @@ export default {
                         :disabled="disabled"
                         :info="snippet.info"
                         :title="getTitle(snippet, layerConfig.layerId)"
+                        :operator-for-attr-name="snippet.operatorForAttrName"
                         :operator="snippet.operator"
                         :placeholder="snippet.placeholder"
                         :prechecked="snippet.prechecked"
@@ -1177,6 +1180,7 @@ export default {
                         :title="getTitle(snippet, layerConfig.layerId)"
                         :max-value="snippet.maxValue"
                         :min-value="snippet.minValue"
+                        :operator-for-attr-name="snippet.operatorForAttrName"
                         :operator="snippet.operator"
                         :prechecked="snippet.prechecked"
                         :fixed-rules="fixedRules"
@@ -1239,10 +1243,13 @@ export default {
                         :title="getTitle(snippet, layerConfig.layerId)"
                         :min-value="snippet.minValue"
                         :max-value="snippet.maxValue"
+                        :operator-for-attr-name="snippet.operatorForAttrName"
                         :operator="snippet.operator"
                         :prechecked="snippet.prechecked"
                         :fixed-rules="fixedRules"
                         :snippet-id="snippet.snippetId"
+                        :timeout-slider="getTimeoutSlider(snippet)"
+                        :timeout-input="getTimeoutInput(snippet)"
                         :visible="snippet.visible"
                         :filter-geometry="filterGeometry"
                         :filter-geometry-name="layerConfig.geometryName"
@@ -1272,6 +1279,8 @@ export default {
                         :snippet-id="snippet.snippetId"
                         :timeout-slider="getTimeoutSlider(snippet)"
                         :timeout-input="getTimeoutInput(snippet)"
+                        :operator-for-attr-name="snippet.operatorForAttrName"
+                        :operator="snippet.operator"
                         :visible="snippet.visible"
                         :value="snippet.value"
                         :filter-geometry="filterGeometry"
