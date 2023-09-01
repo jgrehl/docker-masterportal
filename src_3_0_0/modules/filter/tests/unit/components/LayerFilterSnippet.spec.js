@@ -337,7 +337,7 @@ describe("src/modules/tools/filter/components/LayerFilterSnippet.vue", () => {
             });
             await wrapper.vm.$nextTick();
             expect(wrapper.find(".filter-result").exists()).to.be.true;
-            expect(wrapper.find(".filter-result").text()).contain("modules.tools.filter.filterResult.unit", "3");
+            expect(wrapper.find(".filter-result").text()).contain("common:modules.filter.filterResult.unit", "3");
         });
         it("should render amount of filtered items if showHits is undefined", async () => {
             await wrapper.setData({
@@ -348,7 +348,7 @@ describe("src/modules/tools/filter/components/LayerFilterSnippet.vue", () => {
             });
             await wrapper.vm.$nextTick();
             expect(wrapper.find(".filter-result").exists()).to.be.true;
-            expect(wrapper.find(".filter-result").text()).contain("modules.tools.filter.filterResult.unit", "3");
+            expect(wrapper.find(".filter-result").text()).contain("common:modules.filter.filterResult.unit", "3");
         });
         describe("setSnippetValueByState", async () => {
             await wrapper.setData({

@@ -2,6 +2,7 @@ import {expect} from "chai";
 import sinon from "sinon";
 import UrlHandler from "../../../utils/urlHandler.js";
 import MapHandler from "../../../utils/mapHandler.js";
+
 describe("src/module/tools/filter/utils/mapHandler.js", () => {
     const urlHandler = new UrlHandler();
 
@@ -114,6 +115,7 @@ describe("src/module/tools/filter/utils/mapHandler.js", () => {
                 };
 
             matchingFilterStub.returns({index: -1});
+
             urlHandler.transformOldUrl([{"foooo": "fpp"}], {}, undefined, result => {
                 expect(result).to.deep.equal(expected);
             });
@@ -136,6 +138,7 @@ describe("src/module/tools/filter/utils/mapHandler.js", () => {
             function onsuccess (result) {
                 expect(result).to.deep.equal(expected);
             }
+
             sinon.stub(mapHandler, "initializeLayer");
             getPreparedRuleStub.returns({
                 snippetId: 0,
@@ -159,6 +162,8 @@ describe("src/module/tools/filter/utils/mapHandler.js", () => {
                     }
                 }
             });
+
+
             urlHandler.transformOldUrl([{rules: [{foo: "foo"}]}], {}, mapHandler, onsuccess);
             sinon.restore();
         });
