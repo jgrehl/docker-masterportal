@@ -94,7 +94,7 @@ export default {
          * @returns {void}
          */
         setActiveLayoutKey (layoutKey) {
-            this.activeLayoutKey = this.activeLayoutKey !== layoutKey ? layoutKey : "";
+            this.activeLayoutKey = layoutKey;
         },
 
         /**
@@ -222,7 +222,7 @@ export default {
         </div>
         <div
             v-else-if="activeLayoutKey === 'fillTransparency'"
-            class="d-flex"
+            class="d-flex mt-4"
         >
             <input
                 :id="'slider-fill-transparency-' + circleType"
