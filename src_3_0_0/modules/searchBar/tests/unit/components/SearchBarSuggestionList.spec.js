@@ -48,9 +48,9 @@ describe("src_3_0_0/modules/searchBar/components/SearchBarSuggestionList.vue", (
                 0: searchResults[0],
                 1: searchResults[0],
                 availableCategories: ["example"],
-                categoryProvider: {
-                    example: "exampleSearch"
-                },
+                categoryProvider: [
+                    "exampleSearch"
+                ],
                 exampleCount: 1,
                 exampleIcon: "bi-signpost-2-fill"
             },
@@ -70,6 +70,7 @@ describe("src_3_0_0/modules/searchBar/components/SearchBarSuggestionList.vue", (
                                 addSelectedSearchResultToTopicTree: sinon.stub()
                             },
                             getters: {
+                                currentSide: () => "mainMenu",
                                 minCharacters: () => minCharacters,
                                 searchInput: () => searchInput,
                                 searchResults: () => searchResults,
@@ -79,10 +80,28 @@ describe("src_3_0_0/modules/searchBar/components/SearchBarSuggestionList.vue", (
                                 showAllResults: () => showAllResults
                             },
                             mutations: {
+                                setShowAllResultsSearchInterfaceInstance: sinon.stub(),
                                 setCurrentAvailableCategories: sinon.stub(),
                                 setSearchResultsActive: sinon.stub(),
                                 setShowAllResults: sinon.stub()
                             }
+                        }
+                    }
+                },
+                Menu: {
+                    namespaced: true,
+                    getters: {
+                        currentComponent: () => () => "root"
+                    }
+                }
+            },
+            state: {
+                "Menu": {
+                    "currentComponent": "",
+                    "mainMenu": {
+                        "currentComponent": "",
+                        "navigation": {
+                            "history": []
                         }
                     }
                 }

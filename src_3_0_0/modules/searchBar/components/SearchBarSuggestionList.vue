@@ -42,7 +42,7 @@ export default {
             "setCurrentAvailableCategories",
             "setSearchResultsActive",
             "setShowAllResults",
-            "setshowAllResultsSearchInterfaceInstance"
+            "setShowAllResultsSearchInterfaceInstance"
         ]),
         /**
          * Prepares the all results list of one category and adapts the navigation history
@@ -52,12 +52,13 @@ export default {
         prepareShowAllResults (categoryItem) {
             const side = this.currentSide;
 
-            this.setshowAllResultsSearchInterfaceInstance(this.limitedSortedSearchResults.results.categoryProvider[categoryItem]);
-            this.$store.state.Menu[side].navigation.currentComponent = {props: {name: "common:modules.searchBar.searchResults"}, type: "searchbar"};
-            this.$store.state.Menu.currentComponent = "searchbar";
-            this.$store.state.Menu[side].navigation.history = [];
-            this.$store.state.Menu[side].navigation.history.push({type: "root", props: []}, {type: "searchBar", props: {name: "modules.searchBar.searchBar"}}, {type: "searchBar", props: {name: "modules.searchBar.searchResultList"}});
-
+            this.setShowAllResultsSearchInterfaceInstance(this.limitedSortedSearchResults.results.categoryProvider[categoryItem]);
+            if (this.$store.state.Menu[side]) {
+                this.$store.state.Menu[side].navigation.currentComponent = {props: {name: "common:modules.searchBar.searchResults"}, type: "searchbar"};
+                this.$store.state.Menu.currentComponent = "searchbar";
+                this.$store.state.Menu[side].navigation.history = [];
+                this.$store.state.Menu[side].navigation.history.push({type: "root", props: []}, {type: "searchBar", props: {name: "modules.searchBar.searchBar"}}, {type: "searchBar", props: {name: "modules.searchBar.searchResultList"}});
+            }
             this.setCurrentAvailableCategories(categoryItem);
             this.currentShowAllList = this.limitedSortedSearchResults.currentShowAllList.filter(value => {
                 return value.category === categoryItem;
