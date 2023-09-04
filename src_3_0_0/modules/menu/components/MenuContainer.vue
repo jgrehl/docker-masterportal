@@ -119,7 +119,6 @@ export default {
                 side: this.side,
                 type: "searchbar"
             }, {root: true});
-
         }
     }
 };
