@@ -1,5 +1,6 @@
 <script>
 import {convertColor} from "../../../js/utils/convertColor";
+import SliderItem from "../../slider/components/SliderItem.vue";
 
 /**
  * Shared component that provides buttons for setting the layout of drawings.
@@ -14,6 +15,9 @@ import {convertColor} from "../../../js/utils/convertColor";
  */
 export default {
     name: "DrawLayout",
+    components: {
+        SliderItem
+    },
     props: {
         circleType: {
             type: String,
@@ -203,43 +207,31 @@ export default {
             v-if="activeLayoutKey === 'strokeWidth'"
             class="d-flex mt-4"
         >
-            <input
+            <SliderItem
                 :id="'slider-stroke-width-' + circleType"
-                class="me-3"
-                type="range"
-                :title="`${currentLayout.strokeWidth}px`"
-                :value="currentLayout.strokeWidth"
-                :min="strokeRange[0]"
-                :max="strokeRange[1]"
-                step="1"
-                @input="event => updateCurrentLayout('strokeWidth', event.target.value)"
-            >
-            <label
-                :for="'slider-stroke-width-' + circleType"
-            >
-                {{ `${currentLayout.strokeWidth}px` }}
-            </label>
+                :aria="`${currentLayout.strokeWidth}px`"
+                :label="`${currentLayout.strokeWidth}px`"
+                :min="strokeRange[0].toString()"
+                :max="strokeRange[1].toString()"
+                :value="currentLayout.strokeWidth.toString()"
+                :step="1"
+                :interaction="event => updateCurrentLayout('strokeWidth', event.target.value)"
+            />
         </div>
         <div
             v-else-if="activeLayoutKey === 'fillTransparency'"
             class="d-flex mt-4"
         >
-            <input
+            <SliderItem
                 :id="'slider-fill-transparency-' + circleType"
-                class="me-3"
-                type="range"
-                :title="`${currentLayout.fillTransparency}%`"
-                :value="currentLayout.fillTransparency"
-                min="0"
-                max="100"
-                step="1"
-                @input="event => updateCurrentLayout('fillTransparency', event.target.value)"
-            >
-            <label
-                :for="'slider-fill-transparency-' + circleType"
-            >
-                {{ `${currentLayout.fillTransparency}%` }}
-            </label>
+                :aria="`${currentLayout.fillTransparency}%`"
+                :label="`${currentLayout.fillTransparency}%`"
+                :min="'0'"
+                :max="'100'"
+                :value="currentLayout.fillTransparency.toString()"
+                :step="1"
+                :interaction="event => updateCurrentLayout('fillTransparency', event.target.value)"
+            />
         </div>
     </div>
 </template>
@@ -307,11 +299,6 @@ export default {
 input {
     cursor: pointer;
     border: none;
-}
-
-input[type="range"] {
-    accent-color: $secondary;
-    width: 100%
 }
 
 </style>
