@@ -18,7 +18,7 @@ function getWKTGeom (content, geometryType = "POLYGON") {
         geometry.forEach(function (element, index, list) {
             // polygon with voids
             if (Array.isArray(element)) {
-                element.forEach(function (coord, index2, list2) {
+                element?.forEach(function (coord, index2, list2) {
                     if (index2 % 2 === 0) {
                         wkt += coord + " ";
                     }
@@ -71,7 +71,7 @@ function getWKTGeom (content, geometryType = "POLYGON") {
         // all single polygons
         geometry.forEach(function (element, index) {
             // goes through either all coordinates of a polygon or a polygon with voids
-            element.forEach(function (coord, index2, list2) {
+            element?.forEach(function (coord, index2, list2) {
                 // element is a polygon with voids
                 if (Array.isArray(coord)) {
                     coord.forEach(function (coordinate, index3, list3) {
