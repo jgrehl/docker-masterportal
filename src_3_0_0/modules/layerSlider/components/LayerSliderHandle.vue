@@ -152,37 +152,6 @@ export default {
             />
         </datalist>
     </div>
-    <!-- <div
-        id="module-layer-slider-handle"
-        class="d-flex flex-column px-3"
-    > -->
-    <!-- <label
-            id="label-slider"
-            for="slider"
-        />
-        <input
-            id="slider"
-            class="slider my-2"
-            value="0"
-            type="range"
-            :min="sliderMin"
-            :max="sliderMax"
-            list="ticks"
-            @input="dragHandle"
-        > -->
-    <!-- <datalist
-            id="ticks"
-            class="d-flex flex-column justify-content-between"
-        >
-            <option
-                v-for="(tick, index) in sliderTicks"
-                :key="index"
-                :value="tick"
-                class="p-0"
-                :label="$t(layerIds[index]?.title)"
-            />
-        </datalist> -->
-    <!-- </div> -->
 </template>
 
 <style lang="scss" scoped>
