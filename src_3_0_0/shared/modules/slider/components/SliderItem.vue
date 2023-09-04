@@ -75,7 +75,7 @@ export default {
         :for="id"
         class="form-label"
     >
-        {{ aria }}
+        {{ label }}
     </label>
 </template>
 
