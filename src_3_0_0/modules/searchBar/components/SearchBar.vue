@@ -59,7 +59,7 @@ export default {
             }
         },
         /**
-         * Check if searchShould be activated.
+         * Check if search should be activated.
          * @returns {Boolean} True if search should be executed.
          */
         searchActivated () {
