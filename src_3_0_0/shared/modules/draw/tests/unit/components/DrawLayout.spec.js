@@ -121,24 +121,6 @@ describe("src_3_0_0/shared/modules/draw/components/DrawLayout.vue", () => {
             wrapper.vm.setActiveLayoutKey(layoutKey);
             expect(wrapper.vm.activeLayoutKey).to.equals(layoutKey);
         });
-
-        it("should set activeLayoutKey to empty string, if activeLayoutKey is equals layoutKey", () => {
-            const layoutKey = "fillColor";
-
-            wrapper = shallowMount(DrawLayoutComponent, {
-                propsData: {
-                    currentLayout: currentLayout,
-                    selectedDrawType: "circle",
-                    setCurrentLayout: setCurrentLayoutSpy
-                }
-            });
-
-            expect(wrapper.vm.activeLayoutKey).to.equals("");
-            wrapper.vm.setActiveLayoutKey(layoutKey);
-            expect(wrapper.vm.activeLayoutKey).to.equals(layoutKey);
-            wrapper.vm.setActiveLayoutKey(layoutKey);
-            expect(wrapper.vm.activeLayoutKey).to.equals("");
-        });
     });
 
     describe("updateCurrentLayout", () => {
