@@ -20,7 +20,7 @@ export default {
         SearchInterface.prototype.timeout = state.timeout;
     },
     /**
-     * Handles the switch from the single result view to the search overview and updates the menu navigation values
+     * Handles the switch from the single result view to the search overview and updates the menu navigation values.
      * @param {Object} param.getters the getters
      * @param {Object} param.rootState the rootState
      * @param {Object} side the menu side of the search

@@ -47,7 +47,17 @@ export default {
             }
         });
     },
-
+    /**
+     * Starts the search in searchInterfaces, if min characters are introduced.
+     * @param {Object} param.dispatch the dispatch
+     * @param {Object} param.state the state
+     * @returns {void}
+     */
+    startSearch: ({dispatch, state}) => {
+        if (state.searchInput.length >= parseInt(state.minCharacters, 10)) {
+            dispatch("search", {searchInput: state.searchInput});
+        }
+    },
     /**
      * Send search input to configured searchInterfaces
      * and push the response objects to the state attribute "searchResults".
