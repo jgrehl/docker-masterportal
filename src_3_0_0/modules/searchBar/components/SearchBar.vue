@@ -178,8 +178,6 @@ export default {
          */
         startSearch () {
             if (this.searchActivated) {
-                // Changes?
-                //this.setShowAllResults(false);
                 this.setSearchResultsActive(true);
                 this.search({searchInput: this.searchInputValue});
             }

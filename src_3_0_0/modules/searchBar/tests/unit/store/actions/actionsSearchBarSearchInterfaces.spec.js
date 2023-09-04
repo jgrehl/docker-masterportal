@@ -5,7 +5,6 @@ import sinon from "sinon";
 const {
     cleanSearchResults,
     instantiateSearchInterfaces,
-    startSearch,
     search
 } = actions;
 
@@ -37,9 +36,10 @@ describe("src_3_0_0/modules/searchBar/store/actions/actionsSearchBarSearchInterf
 
             instantiateSearchInterfaces({state, commit});
 
-            expect(commit.calledTwice).to.be.true;
-            expect(commit.firstCall.args[0]).includes("addMultipleSearchInterfaceIds");
-            expect(commit.secondCall.args[0]).includes("addSearchInterfaceInstances");
+            expect(commit.calledThrice).to.be.true;
+            expect(commit.firstCall.args[0]).includes("setSearchInterfaceInstances");
+            expect(commit.secondCall.args[0]).includes("addMultipleSearchInterfaceIds");
+            expect(commit.thirdCall.args[0]).includes("addSearchInterfaceInstances");
         });
 
         it("should instantiate the gazetter and addons search interfaces", () => {
@@ -67,29 +67,14 @@ describe("src_3_0_0/modules/searchBar/store/actions/actionsSearchBarSearchInterf
 
             instantiateSearchInterfaces({state, commit}, searchInterfaceAddons);
 
-            expect(commit.calledThrice).to.be.true;
-            expect(commit.firstCall.args[0]).includes("addMultipleSearchInterfaceIds");
-            expect(commit.secondCall.args[0]).includes("addSearchInterfaceInstances");
+            expect(commit.callCount).to.equal(4);
+            expect(commit.firstCall.args[0]).includes("setSearchInterfaceInstances");
+            expect(commit.secondCall.args[0]).includes("addMultipleSearchInterfaceIds");
             expect(commit.thirdCall.args[0]).includes("addSearchInterfaceInstances");
+            expect(commit.getCall(3).args[0]).includes("addSearchInterfaceInstances");
         });
     });
 
-    describe("startSearch", () => {
-        it("should start search to abc-straße", () => {
-            const state = {
-                searchInput: "abc-straße",
-                minCharacters: 3
-            };
-
-            startSearch({dispatch, state});
-
-            expect(dispatch.calledOnce).to.be.true;
-            expect(dispatch.firstCall.args[0]).to.equals("search");
-            expect(dispatch.firstCall.args[1]).to.deep.equals({
-                searchInput: "abc-straße"
-            });
-        });
-    });
 
     describe("search", () => {
         it("should search in configured search instances", async () => {
@@ -99,10 +84,11 @@ describe("src_3_0_0/modules/searchBar/store/actions/actionsSearchBarSearchInterf
                         search: async (searchInput) => [searchInput]
                     }]
                 },
+                getters = {showAllResults: () => false},
                 searchInput = "Test",
                 searchType = "result";
 
-            await search({commit, dispatch, state}, {searchInput, searchType});
+            await search({getters, commit, dispatch, state}, {searchInput, searchType});
 
             expect(commit.calledOnce).to.be.true;
             expect(commit.firstCall.args[0]).equals("addSearchResults");
