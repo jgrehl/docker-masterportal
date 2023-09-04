@@ -50,7 +50,20 @@ function getWKTGeom (content, geometryType = "POLYGON") {
     }
     else if (type === "POINT") {
         wkt = type + "(";
-        wkt += geometry[0] + " " + geometry[1];
+        if (geometry[1] !== undefined) {
+            wkt += geometry[0] + " " + geometry[1];
+        }
+        else if (Array.isArray(geometry[0])) {
+            if (geometry[0].length === 2) {
+                wkt += geometry[0][0] + " " + geometry[0][1];
+            }
+            else {
+                console.warn("unexpected data in WKT - " + geometry[0]);
+            }
+        }
+        else {
+            wkt += geometry[0];
+        }
         wkt += ")";
     }
     else if (type === "MULTIPOLYGON") {
