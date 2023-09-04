@@ -73,7 +73,7 @@ describe("src_3_0_0/modules/layerSlider/components/LayerSliderHandle.vue", () =>
         sinon.restore();
     });
 
-    it("renders the layerSliderPlayer elements", () => {
+    it("renders the layerSliderHandle elements", () => {
         store.commit("Modules/LayerSlider/setLayerIds", layerIds);
 
         wrapper = shallowMount(LayerSliderHandleComponent, {
@@ -82,9 +82,10 @@ describe("src_3_0_0/modules/layerSlider/components/LayerSliderHandle.vue", () =>
             }
         });
 
+        const input = wrapper.find("slider-item-stub");
+
         expect(wrapper.find("#module-layer-slider-handle").exists()).to.be.true;
-        expect(wrapper.find("#module-layer-slider-handle > label#label-slider").exists()).to.be.true;
-        expect(wrapper.find("#module-layer-slider-handle > input#slider").exists()).to.be.true;
+        expect(input.exists()).to.be.true;
     });
 
     it("prepareSliderTicks - returns the slider ticks", () => {
