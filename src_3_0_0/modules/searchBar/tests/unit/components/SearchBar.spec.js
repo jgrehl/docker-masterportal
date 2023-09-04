@@ -64,6 +64,7 @@ describe("src_3_0_0/modules/searchBar/components/SearchBar.vue", () => {
                             },
                             getters: {
                                 configPaths: () => [],
+                                currentSide: () => "mainMenu",
                                 minCharacters: () => 3,
                                 placeholder: () => "ABC",
                                 searchInput: () => "abc-straße",
@@ -77,12 +78,22 @@ describe("src_3_0_0/modules/searchBar/components/SearchBar.vue", () => {
                                 addSuggestionItem: sinon.stub(),
                                 setSearchInput: sinon.stub(),
                                 setShowAllResults: sinon.stub(),
+                                setCurrentSide: sinon.stub(),
                                 setSearchResultsActive: sinon.stub(),
                                 setSearchSuggestions: sinon.stub()
                             }
                         }
                     }
+                },
+                Menu: {
+                    namespaced: true,
+                    getters: {
+                        currentComponent: () => () => "root"
+                    }
                 }
+            },
+            getters: {
+                portalConfig: sinon.stub()
             },
             actions: {
                 initializeModule: sinon.stub()
