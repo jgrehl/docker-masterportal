@@ -1,7 +1,6 @@
 import SearchInterface from "./searchInterface";
 import WFS from "ol/format/WFS";
 import {uniqueId} from "../../../shared/js/utils/uniqueId";
-import SimpleGeometry from "ol/geom/SimpleGeometry";
 
 /**
  * The search interface to the special wfs.
