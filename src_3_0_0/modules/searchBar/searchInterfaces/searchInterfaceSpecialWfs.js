@@ -191,7 +191,6 @@ SearchInterfaceSpecialWfs.prototype.fillHitList = function (xml, result, request
                         geometryMembers = elementGeometryName.getElementsByTagNameNS("*", memberName);
 
                     coordinates = this.getInteriorAndExteriorPolygonMembers(geometryMembers);
-
                     geometry = undefined;
                     geometryType = "MultiPolygon";
                 }
@@ -199,14 +198,7 @@ SearchInterfaceSpecialWfs.prototype.fillHitList = function (xml, result, request
                     const feature = new WFS().readFeatures(xml)[i];
 
                     geometry = feature.getGeometry();
-                    if (geometry instanceof SimpleGeometry) {
-                        coordinates = geometry.getCoordinates();
-                    }
-                    else {
-                        // Handle GeometryCollection or other types if needed
-                        coordinates = [];
-                    }
-
+                    coordinates = undefined;
                     geometryType = geometry.getType();
                 }
 
@@ -282,7 +274,9 @@ SearchInterfaceSpecialWfs.prototype.createPossibleActions = function (searchResu
                     coordinates.push(parseFloat(coordinate));
                 });
             }
-            // coordinates.push(parseFloat(coord));
+            else {
+                coordinates.push(parseFloat(coord));
+            }
         });
     }
     else if (Array.isArray(searchResult?.geometry)) {
@@ -292,12 +286,16 @@ SearchInterfaceSpecialWfs.prototype.createPossibleActions = function (searchResu
                     coordinates.push(parseFloat(coordinate));
                 });
             }
-            coordinates.push(parseFloat(coord));
+            if (coord) {
+                coordinates.push(parseFloat(coord));
+            }
         });
     }
     else if (searchResult?.geometry?.flatCoordinates) {
         searchResult?.geometry?.flatCoordinates.forEach(coord => {
-            coordinates.push(parseFloat(coord));
+            if (coord) {
+                coordinates.push(parseFloat(coord));
+            }
         });
     }
 
@@ -310,11 +308,11 @@ SearchInterfaceSpecialWfs.prototype.createPossibleActions = function (searchResu
             closeResults: false
         },
         setMarker: {
-            coordinates: [coordinates],
+            coordinates: coordinates,
             closeResults: true
         },
         zoomToResult: {
-            coordinates: [coordinates],
+            coordinates: coordinates,
             closeResults: true
         }
     };
