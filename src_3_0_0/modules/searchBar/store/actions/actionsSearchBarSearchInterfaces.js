@@ -34,9 +34,8 @@ export default {
         };
 
         Object.assign(searchInterfacesMapper, ...searchInterfaceAddons);
-
+        commit("setSearchInterfaceInstances", []);
         commit("addMultipleSearchInterfaceIds");
-
         state.searchInterfaces.forEach(searchInterface => {
             const type = searchInterface.type;
 
@@ -50,18 +49,6 @@ export default {
     },
 
     /**
-     * Starts the search in searchInterfaces, if min characters are introduced.
-     * @param {Object} param.dispatch the dispatch
-     * @param {Object} param.state the state
-     * @returns {void}
-     */
-    /*  startSearch: ({dispatch, state}) => {
-        if (state.searchInput.length >= parseInt(state.minCharacters, 10)) {
-            dispatch("search", {searchInput: state.searchInput});
-        }
-    }, */
-
-    /**
      * Send search input to configured searchInterfaces
      * and push the response objects to the state attribute "searchResults".
      * @param {Object} param.commit the commit
@@ -71,9 +58,15 @@ export default {
      * @param {Object} payload.searchInput The search input.
      * @returns {void}
      */
-    search: ({commit, dispatch, state}, {searchInput}) => {
+    search: ({getters, commit, dispatch, state}, {searchInput}) => {
         dispatch("cleanSearchResults");
-        state.searchInterfaceInstances.forEach(instance => {
+        let currentSearchInterfaceInstances = state.searchInterfaceInstances;
+
+        if (getters.showAllResults) {
+            currentSearchInterfaceInstances = state.searchInterfaceInstances.filter(instance =>instance.searchInterfaceId === getters.showAllResultsSearchInterfaceInstance);
+        }
+
+        currentSearchInterfaceInstances.forEach(instance => {
             instance.clearSearchResults();
             instance.search(searchInput)
                 .then(searchResults => {
