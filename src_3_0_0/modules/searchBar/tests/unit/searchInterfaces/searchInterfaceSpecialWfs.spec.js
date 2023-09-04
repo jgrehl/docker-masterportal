@@ -48,11 +48,11 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceSpecialWfs
                             },
                             setMarker: {
                                 closeResults: true,
-                                coordinates: [[565931.982, 5935196.323, 565869.067, 5935016.323]]
+                                coordinates: [565931.982, 5935196.323, 565869.067, 5935016.323]
                             },
                             zoomToResult: {
                                 closeResults: true,
-                                coordinates: [[565931.982, 5935196.323, 565869.067, 5935016.323]]
+                                coordinates: [565931.982, 5935196.323, 565869.067, 5935016.323]
                             }
                         },
                         onHover: {
@@ -65,7 +65,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceSpecialWfs
                             },
                             setMarker: {
                                 closeResults: true,
-                                coordinates: [[565931.982, 5935196.323, 565869.067, 5935016.323]]
+                                coordinates: [565931.982, 5935196.323, 565869.067, 5935016.323]
                             }
                         }
                     },
@@ -139,11 +139,11 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceSpecialWfs
                         }
                     },
                     setMarker: {
-                        coordinates: [[565931.982, 5935196.323, 565869.067, 5935016.323]],
+                        coordinates: [565931.982, 5935196.323, 565869.067, 5935016.323],
                         closeResults: true
                     },
                     zoomToResult: {
-                        coordinates: [[565931.982, 5935196.323, 565869.067, 5935016.323]],
+                        coordinates: [565931.982, 5935196.323, 565869.067, 5935016.323],
                         closeResults: true
                     }
                 }
