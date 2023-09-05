@@ -2,8 +2,9 @@ import getPosition from "../utils/getPosition";
 import {getRenderPixel} from "ol/render";
 import layerCollection from "../../../core/layers/js/layerCollection";
 import {treeSubjectsKey} from "../../../shared/js/utils/constants";
+import store from "../../../app-store";
 
-const actions = {
+export default {
     windowWidthChanged ({commit, dispatch, state, getters}) {
         commit("setWindowWidth");
 
@@ -12,9 +13,71 @@ const actions = {
         }
     },
     /**
+     * Watch the visible layers in layerConfig.
+     * Starts and ends wmsTime when time layer is activated/deactivated
+     * @param {Object} context the vuex context
+     * @param {Object} context.commit the commit
+     * @param {Object} context.state the state
+     * @param {Object} context.rootGetters the rootGetters
+     * @returns {void}
+     */
+    watchVisibleLayerConfig ({commit, state, rootGetters}) {
+        rootGetters.visibleLayerConfigs.forEach(visLayer => {
+            if (visLayer.typ === "WMS" && visLayer.time) {
+                commit("setTimeSliderActive", {
+                    active: true,
+                    currentLayerId: visLayer.id,
+                    playbackDelay: visLayer.time?.playbackDelay || 1
+                });
+                commit("setTimeSliderDefaultValue", {
+                    currentLayerId: visLayer.id
+                });
+                commit("setVisibility", true);
+            }
+        });
+        store.watch((_, getters) => getters.visibleLayerConfigs, layerConfig => {
+            if (!state.timeSlider.active) {
+                layerConfig.forEach(element => {
+                    if (element.typ === "WMS" && element.time) {
+                        commit("setTimeSliderActive", {
+                            active: true,
+                            currentLayerId: element.id,
+                            playbackDelay: element.time?.playbackDelay || 1
+                        });
+                        commit("setTimeSliderDefaultValue", {
+                            currentLayerId: element.id
+                        });
+                        commit("setVisibility", true);
+                    }
+                });
+            }
+            else if (state.timeSlider.active) {
+                const currentLayerConf = rootGetters.layerConfigById(state.timeSlider.currentLayerId),
+                    visLayerConf = layerConfig.find(layerConf => layerConf.id === currentLayerConf.id);
+
+                if (!visLayerConf) {
+                    commit("setTimeSliderActive", {
+                        active: false,
+                        currentLayerId: "",
+                        objects: [],
+                        playbackDelay: 1,
+                        playing: false
+                    });
+                    commit("setVisibility", false);
+                    commit("setTimeSliderDefaultValue", {
+                        currentLayerId: ""
+                    });
+                }
+            }
+        }, {deep: true});
+    },
+    /**
      * Toggles the LayerSwiper.
      * If the LayerSwiper is deactivated, the second layer is deactivated and removed from the ModelList.
-     *
+     * @param {Object} context the vuex context
+     * @param {Object} context.commit the commit
+     * @param {Object} context.state the state
+     * @param {Object} context.dispatch the dispatch
      * @param {String} id Id of the Layer that should be toggled.
      * @returns {void}
      */
@@ -54,7 +117,6 @@ const actions = {
             commit("setLayerSwiperTargetLayer", layerCollection.getLayerById(secondId));
         }
         else {
-            const layerConfigs = [];
 
             // If the button of the "original" window is clicked, it is assumed, that the time value selected in the added window is desired to be further displayed.
             if (!id.endsWith(state.layerAppendix)) {
@@ -62,34 +124,39 @@ const actions = {
                     {transparency} = layer.attributes,
                     origLayer = layerCollection.getLayerById(id);
 
-                layerConfigs.push({
-                    id: id,
-                    layer: {
-                        id: id,
-                        transparency: transparency
-                    }
-                });
                 origLayer.updateTime(id, TIME);
-                dispatch("replaceByIdInLayerConfig", {layerConfigs: layerConfigs}, {root: true});
+
+                dispatch("replaceByIdInLayerConfig", {
+                    layerConfigs: [{
+                        id: id,
+                        layer: {
+                            id: id,
+                            transparency: transparency
+                        }
+                    }]
+                }, {root: true});
                 commit("setTimeSliderDefaultValue", TIME);
             }
-
-            layerConfigs.push({
-                id: secondId,
-                layer: {
+            dispatch("replaceByIdInLayerConfig", {
+                layerConfigs: [{
                     id: secondId,
-                    visibility: false,
-                    showInLayerTree: false
-                }
-            });
-
-            dispatch("replaceByIdInLayerConfig", {layerConfigs: layerConfigs}, {root: true});
+                    layer: {
+                        id: secondId,
+                        visibility: false,
+                        showInLayerTree: false
+                    }
+                }]
+            }, {root: true});
         }
     },
     /**
      * Sets the postion of the layerSwiper to state according to the x-coordinate of the mousedown event
      * or adjusts it based on the direction of the key pressed by the state defined value.
-     *
+     * @param {Object} context the vuex context
+     * @param {Object} context.state the state
+     * @param {Object} context.commit the commit
+     * @param {Object} context.dispatch the dispatch
+     * @param {Object} context.getters the getters
      * @param {KeyboardEvent.keydown | MouseEvent.mousemove} event DOM Event.
      * @returns {void}
      */
@@ -103,6 +170,10 @@ const actions = {
     /**
      * Updates the map so that the layer is displayed clipped again.
      *
+     * @param {Object} context the vuex context
+     * @param {Object} context.state the state
+     * @param {Object} context.rootGetters the rootGetters
+     * @param {Object} context.dispatch the dispatch
      * @returns {void}
      */
     async updateMap ({state, rootGetters, dispatch}) {
@@ -126,6 +197,9 @@ const actions = {
     /**
      * Manipulates the width of each layer according to the position of the layerSwiper and the side of the layer.
      *
+     * @param {Object} context the vuex context
+     * @param {Object} context.state the state
+     * @param {Object} context.rootGetters the rootGetters
      * @param {ol.render.Event} renderEvent The event object triggered on prerender
      * @returns {void}
      */
@@ -145,5 +219,3 @@ const actions = {
         context.clip();
     }
 };
-
-export default actions;
