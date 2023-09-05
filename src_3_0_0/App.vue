@@ -56,6 +56,7 @@ export default {
                 initializeMaps(this.portalConfig, this.configJs);
                 initializeLayers(this.visibleLayerConfigs);
                 startProcessUrlParams();
+                this.initializeOther();
             }
         }
     },
@@ -78,6 +79,7 @@ export default {
         ]),
         ...mapActions([
             "extendLayers",
+            "initializeOther",
             "initializeVectorStyle",
             "loadConfigJs",
             "loadConfigJson",
