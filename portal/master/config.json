@@ -270,7 +270,8 @@
             "logo": "https://geodienste.hamburg.de/lgv-config/img/hh-logo.png",
             "downloadLink": "https://bitbucket.org/geowerkstatt-hamburg/masterportal/downloads/examples-",
             "cswUrl": "https://metaver.de/csw",
-            "metaUrl": "https://metaver.de/trefferanzeige?docuuid=40D48B03-AD1D-407B-B04D-B5BC6855BE15"
+            "metaUrl": "https://metaver.de/trefferanzeige?docuuid=40D48B03-AD1D-407B-B04D-B5BC6855BE15",
+            "metaId": "40D48B03-AD1D-407B-B04D-B5BC6855BE15"
           },
           {
             "type": "legend"
