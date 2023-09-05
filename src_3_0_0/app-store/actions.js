@@ -105,6 +105,15 @@ export default {
     },
 
     /**
+     * Initializes other actions.
+     * @param {Object} param.dispatch the dispatch
+     * @returns {void}
+     */
+    initializeOther ({dispatch}) {
+        dispatch("Modules/WmsTime/watchVisibleLayerConfig", null, {root: true});
+    },
+
+    /**
      * Initializes the style list of vector styling. Sets state variable 'StyleListLoaded' to true, if successful loaded.
      * @param {Object} param.state the state
      * @param {Object} param.commit the commit
