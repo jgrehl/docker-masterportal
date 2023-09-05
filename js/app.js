@@ -78,7 +78,6 @@ async function loadApp () {
     /* eslint-disable no-undef */
     let app = {},
         searchbarAttributes = {};
-        // styleGetters = {};
 
     if (Object.prototype.hasOwnProperty.call(Config, "uiStyle")) {
         utilConfig.uiStyle = Config.uiStyle.toUpperCase();
