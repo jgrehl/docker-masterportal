@@ -64,6 +64,15 @@ export default {
         state.restConf = config;
     },
     /**
+     * Sets styleListLoaded to value.
+     * @param {Object} state store state
+     * @param {Object} value to set
+     * @returns {void}
+     */
+    setStyleListLoaded (state, value) {
+        state.styleListLoaded = value;
+    },
+    /**
      * Sets mobile flag.
      * @param {Object} state store state
      * @param {Boolean} mobile whether browser resolution indicates mobile device

@@ -145,7 +145,10 @@ async function loadApp () {
                 });
             }
             return initializedStyleList;
-        });
+        }).then(() => {
+        store.commit("setStyleListLoaded", true);
+    }).catch(error => console.error(error));
+
     createMaps(Config, Radio.request("Parser", "getPortalConfig").mapView);
     new WindowView();
 

@@ -30,6 +30,7 @@ In the following, all configuration options are described. For all configuration
 |inputMap.setCenter|no|Boolean|`false`|Center on a marker after producing it?|`setCenter: true`|
 |inputMap.setMarker|no|Boolean|`false`|Flag to activate the 'setMarker' functionality.|`setMarker: true`|
 |inputMap.targetProjection|no|String|`"EPSG:25832"`|The target coordinate reference system. Coordinates will be translated to it before being communicated via **[remoteInterface](remoteInterface.md)**.|`targetprojection: "EPSG:4326"`|
+|login|no|Object|`{}`|Activates the Login module. This displays a login button in the toolbar that allows login and logout with an IDM server, e.g. keycloak, as configured.||
 |mapInteractions|no|**[mapInteractions](#markdown-header-mapInteractions)**||Overrides the ol map interactions. Provides further configuration possibilities for control behaviour and keyboardEventTarget.||
 |mapMarker|no|**[mapMarker](#markdown-header-mapmarker)**||Overrides the map marker module's default values. Useful for 3D markers since OpenLayers's overlays can not be displayed in 3D mode. For this, the map marker has to be defined as vector layer.||
 |metaDataCatalogueId|no|String|`"2"`|URL to the metadata catalog linked to in the layer information window. The ID is resolved to a service of the **[rest-services.json](rest-services.json.md)** file. Note: This attribute is only necessary, when no "show_doc_url" is configured in the metadata dataset in the **[services.json](services.json.md)**. The url can either be set globally (**[config.js](config.js.md)**) or layer-specific(**[services.json](services.json.md)**).|`"MetaDataCatalogueUrl"`|
@@ -279,6 +280,47 @@ For more attributes see **[Scene](https://cesium.com/learn/cesiumjs/ref-doc/Glob
 }
 ```
 ***
+
+## login
+
+This module allows the user to login with an OIDC server. The retrieved access token is stored in cookies which can be used by the backend to deliver user-specific data (e.g. layers). Since the cookies are technically required to implement the login functionality, there is not corresponding cookie notice.
+
+|Name|Required|Type|Default|Description|
+|----|--------|----|-------|-----------|
+|oidcAuthorizationEndpoint|yes|String||The oidc auth endpoint, e.g. "https://idm.domain.de/auth/realms/REALM/protocol/openid-connect/auth".|
+|oidcTokenEndpoint|yes|String||The oidc token endpoint, e.g. "https://idm.domain.de/auth/realms/REALM/protocol/openid-connect/token".|
+|oidcClientId|yes|String||The oidc client, e.g. "masterportal" (must be created in your IDM, e.g. keycloak).|
+|oidcScope|yes|String||The scope used for oidc, defaults to "profile email openid".|
+|oidcRedirectUri|yes|String||The url to redirect the oidc process to - after login.|
+|interceptorUrlRegex|yes|String||An regexp pattern that allows to specify urls the oidc token will be attached to.|
+
+Make sure in keycloak the client is configured as follows:
+
+```
+Access Type: public
+Standard Flow Enabled: ON
+Valid Redirect URIs: <PORTAL URL, e.g. https://localhost/*>
+Web Origins: <PORTAL HOST, e.g. https://localhost>
+```
+
+Specific ports are not allowed ports here. Especially, ports on localhost, e.g. `localhost:9001` will not work with keycloak since ports are not accepted in web origins.
+
+In the section `OpenID Connect Compatibility Modes` activate `Use Refresh Tokens`. In the section `Advanced Settings` set `Proof Key for Code Exchange Code Challenge Method` to `S256`.
+
+**Example:**
+
+```json
+{
+  "login": {
+      "oidcAuthorizationEndpoint": "https://idm.DOMAIN.de/auth/realms/REALM/protocol/openid-connect/auth",
+      "oidcTokenEndpoint": "https://idm.DOMAIN.de/auth/realms/REALM/protocol/openid-connect/token",
+      "oidcClientId": "masterportal",
+      "oidcScope": "profile email openid",
+      "oidcRedirectUri": "https://localhost/portal/basic/",
+      "interceptorUrlRegex": "https?://localhost.*" // add authorization to all URLs that match the given regex
+  }
+}
+```
 
 ## mapInteractions
 

@@ -37,9 +37,8 @@ export default function GeoJSONLayer (attrs) {
         this.checkForScale({scale: store.getters["Maps/scale"]});
     }
 
-    this.setStyle(this.getStyleFunction(attrs));
+    this.initStyle(attrs);
     this.prepareFeaturesFor3D(this.layer.getSource().getFeatures());
-    this.createLegend(attrs);
 }
 
 // Link prototypes and add prototype methods, means GeoJSONLayer uses all methods and properties of Layer
@@ -72,9 +71,7 @@ GeoJSONLayer.prototype.createLayer = function (attrs) {
             excludeTypesFromParsing: attrs.excludeTypesFromParsing, // types that should not be parsed from strings, only necessary for webgl
             isPointLayer: attrs.isPointLayer // whether the source will only hold point data, only necessary for webgl
         },
-        styleFn = this.getStyleFunction(attrs),
         options = {
-            layerStyle: styleFn,
             map: mapCollection.getMap("2D"),
             clusterGeometryFunction: (feature) => {
                 // do not cluster invisible features; can't rely on style since it will be null initially
@@ -111,37 +108,63 @@ GeoJSONLayer.prototype.createLayer = function (attrs) {
             }
         };
 
-    if (styleFn) {
-        styleFn.bind(this);
-    }
-    options.layerStyle = styleFn;
     this.layer = geojson.createLayer(rawLayerAttributes, {layerParams, options});
 };
 
 /**
- * Sets Style for layer.
+ * Initializes the style for this layer. If styleId is set, this is done after vector styles are loaded.
  * @param {Object} attrs  params of the raw layer
  * @returns {void}
  */
-GeoJSONLayer.prototype.getStyleFunction = function (attrs) {
-    const styleId = attrs.styleId,
-        styleObject = styleList.returnStyleObject(styleId);
-    let isClusterFeature = false,
-        style = null;
-
-    if (styleObject !== undefined) {
-        style = function (feature) {
-            const feat = feature !== undefined ? feature : this;
-
-            isClusterFeature = typeof feat.get("features") === "function" || typeof feat.get("features") === "object" && Boolean(feat.get("features"));
-            return createStyle.createStyle(styleObject, feat, isClusterFeature, Config.wfsImgPath);
-        };
+GeoJSONLayer.prototype.initStyle = async function (attrs) {
+    if (store.getters.styleListLoaded) {
+        this.createStyle(attrs);
+        this.createLegend(attrs);
     }
     else {
-        console.error(i18next.t("common:modules.core.modelList.layer.wrongStyleId", {styleId}));
+        store.watch((state, getters) => getters.styleListLoaded, value => {
+            if (value) {
+                this.createStyle(attrs);
+                this.createLegend(attrs);
+            }
+        });
     }
+};
 
-    return style;
+/**
+ * Creates the style function.
+ * @param {Object} attrs  params of the raw layer
+ * @returns {void}
+ */
+GeoJSONLayer.prototype.createStyle = async function (attrs) {
+    const styleId = attrs.styleId,
+        styleObject = styleList.returnStyleObject(styleId);
+
+    if (styleObject !== undefined) {
+        /**
+         * Returns style function to style fature.
+         * @param {ol.Feature} feature the feature to style
+         * @returns {Function} style function to style feature
+         */
+        const style = (feature) => {
+            const feat = feature !== undefined ? feature : this,
+                isClusterFeature = typeof feat.get("features") === "function" || typeof feat.get("features") === "object" && Boolean(feat.get("features"));
+
+            return createStyle.createStyle(styleObject, feat, isClusterFeature, Config.wfsImgPath);
+        };
+
+        this.setStyle(style);
+    }
+    else {
+        console.warn(i18next.t("common:core.layers.errorHandling.wrongStyleId", {styleId}));
+    }
+};
+/**
+ * Returns the style function of this layer to be called with feature.
+ * @returns {Object} the style function
+ */
+GeoJSONLayer.prototype.getStyleFunction = function () {
+    return this.get("style");
 };
 
 /**

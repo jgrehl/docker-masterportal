@@ -59,3 +59,7 @@ npm-debug.log
 !/portal/master
 !/portal/masterCustom
 !/portal/masterDefault
+
+#ignore pipeline files
+.gitlab-ci.yml
+bitbucket-pipelines.yml

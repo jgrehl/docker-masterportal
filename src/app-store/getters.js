@@ -1,6 +1,7 @@
 export default {
     masterPortalVersionNumber: state => state?.masterPortalVersionNumber,
     mobile: state => state.mobile,
+    styleListLoaded: state => state.styleListLoaded,
     dpi: state => state.dpi,
     idCounter: state => state?.idCounter,
     // configJS destructuring

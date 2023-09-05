@@ -1289,6 +1289,7 @@ This field allows creating and ordering menu entries. The order of tools corresp
 |ansichten|no|**[ansichten](#markdown-header-portalconfigmenuansichten)**||Preconfigured map view in 2D and 3D mode|false|
 |info|no|**[info](#markdown-header-portalconfigmenuinfo)**||Menu folder containing **[tools](#markdown-header-portalconfigmenutools)** or **[staticlinks](#markdown-header-portalconfigmenustaticlinks)**.|false|
 |legend|no|**[legend](#markdown-header-portalconfigmenulegend)**||The legend for all visible layers is displayed here.|false|
+|login|no|**[login](#markdown-header-portalconfigmenulogin)**||Configuration of login with an OIDC server.|false|
 |tools|no|**[tools](#markdown-header-portalconfigmenutools)**||Menu folder containing tools.|false|
 |tree|no|**[tree](#markdown-header-portalconfigmenutree)**||Representation and position of the topic selection tree.|false|
 
@@ -1367,6 +1368,28 @@ Legend configuration options.
 |icon|no|String|"bi-lightbulb"|Legend icon.|false|
 |showCollapseAllButton|no|Boolean|false|Option to en-/disable all legends.|false|
 |showLegend|no|Boolean|false|Option to display the legend when starting the portal|false|
+
+***
+
+#### Portalconfig.menu.login
+
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|name|yes|String||The name for the module in the menu. Overwritten when the user is logged in.|false|
+|icon|yes|String||The icon next to the login button in the menu. Will be changed when the user is logged in (see module store).|false|
+
+```json
+{
+    "Portalconfig": {
+        "menu": {
+            "login": {
+                "name": "translate#common:modules.login.login",
+                "icon": "bi-door-open"
+            }
+        }
+    }
+}
+```
 
 ***
 

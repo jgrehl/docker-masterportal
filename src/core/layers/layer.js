@@ -667,6 +667,17 @@ export function handleSingleTimeLayer (isSelected, layer, model) {
 }
 
 /**
+ * Setter for style of ol layer.
+ * @param {Object} value The style to set at ol layer. If value is null, undefined is set as style at layer to use defaultStyle.
+ * @returns {void}
+ */
+Layer.prototype.setStyle = function (value) {
+    const style = value === null ? undefined : value;
+
+    this.set("style", style);
+    this.layer?.setStyle(style);
+};
+/**
  * Setter for isJustAdded (currently only used in uiStyle = table)
  * @param {Boolean} value Flag if layer has just been added to the tree
  * @returns {void}

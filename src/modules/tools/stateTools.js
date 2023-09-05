@@ -10,6 +10,7 @@ import FilterGeneral from "./filter/components/FilterGeneral.vue";
 import GetFeatureInfo from "./gfi/components/GetFeatureInfo.vue";
 import LayerClusterToggler from "./layerClusterToggler/components/LayerClusterToggler.vue";
 import LayerSlider from "./layerSlider/components/LayerSlider.vue";
+import LoginComponent from "./login/components/LoginComponent.vue";
 import MeasureInMap from "./measure/components/MeasureInMap.vue";
 import Modeler3D from "./modeler3D/components/Modeler3D.vue";
 import PrintMap from "./print/components/PrintMap.vue";
@@ -45,6 +46,7 @@ const state = {
         filter: FilterGeneral,
         layerClusterToggler: LayerClusterToggler,
         layerSlider: LayerSlider,
+        login: LoginComponent,
         measure: MeasureInMap,
         modeler3D: Modeler3D,
         print: PrintMap,

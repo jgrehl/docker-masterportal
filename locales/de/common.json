@@ -198,6 +198,14 @@
             "buildings": "Gebäude",
             "changeLayerInfo": "Informationstext wechseln"
         },
+        "login": {
+            "login": "Login",
+            "logout": "Logout",
+            "progress": "Bitte melden Sie sich im geöffneten Popup an.",
+            "name": "Name",
+            "email": "E-Mail",
+            "profile": "Profil"
+        },
         "mapMarker": {
             "nostyleObject": "Zu der angegebenen StyleId: {{styleId}} konnte keine Style gefunden werden. Bitte überprüfen sie ihre Konfiguration."
         },
@@ -494,6 +502,13 @@
                 },
                 "upload": {
                     "geometryParseError": "Die angegebene Geometry konnte nicht geladen werden"
+                }
+            },
+            "statisticDashboard": {
+                "button": {
+                  "difference": "Differenz",
+                  "table": "Tabelle",
+                  "chart": "Diagramm"
                 }
             },
             "pendler": {
