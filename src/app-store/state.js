@@ -8,6 +8,7 @@ const state = {
     configJson: null,
     configJs: null,
     restConf: null,
+    styleListLoaded: false,
     mobile: isMobile(), // resize update in ./index.js
     dpi: getDpi(),
     masterPortalVersionNumber,

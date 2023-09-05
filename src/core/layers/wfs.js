@@ -40,7 +40,7 @@ export default function WFSLayer (attrs) {
 
     // call the super-layer
     Layer.call(this, Object.assign(defaults, attrs), this.layer, !attrs.isChildLayer);
-    this.set("style", this.getStyleFunction(attrs));
+    this.initStyle(attrs);
     this.prepareFeaturesFor3D(this.layer.getSource().getFeatures());
 }
 // Link prototypes and add prototype methods, means WFSLayer uses all methods and properties of Layer
@@ -81,7 +81,6 @@ WFSLayer.prototype.createLayer = function (attrs) {
             excludeTypesFromParsing: attrs.excludeTypesFromParsing, // types that should not be parsed from strings, only necessary for webgl
             isPointLayer: attrs.isPointLayer // whether the source will only hold point data, only necessary for webgl
         },
-        styleFn = this.getStyleFunction(attrs),
         options = {
             doNotLoadInitially: attrs.doNotLoadInitially,
             wfsFilter: attrs.wfsFilter,
@@ -120,11 +119,6 @@ WFSLayer.prototype.createLayer = function (attrs) {
             loadingStrategy: attrs.loadingStrategy === "all" ? all : bbox
         };
 
-    if (styleFn) {
-        styleFn.bind(this);
-    }
-    options.style = styleFn;
-
     this.layer = wfs.createLayer(rawLayerAttributes, {layerParams, options});
 };
 
@@ -161,29 +155,59 @@ WFSLayer.prototype.getPropertyname = function (attrs) {
 };
 
 /**
- * Sets Style for layer.
+ * Initializes the style for this layer. If styleId is set, this is done after vector styles are loaded.
  * @param {Object} attrs  params of the raw layer
  * @returns {void}
  */
-WFSLayer.prototype.getStyleFunction = function (attrs) {
-    const styleId = attrs.styleId,
-        styleObject = styleList.returnStyleObject(styleId);
-    let isClusterFeature = false,
-        style = null;
-
-    if (styleObject !== undefined) {
-        style = (feature) => {
-            const feat = feature !== undefined ? feature : this;
-
-            this.createLegend();
-            isClusterFeature = typeof feat.get("features") === "function" || typeof feat.get("features") === "object" && Boolean(feat.get("features"));
-            return createStyle.createStyle(styleObject, feat, isClusterFeature, Config.wfsImgPath);
-        };
+WFSLayer.prototype.initStyle = async function (attrs) {
+    if (store.getters.styleListLoaded) {
+        this.createStyle(attrs);
+        this.createLegend(attrs);
     }
     else {
-        console.error(i18next.t("common:modules.core.modelList.layer.wrongStyleId", {styleId}));
+        store.watch((state, getters) => getters.styleListLoaded, value => {
+            if (value) {
+                this.createStyle(attrs);
+                this.createLegend(attrs);
+            }
+        });
     }
-    return style;
+};
+
+/**
+ * Creates the style function.
+ * @param {Object} attrs  params of the raw layer
+ * @returns {void}
+ */
+WFSLayer.prototype.createStyle = async function (attrs) {
+    const styleId = attrs.styleId,
+        styleObject = styleList.returnStyleObject(styleId);
+
+    if (styleObject !== undefined) {
+        /**
+         * Returns style function to style fature.
+         * @param {ol.Feature} feature the feature to style
+         * @returns {Function} style function to style fature
+         */
+        const style = (feature) => {
+            const feat = feature !== undefined ? feature : this,
+                isClusterFeature = typeof feat.get("features") === "function" || typeof feat.get("features") === "object" && Boolean(feat.get("features"));
+
+            return createStyle.createStyle(styleObject, feat, isClusterFeature, Config.wfsImgPath);
+        };
+
+        this.setStyle(style);
+    }
+    else {
+        console.warn(i18next.t("common:core.layers.errorHandling.wrongStyleId", {styleId}));
+    }
+};
+/**
+ * Returns the style function of this layer to be called with feature.
+ * @returns {Object} the style function
+ */
+WFSLayer.prototype.getStyleFunction = function () {
+    return this.get("style");
 };
 /**
  * Updates the layers source by calling refresh at source. Depending on attribute 'sourceUpdated'.

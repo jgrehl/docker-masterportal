@@ -188,10 +188,38 @@ describe("src/core/layers/wfs.js", () => {
         });
     });
     describe("getStyleFunction", () => {
-        it("getStyleFunction shall return a function", function () {
+        it("initStyle shall be called on creation and call createStyle if styleListLoaded=true", function () {
+            const createStyleSpy = sinon.spy(WfsLayer.prototype, "createStyle");
+
+            store.getters = {
+                styleListLoaded: true
+            };
+            attributes.styleId = "styleId";
+            new WfsLayer(attributes);
+
+            expect(createStyleSpy.calledOnce).to.be.true;
+        });
+        it("initStyle shall be called on creation and not call createStyle if styleListLoaded=false", function () {
+            const createStyleSpy = sinon.spy(WfsLayer.prototype, "createStyle");
+
+            store.getters = {
+                styleListLoaded: false
+            };
+            attributes.styleId = "styleId";
+            new WfsLayer(attributes);
+
+            expect(createStyleSpy.notCalled).to.be.true;
+        });
+
+        it("createStyle shall return a function", function () {
+            let layer = null,
+                styleFunction = null;
+
             sinon.stub(styleList, "returnStyleObject").returns(true);
-            const wfsLayer = new WfsLayer(attributes),
-                styleFunction = wfsLayer.getStyleFunction(attributes);
+            attributes.styleId = "styleId";
+            layer = new WfsLayer(attributes);
+            layer.createStyle(attributes);
+            styleFunction = layer.getStyleFunction();
 
             expect(styleFunction).not.to.be.null;
             expect(typeof styleFunction).to.be.equals("function");
@@ -599,6 +627,7 @@ describe("src/core/layers/wfs.js", () => {
             const wfsLayer = new WfsLayer(attributes),
                 layer = wfsLayer.get("layer");
 
+            wfsLayer.createStyle(attributes);
             sinon.stub(layer.getSource(), "getFeatures").returns(features);
             wfsLayer.showAllFeatures();
 
@@ -622,6 +651,7 @@ describe("src/core/layers/wfs.js", () => {
                 layer = wfsLayer.get("layer"),
                 clearStub = sinon.stub(layer.getSource(), "clear");
 
+            wfsLayer.createStyle(attributes);
             sinon.stub(layer.getSource(), "addFeatures");
             sinon.stub(layer.getSource(), "getFeatures").returns(features);
             sinon.stub(layer.getSource(), "getFeatureById").returns(features[0]);

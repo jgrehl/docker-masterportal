@@ -1237,6 +1237,7 @@ Hier können die Menüeinträge und deren Anordnung konfiguriert werden. Die Rei
 |ansichten|nein|**[ansichten](#markdown-header-portalconfigmenuansichten)**||Vorkonfigurierte Kartenansicht im 2D und 3D Modus|false|
 |info|nein|**[info](#markdown-header-portalconfigmenuinfo)**||Ordner im Menü, der **[tools](#markdown-header-portalconfigmenutools)** oder **[staticlinks](#markdown-header-portalconfigmenustaticlinks)** darstellt.|false|
 |legend|nein|**[legend](#markdown-header-portalconfigmenulegend)**||In der Legende werden alle sichtbaren Layer dargestellt.|false|
+|login|nein|**[login](#markdown-header-portalconfigmenulogin)**||Konfiguration der Anmeldung bei einem OIDC-Server.|false|
 |tools|nein|**[tools](#markdown-header-portalconfigmenutools)**||Ordner im Menü, der Werkzeuge darstellt.|false|
 |tree|nein|**[tree](#markdown-header-portalconfigmenutree)**||Darstellung und Position des Themenbaums.|false|
 
@@ -1315,6 +1316,28 @@ Konfigurations-Optionen der Legende.
 |icon|nein|String|"bi-lightbulb"|Icon der Legende.|false|
 |showCollapseAllButton|nein|Boolean|false|Option zum Ein- bzw. Ausblenden aller Legenden|false|
 |showLegend|nein|Boolean|false|Option zum Anzeigen der Legende beim Start des Portals|false|
+
+***
+
+#### Portalconfig.menu.login
+
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|name|ja|String||Der Name für das Module im Menü. Wird überschrieben, wenn der User eingeloggt ist.|false|
+|icon|ja|String||Das Icon neben dem Login Button im Menü. Wird geändert, wenn der User eingeloggt ist (siehe module store).|false|
+
+```json
+{
+    "Portalconfig": {
+        "menu": {
+            "login": {
+                "name": "translate#common:modules.login.login",
+                "icon": "bi-door-open"
+            }
+        }
+    }
+}
+```
 
 ***
 

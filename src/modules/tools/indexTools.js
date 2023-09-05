@@ -18,6 +18,7 @@ import Filter from "./filter/store/indexFilter";
 import Gfi from "./gfi/store/indexGfi";
 import LayerClusterToggler from "./layerClusterToggler/store/indexLayerClusterToggler";
 import LayerSlider from "./layerSlider/store/indexLayerSlider";
+import Login from "./login/store/indexLogin";
 import Measure from "./measure/store/indexMeasure";
 import Modeler3D from "./modeler3D/store/indexModeler3D";
 import Print from "./print/store/indexPrint";
@@ -52,6 +53,7 @@ export default {
         Gfi,
         LayerClusterToggler,
         LayerSlider,
+        Login,
         Measure,
         Modeler3D,
         Print,

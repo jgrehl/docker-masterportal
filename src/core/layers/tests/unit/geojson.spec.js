@@ -78,6 +78,7 @@ describe("src/core/layers/geojson.js", () => {
             const geojsonLayer = new GeoJSONLayer(attributes),
                 layer = geojsonLayer.get("layer");
 
+            geojsonLayer.createStyle(attributes);
 
             expect(layer).to.be.an.instanceof(VectorLayer);
             expect(layer.getSource()).to.be.an.instanceof(Cluster);
@@ -173,10 +174,38 @@ describe("src/core/layers/geojson.js", () => {
         });
     });
     describe("getStyleFunction", () => {
-        it("getStyleFunction shall return a function", function () {
+        it("initStyle shall be called on creation and call createStyle if styleListLoaded=true", function () {
+            const createStyleSpy = sinon.spy(GeoJSONLayer.prototype, "createStyle");
+
+            store.getters = {
+                styleListLoaded: true
+            };
+            attributes.styleId = "styleId";
+            new GeoJSONLayer(attributes);
+
+            expect(createStyleSpy.calledOnce).to.be.true;
+        });
+        it("initStyle shall be called on creation and not call createStyle if styleListLoaded=false", function () {
+            const createStyleSpy = sinon.spy(GeoJSONLayer.prototype, "createStyle");
+
+            store.getters = {
+                styleListLoaded: false
+            };
+            attributes.styleId = "styleId";
+            new GeoJSONLayer(attributes);
+
+            expect(createStyleSpy.notCalled).to.be.true;
+        });
+
+        it("createStyle shall return a function", function () {
+            let geoJSONLayer = null,
+                styleFunction = null;
+
             sinon.stub(styleList, "returnStyleObject").returns(true);
-            const geojsonLayer = new GeoJSONLayer(attributes),
-                styleFunction = geojsonLayer.getStyleFunction(attributes);
+            attributes.styleId = "styleId";
+            geoJSONLayer = new GeoJSONLayer(attributes);
+            geoJSONLayer.createStyle(attributes);
+            styleFunction = geoJSONLayer.getStyleFunction();
 
             expect(styleFunction).not.to.be.null;
             expect(typeof styleFunction).to.be.equals("function");
@@ -187,6 +216,7 @@ describe("src/core/layers/geojson.js", () => {
             attributes.legendURL = "https://legendUrl";
             const geojsonLayer = new GeoJSONLayer(attributes);
 
+            geojsonLayer.createLegend(attributes);
             expect(geojsonLayer.get("legend")).to.be.deep.equals([attributes.legendURL]);
         });
     });

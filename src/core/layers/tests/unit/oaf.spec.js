@@ -203,11 +203,38 @@ describe("src/core/layers/oaf.js", () => {
         });
     });
     describe("getStyleFunction", () => {
-        it("getStyleFunction shall return a function", function () {
+        it("initStyle shall be called on creation and call createStyle if styleListLoaded=true", function () {
+            const createStyleSpy = sinon.spy(OAFLayer.prototype, "createStyle");
+
+            store.getters = {
+                styleListLoaded: true
+            };
+            attributes.styleId = "styleId";
+            new OAFLayer(attributes);
+
+            expect(createStyleSpy.calledOnce).to.be.true;
+        });
+        it("initStyle shall be called on creation and not call createStyle if styleListLoaded=false", function () {
+            const createStyleSpy = sinon.spy(OAFLayer.prototype, "createStyle");
+
+            store.getters = {
+                styleListLoaded: false
+            };
+            attributes.styleId = "styleId";
+            new OAFLayer(attributes);
+
+            expect(createStyleSpy.notCalled).to.be.true;
+        });
+
+        it("createStyle shall return a function", function () {
+            let oAFLayer = null,
+                styleFunction = null;
+
             sinon.stub(styleList, "returnStyleObject").returns(true);
-            sinon.stub(getGeometryTypeFromService, "getGeometryTypeFromOAF").returns(true);
-            const oafLayer = new OAFLayer(attributes),
-                styleFunction = oafLayer.getStyleFunction(attributes);
+            attributes.styleId = "styleId";
+            oAFLayer = new OAFLayer(attributes);
+            oAFLayer.createStyle(attributes);
+            styleFunction = oAFLayer.getStyleFunction();
 
             expect(styleFunction).not.to.be.null;
             expect(typeof styleFunction).to.be.equals("function");
@@ -275,6 +302,7 @@ describe("src/core/layers/oaf.js", () => {
             const oafLayer = new OAFLayer(attributes),
                 layer = oafLayer.get("layer");
 
+            oafLayer.createStyle(attributes);
             sinon.stub(layer.getSource(), "getFeatures").returns(featuresToShow);
             oafLayer.showAllFeatures();
 

@@ -188,18 +188,50 @@ describe("src/core/layers/sta.js", () => {
     });
 
     describe("getStyleFunction", () => {
-        it("getStyleFunction shall return a function", () => {
+        it("initStyle shall be called on creation and call createStyle if styleListLoaded=true", function () {
+            const createStyleSpy = sinon.spy(STALayer.prototype, "createStyle");
+
+            store.getters = {
+                styleListLoaded: true
+            };
+            attributes.styleId = "styleId";
+            new STALayer(attributes);
+
+            expect(createStyleSpy.calledOnce).to.be.true;
+        });
+        it("initStyle shall be called on creation and not call createStyle if styleListLoaded=false", function () {
+            const createStyleSpy = sinon.spy(STALayer.prototype, "createStyle");
+
+            store.getters = {
+                styleListLoaded: false
+            };
+            attributes.styleId = "styleId";
+            new STALayer(attributes);
+
+            expect(createStyleSpy.notCalled).to.be.true;
+        });
+
+        it("createStyle shall return a function", function () {
+            let layer = null,
+                styleFunction = null;
+
             sinon.stub(styleList, "returnStyleObject").returns(true);
-            const staLayer = new STALayer(attributes),
-                styleFunction = staLayer.getStyleFunction(attributes);
+            attributes.styleId = "styleId";
+            layer = new STALayer(attributes);
+            layer.createStyle(attributes);
+            styleFunction = layer.getStyleFunction();
 
             expect(styleFunction).not.to.be.null;
             expect(typeof styleFunction).to.be.equals("function");
         });
         it("getStyleFunction shall return null when style is null", () => {
+            let layer = null,
+                styleFunction = null;
+
             sinon.stub(createStyle, "createStyle").returns(null);
-            const staLayer = new STALayer(attributes),
-                styleFunction = staLayer.getStyleFunction(attributes);
+            layer = new STALayer(attributes);
+            layer.createStyle(attributes);
+            styleFunction = layer.getStyleFunction();
 
             expect(styleFunction).to.equal(null);
         });
@@ -291,6 +323,7 @@ describe("src/core/layers/sta.js", () => {
             const staLayer = new STALayer(attributes),
                 layer = staLayer.get("layer");
 
+            staLayer.createStyle(attributes);
             sinon.stub(layer.getSource(), "getFeatures").returns(features);
             staLayer.showAllFeatures();
 
@@ -316,6 +349,7 @@ describe("src/core/layers/sta.js", () => {
                 layer = staLayer.get("layer"),
                 clearStub = sinon.stub(layer.getSource(), "clear");
 
+            staLayer.createStyle(attributes);
             sinon.stub(layer.getSource(), "addFeatures");
             sinon.stub(layer.getSource(), "getFeatures").returns(features);
             sinon.stub(layer.getSource(), "getFeatureById").returns(features[0]);
