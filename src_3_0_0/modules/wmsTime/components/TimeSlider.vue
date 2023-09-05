@@ -1,7 +1,6 @@
 <script>
 import {mapActions, mapGetters, mapMutations} from "vuex";
 import layerCollection from "../../../core/layers/js/layerCollection";
-import mutations from "../store/mutationsWmsTime";
 import RoutingLoadingSpinner from "../../../modules/routing/components/RoutingLoadingSpinner.vue";
 
 export default {
@@ -55,7 +54,7 @@ export default {
     },
     methods: {
         ...mapActions("Modules/WmsTime", ["toggleSwiper", "updateMap"]),
-        ...mapMutations("Modules/WmsTime", Object.keys(mutations)),
+        ...mapMutations("Modules/WmsTime", ["setWindowWidth", "setTimeSliderActive", "setLayerSwiperActive", "setTimeSliderPlaying"]),
         setSliderValue (value) {
             this.sliderValue = Number(value);
         },
@@ -107,6 +106,9 @@ export default {
 
 <template>
     <div class="timeSlider-wrapper centered-box-wrapper">
+        <RoutingLoadingSpinner
+            v-if="!layerId"
+        />
         <div
             class="timeSlider-control-row"
         >

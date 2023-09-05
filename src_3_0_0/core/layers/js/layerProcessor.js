@@ -93,9 +93,6 @@ function processLayer (layer) {
     if (layer) {
         updateLayerConfig(layer);
         layerCollection.addLayer(layer);
-        if (layer.attributes.time) {
-            handleSingleTimeLayer(true, layer);
-        }
     }
 }
 
@@ -112,50 +109,4 @@ function updateLayerConfig (layer) {
         }],
         trigger: false
     }, {root: true});
-}
-
-/**
- * Called from setSelected or modelList, handles single time layers.
- * @param {Boolean} isSelected true, if layer is selected
- * @param {ol.Layer} layer the dedicated layer
- * @returns {void}
- */
-function handleSingleTimeLayer (isSelected, layer) {
-    const id = layer?.get("id"),
-        timeLayer = layer,
-        isTimeLayer = timeLayer?.get("typ") === "WMS" && timeLayer?.get("time");
-
-    if (isTimeLayer) {
-        if (isSelected) {
-            const map2D = mapCollection.getMap("2D");
-
-            // selectedLayers.forEach(sLayer => {
-            //     if (sLayer.get("time") && sLayer.get("id") !== id) {
-            //         if (sLayer.get("id").endsWith(store.getters["WmsTime/layerAppendix"])) {
-            //             sLayer.removeLayer(sLayer.get("id"));
-            //         }
-            //         else {
-            //             map2D?.removeLayer(sLayer.get("layer"));
-            //             sLayer.set("isSelected", false);
-            //         }
-            //     }
-            // });
-
-            store.commit("Modules/WmsTime/setTimeSliderActive", {
-                active: true,
-                currentLayerId: timeLayer.get("id"),
-                playbackDelay: timeLayer?.get("time")?.playbackDelay || 1
-            });
-
-            store.commit("Modules/WmsTime/setTimeSliderDefaultValue", {
-                currentLayerId: timeLayer.get("id")
-            });
-
-
-            store.commit("Modules/WmsTime/setVisibility", true);
-        }
-        else {
-            timeLayer.removeLayer(timeLayer.get("id"));
-        }
-    }
 }
