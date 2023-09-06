@@ -16,8 +16,7 @@ export default {
             "sliderMax",
             "sliderMin",
             "sliderTicks",
-            "layerIds",
-            "layerList"
+            "layerIds"
         ])
     },
     created () {

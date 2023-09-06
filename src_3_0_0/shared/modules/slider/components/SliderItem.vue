@@ -22,12 +22,12 @@ export default {
             required: false
         },
         min: {
-            type: String,
+            type: [String, Number],
             default: null,
             required: false
         },
         max: {
-            type: String,
+            type: [String, Number],
             default: null,
             required: false
         },
@@ -37,7 +37,7 @@ export default {
             required: false
         },
         value: {
-            type: String,
+            type: [String, Number],
             default: "0",
             required: false
         },
@@ -61,7 +61,7 @@ export default {
     <input
         :id="id"
         type="range"
-        class="form-range"
+        class="slider my-2"
         :list="list"
         :value="value"
         :aria-label="aria"
