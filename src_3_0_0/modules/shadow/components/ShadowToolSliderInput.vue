@@ -1,4 +1,5 @@
 <script>
+import SliderItem from "../../../shared/modules/slider/components/SliderItem.vue";
 /**
  * Shadow Tool Slider Input
  * @module modules/ShadowToolSliderInput
@@ -15,6 +16,9 @@
  */
 export default {
     name: "ShadowToolSliderInput",
+    components: {
+        SliderItem
+    },
     props: {
         label: {
             type: String,
@@ -61,22 +65,22 @@ export default {
         class="d-flex flex-column mt-2 slider-input"
     >
         <label :for="'shadow-slider-input-' + label">
-            <h6>{{ label }}</h6>
+            <h6>h6 {{ typeof label }}</h6>
         </label>
         <div class="d-flex justify-content-end">
-            <span>{{ valuelabel }}</span>
+            <span>Span {{ valuelabel }}</span>
         </div>
-        <input
+
+        <SliderItem
             :id="'shadow-slider-input-' + label"
-            class="form-range"
+            :aria="label === 'Wählen Sie eine Uhrzeit:' ? $t('common:modules.shadow.slideHour') : $t('common:modules.shadow.pickDate')"
             :value="value"
-            type="range"
             :min="min"
             :max="max"
             :step="step"
             :disabled="disabled"
-            @input="$emit('input', Number($event.target.value))"
-        >
+            :interaction="$event => $emit('input', Number($event.target.value))"
+        />
     </div>
 </template>
 
