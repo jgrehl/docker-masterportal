@@ -196,7 +196,7 @@ export default {
             <SliderItem
                 id="tool-bufferAnalysis-radiusRangeInput"
                 :value="inputBufferRadius"
-                :aria="$t('common:modules.bufferAnalysis.rangeLabel')"
+                :aria=" $t('common:modules.aria.sliderAria') + $t('common:modules.bufferAnalysis.rangeLabel')"
                 :min="'0'"
                 :max="'3000'"
                 :step="10"
