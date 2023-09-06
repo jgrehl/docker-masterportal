@@ -65,15 +65,16 @@ export default {
         class="d-flex flex-column mt-2 slider-input"
     >
         <label :for="'shadow-slider-input-' + label">
-            <h6>h6 {{ typeof label }}</h6>
+            <h6>{{ label }}</h6>
         </label>
         <div class="d-flex justify-content-end">
-            <span>Span {{ valuelabel }}</span>
+            <span>{{ valuelabel }}</span>
         </div>
 
         <SliderItem
             :id="'shadow-slider-input-' + label"
-            :aria="label === 'Wählen Sie eine Uhrzeit:' ? $t('common:modules.shadow.slideHour') : $t('common:modules.shadow.pickDate')"
+            :aria="label === 'Wählen Sie eine Uhrzeit:' ? $t('common:modules.aria.sliderAria') + $t('common:modules.shadow.slideHour') :
+                $t('common:modules.aria.sliderAria') + $t('common:modules.shadow.pickDate')"
             :value="value"
             :min="min"
             :max="max"

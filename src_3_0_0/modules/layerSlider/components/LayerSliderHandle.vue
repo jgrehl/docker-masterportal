@@ -132,7 +132,7 @@ export default {
         class="d-flex flex-column px-3"
     >
         <SliderItem
-            :aria="$t('common:modules.layerSlider.title')"
+            :aria="$t('common:modules.aria.sliderAria') + $t('common:modules.layerSlider.name')"
             :list="'ticks'"
             :min="sliderMin"
             :max="sliderMax"
