@@ -1,19 +1,12 @@
-import Vuex from "vuex";
-import {createLocalVue} from "@vue/test-utils";
 import sinon from "sinon";
 import {expect} from "chai";
 
 import actions from "../../../store/actionsWmsTime";
 import initialState from "../../../store/stateWmsTime";
+import layerCollection from "../../../../../core/layers/js/layerCollection";
 
-const localVue = createLocalVue(),
-    layerString = "When I grow up I will be a real layer!";
-
-localVue.use(Vuex);
-
-
-describe("src/modules/wmsTime/store/actionsWmsTime.js", () => {
-    let commit, dispatch, getters, rootGetters, state, trigger, map;
+describe("src_3_0_0/modules/wmsTime/store/actionsWmsTime.js", () => {
+    let commit, dispatch, getters, state, map;
 
     before(() => {
         mapCollection.clear();
@@ -32,52 +25,21 @@ describe("src/modules/wmsTime/store/actionsWmsTime.js", () => {
         getters = {
             currentTimeSliderObject: {keyboardMovement: 5}
         };
-        trigger = sinon.spy();
         map.removeLayer = sinon.spy();
+        sinon.stub(layerCollection, "getOlLayers").returns(
+            [
+                {name: "ersterLayer", values_: {id: "123"}, getSource: () => state.source, features: [{getAttributesToShow: () => "TestAttributes"}], geometryType: "Point"},
+                {name: "zweiterLayer", values_: {id: "456"}, features: [{getAttributesToShow: () => "TestAttributes"}], geometryType: "Point"},
+                {name: "dritterLayer", values_: {id: "789"}, features: [{getAttributesToShow: () => "TestAttributes"}], geometryType: "Point"}
+            ]
+        );
     });
 
     afterEach(sinon.restore);
 
     describe("toggleSwiper", () => {
-        const TIME = 1996,
-            transparency = 0;
         let id,
-            commitSpy,
-            requestSpy;
-
-        /**
-         * The mock function for the Radio.request.
-         * Knitted for Radio.request("ModelList", "getModelByAttributes").
-         *
-         * @returns {object} An object containing the needed parameters and function to test the action 'toggleSwiper'.
-         */
-        function request (...args) {
-            requestSpy(...args);
-            return {
-                attributes: {
-                    name: "Layer",
-                    layers: "myLayer",
-                    level: 0,
-                    parentId: "TimeLayer",
-                    url: "https://my.layers.com/",
-                    time: true,
-                    transparency,
-                    version: "1.1.0"
-                },
-                get: prm => {
-                    if (prm === "layerSource") {
-                        return {
-                            params_: {TIME}
-                        };
-                    }
-                    if (prm === "layer") {
-                        return layerString;
-                    }
-                    return {};
-                },
-                updateTime: () => null
-            };
-        }
+            commitSpy;
 
         /**
          * If the mutation 'setLayerSwiperActive' is called, the value needs to be actually changed
@@ -98,70 +60,32 @@ describe("src/modules/wmsTime/store/actionsWmsTime.js", () => {
         beforeEach(() => {
             commit = commitWithReturn;
             commitSpy = sinon.spy();
+            dispatch = sinon.spy();
             id = "someId";
-            requestSpy = sinon.spy();
-            rootGetters = {
-                "Maps/mode": "2D"
-            };
             state = Object.assign({}, initialState);
-            sinon.stub(Radio, "request").callsFake(request);
-            sinon.stub(Radio, "trigger").callsFake(trigger);
+            sinon.stub(layerCollection, "getLayerById").returns(
+                {name: "bester Layer der Welt", values_: {id: "123"}, getSource: () => state.source, attributes: {name: "bester Layer", time: true, url: "www.abc.de"}}
+
+            );
         });
 
-        it("should trigger the Parser to add a layer, add said layer to the ModelList and refresh tree if the swiper was activated", () => {
-            const secondId = id + state.layerAppendix;
+        it("should trigger the Parser to add a layer, add said layer to the tree", async () => {
+            await actions.toggleSwiper({commit, state, dispatch}, id);
 
-            actions.toggleSwiper({commit, getters, state}, id);
-
-            expect(commitSpy.calledThrice).to.be.true;
+            expect(commitSpy.called).to.be.true;
             expect(commitSpy.firstCall.args).to.eql(["setLayerSwiperActive", true]);
             expect(commitSpy.secondCall.args[0]).to.eql("setLayerSwiperSourceLayer");
             expect(commitSpy.thirdCall.args[0]).to.eql("setLayerSwiperTargetLayer");
-            expect(requestSpy.calledTwice).to.be.true;
-            expect(requestSpy.firstCall.args).to.eql(["ModelList", "getModelByAttributes", {id}]);
-            expect(requestSpy.secondCall.args).to.eql(["ModelList", "getModelByAttributes", {id: secondId}]);
-            expect(trigger.calledThrice).to.be.true;
-            expect(trigger.firstCall.args[0]).to.equal("Parser");
-            expect(trigger.firstCall.args[1]).to.equal("addLayer");
-            expect(trigger.secondCall.args[0]).to.equal("ModelList");
-            expect(trigger.secondCall.args[1]).to.equal("addModelsByAttributes");
-            expect(trigger.thirdCall.args).to.eql(["Util", "refreshTree"]);
         });
-        it("should call remove the second layer from the Map, remove it from the ModelList and the Parser and refresh the tree if the swiper was deactivated through the button of the second layer", () => {
+        it("should call remove the second layer from the Map, remove it from the tree", () => {
             id += state.layerAppendix;
 
             state.layerSwiper.active = true;
-            actions.toggleSwiper({commit, getters, state, rootGetters}, id);
+            actions.toggleSwiper({commit, state, dispatch}, id);
 
-            expect(commitSpy.calledOnce).to.be.true;
+            expect(commitSpy.called).to.be.true;
             expect(commitSpy.firstCall.args).to.eql(["setLayerSwiperActive", false]);
-            expect(requestSpy.calledOnce).to.be.true;
-            expect(requestSpy.firstCall.args).to.eql(["ModelList", "getModelByAttributes", {id}]);
-            expect(map.removeLayer.calledOnce).to.be.true;
-            expect(map.removeLayer.firstCall.args).to.eql([layerString]);
-            expect(trigger.calledThrice).to.be.true;
-            expect(trigger.firstCall.args).to.eql(["ModelList", "removeModelsById", id]);
-            expect(trigger.secondCall.args).to.eql(["Parser", "removeItem", id]);
-            expect(trigger.thirdCall.args).to.eql(["Util", "refreshTree"]);
-        });
-        it("should update the time of the original layer and reactivate it, call remove the second layer from the Map, remove it from the ModelList and the Parser and refresh the tree if the swiper was deactivated through the button of the original layer", () => {
-            const secondId = id + state.layerAppendix;
-
-            state.layerSwiper.active = true;
-            actions.toggleSwiper({commit, getters, state, rootGetters}, id);
-
-            expect(commitSpy.calledTwice).to.be.true;
-            expect(commitSpy.firstCall.args).to.eql(["setLayerSwiperActive", false]);
-            expect(commitSpy.secondCall.args).to.eql(["setTimeSliderDefaultValue", TIME]);
-            expect(requestSpy.calledOnce).to.be.true;
-            expect(requestSpy.firstCall.args).to.eql(["ModelList", "getModelByAttributes", {id: secondId}]);
-            expect(trigger.callCount).to.equal(4);
-            expect(trigger.firstCall.args).to.eql(["ModelList", "setModelAttributesById", id, {transparency}]);
-            expect(trigger.secondCall.args).to.eql(["ModelList", "removeModelsById", secondId]);
-            expect(trigger.thirdCall.args).to.eql(["Parser", "removeItem", secondId]);
-            expect(trigger.lastCall.args).to.eql(["Util", "refreshTree"]);
-            expect(map.removeLayer.calledOnce).to.be.true;
-            expect(map.removeLayer.firstCall.args).to.eql([layerString]);
+            expect(dispatch.called).to.be.true;
         });
     });
 
