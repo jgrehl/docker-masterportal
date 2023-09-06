@@ -68,8 +68,8 @@ export default {
         <SliderItem
             :id="'routing-slider-input-' + label"
             :aria="label === 'Maximale Reisedauer'?
-                $t('common:modules.routing.isochrones.sliderAria') + $t('common:modules.routing.isochrones.maxTraveltime') :
-                $t('common:modules.routing.isochrones.sliderAria') + $t('common:modules.routing.isochrones.interval')"
+                $t('common:modules.aria.sliderAria') + $t('common:modules.routing.isochrones.maxTraveltime') :
+                $t('common:modules.aria.sliderAria') + $t('common:modules.routing.isochrones.interval')"
             :value="value"
             :min="min"
             :max="max"
