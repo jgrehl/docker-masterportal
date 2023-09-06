@@ -1,6 +1,7 @@
 import {treeSubjectsKey} from "../../../../shared/js/utils/constants";
 import WKTUtil from "../../../../shared/js/utils/getWKTGeom";
 import wmsGFIUtil from "../../../../shared/js/utils/getWmsFeaturesByMimeType";
+import {rawLayerList} from "@masterportal/masterportalapi/src";
 
 
 /**
@@ -37,18 +38,20 @@ export default {
     /**
      * Add and activates a layer to the topic tree.
      * @param {Object} param.dispatch the dispatch
+     * @param {Object} payload The payload.
      * @param {String} payload.layerId The layer id.
      * @param {Object} payload.source The layer source.
-     * @param {Object} payload The payload.
+     * @param {Object} [payload.showInLayerTree=true] showInLayerTree property of the layer to set.
+     * @param {Object} [payload.visibility=true] visibility property of the layer to set.
      * @returns {void}
      */
-    addLayerToTopicTree: ({dispatch}, {layerId, source}) => {
+    addLayerToTopicTree: ({dispatch}, {layerId, source, showInLayerTree = true, visibility = true}) => {
         dispatch("addLayerToLayerConfig", {
             layerConfig: {...source, ...{
                 id: layerId,
-                showInLayerTree: true,
+                showInLayerTree: showInLayerTree,
                 type: "layer",
-                visibility: true
+                visibility: visibility
             }},
             parentKey: treeSubjectsKey
         }, {root: true}).then(added => {
@@ -62,6 +65,33 @@ export default {
     },
 
     /**
+     * Open folders in layerSelection and shows layer to select.
+     * If layer is not contained, it is added.
+     * @param {Object} param.dispatch the dispatch
+     * @param {Object} payload The payload.
+     * @param {String} payload.layerId The layer id.
+     * @returns {void}
+     */
+    showInTree: ({dispatch, rootGetters}, {layerId}) => {
+        let layerConfig = rootGetters.layerConfigById(layerId);
+
+        if (layerConfig) {
+            dispatch("Modules/LayerSelection/showLayer", {layerId}, {root: true});
+        }
+        else {
+            layerConfig = rawLayerList.getLayerWhere({id: layerId});
+            if (layerConfig) {
+                dispatch("addLayerToTopicTree", {layerId, source: layerConfig, showInLayerTree: false, visibility: false});
+                dispatch("Modules/LayerSelection/showLayer", {layerId}, {root: true});
+            }
+            else {
+                console.warn("Cannot show layer with id ", layerId, ": is not contained in services.json");
+            }
+        }
+    },
+
+
+    /**
      * Highlight feature of the search result.
      * @param {Object} param.dispatch the dispatch
      * @param {Object} payload The payload.
@@ -72,9 +102,6 @@ export default {
         const feature = WKTUtil.getWKTGeom(hit);
 
         dispatch("Maps/placingPolygonMarker", feature, {root: true});
-        /* used in:
-            specialWFS
-        */
     },
 
     /**
