@@ -25,7 +25,7 @@ export default function searchInTree (element, childKey, key, value) {
  * @returns {void}
  */
 function search (result, element, childKey, key, value) {
-   
+
     if (element[key] === value) {
         result.push(element);
     }
