@@ -93,7 +93,7 @@ export default {
     @import "~mixins";
 
     .layer-tree-layer {
-        font-size: $font-size-base;
+        font-size: 0.9rem;
 
     }
     .layer-selection{
