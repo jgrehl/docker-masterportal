@@ -28,7 +28,7 @@ export default {
     computed: {
         ...mapGetters("Maps", ["mode"]),
         ...mapGetters(["invisibleBaselayerConfigs"]),
-        ...mapGetters("Modules/LayerSelection", ["visible", "subjectDataLayerConfs", "baselayerConfs", "layersToAdd", "lastFolderNames", "layerInfoVisible"]),
+        ...mapGetters("Modules/LayerSelection", ["visible", "subjectDataLayerConfs", "baselayerConfs", "layersToAdd", "lastFolderNames", "layerInfoVisible", "highlightLayerId"]),
         lastFolderName () {
             return this.lastFolderNames[this.lastFolderNames.length - 1];
         }
@@ -39,6 +39,18 @@ export default {
                 this.setBaselayerConfs(newVal);
             },
             deep: true
+        }
+    },
+    mounted () {
+        if (this.highlightLayerId) {
+            this.$nextTick(() => {
+                const el = this.$el.querySelector("#layer-checkbox-" + this.highlightLayerId);
+
+                if (el) {
+                    el.scrollIntoView();
+                }
+            });
+
         }
     },
     unmounted () {
@@ -185,7 +197,7 @@ export default {
 .layer-selection {
     background-color: $menu-background-color;
     left: 0px;
-    top: 33%;
+    top: 15%;
     position: absolute;
     padding: $padding;
     padding-top: 0;

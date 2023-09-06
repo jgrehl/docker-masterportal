@@ -70,9 +70,12 @@ export default {
 </script>
 
 <template lang="html">
-    <div :id="'search-bar-result-list-topic-tree-item-' + searchResult.id">
+    <div
+        :id="'search-bar-result-list-topic-tree-item-' + searchResult.id"
+        class="d-flex flex-row align-items-center"
+    >
         <button
-            class="d-flex flex-row p-1 pb-2 search-bar-result-list-topic-tree-item-title btn-transparent"
+            class="d-flex flex-row p-1 pb-2 align-items-center search-bar-result-list-topic-tree-item-title btn-transparent"
             @click="addOrRemoveLayer"
             @keydown.enter="addOrRemoveLayer"
         >

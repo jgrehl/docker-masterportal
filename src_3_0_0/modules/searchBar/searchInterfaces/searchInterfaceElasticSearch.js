@@ -34,7 +34,8 @@ export default function SearchInterfaceElasticSearch ({hitMap, serviceId, epsg, 
         "request",
         searchInterfaceId || "elasticSearch",
         resultEvents || {
-            onClick: ["addLayerToTopicTree"]
+            onClick: ["addLayerToTopicTree"],
+            buttons: ["showInTree"]
         },
         hitTemplate
     );
@@ -238,6 +239,9 @@ SearchInterfaceElasticSearch.prototype.createPossibleActions = function (searchR
         startRouting: {
             coordinates: coordinates,
             name: this.getResultByPath(searchResult, this.hitMap?.name)
+        },
+        showInTree: {
+            layerId: this.getResultByPath(searchResult, this.hitMap?.layerId)
         }
     };
 };
