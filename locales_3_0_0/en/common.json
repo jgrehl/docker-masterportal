@@ -664,6 +664,7 @@
         "legend": "Legend",
         "maxDistance": "Maximum distance",
         "maxTraveltime": "Maximum travel time",
+        "sliderAria": "Slider for ",
         "optimization": {
           "DISTANCE": "Reachability by distance",
           "TIME": "Reachability by time"
