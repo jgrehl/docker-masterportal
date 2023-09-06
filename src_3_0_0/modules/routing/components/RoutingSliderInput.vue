@@ -1,5 +1,5 @@
 <script>
-
+import SliderItem from "../../../shared/modules/slider/components/SliderItem.vue";
 /**
  * RoutingSliderInput
  * @module modules/RoutingSliderInput
@@ -14,6 +14,9 @@
  */
 export default {
     name: "RoutingSliderInput",
+    components: {
+        SliderItem
+    },
     props: {
         label: {
             type: String,
@@ -61,15 +64,18 @@ export default {
             </span>
             <span>{{ max }} {{ unit }}</span>
         </div>
-        <input
+
+        <SliderItem
             :id="'routing-slider-input-' + label"
+            :aria="label === 'Maximale Reisedauer'?
+                $t('common:modules.routing.isochrones.sliderAria') + $t('common:modules.routing.isochrones.maxTraveltime') :
+                $t('common:modules.routing.isochrones.sliderAria') + $t('common:modules.routing.isochrones.interval')"
             :value="value"
-            type="range"
             :min="min"
             :max="max"
             :step="step"
             :disabled="disabled"
-            @input="$emit('input', Number($event.target.value))"
-        >
+            :interaction="$event=> $emit('input', Number($event.target.value))"
+        />
     </div>
 </template>
