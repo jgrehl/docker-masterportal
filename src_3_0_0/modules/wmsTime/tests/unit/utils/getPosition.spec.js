@@ -1,7 +1,7 @@
 import {expect} from "chai";
 import getPosition from "../../../utils/getPosition";
 
-describe("src/modules/wmsTime/utils/getPosition.js", () => {
+describe("src_3_0_0/modules/wmsTime/utils/getPosition.js", () => {
     const keyboardMovement = 5;
     let currentPos,
         event;
