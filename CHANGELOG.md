@@ -3,7 +3,7 @@
 
 [Semantic versioning](https://semver.org/spec/v2.0.0.html) is used.
 
-## Unreleased - in development
+## v2.37.0 - 2023-09-06
 ### Added
 - New Tool 3D-Modeler has been added to draw/import 3D models into the 3D map.
 - Routing
@@ -30,10 +30,6 @@
     - The filter configuration in the portal master is adapted to the new syntax.
     - New Parameter `operatorForAttrName` for Snippets to allow the snippet to filter over multiple attrNames with an OR logic.
     - Parameter `input` and `slider` now also work for the snippet type `slider`.
-
-### Deprecated
-
-### Removed
 
 ### Fixed
 - Issue #1061: Filter: Accept gml:featureMembers occuring with other children in XML response.
