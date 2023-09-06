@@ -1,7 +1,7 @@
 import {expect} from "chai";
 import findCurrentTimeSliderObject from "../../../utils/findCurrentTimeSliderObject";
 
-describe("src/modules/wmsTime/utils/findCurrentTimeSliderObject.js", () => {
+describe("src_3_0_0/modules/wmsTime/utils/findCurrentTimeSliderObject.js", () => {
     let objects,
         currentLayerId;
 
