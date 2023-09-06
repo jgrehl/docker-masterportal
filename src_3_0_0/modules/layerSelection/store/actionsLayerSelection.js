@@ -1,3 +1,7 @@
+import collectDataByFolderModule from "../js/collectDataByFolder";
+import sortBy from "../../../shared/js/utils/sortBy";
+import {treeSubjectsKey} from "../../../shared/js/utils/constants";
+
 const actions = {
 
     /**
@@ -50,6 +54,14 @@ const actions = {
         commit("Menu/switchToRoot", getters.menuSide, {root: true});
     },
 
+    setNavigationByFolder ({commit, rootGetters}, {folder}) {
+        const data = collectDataByFolderModule.collectDataByFolder(folder, rootGetters);
+
+        commit("setLastFolderNames", data.lastFolderNames);
+        commit("setLastBaselayerConfs", data.lastBaselayerConfs);
+        commit("setLastSubjectDataLayerConfs", data.lastSubjectDataLayerConfs);
+    },
+
     /**
      * Navigates forward in layerSelection.
      * @param {Object} param.commit the commit
@@ -90,7 +102,52 @@ const actions = {
         commit("clearLayerSelection");
         commit("setSubjectDataLayerConfs", []);
         commit("setBaselayerConfs", []);
+    },
+
+    /**
+     * Open folders in layerSelection and shows layer to select.
+     * @param {Object} param.commit the commit
+     * @param {Object} param.dispatch the dispatch
+     * @param {Object} param.rootGetters the rootGetters
+     * @param {Object} payload The payload.
+     * @param {String} payload.layerId The layer id.
+     * @returns {void}
+     */
+    showLayer: ({commit, dispatch, rootGetters}, {layerId}) => {
+        const layerConfig = rootGetters.layerConfigById(layerId);
+
+        if (layerConfig) {
+            let lastFolderName = "",
+                subjectDataLayerConfs,
+                baselayerConfs,
+                folder = null;
+
+            if (layerConfig.parentId) {
+                folder = rootGetters.folderById(layerConfig.parentId);
+
+                if (folder) {
+                    lastFolderName = folder.name;
+                    subjectDataLayerConfs = sortBy(folder.elements, (conf) => conf.type !== "folder");
+                    baselayerConfs = [];
+                    dispatch("setNavigationByFolder", {folder});
+                }
+                else {
+                    console.warn("Folder with id ", layerConfig.parentId, " not found. Shall be parent of ", layerConfig);
+                }
+            }
+            else {
+                subjectDataLayerConfs = sortBy(rootGetters.allLayerConfigsStructured(treeSubjectsKey), (conf) => conf.type !== "folder");
+                baselayerConfs = rootGetters.allBaselayerConfigs;
+            }
+            if (subjectDataLayerConfs) {
+                dispatch("Menu/changeCurrentComponent", {type: "layerSelection", side: "mainMenu", props: {name: "common:modules.layerSelection.addSubject"}}, {root: true});
+                dispatch("navigateForward", {lastFolderName, subjectDataLayerConfs, baselayerConfs});
+                commit("setHighlightLayerId", layerId);
+                commit("setVisible", true);
+            }
+        }
     }
+
 };
 
 export default actions;
