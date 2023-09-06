@@ -46,12 +46,12 @@ export default {
         >
             <a
                 :id="'mp-navigation-' + side"
-                class="pb-2 pt-2 mp-menu-navigation-link"
+                class="pt-2 mp-menu-navigation-link"
                 href="#"
                 @click="navigateBack(side)"
                 @keypress="navigateBack(side)"
             >
-                <h6 class="mp-menu-navigation-link-text mb-3"><p class="bi-chevron-left me-2" />{{ previousNavigation }}</h6>
+                <h6 class="mp-menu-navigation-link-text mb-1"><p class="bi-chevron-left me-2" />{{ previousNavigation }}</h6>
             </a>
             <button
                 v-if="!isMobile"
