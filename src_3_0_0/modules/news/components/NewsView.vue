@@ -46,12 +46,6 @@ export default {
 
 <template lang="html">
     <div id="news-view">
-        <div
-            id="news-title"
-            class="title d-flex flex-column justify-content-center mb-3 ps-2 bold"
-        >
-            {{ $t("common:modules.news.headline") }}
-        </div>
         <template
             v-for="(aNews, index) in sortByDate(news)"
             :key="index"
