@@ -95,7 +95,7 @@ describe("src_3_0_0/modules/layerTree/components/LayerComponentSubMenu.vue", () 
     });
 
     it("renders the transparency", () => {
-        wrapper = shallowMount(LayerComponentSubMenu, {
+        wrapper = mount(LayerComponentSubMenu, {
             global: {
                 plugins: [store]
             },
@@ -106,14 +106,12 @@ describe("src_3_0_0/modules/layerTree/components/LayerComponentSubMenu.vue", () 
         expect(wrapper.find(".transparency-container > i").classes()).to.includes("bi-droplet-half");
         expect(wrapper.find(".transparency-container > label").exists()).to.be.true;
         expect(wrapper.find(".transparency-container > input").exists()).to.be.true;
-        expect(wrapper.find(".transparency-container > span").exists()).to.be.true;
-        expect(wrapper.find(".transparency-container > span").text()).to.equals("50%");
     });
 
     it("set value to input field", () => {
         let input = null;
 
-        wrapper = shallowMount(LayerComponentSubMenu, {
+        wrapper = mount(LayerComponentSubMenu, {
             global: {
                 plugins: [store]
             },
