@@ -17,11 +17,13 @@ describe("src_3_0_0/modules/layerTree/components/LayerCheckBox.vue", () => {
         addSelectedLayerSpy,
         removeSelectedLayerSpy,
         isLayerTree,
-        layersToAdd;
+        layersToAdd,
+        highlightLayerId;
 
     beforeEach(() => {
         isLayerTree = true;
         layersToAdd = [];
+        highlightLayerId = null;
         layer = {
             id: "1",
             name: "layer",
@@ -50,10 +52,12 @@ describe("src_3_0_0/modules/layerTree/components/LayerCheckBox.vue", () => {
                             namespaced: true,
                             mutations: {
                                 addSelectedLayer: addSelectedLayerSpy,
-                                removeSelectedLayer: removeSelectedLayerSpy
+                                removeSelectedLayer: removeSelectedLayerSpy,
+                                setHighlightLayerId: sinon.stub()
                             },
                             getters: {
-                                layersToAdd: () => layersToAdd
+                                layersToAdd: () => layersToAdd,
+                                highlightLayerId: () => highlightLayerId
                             }
                         }
                     }
@@ -205,6 +209,43 @@ describe("src_3_0_0/modules/layerTree/components/LayerCheckBox.vue", () => {
         });
 
         expect(wrapper.vm.isLayerVisible).to.be.true;
+    });
+
+    it("computed property isBold with no highlightLayerId shall return visibility false of layer", () => {
+        layer.visibility = false;
+        wrapper = shallowMount(LayerCheckBox, {
+            global: {
+                plugins: [store]
+            },
+            propsData
+        });
+
+        expect(wrapper.vm.isBold).to.be.false;
+    });
+
+    it("computed property isBold with no highlightLayerId shall return visibility true of layer", () => {
+        layer.visibility = true;
+        wrapper = shallowMount(LayerCheckBox, {
+            global: {
+                plugins: [store]
+            },
+            propsData
+        });
+
+        expect(wrapper.vm.isBold).to.be.true;
+    });
+
+    it("computed property isBold with highlightLayerId shall return true although visibility of layer is false", () => {
+        layer.visibility = false;
+        highlightLayerId = "1";
+        wrapper = shallowMount(LayerCheckBox, {
+            global: {
+                plugins: [store]
+            },
+            propsData
+        });
+
+        expect(wrapper.vm.isBold).to.be.true;
     });
 
     it("layerTree: click on checkbox of layer with visibility false, call replaceByIdInLayerConfig", async () => {
