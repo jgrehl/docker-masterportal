@@ -2,6 +2,7 @@
 import {mapActions} from "vuex";
 import LightButton from "../../../shared/modules/buttons/components/LightButton.vue";
 import layerFactory from "../../../core/layers/js/layerFactory";
+import SliderItem from "../../../shared/modules/slider/components/SliderItem.vue";
 
 /**
  * Layer Component Sub Menu
@@ -13,7 +14,8 @@ import layerFactory from "../../../core/layers/js/layerFactory";
 export default {
     name: "LayerComponentSubMenu",
     components: {
-        LightButton
+        LightButton,
+        SliderItem
     },
     props: {
         /** current layer configuration */
@@ -72,20 +74,16 @@ export default {
             >
                 {{ $t("common:modules.layerTree.iconTransparency") + ":" }}
             </label>
-            <input
+            <SliderItem
                 :id="'layer-component-sub-menu-transparency-input-' + layerConf.id"
-                class="mx-3 transparency-input"
-                type="range"
-                :title="`${transparency}%`"
+                :aria="$t('common:modules.aria.sliderAria') + `${transparency}%`"
+                :label="`${transparency}%`"
                 :value="transparency"
-                min="0"
-                max="100"
-                step="1"
-                @input="updateTransparency({layerConf, transparency: parseInt($event.target.value, 10)})"
-            >
-            <span>
-                {{ `${transparency}%` }}
-            </span>
+                :min="0"
+                :max="100"
+                :step="1"
+                :interaction="$event => updateTransparency({layerConf, transparency: parseInt($event.target.value, 10)})"
+            />
         </div>
     </div>
 </template>
