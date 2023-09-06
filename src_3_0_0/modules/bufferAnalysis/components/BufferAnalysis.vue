@@ -2,6 +2,7 @@
 import {mapActions, mapGetters, mapMutations} from "vuex";
 import {ResultType} from "../store/enums";
 import FlatButton from "../../../shared/modules/buttons/components/FlatButton.vue";
+import SliderItem from "../../../shared/modules/slider/components/SliderItem.vue";
 
 /**
  * Tool to check if a subset of features associated to a target layer are located within or outside an applied radius to all features of a source layer.
@@ -14,7 +15,10 @@ import FlatButton from "../../../shared/modules/buttons/components/FlatButton.vu
  */
 export default {
     name: "BufferAnalysis",
-    components: {FlatButton},
+    components: {
+        FlatButton,
+        SliderItem
+    },
     data: () => ({resultTypeEnum: ResultType}),
     computed: {
         ...mapGetters("Modules/BufferAnalysis", ["bufferRadius", "selectOptions", "savedUrl"]),
@@ -138,6 +142,14 @@ export default {
         buildAndCopyUrl () {
             this.buildUrlFromToolState();
             navigator.clipboard.writeText(this.savedUrl);
+        },
+        /**
+         * Sets the new selected buffer radius
+         * @param {Number} value the new selected buffer radius
+         * @returns {void}
+         */
+        setNewInputBufferRadius (value) {
+            this.setInputBufferRadius(value);
         }
     }
 };
@@ -181,16 +193,16 @@ export default {
             <label
                 for="tool-bufferAnalysis-radiusTextInput"
             >{{ $t("common:modules.bufferAnalysis.rangeLabel") }}</label>
-            <input
+            <SliderItem
                 id="tool-bufferAnalysis-radiusRangeInput"
-                v-model="inputBufferRadius"
+                :value="inputBufferRadius"
+                :aria="$t('common:modules.bufferAnalysis.rangeLabel')"
+                :min="'0'"
+                :max="'3000'"
+                :step="10"
                 :disabled="!selectedSourceLayer || selectedTargetLayer"
-                type="range"
-                class="form-range"
-                min="0"
-                max="3000"
-                step="10"
-            >
+                :interaction="event => setNewInputBufferRadius(event.target.value)"
+            />
         </div>
 
         <div class="form-floating mb-3">
