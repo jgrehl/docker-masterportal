@@ -37,7 +37,7 @@ export default {
 <template>
     <button
         type="button"
-        class="btn btn-light d-flex align-items-center btn-description row"
+        class="btn btn-light d-flex align-items-center btn-description mp-btn-light"
         :class="[
             customclass,
 
@@ -110,5 +110,10 @@ export default {
 }
 .btn-description {
     border-radius: 25px;
+}
+
+.mp-btn-light {
+    margin-left: 0;
+    margin-right: 0;
 }
 </style>
