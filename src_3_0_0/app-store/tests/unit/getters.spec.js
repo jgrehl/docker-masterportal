@@ -231,7 +231,7 @@ describe("src_3_0_0/app-store/getters.js", () => {
         });
     });
 
-    describe("allLayerConfigsStructured and allLayerConfigsByParentKey", () => {
+    describe("allLayerConfigsStructured, allLayerConfigsByParentKey, allFolders and folderById", () => {
         let state,
             layerConfig,
             layersWithFolder;
@@ -241,21 +241,29 @@ describe("src_3_0_0/app-store/getters.js", () => {
                 {
                     name: "Titel Ebene 1",
                     type: "folder",
+                    id: "folder-1",
                     elements: [
                         {
                             name: "Titel Ebene 2",
                             type: "folder",
+                            id: "folder-2",
+                            parentId: "folder-1",
                             elements: [{
-                                "id": "1"
+                                "id": "1",
+                                parentId: "folder-2"
                             },
                             {
-                                id: "2"
+                                id: "2",
+                                parentId: "folder-2"
                             },
                             {
                                 name: "Titel Ebene 3",
                                 type: "folder",
+                                id: "folder-3",
+                                parentId: "folder-2",
                                 elements: [{
-                                    id: "3"
+                                    id: "3",
+                                    parentId: "folder-3"
                                 }]
                             }]
                         }
@@ -280,6 +288,25 @@ describe("src_3_0_0/app-store/getters.js", () => {
             state = {
                 layerConfig: layerConfig
             };
+        });
+        it("should return all folders", () => {
+            const folders = getters.allFolders(state);
+
+            expect(folders).to.be.an("array");
+            expect(folders.length).to.be.equals(3);
+            expect(folders[0].id).to.be.equals("folder-1");
+            expect(folders[1].id).to.be.equals("folder-2");
+            expect(folders[2].id).to.be.equals("folder-3");
+        });
+        it("should return folder by id", () => {
+            let folder = getters.folderById(state)("folder-1");
+
+            expect(folder).to.be.an("object");
+            expect(folder.id).to.be.equals("folder-1");
+            expect(folder.name).to.be.equals("Titel Ebene 1");
+
+            folder = getters.folderById(state)("folder-x");
+            expect(folder).to.be.undefined;
         });
         it("should return all layerConfigs of first level", () => {
             const configs = getters.allLayerConfigsStructured(state)();

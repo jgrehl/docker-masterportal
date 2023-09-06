@@ -18,7 +18,8 @@ export default function SearchInterfaceTopicTree ({hitTemplate, resultEvents, se
         "client",
         searchInterfaceId || "topicTree",
         resultEvents || {
-            onClick: ["activateLayerInTopicTree"]
+            onClick: ["activateLayerInTopicTree"],
+            buttons: ["showInTree"]
         },
         hitTemplate
     );
@@ -152,9 +153,11 @@ SearchInterfaceTopicTree.prototype.searchInFolder = function (folder, folders) {
  */
 SearchInterfaceTopicTree.prototype.normalizeFolderResult = function (folder) {
     const folderResultEvents = {...this.resultEvents},
-        index = folderResultEvents.onClick.indexOf("activateLayerInTopicTree");
+        activateLayerIndex = folderResultEvents.onClick.indexOf("activateLayerInTopicTree"),
+        showInTreeIndex = folderResultEvents.buttons.indexOf("showInTree");
 
-    delete folderResultEvents.onClick[index];
+    delete folderResultEvents.onClick[activateLayerIndex];
+    delete folderResultEvents.buttons[showInTreeIndex];
 
     return {
         events: this.normalizeResultEvents(folderResultEvents, folder),
@@ -177,6 +180,9 @@ SearchInterfaceTopicTree.prototype.createPossibleActions = function (searchResul
     if (searchResult.type !== "folder") {
         Object.assign(possibleActions, {
             activateLayerInTopicTree: {
+                layerId: searchResult.id
+            },
+            showInTree: {
                 layerId: searchResult.id
             }
         });
