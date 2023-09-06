@@ -1,17 +1,18 @@
 /**
  * LayerSelection state definition.
  * @typedef {Object} LayerSelectionState
- * @property {Boolean} visible visible if true, LayerSelection will rendered
- * @property {String} type type of LayerSelection
- * @property {String} menuSide side of menu to show LayerSelection in
- * @property {String} name name of LayerSelection
- * @property {Array} subjectDataLayerConfs subject data layer configurations to show in layerSelection
- * @property {Array} baselayerConfs baselayer configurations to show in layerSelection
- * @property {Array} layersToAdd ids of layers to add to LayerTree
- * @property {Array} lastFolderNames names of the previous folder configurations names
- * @property {Array} lastSubjectDataLayerConfs previous subject data layer configurations
- * @property {Array} lastSubjectDataLayerConfs previous baselayer configurations
- * @property {Boolean} layerInfoVisible if true, layerInformation is visible
+ * @property {Boolean} [visible=false] visible if true, LayerSelection will rendered
+ * @property {String} [type="layerSelection"] type of LayerSelection
+ * @property {String} [menuSide="mainMenu"] side of menu to show LayerSelection in
+ * @property {String} [name="common:modules.layerSelection.addSubject"] name of LayerSelection
+ * @property {Array} [subjectDataLayerConfs=[]] subject data layer configurations to show in layerSelection
+ * @property {Array} [baselayerConfs=[]] baselayer configurations to show in layerSelection
+ * @property {Array} [layersToAdd=[]] ids of layers to add to LayerTree
+ * @property {Array} [lastFolderNames=[]] names of the previous folder configurations names
+ * @property {Array} [lastSubjectDataLayerConfs=[]] previous subject data layer configurations
+ * @property {Array} [lastBaselayerConfs=[]] previous baselayer configurations
+ * @property {Boolean} [layerInfoVisible=false] if true, layerInformation is visible
+ * @property {String} [highlightLayerId=null] id of the layer to highlight
  */
 export default {
     visible: false,
@@ -25,5 +26,6 @@ export default {
     lastFolderNames: [],
     lastSubjectDataLayerConfs: [],
     lastBaselayerConfs: [],
-    layerInfoVisible: false
+    layerInfoVisible: false,
+    highlightLayerId: null
 };

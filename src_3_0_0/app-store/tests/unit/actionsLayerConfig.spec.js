@@ -3,14 +3,18 @@ import sinon from "sinon";
 import {expect} from "chai";
 import {treeTopicConfigKey, treeBaselayersKey, treeSubjectsKey} from "../../../shared/js/utils/constants";
 import actions from "../../actionsLayerConfig";
+import treeStructure from "../../js/treeStructure";
 
 describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
     let commit,
         dispatch,
+        getters,
         state,
         layerList,
         layerConfig,
-        layerConfigCustom;
+        layerConfigCustom,
+        setIdsAtFoldersSpy,
+        buildSpy;
     const restConf = "./resources/rest-services-internet.json",
         layerConf = "./services.json";
 
@@ -179,6 +183,9 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
         };
         commit = sinon.spy();
         dispatch = sinon.spy();
+        getters = {
+            allLayerConfigsStructured: () => []
+        };
         state = {
             configJs: {
                 portalConf: "./",
@@ -199,6 +206,8 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
             return layerList.find(entry => Object.keys(searchAttributes).every(key => entry[key] === searchAttributes[key])) || null;
         });
         sinon.stub(rawLayerList, "getLayerList").returns(layerList);
+        setIdsAtFoldersSpy = sinon.spy(treeStructure, "setIdsAtFolders");
+        buildSpy = sinon.spy(treeStructure, "build");
     });
 
     afterEach(() => {
@@ -212,21 +221,22 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
             };
             state.layerConfig = layerConfig;
             const layerToAdd = {
-                    id: "I_m_the_id",
-                    name: "Trees in Hamburg",
-                    typ: "WMS",
-                    layers: "trees",
-                    url: "https://geodienste.hamburg.de/trees",
-                    version: "1.4.3",
-                    visibility: true,
-                    showInLayerTree: true,
-                    maxScale: 2000,
-                    minScale: 12
-                },
-                getters = {
-                    allLayerConfigs: [],
-                    allLayerConfigsByParentKey: () => []
-                };
+                id: "I_m_the_id",
+                name: "Trees in Hamburg",
+                typ: "WMS",
+                layers: "trees",
+                url: "https://geodienste.hamburg.de/trees",
+                version: "1.4.3",
+                visibility: true,
+                showInLayerTree: true,
+                maxScale: 2000,
+                minScale: 12
+            };
+
+            getters = {
+                allLayerConfigs: [],
+                allLayerConfigsByParentKey: () => []
+            };
 
             actions.addLayerToLayerConfig({dispatch, getters, state}, {layerConfig: layerToAdd, parentKey: treeSubjectsKey});
             expect(dispatch.callCount).to.equals(2);
@@ -259,7 +269,7 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
     describe("extendLayers", () => {
         it("extend layers for simple tree", () => {
             state.layerConfig = layerConfig;
-            actions.extendLayers({dispatch, state});
+            actions.extendLayers({dispatch, getters, state});
 
             expect(dispatch.callCount).to.equals(2);
             expect(dispatch.firstCall.args[0]).to.equals("addBaselayerAttribute");
@@ -286,7 +296,7 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
 
         it("extend layer configs for custom tree", () => {
             state.layerConfig = layerConfigCustom;
-            actions.extendLayers({dispatch, state});
+            actions.extendLayers({dispatch, getters, state});
 
             expect(dispatch.callCount).to.be.equals(2);
             expect(dispatch.firstCall.args[0]).to.equals("addBaselayerAttribute");
@@ -317,6 +327,9 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
         });
 
         it("extend layers for special configuration with folders", () => {
+            getters = {
+                allLayerConfigsStructured: () => []
+            };
             layerConfig = {
                 [treeSubjectsKey]: {
                     elements: [
@@ -367,7 +380,8 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
 
             state.layerConfig = layerConfig;
 
-            actions.extendLayers({dispatch, state});
+            actions.extendLayers({dispatch, getters, state});
+            expect(setIdsAtFoldersSpy.calledOnce).to.be.true;
             expect(dispatch.callCount).to.be.equals(2);
             expect(dispatch.firstCall.args[0]).to.equals("addBaselayerAttribute");
             expect(dispatch.firstCall.args[1]).to.be.undefined;
@@ -401,7 +415,7 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
 
         describe("addBaselayerAttribute", () => {
             it("add the attribute background to Baselayer", () => {
-                const getters = {
+                getters = {
                     allLayerConfigsByParentKey: () => layerConfig[treeBaselayersKey].elements
                 };
 
@@ -423,7 +437,7 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
 
         describe("processTreeTypeAuto", () => {
             it("process raw layers in auto tree", () => {
-                const getters = {
+                getters = {
                     activeOrFirstCategory: () => {
                         return {
                             active: true,
@@ -456,23 +470,25 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
                     },
                     parentKey: treeSubjectsKey
                 });
+                expect(buildSpy.calledOnce).to.be.true;
             });
         });
 
         describe("replaceByIdInLayerConfig", () => {
             it("replaceByIdInLayerConfig layer is contained in layerConfig", () => {
                 const toReplace = {
-                        id: "453",
-                        visibility: true,
-                        att1: "bla",
-                        att2: [{
-                            foo: "foo",
-                            bar: "bar"
-                        }]
-                    },
-                    getters = {
-                        layerConfigById: () => sinon.stub()
-                    };
+                    id: "453",
+                    visibility: true,
+                    att1: "bla",
+                    att2: [{
+                        foo: "foo",
+                        bar: "bar"
+                    }]
+                };
+
+                getters = {
+                    layerConfigById: () => sinon.stub()
+                };
 
                 state.layerConfig = layerConfig;
 
@@ -498,17 +514,18 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
 
             it("replaceByIdInLayerConfig layer is not contained in layerConfig", () => {
                 const toReplace = {
-                        id: "unknown",
-                        visibility: true,
-                        att1: "bla",
-                        att2: [{
-                            foo: "foo",
-                            bar: "bar"
-                        }]
-                    },
-                    getters = {
-                        layerConfigById: () => sinon.stub()
-                    };
+                    id: "unknown",
+                    visibility: true,
+                    att1: "bla",
+                    att2: [{
+                        foo: "foo",
+                        bar: "bar"
+                    }]
+                };
+
+                getters = {
+                    layerConfigById: () => sinon.stub()
+                };
                 let stateCopy = null;
 
                 state.layerConfig = layerConfig;
@@ -520,7 +537,8 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
 
             it("replaceByIdInLayerConfig toReplace-layer is undefined", () => {
                 let stateCopy = null;
-                const getters = {
+
+                getters = {
                     layerConfigById: () => sinon.stub()
                 };
 
@@ -601,7 +619,7 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
 
         describe("updateAllZIndexes", () => {
             it("updateAllZIndexes does not set zIndexes, if no zIndexes are set before", () => {
-                const getters = {
+                getters = {
                     allLayerConfigsByParentKey: (key) => {
                         if (key === treeBaselayersKey) {
                             return layerConfig[treeBaselayersKey].elements;
@@ -618,7 +636,7 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
             });
 
             it("updateAllZIndexes with all zIndexes are set before", () => {
-                const getters = {
+                getters = {
                     allLayerConfigsByParentKey: (key) => {
                         if (key === treeBaselayersKey) {
                             return layerConfig[treeBaselayersKey].elements;
@@ -640,7 +658,7 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
             });
 
             it("updateAllZIndexes with some zIndexes are set before", () => {
-                const getters = {
+                getters = {
                     allLayerConfigsByParentKey: (key) => {
                         if (key === treeBaselayersKey) {
                             return layerConfig[treeBaselayersKey].elements;
