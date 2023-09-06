@@ -2,18 +2,18 @@ import rawLayerList from "@masterportal/masterportalapi/src/rawLayerList";
 import getNestedValues from "../../shared/js/utils/getNestedValues";
 import {sortObjects} from "../../shared/js/utils/sortObjects";
 import {treeBaselayersKey} from "../../shared/js/utils/constants";
+import {uniqueId} from "../../shared/js/utils/uniqueId.js";
 
 
 /**
  * Returns all layer from services.json to add to states layerConfig for treetype 'auto', besides background-layers.
- * The layers are sorted and grouped by metadata-name.
+ * The layers are sorted and grouped by metadata-name. All folders and elements get ids and parentIds.
  * @param  {Object} layerConfig configuration of layer like in the config.json, to get background-layer from
  * @param  {String} category the category to get the tree for
  * @param  {Object} shownLayerConfs configuration of layer to show on first level of tree, configured in config.json
  * @returns {Object} tree structure as json object
  */
-export function buildTreeStructure (layerConfig, category, shownLayerConfs = []) {
-    // @todo refactored from parserDefaultTree.js
+function build (layerConfig, category, shownLayerConfs = []) {
     const layerList = rawLayerList.getLayerList(),
         categoryKey = category?.key,
         groups = {},
@@ -52,6 +52,9 @@ export function buildTreeStructure (layerConfig, category, shownLayerConfs = [])
                 addGroup(folder, groups, groupName);
             }
             subFolder = folder.elements.find((obj) => obj.name === groupName);
+            if (subFolder.id === undefined) {
+                subFolder.id = getId();
+            }
 
             if (!Object.keys(groups[groupName]).find((key) => key === mdName)) {
                 groups[groupName][mdName] = [];
@@ -63,9 +66,13 @@ export function buildTreeStructure (layerConfig, category, shownLayerConfs = [])
                 }
             }
             if (!isFirstLayer) {
+                const mdNameFolder = subFolder.elements.find((obj) => obj.name === mdName);
+                let parentId = mdNameFolder ? mdNameFolder.id : subFolder.id;
+
                 if (layersByMdName[mdName].length === 2) {
-                    moveFirstLayerToFolder(subFolder, groups, layersByMdName, groupName, mdName);
+                    parentId = moveFirstLayerToFolder(subFolder, groups, layersByMdName, groupName, mdName);
                 }
+                rawLayer.parentId = parentId;
                 groups[groupName][mdName].push(rawLayer);
                 sortObjects(groups[groupName][mdName], "name");
             }
@@ -74,7 +81,43 @@ export function buildTreeStructure (layerConfig, category, shownLayerConfs = [])
 
     return folder;
 }
-
+/**
+ * Sets unique random ids at folders and recursive at all subfolders.
+ * @param {Array} folders folders to set ids at
+ * @returns {void}
+ */
+function setIdsAtFolders (folders) {
+    folders.forEach(folder => {
+        folder.id = getId();
+        setIdsAtSubFolders(folder);
+    });
+}
+/**
+ * Sets unique random ids at folders and recursive at all subfolders.
+ * Sets parentId at each element under a folder.
+ * @param {Object} folder folder containes elements
+ * @returns {void}
+ */
+function setIdsAtSubFolders (folder) {
+    folder.elements?.forEach(element => {
+        if (element.type === "folder") {
+            element.id = getId();
+        }
+        element.parentId = folder.id;
+        if (folder.elements) {
+            folder.elements.forEach(subElement => {
+                setIdsAtSubFolders(subElement);
+            });
+        }
+    });
+}
+/**
+ * Returns a unique id with prefix 'folder-'.
+ * @returns {String} unique id
+ */
+function getId () {
+    return uniqueId("folder-");
+}
 /**
  * Moves the first layer with given mdName to subfolder.
  * @param {Object} subFolder sub Folder
@@ -93,9 +136,13 @@ function moveFirstLayerToFolder (subFolder, groups, layersByMdName, groupName, m
     subToAdd.elements = groups[groupName][mdName];
     subToAdd.name = mdName;
     subToAdd.type = "folder";
+    subToAdd.id = getId();
+    subToAdd.parentId = subFolder.id;
     subFolder.elements.push(subToAdd);
     sortObjects(subFolder.elements, "name");
+    firstLayer.parentId = subToAdd.id;
     groups[groupName][mdName].push(firstLayer);
+    return subToAdd.id;
 }
 
 /**
@@ -109,6 +156,7 @@ function addSingleLayer (subFolder, layer, mdName) {
     if (!Array.isArray(subFolder.elements)) {
         subFolder.elements = [];
     }
+    layer.parentId = subFolder.id;
     subFolder.elements.push(Object.assign({}, layer, {name: mdName}));
     sortObjects(subFolder.elements, "name");
 }
@@ -127,6 +175,8 @@ function addSubGroup (subFolder, groups, groupName, mdName) {
     subToAdd.elements = groups[groupName][mdName];
     subToAdd.name = mdName;
     subToAdd.type = "folder";
+    subToAdd.id = getId();
+    subToAdd.parentId = subFolder.id;
     subFolder.elements.push(subToAdd);
     sortObjects(subFolder.elements, "name");
 }
@@ -144,9 +194,12 @@ function addGroup (folder, groups, groupName) {
     toAdd.elements = [];
     toAdd.name = groupName;
     toAdd.type = "folder";
+    toAdd.id = getId();
+    toAdd.parentId = folder.id;
     folder.elements.push(toAdd);
     sortObjects(folder.elements, "name");
     groups[groupName] = {};
+    // return toAdd.id;
 }
 
 /**
@@ -210,4 +263,9 @@ function isFirstLayerWithMdName (layersByMdName, layer, mdName) {
     layersByMdName[mdName] = [layer];
     return true;
 }
+
+export default {
+    build,
+    setIdsAtFolders
+};
 

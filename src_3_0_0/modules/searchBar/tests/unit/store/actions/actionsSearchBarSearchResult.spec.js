@@ -1,5 +1,6 @@
 import sinon from "sinon";
 import {expect} from "chai";
+import rawLayerList from "@masterportal/masterportalapi/src/rawLayerList";
 import WKTUtil from "../../../../../../shared/js/utils/getWKTGeom";
 import wmsGFIUtil from "../../../../../../shared/js/utils/getWmsFeaturesByMimeType";
 import actions from "../../../../store/actions/actionsSearchBarSearchResult";
@@ -10,6 +11,7 @@ const {
     highlightFeature,
     openGetFeatureInfo,
     setMarker,
+    showInTree,
     zoomToResult
 } = actions;
 
@@ -37,7 +39,7 @@ describe("src/modules/searchBar/store/actions/actionsSearchBarSearchResult.spec.
         it("should activate a layer in topic tree", () => {
             const layerId = "123",
                 rootGetters = {
-                    layerConfigById: () => sinon.stub().returns(true)
+                    layerConfigById: sinon.stub().returns(true)
                 };
 
             activateLayerInTopicTree({dispatch, rootGetters}, {layerId});
@@ -82,6 +84,53 @@ describe("src/modules/searchBar/store/actions/actionsSearchBarSearchResult.spec.
                     visibility: true
                 },
                 parentKey: "Fachdaten"
+            });
+        });
+    });
+
+    describe("showInTree", () => {
+        it("should call showLayer", () => {
+            const layerId = "123",
+                rootGetters = {
+                    layerConfigById: () => true
+                };
+
+            showInTree({dispatch, rootGetters}, {layerId});
+
+            expect(dispatch.calledOnce).to.be.true;
+            expect(dispatch.firstCall.args[0]).to.equals("Modules/LayerSelection/showLayer");
+            expect(dispatch.firstCall.args[1]).to.be.deep.equals({
+                layerId: "123"
+            });
+        });
+
+        it("should call addLayerToTopicTree and showLayer", () => {
+            const layerId = "123",
+                source = {
+                    id: layerId,
+                    abc: "abc",
+                    datasets: []
+                },
+                rootGetters = {
+                    layerConfigById: () => false
+                };
+
+            sinon.stub(rawLayerList, "getLayerWhere").returns(source);
+
+            showInTree({dispatch, rootGetters}, {layerId});
+
+            expect(dispatch.calledTwice).to.be.true;
+            expect(dispatch.firstCall.args[0]).to.equals("addLayerToTopicTree");
+            expect(dispatch.firstCall.args[1]).to.be.deep.equals({
+                layerId: "123",
+                source,
+                showInLayerTree: false,
+                visibility: false
+            }
+            );
+            expect(dispatch.secondCall.args[0]).to.equals("Modules/LayerSelection/showLayer");
+            expect(dispatch.secondCall.args[1]).to.be.deep.equals({
+                layerId: "123"
             });
         });
     });

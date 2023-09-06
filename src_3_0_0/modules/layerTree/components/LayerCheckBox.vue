@@ -27,7 +27,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters("Modules/LayerSelection", ["layersToAdd"]),
+        ...mapGetters("Modules/LayerSelection", ["layersToAdd", "highlightLayerId"]),
 
         /**
          * Returns the value of layerConf's attribute visibility
@@ -35,6 +35,13 @@ export default {
          */
         isLayerVisible () {
             return typeof this.conf.visibility === "boolean" ? this.conf.visibility : false;
+        },
+        /**
+         * Returns true, if layer is visible or state property 'boldLayerId' contains this confs id.
+         * @returns {Boolean} true, if layers name shall be displayed bold
+         */
+        isBold () {
+            return this.isLayerVisible || this.highlightLayerId === this.conf.id;
         }
     },
     methods: {
@@ -147,7 +154,7 @@ export default {
             ]"
         />
         <label
-            :class="['layer-tree-layer-label', 'mt-0 d-flex flex-column align-self-start', isLayerVisible ? 'bold' : '']"
+            :class="['layer-tree-layer-label', 'mt-0 d-flex flex-column align-self-start', isBold ? 'bold' : '']"
             :for="'layer-tree-layer-checkbox-' + conf.id"
             tabindex="0"
             :aria-label="$t(conf.name)"
