@@ -1,4 +1,4 @@
-import {buildTreeStructure} from "./js/buildTreeStructure";
+import treeStructure from "./js/treeStructure";
 import getNestedValues from "../shared/js/utils/getNestedValues";
 import replaceInNestedValues from "../shared/js/utils/replaceInNestedValues";
 import {getAndMergeAllRawLayers, getAndMergeRawLayer} from "./js/getAndMergeRawLayer";
@@ -134,12 +134,13 @@ export default {
      * If portalConfig.tree contains parameter 'layerIDsToIgnore', 'metaIDsToIgnore', 'metaIDsToMerge' or 'layerIDsToStyle' the raw layerlist is filtered and merged.
      * Config entry portalConfig.tree.validLayerTypesAutoTree is respected.
      * If tree type is 'auto' , folder structure is build from layer's metadata contents for the active or first category configured in config.json unter 'tree'.
-     * Replaces the extended layer in state.layerConf.
+     * Replaces the extended layer in state.layerConf. Sets ids at folders and parentIds at folders and layers.
      * @param {Object} param.dispatch the dispatch
+     * @param {Object} param.getters the getters
      * @param {Object} param.state the state
      * @returns {void}
      */
-    extendLayers ({dispatch, state}) {
+    extendLayers ({dispatch, getters, state}) {
         let layerContainer = [];
         const orderedLayerConfigKeys = Object.keys(state.layerConfig).sort((a, b) => treeOrder.indexOf(a) - treeOrder.indexOf(b));
 
@@ -152,6 +153,12 @@ export default {
         layerContainer = getNestedValues(state.layerConfig, "elements", true).flat(Infinity);
         if (state.portalConfig?.tree?.type === "auto") {
             dispatch("processTreeTypeAuto", layerContainer);
+        }
+        else {
+            const allLayerConfigsStructured = getters.allLayerConfigsStructured(),
+                folders = allLayerConfigsStructured.filter(conf => conf.type === "folder");
+
+            treeStructure.setIdsAtFolders(folders);
         }
         dispatch("updateLayerConfigs", layerContainer);
     },
@@ -168,7 +175,7 @@ export default {
     },
 
     /**
-     * Processes the tree structure with raw layers of the tree type auto.
+     * Processes the tree structure with raw layers of the tree type 'auto'.
      * @param {Object} param.commit the commit
      * @param {Object} param.getters the getters
      * @param {Object} param.state the state
@@ -179,7 +186,7 @@ export default {
         let layersStructured = [];
 
         getAndMergeAllRawLayers(state.portalConfig?.tree);
-        layersStructured = buildTreeStructure(state.layerConfig, getters.activeOrFirstCategory, layerContainer);
+        layersStructured = treeStructure.build(state.layerConfig, getters.activeOrFirstCategory, layerContainer);
 
         commit("setLayerConfigByParentKey", {layerConfigs: layersStructured, parentKey: treeSubjectsKey});
     },

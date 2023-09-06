@@ -1,5 +1,6 @@
 import {generateSimpleGetters} from "../shared/js/utils/generators";
 import getNestedValues from "../shared/js/utils/getNestedValues";
+import searchInTree from "../shared/js/utils/searchInTree";
 import {sortObjects} from "../shared/js/utils/sortObjects";
 import stateAppStore from "./state";
 import {treeBaselayersKey, treeSubjectsKey} from "../shared/js/utils/constants";
@@ -42,6 +43,26 @@ const getters = {
      */
     allLayerConfigs: state => {
         return getNestedValues(state.layerConfig, "elements", true).flat(Infinity);
+    },
+
+    /**
+     * Returns all folders in the layerConfig.
+     * @param {Object} state state of the app-store.
+     * @returns {Array} all folders in the layerConfig
+     */
+    allFolders: state => {
+        return searchInTree(state.layerConfig[treeSubjectsKey], "elements", "type", "folder");
+    },
+
+    /**
+     * Returns a folder by id.
+     * @param {Object} state state of the app-store.
+     * @returns {Object} a folder by id
+     */
+    folderById: (state) => (id) => {
+        const folders = getters.allFolders(state);
+
+        return folders.find(folder => folder.id === id);
     },
 
     /**
