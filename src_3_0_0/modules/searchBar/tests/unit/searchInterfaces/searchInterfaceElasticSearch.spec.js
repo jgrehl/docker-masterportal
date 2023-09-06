@@ -264,6 +264,11 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceElasticSea
                                     ]
                                 }
                             }
+                        },
+                        buttons: {
+                            showInTree: {
+                                layerId: "123"
+                            }
                         }
                     },
                     category: "modules.searchBar.type.subject",
@@ -305,6 +310,9 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceElasticSea
                     startRouting: {
                         coordinates: [10, 20],
                         name: searchResult._source.name
+                    },
+                    showInTree: {
+                        layerId: searchResult._source.id
                     }
                 }
             );

@@ -1,12 +1,12 @@
 import rawLayerList from "@masterportal/masterportalapi/src/rawLayerList";
-import {buildTreeStructure} from "../../../js/buildTreeStructure.js";
+import treeStructure from "../../../js/treeStructure.js";
 import {getAndMergeRawLayer, getAndMergeAllRawLayers} from "../../../js/getAndMergeRawLayer.js";
 import getNestedValues from "../../../../shared/js/utils/getNestedValues";
 import {treeBaselayersKey, treeSubjectsKey} from "../../../../shared/js/utils/constants";
 import {expect} from "chai";
 import sinon from "sinon";
 
-describe("src_3_0_0/app-store/js/buildTreeStructure.js", () => {
+describe("src_3_0_0/app-store/js/treeStructure.js", () => {
     const categories = [
             {
                 "key": "kategorie_opendata",
@@ -42,7 +42,6 @@ describe("src_3_0_0/app-store/js/buildTreeStructure.js", () => {
                         name: "Quartiere",
                         typ: "WMS",
                         visibility: false,
-                        // type: "layer",
                         showInLayerTree: true
                     },
                     {
@@ -67,7 +66,7 @@ describe("src_3_0_0/app-store/js/buildTreeStructure.js", () => {
         sinon.restore();
     });
 
-    describe("buildTreeStructure", () => {
+    describe("build", () => {
         it("should return the unchanged layerlist if no param is given", () => {
             const shortList = [{
                 "id": "452",
@@ -79,7 +78,7 @@ describe("src_3_0_0/app-store/js/buildTreeStructure.js", () => {
             }];
 
             sinon.stub(rawLayerList, "getLayerList").returns(shortList);
-            expect(buildTreeStructure()).to.be.deep.equals(shortList);
+            expect(treeStructure.build()).to.be.deep.equals(shortList);
         });
 
 
@@ -94,7 +93,7 @@ describe("src_3_0_0/app-store/js/buildTreeStructure.js", () => {
             sinon.stub(rawLayerList, "getLayerList").returns(layerList);
 
             getAndMergeAllRawLayers();
-            result = buildTreeStructure(layerConfig, categories[0], layerConfig[treeSubjectsKey].elements);
+            result = treeStructure.build(layerConfig, categories[0], layerConfig[treeSubjectsKey].elements);
             layerConfig[treeSubjectsKey].elements.forEach(layerConf => {
                 getAndMergeRawLayer(layerConf, true);
             });
@@ -111,41 +110,62 @@ describe("src_3_0_0/app-store/js/buildTreeStructure.js", () => {
 
             expect(result.elements).to.be.an("array").to.have.lengthOf(2);
             expect(result.elements[0].name).to.be.equals(result.elements[0].elements[0].datasets[0].kategorie_opendata[0]);
+            expect(result.elements[0].id).include("folder-");
+            expect(result.elements[0].parentId).to.be.undefined;
             expect(result.elements[1].name).to.be.equals(result.elements[1].elements[0].datasets[0].kategorie_opendata[0]);
+            expect(result.elements[1].id).include("folder-");
+            expect(result.elements[1].parentId).to.be.undefined;
 
             expect(firstFolders).to.be.an("array").to.have.lengthOf(1);
+            expect(firstFolders[0].id).include("folder-");
+            expect(firstFolders[0].parentId).to.be.equals(result.elements[0].id);
+            expect(firstFolders[0].name).to.be.equals(firstFolders[0].elements[1].datasets[0].md_name);
             expect(firstFolders[0].elements).to.be.an("array").to.have.lengthOf(2);
             expect(firstFolders[0].elements[0].id).to.be.equals("21999");
+            expect(firstFolders[0].elements[0].parentId).to.be.equals(firstFolders[0].id);
             expect(firstFolders[0].elements[0].showInLayerTree).to.be.true;
             expect(firstFolders[0].elements[0].type).to.be.equals("layer");
             expect(firstFolders[0].elements[0].name).not.to.be.equals(firstFolders[0].elements[0].datasets[0].md_name);
             expect(firstFolders[0].elements[1].id).to.be.equals("22000");
+            expect(firstFolders[0].elements[1].parentId).to.be.equals(firstFolders[0].id);
             expect(firstFolders[0].elements[1].showInLayerTree).to.be.true;
             expect(firstFolders[0].elements[1].name).not.to.be.equals(firstFolders[0].elements[1].datasets[0].md_name);
-            expect(firstFolders[0].name).to.be.equals(firstFolders[0].elements[1].datasets[0].md_name);
             expect(layersInFirstFolders).to.be.an("array").to.have.lengthOf(2);
             expect(layersInFirstFolders[0].id).to.be.equals("22799");
+            expect(layersInFirstFolders[0].parentId).to.be.equals(result.elements[0].id);
             expect(layersInFirstFolders[0].name).to.be.equals(layersInFirstFolders[0].datasets[0].md_name);
             expect(layersInFirstFolders[1].id).to.be.equals("7887");
+            expect(layersInFirstFolders[1].parentId).to.be.equals(result.elements[0].id);
             expect(layersInFirstFolders[1].name).to.be.equals(layersInFirstFolders[1].datasets[0].md_name);
 
             expect(secondFolders).to.be.an("array").to.have.lengthOf(2);
+            expect(secondFolders[0].id).include("folder-");
+            expect(secondFolders[0].parentId).to.be.equals(result.elements[1].id);
+            expect(secondFolders[0].name).to.be.equals(secondFolders[0].elements[1].datasets[0].md_name);
             expect(secondFolders[0].elements).to.be.an("array").to.have.lengthOf(2);
             expect(secondFolders[0].elements[0].id).to.be.equals("96");
+            expect(secondFolders[0].elements[0].parentId).to.be.equals(secondFolders[0].id);
             expect(secondFolders[0].elements[0].name).not.to.be.equals(secondFolders[0].elements[0].datasets[0].md_name);
             expect(secondFolders[0].elements[1].id).to.be.equals("95");
+            expect(secondFolders[0].elements[1].parentId).to.be.equals(secondFolders[0].id);
             expect(secondFolders[0].elements[1].name).not.to.be.equals(secondFolders[0].elements[1].datasets[0].md_name);
             expect(secondFolders[0].name).to.be.equals(secondFolders[0].elements[1].datasets[0].md_name);
+            expect(secondFolders[1].id).include("folder-");
+            expect(secondFolders[1].parentId).to.be.equals(result.elements[1].id);
+            expect(secondFolders[1].name).to.be.equals(secondFolders[1].elements[1].datasets[0].md_name);
             expect(secondFolders[1].elements[0].id).to.be.equals("1102");
+            expect(secondFolders[1].elements[0].parentId).to.be.equals(secondFolders[1].id);
             expect(secondFolders[1].elements[0].name).not.to.be.equals(secondFolders[1].elements[0].datasets[0].md_name);
             expect(secondFolders[1].elements[1].id).to.be.equals("1103");
+            expect(secondFolders[1].elements[1].parentId).to.be.equals(secondFolders[1].id);
             expect(secondFolders[1].elements[1].name).not.to.be.equals(secondFolders[1].elements[1].datasets[0].md_name);
-            expect(secondFolders[1].name).to.be.equals(secondFolders[1].elements[1].datasets[0].md_name);
-            expect(secondFolders[0].name).to.be.equals(secondFolders[0].elements[1].datasets[0].md_name);
+
             expect(layersInSecondFolders).to.be.an("array").to.have.lengthOf(2);
             expect(layersInSecondFolders[0].id).to.be.equals("685");
+            expect(layersInSecondFolders[0].parentId).to.be.equals(result.elements[1].id);
             expect(layersInSecondFolders[0].name).to.be.equals(layersInSecondFolders[0].datasets[0].md_name);
             expect(layersInSecondFolders[1].id).to.be.equals("182");
+            expect(layersInSecondFolders[1].parentId).to.be.equals(result.elements[1].id);
             expect(layersInSecondFolders[1].name).to.be.equals(layersInSecondFolders[1].datasets[0].md_name);
         });
 
@@ -176,7 +196,7 @@ describe("src_3_0_0/app-store/js/buildTreeStructure.js", () => {
             sinon.stub(rawLayerList, "getLayerList").returns(layerListWithMWSTime);
 
             getAndMergeAllRawLayers();
-            result = buildTreeStructure(layerConfig, categories[0]);
+            result = treeStructure.build(layerConfig, categories[0]);
             filteredResult = getNestedValues(result, "id").flat(Infinity);
 
             expect(result).to.be.an("object");
@@ -203,7 +223,7 @@ describe("src_3_0_0/app-store/js/buildTreeStructure.js", () => {
             sinon.stub(rawLayerList, "getLayerList").returns(layerList);
 
             getAndMergeAllRawLayers();
-            result = buildTreeStructure(layerConfig, categories[1]);
+            result = treeStructure.build(layerConfig, categories[1]);
             filteredResult = getNestedValues(result, "id").flat(Infinity);
             folders = result.elements.filter(el => el.type === "folder");
             firstFolders = result.elements[0].elements.filter(el => el.type === "folder");
@@ -219,42 +239,64 @@ describe("src_3_0_0/app-store/js/buildTreeStructure.js", () => {
             expect(result.elements).to.be.an("array").to.have.lengthOf(3);
 
             expect(folders[0].name).to.be.equals(firstFolders[0].elements[0].datasets[0].kategorie_inspire[0]);
+            expect(folders[0].id).include("folder-");
+            expect(folders[0].parentId).to.be.undefined;
             expect(folders[1].name).to.be.equals(secondFolders[0].elements[0].datasets[0].kategorie_inspire[0]);
+            expect(folders[1].id).include("folder-");
+            expect(folders[1].parentId).to.be.undefined;
             expect(folders[2].name).to.be.equals(thirdFolders[0].elements[0].datasets[0].kategorie_inspire[0]);
+            expect(folders[2].id).include("folder-");
+            expect(folders[2].parentId).to.be.undefined;
 
             expect(firstFolders).to.be.an("array").to.have.lengthOf(1);
+            expect(firstFolders[0].id).include("folder-");
+            expect(firstFolders[0].parentId).to.be.equals(result.elements[0].id);
+            expect(firstFolders[0].name).to.be.equals(firstFolders[0].elements[1].datasets[0].md_name);
             expect(layersInFirstFolders).to.be.an("array").to.have.lengthOf(0);
             expect(firstFolders[0].elements).to.be.an("array").to.have.lengthOf(2);
             expect(firstFolders[0].elements[0].id).to.be.equals("1102");
+            expect(firstFolders[0].elements[0].parentId).to.be.equals(firstFolders[0].id);
             expect(firstFolders[0].elements[0].name).not.to.be.equals(firstFolders[0].elements[0].datasets[0].md_name);
             expect(firstFolders[0].elements[1].id).to.be.equals("1103");
+            expect(firstFolders[0].elements[1].parentId).to.be.equals(firstFolders[0].id);
             expect(firstFolders[0].elements[1].name).not.to.be.equals(firstFolders[0].elements[1].datasets[0].md_name);
-            expect(firstFolders[0].name).to.be.equals(firstFolders[0].elements[1].datasets[0].md_name);
 
             expect(secondFolders).to.be.an("array").to.have.lengthOf(1);
+            expect(secondFolders[0].id).include("folder-");
+            expect(secondFolders[0].parentId).to.be.equals(result.elements[1].id);
+            expect(secondFolders[0].name).to.be.equals(secondFolders[0].elements[1].datasets[0].md_name);
             expect(layersInSecondFolders).to.be.an("array").to.have.lengthOf(0);
             expect(secondFolders[0].elements).to.be.an("array").to.have.lengthOf(2);
             expect(secondFolders[0].elements[0].id).to.be.equals("96");
+            expect(secondFolders[0].elements[0].parentId).to.be.equals(secondFolders[0].id);
             expect(secondFolders[0].elements[0].name).not.to.be.equals(secondFolders[0].elements[0].datasets[0].md_name);
             expect(secondFolders[0].elements[1].id).to.be.equals("95");
+            expect(secondFolders[0].elements[1].parentId).to.be.equals(secondFolders[0].id);
             expect(secondFolders[0].elements[1].name).not.to.be.equals(secondFolders[0].elements[1].datasets[0].md_name);
-            expect(secondFolders[0].name).to.be.equals(secondFolders[0].elements[1].datasets[0].md_name);
 
             expect(thirdFolders).to.be.an("array").to.have.lengthOf(1);
+            expect(thirdFolders[0].name).to.be.equals(thirdFolders[0].elements[0].datasets[0].md_name);
+            expect(thirdFolders[0].id).include("folder-");
+            expect(thirdFolders[0].parentId).to.be.equals(result.elements[2].id);
             expect(layersInThirdFolders).to.be.an("array").to.have.lengthOf(4);
             expect(thirdFolders[0].elements).to.be.an("array").to.have.lengthOf(2);
             expect(thirdFolders[0].elements[0].id).to.be.equals("21999");
+            expect(thirdFolders[0].elements[0].parentId).to.be.equals(thirdFolders[0].id);
             expect(thirdFolders[0].elements[0].name).not.to.be.equals(thirdFolders[0].elements[0].datasets[0].md_name);
             expect(thirdFolders[0].elements[1].id).to.be.equals("22000");
+            expect(thirdFolders[0].elements[1].parentId).to.be.equals(thirdFolders[0].id);
             expect(thirdFolders[0].elements[1].name).not.to.be.equals(thirdFolders[0].elements[1].datasets[0].md_name);
-            expect(thirdFolders[0].name).to.be.equals(thirdFolders[0].elements[0].datasets[0].md_name);
             expect(layersInThirdFolders[0].id).to.be.equals("22799");
+            expect(layersInThirdFolders[0].parentId).to.be.equals(result.elements[2].id);
             expect(layersInThirdFolders[0].name).to.be.equals(layersInThirdFolders[0].datasets[0].md_name);
             expect(layersInThirdFolders[1].id).to.be.equals("685");
+            expect(layersInThirdFolders[1].parentId).to.be.equals(result.elements[2].id);
             expect(layersInThirdFolders[1].name).to.be.equals(layersInThirdFolders[1].datasets[0].md_name);
             expect(layersInThirdFolders[2].id).to.be.equals("7887");
+            expect(layersInThirdFolders[2].parentId).to.be.equals(result.elements[2].id);
             expect(layersInThirdFolders[2].name).to.be.equals(layersInThirdFolders[2].datasets[0].md_name);
             expect(layersInThirdFolders[3].id).to.be.equals("182");
+            expect(layersInThirdFolders[3].parentId).to.be.equals(result.elements[2].id);
             expect(layersInThirdFolders[3].name).to.be.equals(layersInThirdFolders[3].datasets[0].md_name);
         });
 
@@ -274,7 +316,7 @@ describe("src_3_0_0/app-store/js/buildTreeStructure.js", () => {
             sinon.stub(rawLayerList, "getLayerList").returns(layerList);
 
             getAndMergeAllRawLayers();
-            result = buildTreeStructure(layerConfig, categories[2]);
+            result = treeStructure.build(layerConfig, categories[2]);
             filteredResult = getNestedValues(result, "id").flat(Infinity);
             folders = result.elements.filter(el => el.type === "folder");
             firstFolders = result.elements[0].elements.filter(el => el.type === "folder");
@@ -292,48 +334,124 @@ describe("src_3_0_0/app-store/js/buildTreeStructure.js", () => {
             expect(folders).to.be.an("array").to.have.lengthOf(4);
 
             expect(folders[0].name).to.be.equals(layersInFirstFolders[0].datasets[0].kategorie_organisation);
+            expect(folders[0].id).include("folder-");
+            expect(folders[0].parentId).to.be.undefined;
             expect(folders[1].name).to.be.equals(layersInSecondFolders[0].datasets[0].kategorie_organisation);
+            expect(folders[1].id).include("folder-");
+            expect(folders[1].parentId).to.be.undefined;
             expect(folders[2].name).to.be.equals(layersInThirdFolders[0].datasets[0].kategorie_organisation);
+            expect(folders[2].id).include("folder-");
+            expect(folders[2].parentId).to.be.undefined;
             expect(folders[3].name).to.be.equals(layersInFourthFolders[0].datasets[0].kategorie_organisation);
+            expect(folders[3].id).include("folder-");
+            expect(folders[3].parentId).to.be.undefined;
 
             expect(firstFolders).to.be.an("array").to.have.lengthOf(2);
+            expect(firstFolders[0].name).to.be.equals(firstFolders[0].elements[0].datasets[0].md_name);
+            expect(firstFolders[0].id).include("folder-");
+            expect(firstFolders[0].parentId).to.be.equals(result.elements[0].id);
             expect(layersInFirstFolders).to.be.an("array").to.have.lengthOf(2);
             expect(firstFolders[0].elements).to.be.an("array").to.have.lengthOf(2);
             expect(firstFolders[0].elements[0].id).to.be.equals("96");
+            expect(firstFolders[0].elements[0].parentId).to.be.equals(firstFolders[0].id);
             expect(firstFolders[0].elements[0].name).not.to.be.equals(firstFolders[0].elements[0].datasets[0].md_name);
             expect(firstFolders[0].elements[1].id).to.be.equals("95");
+            expect(firstFolders[0].elements[0].parentId).to.be.equals(firstFolders[0].id);
             expect(firstFolders[0].elements[1].name).not.to.be.equals(firstFolders[0].elements[1].datasets[0].md_name);
-            expect(firstFolders[0].name).to.be.equals(firstFolders[0].elements[0].datasets[0].md_name);
             expect(layersInFirstFolders[0].id).to.be.equals("685");
+            expect(layersInFirstFolders[0].parentId).to.be.equals(result.elements[0].id);
             expect(layersInFirstFolders[0].name).to.be.equals(layersInFirstFolders[0].datasets[0].md_name);
             expect(layersInFirstFolders[1].id).to.be.equals("182");
+            expect(layersInFirstFolders[1].parentId).to.be.equals(result.elements[0].id);
             expect(layersInFirstFolders[1].name).to.be.equals(layersInFirstFolders[1].datasets[0].md_name);
 
             expect(firstFolders[1].elements).to.be.an("array").to.have.lengthOf(2);
             expect(firstFolders[1].elements[0].id).to.be.equals("1102");
+            expect(firstFolders[1].elements[0].parentId).to.be.equals(firstFolders[1].id);
             expect(firstFolders[1].elements[0].name).not.to.be.equals(firstFolders[1].elements[0].datasets[0].md_name);
             expect(firstFolders[1].elements[1].id).to.be.equals("1103");
+            expect(firstFolders[1].elements[1].parentId).to.be.equals(firstFolders[1].id);
             expect(firstFolders[1].elements[1].name).not.to.be.equals(firstFolders[1].elements[1].datasets[0].md_name);
 
             expect(secondFolders).to.be.an("array").to.have.lengthOf(0);
             expect(layersInSecondFolders).to.be.an("array").to.have.lengthOf(1);
             expect(layersInSecondFolders[0].id).to.be.equals("22799");
+            expect(layersInSecondFolders[0].parentId).to.be.equals(result.elements[1].id);
             expect(layersInSecondFolders[0].name).to.be.equals(layersInSecondFolders[0].datasets[0].md_name);
 
             expect(thirdFolders).to.be.an("array").to.have.lengthOf(0);
             expect(layersInThirdFolders).to.be.an("array").to.have.lengthOf(1);
             expect(layersInThirdFolders[0].id).to.be.equals("7887");
+            expect(layersInThirdFolders[0].parentId).to.be.equals(result.elements[2].id);
             expect(layersInThirdFolders[0].name).to.be.equals(layersInThirdFolders[0].datasets[0].md_name);
 
             expect(fourthFolders).to.be.an("array").to.have.lengthOf(1);
+            expect(fourthFolders[0].name).to.be.equals(layersInFourthFolders[0].datasets[0].md_name);
+            expect(fourthFolders[0].id).include("folder-");
+            expect(fourthFolders[0].parentId).to.be.equals(result.elements[3].id);
             expect(result.elements[3].elements.filter(el => el.type === "layer")).to.be.an("array").to.have.lengthOf(0);
             expect(layersInFourthFolders).to.be.an("array").to.have.lengthOf(2);
             expect(layersInFourthFolders[0].id).to.be.equals("21999");
+            expect(layersInFourthFolders[0].parentId).to.be.equals(result.elements[3].elements[0].id);
             expect(layersInFourthFolders[0].name).not.to.be.equals(layersInFourthFolders[0].datasets[0].md_name);
             expect(layersInFourthFolders[1].id).to.be.equals("22000");
+            expect(layersInFourthFolders[1].parentId).to.be.equals(result.elements[3].elements[0].id);
             expect(layersInFourthFolders[1].name).not.to.be.equals(layersInFourthFolders[1].datasets[0].md_name);
-            expect(fourthFolders[0].name).to.be.equals(layersInFourthFolders[0].datasets[0].md_name);
         });
     });
+    describe("setIdsAtFolders", () => {
+        it("should set ids and parentIds", () => {
+            const folderConfig = {
+                "name": "Emissionen",
+                "type": "folder",
+                "elements": [
+                    {
+                        "name": "Lärmschutzbereiche Flughafen Hamburg (FluLärmHmbV)",
+                        "type": "folder",
+                        "elements": [
+                            {
+                                "id": "2431",
+                                "visibility": false
+                            },
+                            {
+                                "id": "2430",
+                                "visibility": false
+                            },
+                            {
+                                "id": "2429"
+                            },
+                            {
+                                "name": "Überschwemmungsgebiete",
+                                "type": "folder",
+                                "elements": [
+                                    {
+                                        "id": "1103",
+                                        "visibility": false
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            };
+
+            sinon.stub(rawLayerList, "getLayerList").returns(layerList);
+            treeStructure.setIdsAtFolders([folderConfig]);
+            expect(folderConfig.id).include("folder-");
+            expect(folderConfig.elements[0].id).include("folder-");
+            expect(folderConfig.elements[0].parentId).to.be.equals(folderConfig.id);
+            expect(folderConfig.elements[0].elements[0].id).to.be.equals("2431");
+            expect(folderConfig.elements[0].elements[0].parentId).to.be.equals(folderConfig.elements[0].id);
+            expect(folderConfig.elements[0].elements[1].id).to.be.equals("2430");
+            expect(folderConfig.elements[0].elements[1].parentId).to.be.equals(folderConfig.elements[0].id);
+            expect(folderConfig.elements[0].elements[2].id).to.be.equals("2429");
+            expect(folderConfig.elements[0].elements[2].parentId).to.be.equals(folderConfig.elements[0].id);
+            expect(folderConfig.elements[0].elements[3].id).include("folder-");
+            expect(folderConfig.elements[0].elements[3].parentId).to.be.equals(folderConfig.elements[0].id);
+            expect(folderConfig.elements[0].elements[3].elements[0].id).to.be.equals("1103");
+            expect(folderConfig.elements[0].elements[3].elements[0].parentId).to.be.equals(folderConfig.elements[0].elements[3].id);
+        });
+    });
+
 });
 
