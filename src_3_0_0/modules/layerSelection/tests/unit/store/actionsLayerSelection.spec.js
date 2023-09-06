@@ -1,27 +1,45 @@
 import {expect} from "chai";
 import sinon from "sinon";
+import collectDataByFolderModule from "../../../js/collectDataByFolder";
 
 import actions from "../../../store/actionsLayerSelection";
 
-const {updateLayerTree, navigateForward, navigateBack, reset} = actions;
+const {updateLayerTree, navigateForward, navigateBack, setNavigationByFolder, showLayer, reset} = actions;
 
 describe("src_3_0_0/modules/layerSelection/store/actionsLayerSelection", () => {
     let commit,
         dispatch,
         getters,
-        rootGetters;
+        rootGetters,
+        layerConfig,
+        folder;
 
     beforeEach(() => {
         commit = sinon.spy();
         dispatch = sinon.spy();
+        layerConfig = {
+            id: "id",
+            parentId: "folder-1"
+        };
+        folder = {
+            id: "folder-1",
+            name: "folderName"
+        };
+        folder.elements = [layerConfig];
         getters = {
             layersToAdd: ["1", "2"],
-            menuSide: "mainMenu"
+            menuSide: "mainMenu",
+            layerConfigById: () => layerConfig,
+            folderById: () => folder
         };
         rootGetters = {
             determineZIndex: () => 0,
             isBaselayer: (id) => id === "100",
-            layerConfigsByAttributes: () => []
+            layerConfigsByAttributes: () => [],
+            layerConfigById: () => layerConfig,
+            folderById: () => folder,
+            allLayerConfigsStructured: () => [folder],
+            allBaselayerConfigs: [{name: "baselayer"}]
         };
     });
 
@@ -231,6 +249,65 @@ describe("src_3_0_0/modules/layerSelection/store/actionsLayerSelection", () => {
             expect(commit.secondCall.args[1]).to.be.deep.equals(lastSubjectDataLayerConfs);
             expect(commit.thirdCall.args[0]).to.be.equals("setBaselayerConfs");
             expect(commit.thirdCall.args[1]).to.be.deep.equals(lastBaselayerConfs);
+        });
+
+        it("setNavigationByFolder", () => {
+            const data = {
+                    lastBaselayerConfs: [{name: "baselayer"}],
+                    lastSubjectDataLayerConfs: [{name: "subjectdata"}],
+                    lastFolderNames: ["eins"]
+                },
+                collectDataByFolderStub = sinon.stub(collectDataByFolderModule, "collectDataByFolder").returns(data);
+
+            setNavigationByFolder({commit, rootGetters}, {folder: {}});
+
+            expect(collectDataByFolderStub.calledOnce).to.be.true;
+            expect(commit.callCount).to.be.equals(3);
+            expect(commit.firstCall.args[0]).to.be.equals("setLastFolderNames");
+            expect(commit.firstCall.args[1]).to.be.equals(data.lastFolderNames);
+            expect(commit.secondCall.args[0]).to.be.equals("setLastBaselayerConfs");
+            expect(commit.secondCall.args[1]).to.be.equals(data.lastBaselayerConfs);
+            expect(commit.thirdCall.args[0]).to.be.equals("setLastSubjectDataLayerConfs");
+            expect(commit.thirdCall.args[1]).to.be.equals(data.lastSubjectDataLayerConfs);
+
+        });
+        describe("showLayer", () => {
+            it("showLayer, layerConfig has parentId", () => {
+                const layerId = "layerId";
+
+                showLayer({commit, dispatch, rootGetters}, {layerId});
+
+                expect(dispatch.calledThrice).to.be.true;
+                expect(dispatch.firstCall.args[0]).to.be.equals("setNavigationByFolder");
+                expect(dispatch.firstCall.args[1]).to.be.deep.equals({folder});
+                expect(dispatch.secondCall.args[0]).to.be.equals("Menu/changeCurrentComponent");
+                expect(dispatch.secondCall.args[1]).to.be.deep.equals({type: "layerSelection", side: "mainMenu", props: {name: "common:modules.layerSelection.addSubject"}});
+                expect(dispatch.thirdCall.args[0]).to.be.equals("navigateForward");
+                expect(dispatch.thirdCall.args[1]).to.be.deep.equals({lastFolderName: folder.name, subjectDataLayerConfs: folder.elements, baselayerConfs: []});
+                expect(commit.calledTwice).to.be.true;
+                expect(commit.firstCall.args[0]).to.be.equals("setHighlightLayerId");
+                expect(commit.firstCall.args[1]).to.be.equals(layerId);
+                expect(commit.secondCall.args[0]).to.be.equals("setVisible");
+                expect(commit.secondCall.args[1]).to.be.true;
+            });
+
+            it("showLayer, layerConfig has no parentId", () => {
+                const layerId = "layerId";
+
+                layerConfig.parentId = null;
+                showLayer({commit, dispatch, rootGetters}, {layerId});
+
+                expect(dispatch.calledTwice).to.be.true;
+                expect(dispatch.firstCall.args[0]).to.be.equals("Menu/changeCurrentComponent");
+                expect(dispatch.firstCall.args[1]).to.be.deep.equals({type: "layerSelection", side: "mainMenu", props: {name: "common:modules.layerSelection.addSubject"}});
+                expect(dispatch.secondCall.args[0]).to.be.equals("navigateForward");
+                expect(dispatch.secondCall.args[1]).to.be.deep.equals({lastFolderName: "", subjectDataLayerConfs: [folder], baselayerConfs: [{name: "baselayer"}]});
+                expect(commit.calledTwice).to.be.true;
+                expect(commit.firstCall.args[0]).to.be.equals("setHighlightLayerId");
+                expect(commit.firstCall.args[1]).to.be.equals(layerId);
+                expect(commit.secondCall.args[0]).to.be.equals("setVisible");
+                expect(commit.secondCall.args[1]).to.be.true;
+            });
         });
 
         it("reset", () => {

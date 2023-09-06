@@ -74,6 +74,11 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceTopicTree.
                                 activateLayerInTopicTree: {
                                     layerId: "1"
                                 }
+                            },
+                            buttons: {
+                                showInTree: {
+                                    layerId: "1"
+                                }
                             }
                         },
                         icon: "bi-stack",
@@ -125,6 +130,11 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceTopicTree.
                                 activateLayerInTopicTree: {
                                     layerId: "1"
                                 }
+                            },
+                            buttons: {
+                                showInTree: {
+                                    layerId: "1"
+                                }
                             }
                         },
                         icon: "bi-stack",
@@ -138,6 +148,11 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceTopicTree.
                             onClick: {
                                 activateLayerInTopicTree: {
 
+                                    layerId: "3"
+                                }
+                            },
+                            buttons: {
+                                showInTree: {
                                     layerId: "3"
                                 }
                             }
@@ -170,6 +185,11 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceTopicTree.
                     events: {
                         onClick: {
                             activateLayerInTopicTree: {
+                                layerId: "1"
+                            }
+                        },
+                        buttons: {
+                            showInTree: {
                                 layerId: "1"
                             }
                         }
@@ -233,7 +253,8 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceTopicTree.
                     category: "modules.searchBar.type.folder",
                     events: {
                         onClick: {
-                        }
+                        },
+                        buttons: {}
                     },
                     icon: "bi-folder-fill",
                     id: "folder_Überschwemmungsgebiete",
@@ -306,6 +327,8 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceTopicTree.
                     category: "modules.searchBar.type.folder",
                     events: {
                         onClick: {
+                        },
+                        buttons: {
                         }
                     },
                     icon: "bi-folder-fill",
@@ -330,6 +353,9 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceTopicTree.
             expect(SearchInterface1.createPossibleActions(searchResult)).to.deep.equals(
                 {
                     activateLayerInTopicTree: {
+                        layerId: "1"
+                    },
+                    showInTree: {
                         layerId: "1"
                     }
                 }
