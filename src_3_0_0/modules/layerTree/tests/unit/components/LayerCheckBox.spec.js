@@ -3,6 +3,7 @@ import {config, shallowMount} from "@vue/test-utils";
 import {expect} from "chai";
 import sinon from "sinon";
 
+import escapeId from "../../../../../shared/js/utils/escapeId";
 import layerFactory from "../../../../../core/layers/js/layerFactory";
 import LayerCheckBox from "../../../components/LayerCheckBox.vue";
 
@@ -82,6 +83,18 @@ describe("src_3_0_0/modules/layerTree/components/LayerCheckBox.vue", () => {
         });
 
         expect(wrapper.find("#layer-checkbox-" + propsData.conf.id).exists()).to.be.true;
+    });
+
+    it("renders the layer with special id given as property to the component", () => {
+        propsData.conf.id = "1234.5";
+        wrapper = shallowMount(LayerCheckBox, {
+            global: {
+                plugins: [store]
+            },
+            propsData
+        });
+
+        expect(wrapper.find("#layer-checkbox-" + escapeId(propsData.conf.id)).exists()).to.be.true;
     });
 
     it("renders layer with visibility false and checkbox", () => {
