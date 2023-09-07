@@ -18,6 +18,11 @@ export default {
             default: null,
             required: false
         },
+        iconArray: {
+            type: Array,
+            default: null,
+            required: false
+        },
         classArray: {
             type: Array,
             default: null,
@@ -51,7 +56,7 @@ export default {
         @keydown.enter="interaction"
     >
         <i
-            :class="icon"
+            :class="iconArray ? iconArray : icon"
             role="img"
         />
     </button>
