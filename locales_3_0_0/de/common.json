@@ -740,7 +740,8 @@
       "openGetFeatureInfo":"Informationen anzeigen",
       "setMarker":"Marker setzen",
       "zoomToResult":"Zum Ergebnis zoomen",
-      "startRouting":"Route starten"
+      "startRouting":"Route starten",
+      "showInTree":"Thema anzeigen"
     },
     "noInitialResults": "Die initiale Suche ergab keine Treffer.",
     "showAll": "Alle anzeigen",
