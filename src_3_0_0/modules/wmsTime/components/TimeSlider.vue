@@ -2,11 +2,15 @@
 import {mapActions, mapGetters, mapMutations} from "vuex";
 import layerCollection from "../../../core/layers/js/layerCollection";
 import RoutingLoadingSpinner from "../../../modules/routing/components/RoutingLoadingSpinner.vue";
+import FlatButton from "../../../shared/modules/buttons/components/FlatButton.vue";
+import IconButton from "../../../shared/modules/buttons/components/IconButton.vue";
 
 export default {
     name: "TimeSlider",
     components: {
-        RoutingLoadingSpinner
+        RoutingLoadingSpinner,
+        FlatButton,
+        IconButton
     },
     props: {
         layerId: {
@@ -116,43 +120,37 @@ export default {
                 v-if="minWidth"
                 class="timeSlider-innerWrapper"
             >
-                <button
+                <FlatButton
                     :id="'timeSlider-activate-layerSwiper-' + layerId"
-                    class="btn btn-sm btn-secondary"
-                    @click="toggleSwiper(layerId)"
-                >
-                    {{ $t(`common:modules.wmsTime.timeSlider.buttons.${minWidth && layerSwiper.active ? "deactivateL" : "l"}ayerSwiper`) }}
-                </button>
+                    :aria-label="$t('common:modules.wmsTime.timeSlider.buttons')"
+                    :interaction="() => toggleSwiper(layerId)"
+                    :text="$t(minWidth && layerSwiper.active ? 'common:modules.wmsTime.timeSlider.buttons.deactivateLayerSwiper' : 'common:modules.wmsTime.timeSlider.buttons.layerSwiper')"
+                />
             </div>
             <div class="timeSlider-innerWrapper-interactions">
-                <button
+                <IconButton
                     :id="'timeSlider-button-backward-' + layerId"
-                    class="btn btn-sm btn-secondary"
-                    :aria-label="$t('common:modules.wmsTime.timeSlider.buttons.backward')"
+                    :aria="$t('common:modules.wmsTime.timeSlider.buttons.backward')"
+                    :icon="'bi-skip-start-fill'"
                     :disabled="nextIndex(false) === -1"
-                    @click="moveOne(false)"
-                >
-                    <i class="bi-skip-start-fill" />
-                </button>
-                <button
+                    :interaction="() => moveOne(false)"
+                    :class-array="['btn-secondary']"
+                />
+                <IconButton
                     :id="'timeSlider-button-play-' + layerId"
-                    class="btn btn-sm btn-secondary"
-                    :aria-label="$t('common:modules.wmsTime.timeSlider.buttons.play')"
-                    @click="play"
-                >
-                    <i
-                        :class="[playing ? 'bi-pause-fill' : 'bi-play-fill']"
-                    />
-                </button>
-                <button
+                    :aria="$t('common:modules.wmsTime.timeSlider.buttons.play')"
+                    :icon-array="[playing ? 'bi-pause-fill' : 'bi-play-fill']"
+                    :interaction="() => play()"
+                    :class-array="['btn-secondary']"
+                />
+                <IconButton
                     :id="'timeSlider-button-forward-' + layerId"
-                    class="btn btn-sm btn-secondary"
-                    :aria-label="$t('common:modules.wmsTime.timeSlider.buttons.forward')"
+                    :aria="$t('common:modules.wmsTime.timeSlider.buttons.forward')"
+                    :icon="'bi-skip-end-fill'"
                     :disabled="nextIndex() === timeRange.length"
-                    @click="moveOne(true)"
-                >
-                    <i class="bi-skip-end-fill" />
-                </button>
+                    :interaction="() => moveOne(true)"
+                    :class-array="['btn-secondary']"
+                />
             </div>
         </div>
         <label
@@ -193,6 +191,9 @@ export default {
     top: 50%;
     position: absolute;
     background: rgba(0, 0, 0, 0);
+}
+.roundBtn {
+    padding-top: .4rem;
 }
 
 .timeSlider-wrapper {
