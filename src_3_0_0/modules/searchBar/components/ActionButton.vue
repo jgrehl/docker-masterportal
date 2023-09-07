@@ -4,7 +4,7 @@ import IconButton from "../../../shared/modules/buttons/components/IconButton.vu
 
 /**
  * Action button to display at each search result and to execute configured actions.
- * @module modules/SearchBar
+ * @module modules/ActionButton
  * @vue-prop {String} actionName - name of the action to call on click on button
  * @vue-prop {Object} actionArgs - to call the action with
  */
