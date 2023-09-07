@@ -1,6 +1,7 @@
 <script>
 import {mapActions, mapGetters, mapMutations} from "vuex";
 import LayerPreview from "../../../shared/modules/layerPreview/components/LayerPreview.vue";
+import escapeId from "../../../shared/js/utils/escapeId";
 
 /**
  * Displays a checkbox to select a layer in layertree.
@@ -47,6 +48,7 @@ export default {
     methods: {
         ...mapActions(["replaceByIdInLayerConfig"]),
         ...mapMutations("Modules/LayerSelection", ["addSelectedLayer", "removeSelectedLayer"]),
+        escapeId,
 
         /**
          * Replaces the value of current conf's visibility in state's layerConfig
@@ -138,7 +140,7 @@ export default {
     </div>
     <button
         v-else
-        :id="'layer-checkbox-' + conf.id"
+        :id="'layer-checkbox-' + escapeId(conf.id)"
         class="d-flex w-100 layer-tree-layer-title pe-2 p-1 btn-transparent"
         @click="clicked()"
         @keydown.enter="clicked()"
