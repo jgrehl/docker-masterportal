@@ -2,6 +2,7 @@
 import {mapActions, mapGetters, mapMutations} from "vuex";
 import layerFactory from "../../../core/layers/js/layerFactory";
 import sortBy from "../../../shared/js/utils/sortBy";
+import escapeId from "../../../shared/js/utils/escapeId";
 import FlatButton from "../../../shared/modules/buttons/components/FlatButton.vue";
 import LayerCheckBox from "../../layerTree/components/LayerCheckBox.vue";
 import LayerSelectionTreeNode from "./LayerSelectionTreeNode.vue";
@@ -44,7 +45,7 @@ export default {
     mounted () {
         if (this.highlightLayerId) {
             this.$nextTick(() => {
-                const el = this.$el.querySelector("#layer-checkbox-" + this.highlightLayerId);
+                const el = document.querySelector("#layer-checkbox-" + escapeId(this.highlightLayerId));
 
                 if (el) {
                     el.scrollIntoView();
