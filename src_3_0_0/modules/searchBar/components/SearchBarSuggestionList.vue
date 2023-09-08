@@ -33,6 +33,9 @@ export default {
             "showAllResults",
             "currentSide"
         ]),
+        ...mapGetters("Menu", [
+            "menuBySide"
+        ]),
         ...mapGetters([
             "portalConfig"
         ])
@@ -44,6 +47,12 @@ export default {
             "setShowAllResults",
             "setShowAllResultsSearchInterfaceInstance"
         ]),
+        ...mapMutations("Menu", [
+            "setNavigationCurrentComponentBySide",
+            "setNavigationHistoryBySide",
+            "setCurrentComponent",
+            "setCurrentComponentBySide"
+        ]),
         /**
          * Prepares the all results list of one category and adapts the navigation history
          * @param {String} categoryItem the category of the results
@@ -53,11 +62,10 @@ export default {
             const side = this.currentSide;
 
             this.setShowAllResultsSearchInterfaceInstance(this.limitedSortedSearchResults.results.categoryProvider[categoryItem]);
-            if (this.$store.state.Menu[side]) {
-                this.$store.state.Menu[side].navigation.currentComponent = {props: {name: "common:modules.searchBar.searchResults"}, type: "searchbar"};
-                this.$store.state.Menu.currentComponent = "searchbar";
-                this.$store.state.Menu[side].navigation.history = [];
-                this.$store.state.Menu[side].navigation.history.push({type: "root", props: []}, {type: "searchBar", props: {name: "modules.searchBar.searchBar"}}, {type: "searchBar", props: {name: "modules.searchBar.searchResultList"}});
+            if (this.menuBySide(side)) {
+                this.setNavigationCurrentComponentBySide({side: side, newComponent: {props: {name: "common:modules.searchBar.searchResults"}, type: "searchbar"}});
+                this.setCurrentComponentBySide({side: side, type: "searchbar"});
+                this.setNavigationHistoryBySide({side: side, newHistory: [{type: "root", props: []}, {type: "searchBar", props: {name: "modules.searchBar.searchBar"}}, {type: "searchBar", props: {name: "modules.searchBar.searchResultList"}}]});
             }
             this.setCurrentAvailableCategories(categoryItem);
             this.currentShowAllList = this.limitedSortedSearchResults.currentShowAllList.filter(value => {
