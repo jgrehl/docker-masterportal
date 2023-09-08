@@ -87,8 +87,9 @@ export default {
             <LightButton
                 :interaction="folderClicked"
                 :text="$t(conf.name)"
+                icon="bi-folder"
                 icon-end="bi-chevron-right"
-                customclass="w-100 justify-content-start"
+                customclass="w-100 layer-selection-folder"
             />
         </div>
         <template
@@ -102,3 +103,17 @@ export default {
     </div>
 </template>
 
+<style>
+.layer-selection-folder {
+    flex-wrap: nowrap;
+    padding-left: 0;
+    padding-right: 0;
+    justify-content: flex-start !important;
+}
+
+.layer-selection-folder > i {
+    flex: none;
+    width: unset;
+    padding-right: 8px;
+}
+</style>
