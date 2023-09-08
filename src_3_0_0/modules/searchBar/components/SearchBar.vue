@@ -147,6 +147,9 @@ export default {
                 if (newVal === "root") {
                     this.searchInputValue = "";
                     this.$refs.searchInput.blur();
+                    if (this.side) {
+                        this.switchToRoot(this.side);
+                    }
                 }
             },
             deep: true
@@ -174,6 +177,9 @@ export default {
             "setSearchResultsActive",
             "setSearchSuggestions",
             "setCurrentSide"
+        ]),
+        ...mapMutations("Menu", [
+            "switchToRoot"
         ]),
         /**
          * Starts the search in searchInterfaces, if min characters are introduced, updates the result list.
