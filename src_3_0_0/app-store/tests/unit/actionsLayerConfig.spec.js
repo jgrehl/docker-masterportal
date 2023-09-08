@@ -3,7 +3,7 @@ import sinon from "sinon";
 import {expect} from "chai";
 import {treeTopicConfigKey, treeBaselayersKey, treeSubjectsKey} from "../../../shared/js/utils/constants";
 import actions from "../../actionsLayerConfig";
-import treeStructure from "../../js/treeStructure";
+import buildTreeStructure from "../../js/buildTreeStructure";
 
 describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
     let commit,
@@ -206,8 +206,8 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
             return layerList.find(entry => Object.keys(searchAttributes).every(key => entry[key] === searchAttributes[key])) || null;
         });
         sinon.stub(rawLayerList, "getLayerList").returns(layerList);
-        setIdsAtFoldersSpy = sinon.spy(treeStructure, "setIdsAtFolders");
-        buildSpy = sinon.spy(treeStructure, "build");
+        setIdsAtFoldersSpy = sinon.spy(buildTreeStructure, "setIdsAtFolders");
+        buildSpy = sinon.spy(buildTreeStructure, "build");
     });
 
     afterEach(() => {
