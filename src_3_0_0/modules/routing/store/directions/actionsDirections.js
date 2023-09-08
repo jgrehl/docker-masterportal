@@ -287,7 +287,7 @@ export default {
         if (waypoints.length > 0) {
             for (let i = waypoints.length - 1; i >= 0; i--) {
                 dispatch("removeWaypoint", {index: waypoints[i].index});
-                if (waypoints[i].fromExtern === true) {
+                if (waypoints[i] && waypoints[i].fromExtern === true) {
                     waypoints.splice(i, 1);
                 }
             }
