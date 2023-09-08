@@ -41,9 +41,9 @@ export default {
             "type",
             "currentSide"
         ]),
-        ...mapGetters("Menu", [
-            "currentComponent"
-        ]),
+        ...mapGetters("Menu",
+            {menuCurrentComponent: "currentComponent"}
+        ),
         ...mapGetters([
             "portalConfig"
         ]),
@@ -139,6 +139,9 @@ export default {
         }
     },
     watch: {
+        /**
+        * Watcher to check the current component
+        */
         currentComponentSide: {
             handler (newVal) {
                 if (newVal === "root") {
@@ -151,7 +154,7 @@ export default {
     },
     mounted () {
         this.setCurrentSide(this.portalConfig?.mainMenu?.searchBar !== undefined ? "mainMenu" : "secondaryMenu");
-        this.currentComponentSide = this.currentComponent(this.currentSide).type;
+        this.currentComponentSide = this.menuCurrentComponent(this.currentSide).type;
         this.initializeModule({configPaths: this.configPaths, type: this.type});
         this.overwriteDefaultValues();
         this.instantiateSearchInterfaces(this.$searchInterfaceAddons);
