@@ -59,7 +59,7 @@ export function addAdditional (rawLayer, showAllLayerInTree = false) {
         if (rawLayer.showInLayerTree === true) {
             rawLayer.zIndex = zIndex++;
         }
-        rawLayer.is3DLayer = layerTypes3d.includes(rawLayer.typ.toUpperCase());
+        rawLayer.is3DLayer = layerTypes3d.includes(rawLayer.typ?.toUpperCase());
     }
 
     return rawLayer;
