@@ -1,7 +1,7 @@
 import rawLayerList from "@masterportal/masterportalapi/src/rawLayerList";
 import getNestedValues from "../../shared/js/utils/getNestedValues";
 import {sortObjects} from "../../shared/js/utils/sortObjects";
-import {treeBaselayersKey} from "../../shared/js/utils/constants";
+import {treeBaselayersKey, treeSubjectsKey} from "../../shared/js/utils/constants";
 import {uniqueId} from "../../shared/js/utils/uniqueId.js";
 
 
@@ -20,22 +20,30 @@ function build (layerConfig, category, shownLayerConfs = []) {
         folder = {},
         layersByMdName = {};
     let bgLayers = [],
-        bgLayerIds = [];
+        bgLayerIds = [],
+        subjectDataLayers = [];
 
     if (!category) {
         return layerList;
     }
+    folder.elements = [];
     if (layerConfig) {
         bgLayers = getNestedValues(layerConfig[treeBaselayersKey], "elements", true).flat(Infinity);
         bgLayerIds = getIdsOfLayers(bgLayers);
-    }
-    folder.elements = [];
 
+        if (layerConfig[treeSubjectsKey]) {
+            subjectDataLayers = getNestedValues(layerConfig[treeSubjectsKey], "elements", true).flat(Infinity);
+            folder.elements = layerConfig[treeSubjectsKey].elements ? layerConfig[treeSubjectsKey].elements : layerConfig[treeSubjectsKey];
+        }
+    }
     for (let i = 0; i < layerList.length; i++) {
         let rawLayer = layerList[i],
             subFolder;
 
         if (bgLayerIds.indexOf(rawLayer.id) > -1) {
+            continue;
+        }
+        if (subjectDataLayers.find(conf => conf.id === rawLayer.id) !== undefined) {
             continue;
         }
         if (rawLayer.datasets[0] && rawLayer.datasets[0][categoryKey]) {
