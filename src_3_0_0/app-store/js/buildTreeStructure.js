@@ -3,6 +3,7 @@ import getNestedValues from "../../shared/js/utils/getNestedValues";
 import {sortObjects} from "../../shared/js/utils/sortObjects";
 import {treeBaselayersKey, treeSubjectsKey} from "../../shared/js/utils/constants";
 import {uniqueId} from "../../shared/js/utils/uniqueId.js";
+import layerFactory from "../../core/layers/js/layerFactory";
 
 
 /**
@@ -33,7 +34,12 @@ function build (layerConfig, category, shownLayerConfs = []) {
 
         if (layerConfig[treeSubjectsKey]) {
             subjectDataLayers = getNestedValues(layerConfig[treeSubjectsKey], "elements", true).flat(Infinity);
-            folder.elements = layerConfig[treeSubjectsKey].elements ? layerConfig[treeSubjectsKey].elements : layerConfig[treeSubjectsKey];
+            if (containsOnly3DLayer(subjectDataLayers)) {
+                folder.elements = layerConfig[treeSubjectsKey].elements ? layerConfig[treeSubjectsKey].elements : layerConfig[treeSubjectsKey];
+            }
+            else {
+                subjectDataLayers = [];
+            }
         }
     }
     for (let i = 0; i < layerList.length; i++) {
@@ -86,7 +92,6 @@ function build (layerConfig, category, shownLayerConfs = []) {
             }
         }
     }
-
     return folder;
 }
 /**
@@ -126,6 +131,15 @@ function setIdsAtSubFolders (folder) {
 function getId () {
     return uniqueId("folder-");
 }
+/**
+ * Returns true, if all layers are 3D-layer.
+ * @param {Array} layers containing layer configurations
+ * @returns {Boolean} true, if all layers are 3D-layer.
+ */
+function containsOnly3DLayer (layers) {
+    return layers.every(conf => layerFactory.getLayerTypes3d().includes(rawLayerList.getLayerWhere({id: conf.id})?.typ.toUpperCase()));
+}
+
 /**
  * Moves the first layer with given mdName to subfolder.
  * @param {Object} subFolder sub Folder
