@@ -22,18 +22,19 @@ export default {
     /**
      * Handles the switch from the single result view to the search overview and updates the menu navigation values.
      * @param {Object} param.getters the getters
-     * @param {Object} param.rootState the rootState
+     * @param {Object} param.commit the commit
      * @param {Object} side the menu side of the search
      * @returns {void}
      */
-    updateSearchNavigation: ({getters, commit, rootState}, side) => {
-        if (getters.showAllResults === true) {
+    updateSearchNavigation: ({getters, commit}, side) => {
+        if (getters.showAllResults === true && side === getters.currentSide) {
             commit("setShowAllResults", false);
 
             commit("Menu/setCurrentComponentPropsName", {side: side, name: "common:modules.searchBar.searchResultList"}, {root: true});
-           //rootState.Menu[side].navigation.currentComponent.props.name = "common:modules.searchBar.searchResultList";
-            commit("Menu/setNavigationHistoryBySide", {side: side, newHistory:[{type: "root", props: []}]}, {root: true})
-            console.log(rootState.Menu[side].navigation.history)
+            commit("Menu/setNavigationHistoryBySide", {side: side, newHistory: [{type: "root", props: []}]}, {root: true});
+        }
+        if (side !== getters.currentSide) {
+            commit("Menu/switchToPreviousComponent", side, {root: true});
         }
     }
 };
