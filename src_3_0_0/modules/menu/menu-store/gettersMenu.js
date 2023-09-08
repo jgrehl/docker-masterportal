@@ -242,6 +242,13 @@ const menuGetters = {
         }
 
         return moduleAttributes;
+    },
+    /**
+     * @param {MenuState} state Local vuex state (discarded).
+     * @returns {return} The requested menu side
+     */
+    menuBySide: (state) => side => {
+        return state[side];
     }
 };
 

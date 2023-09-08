@@ -4,3 +4,4 @@ import stateSearchBar from "./stateSearchBar";
 export default {
     ...generateSimpleGetters(stateSearchBar)
 };
+
