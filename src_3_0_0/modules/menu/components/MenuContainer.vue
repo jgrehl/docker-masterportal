@@ -213,7 +213,6 @@ export default {
 
 .mp-menu-header{
     display: flex;
-    padding: $padding $padding 0 $padding;
     &-collapsed {
         padding: 0;
         display: none;
@@ -224,6 +223,7 @@ export default {
         flex-direction: column;
         align-items: stretch;
         font-size: $font-size-base;
+        padding: $padding $padding 0 $padding;
         width:100%;
 
         &-collapsed {
