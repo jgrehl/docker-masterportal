@@ -68,7 +68,7 @@ export default {
             const allConfigs = getNestedValues(this.conf, "elements", true).flat(Infinity);
 
             if (this.mode === "2D") {
-                return this.isFolder && !allConfigs.every(conf => conf.showInLayerTree) && allConfigs.find(conf => conf.is3DLayer) === undefined;
+                return this.isFolder && !allConfigs.every(conf => conf.showInLayerTree) && !allConfigs.every(conf => conf.is3DLayer);
             }
 
             return this.isFolder && !allConfigs.every(conf => conf.showInLayerTree);
@@ -87,7 +87,6 @@ export default {
             <LightButton
                 :interaction="folderClicked"
                 :text="$t(conf.name)"
-                icon="bi-question-circle"
                 icon-end="bi-chevron-right"
                 customclass="w-100 justify-content-start"
             />

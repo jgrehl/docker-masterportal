@@ -1,6 +1,7 @@
 import rawLayerList from "@masterportal/masterportalapi/src/rawLayerList";
 import {addAdditional, getAndMergeAllRawLayers, getAndMergeRawLayer, resetZIndex} from "../../../js/getAndMergeRawLayer.js";
 import {treeBaselayersKey, treeSubjectsKey} from "../../../../shared/js/utils/constants";
+import layerFactory from "../../../../core/layers/js/layerFactory";
 import {expect} from "chai";
 import sinon from "sinon";
 
@@ -8,6 +9,7 @@ describe("src_3_0_0/app-store/js/getAndMergeRawLayer.js", () => {
     let layerConfig;
 
     before(() => {
+        sinon.stub(layerFactory, "getLayerTypes3d").returns(["TERRAIN3D"]);
         resetZIndex();
     });
 
@@ -196,7 +198,8 @@ describe("src_3_0_0/app-store/js/getAndMergeRawLayer.js", () => {
                 id: "1",
                 showInLayerTree: true,
                 type: "layer",
-                zIndex: 2
+                zIndex: 2,
+                is3DLayer: false
             });
         });
 
@@ -209,7 +212,8 @@ describe("src_3_0_0/app-store/js/getAndMergeRawLayer.js", () => {
             expect(addAdditional(rawLayer, showAllLayerInTree)).to.deep.equals({
                 id: "2",
                 showInLayerTree: false,
-                type: "layer"
+                type: "layer",
+                is3DLayer: false
             });
         });
 
@@ -225,7 +229,8 @@ describe("src_3_0_0/app-store/js/getAndMergeRawLayer.js", () => {
                 showInLayerTree: true,
                 visibility: true,
                 type: "layer",
-                zIndex: 3
+                zIndex: 3,
+                is3DLayer: false
             });
         });
 
@@ -241,7 +246,8 @@ describe("src_3_0_0/app-store/js/getAndMergeRawLayer.js", () => {
                 showInLayerTree: true,
                 visibility: true,
                 type: "layer",
-                zIndex: 4
+                zIndex: 4,
+                is3DLayer: false
             });
         });
 
@@ -259,7 +265,8 @@ describe("src_3_0_0/app-store/js/getAndMergeRawLayer.js", () => {
                 showInLayerTree: true,
                 visibility: false,
                 type: "layer",
-                zIndex: 5
+                zIndex: 5,
+                is3DLayer: false
             });
         });
 
@@ -267,7 +274,8 @@ describe("src_3_0_0/app-store/js/getAndMergeRawLayer.js", () => {
             const rawLayer = {
                     id: "6",
                     showInLayerTree: false,
-                    visibility: true
+                    visibility: true,
+                    typ: "WMS"
                 },
                 showAllLayerInTree = false;
 
@@ -277,7 +285,29 @@ describe("src_3_0_0/app-store/js/getAndMergeRawLayer.js", () => {
                 showInLayerTree: true,
                 visibility: true,
                 type: "layer",
-                zIndex: 6
+                zIndex: 6,
+                typ: "WMS",
+                is3DLayer: false
+            });
+        });
+
+        it("should set is3DLayer to true, if layrs typ is 3D-type", () => {
+            const rawLayer = {
+                id: "6",
+                showInLayerTree: false,
+                visibility: true,
+                typ: "terrain3D"
+            };
+
+
+            expect(addAdditional(rawLayer, true)).to.deep.equals({
+                id: "6",
+                showInLayerTree: true,
+                visibility: true,
+                type: "layer",
+                zIndex: 7,
+                typ: "terrain3D",
+                is3DLayer: true
             });
         });
     });
