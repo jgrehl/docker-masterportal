@@ -45,23 +45,29 @@ export default {
      * @param {Object} [payload.visibility=true] visibility property of the layer to set.
      * @returns {void}
      */
-    addLayerToTopicTree: ({dispatch}, {layerId, source, showInLayerTree = true, visibility = true}) => {
-        dispatch("addLayerToLayerConfig", {
-            layerConfig: {...source, ...{
-                id: layerId,
-                showInLayerTree: showInLayerTree,
-                type: "layer",
-                visibility: visibility
-            }},
-            parentKey: treeSubjectsKey
-        }, {root: true}).then(added => {
-            if (!added) {
-                dispatch("Alerting/addSingleAlert", {
-                    category: "error",
-                    content: i18next.t("common:modules.searchBar.layerResultNotShown")
-                }, {root: true});
-            }
-        });
+    addLayerToTopicTree: ({dispatch, rootGetters}, {layerId, source, showInLayerTree = true, visibility = true}) => {
+        if (!rootGetters.layerConfigById(layerId)) {
+
+            dispatch("addLayerToLayerConfig", {
+                layerConfig: {...source, ...{
+                    id: layerId,
+                    showInLayerTree: showInLayerTree,
+                    type: "layer",
+                    visibility: visibility
+                }},
+                parentKey: treeSubjectsKey
+            }, {root: true}).then(added => {
+                if (!added) {
+                    dispatch("Alerting/addSingleAlert", {
+                        category: "error",
+                        content: i18next.t("common:modules.searchBar.layerResultNotShown")
+                    }, {root: true});
+                }
+            });
+        }
+        else {
+            dispatch("activateLayerInTopicTree", {layerId, source});
+        }
     },
 
     /**
