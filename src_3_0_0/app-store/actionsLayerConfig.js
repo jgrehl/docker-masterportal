@@ -1,4 +1,4 @@
-import treeStructure from "./js/treeStructure";
+import buildTreeStructure from "./js/buildTreeStructure";
 import getNestedValues from "../shared/js/utils/getNestedValues";
 import replaceInNestedValues from "../shared/js/utils/replaceInNestedValues";
 import {getAndMergeAllRawLayers, getAndMergeRawLayer} from "./js/getAndMergeRawLayer";
@@ -158,7 +158,7 @@ export default {
             const allLayerConfigsStructured = getters.allLayerConfigsStructured(),
                 folders = allLayerConfigsStructured.filter(conf => conf.type === "folder");
 
-            treeStructure.setIdsAtFolders(folders);
+            buildTreeStructure.setIdsAtFolders(folders);
         }
         dispatch("updateLayerConfigs", layerContainer);
     },
@@ -186,7 +186,7 @@ export default {
         let layersStructured = [];
 
         getAndMergeAllRawLayers(state.portalConfig?.tree);
-        layersStructured = treeStructure.build(state.layerConfig, getters.activeOrFirstCategory, layerContainer);
+        layersStructured = buildTreeStructure.build(state.layerConfig, getters.activeOrFirstCategory, layerContainer);
 
         commit("setLayerConfigByParentKey", {layerConfigs: layersStructured, parentKey: treeSubjectsKey});
     },
