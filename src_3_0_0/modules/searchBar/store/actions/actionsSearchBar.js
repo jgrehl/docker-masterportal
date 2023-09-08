@@ -30,9 +30,10 @@ export default {
         if (getters.showAllResults === true) {
             commit("setShowAllResults", false);
 
-            rootState.Menu[side].navigation.currentComponent.props.name = "common:modules.searchBar.searchResultList";
-            rootState.Menu[side].navigation.history = [];
-            rootState.Menu[side].navigation.history.push({type: "root", props: []});
+            commit("Menu/setCurrentComponentPropsName", {side: side, name: "common:modules.searchBar.searchResultList"}, {root: true});
+           //rootState.Menu[side].navigation.currentComponent.props.name = "common:modules.searchBar.searchResultList";
+            commit("Menu/setNavigationHistoryBySide", {side: side, newHistory:[{type: "root", props: []}]}, {root: true})
+            console.log(rootState.Menu[side].navigation.history)
         }
     }
 };
