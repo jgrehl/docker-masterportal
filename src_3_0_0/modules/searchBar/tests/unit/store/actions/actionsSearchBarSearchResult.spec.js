@@ -67,10 +67,13 @@ describe("src/modules/searchBar/store/actions/actionsSearchBarSearchResult.spec.
                     abc: "abc",
                     datasets: []
                 },
-                added = true;
+                added = true,
+                rootGetters = {
+                    layerConfigById: sinon.stub().returns(false)
+                };
 
             dispatch = sinon.stub().resolves(added);
-            addLayerToTopicTree({dispatch}, {layerId, source});
+            addLayerToTopicTree({dispatch, rootGetters}, {layerId, source});
 
             expect(dispatch.calledOnce).to.be.true;
             expect(dispatch.firstCall.args[0]).to.equals("addLayerToLayerConfig");
