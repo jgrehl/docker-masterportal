@@ -1,12 +1,12 @@
 import rawLayerList from "@masterportal/masterportalapi/src/rawLayerList";
-import treeStructure from "../../../js/treeStructure.js";
+import buildTreeStructure from "../../../js/buildTreeStructure.js";
 import {getAndMergeRawLayer, getAndMergeAllRawLayers} from "../../../js/getAndMergeRawLayer.js";
 import getNestedValues from "../../../../shared/js/utils/getNestedValues";
 import {treeBaselayersKey, treeSubjectsKey} from "../../../../shared/js/utils/constants";
 import {expect} from "chai";
 import sinon from "sinon";
 
-describe("src_3_0_0/app-store/js/treeStructure.js", () => {
+describe("src_3_0_0/app-store/js/buildTreeStructure.js", () => {
     const categories = [
             {
                 "key": "kategorie_opendata",
@@ -78,7 +78,7 @@ describe("src_3_0_0/app-store/js/treeStructure.js", () => {
             }];
 
             sinon.stub(rawLayerList, "getLayerList").returns(shortList);
-            expect(treeStructure.build()).to.be.deep.equals(shortList);
+            expect(buildTreeStructure.build()).to.be.deep.equals(shortList);
         });
 
 
@@ -93,7 +93,7 @@ describe("src_3_0_0/app-store/js/treeStructure.js", () => {
             sinon.stub(rawLayerList, "getLayerList").returns(layerList);
 
             getAndMergeAllRawLayers();
-            result = treeStructure.build(layerConfig, categories[0], layerConfig[treeSubjectsKey].elements);
+            result = buildTreeStructure.build(layerConfig, categories[0], layerConfig[treeSubjectsKey].elements);
             layerConfig[treeSubjectsKey].elements.forEach(layerConf => {
                 getAndMergeRawLayer(layerConf, true);
             });
@@ -196,7 +196,7 @@ describe("src_3_0_0/app-store/js/treeStructure.js", () => {
             sinon.stub(rawLayerList, "getLayerList").returns(layerListWithMWSTime);
 
             getAndMergeAllRawLayers();
-            result = treeStructure.build(layerConfig, categories[0]);
+            result = buildTreeStructure.build(layerConfig, categories[0]);
             filteredResult = getNestedValues(result, "id").flat(Infinity);
 
             expect(result).to.be.an("object");
@@ -223,7 +223,7 @@ describe("src_3_0_0/app-store/js/treeStructure.js", () => {
             sinon.stub(rawLayerList, "getLayerList").returns(layerList);
 
             getAndMergeAllRawLayers();
-            result = treeStructure.build(layerConfig, categories[1]);
+            result = buildTreeStructure.build(layerConfig, categories[1]);
             filteredResult = getNestedValues(result, "id").flat(Infinity);
             folders = result.elements.filter(el => el.type === "folder");
             firstFolders = result.elements[0].elements.filter(el => el.type === "folder");
@@ -316,7 +316,7 @@ describe("src_3_0_0/app-store/js/treeStructure.js", () => {
             sinon.stub(rawLayerList, "getLayerList").returns(layerList);
 
             getAndMergeAllRawLayers();
-            result = treeStructure.build(layerConfig, categories[2]);
+            result = buildTreeStructure.build(layerConfig, categories[2]);
             filteredResult = getNestedValues(result, "id").flat(Infinity);
             folders = result.elements.filter(el => el.type === "folder");
             firstFolders = result.elements[0].elements.filter(el => el.type === "folder");
@@ -436,7 +436,7 @@ describe("src_3_0_0/app-store/js/treeStructure.js", () => {
             };
 
             sinon.stub(rawLayerList, "getLayerList").returns(layerList);
-            treeStructure.setIdsAtFolders([folderConfig]);
+            buildTreeStructure.setIdsAtFolders([folderConfig]);
             expect(folderConfig.id).include("folder-");
             expect(folderConfig.elements[0].id).include("folder-");
             expect(folderConfig.elements[0].parentId).to.be.equals(folderConfig.id);
