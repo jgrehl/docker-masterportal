@@ -24,7 +24,7 @@ describe("src_3_0_0/shared/components/LightButton.vue", () => {
             icon = button.find("i");
 
         expect(button.exists()).to.be.true;
-        expect(button.classes()).to.eql(["btn", "btn-light", "d-flex", "align-items-center", "btn-description", "row"]);
+        expect(button.classes()).to.eql(["btn", "btn-light", "d-flex", "align-items-center", "btn-description", "mp-btn-light"]);
         expect(button.attributes("type")).to.equal("button");
         expect(button.text()).to.equal(text);
         expect(icon.exists()).to.be.true;
@@ -44,7 +44,7 @@ describe("src_3_0_0/shared/components/LightButton.vue", () => {
             icon = button.find("i");
 
         expect(button.exists()).to.be.true;
-        expect(button.classes()).to.eql(["btn", "btn-light", "d-flex", "align-items-center", "btn-description", "row"]);
+        expect(button.classes()).to.eql(["btn", "btn-light", "d-flex", "align-items-center", "btn-description", "mp-btn-light"]);
         expect(button.attributes("type")).to.equal("button");
         expect(button.text()).to.equal(text);
         expect(icon.exists()).to.be.false;
@@ -65,7 +65,7 @@ describe("src_3_0_0/shared/components/LightButton.vue", () => {
             icon = button.find("i");
 
         expect(button.exists()).to.be.true;
-        expect(button.classes()).to.eql(["btn", "btn-light", "d-flex", "align-items-center", "btn-description", "row"]);
+        expect(button.classes()).to.eql(["btn", "btn-light", "d-flex", "align-items-center", "btn-description", "mp-btn-light"]);
         expect(button.attributes("type")).to.equal("button");
         expect(icon.exists()).to.be.true;
     });
