@@ -48,6 +48,16 @@ export default {
     setCurrentComponentProps (state, {side, props}) {
         state[side].navigation.currentComponent.props = props;
     },
+    /**
+     * Sets currently shown components name.
+     * @param {Object} state current state
+     * @param {String} side secondary or main Menu
+     * @param {String} name name of component
+     * @returns {void}
+     */
+    setCurrentComponentPropsName (state, {side, name}) {
+        state[side].navigation.currentComponent.props.name = name;
+    },
 
 
     /**
@@ -96,5 +106,38 @@ export default {
         state[side].navigation.currentComponent = {props: [], type: "root"};
         state[side].navigation.history = [];
         state[side].currentComponent = "root";
+    },
+    /**
+     * Sets the current component by side
+     * @param {Object} state The state of menu.
+     * @param {Object} payload The payload.
+     * @param {String} payload.side The current side.
+     * @param {String} payload.newComponent newComponent to add.
+     * @returns {void}
+     */
+    setNavigationCurrentComponentBySide (state, {side, newComponent}) {
+        state[side].navigation.currentComponent = newComponent;
+    },
+    /**
+     * Sets the current history values by side
+     * @param {Object} state The state of menu.
+     * @param {Object} payload The payload.
+     * @param {String} payload.side The current side.
+     * @param {Array} payload.newHistory newHistory to add.
+     * @returns {void}
+     */
+    setNavigationHistoryBySide (state, {side, newHistory}) {
+        state[side].navigation.history = newHistory;
+    },
+    /**
+     * Sets currently shown component by side
+     * @param {Object} state current state
+     * @param {Object} payload The payload.
+     * @param {String} payload.side The current side.
+     * @param {Array} payload.type new component type.
+     * @returns {void}
+     */
+    setCurrentComponentBySide (state, {side, type}) {
+        state[side].currentComponent = type;
     }
 };
