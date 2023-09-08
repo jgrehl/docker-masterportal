@@ -104,21 +104,17 @@ export default {
             "mergeMenuState",
             "setCurrentMenuWidth"
         ]),
-        ...mapActions("Menu", ["clickedMenuElement"]),
-        ...mapActions("Menu", [
-            "toggleMenu",
-            "closeMenu"
-        ]),
+        ...mapActions("Menu", ["clickedMenuElement", "toggleMenu", "closeMenu"]),
         /**
          * Opens the searchbar module.
          * @returns {void}
          */
         openSearchBar () {
-            this.$store.dispatch("Menu/clickedMenuElement", {
+            this.clickedMenuElement({
                 name: "common:modules.searchBar.searchResultList",
                 side: this.side,
                 type: "searchbar"
-            }, {root: true});
+            });
         }
     }
 };
@@ -162,12 +158,10 @@ export default {
                 "
             >
                 <MenuContainerBodyRootLogo
-                    v-if="titleBySide(side)"
                     class="mb-2"
                     v-bind="titleBySide(side)"
                 />
                 <SearchBar
-                    v-if="titleBySide(side)"
                     :click-action="openSearchBar"
                 />
             </div>
