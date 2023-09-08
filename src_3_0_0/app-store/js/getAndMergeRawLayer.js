@@ -1,6 +1,7 @@
 import {rawLayerList} from "@masterportal/masterportalapi/src";
 import omit from "../../shared/js/utils/omit";
 import {updateProxyUrl} from "./getProxyUrl";
+import layerFactory from "../../core/layers/js/layerFactory";
 
 let zIndex = 0;
 
@@ -46,6 +47,8 @@ function splitId (id, seperator = ".") {
  */
 export function addAdditional (rawLayer, showAllLayerInTree = false) {
     if (rawLayer) {
+        const layerTypes3d = layerFactory.getLayerTypes3d();
+
         rawLayer.type = "layer";
         if (showAllLayerInTree || rawLayer.visibility) {
             rawLayer.showInLayerTree = true;
@@ -56,6 +59,7 @@ export function addAdditional (rawLayer, showAllLayerInTree = false) {
         if (rawLayer.showInLayerTree === true) {
             rawLayer.zIndex = zIndex++;
         }
+        rawLayer.is3DLayer = layerTypes3d.includes(rawLayer.typ.toUpperCase());
     }
 
     return rawLayer;
