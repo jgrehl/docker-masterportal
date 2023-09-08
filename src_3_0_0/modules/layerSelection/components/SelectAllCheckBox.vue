@@ -65,16 +65,16 @@ export default {
 <template lang="html">
     <button
         :id="'select-all-layers-' + ids()"
-        class="d-flex w-100 layer-tree-select-all pe-2 p-1 btn-transparent"
+        class="d-flex w-100 layer-tree-select-all mt-3 pe-2 p-1 btn-transparent"
         @click="clicked()"
         @keydown.enter="clicked()"
     >
         <span
             :id="'select-all-checkbox-' + ids()"
             :class="[
-                'layer-tree-select-all pe-2',
+                'ps-1 pe-3',
                 {
-                    'bi-check2-square': isChecked(),
+                    'bi-check-square': isChecked(),
                     'bi-square': !isChecked()
                 }
             ]"
@@ -109,6 +109,7 @@ export default {
         &:focus {
             @include primary_action_focus;
         }
+        margin-left: 0.7rem;
     }
     .layer-tree-layer-label {
         cursor: pointer;
