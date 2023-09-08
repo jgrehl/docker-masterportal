@@ -1,4 +1,5 @@
 <script>
+import {mapGetters} from "vuex";
 import getNestedValues from "../../../shared/js/utils/getNestedValues";
 import Layer from "../../layerTree/components/LayerComponent.vue";
 import SelectAllCheckBox from "./SelectAllCheckBox.vue";
@@ -41,6 +42,7 @@ export default {
     },
     emits: ["showNode"],
     computed: {
+        ...mapGetters("Maps", ["mode"]),
         isFolder () {
             return this.conf.type === "folder";
         },
@@ -58,8 +60,16 @@ export default {
                 this.$emit("showNode", this.conf.name, this.conf.elements);
             }
         },
+        /**
+         * Returns true, if folder shall be displayed.
+         * @returns {Boolean} true, if folder shall be displayed.
+         */
         showFolder () {
             const allConfigs = getNestedValues(this.conf, "elements", true).flat(Infinity);
+
+            if (this.mode === "2D") {
+                return this.isFolder && !allConfigs.every(conf => conf.showInLayerTree) && allConfigs.find(conf => conf.is3DLayer) === undefined;
+            }
 
             return this.isFolder && !allConfigs.every(conf => conf.showInLayerTree);
         }
@@ -68,7 +78,7 @@ export default {
 </script>
 
 <template>
-    <div :id="'layer-selection-treenode-' + (conf.id ? conf.id : conf.name.replace(/\s/g, ''))">
+    <div :id="'layer-selection-treenode-' + (conf.id ? conf.id : conf.name?.replace(/\s/g, ''))">
         <SelectAllCheckBox
             v-if="showSelectAllCheckBox"
             :confs="selectAllConfigs"
