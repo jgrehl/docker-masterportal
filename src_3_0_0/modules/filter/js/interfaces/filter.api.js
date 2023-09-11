@@ -11,6 +11,7 @@ import InterfaceGeojsonExtern from "./interface.geojson.extern.js";
 import InterfaceStaIntern from "./interface.sta.intern.js";
 import InterfaceStaExtern from "./interface.sta.extern.js";
 import InterfaceVectorTilesIntern from "./interface.vectortiles.intern";
+
 /**
  * FilterApi is the api to use in vue environment. It encapsulates the filter interfaces.
  * @class
