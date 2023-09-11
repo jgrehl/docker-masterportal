@@ -1,15 +1,7 @@
 /**
- * @typedef timeSliderObject
- * @type {object}
- * @property {string} defaultValue Initially selected time value.
- * @property {string} layerId Id of the WMS-T layer for which these values are saved.
- * @property {object} step Distance between each time value.
- * @property {number[]} timeRange Range of possible time values in ascending order. May not be continuous.
- */
-
-/**
- * @typedef WmsTimeState
- * @type {object}
+ * state of the WMSTime
+ * @module modules/WMSTime/state
+ *
  * @property {string} layerAppendix Value to be added to the second layer, which is added when using the layerSwiper.
  * @property {number} windowWidth Current width (window.innerWidth) of the window in px.
  * @property {object} layerSwiper Values for the layerSwiper.
