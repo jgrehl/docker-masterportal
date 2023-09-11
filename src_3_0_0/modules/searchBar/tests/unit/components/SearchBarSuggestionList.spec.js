@@ -91,18 +91,13 @@ describe("src_3_0_0/modules/searchBar/components/SearchBarSuggestionList.vue", (
                 Menu: {
                     namespaced: true,
                     getters: {
-                        currentComponent: () => () => "root"
-                    }
-                }
-            },
-            state: {
-                "Menu": {
-                    "currentComponent": "",
-                    "mainMenu": {
-                        "currentComponent": "",
-                        "navigation": {
-                            "history": []
-                        }
+                        currentComponent: () => () => "root",
+                        menuBySide: () => () => true
+                    },
+                    mutations: {
+                        setNavigationCurrentComponentBySide: sinon.stub(),
+                        setCurrentComponentBySide: sinon.stub(),
+                        setNavigationHistoryBySide: sinon.stub()
                     }
                 }
             }
@@ -152,7 +147,13 @@ describe("src_3_0_0/modules/searchBar/components/SearchBarSuggestionList.vue", (
                 }
             });
 
-            wrapper.vm.prepareShowAllResults("Straße");
+            await wrapper.vm.prepareShowAllResults("Straße");
+            wrapper.vm.$nextTick();
+
+            /* expect(wrapper.vm.setNavigationCurrentComponentBySide.calledOnce).to.be.true;
+            expect(wrapper.vm.setCurrentComponentBySide.calledOnce).to.be.true;
+            expect(wrapper.vm.setNavigationHistoryBySide.calledOnce).to.be.true; */
+
             expect(wrapper.vm.searchResultsActive).to.be.true;
             expect(wrapper.vm.currentShowAllList[0]).to.deep.equal(searchResults[0]);
         });
