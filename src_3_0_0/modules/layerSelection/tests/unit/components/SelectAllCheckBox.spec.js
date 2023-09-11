@@ -8,7 +8,7 @@ import SelectAllCheckBox from "../../../components/SelectAllCheckBox.vue";
 
 config.global.mocks.$t = key => key;
 
-describe.only("src_3_0_0/modules/layerTree/components/SelectAllCheckBox.vue", () => {
+describe("src_3_0_0/modules/layerTree/components/SelectAllCheckBox.vue", () => {
     let store,
         wrapper,
         layer,
