@@ -1,5 +1,5 @@
 <script>
-import {mapGetters, mapActions} from "vuex";
+import {mapGetters} from "vuex";
 import ProgressBar from "./ProgressBar.vue";
 import SnippetCheckbox from "./SnippetCheckbox.vue";
 import SnippetCheckboxFilterInMapExtent from "./SnippetCheckboxFilterInMapExtent.vue";
@@ -20,6 +20,7 @@ import {translateKeyWithPlausibilityCheck} from "../../../shared/js/utils/transl
 import {getSnippetAdjustments} from "../utils/getSnippetAdjustments.js";
 import openlayerFunctions from "../utils/openlayerFunctions";
 import {isRule} from "../utils/isRule.js";
+import VectorTileLayer from "ol/layer/VectorTile";
 
 /**
  * Layer Filter Snippet
@@ -116,9 +117,14 @@ export default {
             type: [Function, Boolean],
             required: false,
             default: false
+        },
+        openMultipleAccordeons: {
+            type: Boolean,
+            required: false,
+            default: true
         }
     },
-    emits: ["updateFilterHits", "updateRules", "deleteAllRules"],
+    emits: ["registerMapMoveListener", "updateFilterHits", "updateRules", "deleteAllRules"],
     data () {
         return {
             paging: {
@@ -138,7 +144,8 @@ export default {
             isLockedHandleActiveStrategy: false,
             filterButtonDisabled: false,
             isLoading: false,
-            outOfZoom: false
+            outOfZoom: false,
+            gfiFirstActive: false
         };
     },
     computed: {
@@ -223,7 +230,7 @@ export default {
             });
         },
         filterGeometry () {
-            if (typeof this.isLayerFilterSelected === "function" && this.isLayerFilterSelected(this.layerConfig.filterId) || this.isLayerFilterSelected === true) {
+            if (this.isLayerFilterSelected === true) {
                 this.handleActiveStrategy();
             }
         },
@@ -271,14 +278,20 @@ export default {
         });
     },
     beforeUnmount () {
-        if (this.layerConfig.filterOnMove === true && this.isStrategyActive()) {
-            this.unregisterMapMoveListener();
+        if (this.layerConfig.filterOnMove === true && !this.openMultipleAccordeons && this.layerConfig?.strategy === "active") {
+            this.$emit("registerMapMoveListener", {
+                filterId: this.layerConfig.filterId,
+                listener: false
+            });
+            if (this.mapHandler.getLayerModelByFilterId(this.layerConfig.filterId) instanceof VectorTileLayer) {
+                this.mapHandler.clearLayer(this.layerConfig.filterId, this.isExtern());
+            }
         }
     },
     methods: {
-        ...mapActions("Maps", ["registerListener", "unregisterListener"]),
         isRule,
         translateKeyWithPlausibilityCheck,
+
         /**
          * Outsourced logic that is called in the mounted hook.
          * @returns {void}
@@ -296,16 +309,32 @@ export default {
             }
             if (!this.mapHandler.isLayerActivated(this.layerConfig.filterId)
                 && isObject(this.filterGeometry)
-                && (typeof this.isLayerFilterSelected === "function"
-                && this.isLayerFilterSelected(this.layerConfig.filterId)
-                || this.isLayerFilterSelected === true)) {
+                && this.isLayerFilterSelected === true) {
                 this.handleActiveStrategy();
             }
             if (typeof this.layerConfig.minZoom === "number" || typeof this.layerConfig.maxZoom === "number") {
                 this.checkZoomLevel(this.layerConfig.minZoom, this.layerConfig.maxZoom);
             }
-            if (this.layerConfig.filterOnMove === true && this.layerConfig?.strategy === "active") {
-                this.registerMapMoveListener();
+            if (this.layerConfig.filterOnMove === true && !this.openMultipleAccordeons && this.layerConfig?.strategy === "active") {
+                this.$watch("$store.state.Tools.Gfi.gfiFeatures", (newVal, oldVal) => {
+                    if (Array.isArray(oldVal) && !oldVal.length) {
+                        this.gfiFirstActive = true;
+                    }
+                    else {
+                        this.gfiFirstActive = false;
+                    }
+                });
+
+                this.$emit("registerMapMoveListener", {
+                    filterId: this.layerConfig.filterId,
+                    listener: evt => this.updateSnippets(evt)
+                });
+                this.$nextTick(() => {
+                    if (!this.outOfZoom) {
+                        this.isLockedHandleActiveStrategy = false;
+                        this.handleActiveStrategy();
+                    }
+                });
             }
         },
         /**
@@ -759,35 +788,6 @@ export default {
             }
         },
         /**
-         * Update the snippets with adjustment and shows loading after loadstart.
-         * Registering a map moveend, loadend and loadstart listener.
-         * @returns {void}
-         */
-        registerMapMoveListener () {
-            this.registerListener({type: "loadend", listener: this.updateSnippets});
-            this.registerListener({type: "loadstart", listener: this.updateSnippets});
-            this.registerListener({type: "moveend", listener: this.updateSnippets});
-        },
-        /**
-         * Unregistering this moveend, loadend and loadstart listener.
-         * @returns {void}
-         */
-        unregisterMapMoveListener () {
-            this.unregisterListener({type: "loadend", listener: this.updateSnippets});
-            this.unregisterListener({type: "loadstart", listener: this.updateSnippets});
-            this.unregisterListener({type: "moveend", listener: this.updateSnippets});
-        },
-
-        /**
-         * Setter for isLoading.
-         * @param {Boolean} value - The value for isLoading.
-         * @returns {void}
-         */
-        setIsLoading (value) {
-            this.isLoading = value;
-        },
-
-        /**
          * Registering a zoom listener.
          * @param {Number} minZoom The min zoom level of the layer
          * @param {Number} maxZoom The max zoom level of the layer
@@ -798,6 +798,7 @@ export default {
                 zoomLevel = mapCollection.getMapView("2D").getZoom();
 
             this.outOfZoom = this.checkOutOfZoomLevel(minZoom, maxZoom, zoomLevel);
+
             this.$store.watch((state, getters) => getters["Maps/scale"], scale => {
                 if (scale > currentScale) {
                     zoomLevel = zoomLevel - 1;
@@ -805,7 +806,9 @@ export default {
                 else {
                     zoomLevel = zoomLevel + 1;
                 }
+
                 currentScale = scale;
+
                 this.outOfZoom = this.checkOutOfZoomLevel(minZoom, maxZoom, zoomLevel);
             });
         },
@@ -826,7 +829,16 @@ export default {
             else if (typeof minZoom !== "number" && typeof maxZoom === "number") {
                 return zoomLevel > maxZoom;
             }
+
             return false;
+        },
+        /**
+         * Setter for isLoading.
+         * @param {Boolean} value - The value for isLoading.
+         * @returns {void}
+         */
+        setIsLoading (value) {
+            this.isLoading = value;
         },
         /**
          * Update the snippets with adjustment
@@ -834,8 +846,9 @@ export default {
          * @returns {void}
          */
         updateSnippets (evt) {
-            const snippetIds = [];
-
+            if (this.gfiFirstActive) {
+                return;
+            }
             if (evt.type === "moveend" && !evt.map.loaded_) {
                 return;
             }
@@ -846,19 +859,17 @@ export default {
             if (evt.type === "loadend") {
                 this.setIsLoading(false);
             }
-            this.snippets.forEach(snippet => {
-                snippetIds.push(snippet.snippetId);
-            });
-            if (snippetIds.length) {
+            this.$nextTick(() => {
                 if (!this.outOfZoom) {
                     this.isLockedHandleActiveStrategy = false;
-                    this.handleActiveStrategy(snippetIds);
+                    this.setSnippetValueByState(this.filterRules);
+                    this.handleActiveStrategy();
                 }
                 else {
                     this.amountOfFilteredItems = 0;
                     this.stopFilter();
                 }
-            }
+            });
         },
         /**
          * Terminating the filter process by terminating every snippet
@@ -1423,5 +1434,8 @@ export default {
                 }
             }
         }
+    }
+    .spinner-color {
+        color: $light_grey_inactive;
     }
 </style>
