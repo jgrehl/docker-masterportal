@@ -34,6 +34,7 @@ export default class InterfaceVectorTilesIntern {
      * @returns {void}
      */
     getAttrTypes (service, onsuccess, onerror) {
+
         const layerId = service?.layerId,
             layerModel = layerCollection.getLayerById(layerId),
             listOfAllAttributes = {},
@@ -170,7 +171,6 @@ export default class InterfaceVectorTilesIntern {
         });
 
         uniqueValues = getUniqueValuesFromFetchedFeatures(allFetchedProperties, attrName);
-
         if (uniqueValues === false) {
             if (typeof onerror === "function") {
                 onerror(new Error("InterfaceVectorTilesIntern.getUniqueValues: an error occurred during the creation of unique values."));

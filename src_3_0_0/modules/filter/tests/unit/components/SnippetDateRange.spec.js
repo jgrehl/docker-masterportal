@@ -44,6 +44,7 @@ describe("src/module/tools/filter/components/SnippetDateRange.vue", () => {
             expect(wrapper.vm.info).to.be.false;
             expect(wrapper.vm.isParent).to.be.false;
             expect(wrapper.vm.operator).to.be.undefined;
+            expect(wrapper.vm.operatorForAttrName).to.equal("AND");
             expect(wrapper.vm.prechecked).to.be.undefined;
             expect(wrapper.vm.snippetId).to.equal(0);
             expect(wrapper.vm.subTitles).to.be.false;
@@ -86,6 +87,17 @@ describe("src/module/tools/filter/components/SnippetDateRange.vue", () => {
                 await wrapper.vm.$nextTick();
                 await wrapper.vm.$nextTick();
                 expect(spy.calledOnce).to.be.true;
+            });
+            it("should call the api if operatorForAttrName is 'OR' and attrName is an array", async () => {
+                const api = {
+                        getUniqueValues: () => false
+                    },
+                    spy = sinon.spy(api, "getUniqueValues");
+
+                wrapper = shallowMount(SnippetDateRange, {propsData: {api, attrName: ["attrNameA", "attrNameB", "attrNameC"], operatorForAttrName: "OR"}});
+                await wrapper.vm.$nextTick();
+                await wrapper.vm.$nextTick();
+                expect(spy.called).to.be.true;
             });
         });
         describe("template", () => {
@@ -175,36 +187,44 @@ describe("src/module/tools/filter/components/SnippetDateRange.vue", () => {
                     });
                 });
                 describe("props subTitles", () => {
-                    it("should not display a subtitle for from and until if subtitle is false", () => {
+                    it("should not display a subtitle for from and until if subtitle is false", async () => {
                         wrapper = shallowMount(SnippetDateRange, {propsData: {
                             subTitles: false
                         }});
+                        wrapper.setData({visibleDatepicker: true});
+                        await wrapper.vm.$nextTick();
 
                         expect(wrapper.find(".datepickerWrapper").find(".from").find("label").exists()).to.be.false;
                         expect(wrapper.find(".datepickerWrapper").find(".until").find("label").exists()).to.be.false;
                     });
-                    it("should display attrName as subTitle for from and no subtitle for until if subtitle is true and attrName is a string", () => {
+                    it("should display attrName as subTitle for from and no subtitle for until if subtitle is true and attrName is a string", async () => {
                         wrapper = shallowMount(SnippetDateRange, {propsData: {
                             attrName: "attrName",
                             subTitles: true
                         }});
+                        wrapper.setData({visibleDatepicker: true});
+                        await wrapper.vm.$nextTick();
 
                         expect(wrapper.find(".datepickerWrapper").find(".from").find("label").text()).to.equal("attrName");
                         expect(wrapper.find(".datepickerWrapper").find(".until").find("label").text()).to.be.a("string").that.is.empty;
                     });
-                    it("should display attrName as subTitle for from and for until if subtitle is true and attrName is an array", () => {
+                    it("should display attrName as subTitle for from and for until if subtitle is true and attrName is an array", async () => {
                         wrapper = shallowMount(SnippetDateRange, {propsData: {
                             attrName: ["attrNameA", "attrNameB"],
                             subTitles: true
                         }});
+                        wrapper.setData({visibleDatepicker: true});
+                        await wrapper.vm.$nextTick();
 
                         expect(wrapper.find(".datepickerWrapper").find(".from").find("label").text()).to.equal("attrNameA");
                         expect(wrapper.find(".datepickerWrapper").find(".until").find("label").text()).to.equal("attrNameB");
                     });
-                    it("should display subTitles for from and for until", () => {
+                    it("should display subTitles for from and for until", async () => {
                         wrapper = shallowMount(SnippetDateRange, {propsData: {
                             subTitles: ["subTitleA", "subTitleB"]
                         }});
+                        wrapper.setData({visibleDatepicker: true});
+                        await wrapper.vm.$nextTick();
 
                         expect(wrapper.find(".datepickerWrapper").find(".from").find("label").text()).to.equal("subTitleA");
                         expect(wrapper.find(".datepickerWrapper").find(".until").find("label").text()).to.equal("subTitleB");
@@ -235,6 +255,30 @@ describe("src/module/tools/filter/components/SnippetDateRange.vue", () => {
                         expect(wrapper.find(".datepickerWrapper").find(".until").find("input").attributes("min")).to.equal("2022-08-10");
                         expect(wrapper.find(".datepickerWrapper").find(".until").find("input").attributes("max")).to.equal("2022-08-30");
                     });
+                    it("should set min and max with dates before unix epoch based on api response", async () => {
+                        const api = {
+                            getUniqueValues: (attrName, onsuccess) => onsuccess([
+                                "20.08.2022",
+                                "30.08.2022",
+                                "26.08.1968",
+                                "10.08.1950",
+                                "16.08.2022"
+                            ])
+                        };
+
+                        wrapper = shallowMount(SnippetDateRange, {propsData: {
+                            api,
+                            attrName: "attrName",
+                            format: "DD.MM.YYYY"
+                        }});
+                        await wrapper.vm.$nextTick();
+                        await wrapper.vm.$nextTick();
+                        await wrapper.vm.$nextTick();
+                        expect(wrapper.find(".datepickerWrapper").find(".from").find("input").attributes("min")).to.equal("1950-08-10");
+                        expect(wrapper.find(".datepickerWrapper").find(".from").find("input").attributes("max")).to.equal("2022-08-30");
+                        expect(wrapper.find(".datepickerWrapper").find(".until").find("input").attributes("min")).to.equal("1950-08-10");
+                        expect(wrapper.find(".datepickerWrapper").find(".until").find("input").attributes("max")).to.equal("2022-08-30");
+                    });
                     it("should cap min and max date for datepicker if props value is given", async () => {
                         const api = {
                             getUniqueValues: (attrName, onsuccess) => onsuccess([
@@ -258,6 +302,31 @@ describe("src/module/tools/filter/components/SnippetDateRange.vue", () => {
                         expect(wrapper.find(".datepickerWrapper").find(".from").find("input").attributes("min")).to.equal("2022-08-16");
                         expect(wrapper.find(".datepickerWrapper").find(".from").find("input").attributes("max")).to.equal("2022-08-26");
                         expect(wrapper.find(".datepickerWrapper").find(".until").find("input").attributes("min")).to.equal("2022-08-16");
+                        expect(wrapper.find(".datepickerWrapper").find(".until").find("input").attributes("max")).to.equal("2022-08-26");
+                    });
+                    it("should cap min and max with dates before unix epoch if props value is given", async () => {
+                        const api = {
+                            getUniqueValues: (attrName, onsuccess) => onsuccess([
+                                "20.08.2022",
+                                "30.08.2022",
+                                "26.08.2022",
+                                "10.08.1950",
+                                "16.08.1950"
+                            ])
+                        };
+
+                        wrapper = shallowMount(SnippetDateRange, {propsData: {
+                            api,
+                            attrName: "attrName",
+                            format: "DD.MM.YYYY",
+                            value: ["11.08.1950", "29.08.2022"]
+                        }});
+                        await wrapper.vm.$nextTick();
+                        await wrapper.vm.$nextTick();
+                        await wrapper.vm.$nextTick();
+                        expect(wrapper.find(".datepickerWrapper").find(".from").find("input").attributes("min")).to.equal("1950-08-16");
+                        expect(wrapper.find(".datepickerWrapper").find(".from").find("input").attributes("max")).to.equal("2022-08-26");
+                        expect(wrapper.find(".datepickerWrapper").find(".until").find("input").attributes("min")).to.equal("1950-08-16");
                         expect(wrapper.find(".datepickerWrapper").find(".until").find("input").attributes("max")).to.equal("2022-08-26");
                     });
                 });
@@ -514,6 +583,7 @@ describe("src/module/tools/filter/components/SnippetDateRange.vue", () => {
                     fixed: true,
                     attrName: "attrName",
                     operator: "INTERSECTS",
+                    operatorForAttrName: "AND",
                     format: "DD.MM.YYYY",
                     value: ["01.01.2019", "31.12.2022"],
                     tagTitle: "10.08.2022 - 30.08.2022"
@@ -804,7 +874,7 @@ describe("src/module/tools/filter/components/SnippetDateRange.vue", () => {
                         "20.08.2022",
                         "30.08.2022",
                         "26.08.2022",
-                        "10.08.2022",
+                        "10.08.1950",
                         "16.08.2022"
                     ],
                     [
@@ -813,7 +883,7 @@ describe("src/module/tools/filter/components/SnippetDateRange.vue", () => {
                         "26.08.2022"
                     ]
                 )).to.deep.equal([
-                    "2022-08-10",
+                    "1950-08-10",
                     "2022-08-16",
                     "2022-08-20",
                     "2022-08-22",
