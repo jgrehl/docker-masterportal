@@ -471,33 +471,29 @@ describe("src/modules/tools/filter/components/LayerFilterSnippet.vue", () => {
 
     describe("registerMapMoveListener", () => {
         it("should not call the function registerMapMoveListener", () => {
-            const registerMapMoveListener = sinon.spy(LayerFilterSnippet.methods, "registerMapMoveListener");
-
-            expect(registerMapMoveListener.notCalled).to.be.true;
+            expect(wrapper.emitted()).to.not.have.property("registerMapMoveListener");
         });
 
-        it("should call the function registerMapMoveListener", async () => {
-            const registerMapMoveListener = sinon.spy(LayerFilterSnippet.methods, "registerMapMoveListener"),
-                layerConfig = {
-                    filterOnMove: true,
-                    strategy: "active",
-                    service: {
-                        type: "something external"
-                    }
-                };
-
+        it("should trigger registerMapMoveListener event if filterOnMove is configured", async () => {
             wrapper = shallowMount(LayerFilterSnippet, {
                 global: {
                     plugins: [store]
                 },
                 propsData: {
-                    layerConfig,
-                    mapHandler
+                    layerConfig: {
+                        service: {
+                            type: "something external"
+                        },
+                        strategy: "active",
+                        filterOnMove: true
+                    },
+                    mapHandler,
+                    openMultipleAccordeons: false
                 }
             });
 
             await wrapper.vm.$nextTick();
-            expect(registerMapMoveListener.called).to.be.true;
+            expect(wrapper.emitted()).to.have.property("registerMapMoveListener");
         });
     });
     describe("checkZoomLevel", () => {
