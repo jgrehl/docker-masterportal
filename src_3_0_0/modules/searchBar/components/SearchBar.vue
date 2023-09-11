@@ -144,9 +144,10 @@ export default {
         */
         currentComponentSide: {
             handler (newVal) {
+
                 if (newVal === "root") {
                     this.searchInputValue = "";
-                    this.$refs.searchInput.blur();
+                    this.$refs?.searchInput.blur();
                     if (this.side) {
                         this.switchToRoot(this.side);
                     }

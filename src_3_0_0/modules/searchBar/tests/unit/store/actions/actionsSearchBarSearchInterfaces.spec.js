@@ -110,6 +110,31 @@ describe("src_3_0_0/modules/searchBar/store/actions/actionsSearchBarSearchInterf
             expect(dispatch.calledOnce).to.be.true;
             expect(dispatch.firstCall.args[0]).equals("cleanSearchResults");
         });
+        it("should filter out searchInterfaceInstances with not matching searchInterfaceId", async () => {
+            const state = {
+                    searchInterfaceInstances: [{
+                        searchInterfaceId: "MatchID",
+                        clearSearchResults: sinon.spy(),
+                        search: async (searchInput) => [searchInput]
+                    },
+                    {
+                        searchInterfaceId: "MatchNotID",
+                        clearSearchResults: sinon.spy(),
+                        search: async (searchInput) => [searchInput]
+                    }]
+                },
+                getters = {
+                    showAllResults: () => true,
+                    showAllResultsSearchInterfaceInstance: "MatchID"
+                },
+                searchInput = "Test",
+                searchType = "result";
+
+            await search({getters, commit, dispatch, state}, {searchInput, searchType});
+
+            expect(commit.calledOnce).to.be.true;
+            expect(commit.firstCall.args[0]).equals("addSearchResults");
+        });
     });
 
     describe("cleanSearchResults", () => {
