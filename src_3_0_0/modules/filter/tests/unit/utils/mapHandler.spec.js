@@ -218,7 +218,6 @@ describe("src/module/tools/filter/utils/mapHandler.js", () => {
                 createLayerIfNotExists: () => false,
                 zoomToFilteredFeatures: () => false,
                 zoomToExtent: () => false,
-                addLayerByLayerId: () => false,
                 getLayers: () => false,
                 setParserAttributeByLayerId: () => false
             }, onerror.call);
@@ -633,7 +632,6 @@ describe("src/module/tools/filter/utils/mapHandler.js", () => {
                 createLayerIfNotExists: () => false,
                 zoomToFilteredFeatures: () => false,
                 zoomToExtent: () => false,
-                addLayerByLayerId: () => false,
                 getLayers: () => false,
                 setParserAttributeByLayerId: () => false
             }, onerror.call);
