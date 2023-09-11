@@ -100,10 +100,10 @@ function getNextLinkFromFeatureCollection (featureCollection) {
 }
 
 /**
- * Returns a unique value list of attrName from the given properties list.
+ * Returns a unique value object of attrName(s) from the given properties list.
  * @param {Object[]} allFetchedProperties the list of all properties
- * @param {String} attrName the attribute name to get the unique value list for
- * @returns {String[]|Boolean} a list of unique value or false if an error occured
+ * @param {String|String[]} attrName the attribute name(s) to get the unique value list for
+ * @returns {Object|Boolean} an object with the values as keys ({value1: true, ...}) or false if an error occured
  */
 function getUniqueValuesFromFetchedFeatures (allFetchedProperties, attrName) {
     if (!Array.isArray(allFetchedProperties)) {
@@ -111,19 +111,25 @@ function getUniqueValuesFromFetchedFeatures (allFetchedProperties, attrName) {
     }
     const result = {};
 
+    if (Array.isArray(attrName)) {
+        attrName.forEach(attributeName => {
+            Object.assign(result, getUniqueValuesFromFetchedFeatures(allFetchedProperties, attributeName));
+        });
+        return result;
+    }
+
     allFetchedProperties.forEach(properties => {
         if (!isObject(properties) || !Object.prototype.hasOwnProperty.call(properties, attrName)) {
             return;
         }
         result[properties[attrName]] = true;
     });
-    return Object.keys(result);
+    return result;
 }
-
 /**
  * Returns an Object(min, max) with min and max value extracted from the given properties.
  * @param {Object[]} allFetchedProperties the properties to parse through
- * @param {String} attrName the attribute to receive the min and max value from
+ * @param {String|String[]} attrName the attribute(s) to receive the min and max value from
  * @param {Boolean} minOnly if only min is of interest
  * @param {Boolean} maxOnly if only max is of interest
  * @returns {Object|Boolean} an object with keys min and max or false on error
@@ -135,6 +141,23 @@ function getMinMaxFromFetchedFeatures (allFetchedProperties, attrName, minOnly, 
     let min = false,
         max = false;
 
+    if (Array.isArray(attrName)) {
+        const minMax = {};
+
+        attrName.forEach((attributeName) => {
+            const minMaxOfAttrName = getMinMaxFromFetchedFeatures(allFetchedProperties, attributeName, minOnly, maxOnly);
+
+            if (!Object.prototype.hasOwnProperty.call(minMax, "min") && Object.prototype.hasOwnProperty.call(minMaxOfAttrName, "min")
+                || minMax?.min > minMaxOfAttrName?.min) {
+                minMax.min = minMaxOfAttrName.min;
+            }
+            if (!Object.prototype.hasOwnProperty.call(minMax, "max") && Object.prototype.hasOwnProperty.call(minMaxOfAttrName, "max")
+                || minMax?.max < minMaxOfAttrName?.max) {
+                minMax.max = minMaxOfAttrName.max;
+            }
+        });
+        return minMax;
+    }
     allFetchedProperties.forEach(properties => {
         if (
             !isObject(properties)

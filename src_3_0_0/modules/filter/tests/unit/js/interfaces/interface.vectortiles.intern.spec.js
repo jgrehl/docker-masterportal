@@ -4,8 +4,9 @@ import InterfaceVectorTilesIntern from "../../../../js/interfaces/interface.vect
 import sinon from "sinon";
 import openlayerFunctions from "../../../../utils/openlayerFunctions";
 import store from "../../../../../../app-store";
+import layerCollection from "../../../../../../core/layers/js/layerCollection";
 
-describe.skip("src/modules/tools/filter/interfaces/utils/interface.wfs.intern.js", () => {
+describe("src/modules/tools/filter/interfaces/utils/interface.vectortiles.intern.js", () => {
     let interfaceVectorTilesIntern = null;
 
     beforeEach(() => {
@@ -17,7 +18,7 @@ describe.skip("src/modules/tools/filter/interfaces/utils/interface.wfs.intern.js
     });
     describe("getAttrTypes", () => {
         it("should call onerror function, if layermodel doesn't exist", () => {
-            const stubGetLayerByLayerId = sinon.stub(openlayerFunctions, "getLayerByLayerId").returns(null),
+            const stubGetLayerByLayerId = sinon.stub(layerCollection, "getLayerById").returns(null),
                 service = {layerId: 1},
                 onsuccess = undefined,
                 expectedError = new Error("InterfaceVectorTilesIntern.getAttrTypes: cannot find layer model for given layerId 1.");
@@ -30,12 +31,10 @@ describe.skip("src/modules/tools/filter/interfaces/utils/interface.wfs.intern.js
         });
         it("should call the onsuccess function and return an empty list if no features in current extent", () => {
             sinon.stub(openlayerFunctions, "getLayerByLayerId").returns({
-                layer: {
-                    getSource: () => {
-                        return {
-                            getFeaturesInExtent: () => []
-                        };
-                    }
+                getLayerSource: () => {
+                    return {
+                        getFeaturesInExtent: () => []
+                    };
                 }
             });
 
@@ -49,16 +48,14 @@ describe.skip("src/modules/tools/filter/interfaces/utils/interface.wfs.intern.js
         });
         it("should call the onsuccess function with expected result", () => {
             sinon.stub(openlayerFunctions, "getLayerByLayerId").returns({
-                layer: {
-                    getSource: () => {
-                        return {
-                            getFeaturesInExtent: () => [
-                                new Feature({foo: 10, fow: "wow"}),
-                                new Feature({fof: "10", flw: "wow"}),
-                                new Feature({fee: true, fuu: null})
-                            ]
-                        };
-                    }
+                getLayerSource: () => {
+                    return {
+                        getFeaturesInExtent: () => [
+                            new Feature({foo: 10, fow: "wow"}),
+                            new Feature({fof: "10", flw: "wow"}),
+                            new Feature({fee: true, fuu: null})
+                        ]
+                    };
                 }
             });
             store.getters = {
@@ -81,7 +78,7 @@ describe.skip("src/modules/tools/filter/interfaces/utils/interface.wfs.intern.js
     });
     describe("getMinMax", () => {
         it("should call onerror function, if layermodel doesn't exist", () => {
-            const stubGetLayerByLayerId = sinon.stub(openlayerFunctions, "getLayerByLayerId").returns(null),
+            const stubGetLayerByLayerId = sinon.stub(layerCollection, "getLayerById").returns(null),
                 service = {layerId: 1},
                 attrName = "foo",
                 onsuccess = undefined,
@@ -94,13 +91,11 @@ describe.skip("src/modules/tools/filter/interfaces/utils/interface.wfs.intern.js
             sinon.restore();
         });
         it("should call the onsuccess function with {min: false, max:false} param, if no features exists in current extent.", () => {
-            sinon.stub(openlayerFunctions, "getLayerByLayerId").returns({
-                layer: {
-                    getSource: () => {
-                        return {
-                            getFeaturesInExtent: () => []
-                        };
-                    }
+            sinon.stub(layerCollection, "getLayerById").returns({
+                getLayerSource: () => {
+                    return {
+                        getFeaturesInExtent: () => []
+                    };
                 }
             });
 
@@ -120,17 +115,15 @@ describe.skip("src/modules/tools/filter/interfaces/utils/interface.wfs.intern.js
         });
         it("should call onsuccess with expected min max result", () => {
             sinon.stub(openlayerFunctions, "getLayerByLayerId").returns({
-                layer: {
-                    getSource: () => {
-                        return {
-                            getFeaturesInExtent: () => [
-                                new Feature({foo: 10, fow: "wow"}),
-                                new Feature({foo: 10, fow: "wow"}),
-                                new Feature({foo: 30, fow: "wow"}),
-                                new Feature({foo: 15, fow: "wow"})
-                            ]
-                        };
-                    }
+                getLayerSource: () => {
+                    return {
+                        getFeaturesInExtent: () => [
+                            new Feature({foo: 10, fow: "wow"}),
+                            new Feature({foo: 10, fow: "wow"}),
+                            new Feature({foo: 30, fow: "wow"}),
+                            new Feature({foo: 15, fow: "wow"})
+                        ]
+                    };
                 }
             });
 
@@ -151,7 +144,7 @@ describe.skip("src/modules/tools/filter/interfaces/utils/interface.wfs.intern.js
     });
     describe("getUniqueValues", () => {
         it("should call onerror function, if layermodel doesn't exist", () => {
-            const stubGetLayerByLayerId = sinon.stub(openlayerFunctions, "getLayerByLayerId").returns(null),
+            const stubGetLayerByLayerId = sinon.stub(layerCollection, "getLayerById").returns(null),
                 service = {layerId: 1},
                 attrName = "foo",
                 onsuccess = undefined,
@@ -165,12 +158,10 @@ describe.skip("src/modules/tools/filter/interfaces/utils/interface.wfs.intern.js
         });
         it("should call the onsuccess function, even if no features exists in current extent.", () => {
             sinon.stub(openlayerFunctions, "getLayerByLayerId").returns({
-                layer: {
-                    getSource: () => {
-                        return {
-                            getFeaturesInExtent: () => []
-                        };
-                    }
+                getLayerSource: () => {
+                    return {
+                        getFeaturesInExtent: () => []
+                    };
                 }
             });
 
@@ -190,16 +181,14 @@ describe.skip("src/modules/tools/filter/interfaces/utils/interface.wfs.intern.js
         });
         it("should return unique values if features exists", () => {
             sinon.stub(openlayerFunctions, "getLayerByLayerId").returns({
-                layer: {
-                    getSource: () => {
-                        return {
-                            getFeaturesInExtent: () => [
-                                new Feature({foo: "bar", fow: "wow"}),
-                                new Feature({foo: "baz", fow: "wow"}),
-                                new Feature({foo: "bar", fow: "wow"})
-                            ]
-                        };
-                    }
+                getLayerSource: () => {
+                    return {
+                        getFeaturesInExtent: () => [
+                            new Feature({foo: "bar", fow: "wow"}),
+                            new Feature({foo: "baz", fow: "wow"}),
+                            new Feature({foo: "bar", fow: "wow"})
+                        ]
+                    };
                 }
             });
             store.getters = {
