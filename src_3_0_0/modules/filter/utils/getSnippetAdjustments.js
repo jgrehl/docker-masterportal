@@ -101,8 +101,8 @@ function getAttrValuesOfItemsGroupedByAttrNames (items, relevantAttrNames) {
  * @returns {Number} 1 to move first element down, -1 to move first element up
  */
 function snippetDateCompareFunction (a, b, format) {
-    const momentA = dayjs(a, format, true),
-        momentB = dayjs(b, format, true);
+    const momentA = dayjs(a, format),
+        momentB = dayjs(b, format);
 
     if (!momentA.isValid()) {
         return 1;
