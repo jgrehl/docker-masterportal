@@ -51,6 +51,19 @@ function getFeaturesByLayerId (layerId) {
 
     return layer.getLayer().getSource().getFeatures();
 }
+/**
+ * Gets the features of a vector tile layer by layer id and the collection.
+ * @param {Number} layerId The layerId to get the model by.
+ * @returns {ol/render/Feature[]} The features of the layer in current extent.
+ */
+function getVectorTileFeaturesByLayerId (layerId) {
+    if (typeof layerId === "undefined") {
+        return [];
+    }
+    const layerModel = layerCollection.getLayerById(layerId);
+
+    return layerModel.layerSource.getFeaturesInExtent(store.getters["Maps/extent"]);
+}
 
 /**
  * Returns the current browser extent.
@@ -191,30 +204,28 @@ function getLayers () {
 }
 
 /**
- * Calls success-function on loaded features of a vector tile layer by layer id.
- * @param {Number} layerId The layerId to get the model by.
- * @returns {ol/render/Feature[]} The features of the layer in current extent.
+ * Setting the filter in table Menu
+ * @param {Object} element the html element in Object
+ * @returns {void}
  */
-function getVectorTileFeaturesByLayerId (layerId) {
-    if (typeof layerId !== "undefined") {
-        const layerModel = layerCollection.getLayerById(layerId);
+function setFilterInTableMenu (element) {
+    Radio.trigger("TableMenu", "appendFilter", element);
+}
 
-        if (layerModel) {
-            return layerModel.getLayerSource().getFeaturesInExtent(store.getters["Maps/extent"]);
-        }
-
-        console.warn("VectorTile-Layer with id " + layerId + " not found in layerCollection.");
-
-    }
-    return [];
+/**
+ * Returns the infos from info.json.
+ * @returns {Object} an object with key value pairs as attrName and text content
+ */
+function getSnippetInfos () {
+    return Radio.request("Parser", "getSnippetInfos");
 }
 
 export default {
     getMapProjection,
     getFeaturesByLayerId,
+    getVectorTileFeaturesByLayerId,
     getLayerByLayerId,
     getCurrentExtent,
-    getVectorTileFeaturesByLayerId,
     isFeatureInMapExtent,
     isFeatureInGeometry,
     zoomToFilteredFeatures,
@@ -222,5 +233,7 @@ export default {
     showFeaturesByIds,
     changeLayerVisibility,
     setParserAttributeByLayerId,
-    getLayers
+    getLayers,
+    setFilterInTableMenu,
+    getSnippetInfos
 };
