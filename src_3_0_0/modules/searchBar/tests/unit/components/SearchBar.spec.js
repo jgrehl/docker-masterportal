@@ -1,5 +1,5 @@
 import {createStore} from "vuex";
-import {config, shallowMount} from "@vue/test-utils";
+import {config, shallowMount, mount} from "@vue/test-utils";
 import {expect} from "chai";
 import sinon from "sinon";
 
@@ -70,6 +70,7 @@ describe("src_3_0_0/modules/searchBar/components/SearchBar.vue", () => {
                                 searchInput: () => "abc-straße",
                                 searchInterfaceInstances: () => searchInterfaceInstances,
                                 searchResults: () => searchResults,
+                                searchResultsActive: () => false,
                                 showAllResults: () => false,
                                 suggestionListLength: () => 0,
                                 type: () => "searchBar"
@@ -89,6 +90,9 @@ describe("src_3_0_0/modules/searchBar/components/SearchBar.vue", () => {
                     namespaced: true,
                     getters: {
                         currentComponent: () => () => "root"
+                    },
+                    mutations: {
+                        switchToRoot: sinon.spy()
                     }
                 }
             },
@@ -106,16 +110,19 @@ describe("src_3_0_0/modules/searchBar/components/SearchBar.vue", () => {
     });
 
     describe("render SearchBar", () => {
-        it("should render the SearchBar with button and input", () => {
-            wrapper = shallowMount(SearchBarComponent, {
+        it("should render the SearchBar with button and input and mounted values", async () => {
+            wrapper = mount(SearchBarComponent, {
                 global: {
                     plugins: [store]
                 }
             });
-
+            wrapper.vm.setCurrentSide("root");
+            await wrapper.vm.$nextTick();
             expect(wrapper.find("#search-bar").exists()).to.be.true;
             expect(wrapper.find("#search-button").exists()).to.be.true;
             expect(wrapper.find("input").exists()).to.be.true;
+            expect(wrapper.vm.currentSide).to.eql("mainMenu");
+            expect(wrapper.vm.currentComponentSide).to.be.undefined;
         });
     });
 
@@ -132,6 +139,22 @@ describe("src_3_0_0/modules/searchBar/components/SearchBar.vue", () => {
             await wrapper.find("#search-button").trigger("click");
 
             expect(startSearchSpy.calledOnce).to.be.true;
+        });
+    });
+    describe("test input element", () => {
+        it("should start search to abc-straße, if button is clicked", async () => {
+            wrapper = shallowMount(SearchBarComponent, {
+                propsData: {
+                    clickAction: sinon.spy
+                },
+                global: {
+                    plugins: [store]
+                }
+            });
+
+            const testInput = wrapper.find({ref: "searchInput"});
+
+            expect(testInput.exists()).to.be.true;
         });
     });
 
@@ -201,6 +224,20 @@ describe("src_3_0_0/modules/searchBar/components/SearchBar.vue", () => {
         });
     });
 
+    describe("searchActivated", () => {
+        it("check if search should be activated", () => {
+            wrapper = shallowMount(SearchBarComponent, {
+                global: {
+                    plugins: [store]
+                }
+            });
+
+            const testResult = wrapper.vm.searchActivated;
+
+            expect(testResult).to.be.true;
+        });
+    });
+
     describe("limitedSortedSearchResults", () => {
         it("tests the computed property SearchBarSuggestionList", async () => {
             wrapper = await shallowMount(SearchBarComponent, {
@@ -222,4 +259,23 @@ describe("src_3_0_0/modules/searchBar/components/SearchBar.vue", () => {
             });
         });
     });
+
+    describe("method checkCurrentComponent", () => {
+        it("tests the method checkCurrentComponent with currentComponentSide root", async () => {
+
+            wrapper = await shallowMount(SearchBarComponent, {
+                global: {
+                    plugins: [store]
+                }
+            });
+
+            const startSearchSpy = sinon.spy(wrapper.vm, "startSearch");
+
+            await wrapper.vm.checkCurrentComponent();
+
+            expect(startSearchSpy.called).to.be.true;
+
+        });
+    });
+
 });
