@@ -488,6 +488,8 @@ describe("src_3_0_0/modules/getFeatureInfo/components/GetFeatureInfo.vue", () =>
         });
 
         expect(wrapper.find(".pager-right").exists()).to.be.true;
+        expect(wrapper.find(".gfi-pager-left-margin").exists()).to.be.true;
+        expect(wrapper.find(".gfi-pager-right-margin").exists()).to.be.false;
     });
 
     it("should hide left pager if pagerIndex is zero", () => {
@@ -514,6 +516,8 @@ describe("src_3_0_0/modules/getFeatureInfo/components/GetFeatureInfo.vue", () =>
         });
 
         expect(wrapper.find(".pager-left").exists()).not.to.be.true;
+        expect(wrapper.find(".gfi-pager-left-margin").exists()).to.be.true;
+        expect(wrapper.find(".gfi-pager-right-margin").exists()).to.be.false;
     });
 
     it("should enable right pager if pagerIndex is zero", () => {
@@ -539,6 +543,8 @@ describe("src_3_0_0/modules/getFeatureInfo/components/GetFeatureInfo.vue", () =>
         });
 
         expect(wrapper.find(".pager-right").exists()).to.be.true;
+        expect(wrapper.find(".gfi-pager-left-margin").exists()).to.be.true;
+        expect(wrapper.find(".gfi-pager-right-margin").exists()).to.be.false;
     });
 
     it("should hide right pager if pagerIndex === gfiFeatures.length - 1", () => {
@@ -568,6 +574,8 @@ describe("src_3_0_0/modules/getFeatureInfo/components/GetFeatureInfo.vue", () =>
         });
 
         expect(wrapper.find(".pager-right").exists()).not.to.be.true;
+        expect(wrapper.find(".gfi-pager-left-margin").exists()).to.be.false;
+        expect(wrapper.find(".gfi-pager-right-margin").exists()).to.be.true;
     });
 
     it("should enable left pager if pagerIndex === gfiFeatures.length - 1", () => {
@@ -597,6 +605,8 @@ describe("src_3_0_0/modules/getFeatureInfo/components/GetFeatureInfo.vue", () =>
         });
 
         expect(wrapper.find(".pager-left").exists()).to.be.true;
+        expect(wrapper.find(".gfi-pager-left-margin").exists()).to.be.false;
+        expect(wrapper.find(".gfi-pager-right-margin").exists()).to.be.true;
     });
 
 
@@ -626,6 +636,8 @@ describe("src_3_0_0/modules/getFeatureInfo/components/GetFeatureInfo.vue", () =>
 
         expect(wrapper.find(".pager-left").exists()).to.be.true;
         expect(wrapper.find(".pager-right").exists()).to.be.true;
+        expect(wrapper.find(".gfi-pager-left-margin").exists()).to.be.false;
+        expect(wrapper.find(".gfi-pager-right-margin").exists()).to.be.false;
     });
 
     it("should find a new detached component, if componentKey was changed", async () => {

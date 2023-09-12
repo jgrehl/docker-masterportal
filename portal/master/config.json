@@ -776,7 +776,7 @@
           "name" : "Satellitenbilder Sentinel-2 CIR",
           "url" : "https://geodienste.hamburg.de/HH_WMS-T_Satellitenbilder_Sentinel-2",
           "typ" : "WMS",
-          "visibility": true
+          "visibility": false
         },
         {
           "id": "4538",
@@ -921,7 +921,7 @@
           "styleId": "8712",
           "loadingStrategy": "bbox",
           "typ": "WFS",
-          "visibility": false,
+          "visibility": true,
           "gfiTheme": "schulinfo",
           "showInLayerTree": true,
           "mouseHoverField": [
