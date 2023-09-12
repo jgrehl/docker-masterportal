@@ -153,7 +153,7 @@ export default {
     },
 
     /**
-     * Resets Menucontainers.
+     * Resets MenuContainers.
      * @param {Object} param store context
      * @param {Object} param.commit the commit
      * @param {Object} param.dispatch the dispatch
@@ -167,6 +167,7 @@ export default {
             dispatch("changeCurrentMouseMapInteractionsComponent", {type: state.defaultComponent, side});
         }
 
+        dispatch("Modules/SearchBar/updateSearchNavigation", side, {root: true});
         commit("switchToRoot", side);
     },
 
