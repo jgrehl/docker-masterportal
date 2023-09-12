@@ -133,7 +133,7 @@ describe("src_3_0_0/modules/getFeatureInfo/components/GetFeatureInfoDetached.vue
             }
         });
 
-        expect(wrapper.find("div").text()).to.be.equal("Hallo");
+        expect(wrapper.find("div > div > span.gfi-title").text()).to.be.equal("Hallo");
     });
 
     it("should have the child component default (-Theme)", () => {
