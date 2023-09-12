@@ -105,7 +105,9 @@ export default {
             const params = wms.makeParams(layerConfig);
 
             params.CRS = layerConfig.crs ? layerConfig.crs : mapCollection.getMapView("2D").getProjection().getCode();
+            params.SRS = params.CRS;
             params.BBOX = this.calculateExtent();
+            params.STYLES = "";
 
             Object.entries(params).forEach(([key, value]) => {
                 if (key !== "WIDTH" && key !== "HEIGHT") {
