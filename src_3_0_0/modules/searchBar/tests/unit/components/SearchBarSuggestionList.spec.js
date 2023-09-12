@@ -55,9 +55,12 @@ describe("src_3_0_0/modules/searchBar/components/SearchBarSuggestionList.vue", (
                 exampleIcon: "bi-signpost-2-fill"
             },
             currentShowAllList: searchResults
-        };
+        },
+        setNavigationCurrentComponentBySideSpy = sinon.spy(),
+        setCurrentComponentBySideSpy = sinon.spy(),
+        setNavigationHistoryBySideSpy = sinon.spy();
 
-    before(() => {
+    beforeEach(() => {
         store = createStore({
             namespaces: true,
             modules: {
@@ -95,9 +98,9 @@ describe("src_3_0_0/modules/searchBar/components/SearchBarSuggestionList.vue", (
                         menuBySide: () => () => true
                     },
                     mutations: {
-                        setNavigationCurrentComponentBySide: sinon.stub(),
-                        setCurrentComponentBySide: sinon.stub(),
-                        setNavigationHistoryBySide: sinon.stub()
+                        setNavigationCurrentComponentBySide: setNavigationCurrentComponentBySideSpy,
+                        setCurrentComponentBySide: setCurrentComponentBySideSpy,
+                        setNavigationHistoryBySide: setNavigationHistoryBySideSpy
                     }
                 }
             }
@@ -150,9 +153,9 @@ describe("src_3_0_0/modules/searchBar/components/SearchBarSuggestionList.vue", (
             await wrapper.vm.prepareShowAllResults("Straße");
             wrapper.vm.$nextTick();
 
-            /* expect(wrapper.vm.setNavigationCurrentComponentBySide.calledOnce).to.be.true;
-            expect(wrapper.vm.setCurrentComponentBySide.calledOnce).to.be.true;
-            expect(wrapper.vm.setNavigationHistoryBySide.calledOnce).to.be.true; */
+            expect(setNavigationCurrentComponentBySideSpy.calledOnce).to.be.true;
+            expect(setCurrentComponentBySideSpy.calledOnce).to.be.true;
+            expect(setNavigationHistoryBySideSpy.calledOnce).to.be.true;
 
             expect(wrapper.vm.searchResultsActive).to.be.true;
             expect(wrapper.vm.currentShowAllList[0]).to.deep.equal(searchResults[0]);
