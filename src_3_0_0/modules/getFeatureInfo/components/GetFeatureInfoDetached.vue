@@ -199,7 +199,7 @@ export default {
     <div>
         <div class="d-flex align-items-center justify-content-between mt-3 mb-4">
             <slot name="pager-left" />
-            <span class="gfi-title font-bold">
+            <span class="gfi-title mx-3 font-bold">
                 {{ translate(title) }}
             </span>
             <slot name="pager-right" />
