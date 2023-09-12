@@ -197,22 +197,24 @@ export default {
 
 <template>
     <div>
-        <h4 class="gfi-title font-bold mb-4">
-            {{ translate(title) }}
-        </h4>
+        <div class="d-flex align-items-center justify-content-between mt-3 mb-4">
+            <slot name="pager-left" />
+            <span class="gfi-title font-bold">
+                {{ translate(title) }}
+            </span>
+            <slot name="pager-right" />
+        </div>
         <component
             :is="theme"
             :feature="feature"
         />
-        <slot name="pager" />
     </div>
 </template>
 
 <style lang="scss" scoped>
 @import "~variables";
 
- .gfi-title {
-    text-align: center;
+.gfi-title {
+    font-size: 1.5rem;
  }
-
 </style>
