@@ -5,6 +5,7 @@ import {getComponent} from "../../../../utils/getComponent";
 import isObject from "../../../../utils/isObject";
 import ToolTemplate from "../../ToolTemplate.vue";
 import getters from "../store/gettersStatisticDashboard";
+import GridComponent from "./StatisticGridComponent.vue";
 import mutations from "../store/mutationsStatisticDashboard";
 import Controls from "./StatisticDashboardControls.vue";
 import StatisticFilter from "./StatisticDashboardFilter.vue";
@@ -16,6 +17,7 @@ export default {
     components: {
         ToolTemplate,
         TableComponent,
+        GridComponent,
         Controls,
         StatisticFilter
     },
@@ -239,14 +241,18 @@ export default {
             <Controls
                 :descriptions="controlDescription"
             />
-            <TableComponent
-                :data="testData"
-                :fixed-data="testFixedData"
-                :select-mode="selectMode"
-                :show-header="showHeader"
-                :sortable="sortable"
-                @setSortedRows="setSortedRows"
-            />
+            <GridComponent>
+                <template>
+                    <TableComponent
+                        :data="testData"
+                        :fixed-data="testFixedData"
+                        :select-mode="selectMode"
+                        :show-header="showHeader"
+                        :sortable="sortable"
+                        @setSortedRows="setSortedRows"
+                    />
+                </template>
+            </GridComponent>
         </template>
     </ToolTemplate>
 </template>
