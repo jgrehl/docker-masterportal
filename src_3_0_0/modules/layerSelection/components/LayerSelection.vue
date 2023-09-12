@@ -144,7 +144,7 @@ export default {
     <div
         v-if="visible"
         :id="'layer-selection'"
-        class="layer-selection"
+        class="w-100 layer-selection"
         aria-label=""
     >
         <div
@@ -240,8 +240,7 @@ export default {
 .layer-selection {
     background-color: $menu-background-color;
     left: 0px;
-    top: 15%;
-    // top: 120px;
+    top: 120px;
     position: absolute;
     padding: $padding;
     height: calc(100% - 100px);
@@ -251,7 +250,7 @@ export default {
 }
 
 .layer-selection-navigation-link {
-    color: black;
+    color: $black;
 }
 .layer-selection-navigation-baselayer {
     overflow-x: scroll;
