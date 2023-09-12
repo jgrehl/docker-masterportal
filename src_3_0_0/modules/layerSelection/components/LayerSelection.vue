@@ -139,7 +139,7 @@ export default {
             <h6 v-if="baselayerConfs.length > 0">
                 {{ $t("common:modules.layerSelection.backgrounds") }}
             </h6>
-            <div class="d-flex justify-content-center layer-selection-navigation-baselayer">
+            <div class="d-flex justify-content-start layer-selection-navigation-baselayer">
                 <a
                     v-if="lastFolderName !== 'root'"
                     id="layer-selection-navigation"
