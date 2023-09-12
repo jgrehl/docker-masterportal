@@ -106,6 +106,8 @@ export default {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+        // Padding, so the Ü dots are visible
+        padding-top: 1px;
     }
 }
 .btn-description {

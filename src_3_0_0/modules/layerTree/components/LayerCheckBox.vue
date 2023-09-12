@@ -196,7 +196,7 @@ export default {
         cursor: pointer;
     }
     .small-text {
-    font-size: $font-size-sm;
+        font-size: $font-size-sm;
     }
 
 </style>
