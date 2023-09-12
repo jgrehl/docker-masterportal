@@ -75,7 +75,7 @@ export default {
          * It only works if the string has the same name as the component (in ./templates).
          * @returns {String} the current view type (Detached or Mobile)
          */
-        currentViewType: function () {
+        currentViewType () {
             return "GetFeatureInfoDetached";
         },
 
@@ -83,11 +83,27 @@ export default {
          * Returns the feature depending on the pager index.
          * @returns {?Object} - the current feature
          */
-        feature: function () {
+        feature () {
             if (this.gfiFeatures !== null && Array.isArray(this.gfiFeatures) && this.gfiFeatures.length > 0) {
                 return this.gfiFeatures[this.pagerIndex];
             }
             return null;
+        },
+
+        /**
+         * Left pager is drawn.
+         * @returns {Boolean} Left pager is drawn.
+         */
+        leftPager () {
+            return this.gfiFeatures.length > 1 && this.pagerIndex > 0;
+        },
+
+        /**
+         * Right pager is drawn.
+         * @returns {Boolean} Right pager is drawn.
+         */
+        rightPager () {
+            return this.gfiFeatures.length > 1 && this.pagerIndex < this.gfiFeatures.length - 1;
         }
     },
     watch: {
@@ -302,23 +318,36 @@ export default {
             @update-feature-done="setUpdatedFeature(true)"
             @close="reset"
         >
-            <!-- Slot Content for Footer -->
+            <!-- Slot Content for pager left -->
             <template
-                #pager
+                #pager-left
             >
-                <div class="gfi-pager mt-3">
+                <div
+                    class="gfi-pager"
+                    :class="!leftPager ? 'gfi-pager-left-margin' : ''"
+                >
                     <IconButton
-                        v-if="gfiFeatures.length > 1 && pagerIndex > 0"
+                        v-if="leftPager"
                         :aria="$t('common:modules.getFeatureInfo.buttonBack')"
                         :class-array="['pager-left', 'pager', 'btn-primary']"
                         :icon="leftIcon"
                         role="button"
                         :interaction="decreasePagerIndex"
                     />
+                </div>
+            </template>
+            <!-- Slot Content for pager right -->
+            <template
+                #pager-right
+            >
+                <div
+                    class="gfi-pager"
+                    :class="!rightPager ? 'gfi-pager-right-margin' : ''"
+                >
                     <IconButton
-                        v-if="gfiFeatures.length > 1 && pagerIndex < gfiFeatures.length - 1"
+                        v-if="rightPager"
                         :aria="$t('common:modules.getFeatureInfo.buttonForward')"
-                        :class-array="['pager-right', 'pager', 'btn-primary']"
+                        :class-array="['pager-right', 'pager', 'btn-primary', 'd-flex', 'flex-row-reverse']"
                         :icon="rightIcon"
                         role="button"
                         :interaction="increasePagerIndex"
@@ -339,16 +368,13 @@ export default {
 
     .gfi-pager {
         background-color: $menu-background-color;
-        position: absolute;
-        width: 100%;
-        top: 45px;
     }
 
-    .pager {
-        position: absolute;
-        &-right {
-            right: 40px
-        }
+    .gfi-pager-left-margin {
+        margin-left: 2.5rem
     }
 
+    .gfi-pager-right-margin {
+        margin-right: 2.5rem
+    }
 </style>
