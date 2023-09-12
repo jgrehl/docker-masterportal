@@ -6,7 +6,7 @@ config.global.mocks.$t = key => key;
 
 describe("src_3_0_0/shared/components/IconButton.vue", () => {
 
-    it.only("should render a slider and trigger the given interaction on change", () => {
+    it("should render a slider and trigger the given interaction on change", () => {
         const wrapper = mount(SliderItem, {
                 propsData: {
                     aria: "Aria-Label hier einfügen"
