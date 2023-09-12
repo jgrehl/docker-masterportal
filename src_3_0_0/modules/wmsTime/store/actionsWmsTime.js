@@ -52,9 +52,13 @@ export default {
                 });
             }
             else if (state.timeSlider.active) {
-                const currentLayerConf = rootGetters.layerConfigById(state.timeSlider.currentLayerId),
+                let currentLayerConf = rootGetters.layerConfigById(state.timeSlider.currentLayerId),
                     visLayerConf = layerConfig.find(layerConf => layerConf.id === currentLayerConf.id);
 
+                if (state.layerSwiper.targetLayer) {
+                    currentLayerConf = rootGetters.layerConfigById(state.layerSwiper.targetLayer.get("id"));
+                    visLayerConf = layerConfig.find(layerConf => layerConf.id === currentLayerConf.id);
+                }
                 if (!visLayerConf) {
                     commit("setTimeSliderActive", {
                         active: false,
@@ -93,26 +97,40 @@ export default {
 
             commit("setLayerSwiperSourceLayer", layer);
 
-            await dispatch("addLayerToLayerConfig", {
-                layerConfig: {
-                    id: secondId,
-                    name: name + "_second",
-                    showInLayerTree: true,
-                    typ: "WMS",
-                    type: "layer",
-                    visibility: true,
-                    time,
-                    url,
-                    level,
-                    layers,
-                    version,
-                    parentId,
-                    legendURL: "ignore",
-                    gfiAttributes: gfiAttributes,
-                    featureCount: featureCount
-                },
-                parentKey: treeSubjectsKey
-            }, {root: true});
+            if (!layerCollection.getLayerById(secondId)) {
+                await dispatch("addLayerToLayerConfig", {
+                    layerConfig: {
+                        id: secondId,
+                        name: name + "_second",
+                        showInLayerTree: true,
+                        typ: "WMS",
+                        type: "layer",
+                        visibility: true,
+                        time,
+                        url,
+                        level,
+                        layers,
+                        version,
+                        parentId,
+                        legendURL: "ignore",
+                        gfiAttributes: gfiAttributes,
+                        featureCount: featureCount
+                    },
+                    parentKey: treeSubjectsKey
+                }, {root: true});
+            }
+            else {
+                dispatch("replaceByIdInLayerConfig", {
+                    layerConfigs: [{
+                        id: secondId,
+                        layer: {
+                            id: secondId,
+                            visibility: true,
+                            showInLayerTree: true
+                        }
+                    }]
+                }, {root: true});
+            }
 
             commit("setLayerSwiperTargetLayer", layerCollection.getLayerById(secondId));
         }
@@ -147,6 +165,9 @@ export default {
                     }
                 }]
             }, {root: true});
+
+            commit("setLayerSwiperSourceLayer", null);
+            commit("setLayerSwiperTargetLayer", null);
         }
     },
     /**
