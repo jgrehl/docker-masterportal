@@ -12,6 +12,7 @@ const {
     openGetFeatureInfo,
     setMarker,
     showInTree,
+    showLayerInfo,
     zoomToResult
 } = actions;
 
@@ -135,6 +136,48 @@ describe("src/modules/searchBar/store/actions/actionsSearchBarSearchResult.spec.
             expect(dispatch.secondCall.args[1]).to.be.deep.equals({
                 layerId: "123"
             });
+        });
+    });
+
+    describe("showLayerInfo", () => {
+        it("should call startLayerInformation - layer in layerConfig", () => {
+            const layerId = "123",
+                config = {
+                    layerId
+                },
+                rootGetters = {
+                    layerConfigById: () => config
+                };
+
+            showLayerInfo({dispatch, commit, rootGetters}, {layerId});
+
+            expect(dispatch.calledOnce).to.be.true;
+            expect(dispatch.firstCall.args[0]).to.equals("Modules/LayerInformation/startLayerInformation");
+            expect(dispatch.firstCall.args[1]).to.be.deep.equals(config);
+            expect(commit.calledOnce).to.be.true;
+            expect(commit.firstCall.args[0]).to.equals("Modules/LayerSelection/setLayerInfoVisible");
+            expect(commit.firstCall.args[1]).to.be.true;
+        });
+
+        it("should call startLayerInformation - layer not in layerConfig", () => {
+            const layerId = "123",
+                config = {
+                    layerId
+                },
+                rootGetters = {
+                    layerConfigById: () => false
+                };
+
+            sinon.stub(rawLayerList, "getLayerWhere").returns(config);
+
+            showLayerInfo({dispatch, commit, rootGetters}, {layerId});
+
+            expect(dispatch.calledOnce).to.be.true;
+            expect(dispatch.firstCall.args[0]).to.equals("Modules/LayerInformation/startLayerInformation");
+            expect(dispatch.firstCall.args[1]).to.be.deep.equals(config);
+            expect(commit.calledOnce).to.be.true;
+            expect(commit.firstCall.args[0]).to.equals("Modules/LayerSelection/setLayerInfoVisible");
+            expect(commit.firstCall.args[1]).to.be.true;
         });
     });
 

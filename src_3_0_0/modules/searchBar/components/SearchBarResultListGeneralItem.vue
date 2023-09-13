@@ -52,15 +52,16 @@ export default {
                     {{ searchResult.name }}
                 </span>
             </button>
-            <div
-                v-for="action, i in Object.keys(actions)"
-                :key="i"
-                class="ms-auto mt-1 d-flex"
-            >
-                <ActionButton
-                    :action-name="action"
-                    :action-args="actions[action]"
-                />
+            <div class="ms-auto mt-1 d-flex">
+                <div
+                    v-for="action, i in Object.keys(actions)"
+                    :key="i"
+                >
+                    <ActionButton
+                        :action-name="action"
+                        :action-args="actions[action]"
+                    />
+                </div>
             </div>
         </div>
     </div>
