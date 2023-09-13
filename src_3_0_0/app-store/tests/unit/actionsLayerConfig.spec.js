@@ -26,7 +26,10 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
                 typ: "WMS",
                 datasets: [{
                     md_id: "B6A59A2B-2D40-4676-9094-0EB73039ED34",
-                    md_name: "md_name_453"
+                    md_name: "md_name_453",
+                    kategorie_opendata: ["Umwelt"],
+                    kategorie_inspire: ["Gebäude"],
+                    kategorie_organisation: "Landesbetrieb Geoinformation und Vermessung"
                 }],
                 zIndex: 0
             },
@@ -36,7 +39,10 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
                 typ: "WMS",
                 datasets: [{
                     md_id: "B6A59A2B-2D40-4676-9094-efg",
-                    md_name: "md_name_452"
+                    md_name: "md_name_452",
+                    kategorie_opendata: ["Umwelt"],
+                    kategorie_inspire: ["Gebäude"],
+                    kategorie_organisation: "Landesbetrieb Geoinformation und Vermessung"
                 }],
                 zIndex: 1
             },
@@ -46,7 +52,10 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
                 typ: "SENSORTHINGS",
                 datasets: [{
                     md_id: "B6A59A2B-2D40-4676-9094-abc",
-                    md_name: "md_name_1132"
+                    md_name: "md_name_1132",
+                    kategorie_opendata: ["Umwelt"],
+                    kategorie_inspire: ["Gebäude"],
+                    kategorie_organisation: "Landesbetrieb Geoinformation und Vermessung"
                 }],
                 zIndex: 2
             },
@@ -56,7 +65,10 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
                 typ: "WFS",
                 datasets: [{
                     md_id: "B6A59A2B-2D40-4676-9094-hghghg",
-                    md_name: "md_name_10220"
+                    md_name: "md_name_10220",
+                    kategorie_opendata: ["Verkehr"],
+                    kategorie_inspire: ["kein INSPIRE-Thema"],
+                    kategorie_organisation: "Landesbetrieb Straßen, Brücken und Gewässer"
                 }],
                 zIndex: 3
             },
@@ -64,7 +76,8 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
                 id: "451",
                 name: "name451",
                 typ: "WFS",
-                zIndex: 4
+                zIndex: 4,
+                datasets: []
             },
             {
                 id: "1103",
@@ -73,7 +86,10 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
                 transparent: true,
                 transparency: 0,
                 datasets: [{
-                    md_id: "0879B86F-4F44-45AA-BA5B-021D9D30AAEF"
+                    md_id: "0879B86F-4F44-45AA-BA5B-021D9D30AAEF",
+                    kategorie_opendata: ["Verkehr"],
+                    kategorie_inspire: ["kein INSPIRE-Thema"],
+                    kategorie_organisation: "Landesbetrieb Straßen, Brücken und Gewässer"
                 }],
                 zIndex: 5
             },
@@ -84,7 +100,8 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
                 maxScale: "10000",
                 minScale: "10",
                 typ: "WMS",
-                zIndex: 6
+                zIndex: 6,
+                datasets: []
             },
             {
                 id: "718",
@@ -93,7 +110,8 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
                 maxScale: "30000",
                 minScale: "30",
                 typ: "WMS",
-                zIndex: 7
+                zIndex: 7,
+                datasets: []
             },
             {
                 id: "719",
@@ -102,7 +120,8 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
                 maxScale: "20000",
                 minScale: "20",
                 typ: "WMS",
-                zIndex: 8
+                zIndex: 8,
+                datasets: []
             }
         ];
         layerConfig = {};
@@ -679,4 +698,77 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
             });
         });
     });
+
+    describe("changeCategory", () => {
+        const invisibleBaselayer = [
+                {
+                    id: "baselayer1",
+                    isBaselayer: true
+                }
+            ],
+            rootGetters = {
+                invisibleBaselayerConfigs: invisibleBaselayer
+            },
+            categories = [
+                {
+                    "key": "kategorie_opendata",
+                    "name": "common:modules.layerTree.categoryOpendata",
+                    "active": true
+                },
+                {
+                    "key": "kategorie_inspire",
+                    "name": "common:modules.layerTree.categoryInspire"
+                },
+                {
+                    "key": "kategorie_organisation",
+                    "name": "common:modules.layerTree.categoryOrganisation"
+                }
+            ];
+
+        beforeEach(() => {
+            state.portalConfig = {
+                tree: {
+                    type: "auto",
+                    validLayerTypesAutoTree: ["WMS", "SENSORTHINGS", "TERRAIN3D", "TILESET3D", "OBLIQUE"],
+                    categories
+                }
+            };
+
+            state.layerConfig = layerConfig;
+        });
+        it("changes the category to inspire", () => {
+            actions.changeCategory({commit, dispatch, rootGetters, state}, {category: categories[1]});
+
+            expect(commit.calledOnce).to.be.true;
+            expect(commit.firstCall.args[0]).to.equals("setLayerConfigByParentKey");
+            expect(commit.firstCall.args[1].layerConfigs.elements[0].name).to.be.equals("Gebäude");
+            expect(commit.firstCall.args[1].layerConfigs.elements[1].name).to.be.equals("kein INSPIRE-Thema");
+            expect(commit.firstCall.args[1].parentKey).to.be.equals(treeSubjectsKey);
+            expect(dispatch.calledOnce).to.be.true;
+            expect(dispatch.firstCall.args[0]).to.equals("Modules/LayerSelection/navigateForward");
+            expect(dispatch.firstCall.args[1].lastFolderName).to.equals("root");
+            expect(dispatch.firstCall.args[1].subjectDataLayerConfs[0].name).to.equals("Gebäude");
+            expect(dispatch.firstCall.args[1].subjectDataLayerConfs[1].name).to.equals("kein INSPIRE-Thema");
+            expect(dispatch.firstCall.args[1].baselayerConfs).to.deep.equals(invisibleBaselayer);
+            expect(buildSpy.calledOnce).to.be.true;
+        });
+
+        it("changes the category to organisation", () => {
+            actions.changeCategory({commit, dispatch, rootGetters, state}, {category: categories[2]});
+
+            expect(commit.calledOnce).to.be.true;
+            expect(commit.firstCall.args[0]).to.equals("setLayerConfigByParentKey");
+            expect(commit.firstCall.args[1].layerConfigs.elements[0].name).to.be.equals("Landesbetrieb Geoinformation und Vermessung");
+            expect(commit.firstCall.args[1].layerConfigs.elements[1].name).to.be.equals("Landesbetrieb Straßen, Brücken und Gewässer");
+            expect(commit.firstCall.args[1].parentKey).to.be.equals(treeSubjectsKey);
+            expect(dispatch.calledOnce).to.be.true;
+            expect(dispatch.firstCall.args[0]).to.equals("Modules/LayerSelection/navigateForward");
+            expect(dispatch.firstCall.args[1].lastFolderName).to.equals("root");
+            expect(dispatch.firstCall.args[1].subjectDataLayerConfs[0].name).to.equals("Landesbetrieb Geoinformation und Vermessung");
+            expect(dispatch.firstCall.args[1].subjectDataLayerConfs[1].name).to.equals("Landesbetrieb Straßen, Brücken und Gewässer");
+            expect(dispatch.firstCall.args[1].baselayerConfs).to.deep.equals(invisibleBaselayer);
+            expect(buildSpy.calledOnce).to.be.true;
+        });
+    });
+
 });
