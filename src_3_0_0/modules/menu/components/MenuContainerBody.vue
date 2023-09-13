@@ -122,10 +122,10 @@ export default {
         display: flex;
         flex-direction: column;
         align-items: stretch;
-        padding: $padding $padding 0 $padding;
+        padding: $padding $padding $padding $padding;
         font-size: $font-size-base;
         overflow-y: auto;
-        height: 95%;
+        height: 100%;
         max-height: 100%;
 
         &-collapsed {
