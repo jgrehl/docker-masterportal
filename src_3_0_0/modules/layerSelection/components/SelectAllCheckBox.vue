@@ -65,7 +65,7 @@ export default {
 <template lang="html">
     <button
         :id="'select-all-layers-' + ids()"
-        class="d-flex w-100 layer-tree-select-all mt-3 pe-2 p-1 btn-transparent"
+        class="btn d-flex w-100 layer-tree-select-all mt-3 pe-2 p-1 btn-light"
         @click="clicked()"
         @keydown.enter="clicked()"
     >
@@ -85,11 +85,7 @@ export default {
             tabindex="0"
             :aria-label="$t('common:modules.layerSelection.selectAll')"
         >
-            <span
-                class="small-text"
-            >
-                {{ $t("common:modules.layerSelection.selectAll") }}
-            </span>
+            {{ $t("common:modules.layerSelection.selectAll") }}
         </label>
     </button>
 </template>
@@ -97,10 +93,6 @@ export default {
 <style lang="scss" scoped>
     @import "~variables";
     @import "~mixins";
-    .btn-transparent {
-        background-color: transparent;
-        border:none;
-    }
     .layer-tree-select-all {
         border-radius: 15px;
         &:hover {
@@ -113,9 +105,6 @@ export default {
     }
     .layer-tree-layer-label {
         cursor: pointer;
-    }
-    .small-text {
-        font-size: $font-size-sm;
     }
 
 </style>
