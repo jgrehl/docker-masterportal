@@ -21,15 +21,16 @@ describe("src_3_0_0/modules/about/components/AboutModule.vue", () => {
                         About: {
                             namespaced: true,
                             getters: {
-                                title: () => "",
-                                downloadLink: () => "",
-                                version: () => "",
-                                metaUrl: () => "",
                                 abstractText: () => "Test",
-                                noMetadataLoaded: () => "",
                                 contact: () => null,
                                 logo: () => "",
-                                showAdditionalMetaData: () => true
+                                logoLink: () => "",
+                                metaUrl: () => "",
+                                noMetadataLoaded: () => "",
+                                showAdditionalMetaData: () => true,
+                                title: () => "",
+                                version: () => "3.0.0",
+                                versionLink: () => ""
                             },
                             actions: {
                                 initializeAboutInfo: () => sinon.stub()
@@ -66,15 +67,11 @@ describe("src_3_0_0/modules/about/components/AboutModule.vue", () => {
             }
         });
 
-        expect(wrapper.find(".logoAndVersion")).to.exist;
-    });
-    it("should have a logo and version", async () => {
-        const wrapper = mount(AboutComponent, {
-            global: {
-                plugins: [store]
-            }
-        });
-
-        expect(wrapper.find(".logoAndVersion")).to.exist;
+        expect(wrapper.find("div.logoAndVersion")).to.exist;
+        expect(wrapper.find("div.logoAndVersion > a.logo")).to.exist;
+        expect(wrapper.find("div.logoAndVersion > a.logo > img")).to.exist;
+        expect(wrapper.find("div.logoAndVersion > span.version")).to.exist;
+        expect(wrapper.find("div.logoAndVersion > span.version > a")).to.exist;
+        expect(wrapper.find("div.logoAndVersion > span.version > a").text()).to.equals("common:modules.about.version3.0.0");
     });
 });
