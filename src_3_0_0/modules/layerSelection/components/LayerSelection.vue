@@ -170,45 +170,37 @@ export default {
             </label>
         </div>
         <div class="layer-selection-navigation">
-            <div
-                v-if="baselayerConfs.length > 0"
-            >
-                <h6
-                    class="pb-2"
-                >
-                    {{ $t("common:modules.layerSelection.backgrounds") }}:
-                </h6>
-                <div
-                    class="d-flex layer-selection-navigation-baselayer"
-                >
-                    <template
-                        v-for="(bgConf, index) in baselayerConfs"
-                        :key="index"
-                    >
-                        <LayerCheckBox
-                            :conf="bgConf"
-                            :is-layer-tree="false"
-                        />
-                    </template>
-                </div>
-            </div>
-            <div class="d-flex">
+            <h6 v-if="baselayerConfs.length > 0">
+                {{ $t("common:modules.layerSelection.backgrounds") }}
+            </h6>
+            <div class="d-flex justify-content-start layer-selection-navigation-baselayer">
                 <a
                     v-if="lastFolderName !== 'root'"
                     id="layer-selection-navigation"
-                    class="d-flex layer-selection-navigation-link pb-3"
+                    class="p-2 mp-menu-navigation"
                     href="#"
                     @click="navigate('back')"
                     @keypress="navigate('back')"
                 >
-                    <p class="bi-chevron-left me-2" /><h5>{{ lastFolderName }}</h5>
+                    <h6 class="mp-menu-navigation-link mb-3"><p class="bi-chevron-left" />{{ lastFolderName }}</h6>
                 </a>
+                <template
+                    v-for="(bgConf, index) in baselayerConfs"
+                    :key="index"
+                >
+                    <div class="col">
+                        <LayerCheckBox
+                            :conf="bgConf"
+                            :is-layer-tree="false"
+                        />
+                    </div>
+                </template>
             </div>
             <hr
                 v-if="baselayerConfs.length > 0"
                 class="m-2"
             >
-            <div class="align-items-left layer-selection-navigation-dataLayer">
+            <div class="align-items-left justify-content-center layer-selection-navigation-dataLayer">
                 <template
                     v-for="(conf, index) in subjectDataLayerConfs"
                     :key="index"
@@ -244,14 +236,12 @@ export default {
     position: absolute;
     padding: $padding;
     height: calc(100% - 100px);
+    padding-top: 0;
 }
 .layer-selection-navigation {
     height: 90%;
 }
 
-.layer-selection-navigation-link {
-    color: $black;
-}
 .layer-selection-navigation-baselayer {
     overflow-x: scroll;
 }
