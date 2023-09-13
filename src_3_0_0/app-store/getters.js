@@ -28,6 +28,16 @@ const getters = {
     },
 
     /**
+     * Returns all categories defined in config.json.
+     * @param {Object} state state of the app-store.
+     * @returns {Array} all categories defined in config.json
+     */
+    allCategories: state => {
+        return state.portalConfig?.tree?.categories;
+    },
+
+
+    /**
      * Returns whether all configs were loaded.
      * @param {Object} state state of the app-store.
      * @returns {Boolean} True, if all configs are loaded.
