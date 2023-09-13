@@ -491,7 +491,7 @@
     "layerSelection": {
       "addSubject": "Add subject",
       "baselayers": "Baselayers",
-      "selectAll": "select all",
+      "selectAll": "Select all",
       "selectedSubjectsCount_other": "Please select a topic",
       "addSelectedSubjectsToMap_one": "Add selected topic to the map",
       "addSelectedSubjectsToMap_other": "Add {{count}} selected topics to the map"
@@ -867,7 +867,7 @@
           },
           "inputRangeLabel": "Choose a point in time"
       }
-  },
+    }
   },
   "shared": {
     "js": {

@@ -492,7 +492,7 @@
     "layerSelection": {
       "addSubject": "Thema hinzufügen",
       "backgrounds": "Hintergründe",
-      "selectAll": "alle auswählen",
+      "selectAll": "Alle auswählen",
       "selectedSubjectsCount_other": "Bitte wählen sie ein Thema aus",
       "addSelectedSubjectsToMap_one": "Ausgewähltes Thema der Karte hinzufügen",
       "addSelectedSubjectsToMap_other": "{{count}} ausgewählte Themen der Karte hinzufügen"
@@ -510,7 +510,7 @@
       "titleNotConfigured": "Titel nicht konfiguriert"
     },
     "layerTree": {
-      "addLayer": "hinzufügen",
+      "addLayer": "Hinzufügen",
       "categories": "Kategorien",
       "categoryInspire": "Inspire",
       "categoryOpendata": "Opendata",
