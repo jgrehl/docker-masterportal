@@ -10,6 +10,7 @@ config.global.mocks.$t = key => key;
 describe("src_3_0_0/modules/layerSelection/components/LayerSelection.vue", () => {
     let store,
         wrapper,
+        categories,
         layerBG_1,
         layerBG_2,
         layer2D_1,
@@ -18,9 +19,26 @@ describe("src_3_0_0/modules/layerSelection/components/LayerSelection.vue", () =>
         subjectDataLayers,
         layersWithFolder,
         layersBG,
-        layersToAdd;
+        layersToAdd,
+        changeCategorySpy;
 
     beforeEach(() => {
+        categories = [
+            {
+                "key": "kategorie_opendata",
+                "name": "common:modules.layerTree.categoryOpendata",
+                "active": true
+            },
+            {
+                "key": "kategorie_inspire",
+                "name": "common:modules.layerTree.categoryInspire"
+            },
+            {
+                "key": "kategorie_organisation",
+                "name": "common:modules.layerTree.categoryOrganisation"
+            }
+        ];
+        changeCategorySpy = sinon.spy();
         layersToAdd = [];
         layer2D_1 = {
             id: "1",
@@ -91,11 +109,21 @@ describe("src_3_0_0/modules/layerSelection/components/LayerSelection.vue", () =>
                         namespaced: true,
                         LayerSelection
                     }
-
+                },
+                Maps: {
+                    namespaced: true,
+                    getters: {
+                        mode: sinon.stub()
+                    }
                 }
             },
             getters: {
-                invisibleBaselayerConfigs: sinon.stub()
+                invisibleBaselayerConfigs: sinon.stub(),
+                activeOrFirstCategory: () => categories ? categories[0] : undefined,
+                allCategories: () => categories
+            },
+            actions: {
+                changeCategory: changeCategorySpy
             }
         });
         LayerSelection.getters.layersToAdd = () => layersToAdd;
@@ -142,6 +170,33 @@ describe("src_3_0_0/modules/layerSelection/components/LayerSelection.vue", () =>
         expect(wrapper.findAll("layer-selection-tree-node-stub").length).to.be.equals(1);
         expect(wrapper.find("flat-button-stub").exists()).to.be.true;
     });
+
+    it("renders the LayerSelection without categories", () => {
+        categories = undefined;
+        wrapper = shallowMount(LayerSelectionComponent, {
+            global: {
+                plugins: [store]
+            }});
+
+        expect(wrapper.find("#layer-selection").exists()).to.be.true;
+        expect(wrapper.find("#select_category").exists()).to.be.false;
+        expect(wrapper.findAll("option").length).to.be.equals(0);
+    });
+
+    it("renders the LayerSelection - check categories select", () => {
+        wrapper = shallowMount(LayerSelectionComponent, {
+            global: {
+                plugins: [store]
+            }});
+
+        expect(wrapper.find("#layer-selection").exists()).to.be.true;
+        expect(wrapper.find("#select_category").exists()).to.be.true;
+        expect(wrapper.findAll("option").length).to.be.equals(3);
+        expect(wrapper.findAll("option").at(0).text()).to.be.equals("common:modules.layerTree.categoryOpendata");
+        expect(wrapper.findAll("option").at(1).text()).to.be.equals("common:modules.layerTree.categoryInspire");
+        expect(wrapper.findAll("option").at(2).text()).to.be.equals("common:modules.layerTree.categoryOrganisation");
+    });
+
 
     it("renders the LayerSelection with all levels of folder-buttons without bg-layers ", async () => {
         wrapper = shallowMount(LayerSelectionComponent, {
@@ -201,6 +256,18 @@ describe("src_3_0_0/modules/layerSelection/components/LayerSelection.vue", () =>
         expect(sorted[0].type).to.be.equals("folder");
         expect(sorted[1].type).to.be.equals("layer");
         expect(sorted[2].type).to.be.equals("layer");
+    });
+
+    it("test method categorySelected", () => {
+        wrapper = shallowMount(LayerSelectionComponent, {
+            global: {
+                plugins: [store]
+            }});
+
+        wrapper.vm.categorySelected(categories[1].key);
+
+        expect(changeCategorySpy.calledOnce).to.be.true;
+        expect(changeCategorySpy.firstCall.args[1]).to.deep.equals({category: categories[1]});
     });
 
     describe("watcher", () => {

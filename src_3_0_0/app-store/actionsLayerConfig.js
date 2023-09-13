@@ -192,6 +192,27 @@ export default {
     },
 
     /**
+     * Changes the sorting of layerConfigs to the given category and displays them in layerSelection.
+     * @param {Object} param.commit the commit
+     * @param {Object} param.dispatch the dispatch
+     * @param {Object} param.rootGetters the rootGetters
+     * @param {Object} param.state the state
+     * @param {Object} category the category to change to
+     * @returns {void}
+     */
+    changeCategory ({commit, dispatch, rootGetters, state}, {category}) {
+        const layerContainer = getNestedValues(state.layerConfig, "elements", true).flat(Infinity),
+            layersStructured = buildTreeStructure.build(state.layerConfig, category, layerContainer);
+
+        commit("setLayerConfigByParentKey", {layerConfigs: layersStructured, parentKey: treeSubjectsKey});
+        dispatch("Modules/LayerSelection/navigateForward", {
+            lastFolderName: "root",
+            subjectDataLayerConfs: layersStructured.elements,
+            baselayerConfs: rootGetters.invisibleBaselayerConfigs
+        }, {root: true});
+    },
+
+    /**
      * Updates the layer configs with raw layer attributes.
      * @param {Object} param.commit the commit
      * @param {Object} param.state the state
