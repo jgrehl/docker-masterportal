@@ -47,6 +47,7 @@ const state = {
         addLayerToTopicTree: "bi-plus-circle",
         activateLayerInTopicTree: "bi-eye",
         showInTree: "bi-folder2-open",
+        showLayerInfo: "bi-info-circle",
         highlightFeature: "bi-lightbulb",
         openGetFeatureInfo: "bi-info-circle",
         setMarker: "bi-geo-alt-fill",

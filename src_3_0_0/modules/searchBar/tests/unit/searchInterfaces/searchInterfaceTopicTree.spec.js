@@ -78,6 +78,9 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceTopicTree.
                             buttons: {
                                 showInTree: {
                                     layerId: "1"
+                                },
+                                showLayerInfo: {
+                                    layerId: "1"
                                 }
                             }
                         },
@@ -134,6 +137,9 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceTopicTree.
                             buttons: {
                                 showInTree: {
                                     layerId: "1"
+                                },
+                                showLayerInfo: {
+                                    layerId: "1"
                                 }
                             }
                         },
@@ -153,6 +159,9 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceTopicTree.
                             },
                             buttons: {
                                 showInTree: {
+                                    layerId: "3"
+                                },
+                                showLayerInfo: {
                                     layerId: "3"
                                 }
                             }
@@ -190,6 +199,9 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceTopicTree.
                         },
                         buttons: {
                             showInTree: {
+                                layerId: "1"
+                            },
+                            showLayerInfo: {
                                 layerId: "1"
                             }
                         }
@@ -356,6 +368,9 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceTopicTree.
                         layerId: "1"
                     },
                     showInTree: {
+                        layerId: "1"
+                    },
+                    showLayerInfo: {
                         layerId: "1"
                     }
                 }
