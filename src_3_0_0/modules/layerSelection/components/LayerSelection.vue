@@ -28,7 +28,7 @@ export default {
     },
     computed: {
         ...mapGetters("Maps", ["mode"]),
-        ...mapGetters(["invisibleBaselayerConfigs"]),
+        ...mapGetters(["activeOrFirstCategory", "allCategories", "invisibleBaselayerConfigs"]),
         ...mapGetters("Modules/LayerSelection", ["visible", "subjectDataLayerConfs", "baselayerConfs", "layersToAdd", "lastFolderNames", "layerInfoVisible", "highlightLayerId"]),
         lastFolderName () {
             return this.lastFolderNames[this.lastFolderNames.length - 1];
@@ -64,6 +64,7 @@ export default {
         this.setLayerInfoVisible(false);
     },
     methods: {
+        ...mapActions(["changeCategory"]),
         ...mapActions("Modules/LayerSelection", ["updateLayerTree", "navigateBack", "navigateForward", "reset"]),
         ...mapMutations("Modules/LayerSelection", ["setLayerInfoVisible", "setBaselayerConfs"]),
 
@@ -123,6 +124,17 @@ export default {
                     this.selectAllConfId = conf.id;
                 }
             });
+        },
+        categorySelected (value) {
+            if (typeof value === "string") {
+                const category = this.allCategories.find(aCategory => aCategory.key === value);
+
+                this.allCategories.forEach(aCategory => {
+                    aCategory.active = false;
+                });
+                category.active = true;
+                this.changeCategory({category});
+            }
         }
     }
 };
@@ -135,6 +147,28 @@ export default {
         class="w-100 layer-selection"
         aria-label=""
     >
+        <div
+            v-if="activeOrFirstCategory"
+            class="form-floating mb-3"
+        >
+            <select
+                id="select_category"
+                :value="activeOrFirstCategory.key"
+                class="form-select"
+                @change.prevent="categorySelected($event.target.value)"
+            >
+                <option
+                    v-for="category in allCategories"
+                    :key="category.key"
+                    :value="category.key"
+                >
+                    {{ $t(category.name) }}
+                </option>
+            </select>
+            <label for="select_category">
+                {{ $t("common:modules.layerTree.categories") }}
+            </label>
+        </div>
         <div class="layer-selection-navigation">
             <h6 v-if="baselayerConfs.length > 0">
                 {{ $t("common:modules.layerSelection.backgrounds") }}
