@@ -53,7 +53,6 @@ export default {
     i {
         font-size: 1.5rem;
         padding-right: .5rem;
-        padding-top: 0.4rem;
     }
 }
 </style>
