@@ -98,6 +98,9 @@ export default {
     }
     .btn-texts {
         text-align: left;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
         .btn-description {
             font-size: $font-size-sm;
         }
@@ -107,7 +110,7 @@ export default {
         overflow: hidden;
         text-overflow: ellipsis;
         // Padding, so the Ü dots are visible
-        padding-top: 1px;
+        padding-top: 2px;
     }
 }
 .btn-description {

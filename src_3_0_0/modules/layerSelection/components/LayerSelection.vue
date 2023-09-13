@@ -188,7 +188,7 @@ export default {
                     v-for="(bgConf, index) in baselayerConfs"
                     :key="index"
                 >
-                    <div class="col">
+                    <div class="col baselayer">
                         <LayerCheckBox
                             :conf="bgConf"
                             :is-layer-tree="false"
@@ -235,7 +235,7 @@ export default {
     top: 120px;
     position: absolute;
     padding: $padding;
-    height: calc(100% - 100px);
+    height: calc(100% - 50px);
     padding-top: 0;
 }
 .layer-selection-navigation {
@@ -266,5 +266,8 @@ export default {
     .layer-selection-navigation-baselayer {
         overflow-x: auto;
     }
+}
+.baselayer {
+    min-width: 40%;
 }
 </style>
