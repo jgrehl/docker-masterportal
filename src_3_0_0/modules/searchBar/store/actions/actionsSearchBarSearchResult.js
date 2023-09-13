@@ -96,6 +96,28 @@ export default {
         }
     },
 
+    /**
+     * Open the layer information.
+     * @param {Object} param.dispatch the dispatch
+     * @param {Object} payload The payload.
+     * @param {String} payload.layerId The layer id.
+     * @returns {void}
+     */
+    showLayerInfo: ({dispatch, commit, rootGetters}, {layerId}) => {
+        let layerConfig = rootGetters.layerConfigById(layerId);
+
+        if (!layerConfig) {
+            layerConfig = rawLayerList.getLayerWhere({id: layerId});
+        }
+        if (layerConfig) {
+            dispatch("Modules/LayerInformation/startLayerInformation", layerConfig, {root: true});
+            commit("Modules/LayerSelection/setLayerInfoVisible", true, {root: true});
+        }
+        else {
+            console.warn("Cannot show info for layer with id ", layerId, ": is not contained in services.json");
+        }
+    },
+
 
     /**
      * Highlight feature of the search result.
