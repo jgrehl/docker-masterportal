@@ -78,11 +78,11 @@ export default {
 </script>
 
 <template>
+    <SelectAllCheckBox
+        v-if="showSelectAllCheckBox"
+        :confs="selectAllConfigs"
+    />
     <div :id="'layer-selection-treenode-' + (conf.id ? conf.id : conf.name?.replace(/\s/g, ''))">
-        <SelectAllCheckBox
-            v-if="showSelectAllCheckBox"
-            :confs="selectAllConfigs"
-        />
         <div v-if="showFolder()">
             <LightButton
                 :interaction="folderClicked"
