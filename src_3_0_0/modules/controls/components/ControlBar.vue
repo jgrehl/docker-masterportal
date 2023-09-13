@@ -202,4 +202,13 @@ export default {
             display: block;
         }
     }
+
+    @include media-breakpoint-down(md) {
+        .btn-group-controls {
+            display: block;
+            bottom: inherit;
+            top: 1rem;
+            right: 1rem;
+        }
+    }
 </style>
