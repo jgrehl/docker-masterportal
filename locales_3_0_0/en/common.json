@@ -506,6 +506,7 @@
     },
     "layerTree": {
       "addLayer": "Add layer",
+      "categories": "Categories",
       "categoryInspire": "Inspire",
       "categoryOpendata": "Opendata",
       "categoryOrganisation": "Government agencies",
