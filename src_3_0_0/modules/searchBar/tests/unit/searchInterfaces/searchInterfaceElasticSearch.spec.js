@@ -268,6 +268,9 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceElasticSea
                         buttons: {
                             showInTree: {
                                 layerId: "123"
+                            },
+                            showLayerInfo: {
+                                layerId: "123"
                             }
                         }
                     },
@@ -312,6 +315,9 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceElasticSea
                         name: searchResult._source.name
                     },
                     showInTree: {
+                        layerId: searchResult._source.id
+                    },
+                    showLayerInfo: {
                         layerId: searchResult._source.id
                     }
                 }
