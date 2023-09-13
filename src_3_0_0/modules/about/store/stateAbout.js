@@ -10,15 +10,17 @@
  * @property {String} abstractText the abstract Info text
  * @property {Object} contact the metadata contact
  * @property {String} cswUrl the csw metadata URL
- * @property {String} downloadLink the link to download the example *
  * @property {String} logo the masterportal logo
+ * @property {String} logoLink the link to https://masterportal.org
  * @property {String} logoText the alternate text if the the masterportal logo cannot be displayed
  * @property {String} metaDataCatalogueId id of the MateDataCatalogue
+ * @property {String} metaId id of the MateData
  * @property {String} metaUrl the metadata URL
  * @property {String} noMetadataLoaded no metadata Loaded Text
  * @property {Boolean} showAdditionalMetaData parameter to show the metadata link for more information
  * @property {String} title the metadata title
  * @property {String} version the current mp version
+ * @property {String} versionLink link to the masteprortal downloads
  */
 export default {
     icon: "bi-info-circle",
@@ -29,13 +31,15 @@ export default {
     abstractText: "",
     contact: null,
     cswUrl: "",
-    downloadLink: "",
-    logo: "",
+    logo: "../../src_3_0_0/assets/img/Logo_Masterportal.svg",
+    logoLink: "https://masterportal.org",
     logoText: "Masterportallogo",
     metaDataCatalogueId: "2",
+    metaId: "",
     metaUrl: "",
     noMetadataLoaded: "",
     showAdditionalMetaData: true,
     title: "",
-    version: ""
+    version: "",
+    versionLink: "https://bitbucket.org/geowerkstatt-hamburg/masterportal/downloads/"
 };
