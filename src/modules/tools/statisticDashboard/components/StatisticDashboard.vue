@@ -32,6 +32,26 @@ export default {
                     ["Niedersachsen", 34844, 1234]
                 ]
             },
+            testGridData: [
+                {
+                    headers: ["Raumeinheit", "2023", "2022"],
+                    items: [
+                        ["Harburg", 1234, 1234],
+                        ["Ludwigslust Parchim", 23456, 1234],
+                        ["Lübeck", 23475, 1234],
+                        ["Niedersachsen", 34844, 1234]
+                    ]
+                },
+                {
+                    headers: ["Raumeinheit", "2023", "2022"],
+                    items: [
+                        ["Harburg", 1234, 1234],
+                        ["Ludwigslust Parchim", 23456, 1234],
+                        ["Lübeck", 23475, 1234],
+                        ["Niedersachsen", 34844, 1234]
+                    ]
+                }
+            ],
             testFixedData: {
                 items: [
                     ["Bergedorf", 1234, 1234],
@@ -241,10 +261,15 @@ export default {
             <Controls
                 :descriptions="controlDescription"
             />
-            <GridComponent>
-                <template>
+            <GridComponent
+                :datas="testGridData"
+            >
+                <template
+                    slot="containers"
+                    slot-scope="props"
+                >
                     <TableComponent
-                        :data="testData"
+                        :data="props.data"
                         :fixed-data="testFixedData"
                         :select-mode="selectMode"
                         :show-header="showHeader"
