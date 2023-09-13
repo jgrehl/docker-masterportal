@@ -79,6 +79,6 @@ export default {
     font-size: $font_size_lg;
 }
 .small-text {
-        font-size: $font-size-sm;
-    }
+    font-size: $font-size-sm;
+}
 </style>

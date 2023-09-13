@@ -126,13 +126,11 @@ export default {
         >
             <span
                 v-if="conf.shortname"
-                class="small-text"
             >
                 {{ $t(conf.shortname) }}
             </span>
             <span
                 v-else
-                class="small-text"
             >
                 {{ $t(conf.name) }}
             </span>
@@ -141,7 +139,7 @@ export default {
     <button
         v-else
         :id="'layer-checkbox-' + escapeId(conf.id)"
-        class="d-flex w-100 layer-tree-layer-title pe-2 p-1 btn-transparent"
+        class="btn d-flex w-100 layer-tree-layer-title pe-2 p-1 btn-light"
         @click="clicked()"
         @keydown.enter="clicked()"
     >
@@ -163,13 +161,11 @@ export default {
         >
             <span
                 v-if="conf.shortname"
-                :class="isLayerTree ? '' : 'small-text'"
             >
                 {{ $t(conf.shortname) }}
             </span>
             <span
                 v-else
-                :class="isLayerTree ? '' : 'small-text'"
             >
                 {{ $t(conf.name) }}
             </span>
@@ -180,23 +176,17 @@ export default {
 <style lang="scss" scoped>
     @import "~variables";
     @import "~mixins";
-    .btn-transparent {
-        background-color: transparent;
-        border: none;
-    }
-    .layer-tree-layer-title, .layer-tree-layer-checkbox {
-        &:hover {
-            @include primary_action_hover;
-        }
-        &:focus {
-            @include primary_action_focus;
-        }
+    .layer-tree-layer-title {
+        overflow: hidden;
     }
     .layer-tree-layer-label {
         cursor: pointer;
-    }
-    .small-text {
-        font-size: $font-size-sm;
+        overflow: hidden;
+        span {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
     }
 
 </style>
