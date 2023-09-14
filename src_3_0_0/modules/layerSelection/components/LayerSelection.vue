@@ -133,7 +133,7 @@ export default {
                     aCategory.active = false;
                 });
                 category.active = true;
-                this.changeCategory({category});
+                this.changeCategory(category);
             }
         }
     }
