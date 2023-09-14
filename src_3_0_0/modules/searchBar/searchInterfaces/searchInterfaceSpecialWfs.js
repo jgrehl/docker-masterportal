@@ -303,16 +303,13 @@ SearchInterfaceSpecialWfs.prototype.createPossibleActions = function (searchResu
             hit: {
                 coordinate: [coordinates],
                 geometryType: searchResult.geometryType
-            },
-            closeResults: false
+            }
         },
         setMarker: {
-            coordinates: coordinates,
-            closeResults: true
+            coordinates: coordinates
         },
         zoomToResult: {
-            coordinates: coordinates,
-            closeResults: true
+            coordinates: coordinates
         }
     };
 };
