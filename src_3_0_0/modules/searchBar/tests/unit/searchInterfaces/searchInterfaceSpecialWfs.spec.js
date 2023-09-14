@@ -40,31 +40,26 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceSpecialWfs
                     events: {
                         onClick: {
                             highlightFeature: {
-                                closeResults: false,
                                 hit: {
                                     coordinate: [[565931.982, 5935196.323, 565869.067, 5935016.323]],
                                     geometryType: "MultiPolygon"
                                 }
                             },
                             setMarker: {
-                                closeResults: true,
                                 coordinates: [565931.982, 5935196.323, 565869.067, 5935016.323]
                             },
                             zoomToResult: {
-                                closeResults: true,
                                 coordinates: [565931.982, 5935196.323, 565869.067, 5935016.323]
                             }
                         },
                         onHover: {
                             highlightFeature: {
-                                closeResults: false,
                                 hit: {
                                     coordinate: [[565931.982, 5935196.323, 565869.067, 5935016.323]],
                                     geometryType: "MultiPolygon"
                                 }
                             },
                             setMarker: {
-                                closeResults: true,
                                 coordinates: [565931.982, 5935196.323, 565869.067, 5935016.323]
                             }
                         }
@@ -132,19 +127,16 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceSpecialWfs
             expect(SearchInterface1.createPossibleActions(searchResults[0])).to.deep.equals(
                 {
                     highlightFeature: {
-                        closeResults: false,
                         hit: {
                             coordinate: [[565931.982, 5935196.323, 565869.067, 5935016.323]],
                             geometryType: "MultiPolygon"
                         }
                     },
                     setMarker: {
-                        coordinates: [565931.982, 5935196.323, 565869.067, 5935016.323],
-                        closeResults: true
+                        coordinates: [565931.982, 5935196.323, 565869.067, 5935016.323]
                     },
                     zoomToResult: {
-                        coordinates: [565931.982, 5935196.323, 565869.067, 5935016.323],
-                        closeResults: true
+                        coordinates: [565931.982, 5935196.323, 565869.067, 5935016.323]
                     }
                 }
             );
