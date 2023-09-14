@@ -445,6 +445,7 @@ describe("src_3_0_0/modules/alerting/components/AlertingItem.vue", () => {
                 creationDate: "01/09/22",
                 mustBeConfirmed: true,
                 once: true,
+                isNews: true,
                 initial: true,
                 initialConfirmed: true,
                 displayCategory: "common:modules.alerting.categories.info"
