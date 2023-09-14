@@ -67,7 +67,7 @@ describe("src_3_0_0/modules/alerting/store/actionsAlerting.js", () => {
                 displayedAlerts: [],
                 availableCategories: ["news", "success", "warning", "error", "info"]
             },
-            checkValue = actions.addSingleAlert({state, commit}, {hash: "123", content: "123", displayFrom: false});
+            checkValue = actions.addSingleAlert({state, commit}, {hash: "123", content: "123", displayFrom: false, isNews: true});
 
         expect(checkValue).to.be.true;
         expect(commit.calledTwice).to.be.true;
@@ -81,7 +81,7 @@ describe("src_3_0_0/modules/alerting/store/actionsAlerting.js", () => {
                 displayedAlerts: [],
                 availableCategories: ["news", "success", "warning", "error", "info"]
             },
-            checkValue = actions.addSingleAlert({state, commit}, {hash: "123", content: "123", "displayFrom": "2022-08-24 05:00", "displayUntil": "2022-09-28 23:59"});
+            checkValue = actions.addSingleAlert({state, commit}, {hash: "123", content: "123", "displayFrom": "2022-08-24 05:00", "displayUntil": "2022-09-28 23:59", isNews: true});
 
         expect(checkValue).to.be.false;
         expect(commit.calledOnce).to.be.true;
@@ -95,7 +95,7 @@ describe("src_3_0_0/modules/alerting/store/actionsAlerting.js", () => {
                 displayedAlerts: [],
                 availableCategories: ["news", "success", "warning", "error", "info"]
             },
-            checkValue = actions.addSingleAlert({state, commit}, {hash: "123", content: "123", "displayFrom": "2022-08-24 05:00", "displayUntil": "2088-09-28 23:59"});
+            checkValue = actions.addSingleAlert({state, commit}, {hash: "123", content: "123", "displayFrom": "2022-08-24 05:00", "displayUntil": "2088-09-28 23:59", isNews: true});
 
         expect(checkValue).to.be.true;
         expect(commit.calledTwice).to.be.true;
@@ -111,7 +111,7 @@ describe("src_3_0_0/modules/alerting/store/actionsAlerting.js", () => {
             availableCategories: ["news", "success", "warning", "error", "info"]
         };
 
-        actions.addSingleAlert({state, commit}, {hash: "2db391b6db7866773874b3a5e60123040adb656a", content: "123", "displayFrom": "2022-08-24 05:00", "displayUntil": "2088-09-28 23:59"});
+        actions.addSingleAlert({state, commit}, {hash: "2db391b6db7866773874b3a5e60123040adb656a", isNews: true, content: "123", "displayFrom": "2022-08-24 05:00", "displayUntil": "2088-09-28 23:59"});
 
         expect(console.warn.calledOnce).to.be.true;
         expect(console.warn.firstCall.args).to.eql(["Alert ignored (duplicate): 2db391b6db7866773874b3a5e60123040adb656a"]);
@@ -140,7 +140,8 @@ describe("src_3_0_0/modules/alerting/store/actionsAlerting.js", () => {
             content: "123",
             displayFrom: "2022-08-24 05:00",
             displayUntil: "2088-09-28 23:59",
-            onceInSession: true
+            onceInSession: true,
+            isNews: true
         });
 
         expect(commit.calledOnce).to.be.true;
