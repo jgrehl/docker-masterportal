@@ -9,8 +9,9 @@ import layerCollection from "../core/layers/js/layerCollection";
 export default {
     /**
      * Adds one layer to states layerConfig under the given parentKey, if not already contained.
-     * @param {Object} dispatch store dispatch
-     * @param {Object} state store state
+     * @param {Object} context the vue context
+     * @param {Object} context.dispatch the dispatch
+     * @param {Object} context.state the state
      * @param {Object} payload the payload
      * @param {Object[]} payload.layerConfig layer to add to the layerConfigs
      * @param {String} payload.parentKey the key of the parent object
@@ -38,9 +39,10 @@ export default {
     /**
      * Replaces the layer with the id of the layer toReplace in state's layerConfig.
      * Calls 'visibilityChanged' at layer.
-     * @param {Object} dispatch store state
-     * @param {Object} getters the getters
-     * @param {Object} state store state
+     * @param {Object} context the vue context
+     * @param {Object} context.dispatch the dispatch
+     * @param {Object} context.getters the getters
+     * @param {Object} context.state the state
      * @param {Object} [payload={}] the payload
      * @param {Object[]} [payload.layerConfigs=[]] Array of configs of layers to replace, and the id to match in state.layerConfigs
      * @param {Object} payload.layerConfigs.layer layerConfig
@@ -74,7 +76,8 @@ export default {
 
     /**
      * Show an alert that contains the layerAttributions, if these exist.
-     * @param {Object} dispatch store state
+     * @param {Object} context the vue context
+     * @param {Object} context.dispatch the dispatch
      * @param {Object} layerAttributes The layer attributes
      * @returns {void}
      */
@@ -94,7 +97,7 @@ export default {
     /**
      * Updates the zindex of the layer configs by increasing the zindex of the layer configs
      * that have a zindex greater than the max zindex by 1.
-     * @param {Object} context store context
+     * @param {Object} context the vue context
      * @param {Object} payload the payload
      * @param {Object} payload.layerContainer The layer container of layer configs.
      * @param {Object} payload.maxZIndex The max zIndex of the layer configs.
@@ -112,8 +115,8 @@ export default {
 
     /**
      * Updates the zIndexes of all layerConfigs shown in tree, starts with 0.
-     * @param {Object} param.dispatch the dispatch
-     * @param {Object} param.getters the getters
+     * @param {Object} context the vue context
+     * @param {Object} context.getters the getters
      * @returns {void}
      */
     updateAllZIndexes ({getters}) {
@@ -135,9 +138,10 @@ export default {
      * Config entry portalConfig.tree.validLayerTypesAutoTree is respected.
      * If tree type is 'auto' , folder structure is build from layer's metadata contents for the active or first category configured in config.json unter 'tree'.
      * Replaces the extended layer in state.layerConf. Sets ids at folders and parentIds at folders and layers.
-     * @param {Object} param.dispatch the dispatch
-     * @param {Object} param.getters the getters
-     * @param {Object} param.state the state
+     * @param {Object} context the vue context
+     * @param {Object} context.dispatch the dispatch
+     * @param {Object} context.getters the getters
+     * @param {Object} context.state the state
      * @returns {void}
      */
     extendLayers ({dispatch, getters, state}) {
@@ -165,7 +169,8 @@ export default {
 
     /**
      * Adds the attribute baselayer to layers configured as baselayers.
-     * @param {Object} param.state the state
+     * @param {Object} context the vue context
+     * @param {Object} context.getters the getters
      * @returns {void}
      */
     addBaselayerAttribute ({getters}) {
@@ -176,9 +181,10 @@ export default {
 
     /**
      * Processes the tree structure with raw layers of the tree type 'auto'.
-     * @param {Object} param.commit the commit
-     * @param {Object} param.getters the getters
-     * @param {Object} param.state the state
+     * @param {Object} context the vue context
+     * @param {Object} context.commit the commit
+     * @param {Object} context.getters the getters
+     * @param {Object} context.state the state
      * @param {Object[]} layerContainer The layer configs.
      * @returns {void}
      */
@@ -193,14 +199,15 @@ export default {
 
     /**
      * Changes the sorting of layerConfigs to the given category and displays them in layerSelection.
-     * @param {Object} param.commit the commit
-     * @param {Object} param.dispatch the dispatch
-     * @param {Object} param.rootGetters the rootGetters
-     * @param {Object} param.state the state
+     * @param {Object} context the vue context
+     * @param {Object} context.commit the commit
+     * @param {Object} context.dispatch the dispatch
+     * @param {Object} context.rootGetters the rootGetters
+     * @param {Object} context.state the state
      * @param {Object} category the category to change to
      * @returns {void}
      */
-    changeCategory ({commit, dispatch, rootGetters, state}, {category}) {
+    changeCategory ({commit, dispatch, rootGetters, state}, category) {
         const layerContainer = getNestedValues(state.layerConfig, "elements", true).flat(Infinity),
             layersStructured = buildTreeStructure.build(state.layerConfig, category, layerContainer);
 
@@ -214,8 +221,9 @@ export default {
 
     /**
      * Updates the layer configs with raw layer attributes.
-     * @param {Object} param.commit the commit
-     * @param {Object} param.state the state
+     * @param {Object} context the vue context
+     * @param {Object} context.dispatch the dispatch
+     * @param {Object} context.state the state
      * @param {Object[]} layerContainer The layer configs.
      * @returns {void}
      */
