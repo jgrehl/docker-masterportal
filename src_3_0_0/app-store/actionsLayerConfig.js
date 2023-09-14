@@ -27,7 +27,7 @@ export default {
             configsByParentKey = getters.allLayerConfigsByParentKey(parentKey).filter(config => Object.prototype.hasOwnProperty.call(config, "zIndex") && typeof config.zIndex === "number");
         }
         else {
-            getters.visibleSubjectDataLayerConfigs.filter(config => Object.prototype.hasOwnProperty.call(config, "zIndex") && typeof config.zIndex === "number");
+            configsByParentKey = getters.visibleSubjectDataLayerConfigs.filter(config => Object.prototype.hasOwnProperty.call(config, "zIndex") && typeof config.zIndex === "number");
         }
         maxZIndex = configsByParentKey.length > 0 ? Math.max(...configsByParentKey.map(layerConf => layerConf.zIndex)) : -Infinity;
         dispatch("updateLayerConfigZIndex", {layerContainer, maxZIndex});
