@@ -273,7 +273,43 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
             expect(state.layerConfig[treeSubjectsKey]?.elements[0]).to.deep.equal(layerToAdd);
         });
 
-        it("addLayerToLayerConfig with folders - layer not contained in folder - add config to foler elements", () => {
+        it("addLayerToLayerConfig no folders - add config to 'treeBaselayersKey'", () => {
+            layerConfig[treeBaselayersKey] = {
+                elements: []
+            };
+            state.layerConfig = layerConfig;
+            const layerToAdd = {
+                id: "I_m_the_id",
+                name: "Trees in Hamburg",
+                typ: "WMS",
+                layers: "trees",
+                url: "https://geodienste.hamburg.de/trees",
+                version: "1.4.3",
+                visibility: true,
+                showInLayerTree: true,
+                maxScale: 2000,
+                minScale: 12
+            };
+
+            getters = {
+                allLayerConfigs: [],
+                allLayerConfigsByParentKey: () => []
+            };
+
+            actions.addLayerToLayerConfig({dispatch, getters, state}, {layerConfig: layerToAdd, parentKey: treeBaselayersKey});
+            expect(dispatch.callCount).to.equals(2);
+            expect(dispatch.firstCall.args[0]).to.equals("updateLayerConfigZIndex");
+            expect(dispatch.firstCall.args[1]).to.deep.equals({
+                layerContainer: [],
+                maxZIndex: -Infinity
+            });
+            expect(dispatch.secondCall.args[0]).to.equals("addBaselayerAttribute");
+            expect(dispatch.secondCall.args[1]).to.be.undefined;
+            expect(state.layerConfig[treeBaselayersKey]?.elements.length).to.equal(1);
+            expect(state.layerConfig[treeBaselayersKey]?.elements[0]).to.deep.equal(layerToAdd);
+        });
+
+        it("addLayerToLayerConfig with folders - layer not contained in folder - add config to folder elements", () => {
             state.layerConfig = layerConfigCustom;
             const layerToAdd = {
                     id: "I_m_the_id",
@@ -285,8 +321,8 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
 
             getters = {
                 allLayerConfigs: [{layerToAdd}],
-                allLayerConfigsByParentKey: () => [],
-                folderById: () => folder_3
+                folderById: () => folder_3,
+                visibleSubjectDataLayerConfigs: []
             };
 
             actions.addLayerToLayerConfig({dispatch, getters, state}, {layerConfig: layerToAdd, parentKey: "folder_3"});
@@ -314,7 +350,7 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
 
             getters = {
                 allLayerConfigs: [{layerToAdd}],
-                allLayerConfigsByParentKey: () => [],
+                visibleSubjectDataLayerConfigs: [],
                 folderById: () => folder_3
             };
 
