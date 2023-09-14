@@ -157,6 +157,7 @@ export default {
     addAlertsFromConfigJson ({dispatch}, alerts) {
         Object.values(alerts).forEach((value) => {
             value.initial = true;
+            value.isNews = true;
             value.initialConfirmed = value.mustBeConfirmed;
             dispatch("Alerting/addSingleAlert", value, {root: true});
         });
