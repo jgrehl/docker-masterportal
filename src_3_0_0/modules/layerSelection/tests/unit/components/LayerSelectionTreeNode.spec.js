@@ -28,6 +28,15 @@ describe("src_3_0_0/modules/layerSelection/components/LayerSelectionTreeNode.vue
             selectAllConfigs: []
         };
         store = createStore({
+            namespaces: true,
+            modules: {
+                Maps: {
+                    namespaced: true,
+                    getters: {
+                        mode: sinon.stub()
+                    }
+                }
+            }
         });
     });
 

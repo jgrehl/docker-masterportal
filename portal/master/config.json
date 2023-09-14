@@ -276,9 +276,6 @@
             "type": "legend"
           },
           {
-            "type": "populationRequest"
-          },
-          {
             "type": "fileImport"
           },
           {
@@ -454,6 +451,9 @@
       "expanded": false,
       "sections": [
         [
+          {
+            "type": "populationRequest"
+          },
           {
             "type": "featureLister",
             "description": "Listet alle Features eines Vektorlayers auf",
