@@ -112,6 +112,7 @@ export default {
 
             collectedAlerts.forEach(singleAlert => {
                 singleAlert.initial = true;
+                singleAlert.isNews = true;
                 singleAlert.initialConfirmed = singleAlert.mustBeConfirmed;
                 this.addSingleAlert(singleAlert);
             });
