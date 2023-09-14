@@ -40,7 +40,11 @@ describe("src/modules/searchBar/store/actions/actionsSearchBarSearchResult.spec.
         it("should activate a layer in topic tree", () => {
             const layerId = "123",
                 rootGetters = {
-                    layerConfigById: sinon.stub().returns(true)
+                    layerConfigById: sinon.stub().returns({
+                        id: layerId,
+                        zIndex: 1,
+                        showInLayerTree: true
+                    })
                 };
 
             activateLayerInTopicTree({dispatch, rootGetters}, {layerId});
@@ -53,11 +57,69 @@ describe("src/modules/searchBar/store/actions/actionsSearchBarSearchResult.spec.
                     layer: {
                         id: layerId,
                         visibility: true,
-                        showInLayerTree: true
+                        showInLayerTree: true,
+                        zIndex: 1
                     }
                 }]
             });
         });
+
+        it("should activate a layer in topic tree and set zIndex", () => {
+            const layerId = "123",
+                rootGetters = {
+                    layerConfigById: sinon.stub().returns({
+                        id: layerId,
+                        zIndex: 1,
+                        showInLayerTree: false
+                    }),
+                    determineZIndex: () => 2
+                };
+
+            activateLayerInTopicTree({dispatch, rootGetters}, {layerId});
+
+            expect(dispatch.calledOnce).to.be.true;
+            expect(dispatch.firstCall.args[0]).to.equals("replaceByIdInLayerConfig");
+            expect(dispatch.firstCall.args[1]).to.be.deep.equals({
+                layerConfigs: [{
+                    id: layerId,
+                    layer: {
+                        id: layerId,
+                        visibility: true,
+                        showInLayerTree: true,
+                        zIndex: 2
+                    }
+                }]
+            });
+        });
+
+        it("should add and activate a layer in topic tree", () => {
+            const layerId = "123",
+                source = {
+                    id: layerId,
+                    visibility: true,
+                    showInLayerTree: true,
+                    zIndex: 1
+                },
+                rootGetters = {
+                    layerConfigById: sinon.stub().returns(undefined)
+                };
+
+            activateLayerInTopicTree({dispatch, rootGetters}, {layerId, source});
+
+            expect(dispatch.calledOnce).to.be.true;
+            expect(dispatch.firstCall.args[0]).to.equals("addLayerToTopicTree");
+            expect(dispatch.firstCall.args[1]).to.be.deep.equals({
+                layerId: layerId,
+                source: {
+                    id: layerId,
+                    visibility: true,
+                    showInLayerTree: true,
+                    zIndex: 1
+                }
+            }
+            );
+        });
+
     });
 
     describe("addLayerToTopicTree", () => {
@@ -88,6 +150,29 @@ describe("src/modules/searchBar/store/actions/actionsSearchBarSearchResult.spec.
                     visibility: true
                 },
                 parentKey: "Fachdaten"
+            });
+        });
+
+        it("should activate layer in topic tree", () => {
+            const layerId = "123",
+                source = {
+                    id: layerId,
+                    abc: "abc",
+                    datasets: []
+                },
+                added = true,
+                rootGetters = {
+                    layerConfigById: sinon.stub().returns(true)
+                };
+
+            dispatch = sinon.stub().resolves(added);
+            addLayerToTopicTree({dispatch, rootGetters}, {layerId, source});
+
+            expect(dispatch.calledOnce).to.be.true;
+            expect(dispatch.firstCall.args[0]).to.equals("activateLayerInTopicTree");
+            expect(dispatch.firstCall.args[1]).to.be.deep.equals({
+                layerId,
+                source
             });
         });
     });
@@ -260,6 +345,4 @@ describe("src/modules/searchBar/store/actions/actionsSearchBarSearchResult.spec.
             expect(dispatch.firstCall.args[1]).to.be.deep.equals(payload);
         });
     });
-
-    // todo addLayerToTopicTree activateLayerInTopicTree
 });

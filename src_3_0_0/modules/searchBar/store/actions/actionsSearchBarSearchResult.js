@@ -17,14 +17,22 @@ export default {
      * @returns {void}
      */
     activateLayerInTopicTree: ({dispatch, rootGetters}, {layerId, source}) => {
-        if (rootGetters.layerConfigById(layerId)) {
+        const layer = rootGetters.layerConfigById(layerId);
+
+        if (layer) {
+            let zIndex = layer.zIndex;
+
+            if (!layer.showInLayerTree) {
+                zIndex = rootGetters.determineZIndex(layerId);
+            }
             dispatch("replaceByIdInLayerConfig", {
                 layerConfigs: [{
                     id: layerId,
                     layer: {
                         id: layerId,
                         visibility: true,
-                        showInLayerTree: true
+                        showInLayerTree: true,
+                        zIndex: zIndex
                     }
                 }]
             }, {root: true});
@@ -47,7 +55,6 @@ export default {
      */
     addLayerToTopicTree: ({dispatch, rootGetters}, {layerId, source, showInLayerTree = true, visibility = true}) => {
         if (!rootGetters.layerConfigById(layerId)) {
-
             dispatch("addLayerToLayerConfig", {
                 layerConfig: {...source, ...{
                     id: layerId,
