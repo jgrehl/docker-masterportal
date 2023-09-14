@@ -14,7 +14,7 @@ export default {
      * @param {Object} context.state the state
      * @param {Object} payload the payload
      * @param {Object[]} payload.layerConfig layer to add to the layerConfigs
-     * @param {String} payload.parentKey the key of the parent object
+     * @param {String} payload.parentKey the name of the parent object or the id of the parentFolder
      * @returns {Boolean} true, if layer was added and false, if layer was contained in layerConfig
      */
     addLayerToLayerConfig ({dispatch, getters, state}, {layerConfig, parentKey}) {
@@ -27,7 +27,16 @@ export default {
 
         if (matchingLayer === undefined) {
             layerConfig.zIndex = maxZIndex + 1;
-            state.layerConfig[parentKey].elements.push(layerConfig);
+            if (state.layerConfig[parentKey]) {
+                state.layerConfig[parentKey].elements.push(layerConfig);
+            }
+            else {
+                const folder = getters.folderById(parentKey);
+
+                if (folder && folder.elements.find(config => config.id === layerConfig.id) === undefined) {
+                    folder.elements.push(layerConfig);
+                }
+            }
             dispatch("addBaselayerAttribute");
 
             return true;
