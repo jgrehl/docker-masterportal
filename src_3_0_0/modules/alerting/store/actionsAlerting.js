@@ -180,7 +180,9 @@ export default {
         if (!isNotRestricted) {
             console.warn("Alert ignored (shown recently): " + alertProtoClone.hash);
         }
-        commit("Modules/News/addNews", alertProtoClone, {root: true});
+        if (alertProtoClone.isNews) {
+            commit("Modules/News/addNews", alertProtoClone, {root: true});
+        }
 
         displayAlert = isUnique && isInTime && isNotRestricted;
         if (displayAlert) {
