@@ -22,7 +22,8 @@ describe("src_3_0_0/App.vue", () => {
             loadConfigJson: sinon.spy(),
             loadRestServicesJson: sinon.spy(),
             loadServicesJson: sinon.spy(),
-            initializeVectorStyle: sinon.spy()
+            initializeVectorStyle: sinon.spy(),
+            initializeOther: sinon.stub()
         };
 
         store = createStore({
