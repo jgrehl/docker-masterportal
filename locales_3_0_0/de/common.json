@@ -742,7 +742,8 @@
       "setMarker":"Marker setzen",
       "zoomToResult":"Zum Ergebnis zoomen",
       "startRouting":"Route starten",
-      "showInTree":"Thema anzeigen"
+      "showInTree":"Thema anzeigen",
+      "showLayerInfo":"Layerinformation anzeigen"
     },
     "noInitialResults": "Die initiale Suche ergab keine Treffer.",
     "showAll": "Alle anzeigen",
