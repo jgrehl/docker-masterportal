@@ -171,14 +171,17 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
                 {
                     name: "Lage und Gebietszugehörigkeit",
                     type: "folder",
+                    id: "folder_1",
                     elements: [
                         {
                             name: "Überschwemmungsgebiete",
                             type: "folder",
+                            id: "folder_2",
                             elements: [
                                 {
                                     name: "Überschwemmungsgebiete",
                                     type: "folder",
+                                    id: "folder_3",
                                     elements: [
                                         {
                                             id: "1103"
@@ -234,7 +237,7 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
     });
 
     describe("addLayerToLayerConfig", () => {
-        it("addLayerToLayerConfig", () => {
+        it("addLayerToLayerConfig no folders - add config to 'treeSubjectsKey'", () => {
             layerConfig[treeSubjectsKey] = {
                 elements: []
             };
@@ -268,6 +271,64 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
             expect(dispatch.secondCall.args[1]).to.be.undefined;
             expect(state.layerConfig[treeSubjectsKey]?.elements.length).to.equal(1);
             expect(state.layerConfig[treeSubjectsKey]?.elements[0]).to.deep.equal(layerToAdd);
+        });
+
+        it("addLayerToLayerConfig with folders - layer not contained in folder - add config to foler elements", () => {
+            state.layerConfig = layerConfigCustom;
+            const layerToAdd = {
+                    id: "I_m_the_id",
+                    name: "Trees in Hamburg",
+                    typ: "WMS",
+                    visibility: true
+                },
+                folder_3 = layerConfigCustom[treeSubjectsKey].elements[0].elements[0].elements[0];
+
+            getters = {
+                allLayerConfigs: [{layerToAdd}],
+                allLayerConfigsByParentKey: () => [],
+                folderById: () => folder_3
+            };
+
+            actions.addLayerToLayerConfig({dispatch, getters, state}, {layerConfig: layerToAdd, parentKey: "folder_3"});
+            expect(dispatch.callCount).to.equals(2);
+            expect(dispatch.firstCall.args[0]).to.equals("updateLayerConfigZIndex");
+            expect(dispatch.firstCall.args[1]).to.deep.equals({
+                layerContainer: [],
+                maxZIndex: -Infinity
+            });
+            expect(dispatch.secondCall.args[0]).to.equals("addBaselayerAttribute");
+            expect(dispatch.secondCall.args[1]).to.be.undefined;
+            expect(state.layerConfig[treeSubjectsKey].elements[0].elements[0].elements[0].elements.length).to.equal(2);
+            expect(state.layerConfig[treeSubjectsKey].elements[0].elements[0].elements[0].elements[1]).to.deep.equal(layerToAdd);
+        });
+
+        it("addLayerToLayerConfig with folders - layer contained in folder - do not at config", () => {
+            state.layerConfig = layerConfigCustom;
+            const layerToAdd = {
+                    id: "1103",
+                    name: "Trees in Hamburg",
+                    typ: "WMS",
+                    visibility: true
+                },
+                folder_3 = layerConfigCustom[treeSubjectsKey].elements[0].elements[0].elements[0];
+
+            getters = {
+                allLayerConfigs: [{layerToAdd}],
+                allLayerConfigsByParentKey: () => [],
+                folderById: () => folder_3
+            };
+
+            actions.addLayerToLayerConfig({dispatch, getters, state}, {layerConfig: layerToAdd, parentKey: "folder_3"});
+            expect(dispatch.callCount).to.equals(2);
+            expect(dispatch.firstCall.args[0]).to.equals("updateLayerConfigZIndex");
+            expect(dispatch.firstCall.args[1]).to.deep.equals({
+                layerContainer: [],
+                maxZIndex: -Infinity
+            });
+            expect(dispatch.secondCall.args[0]).to.equals("addBaselayerAttribute");
+            expect(dispatch.secondCall.args[1]).to.be.undefined;
+            expect(state.layerConfig[treeSubjectsKey].elements[0].elements[0].elements[0].elements.length).to.equal(1);
+            expect(state.layerConfig[treeSubjectsKey].elements[0].elements[0].elements[0].elements[0].id).to.deep.equal(layerToAdd.id);
         });
     });
 
