@@ -1,5 +1,17 @@
 {
   "Portalconfig": {
+    
+      "alerts": {
+        "qs-release": {
+          "category": "Portal zur Abnahme!",
+          "content": "Dieses Geoportal dient der Qualitätskontrolle durch den Kunden.<br>Es ist aufgrund von möglichen Fehlern <b>nicht</b> zur Nutzung für alltägliche oder berufliche Aufgaben geeignet!<br><br>",
+          "creationDate": "01/09/22",
+          "mustBeConfirmed": true,
+          "once": false
+        }
+      },
+      
+      
     "mapView": {
       "backgroundImage": "https://geodienste.hamburg.de/lgv-config/img/backgroundCanvas.jpeg",
       "startZoomLevel": 4,
