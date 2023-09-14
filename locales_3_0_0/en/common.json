@@ -715,7 +715,8 @@
       "setMarker":"Set marker",
       "zoomToResult":"Zoom to result",
       "startRouting":"Start route",
-      "showInTree":"Show topic"
+      "showInTree":"Show topic",
+      "showLayerInfo":"Show layer information"
     },
     "showAllResults": "Show all results",
     "searchResults": "search results",
