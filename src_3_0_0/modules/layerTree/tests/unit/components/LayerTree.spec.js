@@ -134,7 +134,8 @@ describe("src_3_0_0/modules/layerTree/components/LayerTree.vue", () => {
                             namespaced: true,
                             getters: {
                                 name: () => sinon.stub(),
-                                type: () => sinon.stub()
+                                type: () => sinon.stub(),
+                                highlightLayerId: () => sinon.stub()
                             },
                             mutations: {
                                 setBaselayerConfs: sinon.stub(),
