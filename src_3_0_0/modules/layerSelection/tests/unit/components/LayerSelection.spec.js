@@ -267,7 +267,7 @@ describe("src_3_0_0/modules/layerSelection/components/LayerSelection.vue", () =>
         wrapper.vm.categorySelected(categories[1].key);
 
         expect(changeCategorySpy.calledOnce).to.be.true;
-        expect(changeCategorySpy.firstCall.args[1]).to.deep.equals({category: categories[1]});
+        expect(changeCategorySpy.firstCall.args[1]).to.deep.equals(categories[1]);
     });
 
     describe("watcher", () => {
