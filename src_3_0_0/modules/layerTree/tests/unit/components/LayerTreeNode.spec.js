@@ -128,6 +128,12 @@ describe("src_3_0_0/modules/layerTree/components/LayerTreeNode.vue", () => {
                                 removeOnSpill: () => true,
                                 touchStartThreshold: () => 3
                             }
+                        },
+                        LayerSelection: {
+                            namespaced: true,
+                            getters: {
+                                highlightLayerId: sinon.stub()
+                            }
                         }
                     }
                 },
