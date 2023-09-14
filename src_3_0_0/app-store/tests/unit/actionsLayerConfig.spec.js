@@ -737,7 +737,7 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
             state.layerConfig = layerConfig;
         });
         it("changes the category to inspire", () => {
-            actions.changeCategory({commit, dispatch, rootGetters, state}, {category: categories[1]});
+            actions.changeCategory({commit, dispatch, rootGetters, state}, categories[1]);
 
             expect(commit.calledOnce).to.be.true;
             expect(commit.firstCall.args[0]).to.equals("setLayerConfigByParentKey");
@@ -754,7 +754,7 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
         });
 
         it("changes the category to organisation", () => {
-            actions.changeCategory({commit, dispatch, rootGetters, state}, {category: categories[2]});
+            actions.changeCategory({commit, dispatch, rootGetters, state}, categories[2]);
 
             expect(commit.calledOnce).to.be.true;
             expect(commit.firstCall.args[0]).to.equals("setLayerConfigByParentKey");
