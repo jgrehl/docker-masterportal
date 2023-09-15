@@ -141,6 +141,10 @@
         "titleGeolocatePOI": "In der Nähe",
         "trackingDeniedText": "'In der Nähe' nicht verfügbar."
       },
+      "tiltView": {
+        "downButton": "Ansicht nach unten kippen",
+        "upButton": "Ansicht nach oben kippen"
+      },
       "totalView": {
         "titleButton": "Zurück zur Startansicht"
       },
