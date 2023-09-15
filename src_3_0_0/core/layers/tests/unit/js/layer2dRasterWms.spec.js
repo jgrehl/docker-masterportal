@@ -134,7 +134,8 @@ describe("src_3_0_0/core/js/layers/layer2dRasterWms.js", () => {
                 name: "test_name",
                 transparency: 10,
                 typ: "wms",
-                zIndex: 1
+                zIndex: 1,
+                featureCount: 5
             };
         });
 
@@ -151,7 +152,8 @@ describe("src_3_0_0/core/js/layers/layer2dRasterWms.js", () => {
                 name: "test_name",
                 opacity: 0.9,
                 typ: "wms",
-                zIndex: 1
+                zIndex: 1,
+                featureCount: 5
             });
         });
     });
