@@ -2,7 +2,8 @@ import {generateSimpleMutations} from "../../../shared/js/utils/generators";
 import coordState from "./stateCoordToolkit";
 
 /**
- * @module modules/CoordToolkit/mutations
+ * The mutations for the CoodToolkit.
+ * @module modules/coordToolkit/store/mutations
  */
 export default {
     /**
@@ -14,7 +15,7 @@ export default {
     ...generateSimpleMutations(coordState),
     /**
      * Set currect projection to one in the list of projections.
-     * @param {Object} state the state of coord-module
+     * @param {Object} state state of this module
      * @param {Object[]} [projections=[]] list of available projections
      * @returns {void}
      */
@@ -37,7 +38,7 @@ export default {
     },
     /**
      * Sets the example values to state.
-     * @param {Object} state the state of coordToolkit-module
+     * @param {Object} state state of this module
      * @returns {void}
      */
     setExample (state) {
@@ -62,7 +63,7 @@ export default {
     },
     /**
      * Resets the northing or easting error messages  in the state which is used for live validation of input.
-     * @param {Object} state the state of coordToolkit-module
+     * @param {Object} state state of this module
      * @param {boolean} id if id === "northing" northing-messages are resetted, if id === "easting" easting-messages, else if id === "all" all messages are resetted
      * @returns {void}
      */
@@ -84,7 +85,7 @@ export default {
     },
     /**
      * Resets the coordinate values in the state.
-     * @param {Object} state the state of coordToolkit-module
+     * @param {Object} state state of this module
      * @returns {void}
      */
     resetValues: (state) => {
@@ -92,12 +93,12 @@ export default {
         state.coordinatesNorthing.value = "";
     },
     /**
-     * Pushes the coordinates to the selectedCoordinates Array in the state.
-     * @param {Object} state the state of coordToolkit-module
-     * @param {Object} payload payload object.
+     * Pushes the coordinates to the selectedCoordinates in the state.
+     * @param {Object} state state of this module
+     * @param {Object} coordinates the formatted coordinates
      * @returns {void}
      */
-    pushCoordinates: (state, payload) => {
-        state.selectedCoordinates.push(payload);
+    pushCoordinates: (state, coordinates) => {
+        state.selectedCoordinates.push(coordinates);
     }
 };
