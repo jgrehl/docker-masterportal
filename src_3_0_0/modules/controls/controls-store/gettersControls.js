@@ -7,6 +7,7 @@ import Freeze from "../freeze/components/FreezeScreen.vue";
 import FullScreen from "../fullScreen/components/FullScreen.vue";
 import Orientation from "../orientation/components/OrientationItem.vue";
 import StartModule from "../startModule/components/StartModule.vue";
+import TiltView from "../tiltView/components/TiltView.vue";
 import TotalView from "../totalView/components/TotalView.vue";
 import Zoom from "../zoom/components/ZoomInAndOut.vue";
 
@@ -21,6 +22,7 @@ const getters = {
             FullScreen,
             Orientation,
             StartModule,
+            TiltView,
             TotalView,
             Zoom
         };
