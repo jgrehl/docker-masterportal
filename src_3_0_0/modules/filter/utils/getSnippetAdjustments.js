@@ -214,7 +214,7 @@ function getSnippetAdjustments (snippets, items, page, total) {
  * Gets a merged array of values for given attrNames array.
  * @param {String[]} attrNames The attrNames to get the values for.
  * @param {Object} values The values object to get the values from.
- * @returns {*[]} The values for all attrNames.
+ * @returns {Array} The values for all attrNames.
  */
 function getMergedValuesByAttrNames (attrNames, values) {
     const result = [];

@@ -1,9 +1,9 @@
 /**
- * state of the CoordToolkit
- * @module modules/CoordToolkit/state
+ * The state of the CoordToolkit.
+ * @module  modules/coordToolkit/store/state
  *
  * @property {String} [icon="bi-globe"] icon next to title (config-param)
- * @property {String} description The description that should be shown in the button in the right menu.
+ * @property {String} [description=""] The description that should be shown in the button in the right menu.
  * @property {Boolean} [hasMouseMapInteractions=true] If this attribute is true, then all other modules will be deactivated when this attribute is also true. Only one module with this attribute true may be open at the same time, since conflicts can arise in the card interactions.
  * @property {String} [name="common:modules.coordToolkit.name"] displayed as title (config-param)
  * @property {Boolean} [showDescription=false] If true, description will be shown.
@@ -12,7 +12,7 @@
  * @property {String} [type= "coordToolkit"] the type of the component
  *
  * @property {Object} [coordinatesEasting="{id: "easting", value: ""}"] contains id and value of the easting input field
- * @property {String} coordinatesEastingExample contains the example for easting coordinates
+ * @property {String} [coordinatesEastingExample=""] contains the example for easting coordinates
  * @property {Object} coordInfo contains the explanations for the coordinate reference systems
  * @property {Object} [coordinatesNorthing="{id: "northing", value: ""}"] contains id and value of the northing input field
  * @property {String} coordinatesNorthingExample contains the example for northing coordinates
@@ -20,7 +20,9 @@
  * @property {String} [delimiter="|"] delimits the copies coordinates
  * @property {boolean} [eastingNoCoord="false"] true, if no coord in easting input field
  * @property {boolean} [eastingNoMatch="false"] true, if coord in easting are not valid
- * @property {String} height contains the value of the height input field
+ * @property {Boolean} [northingNoCoord="false"] true, if no coord in northing input field
+ * @property {boolean} [northingNoMatch="false"] true, if coord in northing are not valid
+ * @property {String} [height=""] contains the value of the height input field
  * @property {String} heightElementName element name in the response of getFeatureRequest of height layer
  * @property {String} [heightInfoFormat="application/vnd.ogc.gml"] infoFormat of the layers getFeatureRequest
  * @property {module:ol/Layer} heightLayer must be set in config.json to display the height. The layer to get the height from.
@@ -30,11 +32,9 @@
  * @property {String} heightValueWater value in the response of getFeatureRequest of height layer, if there is water area
  * @property {Object} mapProjection projection of the map
  * @property {String} [mode="supply"] may be 'search' or 'supply'
- * @property {Boolean} [northingNoCoord="false"] true, if no coord in northing input field
- * @property {boolean} [northingNoMatch="false"] true, if coord in northing are not valid
- * @property {Number[]} positionMapProjection position of the projection in the map
- * @property {Object[]} projections list of available projections
- * @property {Array} selectedCoordinates contains the selected coordinates
+ * @property {Number[]} [positionMapProjection=[]] position of the projection in the map
+ * @property {Object[]} [projections=[]] list of available projections
+ * @property {Array} [selectedCoordinates=[]] contains the selected coordinates
  * @property {module:ol/interaction/Pointer} selectPointerMove contains interaction listener to map
  * @property {Boolean} [showCopyButtons="true"] if true, copy-buttons are shown
  * @property {Boolean} [updatePosition="true"] if true, position is updated in tool

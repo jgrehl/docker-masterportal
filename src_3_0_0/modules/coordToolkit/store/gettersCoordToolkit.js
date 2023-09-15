@@ -4,17 +4,15 @@ import {generateSimpleGetters} from "../../../shared/js/utils/generators";
 import coordState from "./stateCoordToolkit";
 
 /**
- * The getters for the CoodToolkit
- * @module modules/CoordToolkit/getters
+ * The getters for the CoodToolkit.
+ * @module modules/coordToolkit/store/getters
  */
 export default {
     ...generateSimpleGetters(coordState),
 
-    // NOTE overwrite getters here if you need a special behaviour in a getter
-
     /**
      * Transforms the projection.
-     * @param {Object} state state of this tool
+     * @param {Object} state state of this module
      * @param {Object} map the map
      * @param {Object} targetProjection the target projection
      * @returns {Object} the transformed projection
@@ -33,7 +31,7 @@ export default {
     },
     /**
      * Returns the projection to the given id.
-     * @param {Object} state state of this tool
+     * @param {Object} state state of this module
      * @param {String} id of the projection, is like the name and in case of decimal "-DG" is appended to name
      * @returns {Object} projection
      */
@@ -46,7 +44,7 @@ export default {
     },
     /**
      * Returns true to easting coordinate error variable if one test case fails.
-     * @param {Object} state state of this tool
+     * @param {Object} state state of this module
      * @returns {Boolean} true if an error for the coordinate occurs
      */
     getEastingError: state => {
@@ -54,7 +52,7 @@ export default {
     },
     /**
      * Returns true to northing coordinate error variable if one test case fails.
-     * @param {Object} state state of this tool
+     * @param {Object} state state of this module
      * @returns {Boolean} true if an error for the coordinate occurs
      */
     getNorthingError: state => {
@@ -62,7 +60,7 @@ export default {
     },
     /**
      * Returns the label name depending on the selected coordinate system.
-     * @param {Object} state state of this tool
+     * @param {Object} state state of this module
      * @param {String} key in the language files
      * @returns {String} the name of the label
      */
