@@ -23,7 +23,7 @@ async function fetchRoutingGazetteerGeosearch (searchInput) {
  * Parses Response from Gazetteer to RoutingGeosearchResult
  * @param {Object} geosearchResult from Gazetteer
  * @param {Object} [geosearchResult.geometry] geosearchResult geometry
- * @param {[Number, Number]} [geosearchResult.geometry.coordinates] geosearchResult geometry coordinates
+ * @param {Array} [geosearchResult.geometry.coordinates] geosearchResult geometry coordinates
  * @param {Object} [geosearchResult.properties] geosearchResult properties
  * @param {String} [geosearchResult.properties.text] geosearchResult properties text
  * @returns {RoutingGeosearchResult} routingGeosearchResult

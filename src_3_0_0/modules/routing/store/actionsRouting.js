@@ -219,9 +219,9 @@ export default {
      * Transforms the given coordinates from the wgs84 projection to the local projections
      * @param {Object} context actions context object.
      * @param {Object} payload parameter object.
-     * @param {[Number, Number]} payload.coordinates the coordinates to transform.
+     * @param {Array} payload.coordinates the coordinates to transform.
      * @param {String} payload.epsg coordinate system.
-     * @returns {[Number, Number]} projected local coordinates
+     * @returns {Array} projected local coordinates
      */
     transformCoordinatesToLocalProjection ({rootState}, {coordinates, epsg}) {
         return crs.transform(
