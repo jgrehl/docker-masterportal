@@ -72,6 +72,7 @@ Controls can be configured to be expandable so they will not initially show up i
 |----|--------|----|-------|-----------|------|
 |expandable|no|**[expandable](#markdown-header-portalconfigcontrols)**||With expandable, controls are hidden behind a button with three dots and can be expanded when needed.|false|
 |startModule|no|**[startModule](#markdown-header-portalconfigcontrolsstartModule)**|false|Displays buttons for the configured tools. These can be used to open and close the respective tools.|false|
+|tiltView|no|Boolean/**[tiltView](#markdown-header-portalconfigcontrolstiltView)**|false|Displays two buttons that can be used to tilt the camera up or down in the 3D scene.|false|
 |totalView|no|Boolean/**[totalView](#markdown-header-portalconfigcontrolstotalView)**|false|Offers a button to return to the initial view.|false|
 |zoom|no|Boolean/**[zoom](#markdown-header-portalconfigcontrolszoom)**|false|Defines whether zoom buttons should be displayed.|false|
 
@@ -182,6 +183,35 @@ Here you can configure the modules for which a button is to be displayed. These 
         "type": "scaleSwitcher"
     }
 ]
+```
+
+***
+
+#### Portalconfig.controls.tiltView
+Displays two buttons that can be used to tilt the camera up or down in the 3D scene.
+
+The tiltView attribute can be of type Boolean or Object. If it is of type Boolean, it shows the buttons that are set in the default settings. If it is of type Object, the following attributes apply:
+
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|tiltDownIcon|no|String|"bi-caret-down-square"|The tiltDownIcon parameter can be used to specify a different icon for tilt down.|false|
+|tiltUpIcon|no|String|"bi-caret-up-square"|Using the parameter tiltUpIcon another icon can be used for tilting up the camera.|false|
+|supportedDevices|no|String|["Desktop", "Mobile"]|Devices on which the module can be used and is displayed in the menu.|false|
+|SupportedMapModes|no|String|["3D"]|Map modes in which the module can be used and is displayed in the menu.|false|
+
+**Example tiltView as Object**
+
+```json
+"tiltView" : {
+    "tiltDownIcon": "bi-caret-down-square",
+    "tiltUpIcon": "bi-caret-up-square",
+},
+```
+
+**Example tiltView as boolean**
+
+```json
+"tiltView": true
 ```
 
 ***
