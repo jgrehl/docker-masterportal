@@ -151,7 +151,7 @@ The startModule attribute must be of type Object. A button is displayed for each
 ##### Portalconfig.controls.startModule.mainMenu
 Here you can configure the modules for which a button is to be displayed. These are displayed in the `mainMenu` when opened.
 
-|Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
+|Name|Required|Type|Default|Description|Expert|
 |----|-------------|---|-------|------------|------|
 |type|no|String||Type of the module that is to be displayed as a control and opened in the mainMenu when clicked.|false|
 
@@ -170,7 +170,7 @@ Here you can configure the modules for which a button is to be displayed. These 
 ##### Portalconfig.controls.startModule.secondaryMenu
 Here you can configure the modules for which a button is to be displayed. These are displayed in the `secondaryMenu` when opened.
 
-|Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
+|Name|Required|Type|Default|Description|Expert|
 |----|-------------|---|-------|------------|------|
 |type|no|String||Type of the module that is to be displayed as a control and opened in the secondaryMenu when clicked.|false|
 
@@ -258,9 +258,9 @@ Here you can configure the menu items for the `mainMenu` (in the desktop view on
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
 |expanded|no|Boolean|false|Defines whether the respective menu is expanded or collapsed when the portal is started.|false|
-|searchBar|no|**[searchBar](#markdown-header-portalconfigmenusearchbar)**|||false|
-|sections|no|**[sections](#markdown-header-portalconfigmenusections)**[[]]|||false|
-|title|no|**[title](#markdown-header-portalconfigmenutitle)**|||false|
+|searchBar|no|**[searchBar](#markdown-header-portalconfigmenusearchbar)**||The search bar allows requesting information from various search services at once.|false|
+|sections|no|**[sections](#markdown-header-portalconfigmenusections)**[]||Subdivision of modules in the menu.|false|
+|title|no|**[title](#markdown-header-portalconfigmenutitle)**||The portal's title and further elements to be shown in the main menu bar.|false|
 
 ***
 
@@ -334,9 +334,9 @@ Gazetteer search service configuration.
 **This requires a backend!**
 **A WFS's Stored Query is requested with predefined parameters.**
 
-|Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
+|Name|Required|Type|Default|Description|Expert|
 |----|-------------|---|-------|------------|------|
-|resultEvents|no|**[resultEvents](#markdown-header-portalconfigmenusearchbarsearchInterfacesresultEvents)**|{onClick: ["setMarker", "zoomToResult"], onHover: ["setMarker"]}|Actions that are executed when an interaction, such as hover or click, is performed with a result list item. The following events are possible: "setMarker", "zoomToResult".|false|
+|resultEvents|no|**[resultEvents](#markdown-header-portalconfigmenusearchbarsearchInterfacesresultEvents)**|{"onClick": ["setMarker", "zoomToResult"], "onHover": ["setMarker"]}|Actions that are executed when an interaction, such as hover or click, is performed with a result list item. The following events are possible: "setMarker", "zoomToResult".|false|
 |searchAddress|no|Boolean|false|Defines whether address search is active. For backward compatibility, if "searchAddress" is not configured, the "searchAddress" attribute is set to "true" when "searchStreets" and "searchHouseNumbers" are set to "true".|false|
 |searchDistricts|no|Boolean|false|Defines whether district search is active.|false|
 |searchHouseNumbers|no|Boolean|false|Defines whether house numbers should be searched for. Requires `searchStreets` to be set to `true`, too.|false|
@@ -375,7 +375,7 @@ The following events exist. Which events can be configured can be found in the d
 - setMarker: Places a marker on the map.
 - zoomToResult: Zooms to the search hit.
 
-|Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
+|Name|Required|Type|Default|Description|Expert|
 |----|-------------|---|-------|------------|------|
 |onClick|no|String[]||Actions that are fired when clicking on a result list item.|false|
 |onHover|no|String[]||Actions that are fired when hovering on a result list item.|false|
@@ -406,7 +406,7 @@ Modules can be divided into sections. In the menu, sections are divided with a h
 
 #### Portalconfig.menu.sections.modules
 
-|Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
+|Name|Required|Type|Default|Description|Expert|
 |----|-------------|---|-------|------------|------|
 |description|no|String||The description that should be shown in the button in the right menu.|false|
 |icon|no|String||Icon that is shown in front of the module in the menu. For selection see **[Bootstrap Icons](https://icons.getbootstrap.com/)**.|false|
@@ -489,7 +489,7 @@ Coordinates tool: to display the height above sea level in addition to the 2 dim
 ***
 ###### Portalconfig.menu.sections.modules.coordToolkit.coordInfo
 
-|Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
+|Name|Required|Type|Default|Description|Expert|
 |----|-------------|---|-------|------------|------|
 |title|no|string||Heading for the explanations of the coordinate reference systems.|false|
 |explanations|no|**[explanations](#markdown-header-portalconfigmenusectionsmodulescoordtoolkitcoordinfoexplanations)**[]||Array of declarations from which a list is created.|false|
@@ -689,9 +689,9 @@ The shadow tool provides a UI element to define a point in time by using sliders
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
 |icon|no|String|"bi-lamp-fill"|Icon that is shown in front of the module in the menu. For selection see **[Bootstrap Icons](https://icons.getbootstrap.com/)**.|false|
-|isShadowEnabled|no|Boolean|false|Default shadow value. `true` immediately renders shadows, `false` requires a manual confirmation.|
+|isShadowEnabled|no|Boolean|false|Default shadow value. `true` immediately renders shadows, `false` requires a manual confirmation.|false|
 |name|no|String|"common:modules.shadow.name"|Name of the module in the menu.|false|
-|shadowTime|no|**[shadowTime](#markdown-header-portalconfigmenusectionsmodulesshadowshadowtime)**||Default time the mdoule is started with. Recognizes "month", "day", "hour", and "minute".|
+|shadowTime|no|**[shadowTime](#markdown-header-portalconfigmenusectionsmodulesshadowshadowtime)**||Default time the mdoule is started with. Recognizes "month", "day", "hour", and "minute".|false|
 |type|no|String|"shadow"|The type of the module. Defines which module is configured.|false|
 
 **Example**
