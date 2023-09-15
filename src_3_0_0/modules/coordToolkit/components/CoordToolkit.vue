@@ -8,13 +8,9 @@ import InputText from "../../../shared/modules/inputs/components/InputText.vue";
 import FlatButton from "../../../shared/modules/buttons/components/FlatButton.vue";
 
 /**
- * Toolkit to acess coordinates on the map or search for coordinates.
- * @module modules/CoordToolkit
+ * Toolkit to access coordinates on the map or search for coordinates.
+ * @module modules/coordToolkit/components/CoordToolkit
  * @vue-data {Object} eventHandler - The Cesium Event Handler.
- * @vue-computed {String} eastingNoCoordMessage - Error message for missing east coordinate.
- * @vue-computed {String} northingNoCoordMessage - Error message for missing north coordinate.
- * @vue-computed {String} northingNoMatchMessage - Error message for not matching north coordinate.
- * @vue-computed {String} eastingNoMatchMessage - Error message for not matching east coordinate.
  */
 export default {
     name: "CoordToolkit",

@@ -1,11 +1,11 @@
 /**
  * Helper File to convert coordinates.
- * @module modules/CoordToolkit/js/convertSexagesimalCoordinates
+ * @module modules/coordToolkit/js/convertSexagesimalCoordinates
  */
 /**
  * Converts geographic coordinates to decimal.
- * @param {string} coord geographic (geocentric) lat/long coordinates like 53° 32′ 24″ N 9° 54′ 56″ E
- * @returns {object} containing easting and northing as decimal value
+ * @param {String} coord geographic (geocentric) lat/long coordinates like 53° 32′ 24″ N 9° 54′ 56″ E
+ * @returns {Object} containing easting and northing as decimal value
  */
 export function convertSexagesimalToDecimal (coord) {
     if (typeof coord === "string") {
@@ -19,8 +19,8 @@ export function convertSexagesimalToDecimal (coord) {
 
 /**
  * Converts geographic coordinates to decimal.
- * @param {string} coordinates geographic (geocentric) lat/long coordinates like 53° 32′ 24″ N 9° 54′ 56″ E or 53° 35′ N or 53° N.
- * @returns {object} containing easting and northing as decimal value
+ * @param {String} coordinates geographic (geocentric) lat/long coordinates like 53° 32′ 24″ N 9° 54′ 56″ E or 53° 35′ N or 53° N.
+ * @returns {Object} containing easting and northing as decimal value
  */
 function convertSexagesimalStringToDecimal (coordinates) {
     const coord = coordinates.replace("E", ""),
@@ -98,8 +98,8 @@ function convertSexagesimalArrayToDecimal (coordinates) {
 
 /**
  * Converts geographic coordinates as string to easting and northing coordinates.
- * @param {string} coord geographic (geocentric) lat/long coordinates like 0° 00′ 00″ 0° 00′ 00″ or 53° 33′ 04″ N 9° 56′ 29″ E
- * @returns {object} containing easting and northing
+ * @param {String} coord geographic (geocentric) lat/long coordinates like 0° 00′ 00″ 0° 00′ 00″ or 53° 33′ 04″ N 9° 56′ 29″ E
+ * @returns {Object} containing easting and northing
  */
 export function convertSexagesimalFromString (coord) {
     if (typeof coord !== "string") {
@@ -146,8 +146,8 @@ export function convertSexagesimalFromString (coord) {
 }
 /**
  * Converts geographic coordinates as number lat/long coordinates.
- * @param {number} coordinate geographic (geocentric) lat/long coordinates as decimal value
- * @returns {string} lat/long coordinates
+ * @param {Number} coordinate geographic (geocentric) lat/long coordinates as decimal value
+ * @returns {String} lat/long coordinates
  */
 export function convertSexagesimalFromDecimal (coordinate) {
     const absolute = Math.abs(coordinate),
