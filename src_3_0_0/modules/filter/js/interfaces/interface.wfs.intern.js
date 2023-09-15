@@ -249,7 +249,7 @@ export default class InterfaceWfsIntern {
      * @param {Object} rule the rule object
      * @param {String} rule.operator the operator to use
      * @param {*} [rule.value] a single value
-     * @param {*|*[]} featureValue the value of the feature to check
+     * @param {*} featureValue the value of the feature to check
      * @param {*} [featureValue2] the second value to check for ranges with
      * @returns {Boolean} true if the rule matches the given feature value, false if not
      */
@@ -312,7 +312,7 @@ export default class InterfaceWfsIntern {
      * @param {Object} rule the rule object
      * @param {String} rule.operator the operator to use
      * @param {*} [rule.value] a single value
-     * @param {*|*[]} featureValue the value of the feature to check
+     * @param {*} featureValue the value of the feature to check
      * @returns {Boolean} true if the rule matches the given feature value, false if not
      */
     checkRuleForAttributesORHandler (rule, featureValue) {

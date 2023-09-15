@@ -30,7 +30,7 @@ async function fetchRoutingKomootGeosearch (search) {
 
 /**
  * Requests POI at coordinate from Komoot
- * @param {[Number, Number]} coordinates to search at
+ * @param {Array} coordinates to search at
  * @returns {RoutingGeosearchResult} routingGeosearchResult
  */
 async function fetchRoutingKomootGeosearchReverse (coordinates) {
@@ -52,7 +52,7 @@ async function fetchRoutingKomootGeosearchReverse (coordinates) {
  * Parses Response from Komoot to RoutingGeosearchResult
  * @param {Object} geosearchResult from Komoot
  * @param {Object} [geosearchResult.geometry] geosearchResult geometry
- * @param {[Number, Number]} [geosearchResult.geometry.coordinates] geosearchResult geometry coordinates
+ * @param {Array} [geosearchResult.geometry.coordinates] geosearchResult geometry coordinates
  * @param {Object} [geosearchResult.properties] geosearchResult properties
  * @param {String} [geosearchResult.properties.housenumber] geosearchResult properties housenumber
  * @param {String} [geosearchResult.properties.street] geosearchResult properties street
