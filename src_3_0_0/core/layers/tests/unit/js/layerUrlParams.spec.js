@@ -1,6 +1,8 @@
 import layerUrlParams from "../../../js/layerUrlParams";
 import store from "../../../../../app-store";
 import {expect} from "chai";
+import rawLayerList from "@masterportal/masterportalapi/src/rawLayerList";
+import sinon from "sinon";
 
 describe("src_3_0_0/core/layers/js/layerUrlParams.js", () => {
     let dispatchCalls = [],
@@ -267,7 +269,6 @@ describe("src_3_0_0/core/layers/js/layerUrlParams.js", () => {
                 layerConfigById: () => true
             };
         });
-
         it("should add all layers", () => {
             const layers = [
                 {
@@ -306,6 +307,38 @@ describe("src_3_0_0/core/layers/js/layerUrlParams.js", () => {
                         }
                     }
                 ]
+            });
+        });
+        it("should add a layer that isn't in the config.json", () => {
+            store.getters = {
+                layerConfigById: () => false
+            };
+            const layers = [
+                {
+                    id: "123"
+                }
+            ];
+
+            sinon.stub(rawLayerList, "getLayerWhere").returns({
+                id: "123",
+                showInLayerTree: true,
+                type: "layer",
+                visibility: true,
+                zIndex: 0
+            });
+
+            layerUrlParams.addLayerToLayerTree(layers);
+
+            expect(dispatchCalls.length).to.equals(1);
+            expect(dispatchCalls[0].addLayerToLayerConfig).to.deep.equals({
+                layerConfig: {
+                    id: "123",
+                    showInLayerTree: true,
+                    type: "layer",
+                    visibility: true,
+                    zIndex: 0
+                },
+                parentKey: "Fachdaten"
             });
         });
     });
