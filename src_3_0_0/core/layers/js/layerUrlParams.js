@@ -1,5 +1,6 @@
 import processUrlParams from "../../../shared/js/utils/processUrlParams";
 import store from "../../../app-store";
+import rawLayerList from "@masterportal/masterportalapi/src/rawLayerList";
 
 /**
  * Here the urlParams for the layers are processed.
@@ -134,6 +135,20 @@ function addLayerToLayerTree (layers) {
                     layer: layerConfig
                 }]
             });
+        }
+        else if (rawLayerList.getLayerWhere({id: layer.id})) {
+            const source = rawLayerList.getLayerWhere({id: layer.id});
+
+            store.dispatch("addLayerToLayerConfig", {
+                layerConfig: {...source, ...{
+                    showInLayerTree: true,
+                    visibility: true,
+                    type: "layer",
+                    zIndex: zIndex++
+                }},
+                parentKey: "Fachdaten"
+            },
+            {root: true});
         }
         else {
             store.dispatch("Alerting/addSingleAlert", {
