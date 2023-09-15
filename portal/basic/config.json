@@ -34,7 +34,7 @@
     "mainMenu": {
       "expanded": true,
       "title": {
-        "text": "Basic 3 alpha",
+        "text": "Basic",
         "logo": "./resources/img/mp_logo.png",
         "link": "https://masterportal.org",
         "toolTip": "Masterportal"
@@ -56,8 +56,7 @@
             "type": "visibleVector",
             "resultEvents": {
               "onClick": ["openGetFeatureInfo", "setMarker", "zoomToResult"],
-              "onHover": ["setMarker"],
-              "buttons": ["startRouting"]
+              "onHover": ["setMarker"]
             }
           },
           {
@@ -68,32 +67,6 @@
       },
       "sections": [
         [
-          {
-            "type": "wfst",
-            "name": "WFS-T Tool",
-            "layerIds": ["lgvline", "lgvpoint", "lgvpolygon"],
-            "toggleLayer": false,
-            "lineButton": [
-              {
-              "layerId":"lgvline",
-              "available": true
-              }
-            ],
-            "pointButton": [
-              {
-                  "layerId":"lgvpoint",
-                  "available": true
-              }
-            ],
-            "polygonButton": [
-              {
-              "layerId":"lgvpolygon",
-              "available": true
-              }
-            ],
-            "update": "Bearbeiten!",
-            "delete": true
-          },
           {
             "type": "fileImport"
           },
@@ -128,39 +101,33 @@
       "sections": [
         [
           {
-            "type": "legend"
+            "type": "wfst",
+            "name": "WFS-T Tool",
+            "layerIds": ["lgvline", "lgvpoint", "lgvpolygon"],
+            "toggleLayer": false,
+            "lineButton": [
+              {
+              "layerId":"lgvline",
+              "available": true
+              }
+            ],
+            "pointButton": [
+              {
+                  "layerId":"lgvpoint",
+                  "available": true
+              }
+            ],
+            "polygonButton": [
+              {
+              "layerId":"lgvpolygon",
+              "available": true
+              }
+            ],
+            "update": "Bearbeiten!",
+            "delete": true
           },
           {
-            "type": "routing",
-            "icon": "bi-signpost-2",
-            "showDescription": true,
-            "description": "Routenplaner",
-            "geosearch": {
-              "type": "BKG",
-              "serviceId": "5"
-            },
-            "geosearchReverse": {
-              "type": "BKG",
-              "serviceId": "5"
-            },
-            "directionsSettings": {
-              "type": "ORS",
-              "serviceId": "bkg_ors",
-              "speedProfile": "CAR",
-              "batchProcessing": {
-                "enabled": false,
-                "active": false
-              }
-            },
-            "isochronesSettings": {
-              "type": "ORS",
-              "serviceId": "bkg_ors",
-              "speedProfile": "CAR",
-              "batchProcessing": {
-                "enabled": false,
-                "active": false
-              }
-            }
+            "type": "legend"
           },
           {
             "type": "scaleSwitcher",
