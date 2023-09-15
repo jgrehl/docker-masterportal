@@ -9,6 +9,7 @@ import Freeze from "../freeze/store/indexFreeze";
 import FullScreen from "../fullScreen/store/indexFullScreen";
 import Orientation from "../orientation/store/indexOrientation";
 import StartModule from "../startModule/store/indexStartModule";
+import TiltView from "../tiltView/store/indexTiltView";
 import TotalView from "../totalView/store/indexTotalView";
 import Zoom from "../zoom/store/indexZoom";
 
@@ -27,6 +28,7 @@ export default {
         FullScreen,
         Orientation,
         StartModule,
+        TiltView,
         TotalView,
         Zoom
     },

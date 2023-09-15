@@ -141,6 +141,10 @@
         "titleGeolocatePOI": "Close to here",
         "trackingDeniedText": "'Close to here' is not available."
       },
+      "tiltView": {
+        "downButton": "Tilt view down",
+        "upButton": "Tilt view up"
+      },
       "totalView": {
         "titleButton": "Back to home screen"
       },
