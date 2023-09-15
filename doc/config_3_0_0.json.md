@@ -396,6 +396,7 @@ Modules can be divided into sections. In the menu, sections are divided with a h
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
+|coordToolkit|no|**[coordToolkit](#markdown-header-portalconfigmenusectionsmodulescoordtoolkit)**||Coordinate query: Tool to query coordinates and altitude by mouse click: When clicking in the map, the coordinates are frozen in the display and can also be copied directly to the clipboard. Coordinate search: The coordinate system and the coordinates can be entered via an input mask. The tool then zooms to the corresponding coordinate and places a marker on it. The coordinate systems are obtained from config.js.|false|
 |layerClusterToggler|no|**[layerClusterToggler](#markdown-header-portalconfigmenusectionsmoduleslayerClusterToggler)**||This module allows a cluster layers to be active and deactive together.|false|
 |layerSlider|no|**[layerSlider](#markdown-header-portalconfigmenutoollayerslider)**||The layerSlider module allows showing arbitrary services in order. This can e.g. be used to show aerial footage from multiple years in succession.|false|
 |openConfig|no|**[openConfig](#markdown-header-portalconfigmenusectionsopenConfig)**||ith this module a configuration file (config.json) can be reloaded at runtime. The modules and map are adapted to the new configuration.|false|
@@ -445,12 +446,56 @@ Modules can be divided into sections. In the menu, sections are divided with a h
 
 ***
 
+
 ##### Portalconfig.menu.sections.modules.coordToolkit
+Coordinates tool: to display the height above sea level in addition to the 2 dimensional coordinates, a 'heightLayerId' of a WMS service that provides the height must be specified. The format XML is expected and the attribute for the heights is expected under the value of the parameter 'heightElementName'.
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
+|type|no|String|"coordToolkit"|The type of the module. Defines which module is configured.|false|
+|heightLayerId|no|String||Coordinate query: Id of the WMS layer that provides the height in XML format. If not defined, then no height is displayed.|false|
+|heightElementName|no|String||Coordinate query: The element name under which the height in the XML is searched.|false|
+|heightValueWater|no|String||Coordinate query: the value in the element defined under "heightElementName" supplied by the WMS for an unmeasured height in the water area, it will display the internationalized text "Water surface, no heights available" under the key "common:modules.coordToolkit.noHeightWater" in the interface. If this attribute is not specified, then the text provided by the WMS will be displayed.|false|
+|heightValueBuilding|no|String||Coordinate query: the value in the element defined under "heightElementName" supplied by the WMS for a non-measured height in the building area, it will display the internationalized text "Building area, no heights available" under the key "common:modules.coordToolkit.noHeightBuilding" in the interface. If this attribute is not specified, then the text provided by the WMS will be displayed.|false|
+|zoomLevel|no|Number|7|Coordinate search: Specifies the zoom level to which you want to zoom.|false|
+|showCopyButtons|no|Boolean|true|Switch to show or hide the buttons for copying the coordinates.|false|
+|delimiter|no|String|"Pipe-Symbol"|Delimiter of the coordinates when copying the coordinate pair|false|
+|heightLayerInfo|no|String||An explanation for the height can be deposited here.|false|
+|coordInfo|no|[CoordInfo](#markdown-header-portalconfigmenutoolcoordToolkitcoordInfo)||An object with explanations for the coordinate reference systems can be stored here.|false|
+
+**Example**
+```
+#!json
+{
+    "type": "coordToolkit",
+    "heightLayerId": "19173",
+    "heightElementName": "value_0",
+    "heightValueWater": "-20",
+    "heightValueBuilding": "200",
+    "zoomLevel": 5,
+    "heightLayerInfo": "Basis of the height information is the \"Digitalge Höhenmodell Hamburg DGM 1\".",
+    "showDescription": true,
+    "description": "Determine coordinates from the map or search for coordinates.",
+    "coordInfo": {
+        "title": "Coordinate reference system for 2D position information, explanations",
+        "explanations": [
+        "ETRS89_UTM32, EPSG 4647 (zE-N): Reference system ETRS89, mapping rule UTM, zone 32",
+        "EPSG 25832: explanations..."
+        ]
+    }
+}
+```    
 
 ***
+###### Portalconfig.menu.sections.modules.coordToolkit.coordInfo
+
+|Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
+|----|-------------|---|-------|------------|------|
+|title|no|string||Heading for the explanations of the coordinate reference systems.|false|
+|explanations|no|**[explanations](#markdown-header-portalconfigmenusectionsmodulescoordtoolkitcoordinfoexplanations)**[]||Array of declarations from which a list is created.|false|
+
+###### Portalconfig.menu.tool.coordToolkit.coordInfo.explanations
+Can contain an array of explanations of the coordinate reference systems from which a list is created.
 
 ##### Portalconfig.menu.sections.modules.draw
 
