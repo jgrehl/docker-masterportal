@@ -58,7 +58,7 @@ async function fetchRoutingElasticGeosearch (search) {
  * Parses Response from Elastic to RoutingGeosearchResult
  * @param {Object} geosearchResult from Elastic
  * @param {Object} [geosearchResult._source.geometry] geosearchResult geometry
- * @param {[Number, Number]} [geosearchResult._source.geometry.coordinates] geosearchResult geometry coordinates
+ * @param {Array} [geosearchResult._source.geometry.coordinates] geosearchResult geometry coordinates
  * @param {Object} [geosearchResult._source.properties] geosearchResult properties
  * @param {String} [geosearchResult._source.properties.searchField] geosearchResult properties searchField
  * @param {String} [geosearchResult.epsg] geosearchResult epsg

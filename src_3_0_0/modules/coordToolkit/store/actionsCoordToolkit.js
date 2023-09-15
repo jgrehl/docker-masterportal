@@ -6,8 +6,8 @@ import {requestGfi} from "../../../shared/js/api/wmsGetFeatureInfo";
 import layerFactory from "../../../core/layers/js/layerFactory";
 
 /**
- * The actions for the CoordToolkit
- * @module modules/CoordToolkit/actions
+ * The actions for the CoordToolkit.
+ * @module modules/coordToolkit/store/actions
  */
 export default {
     /**
@@ -115,7 +115,7 @@ export default {
      * @param {Object} context.dispatch the dispatch
      * @param {Object} context.rootGetters the rootGetters
      * @param {Object} context.state the state
-     * @param {Number[]} position position of the projection in the map
+     * @param {Number[]} position position in the map
      * @returns {void}
      */
     getHeight ({dispatch, rootGetters, state}, position) {
@@ -178,7 +178,7 @@ export default {
         commit("setExample");
     },
     /**
-     * Delegates the calculation and transformation of the position according to the projection
+     * Delegates the calculation and transformation of the position according to the projection.
      * @param {Object} context the vuex context
      * @param {Object} context.dispatch the dispatch
      * @param {Object} context.state the state
@@ -223,8 +223,9 @@ export default {
      * @param {Object} context the vuex context
      * @param {Object} context.commit the commit
      * @param {Object} context.rootGetters the rootGetters
-     * @param {Number[]} position transformed coordinates
-     * @param {Object} targetProjection selected projection
+     * @param {Object} payload the payload
+     * @param {Number[]} payload.position transformed coordinates
+     * @param {Object} payload.targetProjection selected projection
      * @returns {void}
      */
     adjustPosition ({commit, rootGetters}, {position, targetProjection}) {
@@ -268,7 +269,7 @@ export default {
         }
     },
     /**
-     * Checks the position for update and shows the marker at updated position
+     * Checks the position for update and shows the marker at updated position.
      * @param {Object} context the vuex context
      * @param {Object} context.state the state
      * @param {Object} context.commit the commit
@@ -319,10 +320,10 @@ export default {
         dispatch("Maps/removePointMarker", null, {root: true});
     },
     /**
-     * Remembers the projection and shows mapmarker at the given position.
+     * Shows mapmarker at the given position.
      * @param {Object} context the vuex context
      * @param {Object} context.dispatch the dispatch
-     * @param {Event} coordinates - the position
+     * @param {Array} coordinates - the position
      * @returns {void}
      */
     setMarker: function ({dispatch}, coordinates) {
@@ -412,7 +413,7 @@ export default {
      * @param {Object} context the vuex context
      * @param {Object} context.state the state
      * @param {Object} context.commit the commit
-     * @param {*} targetProjection the target projection
+     * @param {Object} targetProjection the target projection
      * @returns {void}
      */
     transformCoordinatesFromTo ({state, commit}, targetProjection) {

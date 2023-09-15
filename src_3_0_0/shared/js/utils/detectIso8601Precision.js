@@ -18,7 +18,7 @@ export const validIso8601Precisions = [
  * @link https://datatracker.ietf.org/doc/html/rfc3339#section-5.6
  * @param {String} timestamp timestamp to detect precision of
  * @returns {String} format value for precision
- * @throws
+ * @throws Error
  */
 export default function detectIso8601Precision (timestamp) {
     const checkTimestamp = timestamp.endsWith("Z")
