@@ -3,7 +3,7 @@ import {mapGetters} from "vuex";
 import ControlIcon from "../../components/ControlIcon.vue";
 
 /**
- * TiltView adds two controls that allow yout to tilt the 3d map up or down.
+ * TiltView adds two controls that allow you to tilt the 3d map up or down.
  * @module modules/controls/TiltView
  */
 export default {
