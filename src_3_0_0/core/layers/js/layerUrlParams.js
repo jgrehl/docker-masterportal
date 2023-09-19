@@ -119,7 +119,7 @@ function removeCurrentLayerFromLayerTree () {
  * @returns {void}
  */
 function addLayerToLayerTree (layers) {
-    let zIndex = 0;
+    let zIndex = 1;
 
     layers.forEach(layer => {
         if (store.getters.layerConfigById(layer.id)) {
