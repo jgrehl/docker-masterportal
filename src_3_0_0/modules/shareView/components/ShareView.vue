@@ -30,14 +30,6 @@ export default {
          */
         facebook () {
             return "https://www.facebook.com/sharer/sharer.php?u=" + this.url;
-        },
-
-        /**
-         * Generates the link for twitter.
-         * @returns {String} url with params
-         */
-        twitter () {
-            return "https://twitter.com/share?url=" + this.url + "&text=" + this.$t("modules.shareView.myMap");
         }
     },
     methods: {
@@ -111,19 +103,6 @@ export default {
         <div
             v-else
         >
-            <div class="col-12">
-                <a
-                    id="twitter-btn"
-                    aria-label="$t('common:modules.shareView.shareTwitter')"
-                    class="btn btn-secondary btn-icon mb-3 pe-4 ps-3"
-                    :href="twitter"
-                    target="_blank"
-                    role="button"
-                >
-                    <i class="bi-twitter" />
-                    {{ $t("common:modules.shareView.shareTwitter") }}
-                </a>
-            </div>
             <div class="col-12">
                 <a
                     id="facebook-btn"
