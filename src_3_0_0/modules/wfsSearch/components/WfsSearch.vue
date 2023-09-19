@@ -6,6 +6,7 @@ import WfsSearchLiteral from "./WfsSearchLiteral.vue";
 import {createUserHelp} from "../js/literalFunctions";
 import {searchFeatures} from "../js/requests";
 import isObject from "../../../shared/js/utils/isObject";
+import FlatButton from "../../../shared/modules/buttons/components/FlatButton.vue";
 
 /**
  * Wfs Search
@@ -19,7 +20,8 @@ export default {
     components: {
         WfsSearchLiteral,
         ListItem,
-        ModalItem
+        ModalItem,
+        FlatButton
     },
     computed: {
         ...mapGetters("Modules/WfsSearch", [
@@ -176,12 +178,6 @@ export default {
                     <hr>
                 </template>
                 <div
-                    v-else
-                    class="title d-flex justify-content-center mb-3"
-                >
-                    {{ $t(currentInstance.title) }}
-                </div>
-                <div
                     v-if="userHelp !== 'hide'"
                     id="module-wfsSearch-userHelp"
                     class="form-group form-group-sm row"
@@ -197,7 +193,6 @@ export default {
                         v-html="$t('common:modules.wfsSearch.userHelp.text', {userHelp})"
                     />
                 </div>
-                <hr>
                 <div
                     v-for="(literal, i) of currentInstance.literals"
                     :key="'module-wfsSearch-clause' + i"
@@ -208,37 +203,30 @@ export default {
                     <hr :key="'module-wfsSearch-clause-divider' + i">
                 </div>
                 <div class="form-group form-group-sm row">
-                    <div class="col-md-6">
-                        <button
-                            id="module-wfsSearch-button-resetUI"
-                            type="button"
-                            class="btn btn-secondary col-md-12"
-                            @click="resetUI"
-                        >
-                            {{ $t("common:modules.wfsSearch.resetButton") }}
-                        </button>
-                    </div>
-                    <div class="col-md-6">
-                        <input
-                            id="module-wfsSearch-button-search"
-                            type="submit"
-                            class="btn btn-primary col-md-12"
-                            :disabled="requiredFields"
-                            :value="$t('common:modules.wfsSearch.searchButton')"
-                        >
-                    </div>
+                    <FlatButton
+                        id="module-wfsSearch-button-search"
+                        :type="'submit'"
+                        :text="$t('common:modules.wfsSearch.searchButton')"
+                        :icon="'bi-search'"
+                        :disabled="requiredFields"
+                    />
+                    <FlatButton
+                        id="module-wfsSearch-button-resetUI"
+                        :interaction="resetUI"
+                        :text="$t('common:modules.wfsSearch.resetButton')"
+                        :icon="'bi-x'"
+                    />
                     <div
                         v-if="searched && instances[0].resultList !== undefined"
                         class="col-md-12"
                     >
-                        <button
+                        <FlatButton
                             id="module-wfsSearch-button-showResults"
-                            class="btn btn-secondary col-md-12"
+                            :interaction="setShowResultList(true)"
                             :disabled="results.length === 0 || !headers"
-                            @click="setShowResultList(true)"
-                        >
-                            {{ $t("common:modules.wfsSearch.showResults") + " " + `(${results.length})` }}
-                        </button>
+                            :text="$t('common:modules.wfsSearch.showResults') + ' ' + `(${results.length})`"
+                            :icon="'bi-card-list'"
+                        />
                     </div>
                 </div>
             </form>
