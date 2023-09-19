@@ -31,7 +31,7 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
                     kategorie_inspire: ["Gebäude"],
                     kategorie_organisation: "Landesbetrieb Geoinformation und Vermessung"
                 }],
-                zIndex: 0
+                zIndex: 1
             },
             {
                 id: "452",
@@ -44,7 +44,7 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
                     kategorie_inspire: ["Gebäude"],
                     kategorie_organisation: "Landesbetrieb Geoinformation und Vermessung"
                 }],
-                zIndex: 1
+                zIndex: 2
             },
             {
                 id: "1132",
@@ -57,7 +57,7 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
                     kategorie_inspire: ["Gebäude"],
                     kategorie_organisation: "Landesbetrieb Geoinformation und Vermessung"
                 }],
-                zIndex: 2
+                zIndex: 3
             },
             {
                 id: "10220",
@@ -70,13 +70,13 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
                     kategorie_inspire: ["kein INSPIRE-Thema"],
                     kategorie_organisation: "Landesbetrieb Straßen, Brücken und Gewässer"
                 }],
-                zIndex: 3
+                zIndex: 4
             },
             {
                 id: "451",
                 name: "name451",
                 typ: "WFS",
-                zIndex: 4,
+                zIndex: 5,
                 datasets: []
             },
             {
@@ -91,7 +91,7 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
                     kategorie_inspire: ["kein INSPIRE-Thema"],
                     kategorie_organisation: "Landesbetrieb Straßen, Brücken und Gewässer"
                 }],
-                zIndex: 5
+                zIndex: 6
             },
             {
                 id: "717",
@@ -100,7 +100,7 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
                 maxScale: "10000",
                 minScale: "10",
                 typ: "WMS",
-                zIndex: 6,
+                zIndex: 7,
                 datasets: []
             },
             {
@@ -110,7 +110,7 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
                 maxScale: "30000",
                 minScale: "30",
                 typ: "WMS",
-                zIndex: 7,
+                zIndex: 8,
                 datasets: []
             },
             {
@@ -120,7 +120,7 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
                 maxScale: "20000",
                 minScale: "20",
                 typ: "WMS",
-                zIndex: 8,
+                zIndex: 9,
                 datasets: []
             }
         ];
@@ -372,7 +372,7 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
         it("Should set new zindex for layer with zIndex greater than maxZIndex", () => {
             const layerContainer = layerList.slice(0, 5),
                 maxZIndex = 2,
-                resultZIndex = [0, 1, 2, 4, 5];
+                resultZIndex = [1, 2, 4, 5, 6];
 
             actions.updateLayerConfigZIndex({}, {layerContainer, maxZIndex});
 
@@ -761,16 +761,16 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
                     }
                 };
 
-                layerConfig[treeBaselayersKey].elements[0].zIndex = 0;
-                layerConfig[treeBaselayersKey].elements[1].zIndex = 1;
+                layerConfig[treeBaselayersKey].elements[0].zIndex = 1;
+                layerConfig[treeBaselayersKey].elements[1].zIndex = 2;
                 layerConfig[treeSubjectsKey].elements[0].zIndex = 5;
                 layerConfig[treeSubjectsKey].elements[1].zIndex = 6;
                 actions.updateAllZIndexes({getters});
 
-                expect(layerConfig[treeBaselayersKey].elements[0].zIndex).to.be.equals(0);
-                expect(layerConfig[treeBaselayersKey].elements[1].zIndex).to.be.equals(1);
-                expect(layerConfig[treeSubjectsKey].elements[0].zIndex).to.be.equals(2);
-                expect(layerConfig[treeSubjectsKey].elements[1].zIndex).to.be.equals(3);
+                expect(layerConfig[treeBaselayersKey].elements[0].zIndex).to.be.equals(1);
+                expect(layerConfig[treeBaselayersKey].elements[1].zIndex).to.be.equals(2);
+                expect(layerConfig[treeSubjectsKey].elements[0].zIndex).to.be.equals(3);
+                expect(layerConfig[treeSubjectsKey].elements[1].zIndex).to.be.equals(4);
             });
 
             it("updateAllZIndexes with some zIndexes are set before", () => {
@@ -783,15 +783,15 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
                     }
                 };
 
-                layerConfig[treeBaselayersKey].elements[0].zIndex = 0;
+                layerConfig[treeBaselayersKey].elements[0].zIndex = 1;
                 layerConfig[treeSubjectsKey].elements[0].zIndex = 5;
                 layerConfig[treeSubjectsKey].elements[1].zIndex = 6;
                 actions.updateAllZIndexes({getters});
 
-                expect(layerConfig[treeBaselayersKey].elements[0].zIndex).to.be.equals(0);
+                expect(layerConfig[treeBaselayersKey].elements[0].zIndex).to.be.equals(1);
                 expect(layerConfig[treeBaselayersKey].elements[1].zIndex).to.be.equals(undefined);
-                expect(layerConfig[treeSubjectsKey].elements[0].zIndex).to.be.equals(1);
-                expect(layerConfig[treeSubjectsKey].elements[1].zIndex).to.be.equals(2);
+                expect(layerConfig[treeSubjectsKey].elements[0].zIndex).to.be.equals(2);
+                expect(layerConfig[treeSubjectsKey].elements[1].zIndex).to.be.equals(3);
             });
         });
     });
