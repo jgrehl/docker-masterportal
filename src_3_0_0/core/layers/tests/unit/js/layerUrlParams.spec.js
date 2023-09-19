@@ -9,7 +9,7 @@ describe("src_3_0_0/core/layers/js/layerUrlParams.js", () => {
         zIndex;
 
     beforeEach(() => {
-        zIndex = 0;
+        zIndex = 1;
         dispatchCalls = [];
 
         store.dispatch = (arg1, arg2) => {
@@ -44,7 +44,7 @@ describe("src_3_0_0/core/layers/js/layerUrlParams.js", () => {
                             id: "2426",
                             showInLayerTree: true,
                             visibility: true,
-                            zIndex: 0
+                            zIndex: 1
                         }
                     }
                 ]
@@ -57,7 +57,7 @@ describe("src_3_0_0/core/layers/js/layerUrlParams.js", () => {
                             id: "1711",
                             showInLayerTree: true,
                             visibility: false,
-                            zIndex: 1
+                            zIndex: 2
                         }
                     }
                 ]
@@ -71,7 +71,7 @@ describe("src_3_0_0/core/layers/js/layerUrlParams.js", () => {
                             showInLayerTree: true,
                             transparency: 50,
                             visibility: true,
-                            zIndex: 2
+                            zIndex: 3
                         }
                     }
                 ]
@@ -99,7 +99,7 @@ describe("src_3_0_0/core/layers/js/layerUrlParams.js", () => {
                             showInLayerTree: true,
                             transparency: "50",
                             visibility: true,
-                            zIndex: 0
+                            zIndex: 1
                         }
                     }
                 ]
@@ -113,7 +113,7 @@ describe("src_3_0_0/core/layers/js/layerUrlParams.js", () => {
                             showInLayerTree: true,
                             transparency: "0",
                             visibility: false,
-                            zIndex: 1
+                            zIndex: 2
                         }
                     }
                 ]
@@ -182,7 +182,7 @@ describe("src_3_0_0/core/layers/js/layerUrlParams.js", () => {
                             id: "452",
                             showInLayerTree: true,
                             visibility: true,
-                            zIndex: 0
+                            zIndex: 1
                         }
                     }
                 ]
@@ -195,7 +195,7 @@ describe("src_3_0_0/core/layers/js/layerUrlParams.js", () => {
                             id: "2425",
                             showInLayerTree: true,
                             visibility: true,
-                            zIndex: 1
+                            zIndex: 2
                         }
                     }
                 ]
@@ -208,7 +208,7 @@ describe("src_3_0_0/core/layers/js/layerUrlParams.js", () => {
                             id: "2426",
                             showInLayerTree: true,
                             visibility: true,
-                            zIndex: 2
+                            zIndex: 3
                         }
                     }
                 ]
@@ -290,7 +290,7 @@ describe("src_3_0_0/core/layers/js/layerUrlParams.js", () => {
                             id: "123",
                             showInLayerTree: true,
                             visibility: true,
-                            zIndex: 0
+                            zIndex: 1
                         }
                     }
                 ]
@@ -303,7 +303,7 @@ describe("src_3_0_0/core/layers/js/layerUrlParams.js", () => {
                             id: "456",
                             showInLayerTree: true,
                             visibility: true,
-                            zIndex: 1
+                            zIndex: 2
                         }
                     }
                 ]

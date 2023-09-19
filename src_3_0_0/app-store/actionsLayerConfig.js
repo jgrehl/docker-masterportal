@@ -136,7 +136,7 @@ export default {
      * @returns {void}
      */
     updateAllZIndexes ({getters}) {
-        let startZIndex = 0;
+        let startZIndex = 1;
 
         treeOrder.forEach(parentKey => {
             const configsByParentKey = getters.allLayerConfigsByParentKey(parentKey).filter(config => Object.prototype.hasOwnProperty.call(config, "zIndex") && typeof config.zIndex === "number");
