@@ -3,7 +3,7 @@ import omit from "../../shared/js/utils/omit";
 import {updateProxyUrl} from "./getProxyUrl";
 import layerFactory from "../../core/layers/js/layerFactory";
 
-let zIndex = 0;
+let zIndex = 1;
 
 /**
  * Returns the extended raw layer to the id contained in the layer configuration.
@@ -341,5 +341,5 @@ function mergeByMetaIds (toMergeByMdId, layerList) {
  * @returns {void}
  */
 export function resetZIndex () {
-    zIndex = 0;
+    zIndex = 1;
 }
