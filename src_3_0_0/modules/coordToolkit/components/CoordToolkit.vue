@@ -696,7 +696,7 @@ export default {
                 v-if="isDefaultStyle()"
             >
                 <div
-                    id="accordionFlushExample"
+                    id="accordionFlushCoord"
                     class="accordion accordion-flush"
                 >
                     <div class="accordion-item">

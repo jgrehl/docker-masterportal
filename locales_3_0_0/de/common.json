@@ -165,6 +165,7 @@
         "contentSaved": "Inhalt wurde in die Zwischenablage kopiert.",
         "contentNotSaved": "Inhalt konnte nicht in die Zwischenablage kopiert werden."
       },
+      "description": "Hier können Koordinaten gesucht oder abgefragt werden",
       "errorMsg": {
         "example": "Beispiel: ",
         "hdmsNoCoord": "Bitte geben Sie Ihren Wert der {{valueKey}} vollständig ein.",
@@ -230,6 +231,7 @@
         "yellow": "Gelb"
       },
       "defined": "definiert",
+      "description": "Hier können Zeichnungen angelegt und heruntergeladen werden",
       "doubleCirclePlaceholder": "Bitte geben Sie einen Radius ein",
       "download": {
         "enterFilename": "Bitte Dateiname angeben",
@@ -311,6 +313,7 @@
           "kml": "KML-Datei (*.kml)"
         }
       },
+      "description": "Hier können verschiedene Dateiformate importiert werden",
       "fileZoom": "Auf Features dieser Datei \"{{filename}}\" zoomen",
       "importFiles": "Ausgewählte Dateien importieren",
       "name": "Datei-Import",
@@ -528,6 +531,7 @@
     "measure": {
       "area": "Fläche",
       "deleteMeasurements": "Messungen löschen",
+      "description": "Hier können Strecken und Flächen gemessen werden",
       "finishWithDoubleClick": "Abschließen mit Doppelklick",
       "geometry": "Geometrie",
       "influenceFactors": "Die angezeigten Werte unterliegen Ungenauigkeiten, die u.a. durch folgende Faktoren beeinflusst werden, z.B. Maßstab, Auflösung der Karte und des Bildschirmes.",
@@ -572,6 +576,7 @@
       "authorLabel": "Ersteller",
       "autoAdjustScale": "Druckmaßstab automatisch anpassen",
       "createDownloadFile": "Wird erstellt...",
+      "description": "Hier kann ein Kartenausschnitt heruntergeladen und dann gedruckt werden",
       "downloadFile": "Herunterladen",
       "dpiLabel": "DPI",
       "errorMessage": "Die Abfrage der Metadaten ist fehlgeschlagen. Falls das Problem weiterhin besteht, wenden Sie sich bitte an den Eigentümer des Dienstes: <b>{{cswObjCswUrl}}</b>",
@@ -612,6 +617,7 @@
         "uploadFile": "Datei hochladen"
       },
       "coordinateInputHelp": "Suchen Sie einen Ort oder fügen Sie einen Punkt durch Klick in die Karte hinzu",
+      "description": "Hier kann eine Route berechnet werden lassen",
       "deleteWaypoint": "Wegpunkt löschen",
       "directions": {
         "batchProcessing": {
@@ -761,6 +767,7 @@
     },
     "shadow": {
       "name": "Schatten",
+      "description": "Hier kann man sich Schatten an Gebäuden ansehen",
       "pickDate": "Wählen Sie ein Datum:",
       "shadowDisplayOff": "Schatten auf der Karte ausblenden",
       "shadowDisplayOn": "Schatten auf der Karte einblenden",
@@ -788,6 +795,7 @@
     },
     "wfsSearch": {
       "district": "Gemarkung",
+      "description": "Hier können Flurstücke gesucht und angezeigt werden",
       "fieldSelectionLabel": "Feld Auswahl",
       "instancesSelectLabel": "Instanzenauswahl",
       "name": "WFS Suche",
