@@ -4,6 +4,7 @@
  * @type {object}
  * @property {boolean} type the type of the module.
  * @property {string} name Displayed as the title. (config-param)
+ * @property {string} description Displayed as the description. (config-param)
  * @property {string} icon Icon next to the title. (config-param)
  * @property {Object[]} instances Array of search configurations. Each object contains the parameters literals, requestConfig and title and may also contain the parameters selectSource and userHelp. More information in the documentation.
  * @property {number} currentInstanceIndex Position of the current search instance in the instances array.
@@ -26,6 +27,7 @@ const state = {
     type: "wfsSearch",
     // defaults for config.json tool parameters
     name: "common:modules.wfsSearch.name",
+    description: "",
     icon: "bi-search",
     instances: [],
     // state parameters
