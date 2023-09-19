@@ -192,6 +192,9 @@ export default {
         id="masterportal-container"
         class="masterportal-container"
     >
+        <div v-if="allConfigsLoaded && addonsLoaded">
+            <Alerting />
+        </div>
         <MenuContainer
             v-if="allConfigsLoaded && addonsLoaded && mainMenu && uiStyle !== 'SIMPLE'"
             side="mainMenu"
@@ -204,7 +207,6 @@ export default {
             v-if="allConfigsLoaded && addonsLoaded"
             class="elements-positioned-over-map"
         >
-            <Alerting />
             <component :is="componentMap.mouseHover" />
             <ControlBar class="controls" />
             <component :is="componentMap.wmsTime" />
