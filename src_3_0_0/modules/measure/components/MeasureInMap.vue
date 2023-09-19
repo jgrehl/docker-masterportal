@@ -159,27 +159,59 @@ export default {
                 {{ $t("common:modules.measure.measure") }}
             </label>
         </div>
+        <div class="d-flex justify-content-center my-3">
+            <FlatButton
+                id="measure-delete"
+                aria-label="$t('common:modules.measure.deleteMeasurements')"
+                :interaction="deleteFeatures"
+                :text="$t('common:modules.measure.deleteMeasurements')"
+                :icon="deleteIcon"
+            />
+        </div>
         <div
             v-if="isDefaultStyle()"
         >
-            <div class="inaccuracy-list">
-                {{ $t("common:modules.measure.influenceFactors") }}
-                <ul>
-                    <li>{{ $t("common:modules.measure.scale") }}</li>
-                    <li>{{ $t("common:modules.measure.resolution") }}</li>
-                    <li>{{ $t("common:modules.measure.screenResolution") }}</li>
-                    <li>{{ $t("common:modules.measure.inputAccuracy") }}</li>
-                    <li>{{ $t("common:modules.measure.measureDistance") }}</li>
-                </ul>
+            <div
+                id="accordionFlushExample"
+                class="accordion accordion-flush"
+            >
+                <div class="accordion-item">
+                    <h2
+                        id="flush-headingOne"
+                        class="accordion-header"
+                    >
+                        <button
+                            class="accordion-button collapsed"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#flush-collapseOne"
+                            aria-expanded="false"
+                            aria-controls="flush-collapseOne"
+                        >
+                            <i class="bi-info-circle-fill me-2" />
+                            {{ $t("common:modules.coordToolkit.info") }}
+                        </button>
+                    </h2>
+                    <div
+                        id="flush-collapseOne"
+                        class="accordion-collapse collapse"
+                        aria-labelledby="flush-headingOne"
+                        data-bs-parent="#accordionFlushExample"
+                    >
+                        <div class="accordion-body inaccuracy-list">
+                            {{ $t("common:modules.measure.influenceFactors") }}
+                            <ul>
+                                <li>{{ $t("common:modules.measure.scale") }}</li>
+                                <li>{{ $t("common:modules.measure.resolution") }}</li>
+                                <li>{{ $t("common:modules.measure.screenResolution") }}</li>
+                                <li>{{ $t("common:modules.measure.inputAccuracy") }}</li>
+                                <li>{{ $t("common:modules.measure.measureDistance") }}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <FlatButton
-            id="measure-delete"
-            aria-label="$t('common:modules.measure.deleteMeasurements')"
-            :interaction="deleteFeatures"
-            :text="$t('common:modules.measure.deleteMeasurements')"
-            :icon="deleteIcon"
-        />
     </div>
 </template>
 
