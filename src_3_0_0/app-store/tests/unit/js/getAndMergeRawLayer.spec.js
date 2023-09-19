@@ -198,7 +198,7 @@ describe("src_3_0_0/app-store/js/getAndMergeRawLayer.js", () => {
                 id: "1",
                 showInLayerTree: true,
                 type: "layer",
-                zIndex: 2,
+                zIndex: 3,
                 is3DLayer: false
             });
         });
@@ -229,7 +229,7 @@ describe("src_3_0_0/app-store/js/getAndMergeRawLayer.js", () => {
                 showInLayerTree: true,
                 visibility: true,
                 type: "layer",
-                zIndex: 3,
+                zIndex: 4,
                 is3DLayer: false
             });
         });
@@ -246,7 +246,7 @@ describe("src_3_0_0/app-store/js/getAndMergeRawLayer.js", () => {
                 showInLayerTree: true,
                 visibility: true,
                 type: "layer",
-                zIndex: 4,
+                zIndex: 5,
                 is3DLayer: false
             });
         });
@@ -265,7 +265,7 @@ describe("src_3_0_0/app-store/js/getAndMergeRawLayer.js", () => {
                 showInLayerTree: true,
                 visibility: false,
                 type: "layer",
-                zIndex: 5,
+                zIndex: 6,
                 is3DLayer: false
             });
         });
@@ -285,7 +285,7 @@ describe("src_3_0_0/app-store/js/getAndMergeRawLayer.js", () => {
                 showInLayerTree: true,
                 visibility: true,
                 type: "layer",
-                zIndex: 6,
+                zIndex: 7,
                 typ: "WMS",
                 is3DLayer: false
             });
@@ -305,7 +305,7 @@ describe("src_3_0_0/app-store/js/getAndMergeRawLayer.js", () => {
                 showInLayerTree: true,
                 visibility: true,
                 type: "layer",
-                zIndex: 7,
+                zIndex: 8,
                 typ: "terrain3D",
                 is3DLayer: true
             });
