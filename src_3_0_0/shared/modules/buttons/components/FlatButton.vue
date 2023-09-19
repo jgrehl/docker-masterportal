@@ -22,6 +22,11 @@ export default {
             type: Boolean,
             default: false,
             required: false
+        },
+        type: {
+            type: String,
+            required: false,
+            default: "button"
         }
     }
 };
@@ -30,7 +35,7 @@ export default {
 <template>
     <button
         class="flat-button btn btn-secondary d-flex align-items-center mb-3"
-        type="button"
+        :type="type"
         :aria-label="text"
         @click="interaction"
         @keydown.enter="interaction"
