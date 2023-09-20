@@ -123,7 +123,7 @@ export default {
 <template>
     <div
         :id="'mp-menu-' + side"
-        class="mp-menu shadow"
+        class="mp-menu shadow d-flex"
         :class="[
             'mp-' + side,
             {
@@ -192,6 +192,7 @@ export default {
     background-color: $menu-background-color;
     transition: width 0.3s ease;
     z-index: 2;
+    flex-direction: column
 }
 
 .mp-mainMenu {
