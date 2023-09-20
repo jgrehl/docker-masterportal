@@ -15,7 +15,7 @@ const inquirer = require("inquirer"),
             type: "input",
             name: "destPath",
             message: destMessage + ":\n",
-            default: "portal/master_3_0_0"
+            default: "portal/destination"
         }
     ];
 let sourcePath = null,
@@ -76,5 +76,5 @@ function printUsage () {
     console.info(infoMessage);
     console.info("If no parameters are given, the user is asked to enter the paths.");
     console.info("\n");
-    console.info("example: npm run migrateConfig source=portal/master dest=portal/master_3_0_0");
+    console.info("example: npm run migrateConfig source=portal/master dest=portal/destination");
 }
