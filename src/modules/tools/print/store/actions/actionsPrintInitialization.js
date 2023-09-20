@@ -115,27 +115,3 @@ export default {
         // commit("setInvisibleLayer", invisibleLayer);
     }
 };
-
-/**
- * Calls the autoDrawMask if ol3d is given and dispatches compute3DPrintMask in the callback
- * for autoDrawMask function.
- * @param {Object} state the state
- * @param {Object} dispatch the dispatch
- * @param {ol/Map} ol3d the 3d map
- * @returns {void}
- */
-function draw3dMask (state, dispatch, ol3d) {
-    if (!ol3d) {
-        return;
-    }
-    autoDrawMask(ol3d.getCesiumScene(), () => {
-        const evt = {ol3d: ol3d};
-
-        dispatch("compute3DPrintMask");
-        evt.printRectangle = computeRectangle(
-            evt.ol3d.getCesiumScene().canvas,
-            state.layoutMapInfo[0],
-            state.layoutMapInfo[1]);
-        return evt.printRectangle.scaling;
-    });
-}
