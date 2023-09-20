@@ -21,7 +21,7 @@ definitions:
             #replace slashes in branchname with underscores
             - tmp=$BITBUCKET_BRANCH
             - branchname=${tmp//[\/]/_}
-            - export FTP_UNTRACKED_PATH=$'!dist/master_'$branchname$'\n!dist/basic_'$branchname$'\n!dist/masterDefault_'$branchname$'\n!dist/mastercode'
+            - export FTP_UNTRACKED_PATH=$'!dist/master_'$branchname$'\n!dist/basic_'$branchname$'\n!dist/auto_'$branchname$'\n!dist/mastercode'
             - git clone git@bitbucket.org:geowerkstatt-hamburg/ci_scripts.git
             - mv ./ci_scripts/deployScripts ./deployScripts # mv deployScripts scripts to masterportal root
             - rm -rf ./ci_scripts
