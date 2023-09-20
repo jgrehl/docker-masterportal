@@ -186,6 +186,17 @@ export default {
 
     #baselayer-switcher {
         pointer-events: all;
+        max-height: 80vh;
+        overflow: scroll;
+    }
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    #baselayer-switcher::-webkit-scrollbar {
+        display: none;
+    }
+    /* Hide scrollbar for IE, Edge and Firefox */
+    #baselayer-switcher {
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
     }
     .btn-group-background-switcher {
         background-color: $white;
