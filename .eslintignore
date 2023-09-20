@@ -12,4 +12,3 @@ examples/
 /portal/*
 !/portal/basic
 !/portal/master
-!/portal/auto
