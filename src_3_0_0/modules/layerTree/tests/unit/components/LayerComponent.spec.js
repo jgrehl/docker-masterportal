@@ -117,4 +117,36 @@ describe("src_3_0_0/modules/layerTree/components/LayerComponent.vue", () => {
         expect(wrapper.findAll("layer-component-icon-info-stub").length).to.be.equals(1);
         expect(wrapper.findAll("layer-component-sub-menu-stub").length).to.be.equals(0);
     });
+    describe("methods", () => {
+        it("test method show in 3D - typ not VectorTile", () => {
+            mapMode = "3D";
+            isLayerTree = true;
+            wrapper = shallowMount(LayerComponent, {
+                global: {
+                    plugins: [store]
+                },
+                propsData
+            });
+
+            const layerShallBeShown = wrapper.vm.show();
+
+            expect(layerShallBeShown).to.be.true;
+        });
+
+        it("test method show in 3D - typ is VectorTile", () => {
+            mapMode = "3D";
+            propsData.conf.typ = "Vectortile";
+            isLayerTree = true;
+            wrapper = shallowMount(LayerComponent, {
+                global: {
+                    plugins: [store]
+                },
+                propsData
+            });
+
+            const layerShallBeShown = wrapper.vm.show();
+
+            expect(layerShallBeShown).to.be.false;
+        });
+    });
 });

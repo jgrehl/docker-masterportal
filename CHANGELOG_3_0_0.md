@@ -41,6 +41,7 @@
 - The layer attribution is now displayed in an alert when a layer is activated for the first time
 - It is now possible to configure a search interface more than once. For example `elasticSerch`.
 - Searchbar: buttons can be defined for the individual search interfaces, which are displayed at each search result that is visible after clicking on "show all".
+- 3D: Layer of type "VectorTile" are not displayed in Layertree and Layerselection.
 
 ### Added
 - LayerPreview: Preview images can be generated and displayed for layer types WMS, WMTS and VectorTile.
