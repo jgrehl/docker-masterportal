@@ -27,6 +27,7 @@
  * @property {Boolean} isMetaDataAvailable true if the current layout supports meta data
  * @property {Boolean} isGfiAvailable true if the current layout supports gfi
  * @property {Boolean} isGfiSelected true if gfi is to be printed
+ * @property {Boolean} is3d true if map mode is 3D
  * @property {Boolean} isGfiActive true if gfi is active
  * @property {Boolean} isLegendAvailable true if the current layout supports legend
  * @property {Boolean} isLegendSelected true if the legend is to be printed
@@ -37,6 +38,7 @@
  * @property {Array} layoutMapInfo width and height of the map
  * @property {Array} optimalScale the optimal scale for the print
  * @property {Event} eventListener the event listener for postrender
+ * @property {function} eventListener3d the event listener remover for Cesium postrender
  * @property {Integer} dpiList optional list of available dpi values as propagated by mapfish
  * @property {Integer} dpiForPdf dpi value to be used when generating the printout
  * @property {Array} layoutNameList the layouts
@@ -54,7 +56,7 @@ const state = {
     icon: "bi-printer",
     name: "common:modules.print.name",
     supportedDevices: ["Desktop", "Table"],
-    supportedMapModes: ["2D"],
+    supportedMapModes: ["2D", "3D"],
     title: "PrintResult",
     type: "print",
 
@@ -70,6 +72,7 @@ const state = {
     dpiList: [],
     DOTS_PER_INCH: 72,
     eventListener: undefined,
+    eventListener3d: undefined,
     fileDownloads: [],
     fileDownloadUrl: "",
     formatList: ["gif", "pdf", "png", "svg", "tif", "tiff"],
@@ -79,6 +82,7 @@ const state = {
     hintInfoScale: "",
     INCHES_PER_METER: 39.37,
     invisibleLayer: [],
+    is3d: false,
     isGfiActive: false,
     isGfiAvailable: false,
     isGfiSelected: false,

@@ -7,6 +7,8 @@ import BuildSpec from "../js/buildSpec";
 import Canvas from "../js/buildCanvas";
 import getVisibleLayer from "../js/getVisibleLayer";
 import thousandsSeparator from "../../../shared/js/utils/thousandsSeparator";
+import {autoDrawMask} from "olcs/print/drawCesiumMask.ts";
+import {computeRectangle} from "olcs/print/computeRectangle.ts";
 
 let lastPrintedExtent;
 
@@ -186,7 +188,8 @@ export default {
      * @returns {void}
      */
     togglePostrenderListener: function ({state, dispatch, commit}, active = true) {
-        const foundVectorTileLayers = [];
+        const foundVectorTileLayers = [],
+            ol3d = mapCollection.getMap("3D");
 
         getVisibleLayer(state.printMapMarker);
 
@@ -204,15 +207,23 @@ export default {
 
         commit("setVisibleLayer", state.visibleLayerList);
 
-        if (active && state.layoutList.length !== 0 && state.visibleLayerList.length >= 1 && state.eventListener === undefined) {
+        if (active && state.layoutList.length !== 0 && state.visibleLayerList.length >= 1) {
+            if (state.eventListener !== undefined) {
+                dispatch("Maps/unregisterListener", {type: state.eventListener}, {root: true});
+                commit("setEventListener", undefined);
+            }
             const canvasLayer = Canvas.getCanvasLayer(state.visibleLayerList);
 
             commit("setEventListener", canvasLayer.on("postrender", evt => dispatch("createPrintMask", evt)));
+            draw3dMask(state, dispatch, ol3d);
         }
 
         if (!active) {
             dispatch("Maps/unregisterListener", {type: state.eventListener}, {root: true});
             commit("setEventListener", undefined);
+            if (ol3d) {
+                autoDrawMask(ol3d.getCesiumScene(), null);
+            }
         }
 
         mapCollection.getMap("2D").render();
@@ -271,6 +282,16 @@ export default {
     },
 
     /**
+     * Dispatches getPrintMapSize and getPrintMapScales.
+     * @param {Object} dispatch the dispatch
+     * @returns {void}
+     */
+    compute3dPrintMask: function ({dispatch}) {
+        dispatch("getPrintMapSize");
+        dispatch("getPrintMapScales");
+    },
+
+    /**
      * draws the print page rectangle onto the canvas
      * @param {Object} param.state the state
      * @param {Object} param.dispatch the dispatch
@@ -284,8 +305,8 @@ export default {
         const frameState = evt.frameState,
             context = evt.context,
             drawMaskOpt = {
-                "frameState": evt.frameState,
-                "context": evt.context
+                "frameState": frameState,
+                "context": context
             },
             canvasPrintOptions = {
                 "pixelToCoordinateTransform": frameState.pixelToCoordinateTransform,
@@ -453,3 +474,27 @@ export default {
         }
     }
 };
+
+/**
+ * Calls the autoDrawMask if ol3d is given and dispatches compute3dPrintMask in the callback
+ * for autoDrawMask function.
+ * @param {Object} state the state
+ * @param {Object} dispatch the dispatch
+ * @param {ol/Map} ol3d the 3d map
+ * @returns {void}
+ */
+function draw3dMask (state, dispatch, ol3d) {
+    if (!ol3d) {
+        return;
+    }
+    autoDrawMask(ol3d.getCesiumScene(), () => {
+        const evt = {ol3d: ol3d};
+
+        dispatch("compute3dPrintMask");
+        evt.printRectangle = computeRectangle(
+            evt.ol3d.getCesiumScene().canvas,
+            state.layoutMapInfo[0],
+            state.layoutMapInfo[1]);
+        return evt.printRectangle.scaling;
+    });
+}
