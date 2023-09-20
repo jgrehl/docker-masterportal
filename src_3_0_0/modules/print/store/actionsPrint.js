@@ -7,6 +7,8 @@ import getCswRecordById from "../../../shared/js/api/getCswRecordById";
 import getVisibleLayer from "../js/getVisibleLayer";
 import omit from "../../../shared/js/utils/omit";
 import changeCase from "../../../shared/js/utils/changeCase";
+import {takeScreenshot} from "olcs/print/takeCesiumScreenshot.ts";
+import {computeRectangle} from "olcs/print/computeRectangle.ts";
 
 const actions = {
     ...actionsPrintInitialization,
@@ -48,6 +50,111 @@ const actions = {
      */
     setVisibleLayerList: function ({commit}, visibleLayerList) {
         commit("setVisibleLayerList", visibleLayerList);
+    },
+
+    /**
+     * starts the printing process
+     * @param {Object} param.state the state
+     * @param {Object} param.dispatch the dispatch
+     * @param {Object} param.commit the commit
+     * @param {Object} print the print parameters.
+     * @param {Function} print.getResponse The function that calls the axios request.
+     * @param {Number} print.index The print index.
+     * @returns {void}
+     */
+    startPrint3d: async function ({state, dispatch, commit}, print) {
+        commit("setProgressWidth", "width: 25%");
+        /**
+         * @type {import('olcs/OLCesium.js').default}
+         */
+        const ol3d = mapCollection.getMap("3D"),
+            ol2d = ol3d.getOlMap(),
+            view = ol2d.getView(),
+            viewProjection = view.getProjection().getCode(),
+            options = (function () {
+                const evt = {ol3d: ol3d};
+
+                dispatch("compute3dPrintMask");
+                evt.printRectangle = computeRectangle(
+                    evt.ol3d.getCesiumScene().canvas,
+                    state.layoutMapInfo[0],
+                    state.layoutMapInfo[1]);
+                return evt.printRectangle;
+            })(),
+            screenshot = await takeScreenshot(ol3d.getCesiumScene(), options),
+            fakeExtent = (function () {
+                const res = view.getResolution(),
+                    center = view.getCenter(),
+                    width = options.width,
+                    height = options.height;
+
+                return [
+                    center[0] - width / 2 * res, // xmin
+                    center[1] - height / 2 * res, // ymin
+                    center[0] + width / 2 * res, // xmax
+                    center[1] + height / 2 * res // ymax
+                ];
+            })(),
+            cesiumLayer = {
+                type: "image",
+                name: "Cesium",
+                opacity: 1,
+                imageFormat: "image/png",
+                extent: fakeExtent,
+                baseURL: screenshot
+            },
+            attr = {
+                layout: state.currentLayoutName,
+                outputFilename: state.filename,
+                outputFormat: state.currentFormat,
+                attributes: {
+                    title: state.title,
+                    is3dMode: true,
+                    map: {
+                        dpi: state.dpiForPdf,
+                        projection: viewProjection,
+                        bbox: fakeExtent,
+                        useNearestScale: false,
+                        useAdjustBounds: false
+                    }
+                }
+            };
+        let spec = BuildSpec;
+
+        Object.assign(attr.attributes, print.layoutAttributes);
+        spec.setAttributes(attr);
+        if (state.isMetadataAvailable) {
+            spec.setMetadata(true);
+        }
+        if (state.isScaleAvailable) {
+            spec.buildScale(state.currentScale);
+        }
+        spec.defaults.attributes.map.layers = [cesiumLayer];
+        // Use bbox instead of center + scale
+        delete spec.defaults.attributes.map.scale;
+        delete spec.defaults.attributes.map.center;
+        spec.defaults.attributes.map.bbox = cesiumLayer.extent;
+        if (state.isGfiAvailable) {
+            dispatch("getGfiForPrint");
+            spec.buildGfi(state.isGfiSelected, state.gfiForPrint);
+        }
+        if (state.isLegendAvailable) {
+            spec.buildLegend(state.isLegendSelected, state.isMetadataAvailable, print.getResponse, print.index);
+        }
+        else {
+            spec.setLegend({});
+            spec.setShowLegend(false);
+            spec = omit(spec, ["uniqueIdList"]);
+            const printJob = {
+                index: print.index,
+                payload: spec.defaults,
+                printAppId: state.printAppId,
+                currentFormat: state.currentFormat,
+                getResponse: print.getResponse
+            };
+
+            dispatch("createPrintJob", printJob);
+        }
     },
 
     /**
