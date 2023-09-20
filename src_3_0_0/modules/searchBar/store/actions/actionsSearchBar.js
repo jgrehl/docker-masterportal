@@ -26,12 +26,18 @@ export default {
      * @param {Object} side the menu side of the search
      * @returns {void}
      */
-    updateSearchNavigation: ({getters, commit}, side) => {
-        if (getters.showAllResults === true && side === getters.currentSide) {
-            commit("setShowAllResults", false);
+    updateSearchNavigation: ({getters, rootGetters, commit}, side) => {
+        const type = rootGetters["Menu/currentComponent"](side).type;
 
-            commit("Menu/setCurrentComponentPropsName", {side: side, name: "common:modules.searchBar.searchResultList"}, {root: true});
-            commit("Menu/setNavigationHistoryBySide", {side: side, newHistory: [{type: "root", props: []}]}, {root: true});
+        if (getters.showAllResults === true && side === getters.currentSide) {
+            if (type !== "searchbar") {
+                commit("Menu/switchToPreviousComponent", side, {root: true});
+            }
+            else {
+                commit("setShowAllResults", false);
+                commit("Menu/setCurrentComponentPropsName", {side: side, name: "common:modules.searchBar.searchResultList"}, {root: true});
+                commit("Menu/setNavigationHistoryBySide", {side: side, newHistory: [{type: "root", props: []}]}, {root: true});
+            }
         }
         if (side !== getters.currentSide) {
             commit("Menu/switchToPreviousComponent", side, {root: true});
