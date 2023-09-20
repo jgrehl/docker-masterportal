@@ -29,6 +29,9 @@ const layerTypes2d = {
         ENTITIES3D: Layer3dEntities,
         TERRAIN3D: Layer3dTerrain,
         TILESET3D: Layer3dTileset
+    },
+    layerTypesNotVisible3d = {
+        VECTORTILE: Layer2dVectorTile
     };
 
 /**
@@ -67,6 +70,14 @@ function getLayerTypes3d () {
 }
 
 /**
+ * Return layer types not visible in 3D.
+ * @returns {Array} layer types not visible in 3D.
+ */
+function getLayerTypesNotVisibleIn3d () {
+    return Object.keys(layerTypesNotVisible3d);
+}
+
+/**
  * Return vector layer types
  * @returns {Array} The vectorLayer types as an array.
  */
@@ -85,5 +96,6 @@ function getVectorLayerTypes () {
 export default {
     createLayer,
     getLayerTypes3d,
+    getLayerTypesNotVisibleIn3d,
     getVectorLayerTypes
 };

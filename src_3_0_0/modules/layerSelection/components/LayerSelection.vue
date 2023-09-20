@@ -135,6 +135,12 @@ export default {
                 category.active = true;
                 this.changeCategory(category);
             }
+        },
+        filterBaseLayer () {
+            if (this.mode === "3D") {
+                return this.baselayerConfs.filter(conf => !layerFactory.getLayerTypesNotVisibleIn3d().includes(conf.typ?.toUpperCase()));
+            }
+            return this.baselayerConfs;
         }
     }
 };
@@ -170,7 +176,7 @@ export default {
             </label>
         </div>
         <div class="layer-selection-navigation">
-            <h6 v-if="baselayerConfs.length > 0">
+            <h6 v-if="filterBaseLayer().length > 0">
                 {{ $t("common:modules.layerSelection.backgrounds") }}
             </h6>
             <div class="d-flex justify-content-start layer-selection-navigation-baselayer">
@@ -185,7 +191,7 @@ export default {
                     <h6 class="mp-menu-navigation-link mb-3"><p class="bi-chevron-left" />{{ lastFolderName }}</h6>
                 </a>
                 <template
-                    v-for="(bgConf, index) in baselayerConfs"
+                    v-for="(bgConf, index) in filterBaseLayer()"
                     :key="index"
                 >
                     <div class="col baselayer">
