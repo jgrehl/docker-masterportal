@@ -268,6 +268,6 @@ export default {
     }
 }
 .baselayer {
-    min-width: 40%;
+    min-width: 35%;
 }
 </style>
