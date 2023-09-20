@@ -324,7 +324,7 @@ describe("src_3_0_0/core/layers/js/layerUrlParams.js", () => {
                 showInLayerTree: true,
                 type: "layer",
                 visibility: true,
-                zIndex: 0
+                zIndex: 1
             });
 
             layerUrlParams.addLayerToLayerTree(layers);
@@ -336,7 +336,7 @@ describe("src_3_0_0/core/layers/js/layerUrlParams.js", () => {
                     showInLayerTree: true,
                     type: "layer",
                     visibility: true,
-                    zIndex: 0
+                    zIndex: 1
                 },
                 parentKey: "Fachdaten"
             });
