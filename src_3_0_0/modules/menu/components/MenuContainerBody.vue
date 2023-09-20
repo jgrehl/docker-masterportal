@@ -92,7 +92,7 @@ export default {
 <template>
     <div
         :id="'mp-body-' + side"
-        class="mp-menu-body"
+        class="mp-menu-body flex-grow-1"
         :class="
             {'mp-menu-body-collapsed': !mainExpanded && side === 'mainMenu' || !secondaryExpanded && side === 'secondaryMenu'}
         "
@@ -125,7 +125,6 @@ export default {
         padding: $padding $padding $padding $padding;
         font-size: $font-size-base;
         overflow-y: auto;
-        height: 85%;
         max-height: 100%;
 
         &-collapsed {
