@@ -457,15 +457,13 @@ export default class MapHandler {
         if (!isObject(wfsLayerModel) || typeof wfsLayerModel.get !== "function") {
             return;
         }
-        // @todo
-        // same as above with isNeverVisibleInTree
-        // wfsLayerModel.set("isNeverVisibleInTree", !active);
         store.dispatch("replaceByIdInLayerConfig", {
             layerConfigs: [{
                 id: filterId,
                 layer: {
                     id: filterId,
-                    visibility: active
+                    visibility: active,
+                    showInLayerTree: active
                 }
             }]
         });
