@@ -71,7 +71,7 @@ Controls can be configured to be expandable so they will not initially show up i
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
 |expandable|no|**[expandable](#markdown-header-portalconfigcontrols)**||With expandable, controls are hidden behind a button with three dots and can be expanded when needed.|false|
-|freeze|no|Boolean|**[freeze](#markdown-header-portalconfigcontrolsfreeze)**|Whether a "lock view" button is shown.|false|
+|freeze|no|Boolean/**[freeze](#markdown-header-portalconfigcontrolsfreeze)**|false|Whether a "lock view" button is shown.|false|
 |startModule|no|**[startModule](#markdown-header-portalconfigcontrolsstartModule)**|false|Displays buttons for the configured tools. These can be used to open and close the respective tools.|false|
 |tiltView|no|Boolean/**[tiltView](#markdown-header-portalconfigcontrolstiltView)**|false|Displays two buttons that can be used to tilt the camera up or down in the 3D scene.|false|
 |totalView|no|Boolean/**[totalView](#markdown-header-portalconfigcontrolstotalView)**|false|Offers a button to return to the initial view.|false|
@@ -105,6 +105,8 @@ Controls can be configured to be expandable so they will not initially show up i
 
 #### Portalconfig.controls.freeze
 Screen is locked so that no more actions can be performed in the map. Whether a "lock view" button is shown.
+
+The freeze attribute can be of type Boolean or Object. If it is of type Boolean, it shows the buttons that are set in the default settings. If it is of type Object, the following attributes apply:
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
