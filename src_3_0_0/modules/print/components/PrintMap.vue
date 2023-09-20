@@ -47,6 +47,7 @@ export default {
             "fileDownloads",
             "filename",
             "formatList",
+            "is3d",
             "isGfiAvailable",
             "isGfiSelected",
             "isLegendAvailable",
@@ -62,7 +63,7 @@ export default {
             "title",
             "visibleLayerList"
         ]),
-        ...mapGetters("Maps", ["scales, size", "scale"]),
+        ...mapGetters("Maps", ["mode", "scale"]),
         ...mapGetters("Modules/GetFeatureInfo", ["currentFeature"]),
 
         currentScale: {
@@ -157,9 +158,18 @@ export default {
         scale: function (value) {
             this.setCurrentMapScale(value);
         },
-        currentFeature: function () {
-            if (this.currentFeature === null) {
+        currentFeature: function (value) {
+            if (value === null) {
                 this.setIsGfiSelected(false);
+            }
+        },
+        mode: function (value) {
+            if (value === "3D") {
+                this.setIs3d(true);
+                this.togglePostrenderListener();
+            }
+            else {
+                this.setIs3d(false);
             }
         }
     },
@@ -192,6 +202,7 @@ export default {
             "togglePostrenderListener",
             "createMapFishServiceUrl",
             "startPrint",
+            "startPrint3d",
             "getOptimalResolution",
             "updateCanvasLayer",
             "getAttributeInLayoutByName"
@@ -290,7 +301,8 @@ export default {
             const currentPrintLength = this.fileDownloads.filter(file => file.finishState === false).length;
 
             if (currentPrintLength <= 10) {
-                const index = this.fileDownloads.length;
+                const index = this.fileDownloads.length,
+                    layoutAttributes = this.getLayoutAttributes(this.currentLayout, ["subtitle", "textField", "author", "overviewMap", "source"]);
 
                 this.addFileDownload({
                     index: index,
@@ -302,13 +314,24 @@ export default {
                 });
 
                 this.setPrintStarted(true);
-                this.startPrint({
-                    index,
-                    getResponse: async (url, payload) => {
-                        return axios.post(url, payload);
-                    },
-                    layoutAttributes: this.getLayoutAttributes(this.currentLayout, ["subtitle", "textField", "author", "overviewMap", "source"])
-                });
+                if (this.is3d) {
+                    this.startPrint3d({
+                        index,
+                        getResponse: async (url, payload) => {
+                            return axios.post(url, payload);
+                        },
+                        layoutAttributes
+                    });
+                }
+                else {
+                    this.startPrint({
+                        index,
+                        getResponse: async (url, payload) => {
+                            return axios.post(url, payload);
+                        },
+                        layoutAttributes
+                    });
+                }
             }
             else {
                 this.addSingleAlert({
@@ -556,7 +579,7 @@ export default {
                 </label>
             </div>
             <div
-                v-if="dpiList.length > 0"
+                v-if="dpiList.length > 0 && !is3d"
                 class="form-floating mb-3"
             >
                 <select
@@ -577,7 +600,10 @@ export default {
                     {{ $t("common:modules.print.dpiLabel") }}
                 </label>
             </div>
-            <div class="form-floating scale">
+            <div
+                v-if="!is3d"
+                class="form-floating scale"
+            >
                 <select
                     id="printScale"
                     v-model="currentScale"
@@ -622,7 +648,10 @@ export default {
                     {{ $t("common:modules.print.validationWarning") }}
                 </small>
             </div>
-            <div class="form-check form-switch mb-3 d-flex align-items-center">
+            <div
+                v-if="!is3d"
+                class="form-check form-switch mb-3 d-flex align-items-center"
+            >
                 <SwitchInput
                     :id="'autoAdjustScale'"
                     :aria="$t('common:modules.print.autoAdjustScale')"
