@@ -12,12 +12,32 @@ describe("src_3_0_0/modules/Print/components/PrintMap.vue", () => {
         mockMapGetters = {
             scales: () => scales,
             scale: sinon.stub(),
-            getView: sinon.stub()
+            getView: sinon.stub(),
+            mode: sinon.stub()
         },
         mockMapActions = {
             setResolutionByIndex: sinon.stub(),
             unregisterListener: sinon.stub()
-        };
+        },
+        value = "A0 Querformat",
+        printLayout = {
+            attributes: [
+                {
+                    default: "Countries",
+                    name: "title",
+                    type: "String"
+                },
+                {
+                    name: "map",
+                    type: "MapAttributeValues"
+                }
+            ],
+            name: "A0 Querformat"
+        },
+        layoutList = [
+            printLayout
+        ];
+
     let store,
         wrapper,
         map = null;
@@ -64,6 +84,7 @@ describe("src_3_0_0/modules/Print/components/PrintMap.vue", () => {
             }
         });
 
+        store.commit("Modules/Print/setLayoutList", layoutList);
         wrapper = mount(PrintComponent, {
             global: {
                 plugins: [store]
@@ -74,25 +95,6 @@ describe("src_3_0_0/modules/Print/components/PrintMap.vue", () => {
 
     describe("PrintMap.vue methods", () => {
         it("method layoutChanged sets other print layout", () => {
-            const value = "A0 Querformat",
-                printLayout = {
-                    attributes: [
-                        {
-                            default: "Countries",
-                            name: "title",
-                            type: "String"
-                        },
-                        {
-                            name: "map",
-                            type: "MapAttributeValues"
-                        }
-                    ],
-                    name: "A0 Querformat"
-                },
-                layoutList = [
-                    printLayout
-                ];
-
             store.commit("Modules/Print/setLayoutList", layoutList);
             wrapper.vm.layoutChanged(value);
             expect(store.state.Modules.Print.currentLayoutName).to.be.equals(value);
