@@ -82,7 +82,6 @@ describe("src_3_0_0/modules/shareView/components/ShareView.vue", () => {
             }});
 
         expect(wrapper.find("#share-view").exists()).to.be.true;
-        expect(wrapper.find("#twitter-btn").exists()).to.be.true;
         expect(wrapper.find("#facebook-btn").exists()).to.be.true;
         expect(wrapper.find("#copy-btn").exists()).to.be.true;
         expect(wrapper.find("#qr-btn").exists()).to.be.true;
