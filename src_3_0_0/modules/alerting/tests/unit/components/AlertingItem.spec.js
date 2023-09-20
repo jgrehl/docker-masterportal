@@ -199,7 +199,7 @@ describe("src_3_0_0/modules/alerting/components/AlertingItem.vue", () => {
                 },
                 data () {
                     return {
-                        currentUrl: "https://localhost:9001/portal/master_3_0_0/"
+                        currentUrl: "https://localhost:9001/portal/master/"
                     };
                 }
             };
@@ -295,7 +295,7 @@ describe("src_3_0_0/modules/alerting/components/AlertingItem.vue", () => {
                 },
                 data () {
                     return {
-                        currentUrl: "https://localhost:9001/portal/master_3_0_0/"
+                        currentUrl: "https://localhost:9001/portal/master/"
                     };
                 }
             };
@@ -411,7 +411,7 @@ describe("src_3_0_0/modules/alerting/components/AlertingItem.vue", () => {
                         globalAlerts: [
                         ],
                         restrictedAlerts: {
-                            "https://localhost:9001/portal/master_3_0_0/": [
+                            "https://localhost:9001/portal/master/": [
                                 "testParsing"
                             ]
                         },
