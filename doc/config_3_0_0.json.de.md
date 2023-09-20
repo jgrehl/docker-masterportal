@@ -71,6 +71,7 @@ Controls können in der config.json in die Ebene "expandable" verschachtelt werd
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
 |expandable|nein|**[expandable](#markdown-header-portalconfigcontrols)**||Mit expandable werden Controls hinter einem Button mit drei Punkten versteckt und lassen sich bei Bedarf aufklappen.|false|
+|freeze|nein|Boolean|**[freeze](#markdown-header-portalconfigcontrolsfreeze)**|Legt fest, ob ein "Ansicht sperren" Button angezeigt werden soll.|false|
 |startModule|nein|**[startModule](#markdown-header-portalconfigcontrolsstartModule)**|false|Zeigt Buttons für die konfigurierten Module an. Über diese lassen sich die jeweiligen Module öffnen und schließen.|false|
 |tiltView|nein|Boolean/**[tiltView](#markdown-header-portalconfigcontrolstiltView)**|false|Zeigt zwei Buttons an, mit denen sich die Kamera in der 3D-Szene hoch- bzw. runterkippen lässt.|false|
 |totalView|nein|Boolean/**[totalView](#markdown-header-portalconfigcontrolstotalView)**|false|Zeigt einen Button an, mit dem die Startansicht mit den initialen Einstellungen wiederhergestellt werden kann.|false|
@@ -103,8 +104,13 @@ Controls können in der config.json in die Ebene "expandable" verschachtelt werd
 ***
 
 #### Portalconfig.controls.freeze
+Bildschirm wird gesperrt, sodass keine Aktionen mehr in der karte ausgeführt werden können. Legt fest, ob ein "Ansicht sperren" Button angezeigt werden soll.
+
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
+|icon|nein|String|"bi-lock"|Über den Parameter icon kann ein anderes Icon für das Control Freeze verwendet werden.|false|
+|supportedDevices|nein|String|["Desktop"]|Geräte auf denen das Modul verwendbar ist und im Menü angezeigt wird.|false|
+|supportedMapModes|nein|String|["2D", "3D"]|Karten modi in denen das Modul verwendbar ist und im Menü angezeigt wird.|false|
 
 ***
 
@@ -388,7 +394,7 @@ Konfiguration des Gazetteer Suchdienstes
     "searchDistricts": true,
     "searchParcels": true,
     "searchStreetKey": true
-},
+}
 ```
 
 ***
@@ -430,7 +436,10 @@ Module lassen sich in Abschnitte (Sections) unterteilen. Im Menü werden Abschni
 |layerClusterToggler|nein|**[layerClusterToggler](#markdown-header-portalconfigmenusectionsmoduleslayerClusterToggler)**||Mit diesem Modul lassen sich Layer in Clustern gleichzeitig aktivieren/laden und deaktivieren.|false|
 |layerSlider|nein|**[layerSlider](#markdown-header-portalconfigmenusectionsmoduleslayerslider)**||Mit dem Layerslider lassen sich beliebige Dienste in einer Reihenfolge abspielen. Zum Beispiel geeignet für Luftbilder aus verschiedenen Jahrgängen.|false|
 |openConfig|nein|**[openConfig](#markdown-header-portalconfigmenusectionsopenConfig)**||Mit diesem Modul lässt sich eine Konfigurationsdatei (config.json) zur Laufzeit neu laden. Die Module und Karte werden an die neue Konfiguration angepasst.|false|
+|print|nein|**[print](#markdown-header-portalconfigmenusectionsprint)**||Druckmodul mit dem die Karte als PDF exportiert werden kann.|false|
+|scaleSwitcher|nein|**[scaleSwitcher](#markdown-header-portalconfigmenusectionsmodulescaleSwitcher)**||Modul zum Ändern des aktuellen Maßstabs der Karte.|false|
 |shadow|nein|**[shadow](#markdown-header-portalconfigmenusectionsmodulesshadow)**||Konfigurationsobjekt für die Schattenzeit im 3D-Modus.|false|
+|styleVT|nein|**[styleVT](#markdown-header-portalconfigmenusectionsmodulesstyleVT)**||Style-Auswahl zu VT-Diensten. Ermöglicht das Umschalten des Stylings eines Vector Tile Layers, wenn in der services.json mehrere Styles für ihn eingetragen sind.|false|
 
 ***
 
@@ -513,8 +522,10 @@ Koordinaten-Werkzeug: um zusätzlich zu den 2 dimensionalen Koordinaten die Höh
         ]
     }
 }
-```          
+```
+
 ***
+
 ###### Portalconfig.menu.sections.modules.coordToolkit.coordInfo
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -684,9 +695,84 @@ Mit diesem Modul lässt sich eine Konfigurationsdatei (config.json) zur Laufzeit
 ***
 
 ##### Portalconfig.menu.sections.modules.print
+Druckmodul. Konfigurierbar für 2 Druckdienste: den High Resolution PlotService oder MapfishPrint 3.
+
+**ACHTUNG: Backend notwendig!**
+
+**Es wird mit einem [Mapfish-Print3](https://mapfish.github.io/mapfish-print-doc) oder einem HighResolutionPlotService im Backend kommuniziert.**
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
+|capabilitiesFilter|nein|**[capabilitiesFilter](#markdown-header-portalconfigmenusectionsmodulesprintcapabilitiesfilter)**||Filterung der Capabilities vom Druckdienst. Mögliche Parameter sind layouts und outputFormats.|false|
+|currentLayoutName|nein|String|"A4 Hochformat"|Legt fest, welches Layout als Standardwert beim Öffnen des Druckwerkzeuges ausgewählt sein soll. Zum Beispiel "A4 Hochformat". Wenn das angegebene Layout nicht vorhanden ist oder keins angegeben wurde, dann wird das erste Layout der Capabilities verwendet.|false|
+|defaultCapabilitiesFilter|nein|**[capabilitiesFilter](#markdown-header-portalconfigmenusectionsmodulesprintcapabilitiesfilter)**||Ist für ein Attribut kein Filter in capabilitiesFilter gesetzt, wird der Wert aus diesem Objekt genommen.|false|
+|dpiForPdf|nein|Number|200|Auflösung der Karte im PDF.|false|
+|filename|nein|String|"report"|Dateiname des Druckergebnisses.|false|
+|icon|nein|String|"bi-printer"|Icon das im Menü vor dem Modul gezeigt wird. Zur Auswahl siehe **[Bootstrap Icons](https://icons.getbootstrap.com/)**|false|
+|isLegendSelected|nein|Boolean|false|Gibt an, ob die Checkbox, zum Legende mitdrucken, aktiviert sein soll. Wird nur angezeigt wenn der Druckdienst (Mapfish Print 3) das Drucken der Legende unterstützt.|false|
+|name|nein|String|"common:modules.print.name"|Name des Modules im Menü|false|
+|overviewmapLayerId|nein|String||Über den Parameter layerId kann ein anderer Layer für die Overviewmap verwendet werden. Wird keine Id angegeben, wird der erste Layer der ausgewählten Hintergundkarten verwendet.|false|
+|printAppCapabilities|nein|String|"capabilities.json"|Pfad unter welcher die Konfiguration des Druckdienstes zu finden ist.|false|
+|printAppId|nein|String|"master"|Id der print app des Druckdienstes. Dies gibt dem Druckdienst vor welche/s Template/s er zu verwenden hat.|false|
+|printMapMarker|nein|Boolean|false|Wenn dieses Feld auf true gesetzt ist, werden im Bildausschnitt sichtbare MapMarker mitgedruckt. Diese überdecken ggf. interessante Druckinformationen.|false|
+|printService|nein|String|"mapfish"|Flag welcher Druckdienst verwendet werden soll. Bei "plotservice" wird der High Resolution PlotService verwendet, wenn der Parameter nicht gesetzt wird, wird Mapfish 3 verwendet.|false|
+|printServiceId|ja|String||Id des Druckdienstes der verwendet werden soll. Wird in der rest-services.json abgelegt.|false|
+|title|nein|String|"PrintResult"|Titel des Dokuments. Erscheint als Kopfzeile.|false|
+|type|nein|String|"print"|Der type des Moduls. Definiert welches Modul konfiguriert ist.|false|
+
+**Beispiel Konfiguration mit High Resolution PlotService**
+
+```json
+"print": {
+    "name": "common:modules.print.name",
+    "icon": "bi-printer",
+    "type": "print",
+    "printServiceId": "123456",
+    "filename": "Ausdruck",
+    "title": "Mein Titel",
+    "printService": "plotservice",
+    "printAppCapabilities": "info.json",
+    "layoutOrder": [
+        "Default A4 hoch",
+        "Default A4 quer",
+        "Default A3 hoch",
+        "Default A3 quer",
+    ]
+}
+```
+
+**Beispiel Konfiguration mit MapfishPrint3**
+
+```json
+"print": {
+    "name": "Karte drucken",
+    "icon": "bi-printer",
+    "type": "print",
+    "printServiceId": "mapfish_printservice_id",
+    "printAppId": "mrh",
+    "filename": "Ausdruck",
+    "title": "Mein Titel"
+}
+```
+
+***
+
+###### Portalconfig.menu.sections.modules.print.capabilitiesFilter
+Liste von Layouts und Formaten, welche die Antwort vom Druckdienst in der jeweiligen Kategorie filtert.
+
+|Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
+|----|-------------|---|-------|------------|------|
+|layouts|nein|String[]||Liste von Layouts, welche in der Oberfläche angezeigt werden sollen.|false|
+|outputFormats|nein|String[]||Liste von Formaten, welche in der Oberfläche angezeigt werden sollen.|false|
+
+**Beispiel capabilitiesFilter:**
+
+```json
+"capabilitiesFilter": {
+    "layouts": ["A4 Hochformat", "A3 Hochformat"],
+    "outputFormats": ["PDF"]
+}
+```
 
 ***
 
@@ -698,9 +784,23 @@ Mit diesem Modul lässt sich eine Konfigurationsdatei (config.json) zur Laufzeit
 ***
 
 ##### Portalconfig.menu.sections.modules.scaleSwitcher
+Modul, mit dem der aktuelle Maßstab der Karte geändert werden kann.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
+|icon|nein|String|"bi-arrows-angle-contract"|Icon das im Menü vor dem Modul gezeigt wird. Zur Auswahl siehe **[Bootstrap Icons](https://icons.getbootstrap.com/)**|false|
+|name|nein|String|"common:modules.scaleSwitcher.name"|Name des Modules im Menü|false|
+|type|nein|String|"scaleSwitcher"|Der type des Moduls. Definiert welches Modul konfiguriert ist.|false|
+
+**Beispiel**
+
+```json
+{
+    "icon": "bi-arrows-angle-contract",
+    "name": "common:modules.scaleSwitcher.name",
+    "type": "scaleSwitcher"
+}
+```
 
 ***
 
@@ -740,8 +840,8 @@ Das ShadowTool bietet eine Oberfläche zur Definition einer Zeitangabe. Über Sl
 ***
 
 ###### Portalconfig.menu.sections.modules.shadow.shadowTime
-|Name|Required|Type|Default|Description|
-|----|--------|----|-------|-----------|
+|Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
+|----|-------------|---|-------|------------|------|
 |month|nein|String||Monat|
 |day|nein|String||Tag|
 |hour|nein|String||Stunde|
@@ -768,9 +868,23 @@ Das ShadowTool bietet eine Oberfläche zur Definition einer Zeitangabe. Über Sl
 ***
 
 ##### Portalconfig.menu.sections.modules.styleVT
+Das Modul ermöglicht das Umschalten des Stylings von Vector Tile Layers(❗), sofern in der services.json mehrere Styles für die entsprechende Layer eingetragen sind.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
+|icon|nein|String|"bi-paint-bucket"|Icon das im Menü vor dem Modul gezeigt wird. Zur Auswahl siehe **[Bootstrap Icons](https://icons.getbootstrap.com/)**|false|
+|name|nein|String|"common:modules.styleVT.name"|Name des Modules im Menü|false|
+|type|nein|String|"styleVT"|Der type des Moduls. Definiert welches Modul konfiguriert ist.|false|
+
+**Beispiel**
+
+```json
+{
+    "icon": "bi-paint-bucket",
+    "name": "common:modules.styleVT.name",
+    "type": "styleVT"
+}
+```
 
 ***
 
