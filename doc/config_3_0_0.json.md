@@ -71,6 +71,7 @@ Controls can be configured to be expandable so they will not initially show up i
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
 |expandable|no|**[expandable](#markdown-header-portalconfigcontrols)**||With expandable, controls are hidden behind a button with three dots and can be expanded when needed.|false|
+|freeze|no|Boolean|**[freeze](#markdown-header-portalconfigcontrolsfreeze)**|Whether a "lock view" button is shown.|false|
 |startModule|no|**[startModule](#markdown-header-portalconfigcontrolsstartModule)**|false|Displays buttons for the configured tools. These can be used to open and close the respective tools.|false|
 |tiltView|no|Boolean/**[tiltView](#markdown-header-portalconfigcontrolstiltView)**|false|Displays two buttons that can be used to tilt the camera up or down in the 3D scene.|false|
 |totalView|no|Boolean/**[totalView](#markdown-header-portalconfigcontrolstotalView)**|false|Offers a button to return to the initial view.|false|
@@ -103,8 +104,13 @@ Controls can be configured to be expandable so they will not initially show up i
 ***
 
 #### Portalconfig.controls.freeze
+Screen is locked so that no more actions can be performed in the map. Whether a "lock view" button is shown.
+
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
+|icon|no|String|"bi-lock"|Using the icon parameter, a different icon can be used to switch back to the home screen.|false|
+|supportedDevices|no|String|["Desktop"]|Devices on which the module can be used and is displayed in the menu.|false|
+|supportedMapModes|no|String|["2D", "3D"]|Map modes in which the module can be used and is displayed in the menu.|false|
 
 ***
 
@@ -388,7 +394,7 @@ Gazetteer search service configuration.
     "searchDistricts": true,
     "searchParcels": true,
     "searchStreetKey": true
-},
+}
 ```
 
 ***
@@ -430,7 +436,10 @@ Modules can be divided into sections. In the menu, sections are divided with a h
 |layerClusterToggler|no|**[layerClusterToggler](#markdown-header-portalconfigmenusectionsmoduleslayerClusterToggler)**||This module allows a cluster layers to be active and deactive together.|false|
 |layerSlider|no|**[layerSlider](#markdown-header-portalconfigmenutoollayerslider)**||The layerSlider module allows showing arbitrary services in order. This can e.g. be used to show aerial footage from multiple years in succession.|false|
 |openConfig|no|**[openConfig](#markdown-header-portalconfigmenusectionsopenConfig)**||ith this module a configuration file (config.json) can be reloaded at runtime. The modules and map are adapted to the new configuration.|false|
-|shadow|no|**[shadow](#markdown-header-portalconfigmenutoolshadow)**||Configuration object for the 3D mode shadow time.|false|
+|print|no|**[print](#markdown-header-portalconfigmenusectionsprint)**||Printing module that can be used to export the map's current view as PDF.|false|
+|scaleSwitcher|no|**[scaleSwitcher](#markdown-header-portalconfigmenusectionsmodulesSwitcher)**||Module that allows changing the map's current scale.|false|
+|shadow|no|**[shadow](#markdown-header-portalconfigmenusectionsmodulesshadow)**||Configuration object for the 3D mode shadow time.|false|
+|styleVT|no|**[styleVT](#markdown-header-portalconfigmenusectionsmodulesstyleVT)**||Style selection for VT services. Allows switching between styles of a Vector Tile Layer that provides multiple stylings via the `services.json` file.|false|
 
 ***
 
@@ -476,7 +485,6 @@ Modules can be divided into sections. In the menu, sections are divided with a h
 
 ***
 
-
 ##### Portalconfig.menu.sections.modules.coordToolkit
 Coordinates tool: to display the height above sea level in addition to the 2 dimensional coordinates, a 'heightLayerId' of a WMS service that provides the height must be specified. The format XML is expected and the attribute for the heights is expected under the value of the parameter 'heightElementName'.
 
@@ -514,9 +522,10 @@ Coordinates tool: to display the height above sea level in addition to the 2 dim
         ]
     }
 }
-```    
+```
 
 ***
+
 ###### Portalconfig.menu.sections.modules.coordToolkit.coordInfo
 
 |Name|Required|Type|Default|Description|Expert|
@@ -686,9 +695,84 @@ With this module a configuration file (config.json) can be reloaded at runtime. 
 ***
 
 ##### Portalconfig.menu.sections.modules.print
+Print module, configurable for 2 print services: *High Resolution PlotService* and *MapfishPrint 3*.
+
+**This requires a backend!**
+
+**A [Mapfish-Print3](https://mapfish.github.io/mapfish-print-doc), or *HighResolutionPlotService* is required as backend.**
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
+|capabilitiesFilter|no|**[capabilitiesFilter](#markdown-header-portalconfigmenutoolprintcapabilitiesfilter)**||Filter for the response of the configured print service. Possible keys are layouts and outputFormats.|false|
+|currentLayoutName|no|String|""|Defines which layout is the default layout on opening the print tool, e.g. "A4 portrait format". If the given layout is not available oder none is provided, the first layout mentioned in the Capabilities is used.|false|
+|defaultCapabilitiesFilter|no|**[capabilitiesFilter](#markdown-header-portalconfigmenutoolprintcapabilitiesfilter)**||If there is no key set in capabilitiesFilter, the key from this object is taken.|false|
+|dpiForPdf|no|Number|200|DPI resolution for the map in the PDF file.|false|
+|filename|no|String|"report"|Print result file name.|false|
+|icon|no|String|"bi-printer"|Icon that is shown in front of the module in the menu. For selection see **[Bootstrap Icons](https://icons.getbootstrap.com/)**.|false|
+|isLegendSelected|no|Boolean|false|Defines whether a checkbox to print the legend is offered. Only used for print services supporting legend printing (Mapfish Print 3).|false|
+|name|no|String|"common:modules.print.name"|Name of the module in the menu.|false|
+|overviewmapLayerId|no|String||Allows using a different layer for the overview map element. If no Id is specified, the first layer of the selected baselayer maps is used.|false|
+|printAppCapabilities|no|String|"capabilities.json"|path for the configuration of the print service|false|
+|printAppId|no|String|"master"|Print service print app id. This tells the print service which template(s) to use.|false|
+|printMapMarker|no|Boolean|false|If set to true, map markers visible in the print image section will be printed. They may obstruct the view to interesting information.|false|
+|printService|no|String|"mapfish"|Flag determining which print service is in use. `plotservice` activates the *High Resolution PlotService*, if the parameter is not set, *Mapfish 3* is used.|false|
+|printServiceId|yes|String||Print service id. Resolved using the **[rest-services.json](rest-services.json.md)** file.|false|
+|title|no|String|"PrintResult"|Document title appearing as header.|false|
+|type|no|String|"print"|The type of the module. Defines which module is configured.|false|
+
+**High Resolution PlotService example configuration**
+
+```json
+"print": {
+    "name": "common:modules.print.name",
+    "icon": "bi-printer",
+    "type": "print",
+    "printServiceId": "123456",
+    "filename": "Ausdruck",
+    "title": "Mein Titel",
+    "printService": "plotservice",
+    "printAppCapabilities": "info.json",
+    "layoutOrder": [
+        "Default A4 hoch",
+        "Default A4 quer",
+        "Default A3 hoch",
+        "Default A3 quer",
+    ]
+}
+```
+
+**MapfishPrint3 example configuration**
+
+```json
+"print": {
+    "name": "Karte drucken",
+    "icon": "bi-printer",
+    "type": "print",
+    "printServiceId": "mapfish_printservice_id",
+    "printAppId": "mrh",
+    "filename": "Ausdruck",
+    "title": "Mein Titel"
+}
+```
+
+***
+
+###### Portalconfig.menu.sections.modules.print.capabilitiesFilter
+List of layouts and formats that filters the response from the print service in the respective category.
+
+|Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
+|----|-------------|---|-------|------------|------|
+|layouts|no|String[]||Array of layouts should shown in the UI.|false|
+|outputFormats|no|String[]||Array of formats should shown in the UI.|false|
+
+**Example capabilitiesFilter:**
+
+```json
+"capabilitiesFilter": {
+    "layouts": ["A4 Hochformat", "A3 Hochformat"],
+    "outputFormats": ["PDF"]
+}
+```
 
 ***
 
@@ -700,9 +784,23 @@ With this module a configuration file (config.json) can be reloaded at runtime. 
 ***
 
 ##### Portalconfig.menu.sections.modules.scaleSwitcher
+Module that allows changing the map's current scale.
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
+|icon|no|String|"bi-arrows-angle-contract"|Icon that is shown in front of the module in the menu. For selection see **[Bootstrap Icons](https://icons.getbootstrap.com/)**.|false|
+|name|no|String|"common:modules.scaleSwitcher.name"|Name of the module in the menu.|false|
+|type|no|String|"scaleSwitcher"|The type of the module. Defines which module is configured.|false|
+
+**Example**
+
+```json
+{
+    "icon": "bi-arrows-angle-contract",
+    "name": "common:modules.scaleSwitcher.name",
+    "type": "scaleSwitcher"
+}
+```
 
 ***
 
@@ -769,10 +867,24 @@ The shadow tool provides a UI element to define a point in time by using sliders
 
 ***
 
-##### Portalconfig.menu.sections.modules.styleVT
+##### Portalconfig.menu.sections.modules.
+The module allows for switching the style of vector tile layers(❗) which provides multiple stylings defined in the `services.json` file.
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
+|icon|no|String|"bi-paint-bucket"|Icon that is shown in front of the module in the menu. For selection see **[Bootstrap Icons](https://icons.getbootstrap.com/)**.|false|
+|name|no|String|"common:modules.styleVT.name"|Name of the module in the menu.|false|
+|type|no|String|"styleVT"|The type of the module. Defines which module is configured.|false|
+
+**Example**
+
+```json
+{
+    "icon": "bi-paint-bucket",
+    "name": "common:modules.styleVT.name",
+    "type": "styleVT"
+}
+```
 
 ***
 
