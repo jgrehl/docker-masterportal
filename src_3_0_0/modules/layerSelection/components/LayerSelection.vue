@@ -44,14 +44,11 @@ export default {
     },
     mounted () {
         if (this.highlightLayerId) {
-            this.$nextTick(() => {
-                const el = document.querySelector("#layer-checkbox-" + escapeId(this.highlightLayerId));
+            const el = document.querySelector("#layer-checkbox-" + escapeId(this.highlightLayerId));
 
-                if (el) {
-                    el.scrollIntoView();
-                }
-            });
-
+            if (el) {
+                el.scrollIntoView({behavior: "smooth", block: "nearest", inline: "start"});
+            }
         }
     },
     unmounted () {
@@ -220,7 +217,7 @@ export default {
                 </template>
             </div>
         </div>
-        <div class="mt-5 d-flex justify-content-center sticky layer-selection-add-layer-btn">
+        <div class="d-flex justify-content-center sticky layer-selection-add-layer-btn">
             <FlatButton
                 id="layer-selection-add-layer-btn"
                 aria-label="$t('common:modules.layerSelection.addSelectedSubjectsToMap', {count: layersToAdd.length})"
