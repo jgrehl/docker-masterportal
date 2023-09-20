@@ -13,6 +13,7 @@ describe("src_3_0_0/modules/layerSelection/components/LayerSelection.vue", () =>
         categories,
         layerBG_1,
         layerBG_2,
+        layerBG_3,
         layer2D_1,
         layer2D_2,
         layer2D_3,
@@ -20,9 +21,11 @@ describe("src_3_0_0/modules/layerSelection/components/LayerSelection.vue", () =>
         layersWithFolder,
         layersBG,
         layersToAdd,
-        changeCategorySpy;
+        changeCategorySpy,
+        mapMode;
 
     beforeEach(() => {
+        mapMode = "2D";
         categories = [
             {
                 "key": "kategorie_opendata",
@@ -76,6 +79,13 @@ describe("src_3_0_0/modules/layerSelection/components/LayerSelection.vue", () =>
             type: "layer",
             visibility: false
         };
+        layerBG_3 = {
+            id: "13",
+            name: "layerBG_3",
+            typ: "VectorTile",
+            type: "layer",
+            visibility: false
+        };
         layersBG = [
             layerBG_1,
             layerBG_2
@@ -113,7 +123,7 @@ describe("src_3_0_0/modules/layerSelection/components/LayerSelection.vue", () =>
                 Maps: {
                     namespaced: true,
                     getters: {
-                        mode: sinon.stub()
+                        mode: () => mapMode
                     }
                 }
             },
@@ -239,35 +249,67 @@ describe("src_3_0_0/modules/layerSelection/components/LayerSelection.vue", () =>
         await wrapper.vm.$nextTick();
         expect(LayerSelection.actions.updateLayerTree.calledOnce).to.be.true;
     });
+    describe("methods", () => {
+        it("test method sort", () => {
+            let sorted = [];
+            const toSort = subjectDataLayers[0].elements[0].elements;
 
-    it("test method sort", () => {
-        let sorted = [];
-        const toSort = subjectDataLayers[0].elements[0].elements;
+            wrapper = shallowMount(LayerSelectionComponent, {
+                global: {
+                    plugins: [store]
+                }});
 
-        wrapper = shallowMount(LayerSelectionComponent, {
-            global: {
-                plugins: [store]
-            }});
+            expect(toSort[0].type).not.to.be.equals("folder");
+            sorted = wrapper.vm.sort(toSort);
 
-        expect(toSort[0].type).not.to.be.equals("folder");
-        sorted = wrapper.vm.sort(toSort);
+            expect(sorted.length).to.be.equals(toSort.length);
+            expect(sorted[0].type).to.be.equals("folder");
+            expect(sorted[1].type).to.be.equals("layer");
+            expect(sorted[2].type).to.be.equals("layer");
+        });
 
-        expect(sorted.length).to.be.equals(toSort.length);
-        expect(sorted[0].type).to.be.equals("folder");
-        expect(sorted[1].type).to.be.equals("layer");
-        expect(sorted[2].type).to.be.equals("layer");
-    });
+        it("test method categorySelected", () => {
+            wrapper = shallowMount(LayerSelectionComponent, {
+                global: {
+                    plugins: [store]
+                }});
 
-    it("test method categorySelected", () => {
-        wrapper = shallowMount(LayerSelectionComponent, {
-            global: {
-                plugins: [store]
-            }});
+            wrapper.vm.categorySelected(categories[1].key);
 
-        wrapper.vm.categorySelected(categories[1].key);
+            expect(changeCategorySpy.calledOnce).to.be.true;
+            expect(changeCategorySpy.firstCall.args[1]).to.deep.equals(categories[1]);
+        });
 
-        expect(changeCategorySpy.calledOnce).to.be.true;
-        expect(changeCategorySpy.firstCall.args[1]).to.deep.equals(categories[1]);
+        it("test method filterBaseLayer 3D", () => {
+            mapMode = "3D";
+            layersBG.push(layerBG_3);
+            wrapper = shallowMount(LayerSelectionComponent, {
+                global: {
+                    plugins: [store]
+                }});
+
+            const filtered = wrapper.vm.filterBaseLayer();
+
+            expect(filtered.length).to.be.equals(2);
+            expect(filtered[0]).to.deep.equals(layerBG_1);
+            expect(filtered[1]).to.deep.equals(layerBG_2);
+        });
+
+        it("test method filterBaseLayer 2D", () => {
+            mapMode = "2D";
+            layersBG.push(layerBG_3);
+            wrapper = shallowMount(LayerSelectionComponent, {
+                global: {
+                    plugins: [store]
+                }});
+
+            const filtered = wrapper.vm.filterBaseLayer();
+
+            expect(filtered.length).to.be.equals(3);
+            expect(filtered[0]).to.deep.equals(layerBG_1);
+            expect(filtered[1]).to.deep.equals(layerBG_2);
+            expect(filtered[2]).to.deep.equals(layerBG_3);
+        });
     });
 
     describe("watcher", () => {
