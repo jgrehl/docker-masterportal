@@ -296,6 +296,7 @@ Here you can configure the menu items for the `mainMenu` (in the desktop view on
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
 |expanded|no|Boolean|false|Defines whether the respective menu is expanded or collapsed when the portal is started.|false|
+|showDescription|no|Boolean||Defines whether a description of the modules should be displayed in the respective menu.|false|
 |searchBar|no|**[searchBar](#markdown-header-portalconfigmenusearchbar)**||The search bar allows requesting information from various search services at once.|false|
 |sections|no|**[sections](#markdown-header-portalconfigmenusections)**[]||Subdivision of modules in the menu.|false|
 |title|no|**[title](#markdown-header-portalconfigmenutitle)**||The portal's title and further elements to be shown in the main menu bar.|false|
