@@ -4,6 +4,7 @@
  * @property {String}   icon - icon next to title
  * @property {String}   id - internal id of component
  * @property {String}   type - type of the module
+ * @property {String} description The description that should be shown in the button in the menu.
  * @property {String}   name - Module name
  * @property {String} menuSide Specifies in which menu the GFI should be rendered
  * @property {Boolean} resetLayer - if true it will change the reset button to a button which resets the whole layer and ignores the prechecked values
@@ -32,6 +33,7 @@ const state = {
     icon: "bi-funnel-fill",
     id: "filter",
     type: "filter",
+    description: "common:modules.filter.description",
     name: "common:modules.filter.name",
     menuSide: "mainMenu",
     resetLayer: false,
