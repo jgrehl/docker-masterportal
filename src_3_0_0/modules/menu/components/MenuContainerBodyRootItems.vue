@@ -103,7 +103,6 @@ export default {
             :name="props.name"
             :icon="props.icon"
             :description="props.description"
-            :show-description="props.showDescription"
             :path="[...path, key]"
         />
     </div>

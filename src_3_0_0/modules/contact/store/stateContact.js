@@ -1,7 +1,7 @@
 /**
  * Contact tool state definition.
  * @typedef {Object} ContactState
- * @property {String} description The description that should be shown in the button in the right menu.
+ * @property {String} description The description that should be shown in the button in the menu.
  * @property {String} name Displayed as the title. (config-param)
  * @property {String} icon Icon next to the title. (config-param)
  * @property {String} serviceId The id of the service (rest-services.json) that contains the url of the mail service. (config-param)
@@ -21,7 +21,6 @@
  * @property {Boolean} privacyPolicyAccepted Whether the user has accepted the privacy policy or not.
  * @property {String} phone The phone number that the user has entered.
  * @property {String} username The name of the user.
- * @property {Boolean} showDescription If true, description will be shown.
  * @property {String[]} supportedDevices Devices on which the module is displayed.
  * @property {String[]} supportedMapModes Map mode in which this module can be used.
  * @property {String} type The type of the module.
@@ -31,7 +30,7 @@
  * @property {Array} configuredFileExtensions additional file extensions that can be configured. Note: currently the geoportal backend only supports images.
 */
 const state = {
-    description: "",
+    description: "common:modules.contact.description",
     name: "common:modules.contact.name",
     icon: "bi-envelope",
     from: [],
@@ -52,7 +51,7 @@ const state = {
     privacyPolicyAccepted: false,
     phone: "",
     username: "",
-    showDescription: false,
+
     supportedDevices: ["Desktop", "Mobile", "Table"],
     supportedMapModes: ["2D", "3D"],
     type: "contact",

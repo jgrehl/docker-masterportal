@@ -4,7 +4,6 @@
  * @property {String} description The descritption that should be shown in the button in the menu.
  * @property {String} icon Icon next to the title. (config-param)
  * @property {String} name Displayed as the title. (config-param)
- * @property {Boolean} showDescription If true, description will be shown.
  * @property {String[]} supportedDevices Devices on which the module is displayed.
  * @property {String[]} supportedMapModes Map mode in which this module can be used.
  * @property {String} type Type of the Shadow component.
@@ -13,10 +12,9 @@
  * @property {Object} shadowTime Object to define start date and time. (config-param)
  */
 const state = {
-    description: "",
+    description: "common:modules.shadow.description",
     icon: "bi-lamp-fill",
     name: "common:modules.shadow.name",
-    showDescription: false,
     supportedDevices: ["Desktop", "Mobile", "Table"],
     supportedMapModes: ["3D"],
     type: "shadow",
