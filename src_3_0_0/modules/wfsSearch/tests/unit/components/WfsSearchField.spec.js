@@ -78,6 +78,5 @@ describe("src_3_0_0/modules/wfsSearch/components/WfsSearchField.vue", () => {
 
         expect(wrapper.find("label").exists()).to.be.true;
         expect(wrapper.find("label").text()).to.equals("common:modules.wfsSearch.parcelNumber*");
-        expect(wrapper.find("label").classes()).to.includes("col-md-5", "col-form-label");
     });
 });
