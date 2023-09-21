@@ -38,11 +38,6 @@ export default {
             default: "",
             validator: value => value.startsWith("bi-")
         },
-        /** Whether the description should be displayed alongside the element. */
-        showDescription: {
-            type: Boolean,
-            default: false
-        },
         /** Path to find the element inside the store structure. */
         path: {
             type: Array,
@@ -59,7 +54,8 @@ export default {
         ...mapGetters("Maps", ["mode"]),
         ...mapGetters("Menu", [
             "mainMenu",
-            "secondaryMenu"
+            "secondaryMenu",
+            "showDescription"
         ]),
 
         /**
@@ -130,7 +126,7 @@ export default {
             :interaction="() => clickedMenuElement({name, path, side, type, properties})"
             :text="name"
             :icon="showIcon ? icon : null"
-            :description="showDescription ? description : null"
+            :description="showDescription(side) ? description : null"
             customclass="w-100 justify-content-start mp-menu-root-element"
         />
     </div>
