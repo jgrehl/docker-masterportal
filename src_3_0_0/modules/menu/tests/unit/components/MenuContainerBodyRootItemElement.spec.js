@@ -34,7 +34,8 @@ describe("src_3_0_0/modules/menu/MenuContainerBodyRootItemElement.vue", () => {
                     namespaced: true,
                     getters: {
                         mainMenu: () => menu,
-                        secondaryMenu: () => menu
+                        secondaryMenu: () => menu,
+                        showDescription: () => () => false
                     },
                     actions: {
                         clickedMenuElement: clickedMenuElementSpy

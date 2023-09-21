@@ -1,11 +1,10 @@
 /**
  * Print Tool
  * @typedef {Object} PrintState
- * @property {String} description The description that should be shown in the button in the right menu.
+ * @property {String} description The description that should be shown in the button in the menu.
  * @property {String} filename output filename
  * @property {String} icon icon of the print
  * @property {String} name name of the print
- * @property {Boolean} showDescription If true, description will be shown.
  * @property {String[]} supportedDevices Devices on which the module is displayed.
  * @property {String[]} supportedMapModes Map mode in which this module can be used.
  * @property {String} title title for the report
@@ -50,11 +49,10 @@
  * @property {String} overviewmapLayerId the layer id for the overviewmap
  */
 const state = {
-    description: "",
+    description: "common:modules.print.description",
     filename: "report",
     icon: "bi-printer",
     name: "common:modules.print.name",
-    showDescription: false,
     supportedDevices: ["Desktop", "Table"],
     supportedMapModes: ["2D"],
     title: "PrintResult",

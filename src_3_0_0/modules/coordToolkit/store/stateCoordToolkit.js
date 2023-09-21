@@ -3,10 +3,9 @@
  * @module  modules/coordToolkit/store/state
  *
  * @property {String} [icon="bi-globe"] icon next to title (config-param)
- * @property {String} [description=""] The description that should be shown in the button in the right menu.
+ * @property {String} [description="common:modules.coordToolkit.description"] The description that should be shown in the button in the menu.
  * @property {Boolean} [hasMouseMapInteractions=true] If this attribute is true, then all other modules will be deactivated when this attribute is also true. Only one module with this attribute true may be open at the same time, since conflicts can arise in the card interactions.
  * @property {String} [name="common:modules.coordToolkit.name"] displayed as title (config-param)
- * @property {Boolean} [showDescription=false] If true, description will be shown.
  * @property {String[]} [supportedDevices=["Desktop", "Mobile", "Table"]] Devices on which the module is displayed.
  * @property {String[]} [supportedMapModes=["2D", "3D"]] Map mode in which this module can be used.
  * @property {String} [type= "coordToolkit"] the type of the component
@@ -42,10 +41,9 @@
  */
 const state = {
     icon: "bi-globe",
-    description: "",
+    description: "common:modules.coordToolkit.description",
     hasMouseMapInteractions: true,
     name: "common:modules.coordToolkit.name",
-    showDescription: false,
     supportedDevices: ["Desktop", "Mobile", "Table"],
     supportedMapModes: ["2D", "3D"],
     type: "coordToolkit",
