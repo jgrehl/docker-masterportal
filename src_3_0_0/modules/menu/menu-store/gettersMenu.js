@@ -176,6 +176,14 @@ const menuGetters = {
     },
 
     /**
+     * @param {Object} state Local vuex state.
+     * @returns {Boolean} Whether show description for modules in the menu by side.
+     */
+    showDescription: state => side => {
+        return state[side].showDescription;
+    },
+
+    /**
      * @param {MenuState} _ Local vuex state (discarded).
      * @param {Object} getters Local vuex getters.
      * @returns {({title: string, idAppendix: string}|null)} Function returning an object including the title and an appendix for the titles id to make it unique; may return null if no title is configured.

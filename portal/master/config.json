@@ -1,17 +1,14 @@
 {
   "Portalconfig": {
-    
-      "alerts": {
-        "qs-release": {
-          "category": "Portal zur Abnahme!",
-          "content": "Dieses Geoportal dient der Qualitätskontrolle durch den Kunden.<br>Es ist aufgrund von möglichen Fehlern <b>nicht</b> zur Nutzung für alltägliche oder berufliche Aufgaben geeignet!<br><br>",
-          "creationDate": "01/09/22",
-          "mustBeConfirmed": true,
-          "once": false
-        }
-      },
-      
-      
+    "alerts": {
+      "qs-release": {
+        "category": "Portal zur Abnahme!",
+        "content": "Dieses Geoportal dient der Qualitätskontrolle durch den Kunden.<br>Es ist aufgrund von möglichen Fehlern <b>nicht</b> zur Nutzung für alltägliche oder berufliche Aufgaben geeignet!<br><br>",
+        "creationDate": "01/09/22",
+        "mustBeConfirmed": true,
+        "once": false
+      }
+    },
     "mapView": {
       "backgroundImage": "https://geodienste.hamburg.de/lgv-config/img/backgroundCanvas.jpeg",
       "startZoomLevel": 4,
@@ -141,8 +138,13 @@
               ]
             },
             "resultEvents": {
-              "onClick": ["addLayerToTopicTree"],
-              "buttons":["showInTree",  "showLayerInfo"]
+              "onClick": [
+                "addLayerToTopicTree"
+              ],
+              "buttons": [
+                "showInTree",
+                "showLayerInfo"
+              ]
             }
           },
           {
@@ -165,9 +167,18 @@
               "coordinate": "_source.geometry.coordinates"
             },
             "resultEvents": {
-                "onClick": ["setMarker", "zoomToResult"],
-                "onHover": ["setMarker"],
-                "buttons": ["startRouting","setMarker", "zoomToResult"]
+              "onClick": [
+                "setMarker",
+                "zoomToResult"
+              ],
+              "onHover": [
+                "setMarker"
+              ],
+              "buttons": [
+                "startRouting",
+                "setMarker",
+                "zoomToResult"
+              ]
             }
           },
           {
@@ -180,10 +191,17 @@
             "searchParcels": true,
             "searchStreetKey": true,
             "resultEvents": {
-              "onClick": ["setMarker", "zoomToResult"],
-              "onHover": ["setMarker"],
-              "buttons": ["startRouting"]
-          }
+              "onClick": [
+                "setMarker",
+                "zoomToResult"
+              ],
+              "onHover": [
+                "setMarker"
+              ],
+              "buttons": [
+                "startRouting"
+              ]
+            }
           },
           {
             "type": "locationFinder",
@@ -222,9 +240,17 @@
           {
             "type": "visibleVector",
             "resultEvents": {
-              "onClick": ["openGetFeatureInfo", "setMarker", "zoomToResult"],
-              "onHover": ["setMarker"],
-              "buttons": ["startRouting"]
+              "onClick": [
+                "openGetFeatureInfo",
+                "setMarker",
+                "zoomToResult"
+              ],
+              "onHover": [
+                "setMarker"
+              ],
+              "buttons": [
+                "startRouting"
+              ]
             }
           },
           {
@@ -235,46 +261,46 @@
             "minChars": 3,
             "timeout": 10000,
             "definitions": [
-                {
-                  "url": "https://geodienste.hamburg.de/HH_WFS_Bebauungsplaene",
-                  "typeName": "app:hh_hh_festgestellt",
-                  "propertyNames": [
-                    "app:geltendes_planrecht"
-                  ],
-                  "geometryName": "app:geom",
-                  "name": "common:modules.searchBar.specialWFS.terminated",
-                  "namespaces": "xmlns:app='http://www.deegree.org/app'"
-                },
-                {
-                  "url": "https://geodienste.hamburg.de/HH_WFS_Bebauungsplaene",
-                  "typeName": "app:prosin_imverfahren",
-                  "propertyNames": [
-                    "app:plan"
-                  ],
-                  "geometryName": "app:the_geom",
-                  "name": "common:modules.searchBar.specialWFS.ongoing",
-                  "namespaces": "xmlns:app='http://www.deegree.org/app'"
-                },
-                {
-                  "url": "https://geodienste.hamburg.de/HH_WFS_KitaEinrichtung",
-                  "typeName": "app:KitaEinrichtungen",
-                  "propertyNames": [
-                    "app:Name"
-                  ],
-                  "name": "common:modules.searchBar.specialWFS.childcare",
-                  "namespaces": "xmlns:app='http://www.deegree.org/app'"
-                },
-                {
-                  "url": "https://geodienste.hamburg.de/HH_WFS_Stoerfallbetriebe",
-                  "typeName": "app:stoerfallbetrieb",
-                  "propertyNames": [
-                    "app:standort"
-                  ],
-                  "name": "common:modules.searchBar.specialWFS.hazardous",
-                  "namespaces": "xmlns:app='http://www.deegree.org/app'"
-                }
-              ]
-            }
+              {
+                "url": "https://geodienste.hamburg.de/HH_WFS_Bebauungsplaene",
+                "typeName": "app:hh_hh_festgestellt",
+                "propertyNames": [
+                  "app:geltendes_planrecht"
+                ],
+                "geometryName": "app:geom",
+                "name": "common:modules.searchBar.specialWFS.terminated",
+                "namespaces": "xmlns:app='http://www.deegree.org/app'"
+              },
+              {
+                "url": "https://geodienste.hamburg.de/HH_WFS_Bebauungsplaene",
+                "typeName": "app:prosin_imverfahren",
+                "propertyNames": [
+                  "app:plan"
+                ],
+                "geometryName": "app:the_geom",
+                "name": "common:modules.searchBar.specialWFS.ongoing",
+                "namespaces": "xmlns:app='http://www.deegree.org/app'"
+              },
+              {
+                "url": "https://geodienste.hamburg.de/HH_WFS_KitaEinrichtung",
+                "typeName": "app:KitaEinrichtungen",
+                "propertyNames": [
+                  "app:Name"
+                ],
+                "name": "common:modules.searchBar.specialWFS.childcare",
+                "namespaces": "xmlns:app='http://www.deegree.org/app'"
+              },
+              {
+                "url": "https://geodienste.hamburg.de/HH_WFS_Stoerfallbetriebe",
+                "typeName": "app:stoerfallbetrieb",
+                "propertyNames": [
+                  "app:standort"
+                ],
+                "name": "common:modules.searchBar.specialWFS.hazardous",
+                "namespaces": "xmlns:app='http://www.deegree.org/app'"
+              }
+            ]
+          }
         ]
       },
       "sections": [
@@ -295,11 +321,7 @@
             "type": "openConfig"
           },
           {
-            "type": "draw",
-            "showDescription": true,
-            "addIconsOfActiveLayers": true,
-            "enableAttributesSelector": true,
-            "description": "Zeichnen / Schreiben auf der Karte."
+            "type": "draw"
           },
           {
             "type": "print",
@@ -311,55 +333,6 @@
           },
           {
             "type": "selectFeatures"
-          },
-          {
-            "type": "wfsSearch",
-            "zoomLevel": 7,
-            "instances": [
-              {
-                "title": "common:modules.wfsSearch.parcelSearch",
-                "userHelp": "hide",
-                "requestConfig": {
-                  "gazetteer": {
-                    "namespaces": [
-                      "http://www.adv-online.de/namespaces/adv/dog",
-                      "http://geodienste.hamburg.de/dog_gages/services/wfs_dog?SERVICE=WFS&VERSION=2.0.0&REQUEST=DescribeFeatureType&OUTPUTFORMAT=application/gml+xml;+version=3.2&TYPENAME=dog:Flurstueckskoordinaten&NAMESPACES=xmlns(dog,http://www.adv-online.de/namespaces/adv/dog)"
-                    ],
-                    "memberSuffix": "member"
-                  },
-                  "restLayerId": "6",
-                  "storedQueryId": "Flurstueck"
-                },
-                "selectSource": "https://geodienste.hamburg.de/lgv-config/gemarkungen_hh.json",
-                "literals": [
-                  {
-                    "clause": {
-                      "type": "and",
-                      "literals": [
-                        {
-                          "field": {
-                            "queryType": "equal",
-                            "inputLabel": "common:modules.wfsSearch.district",
-                            "fieldName": "gemarkung",
-                            "usesId": true,
-                            "options": "",
-                            "required": true
-                          }
-                        },
-                        {
-                          "field": {
-                            "queryType": "equal",
-                            "inputLabel": "common:modules.wfsSearch.parcelNumber",
-                            "fieldName": "flurstuecksnummer",
-                            "required": true
-                          }
-                        }
-                      ]
-                    }
-                  }
-                ]
-              }
-            ]
           },
           {
             "type": "contact",
@@ -437,9 +410,7 @@
                     "type": "folder",
                     "elements": [
                       {
-                        "type": "bufferAnalysis",
-                        "showDescription": true,
-                        "description": "Finde heraus, was sich in einem Umkreis um ein Feature befindet."
+                        "type": "bufferAnalysis"
                       }
                     ]
                   },
@@ -463,7 +434,7 @@
       ]
     },
     "secondaryMenu": {
-      "expanded": false,
+      "expanded": true,
       "sections": [
         [
           {
@@ -471,8 +442,6 @@
           },
           {
             "type": "featureLister",
-            "description": "Listet alle Features eines Vektorlayers auf",
-            "showDescription": true,
             "maxFeatures": 10,
             "highlightVectorRulesPolygon": {
               "fill": {
@@ -511,12 +480,12 @@
           {
             "type": "routing",
             "icon": "bi-signpost-2",
-            "showDescription": true,
-            "description": "Routenplaner",
             "geosearch": {
               "type": "BKG",
               "serviceId": "5",
-              "bbox": {"CYCLING": "9.6,53.40,10.4,53.84"}
+              "bbox": {
+                "CYCLING": "9.6,53.40,10.4,53.84"
+              }
             },
             "geosearchReverse": {
               "type": "BKG",
@@ -542,24 +511,16 @@
             }
           },
           {
-            "type": "scaleSwitcher",
-            "showDescription": true,
-            "description": "Stelle den Maßstab um, ganz ohne zu scrollen."
+            "type": "scaleSwitcher"
           },
           {
-            "type": "shareView",
-            "showDescription": true,
-            "description": "Teile einen Link zur Karte."
+            "type": "shareView"
           },
           {
-            "type": "measure",
-            "showDescription": true,
-            "description": "Miss eine Strecke oder Fläche."
+            "type": "measure"
           },
           {
-            "type": "styleVT",
-            "showDescription": true,
-            "description": "Wechsel das Aussehen eines Layers vom Typ VectorTile."
+            "type": "styleVT"
           },
           {
             "type": "coordToolkit",
@@ -569,8 +530,6 @@
             "heightValueBuilding": "200",
             "zoomLevel": 5,
             "heightLayerInfo": "Grundlage der Höheninformation ist das \"Digitalge Höhenmodell Hamburg DGM 1\" mit Hohenangaben im Koordinatenrefenerzsystem für Höhenangaben DE_DHHN2016_NH in Metern über Normalhöhennull (NHN).",
-            "showDescription": true,
-            "description": "Bestimme Koordinaten aus der Karte oder suche nach Koordinaten.",
             "coordInfo": {
               "title": "Koordinatenreferenzsystem für 2D-Lageangaben, Erläuterungen",
               "explanations": [
@@ -585,19 +544,63 @@
           {
             "type": "draw_old",
             "enableAttributesSelector": true,
-            "addIconsOfActiveLayers": true,
-            "showDescription": true,
-            "description": "Altes Modul: Zeichnen / Schreiben auf der Karte."
+            "addIconsOfActiveLayers": true
           },
           {
-            "type": "bufferAnalysis",
-            "showDescription": true,
-            "description": "Finde heraus, was sich in einem Umkreis um ein Feature befindet."
+            "type": "wfsSearch",
+            "description": "common:modules.wfsSearch.description_parcel",
+            "zoomLevel": 7,
+            "instances": [
+              {
+                "title": "common:modules.wfsSearch.parcelSearch",
+                "userHelp": "hide",
+                "requestConfig": {
+                  "gazetteer": {
+                    "namespaces": [
+                      "http://www.adv-online.de/namespaces/adv/dog",
+                      "http://geodienste.hamburg.de/dog_gages/services/wfs_dog?SERVICE=WFS&VERSION=2.0.0&REQUEST=DescribeFeatureType&OUTPUTFORMAT=application/gml+xml;+version=3.2&TYPENAME=dog:Flurstueckskoordinaten&NAMESPACES=xmlns(dog,http://www.adv-online.de/namespaces/adv/dog)"
+                    ],
+                    "memberSuffix": "member"
+                  },
+                  "restLayerId": "6",
+                  "storedQueryId": "Flurstueck"
+                },
+                "selectSource": "https://geodienste.hamburg.de/lgv-config/gemarkungen_hh.json",
+                "literals": [
+                  {
+                    "clause": {
+                      "type": "and",
+                      "literals": [
+                        {
+                          "field": {
+                            "queryType": "equal",
+                            "inputLabel": "common:modules.wfsSearch.district",
+                            "fieldName": "gemarkung",
+                            "usesId": true,
+                            "options": "",
+                            "required": true
+                          }
+                        },
+                        {
+                          "field": {
+                            "queryType": "equal",
+                            "inputLabel": "common:modules.wfsSearch.parcelNumber",
+                            "fieldName": "flurstuecksnummer",
+                            "required": true
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "bufferAnalysis"
           },
           {
             "type": "layerSlider",
-            "showDescription": true,
-            "description": "Starte eine Slideshow",
             "layerIds": [
               {
                 "title": "common:modules.layerSlider.serviceOne",
@@ -619,9 +622,7 @@
           },
           {
             "type": "shadow",
-            "isShadowEnabled": true,
-            "showDescription": true,
-            "description": "Zeige den Schattenwurf zu verschiedenen Zeitpunkten in der Karte an."
+            "isShadowEnabled": true
           }
         ]
       ]
@@ -785,10 +786,10 @@
           "visibility": true
         },
         {
-          "id" : "23555",
-          "name" : "Satellitenbilder Sentinel-2 CIR",
-          "url" : "https://geodienste.hamburg.de/HH_WMS-T_Satellitenbilder_Sentinel-2",
-          "typ" : "WMS",
+          "id": "23555",
+          "name": "Satellitenbilder Sentinel-2 CIR",
+          "url": "https://geodienste.hamburg.de/HH_WMS-T_Satellitenbilder_Sentinel-2",
+          "typ": "WMS",
           "visibility": false
         },
         {

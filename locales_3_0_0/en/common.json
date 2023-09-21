@@ -38,6 +38,7 @@
     "about": {
       "additionalMetadata": "additional metadata...",
       "contact": "Contact:",
+      "description": "Learn about this portal",
       "name": "About this Portal",
       "noMetadataLoaded": "No metadata could be loaded!",
       "version": "Version: "
@@ -46,6 +47,7 @@
       "alertTitleSuccess": "Layer added successfully",
       "alreadyAdded": "The layers of the requested WMS have already been added.",
       "completeMessage": "&#9989; The layers of the requested WMS were added to the topic tree under the menu item <strong>External Subject Data</strong>!",
+      "description": "Add a Web Map Service (WMS) to the topic tree",
       "errorEmptyUrl": "Please input an wms Url in the input field!",
       "errorHttpsMessage": "&#10060; The WMS you requested is located under a http-url. The master portal can only integrate WMS via https (SSL).",
       "errorMessage": "&#10060; The specified service could not be loaded. Please make sure that the URL was entered correctly.<br><br> If the problem persists, please contact the operator of the service with the following note:<br><strong>It should be ensured that a CORS header is set for the service. This is recommended by the <a target='_blank' href='https://www.gdi-de.org/SharedDocs/Downloads/DE/GDI-DE/Dokumente/Architektur_GDI-DE_Bereitstellung_Darstellungsdienste.pdf?__blob=publicationFile'>GDI-DE</a> in chapter 4.7.1.</strong>",
@@ -70,6 +72,7 @@
     },
     "bufferAnalysis": {
       "clearButton": "Reset",
+      "description": "Find out what is within a radius of an object",
       "name": "Buffer Analysis",
       "notOverlapping": "outside radius",
       "overlapping": "inside radius",
@@ -83,6 +86,7 @@
     },
     "contact": {
       "addFileButton": "Add image",
+      "description": "Ask questions about this portal or report bugs",
       "error": {
         "mail": "Please input a valid E-mail address",
         "message": "Sending Email failed!",
@@ -165,7 +169,7 @@
         "contentSaved": "Content was copied to the clipboard.",
         "contentNotSaved": "Content could not be copied to the clipboard."
       },
-      "description": "Here you can search for and access coordinates",
+      "description": "Determine coordinates from the map or search for coordinates.",
       "errorMsg": {
         "example": "Example: ",
         "hdmsNoCoord": "Please enter your value for the {{valueKey}}.",
@@ -192,6 +196,7 @@
       "supply": "Query Coordinates / Height"
     },
     "draw": {
+      "description": "Create important markers or mark areas",
       "name": "Drawing / Writing"
     },
     "draw_old": {
@@ -231,7 +236,7 @@
         "yellow": "Yellow"
       },
       "defined": "defined",
-      "description": "Here you can draw on the map and download the result",
+      "description": "Create important markers or mark areas",
       "doubleCirclePlaceholder": "Please enter a radius",
       "download": {
         "enterFilename": "Please enter filename",
@@ -286,6 +291,7 @@
       "chooseTheme": "Choose theme",
       "details": "Details",
       "detailsOfSelected": "Details of the selected feature",
+      "description": "List all entries for a topic",
       "key": "{{shownFeatures}} of {{featureCount}} features listed",
       "list": "List",
       "more": "More...",
@@ -313,7 +319,7 @@
           "kml": "KML-file (*.kml)"
         }
       },
-      "description": "Here you can import different file formats",
+      "description": "Import geodata from different file formats",
       "fileZoom": "Zoom to features of this file \"{{filename}}\"",
       "importFiles": "Import chosen files",
       "name": "Import file",
@@ -379,6 +385,7 @@
         "selectGeometry": "Choose an area."
       },
       "info": {
+        "infoIcon": "By clicking on the info icon more information can be retrieved",
         "snippetCheckbox": "The checkbox can be enabled/disabled by a mouse click.",
         "snippetDate": "To enter a date as a search criteria, click in the date input field and select a date from the opened calendar.",
         "snippetDateRange": "To enter a date range as a search criteria, click in the input field for the start or end date and select a start or end date from the open calendar.",
@@ -459,6 +466,7 @@
     },
     "language": {
       "de": "Deutsch",
+      "description": "Choose your language",
       "en": "English",
       "es": "Español",
       "it": "Italiano",
@@ -470,6 +478,7 @@
       "ua": "Українська"
     },
     "layerClusterToggler": {
+      "description": "Activate multiple themes with one button click",
       "info": "Turn the visibility of the following layers on or off:",
       "name": "Open Layer Cluster",
       "toggle": "Toggle layer visibility"
@@ -500,6 +509,7 @@
       "addSelectedSubjectsToMap_other": "Add {{count}} selected topics to the map"
     },
     "layerSlider": {
+      "description": "Start a slideshow",
       "displayLayers": "Display of various layers.",
       "name": "Layer series",
       "serviceOne": "Service 1",
@@ -523,6 +533,7 @@
       "infosAndLegend": "Show information about the data set"
     },
     "legend": {
+      "description": "Get information about the objects in the map",
       "linkToPdf": "Link to extern legend (PDF)",
       "name": "Legend",
       "noLegendForLayerInfo": "No legend available"
@@ -530,7 +541,7 @@
     "measure": {
       "area": "Area",
       "deleteMeasurements": "Delete measurements",
-      "description": "Here you can measure areas and distances",
+      "description": "Measure a distance or area",
       "finishWithDoubleClick": "Double click to complete",
       "geometry": "Geometry",
       "influenceFactors": "The displayed values are subject to inaccuracies that are influenced by the following factors, among others, e.g. scale, resolution of the map and the screen.",
@@ -555,6 +566,7 @@
       "infoText": "(more objects. Please zoom.)"
     },
     "news": {
+      "description": "Find out what's new",
       "headline": "News",
       "name": "News"
     },
@@ -572,9 +584,10 @@
     },
     "print": {
       "alertMessage": "The maximum number of parallel printouts has been exceeded.<br>Please try again once the creation of other printouts is complete.",
+      "authorLabel": "Author",
       "autoAdjustScale": "Adjust printing scale automatically",
       "createDownloadFile": "Will be created...",
-      "description": "Here you can download an area of the map to print",
+      "description": "Download a map section in a selected format",
       "downloadFile": "Download file",
       "dpiLabel": "DPI",
       "errorMessage": "The query of the metadata failed. If the problem persists, please contact the owner of the service: <b>{{cswObjCswUrl}}</b>",
@@ -589,7 +602,6 @@
       "titleLabel": "Title",
       "subtitleLabel": "Subtitle",
       "textFieldLabel": "Free text box",
-      "authorLabel": "Author",
       "validationWarning": "The file name may only contain letters and the special characters '-' and '_'.",
       "vtlWarning": "Since MapFish 3 does not support Vector Tile Layers, the following active layers will not appear in the print view:",
       "waitForPrintErrorMessage": "Printout creation has failed.<br>Please try again at a later time or contact the portal operator.",
@@ -617,7 +629,7 @@
       },
       "coordinateInputHelp": "Find a place or add a point by clicking on the map",
       "deleteWaypoint": "Delete Waypoint",
-      "description": "Here you can find a route",
+"description": "Find out the fastest way to get to your destination or set a search radius",
       "directions": {
         "batchProcessing": {
           "downloadHeader": {
@@ -701,6 +713,7 @@
       "waypoint": "Waypoint"
     },
     "scaleSwitcher": {
+      "description": "Change the scale without scrolling",
       "label": "Scale",
       "name": "Scale switcher"
     },
@@ -759,6 +772,7 @@
     "layerResultNotShown": "The found layer cannot be displayed."
     },
     "selectFeatures": {
+      "description": "Get information about objects you select on the map",
       "name": "Select features",
       "noFeatureChosen": "No feature chosen. Select features by holding down Ctrl and dragging a box around the features to choose.",
       "propertylessFeature": "Element without attributes",
@@ -766,7 +780,7 @@
     },
     "shadow": {
       "name": "Shadows",
-      "description": "Here you can look at shadows of buildings",
+      "description": "Show the shadow cast at different times on the map",
       "pickDate": "Select a date:",
       "shadowDisplayOff": "Hide shadow on the map",
       "shadowDisplayOn": "Show shadow on the map",
@@ -774,6 +788,7 @@
       "withInfoLabel": "With information"
     },
     "shareView": {
+      "description": "Share a link to the map",
       "downloadQR": "Download QRCode",
       "myMap": "This is my map: ",
       "name": "Share selection",
@@ -786,6 +801,7 @@
     },
     "styleVT": {
       "chooseTheme": "Please choose active theme",
+      "description": "Wechsel das Aussehen eines Layers vom Typ VectorTile",
       "introText": "Various predefined styles can be applied to VectorTile layers to optimize the view to match your requirements.",
       "name": "Style Vector Tile Layers",
       "noStyleableLayers": "There are currently no topics to which this tool could be applied.",
@@ -794,7 +810,8 @@
     },
     "wfsSearch": {
       "district": "District",
-      "description": "Here you can find and highlight parcels",
+      "description": "search for objects in a topic",
+      "description_parcel": "Search for a parcel",
       "fieldSelectionLabel": "Field Selection",
       "instancesSelectLabel": "Instance selection",
       "name": "WFS search",
@@ -820,6 +837,7 @@
         "headline": "Caution",
         "text": "Are you sure about deleting the selected feature?"
       },
+      "description": "Create, update and delete objects",
       "error": {
         "allLayersNotSelected": "Activate a WFS-T layer in the layer tree",
         "geometryOutOfRange": "The drawn geometry is out of range of the allowed region of the layer.",

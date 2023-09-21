@@ -5,7 +5,6 @@
  * @property {String} icon Icon of the layer slider.
  * @property {Objet[]} layerIds The configured layer with their ids and titles.
  * @property {String} name Name of the LayerSlider.
- * @property {Boolean} showDescription If true, description will be shown.
  * @property {Number} timeInterval Time interval.
  * @property {String} title The title of the currently selected layer.
  * @property {String} type Type of the LayerSlider component.
@@ -20,11 +19,10 @@
  * @property {String} sliderTicks Slider ticks. Show the positions of the layers in the slider. Used for slider input.
  */
 const state = {
-    description: "",
+    description: "common:modules.layerSlider.description",
     icon: "bi-collection-play",
     layerIds: [],
     name: "common:modules.layerSlider.name",
-    showDescription: false,
     timeInterval: 2000,
     title: "common:modules.layerSlider.title",
     type: "layerSlider",
