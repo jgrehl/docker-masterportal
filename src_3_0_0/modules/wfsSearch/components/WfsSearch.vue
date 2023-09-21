@@ -144,7 +144,6 @@ export default {
     <div>
         <div>
             <form
-                class=""
                 role="form"
                 @submit.prevent="search"
             >
@@ -154,7 +153,7 @@ export default {
                     <div class="form-floating">
                         <select
                             id="module-wfsSearch-instances-select"
-                            class="form-select form-select-sm"
+                            class="form-select"
                             @change="instanceChanged($event.currentTarget.value)"
                         >
                             <option
@@ -172,16 +171,15 @@ export default {
                             {{ $t("common:modules.wfsSearch.instancesSelectLabel") }}
                         </label>
                     </div>
-                    <hr>
                 </template>
                 <div
                     v-if="userHelp !== 'hide'"
                     id="module-wfsSearch-userHelp"
-                    class="justify-content-center"
+                    class="justify-content-center mt-3"
                 >
                     <i
                         id="module-wfsSearch-userHelp-icon"
-                        class="col-md-1 bi-info-circle"
+                        class="col-md-1 bi-info-circle me-3"
                     />
                     <span
                         id="module-wfsSearch-userHelp-text"
@@ -197,22 +195,25 @@ export default {
                     <WfsSearchLiteral
                         :literal="literal"
                     />
-                    <hr :key="'module-wfsSearch-clause-divider' + i">
                 </div>
-                <div class="">
-                    <FlatButton
-                        id="module-wfsSearch-button-search"
-                        :type="'submit'"
-                        :text="$t('common:modules.wfsSearch.searchButton')"
-                        :icon="'bi-search'"
-                        :disabled="requiredFields"
-                    />
-                    <FlatButton
-                        id="module-wfsSearch-button-resetUI"
-                        :interaction="resetUI"
-                        :text="$t('common:modules.wfsSearch.resetButton')"
-                        :icon="'bi-x'"
-                    />
+                <div>
+                    <div class="col-md-12 d-flex justify-content-center mt-3">
+                        <FlatButton
+                            id="module-wfsSearch-button-search"
+                            :type="'submit'"
+                            :text="$t('common:modules.wfsSearch.searchButton')"
+                            :icon="'bi-search'"
+                            :disabled="requiredFields"
+                        />
+                    </div>
+                    <div class="col-md-12 d-flex justify-content-center">
+                        <FlatButton
+                            id="module-wfsSearch-button-resetUI"
+                            :interaction="resetUI"
+                            :text="$t('common:modules.wfsSearch.resetButton')"
+                            :icon="'bi-x'"
+                        />
+                    </div>
                     <div
                         v-if="searched && instances[0].resultList !== undefined"
                         class="col-md-12"
@@ -238,7 +239,6 @@ export default {
             <template v-if="showResults && results.length">
                 <header>
                     <h4>{{ currentInstance.resultDialogTitle ? $t(currentInstance.resultDialogTitle) : $t(name) }}</h4>
-                    <hr>
                 </header>
                 <ListItem
                     :key="'module-wfsSearch-list'"
@@ -255,7 +255,6 @@ export default {
             <template v-else>
                 <header>
                     <h4>{{ $t(name) }}</h4>
-                    <hr>
                 </header>
                 <span>{{ $t("common:modules.wfsSearch.noResults") }}</span>
             </template>
