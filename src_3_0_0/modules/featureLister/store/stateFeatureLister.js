@@ -3,10 +3,10 @@
  * @typedef {Object} FeatureListerState
  * @property {Boolean} hasMouseMapInteractions If this attribute is true, then all other modules will be deactivated when this attribute is also true. Only one module with this attribute true may be open at the same time, since conflicts can arise in the card interactions.
  * @property {String} type type of the FeatureLister component
+ * @property {String} description The description that should be shown in the button in the menu.
  * @property {String} name displayed as title (config-param)
  * @property {String} icon icon next to title (config-param)
  * @property {String} description The description that should be shown
- * @property {Boolean} showDescription If true, description will be shown.
  * @property {Number} maxFeatures default value for maxFeatures that can be overwritten in config
  * @property {Array} layerlist array of layers in the format {id, name, features}
  * @property {String} layerid id of visibleLayer to be displayed
@@ -29,10 +29,9 @@ const state = {
     // defaults for config.json parameters
     hasMouseMapInteractions: true,
     type: "featureLister",
+    description: "common:modules.featureLister.description",
     name: "common:modules.featureLister.name",
     icon: "bi-list",
-    description: "",
-    showDescription: false,
     maxFeatures: 20,
     // featureLister state
     layerlist: [],
