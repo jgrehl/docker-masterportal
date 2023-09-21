@@ -2,6 +2,7 @@
 
 import axios from "axios";
 import {mapActions, mapGetters, mapMutations} from "vuex";
+import SwitchInput from "../../../shared/modules/checkboxes/components/SwitchInput.vue";
 
 /**
  * Alerting
@@ -11,7 +12,7 @@ import {mapActions, mapGetters, mapMutations} from "vuex";
  */
 export default {
     name: "AlertingItem",
-
+    components: {SwitchInput},
     data () {
         return {
             availableLocalStorage: false,
@@ -282,18 +283,12 @@ export default {
                                         <div
                                             class="form-check form-check-reverse form-switch mt-1"
                                         >
-                                            <label
-                                                class="form-check-label"
-                                                for="flexSwitchCheckDefault"
-                                            >
-                                                {{ singleAlert.mustBeConfirmed? $t(singleAlert.confirmText) : $t(singleAlert.reConfirmText) }}
-                                            </label>
-                                            <input
-                                                id="flexSwitchCheckDefault"
-                                                class="form-check-input"
-                                                type="checkbox"
-                                                @input="markAsRead(singleAlert.hash);"
-                                            >
+                                            <SwitchInput
+                                                :id="'flexSwitchCheckDefault'"
+                                                :aria="singleAlert.mustBeConfirmed? $t(singleAlert.confirmText) : $t(singleAlert.reConfirmText)"
+                                                :interaction="markAsRead(singleAlert.hash)"
+                                                :label="singleAlert.mustBeConfirmed? $t(singleAlert.confirmText) : $t(singleAlert.reConfirmText)"
+                                            />
                                         </div>
                                     </div>
                                 </div>
@@ -338,8 +333,5 @@ export default {
             margin-bottom:0.3125rem;
             padding-bottom:0;
         }
-    #flexSwitchCheckDefault{
-    background-color: $light_blue;
-    }
     }
 </style>
