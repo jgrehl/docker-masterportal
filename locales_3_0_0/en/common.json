@@ -530,7 +530,8 @@
       "iconRemoveLayer": "Remove Topic from Map",
       "iconSubMenu": "Show more functions",
       "iconTransparency": "Transparency",
-      "infosAndLegend": "Show information about the data set"
+      "infosAndLegend": "Show information about the data set",
+      "openCategories": "Switch search category"
     },
     "legend": {
       "description": "Get information about the objects in the map",

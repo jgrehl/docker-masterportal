@@ -530,7 +530,8 @@
       "iconRemoveLayer": "Thema aus Karte entfernen",
       "iconSubMenu": "Weitere Funktionen anzeigen",
       "iconTransparency": "Transparenz",
-      "infosAndLegend": "Informationen zum Datensatz anzeigen"
+      "infosAndLegend": "Informationen zum Datensatz anzeigen",
+      "openCategories": "Suchkategorie umschalten"
     },
     "legend": {
       "description": "Erhalte Informationen zu den Objekten in der Karte",
