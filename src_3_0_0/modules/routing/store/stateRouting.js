@@ -1,6 +1,7 @@
 /**
  * User type definition
  * @typedef {Object} RoutingState
+ * @property {String} description The description that should be shown in the button in the menu.
  * @property {String} type The type of the module.
  * @property {Boolean} hasMouseMapInteractions If this attribute is true, then all other modules will be deactivated when this attribute is also true. Only one module with this attribute true may be open at the same time, since conflicts can arise in the card interactions.
  * @property {String} icon Icon next to title (config-param).
@@ -22,10 +23,9 @@ const state = {
     type: "routing",
     // mandatory defaults for config.json parameters
     hasMouseMapInteractions: true,
+    description: "common:modules.routing.description",
     name: "common:modules.routing.name",
     icon: "bi-signpost-2-fill",
-    description: "",
-    showDescription: false,
     supportedDevices: ["Desktop", "Mobile", "Table"],
     supportedMapModes: ["2D"],
 
