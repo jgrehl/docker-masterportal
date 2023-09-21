@@ -17,7 +17,7 @@
  * @property {Number} [currentLayoutOuterCircle.fillTransparency=100] The fill transparency in percent.
  * @property {Number[]} [currentLayoutOuterCircle.strokeColor=[200, 0, 0]] The stroke color in rgb.
  * @property {Number} currentLayoutOuterCircle.strokeWidth The stroke width in pixel.
- * @property {String} [description=""] The description that should be shown in the button in the right menu.
+ * @property {String} [description="common:modules.draw.description"] The description that should be shown in the button in the menu.
  * @property {String[]} [drawEdits=["deleteAll", "delete", "modify", "undo", "redo"]] The draw edits.
  * @property {Object} [drawIcons={box: "bi-square", circle: "bi-circle", delete: "bi-eraser-fill", deleteAll: "bi-trash",doubleCircle: "bi-record-circle", geometries: "bi-hexagon-fill", line: "bi-slash-lg", modify: "bi-tools", pen: "bi-pencil-fill", point: "bi-circle-fill", polygon: "bi-octagon", redo: "bi-arrow-right", symbols: "bi-circle-square", undo: "bi-arrow-left"}] The icons for draw buttons.
  * @property {String} [drawIcons.box="bi-square"] The icon for box button.
@@ -38,7 +38,6 @@
  * @property {String} [selectedDrawType=""] The selected draw type.
  * @property {String} [selectedDrawTypeMain=""] The selected draw type main.
  * @property {String} [selectedInteraction="draw"] The selected interaction.
- * @property {Boolean} [showDescription=""] If true, description will be shown.
  * @property {Number[]} [strokeRange=[1, 16]] The stroke range in the unit pixel.
  * @property {String[]} [supportedDevices=["Desktop", "Mobile", "Table"]] Devices on which the module is displayed.
  * @property {String[]} [supportedMapModes=["2D", "3D"]] Map mode in which this module can be used.
@@ -64,7 +63,7 @@ const state = {
         strokeColor: [200, 0, 0],
         strokeWidth: 1
     },
-    description: "",
+    description: "common:modules.draw.description",
     drawEdits: ["deleteAll", "delete", "modify", "undo", "redo"],
     drawIcons: {
         box: "bi-square",
@@ -91,7 +90,6 @@ const state = {
     selectedDrawType: "",
     selectedDrawTypeMain: "",
     selectedInteraction: "draw",
-    showDescription: false,
     strokeRange: [1, 16],
     supportedDevices: ["Desktop", "Mobile", "Table"],
     supportedMapModes: ["2D", "3D"],

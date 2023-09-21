@@ -2,6 +2,7 @@
  * User type definition
  * @module modules/About/state
  * @typedef {Object} aboutState
+ * @property {String} description The description that should be shown in the button in the menu.
  * @property {String} icon Icon next to name (config-param).
  * @property {String} name name of this module
  * @property {Object[]} menuSide Specifies in which menu the about should be rendered
@@ -23,6 +24,7 @@
  * @property {String} versionLink link to the masteprortal downloads
  */
 export default {
+    description: "common:modules.about.description",
     icon: "bi-info-circle",
     name: "common:modules.about.name",
     menuSide: "mainMenu",

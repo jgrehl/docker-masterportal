@@ -4,6 +4,7 @@ const symbol = {
         value: "simple_point"
     },
     /**
+     * @property {String} description The description that should be shown in the button in the menu.
      * @property {Boolean} hasMouseMapInteractions Indicating that we have Map interactions.
      * @property {String[]} supportedDevices Devices on which the module is displayed.
      * @property {String[]} supportedMapModes Map mode in which this module can be used.
@@ -37,8 +38,6 @@ const symbol = {
      * @property {module:ol/layer/Vector} layer The layer in which the features are drawn.
      * @property {module:ol/interaction/Modify} modifyInteraction The modify interaction of the draw tool.
      * @property {String} name Title of the Tool. Can be configured through the config.json.
-     * @property {String} description Description of the Tool. Can be configured through the config.json.
-     * @property {Boolean} showDescription If true, the description is shown.
      * @property {String} outerBorderColor The color of the border of the dropdown menu for the selection of the outer radius of a circle.
      * @property {Number} pointSize The size of the point.
      * @property {Number[]} redoArray Array of the IDs of features removed through the undo button.
@@ -155,8 +154,7 @@ const symbol = {
         withoutGUI: false,
         zIndex: 0,
         name: "common:modules.draw_old.name",
-        description: "",
-        showDescription: false,
+        description: "common:modules.draw_old.description",
         // // // // // //
         // UI SETTINGS //
         // // // // // //

@@ -420,6 +420,33 @@ describe("src_3_0_0/modules/menu/menu-store/gettersMenu.js", () => {
         });
     });
 
+    describe("showDescription", () => {
+        beforeEach(() => {
+            state = {
+                mainMenu: {
+                    showDescription: false
+                },
+                secondaryMenu: {
+                    showDescription: true
+                }
+            };
+        });
+
+        it("should return the showDescription for mainMenu", () => {
+            const side = "mainMenu",
+                showDescription = gettersMenu.showDescription(state)(side);
+
+            expect(showDescription).to.be.false;
+        });
+
+        it("should return the showDescription for secondaryMenu", () => {
+            const side = "secondaryMenu",
+                showDescription = gettersMenu.showDescription(state)(side);
+
+            expect(showDescription).to.be.true;
+        });
+    });
+
     describe("titleBySide", () => {
         const exampleTitle = {
             text: "Precise name",

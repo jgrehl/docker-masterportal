@@ -1,7 +1,7 @@
 /**
  * User type definition
  * @typedef {Object} FileImportState
- * @property {String}   description - The description that should be shown in the button in the right menu.
+ * @property {String} description The description that should be shown in the button in the menu.
  * @property {Boolean}  enableZoomToExtend - If true, it is enable to zoom to features of the imported file.
  * @property {Object}   featureExtents - the Feature Extents.
  * @property {String}   icon - icon next to title
@@ -17,7 +17,7 @@
  */
 
 export default {
-    description: "",
+    description: "common:modules.fileImport.description",
     enableZoomToExtend: false,
     featureExtents: {},
     icon: "bi-box-arrow-in-down",
@@ -26,7 +26,7 @@ export default {
     layerId: "importDrawLayer",
     name: "common:modules.fileImport.name",
     selectedFiletype: "auto",
-    showDescription: false,
+
     supportedDevices: ["Desktop", "Mobile", "Table"],
     supportedFiletypes: {
         auto: {
