@@ -144,43 +144,40 @@ export default {
     <div>
         <div>
             <form
-                class="form-horizontal"
+                class=""
                 role="form"
                 @submit.prevent="search"
             >
                 <template
                     v-if="instances.length > 1"
                 >
-                    <div class="form-group form-group-sm row">
+                    <div class="form-floating">
+                        <select
+                            id="module-wfsSearch-instances-select"
+                            class="form-select form-select-sm"
+                            @change="instanceChanged($event.currentTarget.value)"
+                        >
+                            <option
+                                v-for="({title}, i) of instances"
+                                :key="title + i"
+                                :value="i"
+                            >
+                                {{ $t(title) }}
+                            </option>
+                        </select>
                         <label
                             id="module-wfsSearch-instances-select-label"
-                            class="col-md-5 col-form-label"
                             for="module-wfsSearch-instances-select"
                         >
                             {{ $t("common:modules.wfsSearch.instancesSelectLabel") }}
                         </label>
-                        <div class="col-md-7">
-                            <select
-                                id="module-wfsSearch-instances-select"
-                                class="form-select form-select-sm"
-                                @change="instanceChanged($event.currentTarget.value)"
-                            >
-                                <option
-                                    v-for="({title}, i) of instances"
-                                    :key="title + i"
-                                    :value="i"
-                                >
-                                    {{ $t(title) }}
-                                </option>
-                            </select>
-                        </div>
                     </div>
                     <hr>
                 </template>
                 <div
                     v-if="userHelp !== 'hide'"
                     id="module-wfsSearch-userHelp"
-                    class="form-group form-group-sm row"
+                    class="justify-content-center"
                 >
                     <i
                         id="module-wfsSearch-userHelp-icon"
@@ -202,7 +199,7 @@ export default {
                     />
                     <hr :key="'module-wfsSearch-clause-divider' + i">
                 </div>
-                <div class="form-group form-group-sm row">
+                <div class="">
                     <FlatButton
                         id="module-wfsSearch-button-search"
                         :type="'submit'"
@@ -223,9 +220,9 @@ export default {
                         <FlatButton
                             id="module-wfsSearch-button-showResults"
                             :interaction="setShowResultList(true)"
-                            :disabled="results.length === 0 || !headers"
                             :text="$t('common:modules.wfsSearch.showResults') + ' ' + `(${results.length})`"
-                            :icon="'bi-card-list'"
+                            :icon="'bi-x'"
+                            :disabled="results.length === 0 || !headers"
                         />
                     </div>
                 </div>
