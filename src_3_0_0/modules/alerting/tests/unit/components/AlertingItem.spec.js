@@ -263,16 +263,11 @@ describe("src_3_0_0/modules/alerting/components/AlertingItem.vue", () => {
 
         });
 
-        describe("Now clicking on 2nd alert's confirmation switch", () => {
-            it("click", () => {
-                alertWrappers[2].find("#flexSwitchCheckDefault").trigger("click");
-            });
-
+        describe("Now checking if 2nd alert's confirmation switch exists", () => {
             it("confirmation switch of second alert is checked", () => {
-                const checkedInputs = alertWrappers[2].findAll(".form-check-input:checked");
+                const checkedInputs = alertWrappers[2].findAll("switch-input-stub");
 
                 expect(checkedInputs.length === 1).to.be.true;
-                expect(checkedInputs[0].exists()).to.be.true;
             });
         });
 

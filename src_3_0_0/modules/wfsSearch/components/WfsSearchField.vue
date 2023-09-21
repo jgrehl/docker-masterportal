@@ -239,14 +239,14 @@ export default {
 </script>
 
 <template>
-    <div class="">
+    <div class="mb-3">
         <div
             v-if="Array.isArray(inputLabel)"
             class="form-floating mb-3"
         >
             <select
                 :id="`module-wfsSearch-${selectableParameters.fieldName}-${selectableParameters.fieldId}-fieldSelection`"
-                class="form-select form-select-sm"
+                class="form-select"
                 :aria-label="$t('common:modules.wfsSearch.fieldSelectionLabel')"
                 @change="parameterIndex = $event.currentTarget.value"
             >
@@ -277,7 +277,6 @@ export default {
                     'form-select': htmlElement === 'select',
                     'module-wfsSearch-field-input': htmlElement === 'input'
                 }"
-                :placeholder="htmlElement === 'input' ? selectableParameters.inputPlaceholder : ''"
                 :default-value="htmlElement === 'input' ? selectableParameters.defaultValue : ''"
                 :required="selectableParameters.required"
                 :disabled="disabled"
