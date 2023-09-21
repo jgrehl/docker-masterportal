@@ -54,10 +54,10 @@
         - vuedraggable
     - devDependencies:
         - @vue/devtools-api
-- A new module `OpenConfig` has been implemented, which can be used to load a new configuration file (config.json) at runtime.  
+- A new module `OpenConfig` has been implemented, which can be used to load a new configuration file (config.json) at runtime.
 - A new module `News` has been implemented, it displays the recent alerts.
 - A new module in menu `CustomMenuElement` has been implemented. It can open a link, display html from config.json or from external file or dispatch an action.
-- Modules can now have an attribute `hasMouseMapInteractions`. Only one module that has this attribute set to `true` can be open at the same time.      
+- Modules can now have an attribute `hasMouseMapInteractions`. Only one module that has this attribute set to `true` can be open at the same time.
 - Added documentation file doc\jsdoc.md for jsdoc in vue-components and vuex-files.
 
 ### Changed
@@ -126,3 +126,4 @@
 - The layerAttribution control no longer exists. Instead, when a layer that has a layerAttribution is turned on, it is displayed as an alert.
 
 ### Fixed
+- Issue #1072: Fixed a problem when launching the portal with addons_3_0_0
