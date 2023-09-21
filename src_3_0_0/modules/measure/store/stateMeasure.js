@@ -6,11 +6,10 @@ import source from "../js/measureSource";
 /**
  * Measure tool state definition.
  * @typedef {object} MeasureState
- * @property {String} description The description that should be shown in the button in the right menu.
+ * @property {String} description The description that should be shown in the button in the menu.
  * @property {string} name displayed as title (config-param)
  * @property {Boolean} hasMouseMapInteractions If this attribute is true, then all other modules will be deactivated when this attribute is also true. Only one module with this attribute true may be open at the same time, since conflicts can arise in the card interactions.
  * @property {string} icon icon next to title (config-param)
- * @property {Boolean} showDescription If true, description will be shown.
  * @property {number} earthRadius earth radius to assume for length/area calculations (config-param)
  * @property {string} measurementAccuracy indicates how accurately the measurement result is displayed for m and m².
  *                                        Options are "decimeter" for one decimal place. "meter" for no decimal place.
@@ -35,11 +34,10 @@ import source from "../js/measureSource";
  */
 const state = {
     // defaults for config.json tool parameters
-    description: "",
+    description: "common:modules.measure.description",
     name: "common:modules.measure.name",
     hasMouseMapInteractions: true,
     icon: "bi-arrows-angle-expand",
-    showDescription: false,
     supportedDevices: ["Desktop", "Mobile", "Table"],
     supportedMapModes: ["2D"],
     type: "measure",

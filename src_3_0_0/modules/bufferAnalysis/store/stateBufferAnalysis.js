@@ -6,6 +6,7 @@ import {ResultType} from "./enums";
 /**
  * User type definition
  * @typedef {Object} BufferAnalysisState
+ * @property {String} description The description that should be shown in the button in the menu.
  * @property {String} name displayed as title (config-param)
  * @property {String} icon icon next to title (config-param)
  * @property {String} type type of the BufferAnalysis component
@@ -26,11 +27,10 @@ import {ResultType} from "./enums";
  * @property {String} timerId timerId for debounce buffer radius input
  */
 const state = {
+    description: "common:modules.bufferAnalysis.description",
     icon: "bi-arrows-angle-expand",
     name: "common:modules.bufferAnalysis.name",
     type: "bufferAnalysis",
-    description: "",
-    showDescription: false,
     supportedDevices: ["Desktop", "Mobile", "Table"],
     supportedMapModes: ["2D", "3D"],
 

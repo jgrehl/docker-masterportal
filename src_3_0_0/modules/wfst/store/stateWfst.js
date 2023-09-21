@@ -4,9 +4,8 @@
  * @type {Object}
  * @property {Boolean} type the type of the module.
  * @property {String} name Displayed as the title. (config-param)
- * @property {String} description The description that should be shown in the button in the right menu.
+ * @property {String} description The description that should be shown in the button in the menu.
  * @property {String} icon Icon next to the title. (config-param)
- * @property {Boolean} showDescription If true, description will be shown.
  * @property {Boolean} hasMouseMapInteractions If this attribute is true, then all other modules will be deactivated when this attribute is also true. Only one module with this attribute true may be open at the same time, since conflicts can arise in the card interactions.
  * @property {String[]} supportedDevices Devices on which the module is displayed.
  * @property {String[]} supportedMapModes Map mode in which this module can be used.
@@ -28,10 +27,9 @@
 const state = {
     // General configuration
     type: "wfst",
+    description: "common:modules.wfst.description",
     name: "common:modules.wfst.name",
-    description: "",
     icon: "bi-globe",
-    showDescription: false,
     hasMouseMapInteractions: true,
     supportedDevices: ["Desktop", "Mobile", "Table"],
     supportedMapModes: ["2D"],
