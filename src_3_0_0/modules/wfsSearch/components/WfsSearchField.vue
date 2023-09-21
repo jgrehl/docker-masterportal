@@ -239,10 +239,10 @@ export default {
 </script>
 
 <template>
-    <div class="form-group form-group-sm row">
+    <div class="">
         <div
             v-if="Array.isArray(inputLabel)"
-            class="col-md-5"
+            class="form-floating mb-3"
         >
             <select
                 :id="`module-wfsSearch-${selectableParameters.fieldName}-${selectableParameters.fieldId}-fieldSelection`"
@@ -258,23 +258,23 @@ export default {
                     {{ label }}
                 </option>
             </select>
+            <label for="`module-wfsSearch-${selectableParameters.fieldName}-${selectableParameters.fieldId}-fieldSelection`">
+                {{ $t("common:modules.wfsSearch.fieldSelectionLabel") }}
+            </label>
         </div>
         <label
             v-else
-            class="col-md-5 col-form-label"
             :for="`module-wfsSearch-${selectableParameters.fieldName}-${selectableParameters.fieldId}-input`"
         >
             {{ inputLabel.endsWith("*") ? $t(inputLabel.split("*")[0]) + "*" : $t(inputLabel) }}
         </label>
-        <div class="col-md-7">
+        <div class="form-floating">
             <component
                 :is="htmlElement"
                 :id="`module-wfsSearch-${selectableParameters.fieldName}-${selectableParameters.fieldId}-input`"
                 :class="{
                     'form-control': htmlElement !== 'select',
                     'form-select': htmlElement === 'select',
-                    'form-control-sm': htmlElement !== 'select',
-                    'form-select-sm': htmlElement === 'select',
                     'module-wfsSearch-field-input': htmlElement === 'input'
                 }"
                 :placeholder="htmlElement === 'input' ? selectableParameters.inputPlaceholder : ''"
@@ -366,5 +366,9 @@ $length: 1.5em;
     100% {
         transform: rotate(360deg)
     }
+}
+
+.form-control:focus ~ label {
+    color: $secondary;
 }
 </style>
