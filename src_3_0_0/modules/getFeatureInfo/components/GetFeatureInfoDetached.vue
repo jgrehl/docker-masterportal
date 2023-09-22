@@ -138,32 +138,34 @@ export default {
                 }
                 this.removeHighlighting();
 
-                switch (this.feature.getOlFeature()?.getGeometry()?.getType()) {
-                    case "Point":
-                    {
-                        highlightObject.type = "increase";
-                        highlightObject.scale = this.highlightVectorRules.image.scale;
-                        break;
+                if (this.feature.getOlFeature() && typeof this.feature.getOlFeature().getGeometry === "function") {
+                    switch (this.feature.getOlFeature().getGeometry()?.getType()) {
+                        case "Point":
+                        {
+                            highlightObject.type = "increase";
+                            highlightObject.scale = this.highlightVectorRules.image.scale;
+                            break;
+                        }
+                        case "Polygon":
+                        {
+                            highlightObject.type = "highlightPolygon";
+                            highlightObject.highlightStyle = {
+                                fill: this.highlightVectorRules.fill,
+                                stroke: this.highlightVectorRules.stroke
+                            };
+                            break;
+                        }
+                        case "LineString":
+                        {
+                            highlightObject.type = "highlightLine";
+                            highlightObject.highlightStyle = {
+                                stroke: this.highlightVectorRules.stroke
+                            };
+                            break;
+                        }
+                        default:
+                            break;
                     }
-                    case "Polygon":
-                    {
-                        highlightObject.type = "highlightPolygon";
-                        highlightObject.highlightStyle = {
-                            fill: this.highlightVectorRules.fill,
-                            stroke: this.highlightVectorRules.stroke
-                        };
-                        break;
-                    }
-                    case "LineString":
-                    {
-                        highlightObject.type = "highlightLine";
-                        highlightObject.highlightStyle = {
-                            stroke: this.highlightVectorRules.stroke
-                        };
-                        break;
-                    }
-                    default:
-                        break;
                 }
                 if (highlightObject.type) {
                     this.highlightFeature(highlightObject);
