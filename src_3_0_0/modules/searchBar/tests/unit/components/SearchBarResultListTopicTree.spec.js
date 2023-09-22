@@ -9,6 +9,7 @@ config.global.mocks.$t = key => key;
 
 describe("src_3_0_0/modules/searchBar/components/SearchBarResultListTopicTree.vue", () => {
     let activateActionsSpy,
+        setSelectedSearchResultsSpy,
         store,
         wrapper;
 
@@ -66,6 +67,7 @@ describe("src_3_0_0/modules/searchBar/components/SearchBarResultListTopicTree.vu
 
     beforeEach(() => {
         activateActionsSpy = sinon.spy();
+        setSelectedSearchResultsSpy = sinon.spy();
 
         store = createStore({
             namespaces: true,
@@ -82,6 +84,9 @@ describe("src_3_0_0/modules/searchBar/components/SearchBarResultListTopicTree.vu
                             },
                             actions: {
                                 activateActions: activateActionsSpy
+                            },
+                            mutations: {
+                                setSelectedSearchResults: setSelectedSearchResultsSpy
                             }
                         }
                     }
@@ -149,6 +154,8 @@ describe("src_3_0_0/modules/searchBar/components/SearchBarResultListTopicTree.vu
                 },
                 actionType: "onClick"
             });
+            expect(setSelectedSearchResultsSpy.calledOnce).to.be.true;
+            expect(setSelectedSearchResultsSpy.firstCall.args[1]).to.be.deep.equals([]);
         });
     });
 });
