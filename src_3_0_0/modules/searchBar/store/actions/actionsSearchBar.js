@@ -1,5 +1,6 @@
 /**
  * Contains global actions of the search bar.
+ * @module modules/searchBar/store/actions/actionsSearchBar
  */
 import actionsSearchBarResultList from "./actionsSearchBarResultList";
 import actionsSearchBarSearchInterfaces from "./actionsSearchBarSearchInterfaces";
