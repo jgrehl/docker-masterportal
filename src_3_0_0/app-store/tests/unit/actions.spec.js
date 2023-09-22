@@ -78,11 +78,7 @@ describe("src_3_0_0/app-store/actions.js", () => {
 
         it("initializeVectorStyle", () => {
             const getters = {
-                    menuFromConfig: () => {
-                        return {
-                            sections: [[{a: "b"}]]
-                        };
-                    },
+                configuredModules: [{a: "b"}, {c: "d"}],
                     allLayerConfigs: [{
                         id: "id",
                         typ: "WMS"
@@ -118,7 +114,7 @@ describe("src_3_0_0/app-store/actions.js", () => {
             expect(initializeStyleListSpy.firstCall.args[0]).to.be.deep.equals(firstCallArg);
             expect(initializeStyleListSpy.firstCall.args[1]).to.equals(state.configJs);
             expect(initializeStyleListSpy.firstCall.args[2]).to.be.deep.equals(getters.allLayerConfigs);
-            expect(initializeStyleListSpy.firstCall.args[3]).to.be.deep.equals([{a: "b"}, {a: "b"}]);
+            expect(initializeStyleListSpy.firstCall.args[3]).to.be.deep.equals([{a: "b"}, {c: "d"}]);
             expect(typeof initializeStyleListSpy.firstCall.args[4]).to.be.equals("function");
 
         });
