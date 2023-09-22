@@ -48,6 +48,11 @@ module.exports = function (destination) {
         },
         {
             "files": destination + "/js/masterportal.js",
+            "from": /\..\/..\/src_3_0_0\/assets\/img\//g,
+            "to": "../mastercode/" + mastercodeVersionFolderName + "/img/"
+        },
+        {
+            "files": destination + "/js/masterportal.js",
             "from": /\/locales_3_0_0\/\{\{lng\}\}\/\{\{ns\}\}\.json/g,
             "to": "./../mastercode/" + mastercodeVersionFolderName + "/locales/{{lng}}/{{ns}}.json"
         }
