@@ -50,6 +50,7 @@ export default {
                     actionType: "onClick"
                 });
             });
+            this.setSelectedSearchResults([]);
         }
     }
 };
