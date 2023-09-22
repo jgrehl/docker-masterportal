@@ -144,6 +144,29 @@ const getters = {
     },
 
     /**
+     * Returns the content of all menu sections and of controls startModule menu entries.
+     * @param {Object} state state of the app-store.
+     * @returns {Array} configs of all modules in sections and controls
+     */
+    configuredModules: state => {
+        let content = [];
+
+        getters.menuFromConfig(state)("mainMenu").sections?.forEach(subSections => {
+            content = content.concat(subSections);
+        });
+        getters.menuFromConfig(state)("secondaryMenu").sections?.forEach(subSections => {
+            content = content.concat(subSections);
+        });
+        if (getters.controlsConfig(state).startModule?.mainMenu) {
+            content = content.concat(getters.controlsConfig(state).startModule.mainMenu);
+        }
+        if (getters.controlsConfig(state).startModule?.secondaryMenu) {
+            content = content.concat(getters.controlsConfig(state).startModule.secondaryMenu);
+        }
+        return content;
+    },
+
+    /**
      * Returns the zIndex for the given layerConfig. If zIndex already exists at layerConfig, it is returned.
      * @param {Object} state state of the app-store.
      * @param {String} id id of the layer

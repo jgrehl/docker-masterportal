@@ -123,18 +123,15 @@ export default {
      */
     initializeVectorStyle ({state, commit, dispatch, getters}) {
         const styleGetters = {
-                mapMarkerPointStyleId: getters.configJs?.mapMarker?.pointStyleId,
-                mapMarkerPolygonStyleId: getters.configJs?.mapMarker?.polygonStyleId,
-                highlightFeaturesPointStyleId: getters["Modules/HighlightFeatures/pointStyleId"],
-                highlightFeaturesPolygonStyleId: getters["Modules/HighlightFeatures/polygonStyleId"],
-                highlightFeaturesLineStyleId: getters["Modules/HighlightFeatures/lineStyleId"],
-                zoomToFeatureId: getters.configJs.zoomTo?.find(entry => entry.id === "zoomToFeatureId")?.styleId
-            },
-            layerConfigs = getters.allLayerConfigs,
-            secondaryMenuSections = getters.menuFromConfig("secondaryMenu").sections ? getters.menuFromConfig("secondaryMenu").sections[0] : [],
-            sectionsContent = getters.menuFromConfig("mainMenu").sections[0].concat(secondaryMenuSections);
+            mapMarkerPointStyleId: getters.configJs?.mapMarker?.pointStyleId,
+            mapMarkerPolygonStyleId: getters.configJs?.mapMarker?.polygonStyleId,
+            highlightFeaturesPointStyleId: getters["Modules/HighlightFeatures/pointStyleId"],
+            highlightFeaturesPolygonStyleId: getters["Modules/HighlightFeatures/polygonStyleId"],
+            highlightFeaturesLineStyleId: getters["Modules/HighlightFeatures/lineStyleId"],
+            zoomToFeatureId: getters.configJs.zoomTo?.find(entry => entry.id === "zoomToFeatureId")?.styleId
+        };
 
-        styleList.initializeStyleList(styleGetters, state.configJs, layerConfigs, sectionsContent,
+        styleList.initializeStyleList(styleGetters, state.configJs, getters.allLayerConfigs, getters.configuredModules,
             (initializedStyleList, error) => {
                 if (error) {
                     dispatch("Alerting/addSingleAlert", {
