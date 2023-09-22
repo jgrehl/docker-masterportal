@@ -95,7 +95,7 @@
       "fileSizeMessage": "Die angehängte Datei überschreitet die festgelegte Dateigröße.",
       "mailSubject": "Supportanfrage zum Portal ",
       "messageLabel": "Ihre Nachricht",
-      "name": "Kontakt",
+      "name": "Kontakt aufnehmen",
       "placeholder": {
         "mail": "Ihre E-Mail-Adresse",
         "message": "Bitte formulieren Sie hier Ihre Frage und drücken Sie auf \"$t(common:modules.contact.sendButton)\".",
@@ -568,7 +568,7 @@
     },
     "portalFooter": {
       "designation": "Kartographie und Gestaltung:",
-      "mapDiscrepancy": "Kartenunstimmigkeit",
+      "mapDiscrepancy": "Kartenunstimmigkeit melden",
       "scale": "Skalierung der Karte"
     },
     "print": {
