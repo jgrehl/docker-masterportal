@@ -15,6 +15,7 @@
 styleguide
 .history
 
+addons/*
 addons/addons_3_0_0/*
 !addons/addons_3_0_0/readme.txt
 
