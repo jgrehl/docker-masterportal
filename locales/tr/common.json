@@ -727,6 +727,7 @@
                 "drawLine": "çizgiler",
                 "drawCurve": "Serbest çizgi",
                 "drawArea": "Alan",
+                "drawSquare": "Kare",
                 "drawCircle": "Çember",
                 "drawDoubleCircle": "Çift ​​çember",
                 "doubleCirclePlaceholder": "Lütfen bir çap girin",

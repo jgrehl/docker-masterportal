@@ -795,6 +795,7 @@
                 "drawLine": "Лінія",
                 "drawCurve": "Лінія від руки",
                 "drawArea": "Поверхня",
+                "drawSquare": "Площа",
                 "drawCircle": "Коло",
                 "drawDoubleCircle": "Подвійне коло",
                 "doubleCirclePlaceholder": "Будь ласка, введіть радіус",

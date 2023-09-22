@@ -271,7 +271,7 @@ async function initializeWithoutGUI ({state, commit, dispatch, getters, rootStat
 
 /**
  * Find the correct id for the translation of the given drawType.
- * If the drawType is not "Circle", "LineString", "Point" or "Polygon", simply "draw" is returned.
+ * If the drawType is not "Circle", "LineString", "Point", "Polygon" or "Square", simply "draw" is returned.
  *
  * @param {String} drawType Type of the draw interaction.
  * @returns {String} The translation key for the given draw interaction
@@ -286,6 +286,8 @@ function getDrawId (drawType) {
             return "drawSymbol";
         case "Polygon":
             return "drawArea";
+        case "Square":
+            return "drawSquare";
         default:
             return "draw";
     }

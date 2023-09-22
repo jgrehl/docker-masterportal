@@ -865,6 +865,7 @@
                 "drawLine": "Linien",
                 "drawCurve": "Freihandlinie",
                 "drawArea": "Fläche",
+                "drawSquare": "Quadrat",                
                 "drawCircle": "Kreis",
                 "drawDoubleCircle": "Doppelkreis",
                 "doubleCirclePlaceholder": "Bitte geben Sie einen Radius ein",

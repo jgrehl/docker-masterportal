@@ -792,6 +792,7 @@
                 "drawLine": "Линии",
                 "drawCurve": "Свободная линия",
                 "drawArea": "Площадь",
+                "drawSquare": "Квадрат",
                 "drawCircle": "Круг",
                 "drawDoubleCircle": "Двойной круг",
                 "doubleCirclePlaceholder": "Пожалуйста, введите радиус",

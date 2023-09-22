@@ -863,6 +863,7 @@
                 "drawLine": "Line",
                 "drawCurve": "Freehand",
                 "drawArea": "Area",
+                "drawSquare": "Square",
                 "drawCircle": "Circle",
                 "drawDoubleCircle": "Double circle",
                 "doubleCirclePlaceholder": "Please enter a radius",

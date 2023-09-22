@@ -52,6 +52,13 @@ const mutations = {
         state.drawAreaSettings.strokeWidth = styleSettings.strokeWidth;
         state.drawAreaSettings.opacity = styleSettings.opacity;
     },
+    setDrawSquareSettings: (state, styleSettings) => {
+        state.drawSquareSettings.colorContour = styleSettings.colorContour;
+        state.drawSquareSettings.color = styleSettings.color;
+        state.drawSquareSettings.opacityContour = styleSettings.opacityContour;
+        state.drawSquareSettings.strokeWidth = styleSettings.strokeWidth;
+        state.drawSquareSettings.opacity = styleSettings.opacity;
+    },
     setDrawCircleSettings: (state, styleSettings) => {
         state.drawCircleSettings.circleMethod = styleSettings.circleMethod;
         state.drawCircleSettings.unit = styleSettings.unit;

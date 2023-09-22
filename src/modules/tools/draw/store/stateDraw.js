@@ -64,6 +64,12 @@ const symbol = {
      * @property {Number} drawAreaSettings.opacity The opacity of the color of the drawn features. NOTE: The values of the transparencySettings are opacity values.
      * @property {String[]} drawAreaSettings.colorContour The color of the contours of the drawn feature represented as an array.
      * @property {Number} drawAreaSettings.opacityContour The opacity of the color of the contours for features of drawType "LineString". NOTE: The values of the transparencySettings are opacity values.
+     * @property {Object} drawSquareSettings the values used for the drawType drawSquare
+     * @property {Number} drawSquareSettings.strokeWidth Stroke width.
+     * @property {String[]} drawSquareSettings.color The color of the drawn feature represented as an array.
+     * @property {Number} drawSquareSettings.opacity The opacity of the color of the drawn features. NOTE: The values of the transparencySettings are opacity values.
+     * @property {String[]} drawSquareSettings.colorContour The color of the contours of the drawn feature represented as an array.
+     * @property {Number} drawSquareSettings.opacityContour The opacity of the color of the contours for features of drawType "LineString". NOTE: The values of the transparencySettings are opacity values.
      * @property {Object} drawCircleSettings the values used for the drawType drawCircle
      * @property {String} drawCircleSettings.circleMethod The method for drawing features of drawType "Circle".
      * @property {Object} drawCircleSettings.tooltipStyle The custom style for the tooltip of drawType "Circle".
@@ -170,6 +176,13 @@ const symbol = {
             colorContour: [0, 0, 0, 1]
         },
         drawAreaSettings: {
+            strokeWidth: 1,
+            color: [55, 126, 184, 1],
+            opacity: 1,
+            colorContour: [0, 0, 0, 1],
+            opacityContour: 1
+        },
+        drawSquareSettings: {
             strokeWidth: 1,
             color: [55, 126, 184, 1],
             opacity: 1,

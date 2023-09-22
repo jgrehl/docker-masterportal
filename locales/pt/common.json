@@ -596,6 +596,7 @@
                 "drawLine": "Linhas",
                 "drawCurve": "Linha à mão livre",
                 "drawArea": "Área",
+                "drawSquare": "Quadrado",
                 "drawCircle": "Círculo",
                 "drawDoubleCircle": "Círculo duplo",
                 "doubleCirclePlaceholder": "Por favor introduza um diâmetro",
