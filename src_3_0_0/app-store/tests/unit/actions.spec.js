@@ -78,7 +78,7 @@ describe("src_3_0_0/app-store/actions.js", () => {
 
         it("initializeVectorStyle", () => {
             const getters = {
-                configuredModules: [{a: "b"}, {c: "d"}],
+                    configuredModules: [{a: "b"}, {c: "d"}],
                     allLayerConfigs: [{
                         id: "id",
                         typ: "WMS"
