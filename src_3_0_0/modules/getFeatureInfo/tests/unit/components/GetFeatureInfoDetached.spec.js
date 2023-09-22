@@ -288,7 +288,6 @@ describe("src_3_0_0/modules/getFeatureInfo/components/GetFeatureInfoDetached.vue
                 });
 
                 expect(getLayerByIdSpy.calledOnce).to.be.true;
-                // expect(removeHighlightFeatureSpy.calledOnce).to.be.true;
                 expect(highlightFeatureSpy.calledOnce).to.be.true;
                 expect(highlightFeatureSpy.firstCall.args[1]).to.be.deep.equals(expectedArgs);
             });
@@ -329,10 +328,39 @@ describe("src_3_0_0/modules/getFeatureInfo/components/GetFeatureInfoDetached.vue
                 });
 
                 expect(getLayerByIdSpy.calledOnce).to.be.true;
-                // expect(removeHighlightFeatureSpy.calledOnce).to.be.true;
                 expect(highlightFeatureSpy.calledOnce).to.be.true;
                 expect(highlightFeatureSpy.firstCall.args[1]).to.be.deep.equals(expectedArgs);
             });
+            it("should call highlightFeature for a 3D tileset feature without geometry function, shall not be highlighted", () => {
+                const tileFeature = {
+                };
+
+                shallowMount(DetachedTemplate, {
+                    propsData: {
+                        feature: {
+                            getTheme: () => "DefaultTheme",
+                            getTitle: () => "Hallo",
+                            getMimeType: () => "text/xml",
+                            getGfiUrl: () => "",
+                            getLayerId: () => "layerId",
+                            getOlFeature: () => tileFeature
+                        }
+                    },
+                    components: {
+                        DefaultTheme: {
+                            name: "DefaultTheme",
+                            template: "<span />"
+                        }
+                    },
+                    global: {
+                        plugins: [store]
+                    }
+                });
+
+                expect(getLayerByIdSpy.calledOnce).to.be.true;
+                expect(highlightFeatureSpy.notCalled).to.be.true;
+            });
+
             it("should call highlightFeature if feature's geometry is a linestring", () => {
                 const expectedArgs = {
                     feature: olFeature,
@@ -373,7 +401,7 @@ describe("src_3_0_0/modules/getFeatureInfo/components/GetFeatureInfoDetached.vue
             });
         });
 
-        describe("highlightVectorFeature", () => {
+        describe("removeHighlighting", () => {
             it("should not call removeHighlightFeatureSpy if no lastFeature available", () => {
                 highlightVectorRules = null;
 
