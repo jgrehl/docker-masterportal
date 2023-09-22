@@ -104,12 +104,16 @@ describe("src_3_0_0/modules/alerting/components/AlertingItem.vue", () => {
         alertFromConfig.forEach(value => {
             value.initial = true;
             value.initialConfirmed = value.mustBeConfirmed;
+            value.confirmText = "confirmText";
+            value.reConfirmText = "reConfirmText";
 
             alerts.push(value);
         });
         alertingData.forEach(value => {
             value.initial = true;
             value.initialConfirmed = value.mustBeConfirmed;
+            value.confirmText = "confirmText";
+            value.reConfirmText = "reConfirmText";
             alerts.push(value);
         });
 
@@ -138,7 +142,8 @@ describe("src_3_0_0/modules/alerting/components/AlertingItem.vue", () => {
                     namespaced: true,
                     actions: {
                         addSingleAlert: sinon.spy(),
-                        cleanup: sinon.stub()
+                        cleanup: sinon.stub(),
+                        alertHasBeenRead: sinon.stub()
                     },
                     getters: {
                         alerts: () => alerts,
