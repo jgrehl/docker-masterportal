@@ -8,17 +8,15 @@
  * @property {Boolean} showDescription If true, description will be shown.
  * @property {String[]} supportedDevices Devices on which the module is displayed.
  * @property {String[]} supportedMapModes Map mode in which this module can be used.
- * @property {String[]} supportedTreeTypes Tree type in which this module is displayed.
  */
 const state = {
     description: "",
     type: "addWMS",
     name: "common:modules.addWMS.name",
-    icon: "cloud-plus",
+    icon: "bi-cloud-plus",
     showDescription: false,
     supportedDevices: ["Desktop", "Mobile", "Table"],
-    supportedMapModes: ["2D", "3D"],
-    supportedTreeTypes: ["light"]
+    supportedMapModes: ["2D", "3D"]
 };
 
 export default state;
