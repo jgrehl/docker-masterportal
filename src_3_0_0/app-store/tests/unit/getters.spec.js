@@ -614,4 +614,141 @@ describe("src_3_0_0/app-store/getters.js", () => {
 
         });
     });
+
+    describe.only("configuredModules", () => {
+        let state;
+        const section1 = [
+                {
+                    type: "fileImport"
+                },
+                {
+                    type: "openConfig"
+                },
+                {
+                    type: "contact",
+                    serviceId: "80001",
+                    includeSystemInfo: true,
+                    from: [
+                        {
+                            email: "lgvgeoportal-hilfe@gv.hamburg.de",
+                            name: "LGVGeoportalHilfe"
+                        }
+                    ],
+                    to: [
+                        {
+                            email: "lgvgeoportal-hilfe@gv.hamburg.de",
+                            name: "LGVGeoportalHilfe"
+                        }
+                    ]
+                },
+                {
+                    type: "language"
+                }
+            ],
+            section2 = [
+                {
+                    type: "print"
+                },
+                {
+                    type: "draw"
+                }
+            ];
+
+        beforeEach(() => {
+            state = {
+                portalConfig: {
+                    mainMenu: {
+                        expanded: true,
+                        title: {
+                            text: "Title"
+                        },
+                        sections: []
+                    }
+                }
+            };
+        });
+
+        it("configuredModules no sections in mainMenu", () => {
+            expect(getters.configuredModules(state).length).to.be.equals(0);
+        });
+        it("configuredModules only mainMenu", () => {
+            state.portalConfig.mainMenu.sections.push(section1);
+            expect(getters.configuredModules(state).length).to.be.equals(4);
+            expect(getters.configuredModules(state)[0].type).to.be.equals("fileImport");
+            expect(getters.configuredModules(state)[1].type).to.be.equals("openConfig");
+            expect(getters.configuredModules(state)[2].type).to.be.equals("contact");
+            expect(getters.configuredModules(state)[3].type).to.be.equals("language");
+        });
+        it("configuredModules only mainMenu with 2 sections", () => {
+            state.portalConfig.mainMenu.sections.push(section1);
+            state.portalConfig.mainMenu.sections.push(section2);
+            expect(getters.configuredModules(state).length).to.be.equals(6);
+            expect(getters.configuredModules(state)[0].type).to.be.equals("fileImport");
+            expect(getters.configuredModules(state)[1].type).to.be.equals("openConfig");
+            expect(getters.configuredModules(state)[2].type).to.be.equals("contact");
+            expect(getters.configuredModules(state)[3].type).to.be.equals("language");
+            expect(getters.configuredModules(state)[4].type).to.be.equals("print");
+            expect(getters.configuredModules(state)[5].type).to.be.equals("draw");
+        });
+        it("configuredModules mainMenu with 2 sections and secondary menu with one section", () => {
+            state.portalConfig.mainMenu.sections.push(section1);
+            state.portalConfig.mainMenu.sections.push(section2);
+            state.portalConfig.secondaryMenu = {};
+            state.portalConfig.secondaryMenu.sections = [];
+            state.portalConfig.secondaryMenu.sections.push(section1);
+            expect(getters.configuredModules(state).length).to.be.equals(10);
+            expect(getters.configuredModules(state)[0].type).to.be.equals("fileImport");
+            expect(getters.configuredModules(state)[1].type).to.be.equals("openConfig");
+            expect(getters.configuredModules(state)[2].type).to.be.equals("contact");
+            expect(getters.configuredModules(state)[3].type).to.be.equals("language");
+            expect(getters.configuredModules(state)[4].type).to.be.equals("print");
+            expect(getters.configuredModules(state)[5].type).to.be.equals("draw");
+            expect(getters.configuredModules(state)[6].type).to.be.equals("fileImport");
+            expect(getters.configuredModules(state)[7].type).to.be.equals("openConfig");
+            expect(getters.configuredModules(state)[8].type).to.be.equals("contact");
+            expect(getters.configuredModules(state)[9].type).to.be.equals("language");
+        });
+        it("configuredModules mainMenu with 2 sections and secondary menu with 2 section", () => {
+            state.portalConfig.mainMenu.sections.push(section1);
+            state.portalConfig.mainMenu.sections.push(section2);
+            state.portalConfig.secondaryMenu = {};
+            state.portalConfig.secondaryMenu.sections = [];
+            state.portalConfig.secondaryMenu.sections.push(section1);
+            state.portalConfig.secondaryMenu.sections.push(section2);
+            expect(getters.configuredModules(state).length).to.be.equals(12);
+            expect(getters.configuredModules(state)[0].type).to.be.equals("fileImport");
+            expect(getters.configuredModules(state)[1].type).to.be.equals("openConfig");
+            expect(getters.configuredModules(state)[2].type).to.be.equals("contact");
+            expect(getters.configuredModules(state)[3].type).to.be.equals("language");
+            expect(getters.configuredModules(state)[4].type).to.be.equals("print");
+            expect(getters.configuredModules(state)[5].type).to.be.equals("draw");
+            expect(getters.configuredModules(state)[6].type).to.be.equals("fileImport");
+            expect(getters.configuredModules(state)[7].type).to.be.equals("openConfig");
+            expect(getters.configuredModules(state)[8].type).to.be.equals("contact");
+            expect(getters.configuredModules(state)[9].type).to.be.equals("language");
+            expect(getters.configuredModules(state)[10].type).to.be.equals("print");
+            expect(getters.configuredModules(state)[11].type).to.be.equals("draw");
+        });
+        it("configuredModules only mainMenu with 2 sections and startModule", () => {
+            state.portalConfig.mainMenu.sections.push(section1);
+            state.portalConfig.mainMenu.sections.push(section2);
+            state.portalConfig.controls = {};
+            state.portalConfig.controls.startModule = {};
+            state.portalConfig.controls.startModule.mainMenu = [{
+                "type": "test"
+            }];
+            state.portalConfig.controls.startModule.secondaryMenu = [{
+                "type": "vcOblique"
+            }];
+            expect(getters.configuredModules(state).length).to.be.equals(8);
+            expect(getters.configuredModules(state)[0].type).to.be.equals("fileImport");
+            expect(getters.configuredModules(state)[1].type).to.be.equals("openConfig");
+            expect(getters.configuredModules(state)[2].type).to.be.equals("contact");
+            expect(getters.configuredModules(state)[3].type).to.be.equals("language");
+            expect(getters.configuredModules(state)[4].type).to.be.equals("print");
+            expect(getters.configuredModules(state)[5].type).to.be.equals("draw");
+            expect(getters.configuredModules(state)[6].type).to.be.equals("test");
+            expect(getters.configuredModules(state)[7].type).to.be.equals("vcOblique");
+        });
+    });
 });
