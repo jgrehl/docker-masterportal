@@ -1,5 +1,6 @@
 /**
  * Contains actions that communicate with the search interfaces.
+ * @module modules/searchBar/store/actions/actionsSearchBarSearchInterfaces
  */
 import SearchInterfaceBkg from "../../searchInterfaces/searchInterfaceBkg";
 import SearchInterfaceElasticSearch from "../../searchInterfaces/searchInterfaceElasticSearch";
