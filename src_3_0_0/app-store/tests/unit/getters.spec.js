@@ -615,7 +615,7 @@ describe("src_3_0_0/app-store/getters.js", () => {
         });
     });
 
-    describe.only("configuredModules", () => {
+    describe("configuredModules", () => {
         let state;
         const section1 = [
                 {
