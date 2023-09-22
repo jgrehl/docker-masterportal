@@ -6,8 +6,8 @@ import {rawLayerList} from "@masterportal/masterportalapi/src";
 
 /**
  * Contains actions that communicate with other components after an interaction, such as onClick or onHover, with a search result.
+ * @module modules/searchBar/store/actions/actionsSearchBarSearchResult
  */
-
 export default {
     /**
      * Activates a layer in the topic tree.
