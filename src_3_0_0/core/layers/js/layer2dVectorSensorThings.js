@@ -295,6 +295,7 @@ Layer2dVectorSensorThings.prototype.createMqttConnectionToSensorThings = functio
             console.error(error);
         }),
         options = Object.assign({
+            browserBufferSize: 65536,
             host: mqttHost,
             rhPath: url,
             context: this,
@@ -1200,8 +1201,8 @@ Layer2dVectorSensorThings.prototype.startIntervalUpdate = function (timeout) {
             qos = this.get("mqttQos");
 
         this.unsubscribeFromSensorThings(datastreamIds, subscriptionTopics, version, mqttClient);
-        this.initializeConnection(features => {
-            this.subscribeToSensorThings(
+        this.initializeConnection(async features => {
+            await this.subscribeToSensorThings(
                 this.getDatastreamIdsInCurrentExtent(features, store.getters["Maps/extent"]),
                 subscriptionTopics,
                 version,
@@ -1294,7 +1295,7 @@ Layer2dVectorSensorThings.prototype.startIntervalUpdate = function (timeout) {
  * Refreshes all subscriptions by ending all established subscriptions and creating new ones.
  * @returns {void}
  */
-Layer2dVectorSensorThings.prototype.updateSubscription = function () {
+Layer2dVectorSensorThings.prototype.updateSubscription = async function () {
     const datastreamIds = this.getDatastreamIdsInCurrentExtent(this.getLayer().getSource().getFeatures(), store.getters["Maps/extent"]),
         subscriptionTopics = this.get("subscriptionTopics"),
         version = this.get("version"),
@@ -1304,15 +1305,15 @@ Layer2dVectorSensorThings.prototype.updateSubscription = function () {
 
     if (!this.get("loadThingsOnlyInCurrentExtent") && !this.moveLayerRevisible) {
         this.unsubscribeFromSensorThings(datastreamIds, subscriptionTopics, version, mqttClient);
-        this.subscribeToSensorThings(datastreamIds, subscriptionTopics, version, mqttClient, {rh, qos});
+        await this.subscribeToSensorThings(datastreamIds, subscriptionTopics, version, mqttClient, {rh, qos});
         if (typeof this.get("historicalLocations") === "number") {
             this.getHistoricalLocationsOfFeatures();
         }
     }
     else {
         this.unsubscribeFromSensorThings(datastreamIds, subscriptionTopics, version, mqttClient);
-        this.initializeConnection(() => {
-            this.subscribeToSensorThings(
+        this.initializeConnection(async () => {
+            await this.subscribeToSensorThings(
                 this.getDatastreamIdsInCurrentExtent(this.getLayer().getSource().getFeatures(), store.getters["Maps/extent"]),
                 subscriptionTopics,
                 version,
@@ -1494,17 +1495,20 @@ Layer2dVectorSensorThings.prototype.unsubscribeFromSensorThings = function (data
  * @param {Object} mqttSubscribeOptions an object with key rh and qos to subscribe with
  * @returns {Boolean} returns true on success and false if something went wrong
  */
-Layer2dVectorSensorThings.prototype.subscribeToSensorThings = function (dataStreamIds, subscriptionTopics, version, mqttClient, mqttSubscribeOptions = {}) {
+Layer2dVectorSensorThings.prototype.subscribeToSensorThings = async function (dataStreamIds, subscriptionTopics, version, mqttClient, mqttSubscribeOptions = {}) {
     if (!Array.isArray(dataStreamIds) || !isObject(subscriptionTopics) || !isObject(mqttClient)) {
         return false;
     }
-    const layerSource = this.getLayerSource() instanceof Cluster ? this.getLayerSource().getSource() : this.getLayerSource();
+    const layerSource = this.getLayerSource() instanceof Cluster ? this.getLayerSource().getSource() : this.getLayerSource(),
+        newSubscriptionTopics = subscriptionTopics;
 
-    dataStreamIds.forEach(id => {
+    for (let i = 0; i < dataStreamIds.length; i++) {
+        const id = dataStreamIds[i];
+
         if (id && !subscriptionTopics[id]) {
-            mqttClient.subscribe("v" + version + "/Datastreams(" + id + ")/Observations", mqttSubscribeOptions);
+            await mqttClient.subscribe("v" + version + "/Datastreams(" + id + ")/Observations", mqttSubscribeOptions);
             if (this.get("observeLocation")) {
-                mqttClient.subscribe("v" + version + "/Datastreams(" + id + ")/Thing/Locations", mqttSubscribeOptions, () => {
+                await mqttClient.subscribe("v" + version + "/Datastreams(" + id + ")/Thing/Locations", mqttSubscribeOptions, () => {
                     if (this.get("loadThingsOnlyInCurrentExtent")) {
                         return;
                     }
@@ -1521,18 +1525,18 @@ Layer2dVectorSensorThings.prototype.subscribeToSensorThings = function (dataStre
                     );
                 });
             }
-            subscriptionTopics[id] = true;
+            newSubscriptionTopics[id] = true;
             const feature = this.getFeatureByDatastreamId(layerSource.getFeatures(), id);
 
             if (!isObject(feature)) {
-                return;
+                continue;
             }
             feature.set("subscribed", true, true);
             this.subscribedDataStreamIds[id] = {
                 subscribed: true
             };
         }
-    });
+    }
 
     return true;
 };
