@@ -95,7 +95,7 @@
       "fileSizeMessage": "The attached file exceeds the specified file size.",
       "mailSubject": "Support request for the portal ",
       "messageLabel": "Your message",
-      "name": "Contact",
+      "name": "Contact us",
       "placeholder": {
         "mail": "Your E-mail Address",
         "message": "Please write down your message in here and press \"$t(common:modules.contact.sendButton)\".",
@@ -567,7 +567,7 @@
     },
     "portalFooter": {
       "designation": "Cartography and design:",
-      "mapDiscrepancy": "Map discrepancy",
+      "mapDiscrepancy": "Report map discrepancy",
       "scale": "scale of map"
     },
     "print": {
