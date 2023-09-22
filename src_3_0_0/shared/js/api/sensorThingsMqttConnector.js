@@ -23,6 +23,7 @@ export class SensorThingsMqttConnector {
     constructor () {
         /** private */
         this.options = {
+            browserBufferSize: 65536,
             host: "https://localhost",
             port: "",
             path: "/mqtt",
@@ -202,7 +203,7 @@ export class SensorThingsMqttConnector {
      * @param {Function} [onerror] as function(error) - "a subscription error or an error that occurs when client is disconnecting" (see: https://docs.oasis-open.org/mqtt/mqtt/v5.0/os/mqtt-v5.0-os.html#_Toc3901169)
      * @returns {void}
      */
-    subscribe (topic, options, onsuccess, onerror) {
+    async subscribe (topic, options, onsuccess, onerror) {
         if (typeof this.mqttClient?.subscribe !== "function") {
             if (typeof onerror === "function") {
                 onerror("sensorThingsMqtt.js, subscribe: the mqttClient is not ready to subscribe. Set mqttClient and connect before adding subscriptions.");
@@ -214,24 +215,27 @@ export class SensorThingsMqttConnector {
             rh: 2
         }, options);
 
-        this.mqttClient.subscribe(topic, subscriptionOptions, (err, granted) => {
-            if (err) {
-                if (typeof onerror === "function") {
-                    onerror(err);
+        await new Promise(resolve => {
+            this.mqttClient.subscribe(topic, subscriptionOptions, (err, granted) => {
+                resolve();
+                if (err) {
+                    if (typeof onerror === "function") {
+                        onerror(err);
+                    }
+                    return;
                 }
-                return;
-            }
 
-            if (
-                typeof onsuccess === "function" && Array.isArray(granted) && granted.length
-            ) {
-                onsuccess(granted[0]?.topic, granted[0]?.qos);
-            }
+                if (
+                    typeof onsuccess === "function" && Array.isArray(granted) && granted.length
+                ) {
+                    onsuccess(granted[0]?.topic, granted[0]?.qos);
+                }
 
-            if (subscriptionOptions.rh !== 2 && (this.isV31() || this.isV311())) {
-                // simulate retained handling
-                this.simulateRetainedHandling(this.options.rhPath, topic, this.handlers.message, onerror);
-            }
+                if (subscriptionOptions.rh !== 2 && (this.isV31() || this.isV311())) {
+                    // simulate retained handling
+                    this.simulateRetainedHandling(this.options.rhPath, topic, this.handlers.message, onerror);
+                }
+            });
         });
     }
 
