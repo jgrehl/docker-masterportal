@@ -1,20 +1,27 @@
 /**
  * Contains actions that are directly related to the components resultList and resultListItem.
+ * @module modules/searchBar/store/actions/actionsSearchBarResultList
  */
 export default {
     /**
      * Activate click action(s) of searchResult.
+     * Update the input field for onClick events.
+     * @param {Object} param.commit the commit
      * @param {Object} param.dispatch the dispatch
      * @param {Object} searchResult The search result.
      * @param {String} actionType The action type onHover or onClick.
      * @returns {void}
      */
-    activateActions ({dispatch}, {searchResult, actionType}) {
+    activateActions ({commit, dispatch}, {searchResult, actionType}) {
         const events = searchResult.events[actionType] || {};
 
         Object.keys(events).forEach(event => {
             dispatch(event, events[event]);
         });
+
+        if (actionType === "onClick") {
+            commit("setSearchInput", searchResult.name);
+        }
     },
 
     /**
