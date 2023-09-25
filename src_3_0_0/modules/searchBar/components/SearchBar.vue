@@ -168,7 +168,10 @@ export default {
         ...mapActions("Modules/SearchBar", [
             "instantiateSearchInterfaces",
             "overwriteDefaultValues",
-            "search"
+            "search",
+            "activateActions",
+            "setMarker",
+            "zoomToResult"
         ]),
         ...mapMutations("Modules/SearchBar", [
             "addSuggestionItem",
@@ -201,6 +204,7 @@ export default {
         /**
          * Handles the input action behavior of the search
          * @param {String} currentComponentSide Current component type
+         * @param {String} searchInputValue blll
          * @returns {void}
          */
         checkCurrentComponent (currentComponentSide) {
@@ -209,6 +213,23 @@ export default {
             }
             else {
                 this.startSearch();
+            }
+        },
+        /**
+         * Zooms to and sets a marker at the given search result
+         * @param {String} searchInputValue the input value
+         * @returns {void}
+         */
+        zoomToAndMarkSearchResult (searchInputValue) {
+            if (searchInputValue !== undefined) {
+                this.setMarker("undefined");
+                this.searchResults.forEach(searchResult => {
+                    if (searchResult.searchInterfaceId === "elasticSearch_1") {
+                        if (searchInputValue === searchResult.name) {
+                            this.activateActions({searchResult, actionType: "onClick"});
+                        }
+                    }
+                });
             }
         }
     }
@@ -224,7 +245,7 @@ export default {
                 :disabled="!searchActivated"
                 :aria-label="$t(placeholder)"
                 type="button"
-                @click="checkCurrentComponent(currentComponentSide)"
+                @click="zoomToAndMarkSearchResult(searchInputValue), checkCurrentComponent(currentComponentSide)"
             >
                 <i
                     class="bi-search"
@@ -240,7 +261,7 @@ export default {
                 :aria-label="$t(placeholder)"
                 @click="clickAction"
                 @input="checkCurrentComponent(currentComponentSide)"
-                @keydown.enter="checkCurrentComponent(currentComponentSide)"
+                @keydown.enter="zoomToAndMarkSearchResult(searchInputValue), checkCurrentComponent(currentComponentSide)"
             >
         </div>
         <SearchBarSuggestionList
