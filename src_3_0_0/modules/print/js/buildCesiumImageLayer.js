@@ -43,8 +43,8 @@ function takeOl3DScreenshot (scene, options) {
 /**
  * Creates a fake extent based on the given view and given pixels
  * @param {ol.View} view ol view
- * @param {[number, number]} pixels canvas dimensions
- * @returns {[ol.Extent]} extent
+ * @param {Number[]} pixels canvas dimensions
+ * @returns {Number[]} extent
  */
 function createFakeExtent (view, pixels) {
     const res = view.getResolution(),

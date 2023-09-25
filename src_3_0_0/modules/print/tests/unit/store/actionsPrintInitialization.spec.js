@@ -146,7 +146,7 @@ describe("src_3_0_0/modules/print/store/actionsPrintInitialization.js", () => {
 
             // action, payload, state, rootState, expectedMutationsAndActions, getters = {}, done, rootGetters
             testAction(getGfiForPrint, null, {}, {}, [
-                {type: "setGfiForPrint", payload: []}
+                {type: "setGfiForPrint", payload: ["TestProperties", "TestTitle", undefined]}
             ], {}, done, {"Modules/GetFeatureInfo/currentFeature": feature, "Map/clickCoord": undefined});
         });
     });
