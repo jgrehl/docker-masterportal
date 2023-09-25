@@ -177,6 +177,12 @@ export default {
         this.setServiceId(this.printServiceId);
     },
     mounted () {
+        if (this.mode === "3D") {
+            this.setIs3d(true);
+        }
+        else {
+            this.setIs3d(false);
+        }
         this.$nextTick(() => {
             if (this.shownLayoutList.length === 0) {
                 this.retrieveCapabilites();
