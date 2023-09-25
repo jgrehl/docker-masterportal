@@ -28,13 +28,13 @@ function autoDrawMask (ol3d, getScaling) {
     }
     scene.requestRender();
 }
-// CC0 from https://github.com/mdn/dom-examples/tree/main/webgl-examples/tutorial/sample2
 /**
  * Draws a scene
  * @param {WebGL2RenderingContext} gl context
  * @param {*} programInfo program and associated structures
  * @param {WebGLBuffer} buffers position buffer
- * @param {number[]} scaling scaling
+ * @param {Number[]} scaling scaling
+ * @see https://github.com/mdn/dom-examples/tree/main/webgl-examples/tutorial/sample2
  * @returns {void}
  */
 function drawScene (gl, programInfo, buffers, scaling) {
@@ -142,8 +142,8 @@ function main (gl) {
 /**
  * Initialize the shader
  * @param {WebGL2RenderingContext} gl context
- * @param {string} vsSource shader
- * @param {string} fsSource shader
+ * @param {String} vsSource shader
+ * @param {String} fsSource shader
  * @returns {WebGLProgram} program
  */
 function initShaderProgram (gl, vsSource, fsSource) {
@@ -167,8 +167,8 @@ function initShaderProgram (gl, vsSource, fsSource) {
 /**
  * Loads a shader and returns it
  * @param {WebGL2RenderingContext} gl context
- * @param {number} type shader type
- * @param {string} source shader source
+ * @param {Number} type shader type
+ * @param {String} source shader source
  * @returns {WebGLShader} shader
  */
 function loadShader (gl, type, source) {
