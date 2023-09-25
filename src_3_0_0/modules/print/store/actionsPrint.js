@@ -64,9 +64,6 @@ const actions = {
      */
     startPrint3d: async function ({state, dispatch, commit}, print) {
         commit("setProgressWidth", "width: 25%");
-        /**
-         * @type {import('olcs/OLCesium.js').default}
-         */
         const ol3d = mapCollection.getMap("3D"),
             ol2d = ol3d.getOlMap(),
             view = ol2d.getView(),
@@ -129,6 +126,7 @@ const actions = {
         if (state.isScaleAvailable) {
             spec.buildScale(state.currentScale);
         }
+        await spec.buildLayers(state.visibleLayerList);
         spec.defaults.attributes.map.layers = [cesiumLayer];
         // Use bbox instead of center + scale
         delete spec.defaults.attributes.map.scale;
