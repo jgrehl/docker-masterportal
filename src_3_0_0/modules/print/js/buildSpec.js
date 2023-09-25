@@ -1209,7 +1209,7 @@ const BuildSpecModel = {
                 layerName = gfiArray[1];
 
                 gfiObject.layers.push({
-                    layerName: layerName,
+                    layerName: layerName.startsWith("common:") ? i18next.t(layerName) : layerName,
                     values: this.prepareGfiAttributes(gfiAttributes)
                 });
 
