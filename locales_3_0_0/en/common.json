@@ -531,7 +531,7 @@
       "iconSubMenu": "Show more functions",
       "iconTransparency": "Transparency",
       "infosAndLegend": "Show information about the data set",
-      "openCategories": "Switch search category"
+      "openCategories": "Switch category"
     },
     "legend": {
       "description": "Get information about the objects in the map",
