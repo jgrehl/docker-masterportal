@@ -130,7 +130,14 @@ describe("src_3_0_0/modules/layerSelection/components/LayerSelection.vue", () =>
             getters: {
                 invisibleBaselayerConfigs: sinon.stub(),
                 activeOrFirstCategory: () => categories ? categories[0] : undefined,
-                allCategories: () => categories
+                allCategories: () => categories,
+                portalConfig: () => {
+                    return {
+                        tree: {
+                            categories: categories
+                        }
+                    };
+                }
             },
             actions: {
                 changeCategory: changeCategorySpy

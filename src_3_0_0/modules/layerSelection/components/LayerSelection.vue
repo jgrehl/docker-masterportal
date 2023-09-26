@@ -160,7 +160,7 @@ export default {
             id="accordionFlushCategorySettings"
             class="accordion accordion-flush"
         >
-            <div class="accordion-item my-2">
+            <div class="accordion-item mb-3">
                 <IconButton
                     :aria="$t('common:modules.layerTree.openCategories')"
                     :icon="'bi-gear-fill'"
