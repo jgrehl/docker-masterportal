@@ -170,8 +170,7 @@ export default {
             "overwriteDefaultValues",
             "search",
             "activateActions",
-            "setMarker",
-            "zoomToResult"
+            "setMarker"
         ]),
         ...mapMutations("Modules/SearchBar", [
             "addSuggestionItem",
