@@ -107,6 +107,7 @@ export default {
             :is="currentComponent"
             v-if="currentComponent !== 'root' && currentComponent !== 'getFeatureInfo'"
             :side="side"
+            class="menu-body-component"
         />
 
         <MenuContainerBodyRoot
@@ -122,13 +123,25 @@ export default {
         display: flex;
         flex-direction: column;
         align-items: stretch;
+        // overflow-y: auto;
         padding: $padding $padding $padding $padding;
         font-size: $font-size-base;
-        overflow-y: auto;
         max-height: 100%;
 
         &-collapsed {
             padding: 0;
+            display: none;
+        }
+
+        .menu-body-component {
+            overflow-y: auto;
+            /* Hide scrollbar for Firefox */
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Hide scrollbar for Chrome, Edge, Safari and Opera */
+        .menu-body-component::-webkit-scrollbar {
             display: none;
         }
     }
