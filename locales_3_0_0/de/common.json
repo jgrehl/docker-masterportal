@@ -801,7 +801,7 @@
     },
     "styleVT": {
       "chooseTheme": "Bitte aktives Thema auswählen",
-      "description": "Change the appearance of a layer of type VectorTile",
+      "description": "Wechsel das Aussehen eines Layers vom Typ VectorTile",
       "introText": "Auf VectorTiles-Layer können verschiedene vordefinierte Styles angewendet werden, um die Ansicht für den jeweiligen Anwendungszweck zu optimieren.",
       "name": "Style Vector Tile Layers",
       "noStyleableLayers": "Derzeit sind keine Themen verfügbar, auf die dieses Werkzeug angewendet werden könnte.",
