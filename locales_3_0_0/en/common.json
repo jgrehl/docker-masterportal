@@ -616,7 +616,10 @@
         "HIGHWAYS": "Highways",
         "STEPS": "Steps",
         "TOLLWAYS": "Tollways",
-        "UNPAVEDROADS": "Unpaved roads"
+        "UNPAVEDROADS": "Unpaved roads",
+        "MIXEDTRAFFIC": "Mixed traffic",
+        "COBBLESTONE": "Cobblestone",
+        "NARROWWAYS": "Narrow ways"
       },
       "batchProcessing": {
         "cancel": "Cancel batch processing",

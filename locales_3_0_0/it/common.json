@@ -579,7 +579,10 @@
         "HIGHWAYS": "Autostrada",
         "STEPS": "Scale",
         "TOLLWAYS": "Strade a pedaggio",
-        "UNPAVEDROADS": "Strade sterrate"
+        "UNPAVEDROADS": "Strade sterrate",
+        "MIXEDTRAFFIC": "Traffico misto",
+        "COBBLESTONE": "Ciottolo",
+        "NARROWWAYS": "Collo di bottiglia"
       },
       "batchProcessing": {
         "cancel": "Annullamento dell'elaborazione batch",
