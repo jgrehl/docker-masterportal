@@ -30,10 +30,13 @@ export default {
     },
     computed: {
         ...mapGetters("Maps", ["mode"]),
-        ...mapGetters(["activeOrFirstCategory", "allCategories", "invisibleBaselayerConfigs"]),
+        ...mapGetters(["activeOrFirstCategory", "allCategories", "invisibleBaselayerConfigs", "portalConfig"]),
         ...mapGetters("Modules/LayerSelection", ["visible", "subjectDataLayerConfs", "baselayerConfs", "layersToAdd", "lastFolderNames", "layerInfoVisible", "highlightLayerId"]),
         lastFolderName () {
             return this.lastFolderNames[this.lastFolderNames.length - 1];
+        },
+        categorySwitcher () {
+            return this.portalConfig?.tree?.categories;
         }
     },
     watch: {
@@ -152,6 +155,53 @@ export default {
         class="w-100 layer-selection"
         aria-label=""
     >
+        <div
+            v-if="categorySwitcher"
+            id="accordionFlushCategorySettings"
+            class="accordion accordion-flush"
+        >
+            <div class="accordion-item my-2">
+                <IconButton
+                    :aria="$t('common:modules.layerTree.openCategories')"
+                    :icon="'bi-gear-fill'"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseOne"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseOne"
+                />
+                <div
+                    id="flush-collapseOne"
+                    class="accordion-collapse collapse"
+                    aria-labelledby="flush-headingOne"
+                    data-bs-parent="#accordionFlushExample"
+                >
+                    <div class="accordion-body">
+                        <div
+                            v-if="activeOrFirstCategory"
+                            class="form-floating mb-3"
+                        >
+                            <select
+                                id="select_category"
+                                :value="activeOrFirstCategory.key"
+                                class="form-select"
+                                @change.prevent="categorySelected($event.target.value)"
+                            >
+                                <option
+                                    v-for="category in allCategories"
+                                    :key="category.key"
+                                    :value="category.key"
+                                >
+                                    {{ $t(category.name) }}
+                                </option>
+                            </select>
+                            <label for="select_category">
+                                {{ $t("common:modules.layerTree.categories") }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="layer-selection-navigation">
             <h6 v-if="filterBaseLayer().length > 0">
                 {{ $t("common:modules.layerSelection.backgrounds") }}
@@ -183,52 +233,6 @@ export default {
                 v-if="baselayerConfs.length > 0"
                 class="m-2"
             >
-            <div
-                id="accordionFlushCategorySettings"
-                class="accordion accordion-flush"
-            >
-                <div class="accordion-item my-2">
-                    <IconButton
-                        :aria="$t('common:modules.layerTree.openCategories')"
-                        :icon="'bi-gear-fill'"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#flush-collapseOne"
-                        aria-expanded="false"
-                        aria-controls="flush-collapseOne"
-                    />
-                    <div
-                        id="flush-collapseOne"
-                        class="accordion-collapse collapse"
-                        aria-labelledby="flush-headingOne"
-                        data-bs-parent="#accordionFlushExample"
-                    >
-                        <div class="accordion-body">
-                            <div
-                                v-if="activeOrFirstCategory"
-                                class="form-floating mb-3"
-                            >
-                                <select
-                                    id="select_category"
-                                    :value="activeOrFirstCategory.key"
-                                    class="form-select"
-                                    @change.prevent="categorySelected($event.target.value)"
-                                >
-                                    <option
-                                        v-for="category in allCategories"
-                                        :key="category.key"
-                                        :value="category.key"
-                                    >
-                                        {{ $t(category.name) }}
-                                    </option>
-                                </select>
-                                <label for="select_category">
-                                    {{ $t("common:modules.layerTree.categories") }}
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <div class="align-items-left justify-content-center layer-selection-navigation-dataLayer">
                 <template
                     v-for="(conf, index) in subjectDataLayerConfs"
@@ -277,7 +281,7 @@ export default {
 .layer-selection-navigation-dataLayer {
     overflow-y: scroll;
     overflow-x: hidden;
-    max-height: 75%;
+    max-height: calc(100% - 100px);
 }
 .layer-selection-add-layer-btn {
     position: sticky;
