@@ -579,7 +579,10 @@
         "HIGHWAYS": "Автомагистраль",
         "TOLLWAYS": "Платные дороги",
         "STEPS": "Лестницы",
-        "UNPAVEDROADS": "грунтовые дороги"
+        "UNPAVEDROADS": "грунтовые дороги",
+        "MIXEDTRAFFIC": "смешанное движение",
+        "COBBLESTONE": "булыжник",
+        "NARROWWAYS": "узкие пути"
       },
       "batchProcessing": {
         "cancel": "Отмена пакетной обработки данных",
