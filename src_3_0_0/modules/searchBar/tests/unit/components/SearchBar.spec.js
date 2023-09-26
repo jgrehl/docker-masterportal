@@ -60,7 +60,9 @@ describe("src_3_0_0/modules/searchBar/components/SearchBar.vue", () => {
                             actions: {
                                 instantiateSearchInterfaces: sinon.stub(),
                                 overwriteDefaultValues: sinon.stub(),
-                                search: sinon.stub()
+                                search: sinon.stub(),
+                                setMarker: sinon.stub(),
+                                activateActions: sinon.stub()
                             },
                             getters: {
                                 configPaths: () => [],
@@ -275,6 +277,90 @@ describe("src_3_0_0/modules/searchBar/components/SearchBar.vue", () => {
 
             expect(startSearchSpy.called).to.be.true;
 
+        });
+    });
+
+    describe("zoomToAndMarkSearchResult", () => {
+        it("zooms to and sets a marker at a given searchResult", () => {
+            searchResults = [
+                {
+                    "category": "Adresse",
+                    "id": "NeuenfelderStraße19",
+                    "index": 1,
+                    "name": "Neuenfelder Straße 19",
+                    "searchInterfaceId": "gazetteer",
+                    "displayedInfo": "",
+                    "icon": "bi-signpost",
+                    "imagePath": "",
+                    "toolTip": "",
+                    "events": {
+                    }
+                },
+                {
+                    "category": "Adresse",
+                    "id": "NeuenfelderStraße19",
+                    "index": 1,
+                    "name": "Neuenfelder Straße 19",
+                    "searchInterfaceId": "elasticSearch_1",
+                    "displayedInfo": "",
+                    "icon": "bi-signpost",
+                    "imagePath": "",
+                    "toolTip": "",
+                    "events": {
+                    }
+                }
+            ];
+            wrapper = shallowMount(SearchBarComponent, {
+                global: {
+                    plugins: [store]
+                }
+            });
+
+            const activateActionsSpy = sinon.spy(wrapper.vm, "activateActions");
+
+            wrapper.vm.zoomToAndMarkSearchResult("Neuenfelder Straße 19");
+            expect(activateActionsSpy.called).to.be.true;
+        });
+        it("does not zoom to a given searchResult if not elastic search", () => {
+            searchResults = [
+                {
+                    "category": "Adresse",
+                    "id": "NeuenfelderStraße19",
+                    "index": 1,
+                    "name": "Neuenfelder Straße 19",
+                    "searchInterfaceId": "gazetteer",
+                    "displayedInfo": "",
+                    "icon": "bi-signpost",
+                    "imagePath": "",
+                    "toolTip": "",
+                    "events": {
+                    }
+                },
+                {
+                    "category": "Adresse",
+                    "id": "NeuenfelderStraße19",
+                    "index": 1,
+                    "name": "Neuenfelder Straße 19",
+                    "searchInterfaceId": "gazetteer",
+                    "displayedInfo": "",
+                    "icon": "bi-signpost",
+                    "imagePath": "",
+                    "toolTip": "",
+                    "events": {
+                    }
+                }
+            ];
+
+            wrapper = shallowMount(SearchBarComponent, {
+                global: {
+                    plugins: [store]
+                }
+            });
+
+            const activateActionsSpy = sinon.spy(wrapper.vm, "activateActions");
+
+            wrapper.vm.zoomToAndMarkSearchResult("Neuenfelder Straße 19");
+            expect(activateActionsSpy.called).not.to.be.true;
         });
     });
 
