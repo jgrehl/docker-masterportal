@@ -236,7 +236,7 @@
         "yellow": "Yellow"
       },
       "defined": "defined",
-      "description": "Create important markers or mark areas",
+      "description": "Create important markers or identify areas. Download them here to reload them later",
       "doubleCirclePlaceholder": "Please enter a radius",
       "download": {
         "enterFilename": "Please enter filename",
