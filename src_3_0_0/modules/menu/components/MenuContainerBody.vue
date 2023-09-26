@@ -133,10 +133,6 @@ export default {
         }
     }
 
-    #mp-body-secondaryMenu {
-        overflow-y: unset;
-    }
-
     @include media-breakpoint-up(sm)  {
 
         #mp-body-secondaryMenu {
