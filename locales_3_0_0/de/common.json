@@ -616,7 +616,10 @@
         "HIGHWAYS": "Autobahn",
         "STEPS": "Treppen",
         "TOLLWAYS": "Mautstraßen",
-        "UNPAVEDROADS": "Unbefestigte Straßen"
+        "UNPAVEDROADS": "Unbefestigte Straßen",
+        "MIXEDTRAFFIC": "Mischverkehr",
+        "COBBLESTONE": "Kopfsteinpflaster",
+        "NARROWWAYS": "Engstellen"
       },
       "batchProcessing": {
         "cancel": "Stapelverarbeitung abbrechen",
