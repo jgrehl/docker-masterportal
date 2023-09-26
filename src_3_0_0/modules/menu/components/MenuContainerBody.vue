@@ -123,7 +123,6 @@ export default {
         display: flex;
         flex-direction: column;
         align-items: stretch;
-        // overflow-y: auto;
         padding: $padding $padding $padding $padding;
         font-size: $font-size-base;
         max-height: 100%;
