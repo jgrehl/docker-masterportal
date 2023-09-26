@@ -579,7 +579,10 @@
         "HIGHWAYS": "Автомагістралі",
         "STEPS": "Сходи",
         "TOLLWAYS": "Платні дороги",
-        "UNPAVEDROADS": "ґрунтові дороги"
+        "UNPAVEDROADS": "ґрунтові дороги",
+        "MIXEDTRAFFIC": "змішаний рух",
+        "COBBLESTONE": "бруківка",
+        "NARROWWAYS": "вузькі шляхи"
       },
       "batchProcessing": {
         "cancel": "Скасування пакетної обробки",
