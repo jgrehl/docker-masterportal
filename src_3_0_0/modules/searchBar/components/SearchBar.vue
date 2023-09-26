@@ -145,6 +145,7 @@ export default {
         currentComponentSide: {
             handler (newVal) {
                 if (newVal === "root") {
+                    this.removePointMarker();
                     this.searchInputValue = "";
                     this.$refs?.searchInput.blur();
                     if (this.side) {
@@ -180,6 +181,9 @@ export default {
         ]),
         ...mapMutations("Menu", [
             "switchToRoot"
+        ]),
+        ...mapActions("Maps", [
+            "removePointMarker"
         ]),
         /**
          * Starts the search in searchInterfaces, if min characters are introduced, updates the result list.
