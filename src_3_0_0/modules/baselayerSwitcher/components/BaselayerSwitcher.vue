@@ -217,9 +217,9 @@ export default {
     .preview {
         padding: 0px;
         margin: 5px;
-        border: 2px solid rgba(66, 66, 66, 0);
         min-width: 52px;
         min-height: 52px;
+        border: 2px solid rgba(66, 66, 66, 0.3);
     }
 
     .preview:hover, .preview:focus{
@@ -236,5 +236,8 @@ export default {
         border: 2px solid rgba(66, 66, 66, 0.8);
     }
 
+    .top:hover, .top:focus {
+        border: 2px solid rgba(66, 66, 66, 0.8);
+    }
 
 </style>
