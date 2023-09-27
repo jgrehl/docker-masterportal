@@ -203,7 +203,6 @@ export default {
         /**
          * Handles the input action behavior of the search
          * @param {String} currentComponentSide Current component type
-         * @param {String} searchInputValue blll
          * @returns {void}
          */
         checkCurrentComponent (currentComponentSide) {
