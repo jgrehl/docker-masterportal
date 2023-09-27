@@ -75,11 +75,14 @@ TileSetLayer.prototype.setVisible = function (newValue) {
  * @return {void}
  */
 TileSetLayer.prototype.hideObjects = function (toHide, allLayers = false) {
+    console.log("hideObjects", toHide, allLayers)
     let updateLayer = allLayers;
 
     toHide.forEach((id) => {
         if (!hiddenObjects[id]) {
+            console.log(Object.keys(hiddenObjects), id)
             hiddenObjects[id] = new Set();
+            console.log(hiddenObjects, id)
             updateLayer = true;
         }
     });
