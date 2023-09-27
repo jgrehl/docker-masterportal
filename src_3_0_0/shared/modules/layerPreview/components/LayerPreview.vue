@@ -238,10 +238,7 @@ export default {
             <img
                 :class="[
                     customClass,
-                    'previewImg',
-                    {
-                        'thickBorder': currentlyVisible
-                    }
+                    'previewImg'
                 ]"
                 :src="previewUrl"
                 alt="previewImg"
@@ -254,9 +251,7 @@ export default {
                 customClass,
                 'checkable',
                 {
-                    'bi-check-circle': checked,
-                    'bi-circle': !checked,
-                    'checkableThickBorder': currentlyVisible
+                    'bi-check-lg': checked,
                 }
             ]"
         />
@@ -281,13 +276,6 @@ export default {
     transition: background-color 300ms;
     border-radius: 50%;
 }
-.thickBorder{
-    border-width: 0.5rem;
-    border-style: solid;
-}
-.checkableThickBorder{
-    left: -1px;
-}
 .bi-check-circle::before {
     display: block;
 }
@@ -301,11 +289,22 @@ export default {
     position: absolute;
     width: 50px;
     height: 50px;
-    font-size: 3.7rem;
+    line-height: 50px;
+    font-size: 3rem;
+    color: rgba(66, 66, 66, 0.8);
+    text-align: center;
+    -webkit-text-stroke: 0.5px rgba(255, 255, 255, 0.8);
+    border: 2px solid rgba(66, 66, 66, 0.3);
+    border-radius: 50%;
 }
+.checkable:hover, .checkable:focus,  .checkable:active{
+    border: 2px solid rgba(66, 66, 66, 0.8);
+}
+
 @media (max-width: 767px) {
     .checkable{
-        font-size: 3.3rem;
+        font-size: 2.5rem;
+        text-align: center;
 }
 }
 
