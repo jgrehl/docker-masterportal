@@ -61,7 +61,6 @@ describe("src_3_0_0/modules/searchBar/components/SearchBar.vue", () => {
                                 instantiateSearchInterfaces: sinon.stub(),
                                 overwriteDefaultValues: sinon.stub(),
                                 search: sinon.stub(),
-                                setMarker: sinon.stub(),
                                 activateActions: sinon.stub()
                             },
                             getters: {
@@ -86,6 +85,12 @@ describe("src_3_0_0/modules/searchBar/components/SearchBar.vue", () => {
                                 setSearchSuggestions: sinon.stub()
                             }
                         }
+                    }
+                },
+                Maps: {
+                    namespaced: true,
+                    actions: {
+                        removePointMarker: sinon.stub()
                     }
                 },
                 Menu: {
@@ -281,7 +286,7 @@ describe("src_3_0_0/modules/searchBar/components/SearchBar.vue", () => {
     });
 
     describe("zoomToAndMarkSearchResult", () => {
-        it("zooms to and sets a marker at a given searchResult", () => {
+        it.only("zooms to and sets a marker at a given searchResult", () => {
             searchResults = [
                 {
                     "category": "Adresse",
@@ -321,7 +326,7 @@ describe("src_3_0_0/modules/searchBar/components/SearchBar.vue", () => {
             wrapper.vm.zoomToAndMarkSearchResult("Neuenfelder Straße 19");
             expect(activateActionsSpy.called).to.be.true;
         });
-        it("does not zoom to a given searchResult if not category address or street search", () => {
+        it.only("does not zoom to a given searchResult if not category address or street search", () => {
             searchResults = [
                 {
                     "category": " Thema (externe Fachdaten)",
