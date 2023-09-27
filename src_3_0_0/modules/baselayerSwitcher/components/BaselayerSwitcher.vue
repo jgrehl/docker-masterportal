@@ -108,7 +108,6 @@ export default {
             "setTopBaselayerId"
         ]),
         ...mapMutations(["setBaselayerVisibility"]),
-        ...mapActions(["replaceByIdInLayerConfig"]),
         ...mapActions("Modules/BaselayerSwitcher", ["updateLayerVisibilityAndZIndex"]),
 
 
