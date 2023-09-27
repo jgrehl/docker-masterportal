@@ -141,6 +141,7 @@ export default {
                     id="qrCodeImg"
                     alt="qr Code"
                     :src="qrDataUrl"
+                    class="qrCode"
                 >
                 <FlatButton
                     aria-label="$t('common:modules.shareView.downloadQR')"
@@ -155,5 +156,9 @@ export default {
 
 <style lang="scss" scoped>
 @import "~variables";
+
+.qrCode {
+    max-width: 75%;
+}
 
 </style>
