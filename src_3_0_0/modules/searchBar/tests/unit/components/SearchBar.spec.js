@@ -321,14 +321,14 @@ describe("src_3_0_0/modules/searchBar/components/SearchBar.vue", () => {
             wrapper.vm.zoomToAndMarkSearchResult("Neuenfelder Straße 19");
             expect(activateActionsSpy.called).to.be.true;
         });
-        it("does not zoom to a given searchResult if not elastic search", () => {
+        it("does not zoom to a given searchResult if not category address or street search", () => {
             searchResults = [
                 {
-                    "category": "Adresse",
-                    "id": "NeuenfelderStraße19",
+                    "category": " Thema (externe Fachdaten)",
+                    "id": "StaatlicheSchulenHamburg",
                     "index": 1,
-                    "name": "Neuenfelder Straße 19",
-                    "searchInterfaceId": "gazetteer",
+                    "name": "Staatliche Schulen Hamburg",
+                    "searchInterfaceId": "elasticSearch_0",
                     "displayedInfo": "",
                     "icon": "bi-signpost",
                     "imagePath": "",
@@ -337,11 +337,11 @@ describe("src_3_0_0/modules/searchBar/components/SearchBar.vue", () => {
                     }
                 },
                 {
-                    "category": "Adresse",
-                    "id": "NeuenfelderStraße19",
+                    "category": "Komoot",
+                    "id": "StaatlicheSchulenHamburg",
                     "index": 1,
-                    "name": "Neuenfelder Straße 19",
-                    "searchInterfaceId": "gazetteer",
+                    "name": "Staatliche Schulen Hamburg",
+                    "searchInterfaceId": "komootPhoton",
                     "displayedInfo": "",
                     "icon": "bi-signpost",
                     "imagePath": "",
@@ -359,7 +359,7 @@ describe("src_3_0_0/modules/searchBar/components/SearchBar.vue", () => {
 
             const activateActionsSpy = sinon.spy(wrapper.vm, "activateActions");
 
-            wrapper.vm.zoomToAndMarkSearchResult("Neuenfelder Straße 19");
+            wrapper.vm.zoomToAndMarkSearchResult("Staatliche Schulen Hamburg");
             expect(activateActionsSpy.called).not.to.be.true;
         });
     });

@@ -222,8 +222,9 @@ export default {
             if (searchInputValue !== undefined) {
                 this.setMarker("undefined");
                 this.searchResults.forEach(searchResult => {
-                    if (searchResult.searchInterfaceId === "elasticSearch_1") {
-                        if (searchInputValue === searchResult.name) {
+                    console.log("category", searchResult.searchInterfaceId, searchResult.category);
+                    if (searchResult.category.startsWith("Adresse") || searchResult.category.startsWith("Straße")) {
+                        if (searchInputValue.toLowerCase() === searchResult.name.toLowerCase()) {
                             this.activateActions({searchResult, actionType: "onClick"});
                         }
                     }
