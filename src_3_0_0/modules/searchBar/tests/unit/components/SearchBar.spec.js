@@ -286,7 +286,7 @@ describe("src_3_0_0/modules/searchBar/components/SearchBar.vue", () => {
     });
 
     describe("zoomToAndMarkSearchResult", () => {
-        it.only("zooms to and sets a marker at a given searchResult", () => {
+        it("zooms to and sets a marker at a given searchResult", () => {
             searchResults = [
                 {
                     "category": "Adresse",
@@ -323,10 +323,10 @@ describe("src_3_0_0/modules/searchBar/components/SearchBar.vue", () => {
 
             const activateActionsSpy = sinon.spy(wrapper.vm, "activateActions");
 
-            wrapper.vm.zoomToAndMarkSearchResult("Neuenfelder Straße 19");
+            wrapper.vm.zoomToAndMarkSearchResult("neuenfelder Straße 19");
             expect(activateActionsSpy.called).to.be.true;
         });
-        it.only("does not zoom to a given searchResult if not category address or street search", () => {
+        it("does not zoom to a given searchResult if not category address or street search", () => {
             searchResults = [
                 {
                     "category": " Thema (externe Fachdaten)",
