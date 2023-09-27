@@ -165,12 +165,12 @@ export default {
     },
     methods: {
         ...mapActions(["initializeModule"]),
+        ...mapActions("Maps", ["removePointMarker"]),
         ...mapActions("Modules/SearchBar", [
             "instantiateSearchInterfaces",
             "overwriteDefaultValues",
             "search",
-            "activateActions",
-            "setMarker"
+            "activateActions"
         ]),
         ...mapMutations("Modules/SearchBar", [
             "addSuggestionItem",
@@ -220,7 +220,7 @@ export default {
          */
         zoomToAndMarkSearchResult (searchInputValue) {
             if (searchInputValue !== undefined) {
-                this.setMarker("undefined");
+                this.removePointMarker();
                 this.searchResults.forEach(searchResult => {
                     if (searchResult.category.startsWith("Adresse") || searchResult.category.startsWith("Straße")) {
                         if (searchInputValue.toLowerCase() === searchResult.name.toLowerCase()) {
