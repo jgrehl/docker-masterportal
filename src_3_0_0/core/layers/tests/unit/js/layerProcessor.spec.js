@@ -1,5 +1,6 @@
 import {expect} from "chai";
 import Map from "ol/Map";
+import store from "../../../../../app-store";
 import {nextTick} from "vue";
 import sinon from "sinon";
 import View from "ol/View";
@@ -35,7 +36,10 @@ describe("src_3_0_0/core/js/layers/layerProcessor.js", () => {
                 layers: "bezirke"
             }
         ];
-
+        store.getters = {
+            layerConfigById: () => true,
+            determineZIndex: sinon.stub().returns(2)
+        };
         mapCollection.clear();
         map = new Map({
             id: "ol",

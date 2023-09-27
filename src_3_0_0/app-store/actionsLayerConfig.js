@@ -5,6 +5,7 @@ import {getAndMergeAllRawLayers, getAndMergeRawLayer} from "./js/getAndMergeRawL
 import {sortObjects} from "../shared/js/utils/sortObjects";
 import {treeOrder, treeBaselayersKey, treeSubjectsKey} from "../shared/js/utils/constants";
 import layerCollection from "../core/layers/js/layerCollection";
+import rawLayerList from "@masterportal/masterportalapi/src/rawLayerList";
 
 export default {
     /**
@@ -70,8 +71,14 @@ export default {
         layerConfigs.forEach(config => {
             const replacement = config.layer,
                 id = config.id,
-                lastVisibility = typeof getters.layerConfigById === "function" ? getters.layerConfigById(id)?.visibility : null,
-                assigned = replaceInNestedValues(state.layerConfig, "elements", replacement, {key: "id", value: id});
+                existingLayer = getters.layerConfigById(id),
+                lastVisibility = existingLayer?.visibility;
+            let assigned = [];
+
+            if (existingLayer?.zIndex === undefined && config.zIndex === undefined && replacement.visibility) {
+                replacement.zIndex = getters.determineZIndex(id);
+            }
+            assigned = replaceInNestedValues(state.layerConfig, "elements", replacement, {key: "id", value: id});
 
             if (assigned.length > 1) {
                 console.warn(`Replaced ${assigned.length} layers in state.layerConfig with id: ${id}. Layer was found ${assigned.length} times. You have to correct your config!`);
@@ -88,6 +95,56 @@ export default {
 
             dispatch("showLayerAttributions", config.layer);
         });
+    },
+
+    /**
+     * Adds the layer to layerConfig, if not contained and sets visibility.
+     * If layer is already in layertree, it stays there.
+     * @param {String} layerId id of the layer
+     * @param {Boolean} [visibility = true] value for visibility
+     * @param {Number|String} [transparency = 0] value for transparency
+     * @param {Boolean} [showInLayerTree = true] value for showInLayerTree
+     * @param {Boolean} [isBaseLayer = false] value for isBaseLayer
+     * @returns {Boolean} true, if layer exists an was added or replaced
+     */
+    addOrReplaceLayer: function ({dispatch, getters}, {layerId, visibility = true, transparency = 0, showInLayerTree = true, isBaseLayer = false}) {
+        const layer = getters.layerConfigById(layerId);
+
+        if (!layer) {
+            const config = rawLayerList.getLayerWhere({id: layerId}),
+                parentKey = isBaseLayer ? treeBaselayersKey : treeSubjectsKey;
+
+            if (config) {
+                config.type = "layer";
+                config.visibility = visibility;
+                config.transparency = transparency;
+                config.showInLayerTree = showInLayerTree;
+                config.zIndex = getters.determineZIndex(layerId);
+
+                dispatch("addLayerToLayerConfig", {layerConfig: config, parentKey});
+            }
+            else {
+                console.warn("addOrReplaceLayer- layer with id: " + layerId + " not added, because it was not found in services.json.");
+                return false;
+            }
+        }
+        else {
+            let zIndex = layer.zIndex;
+
+            if (!layer.showInLayerTree && visibility) {
+                zIndex = getters.determineZIndex(layerId);
+            }
+            dispatch("replaceByIdInLayerConfig", {layerConfigs: [{
+                id: layerId,
+                layer: {
+                    visibility: visibility,
+                    transparency: transparency,
+                    showInLayerTree: showInLayerTree,
+                    zIndex: zIndex
+                }
+            }]});
+        }
+        return true;
     },
 
     /**
