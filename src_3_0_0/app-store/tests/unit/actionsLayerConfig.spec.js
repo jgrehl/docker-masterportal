@@ -593,17 +593,19 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
         describe("replaceByIdInLayerConfig", () => {
             it("replaceByIdInLayerConfig layer is contained in layerConfig", () => {
                 const toReplace = {
-                    id: "453",
-                    visibility: true,
-                    att1: "bla",
-                    att2: [{
-                        foo: "foo",
-                        bar: "bar"
-                    }]
-                };
+                        id: "453",
+                        visibility: true,
+                        att1: "bla",
+                        att2: [{
+                            foo: "foo",
+                            bar: "bar"
+                        }]
+                    },
+                    determineZIndexSpy = sinon.spy();
 
                 getters = {
-                    layerConfigById: () => sinon.stub()
+                    layerConfigById: () => sinon.stub(),
+                    determineZIndex: determineZIndexSpy
                 };
 
                 state.layerConfig = layerConfig;
@@ -612,7 +614,7 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
 
                 expect(state.layerConfig[treeBaselayersKey].elements).to.be.an("array");
                 expect(state.layerConfig[treeBaselayersKey].elements.length).to.be.equals(2);
-                expect(Object.keys(state.layerConfig[treeBaselayersKey]?.elements[0]).length).to.be.equals(4);
+                expect(Object.keys(state.layerConfig[treeBaselayersKey]?.elements[0]).length).to.be.equals(5);
                 expect(state.layerConfig[treeBaselayersKey]?.elements[0].id).to.be.equals("453");
                 expect(state.layerConfig[treeBaselayersKey]?.elements[0].visibility).to.be.true;
                 expect(state.layerConfig[treeBaselayersKey]?.elements[0].att1).to.be.equals("bla");
@@ -626,21 +628,24 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
                 expect(Object.keys(state.layerConfig[treeSubjectsKey]?.elements[0]).length).to.be.equals(3);
                 expect(state.layerConfig[treeSubjectsKey]?.elements[1].id).to.be.equals("10220");
                 expect(Object.keys(state.layerConfig[treeSubjectsKey]?.elements[1]).length).to.be.equals(1);
+                expect(determineZIndexSpy.calledOnce).to.be.true;
             });
 
             it("replaceByIdInLayerConfig layer is not contained in layerConfig", () => {
                 const toReplace = {
-                    id: "unknown",
-                    visibility: true,
-                    att1: "bla",
-                    att2: [{
-                        foo: "foo",
-                        bar: "bar"
-                    }]
-                };
+                        id: "unknown",
+                        visibility: true,
+                        att1: "bla",
+                        att2: [{
+                            foo: "foo",
+                            bar: "bar"
+                        }]
+                    },
+                    determineZIndexSpy = sinon.spy();
 
                 getters = {
-                    layerConfigById: () => sinon.stub()
+                    layerConfigById: () => null,
+                    determineZIndex: determineZIndexSpy
                 };
                 let stateCopy = null;
 
@@ -649,6 +654,7 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
 
                 actions.replaceByIdInLayerConfig({dispatch, getters, state}, {layerConfigs: [{layer: toReplace, id: "unknown"}]});
                 expect(state).to.be.deep.equals(stateCopy);
+                expect(determineZIndexSpy.calledOnce).to.be.true;
             });
 
             it("replaceByIdInLayerConfig toReplace-layer is undefined", () => {
@@ -664,6 +670,98 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
                 actions.replaceByIdInLayerConfig({dispatch, getters, state}, undefined);
                 expect(state).to.be.deep.equals(stateCopy);
             });
+        });
+
+        describe("addOrReplaceLayer", () => {
+            it("layer is not contained in layerConfig and not contained in rawLayerList", () => {
+                getters = {
+                    layerConfigById: () => null
+                };
+                expect(actions.addOrReplaceLayer({dispatch, getters}, {layerId: "unknown"})).to.be.false;
+            });
+
+            it("layer is not contained in layerConfig but contained in rawLayerList, isBaseLayer:false", () => {
+                getters = {
+                    layerConfigById: () => null,
+                    determineZIndex: () => 5
+                };
+                const expectedConfig = layerList[2];
+
+                expectedConfig.visibility = true;
+                expectedConfig.transparency = 0;
+                expectedConfig.showInLayerTree = true;
+                expectedConfig.zIndex = 5;
+
+                actions.addOrReplaceLayer({dispatch, getters}, {layerId: "1132"});
+                expect(dispatch.calledOnce).to.be.true;
+                expect(dispatch.firstCall.args[0]).to.equals("addLayerToLayerConfig");
+                expect(dispatch.firstCall.args[1]).to.deep.equals({layerConfig: expectedConfig, parentKey: treeSubjectsKey});
+            });
+
+            it("layer is not contained in layerConfig but contained in rawLayerList, isBaseLayer:true", () => {
+                getters = {
+                    layerConfigById: () => null,
+                    determineZIndex: () => 5
+                };
+                const expectedConfig = layerList[0];
+
+                expectedConfig.visibility = true;
+                expectedConfig.transparency = 0;
+                expectedConfig.showInLayerTree = true;
+                expectedConfig.zIndex = 5;
+
+                actions.addOrReplaceLayer({dispatch, getters}, {layerId: "453", isBaseLayer: true});
+                expect(dispatch.calledOnce).to.be.true;
+                expect(dispatch.firstCall.args[0]).to.equals("addLayerToLayerConfig");
+                expect(dispatch.firstCall.args[1]).to.deep.equals({layerConfig: expectedConfig, parentKey: treeBaselayersKey});
+            });
+
+            it("layer is contained in layerConfig - change visibility", () => {
+                const determineZIndexSpy = sinon.spy(),
+                    expectedConfig = {};
+
+                getters = {
+                    layerConfigById: () => layerList[2],
+                    determineZIndex: determineZIndexSpy
+                };
+                layerList[2].zIndex = 5;
+                layerList[2].showInLayerTree = true;
+
+                expectedConfig.visibility = true;
+                expectedConfig.transparency = 0;
+                expectedConfig.showInLayerTree = true;
+                expectedConfig.zIndex = 5;
+
+                actions.addOrReplaceLayer({dispatch, getters}, {layerId: "1132"});
+                expect(dispatch.calledOnce).to.be.true;
+                expect(dispatch.firstCall.args[0]).to.equals("replaceByIdInLayerConfig");
+                expect(dispatch.firstCall.args[1]).to.deep.equals({layerConfigs: [{id: "1132", layer: expectedConfig}]});
+                expect(determineZIndexSpy.notCalled).to.be.true;
+            });
+
+            it("layer is contained in layerConfig - change visibility, new zIndex", () => {
+                const determineZIndexSpy = sinon.stub().returns(6),
+                    expectedConfig = {};
+
+                getters = {
+                    layerConfigById: () => layerList[2],
+                    determineZIndex: determineZIndexSpy
+                };
+                layerList[2].zIndex = 5;
+                layerList[2].visibility = true;
+
+                expectedConfig.visibility = true;
+                expectedConfig.transparency = 0;
+                expectedConfig.showInLayerTree = true;
+                expectedConfig.zIndex = 6;
+
+                actions.addOrReplaceLayer({dispatch, getters}, {layerId: "1132", showInLayerTree: true});
+                expect(dispatch.calledOnce).to.be.true;
+                expect(dispatch.firstCall.args[0]).to.equals("replaceByIdInLayerConfig");
+                expect(dispatch.firstCall.args[1]).to.deep.equals({layerConfigs: [{id: "1132", layer: expectedConfig}]});
+                expect(determineZIndexSpy.calledOnce).to.be.true;
+            });
+
         });
 
         describe("showLayerAttributions", () => {
