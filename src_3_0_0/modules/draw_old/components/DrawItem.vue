@@ -366,6 +366,7 @@ export default {
             "setStrokeWidth",
             "setColorContour",
             "setColor",
+            "setSymbol",
             "setText",
             "setCircleRadius",
             "setCircleMethod",
