@@ -39,7 +39,7 @@
 - Script to migrate masterportal configuration files to version 3.0.0
 - The layer attribution is now displayed in an alert when a layer is activated for the first time
 - It is now possible to configure a search interface more than once. For example `elasticSearch`.
-- Searchbar: ClickEvents can be defined for search results. Furthermore, buttons can be defined for the individual search interfaces, which are displayed at each search result that is visible after clicking on "show all".
+- Searchbar: The searchbar has been refactored with now options e.g. that the order of the search results can be configured accordingly the order of the searchInstances in the config.json. Furthermore, the search results are categorized by the different search categories. ClickEvents can be defined for search results. Furthermore, buttons can be defined for the individual search interfaces, which are displayed at each search result that is visible after clicking on "show all".
 
 ### Added
 - Added documentation file doc\jsdoc.md for jsdoc in vue-components and vuex-files.
@@ -102,7 +102,6 @@
 - The following NPM packages are removed:
     - dependencies
         - @vue/compiler-sfc
-
         - rbush
         - rbush-knn
         - vcs-oblique
