@@ -20,7 +20,7 @@ const state = {
     iconGeolocate: "geo-alt",
     iconGeolocatePOI: "record-circle",
     poiDistances: [],
-    supportedDevices: ["Desktop"],
+    supportedDevices: ["Desktop", "Mobile"],
     supportedMapModes: ["2D", "3D"],
     zoomMode: "once",
 

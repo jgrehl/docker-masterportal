@@ -5,6 +5,10 @@ import {sortObjects} from "../shared/js/utils/sortObjects";
 import stateAppStore from "./state";
 import {treeBaselayersKey, treeSubjectsKey} from "../shared/js/utils/constants";
 
+/**
+ * The root getters.
+ * @module app-store/getters
+ */
 const getters = {
     ...generateSimpleGetters(stateAppStore),
 
@@ -32,7 +36,7 @@ const getters = {
      * @param {Object} state state of the app-store.
      * @returns {Array} all categories defined in config.json
      */
-    allCategories: state => {
+    allCategories: (state) => {
         return state.portalConfig?.tree?.categories;
     },
 
