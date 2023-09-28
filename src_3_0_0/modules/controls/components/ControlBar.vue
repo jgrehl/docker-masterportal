@@ -43,7 +43,7 @@ export default {
         this.initializeControls(this.controlsConfig);
     },
     methods: {
-        ...mapActions("Controls", ["mergeControlState"]),
+        ...mapActions("Controls", ["mergeControlState", "moveStartModuleControls"]),
         ...mapMutations("Controls", ["setActivatedExpandable"]),
 
         /**
@@ -106,7 +106,7 @@ export default {
                 key: controlKey
             };
 
-            if (expandable) {
+            if (expandable && this.checkIsVisible(controlKey)) {
                 this.categorizedControls.expandable.push(control);
             }
             else {
