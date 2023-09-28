@@ -8,12 +8,17 @@ import {portalConfigKey, treeTopicConfigKey} from "../shared/js/utils/constants"
 import {updateProxyUrl} from "./js/getProxyUrl";
 import {upperFirst} from "../shared/js/utils/changeCase";
 
+/**
+ * The root actions.
+ * @module app-store/actions
+ */
 export default {
     ...actionsLayerConfig,
 
     /**
      * Check/adapt for proxy configs and commit the loaded config.js to the state.
-     * @param {Object} param.commit the commit
+     * @param {Object} context the vue context
+     * @param {Object} context.commit the commit
      * @param {Object} configJs The config.js
      * @returns {void}
      */
@@ -26,11 +31,12 @@ export default {
 
     /**
      * Load the config.json, check/adapt for proxy configs, check/add alert config and commit it to the state.
-     * @param {Object} param.commit the commit
-     * @param {Object} param.state the state
+     * @param {Object} context the vue context
+     * @param {Object} context.commit the commit
+     * @param {Object} context.state the state
      * @returns {void}
      */
-    loadConfigJson ({commit, state, dispatch}) {
+    loadConfigJson ({commit, state, dispatch, getters}) {
         const format = ".json";
         let targetPath = "config.json";
 
@@ -45,6 +51,10 @@ export default {
                     dispatch("addAlertsFromConfigJson", response.data.Portalconfig.alerts);
                 }
                 commit("setPortalConfig", response.data ? response.data[portalConfigKey] : null);
+                if (getters.isMobile) {
+                    dispatch("moveStartModuleControls", "mainMenu");
+                    dispatch("moveStartModuleControls", "secondaryMenu");
+                }
                 commit("setLayerConfig", response.data ? response.data[treeTopicConfigKey] : null);
                 commit("setLoadedConfigs", "configJson");
             })
@@ -54,9 +64,32 @@ export default {
     },
 
     /**
+     * Moves modules from controls startModule to main- or secondary-menu.
+     * @param {Object} context the vue context
+     * @param {Object} context.getters the getters
+     * @param {Object} context.state the state
+     * @param {String} side side of menu
+     * @returns {void}
+     */
+    moveStartModuleControls ({getters, state}, side) {
+        if (getters.controlsConfig?.startModule) {
+            const modules = [].concat(getters.controlsConfig.startModule[side]);
+
+            modules.forEach(module => {
+                if (module) {
+                    state.portalConfig[side].sections[0].push(module);
+                }
+            });
+            state.portalConfig.controls.startModule[side] = [];
+        }
+
+    },
+
+    /**
      * Load the rest-services.json, check/adapt for proxy configs and commit it to the state.
-     * @param {Object} param.commit the commit
-     * @param {Object} param.state the state
+     * @param {Object} context the vue context
+     * @param {Object} context.commit the commit
+     * @param {Object} context.state the state
      * @returns {void}
      */
     loadRestServicesJson ({commit, state}) {
@@ -73,9 +106,10 @@ export default {
 
     /**
      * Load the services.json via masterportalapi.
-     * @param {Object} param.state the state
-     * @param {Object} param.commit the commit
-     * @param {Object} param.dispatch the dispatch
+     * @param {Object} context the vue context
+     * @param {Object} context.state the state
+     * @param {Object} context.commit the commit
+     * @param {Object} context.dispatch the dispatch
      * @returns {void}
      */
     loadServicesJson ({state, commit, dispatch}) {
@@ -106,7 +140,8 @@ export default {
 
     /**
      * Initializes other actions.
-     * @param {Object} param.dispatch the dispatch
+     * @param {Object} context the vue context
+     * @param {Object} context.dispatch the dispatch
      * @returns {void}
      */
     initializeOther ({dispatch}) {
@@ -115,10 +150,11 @@ export default {
 
     /**
      * Initializes the style list of vector styling. Sets state variable 'StyleListLoaded' to true, if successful loaded.
-     * @param {Object} param.state the state
-     * @param {Object} param.commit the commit
-     * @param {Object} param.dispatch the dispatch
-     * @param {Object} param.getters the getters
+     * @param {Object} context the vue context
+     * @param {Object} context.state the state
+     * @param {Object} context.commit the commit
+     * @param {Object} context.dispatch the dispatch
+     * @param {Object} context.getters the getters
      * @returns {void}
      */
     initializeVectorStyle ({state, commit, dispatch, getters}) {
@@ -147,7 +183,8 @@ export default {
 
     /**
      * Loops trough defined alerts from config json and add it to the alerting module
-     * @param {Object} param.dispatch the commit
+     * @param {Object} context the vue context
+     * @param {Object} context.dispatch the commit
      * @param {Object} alerts object with defined alerts
      * @returns {void}
      */
