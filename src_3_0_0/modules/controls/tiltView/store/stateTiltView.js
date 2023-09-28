@@ -9,7 +9,7 @@
 const state = {
     tiltDownIcon: "bi-caret-down-square",
     tiltUpIcon: "bi-caret-up-square",
-    supportedDevices: ["Desktop", "Mobile", "Table"],
+    supportedDevices: ["Desktop"],
     supportedMapModes: ["3D"]
 };
 
