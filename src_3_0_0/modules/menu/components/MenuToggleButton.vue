@@ -85,8 +85,18 @@ export default {
         display: none;
     }
 
-
+@include media-breakpoint-down(md) {
+    .toggle-button-mainMenu {
+        bottom: 8rem;
+        top: unset;
+    }
+    .toggle-button-secondaryMenu {
+        bottom: 3rem;
+        top: unset;
+    }
+}
 @include media-breakpoint-up(sm) {
+
     .menu-toggle-button {
         top: 15px;
         font-size: $icon_length;

@@ -7,6 +7,10 @@ import {treeOrder, treeBaselayersKey, treeSubjectsKey} from "../shared/js/utils/
 import layerCollection from "../core/layers/js/layerCollection";
 import rawLayerList from "@masterportal/masterportalapi/src/rawLayerList";
 
+/**
+ * The root actions for layer configurations.
+ * @module app-store/actionsLayerConfig
+ */
 export default {
     /**
      * Adds one layer to states layerConfig under the given parentKey, if not already contained.

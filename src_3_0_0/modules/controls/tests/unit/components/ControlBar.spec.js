@@ -86,6 +86,7 @@ describe("src_3_0_0/modules/controls/components/ControlBar.vue", () => {
         });
 
         it("should fill categorizedControls.expandable", async () => {
+            sinon.stub(ControlBar.methods, "checkIsVisible").returns(true);
             const wrapper = mount(ControlBar, {
                 global: {
                     plugins: [store]

@@ -9,6 +9,7 @@ let zIndex = 1;
  * Returns the extended raw layer to the id contained in the layer configuration.
  * If id contains an array of ids, the rawlayer is merged.
  * Grouped layers children are filled with the rawlayers.
+ * @module app-store/js/getAndMergeRawLayer
  * @param {Object} layerConf configuration of layer like in the config.json
  * @param {Object} [showAllLayerInTree="false"] if true, all layers get the attribute showInLayerTree=true
  * @returns {Object} the extended and merged raw layer

@@ -4,6 +4,7 @@ import getters from "../getters";
  * If a proxyHost is configured, it is prepended to the URL.
  * This prevents CORS errors.
  * Attention: A reverse proxy must be set up on the server side.
+ * @module app-store/js/getProxyUrl
  * @param {String} url The URL to rewrite.
  * @param {String} [proxyHost=configJs.proxyHost] Specifies whether points should be replaced by underscores in URLs.
  * @returns {String} The rewritten URL with underlined instead of dots.
@@ -53,7 +54,7 @@ export function getProxyUrl (url, proxyHost = getters.proxyHost()) {
 /**
  * Updates url to proxy url within nested object if useProxy is set to true.
  * @param {Object} obj Object where url should be updated tp proxy url.
- * @param {String} [proxyHost=configJs.proxyHost] Specifies whether points should be replaced by underscores in URLs.
+ * @param {String} proxyHost Specifies whether points should be replaced by underscores in URLs.
  * @returns {Object} The object with updated url values.
  */
 export function updateProxyUrl (obj, proxyHost) {
