@@ -1,7 +1,11 @@
 import {generateSimpleMutations} from "../shared/js/utils/generators";
 import stateAppStore from "./state";
 
-const mutations = {
+/**
+ * The root mutations.
+ * @module app-store/mutations
+ */
+export default {
     ...generateSimpleMutations(stateAppStore),
 
     /**
@@ -26,5 +30,3 @@ const mutations = {
         state.loadedConfigs[config] = true;
     }
 };
-
-export default mutations;
