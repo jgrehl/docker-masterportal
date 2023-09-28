@@ -108,8 +108,8 @@ export default {
         }))
             .then(gfiFeatures => {
                 const clickPixel = rootGetters["Maps/clickPixel"],
-                    mode = rootGetters["Maps/mode"],
-                    allGfiFeatures = gfiFeaturesAtPixel(clickPixel, clickCoordinate, mode).concat(...gfiFeatures);
+                    mode = rootGetters["Maps/mode"];
+                let allGfiFeatures = gfiFeaturesAtPixel(clickPixel, clickCoordinate, mode).concat(...gfiFeatures);
 
                 allGfiFeatures.sort((a, b) => {
                     const zIndexA = rootGetters.layerConfigById(a.getLayerId())?.zIndex || 0,
@@ -123,6 +123,9 @@ export default {
                     }
                     return 0;
                 });
+                if (mode === "3D") {
+                    allGfiFeatures = allGfiFeatures.reverse();
+                }
 
                 // only commit if features found
                 if (allGfiFeatures.length > 0) {
