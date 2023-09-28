@@ -125,6 +125,7 @@ export default {
         align-items: stretch;
         padding: $padding $padding $padding $padding;
         font-size: $font-size-base;
+        overflow-y: auto;
         max-height: 100%;
 
         &-collapsed {
