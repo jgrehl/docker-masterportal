@@ -6,7 +6,6 @@ import escapeId from "../../../shared/js/utils/escapeId";
 import FlatButton from "../../../shared/modules/buttons/components/FlatButton.vue";
 import LayerCheckBox from "../../layerTree/components/LayerCheckBox.vue";
 import LayerSelectionTreeNode from "./LayerSelectionTreeNode.vue";
-import IconButton from "../../../shared/modules/buttons/components/IconButton.vue";
 
 /**
  * Layer Selection
@@ -19,8 +18,7 @@ export default {
     components: {
         FlatButton,
         LayerCheckBox,
-        LayerSelectionTreeNode,
-        IconButton
+        LayerSelectionTreeNode
     },
     data () {
         return {
@@ -155,53 +153,6 @@ export default {
         class="w-100 layer-selection"
         aria-label=""
     >
-        <div
-            v-if="categorySwitcher"
-            id="accordionFlushCategorySettings"
-            class="accordion accordion-flush"
-        >
-            <div class="accordion-item mb-3">
-                <IconButton
-                    :aria="$t('common:modules.layerTree.openCategories')"
-                    :icon="'bi-gear-fill'"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#flush-collapseOne"
-                    aria-expanded="false"
-                    aria-controls="flush-collapseOne"
-                />
-                <div
-                    id="flush-collapseOne"
-                    class="accordion-collapse collapse"
-                    aria-labelledby="flush-headingOne"
-                    data-bs-parent="#accordionFlushExample"
-                >
-                    <div class="accordion-body">
-                        <div
-                            v-if="activeOrFirstCategory"
-                            class="form-floating mb-3"
-                        >
-                            <select
-                                id="select_category"
-                                :value="activeOrFirstCategory.key"
-                                class="form-select"
-                                @change.prevent="categorySelected($event.target.value)"
-                            >
-                                <option
-                                    v-for="category in allCategories"
-                                    :key="category.key"
-                                    :value="category.key"
-                                >
-                                    {{ $t(category.name) }}
-                                </option>
-                            </select>
-                            <label for="select_category">
-                                {{ $t("common:modules.layerTree.categories") }}
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="layer-selection-navigation">
             <h6 v-if="filterBaseLayer().length > 0">
                 {{ $t("common:modules.layerSelection.backgrounds") }}
@@ -233,6 +184,28 @@ export default {
                 v-if="baselayerConfs.length > 0"
                 class="m-2"
             >
+            <div
+                v-if="activeOrFirstCategory && categorySwitcher"
+                class="form-floating mb-3"
+            >
+                <select
+                    id="select_category"
+                    :value="activeOrFirstCategory.key"
+                    class="form-select"
+                    @change.prevent="categorySelected($event.target.value)"
+                >
+                    <option
+                        v-for="category in allCategories"
+                        :key="category.key"
+                        :value="category.key"
+                    >
+                        {{ $t(category.name) }}
+                    </option>
+                </select>
+                <label for="select_category">
+                    {{ $t("common:modules.layerTree.categories") }}
+                </label>
+            </div>
             <div class="align-items-left justify-content-center layer-selection-navigation-dataLayer">
                 <template
                     v-for="(conf, index) in subjectDataLayerConfs"
