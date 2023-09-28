@@ -204,7 +204,7 @@ The tiltView attribute can be of type Boolean or Object. If it is of type Boolea
 |----|--------|----|-------|-----------|------|
 |tiltDownIcon|no|String|"bi-caret-down-square"|The tiltDownIcon parameter can be used to specify a different icon for tilt down.|false|
 |tiltUpIcon|no|String|"bi-caret-up-square"|Using the parameter tiltUpIcon another icon can be used for tilting up the camera.|false|
-|supportedDevices|no|String|["Desktop", "Mobile"]|Devices on which the module can be used and is displayed in the menu.|false|
+|supportedDevices|no|String|["Desktop"]|Devices on which the module can be used and is displayed in the menu.|false|
 |SupportedMapModes|no|String|["3D"]|Map modes in which the module can be used and is displayed in the menu.|false|
 
 **Example tiltView as Object**
@@ -260,7 +260,7 @@ The attribute zoom may be of type boolean or object. If of type boolean, it show
 |----|--------|----|-------|-----------|------|
 |iconIn|no|String|"bi-plus-lg"|Using the icon parameter, another icon can be used for zooming in.|false|
 |iconOut|no|String|"bi-dash-lg"|Using the icon parameter, another icon can be used for zooming out.|false|
-|supportedDevices|no|String|["Desktop", "Mobile"]|Devices on which the module can be used and is displayed in the menu.|false|
+|supportedDevices|no|String|["Desktop"]|Devices on which the module can be used and is displayed in the menu.|false|
 |supportedMapModes|no|String|["2D", "3D"]|Map modes in which the module can be used and is displayed in the menu.|false|
 
 **Example zoom as Object**
