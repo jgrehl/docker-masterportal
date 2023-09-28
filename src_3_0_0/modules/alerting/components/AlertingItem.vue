@@ -240,12 +240,19 @@ export default {
                                     v-if="singleAlertIndex > 0 || categoryIndex > 0"
                                 >
                                 <h3
-                                    class="mt-1 ms-2 col-8"
+                                    class="mt-1 ms-2 col-11"
                                 >
                                     <b>
                                         {{ singleAlert.title }}
                                     </b>
                                 </h3>
+                                <button
+                                    v-if="!checkCategory(singleAlert.category) && alerts.length >1"
+                                    type="button"
+                                    class="btn btn-close btn-sm col-1"
+                                    aria-label="Close"
+                                    @click="removeAlert(singleAlert.hash);"
+                                />
                                 <div
                                     class="d-flex bd-highlight mb-3 col"
                                 >
@@ -257,13 +264,6 @@ export default {
                                         </span>
                                     </h2>
                                 </div>
-                                <button
-                                    v-if="!checkCategory(singleAlert.category) && alerts.length >1"
-                                    type="button"
-                                    class="btn btn-close btn-sm col-1 me-2"
-                                    aria-label="Close"
-                                    @click="removeAlert(singleAlert.hash);"
-                                />
                                 <div
                                     v-html="singleAlert.content"
                                 />
