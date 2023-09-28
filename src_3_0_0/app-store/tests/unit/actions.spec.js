@@ -127,5 +127,49 @@ describe("src_3_0_0/app-store/actions.js", () => {
             expect(dispatch.secondCall.args[0]).to.equals("Alerting/addSingleAlert");
             expect(dispatch.secondCall.args[1].title).to.equals("testAlert2");
         });
+
+        it("moveStartModuleControls", () => {
+            const startModule = {
+                    secondaryMenu: [
+                        {
+                            type: "module_1",
+                            foo: "bar"
+                        }
+                    ]
+                },
+                getters = {
+                    controlsConfig: {
+                        startModule
+                    }
+                };
+
+            state = {
+                portalConfig: {
+                    secondaryMenu: {
+                        sections: [
+                            [
+                                {
+                                    type: "print"
+                                },
+                                {
+                                    type: "draw"
+                                }
+                            ]
+                        ]
+                    },
+                    controls: {
+                        startModule
+                    }
+                }
+            };
+
+            actions.moveStartModuleControls({getters, state}, "secondaryMenu");
+
+            expect(dispatch.notCalled).to.be.true;
+            expect(state.portalConfig.secondaryMenu.sections[0].length).to.be.equals(3);
+            expect(state.portalConfig.secondaryMenu.sections[0][2].type).to.be.equals("module_1");
+            expect(state.portalConfig.controls.startModule.secondaryMenu).to.be.deep.equals([]);
+
+        });
     });
 });
