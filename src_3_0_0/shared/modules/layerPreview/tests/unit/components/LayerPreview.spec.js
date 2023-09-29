@@ -6,6 +6,7 @@ import crs from "@masterportal/masterportalapi/src/crs";
 import LayerPreviewComponent from "../../../components/LayerPreview.vue";
 import LayerPreview from "../../../store/indexLayerPreview";
 import wmts from "@masterportal/masterportalapi/src/layer/wmts";
+import axios from "axios";
 
 config.global.mocks.$t = key => key;
 
@@ -16,7 +17,8 @@ describe("src_3_0_0/modules/layerPreview/components/LayerPreview.vue", () => {
         layerWMTS,
         layerWMS,
         layerVectorTile,
-        getWMTSCapabilitiesStub;
+        getWMTSCapabilitiesStub,
+        loadSpy;
 
     const namedProjections = [
         ["EPSG:25832", "+title=ETRS89/UTM 32N +proj=utm +zone=32 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs"]
@@ -47,7 +49,7 @@ describe("src_3_0_0/modules/layerPreview/components/LayerPreview.vue", () => {
             transparent: false,
             singleTile: false,
             tilesize: 20,
-            url: "url"
+            url: "https://wms_url.de"
         };
         layerVectorTile = {
             id: "VectorTile",
@@ -55,7 +57,7 @@ describe("src_3_0_0/modules/layerPreview/components/LayerPreview.vue", () => {
             typ: "VectorTile",
             type: "layer",
             preview: {
-                src: "src"
+                src: "https://vectortile_url.de"
             }
         };
 
@@ -117,6 +119,8 @@ describe("src_3_0_0/modules/layerPreview/components/LayerPreview.vue", () => {
                 Layer: []
             }
         })));
+        loadSpy = sinon.spy(LayerPreviewComponent.methods, "load");
+        sinon.stub(axios, "get").returns(Promise.resolve({status: 200, data: []}));
     });
 
     afterEach(() => {
@@ -145,6 +149,7 @@ describe("src_3_0_0/modules/layerPreview/components/LayerPreview.vue", () => {
             layerId: "WMS"
         };
 
+        sinon.stub(LayerPreviewComponent.methods, "getPreviewUrl").returns(layerWMS.url);
         wrapper = shallowMount(LayerPreviewComponent, {
             global: {
                 plugins: [store]
@@ -155,6 +160,8 @@ describe("src_3_0_0/modules/layerPreview/components/LayerPreview.vue", () => {
 
         expect(wrapper.find(".layerPreview").exists()).to.be.true;
         expect(wrapper.find("img").attributes().src.indexOf(layerWMS.url)).to.be.equals(0);
+        expect(loadSpy.calledOnce).to.be.true;
+        expect(loadSpy.firstCall.args[0].indexOf(layerWMS.url)).to.be.equals(0);
         expect(warnSpy.notCalled).to.be.true;
     });
 
@@ -181,6 +188,7 @@ describe("src_3_0_0/modules/layerPreview/components/LayerPreview.vue", () => {
             layerId: "WMTS"
         };
 
+        sinon.stub(LayerPreviewComponent.methods, "getPreviewUrl").returns(layerWMTS.capabilitiesUrl);
         wrapper = shallowMount(LayerPreviewComponent, {
             global: {
                 plugins: [store]
@@ -194,6 +202,8 @@ describe("src_3_0_0/modules/layerPreview/components/LayerPreview.vue", () => {
         expect(getWMTSCapabilitiesStub.calledOnce).to.be.true;
         expect(getWMTSCapabilitiesStub.firstCall.args[0]).to.be.equals(layerWMTS.capabilitiesUrl);
         expect(wrapper.find("img").attributes().src.indexOf(layerWMTS.capabilitiesUrl.split("?")[0])).to.be.equals(0);
+        expect(loadSpy.calledOnce).to.be.true;
+        expect(loadSpy.firstCall.args[0].indexOf(layerWMTS.capabilitiesUrl.split("?")[0])).to.be.equals(0);
         expect(warnSpy.notCalled).to.be.true;
     });
 
@@ -203,6 +213,7 @@ describe("src_3_0_0/modules/layerPreview/components/LayerPreview.vue", () => {
             checkable: true
         };
 
+        sinon.stub(LayerPreviewComponent.methods, "getPreviewUrl").returns(layerWMS.url);
         wrapper = shallowMount(LayerPreviewComponent, {
             global: {
                 plugins: [store]
@@ -221,6 +232,7 @@ describe("src_3_0_0/modules/layerPreview/components/LayerPreview.vue", () => {
             customClass: "customCSSClass"
         };
 
+        sinon.stub(LayerPreviewComponent.methods, "getPreviewUrl").returns(layerWMS.url);
         wrapper = shallowMount(LayerPreviewComponent, {
             global: {
                 plugins: [store]
@@ -238,6 +250,7 @@ describe("src_3_0_0/modules/layerPreview/components/LayerPreview.vue", () => {
             checkable: true
         };
 
+        sinon.stub(LayerPreviewComponent.methods, "getPreviewUrl").returns(layerWMS.url);
         wrapper = shallowMount(LayerPreviewComponent, {
             global: {
                 plugins: [store]
