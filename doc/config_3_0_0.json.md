@@ -1180,3 +1180,42 @@ Layers or folders with layers to be displayed as subject data are defined here.
 ```
 
 ***
+
+#### Themenconfig.Layer.WFS
+
+[inherits]: # (Themenconfig.Layer)
+
+List of typical WFS query attributes for highlightFeaturesByAttribute. For the invocation parameters see **[urlParameter](urlParameter.md)**.
+```
+Example invocations:
+?api/highlightFeaturesByAttribute=1&wfsId=1&attributeName=DK5&attributeValue=valueToSearchFor&attributeQuery=isequal
+?api/highlightFeaturesByAttribute=123&wfsId=1711&attributeName=name&attributeValue=Helios%20ENDO-Klinik%20Hamburg&attributeQuery=IsLike
+?api/highlightFeaturesByAttribute=123&wfsId=2003&attributeName=gebietsname&attributeValue=NSG%20Zollenspieker&attributeQuery=isequal
+?api/highlightFeaturesByAttribute=123&wfsId=2928&attributeName=biotop_nr&attributeValue=279&attributeQuery=isLike
+```
+
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|styleId|yes|String||Id of the style. Id defined in the **[style.json](style.json.md)**.|false|
+|featurePrefix|yes|String||Search prefix for the WFS query - e.g. app:.|true|
+|wildCard|yes|String||The wildcard character for the WFS query -e.g. %|true|
+|singleChar|yes|String||The single character for the WFS query - e.g. #|true|
+|escapeChar|yes|String||The escape character for the WFS query - e.g. \||true|
+|valueDelimiter|no|String||The value delimiter for isIn queries attributeValue, defaulting to semicolon|true|
+
+**Example**
+
+```
+#!json
+{
+    "id": "1",
+    "styleId": "1",
+    "visibility": false,
+    "name": "Tierarten invasiv",
+    "featurePrefix": "app:",
+    "wildCard": "%",
+    "singleChar": "#",
+    "escapeChar": "!"
+}
+
+***
