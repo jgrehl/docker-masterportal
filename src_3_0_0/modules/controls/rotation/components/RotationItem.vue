@@ -19,7 +19,7 @@ export default {
     },
     computed: {
         ...mapGetters("Controls/Rotation", ["icon", "showAlways"]),
-        ...mapGetters(["uiStyle", "controlsConfig"])
+        ...mapGetters(["controlsConfig"])
     },
     mounted () {
         if (this.controlsConfig?.rotation?.showAlways) {
@@ -47,7 +47,7 @@ export default {
          * @returns {void}
          */
         setToNorth () {
-            mapCollection.getMapView("2D").setRotation(0);
+            mapCollection.getMapView("2D").animate({rotation: 0});
         }
     }
 };
