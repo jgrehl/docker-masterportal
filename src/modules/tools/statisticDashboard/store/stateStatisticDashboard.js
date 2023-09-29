@@ -10,6 +10,8 @@
  * @property {Boolean} isVisibleInMenu If true, tool is selectable in menu. (config-param)
  * @property {Boolean} deactivateGFI Flag determining if the tool should deactivate GFI. (config-param)
  * @property {Object} selectedReferenceData the selected reference data
+ * @property {Object[]} selectedRegions - The selected regions.
+ * @property {Object[]} selectedDates - The selected dates.
  */
 const state = {
     active: false,
@@ -21,8 +23,10 @@ const state = {
     isVisibleInMenu: true,
     deactivateGFI: true,
     colorScheme: [],
-    data: {},
+    data: [],
     selectedReferenceData: {},
+    selectedRegions: [],
+    selectedDates: [],
     selectedStatistics: {}
 };
 

@@ -34,9 +34,7 @@ export default {
     emits: ["changeCategory", "changeFilterSettings", "resetStatistics"],
     data () {
         return {
-            selectedCategory: undefined,
-            selectedRegions: [],
-            selectedDates: []
+            selectedCategory: undefined
         };
     },
     computed: {
@@ -56,7 +54,7 @@ export default {
             return isObject(this.selectedStatistics) && Object.keys(this.selectedStatistics).length !== 0;
         },
 
-        ...mapGetters("Tools/StatisticDashboard", ["selectedStatistics"])
+        ...mapGetters("Tools/StatisticDashboard", ["selectedRegions", "selectedRegionsValues", "selectedDates", "selectedDatesValues", "selectedStatistics", "selectedReferenceData"])
     },
     watch: {
         /**
@@ -70,17 +68,17 @@ export default {
         },
 
         selectedStatistics (value) {
-            this.emitFilterSettings(value, this.getSelectedRegions(this.selectedRegions), this.collectDatesValues(this.selectedDates));
+            this.emitFilterSettings(value, this.selectedRegionsValues, this.selectedDatesValues);
         },
-        selectedDates (value) {
-            this.emitFilterSettings(this.selectedStatistics, this.getSelectedRegions(this.selectedRegions), this.collectDatesValues(value));
+        selectedDates () {
+            this.emitFilterSettings(this.selectedStatistics, this.selectedRegionsValues, this.selectedDatesValues);
         },
-        selectedRegions (value) {
-            this.emitFilterSettings(this.selectedStatistics, this.getSelectedRegions(value), this.collectDatesValues(this.selectedDates));
+        selectedRegions () {
+            this.emitFilterSettings(this.selectedStatistics, this.selectedRegionsValues, this.selectedDatesValues);
         }
     },
     methods: {
-        ...mapMutations("Tools/StatisticDashboard", ["setSelectedStatistics"]),
+        ...mapMutations("Tools/StatisticDashboard", ["setSelectedRegions", "setSelectedDates", "setSelectedStatistics"]),
 
         /**
          * Checks if all filter settings are selected.
@@ -102,33 +100,11 @@ export default {
          */
         emitFilterSettings (statistics, regions, dates) {
             if (this.allFilterSettingsSelected(statistics, regions, dates)) {
-                this.$emit("changeFilterSettings", regions, dates);
+                this.$emit("changeFilterSettings", regions, dates, this.selectedReferenceData);
             }
             else {
                 this.$emit("resetStatistics");
             }
-        },
-
-        /**
-         * Collects the dates values.
-         * @param {Object[]} dates - The selected dates.
-         * @return {String[]} The values of the selected dates.
-         */
-        collectDatesValues (dates) {
-            const datesValues = [];
-
-            dates.forEach(date => {
-                if (!isObject(date)) {
-                    return;
-                }
-                if (Array.isArray(date.value)) {
-                    datesValues.push(...date.value);
-                }
-                else {
-                    datesValues.push(date.value);
-                }
-            });
-            return datesValues;
         },
 
         /**
@@ -171,21 +147,6 @@ export default {
         resetStatistics () {
             this.setSelectedStatistics({});
             this.$emit("resetStatistics");
-        },
-
-        /**
-         * Gets selected regions
-         * @param {String[]} regions The regions.
-         * @returns {Object[]} All regions
-         */
-        getSelectedRegions (regions) {
-            if (!Array.isArray(regions) || !Array.isArray(regions.map(region => region.value))) {
-                return [];
-            }
-
-            const allRegions = regions.map(region => region.value).find(region => Array.isArray(region));
-
-            return typeof allRegions !== "undefined" ? allRegions : regions.map(region => region.value);
         }
     }
 };
@@ -252,7 +213,7 @@ export default {
                             </label>
                             <Multiselect
                                 id="areafilter"
-                                v-model="selectedRegions"
+                                :value="selectedRegions"
                                 :multiple="true"
                                 :options="regions"
                                 :searchable="false"
@@ -263,6 +224,7 @@ export default {
                                 :placeholder="$t('common:modules.tools.statisticDashboard.reference.placeholder')"
                                 label="label"
                                 track-by="label"
+                                @input="setSelectedRegions"
                             />
                         </div>
                         <div
@@ -275,7 +237,7 @@ export default {
                                 {{ $t("common:modules.tools.statisticDashboard.label.year") }}</label>
                             <Multiselect
                                 id="timefilter"
-                                v-model="selectedDates"
+                                :value="selectedDates"
                                 :multiple="true"
                                 :options="timeStepsFilter"
                                 :searchable="false"
@@ -286,6 +248,7 @@ export default {
                                 :placeholder="$t('common:modules.tools.statisticDashboard.reference.placeholder')"
                                 label="label"
                                 track-by="label"
+                                @input="setSelectedDates"
                             />
                         </div>
                     </div>

@@ -64,12 +64,6 @@ export default {
             showTable: true,
             showChart: false,
             showGrid: false,
-            buttonGroupRegions: [{
-                name: "Gemeinden"
-            },
-            {
-                name: "Kreise"
-            }],
             referenceData: undefined
         };
     },
@@ -93,8 +87,25 @@ export default {
                 return [];
             }
             return this.setDescriptionsOfSelectedStatistics(this.selectedStatistics);
-        }
+        },
+        /**
+         * Gets the buttons with group regions
+         * @returns {Object[]} The button group regions
+         */
+        buttonGroupRegions () {
+            if (!Array.isArray(this.data) || !this.data.length) {
+                return [];
+            }
 
+            return this.data.map(value => {
+                return {name: value?.levelName};
+            });
+        }
+    },
+    watch: {
+        selectedReferenceData () {
+            this.checkFilterSettings(this.selectedRegionsValues, this.selectedDatesValues, this.selectedReferenceData);
+        }
     },
     async created () {
         this.$on("close", this.close);
@@ -233,15 +244,33 @@ export default {
         },
 
         /**
-         * Handles the filter settings and starts a POST request based on given settings.
-         * @param {String[]} regions The regions.
-         * @param {String[]} dates The dates.
+         * Checks if there is a reference value for the regions or dates and merges them.
+         * @param {String[]} regions - The selected regions for the statistic(s).
+         * @param {String[]} dates - The selected dates for the statistic(s).
+         * @param {Object} referenceData - The selected reference data.
          * @returns {void}
          */
-        async handleFilterSettings (regions, dates) {
-            this.layer.getSource().clear();
-            this.tableData = [];
+        checkFilterSettings (regions, dates, referenceData) {
+            if (typeof referenceData.value === "string") {
+                this.handleFilterSettings([...regions, referenceData.value], dates, "region");
+            }
+            else if (isObject(referenceData?.value) && typeof referenceData.value.label === "string") {
+                this.handleFilterSettings(regions, [...dates, referenceData.value.value], "date");
+            }
+            else {
+                this.handleFilterSettings(regions, dates, false);
+            }
+        },
 
+        /**
+         * Handles the filter settings and starts a POST request based on given settings.
+         * @param {String[]} regions - The selected regions for the statistic(s).
+         * @param {String[]} dates - The selected dates for the statistic(s).
+         * @param {String|Boolean} differenceMode - Indicates the difference mode('date' or 'region') ohterwise false.
+         * @returns {void}
+         */
+        async handleFilterSettings (regions, dates, differenceMode) {
+            this.layer.getSource().clear();
             const statsKeys = StatisticsHandler.getStatsKeysByName(this.statisticsByCategory, this.selectedStatisticsNames),
                 selectedLayer = this.getRawLayerByLayerId(this.selectedLevel.layerId),
                 selectedLevelRegionNameAttribute = this.getSelectedLevelRegionNameAttribute(this.selectedLevel),
@@ -259,7 +288,7 @@ export default {
                 features = new WFS().readFeatures(response),
                 filteredFeatures = FeaturesHandler.filterFeaturesByKeyValue(features, selectedLevelDateAttribute.attrName, dates[0]);
 
-            this.statisticsData = this.prepareStatisticsData(features, this.selectedStatisticsNames, regions, dates, selectedLevelDateAttribute, selectedLevelRegionNameAttribute);
+            this.statisticsData = this.prepareStatisticsData(features, this.selectedStatisticsNames, regions, dates, selectedLevelDateAttribute, selectedLevelRegionNameAttribute, differenceMode);
             this.tableData = this.getTableData(this.statisticsData);
             this.chartCounts = this.selectedStatisticsNames.length;
             this.handleChartData(this.selectedStatisticsNames, regions, dates, this.statisticsData);
@@ -418,15 +447,16 @@ export default {
 
         /**
          * Prepares the statistical data from the features.
-         * @param {Object} features - The configured statistics.
+         * @param {ol/Feature[]} features - The features.
          * @param {String[]} statistics - The key to the statistic whose value is being looked for.
          * @param {String[]} regions - The regions of the statistic wanted.
          * @param {String[]} dates - The dates of the statsitic wanted.
          * @param {String} dateAttribute - The configured date attribute.
          * @param {String} regionAttribute - The configured region attribute.
+         * @param {String|Boolean} differenceMode - Indicates the difference mode('date' or 'region') ohterwise false.
          * @returns {Object} The prepared statistical data.
          */
-        prepareStatisticsData (features, statistics, regions, dates, dateAttribute, regionAttribute) {
+        prepareStatisticsData (features, statistics, regions, dates, dateAttribute, regionAttribute, differenceMode) {
             const data = {};
 
             statistics.forEach(stat => {
@@ -434,13 +464,19 @@ export default {
 
                 data[stat] = {};
                 regions.forEach(region => {
+                    if (region === this.selectedReferenceData?.value) {
+                        return;
+                    }
                     data[stat][region] = {};
                     dates.forEach(date => {
+                        if (date === this.selectedReferenceData?.value?.value) {
+                            return;
+                        }
                         const formatedDate = dayjs(date).format(dateAttribute.outputFormat),
                             regionKey = regionAttribute.attrName,
                             dateKey = dateAttribute.attrName;
 
-                        data[stat][region][formatedDate] = this.getStatisticValue(features, statsKey, region, regionKey, date, dateKey);
+                        data[stat][region][formatedDate] = this.getStatisticValue(features, statsKey, region, regionKey, date, dateKey, differenceMode);
                     });
                 });
             });
@@ -450,20 +486,45 @@ export default {
         /**
          * Finds the feature based on the region and the date.
          * Returns the corresponding value of the passed statistic from the feature.
-         * @param {Object} features - The configured statistics.
+         * @param {ol/Feature[]} features - The features.
          * @param {String[]} statisticKey - The key to the statistic whose value is being looked for.
          * @param {String} region - The region of the statistic wanted.
          * @param {String} regionKey - The key to the region.
          * @param {String} date - The date of the statsitic wanted.
          * @param {String} dateKey - The key to the date.
+         * @param {String|Boolean} differenceMode - Indicates the difference mode('date' or 'region') ohterwise false.
          * @returns {String} The value of the given statistic.
          */
-        getStatisticValue (features, statisticKey, region, regionKey, date, dateKey) {
-            const foundFeature = features.find(feature => {
+        getStatisticValue (features, statisticKey, region, regionKey, date, dateKey, differenceMode) {
+            const foundFeature = this.findFeatureByDateAndRegion(features, region, regionKey, date, dateKey);
+
+            if (differenceMode === "date") {
+                const refFeature = this.findFeatureByDateAndRegion(features, region, regionKey, this.selectedReferenceData.value.value, dateKey);
+
+                return (parseInt(foundFeature?.get(statisticKey), 10) - parseInt(refFeature?.get(statisticKey), 10)) || "-";
+            }
+            if (differenceMode === "region") {
+                const refFeature = this.findFeatureByDateAndRegion(features, this.selectedReferenceData.value, regionKey, date, dateKey);
+
+                return (parseInt(foundFeature?.get(statisticKey), 10) - parseInt(refFeature?.get(statisticKey), 10)) || "-";
+            }
+
+            return parseInt(foundFeature?.get(statisticKey), 10) || "-";
+        },
+
+        /**
+         * Finds a feature by the given region and date.
+         * @param {ol/Feature[]} features - The features.
+         * @param {String} region - The region value.
+         * @param {String} regionKey - The key to the region.
+         * @param {String} date - The date value.
+         * @param {String} dateKey - The key to the date.
+         * @returns {ol/Feature} The found feature.
+         */
+        findFeatureByDateAndRegion (features, region, regionKey, date, dateKey) {
+            return features.find(feature => {
                 return feature.get(regionKey) === region && feature.get(dateKey) === date;
             });
-
-            return foundFeature?.get(statisticKey) || "-";
         },
 
         /**
@@ -551,6 +612,35 @@ export default {
                 return descriptions.push({"title": statistic?.name, "content": statistic?.description !== undefined ? statistic?.description : "Diese Satistik enthält keine Beschreibung."});
             });
             return descriptions;
+        },
+        /**
+         * Gets the metadata link.
+         * @returns {String} Empty if no metadata was found - otherwise it returns the url.
+         */
+        getMetadataLink () {
+            if (!isObject(this.selectedLevel)) {
+                return "";
+            }
+            const currentLayer = this.getRawLayerByLayerId(this.selectedLevel.layerId);
+
+            if (!isObject(currentLayer) || !Array.isArray(currentLayer.datasets) || !isObject(currentLayer.datasets[0])
+                || !currentLayer.datasets[0].show_doc_url || typeof currentLayer.datasets[0].md_id === "undefined") {
+                return "";
+            }
+
+            return `${currentLayer.datasets[0].show_doc_url}${currentLayer.datasets[0].md_id}`;
+        },
+        /**
+         * Opens the metadata in a new tab.
+         * @returns {void}
+         */
+        openMetadata () {
+            const metadataUrl = this.getMetadataLink();
+
+            if (!metadataUrl) {
+                return;
+            }
+            window.open(metadataUrl, "_blank");
         }
     }
 };
@@ -568,13 +658,34 @@ export default {
     >
         <template #toolBody>
             <div class="row justify-content-between">
-                <div class="col-md-4">
-                    <h4>{{ $t("common:modules.tools.statisticDashboard.headings.mrhstatistics") }}</h4>
+                <div class="col-md-4 d-flex align-items-center">
+                    <h4 class="mb-0">
+                        {{ $t("common:modules.tools.statisticDashboard.headings.mrhstatistics") }}
+                    </h4>
+                    <div
+                        v-if="getMetadataLink()"
+                        class="mx-2"
+                        role="button"
+                        tabindex="0"
+                        @click="openMetadata"
+                        @keypress.enter="openMetadata"
+                    >
+                        <span class="bootstrap-icon">
+                            <i
+                                class="bi-info-circle-fill"
+                                :title="$t('common:modules.tools.statisticDashboard.headings.mrhstatisticsTooltip')"
+                            />
+                        </span>
+                    </div>
                 </div>
-                <div class="col-md-auto">
+                <div
+                    v-if="buttonGroupRegions.length > 1"
+                    class="col-md-auto"
+                >
                     <StatisticSwitcher
                         :buttons="buttonGroupRegions"
                         group="regions"
+                        class="level-switch"
                     />
                 </div>
             </div>
@@ -586,7 +697,7 @@ export default {
                 :time-steps-filter="timeStepsFilter"
                 :regions="allRegions"
                 @changeCategory="setStatisticsByCategory"
-                @changeFilterSettings="handleFilterSettings"
+                @changeFilterSettings="checkFilterSettings"
                 @resetStatistics="handleReset"
             />
             <div

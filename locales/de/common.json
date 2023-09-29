@@ -548,7 +548,8 @@
             },
             "statisticDashboard": {
                 "headings": {
-                    "mrhstatistics": "MRH Statistiken"
+                    "mrhstatistics": "MRH Statistiken",
+                    "mrhstatisticsTooltip": "Link zu den Metadaten"
                 },
                 "button": {
                     "difference": "Differenz",

@@ -26,6 +26,12 @@ describe("/src/modules/tools/StatisticDashboard.vue", () => {
                     modules: {
                         StatisticDashboard: indexStatisticDashboard
                     }
+                },
+                Maps: {
+                    namespaced: true,
+                    getters: {
+                        projection: () => "EPSG:25832"
+                    }
                 }
             }
         }),
@@ -42,8 +48,61 @@ describe("/src/modules/tools/StatisticDashboard.vue", () => {
                 bev_weiblich: "112",
                 jahr: "1990",
                 ort: "Hamburg"
+            }),
+            new Feature({
+                bev_maennlich: "93",
+                bev_weiblich: "92",
+                jahr: "1990",
+                ort: "Bremen"
             })
         ];
+
+    describe("Component DOM", () => {
+        it("Level name as switch button should not exist", () => {
+            const wrapper = shallowMount(StatisticDashboard, {
+                localVue,
+                store
+            });
+
+            expect(wrapper.find(".level-switch").exists()).to.be.false;
+            wrapper.destroy();
+        });
+
+        it("Level name as switch button should exist", () => {
+            const wrapper = shallowMount(StatisticDashboard, {
+                computed: {
+                    buttonGroupRegions: () => [
+                        {
+                            "levelName": "test1"
+                        },
+                        {
+                            "levelName": "test2"
+                        }
+                    ]
+                },
+                localVue,
+                store
+            });
+
+            expect(wrapper.find(".level-switch").exists()).to.be.true;
+            wrapper.destroy();
+        });
+    });
+
+    describe("watchers", () => {
+        it("should call 'checkFilterSettings' if selectedReferenceData is changed", async () => {
+            const wrapper = shallowMount(StatisticDashboard, {
+                    localVue,
+                    store
+                }),
+                spyCheckFilterSettings = sinon.stub(wrapper.vm, "checkFilterSettings");
+
+            store.commit("Tools/StatisticDashboard/setSelectedReferenceData", undefined);
+            await wrapper.vm.$nextTick();
+            expect(spyCheckFilterSettings.calledOnce).to.be.true;
+            sinon.restore();
+        });
+    });
 
     describe("methods", () => {
         describe("getUniqueValuesForLevel", () => {
@@ -296,7 +355,7 @@ describe("/src/modules/tools/StatisticDashboard.vue", () => {
                     }),
                     value = wrapper.vm.getStatisticValue(featureList, "bev_maennlich", "Hamburg", "ort", "1890", "jahr");
 
-                expect(value).to.be.equal("13");
+                expect(value).to.be.equal(13);
             });
             it("should call prepareChartData with expected params for line chart", async () => {
                 const wrapper = shallowMount(StatisticDashboard, {
@@ -307,9 +366,35 @@ describe("/src/modules/tools/StatisticDashboard.vue", () => {
 
                 expect(value).to.be.equal("-");
             });
+
+            it("should return the right statistic value if reference date is set", () => {
+                store.commit("Tools/StatisticDashboard/setSelectedReferenceData", {value: {value: "1990"}});
+
+                const wrapper = shallowMount(StatisticDashboard, {
+                        localVue,
+                        store
+                    }),
+                    value = wrapper.vm.getStatisticValue(featureList, "bev_maennlich", "Hamburg", "ort", "1890", "jahr", "date");
+
+                expect(value).to.be.equal(-100);
+            });
+
+            it("should return the right statistic value if reference region is set", () => {
+                store.commit("Tools/StatisticDashboard/setSelectedReferenceData", {value: "Bremen"});
+
+                const wrapper = shallowMount(StatisticDashboard, {
+                        localVue,
+                        store
+                    }),
+                    value = wrapper.vm.getStatisticValue(featureList, "bev_maennlich", "Hamburg", "ort", "1990", "jahr", "region");
+
+                expect(value).to.be.equal(20);
+            });
         });
         describe("prepareStatisticsData", () => {
             it("should return an object representing the statistics from the features", () => {
+                store.commit("Tools/StatisticDashboard/setSelectedReferenceData", {});
+
                 const wrapper = shallowMount(StatisticDashboard, {
                         localVue,
                         store
@@ -317,14 +402,14 @@ describe("/src/modules/tools/StatisticDashboard.vue", () => {
                     statistics = {
                         "Bevölkerung maennlich": {
                             Hamburg: {
-                                "1890": "13",
-                                "1990": "113"
+                                "1890": 13,
+                                "1990": 113
                             }
                         },
                         "Bevölkerung weiblich": {
                             Hamburg: {
-                                "1890": "12",
-                                "1990": "112"
+                                "1890": 12,
+                                "1990": 112
                             }
                         }
                     };
@@ -339,6 +424,71 @@ describe("/src/modules/tools/StatisticDashboard.vue", () => {
                 };
 
                 expect(wrapper.vm.prepareStatisticsData(featureList, ["Bevölkerung maennlich", "Bevölkerung weiblich"], ["Hamburg"], ["1890", "1990"], {outputFormat: "YYYY", attrName: "jahr"}, {attrName: "ort"})).to.deep.equal(statistics);
+            });
+
+            it("should return an object representing the statistics from the features without the reference date", async () => {
+                const wrapper = shallowMount(StatisticDashboard, {
+                        localVue,
+                        store
+                    }),
+                    statistics = {
+                        "Bevölkerung maennlich": {
+                            Hamburg: {
+                                "1990": 113
+                            }
+                        },
+                        "Bevölkerung weiblich": {
+                            Hamburg: {
+                                "1990": 112
+                            }
+                        }
+                    };
+
+                wrapper.vm.statisticsByCategory = {
+                    "bev_maennlich": {
+                        "name": "Bevölkerung maennlich"
+                    },
+                    "bev_weiblich": {
+                        "name": "Bevölkerung weiblich"
+                    }
+                };
+
+                store.commit("Tools/StatisticDashboard/setSelectedReferenceData", {value: {value: "1890"}});
+                await wrapper.vm.$nextTick();
+                expect(wrapper.vm.prepareStatisticsData(featureList, ["Bevölkerung maennlich", "Bevölkerung weiblich"], ["Hamburg"], ["1890", "1990"], {outputFormat: "YYYY", attrName: "jahr"}, {attrName: "ort"})).to.deep.equal(statistics);
+            });
+            it("should return an object representing the statistics from the features without the reference region", async () => {
+                const wrapper = shallowMount(StatisticDashboard, {
+                        localVue,
+                        store
+                    }),
+                    statistics = {
+                        "Bevölkerung maennlich": {
+                            Bremen: {
+                                "1890": "-",
+                                "1990": 93
+                            }
+                        },
+                        "Bevölkerung weiblich": {
+                            Bremen: {
+                                "1890": "-",
+                                "1990": 92
+                            }
+                        }
+                    };
+
+                wrapper.vm.statisticsByCategory = {
+                    "bev_maennlich": {
+                        "name": "Bevölkerung maennlich"
+                    },
+                    "bev_weiblich": {
+                        "name": "Bevölkerung weiblich"
+                    }
+                };
+
+                store.commit("Tools/StatisticDashboard/setSelectedReferenceData", {value: "Hamburg"});
+                await wrapper.vm.$nextTick();
+                expect(wrapper.vm.prepareStatisticsData(featureList, ["Bevölkerung maennlich", "Bevölkerung weiblich"], ["Hamburg", "Bremen"], ["1890", "1990"], {outputFormat: "YYYY", attrName: "jahr"}, {attrName: "ort"})).to.deep.equal(statistics);
             });
         });
         describe("getTableData", () => {

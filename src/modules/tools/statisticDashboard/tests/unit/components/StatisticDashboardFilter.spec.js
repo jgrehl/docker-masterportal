@@ -311,24 +311,6 @@ describe("src/modules/src/tools/statiscticDashboard/components/StatisticDashboar
     });
 
     describe("Methods", () => {
-        describe("collectDatesValues", () => {
-            it("should return all values no matter if they are a string or an array of strings ", () => {
-                const wrapper = shallowMount(StatisticDashboardFilter, {
-                    propsData: {
-                        categories: [],
-                        timeStepsFilter,
-                        regions,
-                        areCategoriesGrouped: false
-                    },
-                    localVue,
-                    store
-                });
-
-                expect(wrapper.vm.collectDatesValues([{value: "2020"}, {value: ["2021", "2022"]}])).to.deep.equals(["2020", "2021", "2022"]);
-                wrapper.destroy();
-            });
-        });
-
         describe("allFilterSettingsSelected", () => {
             it("should return 1 if all given values are not empty", () => {
                 const wrapper = shallowMount(StatisticDashboardFilter, {
@@ -363,7 +345,8 @@ describe("src/modules/src/tools/statiscticDashboard/components/StatisticDashboar
         });
 
         describe("emitFilterSettings", () => {
-            it("should emit 'changeFilterSettings' with the right values", () => {
+            it("should emit 'changeFilterSettings' with the right values", async () => {
+                await store.commit("Tools/StatisticDashboard/setSelectedStatistics", {});
                 const wrapper = shallowMount(StatisticDashboardFilter, {
                     propsData: {
                         categories: [],
@@ -377,7 +360,7 @@ describe("src/modules/src/tools/statiscticDashboard/components/StatisticDashboar
 
                 wrapper.vm.emitFilterSettings({name: "name"}, [6], [6]);
                 expect(wrapper.emitted()).to.have.all.keys("changeFilterSettings");
-                expect(wrapper.emitted().changeFilterSettings).to.deep.equal([[[6], [6]]]);
+                expect(wrapper.emitted().changeFilterSettings).to.deep.equal([[[6], [6], {}]]);
                 wrapper.destroy();
             });
             it("should not emit 'changeFilterSettings' but 'resetStatistics'", () => {
@@ -494,67 +477,6 @@ describe("src/modules/src/tools/statiscticDashboard/components/StatisticDashboar
                 wrapper.vm.resetStatistics();
                 expect(wrapper.vm.selectedStatistics).to.deep.equals({});
                 expect(wrapper.emitted()).to.have.all.keys(["resetStatistics"]);
-                wrapper.destroy();
-            });
-        });
-        describe("getSelectedRegions", () => {
-            it("should remove empty array", () => {
-                const wrapper = shallowMount(StatisticDashboardFilter, {
-                    propsData: {
-                        categories: [],
-                        timeStepsFilter,
-                        regions,
-                        areCategoriesGrouped: false
-                    },
-                    localVue,
-                    store
-                });
-
-                expect(wrapper.vm.getSelectedRegions(0)).to.deep.equals([]);
-                expect(wrapper.vm.getSelectedRegions(null)).to.deep.equals([]);
-                expect(wrapper.vm.getSelectedRegions(false)).to.deep.equals([]);
-                expect(wrapper.vm.getSelectedRegions("")).to.deep.equals([]);
-                expect(wrapper.vm.getSelectedRegions([])).to.deep.equals([]);
-                expect(wrapper.vm.getSelectedRegions({})).to.deep.equals([]);
-                wrapper.destroy();
-            });
-
-            it("should get selected region", () => {
-                const wrapper = shallowMount(StatisticDashboardFilter, {
-                    propsData: {
-                        categories: [],
-                        timeStepsFilter,
-                        regions,
-                        areCategoriesGrouped: false
-                    },
-                    localVue,
-                    store
-                });
-
-                expect(wrapper.vm.getSelectedRegions([
-                    {value: "Schwerin", label: "Schwerin"},
-                    {value: "Harburg", label: "Harburg"}
-                ])).to.deep.equals(["Schwerin", "Harburg"]);
-                wrapper.destroy();
-            });
-
-            it("should get selected all regions", () => {
-                const wrapper = shallowMount(StatisticDashboardFilter, {
-                    propsData: {
-                        categories: [],
-                        timeStepsFilter,
-                        regions,
-                        areCategoriesGrouped: false
-                    },
-                    localVue,
-                    store
-                });
-
-                expect(wrapper.vm.getSelectedRegions([
-                    {value: "Harburg", label: "Harburg"},
-                    {value: "Schwerin", label: "Schwerin"},
-                    {value: ["Harburg", "Lübeck", "Schwerin"], label: "Alle Gebiete"}
-                ])).to.deep.equals(["Harburg", "Lübeck", "Schwerin"]);
                 wrapper.destroy();
             });
         });
