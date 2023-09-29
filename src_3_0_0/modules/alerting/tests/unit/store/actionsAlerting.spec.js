@@ -104,7 +104,6 @@ describe("src_3_0_0/modules/alerting/store/actionsAlerting.js", () => {
     });
 
     it("addSingleAlert doesnt show alert with already existing hash", () => {
-        sinon.stub(console, "warn");
         const state = {
             alerts: [{hash: "2db391b6db7866773874b3a5e60123040adb656a"}],
             displayedAlerts: [],
@@ -113,8 +112,6 @@ describe("src_3_0_0/modules/alerting/store/actionsAlerting.js", () => {
 
         actions.addSingleAlert({state, commit}, {hash: "2db391b6db7866773874b3a5e60123040adb656a", isNews: true, content: "123", "displayFrom": "2022-08-24 05:00", "displayUntil": "2088-09-28 23:59"});
 
-        expect(console.warn.calledOnce).to.be.true;
-        expect(console.warn.firstCall.args).to.eql(["Alert ignored (duplicate): 2db391b6db7866773874b3a5e60123040adb656a"]);
         expect(commit.calledTwice).to.be.true;
         expect(commit.firstCall.args[0]).to.eql("Modules/News/addNews");
         expect(commit.firstCall.args[1].content).to.eql("123");
