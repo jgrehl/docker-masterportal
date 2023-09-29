@@ -1,12 +1,14 @@
 /**
      * @typedef {object} stateLayerPreview
      * @description creates a preview of a layer.
-     * @property {Boolean} center=null center coordinates of the preview by layerId
-     * @property {String} zoomLevel=null zoom level of the preview by layerId
+     * @property {Object} [center={}] center coordinates of the preview by layerId
+     * @property {Object} [zoomLevel={}] zoom level of the preview by layerId
+     * @property {Object} [previewUrlByLayerIds={}] preview urls by layerId
      */
 const state = {
     center: {},
-    zoomLevel: {}
+    zoomLevel: {},
+    previewUrlByLayerIds: {}
 };
 
 export default state;
