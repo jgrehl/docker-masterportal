@@ -6,6 +6,7 @@ import Button3d from "../button3d/components/Button3dItem.vue";
 import Freeze from "../freeze/components/FreezeScreen.vue";
 import FullScreen from "../fullScreen/components/FullScreen.vue";
 import Orientation from "../orientation/components/OrientationItem.vue";
+import Rotation from "../rotation/components/RotationItem.vue";
 import StartModule from "../startModule/components/StartModule.vue";
 import TiltView from "../tiltView/components/TiltView.vue";
 import TotalView from "../totalView/components/TotalView.vue";
@@ -21,6 +22,7 @@ const getters = {
             Freeze,
             FullScreen,
             Orientation,
+            Rotation,
             StartModule,
             TiltView,
             TotalView,
