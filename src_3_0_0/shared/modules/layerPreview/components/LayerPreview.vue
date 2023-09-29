@@ -60,7 +60,6 @@ export default {
             // if smaller some WMS layers load no content in image, e.g. Geobasiskarten (Schriftplatte), handle size by css
             width: 150,
             height: 150,
-            previewUrl: null,
             layerName: null
         };
     },
