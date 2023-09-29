@@ -49,7 +49,7 @@ export default {
             @change="interaction"
         >
         <label
-            class="form-check-label ps-2 pt-2 me-2"
+            class="form-check-label ps-2 pt-1 me-2"
             :for="id"
         >
             {{ $t(label) }}
