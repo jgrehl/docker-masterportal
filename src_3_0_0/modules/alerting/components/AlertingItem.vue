@@ -254,10 +254,10 @@ export default {
                                     @click="removeAlert(singleAlert.hash);"
                                 />
                                 <div
-                                    class="d-flex bd-highlight mb-3 col"
+                                    class="d-flex justify-content-center bd-highlight mb-3"
                                 >
                                     <h2
-                                        class="ms-auto p-2 bd-highlight"
+                                        class="p-2 bd-highlight"
                                     >
                                         <span :class="selectCategoryClass(singleAlert.category)">
                                             {{ $t(singleAlert.displayCategory) }}
@@ -304,12 +304,29 @@ export default {
 <style lang="scss" scoped>
     @import "~variables";
     #alertModal{
-        display:block;
+        display: block;
         background-color: rgba(0,0,0,0.5);
     }
+    .modal-body {
+        /* Hide scrollbar for Firefox */
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+
+    /* Hide scrollbar for Edge, Chrome, Safari and Opera */
+    .modal-body::-webkit-scrollbar{
+        display: none;
+    }
+
+    .badge {
+        white-space: break-spaces;
+        line-height:1.25rem;
+    }
+
     .badge-pill{
         font-size:$font-size-base;
     }
+
     div.alertCategoryContainer {
         margin-bottom:0;
         &.last {
