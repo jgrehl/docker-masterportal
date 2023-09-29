@@ -24,7 +24,7 @@ Please be aware of the following:
 **Changelog is wip and may also not be correct.**
 **We appreciate hints, feedback and communication of bugs! Please use the Issuetracker and tag your issue with "v3.0.0-beta1"**
 
-Our further Roadmap is to work hard on 3.0.0 and to release wip-Versions, rcs etc. and hopefully to be able to have a stable Version in the beginning of 2024. We will support and fix bugs for V2.x until end of 2023.
+Our further Roadmap is to work hard on 3.0.0 and to release wip-Versions, rcs etc. and hopefully to be able to have a first stable Version in the beginning of 2024. We will support and fix bugs for V2.x until end of 2023.
 
 
 ## User section
