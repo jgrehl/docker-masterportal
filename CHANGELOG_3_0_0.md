@@ -4,7 +4,7 @@
 [Semantic versioning](https://semver.org/spec/v2.0.0.html) is used.
 
 
-## 2023-09-04 v3.0.0 - beta1
+## 2023-10-04 v3.0.0 - beta1
 
 ### __Breaking Changes__
 - The `wfsSearch` modules config.json parameter 'field'-property `type` was renamed to `queryType`
