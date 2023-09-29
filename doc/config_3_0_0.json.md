@@ -1181,6 +1181,49 @@ Layers or folders with layers to be displayed as subject data are defined here.
 
 ***
 
+### Themenconfig.Layer
+
+Layer definition. Multiple ways to define layers exist. Most attributes are defined in the **[services.json](services.json.md)**, but may be overwritten in the layer definition.
+
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|id|yes|String/String[]||Layer ID(s). Resolved using the **[services.json](services.json.md)** file. Please mind that the given IDs **MUST** refer to the same URL, that is, use the same service. When configuring an array of IDs, setting `minScale` and `maxScale` of each layer is required to be in the `services.json`.|false|
+|name|no|String||Layer name.|false|
+|entities|yes|**[Entity3D](#markdown-header-themenconfiglayerentity3d)**[]||Models to be shown.|false|
+|transparency|no|Integer|0|Layer transparency.|false|
+|visibility|no|Boolean|false|Layer visibility.|false|
+|supported|no|String[]|["2D", "3D"]|List of modes the layer may be used in.|false|
+|layerAttribution|no|String||**[services.json](services.json.md)** value. HTML string shown when the layer is active.|false|
+|legendURL|no|String||**[services.json](services.json.md)** value. URL used to request the legend graphic. _Deprecated, please use "legend" instead._|false|
+|legend|no|Boolean/String||**[services.json](services.json.md)** value. URL used to request the legend graphic. Use `true` to dynamically generate the legend from a WMS request or the styling. If of type string, it's expected to be a path to an image or a PDF file.|false|
+|maxScale|no|String||**[services.json](services.json.md)** value. Maximum scale in which the layer is still shown.|false|
+|minScale|no|String||**[services.json](services.json.md)** value. Minimum scale in which the layer is still shown.|false|
+|autoRefresh|no|Integer||Automatically reload layer every `autoRefresh` ms. Minimum value is 500.|false|
+|isNeverVisibleInTree|no|Boolean|false|If `true`, the layer is never visible in the topic selection tree.|false|
+|urlIsVisible|no|Boolean|true|Whether the service URL should be shown in the layer information window.|false|
+|filterRefId|no|Integer||Referencing to a configured filter. It is the order (index) of Layer in filter. Starting with 0.|false|
+|renderer|no|String|"default"|Which render pipeline to use ("default" or "webgl") (only for vector data of type "GeoJSON", "WFS", "OAF"). "webgl" is currently classified as experimental and can lead to errors in some modules|false|
+|isPointLayer|no|Boolean|false|Whether the (vector) layer only consists of point features (only relevant for WebGL rendering)|false|
+
+**Example with one ID**
+
+```json
+{
+    "id": "123"
+}
+```
+
+**Example with an array of IDs**
+
+```json
+{
+    "id": ["123", "456", "789"],
+    "name": "my test layer"
+}
+```
+
+***
+
 #### Themenconfig.Layer.WFS
 
 [inherits]: # (Themenconfig.Layer)
