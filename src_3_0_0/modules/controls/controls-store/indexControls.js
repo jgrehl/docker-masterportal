@@ -8,6 +8,7 @@ import Button3d from "../button3d/store/indexButton3d";
 import Freeze from "../freeze/store/indexFreeze";
 import FullScreen from "../fullScreen/store/indexFullScreen";
 import Orientation from "../orientation/store/indexOrientation";
+import Rotation from "../rotation/store/indexRotation";
 import StartModule from "../startModule/store/indexStartModule";
 import TiltView from "../tiltView/store/indexTiltView";
 import TotalView from "../totalView/store/indexTotalView";
@@ -27,6 +28,7 @@ export default {
         Freeze,
         FullScreen,
         Orientation,
+        Rotation,
         StartModule,
         TiltView,
         TotalView,

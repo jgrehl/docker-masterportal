@@ -6,7 +6,7 @@
         "content": "Dieses Geoportal dient der Qualitätskontrolle durch den Kunden.<br>Es ist aufgrund von möglichen Fehlern <b>nicht</b> zur Nutzung für alltägliche oder berufliche Aufgaben geeignet!<br><br>",
         "creationDate": "01/09/22",
         "mustBeConfirmed": true,
-        "once": false
+        "once": true
       }
     },
     "mapView": {
@@ -33,6 +33,7 @@
       "scaleLine": true
     },
     "controls": {
+      "rotation": true ,
       "zoom": true,
       "tiltView": true,
       "startModule": {
