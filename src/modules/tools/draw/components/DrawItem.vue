@@ -77,6 +77,45 @@ export default {
             }
             return this.drawHTMLElementsModifyFeature;
         },
+        /**
+         * Enables the input for the radius if the squareMethod is "defined", for interaction "modify" the rule of drawHTMLElementsModifyFeature takes place.
+         * @returns {Boolean} returns true to disable the input, false to enable the input
+         */
+        drawSquareMethods () {
+            if (this.currentInteraction === "draw") {
+                // remember: true means disable, false means enable
+                return !this.drawLayerVisible || this.styleSettings?.squareMethod !== "defined";
+            }
+            return this.drawHTMLElementsModifyFeature;
+        },
+
+        squareAreaComputed: {
+            /**
+             * getter for the computed property squareArea of the current drawType
+             * @info the internal representation of squareArea is always in meters
+             * @returns {Number} the current radius
+             */
+            get () {
+                if (this.styleSettings?.unit === "km") {
+                    return this.styleSettings?.squareArea / 1000;
+                }
+                return this.styleSettings?.squareArea;
+            },
+            /**
+             * setter for the computed property squareArea of the current drawType
+             * @info the internal representation of squareArea is always in meters
+             * @param {Number} value the value to set the target to
+             * @returns {void}
+             */
+            set (value) {
+                if (this.styleSettings?.unit === "km") {
+                    this.setSquareArea(parseInt(value, 10) * 1000);
+                }
+                else {
+                    this.setSquareArea(parseInt(value, 10));
+                }
+            }
+        },
 
         circleRadiusComputed: {
             /**
@@ -138,6 +177,13 @@ export default {
          */
         circleMethodComputed () {
             return this.styleSettings?.circleMethod;
+        },
+        /**
+         * computed property for squareMethod of the current drawType
+         * @returns {String} "defined" or "interactive"
+         */
+        squareMethodComputed () {
+            return this.styleSettings?.squareMethod;
         },
         /**
          * computed property for the unit of the current drawType
@@ -627,6 +673,90 @@ export default {
                     <div class="col-md-7">
                         <select
                             id="tool-draw-circleUnit"
+                            class="form-select form-select-sm"
+                            :disabled="drawHTMLElementsModifyFeature"
+                            @change="setUnit"
+                        >
+                            <option
+                                v-for="option in constants.unitOptions"
+                                :key="'draw-fontSize-' + option.value"
+                                :selected="option.value === unitComputed"
+                                :value="option.value"
+                            >
+                                {{ option.caption }}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div
+                    v-if="drawType.id === 'drawSquare' && currentInteraction !== 'modify'"
+                    class="form-group form-group-sm row"
+                >
+                    <label
+                        class="col-md-5 col-form-label"
+                        for="tool-draw-squareMethod"
+                    >
+                        {{ $t("common:modules.tools.draw.method") }}
+                    </label>
+                    <div class="col-md-7">
+                        <select
+                            id="tool-draw-squareMethod"
+                            class="form-select form-select-sm"
+                            :disabled="drawHTMLElementsModifyFeature"
+                            @change="setSquareMethod"
+                        >
+                            <option
+                                value="interactive"
+                                :selected="squareMethodComputed === 'interactive'"
+                            >
+                                {{ $t("common:modules.tools.draw.interactive") }}
+                            </option>
+                            <option
+                                value="defined"
+                                :selected="squareMethodComputed === 'defined'"
+                            >
+                                {{ $t("common:modules.tools.draw.defined") }}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div
+                    v-if="drawType.id === 'drawSquare'"
+                    class="form-group form-group-sm row"
+                >
+                    <label
+                        class="col-md-5 col-form-label"
+                        for="tool-draw-squareArea"
+                    >
+                        {{ $t('common:modules.tools.draw.squareAreaLabel') }}
+                    </label>
+                    <div class="col-md-7">
+                        <input
+                            id="tool-draw-squareArea"
+                            v-model="squareAreaComputed"
+                            class="form-control form-control-sm"
+                            :style="{borderColor: innerBorderColor}"
+                            type="number"
+                            step="1"
+                            :placeholder="$t('common:modules.tools.draw.squareAreaPlaceholder')"
+                            :disabled="drawSquareMethods"
+                            min="0"
+                        >
+                    </div>
+                </div>
+                <div
+                    v-if="drawType.id === 'drawSquare'"
+                    class="form-group form-group-sm row"
+                >
+                    <label
+                        class="col-md-5 col-form-label"
+                        for="tool-draw-squareUnit"
+                    >
+                        {{ $t("common:modules.tools.draw.unit") }}
+                    </label>
+                    <div class="col-md-7">
+                        <select
+                            id="tool-draw-squareUnit"
                             class="form-select form-select-sm"
                             :disabled="drawHTMLElementsModifyFeature"
                             @change="setUnit"

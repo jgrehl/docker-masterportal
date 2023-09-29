@@ -56,6 +56,8 @@ const initialState = JSON.parse(JSON.stringify(stateDraw)),
                 circleMethod: styleSettingsCopy.circleMethod,
                 circleRadius: styleSettingsCopy.circleRadius,
                 circleOuterRadius: styleSettingsCopy.circleOuterRadius,
+                squareMethod: styleSettingsCopy.squareMethod,
+                squareArea: styleSettingsCopy.squareArea,
                 drawType,
                 symbol,
                 zIndex,
@@ -198,7 +200,13 @@ const initialState = JSON.parse(JSON.stringify(stateDraw)),
                 dispatch("drawInteractionOnDrawEvent", drawInteraction);
 
                 if (!tooltip && state?.drawType?.id === "drawCircle" || state?.drawType?.id === "drawDoubleCircle") {
-                    tooltip = createTooltipOverlay({getters, commit, dispatch});
+                    tooltip = createTooltipOverlay({state, getters, commit, dispatch});
+                    mapCollection.getMap(rootState.Maps.mode).addOverlay(tooltip);
+                    mapCollection.getMap(rootState.Maps.mode).on("pointermove", tooltip.get("mapPointerMoveEvent"));
+                    event.feature.getGeometry().on("change", tooltip.get("featureChangeEvent"));
+                }
+                else if (state?.drawType?.id === "drawSquare") {
+                    tooltip = createTooltipOverlay({state, getters, commit, dispatch});
                     mapCollection.getMap(rootState.Maps.mode).addOverlay(tooltip);
                     mapCollection.getMap(rootState.Maps.mode).on("pointermove", tooltip.get("mapPointerMoveEvent"));
                     event.feature.getGeometry().on("change", tooltip.get("featureChangeEvent"));
@@ -745,6 +753,29 @@ const initialState = JSON.parse(JSON.stringify(stateDraw)),
                     circleCenter = feature.getGeometry().getCenter();
 
                 circleCalculations.calculateCircle({feature}, circleCenter, radius, mapCollection.getMap(rootState.Maps.mode));
+
+                dispatch("addDrawStateToFeature", state.selectedFeature);
+            }
+        },
+        /**
+         * Updates the selected feature during modify for square
+         *
+         * @param {Number} squareArea The area of the square.
+         * @returns {void}
+         */
+        updateSquareAreaDuringModify ({state, dispatch}, squareArea) {
+            if (state.currentInteraction === "modify" && state.selectedFeature !== null && state.drawType.id === "drawSquare") {
+                const feature = state.selectedFeature,
+                    coordinates = feature.getGeometry().getCoordinates(),
+                    minX = coordinates[0][0][0],
+                    minY = coordinates[0][0][1],
+                    maxX = coordinates[0][2][0],
+                    maxY = coordinates[0][2][1],
+                    centerX = (minX + maxX) / 2,
+                    centerY = (minY + maxY) / 2,
+                    centerCoordinate = [centerX, centerY];
+
+                circleCalculations.calculateCircle({feature}, centerCoordinate, squareArea);
 
                 dispatch("addDrawStateToFeature", state.selectedFeature);
             }

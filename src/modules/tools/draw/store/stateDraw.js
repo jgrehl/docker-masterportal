@@ -65,11 +65,15 @@ const symbol = {
      * @property {String[]} drawAreaSettings.colorContour The color of the contours of the drawn feature represented as an array.
      * @property {Number} drawAreaSettings.opacityContour The opacity of the color of the contours for features of drawType "LineString". NOTE: The values of the transparencySettings are opacity values.
      * @property {Object} drawSquareSettings the values used for the drawType drawSquare
+     * @property {String} drawSquareSettings.squareMethod The method for drawing features of drawType "Square".
      * @property {Number} drawSquareSettings.strokeWidth Stroke width.
+     * @property {String} drawSquareSettings.unit The unit of measurement (e.g. "km").
+     * @property {String} drawSquareSettings.squareArea The area of the square.
      * @property {String[]} drawSquareSettings.color The color of the drawn feature represented as an array.
      * @property {Number} drawSquareSettings.opacity The opacity of the color of the drawn features. NOTE: The values of the transparencySettings are opacity values.
      * @property {String[]} drawSquareSettings.colorContour The color of the contours of the drawn feature represented as an array.
      * @property {Number} drawSquareSettings.opacityContour The opacity of the color of the contours for features of drawType "LineString". NOTE: The values of the transparencySettings are opacity values.
+     * @property {Object} drawSquareSettings.tooltipStyle The custom style for the tooltip of drawType "Square".
      * @property {Object} drawCircleSettings the values used for the drawType drawCircle
      * @property {String} drawCircleSettings.circleMethod The method for drawing features of drawType "Circle".
      * @property {Object} drawCircleSettings.tooltipStyle The custom style for the tooltip of drawType "Circle".
@@ -183,11 +187,21 @@ const symbol = {
             opacityContour: 1
         },
         drawSquareSettings: {
+            squareMethod: "interactive",
             strokeWidth: 1,
+            unit: "m",
+            squareArea: 0,
             color: [55, 126, 184, 1],
             opacity: 1,
             colorContour: [0, 0, 0, 1],
-            opacityContour: 1
+            opacityContour: 1,
+            tooltipStyle: {
+                fontSize: "14px",
+                paddingTop: "3px",
+                paddingLeft: "3px",
+                paddingRight: "3px",
+                backgroundColor: "rgba(255, 255, 255, .9)"
+            }
         },
         drawCircleSettings: {
             circleMethod: "interactive",

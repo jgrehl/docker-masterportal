@@ -1,6 +1,7 @@
 import Overlay from "ol/Overlay";
 import thousandsSeparator from "../../../../../utils/thousandsSeparator";
 import * as setters from "../../store/actions/settersDraw";
+import {getArea} from "ol/sphere.js";
 
 /**
  * returns the Feature to use as mouse label on change of circle or double circle
@@ -8,7 +9,7 @@ import * as setters from "../../store/actions/settersDraw";
  *
  * @returns {module:ol/Overlay} the Feature to use as mouse label
  */
-function createTooltipOverlay ({getters, commit, dispatch}) {
+function createTooltipOverlay ({state, getters, commit, dispatch}) {
     let tooltip = null;
     const decimalsForKilometers = 3,
         autoUnit = false,
@@ -19,14 +20,24 @@ function createTooltipOverlay ({getters, commit, dispatch}) {
                 tooltip.setPosition(evt.coordinate);
             },
             featureChangeEvent: evt => {
-                if (autoUnit && evt.target.getRadius() > 500 || !autoUnit && styleSettings.unit === "km") {
-                    tooltip.getElement().innerHTML = thousandsSeparator(Math.round(evt.target.getRadius()).toFixed(decimalsForKilometers) / 1000) + " km";
+                if (state?.drawType?.id === "drawCircle" || state?.drawType?.id === "drawDoubleCircle") {
+                    if (autoUnit && evt.target.getRadius() > 500 || !autoUnit && styleSettings.unit === "km") {
+                        tooltip.getElement().innerHTML = thousandsSeparator(Math.round(evt.target.getRadius()).toFixed(decimalsForKilometers) / 1000) + " km";
+                    }
+                    else {
+                        tooltip.getElement().innerHTML = thousandsSeparator(Math.round(evt.target.getRadius())) + " m";
+                    }
+                    setters.setCircleRadius({getters, commit, dispatch}, Math.round(evt.target.getRadius()));
                 }
-                else {
-                    tooltip.getElement().innerHTML = thousandsSeparator(Math.round(evt.target.getRadius())) + " m";
+                else if (state?.drawType?.id === "drawSquare") {
+                    if (autoUnit && getArea(evt.target) > 500 || !autoUnit && styleSettings.unit === "km") {
+                        tooltip.getElement().innerHTML = thousandsSeparator(Math.round(getArea(evt.target)).toFixed(decimalsForKilometers) / 1000) + " km²";
+                    }
+                    else {
+                        tooltip.getElement().innerHTML = thousandsSeparator(Math.round(getArea(evt.target))) + " m²";
+                    }
+                    setters.setSquareArea({getters, commit, dispatch}, Math.round(getArea(evt.target)));
                 }
-
-                setters.setCircleRadius({getters, commit, dispatch}, Math.round(evt.target.getRadius()));
             }
         };
 

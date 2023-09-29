@@ -1,5 +1,6 @@
 import createStyleModule from "../../utils/style/createStyle";
 import circleCalculations from "../../utils/circleCalculations";
+import squareCalculations from "../../utils/squareCalculations";
 
 const errorBorder = "#E10019";
 
@@ -15,10 +16,16 @@ export function drawInteractionOnDrawEvent ({state, commit, dispatch}, drawInter
     // we need a clone of styleSettings each time a draw event is called, otherwise the copy will influence former drawn objects
     // using "{styleSettings} = getters," would lead to a copy not a clone - don't use getters for styleSettings here
     const styleSettings = JSON.parse(JSON.stringify(state[state.drawType.id + "Settings"])),
-        circleMethod = styleSettings.circleMethod;
+        circleMethod = styleSettings.circleMethod,
+        squareMethod = styleSettings.squareMethod;
 
     commit("setAddFeatureListener", state.layer.getSource().once("addfeature", event => dispatch("handleDrawEvent", event)));
     if (state.currentInteraction === "draw" && circleMethod === "defined" && state.drawType.geometry === "Circle") {
+        const interaction = state["drawInteraction" + drawInteraction];
+
+        interaction.finishDrawing();
+    }
+    if (state.currentInteraction === "draw" && squareMethod === "defined" && state.drawType.geometry === "Square") {
         const interaction = state["drawInteraction" + drawInteraction];
 
         interaction.finishDrawing();
@@ -38,7 +45,8 @@ export function handleDrawEvent ({state, commit, dispatch, rootState}, event) {
         // we need a clone of styleSettings each time a draw event is called, otherwise the copy will influence former drawn objects
         // using "{styleSettings} = getters," would lead to a copy not a clone - don't use getters for styleSettings here
         styleSettings = JSON.parse(JSON.stringify(state[stateKey])),
-        circleMethod = styleSettings.circleMethod;
+        circleMethod = styleSettings.circleMethod,
+        squareMethod = styleSettings.squareMethod;
 
     event.feature.set("fromDrawTool", true);
     dispatch("updateUndoArray", {remove: false, feature: event.feature});
@@ -84,6 +92,27 @@ export function handleDrawEvent ({state, commit, dispatch, rootState}, event) {
                 state.outerBorderColor = "";
             }
             state.innerBorderColor = "";
+        }
+    }
+    else if (squareMethod === "defined" && drawType.geometry === "Square") {
+        const squareArea = !isNaN(styleSettings.squareArea) ? parseFloat(styleSettings.squareArea) : null;
+
+        if (squareArea === 0) {
+            dispatch("Alerting/addSingleAlert", i18next.t("common:modules.tools.draw.undefinedSquareArea"), {root: true});
+            layerSource.removeFeature(event.feature);
+        }
+        else {
+            const coordinates = event.feature.getGeometry().getCoordinates(),
+                minX = coordinates[0][0][0],
+                minY = coordinates[0][0][1],
+                maxX = coordinates[0][2][0],
+                maxY = coordinates[0][2][1],
+                centerX = (minX + maxX) / 2,
+                centerY = (minY + maxY) / 2,
+                centerCoordinate = [centerX, centerY];
+
+            // Aufruf der calculateSquare-Funktion mit den richtigen Parametern
+            squareCalculations.calculateSquare(event, centerCoordinate, squareArea);
         }
     }
 
