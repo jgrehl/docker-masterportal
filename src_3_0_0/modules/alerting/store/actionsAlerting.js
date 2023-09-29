@@ -168,18 +168,9 @@ export default {
         alertProtoClone.hash = objectHash(alertProtoClone.hash);
         isUnique = findSingleAlertByHash(state.alerts, alertProtoClone.hash) === false;
         onceInSession = !isUnique ? alertProtoClone.onceInSession : false;
-        if (!isUnique) {
-            console.warn("Alert ignored (duplicate): " + alertProtoClone.hash);
-        }
-
         isInTime = checkAlertLifespan(alertProtoClone);
-        if (!isInTime) {
-            console.warn("Alert ignored (not the time): " + alertProtoClone.hash);
-        }
         isNotRestricted = checkAlertViewRestriction(state.displayedAlerts, alertProtoClone);
-        if (!isNotRestricted) {
-            console.warn("Alert ignored (shown recently): " + alertProtoClone.hash);
-        }
+
         if (alertProtoClone.isNews) {
             commit("Modules/News/addNews", alertProtoClone, {root: true});
         }

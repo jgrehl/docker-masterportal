@@ -124,6 +124,7 @@
 - Module contact: The attribute `serviceID` has been removed. Use `serviceId` instead.
 - The loader start screen has been removed.
 - The layerAttribution control no longer exists. Instead, when a layer that has a layerAttribution is turned on, it is displayed as an alert.
+- Several warnings have been removed from alerting as they are unnecessary.
 
 ### Fixed
 - Issue #1072: Fixed a problem when launching the portal with addons_3_0_0
