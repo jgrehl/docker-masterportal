@@ -1,11 +1,13 @@
 <script>
-import {mapGetters, mapActions} from "vuex";
+import {mapGetters, mapActions, mapMutations} from "vuex";
 import {buffer} from "ol/extent";
 import {wms, wmts} from "@masterportal/masterportalapi";
 import {optionsFromCapabilities} from "ol/source/WMTS";
 import proj4 from "proj4";
 import {Point} from "ol/geom";
 import {Tooltip} from "bootstrap";
+import axios from "axios";
+// import fs from "fs-extra";
 
 export default {
     name: "LayerPreview",
@@ -65,7 +67,7 @@ export default {
     computed: {
         ...mapGetters(["isMobile", "layerConfigById"]),
         ...mapGetters("Maps", ["initialCenter", "initialZoom"]),
-        ...mapGetters("Modules/LayerPreview", ["previewCenter", "previewZoomLevel"])
+        ...mapGetters("Modules/LayerPreview", ["previewCenter", "previewZoomLevel", "previewUrlByLayerIds"])
 
     },
     watch: {
@@ -80,6 +82,9 @@ export default {
         ...mapActions("Modules/LayerPreview", [
             "initialize"
         ]),
+        ...mapMutations("Modules/LayerPreview", [
+            "addPreviewUrl"
+        ]),
 
         /**
          * Calculates the extent by zoomlevel/resolution, center and radius from props.
@@ -93,6 +98,28 @@ export default {
                 new Point(this.previewCenter(this.layerId)).getExtent(),
                 radius * Math.sqrt(resolution)
             );
+        },
+
+        /**
+         * Load url as blob and saves it as objectURL.
+         * @param {String} url to load
+         * @returns {void}
+         */
+        load (url) {
+            axios.get(url, {responseType: "blob"})
+                .then(response => {
+                    if (response.status === 200) {
+                        const imgUrl = URL.createObjectURL(response.data);
+
+                        this.addPreviewUrl({id: this.layerId, previewUrl: imgUrl});
+                    }
+                    else {
+                        console.warn("Cannot load preview for id " + this.layerId + ", response status is ", response.status);
+                    }
+                })
+                .catch(error => {
+                    console.error(error);
+                });
         },
 
         /**
@@ -114,8 +141,7 @@ export default {
                     url += `&${key}=${encodeURIComponent(value)}`;
                 }
             });
-
-            this.previewUrl = url;
+            this.load(url);
         },
 
         /**
@@ -171,7 +197,7 @@ export default {
             previewUrl += `&TileMatrix=${encodeURIComponent(tileMatrix)}`;
             previewUrl += `&TileCol=${tileCoord ? tileCoord[1] : "0"}`;
             previewUrl += `&TileRow=${tileCoord ? tileCoord[2] : "0"}`;
-            this.previewUrl = previewUrl;
+            this.load(previewUrl);
         },
 
         /**
@@ -180,7 +206,7 @@ export default {
          * @returns {void}
          */
         buildVectorTileUrl (layerConfig) {
-            this.previewUrl = layerConfig.preview?.src;
+            this.addPreviewUrl({id: layerConfig.id, previewUrl: layerConfig.preview?.src});
         },
 
         /**
@@ -201,19 +227,29 @@ export default {
             if (layerConfig && this.supportedLayerTyps.includes(layerConfig.typ)) {
                 this.initialize({id: this.layerId, center: this.center, zoomLevel: this.zoomLevel});
                 this.layerName = layerConfig.name;
-                if (layerConfig.typ === "WMS") {
-                    this.buildWMSUrl(layerConfig);
-                }
-                else if (layerConfig.typ === "WMTS") {
-                    this.buildWMTSUrl(layerConfig);
-                }
-                else if (layerConfig.typ === "VectorTile") {
-                    this.buildVectorTileUrl(layerConfig);
+                if (!this.previewUrlByLayerIds[this.layerId]) {
+                    if (layerConfig.typ === "WMS") {
+                        this.buildWMSUrl(layerConfig);
+                    }
+                    else if (layerConfig.typ === "WMTS") {
+                        this.buildWMTSUrl(layerConfig);
+                    }
+                    else if (layerConfig.typ === "VectorTile") {
+                        this.buildVectorTileUrl(layerConfig);
+                    }
                 }
             }
             else {
                 console.warn("Layer for preview cannot be found:", this.layerId);
             }
+        },
+
+        /**
+         * Return the preview url for the current layer.
+         * @returns {String} the preview url for the current layer
+         */
+        getPreviewUrl () {
+            return this.previewUrlByLayerIds[this.layerId];
         }
     }
 
@@ -222,7 +258,7 @@ export default {
 
 <template>
     <div
-        v-if="previewUrl"
+        v-if="getPreviewUrl() !== undefined"
         role="button"
         tabindex="0"
         :class="[
@@ -240,7 +276,7 @@ export default {
                     customClass,
                     'previewImg'
                 ]"
-                :src="previewUrl"
+                :src="getPreviewUrl()"
                 alt="previewImg"
             >
         </div>
