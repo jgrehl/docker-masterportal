@@ -7,58 +7,62 @@
 ## 2023-10-04 v3.0.0 - beta1
 
 ### __Breaking Changes__
-- The `wfsSearch` modules config.json parameter 'field'-property `type` was renamed to `queryType`
-- New config.json parameter 'tree' added. Contains:
-  - 'type' (was 'treeType' at root before), the following params are possible: "auto" ( = old "default") or "light"
-  - 'addLayerButton': if true, a button to add layers is shown. On the first menu side only Layers configured in config.json with attribute 'showInLayerTree':true or "visibility": true is shown.
-  - 'validLayerTypesAutoTree' (new parameter) only for tree type 'auto'
-  - 'layerIDsToIgnore' (moved from config.js) only for tree type 'auto'
-  - 'metaIDsToMerge' (moved from config.js) only for tree type 'auto'
-  - 'metaIDsToIgnore' (moved from config.js) only for tree type 'auto'
-  - 'layerIDsToStyle' (moved from config.js) only for tree type 'auto'
-  - 'categories': only for tree type 'auto', contains categories in datasets of layers. Tree is structured by them.
-  - configuration of 'Fachdaten' changed
-- The attribute 'cache' on the layer is no longer taken into account with tree.type 'auto
-- Controls: a control can only be configured in config.json as "expandable". "bottomControl" is no longer supported.
-- 'supportedTreeTypes': attribute was added like 'supportedDevices' and 'supportedMapModes' to make it configurable in which tree type the module should be displayed; default value is light.
-- GetFeatureInfo:
-    - The `gfi` module has been renamed to `getFeatureInfo` and is now configured at the top level in config.json/portalconfigs.
-    - The menu side can be accessed under Portalconfig.getFeatureInfo.menuSide.
-- The `startTool` control has been renamed to `startModule`. Modules are now completely configured within the control.
-- Update from vue 2 to vue 3
-- The configuration for `mouseHover` is moved from config.js to config.json. Also, the configuration is now optional.
-- PortalFooter
-    - The Footer has been renamed to `portalFooter` and its configuration has been moved from config.js to config.json.
-    - The `scaleLine` is now a fixed part of the `portaFooter` and is configured within it.
-    - In the `portalFooter` only `urls` and the `scaleLine` are configured. For the other contents e.g. `version` or `footerInfo` a module is created in the menu. Language switching has also been moved to a separate `language` module.
+- Configuration:
+    - The `wfsSearch` modules config.json parameter 'field'-property `type` was renamed to `queryType`
+    - New config.json parameter 'tree' added. Contains:
+        - 'type' (was 'treeType' at root before), the following params are possible: "auto" ( = old "default")
+        - 'addLayerButton': if true, a button to add layers is shown. On the first menu side only Layers configured in config.json with attribute 'showInLayerTree':true or "visibility": true is shown.
+        - 'validLayerTypesAutoTree' (new parameter) only for tree type 'auto'
+        - 'layerIDsToIgnore' (moved from config.js) only for tree type 'auto'
+        - 'metaIDsToMerge' (moved from config.js) only for tree type 'auto'
+        - 'metaIDsToIgnore' (moved from config.js) only for tree type 'auto'
+        - 'layerIDsToStyle' (moved from config.js) only for tree type 'auto'
+        - 'categories': only for tree type 'auto', contains categories in datasets of layers. Tree is structured by them.
+        - The configuration of 'Themenconfig' changed: Layers are contained in "elements"-Array and have type "layer", folders have type "folder." Type "layer" is default and can be omitted.
+    - The attribute 'cache' on the layer is no longer taken into account with tree.type 'auto
+    - 'supportedTreeTypes': attributes 'supportedDevices' and 'supportedMapModes' are added to each module to make it configurable in which tree type the module should be displayed.
+    - The configuration for `mouseHover` is moved from config.js to config.json. Also, the configuration is now optional.
     - The width of the ScaleLine [in cm] can now be configured with the attribute `scaleLineWidth`.
-- The 'active' attribute has been removed from the modules. Instead, a module to be displayed initially can now be defined centrally for each menu window with the attribute `currentComponent`.
-- LayerIds can no longer be configured as Object in the layer configuration (config.json). Instead the suffix `#` should be used to use a LayerId more than once.
-- The `mapMarker` is now a part of `map`.
-- You can configure the possibility to add attachments to the `contact` form.
-- Script to migrate masterportal configuration files to version 3.0.0.
+    - It is now possible to configure a search interface more than once. For example `elasticSearch`.
+- Modules/Controls:
+    - Controls: a control can only be configured in config.json as "expandable". "bottomControl" is no longer supported.
+    - GetFeatureInfo:
+        - The `gfi` module has been renamed to `getFeatureInfo` and is now configured at the top level in config.json/portalconfigs.
+        - The menu side can be accessed under `Portalconfig.getFeatureInfo.menuSide`.
+    - The `startTool` control has been renamed to `startModule`. Modules are now completely configured within the control.
+    - The `saveSelection` module can now be found as `Copy link` within the `shareSelection` module.
+    - PortalFooter
+        - The Footer has been renamed to `portalFooter` and its configuration has been moved from config.js to config.json.
+        - The `scaleLine` is now a fixed part of the `portalFooter` and is configured within it.
+        - In the `portalFooter` only `urls` and the `scaleLine` are configured. For the other contents e.g. `version` or `footerInfo` a module is created in the menu. Language switching has also been moved to a separate `language` module.
+    - The 'active' attribute has been removed from the modules. Instead, a module to be displayed initially can now be defined centrally for each menu window with the attribute `currentComponent`.
+    - LayerIds can no longer be configured as Object in the layer configuration (config.json). Instead the suffix `#` should be used to use a LayerId more than once.
+    - The `mapMarker` is now a part of `map`.
+    - You can configure the possibility to add attachments to the `contact` form.
+    - `Menu`: the menu has been refactored and changed completely from horizontal menu bar to sidebar navigation.
+    - `Searchbar`: The searchbar has been refactored with new options e.g. that the order of the search results can be configured accordingly the order of the searchInstances in the config.json. Furthermore, the search results are categorized by the different search categories. ClickEvents can be defined for search results (e.g. zooming to results). Furthermore, buttons can be defined for the individual search interfaces, which are displayed at each search result that is visible after clicking on "show all". E.g. for addresses, a button can be configured that allows to open the routing module with a certain start address. Starting a search directly with an address zooms to the search result and places a mapMarker.
+- Libraries:
+    - Update from vue 2 to vue 3
+    - Time library moment.js has been replaced with day.js.
+- Script to migrate masterportal configuration files to version 3.0.0 was added. The command `npm run migrateConfig` prompts for input and `npm run migrateConfig help` describes usage with parameters.
 - The layer attribution is now displayed in an alert when a layer is activated for the first time.
-- It is now possible to configure a search interface more than once. For example `elasticSearch`.
-- Time library moment.js has been replaced with day.js.
-- `Searchbar`: The searchbar has been refactored with new options e.g. that the order of the search results can be configured accordingly the order of the searchInstances in the config.json. Furthermore, the search results are categorized by the different search categories. ClickEvents can be defined for search results (e.g. zooming to results). Furthermore, buttons can be defined for the individual search interfaces, which are displayed at each search result that is visible after clicking on "show all". E.g. for addresses, a button can be configured that allows to open the routing module with a certain start address.
 
 ### Added
 - Added documentation file doc\jsdoc.md for jsdoc in vue-components and vuex-files.
 - LayerPreview: Preview images can be generated and displayed for layer types WMS, WMTS and VectorTile. The layer preview was added to the layerTree.
-- The following NPM package was added:
+- The following NPM packages are added:
     - dependencies:
         - @panter/vue-i18next
         - dayjs
     - devDependencies:
         - @vue/compiler-sfc
-        - @vue/devtools-api
         - cross-env
         - jsdoc
         - jsdoc-vuejs
         - shelljs
         - sinon-chai
 - A new module `about` has been implemented, which can be used to show detailed information about a portal.
-- A new module `baseLayerSwitcher` allows to selected base layers by preview images from a configurable base layer set.
+- A new module `baseLayerSwitcher` allows to select base layers by preview images from a configurable base layer set.
 - Different modules were refactored from masterportal dev: `draw`, `filter`, `legend`, `search`, `wmsTime`, `wfst`
 - The new control `tiltView` adds two controls that allow you to tilt the 3d map up or down
 - Following [Addons](https://bitbucket.org/geowerkstatt-hamburg/addons/src/3.0.0-beta1/addons_3_0_0/) have been refactored:
@@ -68,20 +72,20 @@
 - 3D print support has been added.
 - 3D tile highlighting was refactored from masterportal dev.
 - Possibility to use urlParams including searching within searchInterfaces.
-- Printing functions for vector styking and legend has been added.
+- Printing functions for vector styling and legend has been added.
 - New draw module (still in development) has been added to the code structure parallel to the refactored draw within the module folder.
 ### Changed
 - The following NPM packages have been updated:
     - dependencies:
-        - @masterportal/masterportalapi: 2.17.0 to 2.28.0
+        - @masterportal/masterportalapi: 2.14.0 to 2.28.0
         - @vue/compat: 3.2.45 to 3.2.47
-        - @popperjs/core: 2.11.5 to 2.11.6
         - axios: 1.2.2 to 1.3.4
         - charts.js: 4.1.1 to 4.2.1
-         - i18next: 22.4.8 to 22.4.11
+        - i18next: 22.4.8 to 22.4.11
         - i18next-http-backend: 2.1.1 to 2.2.0
         - moment-timezone: 0.5.40 to 0.5.41
         - vue: 3.2.45 to 3.2.47
+        - vue-multiselect: 2.1.6 to 3.0.0-beta.1
     - devDependencies:
         - @vue/devtools-api: 6.4.5 to 6.5.0
         - @vue/test-utils: 2.2.7 to 2.3.1
@@ -91,7 +95,6 @@
         - eslint-plugin-vuejs-accessibility: 2.0.0 to 2.2.0
         - sass: 1.57.1 to 1.59.3
         - sinon: 15.0.1 to 15.0.2
-
 - Support for node 18.16.0 and npm 9.5.1
 - UI: SDP-Download UI was updated
 - Different terms for baselayer (basemap, backgroundlayer, basemap, hintergrundkarte) have been unified to baselayer
@@ -121,6 +124,8 @@
 - The layerAttribution control no longer exists. Instead, when a layer that has a layerAttribution is turned on, it is displayed as an alert.
 - Several warnings have been removed from alerting as they are unnecessary.
 - LayerAttribution is shown only once when the layer has been selected.
+- The control `overViewMap` has been removed.
+- `styleWMS` is no longer supported.
 
 ### Fixed
 - Issue #1072: Fixed a problem when launching the portal with addons_3_0_0.
@@ -139,7 +144,7 @@
 
 ## 2023-03-01 v3.0.0 - alpha1
 ### Added
-- The following NPM package was added:
+- The following NPM packages are added:
     - devDependencies:
         - @babel/plugin-transform-modules-commonjs
         - @vue/devtools-api
