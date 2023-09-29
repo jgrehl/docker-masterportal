@@ -1181,3 +1181,42 @@ Hier werden Layer oder Ordner mit Layern definiert, die als Fachdaten angezeigt 
 ```
 
 ***
+
+#### Themenconfig.Layer.WFS
+
+[inherits]: # (Themenconfig.Layer)
+
+Attribute für die WFS Suche bei highlightFeaturesByAttribute. Für die Aufrufparameter siehe **[urlParameter](urlParameter.md)**.
+```
+Beispiel-Aufrufe:
+?api/highlightFeaturesByAttribute=1&wfsId=1&attributeName=DK5&attributeValue=valueToSearchFor&attributeQuery=isequal
+?api/highlightFeaturesByAttribute=123&wfsId=1711&attributeName=name&attributeValue=Helios%20ENDO-Klinik%20Hamburg&attributeQuery=IsLike
+?api/highlightFeaturesByAttribute=123&wfsId=2003&attributeName=gebietsname&attributeValue=NSG%20Zollenspieker&attributeQuery=isequal
+?api/highlightFeaturesByAttribute=123&wfsId=2928&attributeName=biotop_nr&attributeValue=279&attributeQuery=isLike
+```
+
+|Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
+|----|--------|----|-------|-----------|------|
+|styleId|ja|String||Id die den Style definiert. Id wird in der **[style.json](style.json.md)** aufgelöst.|false|
+|featurePrefix|ja|String||Suchprefix für den typename bei der WFS Suche - z.Bsp. app:.|true|
+|wildCard|ja|String||Das zu verwendende Zeichen für das Jokerzeichen - z.Bsp. %|true|
+|singleChar|ja|String||Das Zeichen für den singleChar WFS parameter - z.Bsp. #|true|
+|escapeChar|ja|String||Das Zeichen für den escapeChar WFS parameter - z.Bsp. \||true|
+|valueDelimiter|nein|String||Das Trennzeichen für die Werte in attributeValue bei der isIn Suche, Default=Semikolon|true|
+
+**Example**
+
+```
+#!json
+{
+    "id": "1",
+    "visibility": false,
+    "name": "Tierarten invasiv",
+    "featurePrefix": "app:",
+    "wildCard": "%",
+    "singleChar": "#",
+    "escapeChar": "!"
+}
+```
+
+***
