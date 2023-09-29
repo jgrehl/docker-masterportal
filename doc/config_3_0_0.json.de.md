@@ -1182,6 +1182,49 @@ Hier werden Layer oder Ordner mit Layern definiert, die als Fachdaten angezeigt 
 
 ***
 
+### Themenconfig.Layer
+
+Hier werden die Layer definiert. Layer können auf viele verschiedene Arten konfiguriert werden. Ein Großteil der Attribute ist in der **[services.json](services.json.de.md)** definiert, kann jedoch hier am Layer überschrieben werden.
+
+|Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
+|----|-------------|---|-------|------------|------|
+|id|ja|String/String[]||Id des Layers. In der **[services.json](services.json.de.md)** werden die ids aufgelöst und die notwendigen Informationen herangezogen. ACHTUNG: Hierbei ist wichtig, dass die angegebenen ids dieselbe URL ansprechen, also den selben Dienst benutzen. Bei Konfiguration eines Arrays von Ids ist die Angabe der minScale und maxScale in der services.json für jeden Layer notwendig.|false|
+|name|nein|String||Name des Layers.|false|
+|entities|ja|**[Entity3D](#markdown-header-themenconfiglayerentity3d)**[]||Modelle, die angezeigt werden sollen |false|
+|transparency|nein|Integer|0|Transparenz des Layers.|false|
+|visibility|nein|Boolean|false|Sichtbarkeit des Layers.|false|
+|supported|nein|String[]|["2D", "3D"]|Gibt die Modi an, in denen der Layer verwendet werden kann.|false|
+|layerAttribution|nein|String||Wert aus **[services.json](services.json.de.md)**. HTML String. Dieser wird angezeigt, sobald der Layer aktiv ist.|false|
+|legendURL|nein|String||Wert aus **[services.json](services.json.de.md)**. URL die verwendet wird, um die Legende anzufragen. Deprecated, bitte "legend" verwenden.|false|
+|legend|nein|Boolean/String||Wert aus **[services.json](services.json.de.md)**. URL die verwendet wird, um die Legende anzufragen. Boolean-Wert um dynamisch die Legende aus dem WMS request oder dem styling zu generieren. String-Wert als Pfad auf Bild oder PDF-Datei.|false|
+|maxScale|nein|String||Wert aus **[services.json](services.json.de.md)**. Maximaler Maßstab bei dem der Layer angezeigt werden soll.|false|
+|minScale|nein|String||Wert aus **[services.json](services.json.de.md)**. Minimaler Maßstab bei dem der Layer angezeigt werden soll.|false|
+|autoRefresh|nein|Integer||Automatischer Reload des Layers. Angabe in ms. Minimum ist 500.|false|
+|isNeverVisibleInTree|nein|Boolean|false|Anzeige, ob der Layer niemals im Themenbaum sichtbar ist.|false|
+|urlIsVisible|nein|Boolean|true|Anzeige, ob die URL in der Layerinformation angezeigt werden soll.|false|
+|filterRefId|nein|Integer||Referenzierung zu einem konfigurierten Filter. Dabei ist die Id entsprechend der Position der Layer im Filter. Angefangen bei 0.|false|
+|renderer|no|String|"default"|Render-Pipeline für die Darstellung ("default" oder "webgl")(nur für Vektordaten "GeoJSON", "WFS", "OAF")"webgl" ist derzeit als experimentell einzustufen.|false|
+|isPointLayer|no|Boolean|false|Anzeige, ob der (Vektor)-Layer nur aus Punkt-Features besteht (nur relevant für WebGL Rendering))|false|
+
+**Beispiel mit einer Id**
+```
+#!json
+{
+    "id": "123"
+}
+```
+
+**Beispiel mit einem Array von Ids**
+```
+#!json
+{
+    "id": ["123", "456", "789"],
+    "name": "mein testlayer"
+}
+```
+
+***
+
 #### Themenconfig.Layer.WFS
 
 [inherits]: # (Themenconfig.Layer)
