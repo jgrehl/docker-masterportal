@@ -219,7 +219,8 @@ export default {
         },
 
         /*
-         * Generates the previewUrl depending on layerConfig type
+         * Generates the previewUrl depending on layerConfig type.
+         * @returns {void}
          */
         generatePreviewUrlByConfigType () {
             const layerConfig = this.layerConfigById(this.layerId);
