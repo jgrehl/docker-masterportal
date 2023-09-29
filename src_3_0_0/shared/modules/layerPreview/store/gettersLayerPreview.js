@@ -1,4 +1,11 @@
+import {generateSimpleGetters} from "../../../js/utils/generators";
+import stateLayerPreview from "./stateLayerPreview";
+
 const getters = {
+    /**
+     * Creates from every state-key a getter.
+     */
+    ...generateSimpleGetters(stateLayerPreview),
 
     /**
      * Returns the center coordinates of the layer preview.

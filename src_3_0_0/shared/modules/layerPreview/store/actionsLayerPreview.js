@@ -1,10 +1,11 @@
-const actions = {
+export default {
     /**
      * Sets previewCenter and previewZoomlevel depening on given center and zoomlevel or initial values from map.
      * @param {Object} param.commit the commit
      * @param {Object} param.getters the getters
      * @param {Object} param.rootGetters the rootGetters
      * @param {Object} payload the payload
+     * @param {String} payload.id id of the layer
      * @param {Array|String} payload.center center coordinates
      * @param {Number} payload.zoomLevel the zoom level
      * @returns {void}
@@ -25,5 +26,3 @@ const actions = {
         commit("setPreviewZoomLevel", {id, zoomLevel: previewZoomLevel});
     }
 };
-
-export default actions;
