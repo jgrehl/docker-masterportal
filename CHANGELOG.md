@@ -22,6 +22,7 @@
 - Issue #889: Layer is not shown in the tree anymore
 - Issue #1074: print drawn symbols
 - Issue #1075: Routing tool now works as menu entry or tool entry
+- Issue #1081: Transmit authorization token to services after login
 
 - AddWMS: WMS with subfolders are now displayed correctly in the topic tree again and can be switched on and off.
 
