@@ -34,14 +34,13 @@ function addInterceptor (token, interceptorUrlRegex) {
 
     const {fetch: originalFetch} = window;
 
-    window.fetch = async (...args) => {
-        const [resource] = args;
-        let [config] = args;
+    window.fetch = async (resource, originalConfig) => {
+        let config = originalConfig;
 
         if (interceptorUrlRegex && resource?.match(interceptorUrlRegex)) {
             config = {
-                ...config,
-                credentials: "include"
+                ...originalConfig,
+                headers: {"Authorization": `Bearer ${token}`}
             };
         }
 
