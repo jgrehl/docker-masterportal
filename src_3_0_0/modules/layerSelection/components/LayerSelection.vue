@@ -153,7 +153,7 @@ export default {
         class="w-100 layer-selection"
         aria-label=""
     >
-        <div class="layer-selection-navigation">
+        <div class="layer-selection-navigation d-flex">
             <h6 v-if="filterBaseLayer().length > 0">
                 {{ $t("common:modules.layerSelection.backgrounds") }}
             </h6>
@@ -206,7 +206,7 @@ export default {
                     {{ $t("common:modules.layerTree.categories") }}
                 </label>
             </div>
-            <div class="align-items-left justify-content-center layer-selection-navigation-dataLayer">
+            <div class="align-items-left justify-content-center layer-selection-navigation-dataLayer flex-grow-1">
                 <template
                     v-for="(conf, index) in subjectDataLayerConfs"
                     :key="index"
@@ -243,18 +243,30 @@ export default {
     padding: $padding;
     height: calc(100% - 50px);
     padding-top: 0;
+    @media (max-height: 670px) {
+        height: calc(100% - 85px);
+    }
 }
 .layer-selection-navigation {
     height: 90%;
+    flex-direction: column;
 }
 
 .layer-selection-navigation-baselayer {
     overflow-x: scroll;
 }
+@include media-breakpoint-down(md) {
+    .layer-selection-navigation-baselayer {
+        max-height: 120px;
+    }
+}
 .layer-selection-navigation-dataLayer {
     overflow-y: scroll;
     overflow-x: hidden;
     max-height: calc(100% - 100px);
+    @include media-breakpoint-down(md) {
+        max-height: calc(100% - 120px);
+    }
 }
 .layer-selection-add-layer-btn {
     position: sticky;
