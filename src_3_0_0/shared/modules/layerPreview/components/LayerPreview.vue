@@ -7,7 +7,6 @@ import proj4 from "proj4";
 import {Point} from "ol/geom";
 import {Tooltip} from "bootstrap";
 import axios from "axios";
-// import fs from "fs-extra";
 
 export default {
     name: "LayerPreview",
