@@ -845,10 +845,10 @@ Das ShadowTool bietet eine Oberfläche zur Definition einer Zeitangabe. Über Sl
 ###### Portalconfig.menu.sections.modules.shadow.shadowTime
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
-|month|nein|String||Monat|
-|day|nein|String||Tag|
-|hour|nein|String||Stunde|
-|minute|nein|String||Minute|
+|month|nein|String||Monat|false|
+|day|nein|String||Tag|false|
+|hour|nein|String||Stunde|false|
+|minute|nein|String||Minute|false|
 
 **Beispiel**
 
