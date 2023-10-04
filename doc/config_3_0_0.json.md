@@ -1143,8 +1143,20 @@ Layers or folders with layers to be displayed as subject data are defined here.
 ***
 
 ### Themenconfig.elements
+Layers or folders are defined here. Layers can be configured in many different ways. Most of the attributes are defined in **[services.json](services.json.en.md)**, but can be overridden here at the layer. Folders can in turn contain [elements](#markdown-header-themenconfigelements) with folders or layers.
+
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
+|id|yes|String/String[]||Layer ID(s). Resolved using the **[services.json](services.json.md)** file. Please mind that the given IDs **MUST** refer to the same URL, that is, use the same service. When configuring an array of IDs, setting `minScale` and `maxScale` of each layer is required to be in the `services.json`. With the special character `.` as suffix, a LayerId can be used multiple times. Each LayerId marked with a suffix creates its own entry in the topic tree.|false|
+|name|no|String||Layer name.|false|
+|type|no|String|"layer"|Type of the lement: "layer" or "folder"|false|
+|transparency|no|Integer|0|Layer transparency.|false|
+|visibility|no|Boolean|false|Layer visibility.|false|
+|autoRefresh|no|Integer||Automatically reload layer every `autoRefresh` ms. Minimum value is 500.|false|
+|urlIsVisible|no|Boolean|true|Whether the service URL should be shown in the layer information window.|false|
+|renderer|no|String|"default"|Which render pipeline to use ("default" or "webgl") (only for vector data of type "GeoJSON", "WFS", "OAF"). "webgl" is currently classified as experimental and can lead to errors in some modules|false|
+|isPointLayer|no|Boolean|false|Whether the (vector) layer only consists of point features (only relevant for WebGL rendering)|false|
+
 
 **Example Baselayer**
 
@@ -1178,56 +1190,56 @@ Layers or folders with layers to be displayed as subject data are defined here.
     }
 }
 ```
-
-***
-
-### Themenconfig.Layer
-
-Layer definition. Multiple ways to define layers exist. Most attributes are defined in the **[services.json](services.json.md)**, but may be overwritten in the layer definition.
-
-|Name|Required|Type|Default|Description|Expert|
-|----|--------|----|-------|-----------|------|
-|id|yes|String/String[]||Layer ID(s). Resolved using the **[services.json](services.json.md)** file. Please mind that the given IDs **MUST** refer to the same URL, that is, use the same service. When configuring an array of IDs, setting `minScale` and `maxScale` of each layer is required to be in the `services.json`.|false|
-|name|no|String||Layer name.|false|
-|entities|yes|**[Entity3D](#markdown-header-themenconfiglayerentity3d)**[]||Models to be shown.|false|
-|transparency|no|Integer|0|Layer transparency.|false|
-|visibility|no|Boolean|false|Layer visibility.|false|
-|supported|no|String[]|["2D", "3D"]|List of modes the layer may be used in.|false|
-|layerAttribution|no|String||**[services.json](services.json.md)** value. HTML string shown when the layer is active.|false|
-|legendURL|no|String||**[services.json](services.json.md)** value. URL used to request the legend graphic. _Deprecated, please use "legend" instead._|false|
-|legend|no|Boolean/String||**[services.json](services.json.md)** value. URL used to request the legend graphic. Use `true` to dynamically generate the legend from a WMS request or the styling. If of type string, it's expected to be a path to an image or a PDF file.|false|
-|maxScale|no|String||**[services.json](services.json.md)** value. Maximum scale in which the layer is still shown.|false|
-|minScale|no|String||**[services.json](services.json.md)** value. Minimum scale in which the layer is still shown.|false|
-|autoRefresh|no|Integer||Automatically reload layer every `autoRefresh` ms. Minimum value is 500.|false|
-|isNeverVisibleInTree|no|Boolean|false|If `true`, the layer is never visible in the topic selection tree.|false|
-|urlIsVisible|no|Boolean|true|Whether the service URL should be shown in the layer information window.|false|
-|filterRefId|no|Integer||Referencing to a configured filter. It is the order (index) of Layer in filter. Starting with 0.|false|
-|renderer|no|String|"default"|Which render pipeline to use ("default" or "webgl") (only for vector data of type "GeoJSON", "WFS", "OAF"). "webgl" is currently classified as experimental and can lead to errors in some modules|false|
-|isPointLayer|no|Boolean|false|Whether the (vector) layer only consists of point features (only relevant for WebGL rendering)|false|
-
-**Example with one ID**
-
-```json
-{
-    "id": "123"
-}
-```
-
 **Example with an array of IDs**
 
 ```json
+"elements": [
+    {
+        "id": ["123", "456", "789"],
+        "name": "my test layer"
+    }
+]
+```
+**Example with folders and layers**
+```json
 {
-    "id": ["123", "456", "789"],
-    "name": "my test layer"
+"elements": [
+        {
+        "name": "Folder level 1",
+        "type": "folder",
+        "elements": [
+                {
+                "name": "Folder level 2",
+                "type": "folder",
+                "elements": [
+                        {
+                            "id": "2431"
+                        },
+                        {
+                            "id": "2430"
+                        },
+                        {
+                            "id": "2429"
+                        },
+                        {
+                            "name": "Folder level 3",
+                            "type": "folder",
+                            "elements": [
+                                {
+                                    "id": "1103"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
 }
 ```
-
 ***
 
-#### Themenconfig.Layer.WFS
-
-[inherits]: # (Themenconfig.Layer)
-
+### Themenconfig.elements type="WFS"
 List of typical WFS query attributes for highlightFeaturesByAttribute. For the invocation parameters see **[urlParameter](urlParameter.md)**.
 ```
 Example invocations:
@@ -1248,8 +1260,7 @@ Example invocations:
 
 **Example**
 
-```
-#!json
+```json
 {
     "id": "1",
     "styleId": "1",
@@ -1260,5 +1271,5 @@ Example invocations:
     "singleChar": "#",
     "escapeChar": "!"
 }
-
+```
 ***
