@@ -18,7 +18,7 @@
         - 'metaIDsToIgnore' (moved from config.js) only for tree type 'auto'
         - 'layerIDsToStyle' (moved from config.js) only for tree type 'auto'
         - 'categories': only for tree type 'auto', contains categories in datasets of layers. Tree is structured by them.
-        - The configuration of 'Themenconfig' changed: Layers are contained in "elements"-Array and have type "layer", folders have type "folder." Type "layer" is default and can be omitted.
+    - The configuration of 'Themenconfig' changed: Layers are contained in "elements"-Array and have type "layer", folders have type "folder." Type "layer" is default and can be omitted.
     - The attribute 'cache' on the layer is no longer taken into account with tree.type 'auto
     - 'supportedTreeTypes': attributes 'supportedDevices' and 'supportedMapModes' are added to each module to make it configurable in which tree type the module should be displayed.
     - The configuration for `mouseHover` is moved from config.js to config.json. Also, the configuration is now optional.
