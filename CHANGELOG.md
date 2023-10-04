@@ -3,19 +3,12 @@
 
 [Semantic versioning](https://semver.org/spec/v2.0.0.html) is used.
 
-## Unreleased - in development
-### __Breaking Changes__
-
-### Added
-
+## v2.38.0 - 2023-10-04
 ### Changed
 - The following NPM packages have been updated:
   - dependencies:
     - @masterportal/masterportalapi: 2.27.0 to 2.28.0 (This also raised ol to version 7.5.2)
 - GFI: the gfi in 3D is not sorted reversed
-### Deprecated
-
-### Removed
 
 ### Fixed
 - Custom treetype can now load gdi layer via parametriUrl
