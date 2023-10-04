@@ -254,7 +254,7 @@ export default {
                                     @click="removeAlert(singleAlert.hash);"
                                 />
                                 <div
-                                    class="d-flex justify-content-center bd-highlight mb-3"
+                                    class="d-flex justify-content-end bd-highlight mb-3"
                                 >
                                     <h2
                                         class="p-2 bd-highlight"
