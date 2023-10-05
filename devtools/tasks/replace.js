@@ -7,11 +7,6 @@ const replace = require("replace-in-file"),
 module.exports = function (destination) {
     const replacements = [
         {
-            "files": destination + "/index.html",
-            "from": /\/*(\.+\/)*src_3_0_0\/assets\/img\/Logo_Masterportal\.svg/g,
-            "to": "../mastercode/" + mastercodeVersionFolderName + "/img/Logo_Masterportal.svg"
-        },
-        {
             "files": destination + "/js/masterportal.js",
             "from": /\/img\/tools\/draw\/circle_/g,
             "to": "/mastercode/" + mastercodeVersionFolderName + "/img/tools/draw/circle_"
@@ -25,21 +20,6 @@ module.exports = function (destination) {
             "files": destination + "/css/masterportal.css",
             "from": /css\/woffs/g,
             "to": "./woffs"
-        },
-        {
-            "files": destination + "/css/masterportal.css",
-            "from": /url\s?\(\s?"\/img\//g,
-            "to": "url(\"../img/"
-        },
-        {
-            "files": destination + "/css/masterportal.css",
-            "from": /url\s?\(\s?'\/img\//g,
-            "to": "url('../img/"
-        },
-        {
-            "files": destination + "/css/masterportal.css",
-            "from": /url\s?\(\s?\/img\//g,
-            "to": "url(../img/"
         },
         {
             "files": destination + "/js/masterportal.js",
