@@ -845,10 +845,10 @@ The shadow tool provides a UI element to define a point in time by using sliders
 ###### Portalconfig.menu.sections.modules.shadow.shadowTime
 |Name|Required|Type|Default|Description|
 |----|--------|----|-------|-----------|
-|month|nein|String||month|
-|day|nein|String||day|
-|hour|nein|String||hour|
-|minute|nein|String||minute|
+|month|no|String||month|
+|day|no|String||day|
+|hour|no|String||hour|
+|minute|no|String||minute|
 
 **Example**
 
@@ -933,9 +933,153 @@ Configuration of the topic selection tree.
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
+|type|no|enum["auto"]||The topic tree is built in the same structure as the **[topicconfig](#markdown-header-themenconfig)**. If the type `auto` is configured, all layers from the [services.json](services.json.md) are offered in the tree, structured by their metadata (FHH atlas).|false|
+|addLayerButton|no|Boolean||If true, a button for adding layers will be displayed. Initially only visible layers and layers with the property `showInLayerTree = true` are shown in the topic tree. If false, then all configured layers are shown in the topic tree. With the tree.type `auto` an add button is always shown. |false|
+|validLayerTypesAutoTree|no|enum|["WMS", "SENSORTHINGS", "TERRAIN3D", "TILESET3D", "OBLIQUE"]|Layer types to be used with the tree.type `auto`.|false|
+|layerIDsToIgnore|no|String[]||List of `services.json` layer ids that should not be displayed in the tree and map. Only for the tree.type `auto`.|false|
+|metaIDsToIgnore|no|String[]||All layers found in `services.json` that match these meta IDs will not be displayed in the tree and map. Only for the tree.type `auto`.|false|
+|metaIDsToMerge|no|String[]||All layers found in `services.json` that match these meta-IDs will be merged into a single layer in the tree. Only for the tree.type `auto`.|true|
+|categories|no|**[categories](#markdown-header-portalconfigtreecategories)**||Configuration of the categories from the metadata. Only for the tree.type `auto`.|false|
+|layerIDsToStyle|no|**[layerIDsToStyle](#markdown-header-portalconfigtreelayeridstostyle)**[]||Special implementation for a HVV service (Hamburger Verkehrsbetriebe). Contains objects to query different styles of a layer ID. Only for the tree.type `auto`.|true|
+|highlightedFeatures|no|**[highlightedFeatures](#markdown-header-portalconfigtreehighlightedfeatures)**||Configuration in addition to highlighting features.|false|
+|layerPills|no|**[layerPills](#markdown-header-portalconfigtreelayerpills)**||Configuration of the LayerPills.|false|
 
+**Example type auto**
+```json
+{
+    "tree": {
+        "type": "auto",
+        "validLayerTypesAutoTree": ["WMS", "WFS"],
+        "layerIDsToIgnore": ["1912", "1913"],
+        "metaIDsToIgnore": [
+            "09DE39AB-A965-45F4-B8F9-0C339A45B154"
+        ],
+        "metaIDsToMerge": [
+            "FE4DAF57-2AF6-434D-85E3-220A20B8C0F1"
+        ],
+        "layerIDsToStyle": [
+        {
+            "id": "1935",
+            "styles": ["geofox_Faehre", "geofox-bahn", "geofox-bus", "geofox_BusName"],
+            "name": ["Fährverbindungen", "Bahnlinien", "Buslinien", "Busliniennummern"],
+            "legendURL": ["http://geoportal.metropolregion.hamburg.de/legende_mrh/hvv-faehre.png", "http://geoportal.metropolregion.hamburg.de/legende_mrh/hvv-bahn.png", "http://geoportal.metropolregion.hamburg.de/legende_mrh/hvv-bus.png", "http://87.106.16.168/legende_mrh/hvv-bus.png"]
+        },
+        "categories": [
+        {
+          "key": "kategorie_opendata",
+          "name": "common:modules.layerTree.categoryOpendata",
+          "active": true
+        },
+        {
+          "key": "kategorie_inspire",
+          "name": "common:modules.layerTree.categoryInspire"
+        },
+        {
+          "key": "kategorie_organisation",
+          "name": "common:modules.layerTree.categoryOrganisation"
+        }
+      ]
+    }
+}
+```
+
+**Example no type**
+```json
+{
+    "tree": {
+        "addLayerButton": true,
+        "highlightedFeatures": {
+            "active": false
+        },
+    }
+}
+```
 ***
+#### Portalconfig.tree.layerIDsToStyle
+Special implementation for a HVV service (Hamburger Verkehrsbetriebe). Contains objects to query different styles of a layer ID. Only for the tree.type `auto`.
 
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|id|no|String||A `services.json` layer's id.|false|
+|styles|no|String/String[]||Style to use as a string; if multiple styles are to be used, they are listed in an array.|false|
+|name|no|String/String[]||Name to use as a string; if multiple names are to be used, they are listed in an array.|false|
+|legendUrl|no|String/String[]||URL of the legend image as a string ; if multiple legend images are to be used, their URLs are listed in an array.|false|
+
+**Example:**
+
+```json
+{
+    "layerIDsToStyle": [
+        {
+            "id": "1935",
+            "styles": ["geofox_Faehre", "geofox-bahn", "geofox-bus", "geofox_BusName"],
+            "name": ["Fährverbindungen", "Bahnlinien", "Buslinien", "Busliniennummern"],
+            "legendURL": ["http://geoportal.metropolregion.hamburg.de/legende_mrh/hvv-faehre.png", "http://geoportal.metropolregion.hamburg.de/legende_mrh/hvv-bahn.png", "http://geoportal.metropolregion.hamburg.de/legende_mrh/hvv-bus.png", "http://87.106.16.168/legende_mrh/hvv-bus.png"]
+        }
+    ]
+}
+```
+***
+#### Portalconfig.tree.categories
+Configuration of the categories from the metadata. Only for the tree.type `auto`.
+
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|key|yes|String||Key of the respective category in the metadata.|false|
+|name|yes|String||Name of the categorie.|false|
+|active|no|Boolean||Indicates whether this category is initially active. If not specified, the 1st category is initially active.|false|
+
+**Example**
+```json
+ "categories": [
+        {
+          "key": "categorie_opendata",
+          "name": "common:modules.layerTree.categoryOpendata",
+          "active": true
+        },
+        {
+          "key": "categorie_inspire",
+          "name": "common:modules.layerTree.categoryInspire"
+        },
+        {
+          "key": "categorie_organisation",
+          "name": "common:modules.layerTree.categoryOrganisation"
+        }
+      ]
+```
+***
+#### Portalconfig.tree.highlightedFeatures
+Configuration in addition to highlighting features. If features are highlighted with the "List" or "Select Features" module with "Zoom to this Feature" or via url parameter, then a layer with these features is selectable in the menu tree.
+
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|active|no|Boolean|false|Indicates whether this feature is active.|false|
+|layerName|no|String|"common:tree.selectedFeatures"|Name of the created layer with the highlighted features. The name additionally contains the name of the module that was worked with.|true|
+
+**Example**
+```json
+"highlightedFeatures": {
+    "active": false,
+    "layerName": "Selected features"
+},
+```
+***
+#### Portalconfig.tree.layerPills
+Configuration of the LayerPills.
+
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|active|no|Boolean|false|Indicates whether this feature is active.|false|
+|mobileOnly|no|Boolean|false|Indicates whether this feature is active only on small screens.|false|
+
+**Beispiel**
+```json
+"layerPills": {
+    "active": true,
+    "mobileOnly": true
+    }
+```
+***
 ## Themenconfig
 The `Themenconfig` entry defines the contents and their order in the topic selection. The following properties can be configured:
 
