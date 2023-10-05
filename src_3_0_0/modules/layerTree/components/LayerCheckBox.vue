@@ -5,7 +5,7 @@ import escapeId from "../../../shared/js/utils/escapeId";
 
 /**
  * Displays a checkbox to select a layer in layertree.
- * @module modules/LayerCheckBox
+ * @module modules/layerTree/components/LayerCheckBox
  * @vue-prop {Object} conf - The current layer configuration.
  * @vue-prop {Boolean} isLayerTree - Shows if parent is layer tree (true) or layer selection (false).
  * @vue-computed {Boolean} isLayerVisible - Returns the value of layerConf's attribute visibility.

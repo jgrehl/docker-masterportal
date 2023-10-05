@@ -14,7 +14,7 @@ draggable.compatConfig = {MODE: 3};
 
 /**
  * Representation of a node in layertree containing folders or layers.
- * @module modules/LayerTreeNode
+ * @module modules/layerTree/components/LayerTreeNode
  * @vue-data {Boolean} isOpen - Shows if node is open.
  * @vue-computed {Object} sortedLayerConfig - The v-model for sorted layerConfig.
  * @vue-computed {String} treeType - The current tree type.
