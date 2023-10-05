@@ -137,11 +137,8 @@ pipelines:
                 script:
                     - apt-get update && apt-get install -y curl wput jq
                     - git fetch --all --tags
-                    # Get taglist sorted by date, take the penultimate tag name and remove quotation marks
-                    - lastTag=$(curl --request GET --user "$bbapi_name:$bbapi_key" --url "https://api.bitbucket.org/2.0/repositories/geowerkstatt-hamburg/masterportal/refs/tags?sort=-target.date" --header "Accept:application/json" | jq .values[1].name | tr -d '"')
-                    - echo 'deply to opencode:'$lastTag
-                    - git checkout tags/$lastTag
-                    - git push https://$OpenCode_User:$OpenCode_Password@gitlab.opencode.de/geowerkstatt-hamburg/masterportal.git $lastTag
+                    - git checkout tags/3.0.0-beta1
+                    - git push https://$OpenCode_User:$OpenCode_Password@gitlab.opencode.de/geowerkstatt-hamburg/masterportal.git 3.0.0-beta1
                     - git clone --single-branch --branch dev https://geowerkstatt@bitbucket.org/geowerkstatt-hamburg/masterportal.git
                     - cd masterportal
                     - git push https://$OpenCode_User:$OpenCode_Password@gitlab.opencode.de/geowerkstatt-hamburg/masterportal.git -f
