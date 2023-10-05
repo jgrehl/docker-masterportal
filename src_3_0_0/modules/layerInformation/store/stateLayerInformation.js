@@ -1,6 +1,7 @@
 /**
- * User type definition
- * @typedef {Object} layerInformationState
+* The state of the layerInformation.
+ * @module modules/layerInformation/store/stateLayerInformation
+ *
  * @property {String} icon Icon next to name (config-param).
  * @property {Object[]} menuSide Specifies in which menu the GFI should be rendered
  * @property {String} name name of this module
