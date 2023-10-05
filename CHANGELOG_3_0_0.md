@@ -12,8 +12,11 @@
 - LayerInformation: For layers that do not have metadata, the layer information can now be displayed so that the URLs and legend can be viewed th
 - The following NPM packages have been updated:
     - dependencies:
+        - @popperjs/core: 2.11.6 to 2.11.8
         - @vue/compat: 3.2.47 to 3.3.4
         - axios: 1.3.4 to 1.5.1
+        - bootstrap: 5.2.3 to 5.3.2
+        - bootstrap-icons: 1.10.3 to 1.11.1
         - chart.js: 4.2.1 to 4.4.0
         - dayjs: 1.11.7 to 1.11.10
         - i18next: 22.4.11 to 23.5.1
@@ -38,6 +41,7 @@
         - markdown-it: 13.0.1 to 13.0.2
         - mock-local-storage: 1.1.23 to 1.1.24
         - regenerator-runtime: 0.13.11 to 0.14.0+
+        - sass: 1.59.3 to 1.68.0
         - vue-loader: 17.0.1 to 17.2.2
 
 ### Deprecated
