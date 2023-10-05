@@ -13,7 +13,6 @@ describe("src_3_0_0/modules/menu/MenuContainerBodyRootItemElement.vue", () => {
         mockConfigJson = {
             Portalconfig: {
                 tree: {
-                    type: "light"
                 }
             }
         };

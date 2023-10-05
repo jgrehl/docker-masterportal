@@ -1,8 +1,13 @@
-const actions = {
+/**
+ * The actions for the LayerTree.
+ * @module modules/layerTree/store/actions
+ */
+export default {
     /**
-     * Sets showInLayerTree and visibility of the given layer to false.
+     * Sets showInLayerTree and visibility of the given layer to false, updates all zIndexes.
+     * @param {Object} context the vuex context
+     * @param {Object} context.dispatch the dispatch
      * @param {Object} layerConf The layer config.
-     * @param {Object} param.dispatch the dispatch
      * @returns {void}
      */
     removeLayer ({dispatch}, layerConf) {
@@ -18,8 +23,9 @@ const actions = {
 
     /**
      * Sets the given transparency to the layer.
+     * @param {Object} context the vuex context
+     * @param {Object} context.dispatch the dispatch
      * @param {Object} layerConf The layer config.
-     * @param {Object} param.dispatch the dispatch
      * @returns {void}
      */
     updateTransparency ({dispatch}, {layerConf, transparency}) {
@@ -32,8 +38,9 @@ const actions = {
 
     /**
      * Commits the layerconf to the app-store.
+     * @param {Object} context the vuex context
+     * @param {Object} context.commit the commit
      * @param {Object} layerConf The layer config.
-     * @param {Object} param.commit the commit
      * @returns {void}
      */
     replaceByIdInLayerConfig ({dispatch}, layerConf) {
@@ -47,5 +54,3 @@ const actions = {
         }, {root: true});
     }
 };
-
-export default actions;

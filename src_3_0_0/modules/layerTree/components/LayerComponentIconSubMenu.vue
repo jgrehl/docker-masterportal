@@ -3,7 +3,7 @@ import IconButton from "../../../shared/modules/buttons/components/IconButton.vu
 
 /**
  * Represents an sub menu button for a layer in the layertree.
- * @module modules/LayerComponentIconSubMenu
+ * @module modules/layerTree/components/LayerComponentIconSubMenu
  * @vue-prop {Object} layerConf - The current layer configuration.
  */
 export default {
