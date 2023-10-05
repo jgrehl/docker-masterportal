@@ -50,7 +50,6 @@ export default {
             :aria="$t('common:modules.layerTree.infosAndLegend')"
             :icon="icon"
             :interaction="() => showLayerInformation()"
-            :disabled="!layerConf?.datasets?.length > 0"
         />
     </div>
 </template>

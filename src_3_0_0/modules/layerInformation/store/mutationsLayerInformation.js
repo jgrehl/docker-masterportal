@@ -1,7 +1,11 @@
 import {generateSimpleMutations} from "../../../shared/js/utils/generators";
 import stateLayerInformation from "./stateLayerInformation";
 
-const mutations = {
+/**
+ * The mutations for the layerInformation.
+ * @module modules/layerInformation/store/mutationsLayerInformation
+ */
+export default {
     ...generateSimpleMutations(stateLayerInformation),
 
     /**
@@ -12,19 +16,17 @@ const mutations = {
      */
     setLayerInfo (state, layerConf) {
         state.layerInfo = {
-            cswUrl: layerConf.datasets[0].csw_url,
-            id: layerConf.id,
-            layername: layerConf.name,
-            legendURL: layerConf.legendURL,
-            metaID: layerConf.datasets[0].md_id,
-            customMetadata: layerConf.datasets[0].customMetadata,
-            attributes: layerConf.datasets[0].customMetadata,
-            showDocUrl: layerConf.datasets[0].attributes,
-            typ: layerConf.typ,
-            url: layerConf.url,
-            urlIsVisible: layerConf.urlIsVisible
+            cswUrl: layerConf?.datasets?.length > 0 ? layerConf.datasets[0].csw_url : null,
+            id: layerConf?.id,
+            layername: layerConf?.name,
+            legendURL: layerConf?.legendURL,
+            metaID: layerConf?.datasets?.length > 0 ? layerConf.datasets[0].md_id : null,
+            customMetadata: layerConf?.datasets?.length > 0 ? layerConf.datasets[0].customMetadata : null,
+            attributes: layerConf?.datasets?.length > 0 ? layerConf.datasets[0].customMetadata : null,
+            showDocUrl: layerConf?.datasets?.length > 0 ? layerConf.datasets[0].attributes : null,
+            typ: layerConf?.typ,
+            url: layerConf?.url || layerConf?.capabilitiesUrl,
+            urlIsVisible: layerConf?.urlIsVisible
         };
     }
 };
-
-export default mutations;
