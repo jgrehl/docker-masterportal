@@ -191,7 +191,7 @@ describe("src_3_0_0/core/maps/js/highlightFeaturesByAttribute", () => {
                     gfiAttributes: "showAll"
                 },
                 dispatch = sinon.spy(),
-                rootGetters = {treeHighlightedFeatures: null, treeType: "light"};
+                rootGetters = {treeHighlightedFeatures: null, treeType: undefined};
 
             highlightFeaturesByAttribute.highlightPointFeature("defaultHighlightFeaturesPoint", "highlight_point_layer", "highlightPoint", layer, pointFeatures, dispatch, rootGetters);
 
@@ -211,7 +211,7 @@ describe("src_3_0_0/core/maps/js/highlightFeaturesByAttribute", () => {
                     gfiAttributes: "showAll"
                 },
                 dispatch = sinon.spy(),
-                rootGetters = {treeHighlightedFeatures: {active: false}, treeType: "light"};
+                rootGetters = {treeHighlightedFeatures: {active: false}, treeType: undefined};
 
             highlightFeaturesByAttribute.highlightLineOrPolygonFeature("defaultHighlightFeaturesPolygon", "highlight_polygon_layer", "highlightPolygon", "Polygon", layer, polygonFeatures, dispatch, rootGetters);
 
@@ -231,7 +231,7 @@ describe("src_3_0_0/core/maps/js/highlightFeaturesByAttribute", () => {
                     gfiAttributes: "showAll"
                 },
                 dispatch = sinon.spy(),
-                rootGetters = {treeHighlightedFeatures: {active: false}, treeType: "light"};
+                rootGetters = {treeHighlightedFeatures: {active: false}, treeType: undefined};
 
             highlightFeaturesByAttribute.highlightLineOrPolygonFeature("defaultHighlightFeaturesLine", "highlight_line_layer", "highlightLine", "LineString", layer, lineFeatures, dispatch, rootGetters);
 

@@ -56,7 +56,7 @@ describe("src/modules/selectFeatures/components/SelectFeatures.vue", () => {
             },
             getters: {
                 uiStyle: () => true,
-                treeType: () => "light"
+                treeType: () => undefined
             }
         });
         mapCollection.clear();
