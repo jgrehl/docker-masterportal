@@ -14,7 +14,12 @@
     - dependencies:
         - @vue/compat: 3.2.47 to 3.3.4
         - axios: 1.3.4 to 1.5.1
+        - chart.js: 4.2.1 to 4.4.0
         - dayjs: 1.11.7 to 1.11.10
+        - i18next: 22.4.11 to 23.5.1
+        - i18next-browser-languagedetector: 7.0.1 to 7.1.0
+        - i18next-http-backend: 2.2.0 to 2.2.2
+        - i18next-vue: 2.1.1 to 3.0.0
         - moment-timezone: 0.5.41 to 0.5.43
         - qrcode: 1.5.1 to 1.5.3
         - vue: 3.2.47 to 3.3.4
@@ -27,6 +32,7 @@
         - @vue/test-utils: 2.3.1 to 2.4.1
         - canvas: 2.11.0 to 2.11.2
         - chai: 4.3.7 to 4.3.10
+        - esbuild-loader: 3.0.1 to 4.0.2
         - eslint: 8.36.0 to 8.50.0
         - eslint-plugin-vue: 9.9.0 to 9.17.0
         - markdown-it: 13.0.1 to 13.0.2
@@ -37,6 +43,9 @@
 ### Deprecated
 
 ### Removed
+- The following NPM packages are removed:
+    - dependencies
+        - @panter/vue-i18next
 
 ### Fixed
 
@@ -111,6 +120,7 @@
 - Possibility to use urlParams including searching within searchInterfaces.
 - Printing functions for vector styling and legend has been added.
 - New draw module (still in development) has been added to the code structure parallel to the refactored draw within the module folder.
+
 ### Changed
 - The following NPM packages have been updated:
     - dependencies:
