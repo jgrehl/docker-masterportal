@@ -12,15 +12,18 @@
 - LayerInformation: For layers that do not have metadata, the layer information can now be displayed so that the URLs and legend can be viewed th
 - The following NPM packages have been updated:
     - dependencies:
+        - @vue/compat: 3.2.47 to 3.3.4
         - axios: 1.3.4 to 1.5.1
         - dayjs: 1.11.7 to 1.11.10
         - moment-timezone: 0.5.41 to 0.5.43
         - qrcode: 1.5.1 to 1.5.3
+        - vue: 3.2.47 to 3.3.4
         - vue-datepicker-next: 1.0.2 to 1.0.3
         - vue-multiselect: 3.0.0-beta.1 to 3.0.0-beta.2
     - devDependencies:
         - @geoblocks/print: 0.7.3 to 0.7.4
         - @sinonjs/fake-timers: 10.0.2 to 11.1.0
+        - @vue/compiler-sfc: 3.3.2 to 3.3.4
         - @vue/test-utils: 2.3.1 to 2.4.1
         - canvas: 2.11.0 to 2.11.2
         - chai: 4.3.7 to 4.3.10
@@ -28,6 +31,8 @@
         - eslint-plugin-vue: 9.9.0 to 9.17.0
         - markdown-it: 13.0.1 to 13.0.2
         - mock-local-storage: 1.1.23 to 1.1.24
+        - regenerator-runtime: 0.13.11 to 0.14.0+
+        - vue-loader: 17.0.1 to 17.2.2
 
 ### Deprecated
 
