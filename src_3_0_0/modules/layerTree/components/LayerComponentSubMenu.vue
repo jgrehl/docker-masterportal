@@ -6,7 +6,7 @@ import SliderItem from "../../../shared/modules/slider/components/SliderItem.vue
 
 /**
  * Layer Component Sub Menu
- * @module modules/LayerComponentSubMenu
+ * @module modules/layerTree/components/LayerComponentSubMenu
  * @vue-prop {Object} layerConf - The current layer configuration.
  * @vue-computed {Number} transparency - Returns the transparency of the layer config.
  * @vue-computed {Number} supportedTransparency - Indicates if the layer type supports transparency settings.

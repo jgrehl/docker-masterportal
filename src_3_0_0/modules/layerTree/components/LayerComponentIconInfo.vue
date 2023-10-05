@@ -4,7 +4,7 @@ import IconButton from "../../../shared/modules/buttons/components/IconButton.vu
 
 /**
  * Represents an info button for a layer in the layertree.
- * @module modules/LayerComponentIconInfo
+ * @module modules/layerTree/components/LayerComponentIconInfo
  * @vue-prop {Object} layerConf - The current layer configuration.
  * @vue-prop {Boolean} isLayerTree - Shows if icon is shown in layer tree.
  */

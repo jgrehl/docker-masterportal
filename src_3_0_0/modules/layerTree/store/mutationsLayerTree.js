@@ -1,7 +1,11 @@
 import {generateSimpleMutations} from "../../../shared/js/utils/generators";
 import state from "./stateLayerTree";
 
-const mutations = {
+/**
+ * The mutations for the LayerTree.
+ * @module modules/layerTree/store/mutations
+ */
+export default {
     /**
      * Creates from every state-key a setter.
      * For example, given a state object {key: value}, an object
@@ -10,5 +14,3 @@ const mutations = {
      */
     ...generateSimpleMutations(state)
 };
-
-export default mutations;
