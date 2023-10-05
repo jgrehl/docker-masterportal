@@ -23,6 +23,7 @@
         - i18next-browser-languagedetector: 7.0.1 to 7.1.0
         - i18next-http-backend: 2.2.0 to 2.2.2
         - i18next-vue: 2.1.1 to 3.0.0
+        - jsts: 2.9.2 to 2.11.0
         - moment-timezone: 0.5.41 to 0.5.43
         - qrcode: 1.5.1 to 1.5.3
         - vue: 3.2.47 to 3.3.4

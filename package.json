@@ -74,7 +74,7 @@
     "i18next-browser-languagedetector": "^7.1.0",
     "i18next-http-backend": "^2.2.2",
     "i18next-vue": "^3.0.0",
-    "jsts": "^2.9.2",
+    "jsts": "^2.11.0",
     "moment": "^2.29.4",
     "moment-timezone": "^0.5.43",
     "mqtt": "^4.3.7",
