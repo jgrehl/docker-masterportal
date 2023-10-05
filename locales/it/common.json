@@ -883,7 +883,10 @@
                         "key": "Nuova chiave",
                         "value": "Nuovo valore"
                     }
-                }
+                },
+                "squareDefinedInfo": " (senza tenere conto della curvatura della terra)",
+                "squareAreaLabel": "Area",
+                "squareSideLengthLabel": "Lunghezza del lato"
             },
             "measure": {
                 "geometry": "Geometria",

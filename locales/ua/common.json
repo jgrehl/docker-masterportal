@@ -833,7 +833,10 @@
                     "iconCloud": "Хмара",
                     "iconMeadow": "Луг",
                     "gelber Pin": "жовтий Pin"
-                }
+                },
+                "squareDefinedInfo": "(без урахування кривизни землі)",
+                "squareAreaLabel": "площа",
+                "squareSideLengthLabel": "довжина сторони"
             },
             "measure": {
                 "geometry": "Геометрія",

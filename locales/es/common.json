@@ -657,7 +657,10 @@
                     "iconLeaf": "Hoja",
                     "iconCloud": "Nube",
                     "iconMeadow": "Campo"
-                }
+                },
+                "squareDefinedInfo": " (sin tener en cuenta la curvatura de la tierra)",
+                "squareAreaLabel": "Área",
+                "squareSideLengthLabel": "Longitud lateral"
             },
             "measure": {
                 "geometry": "Geometría",

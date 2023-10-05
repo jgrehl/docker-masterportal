@@ -765,7 +765,10 @@
                     "iconCloud": "Wolke",
                     "iconMeadow": "Wiese",
                     "gelber Pin": "gelber Pin"
-                }
+                },
+                "squareDefinedInfo": " (ahn Rücksicht op de Eerdkrümmung)",
+                "squareAreaLabel": "Flaaginholt",
+                "squareSideLengthLabel": "Siedenläng" 
             },
             "measure": {
                 "geometry": "Geometrie",

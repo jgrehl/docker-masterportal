@@ -97,7 +97,9 @@ export default {
              */
             get () {
                 if (this.styleSettings?.unit === "km") {
-                    return this.styleSettings?.squareArea / 1000;
+                    const squareAreaKm = this.styleSettings?.squareArea / 1000;
+
+                    return squareAreaKm.toFixed(2);
                 }
                 return this.styleSettings?.squareArea;
             },
@@ -113,6 +115,43 @@ export default {
                 }
                 else {
                     this.setSquareArea(parseInt(value, 10));
+                }
+            }
+        },
+
+
+        squareSideLengthComputed: {
+        /**
+         * Getter for the computed property squareSideLength based on squareArea
+         * @info the internal representation of squareArea is always in meters
+         * @returns {Number} the current square side length as an integer
+         */
+            get () {
+                const squareAreaMeters = this.styleSettings?.squareArea || 0;
+
+                if (this.styleSettings?.unit === "km") {
+                    const squareSideLengthKm = Math.sqrt(squareAreaMeters) / 1000;
+
+                    return squareSideLengthKm.toFixed(2);
+                }
+                return Math.round(Math.sqrt(squareAreaMeters));
+            },
+            /**
+         * Setter for the computed property squareSideLength based on squareArea
+         * @info the internal representation of squareArea is always in meters
+         * @param {Number} value the value to set the square side length to
+         * @returns {void}
+         */
+            set (value) {
+                if (this.styleSettings?.unit === "km") {
+                    const squareAreaKm = Math.pow(value / 1000, 2);
+
+                    this.setSquareArea(squareAreaKm);
+                }
+                else {
+                    const squareAreaMeters = Math.pow(value, 2);
+
+                    this.setSquareArea(squareAreaMeters);
                 }
             }
         },
@@ -715,7 +754,7 @@ export default {
                                 value="defined"
                                 :selected="squareMethodComputed === 'defined'"
                             >
-                                {{ $t("common:modules.tools.draw.defined") }}
+                                {{ $t("common:modules.tools.draw.defined") + $t("common:modules.tools.draw.squareDefinedInfo") }}
                             </option>
                         </select>
                     </div>
@@ -744,6 +783,30 @@ export default {
                         >
                     </div>
                 </div>
+                <div
+                    v-if="drawType.id === 'drawSquare'"
+                    class="form-group form-group-sm row"
+                >
+                    <label
+                        class="col-md-5 col-form-label"
+                        for="tool-draw-squareSideLength"
+                    >
+                        {{ $t('common:modules.tools.draw.squareSideLengthLabel') }}
+                    </label>
+                    <div class="col-md-7">
+                        <input
+                            id="tool-draw-squareSideLength"
+                            :value="squareSideLengthComputed"
+                            class="form-control form-control-sm"
+                            :style="{borderColor: innerBorderColor}"
+                            type="text"
+                            :placeholder="$t('common:modules.tools.draw.squareSideLengthPlaceholder')"
+                            :disabled="true"
+                        >
+                    </div>
+                </div>
+
+
                 <div
                     v-if="drawType.id === 'drawSquare'"
                     class="form-group form-group-sm row"

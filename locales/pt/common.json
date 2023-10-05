@@ -631,7 +631,10 @@
                     "iconLeaf": "Folha",
                     "iconCloud": "Nuvem",
                     "iconMeadow": "Relva"
-                }
+                },
+                "squareDefinedInfo": " (sem ter em conta a curvatura da Terra)",
+                "squareAreaLabel": "Área",
+                "squareSideLengthLabel": "Comprimento do lado"
             },
             "download": {
                 "format": "Formato",

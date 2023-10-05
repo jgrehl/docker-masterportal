@@ -765,7 +765,10 @@
                     "iconCloud": "Bulut",
                     "iconMeadow": "Çimen",
                     "gelber Pin": "sarı Pin"
-                }
+                },
+                "squareDefinedInfo": "(dünyanın eğriliğini hesaba katmadan)",
+                "squareAreaLabel": "Alan",
+                "squareSideLengthLabel": "Yan uzunluk"
             },
             "measure": {
                 "geometry": "Geometri",

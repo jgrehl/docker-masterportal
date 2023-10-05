@@ -916,7 +916,10 @@
                         "key": "Neuer Schlüssel",
                         "value": "Neuer Wert"
                     }
-                }
+                },
+                "squareDefinedInfo": " (ohne Berücksichtung der Erdkrümmung)",
+                "squareAreaLabel": "Flächeninhalt",
+                "squareSideLengthLabel": "Seitenlänge" 
             },
             "measure": {
                 "geometry": "Geometrie",

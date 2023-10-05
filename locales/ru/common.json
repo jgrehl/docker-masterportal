@@ -830,7 +830,10 @@
                     "iconCloud": "Облако",
                     "iconMeadow": "Луг",
                     "gelber Pin": "Желтый штифт"
-                }
+                },
+                "squareDefinedInfo": "(без учета кривизны Земли)",
+                "squareAreaLabel": "площадь",
+                "squareSideLengthLabel": "длина стороны"
             },
             "measure": {
                 "geometry": "Геометрия",

@@ -914,7 +914,10 @@
                         "key": "New attribute key",
                         "value": "New attribute value"
                     }
-                }
+                },
+                "squareDefinedInfo": " (without taking into account the curvature of the earth)",
+                "squareAreaLabel": "Area",
+                "squareSideLengthLabel": "Side Length"
             },
             "measure": {
                 "geometry": "Geometry",
