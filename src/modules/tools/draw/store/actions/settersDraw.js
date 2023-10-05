@@ -46,13 +46,12 @@ async function setActive ({state, commit, dispatch, rootState}, active) {
  * @param {Number} area the area of the square in meters
  * @returns {void}
  */
-function setSquareArea ({getters, commit, dispatch}, area) {
+function setSquareArea ({getters, commit}, area) {
     const {styleSettings} = getters;
 
     styleSettings.squareArea = area;
 
     setStyleSettings({getters, commit}, styleSettings);
-    dispatch("updateSquareAreaDuringModify", area);
 }
 
 /**

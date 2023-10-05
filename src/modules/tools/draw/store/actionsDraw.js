@@ -758,29 +758,6 @@ const initialState = JSON.parse(JSON.stringify(stateDraw)),
             }
         },
         /**
-         * Updates the selected feature during modify for square
-         *
-         * @param {Number} squareArea The area of the square.
-         * @returns {void}
-         */
-        updateSquareAreaDuringModify ({state, dispatch}, squareArea) {
-            if (state.currentInteraction === "modify" && state.selectedFeature !== null && state.drawType.id === "drawSquare") {
-                const feature = state.selectedFeature,
-                    coordinates = feature.getGeometry().getCoordinates(),
-                    minX = coordinates[0][0][0],
-                    minY = coordinates[0][0][1],
-                    maxX = coordinates[0][2][0],
-                    maxY = coordinates[0][2][1],
-                    centerX = (minX + maxX) / 2,
-                    centerY = (minY + maxY) / 2,
-                    centerCoordinate = [centerX, centerY];
-
-                circleCalculations.calculateCircle({feature}, centerCoordinate, squareArea);
-
-                dispatch("addDrawStateToFeature", state.selectedFeature);
-            }
-        },
-        /**
          * Updates the drawInteractions on the map and creates a new one.
          *
          * @returns {void}
