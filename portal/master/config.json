@@ -1066,7 +1066,9 @@
           "visibility": false,
           "url": "./resources/example_geojson.json",
           "styleId": "contributions",
-          "legend": true
+          "legend": true,
+          "gfiAttributes": "showAll",
+          "gfiTheme": "dipas"
         },
         {
           "id": "StaticImage",

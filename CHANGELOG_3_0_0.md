@@ -9,6 +9,7 @@
 ### Added
 
 ### Changed
+- LayerInformation: For layers that do not have metadata, the layer information can now be displayed so that the URLs and legend can be viewed th
 
 ### Deprecated
 
@@ -16,8 +17,9 @@
 
 ### Fixed
 
-## 2023-10-04 v3.0.0 - beta1
+---
 
+## 2023-10-04 v3.0.0 - beta1
 ### __Breaking Changes__
 - Configuration:
     - The `wfsSearch` modules config.json parameter 'field'-property `type` was renamed to `queryType`
@@ -115,8 +117,6 @@
 - The layer pills are now animated, work with the menu and only show the arrow buttons when useful.
 - Proxy function handling has been centralized.
 
-### Deprecated
-
 ### Removed
 - The url parameter `TOOLS/[tool-id]` was removed. The `MENU` parameter can be used instead.
 - The following NPM packages are removed:
@@ -175,8 +175,6 @@
   - 'layerIDsToStyle'
 - The Control-Bar Design
 
-### Deprecated
-
 ### Removed
 - The following NPM packages are removed:
     - dependencies
@@ -200,5 +198,3 @@
         - sinon-chai
 - Module print: The attribute `mapfishServiceId` has been removed. Use `printServiceId` instead.
 - Module contact: The attribute `serviceID` has been removed. Use `serviceId` instead.
-
-

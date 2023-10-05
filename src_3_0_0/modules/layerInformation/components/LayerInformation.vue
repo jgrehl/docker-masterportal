@@ -5,7 +5,7 @@ import {isWebLink} from "../../../shared/js/utils/urlHelper";
 
 /**
  * The Layer Information that gives the user information, links and the legend for a layer
- * @module modules/LayerInformation
+ * @module modules/layerInformation/components/LayerInformation
  * @vue-data {String} activeTab - The active tab.
  * @vue-computed {Boolean} showAdditionalMetaData - Shows if additional meta data should be displayed.
  * @vue-computed {Boolean} showCustomMetaData - Shows if custom meta data should be displayed.
@@ -133,7 +133,7 @@ export default {
          * @returns {String} GetCapabilities URL
          */
         getGetCapabilitiesUrl ({url, typ}) {
-            const urlObject = new URL(url);
+            const urlObject = new URL(url, location.href);
 
             if (typ !== "OAF") {
                 urlObject.searchParams.set("SERVICE", typ);
