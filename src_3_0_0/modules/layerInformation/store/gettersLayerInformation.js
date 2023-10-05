@@ -1,8 +1,10 @@
 import {generateSimpleGetters} from "../../../shared/js/utils/generators";
 import stateLayerInformation from "./stateLayerInformation";
 
-const getters = {
+/**
+ * The getters for the layerInformation.
+ * @module modules/layerInformation/store/gettersLayerInformation
+ */
+export default {
     ...generateSimpleGetters(stateLayerInformation)
 };
-
-export default getters;

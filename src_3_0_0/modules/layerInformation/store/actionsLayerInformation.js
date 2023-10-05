@@ -3,7 +3,11 @@ import sortBy from "../../../shared/js/utils/sortBy";
 import xml2json from "../../../shared/js/utils/xml2json";
 import axios from "axios";
 
-const actions = {
+/**
+ * The actions for the layerInformation.
+ * @module modules/layerInformation/store/actionsLayerInformation
+ */
+export default {
     /**
      * Starts drawing layer information. If mobile and menu is closed, menu is opened.
      * @param {Object} param.commit the commit
@@ -13,6 +17,9 @@ const actions = {
      * @returns {void}
      */
     startLayerInformation ({commit, dispatch, rootGetters}, layerConf) {
+        const name = layerConf?.datasets?.length > 0 ? layerConf.datasets[0].md_name : layerConf.name,
+            mdid = layerConf?.datasets?.length > 0 ? layerConf.datasets[0].md_id : null;
+
         if (rootGetters["Modules/Legend/layerInfoLegend"].id !== layerConf.id) {
             commit("Modules/Legend/setLayerInfoLegend", {}, {root: true});
             dispatch("Modules/Legend/createLegendForLayerInfo", layerConf.id, {root: true});
@@ -20,9 +27,9 @@ const actions = {
         if (rootGetters.isMobile && !rootGetters["Menu/expanded"]("mainMenu")) {
             dispatch("Menu/toggleMenu", "mainMenu", {root: true});
         }
-        dispatch("Menu/changeCurrentComponent", {type: "layerInformation", side: "mainMenu", props: {name: layerConf.datasets[0].md_name}}, {root: true});
+        dispatch("Menu/changeCurrentComponent", {type: "layerInformation", side: "mainMenu", props: {name}}, {root: true});
         commit("setLayerInfo", layerConf);
-        dispatch("setMetadataURL", layerConf.datasets[0].md_id);
+        dispatch("setMetadataURL", mdid);
         dispatch("additionalSingleLayerInfo");
     },
 
@@ -184,7 +191,4 @@ const actions = {
             commit("setShowUrlGlobal", undefined);
         }
     }
-
 };
-
-export default actions;
