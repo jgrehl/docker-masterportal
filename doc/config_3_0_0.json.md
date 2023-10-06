@@ -29,9 +29,10 @@ The section *Portalconfig* controls the following properties:
 2. Informations on any layers (*getFeatureInfo*)
 3. Menu entries in main menu and availability as well as order of modules (*mainMenu*)
 4. Initial map view settings (*mapView*)
-5. Footer configuration (*portalFooter*)
-6. Menu entries in secondary menu and availability as well as order of modules (*secondaryMenu*)
-7. Type of topic selection (*tree*)
+5. Display of a tooltip of features (*mouseHover*)
+6. Footer configuration (*portalFooter*)
+7. Menu entries in secondary menu and availability as well as order of modules (*secondaryMenu*)
+8. Type of topic selection (*tree*)
 
 The configuration options listed in the following table exist:
 
@@ -41,6 +42,7 @@ The configuration options listed in the following table exist:
 |getFeatureInfo|no|**[getFeatureInfo](#markdown-header-portalconfiggetFeatureInfo)**||Retrieves information about a queried feature by retrieving GetFeatureInfo requests or GetFeature requests or loaded vector data.|false|
 |mainMenu|no|**[menu](#markdown-header-portalconfigmenu)**||Menu entries in main menu and their order are configured in this entry. The order of modules corresponds to the order in the object specifying them; see **[Modules](#markdown-header-portalconfigmenumodules)**.|false|
 |mapView|no|**[mapView](#markdown-header-portalconfigmapview)**||Defines the initial map view and a background shown when no layer is selected.|false|
+|mouseHover|no|**[mouseHover](#markdown-header-portalconfigmousehover)**||Activates the MouseHover feature for vector layers, both WFS and GeoJSON. For per-layer configuration, see the **[Vector](#markdown-header-themenconfiglayervector)**.|false|
 |portalFooter|no|**[footer](#markdown-header-footer)**||Possibility to configure the content of the portal footer.|false|
 |secondaryMenu|no|**[menu](#markdown-header-portalconfigmenu)**||Menu entries in secondary menu and their order are configured in this entry. The order of modules corresponds to the order in the object specifying them; see **[Modules](#markdown-header-portalconfigmenumodules)**.|false|
 |tree|no|**[tree](#markdown-header-portalconfigtree)**||Configuration of the topic selection tree.|false|
@@ -54,6 +56,7 @@ The configuration options listed in the following table exist:
         "getFeatureInfo": {},
         "mainMenu": {},
         "mapView": {},
+        "mouseHover": {},
         "portalFooter": {},
         "secondaryMenu": {},
         "tree": {}
@@ -917,6 +920,23 @@ Defines the initial map view and a background shown when no layer is selected.
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
+
+***
+
+### Portalconfig.mouseHover
+
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|infoText|no|String|"common:modules.mouseHover.infoText"| Text that will be displayed if the features exceed the number of `numFeaturesToShow`.|false|
+|numFeaturesToShow|no|Integer|2|Maximum amount of element information per tooltip; when exceeded, an information text informs the user of cut content.|false|
+
+**Example**
+
+````json
+"mouseHover": {
+    "numFeaturesToShow": 1,
+    "infoText": "Exampletext"
+},
 
 ***
 

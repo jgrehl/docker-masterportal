@@ -29,9 +29,10 @@ Im Abschnitt *Portalconfig* können folgende Eigenschaften konfiguriert werden:
 2. Informationen zu beliebigen Layern (*getFeatureInfo*)
 3. Einträge im Mainmenu sowie Vorhandenheit jeweiliger Module und deren Reihenfolge (*mainMenu*)
 4. Starteinstellungen der Kartenansicht (*mapView*)
-5. Konfiguration der Fußzeile (*portalFooter*)
-6. Einträge im Secondarymenu sowie Vorhandenheit jeweiliger Module und deren Reihenfolge (*secondaryMenu*)
-7. Konfiguration der Themenauswahl (*tree*)
+5. Anzeige eines Tooltips von Features (*mouseHover*)
+6. Konfiguration der Fußzeile (*portalFooter*)
+7. Einträge im Secondarymenu sowie Vorhandenheit jeweiliger Module und deren Reihenfolge (*secondaryMenu*)
+8. Konfiguration der Themenauswahl (*tree*)
 
 Es existieren die im Folgenden aufgelisteten Konfigurationen:
 
@@ -41,6 +42,7 @@ Es existieren die im Folgenden aufgelisteten Konfigurationen:
 |getFeatureInfo|nein|**[getFeatureInfo](#markdown-header-portalconfiggetFeatureInfo)**||Zeigt Informationen zu einem abgefragten Feature ab, indem GetFeatureInfo-Requests oder GetFeature-Requests oder geladene Vektordaten abgefragt werden.|false|
 |mainMenu|nein|**[menu](#markdown-header-portalconfigmenu)**||Hier können die Menüeinträge im Mainmenu und deren Anordnung konfiguriert werden. Die Reihenfolge der Module ist identisch mit der Reihenfolge in der config.json (siehe **[Modules](#markdown-header-portalconfigmenumodules)**).|false|
 |mapView|nein|**[mapView](#markdown-header-portalconfigmapview)**||Mit verschiedenen Parametern wird die Startansicht der Karte konfiguriert und der Hintergrund festgelegt, der erscheint wenn keine Karte geladen ist.|false|
+|mouseHover|nein|**[mouseHover](#markdown-header-portalconfigmousehover)**||Aktiviert die MouseHover-Funktion für Vektorlayer, z.B. WFS oder GeoJSON. Für die Konfiguration pro Layer siehe **[Vector](#markdown-header-themenconfiglayervector)**.|false|
 |portalFooter|no|**[footer](#markdown-header-footer)**||Möglichkeit den Inhalt der Fußzeile des Portals zu konfigurieren.|false|
 |secondaryMenu|nein|**[menu](#markdown-header-portalconfigmenu)**||Hier können die Menüeinträge im Secondarymenu und deren Anordnung konfiguriert werden. Die Reihenfolge der Module ist identisch mit der Reihenfolge in der config.json (siehe **[Modules](#markdown-header-portalconfigmenumodules)**).|false|
 |tree|nein|**[tree](#markdown-header-portalconfigtree)**||Möglichkeit um Einstellungen für den Themenbaum vorzunehmen.|false|
@@ -54,6 +56,7 @@ Es existieren die im Folgenden aufgelisteten Konfigurationen:
         "getFeatureInfo": {},
         "mainMenu": {},
         "mapView": {},
+        "mouseHover": {},
         "portalFooter": {},
         "secondaryMenu": {},
         "tree": {}
@@ -917,6 +920,25 @@ Mit verschiedenen Parametern wird die Startansicht der Karte konfiguriert und de
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
+
+***
+
+### Portalconfig.mouseHover
+Aktiviert die MouseHover-Funktion für Vektorlayer, z.B. WFS oder GeoJSON. Für die Konfiguration pro Layer siehe **[Vector](#markdown-header-themenconfiglayervector)**.
+
+|Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
+|----|-------------|---|-------|------------|------|
+|infoText|nein|String|"common:modules.mouseHover.infoText"| Text der angezeigt wird, wenn die Feature die Anzahl von `numFeaturesToShow` übersteigen.|false|
+|numFeaturesToShow|nein|Integer|2|Maximale Menge an Elementinformationen pro Tooltip; bei Überschreitung informiert ein Informationstext den Benutzer über den abgeschnittenen Inhalt.|false|
+
+**Beispiel**
+
+````json
+"mouseHover": {
+    "numFeaturesToShow": 1,
+    "infoText": "Beispieltext"
+},
+```
 
 ***
 
