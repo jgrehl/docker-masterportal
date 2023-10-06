@@ -44,7 +44,7 @@
         - mock-local-storage: 1.1.23 to 1.1.24
         - regenerator-runtime: 0.13.11 to 0.14.0
         - replace-in-file: 6.3.5 to 7.0.1
-        - sass: 1.59.3 to 1.68.0
+        - sass: 1.59.3 to 1.69.0
         - vue-loader: 17.0.1 to 17.2.2
         - webpack: 4.46.0 to 4.47.0
         - zip-a-folder: 1.1.5 to 3.1.3
