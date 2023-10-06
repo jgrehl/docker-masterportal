@@ -7,7 +7,7 @@ import layerFactory from "../../../core/layers/js/layerFactory";
 
 /**
  * The actions for the CoordToolkit.
- * @module modules/coordToolkit/store/actions
+ * @module modules/coordToolkit/store/actionsCoordToolkit
  */
 export default {
     /**

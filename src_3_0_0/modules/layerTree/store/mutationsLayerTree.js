@@ -3,7 +3,7 @@ import state from "./stateLayerTree";
 
 /**
  * The mutations for the LayerTree.
- * @module modules/layerTree/store/mutations
+ * @module modules/layerTree/store/mutationsLayerTree
  */
 export default {
     /**
