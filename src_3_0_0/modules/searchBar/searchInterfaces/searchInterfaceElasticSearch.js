@@ -62,7 +62,7 @@ SearchInterfaceElasticSearch.prototype = Object.create(SearchInterface.prototype
 SearchInterfaceElasticSearch.prototype.search = async function (searchInput) {
     const searchStringAttribute = this.searchStringAttribute,
         payload = this.appendSearchStringToPayload(this.payload, searchStringAttribute, searchInput),
-        payloadWithIgnoreIds = this.addIgnoreIdsToPayload(payload, Config?.tree),
+        payloadWithIgnoreIds = this.addIgnoreIdsToPayload(payload, store.getters.treeConfig),
         requestConfig = {
             serviceId: this.serviceId,
             requestType: this.requestType,

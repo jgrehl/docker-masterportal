@@ -358,6 +358,15 @@ const getters = {
     },
 
     /**
+     * Return the highlighted features.
+     * @param {Object} state state of the app-store.
+     * @returns {Object|Boolean} The highlighted features.
+     */
+    treeConfig: state => {
+        return state?.portalConfig?.tree;
+    },
+
+    /**
      * Returns the ui style of configJs.
      * @param {Object} state state of the app-store.
      * @returns {Object} The ui style.
