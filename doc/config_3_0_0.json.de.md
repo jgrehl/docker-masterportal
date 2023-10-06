@@ -1144,19 +1144,13 @@ Hier werden Layer oder Ordner mit Layern definiert, die als Fachdaten angezeigt 
 ***
 
 ### Themenconfig.elements
-Hier werden Layer oder Ordner definiert. Layer können auf viele verschiedene Arten konfiguriert werden. Ein Großteil der Attribute ist in der **[services.json](services.json.de.md)** definiert, kann jedoch hier am Layer überschrieben werden. Ordner können wiederum [elements](#markdown-header-themenconfigelements) mit Ordner oder Layern enthalten.
+Hier werden Layer oder Ordner definiert. Ordner können **[elements](#markdown-header-themenconfigelements)** mit Ordner oder Layern enthalten.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
-|id|ja|String/String[]||Id des Layers. In der **[services.json](services.json.de.md)** werden die ids aufgelöst und die notwendigen Informationen herangezogen. ACHTUNG: Hierbei ist wichtig, dass die angegebenen ids dieselbe URL ansprechen, also den selben Dienst benutzen. Bei Konfiguration eines Arrays von Ids ist die Angabe der minScale und maxScale in der services.json für jeden Layer notwendig.|false|
-|name|nein|String||Name des Layers.|false|
+|name|nein|String|""|Name des Layers oder Ordners.|false|
 |type|nein|String|"layer"|Typ des Elements: "layer" für Layer oder "folder" für Ordner|false|
-|transparency|nein|Integer|0|Transparenz des Layers.|false|
-|visibility|nein|Boolean|false|Sichtbarkeit des Layers.|false|
-|autoRefresh|nein|Integer||Automatischer Reload des Layers. Angabe in ms. Minimum ist 500.|false|
-|urlIsVisible|nein|Boolean|true|Anzeige, ob die URL in der Layerinformation angezeigt werden soll.|false|
-|renderer|nein|String|"default"|Render-Pipeline für die Darstellung ("default" oder "webgl")(nur für Vektordaten "GeoJSON", "WFS", "OAF")"webgl" ist derzeit als experimentell einzustufen.|false|
-|isPointLayer|nein|Boolean|false|Anzeige, ob der (Vektor)-Layer nur aus Punkt-Features besteht (nur relevant für WebGL Rendering))|false|
+|elements|nein|**[elements](#markdown-header-themenconfigelements)**[]||Nächste Ebene mit Layern oder Ordnern unter dem type `folder`.|false|
 
 **Beispiel Baselayer**
 
@@ -1191,58 +1185,119 @@ Hier werden Layer oder Ordner definiert. Layer können auf viele verschiedene Ar
 }
 ```
 
-**Beispiel mit einem Array von Ids**
-```json
-{
-"elements": [
-                {
-                    "id": ["123", "456", "789"],
-                    "name": "mein testlayer"
-                }
-            ]
-}
-```
-
 **Beispiel mit Ordnern, die Layer enthalten**
 ```json
 {
 "elements": [
-               {
-                "name": "Ordner Ebene 1",
+        {
+        "name": "Ordner Ebene 1",
+        "type": "folder",
+        "elements": [
+                {
+                "name": "Ordner Ebene 2",
                 "type": "folder",
                 "elements": [
                         {
-                        "name": "Ordner Ebene 2",
-                        "type": "folder",
-                        "elements": [
+                            "id": "2431"
+                        },
+                        {
+                            "id": "2430"
+                        },
+                        {
+                            "id": "2429"
+                        },
+                        {
+                            "name": "Ordner Ebene 3",
+                            "type": "folder",
+                            "elements": [
                                 {
-                                    "id": "2431"
-                                },
-                                {
-                                    "id": "2430"
-                                },
-                                {
-                                    "id": "2429"
-                                },
-                                {
-                                    "name": "Ordner Ebene 3",
-                                    "type": "folder",
-                                    "elements": [
-                                        {
-                                            "id": "1103"
-                                        }
-                                    ]
+                                    "id": "1103"
                                 }
                             ]
                         }
                     ]
                 }
             ]
+        }
+    ]
 }
 ```
 ***
+### Themenconfig.elements.layers
+Hier werden Layer verschiedenen Typs konfiguriert. Layer können auf viele verschiedene Arten konfiguriert werden. Ein Großteil der Attribute ist in der **[services.json](services.json.de.md)** definiert, kann jedoch hier am Layer überschrieben werden. 
+Neben diesen Attributen gibt es auch Typ-spezifische Attribute für die verschiedenen Layer Typen.
 
-### Themenconfig.elements type="WFS"
+|Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
+|----|-------------|---|-------|------------|------|
+|id|ja|String/String[]||Id des Layers. In der **[services.json](services.json.de.md)** werden die ids aufgelöst und die notwendigen Informationen herangezogen. ACHTUNG: Hierbei ist wichtig, dass die angegebenen ids dieselbe URL ansprechen, also den selben Dienst benutzen. Bei Konfiguration eines Arrays von Ids ist die Angabe der minScale und maxScale in der services.json für jeden Layer notwendig.|false|
+|name|nein|String||Name des Layers.|false|
+|type|nein|String|"layer"|Typ des Elements Layer: "layer"|false|
+|transparency|nein|Integer|0|Transparenz des Layers.|false|
+|visibility|nein|Boolean|false|Sichtbarkeit des Layers.|false|
+|styleId|ja|String||Id die den Style definiert. Id wird in der **[style.json](style.json.md)** aufgelöst.|false|
+|autoRefresh|nein|Integer||Automatischer Reload des Layers. Angabe in ms. Minimum ist 500.|false|
+|urlIsVisible|nein|Boolean|true|Anzeige, ob die URL in der Layerinformation angezeigt werden soll.|false|
+|renderer|nein|String|"default"|Render-Pipeline für die Darstellung ("default" oder "webgl")(nur für Vektordaten "GeoJSON", "WFS", "OAF")"webgl" ist derzeit als experimentell einzustufen.|false|
+|isPointLayer|nein|Boolean|false|Anzeige, ob der (Vektor)-Layer nur aus Punkt-Features besteht (nur relevant für WebGL Rendering))|false|
+|styleField|nein|String|??? todo|false|
+
+**Beispiel**
+```json
+{
+"elements": [
+          {
+          "id": "2",
+          "name": "Beispiel Layer",
+          "typ": "WMS",
+          "visibility": false,
+          "styleId": "3"
+        }
+    ]
+}
+```
+**Beispiel mit einem Array von Ids**
+```json
+{
+"elements": [
+        {
+            "id": ["123", "456", "789"],
+            "name": "Mein Testlayer"
+        }
+    ]
+}
+```
+***
+#### Themenconfig.elements.layers.Vector
+Hier werden Vector typische Attribute aufgelistet. Vector Layer sind vpm Typ **[WFS](#markdown-header-themenconfigelementslayerswfs)**, GeoJSON (nur in EPSG:4326), **[SensorLayer](sensorThings.de.md)**, und Vector Tile Layer.
+
+|Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
+|----|--------|----|-------|-----------|------|
+|searchField|nein|String||Attributname nach dem die Searchbar diesen Layer durchsucht.|false|
+|mouseHoverField|nein|String/String[]||Attributname oder Array von Attributnamen, die angezeigt werden sollen, sobald der User mit der Maus über ein Feature hovert.|false|
+|||||||
+
+**Beispiel**
+```json
+{
+"elements": [
+          {
+          "id": "22078",
+          "name": "Bewohnerparkgebiete Hamburg",
+          "typ": "WFS",
+          "visibility": false,
+          "styleId": "22078",
+          "styleField": "bewirtschaftungsart",
+          "searchField": "bwp_name",
+          "mouseHoverField": [
+            "bwp_name",
+            "bewirtschaftungsart"
+          ]
+        }
+    ]
+}
+```
+***
+##### Themenconfig.elements.layers.Vector.WFS
 Attribute für die WFS Suche bei highlightFeaturesByAttribute. Für die Aufrufparameter siehe **[urlParameter](urlParameter.md)**.
 ```
 Beispiel-Aufrufe:
@@ -1254,7 +1309,6 @@ Beispiel-Aufrufe:
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|--------|----|-------|-----------|------|
-|styleId|ja|String||Id die den Style definiert. Id wird in der **[style.json](style.json.md)** aufgelöst.|false|
 |featurePrefix|ja|String||Suchprefix für den typename bei der WFS Suche - z.Bsp. app:.|true|
 |wildCard|ja|String||Das zu verwendende Zeichen für das Jokerzeichen - z.Bsp. %|true|
 |singleChar|ja|String||Das Zeichen für den singleChar WFS parameter - z.Bsp. #|true|
