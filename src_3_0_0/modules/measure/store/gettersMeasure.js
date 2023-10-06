@@ -7,10 +7,10 @@ const getters = {
     ...generateSimpleGetters(stateMeasure),
 
     /**
-     * @param {object} state measure store state
-     * @param {object} _ measure store getters
-     * @param {object} __ root state
-     * @param {object} rootGetters root getters
+     * @param {Object} state measure store state
+     * @param {Object} _ measure store getters
+     * @param {Object} __ root state
+     * @param {Object} rootGetters root getters
      * @returns {String[]} options for measurement units
      */
     currentUnits ({selectedGeometry, lineStringUnits, polygonUnits}) {
@@ -20,10 +20,10 @@ const getters = {
     },
     /**
      * Calculates the length of lines.
-     * @param {object} state measure store state
-     * @param {object} _ measure store getters
-     * @param {object} __ root state
-     * @param {object} rootGetters root getters
+     * @param {Object} state measure store state
+     * @param {Object} _ measure store getters
+     * @param {Object} __ root state
+     * @param {Object} rootGetters root getters
      * @return {String[]} calculated display values
      */
     lineLengths ({lines, earthRadius, measurementAccuracy, selectedUnit, lineStringUnits}, _, __, rootGetters) {
@@ -38,10 +38,10 @@ const getters = {
     },
     /**
      * Calculates the area of a polygon.
-     * @param {object} state measure store state
-     * @param {object} _ measure store getters
-     * @param {object} __ root state
-     * @param {object} rootGetters root getters
+     * @param {Object} state measure store state
+     * @param {Object} _ measure store getters
+     * @param {Object} __ root state
+     * @param {Object} rootGetters root getters
      * @return {String[]} calculated display values
      */
     polygonAreas ({polygons, earthRadius, measurementAccuracy, selectedUnit, polygonUnits}, _, __, rootGetters) {

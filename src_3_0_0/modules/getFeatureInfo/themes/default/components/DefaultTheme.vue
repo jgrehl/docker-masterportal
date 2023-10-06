@@ -105,8 +105,8 @@ export default {
             return Object.keys(feature.getMappedProperties()).length !== 0;
         },
         /**
-         * @param {string} value string to check.
-         * @returns {boolean} whether the given value includes a pipe.
+         * @param {String} value string to check.
+         * @returns {Boolean} whether the given value includes a pipe.
          */
         hasPipe: function (value) {
             return typeof value === "string" && value.includes("|");

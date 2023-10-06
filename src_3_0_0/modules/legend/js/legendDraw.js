@@ -96,7 +96,7 @@ export default {
     /**
      * Creates an SVG for a circle style.
      * @param   {vectorStyle} style feature styles
-     * @returns {string} svg
+     * @returns {String} svg
      */
     drawCircleStyle (style) {
         const circleStrokeColor = style.circleStrokeColor ? convertColor(style.circleStrokeColor, "rgbString") : "black",

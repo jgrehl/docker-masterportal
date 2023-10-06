@@ -19,9 +19,9 @@ const projections = getProjections("EPSG:25832", "EPSG:4326", "32"),
  * Checks whether bots arrays are of length 3 and whether their values are equal at the same positions.
  * Used to check if two colors are the same.
  *
- * @param {number[]} arrOne First array.
- * @param {number[]} arrTwo Second array.
- * @returns {boolean} true, if both are arrays of length 3 consisting of the same values; false, else.
+ * @param {Number[]} arrOne First array.
+ * @param {Number[]} arrTwo Second array.
+ * @returns {Boolean} true, if both are arrays of length 3 consisting of the same values; false, else.
  */
 function allCompareEqual (arrOne, arrTwo) {
     return Array.isArray(arrOne)
@@ -35,9 +35,9 @@ function allCompareEqual (arrOne, arrTwo) {
  * Creates the IconStyle-Part of a Point-KML. Contains the link to a SVG.
  *
  * @see https://developers.google.com/kml/documentation/kmlreference#iconstyle
- * @param {string} url URL from where the Icon can be retrieved from.
- * @param {number} scale Scale of the Icon. NOTE: If this value is 0, the Icon is not displayed.
- * @returns {string} The IconStyle-Part of a KML-File.
+ * @param {String} url URL from where the Icon can be retrieved from.
+ * @param {Number} scale Scale of the Icon. NOTE: If this value is 0, the Icon is not displayed.
+ * @returns {String} The IconStyle-Part of a KML-File.
  */
 function createKmlIconStyle (url, scale) {
     const scaleTag = `<scale>${scale}</scale>`,
@@ -49,8 +49,8 @@ function createKmlIconStyle (url, scale) {
 /**
  * If the given color is included in the color options of the Draw Tool the name of the color is returned.
  *
- * @param {number[]} color The color of which the name is to be retrieved.
- * @returns {string} The name of the color corresponding to the number array.
+ * @param {Number[]} color The color of which the name is to be retrieved.
+ * @returns {String} The name of the color corresponding to the number array.
  */
 function getIconColor (color) {
     const selectedOption = colorOptions.filter(option => allCompareEqual(color, option.value));
@@ -66,7 +66,7 @@ function getIconColor (color) {
  *
  * @see https://developers.google.com/kml/documentation/kmlreference#hotspot
  * @param {Object} anchor Values for the hotspot-tag are retrieved from this object.
- * @returns {string} hotspot-Tag for a KML IconStyle.
+ * @returns {String} hotspot-Tag for a KML IconStyle.
  */
 function getKmlHotSpotOfIconStyle (anchor) {
     const x = anchor.anchor[0],
@@ -103,8 +103,8 @@ function transform (coords, isPolygon) {
 /**
  * Transforms the given point coordinates from EPSG:25832 to EPSG:4326.
  *
- * @param {number[]} coords Coordinates.
- * @returns {number[]} Transformed coordinates.
+ * @param {Number[]} coords Coordinates.
+ * @returns {Number[]} Transformed coordinates.
  */
 function transformPoint (coords) {
     return proj4(projections.sourceProj, projections.destProj, coords);
@@ -137,7 +137,7 @@ function transformCoordinates (geometry) {
 /**
  * convert features to string
  * @param {ol.Feature[]} features - the used features
- * @param {object} format of the features
+ * @param {Object} format of the features
  * @return {String} convertedFeatures - The features converted to KML.
  */
 function convertFeatures (features, format) {
@@ -166,7 +166,7 @@ function convertFeatures (features, format) {
 /**
  * Gets a kml document which has custom attributes from given features added.
  * @param {ol.Feature[]} features The features.
- * @param {object} format The format of the features.
+ * @param {Object} format The format of the features.
  * @returns {Document|null} The KML Document
  */
 function getKMLWithCustomAttributes (features, format) {

@@ -3,9 +3,9 @@ import idx, {badPathSymbol} from "../../../shared/js/utils/idx";
 /**
  * Builds the path to the given option in the external source object.
  *
- * @param {object} optionsObject The currently set values by the user.
- * @param {string} currentOption The option for which the path needs to be build.
- * @param {object} parsedSource source to resolve ID keys by
+ * @param {Object} optionsObject The currently set values by the user.
+ * @param {String} currentOption The option for which the path needs to be build.
+ * @param {Object} parsedSource source to resolve ID keys by
  * @returns {array} The path to the given option as an array.
  */
 function buildPath (optionsObject, currentOption, parsedSource) {
@@ -48,7 +48,7 @@ function buildPath (optionsObject, currentOption, parsedSource) {
  * Retrieves the options from the path in the given source.
  *
  * @param {array} path The path to the values.
- * @param {object} source The source from which the values should be retrieved.
+ * @param {Object} source The source from which the values should be retrieved.
  * @returns {Array} If found, return the values as an array, otherwise return an empty array.
  */
 function getOptions (path, source) {
@@ -66,8 +66,8 @@ function getOptions (path, source) {
  * Prepares the options to be able to be used with the components.
  * Maps id to fieldValue and adds the key to the displayName of the root element if so configured.
  *
- * @param {object} elements The options to be adjusted / prepared.
- * @param {boolean} [showKey = false] Whether the key should be part of the displayName.
+ * @param {Object} elements The options to be adjusted / prepared.
+ * @param {Boolean} [showKey = false] Whether the key should be part of the displayName.
  * @returns {array} The adjusted array of values.
  */
 function prepareOptionsWithId (elements, showKey = false) {
@@ -81,8 +81,8 @@ function prepareOptionsWithId (elements, showKey = false) {
 /**
  * Removes the path to the element so that just the value itself is left.
  *
- * @param {string} el The element of which the path should be removed.
- * @returns {string} The adjusted element.
+ * @param {String} el The element of which the path should be removed.
+ * @returns {String} The adjusted element.
  */
 function removePath (el) {
     let element = el;

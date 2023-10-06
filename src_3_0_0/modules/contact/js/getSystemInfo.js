@@ -10,7 +10,7 @@
 /**
  * Retrieves information about the system of the user.
  *
- * @param {string} title will be used if given; else, document.title will be used
+ * @param {String} title will be used if given; else, document.title will be used
  * @returns {ContactSystemInfo} information object
  */
 function getSystemInfo (title) {

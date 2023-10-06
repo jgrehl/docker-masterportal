@@ -1,8 +1,8 @@
 /**
  * Calculates the center point of the given extent.
  *
- * @param {number[]} extent An extent.
- * @returns {number[]} Center of the given extent.
+ * @param {Number[]} extent An extent.
+ * @returns {Number[]} Center of the given extent.
  */
 export default function (extent) {
     return [

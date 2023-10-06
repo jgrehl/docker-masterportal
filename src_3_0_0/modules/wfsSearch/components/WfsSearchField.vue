@@ -112,7 +112,7 @@ export default {
          * - The prior needed element (e.g. 'foo' is needed to have the field 'foo.bar') is not added yet
          * - The prior needed / root element (example above) is not selected yet
          *
-         * @returns {boolean} Whether the input is disabled or not.
+         * @returns {Boolean} Whether the input is disabled or not.
          */
         disabled () {
             const notRoot = this.selectableParameters.options !== "";

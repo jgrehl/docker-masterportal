@@ -284,7 +284,7 @@ export default {
 
         /**
          * Checks if the filter list is valid.
-         * @returns {boolean} True if valid.
+         * @returns {Boolean} True if valid.
          */
         isFilterListValid () {
             if (this.filterList === null) {

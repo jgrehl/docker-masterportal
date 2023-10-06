@@ -101,8 +101,8 @@ SearchInterfaceSpecialWfs.prototype.normalizeResults = function (searchResults) 
 /**
      * Creates the XML for a WFS 1.1.0 POST request
      * @param   {Object} definition    Definition from Configuration
-     * @param   {string} searchString  The string queried
-     * @returns {string}               XML String
+     * @param   {String} searchString  The string queried
+     * @returns {String}               XML String
      */
 SearchInterfaceSpecialWfs.prototype.getWFS110Xml = function (definition, searchString) {
     const typeName = definition.typeName,

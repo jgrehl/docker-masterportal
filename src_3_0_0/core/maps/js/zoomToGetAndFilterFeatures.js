@@ -7,9 +7,9 @@ import handleAxiosResponse from "../../../shared/js/utils/handleAxiosResponse";
 /**
  * Retrieves features from the defined layer.
  *
- * @param {string} layerId Id of the layer to retrieve the features from.
- * @param {string} property Property to filter.
- * @param {string[]} values Array of allowed values.
+ * @param {String} layerId Id of the layer to retrieve the features from.
+ * @param {String} property Property to filter.
+ * @param {String[]} values Array of allowed values.
  * @returns {Promise<Feature[]>} If resolved, returns an array of features.
  */
 export default function (layerId, property, values) {

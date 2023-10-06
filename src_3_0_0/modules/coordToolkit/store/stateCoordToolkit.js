@@ -17,10 +17,10 @@
  * @property {String} coordinatesNorthingExample contains the example for northing coordinates
  * @property {Object} [currentProjection="{id: "http://www.opengis.net/gml/srs/epsg.xml#25832", name: "EPSG:25832", projName: "utm"}"] the current projection
  * @property {String} [delimiter="|"] delimits the copies coordinates
- * @property {boolean} [eastingNoCoord="false"] true, if no coord in easting input field
- * @property {boolean} [eastingNoMatch="false"] true, if coord in easting are not valid
+ * @property {Boolean} [eastingNoCoord="false"] true, if no coord in easting input field
+ * @property {Boolean} [eastingNoMatch="false"] true, if coord in easting are not valid
  * @property {Boolean} [northingNoCoord="false"] true, if no coord in northing input field
- * @property {boolean} [northingNoMatch="false"] true, if coord in northing are not valid
+ * @property {Boolean} [northingNoMatch="false"] true, if coord in northing are not valid
  * @property {String} [height=""] contains the value of the height input field
  * @property {String} heightElementName element name in the response of getFeatureRequest of height layer
  * @property {String} [heightInfoFormat="application/vnd.ogc.gml"] infoFormat of the layers getFeatureRequest

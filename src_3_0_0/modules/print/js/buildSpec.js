@@ -156,8 +156,8 @@ const BuildSpecModel = {
     },
     /**
      * Returns true, if the given string is not empty or undefined
-     * @param {string} string to check
-     * @returns {boolean} true, if string has content
+     * @param {String} string to check
+     * @returns {Boolean} true, if string has content
      */
     isFilled: function (string) {
         return string !== undefined && string.trim() !== "";
@@ -340,7 +340,7 @@ const BuildSpecModel = {
     /**
      * returns vector tile layer information
      * @param {ol.layer.VectorTile} layer vector tile layer with vector tile source
-     * @param {number} resolution print resolution
+     * @param {Number} resolution print resolution
      * @param {ol.Extent} extent printed extent
      * @returns {Object} - static image layer spec
      */
@@ -465,7 +465,7 @@ const BuildSpecModel = {
      * @param {ol.layer.Vector} layer vector layer with vector source
      * @param {ol.feature[]} features vectorfeatures
      * @param {ol.extent} extent  Extent uses to filter the feature by extent.
-     * @returns {object} - geojson layer spec
+     * @returns {Object} - geojson layer spec
      */
     buildVector: function (layer, features, extent) {
         const geojsonList = [];
@@ -741,7 +741,7 @@ const BuildSpecModel = {
      * @param {String[]} styleAttributes The attribute by whose value the feature is styled.
      * @param {ol.style.Style} style style
      * @param {Number} styleIndex The style index.
-     * @returns {string} an ECQL Expression
+     * @returns {String} an ECQL Expression
      */
     getStylingRules: function (layer, feature, styleAttributes, style, styleIndex) {
         const styleAttr = feature.get("styleId") ? "styleId" : styleAttributes,
@@ -831,7 +831,7 @@ const BuildSpecModel = {
     /**
      * Unsets all properties of type string of the given feature.
      * @param {ol.Feature} feature to unset properties of type string at
-     * @param {string} notToUnset key not to unset
+     * @param {String} notToUnset key not to unset
      * @returns {void}
      */
     unsetStringPropertiesOfFeature: function (feature, notToUnset) {
@@ -878,7 +878,7 @@ const BuildSpecModel = {
      * converts an openlayers feature to a GeoJSON feature object
      * @param {ol.Feature} feature - the feature to convert
      * @param {ol.style.Style[]} style - the feature-style
-     * @returns {object} GeoJSON object
+     * @returns {Object} GeoJSON object
      */
     convertFeatureToGeoJson: function (feature, style) {
         const clonedFeature = feature.clone(),
@@ -1027,7 +1027,7 @@ const BuildSpecModel = {
     /**
      * derives the url of the image from the server the app is running on
      * if the app is running on localhost the images from test.geoportal-hamburg.de are used
-     * @param {object} src the image source
+     * @param {Object} src the image source
      * @return {String} path or url to image directory
      */
     buildGraphicPath: function (src) {
@@ -1193,7 +1193,7 @@ const BuildSpecModel = {
      * gets array with [GfiContent, layername, coordinates] of actual gfi
      * empty array if gfi is not active.
      * coordinates not needed, yet.
-     * @param {boolean} isGfiSelected flag if gfi has to be printed
+     * @param {Boolean} isGfiSelected flag if gfi has to be printed
      * @param  {Array} gfiArray array
      * @return {void}
      */
@@ -1221,7 +1221,7 @@ const BuildSpecModel = {
     },
     /**
      * @param {Object[]} layers - layers attribute of the map spec
-     * @param {number[]} coordinates - the coordinates of the gfi
+     * @param {Number[]} coordinates - the coordinates of the gfi
      * @returns {void}
      */
     addGfiFeature: function (layers, coordinates) {

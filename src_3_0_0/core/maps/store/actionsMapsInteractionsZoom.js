@@ -118,7 +118,7 @@ export default {
      * @param {Object} zoomParams parameter object.
      * @param {String[]} zoomParams.extent The extent to zoom.
      * @param {Object} zoomParams.options Options for zoom.
-     * @param {string} zoomParams.projection The projection from RUL parameter.
+     * @param {String} zoomParams.projection The projection from RUL parameter.
      * @returns {void}
      */
     zoomToProjExtent ({dispatch, getters}, zoomParams) {

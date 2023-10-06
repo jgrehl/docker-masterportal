@@ -2,9 +2,9 @@
  * Returns the data from the axios response.
  *
  * @throws Will throw an error if the response is not valid.
- * @param {object} response The response received by axios.
- * @param {string} callContext Name of the outer function and Component (if given) which used axios.
- * @returns {object} The received data or undefined if an error occurred.
+ * @param {Object} response The response received by axios.
+ * @param {String} callContext Name of the outer function and Component (if given) which used axios.
+ * @returns {Object} The received data or undefined if an error occurred.
  */
 export default function handleAxiosResponse (response, callContext) {
     if (

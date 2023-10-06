@@ -37,8 +37,8 @@ Layer2dRasterWmsTimeLayer.prototype = Object.create(WMSLayer.prototype);
  * Creates an array with ascending values from min to max separated by resolution.
  * @param {String} min Minimum value.
  * @param {String} max Maximum value.
- * @param {object} increment Distance between each value inside the array.
- * @returns {object} Steps and step increments.
+ * @param {Object} increment Distance between each value inside the array.
+ * @returns {Object} Steps and step increments.
  */
 Layer2dRasterWmsTimeLayer.prototype.createTimeRange = function (min, max, increment) {
     let start = dayjs.utc(min);
@@ -101,7 +101,7 @@ Layer2dRasterWmsTimeLayer.prototype.determineDefault = function (timeRange, exte
  *         The step is retrieved from the resolution.
  * - Case 4: List of multiple intervals; ',' and '/' are present. For every interval the process described in CASE 3 will be performed.
  *
- * @param {object} extent Time dimensional extent retrieved from the service.
+ * @param {Object} extent Time dimensional extent retrieved from the service.
  * @returns {Object} An object containing the range of possible time values.
  */
 Layer2dRasterWmsTimeLayer.prototype.extractExtentValues = function (extent) {
@@ -147,7 +147,7 @@ Layer2dRasterWmsTimeLayer.prototype.findNode = function (element, nodeName) {
 
 /**
  * @param {String} resolution in WMS-T format, e.g. "P1900YT5M"; see specification
- * @returns {object} map of increments for start date
+ * @returns {Object} map of increments for start date
  */
 Layer2dRasterWmsTimeLayer.prototype.getIncrementsFromResolution = function (resolution) {
     const increments = {},
@@ -186,9 +186,9 @@ Layer2dRasterWmsTimeLayer.prototype.getRawLayerAttributes = function (attrs) {
 
 /**
  * Compares WMS-T resolution increments.
- * @param {object} step increment to compare to
- * @param {object} increment increment to consider
- * @returns {boolean} whether increment is smaller
+ * @param {Object} step increment to compare to
+ * @param {Object} increment increment to consider
+ * @returns {Boolean} whether increment is smaller
  */
 Layer2dRasterWmsTimeLayer.prototype.incrementIsSmaller = function (step, increment) {
     const compareStrings = [step, increment].map(
@@ -310,8 +310,8 @@ Layer2dRasterWmsTimeLayer.prototype.removeLayer = function (layerId) {
  * Retrieves wmsTime-related entries from GetCapabilities layer specification.
  * @param {String} xmlCapabilities GetCapabilities XML response
  * @param {String} layerName name of layer to use
- * @param {object} timeSpecification may contain "dimensionName" and "extentName"
- * @returns {object} dimension and extent of layer
+ * @param {Object} timeSpecification may contain "dimensionName" and "extentName"
+ * @returns {Object} dimension and extent of layer
  */
 Layer2dRasterWmsTimeLayer.prototype.retrieveTimeData = function (xmlCapabilities, layerName, timeSpecification) {
     const {dimensionName, extentName} = timeSpecification,

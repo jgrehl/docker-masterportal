@@ -147,7 +147,7 @@ export default {
         },
         /**
          * Update a single alert's has-been-read state.
-         * @param {string} hash hash
+         * @param {String} hash hash
          * @returns {void}
          */
         markAsRead: function (hash) {
@@ -155,7 +155,7 @@ export default {
         },
         /**
          * Remove an alert from the alert modal
-         * @param {string} hash hash
+         * @param {String} hash hash
          * @returns {void}
          */
         removeAlert: function (hash) {

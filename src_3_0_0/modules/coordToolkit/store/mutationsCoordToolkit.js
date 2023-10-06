@@ -64,7 +64,7 @@ export default {
     /**
      * Resets the northing or easting error messages  in the state which is used for live validation of input.
      * @param {Object} state state of this module
-     * @param {boolean} id if id === "northing" northing-messages are resetted, if id === "easting" easting-messages, else if id === "all" all messages are resetted
+     * @param {Boolean} id if id === "northing" northing-messages are resetted, if id === "easting" easting-messages, else if id === "all" all messages are resetted
      * @returns {void}
      */
     resetErrorMessages: (state, id) => {

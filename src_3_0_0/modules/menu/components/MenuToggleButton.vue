@@ -19,7 +19,7 @@ export default {
     computed: {
         ...mapGetters("Menu", ["mainExpanded", "secondaryExpanded", "mainToggleButtonIcon", "secondaryToggleButtonIcon"]),
         /**
-         * @returns {string} iconClass to be used depending on the side this button is used for.
+         * @returns {String} iconClass to be used depending on the side this button is used for.
          */
         iconClass () {
             let icon;

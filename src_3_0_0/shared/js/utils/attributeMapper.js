@@ -60,7 +60,7 @@ function prepareValue (properties, key) {
 
 /**
  * checks if value starts with special prefix to determine if value is a object path
- * @param   {string} value string to check
+ * @param   {String} value string to check
  * @returns {Boolean} true is value is an object path
  */
 function isObjectPath (value) {

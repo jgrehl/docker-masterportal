@@ -5,8 +5,8 @@ const badPathSymbol = Symbol("Path could not be resolved.");
  * to retrieve data.
  * Inspired by https://medium.com/javascript-inside/safely-accessing-deeply-nested-values-in-javascript-99bf72a0855a.
  *
- * @param {object} object The object to traverse.
- * @param {string[]} path The path of keys / indices to traverse through the object.
+ * @param {Object} object The object to traverse.
+ * @param {String[]} path The path of keys / indices to traverse through the object.
  * @returns {?*} The value(s) to be retrieved from the given object.
  */
 function idx (object, path) {

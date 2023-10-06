@@ -112,7 +112,7 @@ const getters = {
 
     /**
      * Reverse the gfi features
-     * @param {object} state - the state
+     * @param {Object} state - the state
      * @returns {Array} reversed gfiFeatures Array from state
      */
     gfiFeaturesReverse: (state) => {

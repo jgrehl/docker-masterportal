@@ -158,7 +158,7 @@ export default {
      * handles the response from a wfs get feature request
      * @param {Function} dispatch dispatch function
      * @param {Function} rootGetters rootGetters function
-     * @param {string} response - XML to be sent as String
+     * @param {String} response - XML to be sent as String
      * @param {Object} highlightFeaturesLayer The configuration for the Layer.
      * @returns {void}
     */
