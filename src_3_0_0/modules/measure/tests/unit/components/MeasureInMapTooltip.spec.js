@@ -15,10 +15,10 @@ describe("src_3_0_0/modules/measure/components/MeasureInMapTooltip.vue", () => {
 
     /**
      * Creates a store depending on given params.
-     * @param {boolean} isBeingDrawnLine sets isBeingDrawn at feature in state.lines
-     * @param {boolean} isBeingDrawnPoly sets isBeingDrawn at feature in state.polygons
-     * @param {string} featureId current feature id
-     * @param {string} selectedGeometry current selected geometry
+     * @param {Boolean} isBeingDrawnLine sets isBeingDrawn at feature in state.lines
+     * @param {Boolean} isBeingDrawnPoly sets isBeingDrawn at feature in state.polygons
+     * @param {String} featureId current feature id
+     * @param {String} selectedGeometry current selected geometry
      * @returns {void}
      */
     function createTestStore (isBeingDrawnLine = true, isBeingDrawnPoly = false, featureId = "lineId", selectedGeometry = "LineString") {

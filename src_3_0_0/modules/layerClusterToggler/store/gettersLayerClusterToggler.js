@@ -7,9 +7,9 @@ const getters = {
     /**
      * Returns the layernames of the layer id list.
      * @param {Object} state context object.
-     * @param {object} _ layerClusterToggler store getters
-     * @param {object} __ root state
-     * @param {object} rootGetters root getters
+     * @param {Object} _ layerClusterToggler store getters
+     * @param {Object} __ root state
+     * @param {Object} rootGetters root getters
      * @returns {String[]} The layer names of the layer id list.
      */
     layerNames: (state, _, __, rootGetters) => {
