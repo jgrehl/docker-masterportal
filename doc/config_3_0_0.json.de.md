@@ -1233,13 +1233,13 @@ Neben diesen Attributen gibt es auch Typ-spezifische Attribute für die verschie
 |name|nein|String||Name des Layers.|false|
 |type|nein|String|"layer"|Typ des Elements Layer: "layer"|false|
 |transparency|nein|Integer|0|Transparenz des Layers.|false|
-|visibility|nein|Boolean|false|Sichtbarkeit des Layers.|false|
+|visibility|nein|Boolean|false|Sichtbarkeit des Layers. Wenn true, dann wird der Layer initial im Themenbaum angezeigt.|false|
 |styleId|ja|String||Id die den Style definiert. Id wird in der **[style.json](style.json.md)** aufgelöst.|false|
 |autoRefresh|nein|Integer||Automatischer Reload des Layers. Angabe in ms. Minimum ist 500.|false|
 |urlIsVisible|nein|Boolean|true|Anzeige, ob die URL in der Layerinformation angezeigt werden soll.|false|
 |renderer|nein|String|"default"|Render-Pipeline für die Darstellung ("default" oder "webgl")(nur für Vektordaten "GeoJSON", "WFS", "OAF")"webgl" ist derzeit als experimentell einzustufen.|false|
 |isPointLayer|nein|Boolean|false|Anzeige, ob der (Vektor)-Layer nur aus Punkt-Features besteht (nur relevant für WebGL Rendering))|false|
-|styleField|nein|String|??? todo|false|
+|showInLayerTree|nein|Boolean|false|Wenn true, dann wird der Layer initial im Themenbaum angezeigt. Wenn portalConfig.tree.addLayerButton nicht konfiguriert ist, dann hat dieses Attribut keinen Effekt.|false|
 
 **Beispiel**
 ```json
