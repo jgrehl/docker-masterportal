@@ -96,7 +96,6 @@
     "canvas": "^2.11.2",
     "chai": "^4.3.10",
     "child-process-promise": "^2.2.1",
-    "cross-env": "^7.0.3",
     "css-loader": "1.0.1",
     "esbuild-loader": "^4.0.2",
     "eslint": "^8.50.0",
