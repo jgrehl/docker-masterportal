@@ -56,6 +56,8 @@
 - The following NPM packages are removed:
     - dependencies
         - @panter/vue-i18next
+    - devDependencies:
+        - cross-env
 
 ### Fixed
 
