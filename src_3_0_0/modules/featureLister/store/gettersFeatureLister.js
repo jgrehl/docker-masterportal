@@ -17,9 +17,9 @@ const getters = {
      * The v-for calls this function for every property of the selected feature and returns pairs of header and
      * value as an array
      * @param {Object} state context object.
-     * @param {object} _ featureLister store getters
-     * @param {object} __ root state
-     * @param {object} rootGetters root getters
+     * @param {Object} _ featureLister store getters
+     * @param {Object} __ root state
+     * @param {Object} rootGetters root getters
      * @returns {Array} [header, value] for each property of the selected feature
      */
     featureDetails: (state, _, __, rootGetters) => {
@@ -36,9 +36,9 @@ const getters = {
     /**
      * Gets a list of all property keys to show in a table header.
      * @param {Object} state context object.
-     * @param {object} _ featureLister store getters
-     * @param {object} __ root state
-     * @param {object} rootGetters root getters
+     * @param {Object} _ featureLister store getters
+     * @param {Object} __ root state
+     * @param {Object} rootGetters root getters
      * @returns {Array} [key, value] for each property
      */
     headers: (state, _, __, rootGetters) => {

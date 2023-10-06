@@ -9,7 +9,7 @@
  * @property {String} title The title of the currently selected layer.
  * @property {String} type Type of the LayerSlider component.
  *
- * @property {object} activeLayer The Active layer.
+ * @property {Object} activeLayer The Active layer.
  * @property {String} currentProgressBarWidth The style of the progress bar.
  * @property {Number} progressBarWidth The Width of the progress bar.
  * @property {Function} windowsInterval The Windows Interval used to iterate through the layers.

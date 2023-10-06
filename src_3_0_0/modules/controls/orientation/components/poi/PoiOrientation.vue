@@ -163,7 +163,7 @@ export default {
         /**
          * Getting the feature title
          * @param  {ol/Feature} feature the vector feature
-         * @return {string[]} the nearbyTitle Text
+         * @return {String[]} the nearbyTitle Text
          */
         getFeatureTitle (feature) {
             if (!Array.isArray(feature.nearbyTitleText) || !feature.nearbyTitleText.length) {
@@ -206,7 +206,7 @@ export default {
         /**
          * Changing default category
          * @param {Event} evt click event
-         * @return {string} SVG
+         * @return {String} SVG
          */
         changedCategory (evt) {
             const currentTabId = evt.target.getAttribute("aria-controls");

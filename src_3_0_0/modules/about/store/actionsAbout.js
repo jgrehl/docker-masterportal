@@ -51,7 +51,7 @@ export default {
     },
     /**
      * Returns current Master Portal Version Number
-     * @returns {string} Masterportal version number
+     * @returns {String} Masterportal version number
      */
     currentMasterPortalVersionNumber () {
         return require("../../../../package.json").version;

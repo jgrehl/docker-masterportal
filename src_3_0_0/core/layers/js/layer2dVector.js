@@ -333,7 +333,7 @@ Layer2dVector.prototype.createLegend = async function () {
  * @param {Object} features selected features
  * @param {Object} rules  the styleObject rules
  * @param {Object} legendInfos styleObject legend information
- * @returns {object} uniqueLegendInformation as array
+ * @returns {Object} uniqueLegendInformation as array
  */
 Layer2dVector.prototype.filterUniqueLegendInfo = function (features, rules, legendInfos) {
     const rulesKey = Object.keys(rules[0].conditions.properties)[0],

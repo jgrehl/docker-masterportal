@@ -15,7 +15,7 @@ const handleSigns = {
  * Checks whether the given values is a Number and is between 0 and 1.
  *
  * @param {*} val Value given for any of the dimension props.
- * @returns {boolean} Whether the given value is between 0 and 1.
+ * @returns {Boolean} Whether the given value is between 0 and 1.
  */
 function dimensionValidator (val) {
     return !isNaN(val) && typeof val === "number"
@@ -97,7 +97,7 @@ export default {
     computed: {
         /**
          * Calculates a dynamic CSS class based on the elements' rotation.
-         * @returns {string} Dynamic CSS class for the handle element.
+         * @returns {String} Dynamic CSS class for the handle element.
          */
         cursorClass () {
             const indexWithoutRotation = Object.keys(handleSigns).indexOf(this.handlePosition),
@@ -111,7 +111,7 @@ export default {
             ][(indexWithoutRotation + indexAfterRotation) % 4];
         },
         /**
-         * @returns {object} All relevant data for events.
+         * @returns {Object} All relevant data for events.
          */
         eventData () {
             return {
@@ -157,7 +157,7 @@ export default {
     watch: {
         /**
          * Adds or removes event listeners related to resizing.
-         * @param {boolean} newValue New value of isResizing.
+         * @param {Boolean} newValue New value of isResizing.
          * @returns {void}
          */
         isResizing (newValue) {

@@ -19,7 +19,7 @@ config.global.mocks.$gfiThemeAddons = [];
  * @param {String} uiStyle the uiStyle
  * @param {Array} gfiFeatures the features
  * @param {Array} mapSize the maps size
- * @returns {object} the store
+ * @returns {Object} the store
  */
 function getGfiStore (mobile, uiStyle, gfiFeatures, mapSize) {
     mockGetters.gfiFeaturesReverse = () => gfiFeatures;
