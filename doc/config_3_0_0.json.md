@@ -1239,6 +1239,7 @@ Besides these attributes, there are also type-specific attributes for the differ
 |urlIsVisible|no|Boolean|true|Whether the service URL should be shown in the layer information window.|false|
 |renderer|no|String|"default"|Which render pipeline to use ("default" or "webgl") (only for vector data of type "GeoJSON", "WFS", "OAF"). "webgl" is currently classified as experimental and can lead to errors in some modules|false|
 |isPointLayer|no|Boolean|false|Whether the (vector) layer only consists of point features (only relevant for WebGL rendering)|false|
+|showInLayerTree|no|Boolean|false|If true, then the layer is initially displayed in the topic tree. If portalConfig.tree.addLayerButton is not configured, then this attribute has no effect.|false|
 
 **Example**
 ```json
