@@ -1,5 +1,5 @@
 /**
-     * @typedef {object} stateLayerPreview
+     * @typedef {Object} stateLayerPreview
      * @description creates a preview of a layer.
      * @property {Object} [center={}] center coordinates of the preview by layerId
      * @property {Object} [zoomLevel={}] zoom level of the preview by layerId

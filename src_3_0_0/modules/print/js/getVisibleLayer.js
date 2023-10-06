@@ -3,7 +3,7 @@ import sortBy from "../../../shared/js/utils/sortBy";
 import store from "../../../app-store";
 /**
  * sets the visible layers and set into variable
- * @param {boolean} [printMapMarker=false] whether layer "markerPoint" should be filtered out
+ * @param {Boolean} [printMapMarker=false] whether layer "markerPoint" should be filtered out
  * @returns {void}
  */
 export default function getVisibleLayer (printMapMarker = false) {

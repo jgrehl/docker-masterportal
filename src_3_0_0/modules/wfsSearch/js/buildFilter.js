@@ -8,7 +8,7 @@ let likeFilterProperties = {
  * Builds a XML filter based upon the literal structure defined in the config
  * and the given user inputs.
  *
- * @param {object} values The literals containing the values to be parsed.
+ * @param {Object} values The literals containing the values to be parsed.
  * @returns {XML[]} A filter to constrain returned features from the service.
  */
 function buildFilter (values) {
@@ -41,8 +41,8 @@ function buildFilter (values) {
  * Builds a filter based upon the literal structure defined in the config
  * and the given user inputs.
  *
- * @param {object} values The literals containing the values to be parsed.
- * @returns {string} A filter to constrain returned features from the service.
+ * @param {Object} values The literals containing the values to be parsed.
+ * @returns {String} A filter to constrain returned features from the service.
  */
 function buildStoredFilter (values) {
     let filter = "";
@@ -67,8 +67,8 @@ function buildStoredFilter (values) {
 /**
  * Builds the XML filter for the given fieldName and value.
  *
- * @param {object} field The field for which the filter is build.
- * @returns {string} XML Filter.
+ * @param {Object} field The field for which the filter is build.
+ * @returns {String} XML Filter.
  */
 function buildXmlFilter (field) {
     const {fieldName, parameterIndex, type, value} = field,
@@ -93,7 +93,7 @@ function buildXmlFilter (field) {
 /**
  * Sets the likeFilterProperties to the given value
  *
- * @param {object} properties The properties for the like filter in the way the service needs them.
+ * @param {Object} properties The properties for the like filter in the way the service needs them.
  * @returns {void}
  */
 function setLikeFilterProperties (properties) {

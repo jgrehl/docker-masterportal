@@ -11,7 +11,7 @@ import main from "../../js/main";
  * Converts the features from OpenLayers Features to features in the chosen format.
  *
  * @param {module:ol/format} format Format in which the features should be saved.
- * @returns {string} The features written in the chosen format as a String.
+ * @returns {String} The features written in the chosen format as a String.
  */
 async function convertFeatures ({state, dispatch}, format) {
     const convertedFeatures = [];

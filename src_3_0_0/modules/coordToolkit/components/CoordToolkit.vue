@@ -414,21 +414,21 @@ export default {
         },
         /**
          * Returns true, if uiStyle is not SIMPLE or TABLE.
-         * @returns {boolean} true, if is default style
+         * @returns {Boolean} true, if is default style
          */
         isDefaultStyle () {
             return this.uiStyle !== "SIMPLE" && this.uiStyle !== "TABLE";
         },
         /**
          * Returns true, if heightLayerInfo is configured.
-         * @returns {boolean} true, if is configured
+         * @returns {Boolean} true, if is configured
          */
         isHeightLayerInfo () {
             return typeof this.heightLayerInfo === "string";
         },
         /**
          * Returns true, if coordInfo is configured.
-         * @returns {boolean} true, if is configured
+         * @returns {Boolean} true, if is configured
          */
         isCoordInfo () {
             return this.coordInfo !== null;

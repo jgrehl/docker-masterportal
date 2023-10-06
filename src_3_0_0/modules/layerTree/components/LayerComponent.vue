@@ -33,7 +33,7 @@ export default {
         /**
          * Returns true, if layer configuration shall be shown in tree in current map mode.
          * Filteres by attribute 'showInLayerTree'.
-         * @returns {boolean} true, if layer configuration shall be shown in tree
+         * @returns {Boolean} true, if layer configuration shall be shown in tree
          */
         show () {
             const showLayerTyp = this.mode === "2D" ? !layerFactory.getLayerTypes3d().includes(this.conf.typ?.toUpperCase()) : !layerFactory.getLayerTypesNotVisibleIn3d().includes(this.conf.typ?.toUpperCase());

@@ -9,7 +9,7 @@ import {isUrl} from "../../../shared/js/utils/urlHelper";
 
 /**
  * @param {Feature[]} features Features, which center coordinates should be styled.
- * @param {string} styleId Id of the styleObject.
+ * @param {String} styleId Id of the styleObject.
  * @see {@link https://community.cesium.com/t/cors-and-billboard-image/3920/2} crossOrigin: "anonymous", is necessary for the 3D mode.
  * @returns {Feature[]} Styled features.
  */

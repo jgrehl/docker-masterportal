@@ -68,7 +68,7 @@ function buildWFSPostData (search) {
 
 /**
  * Makes a wfs request
- * @param  {string} serviceUrl url of the service from config
+ * @param  {String} serviceUrl url of the service from config
  * @param  {xml} sendObject Defintion from Config
  * @param {Object} postData wfsPostData
  * @returns {Object} searchResults

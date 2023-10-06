@@ -2,7 +2,7 @@ import proj4 from "proj4";
 
 /**
  * Transforms the given line or polygon coordinates from a given source projection to EPSG:4326.
- * @param {string} sourceProjectionCode source projection.
+ * @param {String} sourceProjectionCode source projection.
  * @param {(Array<number>|Array<Array<number>>|Array<Array<Array<number>>>)} coords Coordinates.
  * @param {Boolean} isPolygon Determines whether the given coordinates are a polygon or a line.
  * @returns {(Array<number>|Array<Array<number>>|Array<Array<Array<number>>>)} Transformed coordinates.
@@ -24,16 +24,16 @@ function transform (sourceProjectionCode, coords, isPolygon) {
 }
 /**
  * Transforms the given point coordinates from a given source projection to EPSG:4326.
- * @param {string} sourceProjectionCode source projection.
- * @param {number[]} coords Coordinates.
- * @returns {number[]} Transformed coordinates.
+ * @param {String} sourceProjectionCode source projection.
+ * @param {Number[]} coords Coordinates.
+ * @returns {Number[]} Transformed coordinates.
  */
 function transformPoint (sourceProjectionCode, coords) {
     return proj4(proj4(sourceProjectionCode), proj4("EPSG:4326"), coords);
 }
 /**
  * Transforms the given geometry from a given source projection to EPSG:4326.
- * @param {string} sourceProjectionCode source projection.
+ * @param {String} sourceProjectionCode source projection.
  * @param {Geometry} geometry Geometry.
  * @returns {Geometry} The given geometry.
  */

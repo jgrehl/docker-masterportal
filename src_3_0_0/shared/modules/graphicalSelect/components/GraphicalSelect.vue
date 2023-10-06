@@ -191,8 +191,8 @@ export default {
 
         /**
          * Calculates the circle radius and places the circle overlay on geometry change.
-         * @param {number} radius - circle radius
-         * @param {number[]} coords - point coordinate
+         * @param {Number} radius - circle radius
+         * @param {Number[]} coords - point coordinate
          * @returns {void}
          */
         showOverlayOnSketch: function (radius, coords) {

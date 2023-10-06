@@ -106,8 +106,8 @@ export default {
      *  3: alert is limited to be display in the future
      *  4: alert has already been read and is not ready to be displayed again yet
      *  5: allows multiple alerts from newsFeedPortaljson (singleAlert.multipleAlert = true) in state.alerts.
-     * @param {object} state state
-     * @param {object} newAlert alert object to be added to queue
+     * @param {Object} state state
+     * @param {Object} newAlert alert object to be added to queue
      * @returns {void}
      */
     addSingleAlert: function ({state, commit}, newAlert) {

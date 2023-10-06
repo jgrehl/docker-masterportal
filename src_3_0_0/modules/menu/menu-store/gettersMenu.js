@@ -9,7 +9,7 @@ const menuGetters = {
     /**
      * Returns the current component for a menu side.
      * @param {MenuNavigationState} state Local vuex state.
-     * @param {string} side Menu Side.
+     * @param {String} side Menu Side.
      * @returns {Object} The current component.
      */
     currentComponent: state => side => {
@@ -18,8 +18,8 @@ const menuGetters = {
 
     /**
      * @param {MenuNavigationState} state Local vuex state.
-     * @param {string} side Menu Side.
-     * @returns {object} Returns the Name of the currently visible Component.
+     * @param {String} side Menu Side.
+     * @returns {Object} Returns the Name of the currently visible Component.
      */
     currentComponentName: state => side => {
         const currentComponent = state[side]?.navigation.currentComponent;
@@ -39,8 +39,8 @@ const menuGetters = {
 
     /**
      * @param {MenuNavigationState} state Local vuex state.
-     * @param {string} side Menu Side
-     * @returns {object} Returns the currently visible Component.
+     * @param {String} side Menu Side
+     * @returns {Object} Returns the currently visible Component.
      */
     currentFolderPath: state => side => {
         return state[side].navigation.currentComponent.props.path;
@@ -49,8 +49,8 @@ const menuGetters = {
 
     /**
      * @param {MenuNavigationState} state Local vuex state.
-     * @param {string} side Menu Side
-     * @returns {object} Returns the current Menu-width
+     * @param {String} side Menu Side
+     * @returns {Object} Returns the current Menu-width
      */
     currentMenuWidth: state => side => {
         return state[side].width;
@@ -148,7 +148,7 @@ const menuGetters = {
 
     /**
      * @param {Object} state Local vuex state.
-     * @returns {string} Icon used for button toggling the secondaryMenu.
+     * @returns {String} Icon used for button toggling the secondaryMenu.
      */
     secondaryToggleButtonIcon: state => {
         return state.secondaryMenu.toggleButtonIcon;
