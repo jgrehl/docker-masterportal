@@ -249,7 +249,7 @@ async function migrateFiles (sourcePath, destPath) {
                 configJsFile = files.find(fileName => fileName === "config.js"),
                 indexFile = files.find(fileName => fileName === "index.html"),
                 configJsonSrcFile = path.resolve(sourceFolder, configJsonFile),
-                configJsonDestFile = path.resolve(destFolder, configJsonFile),
+                configJsonDestFile = path.resolve(destFolder, configJsonFile).split(path.sep).join("/"),
                 configJsSrcFile = path.resolve(sourceFolder, configJsFile),
                 configJsDestFile = path.resolve(destFolder, configJsFile);
 
