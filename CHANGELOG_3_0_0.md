@@ -5,6 +5,7 @@
 
 ## Unreleased - in development
 ### __Breaking Changes__
+- Dropped support for NodeJS 16 and Npm 8
 
 ### Added
 
@@ -52,7 +53,6 @@
 ### Deprecated
 
 ### Removed
-- Dropped support for NodeJS 16 and Npm 8
 - The following NPM packages are removed:
     - dependencies
         - @panter/vue-i18next
