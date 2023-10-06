@@ -73,9 +73,11 @@ Controls can be configured to be expandable so they will not initially show up i
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
+|backForward|no|**[backForward](#markdown-header-portalconfigcontrolsbackforward)**|false|Shows buttons to jump to previous and next map views.|false|
 |expandable|no|**[expandable](#markdown-header-portalconfigcontrols)**||With expandable, controls are hidden behind a button with three dots and can be expanded when needed.|false|
 |freeze|no|Boolean/**[freeze](#markdown-header-portalconfigcontrolsfreeze)**|false|Whether a "lock view" button is shown.|false|
 |fullScreen|no|Boolean/**[fullScreen](#markdown-header-portalconfigcontrolsfullscreen)**|false|Allows the user to view the portal in full screen mode, that is, without the browser's tabs and address bar, by clicking a button. A second click on the element returns the view back to normal.|false|
+|rotation|no|**[rotation](#markdown-header-portalconfigcontrolsrotation)**|false|Control that shows the current rotation of the map. With a click the map rotation can be set to north again. See also `mapInteractions` in **[config.js.md](config.js.md)**.|false|
 |startModule|no|**[startModule](#markdown-header-portalconfigcontrolsstartModule)**|false|Displays buttons for the configured tools. These can be used to open and close the respective tools.|false|
 |tiltView|no|Boolean/**[tiltView](#markdown-header-portalconfigcontrolstiltView)**|false|Displays two buttons that can be used to tilt the camera up or down in the 3D scene.|false|
 |totalView|no|Boolean/**[totalView](#markdown-header-portalconfigcontrolstotalView)**|false|Offers a button to return to the initial view.|false|
@@ -96,8 +98,31 @@ Controls can be configured to be expandable so they will not initially show up i
 ***
 
 #### Portalconfig.controls.backForward
+The attribute backForward may be of type boolean or object. If of type boolean, it shows a button using the default configuration that allows the user to switch back and forth between view states. When of type object, the following attributes may be set:
+
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
+|iconForward|no|String||Allows changing the icon on the forward button.|false|
+|iconBack|no|String||Allows changing the icon on the backwards button.|false|
+
+**Example using type object backForward**
+
+```json
+{
+    "backForward" : {
+        "iconForward": "bi-skip-forward-fill",
+        "iconBack": "bi-skip-backward-fill"
+    }
+}
+```
+
+**Example using type boolean backForward**
+
+```json
+{
+    "backForward": true
+}
+```
 
 ***
 
@@ -152,7 +177,25 @@ Allows the user to view the portal in full screen mode by clicking a button with
 |----|--------|----|-------|-----------|------|
 
 ***
+#### Portalconfig.controls.rotation
+The attribute rotation may be of type boolean or object. If of type boolean and value is set to true, the rotation control is just shown when the map rotation is not equal north/0. When of type object, the following attributes may be set:
 
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|showAlways|no|Boolean|false|If the attribut is set to true the control is shown permanently . Via default it appears only if the map rotation is not equal north/0.|
+
+**Example using type object rotation**
+```json
+"rotation": {
+    "showAlways": true
+}
+```
+
+**Example using type boolean rotation**
+```json
+"rotation": true
+```
+***
 #### Portalconfig.controls.startModule
 The startModule attribute must be of type Object. A button is displayed for each configured module, which can be used to open and close the respective module.
 
