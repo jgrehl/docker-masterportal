@@ -49,8 +49,8 @@ export function deepAssignIgnoreCase (target, source) {
  * @param {Object} source The source object — object containing the properties you want to apply.
  * @param {Number} depthBarrier The depth barrier to escape infinit loops.
  * @param {Number} [depth=0] The depth of the current recursion.
- * @param {boolean} [ignoreCase=false] if true, case of sourceKeys is ignored
- * @param {boolean} [createTargetKey=true] if true, not available key in target is created
+ * @param {Boolean} [ignoreCase=false] if true, case of sourceKeys is ignored
+ * @param {Boolean} [createTargetKey=true] if true, not available key in target is created
  * @returns {Object|null} target with source assigned to or null, if source was not found in target
  */
 function deepAssignHelper (target, source, depthBarrier, depth = 0, ignoreCase = false, createTargetKey = true) {

@@ -26,7 +26,7 @@ function adjustFilter (filter) {
 /**
  * Parses the response from a WFS-G as the features can not be parsed by OL (yet).
  *
- * @param {string} responseData The response data returned by the WFS-G; GML string.
+ * @param {String} responseData The response data returned by the WFS-G; GML string.
  * @param {String|String[]} namespaces The namespaces of the service.
  * @param {String} memberSuffix The suffix of the feature in the FeatureCollection.
  * @returns {module:ol/Feature[]} Array of Features returned from the service.

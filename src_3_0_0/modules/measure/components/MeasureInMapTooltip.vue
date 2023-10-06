@@ -43,7 +43,7 @@ export default {
     methods: {
         /**
          * Sets the measured values at all tooltip-layer.
-         * @param {object} measureValues containes the measured values by featureId
+         * @param {Object} measureValues containes the measured values by featureId
          * @returns {void}
          */
         setValueAtTooltipLayer (measureValues) {
@@ -67,7 +67,7 @@ export default {
         },
         /**
          * generates text for points
-         * @param {string} featureId - id of the current feature
+         * @param {String} featureId - id of the current feature
          * @returns {this} pointFeature
          */
         generateTextPoint (featureId) {
@@ -96,9 +96,9 @@ export default {
         },
         /**
          * generates style for text in 2D view
-         * @param {object} feature - geometry feature
-         * @param {string} newValue - new measured value
-         * @returns {object} styles
+         * @param {Object} feature - geometry feature
+         * @param {String} newValue - new measured value
+         * @returns {Object} styles
          */
         generateTextStyles (feature, newValue = "0") {
             const fill = new Fill({

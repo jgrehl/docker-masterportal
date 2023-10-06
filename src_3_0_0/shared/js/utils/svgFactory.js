@@ -4,7 +4,7 @@ import StylePolygon from "@masterportal/masterportalapi/src/vectorStyle/styles/p
 /**
  * Creating the circle svg
  * @param  {ol/style} style ol style
- * @return {string} SVG
+ * @return {String} SVG
  */
 function createCircle (style) {
     let svg = "";
@@ -37,7 +37,7 @@ function createCircle (style) {
 /**
  * Creating the line svg
  * @param  {ol/style} style ol style
- * @return {string} SVG
+ * @return {String} SVG
  */
 function createLine (style) {
     let svg = "";
@@ -69,7 +69,7 @@ function createLine (style) {
 /**
  * Creating the polygon graphic
  * @param  {ol/style} style ol style
- * @return {string} SVG or data URL
+ * @return {String} SVG or data URL
  */
 function createPolygon (style) {
     let svg = "";

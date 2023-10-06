@@ -1,8 +1,8 @@
 /**
  * Adds an asterix to the end of the given String if not already present.
  *
- * @param {string} val The value to check.
- * @returns {string} The given value with a single asterix at the end.
+ * @param {String} val The value to check.
+ * @returns {String} The given value with a single asterix at the end.
  */
 function addStar (val) {
     return val.endsWith("*") ? val : val + "*";

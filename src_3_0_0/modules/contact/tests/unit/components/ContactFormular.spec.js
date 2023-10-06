@@ -10,7 +10,7 @@ config.global.mocks.$t = key => key;
 
 /**
  * Fills all form fields with joke data for testing..
- * @param {object} parameters holds the text inputs
+ * @param {Object} parameters holds the text inputs
  * @returns {void}
  */
 function fillFields ({nameInput, mailInput, phoneInput, messageInput}) {

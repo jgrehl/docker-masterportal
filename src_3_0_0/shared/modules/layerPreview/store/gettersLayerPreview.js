@@ -19,7 +19,7 @@ const getters = {
     /**
      * Returns the zoom-level of the layer preview.
      * @param {stateLayerPreview} state Local vuex state.
-     * @returns {number} the zoom-level
+     * @returns {Number} the zoom-level
      */
     previewZoomLevel: state => id =>{
         return state.zoomLevel[id];

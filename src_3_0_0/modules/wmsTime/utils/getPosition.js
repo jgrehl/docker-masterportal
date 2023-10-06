@@ -2,9 +2,9 @@
  * Returns the new position of the swiper depending on the input event.
  *
  * @param {KeyboardEvent.keydown | MouseEvent.mousemove} event DOM Event.
- * @param {number} currentPos The current x-axis position of the swiper.
- * @param {number} keyboardMovement Value in pixels that the swiper should be moved when using the arrow keys.
- * @returns {number} The new position of the swiper.
+ * @param {Number} currentPos The current x-axis position of the swiper.
+ * @param {Number} keyboardMovement Value in pixels that the swiper should be moved when using the arrow keys.
+ * @returns {Number} The new position of the swiper.
  */
 export default function getPosition (event, currentPos, keyboardMovement) {
     let position = 0;

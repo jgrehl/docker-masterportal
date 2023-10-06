@@ -383,7 +383,7 @@ describe("src_3_0_0/core/js/layers/layer2dVectorTile.js", () => {
 
         /**
          * @param {function} done mocha callback done
-         * @returns {object} mock context for setStyleById
+         * @returns {Object} mock context for setStyleById
          */
         function makeContext (done) {
             return {
@@ -431,11 +431,11 @@ describe("src_3_0_0/core/js/layers/layer2dVectorTile.js", () => {
 
     describe("setConfiguredLayerStyle", () => {
         /**
-         * @param {object} params parameter object
+         * @param {Object} params parameter object
          * @param {?object} params.styleId style id from config.json
          * @param {?string} params.givenVtStyles style set from services.json to use
          * @param {function} params.done to be called finally
-         * @returns {object} mock context for setStyleById
+         * @returns {Object} mock context for setStyleById
          */
         function makeContext ({styleId, givenVtStyles, done}) {
             return {

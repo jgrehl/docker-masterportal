@@ -1,7 +1,7 @@
 /**
  * Creates an array with a given number of Layer Objects
  *
- * @param {number} count the number of returned array element
+ * @param {Number} count the number of returned array element
  *
  * @return {Array} the array of layer objects
  */
