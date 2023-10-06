@@ -3,7 +3,7 @@ import stateLayerTree from "./stateLayerTree";
 
 /**
  * The getters for the LayerTree.
- * @module modules/layerTree/store/getters
+ * @module modules/layerTree/store/gettersLayerTree
  */
 const getters = {
     ...generateSimpleGetters(stateLayerTree)

@@ -1,7 +1,6 @@
 /**
  * State of module draw.
- * @module modules/draw/store/state
- *
+ * @module modules/draw/store/stateDraw *
  * @property {Object} [circleOptions={innerRadius: 100, interactive: true, outerRadius: 500, unit: "m"}] The circle Options
  * @property {Number} [circleOptions.innerRadius=100] The inner radius for feature of drawType: "circle and doubelCircle".
  * @property {Boolean} [circleOptions.interactive=true] The circle or doubleCircle is drawn interactively or not.

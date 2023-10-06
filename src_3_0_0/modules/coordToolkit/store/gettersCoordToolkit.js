@@ -5,7 +5,7 @@ import coordState from "./stateCoordToolkit";
 
 /**
  * The getters for the CoodToolkit.
- * @module modules/coordToolkit/store/getters
+ * @module modules/coordToolkit/store/gettersCoordToolkit
  */
 export default {
     ...generateSimpleGetters(coordState),

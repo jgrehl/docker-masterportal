@@ -3,7 +3,7 @@ import coordState from "./stateCoordToolkit";
 
 /**
  * The mutations for the CoodToolkit.
- * @module modules/coordToolkit/store/mutations
+ * @module modules/coordToolkit/store/mutationsCoordToolkit
  */
 export default {
     /**
