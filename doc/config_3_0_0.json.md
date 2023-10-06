@@ -75,6 +75,7 @@ Controls can be configured to be expandable so they will not initially show up i
 |----|--------|----|-------|-----------|------|
 |expandable|no|**[expandable](#markdown-header-portalconfigcontrols)**||With expandable, controls are hidden behind a button with three dots and can be expanded when needed.|false|
 |freeze|no|Boolean/**[freeze](#markdown-header-portalconfigcontrolsfreeze)**|false|Whether a "lock view" button is shown.|false|
+|fullScreen|no|Boolean/**[fullScreen](#markdown-header-portalconfigcontrolsfullscreen)**|false|Allows the user to view the portal in full screen mode, that is, without the browser's tabs and address bar, by clicking a button. A second click on the element returns the view back to normal.|false|
 |startModule|no|**[startModule](#markdown-header-portalconfigcontrolsstartModule)**|false|Displays buttons for the configured tools. These can be used to open and close the respective tools.|false|
 |tiltView|no|Boolean/**[tiltView](#markdown-header-portalconfigcontrolstiltView)**|false|Displays two buttons that can be used to tilt the camera up or down in the 3D scene.|false|
 |totalView|no|Boolean/**[totalView](#markdown-header-portalconfigcontrolstotalView)**|false|Offers a button to return to the initial view.|false|
@@ -120,8 +121,29 @@ The freeze attribute can be of type Boolean or Object. If it is of type Boolean,
 ***
 
 #### Portalconfig.controls.fullScreen
+Allows the user to view the portal in full screen mode, that is, without the browser's tabs and address bar, by clicking a button. A second click on the element returns the view back to normal.
+
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
+|iconArrow|no|String|"arrows-fullscreen"|Using the iconArrow parameter, another icon can be used for the button to switch on fullscreen mode.|false|
+|iconExit|no|String|"fullscreen-exit"|Using the iconExit parameter, another icon can be used for the button to exit fullscreen mode.|false|
+|supportedDevices|no|String|["Desktop"]|Devices on which the module can be used and is displayed in the menu.|false|
+|supportedMapModes|no|String|["2D", "3D"]|Map modes in which the module can be used and is displayed in the menu.|false|
+
+**Example fullScreen as Object**
+
+```json
+"fullScreen" : {
+    "iconArrow": "arrows-fullscreen",
+    "iconExit": "fullscreen-exit"
+},
+```
+
+**Example fullScreen as Boolean**
+
+```json
+"fullScreen": true
+```
 
 ***
 

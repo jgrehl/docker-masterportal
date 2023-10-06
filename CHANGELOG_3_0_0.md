@@ -49,6 +49,8 @@
         - webpack: 4.46.0 to 4.47.0
         - zip-a-folder: 1.1.5 to 3.1.3
 - Add documentation for following modules:
+    - controls:
+        - fullScreen
     - mouseHover
 
 ### Deprecated
