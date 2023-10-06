@@ -38,7 +38,7 @@ function splitId (id, seperator = ".") {
 /**
  * Adds the attribute "showInLayerTree" to raw layer.
  * Rules:
- * If treeType light then always showInLayerTree = true (so showLayerInTree has no effect in config.json)
+ * If portalConfig.tree.addLayerButton is not configured, then always showInLayerTree = true (so showLayerInTree has no effect in config.json)
  * If a layer has visibility= true, then also always showInLayerTree = true so it is not possible to have showInLayerTree = false and visibility: true
  * because visibility = true always results in showInLayerTree = true no matter what the config.json says.
  * If both are not true, then showInLayerTree = false (for all other treeTypes e.g. "auto") if the attribute is not already set explicitly on the layer (i.e. in config.json).

@@ -1,7 +1,6 @@
 /**
  * LayerTree state definition.
- * @module modules/layerTree/store/state
- * @typedef {Object} LayerTreeState
+ * @module modules/layerTree/store/stateLayerTree
  * @property {String} [menuSide="mainMenu"] Specifies in which menu the layerTree should be rendered
  * @property {String} [type="layerTree"] The type of the layerTree component.
  * @property {String} [delay="500"] Length of the delay on a touch device in milliseconds.

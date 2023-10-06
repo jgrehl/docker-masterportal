@@ -3,7 +3,7 @@ import stateDraw from "./stateDraw";
 
 /**
  * The getters for the draw module.
- * @module modules/draw/store/getters
+ * @module modules/draw/store/gettersDraw
  */
 export default {
     ...generateSimpleGetters(stateDraw)
