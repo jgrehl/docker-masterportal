@@ -1,6 +1,6 @@
 /**
  * The actions for the LayerTree.
- * @module modules/layerTree/store/actions
+ * @module modules/layerTree/store/actionsLayerTree
  */
 export default {
     /**

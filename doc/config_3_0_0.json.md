@@ -933,16 +933,16 @@ Configuration of the topic selection tree.
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
-|type|no|enum["auto"]||The topic tree is built in the same structure as the **[topicconfig](#markdown-header-themenconfig)**. If the type `auto` is configured, all layers from the [services.json](services.json.md) are offered in the tree, structured by their metadata (FHH atlas).|false|
-|addLayerButton|no|Boolean||If true, a button for adding layers will be displayed. Initially only visible layers and layers with the property `showInLayerTree = true` are shown in the topic tree. If false, then all configured layers are shown in the topic tree. With the tree.type `auto` an add button is always shown. |false|
-|validLayerTypesAutoTree|no|enum|["WMS", "SENSORTHINGS", "TERRAIN3D", "TILESET3D", "OBLIQUE"]|Layer types to be used with the tree.type `auto`.|false|
+|addLayerButton|no|Boolean|false|If true, a button for adding layers will be displayed. Initially only visible layers and layers with the property `showInLayerTree = true` are shown in the topic tree. If false, then all configured layers are shown in the topic tree. With the tree.type `auto` an add button is always shown. |false|
+|categories|no|**[categories](#markdown-header-portalconfigtreecategories)**||Configuration of the categories from the metadata. Only for the tree.type `auto`.|false|
+|highlightedFeatures|no|**[highlightedFeatures](#markdown-header-portalconfigtreehighlightedfeatures)**||Configuration in addition to highlighting features.|false|
 |layerIDsToIgnore|no|String[]||List of `services.json` layer ids that should not be displayed in the tree and map. Only for the tree.type `auto`.|false|
+|layerIDsToStyle|no|**[layerIDsToStyle](#markdown-header-portalconfigtreelayeridstostyle)**[]||Special implementation for a HVV service (Hamburger Verkehrsbetriebe). Contains objects to query different styles of a layer ID. Only for the tree.type `auto`.|true|
+|layerPills|no|**[layerPills](#markdown-header-portalconfigtreelayerpills)**||Configuration of the LayerPills.|false|
 |metaIDsToIgnore|no|String[]||All layers found in `services.json` that match these meta IDs will not be displayed in the tree and map. Only for the tree.type `auto`.|false|
 |metaIDsToMerge|no|String[]||All layers found in `services.json` that match these meta-IDs will be merged into a single layer in the tree. Only for the tree.type `auto`.|true|
-|categories|no|**[categories](#markdown-header-portalconfigtreecategories)**||Configuration of the categories from the metadata. Only for the tree.type `auto`.|false|
-|layerIDsToStyle|no|**[layerIDsToStyle](#markdown-header-portalconfigtreelayeridstostyle)**[]||Special implementation for a HVV service (Hamburger Verkehrsbetriebe). Contains objects to query different styles of a layer ID. Only for the tree.type `auto`.|true|
-|highlightedFeatures|no|**[highlightedFeatures](#markdown-header-portalconfigtreehighlightedfeatures)**||Configuration in addition to highlighting features.|false|
-|layerPills|no|**[layerPills](#markdown-header-portalconfigtreelayerpills)**||Configuration of the LayerPills.|false|
+|type|no|enum["auto"]||The topic tree is built in the same structure as the **[topicconfig](#markdown-header-themenconfig)**. If the type `auto` is configured, all layers from the [services.json](services.json.md) are offered in the tree, structured by their metadata (Geo-Online).|false|
+|validLayerTypesAutoTree|no|enum|["WMS", "SENSORTHINGS", "TERRAIN3D", "TILESET3D", "OBLIQUE"]|Layer types to be used with the tree.type `auto`.|false|
 
 **Example type auto**
 ```json
@@ -995,31 +995,6 @@ Configuration of the topic selection tree.
 }
 ```
 ***
-#### Portalconfig.tree.layerIDsToStyle
-Special implementation for a HVV service (Hamburger Verkehrsbetriebe). Contains objects to query different styles of a layer ID. Only for the tree.type `auto`.
-
-|Name|Required|Type|Default|Description|Expert|
-|----|--------|----|-------|-----------|------|
-|id|no|String||A `services.json` layer's id.|false|
-|styles|no|String/String[]||Style to use as a string; if multiple styles are to be used, they are listed in an array.|false|
-|name|no|String/String[]||Name to use as a string; if multiple names are to be used, they are listed in an array.|false|
-|legendUrl|no|String/String[]||URL of the legend image as a string ; if multiple legend images are to be used, their URLs are listed in an array.|false|
-
-**Example:**
-
-```json
-{
-    "layerIDsToStyle": [
-        {
-            "id": "1935",
-            "styles": ["geofox_Faehre", "geofox-bahn", "geofox-bus", "geofox_BusName"],
-            "name": ["Fährverbindungen", "Bahnlinien", "Buslinien", "Busliniennummern"],
-            "legendURL": ["http://geoportal.metropolregion.hamburg.de/legende_mrh/hvv-faehre.png", "http://geoportal.metropolregion.hamburg.de/legende_mrh/hvv-bahn.png", "http://geoportal.metropolregion.hamburg.de/legende_mrh/hvv-bus.png", "http://87.106.16.168/legende_mrh/hvv-bus.png"]
-        }
-    ]
-}
-```
-***
 #### Portalconfig.tree.categories
 Configuration of the categories from the metadata. Only for the tree.type `auto`.
 
@@ -1062,6 +1037,31 @@ Configuration in addition to highlighting features. If features are highlighted 
     "active": false,
     "layerName": "Selected features"
 },
+```
+***
+#### Portalconfig.tree.layerIDsToStyle
+Special implementation for a HVV service (Hamburger Verkehrsbetriebe). Contains objects to query different styles of a layer ID. Only for the tree.type `auto`.
+
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|id|no|String||A `services.json` layer's id.|false|
+|styles|no|String/String[]||Style to use as a string; if multiple styles are to be used, they are listed in an array.|false|
+|name|no|String/String[]||Name to use as a string; if multiple names are to be used, they are listed in an array.|false|
+|legendUrl|no|String/String[]||URL of the legend image as a string ; if multiple legend images are to be used, their URLs are listed in an array.|false|
+
+**Example:**
+
+```json
+{
+    "layerIDsToStyle": [
+        {
+            "id": "1935",
+            "styles": ["geofox_Faehre", "geofox-bahn", "geofox-bus", "geofox_BusName"],
+            "name": ["Fährverbindungen", "Bahnlinien", "Buslinien", "Busliniennummern"],
+            "legendURL": ["http://geoportal.metropolregion.hamburg.de/legende_mrh/hvv-faehre.png", "http://geoportal.metropolregion.hamburg.de/legende_mrh/hvv-bahn.png", "http://geoportal.metropolregion.hamburg.de/legende_mrh/hvv-bus.png", "http://87.106.16.168/legende_mrh/hvv-bus.png"]
+        }
+    ]
+}
 ```
 ***
 #### Portalconfig.tree.layerPills
