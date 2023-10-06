@@ -61,6 +61,7 @@
         - cross-env
 
 ### Fixed
+- Issue #1085: Corrected case at import of layer2dRasterWmsTime in src_3_0_0\core\layers\js\layerFactory.js.
 
 ---
 
