@@ -1336,7 +1336,7 @@ Possibility to configure the content of the portal footer.
 ***
 
 ### Portalconfig.tree
-Configuration of the topic selection tree.
+Possibility to make settings for the topic selection tree.
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
@@ -1402,6 +1402,41 @@ Configuration of the topic selection tree.
         },
     }
 }
+```
+**Example**
+
+```json
+ "tree": {
+      "addLayerButton": true,
+      "layerPills": {
+        "active": true
+      },
+      "highlightedFeatures": {
+        "active": true
+      }
+ }
+```
+
+***
+
+### Portalconfig.tree.layerPills
+Konfiguration, um Einstellungen für LayerPills vorzunehmen.
+
+Layerpills are buttons on top of the map that show the selected layers. When clicking on a layerPill, the corresponding layer information is displayed in the menu. The close button deselects the layer. The LayerPills attribute is specified as an object and contains the following attributes.
+
+|Name|Required|Type|Default|Description|Expert|
+|----|-------------|---|-------|------------|------|
+|active|no|Boolean|false|Indicates whether LayerPills are active|false|
+|mobileOnly|no|Boolean|false|Defines whether LayerPills should only be active in the mobile version|false|
+
+
+**Example**
+
+```json
+"layerPills": {
+    "active": true,
+    "mobileOnly": true
+    }
 ```
 
 ***
