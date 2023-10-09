@@ -615,6 +615,7 @@ Modules can be divided into sections. In the menu, sections are divided with a h
 |openConfig|no|**[openConfig](#markdown-header-portalconfigmenusectionsopenConfig)**||ith this module a configuration file (config.json) can be reloaded at runtime. The modules and map are adapted to the new configuration.|false|
 |print|no|**[print](#markdown-header-portalconfigmenusectionsprint)**||Printing module that can be used to export the map's current view as PDF.|false|
 |scaleSwitcher|no|**[scaleSwitcher](#markdown-header-portalconfigmenusectionsmodulesSwitcher)**||Module that allows changing the map's current scale.|false|
+|selectFeatures|no|**[selectFeatures](#markdown-header-portalconfigmenusectionsmodulesselectfeatures)**||Allows selecting a set of vector features by letting the user draw a box on the map. Features in that box will be displayed with GFI information.|false|
 |shadow|no|**[shadow](#markdown-header-portalconfigmenusectionsmodulesshadow)**||Configuration object for the 3D mode shadow time.|false|
 |styleVT|no|**[styleVT](#markdown-header-portalconfigmenusectionsmodulesstyleVT)**||Style selection for VT services. Allows switching between styles of a Vector Tile Layer that provides multiple stylings via the `services.json` file.|false|
 
@@ -982,9 +983,148 @@ Module that allows changing the map's current scale.
 ***
 
 ##### Portalconfig.menu.sections.modules.selectFeatures
+Allows selecting a set of vector features by letting the user draw a box on the map. Features in that box will be displayed with GFI information and it's possible to zoom to a feature. This tool requires WFS(❗) layers.
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
+|highlightVectorRulesPointLine|no|**[highlightVectorRulesPointLine](#markdown-header-portalconfigmenusectionsmodulesselectfeatureshighlightvectorrulespointline)**||Specify outline color and stroke width for highlighting lines and fill color and scale factor for highlighting points as well as a zoom parameter.|false|
+|highlightVectorRulesPolygon|no|**[highlightVectorRulesPolygon](#markdown-header-portalconfigmenusectionsmodulesselectfeatureshighlightvectorrulespolygon)**||Specify the fill color and outline color and stroke width for highlighting the polygon features as well as a zoom parameter.|false|
+|icon|no|String|"bi-hand-index"|Icon that is shown in front of the module in the menu. For selection see **[Bootstrap Icons](https://icons.getbootstrap.com/)**.|false|
+|name|no|String|"common:modules.selectFeatures.name"|Name of the module in the menu.|false|
+|type|no|String|"selectFeatures"|The type of the module. Defines which module is configured.|false|
+
+**Example**
+
+```json
+{
+    "type": "selectFeatures",
+    "highlightVectorRulesPolygon": {
+        "fill": {
+            "color": [255, 0, 255, 0.9]
+        },
+        "stroke": {
+            "width": 4,
+            "color": [0, 0, 204, 0.9]
+        },
+        "zoomLevel": 5
+    },
+    "highlightVectorRulesPointLine": {
+        "fill": {
+            "color": [255, 0, 255, 0.9]
+        },
+        "stroke": {
+            "width": 8,
+            "color": [255, 0, 255, 0.9]
+        },
+        "image": {
+            "scale": 2
+        },
+        "zoomLevel": 5
+    }
+}
+```
+
+***
+
+###### Portalconfig.menu.sections.modules.selectFeatures.highlightVectorRulesPointLine
+Specify outline color and stroke width for highlighting lines and fill color and scale factor for highlighting points. Also a zoom level.
+
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|fill|no|**[fill](#markdown-header-portalconfigmenutoolselectfeatureshighlightvectorrulespointlinefill)**||Possible setting: color|false|
+|stroke|no|**[stroke](#markdown-header-portalconfigmenutoolselectfeatureshighlightvectorrulespointlinestroke)**||Possible setting: width|false|
+|image|no|**[image](#markdown-header-portalconfigmenutoolselectfeatureshighlightvectorrulespointlineimage)**||Possible setting: scale|false|
+|zoomLevel|no|Integer|7|Zoom level, possible setting: 0-9|false|
+
+***
+
+####### Portalconfig.menu.sections.modules.selectFeatures.highlightVectorRulesPointLine.fill
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|color|no|Float[]|[255, 255, 255, 0.5]|Possible setting: color (RGBA)|false|
+
+**Example**
+
+```json
+"fill": {
+    "color": [215, 102, 41, 0.9]
+}
+```
+
+***
+
+####### Portalconfig.menu.sections.modules.selectFeatures.highlightVectorRulesPointLine.stroke
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|color|no|Float[]|[255, 255, 255, 0.5]|Possible setting: color (RGBA)|false|
+|width|no|Integer|1|Possible setting: width|false|
+
+**Example**
+
+```json
+"stroke": {
+    "width": 4 ,
+    "color": [255, 0, 255, 0.9]
+}
+```
+
+***
+
+####### Portalconfig.menu.sections.modules.selectFeatures.highlightVectorRulesPointLine.image
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|scale|no|Integer|1.5|Possible setting: scale|false|
+
+**Example**
+
+```json
+"image": {
+    "scale": 2
+    }
+```
+
+***
+
+###### Portalconfig.menu.sections.modules.selectFeatures.highlightVectorRulesPolygon
+Specify the fill color and stroke width for highlighting the polygon features as well as a zoom level.
+
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|fill|no|**[fill](#markdown-header-portalconfigmenusectionsmodulesselectfeatureshighlightvectorrulespolygonfill)**||Possible setting: color|false|
+|stroke|no|**[stroke](#markdown-header-portalconfigmenusectionsmoduleselectfeatureshighlightvectorrulespolygonstroke)**||Possible setting: width|false|
+|zoomLevel|no|Integer|7|Zoom level, possible setting: 0-9|false|
+
+***
+
+####### Portalconfig.menu.sections.modules.selectFeatures.highlightVectorRulesPolygon.fill
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|color|no|Float[]|[255, 255, 255, 0.5]|Possible setting: color (RGBA)|false|
+
+**Example**
+
+```json
+"fill": {
+    "color": [215, 102, 41, 0.9]
+}
+```
+
+***
+
+####### Portalconfig.menu.sections.modules.selectFeatures.highlightVectorRulesPolygon.stroke
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|color|no|Float[]|[255, 255, 255, 0.5]|Possible setting: color (RGBA)|false|
+|width|no|Integer|1|Possible setting: width|false|
+
+**Example**
+
+```json
+"stroke": {
+    "width": 4 ,
+    "color": [255, 0, 255, 0.9]
+}
+```
 
 ***
 
@@ -1263,7 +1403,7 @@ Configuration of the LayerPills.
 |active|no|Boolean|false|Indicates whether this feature is active.|false|
 |mobileOnly|no|Boolean|false|Indicates whether this feature is active only on small screens.|false|
 
-**Beispiel**
+**Example**
 ```json
 "layerPills": {
     "active": true,
