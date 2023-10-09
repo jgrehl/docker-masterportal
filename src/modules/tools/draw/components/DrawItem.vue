@@ -945,34 +945,6 @@ export default {
                     </div>
                 </div>
                 <div
-                    v-if="drawType.id === 'drawLine'"
-                    class="form-group form-group-sm row"
-                >
-                    <label
-                        class="col-md-5 col-form-label"
-                        for="tool-draw-lineUnit"
-                    >
-                        {{ $t("common:modules.tools.draw.unit") }}
-                    </label>
-                    <div class="col-md-7">
-                        <select
-                            id="tool-draw-lineUnit"
-                            class="form-select form-select-sm"
-                            :disabled="drawHTMLElementsModifyFeature"
-                            @change="setUnit"
-                        >
-                            <option
-                                v-for="option in constants.unitOptions"
-                                :key="'draw-fontSize-' + option.value"
-                                :selected="option.value === unitComputed"
-                                :value="option.value"
-                            >
-                                {{ option.caption }}
-                            </option>
-                        </select>
-                    </div>
-                </div>
-                <div
                     v-if="drawType.id === 'writeText'"
                     class="form-group form-group-sm row"
                 >
@@ -1080,6 +1052,55 @@ export default {
                     </div>
                 </div>
                 <div
+                    v-if="drawType.id === 'drawLine'"
+                    class="form-group form-group-sm row"
+                >
+                    <label
+                        class="col-md-5 col-form-label"
+                        for="tool-draw-lineLength"
+                    >
+                        {{ $t('common:modules.tools.draw.lineLengthLabel') }}
+                    </label>
+                    <div class="col-md-7">
+                        <input
+                            id="tool-draw-lineLength"
+                            :value="lineLengthComputed"
+                            class="form-control form-control-sm"
+                            :style="{borderColor: innerBorderColor}"
+                            type="text"
+                            :disabled="true"
+                        >
+                    </div>
+                </div>
+                <div
+                    v-if="drawType.id === 'drawLine'"
+                    class="form-group form-group-sm row"
+                >
+                    <label
+                        class="col-md-5 col-form-label"
+                        for="tool-draw-lineUnit"
+                    >
+                        {{ $t("common:modules.tools.draw.unit") }}
+                    </label>
+                    <div class="col-md-7">
+                        <select
+                            id="tool-draw-lineUnit"
+                            class="form-select form-select-sm"
+                            :disabled="drawHTMLElementsModifyFeature"
+                            @change="setUnit"
+                        >
+                            <option
+                                v-for="option in constants.unitOptions"
+                                :key="'draw-fontSize-' + option.value"
+                                :selected="option.value === unitComputed"
+                                :value="option.value"
+                            >
+                                {{ option.caption }}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div
                     v-if="drawType.id !== 'drawSymbol' && drawType.id !== 'writeText'"
                     class="form-group form-group-sm row"
                 >
@@ -1163,27 +1184,6 @@ export default {
                                 {{ option.caption }}
                             </option>
                         </select>
-                    </div>
-                </div>
-                <div
-                    v-if="drawType.id === 'drawLine'"
-                    class="form-group form-group-sm row"
-                >
-                    <label
-                        class="col-md-5 col-form-label"
-                        for="tool-draw-lineLength"
-                    >
-                        {{ $t('common:modules.tools.draw.lineLengthLabel') }}
-                    </label>
-                    <div class="col-md-7">
-                        <input
-                            id="tool-draw-lineLength"
-                            :value="lineLengthComputed"
-                            class="form-control form-control-sm"
-                            :style="{borderColor: innerBorderColor}"
-                            type="text"
-                            :disabled="true"
-                        >
                     </div>
                 </div>
                 <div
