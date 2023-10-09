@@ -810,6 +810,34 @@ export default {
                     </div>
                 </div>
                 <div
+                    v-if="drawType.id === 'drawArea'"
+                    class="form-group form-group-sm row"
+                >
+                    <label
+                        class="col-md-5 col-form-label"
+                        for="tool-draw-areaUnit"
+                    >
+                        {{ $t("common:modules.tools.draw.unit") }}
+                    </label>
+                    <div class="col-md-7">
+                        <select
+                            id="tool-draw-areaUnit"
+                            class="form-select form-select-sm"
+                            :disabled="drawHTMLElementsModifyFeature"
+                            @change="setUnit"
+                        >
+                            <option
+                                v-for="option in constants.unitOptions"
+                                :key="'draw-fontSize-' + option.value"
+                                :selected="option.value === unitComputed"
+                                :value="option.value"
+                            >
+                                {{ option.caption }}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div
                     v-if="drawType.id === 'drawSquare' && currentInteraction !== 'modify'"
                     class="form-group form-group-sm row"
                 >
