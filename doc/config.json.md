@@ -157,7 +157,7 @@ layerPills": {
 **Example:**
 
 ```json
-{       
+{
     "layerIDsToStyle": [
         {
             "id": "1935",
