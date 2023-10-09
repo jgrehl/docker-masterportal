@@ -89,10 +89,40 @@ export default {
             return this.drawHTMLElementsModifyFeature;
         },
 
+        lineLengthComputed: {
+            /**
+             * getter for the computed property length of the current drawType
+             * @info the internal representation of length is always in meters
+             * @returns {Number} the current radius
+             */
+            get () {
+                if (this.styleSettings?.unit === "km") {
+                    const lineKm = this.styleSettings?.length / 1000;
+
+                    return lineKm.toFixed(2);
+                }
+                return this.styleSettings?.length;
+            },
+            /**
+             * setter for the computed property line of the current drawType
+             * @info the internal representation of line is always in meters
+             * @param {Number} value the value to set the target to
+             * @returns {void}
+             */
+            set (value) {
+                if (this.styleSettings?.unit === "km") {
+                    this.setLength(parseInt(value, 10) * 1000);
+                }
+                else {
+                    this.setLength(parseInt(value, 10));
+                }
+            }
+        },
+
         areaComputed: {
             /**
-             * getter for the computed property squareArea of the current drawType
-             * @info the internal representation of squareArea is always in meters
+             * getter for the computed property area of the current drawType
+             * @info the internal representation of area is always in meters
              * @returns {Number} the current radius
              */
             get () {
@@ -104,8 +134,8 @@ export default {
                 return this.styleSettings?.area;
             },
             /**
-             * setter for the computed property Area of the current drawType
-             * @info the internal representation of Area is always in meters
+             * setter for the computed property area of the current drawType
+             * @info the internal representation of area is always in meters
              * @param {Number} value the value to set the target to
              * @returns {void}
              */
@@ -887,6 +917,34 @@ export default {
                     </div>
                 </div>
                 <div
+                    v-if="drawType.id === 'drawLine'"
+                    class="form-group form-group-sm row"
+                >
+                    <label
+                        class="col-md-5 col-form-label"
+                        for="tool-draw-lineUnit"
+                    >
+                        {{ $t("common:modules.tools.draw.unit") }}
+                    </label>
+                    <div class="col-md-7">
+                        <select
+                            id="tool-draw-lineUnit"
+                            class="form-select form-select-sm"
+                            :disabled="drawHTMLElementsModifyFeature"
+                            @change="setUnit"
+                        >
+                            <option
+                                v-for="option in constants.unitOptions"
+                                :key="'draw-fontSize-' + option.value"
+                                :selected="option.value === unitComputed"
+                                :value="option.value"
+                            >
+                                {{ option.caption }}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div
                     v-if="drawType.id === 'writeText'"
                     class="form-group form-group-sm row"
                 >
@@ -1077,6 +1135,27 @@ export default {
                                 {{ option.caption }}
                             </option>
                         </select>
+                    </div>
+                </div>
+                <div
+                    v-if="drawType.id === 'drawLine'"
+                    class="form-group form-group-sm row"
+                >
+                    <label
+                        class="col-md-5 col-form-label"
+                        for="tool-draw-lineLength"
+                    >
+                        {{ $t('common:modules.tools.draw.lineLengthLabel') }}
+                    </label>
+                    <div class="col-md-7">
+                        <input
+                            id="tool-draw-lineLength"
+                            :value="lineLengthComputed"
+                            class="form-control form-control-sm"
+                            :style="{borderColor: innerBorderColor}"
+                            type="text"
+                            :disabled="true"
+                        >
                     </div>
                 </div>
                 <div

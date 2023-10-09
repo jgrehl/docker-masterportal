@@ -40,10 +40,25 @@ async function setActive ({state, commit, dispatch, rootState}, active) {
 }
 
 /**
- * Sets the inner radius for the circle of the current drawType.
- * @info the internal representation of circleRadius is always in meters
+ * Sets the length of the current drawType.
+ * @info the internal representation of length is always in meters
  * @param {Object} context actions context object.
- * @param {Number} area the area of the square in meters
+ * @param {Number} length the length in meters
+ * @returns {void}
+ */
+function setLength ({getters, commit}, length) {
+    const {styleSettings} = getters;
+
+    styleSettings.length = length;
+
+    setStyleSettings({getters, commit}, styleSettings);
+}
+
+/**
+ * Sets the area of the current drawType.
+ * @info the internal representation of area is always in meters
+ * @param {Object} context actions context object.
+ * @param {Number} area the area of the geometry in meters
  * @returns {void}
  */
 function setArea ({getters, commit}, area) {
@@ -55,8 +70,8 @@ function setArea ({getters, commit}, area) {
 }
 
 /**
- * Sets the inner radius for the circle of the current drawType.
- * @info the internal representation of circleRadius is always in meters
+ * Sets the area of the current drawType.
+ * @info the internal representation of squareArea is always in meters
  * @param {Object} context actions context object.
  * @param {Number} area the area of the square in meters
  * @returns {void}
@@ -428,6 +443,7 @@ function setDrawLayerVisible ({getters, commit, dispatch}, value) {
 export {
     setStyleSettings,
     setActive,
+    setLength,
     setArea,
     setSquareArea,
     setSquareMethod,

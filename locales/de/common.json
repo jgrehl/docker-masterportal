@@ -919,7 +919,8 @@
                 },
                 "squareDefinedInfo": " (ohne Berücksichtung der Erdkrümmung)",
                 "areaLabel": "Flächeninhalt",
-                "squareSideLengthLabel": "Seitenlänge" 
+                "squareSideLengthLabel": "Seitenlänge",
+                "lineLengthLabel": "Gesamtlänge" 
             },
             "measure": {
                 "geometry": "Geometrie",

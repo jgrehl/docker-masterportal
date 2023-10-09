@@ -51,9 +51,12 @@ const symbol = {
      * @property {String[]} drawSymbolSettings.color The color of the drawn feature represented as an array.
      * @property {Number} drawSymbolSettings.opacity The opacity of the color of the drawn features. NOTE: The values of the transparencySettings are opacity values.
      * @property {Object} drawLineSettings the values used for the drawType drawLine
+     * @property {Object} drawLineSettings.unit The unit of measurement (e.g. "km").
+     * @property {Object} drawLineSettings.length the length of the line
      * @property {Number} drawLineSettings.strokeWidth Stroke width.
      * @property {Number} drawLineSettings.opacityContour The opacity of the color of the contours for features of drawType "LineString". NOTE: The values of the transparencySettings are opacity values.
      * @property {String[]} drawLineSettings.colorContour The color of the contours of the drawn feature represented as an array.
+     * @property {Object} drawLineSettings.tooltipStyle The custom style for the tooltip of drawType "Line".
      * @property {Object} drawCurveSettings the values used for the drawType drawCurve
      * @property {Number} drawCurveSettings.strokeWidth Stroke width.
      * @property {Number} drawCurveSettings.opacityContour The opacity of the color of the contours for features of drawType "LineString". NOTE: The values of the transparencySettings are opacity values.
@@ -173,9 +176,18 @@ const symbol = {
             opacity: 1
         },
         drawLineSettings: {
+            unit: "m",
+            length: 0,
             strokeWidth: 1,
             opacityContour: 1,
-            colorContour: [0, 0, 0, 1]
+            colorContour: [0, 0, 0, 1],
+            tooltipStyle: {
+                fontSize: "14px",
+                paddingTop: "3px",
+                paddingLeft: "3px",
+                paddingRight: "3px",
+                backgroundColor: "rgba(255, 255, 255, .9)"
+            }
         },
         drawCurveSettings: {
             strokeWidth: 1,

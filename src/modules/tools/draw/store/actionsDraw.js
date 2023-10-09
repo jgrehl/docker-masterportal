@@ -59,6 +59,7 @@ const initialState = JSON.parse(JSON.stringify(stateDraw)),
                 squareMethod: styleSettingsCopy.squareMethod,
                 squareArea: styleSettingsCopy.squareArea,
                 area: styleSettingsCopy.area,
+                lineLength: styleSettingsCopy.length,
                 drawType,
                 symbol,
                 zIndex,
@@ -218,6 +219,12 @@ const initialState = JSON.parse(JSON.stringify(stateDraw)),
                     mapCollection.getMap(rootState.Maps.mode).on("pointermove", tooltip.get("mapPointerMoveEvent"));
                     event.feature.getGeometry().on("change", tooltip.get("featureChangeEvent"));
                 }
+                else if (state?.drawType?.id === "drawLine") {
+                    tooltip = createTooltipOverlay({state, getters, commit, dispatch});
+                    mapCollection.getMap(rootState.Maps.mode).addOverlay(tooltip);
+                    mapCollection.getMap(rootState.Maps.mode).on("pointermove", tooltip.get("mapPointerMoveEvent"));
+                    event.feature.getGeometry().on("change", tooltip.get("featureChangeEvent"));
+                }
             });
             if (maxFeatures && maxFeatures > 0) {
                 interaction.on("drawstart", () => {
@@ -316,6 +323,12 @@ const initialState = JSON.parse(JSON.stringify(stateDraw)),
                                 mapCollection.getMap(rootState.Maps.mode).on("pointermove", tooltip.get("mapPointerMoveEvent"));
                                 state.selectedFeature.getGeometry().on("change", tooltip.get("featureChangeEvent"));
                             }
+                            else if (!tooltip && state.drawType.id === "drawLine") {
+                                tooltip = createTooltipOverlay({state, getters, commit, dispatch});
+                                mapCollection.getMap(rootState.Maps.mode).addOverlay(tooltip);
+                                mapCollection.getMap(rootState.Maps.mode).on("pointermove", tooltip.get("mapPointerMoveEvent"));
+                                state.selectedFeature.getGeometry().on("change", tooltip.get("featureChangeEvent"));
+                            }
                         }
                     });
                 });
@@ -405,6 +418,12 @@ const initialState = JSON.parse(JSON.stringify(stateDraw)),
                                 state.selectedFeature.getGeometry().on("change", tooltip.get("featureChangeEvent"));
                             }
                             else if (!tooltip && state.drawType.id === "drawArea") {
+                                tooltip = createTooltipOverlay({state, getters, commit, dispatch});
+                                mapCollection.getMap(rootState.Maps.mode).addOverlay(tooltip);
+                                mapCollection.getMap(rootState.Maps.mode).on("pointermove", tooltip.get("mapPointerMoveEvent"));
+                                state.selectedFeature.getGeometry().on("change", tooltip.get("featureChangeEvent"));
+                            }
+                            else if (!tooltip && state.drawType.id === "drawLine") {
                                 tooltip = createTooltipOverlay({state, getters, commit, dispatch});
                                 mapCollection.getMap(rootState.Maps.mode).addOverlay(tooltip);
                                 mapCollection.getMap(rootState.Maps.mode).on("pointermove", tooltip.get("mapPointerMoveEvent"));

@@ -660,7 +660,8 @@
                 },
                 "squareDefinedInfo": " (sin tener en cuenta la curvatura de la tierra)",
                 "areaLabel": "Área",
-                "squareSideLengthLabel": "Longitud lateral"
+                "squareSideLengthLabel": "Longitud lateral",
+                "lineLengthLabel": "longitud total"
             },
             "measure": {
                 "geometry": "Geometría",

@@ -768,7 +768,8 @@
                 },
                 "squareDefinedInfo": " (ahn Rücksicht op de Eerdkrümmung)",
                 "areaLabel": "Flaaginholt",
-                "squareSideLengthLabel": "Siedenläng" 
+                "squareSideLengthLabel": "Siedenläng",
+                "lineLengthLabel": "Gesamtlängt"
             },
             "measure": {
                 "geometry": "Geometrie",

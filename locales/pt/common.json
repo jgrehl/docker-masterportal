@@ -634,7 +634,8 @@
                 },
                 "squareDefinedInfo": " (sem ter em conta a curvatura da Terra)",
                 "areaLabel": "Área",
-                "squareSideLengthLabel": "Comprimento do lado"
+                "squareSideLengthLabel": "Comprimento do lado",
+                "lineLengthLabel": "comprimento total"
             },
             "download": {
                 "format": "Formato",

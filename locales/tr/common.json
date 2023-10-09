@@ -768,7 +768,8 @@
                 },
                 "squareDefinedInfo": "(dünyanın eğriliğini hesaba katmadan)",
                 "areaLabel": "Alan",
-                "squareSideLengthLabel": "Yan uzunluk"
+                "squareSideLengthLabel": "Yan uzunluk",
+                "lineLengthLabel": "toplam uzunluk"
             },
             "measure": {
                 "geometry": "Geometri",

@@ -833,7 +833,8 @@
                 },
                 "squareDefinedInfo": "(без учета кривизны Земли)",
                 "areaLabel": "площадь",
-                "squareSideLengthLabel": "длина стороны"
+                "squareSideLengthLabel": "длина стороны",
+                "lineLengthLabel": "общая длина"
             },
             "measure": {
                 "geometry": "Геометрия",

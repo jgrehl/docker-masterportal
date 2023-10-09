@@ -836,7 +836,8 @@
                 },
                 "squareDefinedInfo": "(без урахування кривизни землі)",
                 "areaLabel": "площа",
-                "squareSideLengthLabel": "довжина сторони"
+                "squareSideLengthLabel": "довжина сторони",
+                "lineLengthLabel": "загальна довжина"
             },
             "measure": {
                 "geometry": "Геометрія",

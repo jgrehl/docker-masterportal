@@ -39,6 +39,8 @@ const mutations = {
         state.drawCurveSettings.opacity = styleSettings.opacity;
     },
     setDrawLineSettings: (state, styleSettings) => {
+        state.drawLineSettings.unit = styleSettings.unit;
+        state.drawLineSettings.length = styleSettings.length;
         state.drawLineSettings.color = styleSettings.color;
         state.drawLineSettings.opacity = styleSettings.opacity;
         state.drawLineSettings.colorContour = styleSettings.colorContour;
