@@ -1730,6 +1730,7 @@ Konfiguration für die Vorschläge von Nutzereingaben.
 |featureType|nein|String||Wenn gegeben, wird die Anfrage mit diesem featureType statt dem aus der Definition des Services ausgeführt. Nur verwendbar, wenn der Dienst in der **[services.json](services.json.de.md)** definiert wurde.|false|
 |length|nein|Number|3|Die Anfrage wird dann ausgelöst, wenn die Inputlänge mindestens so lang ist wie der Wert dieses Parameters.|false|
 
+
 ***
 
 ##### Portalconfig.menu.sections.modules.wfst
