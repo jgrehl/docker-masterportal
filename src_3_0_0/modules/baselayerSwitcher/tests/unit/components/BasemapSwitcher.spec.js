@@ -41,6 +41,9 @@ describe("src_3_0_0/modules/BaselayerSwitcher.vue", () => {
                     }
                 }
             },
+            actions: {
+                initializeModule: sinon.stub()
+            },
             getters: {
                 isMobile: () => false,
                 layerConfigsByAttributes: () => () => visibleBaselayerConfigs,
@@ -70,6 +73,7 @@ describe("src_3_0_0/modules/BaselayerSwitcher.vue", () => {
 
     describe("baselayerSwitcher DOM elements", () => {
         it("renders BaselayerSwitcher", () => {
+            store.commit("Modules/BaselayerSwitcher/setActive", true);
             wrapper = shallowMount(BaselayerSwitcherComponent, {
                 global: {
                     plugins: [store]
