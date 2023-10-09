@@ -11,7 +11,6 @@
  *
  * @property {Boolean} centerMapToClickPoint specifies if the map should be centered when clicking on a feature.
  * @property {Object} currentFeature The current feature that is displayed.
- * @property {String} desktopType Specifies which template is used in desktop mode.
  * @property {Object[]} gfiFeatures temporary array for features at click has to be moved to gfi module.
  * @property {Object[]} path Path for menu navigation
  * @property {Boolean} [hideMapMarkerOnVectorHighlight=false] if true, mapmarker is hidden on vector highlighting.
@@ -30,7 +29,6 @@ const state = {
     currentFeature: null,
     currentPosition: null,
     currentRotation: null,
-    desktopType: "",
     gfiFeatures: [],
     hideMapMarkerOnVectorHighlight: false,
     highlightVectorRules: null,

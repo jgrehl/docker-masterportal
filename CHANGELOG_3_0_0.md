@@ -8,6 +8,11 @@
 - Dropped support for NodeJS 16 and Npm 8
 
 ### Added
+- Add documentation for following modules:
+    - controls:
+        - fullScreen
+    - getFeatureInfo
+    - mouseHover
 
 ### Changed
 - LayerInformation: For layers that do not have metadata, the layer information can now be displayed so that the URLs and legend can be viewed th
@@ -48,10 +53,6 @@
         - vue-loader: 17.0.1 to 17.3.0
         - webpack: 4.46.0 to 4.47.0
         - zip-a-folder: 1.1.5 to 3.1.3
-- Add documentation for following modules:
-    - controls:
-        - fullScreen
-    - mouseHover
 
 ### Deprecated
 

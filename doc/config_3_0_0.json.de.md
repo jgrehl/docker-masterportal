@@ -39,7 +39,7 @@ Es existieren die im Folgenden aufgelisteten Konfigurationen:
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
 |controls|nein|**[controls](#markdown-header-portalconfigcontrols)**||Mit den Controls kann festgelegt werden, welche Interaktionen in der Karte möglich sein sollen.|false|
-|getFeatureInfo|nein|**[getFeatureInfo](#markdown-header-portalconfiggetFeatureInfo)**||Zeigt Informationen zu einem abgefragten Feature ab, indem GetFeatureInfo-Requests oder GetFeature-Requests oder geladene Vektordaten abgefragt werden.|false|
+|getFeatureInfo|nein|**[getFeatureInfo](#markdown-header-portalconfiggetFeatureInfo)**||Mit der GetFeatureInfo(gfi) lassen sich Informationen zu beliebigen Layern anzeigen. Dabei werden bei einem WMS die Daten über die GetFeatureInfo geladen. Bei Vektordaten (WFS, Sensor, GeoJSON usw.) werden die angezeigten Attribute aus den Daten selbst verwendet.|false|
 |mainMenu|nein|**[menu](#markdown-header-portalconfigmenu)**||Hier können die Menüeinträge im Mainmenu und deren Anordnung konfiguriert werden. Die Reihenfolge der Module ist identisch mit der Reihenfolge in der config.json (siehe **[Modules](#markdown-header-portalconfigmenumodules)**).|false|
 |mapView|nein|**[mapView](#markdown-header-portalconfigmapview)**||Mit verschiedenen Parametern wird die Startansicht der Karte konfiguriert und der Hintergrund festgelegt, der erscheint wenn keine Karte geladen ist.|false|
 |mouseHover|nein|**[mouseHover](#markdown-header-portalconfigmousehover)**||Aktiviert die MouseHover-Funktion für Vektorlayer, z.B. WFS oder GeoJSON. Für die Konfiguration pro Layer siehe **[Vector](#markdown-header-themenconfiglayervector)**.|false|
@@ -312,6 +312,155 @@ Bei allen GFI-Abfragen, außer dem direkten Beziehen von HTML, welches durch das
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
+|centerMapToClickPoint|nein|Boolean|false|Wenn der Parameter auf true gesetzt wird, verschiebt sich die Karte beim Klick auf ein Feature so, dass das Feature im Mittelpunkt der sichtbaren Karte liegt.|false|
+|coloredHighlighting3D|nein|**[coloredHighlighting3D](#markdown-header-portalconfiggetfeatureinfocoloredhighlighting3d)**||Regeldefinitionen zum Überschreiben des Highlightings von angeklickten 3D tiles.|false|
+|hideMapMarkerOnVectorHighlight|no|Boolean|false|Wenn Wert auf true gesetzt ist, wird der MapMarker beim VectorHighlighting nicht mit angezeigt. Gilt nur für das DetachedTemplate.|false|
+|highlightVectorRules|nein|**[highlightVectorRules](#markdown-header-portalconfiggetfeatureinfohighlightvectorrules)**||Regeldefinitionen zum Überschreiben des Stylings von abgefragten Vektordaten.|false|
+|icon|nein|String|"bi-info-circle-fill"|CSS Klasse des Icons, das vor dem GFI im Menu angezeigt wird.|false|
+|menuSide|nein|String|"secondaryMenu"|Gibt an in welchem Menü die Informationen angezeigt werden sollen.|false|
+|name|nein|String|"common:modules.getFeatureInfo.name"|Name des Modules im Menü.|false|
+
+**Beispiel einer GetFeatureInfo Konfiguration**
+
+```json
+"getFeatureInfo": {
+    "name":"Informationen abfragen",
+    "icon":"bi-info-circle-fill",
+    "coloredHighlighting3D": {
+        "enabled": true,
+        "color": "GREEN"
+    },
+    "highlightVectorRules": {
+        "fill": {
+            "color": [215, 102, 41, 0.9]
+        },
+        "image": {
+            "scale": 1.5
+        },
+        "stroke": {
+            "width": 4
+        },
+        "text": {
+            "scale": 2
+        }
+    },
+    "hideMapMarkerOnVectorHighlight": true
+}
+```
+
+**Beispiel einer GetFeatureInfo Konfiguration zur Informationsabfrage von Features**
+
+```json
+"getFeatureInfo":{
+    "name":"Informationen abfragen"
+}
+```
+
+***
+
+#### Portalconfig.getFeatureInfo.coloredHighlighting3D
+Highlight Einstellungen von 3D Tiles.
+Falls z. B. ein Gebäude per Linksklick selektiert wurde, wird es in der definierten Farbe gehighlighted.
+Für mehr Informationen über die Farbmöglichkeiten: **[Color-documentation](https://cesium.com/learn/cesiumjs/ref-doc/Color.html)**
+
+|Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
+|----|-------------|---|-------|------------|------|
+|color|nein|String/String[]|"RED"|Color kann als Array oder Cesium.Color definiert werden(z. B. "GREEN" für Cesium.Color.GREEN)|false|
+|enabled|nein|Boolean|true|False falls coloredHighlighting3D disabled ist.|false|
+
+**Beispiel Array**
+
+```json
+"coloredHighlighting3D": {
+    "enabled": true,
+    "color": [0, 255, 0, 255]
+}
+```
+
+**Beispiel Cesium.Color**
+
+```json
+"coloredHighlighting3D": {
+    "enabled": true,
+    "color": "GREEN"
+}
+```
+
+***
+
+#### Portalconfig.getFeatureInfo.highlightVectorRules
+Liste der Einstellungen zum Überschreiben von Vektorstyles bei GetFeatureInfo Abfragen.
+
+Hinweis: Das Highlighting funktioniert nur, wenn der Layer in der config.json über eine gültige StyleId verfügt!
+
+|Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
+|----|-------------|---|-------|------------|------|
+|fill|nein|**[fill](#markdown-header-portalconfiggetfeatureinfohighlightvectorrulesfill)**||Mögliche Einstellung: `color`|false|
+|image|nein|**[image](#markdown-header-portalconfiggetfeatureinfohighlightvectorrulesimage)**||Mögliche Einstellung: `scale`|false|
+|stroke|nein|**[stroke](#markdown-header-portalconfiggetfeatureinfohighlightvectorrulesstroke)**||Mögliche Einstellung: `width`|false|
+|text|nein|**[text](#markdown-header-portalconfiggetfeatureinfohighlightvectorrulestext)**||Mögliche Einstellung: `scale`|false|
+
+***
+
+##### Portalconfig.getFeatureInfo.highlightVectorRules.fill
+|Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
+|----|-------------|---|-------|------------|------|
+|color|nein|Float[]|[255, 255, 255, 0.5]|Mögliche Einstellung: color (RGBA)|false|
+
+**Beispiel**
+
+```json
+"fill": {
+    "color": [215, 102, 41, 0.9]
+}
+```
+
+***
+
+##### Portalconfig.getFeatureInfo.highlightVectorRules.image
+|Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
+|----|-------------|---|-------|------------|------|
+|scale|nein|Float|1|Mögliche Einstellung: scale|false|
+
+**Beispiel**
+
+```json
+"image": {
+    "scale": 1.5
+}
+```
+
+***
+
+##### Portalconfig.getFeatureInfo.highlightVectorRules.stroke
+|Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
+|----|-------------|---|-------|------------|------|
+|color|nein|Float[]|[255, 255, 255, 0.5]|Mögliche Einstellung: color (RGBA)|false|
+|width|nein|Integer|1|Mögliche Einstellung: width|false|
+
+**Beispiel**
+
+```json
+"stroke": {
+    "width": 4,
+    "color": [215, 102, 41, 0.9]
+}
+```
+
+***
+
+##### Portalconfig.getFeatureInfo.highlightVectorRules.text
+|Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
+|----|-------------|---|-------|------------|------|
+|scale|nein|Float|1|Mögliche Einstellung: scale|false|
+
+**Beispiel**
+
+```json
+"text": {
+    "scale": 2
+}
+```
 
 ***
 
