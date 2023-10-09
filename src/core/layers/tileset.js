@@ -80,14 +80,15 @@ TileSetLayer.prototype.hideObjects = function (toHide, allLayers = false) {
 
     toHide.forEach((id) => {
         if (!hiddenObjects[id]) {
-            console.log(Object.keys(hiddenObjects), id)
+            console.log(Object.keys(hiddenObjects), id, hiddenObjects[id])
             hiddenObjects[id] = new Set();
-            console.log(hiddenObjects, id)
+            console.log("+++", hiddenObjects, id)
             updateLayer = true;
         }
     });
     this.setHiddenObjects(hiddenObjects);
     if (updateLayer) {
+        console.log("------------------------------", this)
         this.setFeatureVisibilityLastUpdated(Date.now());
     }
 };
@@ -201,6 +202,7 @@ TileSetLayer.prototype.applyStyle = function (tile) {
  * @return {void}
  */
 TileSetLayer.prototype.styleContent = function (content) {
+    console.log("style")
     if (
         !content[lastUpdatedSymbol] ||
         content[lastUpdatedSymbol] < this.get("featureVisibilityLastUpdated")
