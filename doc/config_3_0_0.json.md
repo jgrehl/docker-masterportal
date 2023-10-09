@@ -39,7 +39,7 @@ The configuration options listed in the following table exist:
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
 |controls|no|**[controls](#markdown-header-portalconfigcontrols)**||Allows setting which interactions are active in the map.|false|
-|getFeatureInfo|no|**[getFeatureInfo](#markdown-header-portalconfiggetFeatureInfo)**||Retrieves information about a queried feature by retrieving GetFeatureInfo requests or GetFeature requests or loaded vector data.|false|
+|getFeatureInfo|no|**[getFeatureInfo](#markdown-header-portalconfiggetFeatureInfo)**||Via  getFeatureInfo (GFI) information to arbitrary layers can be requested. For WMS, the data is fetched with a GetFeatureInfo request. Vector data (WFS, Sensor, GeoJSON, etc.) is already present in the client and will be shown from the already fetched information.|false|
 |mainMenu|no|**[menu](#markdown-header-portalconfigmenu)**||Menu entries in main menu and their order are configured in this entry. The order of modules corresponds to the order in the object specifying them; see **[Modules](#markdown-header-portalconfigmenumodules)**.|false|
 |mapView|no|**[mapView](#markdown-header-portalconfigmapview)**||Defines the initial map view and a background shown when no layer is selected.|false|
 |mouseHover|no|**[mouseHover](#markdown-header-portalconfigmousehover)**||Activates the MouseHover feature for vector layers, both WFS and GeoJSON. For per-layer configuration, see the **[Vector](#markdown-header-themenconfiglayervector)**.|false|
@@ -312,6 +312,155 @@ On all GFI request types except directly fetching HTML, which is done by using `
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
+|centerMapToClickPoint|no|Boolean|false|If true, centers any clicked feature on the map.|false|
+|coloredHighlighting3D|no|**[coloredHighlighting3D](#markdown-header-portalconfiggetfeatureinfocoloredhighlighting3d)**||Rule definition to override the highlighting of clicked 3D tiles.|false|
+|hideMapMarkerOnVectorHighlight|no|Boolean|false|If set to true, the mapmarker won't be shown on vector highlighting. Only applies for the DetachedTemplate|false|
+|highlightVectorRules|no|**[highlightVectorRules](#markdown-header-portalconfiggetfeatureinfohighlightvectorrules)**||Rule definition to override the styling of clicked vector data.|false|
+|icon|no|String|"bi-info-circle-fill"|CSS icon class. Icon is shown before the tool name.|false|
+|menuSide|no|String|"secondaryMenu"|Specifies in which menu the information should be displayed.|false|
+|name|yes|String|"common:modules.getFeatureInfo.name"|Name displayed in the menu.|false|
+
+**Example of a GetFeatureInfo configuration**.
+
+```json
+"getFeatureInfo": {
+    "name": "Request information",
+    "icon": "bi-info-circle-fill",
+    "coloredHighlighting3D": {
+        "enabled": true,
+        "color": "GREEN"
+    },
+    "highlightVectorRules": {
+        "fill": {
+            "color": [215, 102, 41, 0.9]
+        },
+        "image": {
+            "scale": 1.5
+        },
+        "stroke": {
+            "width": 4
+        },
+        "text": {
+            "scale": 2
+        }
+    },
+    "hideMapMarkerOnVectorHighlight": true
+}
+```
+
+**Example of a GetFeatureInfo configuration to retrieve information from features**.
+
+```json
+"getFeatureInfo": {
+    "name": "Request information"
+}
+```
+
+***
+
+#### Portalconfig.getFeatureInfo.coloredHighlighting3D
+Highlight Setting of 3D Tiles.
+If e.g. a building is selected by left mouse click, it will be highlighted in the given color.
+For color configuration see **[Color-documentation](https://cesium.com/learn/cesiumjs/ref-doc/Color.html)**
+
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|-----------|
+|color|no|String/String[]|"RED"|Color can be configured as Array or Cesium.Color (definition e.g "GREEN" for Cesium.Color.GREEN)|false|
+|enabled|no|Boolean|true|False if coloredHighlighting3D is disabled.|false|
+
+**Example Array**
+
+```json
+"coloredHighlighting3D": {
+    "enabled": true,
+    "color": [0, 255, 0, 255]
+}
+```
+
+**Example Cesium.Color**
+
+```json
+"coloredHighlighting3D": {
+    "enabled": true,
+    "color": "GREEN"
+}
+```
+
+***
+
+#### Portalconfig.getFeatureInfo.highlightVectorRules
+Configuration list to overwrite vector styles on gfi requests.
+
+Hint: highlighting only works if there is a styleId in config.json configured for the layer.
+
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|fill|no|**[fill](#markdown-header-portalconfiggetfeatureinfohighlightvectorrulesfill)**||Settable field: `color`|false|
+|image|no|**[image](#markdown-header-portalconfiggetfeatureinfohighlightvectorrulesimage)**||Settable field: `scale`|false|
+|stroke|no|**[stroke](#markdown-header-portalconfiggetfeatureinfohighlightvectorrulesstroke)**||Settable field: `width`|false|
+|text|no|**[text](#markdown-header-portalconfiggetfeatureinfohighlightvectorrulestext)**||Settable field: `scale`|false|
+
+***
+
+##### Portalconfig.getFeatureInfo.highlightVectorRules.fill
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|color|no|Float[]|[255, 255, 255, 0.5]|RGBA value|false|
+
+**Example**
+
+```json
+"fill": {
+    "color": [215, 102, 41, 0.9]
+}
+```
+
+***
+
+##### Portalconfig.getFeatureInfo.highlightVectorRules.image
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|scale|no|Float|1|Scale number|false|
+
+**Example**
+
+```json
+"image": {
+    "scale": 1.5
+}
+```
+
+***
+
+##### Portalconfig.getFeatureInfo.highlightVectorRules.stroke
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|color|no|Float[]|[255, 255, 255, 0.5]|RGBA value|false|
+|width|no|Integer|1|Stroke line width|false|
+
+**Example**
+
+```json
+"stroke": {
+    "width": 4,
+    "color": [215, 102, 41, 0.9]
+}
+```
+
+***
+
+##### Portalconfig.getFeatureInfo.highlightVectorRules.text
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|scale|no|Float|1|Text scale number|false|
+
+**Example**
+
+```json
+"text": {
+    "scale": 2
+}
+```
 
 ***
 

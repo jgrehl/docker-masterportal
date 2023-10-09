@@ -91,7 +91,6 @@ beforeEach(() => {
     mockGetters = {
         centerMapToClickPoint: () => sinon.stub(),
         currentFeature: () => sinon.stub(),
-        desktopType: () => "",
         gfiFeaturesReverse: () => sinon.stub(),
         highlightVectorRules: () => false,
         menuSide: () => false,
