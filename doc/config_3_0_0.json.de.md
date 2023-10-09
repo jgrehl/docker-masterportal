@@ -615,6 +615,7 @@ Module lassen sich in Abschnitte (Sections) unterteilen. Im Menü werden Abschni
 |openConfig|nein|**[openConfig](#markdown-header-portalconfigmenusectionsopenConfig)**||Mit diesem Modul lässt sich eine Konfigurationsdatei (config.json) zur Laufzeit neu laden. Die Module und Karte werden an die neue Konfiguration angepasst.|false|
 |print|nein|**[print](#markdown-header-portalconfigmenusectionsprint)**||Druckmodul mit dem die Karte als PDF exportiert werden kann.|false|
 |scaleSwitcher|nein|**[scaleSwitcher](#markdown-header-portalconfigmenusectionsmodulescaleSwitcher)**||Modul zum Ändern des aktuellen Maßstabs der Karte.|false|
+|selectFeatures|nein|**[selectFeatures](#markdown-header-portalconfigmenusectionsmodulesselectFeatures)**||Ermöglicht Auswahl von Features durch Ziehen einer Box und Einsehen derer GFI-Attribute.|false|
 |shadow|nein|**[shadow](#markdown-header-portalconfigmenusectionsmodulesshadow)**||Konfigurationsobjekt für die Schattenzeit im 3D-Modus.|false|
 |styleVT|nein|**[styleVT](#markdown-header-portalconfigmenusectionsmodulesstyleVT)**||Style-Auswahl zu VT-Diensten. Ermöglicht das Umschalten des Stylings eines Vector Tile Layers, wenn in der services.json mehrere Styles für ihn eingetragen sind.|false|
 
@@ -982,9 +983,148 @@ Modul, mit dem der aktuelle Maßstab der Karte geändert werden kann.
 ***
 
 ##### Portalconfig.menu.sections.modules.selectFeatures
+Erlaub das auswählen von Vektor Features, indem der Nutzer auf der Karte eine Auswahlbox aufziehen kann. Features innerhalb dieser Auwahl werden mit GFI Informationen angezeigt und es ist möglich, auf ein Feature zu zoomen. Zur Nutzung werden vektorbasierte WFS(❗) Dienste benötigt.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
+|highlightVectorRulesPointLine|nein|**[highlightVectorRulesPointLine](#markdown-header-portalconfigmenusectionsmodulesselectfeatureshighlightvectorrulespointline)**||Angabe der Linienfarbe und -breite für Linien Features und der Füllfarbe und Skalierung für Punkte. Sowie optional eine Zoomstufe.|false|
+|highlightVectorRulesPolygon|nein|**[highlightVectorRulesPolygon](#markdown-header-portalconfigmenusectionsmodulesselectfeatureshighlightvectorrulespolygon)**||Angabe der Füllfarbe, Kantenfarbe und -breite für das Hervorheben von Polygon Features. Sowie optional eine Zoomstufe.|false|
+|icon|nein|String|"bi-hand-index"|Icon das im Menü vor dem Modul gezeigt wird. Zur Auswahl siehe **[Bootstrap Icons](https://icons.getbootstrap.com/)**|false|
+|name|nein|String|"common:modules.selectFeatures.name"|Name des Modules im Menü|false|
+|type|nein|String|"selectFeatures"|Der type des Moduls. Definiert welches Modul konfiguriert ist.|false|
+
+**Beispiel**
+
+```json
+{
+    "type": "selectFeatures",
+    "highlightVectorRulesPolygon": {
+        "fill": {
+            "color": [255, 0, 255, 0.9]
+        },
+        "stroke": {
+            "width": 4,
+            "color": [0, 0, 204, 0.9]
+        },
+        "zoomLevel": 5
+    },
+    "highlightVectorRulesPointLine": {
+        "fill": {
+            "color": [255, 0, 255, 0.9]
+        },
+        "stroke": {
+            "width": 8,
+            "color": [255, 0, 255, 0.9]
+        },
+        "image": {
+            "scale": 2
+        },
+        "zoomLevel": 5
+    }
+}
+```
+
+***
+
+###### Portalconfig.menu.sections.modules.selectFeatures.highlightVectorRulesPointLine
+Angabe der Linienfarbe und -breite für Linien Features und der Füllfarbe und Skalierung für Punkte. Sowie optional eine Zoomstufe.
+
+|Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
+|----|-------------|---|-------|------------|------|
+|fill|nein|**[fill](#markdown-header-portalconfigmenutoolselectfeatureshighlightvectorrulespointlinefill)**||Mögliche Einstellung: color|false|
+|stroke|nein|**[stroke](#markdown-header-portalconfigmenutoolselectfeatureshighlightvectorrulespointlinestroke)**||Mögliche Einstellung: width|false|
+|image|nein|**[image](#markdown-header-portalconfigmenutoolselectfeatureshighlightvectorrulespointlineimage)**||Mögliche Einstellung: scale|false|
+|zoomLevel|nein|Integer|7|Zoomstufe, mögliche Einstellung: 0-9|false|
+
+***
+
+####### Portalconfig.menu.sections.modules.selectFeatures.highlightVectorRulesPointLine.fill
+|Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
+|----|-------------|---|-------|------------|------|
+|color|nein|Float[]|[255, 255, 255, 0.5]|Mögliche Einstellung: color (RGBA)|false|
+
+**Beispiel**
+
+```json
+"fill": {
+    "color": [215, 102, 41, 0.9]
+}
+```
+
+***
+
+####### Portalconfig.menu.sections.modules.selectFeatures.highlightVectorRulesPointLine.stroke
+|Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
+|----|-------------|---|-------|------------|------|
+|color|nein|Float[]|[255, 255, 255, 0.5]|Mögliche Einstellung: color (RGBA)|false|
+|width|nein|Integer|1|Mögliche Einstellung: width|false|
+
+**Beispiel**
+
+```json
+"stroke": {
+    "width": 4 ,
+    "color": [255, 0, 255, 0.9]
+}
+```
+
+***
+
+####### Portalconfig.menu.sections.modules.selectFeatures.highlightVectorRulesPointLine.image
+|Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
+|----|-------------|---|-------|------------|------|
+|scale|nein|Integer|1.5|Mögliche Einstellung: scale|false|
+
+**Beispiel**
+
+```json
+"image": {
+    "scale": 2
+    }
+```
+
+***
+
+###### Portalconfig.menu.sections.modules.selectFeatures.highlightVectorRulesPolygon
+Angabe der Füllfarbe, Kantenfarbe und -breite für das Hervorheben von Polygon Features. Sowie optional eine Zoomstufe.
+
+|Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
+|----|-------------|---|-------|------------|------|
+|fill|nein|**[fill](#markdown-header-portalconfigmenusectionsmodulesselectfeatureshighlightvectorrulespolygonfill)**||Mögliche Einstellung: color|false|
+|stroke|nein|**[stroke](#markdown-header-portalconfigmenusectionsmoduleselectfeatureshighlightvectorrulespolygonstroke)**||Mögliche Einstellung: width|false|
+|zoomLevel|nein|Integer|7|Zoomstufe, mögliche Einstellung: 0-9|false|
+
+***
+
+####### Portalconfig.menu.sections.modules.selectFeatures.highlightVectorRulesPolygon.fill
+|Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
+|----|-------------|---|-------|------------|------|
+|color|nein|Float[]|[255, 255, 255, 0.5]|Mögliche Einstellung: color (RGBA)|false|
+
+**Beispiel**
+
+```json
+"fill": {
+    "color": [215, 102, 41, 0.9]
+}
+```
+
+***
+
+####### Portalconfig.menu.sections.modules.selectFeatures.highlightVectorRulesPolygon.stroke
+|Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
+|----|-------------|---|-------|------------|------|
+|color|nein|Float[]|[255, 255, 255, 0.5]|Mögliche Einstellung: color (RGBA)|false|
+|width|nein|Integer|1|Mögliche Einstellung: width|false|
+
+**Beispiel**
+
+```json
+"stroke": {
+    "width": 4 ,
+    "color": [255, 0, 255, 0.9]
+}
+```
 
 ***
 
