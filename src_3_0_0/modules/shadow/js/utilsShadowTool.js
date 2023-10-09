@@ -1,4 +1,4 @@
-import moment from "moment";
+import dayjs from "dayjs";
 
 
 /**
@@ -8,7 +8,7 @@ import moment from "moment";
  */
 function updateCesiumTime (datetime) {
     if (Cesium) {
-        mapCollection.getMap("3D").time = Cesium.JulianDate.fromDate(moment(datetime).toDate());
+        mapCollection.getMap("3D").time = Cesium.JulianDate.fromDate(dayjs(datetime).toDate());
     }
 }
 /**
