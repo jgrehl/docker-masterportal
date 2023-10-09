@@ -1332,7 +1332,7 @@ Möglichkeit den Inhalt der Fußzeile des Portals zu konfigurieren.
 ***
 
 ### Portalconfig.tree
-Möglichkeit um Einstellungen für den Themenbaum vorzunehmen.
+Möglichkeit, um Einstellungen für den Themenbaum vorzunehmen.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
@@ -1479,13 +1479,16 @@ Kombiniert den style von mehreren Layern, Namen  und Legenden.
 
 ***
 
-#### Portalconfig.tree.layerPills
-Konfiguration der LayerPills.
+### Portalconfig.tree.layerPills
+Konfiguration, um Einstellungen für die LayerPills vorzunehmen.
+
+Layerpills sind Buttons, die oberhalb der Karte die ausgewählten Layer anzeigen. Beim Anklicken einer LayerPill, werden die entsprechenden Layerinformationen im Menü angezeigt. Über den Schließbutton wird der Layer abgewählt. Das Attribut LayerPills wird als Objekt angegeben und beinhaltet folgende Attribute.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
-|active|nein|Boolean|false|Gibt an, ob dieses Feature aktiv ist.|false|
-|mobileOnly|nein|Boolean|false|Gibt an, ob dieses Feature nur auf kleinen Bildschirmen aktiv ist.|false|
+|active|nein|Boolean|false|Gibt an, ob LayerPills aktiv sind|false|
+|mobileOnly|nein|Boolean|false|Definiert, ob LayerPills nur in der mobilen Version aktiv sein sollen|false|
+
 
 **Beispiel**
 
