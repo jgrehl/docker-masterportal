@@ -659,7 +659,7 @@
                     "iconMeadow": "Campo"
                 },
                 "squareDefinedInfo": " (sin tener en cuenta la curvatura de la tierra)",
-                "squareAreaLabel": "Área",
+                "areaLabel": "Área",
                 "squareSideLengthLabel": "Longitud lateral"
             },
             "measure": {

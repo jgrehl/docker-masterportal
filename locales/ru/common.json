@@ -832,7 +832,7 @@
                     "gelber Pin": "Желтый штифт"
                 },
                 "squareDefinedInfo": "(без учета кривизны Земли)",
-                "squareAreaLabel": "площадь",
+                "areaLabel": "площадь",
                 "squareSideLengthLabel": "длина стороны"
             },
             "measure": {

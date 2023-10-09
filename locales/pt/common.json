@@ -633,7 +633,7 @@
                     "iconMeadow": "Relva"
                 },
                 "squareDefinedInfo": " (sem ter em conta a curvatura da Terra)",
-                "squareAreaLabel": "Área",
+                "areaLabel": "Área",
                 "squareSideLengthLabel": "Comprimento do lado"
             },
             "download": {

@@ -102,7 +102,8 @@ export function handleDrawEvent ({state, commit, dispatch, rootState}, event) {
             layerSource.removeFeature(event.feature);
         }
         else {
-            const coordinates = event.feature.getGeometry().getCoordinates(),
+            const feature = event.feature,
+                coordinates = feature.getGeometry().getCoordinates(),
                 minX = coordinates[0][0][0],
                 minY = coordinates[0][0][1],
                 maxX = coordinates[0][2][0],
@@ -111,8 +112,7 @@ export function handleDrawEvent ({state, commit, dispatch, rootState}, event) {
                 centerY = (minY + maxY) / 2,
                 centerCoordinate = [centerX, centerY];
 
-            // Aufruf der calculateSquare-Funktion mit den richtigen Parametern
-            squareCalculations.calculateSquare(event, centerCoordinate, squareArea);
+            squareCalculations.calculateSquare(feature, centerCoordinate, squareArea);
         }
     }
 

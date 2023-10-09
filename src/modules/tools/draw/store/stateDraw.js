@@ -60,10 +60,13 @@ const symbol = {
      * @property {String[]} drawCurveSettings.colorContour The color of the contours of the drawn feature represented as an array.
      * @property {Object} drawAreaSettings the values used for the drawType drawArea
      * @property {Number} drawAreaSettings.strokeWidth Stroke width.
+     * @property {String} drawAreaSettings.unit The unit of measurement (e.g. "km").
+     * @property {String} drawAreaSettings.area The area of the area.
      * @property {String[]} drawAreaSettings.color The color of the drawn feature represented as an array.
      * @property {Number} drawAreaSettings.opacity The opacity of the color of the drawn features. NOTE: The values of the transparencySettings are opacity values.
      * @property {String[]} drawAreaSettings.colorContour The color of the contours of the drawn feature represented as an array.
      * @property {Number} drawAreaSettings.opacityContour The opacity of the color of the contours for features of drawType "LineString". NOTE: The values of the transparencySettings are opacity values.
+     * @property {Object} drawAreaSettings.tooltipStyle The custom style for the tooltip of drawType "Area".
      * @property {Object} drawSquareSettings the values used for the drawType drawSquare
      * @property {String} drawSquareSettings.squareMethod The method for drawing features of drawType "Square".
      * @property {Number} drawSquareSettings.strokeWidth Stroke width.
@@ -181,10 +184,19 @@ const symbol = {
         },
         drawAreaSettings: {
             strokeWidth: 1,
+            unit: "m",
+            area: 0,
             color: [55, 126, 184, 1],
             opacity: 1,
             colorContour: [0, 0, 0, 1],
-            opacityContour: 1
+            opacityContour: 1,
+            tooltipStyle: {
+                fontSize: "14px",
+                paddingTop: "3px",
+                paddingLeft: "3px",
+                paddingRight: "3px",
+                backgroundColor: "rgba(255, 255, 255, .9)"
+            }
         },
         drawSquareSettings: {
             squareMethod: "interactive",

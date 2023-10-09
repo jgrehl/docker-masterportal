@@ -89,6 +89,36 @@ export default {
             return this.drawHTMLElementsModifyFeature;
         },
 
+        areaComputed: {
+            /**
+             * getter for the computed property squareArea of the current drawType
+             * @info the internal representation of squareArea is always in meters
+             * @returns {Number} the current radius
+             */
+            get () {
+                if (this.styleSettings?.unit === "km") {
+                    const areaKm = this.styleSettings?.area / 1000;
+
+                    return areaKm.toFixed(2);
+                }
+                return this.styleSettings?.area;
+            },
+            /**
+             * setter for the computed property Area of the current drawType
+             * @info the internal representation of Area is always in meters
+             * @param {Number} value the value to set the target to
+             * @returns {void}
+             */
+            set (value) {
+                if (this.styleSettings?.unit === "km") {
+                    this.setArea(parseInt(value, 10) * 1000);
+                }
+                else {
+                    this.setArea(parseInt(value, 10));
+                }
+            }
+        },
+
         squareAreaComputed: {
             /**
              * getter for the computed property squareArea of the current drawType
@@ -728,6 +758,28 @@ export default {
                     </div>
                 </div>
                 <div
+                    v-if="drawType.id === 'drawArea'"
+                    class="form-group form-group-sm row"
+                >
+                    <label
+                        class="col-md-5 col-form-label"
+                        for="tool-draw-area"
+                    >
+                        {{ $t('common:modules.tools.draw.areaLabel') }}
+                    </label>
+                    <div class="col-md-7">
+                        <input
+                            id="tool-draw-area"
+                            v-model="areaComputed"
+                            class="form-control form-control-sm"
+                            :style="{borderColor: innerBorderColor}"
+                            type="text"
+                            :placeholder="$t('common:modules.tools.draw.areaPlaceholder')"
+                            :disabled="true"
+                        >
+                    </div>
+                </div>
+                <div
                     v-if="drawType.id === 'drawSquare' && currentInteraction !== 'modify'"
                     class="form-group form-group-sm row"
                 >
@@ -767,7 +819,7 @@ export default {
                         class="col-md-5 col-form-label"
                         for="tool-draw-squareArea"
                     >
-                        {{ $t('common:modules.tools.draw.squareAreaLabel') }}
+                        {{ $t('common:modules.tools.draw.areaLabel') }}
                     </label>
                     <div class="col-md-7">
                         <input
@@ -800,7 +852,6 @@ export default {
                             class="form-control form-control-sm"
                             :style="{borderColor: innerBorderColor}"
                             type="text"
-                            :placeholder="$t('common:modules.tools.draw.squareSideLengthPlaceholder')"
                             :disabled="true"
                         >
                     </div>

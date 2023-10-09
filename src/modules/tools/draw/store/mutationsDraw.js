@@ -50,6 +50,8 @@ const mutations = {
         state.drawAreaSettings.color = styleSettings.color;
         state.drawAreaSettings.opacityContour = styleSettings.opacityContour;
         state.drawAreaSettings.strokeWidth = styleSettings.strokeWidth;
+        state.drawAreaSettings.unit = styleSettings.unit;
+        state.drawAreaSettings.area = styleSettings.area;
         state.drawAreaSettings.opacity = styleSettings.opacity;
     },
     setDrawSquareSettings: (state, styleSettings) => {

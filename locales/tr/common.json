@@ -767,7 +767,7 @@
                     "gelber Pin": "sarı Pin"
                 },
                 "squareDefinedInfo": "(dünyanın eğriliğini hesaba katmadan)",
-                "squareAreaLabel": "Alan",
+                "areaLabel": "Alan",
                 "squareSideLengthLabel": "Yan uzunluk"
             },
             "measure": {

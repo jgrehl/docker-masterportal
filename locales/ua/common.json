@@ -835,7 +835,7 @@
                     "gelber Pin": "жовтий Pin"
                 },
                 "squareDefinedInfo": "(без урахування кривизни землі)",
-                "squareAreaLabel": "площа",
+                "areaLabel": "площа",
                 "squareSideLengthLabel": "довжина сторони"
             },
             "measure": {

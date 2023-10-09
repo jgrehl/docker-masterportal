@@ -916,7 +916,7 @@
                     }
                 },
                 "squareDefinedInfo": " (without taking into account the curvature of the earth)",
-                "squareAreaLabel": "Area",
+                "areaLabel": "Area",
                 "squareSideLengthLabel": "Side Length"
             },
             "measure": {

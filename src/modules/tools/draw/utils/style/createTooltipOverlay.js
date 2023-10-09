@@ -20,16 +20,19 @@ function createTooltipOverlay ({state, getters, commit, dispatch}) {
                 tooltip.setPosition(evt.coordinate);
             },
             featureChangeEvent: evt => {
+                let value = null;
+
                 if (state?.drawType?.id === "drawCircle" || state?.drawType?.id === "drawDoubleCircle") {
+                    value = evt.target.getRadius();
                     if (autoUnit && evt.target.getRadius() > 500 || !autoUnit && styleSettings.unit === "km") {
                         tooltip.getElement().innerHTML = thousandsSeparator(Math.round(evt.target.getRadius()).toFixed(decimalsForKilometers) / 1000) + " km";
                     }
                     else {
                         tooltip.getElement().innerHTML = thousandsSeparator(Math.round(evt.target.getRadius())) + " m";
                     }
-                    setters.setCircleRadius({getters, commit, dispatch}, Math.round(evt.target.getRadius()));
                 }
                 else if (state?.drawType?.id === "drawSquare") {
+                    value = getArea(evt.target);
                     if (autoUnit && getArea(evt.target) > 500 || !autoUnit && styleSettings.unit === "km") {
                         tooltip.getElement().innerHTML = thousandsSeparator(Math.round(getArea(evt.target)).toFixed(decimalsForKilometers) / 1000) + " km²";
                     }
@@ -38,6 +41,17 @@ function createTooltipOverlay ({state, getters, commit, dispatch}) {
                     }
                     setters.setSquareArea({getters, commit, dispatch}, Math.round(getArea(evt.target)));
                 }
+                else if (state?.drawType?.id === "drawArea") {
+                    value = getArea(evt.target);
+                    if (autoUnit && getArea(evt.target) > 500 || !autoUnit && styleSettings.unit === "km") {
+                        tooltip.getElement().innerHTML = thousandsSeparator(Math.round(getArea(evt.target)).toFixed(decimalsForKilometers) / 1000) + " km²";
+                    }
+                    else {
+                        tooltip.getElement().innerHTML = thousandsSeparator(Math.round(getArea(evt.target))) + " m²";
+                    }
+                    setters.setArea({getters, commit, dispatch}, Math.round(getArea(evt.target)));
+                }
+                updateCalculations({state, getters, commit, dispatch}, value);
             }
         };
 
@@ -59,6 +73,26 @@ function createTooltipOverlay ({state, getters, commit, dispatch}) {
     tooltip.set("featureChangeEvent", factory.featureChangeEvent);
 
     return tooltip;
+}
+
+/**
+ * returns the Feature to use as mouse label on change of circle or double circle
+ * @param {Object} context context object for actions, getters and setters.
+ * @param {Number} value value of radius or area.
+ * @returns {module:ol/Overlay} the Feature to use as mouse label
+ */
+function updateCalculations ({state, getters, commit, dispatch}, value) {
+    if (state?.drawType?.id === "drawCircle" || state?.drawType?.id === "drawDoubleCircle") {
+        setters.setCircleRadius({getters, commit, dispatch}, Math.round(value));
+    }
+    else if (state?.drawType?.id === "drawSquare") {
+
+        setters.setSquareArea({getters, commit, dispatch}, Math.round(value));
+    }
+    else if (state?.drawType?.id === "drawArea") {
+
+        setters.setArea({getters, commit, dispatch}, Math.round(value));
+    }
 }
 
 export default createTooltipOverlay;
