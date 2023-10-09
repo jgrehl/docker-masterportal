@@ -19,13 +19,11 @@
         - bootstrap: 5.2.3 to 5.3.2
         - bootstrap-icons: 1.10.3 to 1.11.1
         - chart.js: 4.2.1 to 4.4.0
-        - dayjs: 1.11.7 to 1.11.10
         - i18next: 22.4.11 to 23.5.1
         - i18next-browser-languagedetector: 7.0.1 to 7.1.0
         - i18next-http-backend: 2.2.0 to 2.2.2
         - i18next-vue: 2.1.1 to 3.0.0
         - jsts: 2.9.2 to 2.11.0
-        - moment-timezone: 0.5.41 to 0.5.43
         - qrcode: 1.5.1 to 1.5.3
         - vue: 3.2.47 to 3.3.4
         - vue-datepicker-next: 1.0.2 to 1.0.3
@@ -57,6 +55,9 @@
 - The following NPM packages are removed:
     - dependencies
         - @panter/vue-i18next
+        - dayjs
+        - moment
+        - moment-timezone
     - devDependencies:
         - cross-env
 
