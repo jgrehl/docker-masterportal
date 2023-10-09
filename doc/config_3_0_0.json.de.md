@@ -66,6 +66,24 @@ Es existieren die im Folgenden aufgelisteten Konfigurationen:
 
 ***
 
+### Portalconfig.baselayerSwitcher
+Der baselayerSwitcher ermnöglicht ein einfaches Wechseln bzw. Auswählen eines Layers, der eine Hintergrundkarte beinhaltet (baselayer).
+
+|Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
+|----|-------------|---|-------|------------|------|
+active|nein|Boolean|false|Definiert, ob der baselayerSwitcher aktiv ist.|false|
+activatedExpandable|nein|Boolean|false|Gibt an, ob der baselayerSwitcher aufgeklappt ist und alle verfügbaren baselayer angezeigt werden oder nur der aktive, welcher sich auf höchster Ebene befindet.|false|
+**Beispiel**
+
+```json
+"baselayerSwitcher": {
+      "active": true,
+      "activatedExpandable": false
+    }
+```
+
+***
+
 ### Portalconfig.controls
 Mit den Controls kann festgelegt werden, welche Interaktionen in der Karte möglich sein sollen.
 
@@ -682,13 +700,6 @@ Module lassen sich in Abschnitte (Sections) unterteilen. Im Menü werden Abschni
 
 ***
 
-##### Portalconfig.menu.sections.modules.baselayerSwitcher
-
-|Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
-|----|-------------|---|-------|------------|------|
-
-***
-
 ##### Portalconfig.menu.sections.modules.bufferAnalysis
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -1263,6 +1274,7 @@ Das Modul ermöglicht das Umschalten des Stylings von Vector Tile Layers(❗), s
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
+
 
 ***
 

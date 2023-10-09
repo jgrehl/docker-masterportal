@@ -15,9 +15,12 @@ export default {
             "layerConfigsByAttributes"
         ]),
         ...mapGetters("Modules/BaselayerSwitcher", [
+            "active",
             "activatedExpandable",
             "baselayerIds",
-            "topBaselayerId"
+            "configPaths",
+            "topBaselayerId",
+            "type"
         ])
     },
     watch: {
@@ -56,6 +59,7 @@ export default {
         }
     },
     created () {
+        this.initializeModule({configPaths: this.configPaths, type: this.type});
         const baselayerConfigIds = [],
             baselayers = this.layerConfigsByAttributes({
                 baselayer: true,
@@ -108,6 +112,7 @@ export default {
             "setTopBaselayerId"
         ]),
         ...mapMutations(["setBaselayerVisibility"]),
+        ...mapActions(["initializeModule"]),
         ...mapActions("Modules/BaselayerSwitcher", ["updateLayerVisibilityAndZIndex"]),
 
 
@@ -135,7 +140,7 @@ export default {
 
 <template>
     <div
-        v-if="baselayerIds.length > 1"
+        v-if="baselayerIds.length > 1 && active"
         id="baselayer-switcher"
         class="btn-group-vertical my-5 btn-group-background-switcher shadow"
         role="group"
