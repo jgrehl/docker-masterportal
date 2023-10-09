@@ -36,7 +36,7 @@
         - canvas: 2.11.0 to 2.11.2
         - chai: 4.3.7 to 4.3.10
         - esbuild-loader: 3.0.1 to 4.0.2
-        - eslint: 8.36.0 to 8.50.0
+        - eslint: 8.36.0 to 8.51.0
         - eslint-plugin-vue: 9.9.0 to 9.17.0
         - fs-extra: 11.1.0 to 11.1.1
         - markdown-it: 13.0.1 to 13.0.2
@@ -45,7 +45,7 @@
         - replace-in-file: 6.3.5 to 7.0.1
         - sass: 1.59.3 to 1.69.0
         - sinon: 15.0.2 to 16.1.0
-        - vue-loader: 17.0.1 to 17.2.2
+        - vue-loader: 17.0.1 to 17.3.0
         - webpack: 4.46.0 to 4.47.0
         - zip-a-folder: 1.1.5 to 3.1.3
 
