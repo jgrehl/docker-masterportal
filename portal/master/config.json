@@ -9,6 +9,9 @@
         "once": true
       }
     },
+    "baselayerSwitcher": {
+      "active": true
+    },
     "mapView": {
       "backgroundImage": "https://geodienste.hamburg.de/lgv-config/img/backgroundCanvas.jpeg",
       "startZoomLevel": 4,
