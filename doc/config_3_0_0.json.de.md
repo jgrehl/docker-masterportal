@@ -610,6 +610,7 @@ Module lassen sich in Abschnitte (Sections) unterteilen. Im Menü werden Abschni
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
 |coordToolkit|nein|**[coordToolkit](#markdown-header-portalconfigmenusectionsmodulescoordtoolkit)**||Koordinatenabfrage: Werkzeug um Koordinaten und Höhe per Maus-Klick abzufragen: Bei Klick in die Karte werden die Koordinaten in der Anzeige eingefroren und können auch direkt in die Zwischenablage kopiert werden. Koordinatensuche: Über eine Eingabemaske können das Koordinatensystem und die Koordinaten eingegeben werden. Das Werkzeug zoomt dann auf die entsprechende Koordinate und setzt einen Marker darauf. Die Koordinatensysteme werden aus der config.js bezogen.|false|
+|fileImport|nein|**[fileImport](#markdown-header-portalconfigmenusectionsmodulesfileImport)**||Import von Dateien des Typs *.kml, *.geojson und *. gpx. Über dieses Modul können solche Dateien importiert werden.|false|
 |layerClusterToggler|nein|**[layerClusterToggler](#markdown-header-portalconfigmenusectionsmoduleslayerClusterToggler)**||Mit diesem Modul lassen sich Layer in Clustern gleichzeitig aktivieren/laden und deaktivieren.|false|
 |layerSlider|nein|**[layerSlider](#markdown-header-portalconfigmenusectionsmoduleslayerslider)**||Mit dem Layerslider lassen sich beliebige Dienste in einer Reihenfolge abspielen. Zum Beispiel geeignet für Luftbilder aus verschiedenen Jahrgängen.|false|
 |openConfig|nein|**[openConfig](#markdown-header-portalconfigmenusectionsopenConfig)**||Mit diesem Modul lässt sich eine Konfigurationsdatei (config.json) zur Laufzeit neu laden. Die Module und Karte werden an die neue Konfiguration angepasst.|false|
@@ -729,9 +730,23 @@ Kann ein Array von Erläuterungen zu den Koordinatenreferenzsystemen enthalten a
 ***
 
 ##### Portalconfig.menu.sections.modules.fileImport
+Über dieses Modul können Dateien der Formate "*.kml", "*.geojson" und "*.gpx" importiert werden.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
+|enableZoomToExtend|nein|Boolean|false|Legt fest, ob der Dateiname als Knopf angezeigt wird, welcher die Möglichkeit bietet, in die importierten Features hineinzuzoomen.|false|
+|icon|nein|String|"bi-box-arrow-in-down"|Icon das im Menü vor dem Modul gezeigt wird. Zur Auswahl siehe **[Bootstrap Icons](https://icons.getbootstrap.com/)**|false|
+|name|nein|String|"common:modules.fileImport.name"|Name des Modules im Menü|false|
+|type|nein|String|"fileImport"|Der type des Moduls. Definiert welches Modul konfiguriert ist.|false|
+
+**Beispiel**
+
+```json
+{
+    "type": "fileImport",
+    "enableZoomToExtend": true
+}
+```
 
 ***
 
@@ -1220,9 +1235,25 @@ Das Modul ermöglicht das Umschalten des Stylings von Vector Tile Layers(❗), s
 ***
 
 #### Portalconfig.menu.title
+Im Menü kann der Portalname und ein Bild angezeigt werden.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
+|link|nein|String||URL der externen Seite, auf die verlinkt wird.|false|
+|logo|nein|String||URL zur externen Bilddatei. Wird kein logo gesetzt, so wird nur der Titel ohne Bild dargestellt.|false|
+|text|nein|String||Name des Portals.|false|
+|toolTip|nein|String||Tooltip, der beim Hovern über das PortalLogo angezeigt wird.|false|
+
+**Beispiel portalTitle**
+
+```json
+"title": {
+    "text": "Master",
+    "logo": "https://geodienste.hamburg.de/lgv-config/img/hh-logo.png",
+    "link": "https://geoinfo.hamburg.de",
+    "toolTip": "Landesbetrieb Geoinformation und Vermessung"
+}
+```
 
 ***
 
@@ -1244,11 +1275,11 @@ Aktiviert die MouseHover-Funktion für Vektorlayer, z.B. WFS oder GeoJSON. Für 
 
 **Beispiel**
 
-````json
+```json
 "mouseHover": {
     "numFeaturesToShow": 1,
     "infoText": "Beispieltext"
-},
+}
 ```
 
 ***
@@ -1278,6 +1309,7 @@ Möglichkeit um Einstellungen für den Themenbaum vorzunehmen.
 |validLayerTypesAutoTree|nein|enum|["WMS", "SENSORTHINGS", "TERRAIN3D", "TILESET3D", "OBLIQUE"]|Layer Typen die bei dem tree.type `auto` verwendet werden sollen.|false|
 
 **Beispiel type auto**
+
 ```json
 {
     "tree": {
@@ -1317,6 +1349,7 @@ Möglichkeit um Einstellungen für den Themenbaum vorzunehmen.
 ```
 
 **Beispiel kein type**
+
 ```json
 {
     "tree": {
@@ -1327,7 +1360,9 @@ Möglichkeit um Einstellungen für den Themenbaum vorzunehmen.
     }
 }
 ```
+
 ***
+
 #### Portalconfig.tree.categories
 Konfiguration der Kategorien aus den Metadaten. Nur für den tree.type `auto`.
 
@@ -1338,6 +1373,7 @@ Konfiguration der Kategorien aus den Metadaten. Nur für den tree.type `auto`.
 |active|nein|Boolean||Gibt an, ob diese Kategorie initial aktiv ist. Bei keiner Angabe, ist die 1. Kategorie initial aktiv.|false|
 
 **Beispiel**
+
 ```json
  "categories": [
         {
@@ -1355,7 +1391,9 @@ Konfiguration der Kategorien aus den Metadaten. Nur für den tree.type `auto`.
         }
       ]
 ```
+
 ***
+
 #### Portalconfig.tree.highlightedFeatures
 Konfiguration zusätzlich zum Highlighting von Features. Wenn mit dem Modul "Liste" oder "Features auswählen" mit "Auf dieses Feature zoomen" oder per Url-Parameter Features hervorgehoben werden, dann ist ein Layer mit diesen Features im Menü-Baum auswählbar.
 
@@ -1365,6 +1403,7 @@ Konfiguration zusätzlich zum Highlighting von Features. Wenn mit dem Modul "Lis
 |layerName|nein|String|"common:tree.selectedFeatures"|Name der erzeugten Layer mit den hervorgehobenen Features. Der Name enthält zusätzlich den Namen des Moduls mit dem gearbeitet wurde.|true|
 
 **Beispiel**
+
 ```json
 "highlightedFeatures": {
     "active": false,
@@ -1373,6 +1412,7 @@ Konfiguration zusätzlich zum Highlighting von Features. Wenn mit dem Modul "Lis
 ```
 
 ***
+
 #### Portalconfig.tree.layerIDsToStyle
 Kombiniert den style von mehreren Layern, Namen  und Legenden.
 
@@ -1397,7 +1437,9 @@ Kombiniert den style von mehreren Layern, Namen  und Legenden.
     ]
 }
 ```
+
 ***
+
 #### Portalconfig.tree.layerPills
 Konfiguration der LayerPills.
 
@@ -1407,13 +1449,16 @@ Konfiguration der LayerPills.
 |mobileOnly|nein|Boolean|false|Gibt an, ob dieses Feature nur auf kleinen Bildschirmen aktiv ist.|false|
 
 **Beispiel**
+
 ```json
 "layerPills": {
     "active": true,
     "mobileOnly": true
     }
 ```
+
 ***
+
 ## Themenconfig
 Die Themenconfig definiert, welche Inhalte an welcher Stelle im Themenbaum angezeigt werden. Es können folgende Eigenschaften konfiguriert werden:
 

@@ -11,7 +11,10 @@
 - Add documentation for following modules:
     - controls:
         - fullScreen
+    - fileImport
     - getFeatureInfo
+    - menu:
+        - portalTitle
     - mouseHover
     - selectFeatures
 

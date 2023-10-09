@@ -610,6 +610,7 @@ Modules can be divided into sections. In the menu, sections are divided with a h
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
 |coordToolkit|no|**[coordToolkit](#markdown-header-portalconfigmenusectionsmodulescoordtoolkit)**||Coordinate query: Tool to query coordinates and altitude by mouse click: When clicking in the map, the coordinates are frozen in the display and can also be copied directly to the clipboard. Coordinate search: The coordinate system and the coordinates can be entered via an input mask. The tool then zooms to the corresponding coordinate and places a marker on it. The coordinate systems are obtained from config.js.|false|
+|fileImport|no|**[fileImport](#markdown-header-portalconfigmenusectionsmodulesfileImport)**||Import KML, GeoJSON, and GPX files with this modules.|false|
 |layerClusterToggler|no|**[layerClusterToggler](#markdown-header-portalconfigmenusectionsmoduleslayerClusterToggler)**||This module allows a cluster layers to be active and deactive together.|false|
 |layerSlider|no|**[layerSlider](#markdown-header-portalconfigmenutoollayerslider)**||The layerSlider module allows showing arbitrary services in order. This can e.g. be used to show aerial footage from multiple years in succession.|false|
 |openConfig|no|**[openConfig](#markdown-header-portalconfigmenusectionsopenConfig)**||ith this module a configuration file (config.json) can be reloaded at runtime. The modules and map are adapted to the new configuration.|false|
@@ -729,9 +730,23 @@ Can contain an array of explanations of the coordinate reference systems from wh
 ***
 
 ##### Portalconfig.menu.sections.modules.fileImport
+Import "*.kml", "*.geojson" and "*.gpx" files with this module.
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
+|enableZoomToExtend|no|Boolean|false|To decide if the file name is shown as a button and it is able to zoom the imported features by clicking the file name|false|
+|icon|no|String|"bi-box-arrow-in-down"|Icon that is shown in front of the module in the menu. For selection see **[Bootstrap Icons](https://icons.getbootstrap.com/)**.|false|
+|name|no|String|"common:modules.fileImport.name"|Name of the module in the menu.|false|
+|type|no|String|"fileImport"|The type of the module. Defines which module is configured.|false|
+
+**Example**
+
+```json
+{
+    "type": "fileImport",
+    "enableZoomToExtend": true
+}
+```
 
 ***
 
@@ -938,8 +953,8 @@ Print module, configurable for 2 print services: *High Resolution PlotService* a
 ###### Portalconfig.menu.sections.modules.print.capabilitiesFilter
 List of layouts and formats that filters the response from the print service in the respective category.
 
-|Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
-|----|-------------|---|-------|------------|------|
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
 |layouts|no|String[]||Array of layouts should shown in the UI.|false|
 |outputFormats|no|String[]||Array of formats should shown in the UI.|false|
 
@@ -1220,9 +1235,25 @@ The module allows for switching the style of vector tile layers(❗) which provi
 ***
 
 #### Portalconfig.menu.title
+The menu bar allows showing a portal name and portal image.
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
+|link|no|String||URL of an external website to link to.|false|
+|logo|no|String||Path to an external image file. If no image is set, the title will be shown without an accompanying logo.|false|
+|text|no|String||Portal name.|false|
+|toolTip|no|String||Shown on hovering the portal logo.|false|
+
+**Example portalTitle**
+
+```json
+"title": {
+    "text": "Master",
+    "logo": "https://geodienste.hamburg.de/lgv-config/img/hh-logo.png",
+    "link": "https://geoinfo.hamburg.de",
+    "toolTip": "Landesbetrieb Geoinformation und Vermessung"
+}
+```
 
 ***
 
@@ -1235,6 +1266,7 @@ Defines the initial map view and a background shown when no layer is selected.
 ***
 
 ### Portalconfig.mouseHover
+Enables the MouseHover function for vector layers, e.g. WFS or GeoJSON. For per-layer configuration see **[Vector](#markdown-header-themeconfiglayervector)**.
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
@@ -1243,11 +1275,12 @@ Defines the initial map view and a background shown when no layer is selected.
 
 **Example**
 
-````json
+```json
 "mouseHover": {
     "numFeaturesToShow": 1,
     "infoText": "Exampletext"
 },
+```
 
 ***
 
@@ -1276,6 +1309,7 @@ Configuration of the topic selection tree.
 |validLayerTypesAutoTree|no|enum|["WMS", "SENSORTHINGS", "TERRAIN3D", "TILESET3D", "OBLIQUE"]|Layer types to be used with the tree.type `auto`.|false|
 
 **Example type auto**
+
 ```json
 {
     "tree": {
@@ -1315,6 +1349,7 @@ Configuration of the topic selection tree.
 ```
 
 **Example no type**
+
 ```json
 {
     "tree": {
@@ -1325,7 +1360,9 @@ Configuration of the topic selection tree.
     }
 }
 ```
+
 ***
+
 #### Portalconfig.tree.categories
 Configuration of the categories from the metadata. Only for the tree.type `auto`.
 
@@ -1336,6 +1373,7 @@ Configuration of the categories from the metadata. Only for the tree.type `auto`
 |active|no|Boolean||Indicates whether this category is initially active. If not specified, the 1st category is initially active.|false|
 
 **Example**
+
 ```json
  "categories": [
         {
@@ -1353,7 +1391,9 @@ Configuration of the categories from the metadata. Only for the tree.type `auto`
         }
       ]
 ```
+
 ***
+
 #### Portalconfig.tree.highlightedFeatures
 Configuration in addition to highlighting features. If features are highlighted with the "List" or "Select Features" module with "Zoom to this Feature" or via url parameter, then a layer with these features is selectable in the menu tree.
 
@@ -1363,13 +1403,16 @@ Configuration in addition to highlighting features. If features are highlighted 
 |layerName|no|String|"common:tree.selectedFeatures"|Name of the created layer with the highlighted features. The name additionally contains the name of the module that was worked with.|true|
 
 **Example**
+
 ```json
 "highlightedFeatures": {
     "active": false,
     "layerName": "Selected features"
 },
 ```
+
 ***
+
 #### Portalconfig.tree.layerIDsToStyle
 Special implementation for a HVV service (Hamburger Verkehrsbetriebe). Contains objects to query different styles of a layer ID. Only for the tree.type `auto`.
 
@@ -1394,7 +1437,9 @@ Special implementation for a HVV service (Hamburger Verkehrsbetriebe). Contains 
     ]
 }
 ```
+
 ***
+
 #### Portalconfig.tree.layerPills
 Configuration of the LayerPills.
 
@@ -1404,13 +1449,16 @@ Configuration of the LayerPills.
 |mobileOnly|no|Boolean|false|Indicates whether this feature is active only on small screens.|false|
 
 **Example**
+
 ```json
 "layerPills": {
     "active": true,
     "mobileOnly": true
     }
 ```
+
 ***
+
 ## Themenconfig
 The `Themenconfig` entry defines the contents and their order in the topic selection. The following properties can be configured:
 
