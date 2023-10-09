@@ -66,6 +66,23 @@ The configuration options listed in the following table exist:
 
 ***
 
+### Portalconfig.baselayerSwitcher
+The baselayerSwitcher allows you to easily switch or select a baselayer.
+
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+active|no|Boolean|false|Defines if the baselayerSwitcher is activated.|false|
+activatedExpandable|no|Boolean|false|Specifies whether the baselayerSwitcher is expanded and all available baselayers are displayed or only the active one which is on the highest level.|false|
+
+**Example**
+
+```json
+"baselayerSwitcher": {
+      "active": true,
+      "activatedExpandable": false
+    }
+```
+***
 ### Portalconfig.controls
 Allows setting which interactions are active in the map.
 
@@ -680,13 +697,6 @@ Modules can be divided into sections. In the menu, sections are divided with a h
 ***
 
 ##### Portalconfig.menu.sections.modules.addWMS
-
-|Name|Required|Type|Default|Description|Expert|
-|----|--------|----|-------|-----------|------|
-
-***
-
-##### Portalconfig.menu.sections.modules.baselayerSwitcher
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
