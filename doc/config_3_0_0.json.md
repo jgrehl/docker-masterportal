@@ -55,7 +55,7 @@ The configuration options listed in the following table exist:
         "mainMenu": {},
         "mapView": {},
         "portalFooter": {},
-        "Secondarymenu": {},
+        "secondaryMenu": {},
         "tree": {}
     }
 }
