@@ -1274,11 +1274,467 @@ The module allows for switching the style of vector tile layers(❗) which provi
 ***
 
 ##### Portalconfig.menu.sections.modules.wfsSearch
+Allows to query a WFS(❗) layer decoupled from the search bar using filters and to create a form if necessary.
+It is assumed that a stored query is used when using a WFS@2.0.0. When using a WFS@1.1.0, it is assumed that the way the WFS should be filtered is defined through the configuration.
+
+Multiple **[SearchInstances](#markdown-header-portalconfigmenusectionsmoduleswfssearchsearchinstance)** can be defined, which will be selectable through a dropdown menu.
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
+|instances|yes|**[searchInstance](#markdown-header-portalconfigmenusectionsmoduleswfssearchsearchinstance)**[]||Array of `searchInstances`. A singular **[searchInstance](#markdown-header-portalconfigmenusectionsmoduleswfssearchsearchinstance)** corresponds to its own search form.|false|
+|zoomLevel|no|Number|5|Specifies to which zoom level zooming is to be performed. If the feature does not fit into the zoom level, a suitable zoom level is automatically selected.|false|
+|resultsPerPage|no|Number|0|The search result list will at most show this amount of results at a time. Further results will be offered on separate result pages. 0 means display all on one page at the same time.|false|
+|multiSelect|no|Boolean|false|If `true`, a user may select multiple features from the result list by either pressing Strg/Shift or using checkboxes; when zooming, all selected features will be shown.|false|
+
+**Example**
+
+```json
+{
+    "wfsSearch": {
+        "instances": [
+            {
+                "requestConfig": {
+                    "layerId": "1234"
+                },
+                "selectSource": "https://geoportal-hamburg.de/lgv-config/gemarkungen_hh.json",
+                "literals": [
+                    {
+                        "clause": {
+                            "type": "and",
+                            "literals": [
+                                {
+                                    "field": {
+                                        "queryType": "equal",
+                                        "fieldName": "gemarkung",
+                                        "inputLabel": "District",
+                                        "options": ""
+                                    }
+                                },
+                                {
+                                    "field": {
+                                        "queryType": "equal",
+                                        "fieldName": "flur",
+                                        "inputLabel": "Cadastral District",
+                                        "options": "flur"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+}
+```
 
 ***
+
+#### Portalconfig.menu.sections.modules.wfsSearch.searchInstance
+A singular instance of the WFS Search which is selectable through a dropdown.
+
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|literals|yes|**[literal](#markdown-header-portalconfigmenusectionsmoduleswfssearchsearchinstanceliteral)**[]||Array of `literals`.|true|
+|requestConfig|yes|**[requestConfig](#markdown-header-portalconfigmenusectionsmoduleswfssearchsearchinstancerequestconfig)**||An object, which mainly contains the id of the service (`layerId` or `restLayerId`) that is supposed to be requested. If a WFS@2.0.0 will be used, the `storedQueryId` needs to be provided as well. Additionally, further options for requests can be set.|false|
+|selectSource|no|String||Optional Url leading to the expected options for the different inputs. See **[https://geoportal-hamburg.de/lgv-config/gemarkungen_hh.json]** for an example.|false|
+|suggestions|no|**[suggestions](#markdown-header-portalconfigmenusectionsmoduleswfssearchsearchinstancesuggestions)**||If given, the service will be queried whenever a user inserts values into an input field to suggest a value.|false|
+|title|yes|String||Title of the search instance to be displayed in a dropdown inside the tool.|false|
+|userHelp|no|String||Information text regarding the search form to be displayed to the user. If not given, it will be generated from the structure of the config. May be a translation key. If the value is explicitly set to `hide`, no information regarding the structure of the form will be displayed.|false|
+|resultDialogTitle|no|String||Heading of the result list. If not configured the name `WFS search` will be displayed. May be a translation key.|false|
+|resultList|no|**[resultList](#markdown-header-portalconfigmenusectionsmoduleswfssearchsearchinstanceresultlist)**||Settings for the output of the found features in the result list. If no resultList is configured, the search will zoom directly to the first feature found.|true|
+
+**Example**
+
+```json
+{
+    "requestConfig": {
+        "layerId": "1234"
+    },
+    "resultList": {
+        "schulname": "School name",
+        "abschluss": "Degree"
+    },
+    "selectSource": "https://geoportal-hamburg.de/lgv-config/gemarkungen_hh.json",
+    "title": "Parcel Search",
+    "literals": [
+        {
+            "clause": {
+                "type": "and",
+                "literals": [
+                    {
+                        "field": {
+                            "queryType": "equal",
+                            "fieldName": "gemarkung",
+                            "inputLabel": "District",
+                            "options": ""
+                        }
+                    },
+                    {
+                        "field": {
+                            "queryType": "equal",
+                            "fieldName": "flur",
+                            "inputLabel": "Cadastral District",
+                            "options": "flur"
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}
+```
+***
+
+#### Portalconfig.menu.sections.modules.wfsSearch.searchInstance.literal
+A `literal` can either have the parameter `clause`, or the parameter `field`. If both are set, the `clause`-part will be ignored.
+However, a `field` needs to be wrapped inside a `clause` (as seen in most examples).
+
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|clause|yes|**[clause](#markdown-header-portalconfigmenusectionsmoduleswfssearchsearchinstanceliteralclause)**||Defines the way multiple `literals` should be queried together. Can be seen as a group of `literals`.|true|
+|field|no|**[field](#markdown-header-portalconfigmenusectionsmoduleswfssearchsearchinstanceliteralfield)**||Representation for the selection field of a service value for the user.|true|
+
+**Examples**
+
+```json
+{
+    "clause": {
+        "type": "and",
+        "literals": [
+            {
+                "field": {
+                    "queryType": "equal",
+                    "fieldName": "gemarkung",
+                    "inputLabel": "District",
+                    "options": ""
+                }
+            },
+            {
+                "field": {
+                    "queryType": "equal",
+                    "fieldName": "flur",
+                    "inputLabel": "Cadastral District",
+                    "options": "flur"
+                }
+            }
+        ]
+    }
+}
+```
+
+```json
+{
+    "field": {
+        "queryType": "equal",
+        "fieldName": "rivers",
+        "inputLabel": "Rivers",
+        "options": [
+            {
+                "id": "0",
+                "displayName": "Elbe"
+            },
+            {
+                "id": "1",
+                "displayName": "Moselle"
+            },
+            {
+                "id": "2",
+                "displayName": "Rhine"
+            }
+        ]
+    }
+}
+```
+
+***
+
+#### Portalconfig.menu.sections.modules.wfsSearch.searchInstance.literal.clause
+
+[type:literal]: # (Portalconfig.menu.sections.modules.wfsSearch.searchInstance.literal)
+
+A `clause` defines the way multiple `literals` should be queried together.
+
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|literals|yes|**[literal](#markdown-header-portalconfigmenusectionsmoduleswfssearchsearchinstanceliteral)**[]||Array of `literals`.|true|
+|type|yes|enum["and", "or"]||The way the `literals` in this `clause` should be queried together.|false|
+
+**Example**
+
+```json
+{
+    "clause": {
+        "type": "and",
+        "literals": [
+            {
+                "field": {
+                    "queryType": "equal",
+                    "fieldName": "gemarkung",
+                    "inputLabel": "District",
+                    "options": ""
+                }
+            },
+            {
+                "field": {
+                    "queryType": "equal",
+                    "fieldName": "flur",
+                    "inputLabel": "Cadastral District",
+                    "options": "flur"
+                }
+            }
+        ]
+    }
+}
+```
+
+***
+
+#### Portalconfig.menu.sections.modules.wfsSearch.searchInstance.literal.field
+A `field` represents the selection field for a value in the service.
+It is possible to use a `field` for multiple search parameters. To do this, each parameter needs to be an array where each element of the array corresponds to a single parameter of the service.
+A configuration like
+
+```json
+{
+    "field": {
+        "queryType": ["equal", "like"],
+        "fieldName": ["flst", "gmkr"],
+        "inputLabel": ["Parcel", "Communal district number"]
+    }
+}
+```
+
+would create a single `field` with which the user can decide whether he wants to use the input field to search for a `Parcel` or a `Communal district number` by selecting the alue through a dropdown.
+If the values are not an array, a label for the `field` will be shown instead of the dropdown.
+
+If the parameter `options` is set, a select field is used, otherwise a simple text input.
+If `options` is a String, it is important that the order of the fields corresponds to the order of the objects in the external source (`selectSource`).
+Assume the source looks like this:
+
+```json
+{
+    "one": {
+        "foo": {
+            "id": "foo_one",
+            "bar": ["f1_bar_one", "f1_bar_two"]
+        }
+    },
+    "two": {
+        "foo": {
+            "id": "foo_two",
+            "bar": ["f2_bar_one", "f2_bar_two"]
+        }
+    }
+}
+```
+
+Then the order of the config should look like this:
+
+```json
+{
+    "clause": {
+        "type": "and",
+        "literals": [
+            {
+                "field": {
+                    "queryType": "equal",
+                    "fieldName": "objects",
+                    "inputLabel": "Objects",
+                    "options": ""
+                }
+            },
+            {
+                "field": {
+                    "queryType": "equal",
+                    "fieldName": "foo",
+                    "inputLabel": "Foo",
+                    "options": "foo"
+                }
+            },
+            {
+                "field": {
+                    "queryType": "equal",
+                    "fieldName": "bar",
+                    "inputLabel": "Bar",
+                    "options": "foo.bar"
+                }
+            }
+        ]
+    }
+}
+```
+
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|defaultValue|no|String/String[]||If the field is not `required`, this value will be used on sending.|false|
+|fieldName|yes|String/String[]||The wfs service parameter name for the comparison.|false|
+|inputLabel|yes|String/String[]||Label for the UI element. May be a translation key.|false|
+|inputPlaceholder|no|String/String[]||Placeholder for the UI element; only used if `options` is not set. Should contain example data. May be a translation key.|false|
+|inputTitle|no|String/String[]||Value to be shown when hovering the UI element. May be a translation key.|false|
+|required|no|Boolean/Boolean[]|false|Whether the field has to be filled.|false|
+|options|no|String/**[option](#markdown-header-portalconfigmenusectionsmoduleswfssearchsearchinstanceliteralfieldoption)**[]/String[]||If `options` is an array (irrelevant if of strings or **[options](#markdown-header-portalconfigmenusectionsmoduleswfssearchsearchinstanceliteralfieldoption)**), the given values are used for selection. These options may either match **[option](#markdown-header-portalconfigmenusectionsmoduleswfssearchsearchinstanceliteralfieldoption)** or are plain values (`String` / `Number`). In the latter case, the plain value is used as both id and `displayName`. <br /> If it is a String, there are different possibilities: <ul><li>If the String is empty, the keys of **[selectSource](#markdown-header-portalconfigmenusectionsmoduleswfssearchsearchinstance)** are used.</li><li>If the String is not empty, it is assumed that another field with `options=""` exists; otherwise the field is disabled. It is also assumed that the String represents an array in **[selectSource](#markdown-header-portalconfigmenusectionsmoduleswfssearchsearchinstance)** providing further options.</li></ul> **Note**: It is also possible to declare the `options` as a multidimensional array **[option](#markdown-header-portalconfigmenusectionsmoduleswfssearchsearchinstanceliteralfieldoption)**[][]. However, this can't be used as a parameter for Masterportal Admin. This should be used if an **[option](#markdown-header-portalconfigmenusectionsmoduleswfssearchsearchinstanceliteralfieldoption)**[] is wanted for a `field` that uses multiples parameters.|true|
+|queryType|no|enum["equal", "like"]/enum["equal", "like"][]||Required for usage with WFS@1.1.0. The `queryType` declared how the field should be compared to the value in the service.|false|
+|usesId|no|Boolean/Boolean[]|false|Only relevant if the Parameters `options` is set and an empty String (root element). Determines whether the key of the object of the external source should be used as a value for the query or if the object has an Id which should be used.|false|
+
+**Example**
+
+```json
+{
+    "field": {
+        "queryType": "equal",
+        "fieldName": "rivers",
+        "inputLabel": "Rivers",
+        "options": [
+            {
+                "displayName": "Elbe",
+                "fieldValue": "0"
+            },
+            {
+                "displayName": "Moselle",
+                "fieldValue": "1"
+            },
+            {
+                "displayName": "Rhine",
+                "fieldValue": "2"
+            }
+        ]
+    }
+}
+```
+
+***
+
+#### Portalconfig.menu.sections.modules.wfsSearch.searchInstance.literal.field.option
+A selectable option for a queryable parameter.
+
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|displayName|no|String||Value to be displayed for the value. May be a translation key. If not set, the `id` will be shown.|false|
+|fieldValue|yes|String||Value that is supposed to be sent to the service.|false|
+
+**Example**
+
+```json
+{
+    "fieldValue": "elbe",
+    "displayName": "Elbe"
+}
+```
+
+***
+
+#### Portalconfig.menu.sections.modules.wfsSearch.searchInstance.resultList
+Settings for the output of the found features in the result list.
+By specifying `showAll` all attributes of the found features are displayed in their original form.
+By using an object, a key of the object must represent one of the attributes of the feature,
+and the corresponding value defines the textual output of that attribute.
+
+**Examples**:
+
+```json
+{
+    "resultList": "showAll"
+}
+```
+
+```json
+{
+    "resultList": {
+        "schulname": "School name",
+        "abschluss": "Degree"
+    }
+}
+```
+
+***
+
+#### Portalconfig.menu.sections.modules.wfsSearch.searchInstance.requestConfig
+Information about the WFS service that is supposed to be requested.
+Either `layerId` or `restLayerId` need to be present. If `layerId` is chosen, the layer needs to be configured in the **[config.json](config.json.md)**.
+If both are defined `restLayerId` is used.
+
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|gazetteer|no|**[gazetteer](#markdown-header-portalconfigmenusectionsmoduleswfssearchsearchinstancerequestconfiggazetteer)**||Declares whether the used WFS service is a WFS-G, which needs to be parsed differently.|false|
+|layerId|no|String||Id of the WFS service that should be queried. Information is fetched from **[services.json](services.json.md)**.|false|
+|likeFilter|no|**[likeFilter](#markdown-header-portalconfigmenusectionsmoduleswfssearchsearchinstancerequestconfiglikefilter)**|{"wildCard": "*", "singleChar": "#", "escape": "!"}|The configuration of the service for the like filter.|true|
+|maxFeatures|no|Number/String|8|Maximum amount of features that are supposed to be returned from the service. Alternatively, the String `showAll` can be assigned to `maxFeatures` to load all features.|false|
+|restLayerId|no|String||Id of the WFS service that should be queried. Information is fetched from **[rest-services.json](rest-services.json.md)**.|false|
+|storedQueryId|no|String||The id of the Stored Query of the WFS that should be used to query the service. If this field is set, it is assumed that a WFS@2.0.0 is used.|false|
+
+**Example**
+
+```json
+{
+    "requestConfig": {
+        "restLayerId": "1234",
+        "storedQueryId": "Flurstuecke"
+    }
+}
+```
+
+***
+
+#### Portalconfig.menu.sections.modules.wfsSearch.searchInstance.requestConfig.likeFilter
+Values inside a filter for a WFS service can be compared with an `equal` or a `like`.
+If the comparison should be with a `like` then the filter needs additional properties. These may vary in value and property definition.
+For the documentation, it is assumed that the properties are called `wildCard`, `singleChar` and `escapeChar`; variations like e.g. `single` and `escape` are possible and need to be configured in line with the service. All key-value pairs are used in the request as given.
+
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|wildCard|yes|String|"*"|The wildcard value for the like filter.|true|
+|singleChar|yes|String|"#"|The single character value for the like filter.|true|
+|escapeChar|yes|String|"!"|The escape character value for the like filter.|true|
+
+**Example**
+
+In this example case, the key for `escapeChar` deviates.
+
+```json
+{
+    "wildCard": "*",
+    "singleChar": "#",
+    "escape": "!"
+}
+```
+
+***
+
+#### Portalconfig.menu.sections.modules.wfsSearch.searchInstance.requestConfig.gazetteer
+Parameters that are exclusively needed for using a WFS-G (Gazetteer).
+
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|namespaces|yes|String/String[]||The namespaces need to be provided.|false|
+|memberSuffix|yes|enum["member","featureMember"]||The suffix of the featureType needs to be specified.|false|
+
+**Example**
+
+```json
+{
+    "gazetteer": {
+        "namespaces": [
+            "http://www.adv-online.de/namespaces/adv/dog",
+            "http://geodienste.hamburg.de/dog_gages/services/wfs_dog?SERVICE=WFS&VERSION=2.0.0&REQUEST=DescribeFeatureType&OUTPUTFORMAT=application/gml+xml;+version=3.2&TYPENAME=dog:Flurstueckskoordinaten&NAMESPACES=xmlns(dog,http://www.adv-online.de/namespaces/adv/dog)"
+        ],
+        "memberSuffix": "memberSuffix"
+    }
+}
+```
+
+***
+
+#### Portalconfig.menu.sections.modules.wfsSearch.searchInstance.suggestions
+Configuration for the suggestions of the user input.
+
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|featureType|no|String||If given, the query will be sent with this featureType instead of the one configured for the service itself. Only usable if the layer was defined in the **[services.json](services.json.md)**.|false|
+|length|no|Number|3|The query is triggered when the length of the input is at least as long as this parameter.|false|
+
+***
+
 
 ##### Portalconfig.menu.sections.modules.wfst
 
