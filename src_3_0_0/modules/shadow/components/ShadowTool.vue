@@ -289,7 +289,7 @@ export default {
                         :clearable="false"
                         :show-week-number="true"
                         title-format="pickDateFormat"
-                        :lang="$t('common:libraries.vue2-datepicker.lang', {returnObjects: true})"
+                        :lang="$t('common:libraries.vue-datepicker-next.lang', {returnObjects: true})"
                         @change="syncDateSlider($event)"
                     />
                 </div>
