@@ -27,56 +27,56 @@ const mutations = {
     addSymbol: (state, payload) => {
         state.iconList.push(payload);
     },
-    setDrawSymbolSettings: (state, styleSettings) => {
-        state.drawSymbolSettings.color = styleSettings.color;
-        state.drawSymbolSettings.opacity = styleSettings.opacity;
+    setDrawAreaSettings: (state, styleSettings) => {
+        state.drawAreaSettings.area = styleSettings.area;
+        state.drawAreaSettings.color = styleSettings.color;
+        state.drawAreaSettings.colorContour = styleSettings.colorContour;
+        state.drawAreaSettings.opacity = styleSettings.opacity;
+        state.drawAreaSettings.opacityContour = styleSettings.opacityContour;
+        state.drawAreaSettings.strokeWidth = styleSettings.strokeWidth;
+        state.drawAreaSettings.unit = styleSettings.unit;
+    },
+    setDrawCircleSettings: (state, styleSettings) => {
+        state.drawCircleSettings.circleMethod = styleSettings.circleMethod;
+        state.drawCircleSettings.circleOuterRadius = styleSettings.circleOuterRadius;
+        state.drawCircleSettings.circleRadius = styleSettings.circleRadius;
+        state.drawCircleSettings.color = styleSettings.color;
+        state.drawCircleSettings.colorContour = styleSettings.colorContour;
+        state.drawCircleSettings.opacity = styleSettings.opacity;
+        state.drawCircleSettings.opacityContour = styleSettings.opacityContour;
+        state.drawCircleSettings.outerColorContour = styleSettings.outerColorContour;
+        state.drawCircleSettings.strokeWidth = styleSettings.strokeWidth;
+        state.drawCircleSettings.unit = styleSettings.unit;
     },
     setDrawCurveSettings: (state, styleSettings) => {
         state.drawCurveSettings.color = styleSettings.color;
         state.drawCurveSettings.colorContour = styleSettings.colorContour;
+        state.drawCurveSettings.opacity = styleSettings.opacity;
         state.drawCurveSettings.opacityContour = styleSettings.opacityContour;
         state.drawCurveSettings.strokeWidth = styleSettings.strokeWidth;
-        state.drawCurveSettings.opacity = styleSettings.opacity;
     },
     setDrawLineSettings: (state, styleSettings) => {
-        state.drawLineSettings.unit = styleSettings.unit;
-        state.drawLineSettings.length = styleSettings.length;
         state.drawLineSettings.color = styleSettings.color;
-        state.drawLineSettings.opacity = styleSettings.opacity;
         state.drawLineSettings.colorContour = styleSettings.colorContour;
+        state.drawLineSettings.length = styleSettings.length;
+        state.drawLineSettings.opacity = styleSettings.opacity;
         state.drawLineSettings.opacityContour = styleSettings.opacityContour;
         state.drawLineSettings.strokeWidth = styleSettings.strokeWidth;
-    },
-    setDrawAreaSettings: (state, styleSettings) => {
-        state.drawAreaSettings.colorContour = styleSettings.colorContour;
-        state.drawAreaSettings.color = styleSettings.color;
-        state.drawAreaSettings.opacityContour = styleSettings.opacityContour;
-        state.drawAreaSettings.strokeWidth = styleSettings.strokeWidth;
-        state.drawAreaSettings.unit = styleSettings.unit;
-        state.drawAreaSettings.area = styleSettings.area;
-        state.drawAreaSettings.opacity = styleSettings.opacity;
+        state.drawLineSettings.unit = styleSettings.unit;
     },
     setDrawSquareSettings: (state, styleSettings) => {
-        state.drawSquareSettings.squareMethod = styleSettings.squareMethod;
-        state.drawSquareSettings.colorContour = styleSettings.colorContour;
         state.drawSquareSettings.color = styleSettings.color;
-        state.drawSquareSettings.unit = styleSettings.unit;
-        state.drawSquareSettings.squareArea = styleSettings.squareArea;
-        state.drawSquareSettings.opacityContour = styleSettings.opacityContour;
-        state.drawSquareSettings.strokeWidth = styleSettings.strokeWidth;
+        state.drawSquareSettings.colorContour = styleSettings.colorContour;
         state.drawSquareSettings.opacity = styleSettings.opacity;
+        state.drawSquareSettings.opacityContour = styleSettings.opacityContour;
+        state.drawSquareSettings.squareArea = styleSettings.squareArea;
+        state.drawSquareSettings.squareMethod = styleSettings.squareMethod;
+        state.drawSquareSettings.strokeWidth = styleSettings.strokeWidth;
+        state.drawSquareSettings.unit = styleSettings.unit;
     },
-    setDrawCircleSettings: (state, styleSettings) => {
-        state.drawCircleSettings.circleMethod = styleSettings.circleMethod;
-        state.drawCircleSettings.unit = styleSettings.unit;
-        state.drawCircleSettings.circleRadius = styleSettings.circleRadius;
-        state.drawCircleSettings.circleOuterRadius = styleSettings.circleOuterRadius;
-        state.drawCircleSettings.color = styleSettings.color;
-        state.drawCircleSettings.colorContour = styleSettings.colorContour;
-        state.drawCircleSettings.outerColorContour = styleSettings.outerColorContour;
-        state.drawCircleSettings.opacity = styleSettings.opacity;
-        state.drawCircleSettings.opacityContour = styleSettings.opacityContour;
-        state.drawCircleSettings.strokeWidth = styleSettings.strokeWidth;
+    setDrawSymbolSettings: (state, styleSettings) => {
+        state.drawSymbolSettings.color = styleSettings.color;
+        state.drawSymbolSettings.opacity = styleSettings.opacity;
     }
 };
 
