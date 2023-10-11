@@ -6,6 +6,7 @@
 ## Unreleased - in development
 ### __Breaking Changes__
 - Dropped support for NodeJS 16 and Npm 8
+- e2e tests are no longer supported
 
 ### Added
 - Add documentation for following modules:

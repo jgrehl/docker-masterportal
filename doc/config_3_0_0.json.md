@@ -674,9 +674,10 @@ Modules can be divided into sections. In the menu, sections are divided with a h
 |coordToolkit|no|**[coordToolkit](#markdown-header-portalconfigmenusectionsmodulescoordtoolkit)**||Coordinate query: Tool to query coordinates and altitude by mouse click: When clicking in the map, the coordinates are frozen in the display and can also be copied directly to the clipboard. Coordinate search: The coordinate system and the coordinates can be entered via an input mask. The tool then zooms to the corresponding coordinate and places a marker on it. The coordinate systems are obtained from config.js.|false|
 |fileImport|no|**[fileImport](#markdown-header-portalconfigmenusectionsmodulesfileImport)**||Import KML, GeoJSON, and GPX files with this modules.|false|
 |layerClusterToggler|no|**[layerClusterToggler](#markdown-header-portalconfigmenusectionsmoduleslayerClusterToggler)**||This module allows a cluster layers to be active and deactive together.|false|
-|layerSlider|no|**[layerSlider](#markdown-header-portalconfigmenutoollayerslider)**||The layerSlider module allows showing arbitrary services in order. This can e.g. be used to show aerial footage from multiple years in succession.|false|
-|openConfig|no|**[openConfig](#markdown-header-portalconfigmenusectionsopenConfig)**||ith this module a configuration file (config.json) can be reloaded at runtime. The modules and map are adapted to the new configuration.|false|
-|print|no|**[print](#markdown-header-portalconfigmenusectionsprint)**||Printing module that can be used to export the map's current view as PDF.|false|
+|layerSlider|no|**[layerSlider](#markdown-header-portalconfigmenusectionsmoduleslayerslider)**||The layerSlider module allows showing arbitrary services in order. This can e.g. be used to show aerial footage from multiple years in succession.|false|
+|openConfig|no|**[openConfig](#markdown-header-portalconfigmenusectionsmodulesopenConfig)**||ith this module a configuration file (config.json) can be reloaded at runtime. The modules and map are adapted to the new configuration.|false|
+|print|no|**[print](#markdown-header-portalconfigmenusectionsmodulesprint)**||Printing module that can be used to export the map's current view as PDF.|false|
+|routing|no|**[routing](#markdown-header-portalconfigmenusectionsmodulesrouting)**||Routing module to create routes and isochrones.|false|
 |scaleSwitcher|no|**[scaleSwitcher](#markdown-header-portalconfigmenusectionsmodulesSwitcher)**||Module that allows changing the map's current scale.|false|
 |selectFeatures|no|**[selectFeatures](#markdown-header-portalconfigmenusectionsmodulesselectfeatures)**||Allows selecting a set of vector features by letting the user draw a box on the map. Features in that box will be displayed with GFI information.|false|
 |shadow|no|**[shadow](#markdown-header-portalconfigmenusectionsmodulesshadow)**||Configuration object for the 3D mode shadow time.|false|
@@ -1025,9 +1026,628 @@ List of layouts and formats that filters the response from the print service in 
 ***
 
 ##### Portalconfig.menu.sections.modules.routing
+Routing module. Enables user to plan routes between multiple points with multiple options to choose from. In addition users can create isochrones. Both functions are available with mass requests for specific use cases. ❗ This tool will use the routing service provided by the BKG ❗.
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
+|activeRoutingToolOption|no|String|"DIRECTIONS"|Which routing tool should be open.|false|
+|routingToolOptions|no|String[]|[ ]|Which routing tool should be enabled. ("DIRECTIONS", "ISOCHRONES")|false|
+|download|no|**[download](#markdown-header-portalconfigmenusectionsmodulesroutingdownload)**||Downloadoptions|false|
+|geosearch|no|**[geosearch](#markdown-header-portalconfigmenusectionsmodulesroutinggeosearch)**||Geosearchoptions|false|
+|geosearchReverse|no|**[geosearchReverse](#markdown-header-portalconfigmenusectionsmodulesroutinggeosearchreverse)**||Geosearchreverseoptions|false|
+|directionsSettings|no|**[directionsSettings](#markdown-header-portalconfigmenusectionsmodulesroutingdirectionssettings)**||Directionsoptions|false|
+|isochronesSettings|no|**[isochronesSettings](#markdown-header-portalconfigmenusectionsmodulesroutingisochronessettings)**||Isochronesoptions|false|
+
+**Example**
+
+```
+#!json
+{
+    "routing": {
+        "name": "translate#common:modules.routing",
+        "icon": "bi-signpost-2-fill",
+        "activeRoutingToolOption": "DIRECTIONS",
+        "routingToolOptions": ["DIRECTIONS", "ISOCHRONES"],
+        "download": {
+            "filename": "",
+            "format": "GEOJSON"
+        },
+        "geosearch": {
+            "minChars": 3,
+            "limit": 10,
+            "type": "BKG",
+            "serviceId": "bkg_geosearch"
+        },
+        "geosearchReverse": {
+            "distance": 1000,
+            "filter": "",
+            "type": "BKG",
+            "serviceId": "bkg_suggest"
+        },
+        "directionsSettings": {
+            "type": "ORS",
+            "serviceId": "bkg_ors",
+            "speedProfile": "CAR",
+            "preference": "RECOMMENDED",
+            "styleRoute": {
+                "fillColor": [255, 44, 0],
+                "width": 6,
+                "highlightColor": [255, 255, 255],
+                "highlightWidth": 9,
+                "partHighlightColor": [255, 255, 255],
+                "partHighlightWidth": 3
+            },
+            "styleWaypoint": {
+                "lineColor": [255, 127, 0],
+                "lineWidth": 4,
+                "fillColor": [255, 127, 0],
+                "textFillColor": "#000",
+                "textLineColor": "#fff",
+                "textLineWidth": 3,
+                "opacity": 0.3,
+                "radius": 8
+            },
+            "styleAvoidAreas": {
+                "lineColor": [0, 127, 255],
+                "lineWidth": 2,
+                "fillColor": [0, 127, 255],
+                "opacity": 0.3,
+                "pointRadius": 8,
+                "pointLineWidth": 4
+            },
+            "batchProcessing": {
+                "enabled": false,
+                "active": false,
+                "limit": 1000,
+                "maximumConcurrentRequests": 3
+            }
+        },
+        "isochronesSettings": {
+            "type": "ORS",
+            "serviceId": "bkg_ors",
+            "speedProfile": "CAR",
+            "isochronesMethodOption": "TIME",
+            "distanceValue": 30,
+            "minDistance": 1,
+            "maxDistance": 400,
+            "timeValue": 30,
+            "minTime": 1,
+            "maxTime": 180,
+            "intervalValue": 15,
+            "minInterval": 3,
+            "maxInterval": 30,
+            "styleCenter": {
+                "lineColor": [255, 127, 0],
+                "lineWidth": 4,
+                "fillColor": [255, 127, 0],
+                "opacity": 0.3,
+                "radius": 8
+            },
+            "styleIsochrones": {
+                "lineWidth": 2,
+                "opacity": 0.65,
+                "startColor": [66, 245, 78],
+                "endColor": [245, 66, 66]
+            },
+            "batchProcessing": {
+                "enabled": false,
+                "active": false,
+                "limit": 1000,
+                "maximumConcurrentRequests": 3
+            }
+        }
+    }
+}
+```
+
+***
+
+#### Portalconfig.sections.modules.routing.download
+Routing-tool download options.
+
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|fileName|no|String||Default filename for the download.|false|
+|format|no|String|"GEOJSON"|Which format should be selected by default. ("GEOJSON", "KML", "GPX")|false|
+
+**Example**
+
+```
+#!json
+{
+    "download": {
+        "filename": "",
+        "format": "GEOJSON"
+    }
+}
+```
+
+***
+
+#### Portalconfig.sections.modules.routing.geosearch
+Routing-tool geosearch options.
+
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|minChars|no|Number|3|Minimum amount of characters before sending a request to an external service.|false|
+|limit|no|Number|10|Maximale amount of characters for the search.|false|
+|type|yes|String||Which type of the geosearch should be used. ("BKG", "NOMINATIM", "LOCATIONFINDER", "KOMOOT", "GAZETTEER", "SPECIALWFS", "ELASTIC")|false|
+|serviceId|yes|String||Which service should be used for the geosearch.|false|
+|typeName|no|String||Type name for the specialWfs geosearch query.|false|
+|propertyNames|no|String[]||Names of properties to be included in the specialWfs geosearch.|false|
+|geometryNames|no|String||Name of the geometry field for specialWfs geosearch.|false|
+|bbox|no|**[bbox](#markdown-header-portalconfigmenusectionsmodulesroutinggeosearchbbox)**||BBOX value according to the speedProfile. Coordinate system depends on the epsg parameter. Geosearch service must support bbox string.|false|
+|epsg|no|String|4326|Which EPSG code is used by the service (e.g. 4326, 25832).|false|
+|searchField|no|String||The path to the field to be searched for when using Elastic Search.|false|
+|sortField|no|String||The path to the field that specifies the sorting of the results in ascending order when using Elastic Search.|false|
+
+**Example for BKG**
+
+```
+#!json
+{
+    "geosearch": {
+        "type": "BKG",
+        "serviceId": "bkg_geosearch",
+        "bbox": {"CYCLING": "9.6,53.40,10.4,53.84"}
+    }
+}
+```
+**Example for SPECIALWFS**
+
+```
+#!json
+{
+    "geosearch": {
+        "minChars": 3,
+        "limit": 10,
+        "type": "SPECIALWFS",
+        "serviceId": "specialWfs_geosearch",
+        "typeName": "ms:strasse_nr",
+		"propertyNames": [
+			"ms:LABEL_TEXT"
+			],
+		"geometryName": "ms:msGeometry"
+    }
+}
+```
+**Example for ELASTIC**
+
+```
+#!json
+{
+    "geosearch": {
+        "minChars": 3,
+        "limit": 10,
+        "type": "ELASTIC",
+        "serviceId": "elastic_geosearch",
+        "epsg": "25832",
+        "searchField": "properties.searchField",
+        "sortField": "properties.HAUSNUMMER"
+    }
+}
+```
+
+***
+
+#### Portalconfig.sections.modules.routing.geosearch.bbox
+BBOX value according to the speedProfile. Coordinate system depends on the epsg parameter. Geosearch service must support bbox string.
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|speedProfile|no|String||Coordinate values "West,South,East,North"|false|
+
+**Example**
+
+```
+#!json
+{
+    "bbox": {"CYCLING": "9.6,53.40,10.4,53.84"}
+}
+```
+
+***
+
+#### Portalconfig.sections.modules.routing.geosearchReverse
+Routing-tool geosearch reverse options.
+
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|distance|no|Number|1000|Search radius in meter for the external service.|false|
+|filter|no|String||Additional filter used in the query.|false|
+|type|yes|String||Which type of geosearch reverse should be used. ("BKG", "NOMINATIM", KOMOOT)|false|
+|serviceId|yes|String||Which service should be used for the geosearch reverse.|false|
+
+**Example**
+
+```
+#!json
+{
+    "geosearchReverse": {
+        "distance": 1000,
+        "filter": "",
+        "type": "BKG",
+        "serviceId": "bkg_suggest"
+    }
+}
+```
+
+***
+
+#### Portalconfig.sections.modules.routing.directionsSettings
+Routing-tool directions options.
+
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|type|yes|String||Which type of service should be used for the request. ("ORS")|false|
+|serviceId|yes|String||Which service should be used for the request.|false|
+|speedProfile|no|String|"CAR"|Which speed profile should be selected by default.|false|
+|preference|no|String|"RECOMMENDED"|Which type of directions should be used by default.|false|
+|customPreferences|no|**[customPreferences](#markdown-header-portalconfigmenusectionsmodulesroutingdirectionssettingscustompreferences)**||Possibility to define additional preferences for the different speed profiles (additionally to the BKG service)  (requires own modified backend)|false|
+|customAvoidFeatures|no|**[customAvoidFeatures](#markdown-header-portalconfigmenusectionsmodulesroutingdirectionssettingscustomavoidfeatures)**||Possibility to define own options for avoid traffic routes for the different speed profiles(additionally to the BKG service) (requires own modified backend)|false|
+|styleRoute|no|**[styleRoute](#markdown-header-portalconfigmenusectionsmodulesroutingdirectionssettingsstyleroute)**||Stylerouteoptions|false|
+|styleWaypoint|no|**[styleWaypoint](#markdown-header-portalconfigmenusectionsmodulesroutingdirectionssettingsstylewaypoint)**||Stylewaypointoptions|false|
+|styleAvoidAreas|no|**[styleAvoidAreas](#markdown-header-portalconfigmenusectionsmodulesroutingdirectionssettingsstyleavoidareas)**||Styleavoidareasoptions|false|
+|batchProcessing|no|**[batchProcessing](#markdown-header-portalconfigmenusectionsmodulesroutingdirectionssettingsbatchprocessing)**||Batchprocessingoptions|false|
+
+**Example**
+
+```
+#!json
+{
+    "directionsSettings": {
+        "type": "ORS",
+        "serviceId": "bkg_ors",
+        "speedProfile": "CAR",
+        "preference": "RECOMMENDED",
+        "customPreferences": {
+            "CYCLING": ["RECOMMENDED", "SHORTEST", "GREEN"]
+        },
+        "customAvoidFeatures": {
+                "CYCLING": ["STEPS", "FERRIES", "UNPAVEDROADS"]
+        },
+        "styleRoute": {
+            "fillColor": [255, 44, 0],
+            "width": 6,
+            "highlightColor": [255, 255, 255],
+            "highlightWidth": 9,
+            "partHighlightColor": [255, 255, 255],
+            "partHighlightWidth": 3
+        },
+        "styleWaypoint": {
+            "lineColor": [255, 127, 0],
+            "lineWidth": 4,
+            "fillColor": [255, 127, 0],
+            "textFillColor": "#000",
+            "textLineColor": "#fff",
+            "textLineWidth": 3,
+            "opacity": 0.3,
+            "radius": 8
+        },
+        "styleAvoidAreas": {
+            "lineColor": [0, 127, 255],
+            "lineWidth": 2,
+            "fillColor": [0, 127, 255],
+            "opacity": 0.3,
+            "pointRadius": 8,
+            "pointLineWidth": 4
+        },
+        "batchProcessing": {
+            "enabled": false,
+            "active": false,
+            "limit": 1000,
+            "maximumConcurrentRequests": 3
+        }
+    }
+}
+```
+
+***
+
+#### Portalconfig.sections.modules.routing.directionsSettings.customAvoidFeatures
+Possibility to define additional avoid features for the different speed profiles (additionally to the BKG service) (requires own modified backend).
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|speedProfile|no|String[]||Options for avoid traffic routes that should be available for the speedProfile.|false|
+
+**Example**
+
+```
+#!json
+{
+    "customAvoidFeatures": {
+       "CYCLING": ["STEPS", "FERRIES", "UNPAVEDROADS"],
+       "CAR": ["HIGHWAYS"]
+    }
+}
+```
+
+***
+
+#### Portalconfig.sections.modules.routing.directionsSettings.customPreferences
+Routing-tool directions route customPreferences.
+Possibility to define additional preferences for the different speed profiles (additionally to the BKG service)  (requires own modified backend)
+
+
+|Name|Required|Type|Default|Description|Expert|
+|----|-------------|---|-------|------------|------|
+|speedProfile|no|String[]||Which preferences should be available for the speedProfile.|false|
+
+**Example**
+
+```
+#!json
+{
+    "customPreferences": {
+       "CYCLING": ["RECOMMENDED", "SHORTEST", "GREEN"],
+       "CAR": ["RECOMMENDED", "SHORTEST", "GREEN"]
+    }
+}
+```
+
+***
+#### Portalconfig.sections.modules.routing.directionsSettings.styleRoute
+Routing-tool directions route style options.
+
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|fillColor|no|Number[]|[255, 44, 0]|Which color should be used to fill.|false|
+|width|no|Number|6|How thick should the line be displayed.|false|
+|highlightColor|no|Number[]|[255, 255, 255]|Which color should be used to highlight the route.|false|
+|highlightWidth|no|Number|9|How thick should the highlighting line be displayed.|false|
+|partHighlightColor|no|Number[]|[255, 255, 255]|Which color should be used when highlighting part of the route.|false|
+|highlightWidth|no|Number|9|How thick should the highlighting part of the route be displayed.|false|
+
+**Example**
+
+```
+#!json
+{
+    "styleRoute": {
+        "fillColor": [255, 44, 0],
+        "width": 6,
+        "highlightColor": [255, 255, 255],
+        "highlightWidth": 9,
+        "partHighlightColor": [255, 255, 255],
+        "partHighlightWidth": 3
+    }
+}
+```
+
+***
+
+#### Portalconfig.sections.modules.routing.directionsSettings.styleWaypoint
+Routing-tool directions waypoint style options.
+
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|lineColor|no|Number[]|[255, 127, 0]|Which color should be used for the border.|false|
+|lineWidth|no|Number|4|How thick should the border be.|false|
+|fillColor|no|Number[]|[255, 127, 0]|Which color should be used to fill.|false|
+|textFillColor|no|String|"#000"|Which color should be used for the text.|false|
+|textLineColor|no|String|"#fff"|Which color should be used for the text background.|false|
+|textLineWidth|no|Number|3|How big should the text be displayed.|false|
+|opacity|no|Number|0.3|How transparent should the fill color be displayed.|false|
+|radius|no|Number|8|How big should the waypoint be displayed.|false|
+
+**Example**
+
+```
+#!json
+{
+    "styleWaypoint": {
+        "lineColor": [255, 127, 0],
+        "lineWidth": 4,
+        "fillColor": [255, 127, 0],
+        "textFillColor": "#000",
+        "textLineColor": "#fff",
+        "textLineWidth": 3,
+        "opacity": 0.3,
+        "radius": 8
+    }
+}
+```
+
+***
+
+#### Portalconfig.sections.modules.routing.directionsSettings.styleAvoidAreas
+Routing-tool directions avoid areas style options.
+
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|lineColor|no|Number[]|[0, 127, 255]|Which color should be used for the border.|false|
+|lineWidth|no|Number|2|How thick should the border be.|false|
+|fillColor|no|Number[]|[0, 127, 255]|Which color should be used to fill.|false|
+|opacity|no|Number|0.3|How transparent should the fill color be displayed.|false|
+|pointRadius|no|Number|8|How big should the corner points be displayed.|false|
+|pointLineWidth|no|Number|4|How big should the border of the corner points be displayed.|false|
+
+**Example**
+
+```
+#!json
+{
+    "styleAvoidAreas": {
+        "lineColor": [0, 127, 255],
+        "lineWidth": 2,
+        "fillColor": [0, 127, 255],
+        "opacity": 0.3,
+        "pointRadius": 8,
+        "pointLineWidth": 4
+    }
+}
+```
+
+***
+
+#### Portalconfig.sections.modules.routing.directionsSettings.batchProcessing
+Routing-tool directions batch processing options.
+
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|enabled|no|Boolean|false|If the batch processing should be enabled for the user.|false|
+|active|no|Boolean|false|If the batch processing is active by default.|false|
+|limit|no|Number|1000|The maximum amount of rows allowed in the csv file.|false|
+|maximumConcurrentRequests|no|Number|3|The maximum concurrent requests allowed to be made by the batch processing task handler.|false|
+
+**Example**
+
+```
+#!json
+{
+    "batchProcessing": {
+        "enabled": false,
+        "active": false,
+        "limit": 1000,
+        "maximumConcurrentRequests": 3
+    }
+}
+```
+
+***
+
+#### Portalconfig.sections.modules.routing.isochronesSettings
+Routing-tool isochrones options.
+
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|type|yes|String||Which type of service should be used for the request. ("ORS")|false|
+|serviceId|yes|String||Which service should be used for the request.|false|
+|speedProfile|no|String|"CAR"|Which speed profile should be selected by default.|false|
+|isochronesMethodOption|no|String|"TIME"|Which method should be selected by default.|false|
+|distanceValue|no|Number|30|Which distance value in km should be selected by default.|false|
+|minDistance|no|Number|1|Which minimal distance value in km should be used.|false|
+|maxDistance|no|Number|400|Which maximum distance value in km should be used.|false|
+|timeValue|no|Number|30|Which time value in min should be selected by default.|false|
+|minTime|no|Number|1|Which minimal time value in min should be used.|false|
+|maxTime|no|Number|180|Which maximum time in min should be used.|false|
+|intervalValue|no|Number|15|Which interval value in km/min should be used by default.|false|
+|minInterval|no|Number|1|Which minimal interval value in km/min should be used.|false|
+|maxInterval|no|Number|30|Which maximum interval value in km/min should be used.|false|
+|styleCenter|no|**[styleCenter](#markdown-header-portalconfigmenusectionsmodulesroutingisochronessettingsstylecenter)**||Stylecenteroptions|false|
+|styleIsochrones|no|**[styleIsochrones](#markdown-header-portalconfigmenusectionsmodulesroutingisochronessettingsstyleisochrones)**||Styleisochronesoptions|false|
+|batchProcessing|no|**[batchProcessing](#markdown-header-portalconfigmenusectionsmodulesroutingisochronessettingsbatchprocessing)**||Batchprocessingoptions|false|
+
+**Example**
+
+```
+#!json
+{
+    "isochronesSettings": {
+        "type": "ORS",
+        "serviceId": "bkg_ors",
+        "speedProfile": "CAR",
+        "isochronesMethodOption": "TIME",
+        "distanceValue": 30,
+        "minDistance": 1,
+        "maxDistance": 400,
+        "timeValue": 30,
+        "minTime": 1,
+        "maxTime": 180,
+        "intervalValue": 15,
+        "minInterval": 3,
+        "maxInterval": 30,
+        "styleCenter": {
+            "lineColor": [255, 127, 0],
+            "lineWidth": 4,
+            "fillColor": [255, 127, 0],
+            "opacity": 0.3,
+            "radius": 8
+        },
+        "styleIsochrones": {
+            "lineWidth": 2,
+            "opacity": 0.65,
+            "startColor": [66, 245, 78],
+            "endColor": [245, 66, 66]
+        },
+        "batchProcessing": {
+            "enabled": false,
+            "active": false,
+            "limit": 1000,
+            "maximumConcurrentRequests": 3
+        }
+    }
+}
+```
+
+***
+
+#### Portalconfig.sections.modules.routing.isochronesSettings.styleCenter
+Routing-tool isochrones centers style options.
+
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|lineColor|no|Number[]|[255, 127, 0]|Which color should be used for the border.|false|
+|lineWidth|no|Number|4|How thick should the border be displayed.|false|
+|fillColor|no|Number[]|[255, 127, 0]|Which color should be used to fill.|false|
+|opacity|no|Number|0.3|How transparent should the fill color be displayed.|false|
+|radius|no|Number|8|How big should the waypoint be displayed.|false|
+
+**Example**
+
+```
+#!json
+{
+    "styleCenter": {
+        "lineColor": [255, 127, 0],
+        "lineWidth": 4,
+        "fillColor": [255, 127, 0],
+        "opacity": 0.3,
+        "radius": 8
+    }
+}
+```
+
+***
+
+#### Portalconfig.sections.modules.routing.isochronesSettings.styleIsochrones
+Routing-tool isochrones style options.
+
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|lineWidth|no|Number|2|How thick should the lines be displayed.|false|
+|opacity|no|Number|0.65|How transparent the fill color is displayed.|false|
+|startColor|no|Number[]|[66, 245, 78]|The starting color for the fill color interpolation calculation.|false|
+|endColor|no|Number[]|[245, 66, 66]|The end color for the fill color interpolation calculation.|false|
+
+**Example**
+
+```
+#!json
+{
+    "styleIsochrones": {
+        "lineWidth": 2,
+        "opacity": 0.65,
+        "startColor": [66, 245, 78],
+        "endColor": [245, 66, 66]
+    }
+}
+```
+
+***
+
+#### Portalconfig.sections.modules.routing.isochronesSettings.batchProcessing
+Routing-tool isochrones batch processing options.
+
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|enabled|no|Boolean|false|If the batch processing should be enabled for the user.|false|
+|active|no|Boolean|false|If the batch processing is active by default.|false|
+|limit|no|Number|1000|The maximum amount of rows allowed in the csv file.|false|
+|maximumConcurrentRequests|no|Number|3|The maximum concurrent requests allowed to be made by the batch processing task handler.|false|
+
+**Example**
+
+```
+#!json
+{
+    "batchProcessing": {
+        "enabled": false,
+        "active": false,
+        "limit": 1000,
+        "maximumConcurrentRequests": 3
+    }
+}
+```
 
 ***
 
