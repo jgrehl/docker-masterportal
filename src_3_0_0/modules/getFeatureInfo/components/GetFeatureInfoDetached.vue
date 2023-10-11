@@ -7,7 +7,7 @@ import layerCollection from "../../../core/layers/js/layerCollection";
 
 /**
  * Get Feature Info Detached
- * @module modules/GetFeatureInfoDetached
+ * @module modules/getFeatureInfo/components/GetFeatureInfoDetached
  * @vue-prop {Object} feature - The required feature.
  * @vue-prop {Boolean} isUpdated - true, if feature was updated.
  * @vue-data {Boolean} isContentHtml - Shows if content is html.

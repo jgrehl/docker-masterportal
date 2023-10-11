@@ -1,6 +1,11 @@
 import changeCase from "../../../shared/js/utils/changeCase";
 
 /**
+ * Helper file for getting gfi themes.
+ * @module modules/getFeatureInfo/js/getTheme
+ */
+
+/**
  * @param {String[]} addonThemes List of names of themes defined in addons.
  * @param {String} configTheme The configured theme.
  * @param {String} configThemeWithSuffix The configured theme with suffix 'theme'.
