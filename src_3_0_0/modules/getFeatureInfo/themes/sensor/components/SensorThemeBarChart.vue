@@ -10,6 +10,27 @@ dayjs.extend(localeData);
 import {calculateWorkloadForOneWeekday} from "../js/calculateWorkloadForOneWeekday";
 import {calculateArithmeticMean} from "../js/mathematicalOperations";
 
+/**
+ * The bar chart for sensor theme of the get feature info.
+ * @module modules/getFeatureInfo/themes/sensor/components/SensorThemeBarChart
+ * @vue-prop {Boolean} show - Show the chart.
+ * @vue-prop {Object} chartValue - The chart value.
+ * @vue-prop {String} targetValue - The target value.
+ * @vue-prop {Object} chartsParams - The charts parameters.
+ * @vue-prop {Number} periodLength - The period length.
+ * @vue-prop {String} periodUnit - The unit of the period length.
+ * @vue-prop {String} processedHistoricalDataByWeekday - The unit of the period length.
+ * @vue-data {String} [momentLocale=null] - The locale.
+ * @vue-data {Number} [weekdayIndex=0] - The weekday index.
+ * @vue-data {Object} [chart=null] - The chart.
+ * @vue-data {String} [hoverBackgroundColor="rgba(0, 0, 0, 0.8)"] - the background color by hover.
+ * @vue-data {String} [chartColor="rgba(0, 0, 0, 1)"] - The chart color.
+ * @vue-data {Number} [barPercentage=1.0] - The bar percentage.
+ * @vue-data {String} [titleText=""] - The title text.
+ * @vue-data {String} [noticeText=""] - The notice text.
+ * @vue-data {Number} [maxValue=1] - The max value
+ * @vue-computed {String} weekday - Gets the weekday using the index, which is between 0 and 6.
+ */
 export default {
     name: "SensorThemeBarChart",
     props: {

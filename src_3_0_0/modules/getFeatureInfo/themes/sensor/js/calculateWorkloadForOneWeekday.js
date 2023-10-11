@@ -1,6 +1,11 @@
 import dayjs from "dayjs";
 
 /**
+ * Helper functions for calculate workload for one weekday.
+ * @module modules/getFeatureInfo/themes/sensor/js/calculateWorkloadForOneWeekday
+ */
+
+/**
  * Calculates the workload for the current hour.
  * Time calculations in milliseconds.
  * @param  {String} actualState the status of the last observation.

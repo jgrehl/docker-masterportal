@@ -7,6 +7,21 @@ import SensorThemeChartsData from "./SensorThemeData.vue";
 import SensorThemeChartsBarChart from "./SensorThemeBarChart.vue";
 import {processHistoricalDataByWeekdays} from "../js/processHistoricalDataByWeekdays";
 
+/**
+ * The sensor theme for the get feature info.
+ * Used for data with a status like e.g. electric charging stations.
+ * @module modules/getFeatureInfo/themes/sensor/components/SensorTheme
+ * @vue-prop {Object} feature - The required feature.
+ * @vue-data {Number} [periodLength=3] - The period length.
+ * @vue-data {String} [periodUnit="month"] - The unit of the period length.
+ * @vue-data {Object[]} [processedHistoricalDataByWeekday=[]] - The processed historical data by weekday.
+ * @vue-data {String} [activeTab="data"] - The default active tab.
+ * @vue-data {String} [startDate=""] - The start date.
+ * @vue-computed {Object} gfiParams - Get the configured gfiParams.
+ * @vue-computed {Object} dataName - Gets the configured data name attributes.
+ * @vue-computed {Object} header - Gets the configured header attributes.
+ * @vue-computed {Object} chartvalues - Gets the values to draw charts.
+ */
 export default {
     name: "SensorTheme",
     components: {

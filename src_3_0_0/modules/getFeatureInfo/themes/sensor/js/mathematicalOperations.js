@@ -1,4 +1,9 @@
 /**
+ * Helper functions for mathematical operations.
+ * @module modules/getFeatureInfo/themes/sensor/js/mathematicalOperations
+ */
+
+/**
  * Returns an array which contains values at hour position.
  * @param  {Number} position One hour.
  * @param  {Object[]} [dataPerHour=[]] Data for every day, according to targetresult.

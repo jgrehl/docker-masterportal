@@ -8,7 +8,7 @@ import IconButton from "../../../shared/modules/buttons/components/IconButton.vu
 
 /**
  * Get Feature Info
- * @module modules/GetFeatureInfo
+ * @module modules/getFeatureInfo/components/GetFeatureInfo
  * @vue-data {Number} pagerIndex - The current index of the pagination.
  * @vue-data {String} componentKey - The key for re-render child component.
  * @vue-data {String} leftIcon - The icon for button.

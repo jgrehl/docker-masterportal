@@ -1,4 +1,10 @@
 /**
+ * Helper file for getting layers.
+ * @module modules/getFeatureInfo/js/getLayers
+ */
+
+
+/**
  * Gets all visible layers with children from group layers.
  * @param {Object[]} visibleLayers The visible layers.
  * @returns {Object[]} All visible layers.
