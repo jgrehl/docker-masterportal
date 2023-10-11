@@ -5,7 +5,11 @@ import {generateSimpleGetters} from "../../../shared/js/utils/generators";
 import {getGfiFeaturesByTileFeature} from "../../../shared/js/utils/getGfiFeaturesByTileFeature";
 import stateGetFeatureInfo from "./stateGetFeatureInfo";
 
-const getters = {
+/**
+ * The getters for the getFeatureInfo.
+ * @module modules/getFeatureInfo/store/gettersGetFeatureInfo
+ */
+export default {
     ...generateSimpleGetters(stateGetFeatureInfo),
 
     /**
@@ -123,5 +127,3 @@ const getters = {
         return state.gfiFeatures;
     }
 };
-
-export default getters;

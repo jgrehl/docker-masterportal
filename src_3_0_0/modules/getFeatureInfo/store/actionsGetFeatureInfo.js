@@ -5,7 +5,10 @@ let globeEventHandler,
     colored3DTile,
     old3DTileColor;
 
-
+/**
+ * The actions for the getFeatureInfo.
+ * @module modules/getFeatureInfo/store/actionsGetFeatureInfo
+ */
 export default {
     /**
      * Function to highlight a 3D Tile with left click.

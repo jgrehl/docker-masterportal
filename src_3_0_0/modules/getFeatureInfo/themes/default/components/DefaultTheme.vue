@@ -8,6 +8,19 @@ import DefaultThemeSensorChart from "./DefaultThemeSensorChart.vue";
 import {getPropertiesWithFullKeys} from "../js/getPropertiesWithFullKeys.js";
 import {markRaw} from "vue";
 
+/**
+ * The default theme for the get feature info.
+ * @module modules/getFeatureInfo/themes/default/components/DefaultTheme
+ * @vue-prop {Object} feature - The required feature.
+ * @vue-data {String[]} [imageLinks=["bildlink", "link_bild", "Bild", "bild"]] - Links to images, are rendered as an image.
+ * @vue-data {Object[]} importedComponents - The imported gfi themes.
+ * @vue-data {Boolean} [showFavoriteIcons=true] - Show favorite icons.
+ * @vue-data {String} [maxWidth=600px] - Max width for an iframe
+ * @vue-data {Boolean} [beautifyKeysParam=true] - Specifies if the keys should be displayed more nicely, like first letter cap.
+ * @vue-data {Boolean} [showObjectKeysParam=false] - Show objects key params.
+ * @vue-computed {String} imageAttribute - Returns the first value found from the feature properties based on the imageLinks
+ * @vue-computed {String} mimeType - Returns the mimeType of the gfi feature
+ */
 export default {
     name: "DefaultTheme",
     components: {
