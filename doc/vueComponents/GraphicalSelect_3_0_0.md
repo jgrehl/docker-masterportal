@@ -1,5 +1,4 @@
 # The GraphicalSelect Component #
-
 creates a dropdown to select an area in a map by square, circle or polygon.
 Source folder: src_3_0_0\shared\modules\graphicalSelect
 
