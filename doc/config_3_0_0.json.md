@@ -38,6 +38,7 @@ The configuration options listed in the following table exist:
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
+|baselayerSwitcher|no|**[baselayerSwitcher](#markdown-header-portalconfigbaselayerSwitcher)**||The baselayerSwitcher allows you to easily change or select a background map.|false|
 |controls|no|**[controls](#markdown-header-portalconfigcontrols)**||Allows setting which interactions are active in the map.|false|
 |getFeatureInfo|no|**[getFeatureInfo](#markdown-header-portalconfiggetFeatureInfo)**||Via  getFeatureInfo (GFI) information to arbitrary layers can be requested. For WMS, the data is fetched with a GetFeatureInfo request. Vector data (WFS, Sensor, GeoJSON, etc.) is already present in the client and will be shown from the already fetched information.|false|
 |mainMenu|no|**[menu](#markdown-header-portalconfigmenu)**||Menu entries in main menu and their order are configured in this entry. The order of modules corresponds to the order in the object specifying them; see **[Modules](#markdown-header-portalconfigmenumodules)**.|false|
@@ -52,6 +53,7 @@ The configuration options listed in the following table exist:
 ```json
 {
     "Portalconfig": {
+        "baselayerSwitcher": {},
         "controls": {},
         "getFeatureInfo": {},
         "mainMenu": {},
@@ -1450,9 +1452,6 @@ However, a `field` needs to be wrapped inside a `clause` (as seen in most exampl
 ***
 
 #### Portalconfig.menu.sections.modules.wfsSearch.searchInstance.literal.clause
-
-[type:literal]: # (Portalconfig.menu.sections.modules.wfsSearch.searchInstance.literal)
-
 A `clause` defines the way multiple `literals` should be queried together.
 
 |Name|Required|Type|Default|Description|Expert|
@@ -1886,14 +1885,14 @@ Possibility to make settings for the topic selection tree.
 ***
 
 ### Portalconfig.tree.layerPills
-Konfiguration, um Einstellungen für LayerPills vorzunehmen.
+Configuration to make settings for LayerPills.
 
-Layerpills are buttons on top of the map that show the selected layers. When clicking on a layerPill, the corresponding layer information is displayed in the menu. The close button deselects the layer. The LayerPills attribute is specified as an object and contains the following attributes.
+Layerpills are buttons on top of the map that show the selected layers. When clicking on a LayerPill, the corresponding layer information is displayed in the menu. The close button deselects the layer. The LayerPills attribute is specified as an object and contains the following attributes:
 
 |Name|Required|Type|Default|Description|Expert|
 |----|-------------|---|-------|------------|------|
-|active|no|Boolean|false|Indicates whether LayerPills are active|false|
-|mobileOnly|no|Boolean|false|Defines whether LayerPills should only be active in the mobile version|false|
+|active|no|Boolean|false|Indicates whether LayerPills are active.|false|
+|mobileOnly|no|Boolean|false|Defines whether LayerPills should only be active in the mobile version.|false|
 
 
 **Example**
