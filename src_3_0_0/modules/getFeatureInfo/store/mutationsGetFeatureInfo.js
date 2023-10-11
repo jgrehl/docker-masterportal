@@ -1,8 +1,10 @@
 import {generateSimpleMutations} from "../../../shared/js/utils/generators";
 import stateGetFeatureInfo from "./stateGetFeatureInfo";
 
-const mutations = {
+/**
+ * The mutations for the getFeatureInfo.
+ * @module modules/getFeatureInfo/store/mutationsGetFeatureInfo
+ */
+export default {
     ...generateSimpleMutations(stateGetFeatureInfo)
 };
-
-export default mutations;

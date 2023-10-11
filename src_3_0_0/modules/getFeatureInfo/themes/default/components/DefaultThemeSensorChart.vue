@@ -7,6 +7,22 @@ import {
 import LinechartItem from "../../../../../shared/modules/charts/components/LinechartItem.vue";
 import ExportButtonCSV from "../../../../../shared/modules/buttons/components/ExportButtonCSV.vue";
 
+/**
+ * Sensor chart for default theme of the get feature info.
+ * @module modules/getFeatureInfo/themes/default/components/DefaultThemeSensorChart
+ * @vue-prop {String} [type=""] - Type of the chart. The following types are possible: linechart, barchart, cakechart.
+ * @vue-prop {String} [label=""] - The label for the chart.
+ * @vue-prop {String} [query=""] - The query to get the historical data from the sensorThings-API.
+ * @vue-prop {String} [format=""] - The time format.
+ * @vue-prop {Object} [staObject=""] - The sensorThings-API data.
+ * @vue-prop {Object} [options=null] - The options.
+ * @vue-prop {Object} [chartOptions=null] - The chart options.
+ * @vue-prop {Boolean} [download=false] - Specifies whether a download button is displayed for downloading the data.
+ * @vue-data {Object} [linechartData=null] - The line chart data.
+ * @vue-data {Object} [linechartDataOptions={}] - The line chart data options.
+ * @vue-data {String|Boolean} [downloadUrl=false] - The download url
+ * @vue-data {String|Boolean} [downloadFilename=false] - The download filename.
+ */
 export default {
     name: "DefaultThemeSensorChart",
     components: {

@@ -1,4 +1,9 @@
 /**
+ * Helper functions for properties with full keys.
+ * @module modules/getFeatureInfo/themes/default/js/getPropertiesWithFullKeys
+ */
+
+/**
  * Concats the keys of the given structure (in depth) to be used as gfiAttribute keys (including @-paths).
  * @param {Object} properties the properties of the feature, may be the mapped properties
  * @param {String} [prefix="@"] the prefix to use for object paths

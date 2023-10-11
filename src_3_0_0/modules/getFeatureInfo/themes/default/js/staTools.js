@@ -3,6 +3,11 @@ import {getPrimaryColor, getColorUniversalDesign} from "../../../../../shared/js
 import {SensorThingsHttp} from "../../../../../shared/js/api/sensorThingsHttp.js";
 import dayjs from "dayjs";
 
+/**
+ * Helper functions for sta tools.
+ * @module modules/getFeatureInfo/themes/default/js/staTools
+ */
+
 
 /**
  * returns an url based on the given query an @iot.selfLink of a STA object

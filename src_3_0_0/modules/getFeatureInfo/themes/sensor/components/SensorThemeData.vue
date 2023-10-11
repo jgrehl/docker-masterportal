@@ -4,6 +4,16 @@ import {isWebLink} from "../../../../../shared/js/utils/urlHelper.js";
 import {isPhoneNumber, getPhoneNumberAsWebLink} from "../../../../../shared/js/utils/isPhoneNumber.js";
 import {isEmailAddress} from "../../../../../shared/js/utils/isEmailAddress.js";
 
+/**
+ * The bar chart for sensor theme of the get feature info.
+ * @module modules/getFeatureInfo/themes/sensor/components/SensorThemeData
+ * @vue-prop {Object} feature - The required feature.
+ * @vue-prop {Boolean} show - Show the chart.
+ * @vue-data {String} [columnHeaderAttribute="dataStreamName"] - The data stream name.
+ * @vue-computed {String} firstColumnHeaderName - Gets the firstColumnHeaderName.
+ * @vue-computed {Object} splittedMappedProperties - Splits the mappepd properties attribute using the "|" parameter.
+ * @vue-computed {String[]} columnHeaders - Get the column headers.
+ */
 export default {
     name: "SensorThemeData",
     props: {

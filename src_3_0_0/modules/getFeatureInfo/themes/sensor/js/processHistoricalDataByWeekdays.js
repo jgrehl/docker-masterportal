@@ -1,6 +1,11 @@
 import dayjs from "dayjs";
 
 /**
+ * Helper functions for process historical data by weekdays.
+ * @module modules/getFeatureInfo/themes/sensor/js/processHistoricalDataByWeekdays
+ */
+
+/**
  * Creates a zero time observations for a given observation.
  * The value will be set to the value of given observation.
  * @param {Object} observation Observation for which a 0 o'clock observation should be created.
