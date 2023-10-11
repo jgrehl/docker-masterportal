@@ -121,7 +121,7 @@ The freeze attribute can be of type Boolean or Object. If it is of type Boolean,
 ***
 
 #### Portalconfig.controls.fullScreen
-Allows the user to view the portal in full screen mode, that is, without the browser's tabs and address bar, by clicking a button. A second click on the element returns the view back to normal.
+Allows the user to view the portal in full screen mode by clicking a button without the browser's tabs and address bar, by clicking a button. A second click on the element returns the view back to default.
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
@@ -1047,7 +1047,7 @@ Specify outline color and stroke width for highlighting lines and fill color and
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
 |fill|no|**[fill](#markdown-header-portalconfigmenutoolselectfeatureshighlightvectorrulespointlinefill)**||Possible setting: color|false|
-|stroke|no|**[stroke](#markdown-header-portalconfigmenutoolselectfeatureshighlightvectorrulespointlinestroke)**||Possible setting: width|false|
+|stroke|no|**[stroke](#markdown-header-portalconfigmenutoolselectfeatureshighlightvectorrulespointlinestroke)**||Possible setting: width and color|false|
 |image|no|**[image](#markdown-header-portalconfigmenutoolselectfeatureshighlightvectorrulespointlineimage)**||Possible setting: scale|false|
 |zoomLevel|no|Integer|7|Zoom level, possible setting: 0-9|false|
 
