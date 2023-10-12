@@ -1896,7 +1896,6 @@ Zu beachten ist jedoch, dass ein Feld innerhalb einer Klausel verpackt sein muss
 
 
 ##### Portalconfig.menu.sections.modules.wfsSearch.searchInstance.literal.clause
-[type:literal]: # (Portalconfig.menu.sections.modules.wfsSearch.searchInstance.literal)
 Eine Klausel (`clause`) definiert die Art und Weise wie verschiedene `literals` miteinander anzufragen sind.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
