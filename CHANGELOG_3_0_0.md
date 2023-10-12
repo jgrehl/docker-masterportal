@@ -22,6 +22,7 @@
 - LayerInformation: For layers that do not have metadata, the layer information can now be displayed so that the URLs and legend can be viewed th
 - The following NPM packages have been updated:
     - dependencies:
+        - @masterportal/masterportalapi: 2.28.0 to 2.29.0 (This also raised ol to version 8.1.0)
         - @popperjs/core: 2.11.6 to 2.11.8
         - @vue/compat: 3.2.47 to 3.3.4
         - axios: 1.3.4 to 1.5.1
