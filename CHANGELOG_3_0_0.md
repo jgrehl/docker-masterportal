@@ -64,7 +64,7 @@
 - The following NPM packages are removed:
     - dependencies
         - @panter/vue-i18next
-        - dayjs
+        - dayjs (is loaded via @masterportal/masterportalapi)
         - moment
         - moment-timezone
     - devDependencies:
