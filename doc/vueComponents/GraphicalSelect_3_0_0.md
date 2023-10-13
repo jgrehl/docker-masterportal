@@ -1,5 +1,5 @@
 # The GraphicalSelect Component #
-creates a dropdown to select an area in a map by square, circle or polygon.
+Creates a dropdown to select an area in a map by square, circle or polygon.
 Source folder: src_3_0_0\shared\modules\graphicalSelect
 
 Component may be used like this:
@@ -60,12 +60,11 @@ export default {
 
 ```
 
-## Parameters of Component ##
+## Properties of Component ##
 |Name|Required|Type|Default|Description|
 |----|--------|----|-------|-----------|
 |selectElement|no|String|"Dropdown"|The used template element for graphical selection.|
 |selectedOption|no|String|"Box"|Preselected draw modus.|
-|options|no|Object|{}|The keys corresponds to the ol draw modus.|
 |focusOnCreation|no|Boolean||True if focus should be set to this component when it is created.|
 |label|yes|String|""|The label of the select.|
 |description|no|String|""|The description over the select element.|

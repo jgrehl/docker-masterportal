@@ -735,7 +735,7 @@ Koordinaten-Werkzeug: um zusätzlich zu den 2 dimensionalen Koordinaten die Höh
 
 **Beispiel**
 ```
-#!json
+#json
 {
     "type": "coordToolkit",
     "heightLayerId": "19173",
@@ -1038,100 +1038,99 @@ Routing-Werkzeug. Ermöglicht Nutzern das Planen von Routen zwischen mehreren Pu
 **Beispiel**
 
 ```
-#!json
+#json
 {
-    "routing": {
-        "name": "translate#common:modules.tools.routing",
-        "icon": "bi-signpost-2-fill",
-        "activeRoutingToolOption": "DIRECTONS",
-        "routingToolOptions": ["DIRECTONS", "ISOCHRONES"],
-        "download": {
-            "filename": "",
-            "format": "GEOJSON"
+    "type": "routing",
+    "name": "common:modules.tools.routing",
+    "icon": "bi-signpost-2-fill",
+    "activeRoutingToolOption": "DIRECTONS",
+    "routingToolOptions": ["DIRECTONS", "ISOCHRONES"],
+    "download": {
+        "filename": "",
+        "format": "GEOJSON"
+    },
+    "geosearch": {
+        "minChars": 3,
+        "limit": 10,
+        "type": "BKG",
+        "serviceId": "bkg_geosearch"
+    },
+    "geosearchReverse": {
+        "distance": 1000,
+        "filter": "",
+        "type": "BKG",
+        "serviceId": "bkg_suggest"
+    },
+    "directionsSettings": {
+        "type": "ORS",
+        "serviceId": "bkg_ors",
+        "speedProfile": "CAR",
+        "preference": "RECOMMENDED",
+        "styleRoute": {
+            "fillColor": [255, 44, 0],
+            "width": 6,
+            "highlightColor": [255, 255, 255],
+            "highlightWidth": 9,
+            "partHighlightColor": [255, 255, 255],
+            "partHighlightWidth": 3
         },
-        "geosearch": {
-            "minChars": 3,
-            "limit": 10,
-            "type": "BKG",
-            "serviceId": "bkg_geosearch"
+        "styleWaypoint": {
+            "lineColor": [255, 127, 0],
+            "lineWidth": 4,
+            "fillColor": [255, 127, 0],
+            "textFillColor": "#000",
+            "textLineColor": "#fff",
+            "textLineWidth": 3,
+            "opacity": 0.3,
+            "radius": 8
         },
-        "geosearchReverse": {
-            "distance": 1000,
-            "filter": "",
-            "type": "BKG",
-            "serviceId": "bkg_suggest"
+        "styleAvoidAreas": {
+            "lineColor": [0, 127, 255],
+            "lineWidth": 2,
+            "fillColor": [0, 127, 255],
+            "opacity": 0.3,
+            "pointRadius": 8,
+            "pointLineWidth": 4
         },
-        "directionsSettings": {
-            "type": "ORS",
-            "serviceId": "bkg_ors",
-            "speedProfile": "CAR",
-            "preference": "RECOMMENDED",
-            "styleRoute": {
-                "fillColor": [255, 44, 0],
-                "width": 6,
-                "highlightColor": [255, 255, 255],
-                "highlightWidth": 9,
-                "partHighlightColor": [255, 255, 255],
-                "partHighlightWidth": 3
-            },
-            "styleWaypoint": {
-                "lineColor": [255, 127, 0],
-                "lineWidth": 4,
-                "fillColor": [255, 127, 0],
-                "textFillColor": "#000",
-                "textLineColor": "#fff",
-                "textLineWidth": 3,
-                "opacity": 0.3,
-                "radius": 8
-            },
-            "styleAvoidAreas": {
-                "lineColor": [0, 127, 255],
-                "lineWidth": 2,
-                "fillColor": [0, 127, 255],
-                "opacity": 0.3,
-                "pointRadius": 8,
-                "pointLineWidth": 4
-            },
-            "batchProcessing": {
-                "enabled": false,
-                "active": false,
-                "limit": 1000,
-                "maximumConcurrentRequests": 3
-            }
+        "batchProcessing": {
+            "enabled": false,
+            "active": false,
+            "limit": 1000,
+            "maximumConcurrentRequests": 3
+        }
+    },
+    "isochronesSettings": {
+        "type": "ORS",
+        "serviceId": "bkg_ors",
+        "speedProfile": "CAR",
+        "isochronesMethodOption": "TIME",
+        "distanceValue": 30,
+        "minDistance": 1,
+        "maxDistance": 400,
+        "timeValue": 30,
+        "minTime": 1,
+        "maxTime": 180,
+        "intervalValue": 15,
+        "minInterval": 3,
+        "maxInterval": 30,
+        "styleCenter": {
+            "lineColor": [255, 127, 0],
+            "lineWidth": 4,
+            "fillColor": [255, 127, 0],
+            "opacity": 0.3,
+            "radius": 8
         },
-        "isochronesSettings": {
-            "type": "ORS",
-            "serviceId": "bkg_ors",
-            "speedProfile": "CAR",
-            "isochronesMethodOption": "TIME",
-            "distanceValue": 30,
-            "minDistance": 1,
-            "maxDistance": 400,
-            "timeValue": 30,
-            "minTime": 1,
-            "maxTime": 180,
-            "intervalValue": 15,
-            "minInterval": 3,
-            "maxInterval": 30,
-            "styleCenter": {
-                "lineColor": [255, 127, 0],
-                "lineWidth": 4,
-                "fillColor": [255, 127, 0],
-                "opacity": 0.3,
-                "radius": 8
-            },
-            "styleIsochrones": {
-                "lineWidth": 2,
-                "opacity": 0.65,
-                "startColor": [66, 245, 78],
-                "endColor": [245, 66, 66]
-            },
-            "batchProcessing": {
-                "enabled": false,
-                "active": false,
-                "limit": 1000,
-                "maximumConcurrentRequests": 3
-            }
+        "styleIsochrones": {
+            "lineWidth": 2,
+            "opacity": 0.65,
+            "startColor": [66, 245, 78],
+            "endColor": [245, 66, 66]
+        },
+        "batchProcessing": {
+            "enabled": false,
+            "active": false,
+            "limit": 1000,
+            "maximumConcurrentRequests": 3
         }
     }
 }
@@ -1144,13 +1143,13 @@ Routing-Werkzeug Download Optionen.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
-|fileName|nein|String||Default Dateiname für den Download.|false|
-|format|nein|String|"GEOJSON"|Welches Format default ausgewählt ist. Aktuell möglich sind "GEOJSON", "KML" und "GPX".|false|
+|fileName|nein|String|""|Default Dateiname für den Download.|false|
+|format|nein|enum["GEOJSON","KML","GPX"]|"GEOJSON"|Welches Format default ausgewählt ist.|false|
 
 **Beispiel**
 
 ```
-#!json
+#json
 {
     "download": {
         "filename": "",
@@ -1168,7 +1167,7 @@ Routing-Werkzeug Geosuche Optionen.
 |----|-------------|---|-------|------------|------|
 |minChars|nein|Number|3|Minimum an Zeichen für die Anfrage bei dem externen Service.|false|
 |limit|nein|Number|10|Maximale Anzahl an Zeichen für die Suche.|false|
-|type|ja|String||Welcher Typ für die Geosuche verwendet werden soll. Aktuell möglich sind "BKG", "NOMINATIM", "LOCATIONFINDER", "KOMOOT", "GAZETTEER", "SPECIALWFS" und "ELASTIC.|false|
+|type|ja|enum["BKG","NOMINATIM","LOCATIONFINDER","KOMOOT","GAZETTEER","SPECIALWFS","ELASTIC"]|""|Welcher Typ für die Geosuche verwendet werden soll.|false|
 |serviceId|ja|String||Welcher Service für die Geosuche verwendet werden soll.|false|
 |typeName|nein|String||Typname für die specialWfs Geosuchabfrage.|false|
 |propertyNames|nein|String[]||Namen der Eigenschaften, die in die specialWfs Geosuche einbezogen werden sollen.|false|
@@ -1181,7 +1180,7 @@ Routing-Werkzeug Geosuche Optionen.
 **Beispiel für BKG**
 
 ```
-#!json
+#json
 {
     "geosearch": {
         "type": "BKG",
@@ -1193,7 +1192,7 @@ Routing-Werkzeug Geosuche Optionen.
 **Beispiel für SPECIALWFS**
 
 ```
-#!json
+#json
 {
     "geosearch": {
         "minChars": 3,
@@ -1211,7 +1210,7 @@ Routing-Werkzeug Geosuche Optionen.
 **Beispiel FÜR ELASTIC**
 
 ```
-#!json
+#json
 {
     "geosearch": {
         "minChars": 3,
@@ -1237,7 +1236,7 @@ BBOX-Wert zugeordnet zu einem speedProfile. Koordinatensystem ist abhängig von 
 **Beispiel**
 
 ```
-#!json
+#json
 {
     "bbox": {"CYCLING": "9.6,53.40,10.4,53.84"}
 }
@@ -1252,13 +1251,13 @@ Routing-Werkzeug Geosuche Reverse Optionen.
 |----|-------------|---|-------|------------|------|
 |distance|nein|Number|1000|Distanz zum Suchen in Meter für die Anfrage bei dem externen Service.|false|
 |filter|nein|String||Zusätzliche Filter für die Suche werden an die Anfrage angehangen.|false|
-|type|ja|String||Welcher Typ für die Geosuche verwendet werden soll. Aktuell möglich sind "BKG", "NOMINATIM" und "KOMOOT".|false|
+|type|ja|enum["BKG","NOMINATIM","KOMOOT"]||Welcher Typ für die Geosuche verwendet werden soll.|false|
 |serviceId|ja|String||Welcher Service für die Geosuche verwendet werden soll.|false|
 
 **Beispiel**
 
 ```
-#!json
+#json
 {
     "geosearchReverse": {
         "distance": 1000,
@@ -1276,7 +1275,7 @@ Routing-Werkzeug Routenplanung Optionen.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
-|type|ja|String||Welche Art der externe Service zur Abfrage ist. Aktuell möglich ist "ORS".|false|
+|type|ja|enum["ORS"]||Welche Art der externe Service zur Abfrage ist.|false|
 |serviceId|ja|String||Welcher Service für die Abfrage verwendet werden soll.|false|
 |speedProfile|nein|String|"CAR"|Welches Geschwindigkeitsprofil verwendet werden soll.|false|
 |preference|nein|String|"RECOMMENDED"|Welche Art der Routenplanung verwendet werden soll.|false|
@@ -1290,7 +1289,7 @@ Routing-Werkzeug Routenplanung Optionen.
 **Beispiel**
 
 ```
-#!json
+#json
 {
     "directionsSettings": {
         "type": "ORS",
@@ -1351,7 +1350,7 @@ Möglichkeit eigene Optionen für Verkehrswege meiden (zusätzlich zum BKG-Diens
 **Beispiel**
 
 ```
-#!json
+#json
 {
     "customAvoidFeatures": {
        "CYCLING": ["STEPS", "FERRIES", "UNPAVEDROADS"],
@@ -1371,7 +1370,7 @@ Möglichkeit eigene Routenpräferenzen (zusätzlich zum BKG-Dienst) für speedPr
 **Beispiel**
 
 ```
-#!json
+#json
 {
     "customPreferences": {
        "CYCLING": ["RECOMMENDED", "SHORTEST", "GREEN"],
@@ -1396,7 +1395,7 @@ Routing-Werkzeug Routenplanung Routen Style Optionen.
 **Beispiel**
 
 ```
-#!json
+#json
 {
     "styleRoute": {
         "fillColor": [255, 44, 0],
@@ -1428,7 +1427,7 @@ Routing-Werkzeug Routenplanung Wegpunkt Style Optionen.
 **Beispiel**
 
 ```
-#!json
+#json
 {
     "styleWaypoint": {
         "lineColor": [255, 127, 0],
@@ -1460,7 +1459,7 @@ Routing-Werkzeug Routenplanung Sperrflächen Style Optionen.
 **Beispiel**
 
 ```
-#!json
+#json
 {
     "styleAvoidAreas": {
         "lineColor": [0, 127, 255],
@@ -1488,7 +1487,7 @@ Routing-Werkzeug Routenplanung Stapelverarbeitung Optionen.
 **Beispiel**
 
 ```
-#!json
+#json
 {
     "batchProcessing": {
         "enabled": false,
@@ -1526,7 +1525,7 @@ Routing-Werkzeug Erreichbarkeitsanalysen Optionen.
 **Beispiel**
 
 ```
-#!json
+#json
 {
     "isochronesSettings": {
         "type": "ORS",
@@ -1581,7 +1580,7 @@ Routing-Werkzeug Erreichbarkeitsanalysen Center Style Optionen.
 **Beispiel**
 
 ```
-#!json
+#json
 {
     "styleCenter": {
         "lineColor": [255, 127, 0],
@@ -1608,7 +1607,7 @@ Routing-Werkzeug Erreichbarkeitsanalysen Isochrone Style Optionen.
 **Beispiel**
 
 ```
-#!json
+#json
 {
     "styleIsochrones": {
         "lineWidth": 2,
@@ -1634,7 +1633,7 @@ Routing-Werkzeug Erreichbarkeitsanalysen Stapelverarbeitung Optionen.
 **Beispiel**
 
 ```
-#!json
+#json
 {
     "batchProcessing": {
         "enabled": false,
