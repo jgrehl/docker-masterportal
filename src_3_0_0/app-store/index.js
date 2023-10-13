@@ -10,7 +10,6 @@ import Controls from "../modules/controls/controls-store/indexControls";
 import Maps from "../core/maps/store/indexMaps";
 import Menu from "../modules/menu/menu-store/indexMenu";
 import Modules from "../modules/modules-store/indexModules";
-import SearchBar from "../modules/searchBar/store/indexSearchBar";
 
 const store = createStore({
     state,
@@ -22,8 +21,7 @@ const store = createStore({
         Controls,
         Maps,
         Menu,
-        Modules,
-        SearchBar
+        Modules
     }
 });
 
