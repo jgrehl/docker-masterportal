@@ -734,8 +734,7 @@ Koordinaten-Werkzeug: um zusätzlich zu den 2 dimensionalen Koordinaten die Höh
 |coordInfo|nein|[CoordInfo](#markdown-header-portalconfigmenusectionsmodulescoordtoolkitcoordInfo)|null|Hier kann ein Objekt mit Erläuterungen für die Koordinatenreferenzsysteme hinterlegt werden.|false|
 
 **Beispiel**
-```
-#json
+```json
 {
     "type": "coordToolkit",
     "heightLayerId": "19173",
@@ -1037,8 +1036,7 @@ Routing-Werkzeug. Ermöglicht Nutzern das Planen von Routen zwischen mehreren Pu
 
 **Beispiel**
 
-```
-#json
+```json
 {
     "type": "routing",
     "name": "common:modules.tools.routing",
@@ -1148,8 +1146,7 @@ Routing-Werkzeug Download Optionen.
 
 **Beispiel**
 
-```
-#json
+```json
 {
     "download": {
         "filename": "",
@@ -1179,8 +1176,7 @@ Routing-Werkzeug Geosuche Optionen.
 
 **Beispiel für BKG**
 
-```
-#json
+```json
 {
     "geosearch": {
         "type": "BKG",
@@ -1191,8 +1187,7 @@ Routing-Werkzeug Geosuche Optionen.
 ```
 **Beispiel für SPECIALWFS**
 
-```
-#json
+```json
 {
     "geosearch": {
         "minChars": 3,
@@ -1209,8 +1204,7 @@ Routing-Werkzeug Geosuche Optionen.
 ```
 **Beispiel FÜR ELASTIC**
 
-```
-#json
+```json
 {
     "geosearch": {
         "minChars": 3,
@@ -1235,8 +1229,7 @@ BBOX-Wert zugeordnet zu einem speedProfile. Koordinatensystem ist abhängig von 
 
 **Beispiel**
 
-```
-#json
+```json
 {
     "bbox": {"CYCLING": "9.6,53.40,10.4,53.84"}
 }
@@ -1256,8 +1249,7 @@ Routing-Werkzeug Geosuche Reverse Optionen.
 
 **Beispiel**
 
-```
-#json
+```json
 {
     "geosearchReverse": {
         "distance": 1000,
@@ -1288,8 +1280,7 @@ Routing-Werkzeug Routenplanung Optionen.
 
 **Beispiel**
 
-```
-#json
+```json
 {
     "directionsSettings": {
         "type": "ORS",
@@ -1349,8 +1340,7 @@ Möglichkeit eigene Optionen für Verkehrswege meiden (zusätzlich zum BKG-Diens
 
 **Beispiel**
 
-```
-#json
+```json
 {
     "customAvoidFeatures": {
        "CYCLING": ["STEPS", "FERRIES", "UNPAVEDROADS"],
@@ -1369,8 +1359,7 @@ Möglichkeit eigene Routenpräferenzen (zusätzlich zum BKG-Dienst) für speedPr
 
 **Beispiel**
 
-```
-#json
+```json
 {
     "customPreferences": {
        "CYCLING": ["RECOMMENDED", "SHORTEST", "GREEN"],
@@ -1394,8 +1383,7 @@ Routing-Werkzeug Routenplanung Routen Style Optionen.
 
 **Beispiel**
 
-```
-#json
+```json
 {
     "styleRoute": {
         "fillColor": [255, 44, 0],
@@ -1426,8 +1414,7 @@ Routing-Werkzeug Routenplanung Wegpunkt Style Optionen.
 
 **Beispiel**
 
-```
-#json
+```json
 {
     "styleWaypoint": {
         "lineColor": [255, 127, 0],
@@ -1458,8 +1445,7 @@ Routing-Werkzeug Routenplanung Sperrflächen Style Optionen.
 
 **Beispiel**
 
-```
-#json
+```json
 {
     "styleAvoidAreas": {
         "lineColor": [0, 127, 255],
@@ -1486,8 +1472,7 @@ Routing-Werkzeug Routenplanung Stapelverarbeitung Optionen.
 
 **Beispiel**
 
-```
-#json
+```json
 {
     "batchProcessing": {
         "enabled": false,
@@ -1505,7 +1490,7 @@ Routing-Werkzeug Erreichbarkeitsanalysen Optionen.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
-|type|ja|String||Welche Art der externe Service zur Abfrage ist. Aktuell möglich ist "ORS".|false|
+|type|ja|enum["ORS"]||Welche Art der externe Service zur Abfrage ist.|false|
 |serviceId|ja|String||Welcher Service für die Abfrage verwendet werden soll.|false|
 |speedProfile|nein|String|"CAR"|Welches Geschwindigkeitsprofil verwendet werden soll.|false|
 |isochronesMethodOption|nein|String|"TIME"|Welche Methode für den Abruf verwendet werden soll.|false|
@@ -1524,8 +1509,7 @@ Routing-Werkzeug Erreichbarkeitsanalysen Optionen.
 
 **Beispiel**
 
-```
-#json
+```json
 {
     "isochronesSettings": {
         "type": "ORS",
@@ -1579,8 +1563,7 @@ Routing-Werkzeug Erreichbarkeitsanalysen Center Style Optionen.
 
 **Beispiel**
 
-```
-#json
+```json
 {
     "styleCenter": {
         "lineColor": [255, 127, 0],
@@ -1606,8 +1589,7 @@ Routing-Werkzeug Erreichbarkeitsanalysen Isochrone Style Optionen.
 
 **Beispiel**
 
-```
-#json
+```json
 {
     "styleIsochrones": {
         "lineWidth": 2,
@@ -1632,8 +1614,7 @@ Routing-Werkzeug Erreichbarkeitsanalysen Stapelverarbeitung Optionen.
 
 **Beispiel**
 
-```
-#json
+```json
 {
     "batchProcessing": {
         "enabled": false,

@@ -737,8 +737,7 @@ Coordinates tool: to display the height above sea level in addition to the 2 dim
 |coordInfo|no|[CoordInfo](#markdown-header-portalconfigmenutoolcoordToolkitcoordInfo)||An object with explanations for the coordinate reference systems can be stored here.|false|
 
 **Example**
-```
-#json
+```json
 {
     "type": "coordToolkit",
     "heightLayerId": "19173",
@@ -1040,8 +1039,7 @@ Routing module. Enables user to plan routes between multiple points with multipl
 
 **Example**
 
-```
-#json
+```json
 {
     "type": "routing",
     "name": "common:modules.routing",
@@ -1151,8 +1149,7 @@ Routing-tool download options.
 
 **Example**
 
-```
-#json
+```json
 {
     "download": {
         "filename": "",
@@ -1182,8 +1179,7 @@ Routing-tool geosearch options.
 
 **Example for BKG**
 
-```
-#json
+```json
 {
     "geosearch": {
         "type": "BKG",
@@ -1194,8 +1190,7 @@ Routing-tool geosearch options.
 ```
 **Example for SPECIALWFS**
 
-```
-#json
+```json
 {
     "geosearch": {
         "minChars": 3,
@@ -1212,8 +1207,7 @@ Routing-tool geosearch options.
 ```
 **Example for ELASTIC**
 
-```
-#json
+```json
 {
     "geosearch": {
         "minChars": 3,
@@ -1237,8 +1231,7 @@ BBOX value according to the speedProfile. Coordinate system depends on the epsg 
 
 **Example**
 
-```
-#json
+```json
 {
     "bbox": {"CYCLING": "9.6,53.40,10.4,53.84"}
 }
@@ -1258,8 +1251,7 @@ Routing-tool geosearch reverse options.
 
 **Example**
 
-```
-#json
+```json
 {
     "geosearchReverse": {
         "distance": 1000,
@@ -1290,8 +1282,7 @@ Routing-tool directions options.
 
 **Example**
 
-```
-#json
+```json
 {
     "directionsSettings": {
         "type": "ORS",
@@ -1350,8 +1341,7 @@ Possibility to define additional avoid features for the different speed profiles
 
 **Example**
 
-```
-#json
+```json
 {
     "customAvoidFeatures": {
        "CYCLING": ["STEPS", "FERRIES", "UNPAVEDROADS"],
@@ -1373,8 +1363,7 @@ Possibility to define additional preferences for the different speed profiles (a
 
 **Example**
 
-```
-#json
+```json
 {
     "customPreferences": {
        "CYCLING": ["RECOMMENDED", "SHORTEST", "GREEN"],
@@ -1398,8 +1387,7 @@ Routing-tool directions route style options.
 
 **Example**
 
-```
-#json
+```json
 {
     "styleRoute": {
         "fillColor": [255, 44, 0],
@@ -1430,8 +1418,7 @@ Routing-tool directions waypoint style options.
 
 **Example**
 
-```
-#json
+```json
 {
     "styleWaypoint": {
         "lineColor": [255, 127, 0],
@@ -1462,8 +1449,7 @@ Routing-tool directions avoid areas style options.
 
 **Example**
 
-```
-#json
+```json
 {
     "styleAvoidAreas": {
         "lineColor": [0, 127, 255],
@@ -1490,8 +1476,7 @@ Routing-tool directions batch processing options.
 
 **Example**
 
-```
-#json
+```json
 {
     "batchProcessing": {
         "enabled": false,
@@ -1509,7 +1494,7 @@ Routing-tool isochrones options.
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
-|type|yes|String||Which type of service should be used for the request. ("ORS")|false|
+|type|yes|enum["ORS"]||Which type of service should be used for the request.|false|
 |serviceId|yes|String||Which service should be used for the request.|false|
 |speedProfile|no|String|"CAR"|Which speed profile should be selected by default.|false|
 |isochronesMethodOption|no|String|"TIME"|Which method should be selected by default.|false|
@@ -1528,8 +1513,7 @@ Routing-tool isochrones options.
 
 **Example**
 
-```
-#json
+```json
 {
     "isochronesSettings": {
         "type": "ORS",
@@ -1583,8 +1567,7 @@ Routing-tool isochrones centers style options.
 
 **Example**
 
-```
-#json
+```json
 {
     "styleCenter": {
         "lineColor": [255, 127, 0],
@@ -1610,8 +1593,7 @@ Routing-tool isochrones style options.
 
 **Example**
 
-```
-#json
+```json
 {
     "styleIsochrones": {
         "lineWidth": 2,
@@ -1636,8 +1618,7 @@ Routing-tool isochrones batch processing options.
 
 **Example**
 
-```
-#json
+```json
 {
     "batchProcessing": {
         "enabled": false,
