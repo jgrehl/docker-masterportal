@@ -98,6 +98,8 @@ function processLayer (layer) {
 
 /**
  * Update the layer config in app-store.
+ * So that the state always contains the current attributes of the layers and is thus globally available.
+ * NOte: Note, the reactivity of the store is not triggered, otherwise an infinite loop would be created.
  * @param {Layer} layer Layer of the layer collection.
  * @returns {void}
  */
