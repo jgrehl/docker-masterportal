@@ -1,3 +1,6 @@
+const {config, enableAutoUnmount} = require("@vue/test-utils");
+const canvas = require("canvas");
+
 global.ResizeObserver = require("resize-observer-polyfill");
 
 /**
@@ -57,3 +60,16 @@ class MutationObserver {
 }
 // a mock for MutationObserver
 global.MutationObserver = MutationObserver;
+
+// renderStubDefaultSlot: https://test-utils.vuejs.org/migration/#shallowmount-and-renderstubdefaultslot
+config.global.renderStubDefaultSlot = true;
+// global.SVGElement: @see https://github.com/vuejs/core/issues/3590
+global.SVGElement = window.SVGElement;
+global.CanvasPattern = canvas.CanvasPattern;
+
+/**
+ * EnableAutoUnmount allows to automatically destroy Vue wrappers.
+ * No wrapper.destroy() is needed in each test.
+ * Destroy logic is passed as callback to hook Function.
+ */
+enableAutoUnmount(afterEach);
