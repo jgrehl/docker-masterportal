@@ -55,8 +55,9 @@ TileSetLayer.prototype = Object.create(Layer.prototype);
  * @param {Object} attr the attributes for the layer
  * @returns {void}
  */
-TileSetLayer.prototype.createLayer = function (attr) {
+TileSetLayer.prototype.createLayer = async function (attr) {
     this.layer = new Tileset(attr);
+    this.layer.layer = await this.layer.createTileSet(attr);
 };
 
 /**
@@ -75,20 +76,16 @@ TileSetLayer.prototype.setVisible = function (newValue) {
  * @return {void}
  */
 TileSetLayer.prototype.hideObjects = function (toHide, allLayers = false) {
-    console.log("hideObjects", toHide, allLayers)
     let updateLayer = allLayers;
 
     toHide.forEach((id) => {
         if (!hiddenObjects[id]) {
-            console.log(Object.keys(hiddenObjects), id, hiddenObjects[id])
             hiddenObjects[id] = new Set();
-            console.log("+++", hiddenObjects, id)
             updateLayer = true;
         }
     });
     this.setHiddenObjects(hiddenObjects);
     if (updateLayer) {
-        console.log("------------------------------", this)
         this.setFeatureVisibilityLastUpdated(Date.now());
     }
 };
@@ -202,7 +199,6 @@ TileSetLayer.prototype.applyStyle = function (tile) {
  * @return {void}
  */
 TileSetLayer.prototype.styleContent = function (content) {
-    console.log("style")
     if (
         !content[lastUpdatedSymbol] ||
         content[lastUpdatedSymbol] < this.get("featureVisibilityLastUpdated")
