@@ -876,7 +876,9 @@ const ModelList = Backbone.Collection.extend(/** @lends ModelList.prototype */{
                 else {
                     const source = rawLayerList.getLayerWhere({id: paramLayer.id});
 
-                    Radio.trigger("Parser", "addGdiLayer", {id: paramLayer.id, source: source, name: source.name});
+                    if (source) {
+                        Radio.trigger("Parser", "addGdiLayer", {id: paramLayer.id, source: source, name: source.name});
+                    }
                 }
             });
             this.addModelsByAttributes({typ: "Oblique"});
