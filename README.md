@@ -25,7 +25,7 @@ Please be aware of the following:
 **We appreciate hints, feedback and communication of bugs! Please use the Issuetracker and tag your issue with "v3.0.0-beta1"**
 
 ## Roadmap
-Our further Roadmap is to work hard on 3.0.0 and to release wip-Versions, rcs etc. and hopefully to be able to have a first stable Version in the beginning of 2024. We will support and fix bugs for V2.x until end of 2024.
+Our further Roadmap is to work hard on 3.0.0 and to release wip-Versions and hopefully to be able to have a first stable Version in the beginning of 2024. We will support and fix bugs for V2.x until end of 2024.
 ### Masterportal 3.x
 * 04.10.2023: Release MP 3.0 beta 1
 * 06.12.2023: Release MP 3.0 beta 2
