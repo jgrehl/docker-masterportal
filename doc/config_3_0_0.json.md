@@ -675,6 +675,7 @@ Modules can be divided into sections. In the menu, sections are divided with a h
 |fileImport|no|**[fileImport](#markdown-header-portalconfigmenusectionsmodulesfileImport)**||Import KML, GeoJSON, and GPX files with this modules.|false|
 |layerClusterToggler|no|**[layerClusterToggler](#markdown-header-portalconfigmenusectionsmoduleslayerClusterToggler)**||This module allows a cluster layers to be active and deactive together.|false|
 |layerSlider|no|**[layerSlider](#markdown-header-portalconfigmenusectionsmoduleslayerslider)**||The layerSlider module allows showing arbitrary services in order. This can e.g. be used to show aerial footage from multiple years in succession.|false|
+|measure|no|**[measure](#markdown-header-portalconfigmenusectionsmodulesmeasure)**||Allows measuring areas and distances in the units m/km/nm resp. m²/ha/km².|false|
 |openConfig|no|**[openConfig](#markdown-header-portalconfigmenusectionsmodulesopenConfig)**||ith this module a configuration file (config.json) can be reloaded at runtime. The modules and map are adapted to the new configuration.|false|
 |print|no|**[print](#markdown-header-portalconfigmenusectionsmodulesprint)**||Printing module that can be used to export the map's current view as PDF.|false|
 |routing|no|**[routing](#markdown-header-portalconfigmenusectionsmodulesrouting)**||Routing module to create routes and isochrones.|false|
@@ -908,9 +909,29 @@ Defines a layer slider layer.
 ***
 
 ##### Portalconfig.menu.sections.modules.measure
+The measure tool allows measuring distances and areas. This includes the specification of measurement inaccuracies.
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
+|earthRadius|no|Number|6378137|Earth radius in meters. Please mind that the earth radius should be chosen in accordance with the reference ellipsoid. E.g., GRS80 should be used for ETRS89 (EPSG:25832).|false|
+|icon|no|String|"bi-arrows-angle-expand"|Icon that is shown in front of the module in the menu. For selection see **[Bootstrap Icons](https://icons.getbootstrap.com/)**.|false|
+|lineStringUnits|no|String[]|["m", "km"]|Indicates which units for length measurements will be selectable by users. Options are "m" (metres), "km" (kilometres), "nm" (nautical miles).|false|
+|measurementAccuracy|no|String|"meter"|Indicates how accurately the measurement result is displayed for "m", "nm", "m²", "ha". Options are "decimeter" for one decimal place. "meter" for no decimal place. "dynamic" for one decimal place for results smaller 10 and no decimal place for results greater or equal 10 of the respective unit.|false|
+|name|no|String|"common:modules.measure.name"|Name of the module in the menu.|false|
+|polygonUnits|no|String[]|["m²", "km²"]|Indicates which units for area measurements will be selectable by users. Options are "m²", "ha", "km²".|false|
+|type|no|String|"measure"|The type of the module. Defines which module is configured.|false|
+
+**Example**
+
+```json
+{
+    "earthRadius": 6378137,
+    "icon": "bi-arrows-angle-expand",
+    "measurementAccuracy": "dynamic",
+    "name": "common:modules.measure.name",
+    "type": "measure"
+}
+```
 
 ***
 
@@ -3071,7 +3092,7 @@ List of attributes typically used for tilesets.
 ***
 
 #### Themenconfig.elements.layers.Tileset.cesium3DTilesetOption
-Cesium 3D tileset options directly forwarded to the *Cesium tileset object*. 
+Cesium 3D tileset options directly forwarded to the *Cesium tileset object*.
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
