@@ -29,7 +29,7 @@
 - addWMS: Transformation for external services with EPSG:4326
 - Issue #1018:The tool selectFeatures can now also be used mobile, as an area can be dragged on the map.
 - Issue #1083: fixed the issue.
-- parametricUrl: prevented error in console when layer is not available.
+- parametricUrl: show alert again if invalid layerId is used in the url.
 
 ---
 
