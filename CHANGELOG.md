@@ -31,6 +31,7 @@
 - Issue #1018:The tool selectFeatures can now also be used mobile, as an area can be dragged on the map.
 - Issue #1083: fixed the issue.
 - Fix some vulnerabilities in dependencies
+- parametricUrl: show alert again if invalid layerId is used in the url
 
 ---
 
