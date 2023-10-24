@@ -669,6 +669,7 @@ Module lassen sich in Abschnitte (Sections) unterteilen. Im Menü werden Abschni
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
 |coordToolkit|nein|**[coordToolkit](#markdown-header-portalconfigmenusectionsmodulescoordtoolkit)**||Koordinatenabfrage: Werkzeug um Koordinaten und Höhe per Maus-Klick abzufragen: Bei Klick in die Karte werden die Koordinaten in der Anzeige eingefroren und können auch direkt in die Zwischenablage kopiert werden. Koordinatensuche: Über eine Eingabemaske können das Koordinatensystem und die Koordinaten eingegeben werden. Das Werkzeug zoomt dann auf die entsprechende Koordinate und setzt einen Marker darauf. Die Koordinatensysteme werden aus der config.js bezogen.|false|
+|customMenuElement|nein|**[customMenuElement](#markdown-header-portalconfigmenusectionsmodulescustommenuelement)**||Dieses Modul kann einen Link öffnen, HTML aus config.json oder einer externen Datei anzeigen oder eine Aktion ausführen. Diese Modul kann mehrfach in der config.json konfiguriert werden.|false|
 |fileImport|nein|**[fileImport](#markdown-header-portalconfigmenusectionsmodulesfileImport)**||Import von Dateien des Typs *.kml, *.geojson und *. gpx. Über dieses Modul können solche Dateien importiert werden.|false|
 |language|nein|**[language](#markdown-header-portalconfigmenusectionsmoduleslanguage)**||In diesem Modul lässt sich die Sprache des Portals umschalten.|false|
 |layerClusterToggler|nein|**[layerClusterToggler](#markdown-header-portalconfigmenusectionsmoduleslayerClusterToggler)**||Mit diesem Modul lassen sich Layer in Clustern gleichzeitig aktivieren/laden und deaktivieren.|false|
@@ -737,6 +738,7 @@ Koordinaten-Werkzeug: um zusätzlich zu den 2 dimensionalen Koordinaten die Höh
 |coordInfo|nein|[CoordInfo](#markdown-header-portalconfigmenusectionsmodulescoordtoolkitcoordInfo)|null|Hier kann ein Objekt mit Erläuterungen für die Koordinatenreferenzsysteme hinterlegt werden.|false|
 
 **Beispiel**
+
 ```json
 {
     "type": "coordToolkit",
@@ -764,11 +766,92 @@ Koordinaten-Werkzeug: um zusätzlich zu den 2 dimensionalen Koordinaten die Höh
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
-|title|nein|string||Überschrift für die Erläuterungen zu den Koordinatenreferenzsystemen.|false|
 |explanations|nein|**[explanations](#markdown-header-portalconfigmenusectionsmodulescoordtoolkitcoordinfoexplanations)**[]||Array mit Erklärungen, aus denen eine Liste erstellt wird.|false|
+|title|nein|string||Überschrift für die Erläuterungen zu den Koordinatenreferenzsystemen.|false|
+
+***
 
 ###### Portalconfig.menu.tool.coordToolkit.coordInfo.explanations
 Kann ein Array von Erläuterungen zu den Koordinatenreferenzsystemen enthalten aus denen eine Liste erstellt wird.
+
+***
+
+##### Portalconfig.menu.sections.modules.customMenuElement
+Dieses Modul kann einen Link öffnen, HTML aus config.json oder einer externen Datei anzeigen oder eine Aktion ausführen. Diese Modul kann mehrfach in der config.json konfiguriert werden. Wenn `htmlContent`angegeben wird, dann wird `pathToContent` nicht ausgeführt und umgekehrt.
+
+|Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
+|----|-------------|---|-------|------------|------|
+|execute|nein|**[execute](#markdown-header-portalconfigmenusectionsmodulescustomMenuElementexecute)**||Aktion, die mit dem Klick auf den Menü-Eintrag ausgeführt werden soll.|true|
+|htmlContent|nein|String||HTML, das in dem Modul angezeigt wird. Das HTML wird nicht validiert, die Verantwortung für die Sicherheit des HTMLs liegt beim Betreiber des Portals.|false|
+|name|nein|String||Name des Moduls, der im Menü angezeigt wird|false|
+|openURL|nein|String||Url die mit dem Klick auf den Menü-Eintrag in einem neuen Tab geöffnet werden soll.|false|
+|pathToContent|nein|String||Pfad zu einer Datei, die HTML enthält, das in dem Modul angezeigt wird. Das HTML wird nicht validiert, die Verantwortung für die Sicherheit des HTMLs liegt beim Betreiber des Portals.|false|
+|type|ja|String|"customMenuElement"|type des Moduls.|false|
+
+**Beispiel**
+
+```json
+ {
+    "type": "customMenuElement",
+    "name": "Url öffnen",
+    "openURL": "https://geoinfo.hamburg.de/"
+ },
+{
+    "type": "customMenuElement",
+    "name": "Url öffnen und HTML anzeigen",
+    "openURL": "https://geoinfo.hamburg.de/",
+    "htmlContent": "<div><h1>This is a Heading</h1><p>Es wurde eine Url geöffnet.<p/></div>"
+},
+{
+    "type": "customMenuElement",
+    "name": "HTML aus config.json und Action",
+    "htmlContent": "<div><p>This is a paragraph.</p></br><a href=\"https://www.w3schools.com/\" target=\"_blank\">Visit W3Schools.com!</a></div>",
+    "execute":{
+        "action": "Alerting/addSingleAlert",
+        "payload":  {"title":"An alle Menschen", "content": "Hallo Welt"}
+    }
+}
+```
+
+***
+
+###### Portalconfig.menu.sections.modules.customMenuElement.execute
+CustomMenuElement Module `execute` Optionen.
+
+|Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
+|----|-------------|---|-------|------------|------|
+|action|ja|String||Name und ggf. Pfad der Aktion, die ausgeführt werden soll.|true|
+|payload|nein|**[payload](#markdown-header-portalconfigmenusectionsmodulescustomMenuElementexecutepayload)**||Payload, der an die Aktion übergeben wird.|true|
+
+**Beispiel**
+
+```json
+{
+    "action": "Alerting/addSingleAlert",
+    "payload":  {"title":"An alle Menschen", "content": "Hallo Welt"}
+}
+```
+
+***
+
+####### Portalconfig.menu.sections.modules.customMenuElement.execute.payload
+CustomMenuElement Module `execute` vom `payload`. Der passende payload zu der Aktion muss angegeben werden. Hier das Beispiel des `Alerting/addSingleAlert`.
+
+|Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
+|----|-------------|---|-------|------------|------|
+|content|ja|String||Inhalt der Meldung.|true|
+|title|nein|String||Titel der Meldung.|true|
+
+**Beispiel**
+
+```json
+{
+    "title":"An alle Menschen",
+    "content": "Hallo Welt"
+}
+```
+
+***
 
 ##### Portalconfig.menu.sections.modules.draw
 

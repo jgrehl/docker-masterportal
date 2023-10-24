@@ -12,6 +12,7 @@
 - Add documentation for following modules:
     - controls:
         - fullScreen
+    - customMenuElement
     - fileImport
     - getFeatureInfo
     - language
