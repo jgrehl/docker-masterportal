@@ -17,7 +17,7 @@
   "scripts": {
     "start": "webpack-dev-server --config devtools/webpack.dev.js",
     "start:ssl": "webpack-dev-server --config devtools/webpack.dev.js --https --cert devtools/certificate/localhost.pem --key devtools/certificate/localhost.key",
-    "test": "mochapack --recursive --webpack-config devtools/webpack.test.js --file devtools/setupUnitTests.js \"./src_3_0_0/**/*.spec.js\" \"./addons/addons_3_0_0/*/!(node_modules)/**/*.spec.js\"",
+    "test": "mochapack --recursive --webpack-config devtools/webpack.test.js --file devtools/setupUnitTests.js \"./src_3_0_0/**/*.spec.js\" \"./addons/addons_3_0_0/*/!node_modules/**/*.spec.js\"",
     "test:watch": "npm run test -- --watch",
     "browsertestWithDevServer": "env NODE_ENV=e2eTest env browser=fromCapabilities webpack-dev-server --reporter ./test/end2end/library/reporter.js --config devtools/webpack.browsertest.js",
     "browsertestOnExternalServer": "env browser=fromCapabilities env urlPart=\\/ ./node_modules/.bin/mocha --reporter ./test/end2end/library/reporter.js ./test/end2end/TestRunner.js",
