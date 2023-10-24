@@ -14,6 +14,7 @@
         - fullScreen
     - fileImport
     - getFeatureInfo
+    - measure
     - menu:
         - portalTitle
     - mouseHover
