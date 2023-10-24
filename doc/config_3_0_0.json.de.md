@@ -673,6 +673,7 @@ Module lassen sich in Abschnitte (Sections) unterteilen. Im Menü werden Abschni
 |layerClusterToggler|nein|**[layerClusterToggler](#markdown-header-portalconfigmenusectionsmoduleslayerClusterToggler)**||Mit diesem Modul lassen sich Layer in Clustern gleichzeitig aktivieren/laden und deaktivieren.|false|
 |layerSlider|nein|**[layerSlider](#markdown-header-portalconfigmenusectionsmoduleslayerslider)**||Mit dem Layerslider lassen sich beliebige Dienste in einer Reihenfolge abspielen. Zum Beispiel geeignet für Luftbilder aus verschiedenen Jahrgängen.|false|
 |measure|nein|**[measure](#markdown-header-portalconfigmenusectionsmodulesmeasure)**||Messwerkzeug um Flächen oder Strecken zu messen. Dabei kann zwischen den Einheiten m/km/nm bzw m²/ha/km² gewechselt werden.|false|
+|news|nein|**[news](#markdown-header-portalconfigmenusectionsmodulesnews)**||Dieses Modul zeigt alle Meldungen aus der newsFeedPortalAlerts.json des aktuellen Portals unabhängig des "gelesen" Status.|false|
 |openConfig|nein|**[openConfig](#markdown-header-portalconfigmenusectionsmodulesopenConfig)**||Mit diesem Modul lässt sich eine Konfigurationsdatei (config.json) zur Laufzeit neu laden. Die Module und Karte werden an die neue Konfiguration angepasst.|false|
 |print|nein|**[print](#markdown-header-portalconfigmenusectionsmodulesprint)**||Druckmodul mit dem die Karte als PDF exportiert werden kann.|false|
 |routing|nein|**[routing](#markdown-header-portalconfigmenusectionsmodulesrouting)**||Routing Modul zur Erstellung von Routenplanungen und Erreichbarkeitsanalysen.|false|
@@ -933,9 +934,23 @@ Mit dem Messwerkzeug können Strecken und Flächen gemessen werden. Dabei werden
 ***
 
 ##### Portalconfig.menu.sections.modules.news
+Dieses Modul zeigt alle Meldungen aus der newsFeedPortalAlerts.json des aktuellen Portals unabhängig des "gelesen" Status.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
+|icon|nein|String|"bi-newspaper"|Icon das im Menü vor dem Modul gezeigt wird. Zur Auswahl siehe **[Bootstrap Icons](https://icons.getbootstrap.com/)**|false|
+|name|nein|String|"common:modules.news.name"|Name des Modules im Menü|false|
+|type|nein|String|"news"|Der type des Moduls. Definiert welches Modul konfiguriert ist.|false|
+
+**Beispiel**
+
+```json
+{
+    "icon": "bi-newspaper",
+    "name": "common:modules.news.name",
+    "type": "news"
+}
+```
 
 ***
 

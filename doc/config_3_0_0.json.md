@@ -676,6 +676,7 @@ Modules can be divided into sections. In the menu, sections are divided with a h
 |layerClusterToggler|no|**[layerClusterToggler](#markdown-header-portalconfigmenusectionsmoduleslayerClusterToggler)**||This module allows a cluster layers to be active and deactive together.|false|
 |layerSlider|no|**[layerSlider](#markdown-header-portalconfigmenusectionsmoduleslayerslider)**||The layerSlider module allows showing arbitrary services in order. This can e.g. be used to show aerial footage from multiple years in succession.|false|
 |measure|no|**[measure](#markdown-header-portalconfigmenusectionsmodulesmeasure)**||Allows measuring areas and distances in the units m/km/nm resp. m²/ha/km².|false|
+|news|no|**[news](#markdown-header-portalconfigmenusectionsmodulesnews)**||This module shows all messages from the newsFeedPortalAlerts.json of the current portal regardless of the "read" status.|false|
 |openConfig|no|**[openConfig](#markdown-header-portalconfigmenusectionsmodulesopenConfig)**||ith this module a configuration file (config.json) can be reloaded at runtime. The modules and map are adapted to the new configuration.|false|
 |print|no|**[print](#markdown-header-portalconfigmenusectionsmodulesprint)**||Printing module that can be used to export the map's current view as PDF.|false|
 |routing|no|**[routing](#markdown-header-portalconfigmenusectionsmodulesrouting)**||Routing module to create routes and isochrones.|false|
@@ -936,9 +937,23 @@ The measure tool allows measuring distances and areas. This includes the specifi
 ***
 
 ##### Portalconfig.menu.sections.modules.news
+This module shows all messages from the newsFeedPortalAlerts.json of the current portal regardless of the "read" status.
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
+|icon|no|String|"bi-newspaper"|Icon that is shown in front of the module in the menu. For selection see **[Bootstrap Icons](https://icons.getbootstrap.com/)**.|false|
+|name|no|String|"common:modules.news.name"|Name of the module in the menu.|false|
+|type|no|String|"news"|The type of the module. Defines which module is configured.|false|
+
+**Example**
+
+```json
+{
+    "icon": "bi-newspaper",
+    "name": "common:modules.news.name",
+    "type": "news"
+}
+```
 
 ***
 

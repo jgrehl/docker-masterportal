@@ -18,6 +18,7 @@
     - menu:
         - portalTitle
     - mouseHover
+    - news
     - selectFeatures
 - Add roadmap information to the readme file.
 
