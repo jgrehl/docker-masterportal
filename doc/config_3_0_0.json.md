@@ -673,6 +673,7 @@ Modules can be divided into sections. In the menu, sections are divided with a h
 |----|--------|----|-------|-----------|------|
 |coordToolkit|no|**[coordToolkit](#markdown-header-portalconfigmenusectionsmodulescoordtoolkit)**||Coordinate query: Tool to query coordinates and altitude by mouse click: When clicking in the map, the coordinates are frozen in the display and can also be copied directly to the clipboard. Coordinate search: The coordinate system and the coordinates can be entered via an input mask. The tool then zooms to the corresponding coordinate and places a marker on it. The coordinate systems are obtained from config.js.|false|
 |fileImport|no|**[fileImport](#markdown-header-portalconfigmenusectionsmodulesfileImport)**||Import KML, GeoJSON, and GPX files with this modules.|false|
+|language|no|**[language](#markdown-header-portalconfigmenusectionsmoduleslanguage)**|In this module the language of the portal can be switched.|false|
 |layerClusterToggler|no|**[layerClusterToggler](#markdown-header-portalconfigmenusectionsmoduleslayerClusterToggler)**||This module allows a cluster layers to be active and deactive together.|false|
 |layerSlider|no|**[layerSlider](#markdown-header-portalconfigmenusectionsmoduleslayerslider)**||The layerSlider module allows showing arbitrary services in order. This can e.g. be used to show aerial footage from multiple years in succession.|false|
 |measure|no|**[measure](#markdown-header-portalconfigmenusectionsmodulesmeasure)**||Allows measuring areas and distances in the units m/km/nm resp. m²/ha/km².|false|
@@ -811,6 +812,28 @@ Import "*.kml", "*.geojson" and "*.gpx" files with this module.
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
+
+***
+
+##### Portalconfig.menu.sections.modules.language
+In this module the language of the portal can be switched.
+
+|Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
+|----|-------------|---|-------|------------|------|
+|icon|no|String|"bi-flag"|Icon that is shown in front of the module in the menu. For selection see **[Bootstrap Icons](https://icons.getbootstrap.com/)**.|false|
+|layerIdList|yes|String[]|[]|List of layerIds, the layers that should be switched on or off together.|false|
+|name|no|String|"common:modules.language.name"|Name of the module in the menu.|false|
+|type|no|String|"language"|The type of the module. Defines which module is configured.|false|
+
+**Example**
+
+```json
+{
+    "icon": "bi-flag",
+    "name": "common:modules.language.name",
+    "type": "language"
+}
+```
 
 ***
 

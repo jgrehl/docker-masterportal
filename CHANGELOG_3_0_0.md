@@ -14,6 +14,7 @@
         - fullScreen
     - fileImport
     - getFeatureInfo
+    - language
     - measure
     - menu:
         - portalTitle
