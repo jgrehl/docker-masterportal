@@ -2374,7 +2374,7 @@ Defines the initial map view and a background shown when no layer is selected.
 ***
 
 ### Portalconfig.mouseHover
-Enables the MouseHover function for vector layers, e.g. WFS or GeoJSON. For per-layer configuration see **[Vector](#markdown-header-themeconfiglayervector)**.
+Enables the MouseHover function for vector layers, e.g. WFS or GeoJSON. For per-layer configuration see **[Vector](#markdown-header-themenconfigelementslayersvector)**.
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
@@ -2669,9 +2669,9 @@ Layers or folders are defined here. Folders can in turn contain **[elements](#ma
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
+|elements|no|**[elements](#markdown-header-themenconfigelements)**[]||Next layer with layers or folders under the type `folder`.|false|
 |name|no|String|""|Layer or folder name.|false|
 |type|no|String|"layer"|Type of the lement: "layer" or "folder"|false|
-|elements|no|**[elements](#markdown-header-themenconfigelements)**[]||Next layer with layers or folders under the type `folder`.|false|
 
 
 **Example Baselayer**
@@ -2751,22 +2751,22 @@ Besides these attributes, there are also type-specific attributes for the differ
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
-|id|yes|String/String[]||Layer ID(s). Resolved using the **[services.json](services.json.md)** file. Please mind that the given IDs **MUST** refer to the same URL, that is, use the same service. When configuring an array of IDs, setting `minScale` and `maxScale` of each layer is required to be in the `services.json`. With the special character `.` as suffix, a LayerId can be used multiple times. Each LayerId marked with a suffix creates its own entry in the topic tree.|false|
-|name|no|String||Layer name.|false|
-|type|no|String|"layer"|Type of the lement: "layer" or "folder"|false|
-|transparency|no|Integer|0|Layer transparency.|false|
-|visibility|no|Boolean|false|Layer visibility.|false|
-|styleId|yes|String||Id of the style. Id defined in the **[style.json](style.json.md)**.|false|
 |autoRefresh|no|Integer||Automatically reload layer every `autoRefresh` ms. Minimum value is 500.|false|
-|urlIsVisible|no|Boolean|true|Whether the service URL should be shown in the layer information window.|false|
-|renderer|no|String|"default"|Which render pipeline to use ("default" or "webgl") (only for vector data of type "GeoJSON", "WFS", "OAF"). "webgl" is currently classified as experimental and can lead to errors in some modules|false|
+|id|yes|String/String[]||Layer ID(s). Resolved using the **[services.json](services.json.md)** file. Please mind that the given IDs **MUST** refer to the same URL, that is, use the same service. When configuring an array of IDs, setting `minScale` and `maxScale` of each layer is required to be in the `services.json`. With the special character `.` as suffix, a LayerId can be used multiple times. Each LayerId marked with a suffix creates its own entry in the topic tree.|false|
 |isPointLayer|no|Boolean|false|Whether the (vector) layer only consists of point features (only relevant for WebGL rendering)|false|
+|name|no|String||Layer name.|false|
+|preview|no**[preview](#markdown-header-themenconfigelementslayerspreview)**||Preview for baselayers of type WMS, WMTS and VectorTile. WMS and WMTS: if not specified, a centered map section is loaded.|false|
+|renderer|no|String|"default"|Which render pipeline to use ("default" or "webgl") (only for vector data of type "GeoJSON", "WFS", "OAF"). "webgl" is currently classified as experimental and can lead to errors in some modules|false|
 |showInLayerTree|no|Boolean|false|If true, then the layer is initially displayed in the topic tree. If portalConfig.tree.addLayerButton is not configured, then this attribute has no effect.|false|
+|transparency|no|Integer|0|Layer transparency.|false|
+|type|no|String|"layer"|Type of the lement: "layer" or "folder"|false|
+|urlIsVisible|no|Boolean|true|Whether the service URL should be shown in the layer information window.|false|
+|visibility|no|Boolean|false|Layer visibility.|false|
 
 **Example**
 ```json
 {
-    "elements": [
+"elements": [
           {
           "id": "2",
           "name": "Example Layer",
@@ -2781,7 +2781,7 @@ Besides these attributes, there are also type-specific attributes for the differ
 
 ```json
 {
-    "elements": [
+"elements": [
         {
             "id": ["123", "456", "789"],
             "name": "My test layer"
@@ -2790,40 +2790,171 @@ Besides these attributes, there are also type-specific attributes for the differ
 }
 ```
 ***
-#### Themenconfig.elements.layers.Vector
-Vector typical attributes are listed here. Vector layers are vpm type **[WFS](#markdown-header-themenconfigelementslayerswfs)**, GeoJSON (only in EPSG:4326), **[SensorLayer](sensorThings.md)**, and Vector Tile Layer.
+#### Themenconfig.elements.layers.preview
+Preview for baselayer in theme tree, also used in **[BaselayerSwitcher](#markdown-header-portalconfigmenusectionsmodulesbaselayerswitcher)**.
+For the **[VectorTile](#markdown-header-themenconfigelementslayersvectortile)**, **[WMS](#markdown-header-themenconfiggelementslayersrasterwms)** and WMTS layer types.
+With the VectorTile layer a dropped preview image is displayed, with WMS and WMTS layers a map section is loaded. WMS and WMTS: if not specified, a centered map section is loaded.
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
-|searchField|no|String||Attribute name for which the searchbar searches this layer.|false|
+|center|no|Number[]/String[]||Center coordinates for the preview image loading parameters. Default is the center of the map extent.|false|
+|checkable|no|Boolean|false|If `true`, then the preview image is usable as checkbox.|false|
+|customClass|no|String||Custom css class to override the style, NOTE: may need to use '!important'.|false|
+|radius|no|Number|1000|Radius of the extent in meters.|false|
+|src|no|String||Only for type 'VectorTile'. Path to the image to be previewed.|false|
+|zoomLevel|no|Number||Zoom level from which the resolution for the loading parameters of the preview image are determined. Default is the initial zoomLevel of the map.|false|
+
+**Example VectorTile**
+```json
+"preview":{
+    "src": "./resources/vectorTile.png"
+    }
+```
+**Example WMS**
+```json
+ "preview": {
+    "zoomLevel": 6,
+    "center": "566245.97,5938894.79",
+    "radius": 500
+    }
+```
+***
+#### Themenconfig.elements.layers.Raster
+Raster layer typical attributes are listed here. Raster layers are of type **[StaticImage](#markdown-header-themenconfigelementslayersrasterstaticimage)**, **[WMS](#markdown-header-themenconfigelementslayersrasterwms)**, WMSTime and WMTS.
+
+***
+
+##### Themenconfig.elements.layers.Raster.StaticImage
+StaticImage can be used to load images as layers and display them georeferenced on the map. The formats jpeg and png are supported.
+
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|extent|yes|Number[]|[560.00, 5950.00, 560.00, 5945.00]|Specifies the georeferencing of the image. The coordinate pair expected in EPSG:25832 format is the coordinate for the top left and bottom right corner of the image.|false|
+|id|yes|String||A unique ID must be assigned among all layers.|false|
+|typ|yes|String|"StaticImage"|Sets the layer type to StaticImage, which can display static images as layers.|false|
+|url|yes|String|"https://meinedomain.de/bild.png"|Link to the image to be displayed.|false|
+
+
+**Example**
+```json
+{
+    "id": "4811",
+    "typ": "StaticImage",
+    "url": "https://www.w3.org/Graphics/PNG/alphatest.png",
+    "name": "Testing PNG file",
+    "visibility": true,
+    "extent": [560296.72, 5932154.22, 562496.72, 5933454.22]
+}
+```
+
+***
+##### Themenconfig.elements.layers.Raster.WMS
+WMS typical attributes are listed here.
+
+|Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
+|----|--------|----|-------|-----------|------|
+|name|no|String/String[]||Name of the layer. If the **styles** attribute is configured, this attribute must be configured as Tpy String[].|false|
+|featureCount|no|Number|1|Number of features to return on a GetFeatureInfo query.|false|
+|gfiAsNewWindow|no|**[gfiAsNewWindow](#markdown-header-themenconfigelementslayersrasterwmsgfiasnewwindow)**|null|Considered only if infoFormat is text/html.|true|
+|styles|no|String[]||If styles are specified, they are also sent to the WMS. The server interprets these styles and returns the data accordingly.|true|
+
+**Example**
+```json
+{
+    "id": "4711",
+    "name": ["MyFirstWMSLayerName", "MySecondWMSLayerName"],
+    "transparency": 0,
+    "visibility": true,
+    "featureCount": 2,
+    "gfiAsNewWindow": {
+        "name": "_blank",
+        "specs": "width=800,height=700"
+    },
+    "styles": ["firstStyle", "secondStyle"]
+}
+```
+***
+###### Themenconfig.elements.layers.Raster.WMS.gfiAsNewWindow
+The parameter `gfiAsNewWindow` is only in use when `infoFormat` is set to `"text/html"`.
+
+This feature allows opening WMS HTML responses in their own window or tab rather than in an iFrame or GFI. To open HTML contents in a standard browser window, set the empty object `{}` instead of `null`.
+
+You may change the opening behaviour by setting the parameter `name`:
+
+**Note on SSL encryption**
+
+If `gfiAsNewWindow` is not defined, it's applied with default values when the called URL is not SSL-encrypted (HTTPS).
+
+Due to the *No Mixed Content* policy of all modern browsers, unencrypted content may not be displayed in an iFrame. Please mind that automatic forwarding (e.g. in Javascript) in iFrames to an insecure HTTP connection (without SSL) is not automatically recognized and may be prevented by the browser.
+
+For such cases, define `gfiAsNewWindow` manually as described above.
+
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|name|yes|enum["_blank_","_self_"]|"_blank"|`"_blank"` opens a new browser tab or window (depending on browser) with the specified HTML content. The window appearance can be changed with the `specs` parameter. `"_self"` opens the specified HTML content within the current browser window.|true|
+|specs|no|String||You may add an arbitrary amount of comma-separated properties like `{"specs": "width=800,height=700"}`. For more options, please read the documentation regarding `javascript` and `window.open`: [W3 Schools: Met win open](https://www.w3schools.com/jsref/met_win_open.asp) (German), [JavaScript Info: Popup windows](https://javascript.info/popup-windows) (English), [MDN: Window open](https://developer.mozilla.org/en-US/docs/Web/API/Window/open) (English)|true|
+
+**Example**
+```json
+{
+    "id": "4711",
+    "gfiAsNewWindow": {
+        "name": "_blank",
+        "specs": "toolbar=yes,scrollbars=yes,resizable=yes,top=0,left=500,width=800,height=700"
+    }
+}
+```
+
+***
+#### Themenconfig.elements.layers.Vector
+Vector typical attributes are listed here. Vector layers are of type **[WFS](#markdown-header-themenconfigelementslayersvectorwfs)**, GeoJSON (only in EPSG:4326), **[SensorLayer](sensorThings.de.md)** and OAF.
+
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|additionalInfoField|no|String|"name"|Attribute name of the feature for the hitlist in the searchbar. If the attribute does not exist, the layer name is specified.|false|
+|clusterDistance|no|Integer||Pixel radius. Within this radius all features are "clustered" to one feature. ⚠️ clusterDistance for WFS layers with polygon or line geometry will result in the features not being displayed.|false|
+|hitTolerance|no|String||Click tolerance at which a hit is triggered for the GetFeatureInfo query.|false|
+|loadingStrategy|no|String|"bbox"|LLoading strategy for loading the features. Possible values are "bbox" or "all". **[see](https://openlayers.org/en/latest/apidoc/module-ol_loadingstrategy.html)**.|false|
 |mouseHoverField|no|String/String[]||Attribute name or array of attribute names to be displayed when the user hovers over a feature.|false|
-|||||||
+|nearbyTitle|no|String/String[]||Attribute name or array of attribute names to be displayed as title in the result list during the proximity search.|false|
+|searchField|no|String||Attribute name for which the searchbar searches this layer.|false|
+|styleGeometryType|no|String/String[]||Geometry types for a WFS style, if only certain geometries of a layer are to be displayed **[see](style.json.md#markdown-header-display-rules)**.|false|
+|styleId|yes|String||Id that defines the style. Id is resolved in the **[style.json](style.json.md)**.|false|
 
 **Example**
 ```json
 {
 "elements": [
           {
-          "id": "22078",
-          "name": "Residents parking areas Hamburg",
-          "typ": "WFS",
-          "visibility": false,
-          "styleId": "22078",
-          "styleField": "bewirtschaftungsart",
-          "searchField": "bwp_name",
-          "mouseHoverField": [
-            "bwp_name",
-            "bewirtschaftungsart"
-          ]
+            "id": "22078",
+            "name": "Bewohnerparkgebiete Hamburg",
+            "typ": "WFS",
+            "visibility": false,
+            "styleId": "22078",
+            "styleField": "bewirtschaftungsart",
+            "searchField": "bwp_name",
+            "mouseHoverField": [
+                "bwp_name",
+                "bewirtschaftungsart"
+            ]
+        },
+        {
+            "id" : "11111",
+            "name" : "lokale GeoJSON",
+            "url" : "portal/master/test.json",
+            "typ" : "GeoJSON",
+            "gfiAttributes" : "showAll",
+            "layerAttribution" : "nicht vorhanden",
+            "legend" : true
         }
     ]
 }
 ```
 ***
 ##### Themenconfig.elements.layers.Vector.WFS
-List of typical WFS query attributes for highlightFeaturesByAttribute. For the invocation parameters see **[urlParameter](urlParameter.md)**.
+Attributes for the WFS search at highlightFeaturesByAttribute. For the call parameters see **[urlParameter](urlParameter.md)**.
 ```
-Example invocations:
+Example calls:
 ?api/highlightFeaturesByAttribute=1&wfsId=1&attributeName=DK5&attributeValue=valueToSearchFor&attributeQuery=isequal
 ?api/highlightFeaturesByAttribute=123&wfsId=1711&attributeName=name&attributeValue=Helios%20ENDO-Klinik%20Hamburg&attributeQuery=IsLike
 ?api/highlightFeaturesByAttribute=123&wfsId=2003&attributeName=gebietsname&attributeValue=NSG%20Zollenspieker&attributeQuery=isequal
@@ -2832,24 +2963,227 @@ Example invocations:
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
-|featurePrefix|yes|String||Search prefix for the WFS query - e.g. app:.|true|
-|wildCard|yes|String||The wildcard character for the WFS query -e.g. %|true|
-|singleChar|yes|String||The single character for the WFS query - e.g. #|true|
 |escapeChar|yes|String||The escape character for the WFS query - e.g. \||true|
-|valueDelimiter|no|String||The value delimiter for isIn queries attributeValue, defaulting to semicolon|true|
+|featurePrefix|yes|String||Search prefix for the WFS query - e.g. app:.|true|
+|singleChar|yes|String||The single character for the WFS query - e.g. #|true|
+|valueDelimiter|no|String|"";"|The value delimiter for isIn queries attributeValue.|true|
+|wildCard|yes|String||The wildcard character for the WFS query -e.g. %|true|
 
 **Example**
 
 ```json
 {
     "id": "1",
-    "styleId": "1",
     "visibility": false,
     "name": "Animal species invasive",
     "featurePrefix": "app:",
     "wildCard": "%",
     "singleChar": "#",
     "escapeChar": "!"
+}
+```
+
+***
+#### Themenconfig.elements.layers.VectorTile
+VectorTile typical attributes are listed here.
+
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|useMpFonts|no|Boolean|true|Only available in a *Vector Tile Layer*. Switch to overwrite Fontstacks of external style definitions, to assure needed fonts are available. If set to false, used fonts need to be added separately e.g. via '<link rel=stylesheet ...>' in index.html |false|
+|vtStyles|no|**[vtStyle](#markdown-header-themenconfigelementslayersvectortilevtstyle)**[]||Choosable external style definitions.|false|
+
+**Example**
+```json
+{
+  "id": "123",
+  "name": "Vectortile layer name",
+  "epsg": "EPSG:3857",
+  "url": "https://example.com/3857/tile/{z}/{y}/{x}.pbf",
+  "typ": "VectorTile",
+  "vtStyles": [
+    {
+      "id": "STYLE_1",
+      "name": "Day view",
+      "url": "https://example.com/3857/resources/styles/day.json",
+      "defaultStyle": true
+    },
+    {
+      "id": "STYLE_2",
+      "name": "Night view",
+      "url": "https://example.com/3857/resources/styles/night.json"
+    }
+  ],
+  "preview":{
+    "src": "./resources/vectorTile.png"
+    }
+}
+```
+***
+#### Themenconfig.elements.layers.VectorTile.vtStyle
+Style definitions. Available for *Vector Tile Layers* only.
+
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|defaultStyle|no|String||If set `true`, this style is used initially; if no field is set `true`, the first style is used.|false|
+|id|yes|String||Cross-service unique id.|false|
+|name|yes|String||Display name, e.g. used in the selection tool.|false|
+|resolutions|no|Number[]||Resolutions for zoom levels defined in style. If not set default resolutions from ol-mapbox-style project are used.|false|
+|url|yes|String||URL to load a style from. The linked JSON *must* match the [Mapbox style specification](https://docs.mapbox.com/mapbox-gl-js/style-spec/).|false|
+
+**Example**
+```json
+{
+    "id": "Style_1",
+    "name": "Red lines",
+    "url": "https://example.com/asdf/styles/root.json",
+    "defaultStyle": true,
+    "resolutions": [
+        661.4579761460263,
+        264.58319045841048,
+        66.14579761460263,
+        26.458319045841044,
+        15.874991427504629,
+        10.583327618336419
+    ]
+}
+```
+***
+#### Themenconfig.elements.layers.Tileset
+List of attributes typically used for tilesets.
+
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|hiddenFeatures|no|String[]|[]|List of IDs to be hidden in the plane.|true|
+|**[cesium3DTilesetOptions](https://cesiumjs.org/Cesium/Build/Documentation/Cesium3DTileset.html)**|no|**[cesium3DTilesetOption](#markdown-header-themenconfigelementslayerstilesetcesium3dtilesetoption)**||Cesium 3D tileset options directly forwarded to the *Cesium tileset object*. E.g. `maximumScreenSpaceError` is relevant to the visibility.|true|
+
+**Example**
+```json
+{
+    "id": "123456",
+    "name": "TilesetLayerName",
+    "visibility": true,
+    "hiddenFeatures": ["id1", "id2"],
+    "cesium3DTilesetOptions" : {
+        maximumScreenSpaceError : 6
+    },
+}
+```
+***
+
+#### Themenconfig.elements.layers.Tileset.cesium3DTilesetOption
+Cesium 3D tileset options directly forwarded to the *Cesium tileset object*. 
+
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|maximumScreenSpaceError|no|Number||The maximum screen space error used for refining the level of detail. This value helps determine when a tile is refined to its successors, and therefore plays an important role in balancing performance and visual quality.|true|
+
+**Example**
+```json
+"cesium3DTilesetOptions" : {
+    maximumScreenSpaceError : 6
+}
+```
+***
+#### Themenconfig.elements.layers.Terrain
+List of attributes typically used for Terrain.
+
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|**[cesiumTerrainProviderOptions](https://cesiumjs.org/Cesium/Build/Documentation/CesiumTerrainProvider.html)**|no|**[cesiumTerrainProviderOption](#markdown-header-themenconfigelementslayersterraincesiumterrainprovideroption)**[]||Cesium TerrainProvider options directly forwarded to the *Cesium TerrainProvider* E.g. `requestVertexNormals` is used for object surface shading.|true|
+
+**Example**
+```json
+{
+    "id": "123456",
+    "name": "TerrainLayerName",
+    "visibility": true,
+    "cesiumTerrainProviderOptions": {
+        "requestVertexNormals" : true
+    },
+}
+```
+***
+#### Themenconfig.elements.layers.Terrain.cesiumTerrainProviderOption
+Initialization options for the CesiumTerrainProvider constructor.
+[cesiumTerrainProviderOptions]: https://cesium.com/learn/cesiumjs/ref-doc/CesiumTerrainProvider.html
+
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|requestVertexNormals|no|Boolean||Flag indicating whether the client should request additional illumination information from the server, in the form of normals per vertex, if available.|true|
+
+**Example**
+```json
+"cesiumTerrainProviderOptions": {
+    "requestVertexNormals" : true
+}
+```
+***
+#### Themenconfig.elements.layers.Entity3D
+List of attributes typically used for Entities 3D.
+
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|entities|yes|**[Attribute](#markdown-header-themenconfigelementslayersentities3dentities)**[]||List of entities of the layer to be displayed.|false|
+#### Themenconfig.elements.layers.Entity3D.entities
+Entities3D entities typical attributes are listed here.
+
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|allowPicking|no|Boolean|true|Whether the model may be clicked for GFI. Example: `true`|false|
+|attributes|no|**[Attribute](#markdown-header-themenconfigelementslayersentities3dentitiesattribute)**||Model attributes, e.g. `{"name": "test"}`|false|
+|latitude|yes|Number||Model origin latitude in degrees. Example: `53.541831`|false|
+|longitude|yes|Number||Model origin longitude in degrees. Example: `9.917963`|false|
+|height|no|Number|0|Model origin height. Example: `10`|false|
+|heading|no|Number|0|Model rotation in degrees. Example: `0`|false|
+|pitch|no|Number|0|Model pitch in degrees. Example: `0`|false|
+|roll|no|Number|0|Model roll in degrees. Example: `0`|false|
+|scale|no|Number|1|Model scale. Example: `1`|false|
+|show|no|Boolean|true|Whether the model should be shown. Should be `true`. Example: `true`|false|
+|url|yes|String|""|Model url, e.g. `"https://daten-hamburg.de/gdi3d/datasource-data/Simple_Building.glb"`|false|
+
+
+**Example**
+```json
+{
+      "id": "123456",
+      "name": "EntitiesLayerName",
+      "visibility": true,
+      "typ": "Entities3D",
+      "entities": [
+         {
+            "url": "https://daten-hamburg.de/gdi3d/datasource-data/Simple_Building.glb",
+           "attributes": {
+             "name": "einfaches Haus in Planten und Blomen"
+           },
+           "latitude": 53.5631,
+           "longitude": 9.9800,
+           "height": 12,
+           "heading": 0,
+           "pitch": 0,
+           "roll": 0,
+           "scale": 5,
+           "allowPicking": true,
+           "show": true
+         }
+       ],
+       "gfiAttributes" : {
+         "name": "Name"
+      }
+  },
+```
+
+***
+
+#### Themenconfig.elements.layers.Entity3D.entities.Attribute
+
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|name|no|String|""|Field that can be displayed in the GFI.|false|
+
+**Example**
+```json
+{
+   "name": "Fernsehturm.kmz"
 }
 ```
 ***

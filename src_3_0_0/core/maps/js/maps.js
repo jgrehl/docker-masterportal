@@ -81,6 +81,13 @@ function create3DMap (configJs) {
         }
     }, "3D");
 
+    /**
+     * Note: if the bugfix was released in an olcs version these two lines should be removed again
+     * @see {@link https://github.com/openlayers/ol-cesium/pull/1109}
+     */
+    map3d.setEnabled(true);
+    map3d.setEnabled(configJs.startingMap3D);
+
     mapCollection.addMap(map3d, "3D");
 }
 
