@@ -675,7 +675,7 @@ Module lassen sich in Abschnitte (Sections) unterteilen. Im Menü werden Abschni
 |layerClusterToggler|nein|**[layerClusterToggler](#markdown-header-portalconfigmenusectionsmoduleslayerClusterToggler)**||Mit diesem Modul lassen sich Layer in Clustern gleichzeitig aktivieren/laden und deaktivieren.|false|
 |layerSlider|nein|**[layerSlider](#markdown-header-portalconfigmenusectionsmoduleslayerslider)**||Mit dem Layerslider lassen sich beliebige Dienste in einer Reihenfolge abspielen. Zum Beispiel geeignet für Luftbilder aus verschiedenen Jahrgängen.|false|
 |measure|nein|**[measure](#markdown-header-portalconfigmenusectionsmodulesmeasure)**||Messwerkzeug um Flächen oder Strecken zu messen. Dabei kann zwischen den Einheiten m/km/nm bzw m²/ha/km² gewechselt werden.|false|
-|news|nein|**[news](#markdown-header-portalconfigmenusectionsmodulesnews)**||Dieses Modul zeigt alle Meldungen aus der newsFeedPortalAlerts.json des aktuellen Portals unabhängig des "gelesen" Status.|false|
+|news|nein|**[news](#markdown-header-portalconfigmenusectionsmodulesnews)**||Dieses Modul zeigt alle Meldungen aus der newsFeedPortalAlerts.json un der config.json des aktuellen Portals unabhängig des "gelesen" Status.|false|
 |openConfig|nein|**[openConfig](#markdown-header-portalconfigmenusectionsmodulesopenConfig)**||Mit diesem Modul lässt sich eine Konfigurationsdatei (config.json) zur Laufzeit neu laden. Die Module und Karte werden an die neue Konfiguration angepasst.|false|
 |print|nein|**[print](#markdown-header-portalconfigmenusectionsmodulesprint)**||Druckmodul mit dem die Karte als PDF exportiert werden kann.|false|
 |routing|nein|**[routing](#markdown-header-portalconfigmenusectionsmodulesrouting)**||Routing Modul zur Erstellung von Routenplanungen und Erreichbarkeitsanalysen.|false|
@@ -777,16 +777,17 @@ Kann ein Array von Erläuterungen zu den Koordinatenreferenzsystemen enthalten a
 ***
 
 ##### Portalconfig.menu.sections.modules.customMenuElement
-Dieses Modul kann einen Link öffnen, HTML aus config.json oder einer externen Datei anzeigen oder eine Aktion ausführen. Diese Modul kann mehrfach in der config.json konfiguriert werden. Wenn `htmlContent`angegeben wird, dann wird `pathToContent` nicht ausgeführt und umgekehrt.
+Dieses Modul kann einen Link öffnen, HTML aus config.json oder einer externen Datei anzeigen oder eine Aktion ausführen. Diese Modul kann mehrfach in der config.json konfiguriert werden. Wenn `htmlContent` angegeben wird, dann wird `pathToContent` nicht ausgeführt und umgekehrt.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
 |execute|nein|**[execute](#markdown-header-portalconfigmenusectionsmodulescustomMenuElementexecute)**||Aktion, die mit dem Klick auf den Menü-Eintrag ausgeführt werden soll.|true|
 |htmlContent|nein|String||HTML, das in dem Modul angezeigt wird. Das HTML wird nicht validiert, die Verantwortung für die Sicherheit des HTMLs liegt beim Betreiber des Portals.|false|
-|name|nein|String||Name des Moduls, der im Menü angezeigt wird|false|
+|icon|nein|String|"bi-asterisk"|Icon das im Menü vor dem Modul gezeigt wird. Zur Auswahl siehe **[Bootstrap Icons](https://icons.getbootstrap.com/)**|false|
+|name|nein|String||Name des Modules im Menü|false|
 |openURL|nein|String||Url die mit dem Klick auf den Menü-Eintrag in einem neuen Tab geöffnet werden soll.|false|
 |pathToContent|nein|String||Pfad zu einer Datei, die HTML enthält, das in dem Modul angezeigt wird. Das HTML wird nicht validiert, die Verantwortung für die Sicherheit des HTMLs liegt beim Betreiber des Portals.|false|
-|type|ja|String|"customMenuElement"|type des Moduls.|false|
+|type|ja|String|"customMenuElement"|Der type des Moduls. Definiert welches Modul konfiguriert ist.|false|
 
 **Beispiel**
 
@@ -834,7 +835,7 @@ CustomMenuElement Module `execute` Optionen.
 
 ***
 
-####### Portalconfig.menu.sections.modules.customMenuElement.execute.payload
+###### Portalconfig.menu.sections.modules.customMenuElement.execute.payload
 CustomMenuElement Module `execute` vom `payload`. Der passende payload zu der Aktion muss angegeben werden. Hier das Beispiel des `Alerting/addSingleAlert`.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -1039,7 +1040,7 @@ Mit dem Messwerkzeug können Strecken und Flächen gemessen werden. Dabei werden
 ***
 
 ##### Portalconfig.menu.sections.modules.news
-Dieses Modul zeigt alle Meldungen aus der newsFeedPortalAlerts.json des aktuellen Portals unabhängig des "gelesen" Status.
+Dieses Modul zeigt alle Meldungen aus der newsFeedPortalAlerts.json und der config.json des aktuellen Portals unabhängig des "gelesen" Status.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|

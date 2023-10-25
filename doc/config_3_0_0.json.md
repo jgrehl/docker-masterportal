@@ -678,7 +678,7 @@ Modules can be divided into sections. In the menu, sections are divided with a h
 |layerClusterToggler|no|**[layerClusterToggler](#markdown-header-portalconfigmenusectionsmoduleslayerClusterToggler)**||This module allows a cluster layers to be active and deactive together.|false|
 |layerSlider|no|**[layerSlider](#markdown-header-portalconfigmenusectionsmoduleslayerslider)**||The layerSlider module allows showing arbitrary services in order. This can e.g. be used to show aerial footage from multiple years in succession.|false|
 |measure|no|**[measure](#markdown-header-portalconfigmenusectionsmodulesmeasure)**||Allows measuring areas and distances in the units m/km/nm resp. m²/ha/km².|false|
-|news|no|**[news](#markdown-header-portalconfigmenusectionsmodulesnews)**||This module shows all messages from the newsFeedPortalAlerts.json of the current portal regardless of the "read" status.|false|
+|news|no|**[news](#markdown-header-portalconfigmenusectionsmodulesnews)**||This module shows all messages from the newsFeedPortalAlerts.json and the config.json of the current portal regardless of the "read" status.|false|
 |openConfig|no|**[openConfig](#markdown-header-portalconfigmenusectionsmodulesopenConfig)**||ith this module a configuration file (config.json) can be reloaded at runtime. The modules and map are adapted to the new configuration.|false|
 |print|no|**[print](#markdown-header-portalconfigmenusectionsmodulesprint)**||Printing module that can be used to export the map's current view as PDF.|false|
 |routing|no|**[routing](#markdown-header-portalconfigmenusectionsmodulesrouting)**||Routing module to create routes and isochrones.|false|
@@ -786,10 +786,11 @@ This module can open a link, display HTML from config.json or an external file, 
 |----|--------|----|-------|-----------|------|
 |execute|no|[execute](#markdown-header-portalconfigmenusectionsmodulescustomMenuElementexecute)||Action to be executed by clicking on the menu item.|true|
 |htmlContent|no|String||HTML displayed in the module. The HTML is not validated, the responsibility for the security of the HTML lies with the operator of the portal.|false|
-|name|no|String||Name of the module displayed in the menu.|false|
+|icon|no|String|"bi-asterisk"|Icon that is shown in front of the module in the menu. For selection see **[Bootstrap Icons](https://icons.getbootstrap.com/)**.|false|
+|name|no|String||Name of the module in the menu.|false|
 |openURL|no|String||Url that is to be opened in a new tab by clicking on the menu item.|false|
 |pathToContent|no|String||Path to a file containing HTML displayed in the module. The HTML is not validated, the responsibility for the security of the HTML lies with the operator of the portal.|false|
-|type|yes|String|"customMenuElement"|Type of the module.|false|
+|type|yes|String|"customMenuElement"|The type of the module. Defines which module is configured.|false|
 
 **Example**
 
@@ -837,7 +838,7 @@ CustomMenuElement Module `execute` options.
 
 ***
 
-####### Portalconfig.menu.sections.modules.customMenuElement.execute.payload
+###### Portalconfig.menu.sections.modules.customMenuElement.execute.payload
 CustomMenuElement Module `execute` from `payload`. The appropriate payload for the action must be specified. Here is the example of the `Alerting/addSingleAlert`.
 
 |Name|Required|Type|Default|Description|Expert|
@@ -1044,7 +1045,7 @@ The measure tool allows measuring distances and areas. This includes the specifi
 ***
 
 ##### Portalconfig.menu.sections.modules.news
-This module shows all messages from the newsFeedPortalAlerts.json of the current portal regardless of the "read" status.
+This module shows all messages from the newsFeedPortalAlerts.json and the config.json of the current portal regardless of the "read" status.
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
