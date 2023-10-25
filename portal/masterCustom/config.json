@@ -1,5 +1,13 @@
 {
   "Portalconfig": {
+    "mapView": {
+      "extent": [
+        286800,
+        5235800,
+        899100,
+        6102400
+      ]
+    },
     "quickHelp": {
       "configs": {
         "search": true,

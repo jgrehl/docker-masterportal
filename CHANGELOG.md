@@ -7,24 +7,50 @@
 ### __Breaking Changes__
 
 ### Added
+- Add roadmap information to the readme file.
 
+### Changed
+- Using the workaround `NODE_OPTIONS=--openssl-legacy-provider` for node 18 is no longer necessary.
+- The following NPM packages have been updated:
+    - dependencies:
+        - @masterportal/masterportalapi: 2.28.0 to 2.29.0 (This also raised ol to version 8.1.0 and olcs to version 2.16.0)
+    - devDependencies:
+        - esbuild-loader: 3.0.1 to 3.1.0
+        - webpack: 4.46.0 to 4.47.0
+- Updated readme with contribution and pull request information.
+
+### Deprecated
+
+### Removed
+- The following NPM packages have been removed:
+    - devDependencies:
+        - cross-env
+
+### Fixed
+- addWMS: Transformation for external services with EPSG:4326
+- Issue #1018:The tool selectFeatures can now also be used mobile, as an area can be dragged on the map.
+- Issue #1083: fixed the issue.
+- Issue #1081: Transmit authorization token to services after login
+- Fix some vulnerabilities in dependencies
+
+---
+
+## v2.38.0 - 2023-10-04
 ### Changed
 - The following NPM packages have been updated:
   - dependencies:
     - @masterportal/masterportalapi: 2.27.0 to 2.28.0 (This also raised ol to version 7.5.2)
 - GFI: the gfi in 3D is not sorted reversed
-### Deprecated
-
-### Removed
 
 ### Fixed
 - Custom treetype can now load gdi layer via parametriUrl
 - Issue #889: Layer is not shown in the tree anymore
+- Issue #1023: Fix layer information for GeoJSON
 - Issue #1074: print drawn symbols
 - Issue #1075: Routing tool now works as menu entry or tool entry
-- Issue #1081: Transmit authorization token to services after login
-
 - AddWMS: WMS with subfolders are now displayed correctly in the topic tree again and can be switched on and off.
+
+---
 
 ## v2.37.0 - 2023-09-06
 ### Added
@@ -55,17 +81,15 @@
     - New Parameter `operatorForAttrName` for Snippets to allow the snippet to filter over multiple attrNames with an OR logic.
     - Parameter `input` and `slider` now also work for the snippet type `slider`.
 
-### Deprecated
-
-### Removed
-
 ### Fixed
+- Issue #776: show only 2D layers in 2D mode and 3D layers in 3D mode
 - Issue #1061: Filter: Accept gml:featureMembers occuring with other children in XML response.
 - Issue #1068: Print: fixed printing of point layers.
 - Issue #1070: show quickHelp icon when search is configured as an object
 - Default Tree
     - on category change all layers are shown in the layer tree
     - Config.tree.orderBy sets category
+
 ---
 
 ## v2.36.1 - 2023-08-04
@@ -175,7 +199,7 @@
     - the icon (arrow) to toggle information is only visible if it is configured
 
 ### Changed
-- The version of node was updated to `^16.13.2 || ^18.16.0`. If you use node 18, you must provide the environment variable `NODE_OPTIONS=--openssl-legacy-provider` or you can alter npm scripts using cross-env, e.g. `"start": "cross-env NODE_OPTIONS=--openssl-legacy-provider webpack-dev-server --config devtools/webpack.dev.js"` to avoid errors with webpack 4 (see https://github.com/webpack/webpack/issues/14532#issuecomment-947807590).
+- The version of node was updated to `^16.13.2 || ^18.16.0`. If you use node 18, you must provide the environment variable `NODE_OPTIONS=--openssl-legacy-provider` or you can alter npm scripts using cross-env, e.g. `"start": "cross-env NODE_OPTIONS=--openssl-legacy-provider webpack-dev-server --config devtools/webpack.dev.js"` to avoid errors with webpack 4 (see https://github.com/webpack/webpack/issues/14532#issuecomment-947807590). This workaround only applies up to Masterportal version 2.38.0.
 - The version of npm was updated to `^8.1.2 || ^9.5.1`
 - The following NPM packages have been updated:
     - dependencies:

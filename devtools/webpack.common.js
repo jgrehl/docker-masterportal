@@ -95,10 +95,10 @@ module.exports = function () {
             alias: {
                 text: "text-loader",
                 "variables": path.resolve(__dirname, "..", "css", "variables.scss")
-            },
-            extensions: [".tsx", ".ts", ".js"]
+            }
         },
         module: {
+            unknownContextCritical: false,
             rules: [
                 // ignore all files ending with ".test.js".
                 {
@@ -119,12 +119,6 @@ module.exports = function () {
                             format: "cjs",
                             platform: "node"
                         }
-                    }
-                },
-                {
-                    test: /\.[t]sx?$/,
-                    use: {
-                        loader: "esbuild-loader"
                     }
                 },
                 {

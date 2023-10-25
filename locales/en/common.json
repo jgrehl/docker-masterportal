@@ -75,8 +75,7 @@
             "bufferAnalysis": "Buffer Analysis",
             "parcelSearch": "Parcel search",
             "wfsSearch": "WFS search",
-            "layerClusterToggler": "Open Layer Cluster",
-            "statisticDashboard": "Statistic Dashboard"
+            "layerClusterToggler": "Open Layer Cluster"
         },
         "contact": "Mail",
         "info": "Information"
@@ -435,37 +434,6 @@
                 "serviceThree": "Service 3",
                 "serviceFour": "Service 4"
             },
-            "statisticDashboard": {
-                "headings": {
-                    "mrhstatistics": "MRH Statistics",
-                    "mrhstatisticsTooltip": "Link to the metadata"
-                },
-                "button": {
-                    "difference": "Difference",
-                    "table": "Table",
-                    "chart": "Chart",
-                    "add": "Add",
-                    "reset": "reset",
-                    "filter": "Filter"
-                },
-                "label": {
-                    "category": "Category",
-                    "area": "Region",
-                    "year": "Year",
-                    "statistics": "Statistics",
-                    "communities": "Communities",
-                    "districts": "Districts"
-                },
-                "filterInputs": {
-                    "additional": "Additional"
-                },
-                "reference": {
-                    "title": "Reference type",
-                    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod",
-                    "placeholder": "Please choose an option!",
-                    "tagLabel": "Reference"
-                }
-          },
             "filter": {
                 "alertingMessages": {
                     "noMatchingFilterId": "The configured filter id does not exist."
@@ -744,7 +712,7 @@
             },
             "selectFeatures": {
                 "zoomToFeature": "Zoom to this feature",
-                "noFeatureChosen": "No feature chosen. Select features by holding down Ctrl and dragging a box around the features to choose.",
+                "noFeatureChosen": "No feature chosen. Select features dragging a box around the features to choose.(Or holding down Ctrl+drag)",
                 "propertylessFeature": "Element without attributes"
             },
             "supplyCoord": {

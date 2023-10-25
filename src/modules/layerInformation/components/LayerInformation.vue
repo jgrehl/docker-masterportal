@@ -169,7 +169,7 @@ export default {
          * @returns {String} GetCapabilities URL
          */
         getGetCapabilitiesUrl ({url, typ}) {
-            const urlObject = new URL(url);
+            const urlObject = new URL(url, location.href);
 
             if (typ !== "OAF") {
                 urlObject.searchParams.set("SERVICE", typ);

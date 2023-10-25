@@ -25,8 +25,7 @@ module.exports = {
             "@modules": path.resolve(__dirname, "../modules"),
             "@addons": path.resolve(__dirname, "../addons"),
             "@testUtil": path.resolve(__dirname, "../test/unittests/Util")
-        },
-        extensions: [".tsx", ".ts", ".js"]
+        }
     },
     module: {
         rules: [
@@ -41,12 +40,6 @@ module.exports = {
                         format: "cjs",
                         platform: "node"
                     }
-                }
-            },
-            {
-                test: /\.[t]sx?$/,
-                use: {
-                    loader: "esbuild-loader"
                 }
             },
             {

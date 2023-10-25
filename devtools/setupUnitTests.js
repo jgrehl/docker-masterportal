@@ -27,3 +27,35 @@ class Worker {
 }
 // a mock for web worker
 global.Worker = Worker;
+
+
+/**
+ * Mock for MutationObserver
+ */
+class MutationObserver {
+    /**
+     * Constructor
+     * @param {Object} args the args
+     * @returns {void} void
+     */
+    constructor (args) {
+        this.args = args;
+    }
+    /**
+     * Fake function.
+     * @returns {void}
+     */
+    disconnect () {
+        this.args = null;
+    }
+    /**
+     * Fake function.
+     * @param {Object} toObserve to observe
+     * @returns {void}
+     */
+    observe (toObserve) {
+        this.args = toObserve;
+    }
+}
+// a mock for MutationObserver
+global.MutationObserver = MutationObserver;

@@ -312,11 +312,10 @@ GeoJSONLayer.prototype.setOpenSenseMapSensorValues = function (feature, response
 
 /**
  * Creates the legend
- * @param {Object} attrs attributes of the layer
  * @returns {void}
  */
-GeoJSONLayer.prototype.createLegend = function (attrs) {
-    const styleObject = styleList.returnStyleObject(attrs.styleId);
+GeoJSONLayer.prototype.createLegend = function () {
+    const styleObject = styleList.returnStyleObject(this.attributes.styleId);
     let legend = this.get("legend");
 
     /**

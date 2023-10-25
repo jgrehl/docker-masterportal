@@ -28,7 +28,6 @@ import ScaleSwitcher from "./scaleSwitcher/store/indexScaleSwitcher";
 import SearchByCoord from "./searchByCoord/store/indexSearchByCoord";
 import SelectFeatures from "./selectFeatures/store/indexSelectFeatures";
 import Shadow from "./shadowTool/store/indexShadowTool";
-import StatisticDashboard from "./statisticDashboard/store/indexStatisticDashboard";
 import StyleVT from "./styleVT/store/indexStyleVT";
 import SupplyCoord from "./supplyCoord/store/indexSupplyCoord";
 import WfsSearch from "./wfsSearch/store/indexWfsSearch";
@@ -63,7 +62,6 @@ export default {
         SearchByCoord,
         SelectFeatures,
         Shadow,
-        StatisticDashboard,
         StyleVT,
         SupplyCoord,
         WfsSearch,

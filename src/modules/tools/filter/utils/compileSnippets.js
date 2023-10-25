@@ -27,7 +27,7 @@ function compileSnippets (originalSnippets, api, FilterApi, onfinish, onerror) {
     createSnippetsIfNoSnippetsAreGiven(snippets, api, () => {
         addSnippetIds(snippets);
         addSnippetAdjustment(snippets);
-        if (typeof FilterApi !== "function") {
+        if (typeof FilterApi === "function") {
             addSnippetApi(snippets, () => new FilterApi());
         }
         addSnippetMultiselect(snippets);

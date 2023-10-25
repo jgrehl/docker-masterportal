@@ -44,8 +44,7 @@ module.exports = {
     resolve: {
         alias: {
             vue: "vue/dist/vue.js"
-        },
-        extensions: [".tsx", ".ts", ".js"]
+        }
     },
     module: {
         rules: [
@@ -59,12 +58,6 @@ module.exports = {
                         target: "es2018",
                         format: "cjs"
                     }
-                }
-            },
-            {
-                test: /\.[t]sx?$/,
-                use: {
-                    loader: "esbuild-loader"
                 }
             },
             {

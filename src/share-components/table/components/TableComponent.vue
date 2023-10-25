@@ -202,7 +202,7 @@ export default {
     <div>
         <h5
             v-if="title"
-            class="mb-3 text-center"
+            class="mb-3 text-center table-title"
         >
             {{ title }}
         </h5>
@@ -272,6 +272,8 @@ export default {
 
 h5 {
     font-family: $font_family_accent;
+    color: $secondary_contrast;
+    font-size: 13px;
 }
 
 .table {

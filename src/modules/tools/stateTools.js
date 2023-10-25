@@ -20,7 +20,6 @@ import ScaleSwitcher from "./scaleSwitcher/components/ScaleSwitcher.vue";
 import SearchByCoord from "./searchByCoord/components/SearchByCoord.vue";
 import SelectFeatures from "./selectFeatures/components/SelectFeatures.vue";
 import Shadow from "./shadowTool/components/ShadowTool.vue";
-import StatisticDashboard from "./statisticDashboard/components/StatisticDashboard.vue";
 import StyleVT from "./styleVT/components/StyleVT.vue";
 import SupplyCoord from "./supplyCoord/components/SupplyCoord.vue";
 import WfsSearch from "./wfsSearch/components/WfsSearch.vue";
@@ -56,7 +55,6 @@ const state = {
         searchByCoord: SearchByCoord,
         selectFeatures: SelectFeatures,
         shadow: Shadow,
-        statisticDashboard: StatisticDashboard,
         styleVT: StyleVT,
         supplyCoord: SupplyCoord,
         wfsSearch: WfsSearch,

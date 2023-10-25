@@ -254,8 +254,9 @@ export default {
          */
         getIfInExtent: function (capability, currentExtent) {
             const layer = capability?.Capability?.Layer?.BoundingBox?.filter(bbox => {
-                return bbox?.crs && bbox?.crs.includes("EPSG") && crs.getProjection(bbox?.crs) !== undefined && Array.isArray(bbox?.extent) && bbox?.extent.length === 4;
-            });
+                    return bbox?.crs && bbox?.crs.includes("EPSG") && crs.getProjection(bbox?.crs) !== undefined && Array.isArray(bbox?.extent) && bbox?.extent.length === 4;
+                }),
+                layerEPSG4326Projection = layer.find((element) => element.crs === "EPSG:4326");
             let layerExtent;
 
             // If there is no extent defined or the extent is not right defined, it will import the external wms layer(s).
@@ -274,7 +275,11 @@ export default {
                     }
                 });
 
-                if (!firstLayerExtent.length && !secondLayerExtent.length) {
+                if (layerEPSG4326Projection && !firstLayerExtent.length && !secondLayerExtent.length) {
+                    firstLayerExtent = crs.transform(layer[0].crs, this.projection.getCode(), [layerEPSG4326Projection.extent[1], layerEPSG4326Projection.extent[0]]);
+                    secondLayerExtent = crs.transform(layer[0].crs, this.projection.getCode(), [layerEPSG4326Projection.extent[3], layerEPSG4326Projection.extent[2]]);
+                }
+                else if (!firstLayerExtent.length && !secondLayerExtent.length) {
                     firstLayerExtent = crs.transform(layer[0].crs, this.projection.getCode(), [layer[0].extent[0], layer[0].extent[1]]);
                     secondLayerExtent = crs.transform(layer[0].crs, this.projection.getCode(), [layer[0].extent[2], layer[0].extent[3]]);
                 }

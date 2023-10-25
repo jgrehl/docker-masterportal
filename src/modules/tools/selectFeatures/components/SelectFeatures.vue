@@ -1,6 +1,6 @@
 <script>
 import {DragBox, Select} from "ol/interaction";
-import {never, platformModifierKeyOnly} from "ol/events/condition";
+import {never, platformModifierKeyOnly, touchOnly} from "ol/events/condition";
 import VectorSource from "ol/source/Vector.js";
 
 import ToolTemplate from "../../../../modules/tools/ToolTemplate.vue";
@@ -18,7 +18,7 @@ export default {
         ToolTemplate
     },
     computed: {
-        ...mapGetters(["ignoredKeys"]),
+        ...mapGetters(["ignoredKeys", "mobile"]),
         ...mapGetters("Tools/SelectFeatures", Object.keys(getters))
     },
     watch: {
@@ -59,7 +59,7 @@ export default {
                     toggleCondition: never,
                     condition: never
                 }),
-                dragBox = new DragBox({condition: platformModifierKeyOnly});
+                dragBox = new DragBox(this.mobile ? {condition: touchOnly} : {condition: platformModifierKeyOnly});
 
             dragBox.on("boxstart", this.clearFeatures.bind(this));
             dragBox.on("boxend", this.setFeaturesFromDrag.bind(this));

@@ -33,7 +33,7 @@ describe("src/modules/LayerInformation.vue", () => {
                         active: () => true,
                         metaDataCatalogueId: () => "2",
                         title: () => "",
-                        layerInfo: () => ({"metaIdArray": [], "url": ["https://wms.example.org/", "https://wfs.example.org/?evil=1"], "typ": ["WMS", "WFS"], "layerNames": ["X-WMS", "X-WFS"]}),
+                        layerInfo: () => ({"metaIdArray": [], "url": ["https://wms.example.org/", "https://wfs.example.org/?evil=1", "./local.geojson"], "typ": ["WMS", "WFS", "GeoJSON"], "layerNames": ["X-WMS", "X-WFS", ""]}),
                         datePublication: () => null,
                         dateRevision: () => null,
                         downloadLinks: () => null,
@@ -57,6 +57,7 @@ describe("src/modules/LayerInformation.vue", () => {
                 metaDataCatalogueId: () => "2"
             }
         });
+        location = {href: "https://self.example.org/portal/"};
     });
 
 
@@ -104,6 +105,7 @@ describe("src/modules/LayerInformation.vue", () => {
 
         expect(links.map(link => link.attributes("href"))).to.include("https://wms.example.org/?SERVICE=WMS&REQUEST=GetCapabilities");
         expect(links.map(link => link.attributes("href"))).to.include("https://wfs.example.org/?evil=1&SERVICE=WFS&REQUEST=GetCapabilities");
+        expect(links.map(link => link.attributes("href"))).to.include("https://self.example.org/portal/local.geojson?SERVICE=GeoJSON&REQUEST=GetCapabilities");
     });
 
 });

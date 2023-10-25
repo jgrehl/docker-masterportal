@@ -76,8 +76,7 @@
             "bufferAnalysis": "Buffer Analyse",
             "wfsSearch": "WFS Suche",
             "routing": "Routing",
-            "layerClusterToggler": "Layer-Gruppe öffnen",
-            "statisticDashboard": "Statistik Dashboard"
+            "layerClusterToggler": "Layer-Gruppe öffnen"
         },
         "contact": "Kontakt",
         "info": "Informationen"
@@ -504,37 +503,6 @@
                     "geometryParseError": "Die angegebene Geometry konnte nicht geladen werden"
                 }
             },
-            "statisticDashboard": {
-                "headings": {
-                    "mrhstatistics": "MRH Statistiken",
-                    "mrhstatisticsTooltip": "Link zu den Metadaten"
-                },
-                "button": {
-                    "difference": "Differenz",
-                    "table": "Tabelle",
-                    "chart": "Diagramm",
-                    "add": "Hinzufügen",
-                    "reset": "zurücksetzen",
-                    "filter": "Filter"
-                },
-                "label": {
-                    "category": "Kategorie",
-                    "area": "Gebiet",
-                    "year": "Jahr",
-                    "statistics": "Statistiken",
-                    "communities": "Gemeinden",
-                    "districts": "Kreise"
-                },
-                "filterInputs": {
-                    "additional": "Sonstiges"
-                },
-                "reference": {
-                    "title": "Referenzart",
-                    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod,",
-                    "placeholder": "Bitte wählen Sie eine Option aus!",
-                    "tagLabel": "Referenz"
-                }
-            },
             "pendler": {
                 "animation": {
                     "domicile": "Wohnort",
@@ -745,7 +713,7 @@
             },
             "selectFeatures": {
                 "zoomToFeature": "Auf dieses Feature zoomen",
-                "noFeatureChosen": "Keine Features ausgewählt. Wählen Sie Features durch Halten von Strg und Ziehen einer Box um die auszuwählenden Features.",
+                "noFeatureChosen": "Keine Features ausgewählt. Wählen Sie Features durch Ziehen einer Box um die auszuwählenden Features bzw. Halten von Strg und Ziehen.",
                 "propertylessFeature": "Element ohne Attribute"
             },
             "supplyCoord": {
