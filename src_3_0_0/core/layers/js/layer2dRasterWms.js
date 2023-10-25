@@ -111,7 +111,7 @@ Layer2dRasterWms.prototype.createLegend = function () {
 
     if (!Array.isArray(legend)) {
         if (legend === true && this.get("url") && this.get("layers")) {
-            const layerNames = this.get("layers").split(","),
+            const layerNames = !Array.isArray(this.get("layers")) ? this.get("layers").split(",") : this.get("layers"),
                 legends = [];
 
             // Compose GetLegendGraphic request(s)

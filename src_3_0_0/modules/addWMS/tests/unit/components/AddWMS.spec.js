@@ -21,6 +21,19 @@ describe("src_3_0_0/modules/addWMS/components/AddWMS.vue", () => {
                         namespaced: true,
                         AddWMS
                     }
+                },
+                Maps: {
+                    namespaced: true,
+                    getters: {
+                        projection: () => {
+                            return {
+                                id: "http://www.opengis.net/gml/srs/epsg.xml#25832",
+                                name: "EPSG:25832",
+                                projName: "utm",
+                                getCode: () => "EPSG:25832"
+                            };
+                        }
+                    }
                 }
             }
         });
@@ -100,7 +113,7 @@ describe("src_3_0_0/modules/addWMS/components/AddWMS.vue", () => {
         });
     });
 
-    it("getIfInExtent", () => {
+    describe("getIfInExtent", () => {
         let capability = {
                 Capability: {
                     Layer: {
@@ -195,6 +208,58 @@ describe("src_3_0_0/modules/addWMS/components/AddWMS.vue", () => {
                 6075800
             ];
             expect(wrapper.vm.getIfInExtent(capability, currentExtent)).to.be.true;
+        });
+        it("should return true if the transformed extent of the layer in Capability intersects the extent", () => {
+            capability = {
+                Capability: {
+                    Layer: {
+                        "BoundingBox": [
+                            {
+                                "crs": "EPSG:4326",
+                                "extent": [
+                                    47,
+                                    5,
+                                    56,
+                                    15
+                                ]
+                            }
+                        ]
+                    }
+                }
+            };
+            currentExtent = [
+                455000,
+                5809000,
+                730000,
+                6075800
+            ];
+            expect(wrapper.vm.getIfInExtent(capability, currentExtent)).to.be.true;
+        });
+        it("should return false if the transformed extent of the layer in Capability intersects the extent", () => {
+            capability = {
+                Capability: {
+                    Layer: {
+                        "BoundingBox": [
+                            {
+                                "crs": "EPSG:4326",
+                                "extent": [
+                                    56,
+                                    9,
+                                    56,
+                                    10
+                                ]
+                            }
+                        ]
+                    }
+                }
+            };
+            currentExtent = [
+                455000,
+                5809000,
+                730000,
+                6075800
+            ];
+            expect(wrapper.vm.getIfInExtent(capability, currentExtent)).to.be.false;
         });
     });
 
