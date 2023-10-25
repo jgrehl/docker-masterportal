@@ -58,7 +58,7 @@ function compileSnippets (originalSnippets, api, FilterApi, onfinish, onerror) {
  */
 function createSnippetsIfNoSnippetsAreGiven (snippets, api, onsuccess, onerror) {
     if (!snippets.length) {
-        if (typeof api?.getAttrTypes === "function") {
+        if (typeof api?.getAttrTypes !== "function") {
             api.getAttrTypes(attrTypes => {
                 if (!isObject(attrTypes)) {
                     if (typeof onsuccess === "function") {
