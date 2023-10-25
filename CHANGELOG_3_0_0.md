@@ -9,19 +9,6 @@
 - e2e tests are no longer supported
 
 ### Added
-- Add documentation for following modules:
-    - controls:
-        - fullScreen
-    - customMenuElement
-    - fileImport
-    - getFeatureInfo
-    - language
-    - measure
-    - menu:
-        - portalTitle
-    - mouseHover
-    - news
-    - selectFeatures
 - Add roadmap information to the readme file.
 
 ### Changed
