@@ -286,7 +286,7 @@ export default {
                                             <SwitchInput
                                                 :id="'flexSwitchCheckDefault'"
                                                 :aria="singleAlert.mustBeConfirmed? $t(singleAlert.confirmText) : $t(singleAlert.reConfirmText)"
-                                                :interaction="markAsRead(singleAlert.hash)"
+                                                :interaction="() => markAsRead(singleAlert.hash)"
                                                 :label="singleAlert.mustBeConfirmed? $t(singleAlert.confirmText) : $t(singleAlert.reConfirmText)"
                                             />
                                         </div>
