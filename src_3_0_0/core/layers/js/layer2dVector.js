@@ -105,7 +105,8 @@ Layer2dVector.prototype.getLayerParams = function (attributes) {
         styleId: attributes.styleId, // styleId to pass to masterportalapi
         style: attributes.style, // style function to style the layer or WebGLPoints style syntax
         excludeTypesFromParsing: attributes.excludeTypesFromParsing, // types that should not be parsed from strings, only necessary for webgl
-        isPointLayer: attributes.isPointLayer // whether the source will only hold point data, only necessary for webgl
+        isPointLayer: attributes.isPointLayer, // whether the source will only hold point data, only necessary for webgl
+        gfiThemeSettings: attributes.gfiThemeSettings // for accessing additional theme settings
     };
 };
 

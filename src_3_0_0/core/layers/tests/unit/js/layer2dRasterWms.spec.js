@@ -153,7 +153,8 @@ describe("src_3_0_0/core/js/layers/layer2dRasterWms.js", () => {
                 opacity: 0.9,
                 typ: "wms",
                 zIndex: 1,
-                featureCount: 5
+                featureCount: 5,
+                gfiThemeSettings: undefined
             });
         });
     });

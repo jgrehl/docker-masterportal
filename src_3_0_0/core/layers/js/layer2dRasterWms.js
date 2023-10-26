@@ -84,7 +84,8 @@ Layer2dRasterWms.prototype.getLayerParams = function (attributes) {
         opacity: (100 - attributes.transparency) / 100,
         typ: attributes.typ,
         zIndex: attributes.zIndex,
-        featureCount: attributes.featureCount
+        featureCount: attributes.featureCount,
+        gfiThemeSettings: attributes.gfiThemeSettings // for accessing additional theme settings
     };
 };
 

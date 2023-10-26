@@ -170,7 +170,8 @@ describe("src_3_0_0/core/js/layers/layer2dVector.js", () => {
                 styleId: "styleId",
                 style: [],
                 excludeTypesFromParsing: ["type"],
-                isPointLayer: false
+                isPointLayer: false,
+                gfiThemeSettings: undefined
             });
         });
     });
