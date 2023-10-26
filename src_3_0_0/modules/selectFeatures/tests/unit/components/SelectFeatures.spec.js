@@ -56,7 +56,8 @@ describe("src/modules/selectFeatures/components/SelectFeatures.vue", () => {
             },
             getters: {
                 uiStyle: () => true,
-                treeType: () => undefined
+                treeType: () => undefined,
+                mobile: () => false
             }
         });
         mapCollection.clear();
