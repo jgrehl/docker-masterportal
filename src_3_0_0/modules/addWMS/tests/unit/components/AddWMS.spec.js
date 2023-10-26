@@ -74,6 +74,9 @@ describe("src_3_0_0/modules/addWMS/components/AddWMS.vue", () => {
             expect(wrapper.vm.getParsedTitle("test title")).to.equal("test-title");
         });
         it("should return parsed title without slash and be replaced with minus", function () {
+            expect(wrapper.vm.getParsedTitle("WMS Digitales Höhenmodell Hamburg (DGM1) - 1:10.000")).to.equal("WMS-Digitales-Höhenmodell-Hamburg--DGM1----1-10.000");
+        });
+        it("should return parsed title without slash and be replaced with minus", function () {
             expect(wrapper.vm.getParsedTitle("test/title")).to.equal("test-title");
         });
         it("should return parsed title as original title", function () {
