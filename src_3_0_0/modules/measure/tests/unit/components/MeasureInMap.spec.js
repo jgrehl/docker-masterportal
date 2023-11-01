@@ -15,7 +15,7 @@ describe("src_3_0_0/modules/measure/components/MeasureInMap.vue", () => {
         origdeleteFeatures;
 
     const mockConfigJson = {
-        Portalconfig: {
+        portalConfig: {
             navigationSecondary: {
                 sections: [
                     {

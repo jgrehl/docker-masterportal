@@ -11,7 +11,7 @@ import store from "../../../app-store";
  * @param {String} serviceId Service id. Resolved using the rest-services.json file.
  *
  * @param {String[]} [classes] May contain classes (with properties) to use in searches.
- * @param {String} [epsg] Coordinate reference system to use for requests. By default, the value in `Portalconfig.mapView.epsg` is used.
+ * @param {String} [epsg] Coordinate reference system to use for requests. By default, the value in `portalConfig.mapView.epsg` is used.
  * @param {String} [hitTemplate="default"] The template for rendering the hits.
  * @param {Object} [resultEvents] Actions that are executed when an interaction, such as hover or click, is performed with a result list item.
  * @param {String[]} [resultEvents.onClick=["setMarker", "zoomToResult"]] Actions that are fired when clicking on a result list item.

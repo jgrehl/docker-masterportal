@@ -48,7 +48,7 @@ describe("src_3_0_0/modules/coordToolkit/components/CoordToolkit.vue", () => {
             }
         },
         mockConfigJson = {
-            Portalconfig: {
+            portalConfig: {
                 navigationSecondary: {
                     sections: [
                         {

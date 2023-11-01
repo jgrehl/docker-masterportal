@@ -105,7 +105,7 @@ export default {
             }
         }
         if (!layerConfig) {
-            console.warn("CoordToolkit: the layer with id " + state.heightLayerId + " to retrieve height from is not available. Check the Id in config.json with path 'Portalconfig.mainMenu.sections.coordToolkit.heightLayerId'!");
+            console.warn("CoordToolkit: the layer with id " + state.heightLayerId + " to retrieve height from is not available. Check the Id in config.json with path 'portalConfig.mainMenu.sections.coordToolkit.heightLayerId'!");
         }
     },
     /**

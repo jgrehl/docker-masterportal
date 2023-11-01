@@ -1,5 +1,5 @@
 {
-  "Portalconfig": {
+  "portalConfig": {
     "mapView": {
       "backgroundImage": "https://geodienste.hamburg.de/lgv-config/img/backgroundCanvas.jpeg",
       "extent": [

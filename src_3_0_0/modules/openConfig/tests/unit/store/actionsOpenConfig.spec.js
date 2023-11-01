@@ -36,10 +36,10 @@ describe("src_3_0_0/modules/openConfig/store/actionsOpenConfig.js", () => {
     });
 
     describe("processConfigJsonOnload", () => {
-        it("should clear layerCollection, set Portalconfig to the state and start extendLayers", () => {
+        it("should clear layerCollection, set portalConfig to the state and start extendLayers", () => {
             const event = {
                 target: {
-                    result: "{\r\n  \"Portalconfig\": {},\r\n  \"" + treeTopicConfigKey + "\": {}\r\n}\r\n"
+                    result: "{\r\n  \"portalConfig\": {},\r\n  \"" + treeTopicConfigKey + "\": {}\r\n}\r\n"
                 }
             };
 
@@ -59,10 +59,10 @@ describe("src_3_0_0/modules/openConfig/store/actionsOpenConfig.js", () => {
             expect(dispatch.firstCall.args[1]).to.equals(null);
         });
 
-        it("should clear layerCollection, set Portalconfig, set Layerconfig to the state and start extendLayers", () => {
+        it("should clear layerCollection, set portalConfig, set Layerconfig to the state and start extendLayers", () => {
             const event = {
                 target: {
-                    result: "{\r\n  \"Portalconfig\": {\r\n    \"mainMenu\": {\r\n      \"sections\": [\r\n        [\r\n          {\r\n            \"type\": \"openConfig\"\r\n          }\r\n        ]\r\n      ]\r\n    },\r\n    \"secondaryMenu\": {\r\n      \"expanded\": false,\r\n      \"sections\": [\r\n        [\r\n          {\r\n            \"type\": \"shareView\"\r\n          }\r\n        ]\r\n      ]\r\n    }\r\n  },\r\n  \"" + treeTopicConfigKey + "\": {\r\n    \"" + treeBaselayersKey + "\": {\r\n      \"elements\": [\r\n          {\r\n              \"id\": \"453\",\r\n              \"name\": \"Geobasiskarten (HamburgDE)\",\r\n              \"typ\": \"WMS\",\r\n              \"visibility\": true\r\n          }\r\n      ]\r\n    },\r\n    \"" + treeSubjectsKey + "\": {\r\n      \"elements\": [\r\n        {\r\n          \"id\": \"10220\",\r\n          \"name\": \"Dauerzählstellen (Rad) Hamburg\",\r\n          \"typ\": \"WMS\",\r\n          \"visibility\": true\r\n        },\r\n        {\r\n          \"id\": \"2426\",\r\n          \"name\": \"Bezirke\",\r\n          \"typ\": \"WMS\",\r\n          \"visibility\": true\r\n        }\r\n      ]\r\n    }\r\n  }\r\n}\r\n"
+                    result: "{\r\n  \"portalConfig\": {\r\n    \"mainMenu\": {\r\n      \"sections\": [\r\n        [\r\n          {\r\n            \"type\": \"openConfig\"\r\n          }\r\n        ]\r\n      ]\r\n    },\r\n    \"secondaryMenu\": {\r\n      \"expanded\": false,\r\n      \"sections\": [\r\n        [\r\n          {\r\n            \"type\": \"shareView\"\r\n          }\r\n        ]\r\n      ]\r\n    }\r\n  },\r\n  \"" + treeTopicConfigKey + "\": {\r\n    \"" + treeBaselayersKey + "\": {\r\n      \"elements\": [\r\n          {\r\n              \"id\": \"453\",\r\n              \"name\": \"Geobasiskarten (HamburgDE)\",\r\n              \"typ\": \"WMS\",\r\n              \"visibility\": true\r\n          }\r\n      ]\r\n    },\r\n    \"" + treeSubjectsKey + "\": {\r\n      \"elements\": [\r\n        {\r\n          \"id\": \"10220\",\r\n          \"name\": \"Dauerzählstellen (Rad) Hamburg\",\r\n          \"typ\": \"WMS\",\r\n          \"visibility\": true\r\n        },\r\n        {\r\n          \"id\": \"2426\",\r\n          \"name\": \"Bezirke\",\r\n          \"typ\": \"WMS\",\r\n          \"visibility\": true\r\n        }\r\n      ]\r\n    }\r\n  }\r\n}\r\n"
                 }
             };
 

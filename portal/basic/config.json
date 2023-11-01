@@ -1,5 +1,5 @@
 {
-  "Portalconfig": {
+  "portalConfig": {
     "mapView": {
       "backgroundImage": "./resources/img/backgroundCanvas.jpeg",
       "startCenter": [

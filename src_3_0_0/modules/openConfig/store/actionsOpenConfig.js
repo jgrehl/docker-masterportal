@@ -14,7 +14,7 @@ const actions = {
         const configJson = JSON.parse(event.target.result);
 
         layerCollection.clear();
-        commit("setPortalConfig", configJson.Portalconfig, {root: true});
+        commit("setPortalConfig", configJson.portalConfig, {root: true});
         Object.keys(configJson[treeTopicConfigKey]).forEach(topic => {
             commit("setLayerConfigByParentKey", {layerConfigs: configJson[treeTopicConfigKey][topic], parentKey: topic}, {root: true});
         });

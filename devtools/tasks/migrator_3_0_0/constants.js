@@ -1,5 +1,5 @@
 const
-    PORTALCONFIG = "Portalconfig",
+    PORTALCONFIG = "portalConfig",
     TOPICS = "layerConfig",
     BASEMAPS = "Baselayer",
     BASEMAPS_OLD = "Hintergrundkarten",

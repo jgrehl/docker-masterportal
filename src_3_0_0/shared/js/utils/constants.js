@@ -1,5 +1,5 @@
 const
-    portalConfigKey = "Portalconfig",
+    portalConfigKey = "portalConfig",
     treeTopicConfigKey = "layerConfig",
     treeBaselayersKey = "Baselayer",
     treeSubjectsKey = "Fachdaten",

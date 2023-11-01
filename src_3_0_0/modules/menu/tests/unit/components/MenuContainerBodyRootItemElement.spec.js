@@ -11,7 +11,7 @@ config.global.mocks.$t = key => key;
 describe("src_3_0_0/modules/menu/MenuContainerBodyRootItemElement.vue", () => {
     const
         mockConfigJson = {
-            Portalconfig: {
+            portalConfig: {
                 tree: {
                 }
             }
@@ -49,7 +49,7 @@ describe("src_3_0_0/modules/menu/MenuContainerBodyRootItemElement.vue", () => {
             },
             getters: {
                 deviceMode: () => "Desktop",
-                portalConfig: () => mockConfigJson.Portalconfig
+                portalConfig: () => mockConfigJson.portalConfig
             }
         });
     });

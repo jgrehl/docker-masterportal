@@ -9,7 +9,7 @@ config.global.mocks.$t = key => key;
 
 describe("src_3_0_0/modules/shareView/components/ShareView.vue", () => {
     const mockConfigJson = {
-        Portalconfig: {
+        portalConfig: {
             navigationSecondary: {
                 sections: [
                     {

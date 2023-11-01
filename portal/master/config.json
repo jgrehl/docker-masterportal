@@ -1,5 +1,5 @@
 {
-  "Portalconfig": {
+  "portalConfig": {
     "alerts": {
       "qs-release": {
         "category": "Portal zur Abnahme!",
