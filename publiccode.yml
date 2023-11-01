@@ -82,7 +82,7 @@ maintenance:
 name: Masterportal
 platforms:
   - web
-releaseDate: '2023-10-04'
+releaseDate: '2023-11-01'
 roadmap: 'https://www.masterportal.org/features.html'
 softwareType: standalone/web
 softwareVersion: 3.0.0 - beta1
