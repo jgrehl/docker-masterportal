@@ -530,7 +530,7 @@ describe("src_3_0_0/app-store/actionsLayerConfig.js", () => {
         });
 
         describe("addBaselayerAttribute", () => {
-            it("add the attribute background to Baselayer", () => {
+            it("add the attribute background to baselayer", () => {
                 getters = {
                     allLayerConfigsByParentKey: () => layerConfig[treeBaselayersKey].elements
                 };

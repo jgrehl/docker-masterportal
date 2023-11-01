@@ -45,18 +45,18 @@
     font-style: normal;
   }
 
-  /* Fonts for Baselayer */
+  /* Fonts for baselayer */
   @font-face {
     font-family: "NotoSans Regular";
     src: url("fonts/NotoSans.woff") format('woff');
   }
-  
+
   @font-face {
     font-family: "NotoSans Bold";
     src: url("fonts/NotoSans-Bold.woff") format('woff');
     font-weight: bold;
   }
-  
+
   @font-face {
     font-family: "Noto Sans Italic";
     src: url("fonts/NotoSans-Italic.woff") format('woff');

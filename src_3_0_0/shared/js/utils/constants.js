@@ -1,7 +1,7 @@
 const
     portalConfigKey = "portalConfig",
     treeTopicConfigKey = "layerConfig",
-    treeBaselayersKey = "Baselayer",
+    treeBaselayersKey = "baselayer",
     treeSubjectsKey = "Fachdaten",
     treeOrder = [treeBaselayersKey, treeSubjectsKey];
 

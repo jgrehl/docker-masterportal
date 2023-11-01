@@ -331,7 +331,7 @@ describe("src_3_0_0/app-store/getters.js", () => {
             expect(configs[0].elements.length).to.be.equals(1);
             expect(configs[0].elements).to.be.deep.equals(layersWithFolder[0].elements);
         });
-        it("should return all layerConfigs of first level by key 'Baselayer'", () => {
+        it("should return all layerConfigs of first level by key 'baselayer'", () => {
             const configs = getters.allLayerConfigsStructured(state)(treeBaselayersKey);
 
             expect(configs).to.be.an("array");
@@ -340,7 +340,7 @@ describe("src_3_0_0/app-store/getters.js", () => {
             expect(configs[1].id).to.be.equals("452");
         });
 
-        it("allLayerConfigsByParentKey should return all layerConfigs key 'Baselayer'", () => {
+        it("allLayerConfigsByParentKey should return all layerConfigs key 'baselayer'", () => {
             const configs = getters.allLayerConfigsByParentKey(state)(treeBaselayersKey);
 
             expect(configs).to.be.an("array");
@@ -437,7 +437,7 @@ describe("src_3_0_0/app-store/getters.js", () => {
                             }
                         ]
                     },
-                    Baselayer: {
+                    baselayer: {
                         elements: [
                             {
                                 id: "100",

@@ -633,7 +633,7 @@
     }
   },
   "layerConfig": {
-    "Baselayer": {
+    "baselayer": {
       "elements": [
         {
           "id": "453",

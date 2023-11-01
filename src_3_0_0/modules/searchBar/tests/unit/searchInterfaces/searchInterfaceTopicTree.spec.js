@@ -248,7 +248,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceTopicTree.
                             }
                         ]
                     },
-                    Baselayer: {
+                    baselayer: {
                         elements: [
                             {
                                 id: "500",

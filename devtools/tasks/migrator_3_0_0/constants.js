@@ -1,7 +1,7 @@
 const
     PORTALCONFIG = "portalConfig",
     TOPICS = "layerConfig",
-    BASEMAPS = "Baselayer",
+    BASEMAPS = "baselayer",
     BASEMAPS_OLD = "Hintergrundkarten",
     SUBJECTDATA = "Fachdaten";
 
