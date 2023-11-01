@@ -1,6 +1,6 @@
 const
     PORTALCONFIG = "Portalconfig",
-    TOPICS = "Themenconfig",
+    TOPICS = "layerConfig",
     BASEMAPS = "Baselayer",
     BASEMAPS_OLD = "Hintergrundkarten",
     SUBJECTDATA = "Fachdaten";

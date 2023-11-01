@@ -31,7 +31,7 @@ export default {
                 return true;
             }
 
-            console.warn(`The configuration of the module layerSlider is invalid. The layer with the id: "${layerId}" must be configured in the "Themenconfig".`);
+            console.warn(`The configuration of the module layerSlider is invalid. The layer with the id: "${layerId}" must be configured in the "layerConfig".`);
             return false;
         });
 

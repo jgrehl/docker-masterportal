@@ -1,6 +1,6 @@
 const
     portalConfigKey = "Portalconfig",
-    treeTopicConfigKey = "Themenconfig",
+    treeTopicConfigKey = "layerConfig",
     treeBaselayersKey = "Baselayer",
     treeSubjectsKey = "Fachdaten",
     treeOrder = [treeBaselayersKey, treeSubjectsKey];

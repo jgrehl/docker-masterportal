@@ -7,6 +7,8 @@
 ### __Breaking Changes__
 - Dropped support for NodeJS 16 and Npm 8
 - e2e tests are no longer supported
+- The following attributes have been renamed or the location of the configuration has been moved:
+    - Themenconfig --> layerConfig
 
 ### Added
 - Add roadmap information to the readme file.

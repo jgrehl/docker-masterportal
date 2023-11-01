@@ -41,7 +41,7 @@
       },
       "searchBar": {
         "searchInterfaces": [
-          
+
           {
             "type": "komootPhoton",
             "minChars": 3,
@@ -203,7 +203,7 @@
       }
     }
   },
-  "Themenconfig": {
+  "layerConfig": {
     "Baselayer": {
       "elements": [
         {

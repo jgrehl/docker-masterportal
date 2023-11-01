@@ -306,7 +306,7 @@
       ]
     }
   },
-  "Themenconfig": {
+  "layerConfig": {
     "Baselayer": {
       "elements": [
         {
