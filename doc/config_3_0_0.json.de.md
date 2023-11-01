@@ -9,21 +9,21 @@
 # config.json
 
 Die *config.json* enthält die gesamte Konfiguration der Portal-Oberfläche. In ihr wird geregelt welche Elemente sich wo in der Menüleiste befinden, worauf die Karte zentriert werden soll und welche Layer geladen werden sollen. Hier geht es zu einem **[Beispiel](https://bitbucket.org/geowerkstatt-hamburg/masterportal/src/dev_vue/portal/basic/config.json)**.
-Die config.json besteht aus der **[Portalconfig](#markdown-header-Portalconfig)** und der **[Themenconfig](#markdown-header-Themenconfig)**
+Die config.json besteht aus der **[portalConfig](#markdown-header-portalConfig)** und der **[layerConfig](#markdown-header-layerConfig)**
 
 **Beispiel**
 
 ```json
 {
-   "Portalconfig": {},
-   "Themenconfig": {}
+   "portalConfig": {},
+   "layerConfig": {}
 }
 ```
 
 ***
 
-## Portalconfig
-Im Abschnitt *Portalconfig* können folgende Eigenschaften konfiguriert werden:
+## portalConfig
+Im Abschnitt *portalConfig* können folgende Eigenschaften konfiguriert werden:
 
 1. Schaltflächen auf der Kartenansicht sowie mögliche Interaktionen (*controls*)
 2. Informationen zu beliebigen Layern (*getFeatureInfo*)
@@ -52,7 +52,7 @@ Es existieren die im Folgenden aufgelisteten Konfigurationen:
 
 ```json
 {
-    "Portalconfig": {
+    "portalConfig": {
         "baselayerSwitcher":{},
         "controls": {},
         "getFeatureInfo": {},
@@ -68,7 +68,7 @@ Es existieren die im Folgenden aufgelisteten Konfigurationen:
 
 ***
 
-### Portalconfig.baselayerSwitcher
+### portalConfig.baselayerSwitcher
 Der baselayerSwitcher ermnöglicht ein einfaches Wechseln bzw. Auswählen eines Layers, der eine Hintergrundkarte beinhaltet (baselayer).
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -86,7 +86,7 @@ activatedExpandable|nein|Boolean|false|Gibt an, ob der baselayerSwitcher aufgekl
 
 ***
 
-### Portalconfig.controls
+### portalConfig.controls
 Mit den Controls kann festgelegt werden, welche Interaktionen in der Karte möglich sein sollen.
 
 Controls können in der config.json in die Ebene "expandable" verschachtelt werden und sind somit nicht mehr in der Leiste an der Seite, sondern über den Button mit den drei Punkten aufklappbar.
@@ -117,7 +117,7 @@ Controls können in der config.json in die Ebene "expandable" verschachtelt werd
 
 ***
 
-#### Portalconfig.controls.backForward
+#### portalConfig.controls.backForward
 Das Attribut backForward kann vom Typ Boolean oder Object sein. Wenn es vom Typ Boolean ist, zeigt es die Buttons zur Steuerung der letzten und nächsten Kartenansichten mit den Defaulteinsellungen an. Ist es vom Typ Object, so gelten folgende Attribute
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -140,13 +140,13 @@ Das Attribut backForward kann vom Typ Boolean oder Object sein. Wenn es vom Typ 
 
 ***
 
-#### Portalconfig.controls.button3d
+#### portalConfig.controls.button3d
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
 
 ***
 
-#### Portalconfig.controls.freeze
+#### portalConfig.controls.freeze
 Bildschirm wird gesperrt, sodass keine Aktionen mehr in der karte ausgeführt werden können. Legt fest, ob ein "Ansicht sperren" Button angezeigt werden soll.
 
 Das Attribut freeze kann vom Typ Boolean oder Object sein. Wenn es vom Typ Boolean ist, zeigt es die Buttons an, die in den Defaulteinstellungen gesetzt sind. Ist es vom Typ Object, so gelten folgende Attribute:
@@ -159,7 +159,7 @@ Das Attribut freeze kann vom Typ Boolean oder Object sein. Wenn es vom Typ Boole
 
 ***
 
-#### Portalconfig.controls.fullScreen
+#### portalConfig.controls.fullScreen
 Ermöglicht dem User die Darstellung im Vollbildmodus (ohne Tabs und Adressleiste) per Klick auf den Button. Ein erneuter Klick auf den Button wechselt wieder in den normalen Modus.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -186,12 +186,12 @@ Ermöglicht dem User die Darstellung im Vollbildmodus (ohne Tabs und Adressleist
 
 ***
 
-#### Portalconfig.controls.orientation
+#### portalConfig.controls.orientation
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
 
 ***
-#### Portalconfig.controls.rotation
+#### portalConfig.controls.rotation
 Das Attribut rotation kann vom Typ Boolean oder Object sein. Wenn es vom Typ Boolean ist und auf true gesetzt ist, zeigt es das Rotation-Control nur an, wenn die Maprotation ungleich Norden/0 ist. Ist es vom Typ Object, so gelten folgende Attribute:
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|
@@ -212,7 +212,7 @@ Das Attribut rotation kann vom Typ Boolean oder Object sein. Wenn es vom Typ Boo
 
 ***
 
-#### Portalconfig.controls.startModule
+#### portalConfig.controls.startModule
 Das Attribut startModule muss vom Typ Object sein. Es wird für jedes konfigurierte Modul ein Button angezeigt, über den sich das jeweilige Modul öffen und schließen lässt.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -241,7 +241,7 @@ Das Attribut startModule muss vom Typ Object sein. Es wird für jedes konfigurie
 
 ***
 
-##### Portalconfig.controls.startModule.mainMenu
+##### portalConfig.controls.startModule.mainMenu
 Hier werden die Module zu denen jeweils ein Button angezeigt werden soll konfiguriert. Diese werden beim Öffnen in dem `mainMenu` dargestellt.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -260,7 +260,7 @@ Hier werden die Module zu denen jeweils ein Button angezeigt werden soll konfigu
 
 ***
 
-##### Portalconfig.controls.startModule.secondaryMenu
+##### portalConfig.controls.startModule.secondaryMenu
 Hier werden die Module zu denen jeweils ein Button angezeigt werden soll konfiguriert. Diese werden beim Öffnen in dem `secondaryMenu` dargestellt.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -279,7 +279,7 @@ Hier werden die Module zu denen jeweils ein Button angezeigt werden soll konfigu
 
 ***
 
-#### Portalconfig.controls.tiltView
+#### portalConfig.controls.tiltView
 Zeigt zwei Buttons an, mit denen sich die Kamera in der 3D-Szene hoch- bzw. runterkippen lässt.
 
 Das Attribut tiltView kann vom Typ Boolean oder Object sein. Wenn es vom Typ Boolean ist, zeigt es die Buttons an, die in den Defaulteinstellungen gesetzt sind. Ist es vom Typ Object, so gelten folgende Attribute:
@@ -308,7 +308,7 @@ Das Attribut tiltView kann vom Typ Boolean oder Object sein. Wenn es vom Typ Boo
 
 ***
 
-#### Portalconfig.controls.totalView
+#### portalConfig.controls.totalView
 Zeigt einen Button an, mit dem die Strtansicht mit den initialen Einstellungen wiederhergestellt werden kann.
 
 Das Attribut totalView kann vom Typ Boolean oder Object sein. Wenn es vom Typ Boolean ist, zeigt es den Button an, der in den Defaulteinstellungen gesetzt ist. Ist es vom Typ Object, so gelten folgende Attribute:
@@ -335,7 +335,7 @@ Das Attribut totalView kann vom Typ Boolean oder Object sein. Wenn es vom Typ Bo
 
 ***
 
-#### Portalconfig.controls.zoom
+#### portalConfig.controls.zoom
 Legt fest, ob die Zoombuttons angezeigt werden sollen.
 
 Das Attribut zoom kann vom Typ Boolean oder Object sein. Wenn es vom Typ Boolean ist, zeigt es die Buttons an, die in den Defaulteinstellungen gesetzt sind. Ist es vom Typ Object, so gelten folgende Attribute:
@@ -364,7 +364,7 @@ Das Attribut zoom kann vom Typ Boolean oder Object sein. Wenn es vom Typ Boolean
 
 ***
 
-### Portalconfig.getFeatureInfo
+### portalConfig.getFeatureInfo
 Zeigt Informationen zu einem abgefragten Feature ab, indem GetFeatureInfo-Requests oder GetFeature-Requests oder geladene Vektordaten abgefragt werden.
 
 Bei allen GFI-Abfragen, außer dem direkten Beziehen von HTML, welches durch das Konfigurieren von `"text/html"` als `"infoFormat"` an einem WMS geschieht, wird das Zeichen "|" als Zeilenumbruch interpretiert. Es ist ebenso möglich `"\r\n"` oder `"\n"` zu verwenden.
@@ -417,7 +417,7 @@ Bei allen GFI-Abfragen, außer dem direkten Beziehen von HTML, welches durch das
 
 ***
 
-#### Portalconfig.getFeatureInfo.coloredHighlighting3D
+#### portalConfig.getFeatureInfo.coloredHighlighting3D
 Highlight Einstellungen von 3D Tiles.
 Falls z. B. ein Gebäude per Linksklick selektiert wurde, wird es in der definierten Farbe gehighlighted.
 Für mehr Informationen über die Farbmöglichkeiten: **[Color-documentation](https://cesium.com/learn/cesiumjs/ref-doc/Color.html)**
@@ -447,7 +447,7 @@ Für mehr Informationen über die Farbmöglichkeiten: **[Color-documentation](ht
 
 ***
 
-#### Portalconfig.getFeatureInfo.highlightVectorRules
+#### portalConfig.getFeatureInfo.highlightVectorRules
 Liste der Einstellungen zum Überschreiben von Vektorstyles bei GetFeatureInfo Abfragen.
 
 Hinweis: Das Highlighting funktioniert nur, wenn der Layer in der config.json über eine gültige StyleId verfügt!
@@ -461,7 +461,7 @@ Hinweis: Das Highlighting funktioniert nur, wenn der Layer in der config.json ü
 
 ***
 
-##### Portalconfig.getFeatureInfo.highlightVectorRules.fill
+##### portalConfig.getFeatureInfo.highlightVectorRules.fill
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
 |color|nein|Float[]|[255, 255, 255, 0.5]|Mögliche Einstellung: color (RGBA)|false|
@@ -476,7 +476,7 @@ Hinweis: Das Highlighting funktioniert nur, wenn der Layer in der config.json ü
 
 ***
 
-##### Portalconfig.getFeatureInfo.highlightVectorRules.image
+##### portalConfig.getFeatureInfo.highlightVectorRules.image
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
 |scale|nein|Float|1|Mögliche Einstellung: scale|false|
@@ -491,7 +491,7 @@ Hinweis: Das Highlighting funktioniert nur, wenn der Layer in der config.json ü
 
 ***
 
-##### Portalconfig.getFeatureInfo.highlightVectorRules.stroke
+##### portalConfig.getFeatureInfo.highlightVectorRules.stroke
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
 |color|nein|Float[]|[255, 255, 255, 0.5]|Mögliche Einstellung: color (RGBA)|false|
@@ -508,7 +508,7 @@ Hinweis: Das Highlighting funktioniert nur, wenn der Layer in der config.json ü
 
 ***
 
-##### Portalconfig.getFeatureInfo.highlightVectorRules.text
+##### portalConfig.getFeatureInfo.highlightVectorRules.text
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
 |scale|nein|Float|1|Mögliche Einstellung: scale|false|
@@ -523,7 +523,7 @@ Hinweis: Das Highlighting funktioniert nur, wenn der Layer in der config.json ü
 
 ***
 
-### Portalconfig.Menu
+### portalConfig.Menu
 Hier können die Menüeinträge jeweils für das MainMenu (in der Desktopansicht links) und SecondaryMenu (in der Desktopansicht rechts) und deren Anordnung konfiguriert werden. Die Reihenfolge der Module ergibt sich aus der Reihenfolge in der *Config.json*.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -536,7 +536,7 @@ Hier können die Menüeinträge jeweils für das MainMenu (in der Desktopansicht
 
 ***
 
-#### Portalconfig.menu.searchBar
+#### portalConfig.menu.searchBar
 Konfiguration der Suchleiste. Es lassen sich verschiedene Suchdienste konfigurieren.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -574,7 +574,7 @@ Konfiguration der Suchleiste. Es lassen sich verschiedene Suchdienste konfigurie
 
 ***
 
-##### Portalconfig.menu.searchBar.searchInterfaces
+##### portalConfig.menu.searchBar.searchInterfaces
 Definitionen der Suchschnittstellen.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -600,7 +600,7 @@ Definitionen der Suchschnittstellen.
 
 ***
 
-###### Portalconfig.menu.searchBar.searchInterfaces.gazetteer
+###### portalConfig.menu.searchBar.searchInterfaces.gazetteer
 Konfiguration des Gazetteer Suchdienstes
 
 **ACHTUNG: Backend notwendig!**
@@ -635,7 +635,7 @@ Konfiguration des Gazetteer Suchdienstes
 
 ***
 
-##### Portalconfig.menu.searchBar.searchInterfaces.resultEvents
+##### portalConfig.menu.searchBar.searchInterfaces.resultEvents
 Aktionen, die ausgeführt werden, wenn eine Interaktion, z. B. ein Hover oder ein Klick, mit einem Element der Ergebnisliste erfolgt.
 
 Folgende Events existieren. Welche Events konfiguriert werden können ist den Beschreibungen der jeweiligen Suchschnittstelle zu entnehmen:
@@ -663,7 +663,7 @@ Folgende Events existieren. Welche Events konfiguriert werden können ist den Be
 
 ***
 
-#### Portalconfig.menu.sections
+#### portalConfig.menu.sections
 Module lassen sich in Abschnitte (Sections) unterteilen. Im Menü werden Abschnitte mit einem horizontalen Strich unterteilt.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -688,7 +688,7 @@ Module lassen sich in Abschnitte (Sections) unterteilen. Im Menü werden Abschni
 
 ***
 
-#### Portalconfig.menu.sections.modules
+#### portalConfig.menu.sections.modules
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
@@ -702,7 +702,7 @@ Module lassen sich in Abschnitte (Sections) unterteilen. Im Menü werden Abschni
 
 ***
 
-##### Portalconfig.menu.sections.modules.addWMS
+##### portalConfig.menu.sections.modules.addWMS
 Mit diesem Modul lassen sich zusätzliche WMS Layer über eine angegebene URL laden.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -723,7 +723,7 @@ Mit diesem Modul lassen sich zusätzliche WMS Layer über eine angegebene URL la
 
 ***
 
-##### Portalconfig.menu.sections.modules.bufferAnalysis
+##### portalConfig.menu.sections.modules.bufferAnalysis
 Mit diesem Modul lassen sich die Features eines Ziel-Layers anzeigen, die sich inner- oder außerhalb einer Kreisfläche um die Features eines Quell-Layers befinden. Dabei wird die Kreisfläche, ausgehend von den Quell-Layer Features, über den Buffer-Radius definiert. Die Quell- und Ziel-Layer benötigen hierzu vektorbasierte Daten aus WFS(❗) Diensten.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -744,14 +744,14 @@ Mit diesem Modul lassen sich die Features eines Ziel-Layers anzeigen, die sich i
 
 ***
 
-##### Portalconfig.menu.sections.modules.contact
+##### portalConfig.menu.sections.modules.contact
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
 
 ***
 
-##### Portalconfig.menu.sections.modules.coordToolkit
+##### portalConfig.menu.sections.modules.coordToolkit
 Koordinaten-Werkzeug: um zusätzlich zu den 2 dimensionalen Koordinaten die Höhe über NHN anzuzeigen muß eine 'heightLayerId' eines WMS-Dienstes angegeben werden, der die Höhe liefert. Es wird das Format XML erwartet und das Attribut für die Höhen wird unter dem Wert des Parameters 'heightElementName' erwartet.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -792,7 +792,7 @@ Koordinaten-Werkzeug: um zusätzlich zu den 2 dimensionalen Koordinaten die Höh
 
 ***
 
-###### Portalconfig.menu.sections.modules.coordToolkit.coordInfo
+###### portalConfig.menu.sections.modules.coordToolkit.coordInfo
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
@@ -801,12 +801,12 @@ Koordinaten-Werkzeug: um zusätzlich zu den 2 dimensionalen Koordinaten die Höh
 
 ***
 
-###### Portalconfig.menu.tool.coordToolkit.coordInfo.explanations
+###### portalConfig.menu.tool.coordToolkit.coordInfo.explanations
 Kann ein Array von Erläuterungen zu den Koordinatenreferenzsystemen enthalten aus denen eine Liste erstellt wird.
 
 ***
 
-##### Portalconfig.menu.sections.modules.customMenuElement
+##### portalConfig.menu.sections.modules.customMenuElement
 Dieses Modul kann einen Link öffnen, HTML aus config.json oder einer externen Datei anzeigen oder eine Aktion ausführen. Diese Modul kann mehrfach in der config.json konfiguriert werden. Wenn `htmlContent` angegeben wird, dann wird `pathToContent` nicht ausgeführt und umgekehrt.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -846,7 +846,7 @@ Dieses Modul kann einen Link öffnen, HTML aus config.json oder einer externen D
 
 ***
 
-###### Portalconfig.menu.sections.modules.customMenuElement.execute
+###### portalConfig.menu.sections.modules.customMenuElement.execute
 CustomMenuElement Module `execute` Optionen.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -865,7 +865,7 @@ CustomMenuElement Module `execute` Optionen.
 
 ***
 
-###### Portalconfig.menu.sections.modules.customMenuElement.execute.payload
+###### portalConfig.menu.sections.modules.customMenuElement.execute.payload
 CustomMenuElement Module `execute` vom `payload`. Der passende payload zu der Aktion muss angegeben werden. Hier das Beispiel des `Alerting/addSingleAlert`.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -884,21 +884,21 @@ CustomMenuElement Module `execute` vom `payload`. Der passende payload zu der Ak
 
 ***
 
-##### Portalconfig.menu.sections.modules.draw
+##### portalConfig.menu.sections.modules.draw
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
 
 ***
 
-##### Portalconfig.menu.sections.modules.featureLister
+##### portalConfig.menu.sections.modules.featureLister
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
 
 ***
 
-##### Portalconfig.menu.sections.modules.fileImport
+##### portalConfig.menu.sections.modules.fileImport
 Über dieses Modul können Dateien der Formate "*.kml", "*.geojson" und "*.gpx" importiert werden.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -919,14 +919,14 @@ CustomMenuElement Module `execute` vom `payload`. Der passende payload zu der Ak
 
 ***
 
-##### Portalconfig.menu.sections.modules.filter
+##### portalConfig.menu.sections.modules.filter
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
 
 ***
 
-##### Portalconfig.menu.sections.modules.language
+##### portalConfig.menu.sections.modules.language
 In diesem Modul lässt sich die Sprache des Portals umschalten.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -947,7 +947,7 @@ In diesem Modul lässt sich die Sprache des Portals umschalten.
 
 ***
 
-##### Portalconfig.menu.sections.modules.layerClusterToggler
+##### portalConfig.menu.sections.modules.layerClusterToggler
 Mit diesem Modul lassen sich Layer in Clustern gleichzeitig aktivieren/laden und deaktivieren.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -975,7 +975,7 @@ Mit diesem Modul lassen sich Layer in Clustern gleichzeitig aktivieren/laden und
 
 ***
 
-##### Portalconfig.menu.sections.modules.layerSlider
+##### portalConfig.menu.sections.modules.layerSlider
 Der Layerslider ist ein Modul um verschiedene Layer in der Anwendung hintereinander an bzw. auszuschalten. Dadurch kann z.B. eine Zeitreihe verschiedener Zustände animiert werden.
 
 Der Slider kann in der Oberfläche zwischen zwei Modi wechseln. Entweder als `"player"` mit Start/Pause/Stop-Buttons oder als `"handle"` mit einem Hebel. Bei "handle" wird die Transparenz der Layer zusätzlich mit angepasst.
@@ -1016,12 +1016,12 @@ Der Slider kann in der Oberfläche zwischen zwei Modi wechseln. Entweder als `"p
 
 ***
 
-###### Portalconfig.menu.sections.modules.layerSlider.layerIds
+###### portalConfig.menu.sections.modules.layerSlider.layerIds
 Definiert einen Layer für den Layerslider.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
-|layerId|ja|String||Id des Layers, der im Portal angezeigt werden soll. ACHTUNG: Diese LayerId muss auch in der Themenconfig konfiguriert sein!|false|
+|layerId|ja|String||Id des Layers, der im Portal angezeigt werden soll. ACHTUNG: Diese LayerId muss auch in der layerConfig konfiguriert sein!|false|
 |title|ja|String||Name des Layers, wie er im Portal angezeigt werden soll.|false|
 
 **Beispiel**
@@ -1035,14 +1035,14 @@ Definiert einen Layer für den Layerslider.
 
 ***
 
-##### Portalconfig.menu.sections.modules.legend
+##### portalConfig.menu.sections.modules.legend
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
 
 ***
 
-##### Portalconfig.menu.sections.modules.measure
+##### portalConfig.menu.sections.modules.measure
 Mit dem Messwerkzeug können Strecken und Flächen gemessen werden. Dabei werden auch die Messungenauigkeiten mit angegeben.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -1069,7 +1069,7 @@ Mit dem Messwerkzeug können Strecken und Flächen gemessen werden. Dabei werden
 
 ***
 
-##### Portalconfig.menu.sections.modules.news
+##### portalConfig.menu.sections.modules.news
 Dieses Modul zeigt alle Meldungen aus der newsFeedPortalAlerts.json und der config.json des aktuellen Portals unabhängig des "gelesen" Status.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -1090,7 +1090,7 @@ Dieses Modul zeigt alle Meldungen aus der newsFeedPortalAlerts.json und der conf
 
 ***
 
-##### Portalconfig.menu.sections.modules.openConfig
+##### portalConfig.menu.sections.modules.openConfig
 Mit diesem Modul lässt sich eine Konfigurationsdatei (config.json) zur Laufzeit neu laden. Die Module und Karte werden an die neue Konfiguration angepasst.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -1111,7 +1111,7 @@ Mit diesem Modul lässt sich eine Konfigurationsdatei (config.json) zur Laufzeit
 
 ***
 
-##### Portalconfig.menu.sections.modules.print
+##### portalConfig.menu.sections.modules.print
 Druckmodul. Konfigurierbar für 2 Druckdienste: den High Resolution PlotService oder MapfishPrint 3.
 
 **ACHTUNG: Backend notwendig!**
@@ -1128,7 +1128,7 @@ Druckmodul. Konfigurierbar für 2 Druckdienste: den High Resolution PlotService 
 |icon|nein|String|"bi-printer"|Icon das im Menü vor dem Modul gezeigt wird. Zur Auswahl siehe **[Bootstrap Icons](https://icons.getbootstrap.com/)**|false|
 |isLegendSelected|nein|Boolean|false|Gibt an, ob die Checkbox, zum Legende mitdrucken, aktiviert sein soll. Wird nur angezeigt wenn der Druckdienst (Mapfish Print 3) das Drucken der Legende unterstützt.|false|
 |name|nein|String|"common:modules.print.name"|Name des Modules im Menü|false|
-|overviewmapLayerId|nein|String||Über den Parameter layerId kann ein anderer Layer für die Overviewmap verwendet werden. Wird keine Id angegeben, wird der erste Layer der ausgewählten Hintergundkarten verwendet.|false|
+|overviewmapLayerId|nein|String||Über den Parameter layerId kann ein anderer Layer für die Overviewmap verwendet werden. Wird keine Id angegeben, wird der erste Layer der ausgewählten baselayer verwendet.|false|
 |printAppCapabilities|nein|String|"capabilities.json"|Pfad unter welcher die Konfiguration des Druckdienstes zu finden ist.|false|
 |printAppId|nein|String|"master"|Id der print app des Druckdienstes. Dies gibt dem Druckdienst vor welche/s Template/s er zu verwenden hat.|false|
 |printMapMarker|nein|Boolean|false|Wenn dieses Feld auf true gesetzt ist, werden im Bildausschnitt sichtbare MapMarker mitgedruckt. Diese überdecken ggf. interessante Druckinformationen.|false|
@@ -1174,7 +1174,7 @@ Druckmodul. Konfigurierbar für 2 Druckdienste: den High Resolution PlotService 
 
 ***
 
-###### Portalconfig.menu.sections.modules.print.capabilitiesFilter
+###### portalConfig.menu.sections.modules.print.capabilitiesFilter
 Liste von Layouts und Formaten, welche die Antwort vom Druckdienst in der jeweiligen Kategorie filtert.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -1193,7 +1193,7 @@ Liste von Layouts und Formaten, welche die Antwort vom Druckdienst in der jeweil
 
 ***
 
-##### Portalconfig.menu.sections.modules.routing
+##### portalConfig.menu.sections.modules.routing
 Routing-Werkzeug. Ermöglicht Nutzern das Planen von Routen zwischen mehreren Punkten mit verschiedenen Optionen. Zusätzlich gibt es noch die Funktion zur Erstellung einer Erreichbarkeitsanalyse. Beide Funktionen sind mit einer Stapelverarbeitung verfügbar, zur Abfrage mehrere Routen und Analysen. ❗ Das Werkzeug greift auf Den Routing Dienst des BKG zurück ❗.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -1308,7 +1308,7 @@ Routing-Werkzeug. Ermöglicht Nutzern das Planen von Routen zwischen mehreren Pu
 
 ***
 
-#### Portalconfig.menu.sections.modules.routing.download
+#### portalConfig.menu.sections.modules.routing.download
 Routing-Werkzeug Download Optionen.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -1329,7 +1329,7 @@ Routing-Werkzeug Download Optionen.
 
 ***
 
-#### Portalconfig.menu.sections.modules.routing.geosearch
+#### portalConfig.menu.sections.modules.routing.geosearch
 Routing-Werkzeug Geosuche Optionen.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -1392,7 +1392,7 @@ Routing-Werkzeug Geosuche Optionen.
 
 ***
 
-#### Portalconfig.menu.sections.modules.routing.geosearch.bbox
+#### portalConfig.menu.sections.modules.routing.geosearch.bbox
 BBOX-Wert zugeordnet zu einem speedProfile. Koordinatensystem ist abhängig von dem verwendeten epsg-Parameter. Der verwendete geosearch Dienst muss bbox-Werte als String unterstützen.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -1409,7 +1409,7 @@ BBOX-Wert zugeordnet zu einem speedProfile. Koordinatensystem ist abhängig von 
 
 ***
 
-#### Portalconfig.menu.sections.modules.routing.geosearchReverse
+#### portalConfig.menu.sections.modules.routing.geosearchReverse
 Routing-Werkzeug Geosuche Reverse Optionen.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -1434,7 +1434,7 @@ Routing-Werkzeug Geosuche Reverse Optionen.
 
 ***
 
-#### Portalconfig.menu.sections.modules.routing.directionsSettings
+#### portalConfig.menu.sections.modules.routing.directionsSettings
 Routing-Werkzeug Routenplanung Optionen.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -1502,7 +1502,7 @@ Routing-Werkzeug Routenplanung Optionen.
 ```
 
 ***
-#### Portalconfig.menu.sections.modules.routing.directionsSettings.customAvoidFeatures
+#### portalConfig.menu.sections.modules.routing.directionsSettings.customAvoidFeatures
 Routing-Werkzeug Routenplanung Routen customAvoidFeatures.
 Möglichkeit eigene Optionen für Verkehrswege meiden (zusätzlich zum BKG-Dienst) für speedProfiles zu definieren (erfordert eigenes Backend).
 
@@ -1521,7 +1521,7 @@ Möglichkeit eigene Optionen für Verkehrswege meiden (zusätzlich zum BKG-Diens
 }
 ```
 ***
-#### Portalconfig.menu.sections.modules.routing.directionsSettings.customPreferences
+#### portalConfig.menu.sections.modules.routing.directionsSettings.customPreferences
 Routing-Werkzeug Routenplanung Routen customPreferences.
 Möglichkeit eigene Routenpräferenzen (zusätzlich zum BKG-Dienst) für speedProfiles zu definieren (erfordert eigenes Backend).
 
@@ -1541,7 +1541,7 @@ Möglichkeit eigene Routenpräferenzen (zusätzlich zum BKG-Dienst) für speedPr
 ```
 
 ***
-#### Portalconfig.menu.sections.modules.routing.directionsSettings.styleRoute
+#### portalConfig.menu.sections.modules.routing.directionsSettings.styleRoute
 Routing-Werkzeug Routenplanung Routen Style Optionen.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -1570,7 +1570,7 @@ Routing-Werkzeug Routenplanung Routen Style Optionen.
 
 ***
 
-#### Portalconfig.menu.sections.modules.routing.directionsSettings.styleWaypoint
+#### portalConfig.menu.sections.modules.routing.directionsSettings.styleWaypoint
 Routing-Werkzeug Routenplanung Wegpunkt Style Optionen.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -1603,7 +1603,7 @@ Routing-Werkzeug Routenplanung Wegpunkt Style Optionen.
 
 ***
 
-#### Portalconfig.menu.sections.modules.routing.directionsSettings.styleAvoidAreas
+#### portalConfig.menu.sections.modules.routing.directionsSettings.styleAvoidAreas
 Routing-Werkzeug Routenplanung Sperrflächen Style Optionen.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -1632,7 +1632,7 @@ Routing-Werkzeug Routenplanung Sperrflächen Style Optionen.
 
 ***
 
-#### Portalconfig.menu.sections.modules.routing.directionsSettings.batchProcessing
+#### portalConfig.menu.sections.modules.routing.directionsSettings.batchProcessing
 Routing-Werkzeug Routenplanung Stapelverarbeitung Optionen.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -1657,7 +1657,7 @@ Routing-Werkzeug Routenplanung Stapelverarbeitung Optionen.
 
 ***
 
-#### Portalconfig.menu.sections.modules.routing.isochronesSettings
+#### portalConfig.menu.sections.modules.routing.isochronesSettings
 Routing-Werkzeug Erreichbarkeitsanalysen Optionen.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -1722,7 +1722,7 @@ Routing-Werkzeug Erreichbarkeitsanalysen Optionen.
 
 ***
 
-#### Portalconfig.menu.sections.modules.routing.isochronesSettings.styleCenter
+#### portalConfig.menu.sections.modules.routing.isochronesSettings.styleCenter
 Routing-Werkzeug Erreichbarkeitsanalysen Center Style Optionen.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -1749,7 +1749,7 @@ Routing-Werkzeug Erreichbarkeitsanalysen Center Style Optionen.
 
 ***
 
-#### Portalconfig.menu.sections.modules.routing.isochronesSettings.styleIsochrones
+#### portalConfig.menu.sections.modules.routing.isochronesSettings.styleIsochrones
 Routing-Werkzeug Erreichbarkeitsanalysen Isochrone Style Optionen.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -1774,7 +1774,7 @@ Routing-Werkzeug Erreichbarkeitsanalysen Isochrone Style Optionen.
 
 ***
 
-#### Portalconfig.menu.sections.modules.routing.isochronesSettings.batchProcessing
+#### portalConfig.menu.sections.modules.routing.isochronesSettings.batchProcessing
 Routing-Werkzeug Erreichbarkeitsanalysen Stapelverarbeitung Optionen.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -1799,7 +1799,7 @@ Routing-Werkzeug Erreichbarkeitsanalysen Stapelverarbeitung Optionen.
 
 ***
 
-##### Portalconfig.menu.sections.modules.scaleSwitcher
+##### portalConfig.menu.sections.modules.scaleSwitcher
 Modul, mit dem der aktuelle Maßstab der Karte geändert werden kann.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -1820,7 +1820,7 @@ Modul, mit dem der aktuelle Maßstab der Karte geändert werden kann.
 
 ***
 
-##### Portalconfig.menu.sections.modules.selectFeatures
+##### portalConfig.menu.sections.modules.selectFeatures
 Erlaub das auswählen von Vektor Features, indem der Nutzer auf der Karte eine Auswahlbox aufziehen kann. Features innerhalb dieser Auwahl werden mit GFI Informationen angezeigt und es ist möglich, auf ein Feature zu zoomen. Zur Nutzung werden vektorbasierte WFS(❗) Dienste benötigt.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -1864,7 +1864,7 @@ Erlaub das auswählen von Vektor Features, indem der Nutzer auf der Karte eine A
 
 ***
 
-###### Portalconfig.menu.sections.modules.selectFeatures.highlightVectorRulesPointLine
+###### portalConfig.menu.sections.modules.selectFeatures.highlightVectorRulesPointLine
 Angabe der Linienfarbe und -breite für Linien Features und der Füllfarbe und Skalierung für Punkte. Sowie optional eine Zoomstufe.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -1876,7 +1876,7 @@ Angabe der Linienfarbe und -breite für Linien Features und der Füllfarbe und S
 
 ***
 
-####### Portalconfig.menu.sections.modules.selectFeatures.highlightVectorRulesPointLine.fill
+###### portalConfig.menu.sections.modules.selectFeatures.highlightVectorRulesPointLine.fill
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
 |color|nein|Float[]|[255, 255, 255, 0.5]|Mögliche Einstellung: color (RGBA)|false|
@@ -1891,7 +1891,7 @@ Angabe der Linienfarbe und -breite für Linien Features und der Füllfarbe und S
 
 ***
 
-####### Portalconfig.menu.sections.modules.selectFeatures.highlightVectorRulesPointLine.stroke
+###### portalConfig.menu.sections.modules.selectFeatures.highlightVectorRulesPointLine.stroke
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
 |color|nein|Float[]|[255, 255, 255, 0.5]|Mögliche Einstellung: color (RGBA)|false|
@@ -1908,7 +1908,7 @@ Angabe der Linienfarbe und -breite für Linien Features und der Füllfarbe und S
 
 ***
 
-####### Portalconfig.menu.sections.modules.selectFeatures.highlightVectorRulesPointLine.image
+###### portalConfig.menu.sections.modules.selectFeatures.highlightVectorRulesPointLine.image
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
 |scale|nein|Integer|1.5|Mögliche Einstellung: scale|false|
@@ -1923,7 +1923,7 @@ Angabe der Linienfarbe und -breite für Linien Features und der Füllfarbe und S
 
 ***
 
-###### Portalconfig.menu.sections.modules.selectFeatures.highlightVectorRulesPolygon
+###### portalConfig.menu.sections.modules.selectFeatures.highlightVectorRulesPolygon
 Angabe der Füllfarbe, Kantenfarbe und -breite für das Hervorheben von Polygon Features. Sowie optional eine Zoomstufe.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -1934,7 +1934,7 @@ Angabe der Füllfarbe, Kantenfarbe und -breite für das Hervorheben von Polygon 
 
 ***
 
-####### Portalconfig.menu.sections.modules.selectFeatures.highlightVectorRulesPolygon.fill
+###### portalConfig.menu.sections.modules.selectFeatures.highlightVectorRulesPolygon.fill
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
 |color|nein|Float[]|[255, 255, 255, 0.5]|Mögliche Einstellung: color (RGBA)|false|
@@ -1949,7 +1949,7 @@ Angabe der Füllfarbe, Kantenfarbe und -breite für das Hervorheben von Polygon 
 
 ***
 
-####### Portalconfig.menu.sections.modules.selectFeatures.highlightVectorRulesPolygon.stroke
+###### portalConfig.menu.sections.modules.selectFeatures.highlightVectorRulesPolygon.stroke
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
 |color|nein|Float[]|[255, 255, 255, 0.5]|Mögliche Einstellung: color (RGBA)|false|
@@ -1966,7 +1966,7 @@ Angabe der Füllfarbe, Kantenfarbe und -breite für das Hervorheben von Polygon 
 
 ***
 
-##### Portalconfig.menu.sections.modules.shadow
+##### portalConfig.menu.sections.modules.shadow
 Das ShadowTool bietet eine Oberfläche zur Definition einer Zeitangabe. Über Slider und Datepicker können Zeitangaben angegeben werden. Die ausgewählte Zeitangabe dient dem Rendern der Schatten aller 3D-Objekte im 3D-Modus, indem der Sonnenstand simuliert wird. Durch Ziehen des Sliders oder Auswahl eines neuen Datums wird unmittelbar ein neuer Sonnenstand simuliert. Per default startet das Tool mit der aktuellen Zeitangabe, die über Parameter überschrieben werden kann.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -1994,7 +1994,7 @@ Das ShadowTool bietet eine Oberfläche zur Definition einer Zeitangabe. Über Sl
 
 ***
 
-###### Portalconfig.menu.sections.modules.shadow.shadowTime
+###### portalConfig.menu.sections.modules.shadow.shadowTime
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
 |month|nein|String||Monat|false|
@@ -2015,14 +2015,14 @@ Das ShadowTool bietet eine Oberfläche zur Definition einer Zeitangabe. Über Sl
 
 ***
 
-##### Portalconfig.menu.sections.modules.shareView
+##### portalConfig.menu.sections.modules.shareView
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
 
 ***
 
-##### Portalconfig.menu.sections.modules.styleVT
+##### portalConfig.menu.sections.modules.styleVT
 Das Modul ermöglicht das Umschalten des Stylings von Vector Tile Layers(❗), sofern in der services.json mehrere Styles für die entsprechende Layer eingetragen sind.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -2043,7 +2043,7 @@ Das Modul ermöglicht das Umschalten des Stylings von Vector Tile Layers(❗), s
 
 ***
 
-##### Portalconfig.menu.sections.modules.wfsSearch
+##### portalConfig.menu.sections.modules.wfsSearch
 Das Modul ermöglicht es einen WFS(❗) Layer abgekoppelt von der Suchleiste mittels Filter anzufragen und gegebenenfalls eine Ergebnisliste zu erstellen.
 Wenn ein WFS@2.0.0 verwendet werden soll, wird erwartet, dass eine gespeicherte Anfrage (Stored Query) verwendet wird. Wenn ein WFS@1.1.0 verwendet werden soll, wird erwartet, dass der Aufbau der Anfrage mittels der Konfiguration dieses Werkzeugs grundlegend vorgegeben wird.
 
@@ -2100,7 +2100,7 @@ Es können mehrere Suchinstanzen (**[SearchInstances](#markdown-header-portalcon
 
 ***
 
-##### Portalconfig.menu.sections.modules.wfsSearch.searchInstance
+##### portalConfig.menu.sections.modules.wfsSearch.searchInstance
 Eine Instanz der WFS Suche, welche durch ein Dropdown Menü im Werkzeug ausgewählt werden kann.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -2157,7 +2157,7 @@ Eine Instanz der WFS Suche, welche durch ein Dropdown Menü im Werkzeug ausgewä
 
 ***
 
-##### Portalconfig.menu.sections.modules.wfsSearch.searchInstance.literal
+##### portalConfig.menu.sections.modules.wfsSearch.searchInstance.literal
 Ein Literal (`literal`) kann entweder eine Klausel (`clause`) als Parameter besitzen oder ein Feld (`field`). Falls beide gesetzt sind, dann wird der `clause`-Teil ignoriert.
 Zu beachten ist jedoch, dass ein Feld innerhalb einer Klausel verpackt sein muss (wie in den meisten Beispielen zu sehen).
 
@@ -2221,7 +2221,7 @@ Zu beachten ist jedoch, dass ein Feld innerhalb einer Klausel verpackt sein muss
 ***
 
 
-##### Portalconfig.menu.sections.modules.wfsSearch.searchInstance.literal.clause
+##### portalConfig.menu.sections.modules.wfsSearch.searchInstance.literal.clause
 Eine Klausel (`clause`) definiert die Art und Weise wie verschiedene `literals` miteinander anzufragen sind.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -2259,7 +2259,7 @@ Eine Klausel (`clause`) definiert die Art und Weise wie verschiedene `literals` 
 
 ***
 
-##### Portalconfig.menu.sections.modules.wfsSearch.searchInstance.literal.field
+##### portalConfig.menu.sections.modules.wfsSearch.searchInstance.literal.field
 Ein `field` repräsentiert ein Auswahlfeld für einen Wert des Services.
 Es ist möglich ein Feld für mehrere Suchparameter des Dienstes zu verwenden. Um dies zu ermöglichen, muss für jeden Parameter ein Array verwendet werden, wobei jedes Element zu einem einzelnen Wert des Dienstes gehört.
 Eine Konfiguration wie
@@ -2373,7 +2373,7 @@ In diesem Fall sollte die Reihenfolge in der Konfiguration wie folgt aussehen:
 
 ***
 
-##### Portalconfig.menu.sections.modules.wfsSearch.searchInstance.literal.field.option
+##### portalConfig.menu.sections.modules.wfsSearch.searchInstance.literal.field.option
 Eine auswählbare Option für einen anzufragenden Parameter.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -2392,7 +2392,7 @@ Eine auswählbare Option für einen anzufragenden Parameter.
 
 ***
 
-##### Portalconfig.menu.sections.modules.wfsSearch.searchInstance.resultList
+##### portalConfig.menu.sections.modules.wfsSearch.searchInstance.resultList
 Einstellungen für die Ausgabe der gefundenen Features in der Ergebnisliste.
 Mit der Angabe von `showAll` werden alle Attribute der gefundenen Feature in ihrer Ursprungsform dargestellt.
 Bei Verwendung eines Objektes können die darzustellenden Attribute festgelegt werden.
@@ -2417,7 +2417,7 @@ Ein Schlüssel des Objektes muss eines der Attribute des Features wiedergeben, w
 
 ***
 
-##### Portalconfig.menu.sections.modules.wfsSearch.searchInstance.requestConfig
+##### portalConfig.menu.sections.modules.wfsSearch.searchInstance.requestConfig
 Informationen über den WFS-Dienst, welcher angefragt werden soll.
 Es muss entweder `layerId` oder `restLayerId` definiert sein. Wenn `layerId` verwendet wird, dann muss zusätzlich der Layer in der **[config.json](config.json.de.md)** konfiguriert werden.
 Falls beide Parameter gesetzt wurden, dann wird `restLayerId` verwendet.
@@ -2444,7 +2444,7 @@ Falls beide Parameter gesetzt wurden, dann wird `restLayerId` verwendet.
 
 ***
 
-##### Portalconfig.menu.sections.modules.wfsSearch.searchInstance.requestConfig.likeFilter
+##### portalConfig.menu.sections.modules.wfsSearch.searchInstance.requestConfig.likeFilter
 Innerhalb eines Filters für einen WFS-Dienst können Werte mit einem `equal` oder einem `like` verglichen werden.
 Wenn der Vergleich mit einem `like` durchgeführt werden soll, dann werden weitere Eigenschaften benötigt. Diese können sowohl im Wert, als auch in der Eigenschaftsdefinition variieren.
 Es wird für die Dokumentation angenommen, dass die Eigenschaften `wildCard`, `singleChar` und `escapeChar` heißen; Variationen wie `single` und `escape` sind jedoch auch möglich und müssen dem Dienst entsprechend für den Filter angegeben werden. Die Schlüssel-Wert-Paare des hier übergebenen Objekts werden immer wie angegeben in den Request übertragen.
@@ -2469,7 +2469,7 @@ In diesem Beispiel weicht der Key für `escapeChar` ab.
 
 ***
 
-##### Portalconfig.menu.sections.modules.wfsSearch.searchInstance.requestConfig.gazetteer
+##### portalConfig.menu.sections.modules.wfsSearch.searchInstance.requestConfig.gazetteer
 Parameter, welche exklusiv für die Verwendung eines WFS-G (Gazetteer) benötigt werden.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -2493,7 +2493,7 @@ Parameter, welche exklusiv für die Verwendung eines WFS-G (Gazetteer) benötigt
 
 ***
 
-##### Portalconfig.menu.sections.modules.wfsSearch.searchInstance.suggestions
+##### portalConfig.menu.sections.modules.wfsSearch.searchInstance.suggestions
 Konfiguration für die Vorschläge von Nutzereingaben.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -2545,7 +2545,7 @@ Konfiguration für die Vorschläge von Nutzereingaben.
 
 ***
 
-##### Portalconfig.menu.sections.modules.wfsSearch.searchInstance
+##### portalConfig.menu.sections.modules.wfsSearch.searchInstance
 Eine Instanz der WFS Suche, welche durch ein Dropdown Menü im Werkzeug ausgewählt werden kann.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -2602,7 +2602,7 @@ Eine Instanz der WFS Suche, welche durch ein Dropdown Menü im Werkzeug ausgewä
 
 ***
 
-##### Portalconfig.menu.sections.modules.wfsSearch.searchInstance.literal
+##### portalConfig.menu.sections.modules.wfsSearch.searchInstance.literal
 Ein Literal (`literal`) kann entweder eine Klausel (`clause`) als Parameter besitzen oder ein Feld (`field`). Falls beide gesetzt sind, dann wird der `clause`-Teil ignoriert.
 Zu beachten ist jedoch, dass ein Feld innerhalb einer Klausel verpackt sein muss (wie in den meisten Beispielen zu sehen).
 
@@ -2666,7 +2666,7 @@ Zu beachten ist jedoch, dass ein Feld innerhalb einer Klausel verpackt sein muss
 ***
 
 
-##### Portalconfig.menu.sections.modules.wfsSearch.searchInstance.literal.clause
+##### portalConfig.menu.sections.modules.wfsSearch.searchInstance.literal.clause
 Eine Klausel (`clause`) definiert die Art und Weise wie verschiedene `literals` miteinander anzufragen sind.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -2704,7 +2704,7 @@ Eine Klausel (`clause`) definiert die Art und Weise wie verschiedene `literals` 
 
 ***
 
-##### Portalconfig.menu.sections.modules.wfsSearch.searchInstance.literal.field
+##### portalConfig.menu.sections.modules.wfsSearch.searchInstance.literal.field
 Ein `field` repräsentiert ein Auswahlfeld für einen Wert des Services.
 Es ist möglich ein Feld für mehrere Suchparameter des Dienstes zu verwenden. Um dies zu ermöglichen, muss für jeden Parameter ein Array verwendet werden, wobei jedes Element zu einem einzelnen Wert des Dienstes gehört.
 Eine Konfiguration wie
@@ -2818,7 +2818,7 @@ In diesem Fall sollte die Reihenfolge in der Konfiguration wie folgt aussehen:
 
 ***
 
-##### Portalconfig.menu.sections.modules.wfsSearch.searchInstance.literal.field.option
+##### portalConfig.menu.sections.modules.wfsSearch.searchInstance.literal.field.option
 Eine auswählbare Option für einen anzufragenden Parameter.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -2837,7 +2837,7 @@ Eine auswählbare Option für einen anzufragenden Parameter.
 
 ***
 
-##### Portalconfig.menu.sections.modules.wfsSearch.searchInstance.resultList
+##### portalConfig.menu.sections.modules.wfsSearch.searchInstance.resultList
 Einstellungen für die Ausgabe der gefundenen Features in der Ergebnisliste.
 Mit der Angabe von `showAll` werden alle Attribute der gefundenen Feature in ihrer Ursprungsform dargestellt.
 Bei Verwendung eines Objektes können die darzustellenden Attribute festgelegt werden.
@@ -2862,7 +2862,7 @@ Ein Schlüssel des Objektes muss eines der Attribute des Features wiedergeben, w
 
 ***
 
-##### Portalconfig.menu.sections.modules.wfsSearch.searchInstance.requestConfig
+##### portalConfig.menu.sections.modules.wfsSearch.searchInstance.requestConfig
 Informationen über den WFS-Dienst, welcher angefragt werden soll.
 Es muss entweder `layerId` oder `restLayerId` definiert sein. Wenn `layerId` verwendet wird, dann muss zusätzlich der Layer in der **[config.json](config.json.de.md)** konfiguriert werden.
 Falls beide Parameter gesetzt wurden, dann wird `restLayerId` verwendet.
@@ -2889,7 +2889,7 @@ Falls beide Parameter gesetzt wurden, dann wird `restLayerId` verwendet.
 
 ***
 
-##### Portalconfig.menu.sections.modules.wfsSearch.searchInstance.requestConfig.likeFilter
+##### portalConfig.menu.sections.modules.wfsSearch.searchInstance.requestConfig.likeFilter
 Innerhalb eines Filters für einen WFS-Dienst können Werte mit einem `equal` oder einem `like` verglichen werden.
 Wenn der Vergleich mit einem `like` durchgeführt werden soll, dann werden weitere Eigenschaften benötigt. Diese können sowohl im Wert, als auch in der Eigenschaftsdefinition variieren.
 Es wird für die Dokumentation angenommen, dass die Eigenschaften `wildCard`, `singleChar` und `escapeChar` heißen; Variationen wie `single` und `escape` sind jedoch auch möglich und müssen dem Dienst entsprechend für den Filter angegeben werden. Die Schlüssel-Wert-Paare des hier übergebenen Objekts werden immer wie angegeben in den Request übertragen.
@@ -2914,7 +2914,7 @@ In diesem Beispiel weicht der Key für `escapeChar` ab.
 
 ***
 
-##### Portalconfig.menu.sections.modules.wfsSearch.searchInstance.requestConfig.gazetteer
+##### portalConfig.menu.sections.modules.wfsSearch.searchInstance.requestConfig.gazetteer
 Parameter, welche exklusiv für die Verwendung eines WFS-G (Gazetteer) benötigt werden.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -2938,7 +2938,7 @@ Parameter, welche exklusiv für die Verwendung eines WFS-G (Gazetteer) benötigt
 
 ***
 
-##### Portalconfig.menu.sections.modules.wfsSearch.searchInstance.suggestions
+##### portalConfig.menu.sections.modules.wfsSearch.searchInstance.suggestions
 Konfiguration für die Vorschläge von Nutzereingaben.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -2948,14 +2948,14 @@ Konfiguration für die Vorschläge von Nutzereingaben.
 
 ***
 
-##### Portalconfig.menu.sections.modules.wfst
+##### portalConfig.menu.sections.modules.wfst
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
 
 ***
 
-#### Portalconfig.menu.title
+#### portalConfig.menu.title
 Im Menü kann der Portalname und ein Bild angezeigt werden.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -2978,7 +2978,7 @@ Im Menü kann der Portalname und ein Bild angezeigt werden.
 
 ***
 
-### Portalconfig.mapView
+### portalConfig.mapView
 Mit verschiedenen Parametern wird die Startansicht der Karte konfiguriert und der Hintergrund festgelegt, der erscheint wenn keine Karte geladen ist.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -2986,7 +2986,7 @@ Mit verschiedenen Parametern wird die Startansicht der Karte konfiguriert und de
 
 ***
 
-### Portalconfig.mouseHover
+### portalConfig.mouseHover
 Aktiviert die MouseHover-Funktion für Vektorlayer, z.B. WFS oder GeoJSON. Für die Konfiguration pro Layer siehe **[Vector](#markdown-header-themenconfigelementslayersvector)**.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -3005,7 +3005,7 @@ Aktiviert die MouseHover-Funktion für Vektorlayer, z.B. WFS oder GeoJSON. Für 
 
 ***
 
-### Portalconfig.portalFooter
+### portalConfig.portalFooter
 Möglichkeit den Inhalt der Fußzeile des Portals zu konfigurieren.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -3013,7 +3013,7 @@ Möglichkeit den Inhalt der Fußzeile des Portals zu konfigurieren.
 
 ***
 
-### Portalconfig.tree
+### portalConfig.tree
 Möglichkeit, um Einstellungen für den Themenbaum vorzunehmen.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -3026,7 +3026,7 @@ Möglichkeit, um Einstellungen für den Themenbaum vorzunehmen.
 |layerPills|nein|**[layerPills](#markdown-header-portalconfigtreelayerpills)**||Konfiguration der LayerPills.|false|
 |metaIDsToIgnore|nein|String[]||Alle in der `services.json` gefundenen Layer, die diesen Meta-IDs entsprechen, werden nicht im Baum und in der Karte angezeigt. Nur für den tree.type `auto`.|false|
 |metaIDsToMerge|nein|String[]||Alle in der `services.json` gefundenen Layer, die diesen Meta-IDs entsprechen, werden zu einer einzigen Layer im Baum zusammengeführt. Nur für den tree.type `auto`.|true|
-|type|nein|enum["auto"]||Der Themenbaum ist in der gleichen Struktur aufgebaut wie die **[Themenconfig](#markdown-header-themenconfig)**. Wenn der Typ `auto` konfiguriert ist, werden alle Ebenen aus der [services.json](services.json.md) im Baum angeboten, strukturiert durch ihre Metadaten (Geo-Online).|false|
+|type|nein|enum["auto"]||Der Themenbaum ist in der gleichen Struktur aufgebaut wie die **[layerConfig](#markdown-header-themenconfig)**. Wenn der Typ `auto` konfiguriert ist, werden alle Ebenen aus der [services.json](services.json.md) im Baum angeboten, strukturiert durch ihre Metadaten (Geo-Online).|false|
 |validLayerTypesAutoTree|nein|enum|["WMS", "SENSORTHINGS", "TERRAIN3D", "TILESET3D", "OBLIQUE"]|Layer Typen die bei dem tree.type `auto` verwendet werden sollen.|false|
 
 **Beispiel type auto**
@@ -3084,7 +3084,7 @@ Möglichkeit, um Einstellungen für den Themenbaum vorzunehmen.
 
 ***
 
-#### Portalconfig.tree.categories
+#### portalConfig.tree.categories
 Konfiguration der Kategorien aus den Metadaten. Nur für den tree.type `auto`.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -3115,7 +3115,7 @@ Konfiguration der Kategorien aus den Metadaten. Nur für den tree.type `auto`.
 
 ***
 
-#### Portalconfig.tree.highlightedFeatures
+#### portalConfig.tree.highlightedFeatures
 Konfiguration zusätzlich zum Highlighting von Features. Wenn mit dem Modul "Liste" oder "Features auswählen" mit "Auf dieses Feature zoomen" oder per Url-Parameter Features hervorgehoben werden, dann ist ein Layer mit diesen Features im Menü-Baum auswählbar.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -3134,7 +3134,7 @@ Konfiguration zusätzlich zum Highlighting von Features. Wenn mit dem Modul "Lis
 
 ***
 
-#### Portalconfig.tree.layerIDsToStyle
+#### portalConfig.tree.layerIDsToStyle
 Kombiniert den style von mehreren Layern, Namen  und Legenden.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -3161,7 +3161,7 @@ Kombiniert den style von mehreren Layern, Namen  und Legenden.
 
 ***
 
-### Portalconfig.tree.layerPills
+### portalConfig.tree.layerPills
 Konfiguration, um Einstellungen für die LayerPills vorzunehmen.
 
 Layerpills sind Buttons, die oberhalb der Karte die ausgewählten Layer anzeigen. Beim Anklicken einer LayerPill, werden die entsprechenden Layerinformationen im Menü angezeigt. Über den Schließen-Button wird der Layer abgewählt. Das Attribut LayerPills wird als Objekt angegeben und beinhaltet folgende Attribute:
@@ -3183,23 +3183,23 @@ Layerpills sind Buttons, die oberhalb der Karte die ausgewählten Layer anzeigen
 
 ***
 
-## Themenconfig
-Die Themenconfig definiert, welche Inhalte an welcher Stelle im Themenbaum angezeigt werden. Es können folgende Eigenschaften konfiguriert werden:
+## layerConfig
+Die layerConfig definiert, welche Inhalte an welcher Stelle im Themenbaum angezeigt werden. Es können folgende Eigenschaften konfiguriert werden:
 
-1. Layer die Hintergrundkarten beinhalten (*Baselayer*)
+1. Layer die Hintergrundkarten beinhalten (*baselayer*)
 2. Layer die Fachdaten beinhalten (*subjectlayer*)
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
-|Baselayer|nein|**[Baselayer](#markdown-header-themenconfigbaselayer)**||Layer die Hintergrundkarten beinhalten.|false|
-|subjectlayer|nein|**[subjectlayer](#markdown-header-themenconfigsubjectlayer)**||Layer die Fachdaten beinhalten.|false|
+|baselayer|nein|**[baselayer](#markdown-header-themenconfigbaselayer)**||Layer die Hintergrundkarten beinhalten.|false|
+|subjectlayer|nein|**[subjectlayer](#markdown-header-themenconfigsubjectlayer)**||Layer die subjectlayer beinhalten.|false|
 
 **Beispiel**
 
 ```json
 {
-    "Themenconfig": {
-        "Baselayer": {},
+    "layerConfig": {
+        "baselayer": {},
         "subjectlayer": {}
     }
 }
@@ -3207,7 +3207,7 @@ Die Themenconfig definiert, welche Inhalte an welcher Stelle im Themenbaum angez
 
 ***
 
-### Themenconfig.Baselayer
+### layerConfig.baselayer
 Hier werden Layer definiert, die als Hintergrundkarten angezeigt werden sollen.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -3218,26 +3218,26 @@ Hier werden Layer definiert, die als Hintergrundkarten angezeigt werden sollen.
 
 ```json
 {
-    "Themenconfig": {
-        "Baselayer": {}
+    "layerConfig": {
+        "baselayer": {}
     }
 }
 ```
 
 ***
 
-### Themenconfig.subjectlayer
-Hier werden Layer oder Ordner mit Layern definiert, die als Fachdaten angezeigt werden sollen.
+### layerConfig.subjectlayer
+Hier werden Layer oder Ordner mit Layern definiert, die als subjectlayer angezeigt werden sollen.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
-|elements|nein|**[elements](#markdown-header-themenconfigelements)**[]||Definition der Layer oder Ordner die im Themenbaum als Fachdaten angezeigt werden sollen.|false|
+|elements|nein|**[elements](#markdown-header-themenconfigelements)**[]||Definition der Layer oder Ordner die im Themenbaum als subjectlayer angezeigt werden sollen.|false|
 
 **Beispiel**
 
 ```json
 {
-    "Themenconfig": {
+    "layerConfig": {
         "subjectlayer": {}
     }
 }
@@ -3245,7 +3245,7 @@ Hier werden Layer oder Ordner mit Layern definiert, die als Fachdaten angezeigt 
 
 ***
 
-### Themenconfig.elements
+### layerConfig.elements
 Hier werden Layer oder Ordner definiert. Ordner können **[elements](#markdown-header-themenconfigelements)** mit Ordner oder Layern enthalten.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -3254,12 +3254,12 @@ Hier werden Layer oder Ordner definiert. Ordner können **[elements](#markdown-h
 |name|nein|String|""|Name des Layers oder Ordners.|false|
 |type|nein|String|"layer"|Typ des Elements: "layer" für Layer oder "folder" für Ordner|false|
 
-**Beispiel Baselayer**
+**Beispiel baselayer**
 
 ```json
 {
-    "Themenconfig": {
-        "Baselayer": {
+    "layerConfig": {
+        "baselayer": {
             "elements": [
                 {
                     "id": "123"
@@ -3274,7 +3274,7 @@ Hier werden Layer oder Ordner definiert. Ordner können **[elements](#markdown-h
 
 ```json
 {
-    "Themenconfig": {
+    "layerConfig": {
         "subjectlayer": {
             "elements": [
                 {
@@ -3325,7 +3325,7 @@ Hier werden Layer oder Ordner definiert. Ordner können **[elements](#markdown-h
 }
 ```
 ***
-### Themenconfig.elements.layers
+### layerConfig.elements.layers
 Hier werden Layer verschiedenen Typs konfiguriert. Layer können auf viele verschiedene Arten konfiguriert werden. Ein Großteil der Attribute ist in der **[services.json](services.json.de.md)** definiert, kann jedoch hier am Layer überschrieben werden.
 Neben diesen Attributen gibt es auch Typ-spezifische Attribute für die verschiedenen Layer Typen.
 
@@ -3335,7 +3335,7 @@ Neben diesen Attributen gibt es auch Typ-spezifische Attribute für die verschie
 |id|ja|String/String[]||Id des Layers. In der **[services.json](services.json.de.md)** werden die ids aufgelöst und die notwendigen Informationen herangezogen. ACHTUNG: Hierbei ist wichtig, dass die angegebenen ids dieselbe URL ansprechen, also den selben Dienst benutzen. Bei Konfiguration eines Arrays von Ids ist die Angabe der minScale und maxScale in der services.json für jeden Layer notwendig.|false|
 |isPointLayer|nein|Boolean|false|Anzeige, ob der (Vektor)-Layer nur aus Punkt-Features besteht (nur relevant für WebGL Rendering))|false|
 |name|nein|String||Name des Layers.|false|
-|preview|nein**[preview](#markdown-header-themenconfigelementslayerspreview)**||Vorschau für Baselayer vom Typ WMS, WMTS und VectorTile. WMS und WMTS: bei keiner Angabe, wird ein zentrierter Kartenausschnitt geladen.|false|
+|preview|nein**[preview](#markdown-header-themenconfigelementslayerspreview)**||Vorschau für baselayer vom Typ WMS, WMTS und VectorTile. WMS und WMTS: bei keiner Angabe, wird ein zentrierter Kartenausschnitt geladen.|false|
 |renderer|nein|String|"default"|Render-Pipeline für die Darstellung ("default" oder "webgl")(nur für Vektordaten "GeoJSON", "WFS", "OAF")"webgl" ist derzeit als experimentell einzustufen.|false|
 |showInLayerTree|nein|Boolean|false|Wenn true, dann wird der Layer initial im Themenbaum angezeigt. Wenn portalConfig.tree.addLayerButton nicht konfiguriert ist, dann hat dieses Attribut keinen Effekt.|false|
 |transparency|nein|Integer|0|Transparenz des Layers.|false|
@@ -3368,8 +3368,8 @@ Neben diesen Attributen gibt es auch Typ-spezifische Attribute für die verschie
 }
 ```
 ***
-#### Themenconfig.elements.layers.preview
-Vorschau für Baselayer im Themenbaum, wird auch im **[BaselayerSwitcher](#markdown-header-portalconfigmenusectionsmodulesbaselayerswitcher)** verwendet.
+#### layerConfig.elements.layers.preview
+Vorschau für baselayer im Themenbaum, wird auch im **[baselayerSwitcher](#markdown-header-portalconfigmenusectionsmodulesbaselayerswitcher)** verwendet.
 Für die Layertypen **[VectorTile](#markdown-header-themenconfigelementslayersvectortile)**, **[WMS](#markdown-header-themenconfigelementslayersrasterwms)** und WMTS.
 Beim VectorTile-Layer wird ein abgelegtes Vorschaubild angezeigt, bei WMS- und WMTS-Layern wird ein Kartenausschnitt geladen. WMS und WMTS: bei keiner Angabe, wird ein zentrierter Kartenausschnitt geladen.
 
@@ -3397,12 +3397,12 @@ Beim VectorTile-Layer wird ein abgelegtes Vorschaubild angezeigt, bei WMS- und W
     }
 ```
 ***
-#### Themenconfig.elements.layers.Raster
+#### layerConfig.elements.layers.Raster
 Hier werden Raster-Layer typische Attribute aufgelistet. Raster Layer sind vom Typ **[StaticImage](#markdown-header-themenconfigelementslayersrasterstaticimage)**, **[WMS](#markdown-header-themenconfigelementslayersrasterwms)**, WMSTime und WMTS.
 
 ***
 
-##### Themenconfig.elements.layers.Raster.StaticImage
+##### layerConfig.elements.layers.Raster.StaticImage
 Mit StaticImage lassen sich Bilder als Layer laden und georeferenziert auf der Karte darstellen. Es werden die Formate jpeg und png unterstützt.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -3426,7 +3426,7 @@ Mit StaticImage lassen sich Bilder als Layer laden und georeferenziert auf der K
 ```
 
 ***
-##### Themenconfig.elements.layers.Raster.WMS
+##### layerConfig.elements.layers.Raster.WMS
 Hier werden WMS typische Attribute aufgelistet.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -3452,7 +3452,7 @@ Hier werden WMS typische Attribute aufgelistet.
 }
 ```
 ***
-###### Themenconfig.elements.layers.Raster.WMS.gfiAsNewWindow
+###### layerConfig.elements.layers.Raster.WMS.gfiAsNewWindow
 
 Der Parameter *gfiAsNewWindow* wird nur berücksichtigt wenn infoFormat text/html ist.
 
@@ -3488,7 +3488,7 @@ Beispiel:
 ```
 
 ***
-#### Themenconfig.elements.layers.Vector
+#### layerConfig.elements.layers.Vector
 Hier werden Vector typische Attribute aufgelistet. Vector Layer sind vom Typ **[WFS](#markdown-header-themenconfigelementslayersvectorwfs)**, GeoJSON (nur in EPSG:4326), **[SensorLayer](sensorThings.de.md)** und OAF.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -3533,7 +3533,7 @@ Hier werden Vector typische Attribute aufgelistet. Vector Layer sind vom Typ **[
 }
 ```
 ***
-##### Themenconfig.elements.layers.Vector.WFS
+##### layerConfig.elements.layers.Vector.WFS
 Attribute für die WFS Suche bei highlightFeaturesByAttribute. Für die Aufrufparameter siehe **[urlParameter](urlParameter.md)**.
 ```
 Beispiel-Aufrufe:
@@ -3566,7 +3566,7 @@ Beispiel-Aufrufe:
 ```
 
 ***
-#### Themenconfig.elements.layers.VectorTile
+#### layerConfig.elements.layers.VectorTile
 Hier werden VectorTile typische Attribute aufgelistet.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -3601,7 +3601,7 @@ Hier werden VectorTile typische Attribute aufgelistet.
 }
 ```
 ***
-#### Themenconfig.elements.layers.VectorTile.vtStyle
+#### layerConfig.elements.layers.VectorTile.vtStyle
 Style-Definition; nur für Vector Tile Layer.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -3630,7 +3630,7 @@ Style-Definition; nur für Vector Tile Layer.
 }
 ```
 ***
-#### Themenconfig.elements.layers.Tileset
+#### layerConfig.elements.layers.Tileset
 Hier werden Tileset typische Attribute aufgelistet.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -3652,7 +3652,7 @@ Hier werden Tileset typische Attribute aufgelistet.
 ```
 ***
 
-#### Themenconfig.elements.layers.Tileset.cesium3DTilesetOption
+#### layerConfig.elements.layers.Tileset.cesium3DTilesetOption
 
 Todo
 
@@ -3667,7 +3667,7 @@ Todo
 }
 ```
 ***
-#### Themenconfig.elements.layers.Terrain
+#### layerConfig.elements.layers.Terrain
 Hier werden Terrain typische Attribute aufgelistet.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
@@ -3686,7 +3686,7 @@ Hier werden Terrain typische Attribute aufgelistet.
 }
 ```
 ***
-#### Themenconfig.elements.layers.Terrain.cesiumTerrainProviderOption
+#### layerConfig.elements.layers.Terrain.cesiumTerrainProviderOption
 Initialisierungsoptionen für den CesiumTerrainProvider-Konstruktor.
 [cesiumTerrainProviderOptions]: https://cesium.com/learn/cesiumjs/ref-doc/CesiumTerrainProvider.html
 
@@ -3701,13 +3701,13 @@ Initialisierungsoptionen für den CesiumTerrainProvider-Konstruktor.
 }
 ```
 ***
-#### Themenconfig.elements.layers.Entity3D
+#### layerConfig.elements.layers.Entity3D
 Hier werden Entities3D typische Attribute aufgelistet.
 
 |Name|Verpflichtend|Typ|default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
 |entities|ja|**[Attribute](#markdown-header-themenconfigelementslayersentities3dentities)**[]||Liste von darzustellenden Einheiten des Layers.|false|
-#### Themenconfig.elements.layers.Entity3D.entities
+#### layerConfig.elements.layers.Entity3D.entities
 Hier werden Entities3D Einheiten typische Attribute aufgelistet.
 
 |Name|Verpflichtend|Typ|default|Beschreibung|Expert|
@@ -3757,7 +3757,7 @@ Hier werden Entities3D Einheiten typische Attribute aufgelistet.
 
 ***
 
-#### Themenconfig.elements.layers.Entity3D.entities.Attribute
+#### layerConfig.elements.layers.Entity3D.entities.Attribute
 
 |Name|Verpflichtend|Typ|default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
