@@ -149,7 +149,7 @@ describe("src/modules/searchBar/store/actions/actionsSearchBarSearchResult.spec.
                     type: "layer",
                     visibility: true
                 },
-                parentKey: "Fachdaten"
+                parentKey: "subjectlayer"
             });
         });
 

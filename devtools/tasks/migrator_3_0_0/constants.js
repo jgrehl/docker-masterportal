@@ -3,7 +3,7 @@ const
     TOPICS = "layerConfig",
     BASEMAPS = "baselayer",
     BASEMAPS_OLD = "Hintergrundkarten",
-    SUBJECTDATA = "Fachdaten";
+    SUBJECTDATA = "subjectlayer";
 
 module.exports = {
     PORTALCONFIG,

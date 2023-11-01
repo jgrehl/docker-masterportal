@@ -2,7 +2,7 @@ const
     portalConfigKey = "portalConfig",
     treeTopicConfigKey = "layerConfig",
     treeBaselayersKey = "baselayer",
-    treeSubjectsKey = "Fachdaten",
+    treeSubjectsKey = "subjectlayer",
     treeOrder = [treeBaselayersKey, treeSubjectsKey];
 
 export {

@@ -344,7 +344,7 @@
         }
       ]
     },
-    "Fachdaten": {
+    "subjectlayer": {
       "elements": [
         {
           "id": "2423",

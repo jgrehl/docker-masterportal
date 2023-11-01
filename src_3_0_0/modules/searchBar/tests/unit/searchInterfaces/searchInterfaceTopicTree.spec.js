@@ -219,7 +219,7 @@ describe("src_3_0_0/modules/searchBar/searchInterfaces/searchInterfaceTopicTree.
         it("should search in folders and return found folders", () => {
             const searchInput = "Überschwemmungsgebiete",
                 layerConfig = {
-                    Fachdaten: {
+                    subjectlayer: {
                         elements: [
                             {
                                 id: "100",

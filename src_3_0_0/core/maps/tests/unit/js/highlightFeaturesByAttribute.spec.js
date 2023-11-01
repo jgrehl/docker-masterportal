@@ -104,7 +104,7 @@ describe("src_3_0_0/core/maps/js/highlightFeaturesByAttribute", () => {
                     type: "layer",
                     visibility: true
                 },
-                parentKey: "Fachdaten"
+                parentKey: "subjectlayer"
             });
         });
     });

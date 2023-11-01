@@ -9,6 +9,7 @@
 - e2e tests are no longer supported
 - The following attributes have been renamed or the location of the configuration has been moved:
     - Baselayer --> baselayer
+    - Fachdaten --> subjectlayer
     - Portalconfig --> portalConfig
     - Themenconfig --> layerConfig
 

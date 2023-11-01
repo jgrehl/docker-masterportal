@@ -321,7 +321,7 @@ describe("src_3_0_0/app-store/getters.js", () => {
             expect(configs[2].elements).to.be.deep.equals(layersWithFolder[0].elements);
         });
 
-        it("should return all layerConfigs of first level by key 'Fachdaten'", () => {
+        it("should return all layerConfigs of first level by key 'subjectlayer'", () => {
             const configs = getters.allLayerConfigsStructured(state)(treeSubjectsKey);
 
             expect(configs).to.be.an("array");
@@ -349,7 +349,7 @@ describe("src_3_0_0/app-store/getters.js", () => {
             expect(configs[1].id).to.be.equals("452");
         });
 
-        it("allLayerConfigsByParentKey should return all layerConfigs key 'Fachdaten'", () => {
+        it("allLayerConfigsByParentKey should return all layerConfigs key 'subjectlayer'", () => {
             const configs = getters.allLayerConfigsByParentKey(state)(treeSubjectsKey);
 
             expect(configs).to.be.an("array");
@@ -417,7 +417,7 @@ describe("src_3_0_0/app-store/getters.js", () => {
         it("should return the layers in tree for url params", () => {
             const state = {
                 layerConfig: {
-                    Fachdaten: {
+                    subjectlayer: {
                         elements: [
                             {
                                 id: "1",

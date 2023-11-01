@@ -230,7 +230,7 @@ describe("src_3_0_0/core/maps/actionsMapsFeatureViaUrl", () => {
                     type: "layer",
                     visibility: true
                 },
-                parentKey: "Fachdaten"
+                parentKey: "subjectlayer"
             });
         });
     });

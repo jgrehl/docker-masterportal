@@ -130,13 +130,13 @@ describe("core/configLoader/parserCustomTree", function () {
         };
 
         if (options.baselayersWithChildren) {
-            testConfig.baselayer = baselayersWithChildren;
+            testConfig.Baselayer = baselayersWithChildren;
         }
         else {
-            testConfig.baselayer = baselayersNoChildren;
+            testConfig.Baselayer = baselayersNoChildren;
         }
         model.setItemList([]);
-        model.parseTree(testConfig.baselayer, "baselayer", 0);
+        model.parseTree(testConfig.Baselayer, "Baselayer", 0);
         return model;
     }
 
@@ -177,7 +177,7 @@ describe("core/configLoader/parserCustomTree", function () {
             expect(folder).not.to.be.null;
             itemList.forEach(item => {
                 if (item.type === "folder") {
-                    expect(item.parentId).to.be.equals("baselayer");
+                    expect(item.parentId).to.be.equals("Baselayer");
                 }
                 else {
                     expect(item.parentId).to.be.equals(folder.id);
@@ -195,7 +195,7 @@ describe("core/configLoader/parserCustomTree", function () {
             expect(folder).not.to.be.null;
             itemList.forEach(item => {
                 if (item.type === "folder") {
-                    expect(item.parentId).to.be.equals("baselayer");
+                    expect(item.parentId).to.be.equals("Baselayer");
                 }
                 else {
                     expect(item.parentId).to.be.equals(folder.id);
