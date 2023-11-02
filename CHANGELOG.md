@@ -3,6 +3,21 @@
 
 [Semantic versioning](https://semver.org/spec/v2.0.0.html) is used.
 
+## Unreleased - in development
+### __Breaking Changes__
+
+### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+- Issue #1093: Fixed the Wrong CRS in GeoJSON by Download filtered data
+
+---
 ## v2.39.0 - 2023-11-01
 
 ### Added
