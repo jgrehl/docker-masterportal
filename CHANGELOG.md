@@ -16,6 +16,7 @@
 
 ### Fixed
 - Issue #1093: Fixed the Wrong CRS in GeoJSON by Download filtered data
+- prepareFeaturesFor3D is now called after loading
 
 ---
 ## v2.39.0 - 2023-11-01

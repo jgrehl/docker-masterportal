@@ -38,7 +38,6 @@ export default function GeoJSONLayer (attrs) {
     }
 
     this.initStyle(attrs);
-    this.prepareFeaturesFor3D(this.layer.getSource().getFeatures());
 }
 
 // Link prototypes and add prototype methods, means GeoJSONLayer uses all methods and properties of Layer
@@ -97,6 +96,7 @@ GeoJSONLayer.prototype.createLayer = function (attrs) {
                             feature.setId("geojson-" + attrs.id + "-feature-id-" + idx);
                         }
                     });
+                    this.prepareFeaturesFor3D(features);
                 }
                 this.featuresLoaded(attrs.id, features);
                 if (this.get("isSelected") || attrs.isSelected) {
