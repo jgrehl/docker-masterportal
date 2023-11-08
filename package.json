@@ -152,13 +152,17 @@
     "text-loader": "^0.0.1",
     "vue-loader": "^15.9.8",
     "webpack": "^4.47.0",
+    "webpack-bundle-analyzer": "^4.9.1",
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.3",
     "webpack-merge": "^4.2.2",
-    "webpack-visualizer-plugin": "^0.1.11",
     "worker-loader": "^3.0.8",
     "xmlserializer": "^0.6.1",
     "zip-a-folder": "^1.1.5"
+  },
+  "overrides": {
+    "@cesium/engine": "npm:dry-uninstall",
+    "@cesium/widgets": "npm:dry-uninstall"
   },
   "engines": {
     "node": "^16.13.2 || ^18.16.0",
