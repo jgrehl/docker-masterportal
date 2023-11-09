@@ -36,12 +36,7 @@ module.exports = function () {
             new MiniCssExtractPlugin({
                 filename: "css/[name].css"
             }),
-            new VueLoaderPlugin(),
-            // create global constant at compile time
-            new webpack.DefinePlugin({
-                ADDONS: JSON.stringify(addonsRelPaths),
-                VUE_ADDONS: JSON.stringify(vueAddonsRelPaths)
-            })
+            new VueLoaderPlugin()
         ];
 
     if (process.env.EXCLUDE_ADDON) {
@@ -92,6 +87,13 @@ module.exports = function () {
             addonsRelPaths[addonName] = addonCombinedRelpath;
         }
     }
+
+    plugins.push(
+        // create global constant at compile time
+        new webpack.DefinePlugin({
+            ADDONS: JSON.stringify(addonsRelPaths),
+            VUE_ADDONS: JSON.stringify(vueAddonsRelPaths)
+        }));
 
     return {
         entry: entryPoints,
