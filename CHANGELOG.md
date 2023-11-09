@@ -7,16 +7,25 @@
 ### __Breaking Changes__
 
 ### Added
+- The following packages have been added:
+    - devDependencies:
+        - webpack-bundle-analyzer: 4.9.1
+- To manage dependencies of dependencies "overrides" for cesium are added to package.json and create dummy packages for it.
 
 ### Changed
+- The script "npm run build" has been extended. The user can now specify the name of an addon that is not added to bundle.
 
 ### Deprecated
 
 ### Removed
+- The following packages have been removed:
+    - devDependencies:
+        - webpack-visualizer-plugin
 
 ### Fixed
-- Issue #1093: Fixed the Wrong CRS in GeoJSON by Download filtered data
 - prepareFeaturesFor3D is now called after loading
+- Issue #1093: Fixed the Wrong CRS in GeoJSON by Download filtered data
+- Issue #1099: The package.json is adapted, now the size of the bundle, created with "npm run build" is reduced.
 
 ---
 ## v2.39.0 - 2023-11-01
