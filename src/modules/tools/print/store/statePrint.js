@@ -139,7 +139,8 @@ const state = {
      * @deprecated in the next major-release!
      * useProxy
      */
-    useProxy: false
+    useProxy: false,
+    showInvisibleLayerInfo: true
 };
 
 export default state;

@@ -300,7 +300,7 @@ export default {
         hintInfo = i18next.t("common:modules.tools.print.invisibleLayer", {scale: "1: " + thousandsSeparator(scale, " ")});
         hintInfo = hintInfo + "<br>" + invisibleLayerNames;
 
-        if (invisibleLayer.length && hintInfo !== state.hintInfo) {
+        if ((invisibleLayer.length && hintInfo !== state.hintInfo) && state.showInvisibleLayerInfo) {
             dispatch("Alerting/addSingleAlert", hintInfo, {root: true});
             commit("setHintInfo", hintInfo);
         }
