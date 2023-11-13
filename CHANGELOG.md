@@ -15,6 +15,7 @@
 
 ### Changed
 - The script "npm run build" has been extended. The user can now specify the name of an addon that is excluded from bundle.
+- Issue #1064: Print: parameter to configure invisible layer info
 
 ### Deprecated
 
