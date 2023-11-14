@@ -224,8 +224,13 @@ async function loadApp () {
             switch (control.id) {
                 case "button3d": {
                     if (control.attr === true) {
-                        element = controlsView.addRowTR(control.id);
-                        new Button3DView({el: element});
+                        if (global.Cesium === null) {
+                            console.warn("Cesium/3D-Functionality could not be loaded - Please check your Cesium configuration");
+                        }
+                        else {
+                            element = controlsView.addRowTR(control.id);
+                            new Button3DView({el: element});
+                        }
                     }
                     break;
                 }

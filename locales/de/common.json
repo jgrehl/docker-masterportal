@@ -76,7 +76,8 @@
             "bufferAnalysis": "Buffer Analyse",
             "wfsSearch": "WFS Suche",
             "routing": "Routing",
-            "layerClusterToggler": "Layer-Gruppe öffnen"
+            "layerClusterToggler": "Layer-Gruppe öffnen",
+            "login": "Login"
         },
         "contact": "Kontakt",
         "info": "Informationen"
@@ -417,6 +418,7 @@
                 "style": "Style"
             },
             "featureLister": {
+                "title": "Feature List",
                 "chooseTheme": "Thema wählen",
                 "visibleVectorLayers": "Sichtbare Vektorlayer",
                 "list": "Liste",

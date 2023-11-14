@@ -637,9 +637,21 @@ const SearchbarView = Backbone.View.extend(/** @lends SearchbarView.prototype */
         else {
             store.dispatch("MapMarker/removePolygonMarker");
             store.dispatch("MapMarker/removePointMarker");
-            store.dispatch("MapMarker/placingPolygonMarker", getWKTGeom(hit));
-            extent = store.getters["MapMarker/markerPolygon"].getSource().getExtent();
-            Radio.trigger("Map", "zoomToExtent", {extent: extent, options: {maxZoom: zoomLevel}});
+
+            if (store.getters.styleListLoaded) {
+                store.dispatch("MapMarker/placingPolygonMarker", getWKTGeom(hit));
+                extent = store.getters["MapMarker/markerPolygon"].getSource().getExtent();
+                Radio.trigger("Map", "zoomToExtent", {extent: extent, options: {maxZoom: zoomLevel}});
+            }
+            else {
+                store.watch((state, getters) => getters.styleListLoaded, value => {
+                    if (value) {
+                        store.dispatch("MapMarker/placingPolygonMarker", getWKTGeom(hit));
+                        extent = store.getters["MapMarker/markerPolygon"].getSource().getExtent();
+                        Radio.trigger("Map", "zoomToExtent", {extent: extent, options: {maxZoom: zoomLevel}});
+                    }
+                });
+            }
         }
     },
     /**

@@ -79,7 +79,8 @@ WFSLayer.prototype.createLayer = function (attrs) {
             styleId: attrs.styleId, // styleId to pass to masterportalapi
             style: attrs.style, // style function to style the layer or WebGLPoints style syntax
             excludeTypesFromParsing: attrs.excludeTypesFromParsing, // types that should not be parsed from strings, only necessary for webgl
-            isPointLayer: attrs.isPointLayer // whether the source will only hold point data, only necessary for webgl
+            isPointLayer: attrs.isPointLayer, // whether the source will only hold point data, only necessary for webgl
+            gfiThemeSettings: attrs.gfiThemeSettings // for accessing additional theme settings
         },
         options = {
             doNotLoadInitially: attrs.doNotLoadInitially,

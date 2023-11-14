@@ -1,8 +1,8 @@
 /* eslint-disable no-sync */
 /* eslint-disable global-require */
 const merge = require("webpack-merge"),
-    // auskommentieren um eine grafische Darstellung vom bundle als html zu erzeugen
-    // Visualizer = require("webpack-visualizer-plugin"),
+    // einkommentieren um eine grafische Darstellung vom bundle als html zu erzeugen
+    // BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin,
     Common = require("./webpack.common.js"),
     fse = require("fs-extra"),
     HttpsProxyAgent = require("https-proxy-agent"),
@@ -36,7 +36,7 @@ Object.keys(proxies).forEach(proxy => {
 });
 
 module.exports = function () {
-    return merge.smart({
+    return merge.smart(new Common(), {
         mode: "development",
         devtool: "cheap-module-eval-source-map",
         devServer: {
@@ -73,11 +73,9 @@ module.exports = function () {
                 }
             ]
         }
-        // auskommentieren um eine grafische Darstellung vom bundle als html unter "build/statistics.html" zu erzeugen
-        // plugins: [
-        //     new Visualizer({
-        //         filename: "./statistics.html"
-        //     })
+        // einkommentieren um eine grafische Darstellung vom bundle als html unter "build/statistics.html" zu erzeugen
+        // ,plugins: [
+        //     new BundleAnalyzerPlugin()
         // ]
-    }, new Common());
+    });
 };

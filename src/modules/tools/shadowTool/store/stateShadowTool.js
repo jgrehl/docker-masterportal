@@ -15,7 +15,7 @@
 const state = {
     active: false,
     id: "shadow",
-    name: "common:menu.shadow",
+    name: "common:menu.tools.shadow",
     icon: "bi-lamp-fill",
     renderToWindow: true,
     resizableWindow: true,

@@ -7,7 +7,34 @@
 ### __Breaking Changes__
 
 ### Added
+- The following packages have been added:
+    - devDependencies:
+        - webpack-bundle-analyzer: 4.9.1
+- To manage dependencies of dependencies "overrides" for cesium are added to package.json and create dummy packages for it.
+
+### Changed
+- The script "npm run build" has been extended. The user can now specify the name of an addon that is excluded from bundle.
+
+### Deprecated
+
+### Removed
+- The following packages have been removed:
+    - devDependencies:
+        - webpack-visualizer-plugin
+
+### Fixed
+- prepareFeaturesFor3D is now called after loading
+- Issue #1081: Transmit authorization token to services after login
+- Issue #1093: Fixed the Wrong CRS in GeoJSON by Download filtered data
+- Issue #1099: The package.json is adapted, now the size of the bundle, created with "npm run build" is reduced.
+
+---
+## v2.39.0 - 2023-11-01
+
+### Added
 - Add roadmap information to the readme file.
+- Add additional wfs and wms layer param 'gfiThemeSettings' to provide the possibility of additional gfiTheme settings.
+- Issue #1046: Add documentation in the config.json md-files for the `mapView` attribute `startResolution`.
 
 ### Changed
 - Using the workaround `NODE_OPTIONS=--openssl-legacy-provider` for node 18 is no longer necessary.
@@ -19,8 +46,6 @@
         - webpack: 4.46.0 to 4.47.0
 - Updated readme with contribution and pull request information.
 
-### Deprecated
-
 ### Removed
 - The following NPM packages have been removed:
     - devDependencies:
@@ -28,10 +53,14 @@
 
 ### Fixed
 - addWMS: Transformation for external services with EPSG:4326
-- Issue #1018:The tool selectFeatures can now also be used mobile, as an area can be dragged on the map.
+- Issue #886: Remove warning for `Cesium could not be loaded`, if control `button3d` is not configured.
+- Issue #1018: The tool selectFeatures can now also be used mobile, as an area can be dragged on the map.
+- Issue #1052: VectorStyle: path to an icon in the map or in the legend in style.json may be an icon name, a relative path to icon, a complete url or an svg.
 - Issue #1083: fixed the issue.
-- Issue #1081: Transmit authorization token to services after login
+- Issue #1086: prepush hook runs on linux.
+- Issue #1089: When called via the url parameter ?query, no error message is displayed now.
 - Fix some vulnerabilities in dependencies
+- parametricUrl: show alert again if invalid layerId is used in the url.
 
 ---
 

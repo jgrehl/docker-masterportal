@@ -75,7 +75,8 @@
             "bufferAnalysis": "Buffer Analysis",
             "parcelSearch": "Parcel search",
             "wfsSearch": "WFS search",
-            "layerClusterToggler": "Open Layer Cluster"
+            "layerClusterToggler": "Open Layer Cluster",
+            "login": "Login"
         },
         "contact": "Mail",
         "info": "Information"
@@ -416,6 +417,7 @@
                 "style": "Style"
             },
             "featureLister": {
+                "title": "Feature List",
                 "chooseTheme": "Choose theme",
                 "visibleVectorLayers": "Visible vector layers",
                 "list": "List",

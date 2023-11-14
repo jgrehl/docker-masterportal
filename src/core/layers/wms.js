@@ -103,7 +103,8 @@ WMSLayer.prototype.getLayerParams = function (attrs) {
         format: attrs.format,
         useProxy: attrs.useProxy,
         typ: attrs.typ,
-        layerSequence: attrs.layerSequence
+        layerSequence: attrs.layerSequence,
+        gfiThemeSettings: attrs.gfiThemeSettings // for accessing additional theme settings
     };
 };
 

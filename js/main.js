@@ -25,7 +25,6 @@ if (!("Config" in window)) {
     // temporary solution for portals that didn't have loaded Cesium in index.html until lazy loading is implemented
     if (typeof Cesium === "undefined") {
         global.Cesium = null;
-        console.warn("Cesium/3D-Functionality could not be loaded - Please check your Cesium configuration");
     }
 
     // Pfad zur Config.js bei ParametricUrl

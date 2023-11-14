@@ -333,7 +333,16 @@ export default {
             let newLegendObj = legendObj;
 
             if (type === "icon") {
-                newLegendObj.graphic = imgPath + imageName;
+                if (imageName.startsWith("https:")) {
+                    newLegendObj.graphic = imageName;
+                }
+                else if (imageName.startsWith("<svg")) {
+                    newLegendObj.graphic = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(imageName);
+
+                }
+                else {
+                    newLegendObj.graphic = imgPath + imageName;
+                }
             }
             else if (type === "circle") {
                 newLegendObj.graphic = this.drawCircleStyle(style);

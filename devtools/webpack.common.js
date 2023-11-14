@@ -21,7 +21,27 @@ else {
 
 module.exports = function () {
     const addonsRelPaths = {},
-        vueAddonsRelPaths = {};
+        vueAddonsRelPaths = {},
+        plugins = [
+            // provide libraries globally
+            new webpack.ProvidePlugin({
+                jQuery: "jquery",
+                $: "jquery",
+                Backbone: "backbone",
+                Radio: "backbone.radio",
+                i18next: ["i18next/dist/cjs/i18next.js"],
+                _: "underscore"
+            }),
+            // create css under build/
+            new MiniCssExtractPlugin({
+                filename: "css/[name].css"
+            }),
+            new VueLoaderPlugin()
+        ];
+
+    if (process.env.EXCLUDE_ADDON) {
+        plugins.push(new webpack.IgnorePlugin(new RegExp(process.env.EXCLUDE_ADDON + "/", "i")));
+    }
 
     for (const addonName in addonEntryPoints) {
         let isVueAddon = false,
@@ -66,8 +86,14 @@ module.exports = function () {
         else {
             addonsRelPaths[addonName] = addonCombinedRelpath;
         }
-
     }
+
+    plugins.push(
+        // create global constant at compile time
+        new webpack.DefinePlugin({
+            ADDONS: JSON.stringify(addonsRelPaths),
+            VUE_ADDONS: JSON.stringify(vueAddonsRelPaths)
+        }));
 
     return {
         entry: entryPoints,
@@ -166,26 +192,6 @@ module.exports = function () {
                 }
             ]
         },
-        plugins: [
-            // provide libraries globally
-            new webpack.ProvidePlugin({
-                jQuery: "jquery",
-                $: "jquery",
-                Backbone: "backbone",
-                Radio: "backbone.radio",
-                i18next: ["i18next/dist/cjs/i18next.js"],
-                _: "underscore"
-            }),
-            // create css under build/
-            new MiniCssExtractPlugin({
-                filename: "css/[name].css"
-            }),
-            new VueLoaderPlugin(),
-            // create global constant at compile time
-            new webpack.DefinePlugin({
-                ADDONS: JSON.stringify(addonsRelPaths),
-                VUE_ADDONS: JSON.stringify(vueAddonsRelPaths)
-            })
-        ]
+        plugins: plugins
     };
 };
