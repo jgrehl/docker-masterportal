@@ -1,3 +1,5 @@
+import store from "../app-store/index";
+
 /**
  * Handles Loader Overlay.
  */
@@ -11,7 +13,7 @@ export default {
      * @param {number}     maxWait - Maximum loader duration
      * @returns {number}           - Count of virtual loader stacks
      */
-    show: function (maxWait = 25000) {
+    show: function (maxWait = store.state.configJson?.Portalconfig.loaderOverlayMaxWait || 25000) {
         const loader = document.getElementById("loader"),
             masterportalContainer = document.getElementById("masterportal-container");
 
