@@ -24,6 +24,7 @@
 - The following NPM packages have been updated:
     - dependencies:
         - @masterportal/masterportalapi: 2.29.0 to 2.30.0
+- GEOSUPP-170: new parameter "loaderOverlayMaxWait" has been added to configure the maximum loading time for Loader Overlay
 
 ### Deprecated
 
