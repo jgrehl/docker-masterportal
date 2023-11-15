@@ -567,6 +567,51 @@ describe("src/core/layers/wfs.js", () => {
 
             expect(wfsLayer.filterUniqueLegendInfo(features, rules, legendInfos)).to.deep.equal(expectedUniqueLegendInfo);
         });
+        it.only("should not fail if some rules have no condition", () => {
+            const wfsLayer = new WfsLayer(attributes),
+                attributes1 = {id: 1, ID_SYMBOL: "3", name: "ASN, Wertstoffhof Nord"},
+                features = [{
+                    attribute: attributes1,
+                    get: (key) => {
+                        return attributes1[key];
+                    }
+                }],
+                rules = [{
+                    conditions: {
+                        properties: {
+                            ID_SYMBOL: "3"
+                        }
+                    },
+                    style: {
+                        clusterImageName: "amt_stadt_nuernberg.png",
+                        imageName: "amt_stadt_nuernberg.png",
+                        legendValue: "Städtische Ämter"
+                    }
+                },
+                {
+                    style: {
+                        imageName: "bruecke.png"
+                    }
+                }],
+                legendInfos = [
+                    {
+                        geometryType: "Point",
+                        id: "Point%7B%22properties%22%3A%7B%22ID_SYMBOL%22%3A3%7D%7D",
+                        label: "Städtische Ämter",
+                        styleObject: {}
+                    }
+                ],
+                expectedUniqueLegendInfo = [
+                    {
+                        geometryType: "Point",
+                        id: "Point%7B%22properties%22%3A%7B%22ID_SYMBOL%22%3A3%7D%7D",
+                        label: "Städtische Ämter",
+                        styleObject: {}
+                    }
+                ];
+
+            expect(wfsLayer.filterUniqueLegendInfo(features, rules, legendInfos)).to.deep.equal(expectedUniqueLegendInfo);
+        });
     });
     describe("functions for features", () => {
         let style1 = null,
