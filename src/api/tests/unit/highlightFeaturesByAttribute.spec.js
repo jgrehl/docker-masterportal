@@ -105,7 +105,7 @@ describe("api/highlightFeaturesByAttribute", () => {
                     }),
                     getProperties: () => [],
                     get: () => sinon.stub(),
-                    setStyle: () => sinon.stub()
+                    setStyle: sinon.stub()
                 },
                 {
                     id: "789",
@@ -115,31 +115,35 @@ describe("api/highlightFeaturesByAttribute", () => {
                     }),
                     getProperties: () => [],
                     get: () => sinon.stub(),
-                    setStyle: () => sinon.stub()
+                    setStyle: sinon.stub()
                 }
             ],
             polygonFeatures = [
                 {
                     id: "123",
                     getGeometry: () => new Polygon([[[565086.1948534324, 5934664.461947621], [565657.6945448224, 5934738.54524095], [565625.9445619675, 5934357.545446689], [565234.3614400891, 5934346.962119071], [565086.1948534324, 5934664.461947621]]]),
-                    getProperties: () => []
+                    getProperties: () => [],
+                    setStyle: sinon.stub()
                 },
                 {
                     id: "456",
                     getGeometry: () => new Polygon([[[565086.1948534324, 5934664.461947621], [565657.6945448224, 5934738.54524095], [565625.9445619675, 5934357.545446689], [565234.3614400891, 5934346.962119071], [565086.1948534324, 5934664.461947621]]]),
-                    getProperties: () => []
+                    getProperties: () => [],
+                    setStyle: sinon.stub()
                 }
             ],
             lineFeatures = [
                 {
                     id: "123",
                     getGeometry: () => new LineString([[0, 0], [1000, 0]]),
-                    getProperties: () => []
+                    getProperties: () => [],
+                    setStyle: sinon.stub()
                 },
                 {
                     id: "456",
                     getGeometry: () => new LineString([[0, 0], [1000, 0]]),
-                    getProperties: () => []
+                    getProperties: () => [],
+                    setStyle: sinon.stub()
                 }
             ],
             styleObject = {
