@@ -2551,6 +2551,7 @@ Print module, configurable for 2 print services: *High Resolution PlotService* a
 |overviewmapLayerId|no|String||Allows using a different layer for the overview map element. If no Id is specified, the first layer of the selected baselayer maps is used.|false|
 |layoutOrder|no|String[]||Defines the order in which the layouts should be shown in the dropdown. Only to be used in combination with the print service 'plotservice'.|false|
 |isPrintDrawnGeoms|no|Boolean|false|Flag if it's possible to print geometries created by the Draw or Measure tool. Only to be used in combination with the print service 'plotservice'.|false|
+|showInvisibleLayerInfo|no|Boolean|true|Defines whether an infobox is shown when layers will not be printed because they are invisible due to scale.|false|
 
 **High Resolution PlotService example configuration**
 
