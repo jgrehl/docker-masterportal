@@ -204,7 +204,7 @@ const configQuickHelp = {
                     },
                     {
                         text: "common:modules.quickHelp.routingTool.routing.textAvoidTrafficRoutes",
-                        type: "text/plain"
+                        type: "text/html"
                     },
                     {
                         imgName: "routing_5.png",
