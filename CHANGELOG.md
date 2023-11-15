@@ -16,7 +16,6 @@
 
 ### Changed
 - The script "npm run build" has been extended. The user can now specify the name of an addon that is excluded from bundle.
-- Issue #1064: Print: parameter to configure invisible layer info
 - The roadmap dates have been updated. See [Readme](https://bitbucket.org/geowerkstatt-hamburg/masterportal/src/dev/README.md).
 - Highlighting features via URL: 
     - now accepts multiple feature ids, seperated with commas. 
@@ -25,6 +24,7 @@
     - dependencies:
         - @masterportal/masterportalapi: 2.29.0 to 2.30.0
 - New parameter "loaderOverlayMaxWait" has been added to configure the maximum loading time for Loader Overlay
+- Issue #1064: Print: parameter to configure invisible layer info
 
 ### Deprecated
 
