@@ -29,6 +29,7 @@ Im Abschnitt *Portalconfig* können folgende Eigenschaften konfiguriert werden:
 5. Menüeinträge sowie Vorhandenheit jeweiliger Tools und deren Reihenfolge (*menu*)
 6. Typ und Eigenschaften des genutzten Suchdienstes (*searchBar*)
 7. Löschbarkeit von Themen (*layersRemovable*)
+8. Ladezeiten von Loader Overlays (*loaderOverlayMaxWait*)
 
 Es existieren die im Folgenden aufgelisteten Konfigurationen:
 
@@ -46,6 +47,7 @@ Es existieren die im Folgenden aufgelisteten Konfigurationen:
 |quickHelp|nein|**[quickHelp](#markdown-header-portalconfigquickHelp)**||Konfiguration neuer und Manipulation bestehender QuickHelp-Fenster.|false|
 |tree|nein|**[tree](#markdown-header-portalconfigtree)**||Konfiguration des Menü-Baums.|false|
 |layerInformation|nein|**[layerInformation](#markdown-header-portalconfiglayerInformation)**||Legt fest, ob individuelle Attribute in Metadaten von layerinformation angezeigt werden soll.|false|
+|loaderOverlayMaxWait|nein|Integer|25000|Legt die maximale Ladezeit für Loader Overlay an.|false|
 
 ***
 

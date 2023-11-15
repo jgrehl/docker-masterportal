@@ -34,6 +34,7 @@ The section *Portalconfig* controls the following properties:
 5. Menu entries and availability as well as order of tools (*menu*)
 6. Type and properties of used search services (*searchBar*)
 7. Deletability of topics (*layersRemovable*)
+8. Maximum loading time (*loaderOverlayMaxWait*)
 
 The configuration options listed in the following table exist:
 
@@ -51,6 +52,7 @@ The configuration options listed in the following table exist:
 |quickHelp|no|**[quickHelp](#markdown-header-portalconfigquickHelp)**||Configuration of new and manipulation of existing QuickHelp windows.|false|
 |tree|no|**[tree](#markdown-header-portalconfigtree)**||Configuration of menu tree.|false|
 |layerInformation|no|**[layerInformation](#markdown-header-portalconfiglayerInformation)**||Decides if to show individual attribute in Meta data of layer information|false|
+|loaderOverlayMaxWait|no|Integer|25000|Defines the maximum loading time for showing Loader Overlays.|false|
 
 ***
 
