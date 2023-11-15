@@ -567,7 +567,7 @@ describe("src/core/layers/wfs.js", () => {
 
             expect(wfsLayer.filterUniqueLegendInfo(features, rules, legendInfos)).to.deep.equal(expectedUniqueLegendInfo);
         });
-        it.only("should not fail if some rules have no condition", () => {
+        it("should not fail if some rules have no condition", () => {
             const wfsLayer = new WfsLayer(attributes),
                 attributes1 = {id: 1, ID_SYMBOL: "3", name: "ASN, Wertstoffhof Nord"},
                 features = [{
