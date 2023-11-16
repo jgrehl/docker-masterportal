@@ -3,6 +3,7 @@ import actions from "../../../../store/actions/actionsPrintInitialization";
 import VectorLayer from "ol/layer/Vector.js";
 import Canvas from "../../../../utils/buildCanvas";
 import sinon from "sinon";
+import OpenTileLayer from "ol/layer/Tile.js";
 
 const {
     chooseCurrentLayout,
@@ -250,7 +251,8 @@ describe("src/modules/tools/print/store/actions/actionsPrintInitialization.js", 
                         TileLayer
                     ],
                     eventListener: undefined,
-                    layoutList: []
+                    layoutList: [],
+                    showInvisibleLayerInfo: true
                 },
                 rootGetters = {
                     "Maps/getResolutionByScale": () => 10
@@ -259,6 +261,33 @@ describe("src/modules/tools/print/store/actions/actionsPrintInitialization.js", 
             testAction(setPrintLayers, scale, state, {}, [
                 {type: "setHintInfo", payload: "", commit: true},
                 {type: "setInvisibleLayer", payload: [], commit: true}
+            ], {}, done, rootGetters);
+        });
+        it("should not commit setHintInfo", done => {
+            const attributes = {id: 1},
+                TileLayer = new OpenTileLayer(attributes),
+                scale = 40000,
+                state = {
+                    active: true,
+                    visibleLayerList: [
+                        TileLayer
+                    ],
+                    eventListener: undefined,
+                    layoutList: [],
+                    showInvisibleLayerInfo: false,
+                    invisibleLayer: []
+                },
+                rootGetters = {
+                    "Maps/getResolutionByScale": () => 10
+                };
+
+            TileLayer.setMaxResolution(9);
+            TileLayer.setMinResolution(11);
+            TileLayer.setVisible(true);
+            TileLayer.set("name", "TestLayer");
+
+            testAction(setPrintLayers, scale, state, {}, [
+                {type: "setInvisibleLayer", payload: [TileLayer], commit: true}
             ], {}, done, rootGetters);
         });
     });

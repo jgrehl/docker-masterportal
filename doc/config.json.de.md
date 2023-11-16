@@ -2490,6 +2490,7 @@ Druckmodul. Konfigurierbar für 2 Druckdienste: den High Resolution PlotService 
 |overviewmapLayerId|nein|String||Über den Parameter layerId kann ein anderer Layer für die Overviewmap verwendet werden. Wird keine Id angegeben, wird der erste Layer der ausgewählten Hintergundkarten verwendet.|false|
 |layoutOrder|nein|String[]||Legt die Reihenfolge fest, in der die Layouts in der Dropdown-Liste angezeigt werden sollen. Nur in Kombination mit dem Druckdienst 'plotservice' zu verwenden.|false|
 |isPrintDrawnGeoms|nein|Boolean|false|Gibt an, ob es möglich ist, Geometrien zu drucken, die durch das Draw oder Measure Tool entstanden sind. Nur in Kombination mit dem Druckdienst 'plotservice' zu verwenden.|false|
+|showInvisibleLayerInfo|no|Boolean|true|Definiert, ob eine Infobox angezeigt werden soll, wenn layer aufgrund des Maßstabs unsichtbar sind und nicht mitgedruckt werden.|false|
 
 **Beispiel Konfiguration mit High Resolution PlotService**
 ```

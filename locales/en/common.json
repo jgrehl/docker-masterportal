@@ -748,6 +748,10 @@
                     "eastingLabel": "Easting",
                     "northingLabel": "Northing"
                 },
+                "utm": {
+                    "eastingLabel": "Easting",
+                    "northingLabel": "Northing"
+                },
                 "exampleAcronym": "e.g. ",
                 "errorMsg": {
                     "noCoord": "Please enter your {{valueKey}}.",

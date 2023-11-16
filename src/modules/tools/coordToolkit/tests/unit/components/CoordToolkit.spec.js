@@ -340,9 +340,22 @@ describe("src/modules/tools/coordToolkit/components/CoordToolkit.vue", () => {
             wrapper.vm.initProjections();
             wrapper.vm.selectionChanged(event);
 
+            // Projection EPSG:4326
             ret = wrapper.vm.getLabel(key);
             expect(ret).to.be.equals("modules.tools.coordToolkit.hdms.key");
 
+            // Projection EPSG:25832
+            value = "http://www.opengis.net/gml/srs/epsg.xml#25832";
+            event = {
+                target: {
+                    value: value
+                }
+            };
+            wrapper.vm.selectionChanged(event);
+            ret = wrapper.vm.getLabel(key);
+            expect(ret).to.be.equals("modules.tools.coordToolkit.utm.key");
+
+            // Projection EPSG:31467
             value = "http://www.opengis.net/gml/srs/epsg.xml#31467";
             event = {
                 target: {
@@ -353,6 +366,7 @@ describe("src/modules/tools/coordToolkit/components/CoordToolkit.vue", () => {
             ret = wrapper.vm.getLabel(key);
             expect(ret).to.be.equals("modules.tools.coordToolkit.cartesian.key");
 
+            // no projection
             value = null;
             event = {
                 target: {

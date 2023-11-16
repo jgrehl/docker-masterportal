@@ -750,6 +750,10 @@
                     "eastingLabel": "East-Wert / Rechtswert",
                     "northingLabel": "North-Wert / Hochwert"
                 },
+                "utm": {
+                    "eastingLabel": "Ostwert",
+                    "northingLabel": "Nordwert"
+                },
                 "exampleAcronym": "Bsp. ",
                 "errorMsg": {
                     "noCoord": "Bitte geben Sie Ihren {{valueKey}} vollständig ein.",
