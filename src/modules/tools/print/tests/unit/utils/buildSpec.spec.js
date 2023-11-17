@@ -338,7 +338,25 @@ describe("src/modules/tools/print/utils/buildSpec", function () {
                 }
             ]);
         });
+        it("should return prepared legend attributes with sldVersion for GetLegendGraphic-Requests", function () {
+            const legend = [
+                    {
+                        graphic: "SomeGetLegendGraphicRequest",
+                        name: "name_WMS"
+                    }
+                ],
+                sldVersion = "1.1.0";
+
+            expect(buildSpec.prepareLegendAttributes(legend, sldVersion)).to.deep.equal([{
+                legendType: "wmsGetLegendGraphic",
+                geometryType: "",
+                imageUrl: "SomeGetLegendGraphicRequest&sld_version=1.1.0",
+                color: "",
+                label: "name_WMS"
+            }]);
+        });
     });
+
     describe("getFillColorFromSVG", function () {
         it("should return fillColor from svg string in rgb for polygon geometry", function () {
             const svg_string = "<svg foobar fill:rgb(255, 0, 0);/>";
