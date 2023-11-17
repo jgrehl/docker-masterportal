@@ -20,7 +20,7 @@ import styleList from "@masterportal/masterportalapi/src/vectorStyle/styleList";
 import createStyle from "@masterportal/masterportalapi/src/vectorStyle/createStyle";
 import {getRulesForFeature} from "@masterportal/masterportalapi/src/vectorStyle/lib/getRuleForIndex";
 import StaticImageSource from "ol/source/ImageStatic.js";
-import printStore from "../../print/store/indexPrint";
+import legendStore from "../../../legend/store/indexLegend.js";
 
 
 const BuildSpecModel = {
@@ -1307,7 +1307,7 @@ const BuildSpecModel = {
                     else {
                         legendObject.layers.push({
                             layerName: legendObj.name,
-                            values: this.prepareLegendAttributes(legendObj.legend, printStore.state.sldVersion)
+                            values: this.prepareLegendAttributes(legendObj.legend, legendStore.state.sldVersion)
                         });
                     }
                 }
