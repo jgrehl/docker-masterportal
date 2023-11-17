@@ -30,7 +30,7 @@
     - devDependencies:
         - webpack-bundle-analyzer: 4.9.1
 - To manage dependencies of dependencies "overrides" for cesium are added to package.json and create dummy packages for it.
-- New Parameter sldVersion for print module to define a Styled Layer Descriptor for the GetLegendGraphic Requests
+- New Parameter sldVersion for legend configuration to define a Styled Layer Descriptor for the GetLegendGraphic Requests
 - Issue #1105: Added easting and nothing labels for utm projections in CoordToolkit
 - possibility to keep more than one tool open at the same time
 - Added parameter minChars to the locationFinder configuration of the searchBar.
