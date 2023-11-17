@@ -1374,6 +1374,7 @@ Legend configuration options.
 |icon|no|String|"bi-lightbulb"|Legend icon.|false|
 |showCollapseAllButton|no|Boolean|false|Option to en-/disable all legends.|false|
 |showLegend|no|Boolean|false|Option to display the legend when starting the portal|false|
+|sldVersion|no|String|""|Defines the Styled Layer Descriptor version for the GetLegendGraphic Requests, e.g.: "1.1.0"|false|
 
 ***
 
@@ -2557,7 +2558,6 @@ Print module, configurable for 2 print services: *High Resolution PlotService* a
 |layoutOrder|no|String[]||Defines the order in which the layouts should be shown in the dropdown. Only to be used in combination with the print service 'plotservice'.|false|
 |isPrintDrawnGeoms|no|Boolean|false|Flag if it's possible to print geometries created by the Draw or Measure tool. Only to be used in combination with the print service 'plotservice'.|false|
 |showInvisibleLayerInfo|no|Boolean|true|Defines whether an infobox is shown when layers will not be printed because they are invisible due to scale.|false|
-|sldVersion|no|String|""|Defines the Styled Layer Descriptor version for the GetLegendGraphic Requests, e.g.: "1.1.0"|false|
 
 **High Resolution PlotService example configuration**
 
