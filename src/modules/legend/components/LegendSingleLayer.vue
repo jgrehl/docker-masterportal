@@ -1,4 +1,6 @@
 <script>
+import state from "../store/stateLegend";
+
 export default {
     name: "LegendSingleLayer",
     components: {},
@@ -15,6 +17,13 @@ export default {
         renderToId: {
             type: String,
             required: true
+        }
+    },
+    computed: {
+        sld: {
+            get () {
+                return state.sldVersion;
+            }
         }
     },
     watch: {
@@ -59,7 +68,7 @@ export default {
                     <img
                         v-if="!legendPart.endsWith('.pdf') && !legendPart.endsWith('</svg>')"
                         :alt="legendPart.name ? legendPart.name : legendObj.name"
-                        :src="legendPart"
+                        :src="legendPart + (legendPart.toUpperCase().includes('GETLEGENDGRAPHIC') && sld ? '&sld_version=' + sld : '')"
                     >
                     <!--Legend as SVG-->
                     <div
