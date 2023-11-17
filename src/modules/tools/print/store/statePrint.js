@@ -135,7 +135,6 @@ const state = {
     shouldPrintGeometries: false,
     geometries: "[]",
     isPrintDrawnGeoms: false,
-    sldVersion: "",
     /**
      * @deprecated in the next major-release!
      * useProxy
