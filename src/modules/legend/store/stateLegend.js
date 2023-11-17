@@ -9,5 +9,6 @@ export default {
     layerInfoLegend: {},
     showCollapseAllButton: false,
     legendOnChanged: [],
-    showLegendInMenu: true
+    showLegendInMenu: true,
+    sldVersion: ""
 };
