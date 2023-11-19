@@ -104,16 +104,26 @@ function highlightLine (commit, dispatch, highlightObject) {
  * @returns {void}
  */
 function highlightViaParametricUrl (dispatch, getters, layerIdAndFeatureId) {
-    const featureToAdd = layerIdAndFeatureId;
-    let temp,
-        feature;
+    const features = [],
+        featureToAdd = layerIdAndFeatureId;
+    let layerId, params;
 
     if (featureToAdd) {
-        temp = featureToAdd.split(",");
-        feature = getHighlightFeature(temp[0], temp[1], getters);
+        params = featureToAdd.split(",");
+        layerId = params.shift();
+
+        params.forEach((featId) => {
+            features.push(getHighlightFeature(layerId, featId, getters));
+        });
     }
-    if (feature) {
-        dispatch("MapMarker/placingPolygonMarker", feature, {root: true});
+    if (features.length) {
+        const featureIds = [];
+
+        features.forEach(feature => {
+            dispatch("MapMarker/placingPolygonMarker", feature, {root: true});
+            featureIds.push(feature.getId());
+        });
+        dispatch("Maps/zoomToFilteredFeatures", {ids: featureIds, layerId}, {root: true});
     }
 }
 /**
