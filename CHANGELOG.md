@@ -17,6 +17,9 @@
 - The script "npm run build" has been extended. The user can now specify the name of an addon that is excluded from bundle.
 - Issue #1064: Print: parameter to configure invisible layer info
 - The roadmap dates have been updated. See [Readme](https://bitbucket.org/geowerkstatt-hamburg/masterportal/src/dev/README.md).
+- Highlighting features via URL: 
+    - now accepts multiple feature ids, seperated with commas. 
+    - Zooms the map, so that all highlighted features are visible.
 
 ### Deprecated
 
