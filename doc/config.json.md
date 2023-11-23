@@ -211,6 +211,7 @@ Search configuration to use a *ESRI CH LocationFinder*.
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
+|minChars|no|Number|3|Minimum amount of characters required to start a search.|false|
 |incrementalSearch|no|Boolean|true|Defines whether autocomplete is enabled. If `incrementalSearch` is set to `false`, searches will only start on clicking the search icon or pressing enter, since there's a quota on requests.|false|
 |serviceId|yes|String||Service id. Resolved using the **[rest-services.json](rest-services.json.md)** file.|false|
 |classes|no|**[LocationFinderClass](#markdown-header-portalconfigsearchbarlocationfinderLocationFinderClass)**||May contain classes (with properties) to use in searches. If nothing is specified, all classes are considered valid.|false|

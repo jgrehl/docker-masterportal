@@ -5,6 +5,7 @@ import store from "../../../src/app-store";
 
 const LocationFinderModel = Backbone.Model.extend(/** @lends LocationFinderModel.prototype */{
     defaults: {
+        minChars: 3,
         incrementalSearch: true,
         serviceUrl: undefined,
         classes: [],
@@ -24,6 +25,7 @@ const LocationFinderModel = Backbone.Model.extend(/** @lends LocationFinderModel
      * @property {*} ajaxRequest=null - Object for controlling ajax request
      * @property {Boolean} useProxy=false Attribute to request the URL via a reverse proxy.
      * @param {Object} config - The configuration object of the LocationFinder search
+     * @param {integer} [config.minChars=3] - minimum of characters before search gets initiated.
      * @param {number} [config.incrementalSearch=true] - Enable/disable incremental search (autocomplete)
      * @param {number} config.serviceId - ID of rest service
      * @param {number} [config.classes] - Filter results of LocationFinder to listed classes.
@@ -61,6 +63,10 @@ const LocationFinderModel = Backbone.Model.extend(/** @lends LocationFinderModel
                 this.setServiceUrl(service.get("url"));
             }
 
+            if (config.minChars) {
+                this.set("minChars", config.minChars);
+            }
+
             if (store.state.urlParams && store.state.urlParams["Search/query"]) {
                 this.search(store.state.urlParams && store.state.urlParams["Search/query"]);
             }
@@ -84,28 +90,29 @@ const LocationFinderModel = Backbone.Model.extend(/** @lends LocationFinderModel
      * @returns {void}
      */
     search: function (searchString) {
+        if (searchString.length >= this.get("minChars")) {
+            Radio.trigger("Searchbar", "removeHits", "hitList", {type: "locationFinder"});
 
-        Radio.trigger("Searchbar", "removeHits", "hitList", {type: "locationFinder"});
+            const url = this.get("serviceUrl") + "/Lookup",
+                payload = {
+                    query: searchString
+                };
 
-        const url = this.get("serviceUrl") + "/Lookup",
-            payload = {
-                query: searchString
-            };
+            // Filter results by classes
+            if (Array.isArray(this.get("classes")) && this.get("classes").length > 0) {
+                payload.filter = "type:" + this.get("classes").map(item => item.name).join(",");
+            }
 
-        // Filter results by classes
-        if (Array.isArray(this.get("classes")) && this.get("classes").length > 0) {
-            payload.filter = "type:" + this.get("classes").map(item => item.name).join(",");
+            // Set target CRS
+            if (this.get("spatialReference")) {
+                payload.sref = this.get("spatialReference");
+            }
+            else {
+                payload.sref = Radio.request("MapView", "getProjection").getCode();
+            }
+
+            this.sendRequest(url, payload);
         }
-
-        // Set target CRS
-        if (this.get("spatialReference")) {
-            payload.sref = this.get("spatialReference");
-        }
-        else {
-            payload.sref = Radio.request("MapView", "getProjection").getCode();
-        }
-
-        this.sendRequest(url, payload);
     },
 
     /**
