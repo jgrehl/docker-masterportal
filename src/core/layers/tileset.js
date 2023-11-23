@@ -44,7 +44,7 @@ export default function TileSetLayer (attrs) {
     if (attrs.hiddenFeatures && attrs.isSelected === true) {
         this.hideObjects(attrs.hiddenFeatures);
     }
-    this.layer.tileset?.tileVisible?.addEventListener(this.applyStyle.bind(this));
+    this.layer.tileset?.then(tileset => tileset.tileVisible?.addEventListener(this.applyStyle.bind(this)));
 
 }
 // Link prototypes and add prototype methods, means TileSetLayer uses all methods and properties of Layer
