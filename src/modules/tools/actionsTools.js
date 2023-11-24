@@ -14,10 +14,10 @@ const actions = {
      */
     setToolActive ({state, commit, dispatch}, {id, active}) {
         const toolId = Object.keys(state).find(tool => state[tool]?.id?.toLowerCase() === id?.toLowerCase()),
-            keepOpenToolId = Object.keys(state).find(tool => typeof state[tool].keepOpen !== "undefined");
+            keepOpenToolIds = Object.keys(state).filter(tool => typeof state[tool].keepOpen !== "undefined");
 
         if (toolId !== undefined) {
-            if (toolId !== keepOpenToolId) {
+            if (!keepOpenToolIds.includes(toolId)) {
                 dispatch("controlActivationOfTools", {id: state[toolId].id, name: state[toolId].name, active});
                 commit(toolId + "/setActive", active);
                 if (toolId !== "Gfi") {
@@ -77,25 +77,27 @@ const actions = {
      */
     controlActivationOfTools: ({state, getters, commit, dispatch}, {id, name, active}) => {
         let activeToolName;
-        const keepOpenToolId = Object.keys(state).find(tool => typeof state[tool].keepOpen !== "undefined");
+        const keepOpenToolIds = Object.keys(state).filter(tool => typeof state[tool].keepOpen !== "undefined");
 
         getters.getActiveToolNames.forEach((tool) => {
-            if (tool !== keepOpenToolId) {
+            if (!keepOpenToolIds.includes(tool)) {
                 commit(tool + "/setActive", false);
             }
         });
 
-        if (typeof keepOpenToolId !== "undefined") {
-            if (!state[keepOpenToolId].keepOpen) {
-                commit(keepOpenToolId + "/setActive", false);
+        keepOpenToolIds.forEach(keepOpenToolId => {
+            if (typeof keepOpenToolId !== "undefined") {
+                if (!state[keepOpenToolId].keepOpen) {
+                    commit(keepOpenToolId + "/setActive", false);
+                }
+                else if (typeof state[keepOpenToolId].keepOpen === "string" && state[keepOpenToolId].keepOpen !== id) {
+                    commit(keepOpenToolId + "/setActive", false);
+                }
+                else if (Array.isArray(state[keepOpenToolId].keepOpen) && !state[keepOpenToolId].keepOpen.includes(id) && id !== "gfi") {
+                    commit(keepOpenToolId + "/setActive", false);
+                }
             }
-            else if (typeof state[keepOpenToolId].keepOpen === "string" && state[keepOpenToolId].keepOpen !== id) {
-                commit(keepOpenToolId + "/setActive", false);
-            }
-            else if (Array.isArray(state[keepOpenToolId].keepOpen) && !state[keepOpenToolId].keepOpen.includes(id) && id !== "gfi") {
-                commit(keepOpenToolId + "/setActive", false);
-            }
-        }
+        });
 
         if (getters.getConfiguredToolNames.includes(name)) {
             activeToolName = name;
@@ -103,7 +105,7 @@ const actions = {
         else if (getters.getConfiguredToolKeys.includes(id)) {
             activeToolName = upperFirst(id);
         }
-        if (activeToolName !== "Gfi" && activeToolName !== keepOpenToolId) {
+        if (activeToolName !== "Gfi" && !keepOpenToolIds.includes(activeToolName)) {
             commit(activeToolName + "/setActive", true);
             dispatch("activateToolInModelList", {tool: activeToolName, active: active});
         }

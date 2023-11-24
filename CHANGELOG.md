@@ -12,6 +12,7 @@
         - webpack-bundle-analyzer: 4.9.1
 - To manage dependencies of dependencies "overrides" for cesium are added to package.json and create dummy packages for it.
 - Issue #1105: Added easting and nothing labels for utm projections in CoordToolkit
+- possibility to keep more than one tool open at the same time
 
 ### Changed
 - The script "npm run build" has been extended. The user can now specify the name of an addon that is excluded from bundle.
