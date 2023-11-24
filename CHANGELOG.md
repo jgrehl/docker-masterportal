@@ -39,6 +39,7 @@
 - Issue #1091: VectorStyle: read geometry type from geoserver featureTypeRequest and do not fail if some rules in style.json have no condition.
 - Issue #1093: Fixed the Wrong CRS in GeoJSON by Download filtered data
 - Issue #1099: The package.json is adapted, now the size of the bundle, created with "npm run build" is reduced.
+- Search gazeteer: the results to show are arranged to prefer entries, that start with first char of searchstring.
 
 ---
 ## v2.39.0 - 2023-11-01

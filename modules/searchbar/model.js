@@ -354,13 +354,31 @@ const SearchbarModel = Backbone.Model.extend(/** @lends SearchbarModel.prototype
     },
 
     /**
-     * Choose the results for recommenden List
+     * Reduces the results for recommended list to configured max results and prefers results, that start with first char of searchstring.
      * @param {Object[]} typeList Sorted Hits by Type.
      * @param {Number} max Length of recommended list.
-     * @returns {Object[]} Hits for recommended list.
+     * @returns {Object[]} the recommended list to show
      */
     chooseRecommendedHits: function (typeList, max) {
-        const recommendedList = [];
+        const recommendedList = [],
+            searchString = this.get("searchString").toLowerCase();
+
+        typeList.forEach(typeItem => {
+            if (typeItem.type !== i18next.t("common:modules.searchbar.type.topic") && typeItem.type !== i18next.t("common:modules.searchbar.type.subject")) {
+                typeItem.list = typeItem.list.sort((a, b) => {
+                    if (searchString.startsWith(a.name.at(0).toLowerCase())) {
+                        if (searchString.startsWith(b.name.at(0).toLowerCase())) {
+                            return a.name.localeCompare(b.name);
+                        }
+                        return -1;
+                    }
+                    else if (searchString.startsWith(b.name.at(0).toLowerCase())) {
+                        return 1;
+                    }
+                    return a.name.localeCompare(b.name);
+                });
+            }
+        });
 
         for (let i = 0; i < max; i++) {
             typeList.forEach(typeItem => {
