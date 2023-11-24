@@ -184,7 +184,8 @@ describe("src/modules/controls/orientation/components/PoiOrientation.vue", () =>
                     getCoordinates: () => [100, 100]
                 }),
                 getProperties: () => [],
-                get: () => sinon.stub()
+                get: () => sinon.stub(),
+                setStyle: () => sinon.stub()
             };
 
             expect(wrapper.vm.getImgPath(feat)).to.equals("https://geodienste.hamburg.de/lgv-config/img/blank.png");

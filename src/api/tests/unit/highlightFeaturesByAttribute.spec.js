@@ -104,7 +104,8 @@ describe("api/highlightFeaturesByAttribute", () => {
                         getCoordinates: () => [100, 100]
                     }),
                     getProperties: () => [],
-                    get: () => sinon.stub()
+                    get: () => sinon.stub(),
+                    setStyle: () => sinon.stub()
                 },
                 {
                     id: "789",
@@ -113,7 +114,8 @@ describe("api/highlightFeaturesByAttribute", () => {
                         getCoordinates: () => [150, 150]
                     }),
                     getProperties: () => [],
-                    get: () => sinon.stub()
+                    get: () => sinon.stub(),
+                    setStyle: () => sinon.stub()
                 }
             ],
             polygonFeatures = [
