@@ -4,7 +4,7 @@ import TileSetLayer, {lastUpdatedSymbol, hiddenObjects} from "../../tileset";
 import store from "../../../../app-store";
 
 describe("src/core/layers/tileset.js", () => {
-    let attributes, map3D, cesium3DTilesetSpy;
+    let attributes, map3D, fromUrlSpy;
 
     before(() => {
         mapCollection.clear();
@@ -40,9 +40,10 @@ describe("src/core/layers/tileset.js", () => {
     beforeEach(() => {
         global.Cesium = {};
         global.Cesium.Cesium3DTileset = () => { /* no content*/ };
+        global.Cesium.Cesium3DTileset.fromUrl = () => sinon.stub();
         attributes = {
             id: "4002",
-            name: "GebÃ¤ude LoD2",
+            name: "Gebäude LoD2",
             url: "https://geoportal-hamburg.de/gdi3d/datasource-data/LoD2",
             typ: "TileSet3D",
             cesium3DTilesetOptions: {
@@ -50,7 +51,7 @@ describe("src/core/layers/tileset.js", () => {
             },
             isSelected: false
         };
-        cesium3DTilesetSpy = sinon.spy(global.Cesium, "Cesium3DTileset");
+        fromUrlSpy = sinon.spy(global.Cesium.Cesium3DTileset, "fromUrl");
         store.state.Maps.mode = "3D";
         store.getters = {
             "Maps/mode": store.state.Maps.mode
@@ -75,7 +76,9 @@ describe("src/core/layers/tileset.js", () => {
         expect(tilesetLayer.get("name")).to.be.equals(attrs.name);
         expect(tilesetLayer.get("id")).to.be.equals(attrs.id);
         expect(tilesetLayer.get("typ")).to.be.equals(attrs.typ);
-        expect(layer.tileset.layerReferenceId).to.be.equals(attrs.id);
+        layer.tileset.then(tileset => {
+            expect(tileset.layerReferenceId).to.be.equals(attrs.id);
+        });
     }
 
     it("createLayer shall create a tileset layer", function () {
@@ -83,7 +86,7 @@ describe("src/core/layers/tileset.js", () => {
             layer = tilesetLayer.get("layer");
 
         checkLayer(layer, tilesetLayer, attributes);
-        expect(cesium3DTilesetSpy.calledOnce).to.equal(true);
+        expect(fromUrlSpy.calledOnce).to.equal(true);
 
     });
     it("createLayer shall create a visible tileset layer", function () {
@@ -92,8 +95,8 @@ describe("src/core/layers/tileset.js", () => {
             layer = tilesetLayer.get("layer");
 
         checkLayer(layer, tilesetLayer, attributes);
-        expect(cesium3DTilesetSpy.calledOnce).to.equal(true);
-        expect(cesium3DTilesetSpy.calledWithMatch({maximumScreenSpaceError: 6})).to.equal(true);
+        expect(fromUrlSpy.calledOnce).to.equal(true);
+        expect(fromUrlSpy.calledWithMatch("https://geoportal-hamburg.de/gdi3d/datasource-data/LoD2/tileset.json", {maximumScreenSpaceError: 6})).to.equal(true);
     });
     it("setVisible shall call setIsSelected", function () {
         const tilesetLayer = new TileSetLayer(attributes),
@@ -133,23 +136,29 @@ describe("src/core/layers/tileset.js", () => {
             expect(hiddenObjects.id).to.be.undefined;
         });
     });
-    it("setIsSelected true shall create cesiumtilesetProvider", function () {
+    it("setIsSelected true shall create cesiumtilesetProvider", function (done) {
         const tilesetLayer = new TileSetLayer(attributes),
             layer = tilesetLayer.get("layer");
 
         tilesetLayer.setIsSelected(true);
         checkLayer(layer, tilesetLayer, attributes);
-        expect(layer.tileset.show).to.be.true;
-        expect(cesium3DTilesetSpy.calledOnce).to.equal(true);
-        expect(cesium3DTilesetSpy.calledWithMatch({maximumScreenSpaceError: 6})).to.equal(true);
+        layer.tileset.then(tileset => {
+            expect(tileset.show).to.be.true;
+            expect(fromUrlSpy.calledOnce).to.equal(true);
+            expect(fromUrlSpy.calledWithMatch("https://geoportal-hamburg.de/gdi3d/datasource-data/LoD2/tileset.json", {maximumScreenSpaceError: 6})).to.equal(true);
+            done();
+        });
     });
-    it("setIsSelected false shall create ellipsoidtilesetProvider", function () {
+    it("setIsSelected false shall create ellipsoidtilesetProvider", function (done) {
         const tilesetLayer = new TileSetLayer(attributes),
             layer = tilesetLayer.get("layer");
 
         tilesetLayer.setIsSelected(false);
         checkLayer(layer, tilesetLayer, attributes);
-        expect(layer.tileset.show).to.be.false;
+        layer.tileset.then(tileset => {
+            expect(tileset.show).to.be.false;
+            done();
+        });
     });
     it("createLegend shall set legend", function () {
         attributes.legendURL = "https://legendUrl";
@@ -173,16 +182,19 @@ describe("src/core/layers/tileset.js", () => {
         tilesetLayer.setIsVisibleInMap(true);
         checkLayer(layer, tilesetLayer, attributes);
         expect(tilesetLayer.get("isVisibleInMap")).to.equal(true);
-        expect(cesium3DTilesetSpy.calledOnce).to.equal(true);
-        expect(cesium3DTilesetSpy.calledWithMatch({maximumScreenSpaceError: 6})).to.equal(true);
+        expect(fromUrlSpy.calledOnce).to.equal(true);
+        expect(fromUrlSpy.calledWithMatch("https://geoportal-hamburg.de/gdi3d/datasource-data/LoD2/tileset.json", {maximumScreenSpaceError: 6})).to.equal(true);
     });
-    it("setIsVisibleInMap to false shall set isVisibleInMap and hide layer", function () {
+    it("setIsVisibleInMap to false shall set isVisibleInMap and hide layer", function (done) {
         const tilesetLayer = new TileSetLayer(attributes),
             layer = tilesetLayer.get("layer");
 
         checkLayer(layer, tilesetLayer, attributes);
         tilesetLayer.setIsVisibleInMap(false);
-        expect(tilesetLayer.get("isVisibleInMap")).to.equal(false);
-        expect(layer.tileset.show).to.be.false;
+        layer.tileset.then(tileset => {
+            expect(tilesetLayer.get("isVisibleInMap")).to.equal(false);
+            expect(tileset.show).to.be.false;
+            done();
+        });
     });
 });
