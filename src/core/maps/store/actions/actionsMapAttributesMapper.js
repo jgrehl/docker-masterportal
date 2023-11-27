@@ -31,6 +31,15 @@ export default {
         const layerIds = await dispatch("normalizeLayers", await map.getLayers().getArray()),
             channel = Radio.channel("VectorLayer");
 
+        if (rootState.urlParams["Maps/highlightFeature"]) {
+            channel.once({"featuresLoaded": () => {
+                const ids = rootState.urlParams["Maps/highlightFeature"].split(","),
+                    layerId = ids.shift();
+
+                dispatch("Maps/zoomToFilteredFeatures", {ids, layerId}, {root: true});
+            }});
+        }
+
         // listen to featuresLoaded event to be able to determine if all features of a layer are completely loaded
         channel.on({"featuresLoaded": id => {
             commit("addLoadedLayerId", id);

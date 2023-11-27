@@ -117,13 +117,9 @@ function highlightViaParametricUrl (dispatch, getters, layerIdAndFeatureId) {
         });
     }
     if (features.length) {
-        const featureIds = [];
-
         features.forEach(feature => {
             dispatch("MapMarker/placingPolygonMarker", feature, {root: true});
-            featureIds.push(feature.getId());
         });
-        dispatch("Maps/zoomToFilteredFeatures", {ids: featureIds, layerId}, {root: true});
     }
 }
 /**
