@@ -1229,6 +1229,7 @@
                 "location": "Ort",
                 "subject": "Thema (externe Fachdaten)",
                 "topic": "Thema (Fachdaten)",
+                "topicBaselayer": "Thema (Hintergrundkarten)",
                 "general": "Fachdaten",
                 "folder": "Ordner (Fachdaten)"
             },

@@ -15,6 +15,7 @@
 - possibility to keep more than one tool open at the same time
 - Added parameter minChars to the locationFinder configuration of the searchBar.
 - utils/convertColor: added an option to convert an rgba array into a hex color with alpha value
+- Searchbar tree: add a layertree path to the search result. Add a typename for background layer.
 
 ### Changed
 - The script "npm run build" has been extended. The user can now specify the name of an addon that is excluded from bundle.
@@ -42,6 +43,7 @@
 - Issue #1091: VectorStyle: read geometry type from geoserver featureTypeRequest and do not fail if some rules in style.json have no condition.
 - Issue #1093: Fixed the Wrong CRS in GeoJSON by Download filtered data
 - Issue #1099: The package.json is adapted, now the size of the bundle, created with "npm run build" is reduced.
+- Issue #1109: Folders with identical names are searchable in searchbar tree search.
 - Search gazeteer: the results to show are arranged to prefer entries, that start with first char of searchstring.
 
 ---

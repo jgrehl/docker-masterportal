@@ -4,6 +4,7 @@ const TreeModel = Backbone.Model.extend(/** @lends TreeModel.prototype */{
     defaults: {
         inUse: false,
         minChars: 3,
+        searchType: "metadata",
         layers: [],
         nodes: []
     },
@@ -15,6 +16,7 @@ const TreeModel = Backbone.Model.extend(/** @lends TreeModel.prototype */{
      * @param {object} config - Config parameters from config.json for searching in layer tree.
      * @property {boolean} inUse=false todo
      * @property {number} minChars=3 Minimum number of characters to start the search.
+     * @property {String} searchType="metadata" Decides whether the metadata or the name of a layer should be searched. Possible values: "metadata" and "name"
      * @property {object[]} layers=[] todo
      * @property {object[]} nodes=[] todo
      * @fires Core.ConfigLoader#RadioRequestParserGetItemsByAttributes
@@ -27,6 +29,11 @@ const TreeModel = Backbone.Model.extend(/** @lends TreeModel.prototype */{
     initialize: function (config) {
         if (config.minChars) {
             this.set("minChars", config.minChars);
+        }
+
+
+        if (config.searchType) {
+            this.set("searchType", config.searchType);
         }
 
         this.listenTo(Radio.channel("Searchbar"), {
@@ -132,7 +139,7 @@ const TreeModel = Backbone.Model.extend(/** @lends TreeModel.prototype */{
      * @returns {void}
      */
     searchInNodes: function (searchStringRegExp) {
-        const nodes = this.getUniqeNodes(this.get("nodes"));
+        const nodes = this.get("nodes");
 
         nodes.forEach(node => {
             const nodeName = node.name.replace(/ /g, "");
@@ -150,14 +157,16 @@ const TreeModel = Backbone.Model.extend(/** @lends TreeModel.prototype */{
      * @returns {void}
      */
     searchInLayers: function (searchStringRegExp) {
+        const searchType = this.get("searchType");
+
         this.get("layers").forEach(layer => {
             let searchString = "";
 
-            if (layer.metaName !== undefined) {
-                searchString = layer.metaName.replace(/ /g, "");
-            }
-            else if (layer.name !== undefined) {
+            if (searchType === "name" && layer.name !== undefined) {
                 searchString = layer.name.replace(/ /g, "");
+            }
+            else if (searchType === "metadata" && layer.metaName !== undefined) {
+                searchString = layer.metaName.replace(/ /g, "");
             }
 
             if (searchString.search(searchStringRegExp) !== -1) {
@@ -230,9 +239,25 @@ const TreeModel = Backbone.Model.extend(/** @lends TreeModel.prototype */{
         const layersForsearch = [];
 
         layerModelsUniqe.forEach(model => {
-            let metaName;
+            const treeType = Radio.request("Parser", "getTreeType"),
+                parentId = model.parentId,
+                // add path to each model
+                path = this.getModelPath(model);
+            let metaName,
+                fachdatenName = treeType === "custom" ? store.state?.configJson?.Themenconfig?.Fachdaten?.name : undefined, // Use folder name from configuration, if available
+                displayName = fachdatenName ? "Thema (" + fachdatenName + ")" : i18next.t("common:modules.searchbar.type.topic");
 
-            if (Array.isArray(model.datasets) && model.datasets.length > 0 && typeof model.datasets[0].md_name === "string") {
+            // different type text for Baselayer
+            if (treeType === "custom" && path === "" && parentId === "Baselayer") {
+                // Use folder name from configuration, if available
+                fachdatenName = treeType === "custom" ? store.state?.configJson?.Themenconfig?.Hintergrundkarten?.name : undefined;
+                displayName = fachdatenName ? "Thema (" + fachdatenName + ")" : i18next.t("common:modules.searchbar.type.topicBaselayer");
+            }
+
+            if (path !== "") {
+                metaName = path;
+            }
+            else if (Array.isArray(model.datasets) && model.datasets.length > 0 && typeof model.datasets[0].md_name === "string") {
                 metaName = model.name + " (" + model.datasets[0].md_name + ")";
             }
             else {
@@ -241,14 +266,78 @@ const TreeModel = Backbone.Model.extend(/** @lends TreeModel.prototype */{
 
             layersForsearch.push({
                 name: model.name,
-                metaName,
-                type: i18next.t("common:modules.searchbar.type.topic"),
+                metaName: metaName,
+                type: displayName,
                 icon: "bi-stack",
                 id: model.id
             });
         });
 
         return layersForsearch;
+    },
+
+    /**
+     * creates the path in the layertree of the given model
+     * @param {Object} model - given model (layer or leaf folder)
+     * @return {String} path - the path in the layertree
+     */
+    getModelPath: function (model) {
+        const treeType = Radio.request("Parser", "getTreeType");
+        let path = "";
+
+        if (treeType === "custom") {
+            const parentModelId = model?.parentId,
+                itemList = Radio.request("Parser", "getItems"),
+                topFolderNames = [],
+                // all top folders in the overlayer section (currently BASISDATEN & FACHDATEN)
+                overlayerFolders = itemList.filter(item => {
+                    return item.parentId === "Overlayer" && item.type === "folder";
+                }),
+                // all top folders in the Baselayer section (currently none)
+                baseLayerFolders = itemList.filter(item => {
+                    return item.parentId === "Baselayer" && item.type === "folder";
+                });
+
+            // add the top overlayer folders to the topFolders
+            overlayerFolders.forEach(folder => {
+                topFolderNames.push({
+                    id: folder.id,
+                    name: folder.name
+                });
+            });
+            // add the top baselayer folders to the topFolders
+            baseLayerFolders.forEach(folder => {
+                topFolderNames.push({
+                    id: folder.id,
+                    name: folder.name
+                });
+            });
+            // Only add path for folders that are not the top folders in Overlayer or Baselayer section
+            if (parentModelId && parentModelId !== "root" && parentModelId !== "Baselayer" && parentModelId !== "Overlayer") {
+                const isParentTopFolderChild = topFolderNames.find(folder => {
+                    return folder.id === parentModelId;
+                });
+
+                // is the parent model one of the top folders
+                if (isParentTopFolderChild) {
+                    // parse the name of the top folder
+                    const topFolderName = isParentTopFolderChild?.name.toLowerCase(),
+                        parsedTopFolderName = topFolderName.charAt(0).toUpperCase() + topFolderName.slice(1);
+
+                    path = parsedTopFolderName;
+                }
+                else {
+                    // get the parent model
+                    const parentModel = itemList.find(item => {
+                        return item.id === parentModelId;
+                    });
+
+                    // rekursive call with the parent model and adding the parent model name to the path
+                    path = this.getModelPath(parentModel) + "/" + parentModel.name;
+                }
+            }
+        }
+        return path;
     },
 
     /**
@@ -259,13 +348,34 @@ const TreeModel = Backbone.Model.extend(/** @lends TreeModel.prototype */{
     getNodeForSearch: function (nodeModels = []) {
         const nodesForSearch = [],
             folders = [],
-            allFolder = nodeModels?.Ordner ? nodeModels.Ordner : [];
+            allFolder = nodeModels?.Ordner ? nodeModels.Ordner : [],
+            treeType = Radio.request("Parser", "getTreeType"),
+            fachdatenName = treeType === "custom" ? store.state?.configJson?.Themenconfig?.Fachdaten?.name : undefined, // Use folder name from configuration, if available
+            displayName = fachdatenName ? "Ordner (" + fachdatenName + ")" : i18next.t("common:modules.searchbar.type.folder"),
+            nodeModelTitel = nodeModels.Titel,
+            basePath = nodeModels.tooltip !== undefined ? nodeModels.tooltip + "/" + nodeModelTitel : ""; // if nodeModels already has a tooltip, set it as base path
 
         allFolder.forEach(node => {
             if (node.Ordner !== undefined && node.Ordner.length > 0) {
                 node.Ordner.forEach(subfolder => {
-                    let rekursionFolderForSearch = [];
+                    let rekursionFolderForSearch = [],
+                        nodePath = "";
 
+                    if (treeType === "custom") {
+                        // check if the subfolder already has a tooltip
+                        if (subfolder.tooltip === undefined) {
+                            // parse title of node
+                            const nodeTitel = node?.Titel?.toLowerCase(),
+                                nodeTitelParsed = nodeTitel.charAt(0).toUpperCase() + nodeTitel.slice(1);
+
+                            // create the path for the node and add it to the subolder tooltip
+                            nodePath = basePath !== "" ? basePath + "/" + nodeTitelParsed : nodeTitelParsed;
+                            subfolder.tooltip = nodePath;
+                        }
+                        else {
+                            nodePath = subfolder.tooltip;
+                        }
+                    }
                     folders.push(subfolder);
                     if (subfolder?.Ordner !== undefined) {
                         rekursionFolderForSearch = this.getNodeForSearch(subfolder);
@@ -274,6 +384,13 @@ const TreeModel = Backbone.Model.extend(/** @lends TreeModel.prototype */{
                         nodesForSearch.push(model);
                     });
                 });
+                if (node.tooltip === undefined && treeType === "custom") {
+                    node.tooltip = basePath;
+                }
+            }
+            // add tooltip for node if current node has no subfolders
+            else if (node.tooltip === undefined) {
+                node.tooltip = basePath;
             }
             folders.push(node);
         });
@@ -281,7 +398,8 @@ const TreeModel = Backbone.Model.extend(/** @lends TreeModel.prototype */{
         folders.forEach(model => {
             nodesForSearch.push({
                 name: model.Titel,
-                type: i18next.t("common:modules.searchbar.type.folder"),
+                metaName: model?.tooltip,
+                type: displayName,
                 icon: "bi-folder-fill",
                 id: model.id
             });

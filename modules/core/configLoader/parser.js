@@ -108,6 +108,9 @@ const Parser = Backbone.Model.extend(/** @lends Parser.prototype */{
             },
             "getOverlayer": function () {
                 return this.get("overlayer");
+            },
+            "getItems": function () {
+                return this.get("itemList");
             }
         }, this);
 

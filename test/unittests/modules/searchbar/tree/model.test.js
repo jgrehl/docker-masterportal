@@ -275,12 +275,14 @@ describe("modules/searchbar/tree", function () {
             expect(model.getNodeForSearch(nodeModels)).to.be.an("array").to.deep.include(
                 {
                     name: "Test Folder",
+                    metaName: "",
                     type: i18next.t("common:modules.searchbar.type.folder"),
                     icon: "bi-folder-fill",
                     id: "TestFolder7"
                 },
                 {
                     name: "Restliche Layer",
+                    metaName: "",
                     type: i18next.t("common:modules.searchbar.type.folder"),
                     icon: "bi-folder-fill",
                     id: "RestlicheLayer8"

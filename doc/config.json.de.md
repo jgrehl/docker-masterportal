@@ -507,12 +507,14 @@ Alle Layer, die im Themenbaum des Portals sind, werden durchsucht.
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
 |minChars|nein|Integer|3|Minimale Anzahl an Buchstaben, ab der die Suche losläuft.|false|
+|searchType|nein|String|"metadata"|Entscheidet, ob die Metadaten oder der Name eines Layers durchsucht werden soll. Mögliche Werte: "metadata" und "name"|false|
 
 **Beispiel**
 ```
 #!json
 "tree": {
-    "minChars": 5
+    "minChars": 5,
+    "searchType": "name"
 }
 ```
 
