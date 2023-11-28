@@ -21,6 +21,9 @@
 - Highlighting features via URL: 
     - now accepts multiple feature ids, seperated with commas. 
     - Zooms the map, so that all highlighted features are visible.
+- The following NPM packages have been updated:
+    - dependencies:
+        - @masterportal/masterportalapi: 2.29.0 to 2.30.0
 
 ### Deprecated
 
