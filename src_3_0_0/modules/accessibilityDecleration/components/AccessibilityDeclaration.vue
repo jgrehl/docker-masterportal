@@ -1,5 +1,4 @@
 <script>
-// import {mapGetters, mapMutations} from "vuex";
 import ContactFormular from "../../contact/components/ContactFormular.vue";
 
 export default {
@@ -15,6 +14,19 @@ export default {
         id="accessibility-declaration"
         class="d-flex flex-column justify-content-between"
     >
+        <p>Diese Erklärung zur Barrierefreiheit gilt für die unter https://geoportal-hamburg.de/ veröffentlichte Website.</p>
+        <p>Als öffentliche Stelle im Sinne der Richtlinie (EU) 2016/2102 sind wir bemüht, unsere Websites und mobilen Anwendungen im Einklang mit den Bestimmungen des Hamburgischen Behindertengleichstellungsgesetzes (nachfolgend bezeichnet als HmbBGG) sowie der Hamburgischen Barrierefreien Informationstechnik-Verordnung (nachfolgend bezeichnet als HmbBITVO) zur Umsetzung der Richtlinie (EU) 2016/2102 barrierefrei zugänglich zu machen.</p>
+        <hr>
+        <article>
+            <h5>Gebärdensprache</h5>
+            <p>Die Erklärung zur Barrierefreiheit als Video in Gebärdensprache mit Untertiteln und Kapitelfunktion.</p>
+        </article>
+        <hr>
+        <article>
+            <h5>Leichte Sprache</h5>
+            <p>Die Erklärung zur Barrierefreiheit in leichter Sprache.</p>
+        </article>
+        <hr>
         <article>
             <h5>Stand der Vereinbarkeit mit den Anforderungen</h5>
             <p>
