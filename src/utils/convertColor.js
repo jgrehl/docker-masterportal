@@ -77,6 +77,9 @@ function convertColor (color, dest = "rgba") {
         case "hex":
             // -> "#ffffff"
             return convertToHexColor(transColor);
+        case "hexa":
+            // -> "#ffffffff"
+            return convertToHexColorA(transColor);
         case "rgbArrayString":
             // -> "[255, 255, 255]"
             return convertToRgbArrayString(transColor);
@@ -327,6 +330,23 @@ function convertToHexColor (color) {
         + parseInt(color[0], 10).toString(16).padStart(2, "0")
         + parseInt(color[1], 10).toString(16).padStart(2, "0")
         + parseInt(color[2], 10).toString(16).padStart(2, "0");
+}
+
+/**
+ * converts an rgba array into a hex color with alpha value
+ * @param {Number[]} color the validated rgba array
+ * @returns {String} the resulting hex color string with alpha value
+ */
+function convertToHexColorA (color) {
+    const i = Math.round(color[3] * 100) / 100,
+        alpha = Math.round(i * 255),
+        hex = (alpha + 0 * 10000).toString(16).substr(-2);
+
+    return "#"
+        + parseInt(color[0], 10).toString(16).padStart(2, "0")
+        + parseInt(color[1], 10).toString(16).padStart(2, "0")
+        + parseInt(color[2], 10).toString(16).padStart(2, "0")
+        + hex;
 }
 
 /**
