@@ -299,7 +299,7 @@ describe("src_3_0_0/modules/layerSelection/components/LayerSelection.vue", () =>
         expect(provideSelectAllPropsSpy.calledTwice).to.be.true;
     });
 
-    it("reducedFolderNames shall deduce lastFolderNames", async () => {
+    it("reducedFolderNames shall reduce lastFolderNames", async () => {
         lastFolderNames = ["root", "Titel Ebene 1", "Titel Ebene 2"];
         store.commit("Modules/LayerSelection/setLastFolderNames", lastFolderNames);
         wrapper = shallowMount(LayerSelectionComponent, {
