@@ -43,6 +43,10 @@
       "noMetadataLoaded": "Es konnten keine Metadaten geladen werden!",
       "version": "Version: "
     },
+    "accessibilityDeclaration": {
+      "name": "Barrierefreiheitserklärung",
+      "description": "Informiere dich über Barrieren auf dieser Website"
+    },
     "addWMS": {
       "alertTitleSuccess": "Layer erfolgreich hinzugefügt",
       "alreadyAdded": "Die Layer des angeforderten WMS wurden bereits hinzugefügt.",

@@ -1,4 +1,5 @@
 import About from "../about/components/AboutModule.vue";
+import AccessibilityDeclaration from "../accessibilityDecleration/components/AccessibilityDeclaration.vue";
 import AddWMS from "../addWMS/components/AddWMS.vue";
 import BaselayerSwitcher from "../baselayerSwitcher/components/BaselayerSwitcher.vue";
 import BufferAnalysis from "../bufferAnalysis/components/BufferAnalysis.vue";
@@ -45,6 +46,7 @@ const getters = {
     componentMap: () => {
         const coreModules = {
             about: About,
+            accessibilityDeclaration: AccessibilityDeclaration,
             addWMS: AddWMS,
             baselayerSwitcher: BaselayerSwitcher,
             bufferAnalysis: BufferAnalysis,
