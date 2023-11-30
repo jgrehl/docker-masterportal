@@ -4536,11 +4536,11 @@ Routing-Werkzeug Routenplanung Optionen.
                 "CYCLING": ["STEPS", "FERRIES", "UNPAVEDROADS"]
         },
         "styleRoute": {
-            "fillColor": [255, 44, 0],
+            "fillColor": [255, 44, 0, 1],
             "width": 6,
-            "highlightColor": [255, 255, 255],
+            "highlightColor": [255, 255, 255, 1],
             "highlightWidth": 9,
-            "partHighlightColor": [255, 255, 255],
+            "partHighlightColor": [255, 255, 255, 1],
             "partHighlightWidth": 3
         },
         "styleWaypoint": {
@@ -4617,11 +4617,11 @@ Routing-Werkzeug Routenplanung Routen Style Optionen.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
-|fillColor|nein|Number[]|[255, 44, 0]|Welche Farbe zum Füllen verwendet werden soll.|false|
+|fillColor|nein|Number[]|[255, 44, 0, 1]|Welche Farbe zum Füllen verwendet werden soll.|false|
 |width|nein|Number|6|Wie breit die Route dargestellt werden soll.|false|
-|highlightColor|nein|Number[]|[255, 255, 255]|Welche Farbe zum Highlighten verwendet werden soll.|false|
+|highlightColor|nein|Number[]|[255, 255, 255, 1]|Welche Farbe zum Highlighten verwendet werden soll.|false|
 |highlightWidth|nein|Number|9|Wie breit das Highlighting dargestellt werden soll.|false|
-|partHighlightColor|nein|Number[]|[255, 255, 255]|Welche Farbe zum highlighten verwendet werden soll, wenn nur ein Teil der Route gehighlightet wird.|false|
+|partHighlightColor|nein|Number[]|[255, 255, 255, 1]|Welche Farbe zum highlighten verwendet werden soll, wenn nur ein Teil der Route gehighlightet wird.|false|
 |highlightWidth|nein|Number|9|Wie breit das Highlighting dargestellt werden soll, wenn nur ein Teil der Route gehighlightet wird.|false|
 
 **Beispiel**
@@ -4629,11 +4629,11 @@ Routing-Werkzeug Routenplanung Routen Style Optionen.
 #!json
 {
     "styleRoute": {
-        "fillColor": [255, 44, 0],
+        "fillColor": [255, 44, 0, 1],
         "width": 6,
-        "highlightColor": [255, 255, 255],
+        "highlightColor": [255, 255, 255, 1],
         "highlightWidth": 9,
-        "partHighlightColor": [255, 255, 255],
+        "partHighlightColor": [255, 255, 255, 1],
         "partHighlightWidth": 3
     }
 }

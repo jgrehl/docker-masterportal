@@ -62,11 +62,11 @@ const state = {
         speedProfile: "CAR",
         preference: "RECOMMENDED",
         styleRoute: {
-            fillColor: [255, 44, 0],
+            fillColor: [255, 44, 0, 1],
             width: 6,
-            highlightColor: [255, 255, 255],
+            highlightColor: [255, 255, 255, 1],
             highlightWidth: 9,
-            partHighlightColor: [255, 255, 255],
+            partHighlightColor: [255, 255, 255, 1],
             partHighlightWidth: 3
         },
         styleWaypoint: {

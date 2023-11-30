@@ -4360,11 +4360,11 @@ Routing-tool. Enables user to plan routes between multiple points with multiple 
             "speedProfile": "CAR",
             "preference": "RECOMMENDED",
             "styleRoute": {
-                "fillColor": [255, 44, 0],
+                "fillColor": [255, 44, 0, 1],
                 "width": 6,
-                "highlightColor": [255, 255, 255],
+                "highlightColor": [255, 255, 255, 1],
                 "highlightWidth": 9,
-                "partHighlightColor": [255, 255, 255],
+                "partHighlightColor": [255, 255, 255, 1],
                 "partHighlightWidth": 3
             },
             "styleWaypoint": {
@@ -4594,11 +4594,11 @@ Routing-tool directions options.
                 "CYCLING": ["STEPS", "FERRIES", "UNPAVEDROADS"]
         },
         "styleRoute": {
-            "fillColor": [255, 44, 0],
+            "fillColor": [255, 44, 0, 1],
             "width": 6,
-            "highlightColor": [255, 255, 255],
+            "highlightColor": [255, 255, 255, 1],
             "highlightWidth": 9,
-            "partHighlightColor": [255, 255, 255],
+            "partHighlightColor": [255, 255, 255, 1],
             "partHighlightWidth": 3
         },
         "styleWaypoint": {
@@ -4677,11 +4677,11 @@ Routing-tool directions route style options.
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
-|fillColor|no|Number[]|[255, 44, 0]|Which color should be used to fill.|false|
+|fillColor|no|Number[]|[255, 44, 0, 1]|Which color should be used to fill.|false|
 |width|no|Number|6|How thick should the line be displayed.|false|
-|highlightColor|no|Number[]|[255, 255, 255]|Which color should be used to highlight the route.|false|
+|highlightColor|no|Number[]|[255, 255, 255, 1]|Which color should be used to highlight the route.|false|
 |highlightWidth|no|Number|9|How thick should the highlighting line be displayed.|false|
-|partHighlightColor|no|Number[]|[255, 255, 255]|Which color should be used when highlighting part of the route.|false|
+|partHighlightColor|no|Number[]|[255, 255, 255, 1]|Which color should be used when highlighting part of the route.|false|
 |highlightWidth|no|Number|9|How thick should the highlighting part of the route be displayed.|false|
 
 **Example**
@@ -4689,11 +4689,11 @@ Routing-tool directions route style options.
 #!json
 {
     "styleRoute": {
-        "fillColor": [255, 44, 0],
+        "fillColor": [255, 44, 0, 1],
         "width": 6,
-        "highlightColor": [255, 255, 255],
+        "highlightColor": [255, 255, 255, 1],
         "highlightWidth": 9,
-        "partHighlightColor": [255, 255, 255],
+        "partHighlightColor": [255, 255, 255, 1],
         "partHighlightWidth": 3
     }
 }

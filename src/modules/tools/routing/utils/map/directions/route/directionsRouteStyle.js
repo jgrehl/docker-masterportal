@@ -13,7 +13,7 @@ export default function createDirectionsRouteStyle (feature) {
     if (isHighlight) {
         return new Style({
             stroke: new Stroke({
-                color: [...styleSetting.partHighlightColor, 1.0],
+                color: [...styleSetting.partHighlightColor],
                 width: styleSetting.partHighlightWidth
             })
         });
@@ -22,13 +22,13 @@ export default function createDirectionsRouteStyle (feature) {
     return [
         new Style({
             stroke: new Stroke({
-                color: [...styleSetting.highlightColor, 1.0],
+                color: [...styleSetting.highlightColor],
                 width: styleSetting.highlightWidth
             })
         }),
         new Style({
             stroke: new Stroke({
-                color: [...styleSetting.fillColor, 1.0],
+                color: [...styleSetting.fillColor],
                 width: styleSetting.width
             })
         })
