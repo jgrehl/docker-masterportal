@@ -1377,7 +1377,7 @@ const BuildSpecModel = {
     /**
      * Prepares Attributes for legend in mapfish-print template
      * @param {Object} legend Legend of layer.
-     * @param {String} sldVersion sld version for GetLegendGraphic Requests
+     * @param {String} sldVersion [sldVersion=""] sld version for GetLegendGraphic Requests
      * @returns {Object[]} - prepared legend attributes.
      */
     prepareLegendAttributes: function (legend, sldVersion = "") {
