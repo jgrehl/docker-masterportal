@@ -942,6 +942,7 @@
                     "restrictedAreas": "Запретные зоны",
                     "editRestrictedAreas": "Запретные зоны рисовать/редактировать",
                     "deleteRestrictedAreas": "Запретные зоны удалить",
+                    "deleteRoutesAfterClose": "Сохранить маршрут после закрытия инструмента",
                     "batchProcessing": {
                         "structure": "ID;lon(Отправная точка);lat(Отправная точка);lon(Конечная точка);lat(Конечная точка)",
                         "errorSomeFailed": "Результаты не могут быть рассчитаны правильно {{countFailed}}. Результирующий файл содержит пустые ячейки в этих местах.",

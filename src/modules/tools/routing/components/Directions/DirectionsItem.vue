@@ -170,6 +170,15 @@ export default {
         />
 
         <hr>
+        <input
+            id="routing-delete-routes-input"
+            type="checkbox"
+            :checked="deleteRoutes"
+            @change="setDeleteRoutes($event.target.checked)"
+        >
+        <span class="ms-2">{{ $t('common:modules.tools.routing.directions.deleteRoutesAfterClose') }}</span>
+
+        <hr>
 
         <template v-if="settings.batchProcessing.enabled">
             <RoutingBatchProcessingCheckbox

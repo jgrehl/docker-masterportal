@@ -1042,6 +1042,7 @@
                     "restrictedAreas": "Superfici di barriera",
                     "editRestrictedAreas": "Disegnare/modificare le aree di mantenimento",
                     "deleteRestrictedAreas": "Eliminare le aree di interdizione",
+                    "deleteRoutesAfterClose": "Conserva il percorso dopo la chiusura dello strumento",
                     "batchProcessing": {
                         "structure": "ID;lon(punto iniziale);lat(punto iniziale);lon(punto finale);lat(punto finale)",
                         "errorSomeFailed": "Non è stato possibile calcolare il {{countFailed}} Non è stato possibile calcolare correttamente i risultati. Il file dei risultati contiene celle vuote in questi punti.",

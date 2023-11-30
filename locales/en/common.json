@@ -1073,6 +1073,7 @@
                     "restrictedAreas": "Barrier areas",
                     "editRestrictedAreas": "Draw/edit Barrier areas",
                     "deleteRestrictedAreas": "Delete Barrier areas",
+                    "deleteRoutesAfterClose": "Keep the route after closing the tool",
                     "batchProcessing": {
                         "structure": "ID;lon(Startpoint);lat(Startpoint);lon(Endpoint);lat(Endpoint)",
                         "errorSomeFailed": "{{countFailed}} Results could not be calculated correctly. The result file contains empty cells at these positions.",

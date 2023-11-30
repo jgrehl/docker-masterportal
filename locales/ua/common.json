@@ -945,6 +945,7 @@
                     "restrictedAreas": "бар'єрні зони",
                     "editRestrictedAreas": "Малювання / редагування бар'єрних зон",
                     "deleteRestrictedAreas": "Видалення бар'єрних зон",
+                    "deleteRoutesAfterClose": "Зберігати маршрут після закриття інструмента",
                     "batchProcessing": {
                         "structure": "ID;lon(Startpunkt);lat(Startpunkt);lon(Endpunkt);lat(Endpunkt)",
                         "errorSomeFailed": "Не вдалося правильно розрахувати результати  {{countFailed}}. Файл результатів містить порожні клітинки в цих позиціях.",

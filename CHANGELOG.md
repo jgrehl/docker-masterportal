@@ -37,6 +37,7 @@
 - utils/convertColor: added an option to convert an rgba array into a hex color with alpha value
 - Searchbar tree: add a layertree path to the search result. Add a typename for background layer.
 - Added opacity to configurable parameters of styleRoute
+- Added checkbox to determine if routes stay visible after closing the routing tool
 
 ### Changed
 - The script "npm run build" has been extended. The user can now specify the name of an addon that is excluded from bundle.
