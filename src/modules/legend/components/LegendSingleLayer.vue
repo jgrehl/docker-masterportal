@@ -1,5 +1,5 @@
 <script>
-import state from "../store/stateLegend";
+import {mapGetters} from "vuex";
 
 export default {
     name: "LegendSingleLayer",
@@ -20,11 +20,7 @@ export default {
         }
     },
     computed: {
-        sld: {
-            get () {
-                return state.sldVersion;
-            }
-        }
+        ...mapGetters("Legend", ["sldVersion"])
     },
     watch: {
         legendObj () {
@@ -68,7 +64,7 @@ export default {
                     <img
                         v-if="!legendPart.endsWith('.pdf') && !legendPart.endsWith('</svg>')"
                         :alt="legendPart.name ? legendPart.name : legendObj.name"
-                        :src="legendPart + (legendPart.toUpperCase().includes('GETLEGENDGRAPHIC') && sld ? '&sld_version=' + sld : '')"
+                        :src="legendPart + (legendPart.toUpperCase().includes('GETLEGENDGRAPHIC') && sldVersion ? '&sld_version=' + sldVersion : '')"
                     >
                     <!--Legend as SVG-->
                     <div
