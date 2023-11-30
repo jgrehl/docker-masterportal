@@ -1374,7 +1374,7 @@ Legend configuration options.
 |icon|no|String|"bi-lightbulb"|Legend icon.|false|
 |showCollapseAllButton|no|Boolean|false|Option to en-/disable all legends.|false|
 |showLegend|no|Boolean|false|Option to display the legend when starting the portal|false|
-|sldVersion|no|String|""|Defines the Styled Layer Descriptor version for the GetLegendGraphic Requests, e.g.: "1.1.0"|false|
+|sldVersion|no|String|""|Defines the Styled Layer Descriptor version for the GetLegendGraphic requests, e.g.: "1.1.0"|false|
 
 ***
 
