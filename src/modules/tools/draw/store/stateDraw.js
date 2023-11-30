@@ -74,7 +74,8 @@ const symbol = {
      * @property {String} drawSquareSettings.squareMethod The method for drawing features of drawType "Square".
      * @property {Number} drawSquareSettings.strokeWidth Stroke width.
      * @property {String} drawSquareSettings.unit The unit of measurement (e.g. "km").
-     * @property {String} drawSquareSettings.squareArea The area of the square.
+     * @property {Number} drawSquareSettings.squareArea The area of the square.
+     * @property {Number} drawSquareSettings.squareSide The length of the sides from the square, only calculated if not modified and all sides are the same length.
      * @property {String[]} drawSquareSettings.color The color of the drawn feature represented as an array.
      * @property {Number} drawSquareSettings.opacity The opacity of the color of the drawn features. NOTE: The values of the transparencySettings are opacity values.
      * @property {String[]} drawSquareSettings.colorContour The color of the contours of the drawn feature represented as an array.
@@ -213,6 +214,7 @@ const symbol = {
         drawSquareSettings: {
             squareMethod: "interactive",
             strokeWidth: 1,
+            squareSide: 0,
             unit: "m",
             squareArea: 0,
             color: [55, 126, 184, 1],

@@ -197,6 +197,9 @@ const initialState = JSON.parse(JSON.stringify(stateDraw)),
 
                 const drawTypeId = state?.drawType?.id;
 
+                if (drawTypeId === "drawSquare") {
+                    commit("setSquareSide", 0);
+                }
                 if (drawTypeId === "drawCircle" || drawTypeId === "drawDoubleCircle" || drawTypeId === "drawSquare" || drawTypeId === "drawArea" || drawTypeId === "drawLine") {
                     tooltip = createTooltipOverlay({state, getters, commit, dispatch});
                     const map = mapCollection.getMap(rootState.Maps.mode);
@@ -267,6 +270,9 @@ const initialState = JSON.parse(JSON.stringify(stateDraw)),
             state.modifyAttributesInteraction.on("modifystart", event => {
                 if (state.selectedFeature) {
                     commit("setSelectedFeature", null);
+                }
+                if (state.drawType.id === "drawSquare") {
+                    commit("setSquareSide", "-");
                 }
 
                 event.features.getArray().forEach(feature => {

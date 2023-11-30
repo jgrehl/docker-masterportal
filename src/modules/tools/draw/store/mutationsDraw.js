@@ -24,6 +24,9 @@ const mutations = {
     setDownloadSelectedFormat: (state, payload) => {
         state.download.selectedFormat = payload;
     },
+    setSquareSide: (state, payload) => {
+        state.drawSquareSettings.squareSide = payload;
+    },
     addSymbol: (state, payload) => {
         state.iconList.push(payload);
     },
@@ -71,6 +74,7 @@ const mutations = {
         state.drawSquareSettings.opacityContour = styleSettings.opacityContour;
         state.drawSquareSettings.squareArea = styleSettings.squareArea;
         state.drawSquareSettings.squareMethod = styleSettings.squareMethod;
+        state.drawSquareSettings.squareSide = styleSettings.squareSide;
         state.drawSquareSettings.strokeWidth = styleSettings.strokeWidth;
         state.drawSquareSettings.unit = styleSettings.unit;
     },

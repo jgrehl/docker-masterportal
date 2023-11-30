@@ -189,12 +189,15 @@ export default {
             get () {
                 const squareAreaMeters = this.styleSettings?.squareArea || 0;
 
-                if (this.styleSettings?.unit === "km") {
-                    const squareSideLengthKm = Math.sqrt(squareAreaMeters) / 1000;
+                if (this.drawSquareSettings.squareSide !== "-") {
+                    if (this.styleSettings?.unit === "km") {
+                        const squareSideLengthKm = Math.sqrt(squareAreaMeters) / 1000;
 
-                    return squareSideLengthKm.toFixed(2);
+                        return squareSideLengthKm.toFixed(2);
+                    }
+                    return Math.round(Math.sqrt(squareAreaMeters));
                 }
-                return Math.round(Math.sqrt(squareAreaMeters));
+                return this.drawSquareSettings.squareSide;
             },
             /**
          * Setter for the computed property squareSideLength based on squareArea
@@ -206,12 +209,12 @@ export default {
                 if (this.styleSettings?.unit === "km") {
                     const squareAreaKm = Math.pow(value / 1000, 2);
 
-                    this.setSquareArea(squareAreaKm);
+                    this.setSquareSide(squareAreaKm);
                 }
                 else {
                     const squareAreaMeters = Math.pow(value, 2);
 
-                    this.setSquareArea(squareAreaMeters);
+                    this.setSquareSide(squareAreaMeters);
                 }
             }
         },
