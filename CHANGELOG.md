@@ -31,6 +31,7 @@
         - webpack-bundle-analyzer: 4.9.1
 - To manage dependencies of dependencies "overrides" for cesium are added to package.json and create dummy packages for it.
 - New Parameter sldVersion for legend configuration to define a Styled Layer Descriptor for the GetLegendGraphic requests.
+- Issue #1038: Tooltips to display area of drawn polygons/squares and length of drawn lines
 - Issue #1105: Added easting and nothing labels for utm projections in CoordToolkit
 - possibility to keep more than one tool open at the same time
 - Added parameter minChars to the locationFinder configuration of the searchBar.
@@ -38,6 +39,7 @@
 - Searchbar tree: add a layertree path to the search result. Add a typename for background layer.
 - Added opacity to configurable parameters of styleRoute
 - Added checkbox to determine if routes stay visible after closing the routing tool
+- Added square as geometryType for drawingTool.
 
 ### Changed
 - The script "npm run build" has been extended. The user can now specify the name of an addon that is excluded from bundle.
