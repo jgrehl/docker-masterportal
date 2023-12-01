@@ -5,7 +5,7 @@
  * @param {Number} squareArea The area of the square to be calculated.
  * @returns {void}
  */
-function calculateSquare (feature, squareCenter, squareArea) {
+export function calculateSquare (feature, squareCenter, squareArea) {
     // Calculate the side length of the square from the area
     const squareSideLength = Math.sqrt(squareArea),
         halfSide = squareSideLength / 2,
@@ -19,7 +19,3 @@ function calculateSquare (feature, squareCenter, squareArea) {
 
     feature.getGeometry().setCoordinates(coordinates);
 }
-
-export default {
-    calculateSquare
-};
