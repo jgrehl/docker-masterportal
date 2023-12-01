@@ -19,3 +19,7 @@ export function calculateSquare (feature, squareCenter, squareArea) {
 
     feature.getGeometry().setCoordinates(coordinates);
 }
+
+export default {
+    calculateSquare
+};

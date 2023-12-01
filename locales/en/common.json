@@ -856,6 +856,7 @@
                 "undefinedInnerCircle": "Please also define the inner circle.",
                 "undefinedRadius": "Please specify a radius.",
                 "undefinedOuterCircle": "Please also define the outer circle.",
+                "undefinedSquareArea": "Please define the area of the square",
                 "limitReached_one": "You have already drawn {{count}} object, please delete it before continuing!",
                 "limitReached_other": "You have already drawn {{count}} objects, please delete one before proceeding!",
                 "drawSymbol": "Symbol",

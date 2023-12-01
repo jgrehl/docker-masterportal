@@ -1,6 +1,6 @@
 import sinon from "sinon";
 import {expect} from "chai";
-import {calculateSquare} from "../../../utils/squareCalculations";
+import * as calculateSquare from "../../../utils/squareCalculations";
 
 const mockGeometry = {
         getCoordinates: sinon.stub().returns([]),
@@ -16,7 +16,7 @@ const mockGeometry = {
 
 describe("calculateSquare", () => {
     it("should create a square around the center with the specified area", () => {
-        calculateSquare(mockFeature, mockSquareCenter, mockSquareArea);
+        calculateSquare.calculateSquare(mockFeature, mockSquareCenter, mockSquareArea);
 
         const halfSide = Math.sqrt(mockSquareArea) / 2,
             expectedCoordinates = [

@@ -11,6 +11,7 @@ config.mocks.$t = key => key;
 config.mocks.$i18n = {
     i18next: {
         exists: sinon.stub(),
+        t: sinon.stub(),
         options: {
             isEnabled: () => sinon.stub(),
             getLanguages: () => sinon.stub()
@@ -84,6 +85,22 @@ describe("src/tools/draw/components/DrawItem.vue", () => {
         }
     });
 
+    /**
+     * Mounts the DrawItemComponent with specified draw type, geometry, and style settings for testing.
+     *
+     * @param {string} drawType - The draw type identifier ('drawArea', 'drawSquare', 'drawLine').
+     * @param {string} geometry - The geometry type ('Area', 'Square', 'Line').
+     * @param {Object} styleSettingsData - The style settings data to set for testing.
+     * @returns {Wrapper} - The mounted wrapper for the DrawItemComponent.
+     */
+    function mountComponent (drawType, geometry, styleSettingsData) {
+        const mountedWrapper = shallowMount(DrawItemComponent, {store, localVue, data: componentData});
+
+        store.commit("Tools/Draw/setDrawType", {id: drawType, geometry: geometry});
+        mountedWrapper.setData({styleSettings: styleSettingsData});
+        return mountedWrapper;
+    }
+
     it("sets focus to first input control", async () => {
         const elem = document.createElement("div");
 
@@ -119,6 +136,33 @@ describe("src/tools/draw/components/DrawItem.vue", () => {
         expect(wrapper.find("#tool-draw-editInteraction").element.disabled).to.be.true;
         expect(wrapper.find("#tool-draw-deleteInteraction").element.disabled).to.be.true;
         expect(wrapper.find("#tool-draw-deleteAllInteraction").element.disabled).to.be.true;
+    });
+
+    it("should render area and area unit if drawType.id is drawArea", async () => {
+        wrapper = mountComponent("drawArea", "Area", {});
+        await wrapper.vm.$nextTick();
+        expect(wrapper.find("#tool-draw-area").exists()).to.be.true;
+        expect(wrapper.find("#tool-draw-areaUnit").exists()).to.be.true;
+    });
+
+    // Restliche Tests...
+
+    it("sets area in kilometers if unit is 'km'", () => {
+        wrapper = mountComponent("drawArea", "Area", {unit: "km"});
+        wrapper.vm.areaComputed = 6.8;
+        expect(wrapper.vm.styleSettings.area).to.equal(6800);
+    });
+
+    it("sets line length in kilometers if unit is 'km'", () => {
+        wrapper = mountComponent("drawLine", "Line", {unit: "km"});
+        wrapper.vm.lineLengthComputed = 6.5;
+        expect(wrapper.vm.styleSettings.length).to.equal(6500);
+    });
+
+    it("sets square area in kilometers if unit is 'km'", () => {
+        wrapper = mountComponent("drawSquare", "Square", {unit: "km"});
+        wrapper.vm.squareAreaComputed = 6.5;
+        expect(wrapper.vm.styleSettings.squareArea).to.equal(6500);
     });
 
     describe("addSymbolsByLayerModels", () => {

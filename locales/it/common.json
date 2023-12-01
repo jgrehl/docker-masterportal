@@ -825,6 +825,7 @@
                 "undefinedInnerCircle": "Si prega di definire anche il cerchio interno.",
                 "undefinedRadius": "Specificare un raggio.",
                 "undefinedOuterCircle": "Si prega di definire anche il cerchio esterno.",
+                "undefinedSquareArea": "Definire l'area del quadrato",
                 "limitReached_one": "Avete già disegnato {{{count}}} oggetti, per favore cancellatelo prima di continuare!",
                 "limitReached_other": "Avete già disegnato {{{count}}} oggetti, per favore cancellatene uno prima di continuare!",
                 "drawSymbol": "Simbolo",

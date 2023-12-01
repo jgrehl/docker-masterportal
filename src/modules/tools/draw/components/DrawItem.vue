@@ -110,10 +110,10 @@ export default {
              */
             set (value) {
                 if (this.styleSettings?.unit === "km") {
-                    this.setLength(parseInt(value, 10) * 1000);
+                    this.setLength(parseFloat(value, 10) * 1000);
                 }
                 else {
-                    this.setLength(parseInt(value, 10));
+                    this.setLength(parseFloat(value, 10));
                 }
             }
         },
@@ -140,10 +140,10 @@ export default {
              */
             set (value) {
                 if (this.styleSettings?.unit === "km") {
-                    this.setArea(parseInt(value, 10) * 1000);
+                    this.setArea(parseFloat(value) * 1000);
                 }
                 else {
-                    this.setArea(parseInt(value, 10));
+                    this.setArea(parseFloat(value, 10));
                 }
             }
         },
@@ -170,10 +170,10 @@ export default {
              */
             set (value) {
                 if (this.styleSettings?.unit === "km") {
-                    this.setSquareArea(parseInt(value, 10) * 1000);
+                    this.setSquareArea(parseFloat(value, 10) * 1000);
                 }
                 else {
-                    this.setSquareArea(parseInt(value, 10));
+                    this.setSquareArea(parseFloat(value, 10));
                 }
             }
         },

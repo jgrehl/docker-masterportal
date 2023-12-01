@@ -589,6 +589,7 @@
                 "undefinedInnerCircle": "Por favor, defina também o círculo interno.",
                 "undefinedDiameter": "Por favor especifique um diâmetro.",
                 "undefinedOuterCircle": "Por favor, defina também o círculo exterior.",
+                "undefinedSquareArea": "Por favor, defina a área do quadrado",
                 "limitReached_one": "Já desenhou o objecto {{count}}, por favor apague-o antes de continuar!",
                 "limitReached_other": "Já desenhou os objectos {{count}}, por favor apague um antes de continuar!",
                 "drawSymbol": "Símbolo",

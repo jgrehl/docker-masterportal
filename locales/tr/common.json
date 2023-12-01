@@ -720,6 +720,7 @@
                 "undefinedInnerCircle": "Lütfen iç çemberi de tanımlayın.",
                 "undefinedRadius": "Lütfen çemberin çapını girin.",
                 "undefinedOuterCircle": "Lütfen dış çemberi de tanımlayın.",
+                "undefinedSquareArea": "Lütfen karenin alanını tanımlayın",
                 "limitReached_one": "Daha önce {{count}} nesne çizdiniz, lütfen devam etmeden önce bunları silin!",
                 "limitReached_other": "Daha önce {{count}} nesne çizdiniz, lütfen devam etmeden önce birini silin!",
                 "drawSymbol": "Sembol",

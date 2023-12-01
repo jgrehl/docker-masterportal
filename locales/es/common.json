@@ -613,6 +613,7 @@
                 "undefinedInnerCircle": "Por favor, defina también el círculo interior.",
                 "undefinedRadius": "Por favor, especifique el radio.",
                 "undefinedOuterCircle": "Por favor, defina también el círculo exterior.",
+                "undefinedSquareArea": "Por favor, defina el área del cuadrado",
                 "limitReached_one": "Ya has dibujado el objeto {{count}}, por favor, elimínalo antes de continuar!.",
                 "limitReached_other": "¡Ya has dibujado {{count}} objetos, por favor, borra uno antes de continuar!.",
                 "drawSymbol": "Simbolo",
