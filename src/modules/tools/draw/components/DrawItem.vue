@@ -72,7 +72,6 @@ export default {
          */
         drawCircleMethods () {
             if (this.currentInteraction === "draw") {
-                // remember: true means disable, false means enable
                 return !this.drawLayerVisible || this.styleSettings?.circleMethod !== "defined";
             }
             return this.drawHTMLElementsModifyFeature;
@@ -121,7 +120,7 @@ export default {
 
         areaComputed: {
             /**
-             * getter for the computed property area of the current drawType
+             * Getter for the computed property area of the current drawType
              * @info the internal representation of area is always in meters
              * @returns {Number} the current radius
              */
@@ -134,7 +133,7 @@ export default {
                 return this.styleSettings?.area;
             },
             /**
-             * setter for the computed property area of the current drawType
+             * Setter for the computed property area of the current drawType
              * @info the internal representation of area is always in meters
              * @param {Number} value the value to set the target to
              * @returns {void}
@@ -151,7 +150,7 @@ export default {
 
         squareAreaComputed: {
             /**
-             * getter for the computed property squareArea of the current drawType
+             * Getter for the computed property squareArea of the current drawType
              * @info the internal representation of squareArea is always in meters
              * @returns {Number} the current radius
              */
@@ -164,7 +163,7 @@ export default {
                 return this.styleSettings?.squareArea;
             },
             /**
-             * setter for the computed property squareArea of the current drawType
+             * Setter for the computed property squareArea of the current drawType
              * @info the internal representation of squareArea is always in meters
              * @param {Number} value the value to set the target to
              * @returns {void}
