@@ -28,6 +28,7 @@
         - @masterportal/masterportalapi: 2.29.0 to 2.30.0
 - New parameter "loaderOverlayMaxWait" has been added to configure the maximum loading time for Loader Overlay
 - Issue #1064: Print: parameter to configure invisible layer info
+- Added radio selection of background layers in custom treetype when 'singleBaseLayer' is true
 
 ### Deprecated
 
