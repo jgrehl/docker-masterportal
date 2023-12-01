@@ -12,6 +12,21 @@ describe("LegendSingleLayer.vue", () => {
     let store,
         wrapper;
 
+    beforeEach(() => {
+        store = new Vuex.Store({
+            namespaced: true,
+            modules: {
+                Legend: {
+                    namespaced: true,
+                    getters: {
+                        sldVersion () {
+                            return "1.1.0";
+                        }
+                    }
+                }
+            }});
+    });
+
     afterEach(() => {
         if (wrapper) {
             wrapper.destroy();
@@ -197,6 +212,22 @@ describe("LegendSingleLayer.vue", () => {
             expect(wrapper.find("#legend_myLayer > div:nth-child(2) img").exists()).to.be.true;
             expect(wrapper.find("#legend_myLayer > div:nth-child(2) img").attributes().src).to.equal("another_string_interpreted_as_image");
             expect(wrapper.find("#legend_myLayer > div:nth-child(2) span").text()).to.equal("barfoo");
+        });
+        it("renders the legend with img with sldVersion request", () => {
+            wrapper = shallowMount(LegendSingleLayerComponent, {
+                store,
+                localVue,
+                propsData: {
+                    id: "legend_myLayer",
+                    legendObj: {
+                        name: "myLayer",
+                        legend: ["some_request_for_an_image?REQUEST=GetLegendGraphic"],
+                        position: 1
+                    },
+                    renderToId: ""
+                }
+            });
+            expect(wrapper.find("#legend_myLayer > div:nth-child(1) img").attributes().src).includes("&sld_version=1.1.0");
         });
     });
     describe("renders legend with svg", () => {
