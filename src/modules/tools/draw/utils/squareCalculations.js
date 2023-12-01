@@ -6,7 +6,7 @@
  * @returns {void}
  */
 function calculateSquare (feature, squareCenter, squareArea) {
-    // Berechne die Seitenlänge des Quadrats aus dem Flächeninhalt
+    // Calculate the side length of the square from the area
     const squareSideLength = Math.sqrt(squareArea),
         halfSide = squareSideLength / 2,
         topLeft = [squareCenter[0] - halfSide, squareCenter[1] + halfSide],
@@ -14,7 +14,7 @@ function calculateSquare (feature, squareCenter, squareArea) {
         bottomLeft = [squareCenter[0] - halfSide, squareCenter[1] - halfSide],
         bottomRight = [squareCenter[0] + halfSide, squareCenter[1] - halfSide],
 
-        // Erzeuge ein Polygon aus den Koordinaten der Quadratseiten
+        // Create a polygon from the coordinates of the square sides
         coordinates = [[topLeft, topRight, bottomRight, bottomLeft, topLeft]];
 
     feature.getGeometry().setCoordinates(coordinates);
