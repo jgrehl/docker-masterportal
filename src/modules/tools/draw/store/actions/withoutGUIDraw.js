@@ -184,7 +184,7 @@ function editFeaturesWithoutGUI ({dispatch}) {
  *
  * @param {Object} context actions context object.
  * @param {String} prmObject An Object which includes the parameters.
- * @param {String} prmObject.drawType Which feature type is meant to be drawn; ["Point", "LineString", "Polygon", "Circle"].
+ * @param {String} prmObject.drawType Which feature type is meant to be drawn; ["Point", "LineString", "Polygon", "Circle", "Square"].
  * @param {String} prmObject.color color of the feature, rgb-coded (default: "55, 126, 184").
  * @param {Number} prmObject.opacity opacity of the feature (default: 1.0).
  * @param {Integer} prmObject.maxFeatures Maximum number of Features allowed to be drawn (default: unlimited).
@@ -207,7 +207,7 @@ async function initializeWithoutGUI ({state, commit, dispatch, getters, rootStat
     commit("setFreeHand", false);
     commit("setWithoutGUI", true);
 
-    if (["Point", "LineString", "Polygon", "Circle"].indexOf(drawType) > -1) {
+    if (["Point", "LineString", "Polygon", "Circle", "Square"].indexOf(drawType) > -1) {
         const {styleSettings} = getters;
 
         commit("setDrawType", {id: drawTypeId, geometry: drawType});

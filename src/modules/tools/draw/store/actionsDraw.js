@@ -101,20 +101,6 @@ const initialState = JSON.parse(JSON.stringify(stateDraw)),
             mapCollection.getMap(rootState.Maps.mode).removeOverlay(tooltip);
         },
         /**
-         * Transforms the given coordinates from the map's projection to the target projection, if provided.
-         *
-         * @param {module:ol/Map} map - The map instance.
-         * @param {String} targetProjection - The target projection (e.g., 'EPSG:4326') or undefined if no transformation is needed.
-         * @param {module:ol/coordinate~Coordinate} coordinates - The coordinates to transform.
-         * @returns {module:ol/coordinate~Coordinate} - Transformed coordinates if a target projection is provided; otherwise, the original coordinates.
-         */
-        transformCoordinates (map, targetProjection, coordinates) {
-            if (targetProjection !== undefined) {
-                return crs.transform(crs.getMapProjection(map), targetProjection, coordinates);
-            }
-            return coordinates;
-        },
-        /**
          * Returns the center point coordinates of a Line, Polygon, or Point feature.
          * If a target projection is provided, the coordinates are transformed accordingly.
          *
@@ -124,25 +110,45 @@ const initialState = JSON.parse(JSON.stringify(stateDraw)),
          * @returns {module:ol/coordinate~Coordinate} - Coordinates of the center point of the geometry.
          */
         createCenterPoint ({rootState}, {feature, targetProjection}) {
-            let centerPointCoords = [];
+            let centerPoint,
+                centerPointCoords = [];
+
             const featureType = feature.getGeometry().getType(),
                 map = mapCollection.getMap(rootState.Maps.mode);
 
             if (featureType === "LineString") {
-                centerPointCoords = this.transformCoordinates(map, targetProjection, feature.getGeometry().getCoordinateAt(0.5));
+                if (targetProjection !== undefined) {
+                    centerPointCoords = crs.transform(crs.getMapProjection(map), targetProjection, feature.getGeometry().getCoordinateAt(0.5));
+                }
+                else {
+                    centerPointCoords = feature.getGeometry().getCoordinateAt(0.5);
+                }
             }
             else if (featureType === "Point") {
-                centerPointCoords = this.transformCoordinates(map, targetProjection, feature.getGeometry().getCoordinates());
+                if (targetProjection !== undefined) {
+                    centerPointCoords = crs.transform(crs.getMapProjection(map), targetProjection, feature.getGeometry().getCoordinates());
+                }
+                else {
+                    centerPointCoords = feature.getGeometry().getCoordinates();
+                }
             }
             else if (featureType === "Polygon") {
-                const centerPoint = this.transformCoordinates(map, targetProjection, feature.getGeometry().getInteriorPoint().getCoordinates());
-
+                if (targetProjection !== undefined) {
+                    centerPoint = crs.transform(crs.getMapProjection(map), targetProjection, feature.getGeometry().getInteriorPoint().getCoordinates());
+                }
+                else {
+                    centerPoint = feature.getGeometry().getInteriorPoint().getCoordinates();
+                }
                 centerPointCoords = centerPoint.slice(0, -1);
             }
             else if (featureType === "Circle") {
-                centerPointCoords = this.transformCoordinates(map, targetProjection, feature.getGeometry().getCenter());
+                if (targetProjection !== undefined) {
+                    centerPointCoords = crs.transform(crs.getMapProjection(map), targetProjection, feature.getGeometry().getCenter());
+                }
+                else {
+                    centerPointCoords = feature.getGeometry().getCenter();
+                }
             }
-
             return centerPointCoords;
         },
         /**
