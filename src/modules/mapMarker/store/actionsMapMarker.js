@@ -203,7 +203,7 @@ export default {
             const feature = new Feature({
                     geometry: geometry
                 }),
-                featureStyle = createStyle.createStyle(styleObject, feature, false, Config.wfsImgPath).getStyle();
+                featureStyle = createStyle.createStyle(styleObject, feature, false, Config.wfsImgPath);
 
             feature.setStyle(featureStyle);
             commit("addFeatureToMarker", {feature: feature, marker: "markerPolygon"});

@@ -15,6 +15,7 @@
 ### Removed
 
 ### Fixed
+- mapMarker: fix creating a feature style in placingPolygonMarkerByGeom.
 
 ---
 ## v2.40.0 - 2023-12-06
