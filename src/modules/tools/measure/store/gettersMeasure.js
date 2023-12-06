@@ -49,13 +49,14 @@ const getters = {
      * @param {object} rootGetters root getters
      * @return {String[]} calculated display values
      */
-    lineLengths ({lines, earthRadius, measurementAccuracy, selectedUnit, lineStringUnits}, _, __, rootGetters) {
+    lineLengths ({lines, earthRadius, measurementAccuracy, selectedUnit, selectedGeometry, lineStringUnits}, _, __, rootGetters) {
         return calculateLineLengths(
             rootGetters["Maps/projection"].getCode(),
             lines,
             earthRadius,
             measurementAccuracy,
             selectedUnit,
+            selectedGeometry,
             lineStringUnits
         );
     },
@@ -67,13 +68,14 @@ const getters = {
      * @param {object} rootGetters root getters
      * @return {String[]} calculated display values
      */
-    polygonAreas ({polygons, earthRadius, measurementAccuracy, selectedUnit, polygonUnits}, _, __, rootGetters) {
+    polygonAreas ({polygons, earthRadius, measurementAccuracy, selectedUnit, selectedGeometry, polygonUnits}, _, __, rootGetters) {
         return calculatePolygonAreas(
             rootGetters["Maps/projection"].getCode(),
             polygons,
             earthRadius,
             measurementAccuracy,
             selectedUnit,
+            selectedGeometry,
             polygonUnits
         );
     }

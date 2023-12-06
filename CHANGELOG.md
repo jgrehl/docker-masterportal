@@ -61,6 +61,7 @@
 - Issue #1081: Transmit authorization token to services after login
 - Issue #1091: VectorStyle: read geometry type from geoserver featureTypeRequest and do not fail if some rules in style.json have no condition.
 - Issue #1093: Fixed the Wrong CRS in GeoJSON by Download filtered data
+- Issue #1094: Measure Tool: unit changes not connected anymore.
 - Issue #1099: The package.json is adapted, now the size of the bundle, created with "npm run build" is reduced.
 - Issue #1109: Folders with identical names are searchable in searchbar tree search.
 - Search gazeteer: the results to show are arranged to prefer entries, that start with first char of searchstring.
