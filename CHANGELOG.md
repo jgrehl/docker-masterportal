@@ -3,8 +3,7 @@
 
 [Semantic versioning](https://semver.org/spec/v2.0.0.html) is used.
 
-## Unreleased - in development
-### __Breaking Changes__
+## v2.40.0 - 2023-12-06
 
 ### Added
 - The following packages have been added:
@@ -20,8 +19,8 @@
 ### Changed
 - The script "npm run build" has been extended. The user can now specify the name of an addon that is excluded from bundle.
 - The roadmap dates have been updated. See [Readme](https://bitbucket.org/geowerkstatt-hamburg/masterportal/src/dev/README.md).
-- Highlighting features via URL: 
-    - now accepts multiple feature ids, seperated with commas. 
+- Highlighting features via URL:
+    - now accepts multiple feature ids, seperated with commas.
     - Zooms the map, so that all highlighted features are visible.
 - The following NPM packages have been updated:
     - dependencies:
@@ -29,8 +28,6 @@
 - New parameter "loaderOverlayMaxWait" has been added to configure the maximum loading time for Loader Overlay
 - Issue #1064: Print: parameter to configure invisible layer info
 - Added radio selection of background layers in custom treetype when 'singleBaseLayer' is true
-
-### Deprecated
 
 ### Removed
 - The following packages have been removed:
