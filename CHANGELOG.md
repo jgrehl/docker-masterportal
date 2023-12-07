@@ -3,23 +3,13 @@
 
 [Semantic versioning](https://semver.org/spec/v2.0.0.html) is used.
 
-## Unreleased - in development
-### __Breaking Changes__
-
-### Added
-
-### Changed
-
-### Deprecated
-
-### Removed
-
+## v2.40.1 - 2023-12-07
 ### Fixed
 - mapMarker: fix creating a feature style in placingPolygonMarkerByGeom.
 
 ---
-## v2.40.0 - 2023-12-06
 
+## v2.40.0 - 2023-12-06
 ### Added
 - The following packages have been added:
     - devDependencies:
@@ -61,8 +51,8 @@
 - Search gazeteer: the results to show are arranged to prefer entries, that start with first char of searchstring.
 
 ---
-## v2.39.0 - 2023-11-01
 
+## v2.39.0 - 2023-11-01
 ### Added
 - Add roadmap information to the readme file.
 - Add additional wfs and wms layer param 'gfiThemeSettings' to provide the possibility of additional gfiTheme settings.
