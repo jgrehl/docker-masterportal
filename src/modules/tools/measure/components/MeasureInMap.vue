@@ -108,6 +108,15 @@ export default {
         },
         is3DMode () {
             return this.mode === "3D";
+        },
+
+        setSelectedUnit (value) {
+            if (this.selectedGeometry === "LineString") {
+                this.setSelectedLineStringUnit(value);
+            }
+            else {
+                this.setSelectedPolygonUnit(value);
+            }
         }
     }
 };
@@ -174,7 +183,7 @@ export default {
                                 id="measure-tool-unit-select"
                                 ref="measure-tool-unit-select"
                                 class="font-arial form-select form-select-sm float-start"
-                                :value="selectedUnit"
+                                :value="selectedGeometry === 'LineString' ? selectedLineStringUnit : selectedPolygonUnit"
                                 @change="setSelectedUnit($event.target.value)"
                             >
                                 <option

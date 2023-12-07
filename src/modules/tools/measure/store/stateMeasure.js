@@ -26,7 +26,10 @@ import source from "../utils/measureSource";
  * @property {string[]} lineStringUnits Available units for line measurement
  * @property {string[]} polygonUnits Available units for polygon measurement
  * @property {string} selectedGeometry Selected geometry value for measurement
- * @property {string} selectedUnit Selected unit by stringified index ("0"/"1"). Index allows smoother
+ * @property {string} selectedLineStringUnit Selected unit by stringified index ("0"/"1"). Index allows smoother
+ *                                 changes between measurement systems. E.g. when switching from 2D polygon measuring
+ *                                 to 3D line measuring, the unit stays in kilos, in this example km² to km.
+ * @property {string} selectedPolygonUnit Selected unit by stringified index ("0"/"1"). Index allows smoother
  *                                 changes between measurement systems. E.g. when switching from 2D polygon measuring
  *                                 to 3D line measuring, the unit stays in kilos, in this example km² to km.
  * @property {function[]} unlisteners unlisten methods to execute before source clear
@@ -60,7 +63,8 @@ const state = {
     lineStringUnits: ["m", "km"],
     polygonUnits: ["m²", "km²"],
     selectedGeometry: "LineString",
-    selectedUnit: "0",
+    selectedLineStringUnit: "0",
+    selectedPolygonUnit: "0",
     unlisteners: [],
     isDrawing: false,
 

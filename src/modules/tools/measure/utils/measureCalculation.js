@@ -6,18 +6,18 @@ import {getArea, getLength} from "ol/sphere";
  * @param {module:ol/geom/LineString[]} lines lines to calculate length of
  * @param {Number} radius earth radius to assume for calculation
  * @param {String} accuracy accuracy of the measurement result
- * @param {String} selectedUnit index of unit as string
+ * @param {String} selectedLineStringUnit index of unit as string
  * @param {String} selectedGeometry the selected geometry
  * @param {String[]} lineStringUnits list of supported units
  * @return {MeasureCalculation[]} calculated value for display, if value is 0, return without unit
  */
-export function calculateLineLengths (projection, lines, radius, accuracy, selectedUnit, selectedGeometry, lineStringUnits) {
+export function calculateLineLengths (projection, lines, radius, accuracy, selectedLineStringUnit, selectedGeometry, lineStringUnits) {
     if (selectedGeometry === "LineString") {
         return Object.keys(lines).reduce((accumulator, lineKey) => {
             const line = lines[lineKey],
                 length = getLength(line.getGeometry(), {projection, radius}),
                 measurementAccuracy = accuracy,
-                selectedUnitName = lineStringUnits[selectedUnit];
+                selectedUnitName = lineStringUnits[selectedLineStringUnit];
 
             if (length.toFixed(0) === "0") {
                 accumulator[lineKey] = "0";
@@ -52,18 +52,18 @@ export function calculateLineLengths (projection, lines, radius, accuracy, selec
  * @param {module:ol/geom/Polygon[]} polygons polygons to area of
  * @param {Number} radius earth radius to assume for calculation
  * @param {String} accuracy accuracy of the measurement result
- * @param {String} selectedUnit index of unit as number
+ * @param {String} selectedPolygonUnit index of unit as number
  * @param {String} selectedGeometry the selected geometry
  * @param {String[]} polygonUnits list of supported units
  * @return {MeasureCalculation[]} calculated value for display, if value is 0, return without unit
  */
-export function calculatePolygonAreas (projection, polygons, radius, accuracy, selectedUnit, selectedGeometry, polygonUnits) {
+export function calculatePolygonAreas (projection, polygons, radius, accuracy, selectedPolygonUnit, selectedGeometry, polygonUnits) {
     if (selectedGeometry === "Polygon") {
         return Object.keys(polygons).reduce((accumulator, polygonKey) => {
             const polygon = polygons[polygonKey],
                 area = getArea(polygon.getGeometry(), {projection, radius}),
                 measurementAccuracy = accuracy,
-                selectedUnitName = polygonUnits[selectedUnit];
+                selectedUnitName = polygonUnits[selectedPolygonUnit];
 
             if (area.toFixed(0) === "0") {
                 accumulator[polygonKey] = "0";
