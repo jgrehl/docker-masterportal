@@ -13,12 +13,13 @@
 ### Removed
 
 ### Fixed
+- mapMarker: fix creating a feature style in placingPolygonMarkerByGeom.
 
 ---
 
 ## v2.40.1 - 2023-12-07
 ### Fixed
-- mapMarker: fix creating a feature style in placingPolygonMarkerByGeom.
+-  defaultTree: Added missing key singleBaseLayer
 
 ---
 
