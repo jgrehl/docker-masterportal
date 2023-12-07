@@ -3,6 +3,19 @@
 
 [Semantic versioning](https://semver.org/spec/v2.0.0.html) is used.
 
+## Unreleased - in development
+### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+---
+
 ## v2.40.1 - 2023-12-07
 ### Fixed
 - mapMarker: fix creating a feature style in placingPolygonMarkerByGeom.
