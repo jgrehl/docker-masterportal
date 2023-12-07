@@ -363,7 +363,8 @@ const DefaultTreeParser = Parser.extend(/** @lends DefaultTreeParser.prototype *
                     isVisibleInTree: true,
                     level: 0,
                     parentId: "Baselayer",
-                    type: "layer"
+                    type: "layer",
+                    singleBaseLayer: ""
                 }, newLayer));
             }
         });
@@ -476,7 +477,8 @@ const DefaultTreeParser = Parser.extend(/** @lends DefaultTreeParser.prototype *
                 level: 1,
                 parentId: category.id,
                 type: "folder",
-                quickHelp: isQuickHelpSet
+                quickHelp: isQuickHelpSet,
+                singleBaseLayer: ""
             });
             category.layer.forEach(layer => {
                 layer.name = layer.datasets[0].md_name;
@@ -486,7 +488,8 @@ const DefaultTreeParser = Parser.extend(/** @lends DefaultTreeParser.prototype *
                 isBaseLayer: false,
                 level: 1,
                 parentId: category.id,
-                type: "layer"
+                type: "layer",
+                singleBaseLayer: ""
             });
             category.folder.forEach(folder => {
                 // Layer in der untertesten Ebene erzeugen
@@ -494,7 +497,8 @@ const DefaultTreeParser = Parser.extend(/** @lends DefaultTreeParser.prototype *
                     isBaseLayer: false,
                     level: 2,
                     parentId: folder.id,
-                    type: "layer"
+                    type: "layer",
+                    singleBaseLayer: ""
                 });
             });
         });

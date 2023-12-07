@@ -31,7 +31,7 @@ const CustomTreeParser = Parser.extend(/** @lends CustomTreeParser.prototype */{
     parseTree: function (object = {}, parentId = "", level = 0, isAbaseLayer = false) {
         const isBaseLayer = isAbaseLayer || Boolean(parentId === "Baselayer" || this.isAncestorBaseLayer(parentId)),
             treeType = Radio.request("Parser", "getTreeType"),
-            singleBaseLayer = store.state.configJson?.Portalconfig.singleBaselayer;
+            singleBaseLayer = isBaseLayer === true && store.state.configJson?.Portalconfig.singleBaselayer === true;
 
         if (object?.Layer) {
             object.Layer.forEach(layer => {
@@ -140,7 +140,8 @@ const CustomTreeParser = Parser.extend(/** @lends CustomTreeParser.prototype */{
                             name: layerExtended.name[index],
                             parentId: parentId,
                             styles: layerExtended.styles[index],
-                            type: "layer"
+                            type: "layer",
+                            singleBaseLayer
                         }, Radio.request("Util", "omit", layerExtended, ["id", "name", "styles", "legendURL"]));
 
                         subItem = this.controlsVisibilityInTree(subItem, treeType, level, layerExtended);
