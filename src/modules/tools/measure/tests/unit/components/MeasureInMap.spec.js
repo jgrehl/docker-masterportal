@@ -18,7 +18,8 @@ describe("src/modules/tools/measure/components/MeasureInMap.vue", () => {
         MeasureModule.actions.removeDrawInteraction = sinon.spy(MeasureModule.actions.removeDrawInteraction);
         MeasureModule.actions.deleteFeatures = sinon.spy(MeasureModule.actions.deleteFeatures);
         MeasureModule.mutations.setSelectedGeometry = sinon.spy(MeasureModule.mutations.setSelectedGeometry);
-        MeasureModule.mutations.setSelectedUnit = sinon.spy(MeasureModule.mutations.setSelectedUnit);
+        MeasureModule.mutations.setSelectedLineStringUnit = sinon.spy(MeasureModule.mutations.setSelectedLineStringUnit);
+        MeasureModule.mutations.setSelectedPolygonUnit = sinon.spy(MeasureModule.mutations.setSelectedPolygonUnit);
 
         store = new Vuex.Store({
             namespaces: true,
@@ -114,7 +115,7 @@ describe("src/modules/tools/measure/components/MeasureInMap.vue", () => {
         unitSelect.trigger("change");
         await wrapper.vm.$nextTick();
         expect(unitSelect.element.value).equals("1");
-        expect(MeasureModule.mutations.setSelectedUnit.calledOnce).to.be.true;
+        expect(MeasureModule.mutations.setSelectedPolygonUnit.calledOnce).to.be.true;
 
         // no further draw interaction recreation should have happened
         expect(MeasureModule.actions.createDrawInteraction.calledTwice).to.be.true;
