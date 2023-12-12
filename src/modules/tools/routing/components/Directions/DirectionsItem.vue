@@ -173,10 +173,10 @@ export default {
         <input
             id="routing-delete-routes-input"
             type="checkbox"
-            :checked="deleteRoutes"
-            @change="setDeleteRoutes($event.target.checked)"
+            :checked="keepRoutes"
+            @change="setKeepRoutes($event.target.checked)"
         >
-        <span class="ms-2">{{ $t('common:modules.tools.routing.directions.deleteRoutesAfterClose') }}</span>
+        <span class="ms-2">{{ $t('common:modules.tools.routing.directions.keepRoutesAfterClose') }}</span>
 
         <hr>
 

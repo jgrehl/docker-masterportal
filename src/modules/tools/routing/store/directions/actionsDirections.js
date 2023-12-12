@@ -298,7 +298,7 @@ export default {
         const {directionsWaypointsLayer, directionsRouteLayer, directionsAvoidLayer} = state,
             map = await mapCollection.getMap(rootState.Maps.mode);
 
-        if (!state.deleteRoutes) {
+        if (!state.keepRoutes) {
             map.removeLayer(directionsRouteLayer);
         }
         map.removeLayer(directionsWaypointsLayer);
