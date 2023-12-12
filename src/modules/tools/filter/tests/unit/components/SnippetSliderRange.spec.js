@@ -221,6 +221,22 @@ describe("src/module/tools/filter/components/SnippetSliderRange.vue", () => {
                 });
             });
             describe("sliderWrapper", () => {
+                describe("disabling and enabling inputs", () => {
+                    it("should add disabledClass to CSS classes if prop disabled is true", async () => {
+                        wrapper = shallowMount(SnippetSliderRange, {localVue, propsData: {
+                            disabled: true
+                        }});
+
+                        expect(wrapper.find(".measure").classes()).to.include("disabledClass");
+                    });
+                    it("should verify absence of disabledClass if prop disabled is false", async () => {
+                        wrapper = shallowMount(SnippetSliderRange, {localVue, propsData: {
+                            disabled: false
+                        }});
+
+                        expect(wrapper.find(".measure").classes()).to.not.include("disabledClass");
+                    });
+                });
                 describe("min and max", () => {
                     it("should set min and max value for slider based on api response", async () => {
                         const api = {
