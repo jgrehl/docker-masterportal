@@ -87,7 +87,7 @@ export default {
 
         lineLengthComputed: {
             /**
-             * getter for the computed property length of the current drawType
+             * Getter for the computed property length of the current drawType
              * @info the internal representation of length is always in meters
              * @returns {Number} the current radius
              */
@@ -100,7 +100,7 @@ export default {
                 return this.styleSettings?.length;
             },
             /**
-             * setter for the computed property line of the current drawType
+             * Setter for the computed property line of the current drawType
              * @info the internal representation of line is always in meters
              * @param {Number} value the value to set the target to
              * @returns {void}
@@ -217,7 +217,7 @@ export default {
 
         circleRadiusComputed: {
             /**
-             * getter for the computed property circleRadius of the current drawType
+             * Getter for the computed property circleRadius of the current drawType
              * @info the internal representation of circleRadius is always in meters
              * @returns {Number} the current radius
              */
@@ -228,7 +228,7 @@ export default {
                 return this.styleSettings?.circleRadius;
             },
             /**
-             * setter for the computed property circleRadius of the current drawType
+             * Setter for the computed property circleRadius of the current drawType
              * @info the internal representation of circleRadius is always in meters
              * @param {Number} value the value to set the target to
              * @returns {void}
@@ -244,7 +244,7 @@ export default {
         },
         circleOuterRadiusComputed: {
             /**
-             * getter for the computed property circleOuterRadius of the current drawType
+             * Getter for the computed property circleOuterRadius of the current drawType
              * @info the internal representation of circleOuterRadius is always in meters
              * @returns {Number} the current radius
              */
@@ -255,7 +255,7 @@ export default {
                 return this.styleSettings?.circleOuterRadius;
             },
             /**
-             * setter for the computed property circleOuterRadius of the current drawType
+             * Setter for the computed property circleOuterRadius of the current drawType
              * @info the internal representation of circleOuterRadius is always in meters
              * @param {Number} value the value to set the target to
              * @returns {void}
