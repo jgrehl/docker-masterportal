@@ -52,7 +52,6 @@ export default {
          * @returns {Boolean} currentInteraction === "draw": return false and activate the HTML elements, else: return true and deactivate the HTML elements.
          */
         drawHTMLElements () {
-            // remember: true means disable, false means enable
             return !this.drawLayerVisible || this.currentInteraction !== "draw";
         },
         /**
@@ -63,7 +62,6 @@ export default {
             if (this.selectedFeature !== null && this.currentInteraction === "modify") {
                 return false;
             }
-            // remember: true means disable, false means enable
             return !this.drawLayerVisible || this.currentInteraction !== "draw";
         },
         /**
@@ -82,7 +80,6 @@ export default {
          */
         drawSquareMethods () {
             if (this.currentInteraction === "draw") {
-                // remember: true means disable, false means enable
                 return !this.drawLayerVisible || this.styleSettings?.squareMethod !== "defined";
             }
             return this.drawHTMLElementsModifyFeature;
