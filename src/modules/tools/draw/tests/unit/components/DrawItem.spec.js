@@ -138,14 +138,44 @@ describe("src/tools/draw/components/DrawItem.vue", () => {
         expect(wrapper.find("#tool-draw-deleteAllInteraction").element.disabled).to.be.true;
     });
 
-    it("should render area and area unit if drawType.id is drawArea", async () => {
+    it("should render circle and circleUnit if drawType.id is drawCircle", async () => {
+        wrapper = mountComponent("drawCircle", "Circle", {});
+        await wrapper.vm.$nextTick();
+        expect(wrapper.find("#tool-draw-circleRadius").exists()).to.be.true;
+        expect(wrapper.find("#tool-draw-circleMethod").exists()).to.be.true;
+        expect(wrapper.find("#tool-draw-circleUnit").exists()).to.be.true;
+    });
+
+    it("should render area and areaUnit if drawType.id is drawArea", async () => {
         wrapper = mountComponent("drawArea", "Area", {});
         await wrapper.vm.$nextTick();
         expect(wrapper.find("#tool-draw-area").exists()).to.be.true;
         expect(wrapper.find("#tool-draw-areaUnit").exists()).to.be.true;
     });
 
-    // Restliche Tests...
+    it("should render squareArea, squareSideLength and squareUnit if drawType.id is drawSquare", async () => {
+        wrapper = mountComponent("drawSquare", "Square", {});
+        await wrapper.vm.$nextTick();
+        expect(wrapper.find("#tool-draw-squareMethod").exists()).to.be.true;
+        expect(wrapper.find("#tool-draw-squareArea").exists()).to.be.true;
+        expect(wrapper.find("#tool-draw-squareSideLength").exists()).to.be.true;
+        expect(wrapper.find("#tool-draw-squareUnit").exists()).to.be.true;
+    });
+
+    it("should render lineLength and lineUnit if drawType.id is drawLine", async () => {
+        wrapper = mountComponent("drawLine", "Line", {});
+        await wrapper.vm.$nextTick();
+        expect(wrapper.find("#tool-draw-lineLength").exists()).to.be.true;
+        expect(wrapper.find("#tool-draw-lineUnit").exists()).to.be.true;
+    });
+
+    it("should render lineLength and lineUnit if drawType.id is drawLine", async () => {
+        wrapper = mountComponent("drawLine", "Line", {});
+        await wrapper.vm.$nextTick();
+        expect(wrapper.find("#tool-draw-lineLength").exists()).to.be.true;
+        expect(wrapper.find("#tool-draw-lineUnit").exists()).to.be.true;
+        expect(wrapper.find("#tool-draw-opacityContour").exists()).to.be.true;
+    });
 
     it("sets area in kilometers if unit is 'km'", () => {
         wrapper = mountComponent("drawArea", "Area", {unit: "km"});
