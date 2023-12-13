@@ -10,7 +10,9 @@
 ### Changed
 - The version of node was updated to `^16.13.2 || ^18.16.0 || ^20.9.0`.
 - The version of npm was updated to `^8.1.2 || ^9.5.1 || ^10.1.0`
-- - The following NPM packages have been updated:
+- The following NPM packages have been updated:
+    - dependencies:
+        - @masterportal/masterportalapi: 2.30.0 to 2.31.0
     - devDependencies:
         - canvas: 2.11.0 to 2.11.2
 
