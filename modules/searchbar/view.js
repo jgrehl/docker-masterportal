@@ -21,7 +21,6 @@ import isMobile from "../../src/utils/isMobile";
 import uiStyle from "../../src/utils/uiStyle";
 import styleList from "@masterportal/masterportalapi/src/vectorStyle/styleList";
 import * as turf from "@turf/turf";
-// import LayerView from "../../modules/menu/desktop/layer/view.js";
 
 /**
  * @member SearchbarTemplate
