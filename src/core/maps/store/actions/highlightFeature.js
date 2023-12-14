@@ -20,6 +20,9 @@ function highlightFeature ({commit, dispatch, getters}, highlightObject) {
     else if (highlightObject.type === "highlightPolygon") {
         highlightPolygon(commit, dispatch, highlightObject);
     }
+    else if (highlightObject.type === "highlightMultiPolygon") {
+        highlightMultiPolygon(commit, dispatch, highlightObject);
+    }
     else if (highlightObject.type === "highlightLine") {
         highlightLine(commit, dispatch, highlightObject);
     }
@@ -61,6 +64,49 @@ function highlightPolygon (commit, dispatch, highlightObject) {
     }
 
 }
+/** highlights a multipolygon feature
+ * @param {Function} commit commit function
+ * @param {Function} dispatch dispatch function
+ * @param {Object} highlightObject contains several parameters for feature highlighting
+ * @fires VectorStyle#RadioRequestStyleListReturnModelById
+ * @returns {void}
+ */
+function highlightMultiPolygon (commit, dispatch, highlightObject) {
+    if (highlightObject.highlightStyle) {
+        const newStyle = highlightObject.highlightStyle,
+            feature = highlightObject.feature,
+            originalStyle = styleObject(highlightObject, feature),
+            clonedStyles = [];
+
+        if (originalStyle) {
+            for (let i = 0; i < originalStyle.length; i++) {
+                commit("Maps/addHighlightedFeature", feature, {root: true});
+                commit("Maps/addHighlightedFeatureStyle", feature.getStyle(), {
+                    root: true
+                });
+                const clonedStyle = originalStyle[i].clone();
+
+                if (newStyle.fill?.color) {
+                    clonedStyle.getFill().setColor(newStyle.fill.color);
+                }
+                if (newStyle.stroke?.width) {
+                    clonedStyle.getStroke().setWidth(newStyle.stroke.width);
+                }
+                if (newStyle.stroke?.color) {
+                    clonedStyle.getStroke().setColor(newStyle.stroke.color);
+                }
+                clonedStyles.push(clonedStyle);
+            }
+            feature.setStyle(clonedStyles);
+        }
+    }
+    else {
+        dispatch("MapMarker/placingPolygonMarker", highlightObject.feature, {
+            root: true
+        });
+    }
+}
+
 /**
  * highlights a line feature
  * @param {Function} commit commit function
@@ -193,9 +239,6 @@ function styleObject (highlightObject, feature) {
 
     if (stylelistObject !== undefined) {
         style = createStyle.createStyle(stylelistObject, feature, false, Config.wfsImgPath);
-        if (Array.isArray(style) && style.length > 0) {
-            style = style[0];
-        }
     }
     return style;
 }
