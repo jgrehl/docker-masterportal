@@ -22,6 +22,7 @@
 
 ### Fixed
 - mapMarker: fix creating a feature style in placingPolygonMarkerByGeom.
+- Print: Printing vector features with multipolygons now works again.
 
 ---
 
