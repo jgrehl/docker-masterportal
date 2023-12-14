@@ -27,6 +27,8 @@
 - Issue #1117: The tool addWMS now works again.
 - Issue #1081: the geometry display when importing more than one KML file is complete, despite identical ids at the element `Placemark` .
 - Issue #1098: fixed all urls used in routing tool and in wfsSearch tool to not use more than one questionmark.
+- Issue #1084: fix wrong pointMarker placement when featureType is MultiPolygon. 
+- Fixed HighlightFeature for MultiPolygons
 ---
 
 ## v2.40.1 - 2023-12-07
