@@ -22,6 +22,8 @@
 
 ### Fixed
 - mapMarker: fix creating a feature style in placingPolygonMarkerByGeom.
+- Issue #1084: fix wrong pointMarker placement when featureType is MultiPolygon. 
+- Fixed HighlightFeature for MultiPolygons
 
 ---
 
