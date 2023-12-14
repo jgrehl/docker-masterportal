@@ -141,6 +141,18 @@ export default {
                         styleId
                     });
                 }
+                else if (this.feature.getOlFeature()?.getGeometry()?.getType() === "MultiPolygon") {
+                    this.highlightFeature({
+                        feature: this.feature.getOlFeature(),
+                        type: "highlightMultiPolygon",
+                        highlightStyle: {
+                            fill: this.highlightVectorRules.fill,
+                            stroke: this.highlightVectorRules.stroke
+                        },
+                        layer: {id: this.feature.getLayerId()},
+                        styleId
+                    });
+                }
                 else if (this.feature.getOlFeature()?.getGeometry()?.getType() === "LineString") {
                     this.highlightFeature({
                         feature: this.feature.getOlFeature(),

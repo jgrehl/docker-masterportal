@@ -19,6 +19,9 @@ import {getWKTGeom} from "../../src/utils/getWKTGeom";
 import Collapse from "bootstrap/js/dist/collapse";
 import isMobile from "../../src/utils/isMobile";
 import uiStyle from "../../src/utils/uiStyle";
+import styleList from "@masterportal/masterportalapi/src/vectorStyle/styleList";
+import * as turf from "@turf/turf";
+// import LayerView from "../../modules/menu/desktop/layer/view.js";
 
 /**
  * @member SearchbarTemplate
@@ -630,8 +633,18 @@ const SearchbarView = Backbone.View.extend(/** @lends SearchbarView.prototype */
         if (hit?.coordinate?.length === 2 && !Array.isArray(hit.coordinate[0])) {
             store.dispatch("MapMarker/removePolygonMarker");
             hit.coordinate = this.sanitizePoint(hit.coordinate);
-            store.dispatch("MapMarker/placingPointMarker", hit.coordinate);
-            Radio.trigger("MapView", "setCenter", hit.coordinate, zoomLevel);
+            const isInsideTurfPolygon = this.checkIsCoordInsidePolygon(hit);
+
+            if (!isInsideTurfPolygon.isInside) {
+                const randomCoordinate = this.getRandomCoordinate(isInsideTurfPolygon.turfPolygonGeometryCoords);
+
+                store.dispatch("MapMarker/placingPointMarker", randomCoordinate);
+                Radio.trigger("MapView", "setCenter", randomCoordinate, zoomLevel);
+            }
+            else {
+                store.dispatch("MapMarker/placingPointMarker", hit.coordinate);
+                Radio.trigger("MapView", "setCenter", hit.coordinate, zoomLevel);
+            }
             store.commit("Maps/setClickCoordinate", hit.coordinate);
         }
         else {
@@ -1017,6 +1030,7 @@ const SearchbarView = Backbone.View.extend(/** @lends SearchbarView.prototype */
         this.hideMarker();
         store.dispatch("MapMarker/removePointMarker");
         store.dispatch("MapMarker/removePolygonMarker");
+        store.dispatch("Maps/removeHighlightFeature");
         this.hideMenu();
         this.$("#searchInputUL").html("");
     },
@@ -1032,6 +1046,8 @@ const SearchbarView = Backbone.View.extend(/** @lends SearchbarView.prototype */
             hit = isEvent ? this.model.get("finalHitList").find(obj => obj.id === hitId) : null,
             hitName = isEvent ? hit?.name : "undefined";
 
+        let highlightObject = {};
+
         // with gdi-search no action on mousehover or on GFI onClick
         if (hit && hit?.triggerEvent && hit.type !== i18next.t("common:modules.searchbar.type.subject") && hit.type !== i18next.t("common:modules.searchbar.type.general") && hit.type !== i18next.t("common:modules.searchbar.type.folder") && hit.triggerEvent.event !== "gfiOnClick") {
             Radio.trigger(hit.triggerEvent.channel, hit.triggerEvent.event, hit, true, evt.handleObj.type);
@@ -1040,10 +1056,20 @@ const SearchbarView = Backbone.View.extend(/** @lends SearchbarView.prototype */
         else if (hit && hit?.coordinate) {
             store.dispatch("MapMarker/removePolygonMarker");
             await store.dispatch("MapMarker/removePointMarker");
+            await store.dispatch("Maps/removeHighlightFeature");
 
             if (hit.coordinate.length === 2 && !Array.isArray(hit.coordinate[0])) {
                 hit.coordinate = this.sanitizePoint(hit.coordinate);
-                store.dispatch("MapMarker/placingPointMarker", hit.coordinate);
+                const isInsideTurfPolygon = this.checkIsCoordInsidePolygon(hit);
+                let coordinateForMarker = hit.coordinate;
+
+                if (!isInsideTurfPolygon.isInside) {
+                    coordinateForMarker = this.getRandomCoordinate(isInsideTurfPolygon.turfPolygonGeometryCoords);
+                }
+                highlightObject = this.setHighlightObjectProperties(highlightObject, hit);
+
+                store.dispatch("Maps/highlightFeature", highlightObject);
+                store.dispatch("MapMarker/placingPointMarker", coordinateForMarker);
             }
             else {
                 store.dispatch("MapMarker/placingPolygonMarker", getWKTGeom(hit));
@@ -1078,6 +1104,7 @@ const SearchbarView = Backbone.View.extend(/** @lends SearchbarView.prototype */
         }
         else if (this.$(".dropdown-menu-search").css("display") === "block") {
             store.dispatch("MapMarker/removePointMarker");
+            store.dispatch("Maps/removeHighlightFeature");
         }
     },
 
@@ -1091,6 +1118,62 @@ const SearchbarView = Backbone.View.extend(/** @lends SearchbarView.prototype */
 
         element.focus();
         element[0].setSelectionRange(strLength, strLength);
+    },
+
+    /**
+     * Checks whether the given coordinate is within a Polygon.
+     * @param {hit} hit - the result within a search.
+     * @returns {polygonAndIsInside} - an object with polygonGeometryCoordinates and a boolean if a given coordinate is inside
+     */
+    checkIsCoordInsidePolygon: function (hit) {
+        const pointToCheck = hit.coordinate,
+            polygon = hit.feature.getGeometry().getCoordinates(),
+            polygonType = hit.feature.getGeometry().getType(),
+            turfPoint = turf.point(pointToCheck),
+            turfPolygon = polygonType === "Polygon" ? turf.polygon(polygon) : turf.multiPolygon(polygon),
+            turfPolygonGeometryCoords = turfPolygon.geometry.coordinates,
+            isInside = turf.booleanPointInPolygon(turfPoint, turfPolygon),
+            polygonAndIsInside = {};
+
+        polygonAndIsInside.turfPolygonGeometryCoords = turfPolygonGeometryCoords;
+        polygonAndIsInside.isInside = isInside;
+
+        return polygonAndIsInside;
+    },
+
+    /**
+     * Determines a random coordinate given within a polygon.
+     * @param {coordinates} coordinates - the coordinates within a polygon.
+     * @returns {coordinates} - returns a random coordinate.
+     */
+    getRandomCoordinate: function (coordinates) {
+        if (Array.isArray(coordinates) && coordinates[coordinates.length - 1]) {
+            const randomIndex = Math.floor(Math.random() * coordinates.length);
+
+            return this.getRandomCoordinate(coordinates[randomIndex]);
+        }
+        return coordinates;
+    },
+
+    /**
+     * Sets the properties for a feature to highlight.
+     * @param {highlightObject} highlightObject - the given object, that is to be highlighted.
+     * @param {hit} hit - the result within a search.
+     * @returns {highlightObject} - the given object, that is to be highlighted.
+     */
+    setHighlightObjectProperties: function (highlightObject, hit) {
+        const styleObject = styleList.returnStyleObject("defaultMapMarkerPolygon"),
+            masterportalapiDefaultStyle = styleObject.rules[0].style,
+            fill = {color: `rgb(${masterportalapiDefaultStyle.polygonFillColor.join(", ")})`},
+            stroke = {color: `rgb(${masterportalapiDefaultStyle.polygonStrokeColor.join(", ")})`,
+                width: masterportalapiDefaultStyle.polygonStrokeWidth[0]};
+
+        highlightObject.highlightStyle = {fill, stroke};
+        highlightObject.type = "highlightMultiPolygon";
+        highlightObject.feature = hit.feature;
+        highlightObject.styleId = Radio.request("ModelList", "getModelByAttributes", {id: hit.layer_id}).attributes.styleId;
+        highlightObject.polygons = highlightObject.feature.getGeometry().getPolygons();
+        return highlightObject;
     }
 });
 
