@@ -6,13 +6,26 @@ import {RoutingGeosearchResult} from "../../../../utils/classes/routing-geosearc
 import {
     fetchRoutingBkgGeosearch,
     fetchRoutingBkgGeosearchReverse,
+    getRoutingBkgGeosearchReverseUrl,
     checkConfiguredBbox
 } from "../../../../utils/geosearch/routing-bkg-geosearch";
 
 describe("src/modules/tools/routing/utils/geosearch/routing-bkg-geosearch.js", () => {
+    let service;
+
     beforeEach(() => {
+        service = "https://service;";
         sinon.stub(i18next, "t").callsFake((...args) => args);
-        store.getters.getRestServiceById = () => ({url: "tmp"});
+        store.getters = {
+            getRestServiceById: sinon.stub().callsFake(() =>{
+                return {url: service};
+            })
+        };
+        store.state.geosearchReverse = {
+            serviceId: {
+                url: "http://serviceId.url",
+                distance: "1000"
+            }};
     });
 
     afterEach(() => {
@@ -205,6 +218,35 @@ describe("src/modules/tools/routing/utils/geosearch/routing-bkg-geosearch.js", (
             const result = checkConfiguredBbox();
 
             expect(result).to.eql("10,20,30,40");
+        });
+    });
+    describe("getRoutingBkgGeosearchReverseUrl", () => {
+        it("1", () => {
+            const coordinates = ["1", "2"],
+                createdUrl = getRoutingBkgGeosearchReverseUrl(coordinates);
+
+            expect(createdUrl.origin).to.eql(service);
+            expect(createdUrl.searchParams.get("lon")).to.eql(coordinates[0]);
+            expect(createdUrl.searchParams.get("lat")).to.eql(coordinates[1]);
+            expect(createdUrl.searchParams.get("count")).to.be.equals("1");
+            expect(createdUrl.searchParams.get("properties")).to.eql("text");
+            expect(createdUrl.searchParams.get("distance")).to.eql("1000");
+        });
+
+        it("createUrl should respect questionmark in serviceUrl", () => {
+            const coordinates = ["1", "2"];
+            let createdUrl = null;
+
+            service = "https://mapservice.regensburg.de/cgi-bin/mapserv?map=wfs.map";
+            createdUrl = getRoutingBkgGeosearchReverseUrl(coordinates);
+
+            expect(createdUrl.origin).to.eql("https://mapservice.regensburg.de");
+            expect(decodeURI(createdUrl)).to.eql(service + "&lon=1&lat=2&count=1&properties=text&distance=1000&filter=typ%3Aort");
+            expect(createdUrl.searchParams.get("lon")).to.eql(coordinates[0]);
+            expect(createdUrl.searchParams.get("lat")).to.eql(coordinates[1]);
+            expect(createdUrl.searchParams.get("count")).to.be.equals("1");
+            expect(createdUrl.searchParams.get("properties")).to.eql("text");
+            expect(createdUrl.searchParams.get("distance")).to.eql("1000");
         });
     });
 });
