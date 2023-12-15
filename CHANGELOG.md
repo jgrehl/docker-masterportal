@@ -25,7 +25,7 @@
 - MapMarker: fix creating a feature style in placingPolygonMarkerByGeom.
 - Print: Printing vector features with multipolygons now works again.
 - LayerTree: The tooltip is now displayed correctly again for layers that are outside the displayable scale.
-
+- Issue #1081: the geometry display when importing more than one KML file is complete, despite identical ids at the element `Placemark` .
 ---
 
 ## v2.40.1 - 2023-12-07
