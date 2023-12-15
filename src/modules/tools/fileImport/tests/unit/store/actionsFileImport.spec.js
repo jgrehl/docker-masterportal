@@ -254,7 +254,7 @@ describe("src/modules/tools/fileImport/store/actionsFileImport.js", () => {
 
             dispatch = sinon.spy();
 
-            payload = {layer: layer, raw: test1KML, filename: "test2.kml"};
+            payload = {layer: layer, raw: test2KML, filename: "test2.kml"};
             importKML({state, dispatch, rootGetters}, payload);
             expect(dispatch.calledTwice).to.be.true;
             expect(dispatch.firstCall.args[0]).to.equal("Alerting/addSingleAlert");
