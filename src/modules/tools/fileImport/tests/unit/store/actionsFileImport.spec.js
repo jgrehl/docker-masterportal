@@ -26,7 +26,9 @@ const
         source: source,
         alwaysOnTop: true
     });
-let dispatch;
+let dispatch,
+    test1KML,
+    test2KML;
 
 before(() => {
     crs.registerProjections(namedProjections);
@@ -35,6 +37,10 @@ before(() => {
         lng: "cimode",
         debug: false
     });
+    const fs = require("fs");
+
+    test1KML = fs.readFileSync("./src/modules/tools/fileImport/tests/resources/test1.kml", "utf8");
+    test2KML = fs.readFileSync("./src/modules/tools/fileImport/tests/resources/test2.kml", "utf8");
 });
 beforeEach(() => {
     dispatch = sinon.spy();
@@ -230,6 +236,31 @@ describe("src/modules/tools/fileImport/store/actionsFileImport.js", () => {
                 text: "Jungfernstieg"
             });
 
+        });
+
+        it("second imported kml should not overwrite first imported features", () => {
+            let payload = {layer: layer, raw: test1KML, filename: "test1.kml"};
+            const state = {
+                selectedFiletype: "kml"
+            };
+
+            importKML({state, dispatch, rootGetters}, payload);
+
+            expect(dispatch.calledTwice).to.be.true;
+            expect(dispatch.firstCall.args[0]).to.equal("Alerting/addSingleAlert");
+            expect(dispatch.secondCall.args[0]).to.equal("addImportedFilename");
+            expect(dispatch.secondCall.args[1]).to.equal("test1.kml");
+            expect(layer.getSource().getFeatures().length).to.equal(1);
+
+            dispatch = sinon.spy();
+
+            payload = {layer: layer, raw: test1KML, filename: "test2.kml"};
+            importKML({state, dispatch, rootGetters}, payload);
+            expect(dispatch.calledTwice).to.be.true;
+            expect(dispatch.firstCall.args[0]).to.equal("Alerting/addSingleAlert");
+            expect(dispatch.secondCall.args[0]).to.equal("addImportedFilename");
+            expect(dispatch.secondCall.args[1]).to.equal("test2.kml");
+            expect(layer.getSource().getFeatures().length).to.equal(2);
         });
 
         it("adds a text style from the geojson file", () => {
