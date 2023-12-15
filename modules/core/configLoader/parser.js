@@ -406,6 +406,7 @@ const Parser = Backbone.Model.extend(/** @lends Parser.prototype */{
             layerAttribution: "nicht vorhanden",
             maxScale,
             minScale,
+            singleBaseLayer: "",
             singleTile: false,
             supported: ["2D", "3D"],
             tilesize: "512",
