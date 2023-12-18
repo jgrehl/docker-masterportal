@@ -179,6 +179,8 @@ ul#tree {
     }
     .dropdown-item.disabled, .dropdown-item:disabled {
         background-color: $dropdown-item-disabled-bg;
+        cursor: not-allowed;
+        pointer-events: auto;
     }
 }
 ul#tree.light {
