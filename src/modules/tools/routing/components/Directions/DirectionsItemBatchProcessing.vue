@@ -157,7 +157,7 @@ export default {
                     const line = lines[i],
                         lineParts = line.split(";");
 
-                    if (lineParts.length === 0) {
+                    if (lineParts.length === 1 && lineParts.includes("")) {
                         continue;
                     }
 
