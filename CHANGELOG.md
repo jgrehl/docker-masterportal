@@ -24,6 +24,7 @@
 - Issue #1117: The tool addWMS now works again.
 - MapMarker: fix creating a feature style in placingPolygonMarkerByGeom.
 - Print: Printing vector features with multipolygons now works again.
+- LayerTree: The tooltip is now displayed correctly again for layers that are outside the displayable scale.
 
 ---
 

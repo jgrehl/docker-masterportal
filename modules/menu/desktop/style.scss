@@ -201,6 +201,8 @@ ul#tree.light {
     }
     .dropdown-item.disabled, .dropdown-item:disabled {
         background-color: $light_grey;
+        cursor: not-allowed;
+        pointer-events: auto;
     }
 }
 
