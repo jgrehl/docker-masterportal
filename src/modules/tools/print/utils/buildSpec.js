@@ -1069,7 +1069,7 @@ const BuildSpecModel = {
         });
 
         // take over id from feature because the feature id is not set in the clone.
-        clonedFeature.setId(feature.getId() || feature.ol_uid);
+        clonedFeature.setId(clonedFeature.ol_uid);
         // set "_label"-Propterty.
         // This is necessary because the *label* of the *text-Style* (buildTextStyle()) now referrs to it.
         clonedFeature.set("_label", labelText);
