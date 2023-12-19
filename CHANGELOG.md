@@ -7,6 +7,7 @@
 ### __Breaking Changes__
 
 ### Added
+- Issue #1116: New alert for batchprocessing in routing tool informs the user when all requests to the service failed.
 - Filter: A new parameter `filterOnOpen` has been added to filterLayer in Filter. If set to true, the filter is triggered when the accordeon is clicked.
 - Print: An option "Improve scaling resolution" is implemented for 3d Layers to supply an improved and better resolution.
 
