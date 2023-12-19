@@ -79,7 +79,7 @@ async function fetchRoutingOrsDirections ({
         });
     }
     catch (e) {
-        if (e.response.status === 404) {
+        if (e.response?.status === 404) {
             throw new Error(i18next.t("common:modules.tools.routing.errors.noRouteFound"));
         }
         if (e.response && e.response.data && e.response.data.error) {
