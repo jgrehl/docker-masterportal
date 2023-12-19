@@ -954,6 +954,7 @@
                     "keepRoutesAfterClose": "Зберігати маршрут після закриття інструмента",
                     "batchProcessing": {
                         "structure": "ID;lon(Startpunkt);lat(Startpunkt);lon(Endpunkt);lat(Endpunkt)",
+                        "errorAllFailed": "Всі запити не виконані. Запит може бути заблокований сервісом. Файл не містить результатів.",
                         "errorSomeFailed": "Не вдалося правильно розрахувати результати  {{countFailed}}. Файл результатів містить порожні клітинки в цих позиціях.",
                         "errorNoEntries": "Немає записів у файлі CSV",
                         "errorToManyEntriesInFile": "Перевищено максимальну кількість рядків ({{limit}})",
@@ -985,6 +986,7 @@
                     "legend": "Легенда",
                     "batchProcessing": {
                         "structure": "ID;lon(Startpunkt);lat(Startpunkt)",
+                        "errorAllFailed": "Всі запити не виконані. Запит може бути заблокований сервісом. Файл не містить результатів.",
                         "errorSomeFailed": "Не вдалося правильно розрахувати результати {{countFailed}}. Файл результатів містить порожні клітинки в цих позиціях.",
                         "errorNoEntries": "Немає записів у файлі CSV",
                         "errorToManyEntriesInFile": "Перевищено максимальну кількість рядків ({{limit}})",

@@ -1037,6 +1037,7 @@
                     "fetchingCoordinates": "Fehler bei Abfrage der Koordinaten",
                     "noRouteFound": "Leider konnte keine Route gefunden werden",
                     "avoidAreaBig": "Die angegebenen Sperrflächen sind zu groß. Bitte korrigieren Sie Ihre Eingabe.",
+                    "serviceBlocksRequest": "Die Anfrage wurde blockiert.",
                     "errorRouteFetch": "Fehler bei Abfrage der Route",
                     "errorIsochronesFetch": "Fehler bei Abfrage der Erreichbarkeit"
                 },
@@ -1085,6 +1086,7 @@
                     "keepRoutesAfterClose": "Die Route nach dem Schließen des Tools beibehalten",
                     "batchProcessing": {
                         "structure": "ID;lon(Startpunkt);lat(Startpunkt);lon(Endpunkt);lat(Endpunkt)",
+                        "errorAllFailed": "Alle Anfragen sind fehlgeschlagen. Eventuell wird die Anfrage vom Dienst blockiert. Die Datei enthält keine Resultate.",
                         "errorSomeFailed": "Es konnten {{countFailed}} Ergebnisse nicht korrekt errechnet werden. Die Ergebnisdatei enthält an diesen Stellen Leerzellen.",
                         "errorNoEntries": "Keine Einträge in der CSV",
                         "errorToManyEntriesInFile": "Maximale Anzahl an Zeilen überschritten ({{limit}})",
@@ -1117,6 +1119,7 @@
                     "legend": "Legende",
                     "batchProcessing": {
                         "structure": "ID;lon(Startpunkt);lat(Startpunkt)",
+                        "errorAllFailed": "Alle Anfragen sind fehlgeschlagen. Eventuell wird die Anfrage vom Dienst blockiert. Die Datei enthält keine Resultate.",
                         "errorSomeFailed": "Es konnten {{countFailed}} Ergebnisse nicht korrekt errechnet werden. Die Ergebnisdatei enthält an diesen Stellen Leerzellen.",
                         "errorNoEntries": "Keine Einträge in der CSV",
                         "errorToManyEntriesInFile": "Maximale Anzahl an Zeilen überschritten ({{limit}})",

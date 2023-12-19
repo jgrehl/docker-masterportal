@@ -1051,6 +1051,7 @@
                     "keepRoutesAfterClose": "Conserva il percorso dopo la chiusura dello strumento",
                     "batchProcessing": {
                         "structure": "ID;lon(punto iniziale);lat(punto iniziale);lon(punto finale);lat(punto finale)",
+                        "errorAllFailed": "Tutte le richieste sono fallite. La richiesta potrebbe essere bloccata dal servizio. Il file non contiene risultati.",
                         "errorSomeFailed": "Non è stato possibile calcolare il {{countFailed}} Non è stato possibile calcolare correttamente i risultati. Il file dei risultati contiene celle vuote in questi punti.",
                         "errorNoEntries": "Nessuna voce nel CSV",
                         "errorToManyEntriesInFile": "Numero massimo di righe superato ({{limit}})",
@@ -1083,6 +1084,7 @@
                     "legend": "Leggenda",
                     "batchProcessing": {
                         "structure": "ID;lon(punto di partenza);lat(punto di partenza)",
+                        "errorAllFailed": "Tutte le richieste sono fallite. La richiesta potrebbe essere bloccata dal servizio. Il file non contiene risultati.",
                         "errorSomeFailed": "Non è stato possibile calcolare il {{countFailed}} Non è stato possibile calcolare correttamente i risultati. Il file dei risultati contiene celle vuote in questi punti.",
                         "errorNoEntries": "Nessuna voce nel CSV",
                         "errorToManyEntriesInFile": "Numero massimo di righe superato ({{limit}})",

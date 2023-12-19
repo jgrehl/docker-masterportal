@@ -1083,6 +1083,7 @@
                     "keepRoutesAfterClose": "Keep the route after closing the tool",
                     "batchProcessing": {
                         "structure": "ID;lon(Startpoint);lat(Startpoint);lon(Endpoint);lat(Endpoint)",
+                        "errorAllFailed": "All requests have failed. The request may be blocked by the service. The file does not contain any results.",
                         "errorSomeFailed": "{{countFailed}} Results could not be calculated correctly. The result file contains empty cells at these positions.",
                         "errorNoEntries": "No entries in the CSV-File",
                         "errorToManyEntriesInFile": "Maximum number of lines exceeded ({{limit}})",
@@ -1115,6 +1116,7 @@
                     "legend": "Legend",
                     "batchProcessing": {
                         "structure": "ID;lon(Startpoint);lat(Startpoint)",
+                        "errorAllFailed": "All requests have failed. The request may be blocked by the service. The file does not contain any results.",
                         "errorSomeFailed": "{{countFailed}} Results could not be calculated correctly. The result file contains empty cells at these positions.",
                         "errorNoEntries": "No entries in the CSV-File",
                         "errorToManyEntriesInFile": "Maximum number of lines exceeded ({{limit}})",
