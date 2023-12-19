@@ -18,7 +18,8 @@ export default {
     data () {
         return {
             isProcessing: false,
-            countFailed: 0
+            countFailed: 0,
+            serviceRequests: 0
         };
     },
     computed: {
@@ -43,6 +44,7 @@ export default {
                     this.isProcessing = true;
                     this.setTaskHandler(null);
                     this.countFailed = 0;
+                    this.serviceRequests = 0;
 
                     this.resetRoutingDirectionsResults();
                     this.setIsLoadingDirections(true);
@@ -53,7 +55,13 @@ export default {
                         if (result) {
                             this.downloadResults(file.name, result);
                         }
-                        if (this.countFailed !== 0) {
+                        if (this.countFailed === this.serviceRequests) {
+                            this.addSingleAlert({
+                                category: this.$t("common:modules.alerting.categories.error"),
+                                content: this.$t("common:modules.tools.routing.directions.batchProcessing.errorAllFailed")
+                            });
+                        }
+                        else if (this.countFailed !== 0) {
                             this.addSingleAlert({
                                 category: this.$t("common:modules.alerting.categories.error"),
                                 content: this.$t("common:modules.tools.routing.directions.batchProcessing.errorSomeFailed", {countFailed: this.coundFailed})
@@ -204,6 +212,7 @@ export default {
                 };
 
             try {
+                this.serviceRequests += 1;
                 const directionsResult = await this.fetchDirections({
                     wgs84Coords: [
                         [startLon, startLat],
