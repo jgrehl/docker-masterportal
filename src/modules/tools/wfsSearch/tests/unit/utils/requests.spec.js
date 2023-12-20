@@ -6,13 +6,13 @@ describe("src/modules/tools/wfsSearch/utils/requests.js", () => {
         it("createUrl should respect questionmark in given url", () => {
             const url = "https://mapservice.regensburg.de/cgi-bin/mapserv?map=wfs.map",
                 typeName = "typeName",
-                filter = "filter",
+                filter = "filter=filter",
                 fromServicesJson = true,
                 storedQueryId = "storedQueryId",
                 maxFeatures = 10,
                 featureType = "featureType",
                 createdUrl = decodeURI(requestsModule.createUrl(url, typeName, filter, fromServicesJson, storedQueryId, maxFeatures, featureType)),
-                expectedUrl = "https://mapservice.regensburg.de/cgi-bin/mapserv?map=wfs.map&service=WFS&request=GetFeature&typeName=featureType&maxFeatures=10&version=2.0.0&StoredQuery_ID=storedQueryIdfilter";
+                expectedUrl = "https://mapservice.regensburg.de/cgi-bin/mapserv?map=wfs.map&service=WFS&request=GetFeature&typeName=featureType&maxFeatures=10&version=2.0.0&StoredQuery_ID=storedQueryId&filter=filter";
 
             expect(createdUrl).to.eql(expectedUrl);
         });
@@ -20,13 +20,13 @@ describe("src/modules/tools/wfsSearch/utils/requests.js", () => {
         it("createUrl with usual url given", () => {
             const url = "https://getwfs.de",
                 typeName = "typeName",
-                filter = "filter",
+                filter = "filter=filter",
                 fromServicesJson = true,
                 storedQueryId = "storedQueryId",
                 maxFeatures = 10,
                 featureType = "featureType",
                 createdUrl = decodeURI(requestsModule.createUrl(url, typeName, filter, fromServicesJson, storedQueryId, maxFeatures, featureType)),
-                expectedUrl = "https://getwfs.de/?service=WFS&request=GetFeature&typeName=featureType&maxFeatures=10&version=2.0.0&StoredQuery_ID=storedQueryIdfilter";
+                expectedUrl = "https://getwfs.de/?service=WFS&request=GetFeature&typeName=featureType&maxFeatures=10&version=2.0.0&StoredQuery_ID=storedQueryId&filter=filter";
 
             expect(createdUrl).to.eql(expectedUrl);
         });
@@ -34,13 +34,13 @@ describe("src/modules/tools/wfsSearch/utils/requests.js", () => {
         it("createUrl not from servicesJson", () => {
             const url = "https://getwfs.de",
                 typeName = "typeName",
-                filter = "filter",
+                filter = "filter=filter",
                 fromServicesJson = false,
                 storedQueryId = "storedQueryId",
                 maxFeatures = 10,
                 featureType = "featureType",
                 createdUrl = decodeURI(requestsModule.createUrl(url, typeName, filter, fromServicesJson, storedQueryId, maxFeatures, featureType)),
-                expectedUrl = "https://getwfs.de/?maxFeatures=10&version=2.0.0&StoredQuery_ID=storedQueryIdfilter";
+                expectedUrl = "https://getwfs.de/?maxFeatures=10&version=2.0.0&StoredQuery_ID=storedQueryId&filter=filter";
 
             expect(createdUrl).to.eql(expectedUrl);
         });
@@ -48,13 +48,13 @@ describe("src/modules/tools/wfsSearch/utils/requests.js", () => {
         it("createUrl maxFeatures is 'showAll' and storedFilter", () => {
             const url = "https://getwfs.de",
                 typeName = "typeName",
-                filter = "filter",
+                filter = "&filter=filter&neu=neu",
                 fromServicesJson = false,
                 storedQueryId = "storedQueryId",
                 maxFeatures = "showAll",
                 featureType = "featureType",
                 createdUrl = decodeURI(requestsModule.createUrl(url, typeName, filter, fromServicesJson, storedQueryId, maxFeatures, featureType)),
-                expectedUrl = "https://getwfs.de/?version=2.0.0&StoredQuery_ID=storedQueryIdfilter";
+                expectedUrl = "https://getwfs.de/?version=2.0.0&StoredQuery_ID=storedQueryId&filter=filter&neu=neu";
 
             expect(createdUrl).to.eql(expectedUrl);
         });
