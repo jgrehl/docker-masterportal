@@ -104,7 +104,16 @@ function parseGazetteerResponse (responseData, namespaces, memberSuffix, respons
 function storedFilter (requestUrl, filter, storedQueryId) {
     requestUrl.searchParams.set("version", "2.0.0");
     if (filter !== "") {
-        requestUrl.searchParams.set("StoredQuery_ID", storedQueryId + filter);
+        const filterSplitted = filter.split("&");
+
+        requestUrl.searchParams.set("StoredQuery_ID", storedQueryId);
+        filterSplitted.forEach(param => {
+            if (param) {
+                const split = param.split("=");
+
+                requestUrl.searchParams.set(split[0], split[1]);
+            }
+        });
     }
     return requestUrl;
 }

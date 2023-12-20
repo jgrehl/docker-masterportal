@@ -7,7 +7,7 @@ import isObject from "../../../../utils/isObject";
 import {buildXmlFilter} from "../utils/buildFilter";
 import {fieldValueChanged} from "../utils/literalFunctions";
 import {buildPath, getOptions, prepareOptionsWithId} from "../utils/pathFunctions";
-import {searchFeatures} from "../utils/requests";
+import requestProvider from "../utils/requests";
 
 /**
  * Validates that the prop for the type is correct.
@@ -214,7 +214,7 @@ export default {
                 this.showLoader = true;
                 const fieldName = Array.isArray(this.fieldName) ? this.fieldName[this.parameterIndex] : this.fieldName,
                     xmlFilter = buildXmlFilter({fieldName, type: "like", value}),
-                    suggestions = await searchFeatures(this.currentInstance, this.service, xmlFilter, this?.suggestionsConfig?.featureType);
+                    suggestions = await requestProvider.searchFeatures(this.currentInstance, this.service, xmlFilter, this?.suggestionsConfig?.featureType);
 
                 this.showLoader = false;
                 // Retrieve the values for the fieldName and make sure they are unique.

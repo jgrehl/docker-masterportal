@@ -10,7 +10,7 @@ import actions from "../store/actionsWfsSearch";
 import getters from "../store/gettersWfsSearch";
 import mutations from "../store/mutationsWfsSearch";
 import {createUserHelp} from "../utils/literalFunctions";
-import {searchFeatures} from "../utils/requests";
+import requestProvider from "../utils/requests";
 import isObject from "../../../../utils/isObject";
 
 export default {
@@ -71,7 +71,6 @@ export default {
         ...mapActions("Tools/WfsSearch", Object.keys(actions)),
         ...mapActions("MapMarker", ["placingPointMarker"]),
         ...mapActions("Maps", ["setCenter", "setZoomLevel"]),
-        searchFeatures,
         /**
          * Function called when the window of the tool is closed.
          * Resets the whole component and sets it inactive.
@@ -104,7 +103,7 @@ export default {
         async search () {
             this.setSearched(true);
             LoaderOverlay.show();
-            const features = await searchFeatures(this.currentInstance, this.service);
+            const features = await requestProvider.searchFeatures(this.currentInstance, this.service);
 
             LoaderOverlay.hide();
 
