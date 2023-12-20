@@ -21,17 +21,17 @@
 ### Removed
 
 ### Fixed
-- Issue #1117: The tool addWMS now works again.
 - MapMarker: fix creating a feature style in placingPolygonMarkerByGeom.
 - Print: Printing vector features with multipolygons now works again.
 - LayerTree: The tooltip is now displayed correctly again for layers that are outside the displayable scale.
+- Issue #1117: The tool addWMS now works again.
 - Issue #1081: the geometry display when importing more than one KML file is complete, despite identical ids at the element `Placemark` .
+- Issue #1098: fixed all urls used in routing tool and in wfsSearch tool to not use more than one questionmark.
 ---
 
 ## v2.40.1 - 2023-12-07
 ### Fixed
 -  defaultTree: Added missing key singleBaseLayer
-- Issue #1098: fixed all urls used in routing tool and in wfsSearch tool to not use more than one questionmark.
 
 ---
 
