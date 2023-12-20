@@ -5,13 +5,33 @@ import sinon from "sinon";
 import {RoutingGeosearchResult} from "../../../../utils/classes/routing-geosearch-result";
 import {
     fetchRoutingNominatimGeosearch,
-    fetchRoutingNominatimGeosearchReverse
+    fetchRoutingNominatimGeosearchReverse,
+    getRoutingNominatimGeosearchUrl,
+    getRoutingNominatimGeosearchReverseUrl
 } from "../../../../utils/geosearch/routing-nominatim-geosearch";
 
 describe("src/modules/tools/routing/utils/geosearch/routing-nominatim-geosearch.js", () => {
+    let service;
+
     beforeEach(() => {
+        service = "https://service";
         sinon.stub(i18next, "t").callsFake((...args) => args);
-        store.getters.getRestServiceById = () => ({url: "tmp"});
+        store.getters = {
+            getRestServiceById: sinon.stub().callsFake(() =>{
+                return {url: service};
+            })
+        };
+        store.state.Tools.Routing.geosearch = {
+            serviceId: {
+                url: "http://serviceId.url"
+            },
+            limit: 1000
+        };
+        store.state.Tools.Routing.geosearchReverse = {
+            serviceId: {
+                url: "http://serviceIdReverse.url"
+            }
+        };
     });
 
     afterEach(() => {
@@ -148,6 +168,64 @@ describe("src/modules/tools/routing/utils/geosearch/routing-nominatim-geosearch.
             catch (error) {
                 expect(error.message).equal("testerror");
             }
+        });
+    });
+
+    describe("getRoutingNominatimGeosearchUrl", () => {
+        it("test params", () => {
+            const search = "search",
+                createdUrl = getRoutingNominatimGeosearchUrl(search);
+
+            expect(createdUrl.origin).to.eql(service);
+            expect(createdUrl.searchParams.get("countrycodes")).to.eql("de");
+            expect(createdUrl.searchParams.get("format")).to.eql("json");
+            expect(createdUrl.searchParams.get("limit")).to.eql("1000");
+            expect(createdUrl.searchParams.get("bounded")).to.eql("1");
+            expect(createdUrl.searchParams.get("q")).to.eql(search);
+        });
+
+        it("createUrl should respect questionmark in serviceUrl", () => {
+            const search = "search";
+            let createdUrl = null;
+
+            service = "https://mapservice.regensburg.de/cgi-bin/mapserv?map=wfs.map";
+            createdUrl = getRoutingNominatimGeosearchUrl(search);
+
+            expect(createdUrl.origin).to.eql("https://mapservice.regensburg.de");
+            expect(decodeURI(createdUrl)).to.eql(service + "&countrycodes=de&format=json&limit=1000&bounded=1&q=search");
+            expect(createdUrl.searchParams.get("countrycodes")).to.eql("de");
+            expect(createdUrl.searchParams.get("format")).to.eql("json");
+            expect(createdUrl.searchParams.get("limit")).to.eql("1000");
+            expect(createdUrl.searchParams.get("bounded")).to.eql("1");
+            expect(createdUrl.searchParams.get("q")).to.eql(search);
+        });
+    });
+
+    describe("getRoutingNominatimGeosearchReverseUrl", () => {
+        it("test params", () => {
+            const coordinates = [1, 2],
+                createdUrl = getRoutingNominatimGeosearchReverseUrl(coordinates);
+
+            expect(createdUrl.origin).to.eql(service);
+            expect(createdUrl.searchParams.get("lon")).to.eql(String(coordinates[0]));
+            expect(createdUrl.searchParams.get("lat")).to.eql(String(coordinates[1]));
+            expect(createdUrl.searchParams.get("format")).to.eql("json");
+            expect(createdUrl.searchParams.get("addressdetails")).to.eql("0");
+        });
+
+        it("createUrl should respect questionmark in serviceUrl", () => {
+            const coordinates = [1, 2];
+            let createdUrl = null;
+
+            service = "https://mapservice.regensburg.de/cgi-bin/mapserv?map=wfs.map";
+            createdUrl = getRoutingNominatimGeosearchReverseUrl(coordinates);
+
+            expect(createdUrl.origin).to.eql("https://mapservice.regensburg.de");
+            expect(decodeURI(createdUrl)).to.eql(service + "&lon=1&lat=2&format=json&addressdetails=0");
+            expect(createdUrl.searchParams.get("lon")).to.eql(String(coordinates[0]));
+            expect(createdUrl.searchParams.get("lat")).to.eql(String(coordinates[1]));
+            expect(createdUrl.searchParams.get("format")).to.eql("json");
+            expect(createdUrl.searchParams.get("addressdetails")).to.eql("0");
         });
     });
 });

@@ -9,10 +9,8 @@ import store from "../../../../../app-store";
  * @returns {RoutingGeosearchResult[]} routingGeosearchResults
  */
 async function fetchRoutingLocationFinderGeosearch (search) {
-    const serviceUrl = store.getters.getRestServiceById(state.geosearch.serviceId).url,
-        url = `${serviceUrl}/Lookup?limit=${state.geosearch.limit}&properties=text`,
-        parameter = `&query=${encodeURIComponent(search)}`,
-        response = await axios.get(url + parameter);
+    const url = getRoutingLocationFinderGeosearchUrl(search),
+        response = await axios.get(url);
 
     if (response.status !== 200 && !response.data.success) {
         throw new Error({
@@ -25,6 +23,28 @@ async function fetchRoutingLocationFinderGeosearch (search) {
         d.epsg = response.data.sref;
         return parseRoutingLocationFinderGeosearchResult(d);
     });
+}
+
+/**
+ * Creates the url with the given params.
+ * @param {String} search the string to search for
+ * @returns {String} the url
+ */
+function getRoutingLocationFinderGeosearchUrl (search) {
+    let serviceUrl = store.getters.getRestServiceById(state.geosearch.serviceId).url,
+        url = null;
+
+    if (serviceUrl.endsWith("/")) {
+        serviceUrl += "Lookup";
+    }
+    else {
+        serviceUrl += "/Lookup";
+    }
+    url = new URL(serviceUrl);
+    url.searchParams.set("limit", state.geosearch.limit);
+    url.searchParams.set("properties", "text");
+    url.searchParams.set("query", encodeURIComponent(search));
+    return url;
 }
 
 /**
@@ -44,4 +64,4 @@ function parseRoutingLocationFinderGeosearchResult (geosearchResult) {
     );
 }
 
-export {fetchRoutingLocationFinderGeosearch};
+export {fetchRoutingLocationFinderGeosearch, getRoutingLocationFinderGeosearchUrl};

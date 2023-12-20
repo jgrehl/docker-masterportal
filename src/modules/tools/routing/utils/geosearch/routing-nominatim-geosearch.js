@@ -9,10 +9,8 @@ import store from "../../../../../app-store";
  * @returns {RoutingGeosearchResult[]} routingGeosearchResults
  */
 async function fetchRoutingNominatimGeosearch (search) {
-    const serviceUrl = store.getters.getRestServiceById(state.geosearch.serviceId).url,
-        url = `${serviceUrl}&countrycodes=de&format=json&limit=${state.geosearch.limit}&bounded=1`,
-        parameter = `&q=${encodeURIComponent(search)}`,
-        response = await axios.get(url + parameter);
+    const url = getRoutingNominatimGeosearchUrl(search),
+        response = await axios.get(url);
 
     if (response.status !== 200 && !response.data.success) {
         throw new Error({
@@ -24,13 +22,29 @@ async function fetchRoutingNominatimGeosearch (search) {
 }
 
 /**
+ * Creates the url with the given params.
+ * @param {String} search to search for
+ * @returns {String} the url
+ */
+function getRoutingNominatimGeosearchUrl (search) {
+    const serviceUrl = store.getters.getRestServiceById(state.geosearch.serviceId).url,
+        url = new URL(serviceUrl);
+
+    url.searchParams.set("countrycodes", "de");
+    url.searchParams.set("format", "json");
+    url.searchParams.set("limit", state.geosearch.limit);
+    url.searchParams.set("bounded", "1");
+    url.searchParams.set("q", encodeURIComponent(search));
+    return url;
+}
+
+/**
  * Requests POI at coordinate from Nominatim
  * @param {[Number, Number]} coordinates to search at
  * @returns {RoutingGeosearchResult} routingGeosearchResult
  */
 async function fetchRoutingNominatimGeosearchReverse (coordinates) {
-    const serviceUrl = store.getters.getRestServiceById(state.geosearchReverse.serviceId).url,
-        url = `${serviceUrl}&lon=${coordinates[0]}&lat=${coordinates[1]}&format=json&addressdetails=0`,
+    const url = getRoutingNominatimGeosearchReverseUrl(coordinates),
         response = await axios.get(url);
 
     if (response.status !== 200 && !response.data.success) {
@@ -40,6 +54,22 @@ async function fetchRoutingNominatimGeosearchReverse (coordinates) {
         });
     }
     return parseRoutingNominatimGeosearchResult(response.data);
+}
+
+/**
+ * Creates the url with the given params.
+ * @param {Array} coordinates to add as params
+ * @returns {String} the url
+ */
+function getRoutingNominatimGeosearchReverseUrl (coordinates) {
+    const serviceUrl = store.getters.getRestServiceById(state.geosearchReverse.serviceId).url,
+        url = new URL(serviceUrl);
+
+    url.searchParams.set("lon", coordinates[0]);
+    url.searchParams.set("lat", coordinates[1]);
+    url.searchParams.set("format", "json");
+    url.searchParams.set("addressdetails", "0");
+    return url;
 }
 
 /**
@@ -57,4 +87,4 @@ function parseRoutingNominatimGeosearchResult (geosearchResult) {
     );
 }
 
-export {fetchRoutingNominatimGeosearch, fetchRoutingNominatimGeosearchReverse};
+export {fetchRoutingNominatimGeosearch, fetchRoutingNominatimGeosearchReverse, getRoutingNominatimGeosearchUrl, getRoutingNominatimGeosearchReverseUrl};

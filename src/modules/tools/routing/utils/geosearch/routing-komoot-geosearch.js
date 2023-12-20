@@ -14,10 +14,8 @@ async function fetchRoutingKomootGeosearch (search) {
         mapBboxLng = crs.transformFromMapProjection(map, "EPSG:4326", [store.getters["Maps/boundingBox"][0], store.getters["Maps/boundingBox"][1]]),
         mapBboxLat = crs.transformFromMapProjection(map, "EPSG:4326", [store.getters["Maps/boundingBox"][2], store.getters["Maps/boundingBox"][3]]),
         mapBbox = mapBboxLng.concat(mapBboxLat),
-        serviceUrl = store.getters.getRestServiceById(state.geosearch.serviceId).url,
-        url = `${serviceUrl}lang=de&lon=10&lat=53.6&bbox=${mapBbox}&limit=${state.geosearch.limit}`,
-        parameter = `&q=${encodeURIComponent(search)}`,
-        response = await axios.get(url + parameter);
+        url = getRoutingKomootGeosearchUrl(mapBbox, search),
+        response = await axios.get(url);
 
     if (response.status !== 200 && !response.data.success) {
         throw new Error({
@@ -29,13 +27,31 @@ async function fetchRoutingKomootGeosearch (search) {
 }
 
 /**
+ * Creates the url with the given params.
+ * @param {String} mapBbox the bbox
+ * @param {String} search the string to search for
+ * @returns {String} the url
+ */
+function getRoutingKomootGeosearchUrl (mapBbox, search) {
+    const serviceUrl = store.getters.getRestServiceById(state.geosearch.serviceId).url,
+        url = new URL(serviceUrl);
+
+    url.searchParams.set("lang", "de");
+    url.searchParams.set("lon", "10");
+    url.searchParams.set("lat", "53.6");
+    url.searchParams.set("bbox", mapBbox);
+    url.searchParams.set("limit", state.geosearch.limit);
+    url.searchParams.set("q", encodeURIComponent(search));
+    return url;
+}
+
+/**
  * Requests POI at coordinate from Komoot
  * @param {[Number, Number]} coordinates to search at
  * @returns {RoutingGeosearchResult} routingGeosearchResult
  */
 async function fetchRoutingKomootGeosearchReverse (coordinates) {
-    const serviceUrl = store.getters.getRestServiceById(state.geosearchReverse.serviceId).url,
-        url = `${serviceUrl}lon=${coordinates[0]}&lat=${coordinates[1]}`,
+    const url = getRoutingKomootGeosearchReverseUrl(coordinates),
         response = await axios.get(url);
 
     if (response.status !== 200 && !response.data.success) {
@@ -47,6 +63,21 @@ async function fetchRoutingKomootGeosearchReverse (coordinates) {
 
     return parseRoutingKomootGeosearchResult(response.data.features[0]);
 }
+
+/**
+ * Creates the url with the given params.
+ * @param {Array} coordinates the coordinates
+ * @returns {String} the url
+ */
+function getRoutingKomootGeosearchReverseUrl (coordinates) {
+    const serviceUrl = store.getters.getRestServiceById(state.geosearchReverse.serviceId).url,
+        url = new URL(serviceUrl);
+
+    url.searchParams.set("lon", coordinates[0]);
+    url.searchParams.set("lat", coordinates[1]);
+    return url;
+}
+
 
 /**
  * Parses Response from Komoot to RoutingGeosearchResult
@@ -66,4 +97,4 @@ function parseRoutingKomootGeosearchResult (geosearchResult) {
     );
 }
 
-export {fetchRoutingKomootGeosearch, fetchRoutingKomootGeosearchReverse};
+export {fetchRoutingKomootGeosearch, fetchRoutingKomootGeosearchReverse, getRoutingKomootGeosearchUrl, getRoutingKomootGeosearchReverseUrl};

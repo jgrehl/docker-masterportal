@@ -14,7 +14,7 @@ describe("src/modules/tools/routing/utils/geosearch/routing-bkg-geosearch.js", (
     let service;
 
     beforeEach(() => {
-        service = "https://service;";
+        service = "https://service";
         sinon.stub(i18next, "t").callsFake((...args) => args);
         store.getters = {
             getRestServiceById: sinon.stub().callsFake(() =>{
@@ -221,7 +221,7 @@ describe("src/modules/tools/routing/utils/geosearch/routing-bkg-geosearch.js", (
         });
     });
     describe("getRoutingBkgGeosearchReverseUrl", () => {
-        it("1", () => {
+        it("test params", () => {
             const coordinates = ["1", "2"],
                 createdUrl = getRoutingBkgGeosearchReverseUrl(coordinates);
 

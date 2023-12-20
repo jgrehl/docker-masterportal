@@ -50,9 +50,6 @@ function getRoutingBkgGeosearchReverseUrl (coordinates) {
  * @returns {RoutingGeosearchResult} routingGeosearchResult
  */
 async function fetchRoutingBkgGeosearchReverse (coordinates) {
-    // todo: den alten code testen
-    // filterQuery = "&filter=" + (state.geosearchReverse.filter ? state.geosearchReverse.filter : "typ:ort"),
-    // url = `${serviceUrl}?lon=${coordinates[0]}&lat=${coordinates[1]}&count=1&properties=text&distance=${state.geosearchReverse.distance}${filterQuery}`,
     const response = await axios.get(getRoutingBkgGeosearchReverseUrl(coordinates));
 
     if (response.status !== 200 && !response.data.success) {

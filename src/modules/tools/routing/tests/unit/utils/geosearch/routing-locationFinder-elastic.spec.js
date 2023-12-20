@@ -5,11 +5,14 @@ import sinon from "sinon";
 import {RoutingGeosearchResult} from "../../../../utils/classes/routing-geosearch-result";
 import {fetchRoutingElasticGeosearch} from "../../../../utils/geosearch/routing-elastic-geosearch";
 
-describe("src/modules/tools/routing/utils/geosearch/routing-elastic-geosearch.js", () => {
+describe("src/modules/tools/routing/utils/geosearch/routing-locationFinder-geosearch.js", () => {
+    let service;
+
     beforeEach(() => {
+        service = "https://service";
         sinon.stub(i18next, "t").callsFake((...args) => args);
         store.getters = {
-            getRestServiceById: () => ({url: "tmp"})
+            getRestServiceById: () => ({url: service})
         };
         store.state.Tools.Routing.geosearch.epsg = "25832";
     });
