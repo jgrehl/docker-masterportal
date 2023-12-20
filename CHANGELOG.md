@@ -31,6 +31,7 @@
 ## v2.40.1 - 2023-12-07
 ### Fixed
 -  defaultTree: Added missing key singleBaseLayer
+- Issue #1098: fixed all urls used in routing tool and in wfsSearch tool to not use more than one questionmark.
 
 ---
 
