@@ -72,6 +72,7 @@ describe("src/modules/tools/wfsSearch/utils/requests.js", () => {
 
             expect(createdUrl.origin).to.eql(url);
             expect(createdUrl.searchParams.get("filter")).to.eql(expectedUrlParam);
+            expect(createdUrl.searchParams.get("version")).to.eql("1.1.0");
         });
     });
 

@@ -126,7 +126,10 @@ function storedFilter (requestUrl, filter, storedQueryId) {
  * @returns {String} The added parts for the request Url.
  */
 function xmlFilter (requestUrl, filter) {
-    requestUrl.searchParams.set("filter", `<ogc:Filter xmlns:ogc="http://www.opengis.net/ogc" xmlns:gml="http://www.opengis.net/gml">${adjustFilter(filter)}</ogc:Filter>`);
+    const value = `<ogc:Filter xmlns:ogc="http://www.opengis.net/ogc" xmlns:gml="http://www.opengis.net/gml">${adjustFilter(filter)}</ogc:Filter>`;
+
+    requestUrl.searchParams.set("version", "1.1.0");
+    requestUrl.searchParams.set("filter", value);
     return requestUrl;
 }
 
@@ -223,7 +226,7 @@ function sendRequest ({url, typeName}, filter, fromServicesJson, storedQueryId, 
     }
     currentRequest = axios.CancelToken.source();
 
-    return axios.get(encodeURI(requestUrl))
+    return axios.get(decodeURI(requestUrl))
         .then(response => handleAxiosResponse(response, "WfsSearch, searchFeatures, sendRequest"))
         .catch(error => store.dispatch("Alerting/addSingleAlert", i18next.t("common:modules.tools.wfsSearch.searchError", {error})));
 }
