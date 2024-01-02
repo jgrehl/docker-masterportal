@@ -20,7 +20,6 @@ import Collapse from "bootstrap/js/dist/collapse";
 import isMobile from "../../src/utils/isMobile";
 import uiStyle from "../../src/utils/uiStyle";
 import styleList from "@masterportal/masterportalapi/src/vectorStyle/styleList";
-import * as turf from "@turf/turf";
 
 /**
  * @member SearchbarTemplate
@@ -634,8 +633,8 @@ const SearchbarView = Backbone.View.extend(/** @lends SearchbarView.prototype */
             hit.coordinate = this.sanitizePoint(hit.coordinate);
             const isInsideTurfPolygon = this.checkIsCoordInsidePolygon(hit);
 
-            if (!isInsideTurfPolygon.isInside) {
-                const randomCoordinate = this.getRandomCoordinate(isInsideTurfPolygon.turfPolygonGeometryCoords);
+            if (!isInsideTurfPolygon) {
+                const randomCoordinate = this.getRandomCoordinate(hit.feature.getGeometry().getCoordinates());
 
                 store.dispatch("MapMarker/placingPointMarker", randomCoordinate);
                 Radio.trigger("MapView", "setCenter", randomCoordinate, zoomLevel);
@@ -1062,8 +1061,8 @@ const SearchbarView = Backbone.View.extend(/** @lends SearchbarView.prototype */
                 const isInsideTurfPolygon = this.checkIsCoordInsidePolygon(hit);
                 let coordinateForMarker = hit.coordinate;
 
-                if (!isInsideTurfPolygon.isInside) {
-                    coordinateForMarker = this.getRandomCoordinate(isInsideTurfPolygon.turfPolygonGeometryCoords);
+                if (!isInsideTurfPolygon) {
+                    coordinateForMarker = this.getRandomCoordinate(hit.feature.getGeometry().getCoordinates());
                 }
                 highlightObject = this.setHighlightObjectProperties(highlightObject, hit);
 
@@ -1126,18 +1125,9 @@ const SearchbarView = Backbone.View.extend(/** @lends SearchbarView.prototype */
      */
     checkIsCoordInsidePolygon: function (hit) {
         const pointToCheck = hit.coordinate,
-            polygon = hit.feature.getGeometry().getCoordinates(),
-            polygonType = hit.feature.getGeometry().getType(),
-            turfPoint = turf.point(pointToCheck),
-            turfPolygon = polygonType === "Polygon" ? turf.polygon(polygon) : turf.multiPolygon(polygon),
-            turfPolygonGeometryCoords = turfPolygon.geometry.coordinates,
-            isInside = turf.booleanPointInPolygon(turfPoint, turfPolygon),
-            polygonAndIsInside = {};
+            isPointInsidePolygon = hit.feature.getGeometry().intersectsCoordinate(pointToCheck);
 
-        polygonAndIsInside.turfPolygonGeometryCoords = turfPolygonGeometryCoords;
-        polygonAndIsInside.isInside = isInside;
-
-        return polygonAndIsInside;
+        return isPointInsidePolygon;
     },
 
     /**
