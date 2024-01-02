@@ -631,9 +631,9 @@ const SearchbarView = Backbone.View.extend(/** @lends SearchbarView.prototype */
         if (hit?.coordinate?.length === 2 && !Array.isArray(hit.coordinate[0])) {
             store.dispatch("MapMarker/removePolygonMarker");
             hit.coordinate = this.sanitizePoint(hit.coordinate);
-            const isInsideTurfPolygon = this.checkIsCoordInsidePolygon(hit);
+            const isPointInsidePolygon = this.checkIsCoordInsidePolygon(hit);
 
-            if (!isInsideTurfPolygon) {
+            if (!isPointInsidePolygon) {
                 const randomCoordinate = this.getRandomCoordinate(hit.feature.getGeometry().getCoordinates());
 
                 store.dispatch("MapMarker/placingPointMarker", randomCoordinate);
@@ -1058,10 +1058,10 @@ const SearchbarView = Backbone.View.extend(/** @lends SearchbarView.prototype */
 
             if (hit.coordinate.length === 2 && !Array.isArray(hit.coordinate[0])) {
                 hit.coordinate = this.sanitizePoint(hit.coordinate);
-                const isInsideTurfPolygon = this.checkIsCoordInsidePolygon(hit);
+                const isPointInsidePolygon = this.checkIsCoordInsidePolygon(hit);
                 let coordinateForMarker = hit.coordinate;
 
-                if (!isInsideTurfPolygon) {
+                if (!isPointInsidePolygon) {
                     coordinateForMarker = this.getRandomCoordinate(hit.feature.getGeometry().getCoordinates());
                 }
                 highlightObject = this.setHighlightObjectProperties(highlightObject, hit);
