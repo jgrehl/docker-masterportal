@@ -1312,7 +1312,7 @@ const BuildSpecModel = {
                     }
                     else {
                         legendObject.layers.push({
-                            layerName: legendObj.name,
+                            layerName: legendObj.name.toString(),
                             values: this.prepareLegendAttributes(legendObj.legend, store.getters["Modules/Legend/sldVersion"])
                         });
                     }
