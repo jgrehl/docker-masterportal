@@ -3,10 +3,7 @@
 
 [Semantic versioning](https://semver.org/spec/v2.0.0.html) is used.
 
-## Unreleased - in development
-### __Breaking Changes__
-### Added
-
+## v2.41.0 - 2024-01-08
 ### Changed
 - The version of node was updated to `^16.13.2 || ^18.16.0 || ^20.9.0`.
 - The version of npm was updated to `^8.1.2 || ^9.5.1 || ^10.1.0`
@@ -16,17 +13,13 @@
     - devDependencies:
         - canvas: 2.11.0 to 2.11.2
 
-### Deprecated
-
-### Removed
-
 ### Fixed
 - MapMarker: fix creating a feature style in placingPolygonMarkerByGeom.
 - Print: Printing vector features with multipolygons now works again.
 - LayerTree: The tooltip is now displayed correctly again for layers that are outside the displayable scale.
-- Issue #1117: The tool addWMS now works again.
 - Issue #1081: the geometry display when importing more than one KML file is complete, despite identical ids at the element `Placemark` .
 - Issue #1098: fixed all urls used in routing tool and in wfsSearch tool to not use more than one questionmark.
+- Issue #1117: The tool addWMS now works again.
 ---
 
 ## v2.40.1 - 2023-12-07
