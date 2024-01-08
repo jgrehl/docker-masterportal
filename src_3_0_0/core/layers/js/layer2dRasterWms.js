@@ -125,6 +125,11 @@ Layer2dRasterWms.prototype.createLegend = function () {
                 legendUrl.searchParams.set("REQUEST", "GetLegendGraphic");
                 legendUrl.searchParams.set("FORMAT", "image/png");
                 legendUrl.searchParams.set("LAYER", layerName);
+                if (this.get("styles")) {
+                    const style = this.get("styles")[0];
+
+                    legendUrl.searchParams.set("STYLE", style);
+                }
 
                 legends.push(legendUrl.toString());
             });
