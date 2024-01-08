@@ -73,7 +73,7 @@ export default {
             :key="index"
         >
             <div class="font-bold mt-3">
-                <span>{{ legendObj.name }}</span>
+                <span>{{ Array.isArray(legendObj.name) ? legendObj.name[0] : legendObj.name }}</span>
             </div>
             <LegendSingleLayer
                 :id="generateId(legendObj.name)"
