@@ -129,6 +129,8 @@
 - Draw: imported features can be modified and deleted. GetFeatureInfo attributes are shown on click on imported feature.
 - The routing module can now be saved via shareView.
 - Print: only layers are printed that are also displayed in the current scale
+- Print+Legend: style added to the GetGraphicLegend request for WMS layer
+- Print+Legend: a layer name configured as array in config.json is shown as string
 
 ---
 
