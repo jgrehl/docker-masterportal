@@ -3,6 +3,21 @@
 
 [Semantic versioning](https://semver.org/spec/v2.0.0.html) is used.
 
+## Unreleased - in development
+### __Breaking Changes__
+
+### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+---
+
 ## v2.41.1 - 2024-01-09
 ### Fixed
 - Fixed error "singleBaseLayer not defined" on opening 3D folders or on adding a layer by searchbar.
