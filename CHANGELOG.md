@@ -7,7 +7,7 @@
 ### __Breaking Changes__
 
 ### Added
-- New parameter filterOnOpen has been added to filterLayer in Filter. If set to true, the filter is triggered when the accordeon is clicked.
+- - New parameter `filterOnOpen` has been added to filterLayer in Filter. If set to true, the filter is triggered when the accordeon is clicked.
 
 ### Changed
 
