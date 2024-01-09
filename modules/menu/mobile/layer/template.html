@@ -5,7 +5,7 @@
     <% } %>
 </div>
 <div class="layer-item d-flex align-items-center">
-    <% if (singleBaseLayer) { %>
+    <% if (typeof singleBaseLayer !== "undefined" && singleBaseLayer) { %>
         <% if (isSelected) { %>
             <input type="radio" id="<%= name %>" checked name="radio-group" tabindex="0">
         <% } else { %>
