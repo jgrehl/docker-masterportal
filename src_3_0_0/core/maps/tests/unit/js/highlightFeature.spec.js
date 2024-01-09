@@ -23,11 +23,11 @@ describe.only("src_3_0_0/core/maps/js/highlightFeature.js", () => {
             };
         let commit,
             dispatch,
-            getters;
-            // increaseFeatureSpy;
+            getters,
+            increaseFeatureSpy;
 
         before(() => {
-            // increaseFeatureSpy = sinon.spy(increaseFeature);
+            increaseFeatureSpy = sinon.spy(highlightFeature, "increaseFeature");
             commit = sinon.spy();
             dispatch = sinon.spy();
 
@@ -36,7 +36,7 @@ describe.only("src_3_0_0/core/maps/js/highlightFeature.js", () => {
         it("tests highlightFeature with type 'increase'", () => {
 
             highlightFeature({commit, dispatch, getters}, highlightObject);
-            // expect(increaseFeatureSpy.calledOnce).to.be.true;
+            expect(increaseFeatureSpy.calledOnce).to.be.true;
             // expect(Object.keys(olMap.listeners_)).include("pointermove");
         });
 
