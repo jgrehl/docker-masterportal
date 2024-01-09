@@ -16,6 +16,7 @@
 ### Removed
 
 ### Fixed
+- Fixed error "singleBaseLayer not defined" on opening 3D folders or on adding a layer by searchbar.
 
 ---
 
