@@ -35,7 +35,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(["singleBaselayer", "visibleBaselayerConfigs"]),
+        ...mapGetters(["folderById", "singleBaselayer", "visibleBaselayerConfigs"]),
         ...mapGetters("Modules/LayerSelection", ["layersToAdd", "highlightLayerId"]),
 
         /**
@@ -54,6 +54,7 @@ export default {
         }
     },
     mounted () {
+        console.log(this.conf);
         if (this.highlightLayerId === this.conf.id) {
             const el = document.querySelector("#layer-selection-treenode-" + escapeId(this.highlightLayerId));
 
@@ -100,6 +101,34 @@ export default {
                 this.changeVisibility({layerId: this.conf.id, value: value});
             }
 
+        },
+
+        getPath(){
+            let names = [];
+
+            if(this.isLayerTree){
+                const parentId = this.conf.parentId;
+
+                if(parentId !== undefined){
+                    parent = this.folderById(parentId);
+                    if(parent){
+                        names.push(parent.name);
+                        const grandParent = this.folderById(parent.parentId);
+
+                        if(grandParent){
+                            names.push(grandParent.name);
+                            const grandGrandParent = this.folderById(grandParent.parentId);
+                            if(grandGrandParent && grandGrandParent.parentId){
+                                names.push(grandGrandParent.name);
+                            }
+                        }
+                    }
+                }
+
+            }
+
+            names = names.reverse();
+            return names.join("/");
         }
     }
 };
@@ -144,6 +173,9 @@ export default {
         :id="'layer-checkbox-' + escapeId(conf.id)"
         :disabled="disabled"
         class="btn d-flex w-100 layer-tree-layer-title pe-2 p-1 btn-light"
+        data-bs-toggle="tooltip"
+        data-bs-placement="right"
+        :title="getPath()"
         @click="clicked()"
         @keydown.enter="clicked()"
     >
@@ -160,10 +192,19 @@ export default {
             ]"
         />
         <span
-            :class="['layer-tree-layer-label', 'mt-0 d-flex flex-column align-self-start', isBold ? 'bold' : '']"
+            :class="['layer-tree-layer-label', 'mt-0 d-flex flex-column align-self-start']"
             :for="'layer-tree-layer-checkbox-' + conf.id"
             tabindex="0"
             :aria-label="$t(conf.name)"
+        >
+        <span
+            v-if="isLayerTree"
+            class="path"
+        >
+                {{ getPath() }}
+        </span>
+        <span
+        :class="['align-self-start', isBold ? 'bold' : '']"
         >
             <span
                 v-if="conf.shortname"
@@ -175,6 +216,7 @@ export default {
             >
                 {{ $t(conf.name) }}
             </span>
+        </span>
         </span>
     </button>
 </template>
@@ -192,6 +234,10 @@ export default {
             overflow: hidden;
             text-overflow: ellipsis;
         }
+    }
+    .path{
+        font-size: smaller;
+        color: gray;
     }
 
 </style>
