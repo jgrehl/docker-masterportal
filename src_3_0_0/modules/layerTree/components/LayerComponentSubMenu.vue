@@ -1,5 +1,5 @@
 <script>
-import {mapActions} from "vuex";
+import {mapActions, mapGetters} from "vuex";
 import LightButton from "../../../shared/modules/buttons/components/LightButton.vue";
 import layerFactory from "../../../core/layers/js/layerFactory";
 import SliderItem from "../../../shared/modules/slider/components/SliderItem.vue";
@@ -25,6 +25,7 @@ export default {
         }
     },
     computed: {
+        ...mapGetters(["folderById"]),
         /**
          * Returns the transparency of the layer config.
          * @returns {Number} Transparency of the layer config.
@@ -45,7 +46,34 @@ export default {
         }
     },
     methods: {
-        ...mapActions("Modules/LayerTree", ["removeLayer", "updateTransparency"])
+        ...mapActions("Modules/LayerTree", ["removeLayer", "updateTransparency"]),
+        getPath(){
+            let names = [];
+
+            
+                const parentId = this.layerConf.parentId;
+
+                if(parentId !== undefined){
+                    parent = this.folderById(parentId);
+                    if(parent){
+                        names.push(parent.name);
+                        const grandParent = this.folderById(parent.parentId);
+
+                        if(grandParent){
+                            names.push(grandParent.name);
+                            const grandGrandParent = this.folderById(grandParent.parentId);
+                            if(grandGrandParent && grandGrandParent.parentId){
+                                names.push(grandGrandParent.name);
+                            }
+                        }
+                    }
+                }
+
+            
+
+            names = names.reverse();
+            return names.join("/");
+        }
     }
 };
 </script>
@@ -55,6 +83,13 @@ export default {
         :id="'layer-component-sub-menu-' + layerConf.id"
         class="d-flex flex-column layer-component-sub-menu"
     >
+    <div>
+        <span
+            class="path"
+        >
+                {{ getPath() }}
+        </span>
+    </div>
         <div class="remove-layer-container">
             <LightButton
                 :interaction="() => removeLayer(layerConf)"
@@ -90,8 +125,10 @@ export default {
 
 <style lang="scss" scoped>
     @import "~variables";
-
-    .layer-component-sub-menu {
+    .path{
+        font-size: smaller;
+        color: gray;
+    }    .layer-component-sub-menu {
         font-size: $font-size-base;
 
         .remove-layer-container {
