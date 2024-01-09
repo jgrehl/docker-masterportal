@@ -16,6 +16,7 @@
 ### Removed
 
 ### Fixed
+- Issue #1122: GFI-Window with desktopType "attached" is shown at clicked feature, if another feature is clicked.
 
 ---
 
