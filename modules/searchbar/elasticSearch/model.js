@@ -166,11 +166,12 @@ const ElasticSearchModel = Backbone.Model.extend(/** @lends ElasticSearchModel.p
     createHit: function (result, hitMap, hitType, hitIcon, triggerEvent) {
         let hit = {};
 
+        hit.type = hitType;
+        hit.icon = hitIcon;
+
         Object.keys(hitMap).forEach(key => {
             hit[key] = this.findAttributeByPath(result, hitMap[key]);
         });
-        hit.type = hitType;
-        hit.icon = hitIcon;
         if (Object.keys(triggerEvent).length > 0) {
             hit = Object.assign(hit, {triggerEvent: triggerEvent});
         }

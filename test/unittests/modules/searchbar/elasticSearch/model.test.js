@@ -180,8 +180,8 @@ describe("modules/searchbar/elasticSearch", function () {
                     foo: "bar",
                     deeperKey: {
                         key: "value",
-                        type: "type2",
-                        hitIcon: "glyphicon-cba"
+                        type: "typeInDeeperKey",
+                        hitIcon: "iconInDeeperKey"
                     }
                 },
                 hitMap = {
@@ -193,9 +193,8 @@ describe("modules/searchbar/elasticSearch", function () {
                     icon: "deeperKey.hitIcon"
                 },
                 hitType = "type",
-                hitIcon = "glyphicon-abc",
-                triggerEvent = {
-                };
+                hitIcon = "hitIcon",
+                triggerEvent = {};
 
             expect(model.createHit(result, hitMap, hitType, hitIcon, triggerEvent)).to.deep.equal(
                 {
@@ -203,8 +202,8 @@ describe("modules/searchbar/elasticSearch", function () {
                     name: "name",
                     coordinate: [123456, 456789],
                     key: "value",
-                    type: "type",
-                    icon: "glyphicon-abc"
+                    type: "typeInDeeperKey",
+                    icon: "iconInDeeperKey"
                 }
             );
         });
