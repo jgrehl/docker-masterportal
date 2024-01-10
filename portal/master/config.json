@@ -1006,6 +1006,21 @@
           "autoRefresh": 5000
         },
         {
+          "id": "6076",
+          "styleId": "yellow-polygon",
+          "name": "Flurstücksfläche - ab 1 :2500",
+          "visibility": true,
+          "maxScale": 2500,
+          "gfiTheme": "parcelinfo",
+          "gfiAttributes" : {
+            "flaeche" : "Fläche",
+            "land" : "Land",
+            "gemarkung" : "Gemarkung",
+            "flstnrzae" : "Flurstück",
+            "lagebeztxt" : "Straße"
+          }
+        },
+        {
           "id": "8712",
           "styleId": "8712",
           "loadingStrategy": "bbox",
