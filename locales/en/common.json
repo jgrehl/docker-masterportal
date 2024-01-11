@@ -401,7 +401,8 @@
                     "A3 Querformat": "A3 landscape format"
                 },
                 "hintInfoScale": "The selected print scale differs from the scale in the map window. This can lead to a different map layout in print.",
-                "invisibleLayer": "The following topics cannot be printed in the selected print scale {{scale}}:"
+                "invisibleLayer": "The following topics cannot be printed in the selected print scale {{scale}}:",
+                "improveResolution": "Improve scaling resolution"
             },
             "shadow": {
                 "shadowDisplay": "Shadow display:",

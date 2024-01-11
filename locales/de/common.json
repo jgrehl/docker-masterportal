@@ -402,7 +402,8 @@
                     "A3 Querformat": "A3 Querformat"
                 },
                 "hintInfoScale": "Der ausgewählte Druckmaßstab weicht vom Maßstab im Kartenfenster ab. Das kann zu einem veränderten Kartenlayout im Druck führen.",
-                "invisibleLayer": "Folgende Themen können im ausgewählten Druckmaßstab {{scale}} nicht gedruckt werden:"
+                "invisibleLayer": "Folgende Themen können im ausgewählten Druckmaßstab {{scale}} nicht gedruckt werden:",
+                "improveResolution": "Auflösung verbessern"
             },
             "shadow": {
                 "shadowDisplay": "Schattendarstellung:",
@@ -866,7 +867,7 @@
                 "drawLine": "Linien",
                 "drawCurve": "Freihandlinie",
                 "drawArea": "Fläche",
-                "drawSquare": "Quadrat",                
+                "drawSquare": "Quadrat",
                 "drawCircle": "Kreis",
                 "drawDoubleCircle": "Doppelkreis",
                 "doubleCirclePlaceholder": "Bitte geben Sie einen Radius ein",
@@ -921,7 +922,7 @@
                 "squareDefinedInfo": " (ohne Berücksichtung der Erdkrümmung)",
                 "areaLabel": "Flächeninhalt",
                 "squareSideLengthLabel": "Seitenlänge",
-                "lineLengthLabel": "Gesamtlänge" 
+                "lineLengthLabel": "Gesamtlänge"
             },
             "measure": {
                 "geometry": "Geometrie",
