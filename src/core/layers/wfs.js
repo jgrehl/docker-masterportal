@@ -273,6 +273,11 @@ WFSLayer.prototype.createLegend = function () {
 
                         this.setLegend(uniqueLegendInformation);
                     }
+                    else if (legendInfos.length === 0) {
+                        createStyle.returnLegendByStyleId(styleObject.styleId).then(legendInfoObject => {
+                            this.setLegend(legendInfoObject.legendInformation);
+                        });
+                    }
                     else {
                         this.setLegend(legendInfos);
                     }
