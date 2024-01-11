@@ -5,7 +5,7 @@ import actionsMapsLayers from "./actionsMapsLayers.js";
 import actionsMapsMapMode from "./actionsMapsMapMode.js";
 import actionsMapsMarker from "./actionsMapsMarker.js";
 import actionsMapsZoomTo from "./actionsMapsZoomTo.js";
-import * as highlightFeature from "../js/highlightFeature.js";
+import highlightFeature from "../js/highlightFeature.js";
 import * as removeHighlightFeature from "../js/removeHighlighting.js";
 
 /**
