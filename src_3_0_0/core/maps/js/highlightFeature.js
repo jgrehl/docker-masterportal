@@ -165,7 +165,6 @@ export default {
 
         if (!clonedStyle) {
             if (typeof feature.getStyle()?.clone === "function") {
-            // console.log("hier gehts rein, sonst nirgends")
                 clonedStyle = feature.getStyle()?.clone();
             }
             else {
