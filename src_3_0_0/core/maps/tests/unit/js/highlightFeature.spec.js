@@ -1,65 +1,41 @@
 import {expect} from "chai";
 import sinon from "sinon";
-import highlightFeature from "../../../js/highlightFeature";
 import {Style, Fill, Stroke, Circle} from "ol/style.js";
-import layerCollection from "../../../../layers/js/layerCollection";
 import VectorSource from "ol/source/Vector.js";
+import highlightFeature from "../../../js/highlightFeature";
+import layerCollection from "../../../../layers/js/layerCollection";
 
 describe("src_3_0_0/core/maps/js/highlightFeature.js", () => {
-    describe.only("highlightFeature", () => {
-        const stroke = new Stroke({
-                color: "#3399CC",
-                width: 1.25
-            }),
+    describe("highlightFeature", () => {
+        const stroke = new Stroke({}),
             fill = new Fill({}),
             stylePoint = new Style({
                 image: new Circle({
                     fill: fill,
                     stroke: stroke,
                     radius: 5
-                }),
-                fill: fill,
-                stroke: stroke
+                })
             }),
-            stylePolygon = new Style({
-                stroke: stroke,
-                fill: fill
-            }),
-            styleLine = new Style({
+            styleGeoms = new Style({
                 stroke: stroke,
                 fill: fill
             }),
             featurePoint = {
                 id: "testPunkt",
-                getGeometry: () => sinon.stub({
-                    getType: () => "Point",
-                    getCoordinates: () => [100, 100]
-                }),
-                getProperties: () => [],
-                get: () => sinon.stub(),
+                getGeometry: () => sinon.stub(),
                 getStyle: () => stylePoint,
                 setStyle: () => sinon.stub()
             },
             featurePolygon = {
                 id: "testPolygon",
-                getGeometry: () => sinon.stub({
-                    getType: () => "Polygon",
-                    getCoordinates: () => [[565086.1948534324, 5934664.461947621], [565657.6945448224, 5934738.54524095], [565625.9445619675, 5934357.545446689], [565234.3614400891, 5934346.962119071], [565086.1948534324, 5934664.461947621]]
-                }),
-                getProperties: () => [],
-                get: () => sinon.stub(),
-                getStyle: () => stylePolygon,
+                getGeometry: () => sinon.stub(),
+                getStyle: () => styleGeoms,
                 setStyle: () => sinon.stub()
             },
             featureLine = {
                 id: "testLine",
-                getGeometry: () => sinon.stub({
-                    getType: () => "LineString",
-                    getCoordinates: () => [[565086.1948534324, 5934664.461947621], [565657.6945448224, 5934738.54524095], [565625.9445619675, 5934357.545446689]]
-                }),
-                getProperties: () => [],
-                get: () => sinon.stub(),
-                getStyle: () => styleLine,
+                getGeometry: () => sinon.stub(),
+                getStyle: () => styleGeoms,
                 setStyle: () => sinon.stub()
             },
             layerSource = new VectorSource({
@@ -87,13 +63,13 @@ describe("src_3_0_0/core/maps/js/highlightFeature.js", () => {
                 type: "highlightPolygon",
                 feature: featurePolygon
             },
-            polygonWithHighlightStyle = {...polygonWithoutHighlightStyle, highlightStyle: {stylePolygon}},
+            polygonWithHighlightStyle = {...polygonWithoutHighlightStyle, highlightStyle: {styleGeoms}},
             lineWithoutHighlightStyle = {
                 styleId: "defaultHighlightFeaturesLine",
                 type: "highlightLine",
                 feature: featureLine
             },
-            lineWithHighlightStyle = {...lineWithoutHighlightStyle, highlightStyle: {styleLine}};
+            lineWithHighlightStyle = {...lineWithoutHighlightStyle, highlightStyle: {styleGeoms}};
 
         let commit,
             dispatch,
@@ -143,7 +119,7 @@ describe("src_3_0_0/core/maps/js/highlightFeature.js", () => {
 
         it("tests type 'highlightPolygon' with highlightStyle", () => {
 
-            sinon.stub(highlightFeature, "styleObject").returns(stylePolygon);
+            sinon.stub(highlightFeature, "styleObject").returns(styleGeoms);
             highlightFeature.highlightFeature({commit, dispatch, getters}, polygonWithHighlightStyle);
 
             expect(highlightPolygonSpy.called).to.be.true;
@@ -151,7 +127,7 @@ describe("src_3_0_0/core/maps/js/highlightFeature.js", () => {
             expect(commit.firstCall.args[0]).to.equals("Maps/addHighlightedFeature");
             expect(commit.firstCall.args[1]).to.equals(featurePolygon);
             expect(commit.secondCall.args[0]).to.equals("Maps/addHighlightedFeatureStyle");
-            expect(commit.secondCall.args[1]).to.equals(stylePolygon);
+            expect(commit.secondCall.args[1]).to.equals(styleGeoms);
         });
 
         it("tests type 'highlightPolygon' without highlightStyle", () => {
@@ -167,7 +143,7 @@ describe("src_3_0_0/core/maps/js/highlightFeature.js", () => {
 
         it("tests type 'highlightLine' with highlightStyle", () => {
 
-            sinon.stub(highlightFeature, "styleObject").returns(styleLine);
+            sinon.stub(highlightFeature, "styleObject").returns(styleGeoms);
             highlightFeature.highlightFeature({commit, dispatch, getters}, lineWithHighlightStyle);
 
             expect(highlightLineSpy.called).to.be.true;
@@ -175,12 +151,12 @@ describe("src_3_0_0/core/maps/js/highlightFeature.js", () => {
             expect(commit.firstCall.args[0]).to.equals("Maps/addHighlightedFeature");
             expect(commit.firstCall.args[1]).to.equals(featureLine);
             expect(commit.secondCall.args[0]).to.equals("Maps/addHighlightedFeatureStyle");
-            expect(commit.secondCall.args[1]).to.equals(styleLine);
+            expect(commit.secondCall.args[1]).to.equals(styleGeoms);
         });
 
         it("tests type 'highlightLine' without highlightStyle", () => {
 
-            sinon.stub(highlightFeature, "styleObject").returns(styleLine);
+            sinon.stub(highlightFeature, "styleObject").returns(styleGeoms);
             highlightFeature.highlightFeature({commit, dispatch, getters}, lineWithoutHighlightStyle);
 
             expect(highlightLineSpy.called).to.be.true;
