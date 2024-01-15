@@ -632,17 +632,13 @@ const SearchbarView = Backbone.View.extend(/** @lends SearchbarView.prototype */
             store.dispatch("MapMarker/removePolygonMarker");
             hit.coordinate = this.sanitizePoint(hit.coordinate);
             const isPointInsidePolygon = this.checkIsCoordInsidePolygon(hit);
+            let coordinateForMarker = hit.coordinate;
 
             if (!isPointInsidePolygon) {
-                const randomCoordinate = this.getRandomCoordinate(hit.feature.getGeometry().getCoordinates());
-
-                store.dispatch("MapMarker/placingPointMarker", randomCoordinate);
-                Radio.trigger("MapView", "setCenter", randomCoordinate, zoomLevel);
+                coordinateForMarker = this.getRandomCoordinate(hit.feature.getGeometry().getCoordinates());
             }
-            else {
-                store.dispatch("MapMarker/placingPointMarker", hit.coordinate);
-                Radio.trigger("MapView", "setCenter", hit.coordinate, zoomLevel);
-            }
+            store.dispatch("MapMarker/placingPointMarker", coordinateForMarker);
+            Radio.trigger("MapView", "setCenter", coordinateForMarker, zoomLevel);
             store.commit("Maps/setClickCoordinate", hit.coordinate);
         }
         else {
@@ -1064,9 +1060,10 @@ const SearchbarView = Backbone.View.extend(/** @lends SearchbarView.prototype */
                 if (!isPointInsidePolygon) {
                     coordinateForMarker = this.getRandomCoordinate(hit.feature.getGeometry().getCoordinates());
                 }
-                highlightObject = this.setHighlightObjectProperties(highlightObject, hit);
-
-                store.dispatch("Maps/highlightFeature", highlightObject);
+                highlightObject = Radio.request("ModelList", "getModelByAttributes", {id: hit.layer_id}) ? this.setHighlightObjectProperties(highlightObject, hit) : null;
+                if (highlightObject) {
+                    store.dispatch("Maps/highlightFeature", highlightObject);
+                }
                 store.dispatch("MapMarker/placingPointMarker", coordinateForMarker);
             }
             else {
@@ -1124,10 +1121,12 @@ const SearchbarView = Backbone.View.extend(/** @lends SearchbarView.prototype */
      * @returns {polygonAndIsInside} - an object with polygonGeometryCoordinates and a boolean if a given coordinate is inside
      */
     checkIsCoordInsidePolygon: function (hit) {
-        const pointToCheck = hit.coordinate,
-            isPointInsidePolygon = hit.feature.getGeometry().intersectsCoordinate(pointToCheck);
+        const pointToCheck = hit.coordinate;
 
-        return isPointInsidePolygon;
+        if (hit.feature) {
+            return hit.feature.getGeometry().intersectsCoordinate(pointToCheck);
+        }
+        return true;
     },
 
     /**
@@ -1161,7 +1160,7 @@ const SearchbarView = Backbone.View.extend(/** @lends SearchbarView.prototype */
         highlightObject.type = "highlightMultiPolygon";
         highlightObject.feature = hit.feature;
         highlightObject.styleId = Radio.request("ModelList", "getModelByAttributes", {id: hit.layer_id}).attributes.styleId;
-        highlightObject.polygons = highlightObject.feature.getGeometry().getPolygons();
+        highlightObject.polygons = highlightObject.feature ? highlightObject.feature.getGeometry().getPolygons() : null;
         return highlightObject;
     }
 });
