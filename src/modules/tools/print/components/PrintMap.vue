@@ -137,6 +137,9 @@ export default {
         }
     },
     watch: {
+        increased3DResolutionSelected: function () {
+            this.toggle3DResolutionScale();
+        },
         active: function (value) {
             if (value) {
                 this.setIsScaleSelectedManually(false);
@@ -148,6 +151,7 @@ export default {
                 this.setPlotserviceIndex(-1);
                 this.setShouldPrintGeometries(false);
                 this.togglePostrenderListener();
+                this.setIsIncreased3DResolutionSelected(false);
             }
         },
         scale: function (value) {
@@ -162,6 +166,9 @@ export default {
             if (value) {
                 this.togglePostrenderListener();
             }
+        },
+        isIncreased3DResolutionSelected: function (value) {
+            this.update3DResolutionScale(value);
         }
     },
 
@@ -209,6 +216,7 @@ export default {
         ...mapMutations("Tools/Print", Object.keys(mutations)),
         ...mapActions("Tools/Print", [
             "retrieveCapabilites",
+            "update3DResolutionScale",
             "togglePostrenderListener",
             "createMapFishServiceUrl",
             "startPrint",
@@ -776,6 +784,28 @@ export default {
                                 class="form-check-input"
                                 :checked="isLegendSelected"
                                 @change="setIsLegendSelected($event.target.checked)"
+                            >
+                        </div>
+                    </div>
+                </div>
+                <div
+                    v-if="is3D"
+                    class="form-group form-group-sm row"
+                >
+                    <label
+                        class="col-md-5 control-label"
+                        for="printLegend"
+                    >
+                        {{ $t("common:modules.tools.print.improveResolution") }}
+                    </label>
+                    <div class="col-md-7">
+                        <div class="form-check">
+                            <input
+                                id="printBetterQuality"
+                                type="checkbox"
+                                class="form-check-input"
+                                :checked="isIncreased3DResolutionSelected"
+                                @change="setIsIncreased3DResolutionSelected($event.target.checked)"
                             >
                         </div>
                     </div>

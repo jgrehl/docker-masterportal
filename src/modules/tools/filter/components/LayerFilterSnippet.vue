@@ -50,6 +50,10 @@ export default {
             type: Object,
             required: true
         },
+        layerSelectorVisible: {
+            type: Boolean,
+            required: true
+        },
         mapHandler: {
             type: MapHandler,
             required: false,
@@ -258,6 +262,13 @@ export default {
             compileSnippets(this.layerConfig.snippets, this.api, FilterApi, snippets => {
                 this.snippets = snippets;
                 this.setSnippetValueByState(this.filterRules);
+
+
+                if (this.layerSelectorVisible && this.layerConfig.filterOnOpen && this.layerConfig.strategy === "active") {
+                    this.$nextTick(() => {
+                        this.handleActiveStrategy();
+                    });
+                }
             }, error => {
                 console.warn(error);
             });

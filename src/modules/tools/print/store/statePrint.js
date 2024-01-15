@@ -28,6 +28,7 @@
  * @property {Boolean} isGfiActive true if gfi is active
  * @property {Boolean} isLegendAvailable true if the current layout supports legend
  * @property {Boolean} isLegendSelected true if the legend is to be printed
+ * @property {Boolean} isIncreased3DResolutionSelected true if the 3d resolution is increased
  * @property {Boolean} isScaleAvailable true if the current layout supports scale
  * @property {Boolean} isScaleFixed true if the current layout supports scale
  * @property {Boolean} isMapAvailable true if the Map is available
@@ -88,6 +89,7 @@ const state = {
     isLegendAvailable: false,
     legendAttribute: null,
     isLegendSelected: false,
+    isIncreased3DResolutionSelected: false,
     isScaleAvailable: false,
     autoAdjustScale: true,
     scaleAttribute: null,

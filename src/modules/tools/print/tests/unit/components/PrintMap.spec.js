@@ -208,6 +208,44 @@ describe("src/modules/tools/Print/components/PrintMap.vue", () => {
             expect(wrapper.find(".tool-print-download-button-active").exists()).to.be.false;
             expect(wrapper.find(".tool-print-download-button-disabled").exists()).to.be.true;
         });
+
+        it("should not have a checkbox of improving the resolution for 3d mode", () => {
+            expect(wrapper.find("#printBetterQuality").exists()).to.be.false;
+        });
+
+        it("should have a checkbox of improving the resolution for 3d mode", () => {
+            mockMapGetters.is3D = () => true;
+            store = new Vuex.Store({
+                namespaced: true,
+                modules: {
+                    Tools: {
+                        namespaced: true,
+                        modules: {
+                            Print,
+                            Gfi: {
+                                namespaced: true,
+                                getters: mockGfiGetters
+                            }
+                        }
+                    },
+                    Maps: {
+                        namespaced: true,
+                        getters: mockMapGetters,
+                        actions: mockMapActions
+                    }
+                },
+                getters: {
+                    uiStyle: sinon.stub(),
+                    mobile: sinon.stub()
+                }
+            });
+
+            store.commit("Tools/Print/setActive", true);
+
+            wrapper = mount(PrintComponent, {store, localVue});
+
+            expect(wrapper.find("#printBetterQuality").exists()).to.be.true;
+        });
     });
 
     describe("returnScale", () => {

@@ -50,9 +50,8 @@ export default {
          */
         feature () {
             this.$nextTick(() => {
-                const popover = Popover.getInstance(this.overlay.getElement());
-
-                popover.update();
+                this.overlay.setPosition(this.clickCoordinate);
+                Popover.getInstance(this.overlay.getElement()).update();
             });
         }
     },

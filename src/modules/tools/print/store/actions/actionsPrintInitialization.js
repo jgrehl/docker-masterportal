@@ -189,6 +189,18 @@ export default {
     },
 
     /**
+     * If the tool is activated and the user clicks for an improved quality,
+     * we double the rendered scale of the globe.
+     * @param {Object} param.state the state
+     * @returns {void}
+     */
+    update3DResolutionScale: function ({state}) {
+        const ol3d = mapCollection.getMap("3D");
+
+        ol3d.setResolutionScale(state.isIncreased3DResolutionSelected ? 2 : 1);
+    },
+
+    /**
      * if the tool is activated and there is a layout,
      * a callback function is registered to the postrender event of the map
      * @param {Object} param.state the state

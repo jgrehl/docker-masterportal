@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <div class="menu-row">
-    <% if (singleBaseLayer) { %>
+    <% if (typeof singleBaseLayer !== "undefined" && singleBaseLayer) { %>
         <% if (isSelected) { %>
             <span class="layer-item tabable w-100 p-1 checked">
                 <input type="radio" id="<%= domId %>" checked name="radio-group" tabindex="0">
