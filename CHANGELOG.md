@@ -46,7 +46,8 @@
 - Issue #1098: fixed all urls used in routing tool and in wfsSearch tool to not use more than one questionmark.
 - Issue #1117: The tool addWMS now works again.
 - Issue #1084: fix wrong pointMarker placement when featureType is MultiPolygon. 
-- Fixed HighlightFeature for MultiPolygons
+- Fixed HighlightFeature for MultiPolygons: In certain WFS layers, when polygon selection is enabled,
+    clicking on a polygon would highlight it, but multiPolygons wouldn't. This has now been corrected.
 ---
 
 ## v2.40.1 - 2023-12-07
