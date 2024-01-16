@@ -18,6 +18,7 @@
 
 ### Fixed
 - Issue #1110: Elastic Search: icons can be assigned via the search result.
+- Issue #1115: Legend is shown for all WFS-Layers.
 - Issue #1122: GFI-Window with desktopType "attached" is shown at clicked feature, if another feature is clicked.
 
 ---
