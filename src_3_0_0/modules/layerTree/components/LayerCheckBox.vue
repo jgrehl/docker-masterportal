@@ -35,7 +35,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(["folderById", "singleBaselayer", "visibleBaselayerConfigs"]),
+        ...mapGetters(["folderById", "singleBaselayer", "showFolderPath", "visibleBaselayerConfigs"]),
         ...mapGetters("Modules/LayerSelection", ["layersToAdd", "highlightLayerId"]),
 
         /**
@@ -54,7 +54,6 @@ export default {
         }
     },
     mounted () {
-        console.log(this.conf);
         if (this.highlightLayerId === this.conf.id) {
             const el = document.querySelector("#layer-selection-treenode-" + escapeId(this.highlightLayerId));
 
@@ -102,33 +101,35 @@ export default {
             }
 
         },
-
-        getPath(){
+        /**
+         * Returns the names of all parent folders reversed and separated.
+         * @returns {String} the names of all parent folders
+         */
+        getPath () {
             let names = [];
 
-            if(this.isLayerTree){
-                const parentId = this.conf.parentId;
-
-                if(parentId !== undefined){
-                    parent = this.folderById(parentId);
-                    if(parent){
-                        names.push(parent.name);
-                        const grandParent = this.folderById(parent.parentId);
-
-                        if(grandParent){
-                            names.push(grandParent.name);
-                            const grandGrandParent = this.folderById(grandParent.parentId);
-                            if(grandGrandParent && grandGrandParent.parentId){
-                                names.push(grandGrandParent.name);
-                            }
-                        }
-                    }
-                }
-
+            if (this.showFolderPath === true && this.isLayerTree) {
+                this.getNamesOfParentFolder(this.conf.parentId, names);
+                names = names.reverse();
             }
-
-            names = names.reverse();
             return names.join("/");
+        },
+        /**
+         * Looks up for the names of all parent folders.
+         * @param {String} parentId id of the parent folder
+         * @param {Array} names to store names
+         * @returns {Array}  the names of all parent folders
+         */
+        getNamesOfParentFolder (parentId, names) {
+            if (parentId !== undefined) {
+                const parent = this.folderById(parentId);
+
+                if (parent) {
+                    names.push(parent.name);
+                    this.getNamesOfParentFolder(parent.parentId, names);
+                }
+            }
+            return names;
         }
     }
 };
@@ -197,26 +198,26 @@ export default {
             tabindex="0"
             :aria-label="$t(conf.name)"
         >
-        <span
-            v-if="isLayerTree"
-            class="path"
-        >
+            <span
+                v-if="isLayerTree"
+                class="path"
+            >
                 {{ getPath() }}
-        </span>
-        <span
-        :class="['align-self-start', isBold ? 'bold' : '']"
-        >
-            <span
-                v-if="conf.shortname"
-            >
-                {{ $t(conf.shortname) }}
             </span>
             <span
-                v-else
+                :class="['align-self-start', isBold ? 'bold' : '']"
             >
-                {{ $t(conf.name) }}
+                <span
+                    v-if="conf.shortname"
+                >
+                    {{ $t(conf.shortname) }}
+                </span>
+                <span
+                    v-else
+                >
+                    {{ $t(conf.name) }}
+                </span>
             </span>
-        </span>
         </span>
     </button>
 </template>
@@ -233,11 +234,11 @@ export default {
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            align-self: flex-start;
         }
     }
     .path{
-        font-size: smaller;
-        color: gray;
+        font-size: $font-size-sm;
+        color: $dark_grey;
     }
-
 </style>

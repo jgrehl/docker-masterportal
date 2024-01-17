@@ -8,6 +8,7 @@
 
 ### Added
 - Added config.json-Parameter Portalconfig.tree.singleBaselayer. Specifies whether only one base layer may be active at any time selectable by radio-buttons in visible layers.
+- Added config.json-Parameter Portalconfig.tree.showFolderPath. Determines whether the folder structure of visible layers is displayed.
 ### Changed
 - CoordToolkit: Toast added instead of Alert for feedback after copying coordinates.
 - ShareView: Added more configuration.

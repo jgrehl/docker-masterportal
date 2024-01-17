@@ -48,6 +48,14 @@ export default {
     singleBaselayer: state => {
         return state.portalConfig?.tree?.singleBaselayer;
     },
+    /**
+     * Returns the configured value for showFolderPath, default is true.
+     * @param {Object} state state of the app-store.
+     * @returns {Array} value for showFolderPath
+     */
+    showFolderPath: state => {
+        return typeof state.portalConfig?.tree?.showFolderPath === "boolean" ? state.portalConfig?.tree?.showFolderPath : true;
+    },
 
 
     /**

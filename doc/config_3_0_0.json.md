@@ -4510,6 +4510,7 @@ Possibility to make settings for the topic selection tree.
 |layerIDsToStyle|no|**[layerIDsToStyle](#markdown-header-portalconfigtreelayeridstostyle)**[]||Special implementation for a HVV service (Hamburger Verkehrsbetriebe). Contains objects to query different styles of a layer ID. Only for the tree.type `auto`.|true|
 |metaIDsToIgnore|no|String[]||All layers found in `services.json` that match these meta IDs will not be displayed in the tree and map. Only for the tree.type `auto`.|false|
 |metaIDsToMerge|no|String[]||All layers found in `services.json` that match these meta-IDs will be merged into a single layer in the tree. Only for the tree.type `auto`.|true|
+|showFolderPath|no|Boolean|true|Determines whether the folder structure of visible layers is displayed.|false|
 |singleBaselayer|no|Boolean|false|Specifies whether only one base layer may be active at any time.|false|
 |type|no|enum["auto"]||The topic tree is built in the same structure as the **[topicconfig](#markdown-header-themenconfig)**. If the type `auto` is configured, all layers from the [services.json](services.json.md) are offered in the tree, structured by their metadata (Geo-Online).|false|
 |validLayerTypesAutoTree|no|enum|["WMS", "SENSORTHINGS", "TERRAIN3D", "TILESET3D", "OBLIQUE"]|Layer types to be used with the tree.type `auto`.|false|

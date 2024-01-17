@@ -21,9 +21,20 @@ describe("src_3_0_0/modules/layerTree/components/LayerCheckBox.vue", () => {
         highlightLayerId,
         singleBaselayer,
         visibleBaselayerConfigs,
-        baselayerHandlerSpy;
+        baselayerHandlerSpy,
+        showFolderPath;
+    const folder_1 = {
+            id: "folder-1",
+            name: "folder-1",
+            parentId: "folder-2"
+        },
+        folder_2 = {
+            id: "folder-2",
+            name: "folder-2"
+        };
 
     beforeEach(() => {
+        showFolderPath = true;
         singleBaselayer = false;
         visibleBaselayerConfigs = [];
         isLayerTree = true;
@@ -72,7 +83,17 @@ describe("src_3_0_0/modules/layerTree/components/LayerCheckBox.vue", () => {
             },
             getters: {
                 singleBaselayer: () => singleBaselayer,
-                visibleBaselayerConfigs: () => visibleBaselayerConfigs
+                visibleBaselayerConfigs: () => visibleBaselayerConfigs,
+                showFolderPath: () => showFolderPath,
+                folderById: () => (id) => {
+                    if (id === "folder-1") {
+                        return folder_1;
+                    }
+                    if (id === "folder-2") {
+                        return folder_2;
+                    }
+                    return null;
+                }
             }
         });
     });
@@ -123,7 +144,8 @@ describe("src_3_0_0/modules/layerTree/components/LayerCheckBox.vue", () => {
         expect(wrapper.find("span").attributes("class")).not.to.include("bold");
     });
 
-    it("renders layer with visibility false and checkbox disabled", () => {
+    it("renders layer with visibility false and checkbox disabled and folder-path", () => {
+        layer.parentId = "folder-1";
         let checkbox = null;
 
         propsData.disabled = true;
@@ -139,8 +161,34 @@ describe("src_3_0_0/modules/layerTree/components/LayerCheckBox.vue", () => {
         expect(checkbox.attributes().disabled).to.equal("");
         expect(wrapper.findAll(".layer-tree-layer-checkbox").length).to.be.equals(1);
         expect(wrapper.find(".layer-tree-layer-checkbox pe-2 bi-check2-square").exists()).to.be.false;
-        expect(wrapper.find(".layer-tree-layer-label").text()).to.equal(propsData.conf.name);
+        expect(wrapper.find(".layer-tree-layer-label span span").text()).to.equal(propsData.conf.name);
         expect(wrapper.find("span").attributes("class")).not.to.include("bold");
+        expect(wrapper.find(".path").exists()).to.be.true;
+        expect(wrapper.find(".path").text()).to.equal("folder-2/folder-1");
+    });
+
+    it("renders layer with visibility false and checkbox disabled and no folder-path", () => {
+        layer.parentId = "folder-1";
+        showFolderPath = false;
+        let checkbox = null;
+
+        propsData.disabled = true;
+        wrapper = shallowMount(LayerCheckBox, {
+            global: {
+                plugins: [store]
+            },
+            propsData
+        });
+        checkbox = wrapper.find("#layer-checkbox-" + propsData.conf.id);
+
+        expect(checkbox.exists()).to.be.true;
+        expect(checkbox.attributes().disabled).to.equal("");
+        expect(wrapper.findAll(".layer-tree-layer-checkbox").length).to.be.equals(1);
+        expect(wrapper.find(".layer-tree-layer-checkbox pe-2 bi-check2-square").exists()).to.be.false;
+        expect(wrapper.find(".layer-tree-layer-label span span").text()).to.equal(propsData.conf.name);
+        expect(wrapper.find("span").attributes("class")).not.to.include("bold");
+        expect(wrapper.find(".path").exists()).to.be.true;
+        expect(wrapper.find(".path").text()).to.equal("");
     });
 
     it("renders background-layer as simple preview", () => {
@@ -158,6 +206,7 @@ describe("src_3_0_0/modules/layerTree/components/LayerCheckBox.vue", () => {
         expect(wrapper.find("#layer-tree-layer-preview-" + propsData.conf.id).exists()).to.be.true;
         expect(wrapper.find("layer-preview-stub").exists()).to.be.true;
         expect(wrapper.find(".pt-4").text()).to.equal(propsData.conf.name);
+        expect(wrapper.find(".path").exists()).to.be.false;
     });
 
     it("renders background-layer with preview in config", () => {
@@ -215,81 +264,107 @@ describe("src_3_0_0/modules/layerTree/components/LayerCheckBox.vue", () => {
         });
 
         expect(wrapper.find("#layer-checkbox-" + propsData.conf.id).exists()).to.be.true;
-        expect(wrapper.find("#layer-checkbox-" + propsData.conf.id).attributes("title")).to.be.undefined;
+        expect(wrapper.find("#layer-checkbox-" + propsData.conf.id).attributes("title")).to.be.equals("");
         expect(wrapper.findAll(".layer-tree-layer-checkbox").length).to.be.equals(1);
         expect(wrapper.find(".bi-check-square").exists()).to.be.true;
         expect(wrapper.find(".layer-tree-layer-label").text()).to.equal(propsData.conf.name);
-        expect(wrapper.find(".layer-tree-layer-label").attributes("class")).to.include("bold");
+        expect(wrapper.find(".bold").exists()).to.be.true;
     });
 
-    it("computed property isLayerVisible with visibility=false ", () => {
-        wrapper = shallowMount(LayerCheckBox, {
-            global: {
-                plugins: [store]
-            },
-            propsData
+    describe("watcher", () => {
+        it("computed property isLayerVisible with visibility=false ", () => {
+            wrapper = shallowMount(LayerCheckBox, {
+                global: {
+                    plugins: [store]
+                },
+                propsData
+            });
+
+            expect(wrapper.vm.isLayerVisible).to.be.false;
+        });
+        it("computed property isLayerVisible with visibility=undefined ", () => {
+            layer.visibility = undefined;
+            wrapper = shallowMount(LayerCheckBox, {
+                global: {
+                    plugins: [store]
+                },
+                propsData
+            });
+
+            expect(wrapper.vm.isLayerVisible).to.be.false;
+        });
+        it("computed property isLayerVisible with visibility=true ", () => {
+            layer.visibility = true;
+            wrapper = shallowMount(LayerCheckBox, {
+                global: {
+                    plugins: [store]
+                },
+                propsData
+            });
+
+            expect(wrapper.vm.isLayerVisible).to.be.true;
         });
 
-        expect(wrapper.vm.isLayerVisible).to.be.false;
+        it("computed property isBold with no highlightLayerId shall return visibility false of layer", () => {
+            layer.visibility = false;
+            wrapper = shallowMount(LayerCheckBox, {
+                global: {
+                    plugins: [store]
+                },
+                propsData
+            });
+
+            expect(wrapper.vm.isBold).to.be.false;
+        });
+
+        it("computed property isBold with no highlightLayerId shall return visibility true of layer", () => {
+            layer.visibility = true;
+            wrapper = shallowMount(LayerCheckBox, {
+                global: {
+                    plugins: [store]
+                },
+                propsData
+            });
+
+            expect(wrapper.vm.isBold).to.be.true;
+        });
+
+        it("computed property isBold with highlightLayerId shall return true although visibility of layer is false", () => {
+            layer.visibility = false;
+            highlightLayerId = "1";
+            wrapper = shallowMount(LayerCheckBox, {
+                global: {
+                    plugins: [store]
+                },
+                propsData
+            });
+
+            expect(wrapper.vm.isBold).to.be.true;
+        });
     });
-    it("computed property isLayerVisible with visibility=undefined ", () => {
-        layer.visibility = undefined;
-        wrapper = shallowMount(LayerCheckBox, {
-            global: {
-                plugins: [store]
-            },
-            propsData
+    describe("methods", () => {
+        it("getPath - no folders --> no path", () => {
+            wrapper = shallowMount(LayerCheckBox, {
+                global: {
+                    plugins: [store]
+                },
+                propsData
+            });
+
+            expect(wrapper.vm.getPath()).to.be.equals("");
         });
+        it("getPath - reversed path from folders", () => {
+            layer.parentId = "folder-1";
 
-        expect(wrapper.vm.isLayerVisible).to.be.false;
-    });
-    it("computed property isLayerVisible with visibility=true ", () => {
-        layer.visibility = true;
-        wrapper = shallowMount(LayerCheckBox, {
-            global: {
-                plugins: [store]
-            },
-            propsData
+            wrapper = shallowMount(LayerCheckBox, {
+                global: {
+                    plugins: [store]
+                },
+                propsData
+            });
+
+            expect(wrapper.vm.getPath()).to.be.equals("folder-2/folder-1");
         });
-
-        expect(wrapper.vm.isLayerVisible).to.be.true;
-    });
-
-    it("computed property isBold with no highlightLayerId shall return visibility false of layer", () => {
-        layer.visibility = false;
-        wrapper = shallowMount(LayerCheckBox, {
-            global: {
-                plugins: [store]
-            },
-            propsData
-        });
-
-        expect(wrapper.vm.isBold).to.be.false;
-    });
-
-    it("computed property isBold with no highlightLayerId shall return visibility true of layer", () => {
-        layer.visibility = true;
-        wrapper = shallowMount(LayerCheckBox, {
-            global: {
-                plugins: [store]
-            },
-            propsData
-        });
-
-        expect(wrapper.vm.isBold).to.be.true;
-    });
-
-    it("computed property isBold with highlightLayerId shall return true although visibility of layer is false", () => {
-        layer.visibility = false;
-        highlightLayerId = "1";
-        wrapper = shallowMount(LayerCheckBox, {
-            global: {
-                plugins: [store]
-            },
-            propsData
-        });
-
-        expect(wrapper.vm.isBold).to.be.true;
     });
 
     it("layerTree: click on checkbox of layer with visibility false, call replaceByIdInLayerConfig", async () => {
