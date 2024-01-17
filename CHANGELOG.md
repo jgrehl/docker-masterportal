@@ -11,6 +11,9 @@
 - Print: An option "Improve scaling resolution" is implemented for 3d Layers to supply an improved and better resolution.
 
 ### Changed
+- The following packages have been updated:
+    - dependencies:
+        - @masterportal/masterportalapi: 2.31.0 to 2.32.0 (This also raised ol to version 8.2.0 and @cesium/engine to version 6.2.0)
 
 ### Deprecated
 
@@ -47,7 +50,7 @@
 - Issue #1081: the geometry display when importing more than one KML file is complete, despite identical ids at the element `Placemark` .
 - Issue #1098: fixed all urls used in routing tool and in wfsSearch tool to not use more than one questionmark.
 - Issue #1117: The tool addWMS now works again.
-- Issue #1084: fix wrong pointMarker placement when featureType is MultiPolygon. 
+- Issue #1084: fix wrong pointMarker placement when featureType is MultiPolygon.
 - Fixed HighlightFeature for MultiPolygons: In certain WFS layers, when polygon selection is enabled,
     clicking on a polygon would highlight it, but multiPolygons wouldn't. This has now been corrected.
 ---
