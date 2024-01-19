@@ -59,7 +59,7 @@
     }
   ],
   "dependencies": {
-    "@masterportal/masterportalapi": "2.31.0",
+    "@masterportal/masterportalapi": "2.32.0",
     "@popperjs/core": "^2.11.8",
     "@vue/compat": "^3.3.4",
     "axios": "^1.5.1",

@@ -11,6 +11,9 @@
 ### Changed
 - CoordToolkit: Toast added instead of Alert for feedback after copying coordinates.
 - ShareView: Added more configuration.
+- The following packages have been updated:
+    - dependencies:
+        - @masterportal/masterportalapi: 2.31.0 to 2.32.0 (This also raised ol to version 8.2.0 and @cesium/engine to version 6.2.0)
 
 ### Deprecated
 
