@@ -156,6 +156,7 @@ The produced `examples.zip` and `examples-x.x.x.zip` (versioned) both contain ru
 
 To update all NPM packages, run
 
+This task belongs to the owner/ package maintainers. If you don't know: Dont call the command.
 ```console
 $ npm update
 ```
