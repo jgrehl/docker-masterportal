@@ -174,15 +174,13 @@ export default {
         :id="'layer-checkbox-' + escapeId(conf.id)"
         :disabled="disabled"
         class="btn d-flex w-100 layer-tree-layer-title pe-2 p-1 btn-light"
-        data-bs-toggle="tooltip"
-        data-bs-placement="right"
-        :title="getPath()"
         @click="clicked()"
         @keydown.enter="clicked()"
     >
         <span
             :id="'layer-tree-layer-checkbox-' + conf.id"
             :class="[
+                'my-auto',
                 'layer-tree-layer-checkbox ps-1 pe-3',
                 {
                     'bi-check-square': !(conf.baselayer && singleBaselayer) && isLayerVisible,
@@ -205,7 +203,7 @@ export default {
                 {{ getPath() }}
             </span>
             <span
-                :class="['align-self-start', isBold ? 'bold' : '']"
+                :class="['align-self-start', isBold ? 'font-bold' : '']"
             >
                 <span
                     v-if="conf.shortname"
@@ -235,10 +233,14 @@ export default {
             overflow: hidden;
             text-overflow: ellipsis;
             align-self: flex-start;
+            width: 100%;
+            text-align: start;
         }
     }
     .path{
         font-size: $font-size-sm;
         color: $dark_grey;
+        width: 100%;
+        text-align: start;
     }
 </style>
