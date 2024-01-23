@@ -6,6 +6,8 @@ import LayerCheckBox from "./LayerCheckBox.vue";
 import LayerComponentIconInfo from "./LayerComponentIconInfo.vue";
 import LayerComponentIconSubMenu from "./LayerComponentIconSubMenu.vue";
 import LayerComponentSubMenu from "./LayerComponentSubMenu.vue";
+import LayerComponentIconTreePath from "./LayerComponentIconTreePath.vue";
+import LayerComponentTreePath from "./LayerComponentTreePath.vue";
 
 /**
  * Representation of a layer in layerTree.
@@ -19,7 +21,9 @@ export default {
         LayerCheckBox,
         LayerComponentIconInfo,
         LayerComponentIconSubMenu,
-        LayerComponentSubMenu
+        LayerComponentSubMenu,
+        LayerComponentIconTreePath,
+        LayerComponentTreePath
     },
     props: {
         /** current layer configuration */
@@ -34,6 +38,7 @@ export default {
         };
     },
     computed: {
+        ...mapGetters(["folderById", "showFolderPath"]),
         ...mapGetters("Maps", ["mode", "scale", "scales"])
     },
     mounted () {
@@ -82,6 +87,36 @@ export default {
                 return false;
             }
             return this.scale > parseInt(this.conf.maxScale, 10) || this.scale < parseInt(this.conf.minScale, 10);
+        },
+        /**
+         * Returns the names of all parent folders reversed and separated.
+         * @returns {String} the names of all parent folders
+         */
+        getPath () {
+            let names = [];
+
+            if (this.showFolderPath === true) {
+                this.getNamesOfParentFolder(this.conf.parentId, names);
+                names = names.reverse();
+            }
+            return names.length > 0 ? names.join("/") : null;
+        },
+        /**
+         * Looks up for the names of all parent folders.
+         * @param {String} parentId id of the parent folder
+         * @param {Array} names to store names
+         * @returns {Array}  the names of all parent folders
+         */
+        getNamesOfParentFolder (parentId, names) {
+            if (parentId !== undefined) {
+                const parent = this.folderById(parentId);
+
+                if (parent) {
+                    names.push(parent.name);
+                    this.getNamesOfParentFolder(parent.parentId, names);
+                }
+            }
+            return names;
         }
     }
 };
@@ -93,6 +128,16 @@ export default {
         :id="'layer-tree-layer-' + conf.id"
         :class="['layer-tree-layer', 'd-flex', 'flex-column', 'justify-content-between', !isLayerTree() ? 'layer-selection': '']"
     >
+        <div
+            v-if="isLayerTree() && getPath()"
+            :id="'collapse-tree-path-' + conf.id.split('.').join('_')"
+            class="collapse"
+        >
+            <LayerComponentTreePath
+                :path="getPath()"
+                :conf-id="conf.id"
+            />
+        </div>
         <div class="d-flex justify-content-between align-items-center handle-layer-component-drag">
             <span
                 class="layer-checkbox-tooltip"
@@ -110,6 +155,10 @@ export default {
             <div
                 class="d-flex"
             >
+                <LayerComponentIconTreePath
+                    v-if="isLayerTree() && getPath()"
+                    :layer-conf="conf"
+                />
                 <LayerComponentIconSubMenu
                     v-if="isLayerTree()"
                     :layer-conf="conf"

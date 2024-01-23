@@ -540,6 +540,7 @@
       "categoryOrganisation": "Behörde",
       "iconRemoveLayer": "Thema aus Karte entfernen",
       "iconSubMenu": "Weitere Funktionen anzeigen",
+      "iconTreePath": "Ordner-Struktur anzeigen",
       "iconTransparency": "Transparenz",
       "infosAndLegend": "Informationen zum Datensatz anzeigen",
       "invisibleLayer": "Dieses Thema kann nur im Maßstab {{minScale}} - {{maxScale}} angezeigt werden",

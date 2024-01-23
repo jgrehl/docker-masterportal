@@ -540,6 +540,7 @@
       "categoryOrganisation": "Government agencies",
       "iconRemoveLayer": "Remove topic from Map",
       "iconSubMenu": "Show more functions",
+      "iconTreePath": "Show folder structure",
       "iconTransparency": "Transparency",
       "infosAndLegend": "Show information about the data set",
       "invisibleLayer": "This topic can only be displayed at {{minScale}} - {{maxScale}}",

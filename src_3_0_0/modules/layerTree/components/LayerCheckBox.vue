@@ -35,7 +35,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(["folderById", "singleBaselayer", "showFolderPath", "visibleBaselayerConfigs"]),
+        ...mapGetters(["singleBaselayer", "visibleBaselayerConfigs"]),
         ...mapGetters("Modules/LayerSelection", ["layersToAdd", "highlightLayerId"]),
 
         /**
@@ -100,36 +100,6 @@ export default {
                 this.changeVisibility({layerId: this.conf.id, value: value});
             }
 
-        },
-        /**
-         * Returns the names of all parent folders reversed and separated.
-         * @returns {String} the names of all parent folders
-         */
-        getPath () {
-            let names = [];
-
-            if (this.showFolderPath === true && this.isLayerTree) {
-                this.getNamesOfParentFolder(this.conf.parentId, names);
-                names = names.reverse();
-            }
-            return names.join("/");
-        },
-        /**
-         * Looks up for the names of all parent folders.
-         * @param {String} parentId id of the parent folder
-         * @param {Array} names to store names
-         * @returns {Array}  the names of all parent folders
-         */
-        getNamesOfParentFolder (parentId, names) {
-            if (parentId !== undefined) {
-                const parent = this.folderById(parentId);
-
-                if (parent) {
-                    names.push(parent.name);
-                    this.getNamesOfParentFolder(parent.parentId, names);
-                }
-            }
-            return names;
         }
     }
 };
@@ -197,12 +167,6 @@ export default {
             :aria-label="$t(conf.name)"
         >
             <span
-                v-if="isLayerTree"
-                class="path"
-            >
-                {{ getPath() }}
-            </span>
-            <span
                 :class="['align-self-start', isBold ? 'font-bold' : '']"
             >
                 <span
@@ -236,11 +200,5 @@ export default {
             width: 100%;
             text-align: start;
         }
-    }
-    .path{
-        font-size: $font-size-sm;
-        color: $dark_grey;
-        width: 100%;
-        text-align: start;
     }
 </style>
