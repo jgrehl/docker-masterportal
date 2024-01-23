@@ -26,7 +26,7 @@ export default {
 <template lang="html">
     <div
         :id="'layer-component-tree-path-' + confId.split('.').join('_')"
-        class="d-flex flex-column layer-component-sub-menu ms-2"
+        class="d-flex flex-column layer-component-sub-menu ms-2 mt-2"
     >
         <span
             class="path"
