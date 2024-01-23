@@ -110,9 +110,6 @@ export default function Layer (attrs, layer, initialize = true) {
  * @returns {void}
  */
 Layer.prototype.initialize = function (attrs) {
-    if (store.state.configJson?.Portalconfig.singleBaselayer !== undefined) {
-        this.set("singleBaselayer", store.state.configJson?.Portalconfig.singleBaselayer);
-    }
     if (attrs.clusterDistance) {
         this.set("isClustered", true);
     }
@@ -236,6 +233,9 @@ Layer.prototype.removeLayer = function () {
 Layer.prototype.toggleIsSelected = function () {
     const newValue = this.attributes.isSelected === undefined ? true : !this.attributes.isSelected;
 
+    if (store.state.configJson?.Portalconfig.singleBaselayer !== undefined) {
+        this.set("singleBaselayer", store.state.configJson?.Portalconfig.singleBaselayer);
+    }
     this.setIsSelected(newValue);
     handleSingleBaseLayer(newValue, this);
     handleSingleTimeLayer(newValue, this);
