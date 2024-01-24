@@ -18,8 +18,15 @@ export default function Layer3dTileset (attributes) {
         transparency: 0
     };
 
+    this.hiddenObjects = {};
+    this.lastUpdatedSymbol = Symbol("_lastUpdated");
     this.attributes = Object.assign(defaultAttributes, attributes);
     Layer3d.call(this, this.attributes);
+    this.setFeatureVisibilityLastUpdated(Date.now());
+    if (this.attributes.hiddenFeatures && this.attributes.visibility === true) {
+        this.hideObjects(this.attributes.hiddenFeatures);
+    }
+    this.layer.tileset?.then(tileset => tileset.tileVisible?.addEventListener(this.applyStyle.bind(this)));
 }
 
 Layer3dTileset.prototype = Object.create(Layer3d.prototype);
@@ -53,7 +60,17 @@ Layer3dTileset.prototype.setOpacity = function (transparency = 0) {
  */
 Layer3dTileset.prototype.setVisible = function (visibility, map) {
     this.getLayer()?.setVisible(visibility, map);
+    if (visibility) {
+        this.createLegend();
+    }
+    if (this.attributes.hiddenFeatures && visibility === true) {
+        this.hideObjects(this.attributes.hiddenFeatures);
+    }
+    else if (visibility === false && this.attributes.hiddenFeatures) {
+        this.showObjects(this.attributes.hiddenFeatures);
+    }
 };
+
 
 /**
  * Sets values to the cesium layer.
@@ -66,3 +83,109 @@ Layer3dTileset.prototype.updateLayerValues = function (attributes) {
     }
     this.setOpacity(attributes.transparency);
 };
+
+/**
+ * Hides a number of objects.
+ * @param {Array} toHide A list of Object Ids which will be hidden.
+ * @param {Boolean} allLayers if true, updates all layers.
+ * @return {void}
+ */
+Layer3dTileset.prototype.hideObjects = function (toHide, allLayers = false) {
+    let updateLayer = allLayers;
+
+    toHide.forEach((id) => {
+        if (!this.hiddenObjects[id]) {
+            this.hiddenObjects[id] = new Set();
+            updateLayer = true;
+        }
+    });
+    if (updateLayer) {
+        this.setFeatureVisibilityLastUpdated(Date.now());
+    }
+};
+
+/**
+ * Show a number of objects.
+ * @param {Array} unHide A list of Object Ids which will be unHidden.
+ * @return {void}
+ */
+Layer3dTileset.prototype.showObjects = function (unHide) {
+    unHide.forEach((id) => {
+        if (this.hiddenObjects[id]) {
+            this.hiddenObjects[id].forEach((feature) => {
+                if (feature instanceof Cesium.Cesium3DTileFeature || feature instanceof Cesium.Cesium3DTilePointFeature) {
+                    if (this.featureExists(feature)) {
+                        feature.show = true;
+                    }
+                }
+            });
+            delete this.hiddenObjects[id];
+        }
+    });
+};
+
+/**
+ * Checks if a feature is still valid and not already destroyed.
+ * @param {Cesium.Cesium3DTileFeature|Cesium.Cesium3DTilePointFeature} feature Cesium feature.
+ * @return {Boolean} Feature exists
+ */
+Layer3dTileset.prototype.featureExists = function (feature) {
+    return feature &&
+        feature.content &&
+        !feature.content.isDestroyed() &&
+        !feature.content.batchTable.isDestroyed();
+};
+
+/**
+ * Is called if a tile visibility event is called from the cesium tileset. Checks for Content Type and calls styleContent.
+ * @param {Tile} tile CesiumTile
+ * @returns {void}
+ */
+Layer3dTileset.prototype.applyStyle = function (tile) {
+    if (tile.content instanceof Cesium.Composite3DTileContent) {
+        for (let i = 0; i < tile.content.innerContents.length; i++) {
+            this.styleContent(tile.content.innerContents[i]);
+        }
+    }
+    else {
+        this.styleContent(tile.content);
+    }
+};
+
+/**
+ * Sets the current LayerStyle on the CesiumTilesetFeatures in the Tile.
+ * @param {Cesium.Cesium3DTileContent} content The content for Tile.
+ * @return {void}
+ */
+Layer3dTileset.prototype.styleContent = function (content) {
+    if (!content[this.lastUpdatedSymbol] || content[this.lastUpdatedSymbol] < this.get("featureVisibilityLastUpdated")) {
+        const batchSize = content.featuresLength;
+
+        for (let batchId = 0; batchId < batchSize; batchId++) {
+            const feature = content.getFeature(batchId);
+
+            if (feature) {
+                let id = feature.getProperty("id");
+
+                if (!id) {
+                    id = `${content.url}${batchId}`;
+                }
+                if (this.hiddenObjects[id]) {
+                    this.hiddenObjects[id].add(feature);
+                    feature.show = false;
+                }
+            }
+        }
+        content[this.lastUpdatedSymbol] = Date.now();
+    }
+};
+
+/**
+ * Setter for featureVisibilityLastUpdated.
+ * @param {Date} value featureVisibilityLastUpdated
+ * @returns {void}
+ */
+Layer3dTileset.prototype.setFeatureVisibilityLastUpdated = function (value) {
+    this.set("featureVisibilityLastUpdated", value);
+};
+

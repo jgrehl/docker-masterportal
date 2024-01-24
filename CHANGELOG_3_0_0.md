@@ -8,10 +8,12 @@
 
 ### Added
 - Added config.json-Parameter Portalconfig.tree.singleBaselayer. Specifies whether only one base layer may be active at any time selectable by radio-buttons in visible layers.
+
 ### Changed
 - CoordToolkit: Toast added instead of Alert for feedback after copying coordinates.
 - ShareView: Added more configuration.
 - LayerMenu: Breadcrumbs with folder location will now stick to the top when scrolling.
+- 3D tileset layer supports hiddenFeatures.
 
 ### Deprecated
 

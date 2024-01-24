@@ -88,4 +88,168 @@ describe("src_3_0_0/core/js/layers/layer3dTileset.js", () => {
             checkLayer(layer, layer3dTileset, attributes, done);
         });
     });
+    describe("setVisible", function () {
+        let createLegendSpy, hideObjectsSpy, showObjectsSpy, setVisibleSpy, map;
+
+        beforeEach(() => {
+            createLegendSpy = sinon.spy(Layer3dTileset.prototype, "createLegend");
+            hideObjectsSpy = sinon.spy(Layer3dTileset.prototype, "hideObjects");
+            showObjectsSpy = sinon.spy(Layer3dTileset.prototype, "showObjects");
+            setVisibleSpy = sinon.spy();
+            map = {
+                id: "map"
+            };
+        });
+
+        it("setVisible with visibility true and hiddenFeatures", function () {
+            attributes.hiddenFeatures = [
+                "DEHHALKAJ00011uJ",
+                "DEHHALKAJ0000yd2"
+            ];
+
+            const tilesetLayer = new Layer3dTileset(attributes);
+
+            tilesetLayer.getLayer().setVisible = setVisibleSpy;
+
+            tilesetLayer.setVisible(true, map);
+            expect(setVisibleSpy.calledOnce).to.be.true;
+            expect(setVisibleSpy.firstCall.args[0]).to.be.true;
+            expect(setVisibleSpy.firstCall.args[1]).to.be.deep.equals(map);
+            expect(createLegendSpy.calledOnce).to.be.true;
+            expect(hideObjectsSpy.calledOnce).to.be.true;
+            expect(hideObjectsSpy.firstCall.args[0]).to.be.deep.equals(attributes.hiddenFeatures);
+            expect(showObjectsSpy.notCalled).to.be.true;
+        });
+        it("setVisible with visibility false and hiddenFeatures", function () {
+            attributes.hiddenFeatures = [
+                "DEHHALKAJ00011uJ",
+                "DEHHALKAJ0000yd2"
+            ];
+
+            const tilesetLayer = new Layer3dTileset(attributes);
+
+            tilesetLayer.getLayer().setVisible = setVisibleSpy;
+
+            tilesetLayer.setVisible(false, map);
+            expect(setVisibleSpy.calledOnce).to.be.true;
+            expect(setVisibleSpy.firstCall.args[0]).to.be.false;
+            expect(setVisibleSpy.firstCall.args[1]).to.be.deep.equals(map);
+            expect(createLegendSpy.notCalled).to.be.true;
+            expect(hideObjectsSpy.notCalled).to.be.true;
+            expect(showObjectsSpy.calledOnce).to.be.true;
+            expect(showObjectsSpy.firstCall.args[0]).to.be.deep.equals(attributes.hiddenFeatures);
+        });
+        it("setVisible with visibility true and no hiddenFeatures", function () {
+            const tilesetLayer = new Layer3dTileset(attributes);
+
+            tilesetLayer.getLayer().setVisible = setVisibleSpy;
+
+            tilesetLayer.setVisible(true, map);
+            expect(setVisibleSpy.calledOnce).to.be.true;
+            expect(setVisibleSpy.firstCall.args[0]).to.be.true;
+            expect(setVisibleSpy.firstCall.args[1]).to.be.deep.equals(map);
+            expect(createLegendSpy.calledOnce).to.be.true;
+            expect(hideObjectsSpy.notCalled).to.be.true;
+            expect(showObjectsSpy.notCalled).to.be.true;
+        });
+        it("setVisible with visibility false and no hiddenFeatures", function () {
+            const tilesetLayer = new Layer3dTileset(attributes);
+
+            tilesetLayer.getLayer().setVisible = setVisibleSpy;
+
+            tilesetLayer.setVisible(false, map);
+            expect(setVisibleSpy.calledOnce).to.be.true;
+            expect(setVisibleSpy.firstCall.args[0]).to.be.false;
+            expect(setVisibleSpy.firstCall.args[1]).to.be.deep.equals(map);
+            expect(createLegendSpy.notCalled).to.be.true;
+            expect(hideObjectsSpy.notCalled).to.be.true;
+            expect(showObjectsSpy.notCalled).to.be.true;
+        });
+    });
+    describe("updateLayerValues", function () {
+        it("updateLayerValues shall call setVisible and setOpacity if visibility changed", function () {
+            attributes.visibility = true;
+            const tilesetLayer = new Layer3dTileset(attributes),
+                setVisibleSpy = sinon.spy(Layer3dTileset.prototype, "setVisible"),
+                setOpacitySpy = sinon.spy(Layer3dTileset.prototype, "setOpacity");
+
+            tilesetLayer.updateLayerValues({visibility: false, transparency: 1});
+            expect(setVisibleSpy.calledOnce).to.be.true;
+            expect(setVisibleSpy.firstCall.args[0]).to.be.false;
+            expect(setOpacitySpy.calledOnce).to.be.true;
+            expect(setOpacitySpy.firstCall.args[0]).to.be.equals(1);
+        });
+        it("updateLayerValues shall call setOpacity if visibility not changed", function () {
+            attributes.visibility = true;
+            const tilesetLayer = new Layer3dTileset(attributes),
+                setVisibleSpy = sinon.spy(Layer3dTileset.prototype, "setVisible"),
+                setOpacitySpy = sinon.spy(Layer3dTileset.prototype, "setOpacity");
+
+            tilesetLayer.updateLayerValues({visibility: true, transparency: 1});
+            expect(setVisibleSpy.notCalled).to.be.true;
+            expect(setOpacitySpy.calledOnce).to.be.true;
+            expect(setOpacitySpy.firstCall.args[0]).to.be.equals(1);
+        });
+    });
+    describe("setOpacity", function () {
+        it("setOpacity 100 shall call setOpacity at layer", function () {
+            attributes.visibility = true;
+            const tilesetLayer = new Layer3dTileset(attributes),
+                setOpacitySpy = sinon.spy();
+
+            tilesetLayer.getLayer().setOpacity = setOpacitySpy;
+
+            tilesetLayer.setOpacity(100);
+            expect(setOpacitySpy.calledOnce).to.be.true;
+            expect(setOpacitySpy.firstCall.args[0]).to.be.equals(0);
+        });
+        it("setOpacity 0 shall call setOpacity at layer", function () {
+            attributes.visibility = true;
+            const tilesetLayer = new Layer3dTileset(attributes),
+                setOpacitySpy = sinon.spy();
+
+            tilesetLayer.getLayer().setOpacity = setOpacitySpy;
+
+            tilesetLayer.setOpacity(0);
+            expect(setOpacitySpy.calledOnce).to.be.true;
+            expect(setOpacitySpy.firstCall.args[0]).to.be.equals(1);
+        });
+    });
+    describe("styleContent", function () {
+        it("should set lastUpdatedSymbol on the content on first call", function () {
+            const tilesetLayer = new Layer3dTileset(attributes),
+                content = sinon.spy();
+
+            expect(content[tilesetLayer.lastUpdatedSymbol]).to.be.undefined;
+            tilesetLayer.styleContent(content);
+            expect(content[tilesetLayer.lastUpdatedSymbol]).to.not.be.undefined;
+        });
+    });
+    describe("hideObjects", function () {
+        it("add the id to the hiddenObjects and create an empty Set", function () {
+            const tilesetLayer = new Layer3dTileset(attributes);
+
+            tilesetLayer.hideObjects(["id"]);
+            expect(tilesetLayer.hiddenObjects.id).to.be.an.instanceOf(Set);
+        });
+    });
+    describe("showObjects", function () {
+        it("should remove the id from the hiddenObjects List", function () {
+            const tilesetLayer = new Layer3dTileset(attributes);
+
+            tilesetLayer.hideObjects(["id"]);
+            expect(tilesetLayer.hiddenObjects.id).to.be.an.instanceOf(Set);
+            tilesetLayer.showObjects(["id"]);
+            expect(tilesetLayer.hiddenObjects.id).to.be.undefined;
+        });
+    });
+    describe("createLegend", function () {
+        it("createLegend shall create a legend", async function () {
+            attributes.legendURL = "https://legendUrl";
+            const tilesetLayer = new Layer3dTileset(attributes),
+                legend = await tilesetLayer.createLegend();
+
+            expect(legend).to.be.deep.equals([attributes.legendURL]);
+        });
+    });
 });
