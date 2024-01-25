@@ -107,14 +107,8 @@ export default {
                                 if (fileExtension === "geojson" || fileExtension === "json") {
                                     this.importGeoJSON({raw: f.target.result, layer: layer.layer, filename: file.name});
                                 }
-                                else if (fileExtension === "kml") {
-                                    this.importKML({raw: f.target.result, layer: layer.layer, filename: file.name});
-                                }
                                 else {
-                                    this.addSingleAlert({
-                                        category: "error",
-                                        content: this.$t("common:modules.fileImport.alertingMessages.formatError", {filename: file.name})
-                                    });
+                                    this.importKML({raw: f.target.result, layer: layer.layer, filename: file.name});
                                 }
                             }
                         });
