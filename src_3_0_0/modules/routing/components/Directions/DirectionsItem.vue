@@ -211,7 +211,7 @@ export default {
                     @move-waypoint-up="moveWaypointUp(waypoint.index)"
                     @move-waypoint-down="moveWaypointDown(waypoint.index)"
                     @remove-waypoint="removeWaypoint({index: waypoint.index, reload: true})"
-                    @search-resultselected="findDirections()"
+                    @search-result-selected="findDirections()"
                 />
             </form>
 
