@@ -801,7 +801,8 @@
                             "nextWeekday": "Nächster Wochentag",
                             "noticeTextAvailable": "(Es werden ausschließlich Daten mit dem Wert available / verfügbar berücksichtigt)",
                             "noticeTextCharging": "(Es werden ausschließlich Daten mit dem Wert charging / ladend berücksichtigt)",
-                            "noticeTextOutoforder": "(Es werden ausschließlich Daten mit dem Wert outoforder / Außer Betrieb berücksichtigt)"
+                            "noticeTextOutoforder": "(Es werden ausschließlich Daten mit dem Wert outoforder / Außer Betrieb berücksichtigt)",
+                            "noticeTextFaulted": "(Es werden ausschließlich Daten mit dem Wert faulted / Fehlerzustand berücksichtigt)"
                         },
                         "sensorData": {
                             "firstColumnHeaderName": "Eigenschaften"
@@ -809,7 +810,8 @@
                         "chargingStations": {
                             "available": "Verfügbarkeit",
                             "charging": "Auslastung",
-                            "outoforder": "Außer Betrieb"
+                            "outoforder": "Außer Betrieb",
+                            "faulted": "Fehlerzustand"
                         }
                     }
                 },

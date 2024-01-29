@@ -1104,10 +1104,10 @@
                     "color": "rgba(220, 0, 0, 1)",
                     "noticeText": "common:modules.tools.gfi.themes.sensor.sensorBarChart.noticeTextCharging"
                   },
-                  "outoforder": {
-                    "title": "common:modules.tools.gfi.themes.sensor.chargingStations.outoforder",
+                  "faulted": {
+                    "title": "common:modules.tools.gfi.themes.sensor.chargingStations.faulted",
                     "color": "rgba(175, 175, 175, 1)",
-                    "noticeText": "common:modules.tools.gfi.themes.sensor.sensorBarChart.noticeTextOutoforder"
+                    "noticeText": "common:modules.tools.gfi.themes.sensor.sensorBarChart.noticeTextFaulted"
                   }
                 }
               }
