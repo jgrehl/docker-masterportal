@@ -49,8 +49,7 @@ async function fetchRoutingOrsDirections ({
     avoidPolygons,
     instructions
 }) {
-    const serviceUrl = store.getters.restServiceById(state.directionsSettings.serviceId).url,
-        url = `${serviceUrl}/v2/directions/${routingOrsSpeedProfile(speedProfile)}/geojson`;
+    const url = getRoutingDirectionsSettingsUrl(speedProfile);
     let result = null,
         feature = null,
         first = null,
@@ -135,4 +134,29 @@ async function fetchRoutingOrsDirections ({
     return direction;
 }
 
-export {fetchRoutingOrsDirections, routingOrsPreference};
+/**
+ * Creates the url with the given params.
+ * @param {String} speedProfile current speedProfile
+ * @returns {Object} the url
+ */
+function getRoutingDirectionsSettingsUrl (speedProfile) {
+    const path = `v2/directions/${routingOrsSpeedProfile(speedProfile)}/geojson`;
+    let serviceUrl = store.getters.restServiceById(state.directionsSettings.serviceId).url,
+        url;
+
+    if (serviceUrl.endsWith("/")) {
+        serviceUrl += path;
+    }
+    else {
+        serviceUrl = serviceUrl + "/" + path;
+    }
+    if (serviceUrl.startsWith("/")) {
+        url = new URL(serviceUrl, window.location.origin);
+    }
+    else {
+        url = new URL(serviceUrl);
+    }
+    return url;
+}
+
+export {fetchRoutingOrsDirections, getRoutingDirectionsSettingsUrl, routingOrsPreference};

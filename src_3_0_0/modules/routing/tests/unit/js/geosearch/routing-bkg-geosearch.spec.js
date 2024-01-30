@@ -39,6 +39,11 @@ describe("src_3_0_0/modules/routing/js/geosearch/routing-bkg-geosearch.js", () =
         store.state.Modules.Routing.directionsSettings = {
             speedProfile: "CAR"
         };
+        global.window = {
+            location: {
+                origin: "https://origin"
+            }
+        };
     });
 
     afterEach(() => {
@@ -271,6 +276,15 @@ describe("src_3_0_0/modules/routing/js/geosearch/routing-bkg-geosearch.js", () =
             expect(createdUrl.searchParams.get("properties")).to.eql("text");
             expect(createdUrl.searchParams.get("query")).to.eql("search");
             expect(createdUrl.searchParams.get("bbox")).to.eql("10,20,30,40");
+        });
+        it("service url with backslash at start", async () => {
+            service = "/tmp/";
+            const search = "search",
+                createdUrl = await getRoutingBkgGeosearchUrl(search);
+
+            expect(createdUrl.origin).to.eql(global.window.location.origin);
+            expect(createdUrl.href).to.eql(global.window.location.origin + service + "?count=1000&properties=text&query=search&bbox=10%2C20%2C30%2C40");
+
         });
         it("createUrl should respect questionmark in serviceUrl", async () => {
             const search = "search";

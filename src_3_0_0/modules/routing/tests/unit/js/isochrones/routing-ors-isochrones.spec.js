@@ -4,19 +4,29 @@ import {expect} from "chai";
 import sinon from "sinon";
 import {RoutingIsochrones} from "../../../../js/classes/routing-isochrones";
 import {RoutingIsochronesArea} from "../../../../js/classes/routing-isochrones-area";
-import {fetchRoutingOrsIsochrones} from "../../../../js/isochrones/routing-ors-isochrones";
+import {fetchRoutingOrsIsochrones, getRoutingIsochronesSettingsUrl} from "../../../../js/isochrones/routing-ors-isochrones";
 import state from "../../../../store/stateRouting";
 
 describe("src_3_0_0/modules/routing/js/directions/routing-ors-directions.js", () => {
+    let service;
+    const originWindow = window;
+
     beforeEach(() => {
+        service = "https://tmp";
         sinon.stub(i18next, "t").callsFake((...args) => args);
         store.getters = {
-            restServiceById: () => ({url: "tmp"})
+            restServiceById: () => ({url: service})
+        };
+        global.window = {
+            location: {
+                origin: "https://origin"
+            }
         };
     });
 
     afterEach(() => {
         sinon.restore();
+        global.window = originWindow;
     });
 
     describe("should fetchRoutingOrsIsochrones", () => {
@@ -165,6 +175,35 @@ describe("src_3_0_0/modules/routing/js/directions/routing-ors-directions.js", ()
                     "common:modules.routing.errors.errorIsochronesFetch"
                 );
             }
+        });
+    });
+
+    describe("getRoutingIsochronesSettingsUrl", () => {
+        it("service url without backslash at the end", () => {
+            const speedProfile = "CAR",
+                createdUrl = getRoutingIsochronesSettingsUrl(speedProfile);
+
+            expect(createdUrl.origin).to.eql(service);
+            expect(createdUrl.href).to.eql(service + "/v2/isochrones/driving-car/geojson");
+
+        });
+        it("service url with backslash at the end", () => {
+            service = "https://tmp/";
+            const speedProfile = "CAR",
+                createdUrl = getRoutingIsochronesSettingsUrl(speedProfile);
+
+            expect(createdUrl.origin).to.eql(service.substring(0, service.length - 1));
+            expect(createdUrl.href).to.eql(service + "v2/isochrones/driving-car/geojson");
+
+        });
+        it("service url with backslash at start", () => {
+            service = "/tmp/";
+            const speedProfile = "CAR",
+                createdUrl = getRoutingIsochronesSettingsUrl(speedProfile);
+
+            expect(createdUrl.origin).to.eql(global.window.location.origin);
+            expect(createdUrl.href).to.eql(global.window.location.origin + service + "v2/isochrones/driving-car/geojson");
+
         });
     });
 });

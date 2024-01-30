@@ -8,7 +8,8 @@ import store from "../../../../app-store";
  * @returns {RoutingGeosearchResult[]} routingGeosearchResults
  */
 async function fetchRoutingBkgGeosearch (search) {
-    const response = await axios.get(getRoutingBkgGeosearchUrl(search));
+    const url = await getRoutingBkgGeosearchUrl(search),
+        response = await axios.get(url, window.location.href);
 
     if (response.status !== 200 && !response.data.success) {
         throw new Error({
@@ -26,10 +27,16 @@ async function fetchRoutingBkgGeosearch (search) {
  */
 async function getRoutingBkgGeosearchUrl (search) {
     const serviceUrl = store.getters.restServiceById(state.geosearch.serviceId).url,
-        url = new URL(serviceUrl),
         checkConfiguredBboxValue = await checkConfiguredBbox(),
         bBoxValue = await checkConfiguredBboxValue !== false ? checkConfiguredBboxValue : false;
+    let url;
 
+    if (serviceUrl.startsWith("/")) {
+        url = new URL(serviceUrl, window.location.origin);
+    }
+    else {
+        url = new URL(serviceUrl);
+    }
     url.searchParams.set("count", state.geosearch.limit);
     url.searchParams.set("properties", "text");
     url.searchParams.set("query", encodeURIComponent(search));

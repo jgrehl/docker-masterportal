@@ -51,8 +51,7 @@ async function fetchRoutingOrsIsochrones ({
     avoidSpeedProfileOptions,
     transformCoordinates
 }) {
-    const serviceUrl = store.getters.restServiceById(state.isochronesSettings.serviceId).url,
-        url = `${serviceUrl}/v2/isochrones/${routingOrsSpeedProfile(speedProfile)}/geojson`,
+    const url = getRoutingIsochronesSettingsUrl(speedProfile),
         rangeValue = optimization === "TIME" ? state.Isochrones.settings.timeValue : state.Isochrones.settings.distanceValue,
         optimizationMultiplicator = routingOrsOptimizationMultiplicator(optimization),
         range = rangeValue * optimizationMultiplicator,
@@ -135,4 +134,29 @@ async function fetchRoutingOrsIsochrones ({
     return isochrones;
 }
 
-export {fetchRoutingOrsIsochrones};
+/**
+ * Creates the url with the given params.
+ * @param {String} speedProfile current speedProfile
+ * @returns {Object} the url
+ */
+function getRoutingIsochronesSettingsUrl (speedProfile) {
+    const path = `v2/isochrones/${routingOrsSpeedProfile(speedProfile)}/geojson`;
+    let serviceUrl = store.getters.restServiceById(state.isochronesSettings.serviceId).url,
+        url;
+
+    if (serviceUrl.endsWith("/")) {
+        serviceUrl += path;
+    }
+    else {
+        serviceUrl = serviceUrl + "/" + path;
+    }
+    if (serviceUrl.startsWith("/")) {
+        url = new URL(serviceUrl, window.location.origin);
+    }
+    else {
+        url = new URL(serviceUrl);
+    }
+    return url;
+}
+
+export {fetchRoutingOrsIsochrones, getRoutingIsochronesSettingsUrl};

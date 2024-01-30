@@ -5,20 +5,30 @@ import sinon from "sinon";
 import {RoutingDirections} from "../../../../js/classes/routing-directions";
 import {RoutingDirectionsSegment} from "../../../../js/classes/routing-directions-segment";
 import {RoutingDirectionsStep} from "../../../../js/classes/routing-directions-step";
-import {fetchRoutingOrsDirections, routingOrsPreference} from "../../../../js/directions/routing-ors-directions";
+import {fetchRoutingOrsDirections, getRoutingDirectionsSettingsUrl, routingOrsPreference} from "../../../../js/directions/routing-ors-directions";
 
 describe("src_3_0_0/modules/routing/js/directions/routing-ors-directions.js", () => {
+    let service;
+    const originWindow = window;
+
     beforeEach(() => {
+        service = "https://tmp";
         sinon.stub(i18next, "t").callsFake((...args) => args);
         store.getters = {
             restServiceById: () => {
-                return {url: "tmp"};
+                return {url: service};
+            }
+        };
+        global.window = {
+            location: {
+                origin: "https://origin"
             }
         };
     });
 
     afterEach(() => {
         sinon.restore();
+        global.window = originWindow;
     });
 
     describe("should fetchRoutingOrsDirections", () => {
@@ -285,6 +295,34 @@ describe("src_3_0_0/modules/routing/js/directions/routing-ors-directions.js", ()
             const result = routingOrsPreference("RECOMMENDED", "CYCLING");
 
             expect(result).to.eql("recommended");
+        });
+    });
+    describe("getRoutingDirectionsSettingsUrl", () => {
+        it("service url without backslash at the end", () => {
+            const speedProfile = "CAR",
+                createdUrl = getRoutingDirectionsSettingsUrl(speedProfile);
+
+            expect(createdUrl.origin).to.eql(service);
+            expect(createdUrl.href).to.eql(service + "/v2/directions/driving-car/geojson");
+
+        });
+        it("service url with backslash at the end", () => {
+            service = "https://tmp/";
+            const speedProfile = "CAR",
+                createdUrl = getRoutingDirectionsSettingsUrl(speedProfile);
+
+            expect(createdUrl.origin).to.eql(service.substring(0, service.length - 1));
+            expect(createdUrl.href).to.eql(service + "v2/directions/driving-car/geojson");
+
+        });
+        it("service url with backslash at start", () => {
+            service = "/tmp/";
+            const speedProfile = "CAR",
+                createdUrl = getRoutingDirectionsSettingsUrl(speedProfile);
+
+            expect(createdUrl.origin).to.eql(global.window.location.origin);
+            expect(createdUrl.href).to.eql(global.window.location.origin + service + "v2/directions/driving-car/geojson");
+
         });
     });
 });
