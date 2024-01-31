@@ -64,7 +64,7 @@ export default {
     highlightFeature ({state, dispatch, rootGetters}, feature) {
         dispatch("Maps/removeHighlightFeature", "decrease", {root: true});
         const layerConfig = rootGetters.layerConfigById(state.layer.id),
-            styleObj = state.layer.geometryType.toLowerCase().indexOf("polygon") > -1 ? state.highlightVectorRulesPolygon : state.highlightVectorRulesPointLine,
+            styleObj = state.layer.geometryType?.toLowerCase().indexOf("polygon") > -1 ? state.highlightVectorRulesPolygon : state.highlightVectorRulesPointLine,
             featureGeometryType = feature.getGeometry().getType(),
             highlightObject = {
                 type: featureGeometryType === "Point" || featureGeometryType === "MultiPoint" ? "increase" : "highlightPolygon",

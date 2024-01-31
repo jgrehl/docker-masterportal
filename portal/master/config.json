@@ -364,6 +364,11 @@
             "type": "fileImport"
           },
           {
+            "type": "shareView",
+            "facebookShare": true,
+            "qrShare": true
+          },
+          {
             "type": "openConfig"
           },
           {
@@ -558,11 +563,6 @@
           },
           {
             "type": "scaleSwitcher"
-          },
-          {
-            "type": "shareView",
-            "facebookShare": true,
-            "qrShare": true
           },
           {
             "type": "measure"
@@ -1012,7 +1012,7 @@
           "styleId": "8712",
           "loadingStrategy": "bbox",
           "typ": "WFS",
-          "visibility": false,
+          "visibility": true,
           "gfiTheme": "schulinfo",
           "showInLayerTree": true,
           "mouseHoverField": [
@@ -1024,8 +1024,7 @@
           "featurePrefix": "de.hh.up:",
           "wildCard": "%",
           "singleChar": "#",
-          "escapeChar": "!",
-          "layerAttribution": "<span>Test: LayerAttribution für Schulen</span>"
+          "escapeChar": "!"
         },
         {
           "id": "19173",

@@ -239,7 +239,7 @@ export default {
     },
 
     /**
-    * Update the state attributes of the currentComponent.
+     * Update the state attributes of the currentComponent.
      * @param {Object} param store context
      * @param {Object} param.dispatch the dispatch
      * @param {Object} params The params.

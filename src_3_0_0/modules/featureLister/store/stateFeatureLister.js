@@ -32,6 +32,7 @@ const state = {
     icon: "bi-list",
     maxFeatures: 20,
     // featureLister state
+    alreadyMappedFeatures: false,
     layerlist: [],
     layer: null,
     layerListView: true,

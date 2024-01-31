@@ -213,9 +213,10 @@ export function handleHTMLResponse (document, layer, url) {
  * @param {Object[]} [features=null] a list of features
  * @param {String} [document=""] A html document as string with gfi content.
  * @param {Number[]} optionalBBox the bbox can be passed to give the feature a bbox
+ * @param {String} optionalId the id can be passed to give the feature an id
  * @returns {Object} an object{getTitle, getTheme, getAttributesToShow, getProperties, getId, getGfiUrl, getLayerId, getBBox}
  */
-export function createGfiFeature (layer, url = "", feature = null, features = null, document = "", optionalBBox = null) {
+export function createGfiFeature (layer, url = "", feature = null, features = null, document = "", optionalBBox = null, optionalId = "") {
     if (!layer) {
         return {};
     }
@@ -231,7 +232,8 @@ export function createGfiFeature (layer, url = "", feature = null, features = nu
         getMimeType: () => layer.get("infoFormat"),
         getLayerId: () => layer.get("id") ? layer.get("id") : "",
         getDocument: () => document,
-        getBBox: () => optionalBBox
+        getBBox: () => optionalBBox,
+        id: optionalId
     };
 }
 
