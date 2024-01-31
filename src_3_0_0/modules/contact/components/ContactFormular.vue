@@ -165,35 +165,32 @@ export default {
         >
             <ContactFormularInput
                 :change-function="setUsername"
-                input-name="username"
+                :input-name="'username'"
                 :input-value="username"
-                label-text="Name"
+                :label-text="'Name'"
                 :valid-input="validUsername"
                 :focus-on-creation="true"
-                autocomplete="name"
             />
             <ContactFormularInput
                 :change-function="setMail"
-                input-name="mail"
-                input-type="email"
+                :input-name="'mail'"
+                :input-type="'email'"
                 :input-value="mail"
-                label-text="E-Mail"
+                :label-text="'E-Mail'"
                 :valid-input="validMail"
-                autocomplete="email"
             />
             <ContactFormularInput
                 :change-function="setPhone"
-                input-name="phone"
-                input-type="tel"
+                :input-name="'phone'"
+                :input-type="'tel'"
                 :input-value="phone"
-                label-text="Tel."
+                :label-text="'Tel.'"
                 :valid-input="validPhone"
-                autocomplete="tel"
             />
             <ContactFormularInput
                 :change-function="setMessage"
-                html-element="textarea"
-                input-name="message"
+                :html-element="'textarea'"
+                :input-name="'message'"
                 :input-value="message"
                 :label-text="$t('common:modules.contact.messageLabel')"
                 :rows="maxLines"

@@ -113,8 +113,7 @@ export default {
                 :placeholder="$t(`common:modules.contact.placeholder.${inputName}`)"
                 :style="htmlElement === 'textarea' ? 'height: 100px' : ''"
                 :rows="rows"
-                @focus="help($event.currentTarget)"
-                @keyup="changeFunction($event.currentTarget.value)"
+                @keyup="help($event.currentTarget); changeFunction($event.currentTarget.value)"
             />
 
             <label

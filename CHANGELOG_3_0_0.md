@@ -24,6 +24,7 @@
 - Fixed HighlightFeature for MultiPolygons: In certain WFS layers, when polygon selection is enabled,
     clicking on a polygon would highlight it, but multiPolygons wouldn't. This has now been corrected.
 - UrlParams: The correct layers will be visible when copying the URL.
+- Contact Form: Telephone Field shows Error when entering letters and fields provide better feedback.
 ---
 
 ---
