@@ -1282,7 +1282,7 @@
                 {
                   "id": "16100",
                   "name": "Hauptkirchen",
-                  "visibility": false,
+                  "visibility": true,
                   "hiddenFeatures": [
                     "DEHHALKAJ00011uJ",
                     "DEHHALKAJ0000yd2",

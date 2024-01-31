@@ -1,8 +1,9 @@
 import {Tileset} from "@masterportal/masterportalapi/src";
 import Layer3d from "./layer3d";
+import layerCollection from "./layerCollection";
 
 /**
- * Creates a 3d layer tileset.
+ * Creates a 3d layer tileset and adds event listener to tileset.tileVisible to hide hidden features.
  * @name Layer3dTileset
  * @abstract
  * @constructs
@@ -24,7 +25,7 @@ export default function Layer3dTileset (attributes) {
     Layer3d.call(this, this.attributes);
     this.setFeatureVisibilityLastUpdated(Date.now());
     if (this.attributes.hiddenFeatures && this.attributes.visibility === true) {
-        this.hideObjects(this.attributes.hiddenFeatures);
+        this.addToHiddenObjects(this.attributes.hiddenFeatures);
     }
     this.layer.tileset?.then(tileset => tileset.tileVisible?.addEventListener(this.applyStyle.bind(this)));
 }
@@ -54,19 +55,18 @@ Layer3dTileset.prototype.setOpacity = function (transparency = 0) {
 
 /**
  * Calls masterportalAPI's tilset-layer to set this layer visible.
+ * Shows hidden objects if visibility is set to false.
  * @param {Boolean} visibility visibility of the layer
  * @param {Cesium} map The 3d map.
  * @returns {void}
  */
 Layer3dTileset.prototype.setVisible = function (visibility, map) {
     this.getLayer()?.setVisible(visibility, map);
+    // this.setFeatureVisibilityLastUpdated(Date.now());
     if (visibility) {
         this.createLegend();
     }
-    if (this.attributes.hiddenFeatures && visibility === true) {
-        this.hideObjects(this.attributes.hiddenFeatures);
-    }
-    else if (visibility === false && this.attributes.hiddenFeatures) {
+    if (visibility === false && this.attributes.hiddenFeatures) {
         this.showObjects(this.attributes.hiddenFeatures);
     }
 };
@@ -85,12 +85,12 @@ Layer3dTileset.prototype.updateLayerValues = function (attributes) {
 };
 
 /**
- * Hides a number of objects.
+ * Adds the ids to hide to the hidden objects.
  * @param {Array} toHide A list of Object Ids which will be hidden.
  * @param {Boolean} allLayers if true, updates all layers.
  * @return {void}
  */
-Layer3dTileset.prototype.hideObjects = function (toHide, allLayers = false) {
+Layer3dTileset.prototype.addToHiddenObjects = function (toHide, allLayers = false) {
     let updateLayer = allLayers;
 
     toHide.forEach((id) => {
@@ -153,11 +153,30 @@ Layer3dTileset.prototype.applyStyle = function (tile) {
 };
 
 /**
- * Sets the current LayerStyle on the CesiumTilesetFeatures in the Tile.
+ * Updates the list of hiddenFeatures with hidden features of all visibile layers.
+ * @returns {void}
+ */
+Layer3dTileset.prototype.updateHiddenFeatureList = function () {
+    const visibleTilesetLayer = layerCollection.getLayers().filter(layer => layer.get("typ") === "TileSet3D");
+    let allHiddenFeatures = [];
+
+    visibleTilesetLayer.forEach(tileSetLayer => {
+        const hd = tileSetLayer.get("hiddenFeatures");
+
+        allHiddenFeatures = allHiddenFeatures.concat(hd || []);
+    });
+    visibleTilesetLayer.forEach(tileSetLayer => tileSetLayer.addToHiddenObjects(allHiddenFeatures, true));
+};
+
+/**
+ * Hides features of hidden objects.
  * @param {Cesium.Cesium3DTileContent} content The content for Tile.
  * @return {void}
  */
 Layer3dTileset.prototype.styleContent = function (content) {
+    if (this.get("hiddenFeatures")) {
+        this.updateHiddenFeatureList();
+    }
     if (!content[this.lastUpdatedSymbol] || content[this.lastUpdatedSymbol] < this.get("featureVisibilityLastUpdated")) {
         const batchSize = content.featuresLength;
 
