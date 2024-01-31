@@ -8,6 +8,7 @@
 
 ### Added
 - Added config.json-Parameter Portalconfig.tree.singleBaselayer. Specifies whether only one base layer may be active at any time selectable by radio-buttons in visible layers.
+- 3D: Min- and MaxScale are now available for layers.
 ### Changed
 - CoordToolkit: Toast added instead of Alert for feedback after copying coordinates.
 - ShareView: Added more configuration.
@@ -18,7 +19,7 @@
 ### Removed
 
 ### Fixed
-- Issue #1084: fix wrong pointMarker placement when featureType is MultiPolygon. 
+- Issue #1084: fix wrong pointMarker placement when featureType is MultiPolygon.
 - Issue #1118: The `wfsSearch` module now works with multiple select boxes.
 - Layer selection: The order of the layers corresponds to the order of the layers in config.json.
 - Fixed HighlightFeature for MultiPolygons: In certain WFS layers, when polygon selection is enabled,

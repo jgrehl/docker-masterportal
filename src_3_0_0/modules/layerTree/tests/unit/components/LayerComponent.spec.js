@@ -227,5 +227,56 @@ describe("src_3_0_0/modules/layerTree/components/LayerComponent.vue", () => {
 
             expect(scaleIsOutOfRange).to.be.true;
         });
+        it("test method scaleIsOutOfRange, isLayerTree = true, conf.maxScale is set, is mapMode = 3D, is layer visible, is not in scale", () => {
+            store = createStore({
+                namespaces: true,
+                modules: {
+                    Modules: {
+                        namespaced: true,
+                        modules: {
+                            namespaced: true,
+                            LayerComponent
+                        }
+                    },
+                    Maps: {
+                        namespaced: true,
+                        getters: {
+                            mode: () => "3D",
+                            scale: () => 20000,
+                            scales: () => [500, 1000, 10000, 20000, 100000]
+                        }
+                    }
+                },
+                mutations: {
+                    replaceByIdInLayerConfig: replaceByIdInLayerConfigSpy
+                }
+            });
+            layer.maxScale = "10000";
+            layer.minScale = "0";
+            wrapper = shallowMount(LayerComponent, {
+                global: {
+                    plugins: [store]
+                },
+                propsData
+            });
+
+            const scaleIsOutOfRange = wrapper.vm.scaleIsOutOfRange();
+
+            expect(scaleIsOutOfRange).to.be.true;
+        });
+        it("test method scaleIsOutOfRange, isLayerTree = true, conf.maxScale is set, is mapMode = 3D, is layer visible, is in scale", () => {
+            layer.maxScale = "100000";
+            layer.minScale = "0";
+            wrapper = shallowMount(LayerComponent, {
+                global: {
+                    plugins: [store]
+                },
+                propsData
+            });
+
+            const scaleIsOutOfRange = wrapper.vm.scaleIsOutOfRange();
+
+            expect(scaleIsOutOfRange).to.be.false;
+        });
     });
 });

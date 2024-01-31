@@ -6,6 +6,7 @@ import LayerCheckBox from "./LayerCheckBox.vue";
 import LayerComponentIconInfo from "./LayerComponentIconInfo.vue";
 import LayerComponentIconSubMenu from "./LayerComponentIconSubMenu.vue";
 import LayerComponentSubMenu from "./LayerComponentSubMenu.vue";
+import layerCollection from "../../../core/layers/js/layerCollection";
 
 /**
  * Representation of a layer in layerTree.
@@ -78,9 +79,20 @@ export default {
          * @returns {Boolean}  true, if this layer is not visible in the maps current scale
          */
         scaleIsOutOfRange () {
-            if (!this.isLayerTree() || this.conf.maxScale === undefined || this.mode === "3D") {
+            if (!this.isLayerTree() || this.conf.maxScale === undefined) {
                 return false;
             }
+            if (this.mode === "3D" && this.conf.visibility === true && (this.scale > parseInt(this.conf.maxScale, 10) || this.scale < parseInt(this.conf.minScale, 10))) {
+                const layer = layerCollection.getLayerById(this.conf.id).layer;
+
+                layer.setVisible(false);
+            }
+            else if (this.mode === "3D" && this.conf.visibility === true) {
+                const layer = layerCollection.getLayerById(this.conf.id).layer;
+
+                layer.setVisible(true);
+            }
+
             return this.scale > parseInt(this.conf.maxScale, 10) || this.scale < parseInt(this.conf.minScale, 10);
         }
     }
