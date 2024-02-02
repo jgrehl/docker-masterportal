@@ -41,14 +41,16 @@ jobs:
         env:
           REGISTRY_PREFIX: ${{ secrets.DOCKERHUB_USERNAME }}/
           BUILD_REVISION: ${{ steps.vars.outputs.sha_short }}
-        run: docker buildx bake --pull
+          BUILD_IMAGE: ${{ github.repository }}
+        run: docker build -t $REGISTRY_PREFIX/$BUILD_IMAGE:$BUILD_REVISION .
       
       # Publish to Docker Hub
       - name: Push images
         env:
           REGISTRY_PREFIX: ${{ secrets.DOCKERHUB_USERNAME }}/
           BUILD_REVISION: ${{ steps.vars.outputs.sha_short }}
-        run: docker buildx bake --push
+          BUILD_IMAGE: ${{ github.repository }}
+        run: docker push $REGISTRY_PREFIX/$BUILD_IMAGE:$BUILD_REVISION
       
       # Update Docker Hub description
       - name: Docker Hub Description
@@ -57,4 +59,3 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
           repository: ${{ github.repository }}
-          
